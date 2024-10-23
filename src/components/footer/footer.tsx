@@ -10,8 +10,12 @@ export default function Footer() {
 					<div className="flex items-center">
 						<FooterSocialSection />
 					</div>
-					<div className="flex items-center text-zinc-950 dark:text-zinc-50 font-normal text-base">
-						<FooterLink linkTo="/" linkTitle="Blue Dot Robots" />
+					<div className="flex items-center">
+						<FooterLink
+							linkTo="/"
+							linkTitle="Blue Dot Robots"
+							extraClasses="font-bold text-base"
+						/>
 					</div>
 					<div className="flex items-center">
 						<FooterSupportSection />
