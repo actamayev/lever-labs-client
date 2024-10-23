@@ -10,6 +10,7 @@ export default function Home() {
 					<div className="w-full max-w-3xl">
 						<div className="flex flex-col items-center">
 							<BlueDot />
+							Stay tuned, coming soon...
 						</div>
 					</div>
 				</div>

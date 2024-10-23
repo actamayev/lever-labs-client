@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa"
 export default function Missing() {
 	return (
 		<div className="text-center">
-			<div className="text-lg text-zinc-600 mb-8 dark:text-zinc-200">
+			<div className="text-lg text-zinc-800 mb-8 dark:text-zinc-200">
 				Page Not Found
 			</div>
 			<Link to="/" className="inline-block">
