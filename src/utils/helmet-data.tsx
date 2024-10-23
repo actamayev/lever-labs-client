@@ -8,8 +8,9 @@ interface HelmetData {
 const helmetData: HelmetData = {
 	"/": (
 		<BasicHelmet
-			pageTitleData="Blue Dot Robots | []"
-			description="Blue Dot Robots Description"
+			pageTitleData="Blue Dot Robots | Coming Soon"
+			description="Explore Pip, the educational robot designed to make learning robotics fun and accessible.
+			From coding basics to advanced control algorithms, start your robotics journey today."
 			url="https://www.bluedotrobots.com"
 			needsBlueDotSuffix={false}
 		/>
@@ -17,7 +18,7 @@ const helmetData: HelmetData = {
 	"/contact": (
 		<BasicHelmet
 			pageTitleData="Contact Us"
-			description="Get in touch with the BlueDot team."
+			description="Get in touch with the Blue Dot Robots team."
 			url="https://www.bluedotrobots.com/contact"
 		/>
 	)
