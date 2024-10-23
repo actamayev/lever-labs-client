@@ -13,6 +13,13 @@ const helmetData: HelmetData = {
 			url="https://www.bluedotrobots.com"
 			needsBlueDotSuffix={false}
 		/>
+	),
+	"/contact": (
+		<BasicHelmet
+			pageTitleData="Contact Us"
+			description="Get in touch with the BlueDot team."
+			url="https://www.bluedotrobots.com/contact"
+		/>
 	)
 }
 
