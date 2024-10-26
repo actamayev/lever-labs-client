@@ -23,8 +23,8 @@ export default function Contact() {
 							className="border border-zinc-200 dark:border-zinc-700 rounded-lg py-1 \
 							px-0.5 mx-auto bg-white dark:bg-zinc-800 w-80 mt-10"
 						>
-							<ContactItemInCard name="Levi" email="levi@bluedotrobots.com" />
-							<ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" />
+							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
+							{/* <ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" /> */}
 						</div>
 						<div className="flex justify-center mt-4 space-x-4">
 							<XLink />
