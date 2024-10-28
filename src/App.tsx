@@ -2,10 +2,10 @@ import { Routes, Route } from "react-router-dom"
 import Home from "./pages/home"
 import Missing from "./pages/missing"
 import Contact from "./components/contact"
-import useInitializeTagManager from "./hooks/analytics/initialize-tag-manager"
+import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-analytics"
 
 export default function App() {
-	useInitializeTagManager()
+	useInitializeGoogleAnalytics()
 
 	return (
 		<Routes>
