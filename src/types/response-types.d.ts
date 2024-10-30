@@ -20,6 +20,7 @@ declare global {
 		username: string
 		email: string | null
 		defaultSiteTheme: SiteThemes
+		profilePictureUrl: string | null
 	}
 }
 

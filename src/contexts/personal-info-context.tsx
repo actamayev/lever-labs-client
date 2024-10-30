@@ -8,6 +8,7 @@ class PersonalInfoClass {
 
 	public isRetrievingPersonalInfo = false
 	public defaultSiteTheme: SiteThemes = "light"
+	public profilePictureUrl: string | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -28,6 +29,7 @@ class PersonalInfoClass {
 	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
 		this.username = retrievedData.username
 		this.email = retrievedData.email
+		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
 	})
 
@@ -36,6 +38,10 @@ class PersonalInfoClass {
 		if (addToLocalStorage === true) localStorage.setItem("defaultSiteTheme", newSiteTheme)
 		if (newSiteTheme === "dark") document.documentElement.classList.add("dark")
 		else document.documentElement.classList.remove("dark")
+	})
+
+	public setProfilePictureUrl = action((newProfilePictureUrl: string | null): void => {
+		this.profilePictureUrl = newProfilePictureUrl
 	})
 
 	public logout() {

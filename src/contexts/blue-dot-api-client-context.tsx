@@ -1,10 +1,12 @@
 import { createContext, useContext, useMemo } from "react"
 import AuthDataService from "../services/auth-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import PersonalInfoDataService from "../services/personal-info-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient)
+	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient)
 
 	constructor() {
 	}
@@ -12,6 +14,7 @@ class BlueDotApiClient {
 	private initializeServices() {
 		this.httpClient = new BlueDotHttpClient()
 		this.authDataService = new AuthDataService(this.httpClient)
+		this.personalInfoDataService = new PersonalInfoDataService(this.httpClient)
 	}
 
 	public logout() {
