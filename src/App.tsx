@@ -14,6 +14,7 @@ import useLogoutListenerUseEffect from "./hooks/listeners/logout-listener-use-ef
 import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-analytics"
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
+import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
 
 function App() {
 	useScrollToTop()
@@ -23,6 +24,7 @@ function App() {
 	useSiteThemeListenerUseEffect()
 	useInitializeGoogleAnalytics()
 	useRedirectBackToRegisterUsername()
+	useRetrievePersonalInfoUseEffect()
 
 	return (
 		<Routes>

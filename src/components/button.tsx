@@ -2,8 +2,8 @@
 interface Props {
 	title?: string
 	titleIcon?: React.ReactNode
-	colorClass: string
-	hoverClass: string
+	colorClass?: string
+	hoverClass?: string
 	disabled?: boolean
 	onClick?: (e: any) => void | Promise<void>
 	className?: string
@@ -14,10 +14,10 @@ export default function Button (props: Props) {
 	let backgroundColor
 	let hoverColor
 	if (props.disabled) {
-		backgroundColor = "bg-zinc-400"
+		backgroundColor = "bg-slate-400"
 		hoverColor = ""
 	} else {
-		backgroundColor = props.colorClass || "bg-zinc-950"
+		backgroundColor = props.colorClass || ""
 		hoverColor = props.hoverClass || ""
 	}
 
@@ -26,7 +26,7 @@ export default function Button (props: Props) {
 	return (
 		<button
 			type={props.onClick ? "button" : "submit"}
-			className={css}
+			className={`bg-pipTheme hover:bg-pipThemeHover ${css}`}
 			onClick={props.onClick}
 			disabled={props.disabled ?? false}
 			style={props.style}

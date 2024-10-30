@@ -46,15 +46,13 @@ export default function Login(props: Props) {
 						setCredentials = {createSetCredentialsFunction(setLoginInformation)}
 					/>
 
-					<ErrorMessage error={error} />
-
 					<Button
 						title="Login"
-						className="mt-3 w-full font-semibold text-lg text-white"
-						colorClass="bg-blue-600"
-						hoverClass="hover:bg-blue-700"
+						className="my-3 w-full font-semibold text-lg text-white"
 						disabled={loading}
 					/>
+
+					<ErrorMessage error={error} />
 				</form>
 				<SubLoginInfo setLoginOrRegister={setLoginOrRegister}/>
 			</AuthTemplate>

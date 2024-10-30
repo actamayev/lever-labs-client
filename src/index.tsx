@@ -6,6 +6,7 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"
 import App from "./App"
 import "../src/styles/index.css"
+import "../src/styles/styles.css"
 import Layout from "./components/layout"
 import ContextLevelComponent from "./context-level-component"
 

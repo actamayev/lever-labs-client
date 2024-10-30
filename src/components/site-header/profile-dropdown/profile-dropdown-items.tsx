@@ -9,7 +9,7 @@ import useHandleLogout from "../../../hooks/auth/handle-logout"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 
 const useDropdownItemClasses = () => {
-	const baseClass = "px-4 py-2 flex items-center hover:bg-zinc-200 dark:hover:bg-zinc-800"
+	const baseClass = "px-4 py-2 flex items-center hover:bg-slate-200 dark:hover:bg-slate-800"
 	return {
 		bottom: `${baseClass} rounded-b-md`,
 		middle: baseClass
@@ -27,8 +27,8 @@ function ProfileDropdownItems() {
 	}, [personalInfoClass.username])
 
 	return (
-		<div className="text-base text-zinc-950 dark:text-zinc-200">
-			<div className="px-4 py-2 border-b border-zinc-100 dark:border-zinc-700 font-medium">
+		<div className="text-base text-slate-950 dark:text-slate-200">
+			<div className="px-4 py-2 border-b border-slate-100 dark:border-slate-700 font-medium">
 				@{username || ""}
 			</div>
 
