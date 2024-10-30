@@ -4,7 +4,9 @@ export default function TheLab() {
 	return (
 		<>
 			<PageHelmet pageTitle="/the-lab" />
-			<div>The Lab</div>
+			<div className="text-black dark:text-white">
+				The Lab
+			</div>
 		</>
 	)
 }
