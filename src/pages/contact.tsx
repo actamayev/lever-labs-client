@@ -2,7 +2,7 @@
 import XLink from "../components/social-links/x-link"
 import PageHelmet from "../components/helmet/page-helmet"
 import LinkedinLink from "../components/social-links/linkedin-link"
-import ContactItemInCard from "./contact/contact-item-in-card"
+import ContactItemInCard from "../components/contact/contact-item-in-card"
 
 export default function Contact() {
 	return (
