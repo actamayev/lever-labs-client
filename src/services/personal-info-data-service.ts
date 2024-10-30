@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
-import FortunaHttpClient from "../classes/blue-dot-http-client"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class PersonalInfoDataService {
 	private readonly pathHeader: PathHeaders = "/personal-info"
 
-	constructor(private readonly httpClient: FortunaHttpClient) {
+	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
 	async retrievePersonalInfo(): Promise<AxiosResponse<PersonalInfoResponse | ErrorResponse>> {

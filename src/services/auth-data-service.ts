@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
-import FortunaHttpClient from "../classes/blue-dot-http-client"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class AuthDataService {
 	private readonly pathHeader: PathHeaders = "/auth"
 
-	constructor(private readonly httpClient: FortunaHttpClient) {
+	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
 	async login(loginInformation: LoginCredentials): Promise<AxiosResponse<LoginOrRegisterSuccess | NonSuccessResponse>> {

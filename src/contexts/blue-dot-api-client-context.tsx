@@ -1,16 +1,16 @@
 import { createContext, useContext, useMemo } from "react"
 import AuthDataService from "../services/auth-data-service"
-import FortunaHttpClient from "../classes/blue-dot-http-client"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 class BlueDotApiClient {
-	public httpClient: FortunaHttpClient = new FortunaHttpClient()
+	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient)
 
 	constructor() {
 	}
 
 	private initializeServices() {
-		this.httpClient = new FortunaHttpClient()
+		this.httpClient = new BlueDotHttpClient()
 		this.authDataService = new AuthDataService(this.httpClient)
 	}
 
