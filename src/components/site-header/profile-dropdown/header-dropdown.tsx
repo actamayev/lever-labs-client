@@ -29,7 +29,7 @@ function HeaderDropdown () {
 			<div className="relative inline-block" ref={dropdownRef}>
 				<div
 					className="flex items-center cursor-pointer hover:bg-slate-100 text-slate-950 \
-					dark:text-slate-100 dark:hover:bg-slate-800 p-2 rounded"
+					dark:text-slate-100 dark:hover:bg-slate-700 p-2 rounded"
 					onClick={isOpenCallback}
 				>
 					<div className="w-8 h-8 rounded-full overflow-hidden flex justify-center items-center

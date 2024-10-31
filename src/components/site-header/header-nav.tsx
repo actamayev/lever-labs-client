@@ -1,6 +1,5 @@
 import ChooseSiteTheme from "../choose-site-theme"
 import LogoHeaderSection from "./logo-header-section"
-// import HeaderSearchBar from "../search-bars/header-search-bar"
 import LoginLogoutHeaderItem from "./login-logout-header-item"
 
 export default function HeaderNav() {

@@ -5,7 +5,7 @@ export default function NullUserNavLink() {
 		<>
 			<AuthHeaderLinks
 				title="Log in"
-				className="bg-inherit hover:bg-slate-200 dark:text-slate-100 dark:hover:bg-slate-800 text-slate-950 mx-2"
+				className="bg-inherit hover:bg-slate-200 dark:text-slate-100 dark:hover:bg-slate-700 text-slate-950 mx-2"
 				linkTo="/login"
 			/>
 			<AuthHeaderLinks
