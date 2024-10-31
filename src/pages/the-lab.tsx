@@ -1,9 +1,22 @@
+import { observer } from "mobx-react"
 import PipUUIDs from "../components/the-lab/pip-uuids"
+import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
+import ShowAuthToNullUser from "../components/show-auth-to-null-user"
 import useRetrievePipInfoUseEffect from "../hooks/pip/retrieve-pip-info"
 
-export default function TheLab() {
+function TheLab() {
 	useRetrievePipInfoUseEffect()
+	const authClass = useAuthContext()
+
+	if (authClass.isLoggedIn === false) {
+		return (
+			<>
+				<PageHelmet pageTitle="/the-lab" />
+				<ShowAuthToNullUser whereToNavigate="/the-lab" />
+			</>
+		)
+	}
 
 	return (
 		<>
@@ -15,3 +28,5 @@ export default function TheLab() {
 		</>
 	)
 }
+
+export default observer(TheLab)
