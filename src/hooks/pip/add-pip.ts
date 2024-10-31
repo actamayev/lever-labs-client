@@ -8,7 +8,7 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useAddPip(): (
-	pipData: PipData,
+	pipData: IncompletePipData,
 	toggleModalOpen: () => void
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -16,7 +16,7 @@ export default function useAddPip(): (
 	const pipClass = usePipContext()
 
 	return useCallback(async (
-		pipData: PipData,
+		pipData: IncompletePipData,
 		toggleModalOpen: () => void
 	) => {
 		try {
@@ -31,7 +31,7 @@ export default function useAddPip(): (
 				throw new Error("Report Video failed")
 			}
 			toggleModalOpen()
-			pipClass.addNewPip(pipData)
+			pipClass.addNewPip({ userPipUUIDId: addPipDataResponse.data.userPipUUIDId, ...pipData })
 			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)
 		} catch (error) {
 			console.error(error)

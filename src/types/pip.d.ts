@@ -1,8 +1,11 @@
 declare global {
-	interface PipData {
+	interface IncompletePipData {
 		pipName: string
-		userPipUUIDId: number
 		pipUUID: PipUUID
+	}
+
+	interface PipData extends IncompletePipData {
+		userPipUUIDId: number
 	}
 }
 

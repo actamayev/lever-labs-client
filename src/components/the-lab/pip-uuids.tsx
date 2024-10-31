@@ -1,5 +1,4 @@
 import { useState } from "react"
-import Button from "../button"
 import AddPipModal from "./add-pip-modal"
 import ShowExistingPips from "./show-existing-pips"
 
@@ -8,12 +7,7 @@ export default function PipUUIDs() {
 
 	return (
 		<>
-			<ShowExistingPips />
-			<Button
-				title="Add a Pip"
-				onClick={() => setIsModalOpen(true)}
-				className="text-white"
-			/>
+			<ShowExistingPips setIsModalOpen={setIsModalOpen}/>
 			{isModalOpen && (
 				<AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />
 			)}

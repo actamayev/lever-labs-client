@@ -1,4 +1,4 @@
-export default function validatePipData(pipData: PipData): boolean {
+export default function validatePipData(pipData: IncompletePipData): boolean {
 	const { pipName, pipUUID } = pipData
 
 	const isNameValid = pipName.length >= 3 && pipName.length <= 20

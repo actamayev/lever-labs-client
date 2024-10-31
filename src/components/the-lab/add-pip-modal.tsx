@@ -13,9 +13,8 @@ interface Props {
 
 function AddPipModal(props: Props) {
 	const { toggleModalOpen } = props
-	const [pipData, setPipData] = useState<PipData>({
+	const [pipData, setPipData] = useState<IncompletePipData>({
 		pipName: "",
-		userPipUUIDId: 0,
 		pipUUID: "" as PipUUID
 	})
 	const modalRef = useRef<HTMLDivElement>(null)
