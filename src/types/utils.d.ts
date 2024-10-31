@@ -17,6 +17,8 @@ declare global {
 		"/auth" |
 		"/pip" |
 		"/personal-info"
+
+	type PipUUID = string & { readonly __brand: unique symbol };
 }
 
 export {}

@@ -4,7 +4,7 @@ import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 
-export default function useRedirectKnownUser (): void  {
+export default function useRedirectKnownUser (): void {
 	const authClass = useAuthContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()

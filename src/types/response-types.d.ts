@@ -22,6 +22,11 @@ declare global {
 		defaultSiteTheme: SiteThemes
 		profilePictureUrl: string | null
 	}
+
+	// Pip Responses
+	type AddNewPipResponse = {
+		userPipUUIDId: number
+	}
 }
 
 export {}

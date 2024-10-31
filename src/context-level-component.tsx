@@ -1,3 +1,4 @@
+import PipProvider from "./contexts/pip-context"
 import AuthProvider from "./contexts/auth-context"
 import PersonalInfoProvider from "./contexts/personal-info-context"
 import NotificationsProvider from "./contexts/notifications-context"
@@ -8,9 +9,11 @@ export default function ContextLevelComponent ({ children } : { children: React.
 		<AuthProvider>
 			<NotificationsProvider>
 				<PersonalInfoProvider>
-					<BlueDotApiClientProvider>
-						{children}
-					</BlueDotApiClientProvider>
+					<PipProvider>
+						<BlueDotApiClientProvider>
+							{children}
+						</BlueDotApiClientProvider>
+					</PipProvider>
 				</PersonalInfoProvider>
 			</NotificationsProvider>
 		</AuthProvider>
