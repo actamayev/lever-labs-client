@@ -12,4 +12,10 @@ export default class PipDataService {
 			`${this.pathHeader}/add-pip-to-account`, { addPipToAccountData }
 		)
 	}
+
+	async retrievePreviouslyAddedPips(): Promise<AxiosResponse<PreviouslyAddedPipsResponse | ErrorResponse>> {
+		return await this.httpClient.http.get<PreviouslyAddedPipsResponse | ErrorResponse>(
+			`${this.pathHeader}/retrieve-previously-added-pips`
+		)
+	}
 }

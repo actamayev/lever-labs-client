@@ -9,11 +9,13 @@ declare global {
 	type AllCommonResponses = SuccessResponse | NonSuccessResponse
 
 	//Auth Responses:
-	type LoginOrRegisterSuccess = {
+	type RegisterSuccess = {
 		accessToken: string
-		publicKey: string
 	}
-	type GoogleAuthSuccess = LoginOrRegisterSuccess & { isNewUser: boolean }
+	type LoginSuccess = RegisterSuccess & {
+		userPipData: PipData[]
+	}
+	type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
 	// Personal Info Responses:
 	type PersonalInfoResponse = {
@@ -26,6 +28,9 @@ declare global {
 	// Pip Responses
 	type AddNewPipResponse = {
 		userPipUUIDId: number
+	}
+	type PreviouslyAddedPipsResponse = {
+		userPipData: PipData[]
 	}
 }
 

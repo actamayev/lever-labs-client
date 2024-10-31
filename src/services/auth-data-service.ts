@@ -7,8 +7,8 @@ export default class AuthDataService {
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
-	async login(loginInformation: LoginCredentials): Promise<AxiosResponse<LoginOrRegisterSuccess | NonSuccessResponse>> {
-		return await this.httpClient.http.post<LoginOrRegisterSuccess | NonSuccessResponse>(
+	async login(loginInformation: LoginCredentials): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
+		return await this.httpClient.http.post<LoginSuccess | NonSuccessResponse>(
 			`${this.pathHeader}/login`, { loginInformation }, { headers: { "No-Auth-Required": "true" }}
 		)
 	}
@@ -19,8 +19,8 @@ export default class AuthDataService {
 		)
 	}
 
-	async register(registerInformation: RegisterCredentialsToSend): Promise<AxiosResponse<LoginOrRegisterSuccess | NonSuccessResponse>> {
-		return await this.httpClient.http.post<LoginOrRegisterSuccess | NonSuccessResponse>(
+	async register(registerInformation: RegisterCredentialsToSend): Promise<AxiosResponse<RegisterSuccess | NonSuccessResponse>> {
+		return await this.httpClient.http.post<RegisterSuccess | NonSuccessResponse>(
 			`${this.pathHeader}/register`, { registerInformation }, { headers: { "No-Auth-Required": "true" }}
 		)
 	}

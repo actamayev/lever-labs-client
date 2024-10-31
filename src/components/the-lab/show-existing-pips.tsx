@@ -4,7 +4,6 @@ import { usePipContext } from "../../contexts/pip-context"
 function ShowExistingPips() {
 	const pipClass = usePipContext()
 
-	// TODO: Add useEffect hook to retrieve pip UUIDs
 	return (
 		<>
 			{pipClass.pipData.map(singlePipData => (

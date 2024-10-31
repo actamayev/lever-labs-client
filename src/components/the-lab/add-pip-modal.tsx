@@ -4,8 +4,8 @@ import Button from "../button"
 import FormGroup from "../form-group"
 import ModalHeader from "../modal-header"
 import useAddPip from "../../hooks/pip/add-pip"
-import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 import validatePipData from "../../utils/pip-data-validation"
+import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 
 interface Props {
 	toggleModalOpen: () => void
@@ -13,7 +13,11 @@ interface Props {
 
 function AddPipModal(props: Props) {
 	const { toggleModalOpen } = props
-	const [pipData, setPipData] = useState<PipData>({ pipName: "", pipUUID: "" as PipUUID })
+	const [pipData, setPipData] = useState<PipData>({
+		pipName: "",
+		userPipUUIDId: 0,
+		pipUUID: "" as PipUUID
+	})
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
 	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, toggleModalOpen)
@@ -28,7 +32,7 @@ function AddPipModal(props: Props) {
 		const input = event.target.value
 		const alphanumericInput = input.replace(/[^a-zA-Z0-9]/g, "") // Remove non-alphanumeric characters
 		setPipData(prev => ({ ...prev, pipUUID: alphanumericInput as PipUUID }))
-	},[])
+	}, [])
 
 	return (
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
