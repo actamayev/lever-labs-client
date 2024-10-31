@@ -32,6 +32,12 @@ declare global {
 	type PreviouslyAddedPipsResponse = {
 		userPipData: PipData[]
 	}
+
+	// Socket Events:
+	type PipStatusUpdate = {
+		pipUUID: PipUUID
+		newConnectionStatus: PipConnectionStatus
+	}
 }
 
 export {}

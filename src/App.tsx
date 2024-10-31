@@ -11,6 +11,7 @@ import RegisterUsername from "./pages/auth/register-username"
 import useScrollToTop from "./hooks/scroll-to-top"
 import useGetAuthDataFromStorage from "./hooks/auth/get-auth-data-from-storage"
 import useLogoutListenerUseEffect from "./hooks/listeners/logout-listener-use-effect"
+import useSocketEventsUseEffect from "./hooks/socket-events/socket-events-use-effect"
 import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-analytics"
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
@@ -25,6 +26,7 @@ function App() {
 	useInitializeGoogleAnalytics()
 	useRedirectBackToRegisterUsername()
 	useRetrievePersonalInfoUseEffect()
+	useSocketEventsUseEffect()
 
 	return (
 		<Routes>

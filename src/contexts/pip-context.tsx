@@ -22,6 +22,13 @@ class PipClass {
 		this.pipData.push(pipData)
 	}
 
+	public updatePipConnectionStatus(data: PipStatusUpdate): void {
+		const pipToUpdate = this.pipData.find((pip) => pip.pipUUID === data.pipUUID)
+		if (!pipToUpdate) return
+
+		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
+	}
+
 	public setIsRetrievingPipData = action((newState: boolean): void => {
 		this.isRetrievingPipData = newState
 	})

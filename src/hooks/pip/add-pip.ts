@@ -31,7 +31,11 @@ export default function useAddPip(): (
 				throw new Error("Report Video failed")
 			}
 			toggleModalOpen()
-			pipClass.addNewPip({ userPipUUIDId: addPipDataResponse.data.userPipUUIDId, ...pipData })
+			pipClass.addNewPip({
+				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
+				pipConnectionStatus: "not connected",
+				...pipData
+			})
 			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)
 		} catch (error) {
 			console.error(error)
