@@ -9,7 +9,6 @@ export default function useSocketEventsUseEffect(): void {
 
 	useEffect(() => {
 		if (_.isNull(socketClass.accessToken)) return
-		console.log("here")
 		const handlePipStatusUpdate = (data: PipStatusUpdate): void => {
 			pipClass.updatePipConnectionStatus(data)
 		}

@@ -24,7 +24,6 @@ export default function useAddPip(): (
 				validatePipData(pipData) === false ||
 				pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true
 			) return
-			// TODO: Add the returned data's ID to the class. Can use this idea in the future when editing the pip's name, etc.
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
@@ -33,7 +32,8 @@ export default function useAddPip(): (
 			toggleModalOpen()
 			pipClass.addNewPip({
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
-				pipConnectionStatus: "not connected",
+				// TODO: Should also return the pipConnection status from the backend (if the pip has already been connected to wifi)
+				pipConnectionStatus: "inactive",
 				...pipData
 			})
 			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)

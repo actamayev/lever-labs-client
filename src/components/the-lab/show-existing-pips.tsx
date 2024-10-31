@@ -1,4 +1,5 @@
 import { observer } from "mobx-react"
+import SingleRegisteredPip from "./single-registered-pip"
 import { usePipContext } from "../../contexts/pip-context"
 
 interface Props {
@@ -7,20 +8,15 @@ interface Props {
 
 function ShowExistingPips(props: Props) {
 	const { setIsModalOpen } = props
-
 	const pipClass = usePipContext()
 
 	return (
 		<div className="my-4 flex flex-wrap gap-4">
 			{pipClass.pipData.map(singlePipData => (
-				<div
+				<SingleRegisteredPip
+					singlePipData={singlePipData}
 					key={singlePipData.pipUUID}
-					className="bg-pipTheme dark:bg-slate-700 text-white dark:text-white
-					rounded-2xl border border-slate-400 p-4 w-48 text-center"
-				>
-					<div className="font-bold text-lg">{singlePipData.pipName}</div>
-					<div className="text-sm text-slate-300">{singlePipData.pipUUID}</div>
-				</div>
+				/>
 			))}
 			<button
 				onClick={() => setIsModalOpen(true)}
