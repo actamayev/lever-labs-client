@@ -24,8 +24,10 @@ class SocketClass extends EventEmitter {
 	})
 
 	private connect = action((): void => {
-		if (_.isNull(this.accessToken)) return
-		if (this._socket) this._socket.disconnect()
+		if (
+			_.isNull(this.accessToken) ||
+			!_.isNull(this._socket)
+		) return
 
 		this._socket = io(process.env.REACT_APP_BASE_URL as string, {
 			path: "/socketio",
