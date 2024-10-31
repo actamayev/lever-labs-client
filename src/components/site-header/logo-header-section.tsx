@@ -1,4 +1,13 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
+
+function BlueDotRobots() {
+	const location = useLocation()
+	if (location.pathname === "/the-lab") return null
+
+	return (
+		<span className="ml-2">Blue Dot Robots</span>
+	)
+}
 
 export default function LogoHeaderSection() {
 	return (
@@ -14,7 +23,7 @@ export default function LogoHeaderSection() {
 					className="ml-1"
 					style={{ height: "40px", verticalAlign: "middle" }}
 				/>
-				<span className="ml-2">Blue Dot Robots</span>
+				<BlueDotRobots />
 			</Link>
 		</div>
 	)
