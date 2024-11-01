@@ -27,7 +27,7 @@ export default function useAddPip(): (
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
-				throw new Error("Report Video failed")
+				throw new Error("Add Pip failed")
 			}
 			toggleModalOpen()
 			pipClass.addNewPip({

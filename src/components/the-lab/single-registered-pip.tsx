@@ -1,7 +1,9 @@
 import { useCallback, useState } from "react"
+import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 
 export default function SingleRegisteredPip({ singlePipData }: { singlePipData: PipData }) {
 	const [showTooltip, setShowTooltip] = useState(false)
+	const requestToConnectToPip = useRequestToConnectToPip()
 
 	const getStatusColor = useCallback((status: PipConnectionStatus): string => {
 		switch (status) {
@@ -37,6 +39,8 @@ export default function SingleRegisteredPip({ singlePipData }: { singlePipData: 
 		<div
 			className="relative bg-pipTheme dark:bg-slate-700 text-white dark:text-white
 			rounded-2xl border border-slate-400 p-4 w-48 text-center"
+			style={{ cursor: singlePipData.pipConnectionStatus === "online" ? "pointer" : "default" }}
+			onClick={() => requestToConnectToPip(singlePipData)}
 		>
 			{/* Status Badge with Tooltip */}
 			<div

@@ -13,6 +13,12 @@ export default class PipDataService {
 		)
 	}
 
+	async requestToConnectToPip(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/client-connect-to-pip-request`, { pipUUID }
+		)
+	}
+
 	async retrievePreviouslyAddedPips(): Promise<AxiosResponse<PreviouslyAddedPipsResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<PreviouslyAddedPipsResponse | ErrorResponse>(
 			`${this.pathHeader}/retrieve-previously-added-pips`

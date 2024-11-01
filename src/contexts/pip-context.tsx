@@ -29,6 +29,16 @@ class PipClass {
 		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
 	}
 
+	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
+		return this.pipData.some(
+			data => data.pipUUID === pipUUID &&
+			(
+				data.pipConnectionStatus === "connected" ||
+				data.pipConnectionStatus === "connected to other user"
+			)
+		)
+	}
+
 	public setIsRetrievingPipData = action((newState: boolean): void => {
 		this.isRetrievingPipData = newState
 	})
