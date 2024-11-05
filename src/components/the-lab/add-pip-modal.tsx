@@ -37,7 +37,6 @@ export default function AddPipModal(props: Props) {
 		return pipUUIDPattern.test(pipData.pipUUID)
 	}, [pipData.pipUUID])
 
-	console.log(validatePipData(pipData))
 	return (
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
 			<div
