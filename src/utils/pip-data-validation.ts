@@ -3,7 +3,7 @@ export default function validatePipData(pipData: IncompletePipData): boolean {
 
 	const isNameValid = pipName.length >= 3 && pipName.length <= 20
 
-	const isUUIDValid = /^[a-zA-Z0-9]{5}$/.test(pipUUID)
+	const isUUIDValid = /^[a-zA-Z0-9]{5}-\d+\.\d+\.\d+$/.test(pipUUID)
 
 	return isNameValid && isUUIDValid
 }

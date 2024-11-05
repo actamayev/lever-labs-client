@@ -1,5 +1,4 @@
-import { observer } from "mobx-react"
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 import Button from "../button"
 import FormGroup from "../form-group"
 import ModalHeader from "../modal-header"
@@ -11,7 +10,7 @@ interface Props {
 	toggleModalOpen: () => void
 }
 
-function AddPipModal(props: Props) {
+export default function AddPipModal(props: Props) {
 	const { toggleModalOpen } = props
 	const [pipData, setPipData] = useState<IncompletePipData>({
 		pipName: "",
@@ -29,15 +28,21 @@ function AddPipModal(props: Props) {
 
 	const cleanPipUUIDInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		const input = event.target.value
-		const alphanumericInput = input.replace(/[^a-zA-Z0-9]/g, "") // Remove non-alphanumeric characters
-		setPipData(prev => ({ ...prev, pipUUID: alphanumericInput as PipUUID }))
+		const allowedInput = input.replace(/[^a-zA-Z0-9\-.]/g, "") // Allow only alphanumeric characters, dashes, and periods
+		setPipData(prev => ({ ...prev, pipUUID: allowedInput as PipUUID }))
 	}, [])
 
+	const isUUIDValid = useMemo(() => {
+		const pipUUIDPattern = /^[a-zA-Z0-9]{5}-\d+\.\d+\.\d+$/
+		return pipUUIDPattern.test(pipData.pipUUID)
+	}, [pipData.pipUUID])
+
+	console.log(validatePipData(pipData))
 	return (
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
 			<div
 				ref={modalRef}
-				className="bg-white dark:bg-slate-800 rounded-lg shadow-lg w-1/3 max-h-full overflow-visible"
+				className="bg-white dark:bg-slate-800 rounded-lg shadow-lg w-1/4 max-h-full overflow-visible"
 				onClick={e => e.stopPropagation()}
 			>
 				<ModalHeader
@@ -59,19 +64,22 @@ function AddPipModal(props: Props) {
 							</span>
 						</div>
 						<div>
-							<FormGroup
-								label="Pip ID"
-								value={pipData.pipUUID}
-								onChange={cleanPipUUIDInput}
-								maxLength={5}
-								className="w-full"
-							/>
+							<div className="w-full">
+								<label className="block text-sm text-slate-600 dark:text-slate-200 font-semibold">
+									Pip ID
+								</label>
+								<input
+									className={`mt-1 p-2 w-full border rounded-md text-slate-950 dark:text-slate-200
+									bg-white dark:bg-slate-800 outline-none
+									${isUUIDValid ? "border-slate-200 dark:border-slate-700" : "border-red-500 dark:border-red-500"}`}
+									value={pipData.pipUUID}
+									onChange={cleanPipUUIDInput}
+								/>
+							</div>
 						</div>
 						<div className="flex justify-between mt-2 items-center">
 							<Button
 								title={`Add ${pipData.pipName}`}
-								colorClass="bg-blue-300 dark:bg-blue-600"
-								hoverClass="hover:bg-blue-400 hover:dark:bg-blue-700"
 								onClick={addPipCallback}
 								disabled={!validatePipData(pipData)}
 							/>
@@ -82,5 +90,3 @@ function AddPipModal(props: Props) {
 		</div>
 	)
 }
-
-export default observer(AddPipModal)

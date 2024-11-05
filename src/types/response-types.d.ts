@@ -28,6 +28,7 @@ declare global {
 	// Pip Responses
 	type AddNewPipResponse = {
 		userPipUUIDId: number
+		espStatus: PipConnectionStatus
 	}
 	type PreviouslyAddedPipsResponse = {
 		userPipData: PipData[]

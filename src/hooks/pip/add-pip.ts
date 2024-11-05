@@ -32,8 +32,7 @@ export default function useAddPip(): (
 			toggleModalOpen()
 			pipClass.addNewPip({
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
-				// TODO: Should also return the pipConnection status from the backend (if the pip has already been connected to wifi)
-				pipConnectionStatus: "inactive",
+				pipConnectionStatus: addPipDataResponse.data.espStatus,
 				...pipData
 			})
 			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)

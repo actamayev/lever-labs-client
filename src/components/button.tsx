@@ -11,29 +11,34 @@ interface Props {
 }
 
 export default function Button (props: Props) {
+	const {
+		title, titleIcon, colorClass, hoverClass,
+		disabled, onClick, className, style
+	} = props
+
 	let backgroundColor
 	let hoverColor
-	if (props.disabled) {
+	if (disabled) {
 		backgroundColor = "bg-slate-400"
-		hoverColor = ""
+		hoverColor = "hover:bg-slate-400"
 	} else {
-		backgroundColor = props.colorClass || ""
-		hoverColor = props.hoverClass || ""
+		backgroundColor = colorClass || ""
+		hoverColor = hoverClass || ""
 	}
 
-	const css = `rounded p-2 ${backgroundColor} ${hoverColor} ${props.className}`
+	const extraClasses = `rounded p-2 ${backgroundColor} ${hoverColor} ${className}`
 
 	return (
 		<button
-			type={props.onClick ? "button" : "submit"}
-			className={`bg-pipTheme hover:bg-pipThemeHover ${css}`}
-			onClick={props.onClick}
-			disabled={props.disabled ?? false}
-			style={props.style}
+			type={onClick ? "button" : "submit"}
+			className={`bg-pipTheme hover:bg-pipThemeHover ${extraClasses}`}
+			onClick={onClick}
+			disabled={disabled ?? false}
+			style={style}
 		>
-			<span className="flex items-center justify-center space-x-1">
-				{props.title && <span>{props.title}</span>}
-				{props.titleIcon && <span>{props.titleIcon}</span>}
+			<span className="text-white flex items-center justify-center space-x-1">
+				{title && <span>{title}</span>}
+				{titleIcon && <span>{titleIcon}</span>}
 			</span>
 		</button>
 	)
