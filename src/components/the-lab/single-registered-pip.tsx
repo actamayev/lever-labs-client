@@ -20,10 +20,10 @@ export default function SingleRegisteredPip({ singlePipData }: { singlePipData: 
 		}
 	}, [])
 
-	const getStatusMessage = useCallback((status: string): string => {
+	const getStatusMessage = useCallback((status: PipConnectionStatus): string => {
 		switch (status) {
 		case "inactive":
-			return `${singlePipData.pipName} is either not or, or not connected to the internet`
+			return `${singlePipData.pipName} is either not turned on, or not connected to the internet`
 		case "online":
 			return `${singlePipData.pipName} is online and ready to connect`
 		case "connected to other user":
@@ -52,8 +52,8 @@ export default function SingleRegisteredPip({ singlePipData }: { singlePipData: 
 				{showTooltip && (
 					<div
 						className="absolute -top-8 right-0 bg-slate-700 text-white text-xs px-2 py-1 rounded
-						opacity-0 transition-opacity duration-300"
-						style={{ opacity: showTooltip ? 1 : 0 }}
+						opacity-0 transition-opacity duration-500"
+						style={{ opacity: 1 }}
 					>
 						{getStatusMessage(singlePipData.pipConnectionStatus)}
 					</div>

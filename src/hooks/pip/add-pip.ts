@@ -15,15 +15,17 @@ export default function useAddPip(): (
 	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
 
+	// eslint-disable-next-line complexity
 	return useCallback(async (
 		pipData: IncompletePipData,
 		toggleModalOpen: () => void
 	) => {
 		try {
-			if (
-				validatePipData(pipData) === false ||
-				pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true
-			) return
+			if (validatePipData(pipData) === false) return
+			if (pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true) {
+				throw new Error("You've already added a Pip with this ID")
+			}
+
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
@@ -31,14 +33,16 @@ export default function useAddPip(): (
 			}
 			toggleModalOpen()
 			pipClass.addNewPip({
-				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
-				pipConnectionStatus: addPipDataResponse.data.espStatus,
+				...addPipDataResponse.data,
 				...pipData
 			})
 			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)
 		} catch (error) {
 			console.error(error)
-			if (error instanceof AxiosError) {
+			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
+				notificationsClass.setNegativeNotification("You've already added a Pip with this ID")
+				return
+			} else if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {

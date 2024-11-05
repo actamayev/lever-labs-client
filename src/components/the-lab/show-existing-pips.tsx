@@ -14,8 +14,8 @@ function ShowExistingPips(props: Props) {
 		<div className="my-4 flex flex-wrap gap-4">
 			{pipClass.pipData.map(singlePipData => (
 				<SingleRegisteredPip
-					singlePipData={singlePipData}
 					key={singlePipData.pipUUID}
+					singlePipData={singlePipData}
 				/>
 			))}
 			<button
