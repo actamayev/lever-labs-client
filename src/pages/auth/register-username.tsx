@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import FormGroup from "../../components/form-group"
 import Button from "../../components/button"
 import PageHelmet from "../../components/helmet/page-helmet"
@@ -16,6 +16,10 @@ export default function RegisterUsername() {
 	const [loading, setLoading] = useState(false)
 	const usernameSubmit = useUsernameSubmit(username, setError, setLoading)
 	const handleTypeUsername = useHandleTypeUsername()
+
+	const isDisabled = useMemo(() => {
+		return username.length < 3
+	}, [username.length])
 
 	return (
 		<>
@@ -38,7 +42,7 @@ export default function RegisterUsername() {
 						className="mt-3 w-full font-semibold text-lg text-white"
 						colorClass="bg-blue-600"
 						hoverClass="hover:bg-blue-700"
-						disabled={loading}
+						disabled={loading || isDisabled}
 					/>
 
 					<ErrorMessage error={error} />

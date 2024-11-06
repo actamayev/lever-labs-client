@@ -44,6 +44,10 @@ class PersonalInfoClass {
 		this.profilePictureUrl = newProfilePictureUrl
 	})
 
+	public setUsername = action((newUsername: string): void => {
+		this.username = newUsername
+	})
+
 	public logout() {
 		this.username = null
 		this.email = null

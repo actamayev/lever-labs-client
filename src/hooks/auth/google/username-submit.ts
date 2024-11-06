@@ -27,7 +27,7 @@ export default function useUsernameSubmit (
 				setError("Unable to register username. Please reload page and try again.")
 				return
 			}
-			personalInfoClass.username = username
+			personalInfoClass.setUsername(username)
 			navigate("/the-lab")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError, "Unable to register username")
