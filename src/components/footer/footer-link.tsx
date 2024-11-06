@@ -13,7 +13,7 @@ export default function FooterLink(props: Props) {
 		<div className="text-sm">
 			<Link
 				to={linkTo}
-				className={`text-zinc-950 dark:text-zinc-50 hover:underline ${extraClasses}`}
+				className={`text-slate-950 dark:text-slate-50 hover:underline ${extraClasses}`}
 			>
 				{linkTitle}
 			</Link>
