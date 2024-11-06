@@ -1,7 +1,8 @@
+import { observer } from "mobx-react"
 import { useCallback, useState } from "react"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 
-export default function SingleRegisteredPip({ singlePipData }: { singlePipData: PipData }) {
+function SingleRegisteredPip({ singlePipData }: { singlePipData: PipData }) {
 	const [showTooltip, setShowTooltip] = useState(false)
 	const requestToConnectToPip = useRequestToConnectToPip()
 
@@ -66,3 +67,5 @@ export default function SingleRegisteredPip({ singlePipData }: { singlePipData: 
 		</div>
 	)
 }
+
+export default observer(SingleRegisteredPip)
