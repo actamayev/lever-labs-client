@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class PersonalInfoDataService {
-	private readonly pathHeader: PathHeaders = "/personal-info"
+	private readonly pathHeader: EndpointHeaders = "/personal-info"
 
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}

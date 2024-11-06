@@ -17,9 +17,8 @@ class PersonalInfoClass {
 
 	private setDefaultsFromLocalStorage(): void {
 		const locallyStoredDefaultSiteTheme = localStorage.getItem("defaultSiteTheme")
-		if (isValidSiteTheme(locallyStoredDefaultSiteTheme)) {
-			this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
-		}
+		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) return
+		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
 	}
 
 	public setIsRetrievingPersonalDetails = action((newState: boolean): void => {

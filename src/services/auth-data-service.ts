@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class AuthDataService {
-	private readonly pathHeader: PathHeaders = "/auth"
+	private readonly pathHeader: EndpointHeaders = "/auth"
 
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}

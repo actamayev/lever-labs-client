@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class PipDataService {
-	private readonly pathHeader: PathHeaders = "/pip"
+	private readonly pathHeader: EndpointHeaders = "/pip"
 
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}

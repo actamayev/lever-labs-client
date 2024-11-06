@@ -13,7 +13,7 @@ declare global {
 
 	type SiteThemes = "light" | "dark"
 
-	type PathHeaders =
+	type EndpointHeaders =
 		"/auth" |
 		"/pip" |
 		"/personal-info"
