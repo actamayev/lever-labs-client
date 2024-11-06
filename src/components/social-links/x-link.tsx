@@ -5,7 +5,7 @@ export default function XLink() {
 		<a
 			href="https://x.com/bluedotrobots"
 			aria-label="X"
-			className="text-zinc-800 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-white"
+			className="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white"
 			target="_blank"
 			rel="noopener noreferrer"
 		>
