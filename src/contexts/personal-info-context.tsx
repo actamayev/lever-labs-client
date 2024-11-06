@@ -51,6 +51,7 @@ class PersonalInfoClass {
 		this.username = null
 		this.email = null
 		this.setIsRetrievingPersonalDetails(false)
+		this.setProfilePictureUrl(null)
 	}
 }
 
