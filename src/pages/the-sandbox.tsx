@@ -3,26 +3,26 @@ import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
 import ShowAuthToNullUser from "../components/show-auth-to-null-user"
 
-function TheLab() {
+function TheSandbox() {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
 		return (
 			<>
-				<PageHelmet pageTitle="/the-lab" />
-				<ShowAuthToNullUser whereToNavigate="/the-lab" />
+				<PageHelmet pageTitle="/the-sandbox" />
+				<ShowAuthToNullUser whereToNavigate="/the-sandbox" />
 			</>
 		)
 	}
 
 	return (
 		<>
-			<PageHelmet pageTitle="/the-lab" />
+			<PageHelmet pageTitle="/the-sandbox" />
 			<div className="text-black dark:text-white text-3xl">
-				The Lab
+				The Sandbox
 			</div>
 		</>
 	)
 }
 
-export default observer(TheLab)
+export default observer(TheSandbox)
