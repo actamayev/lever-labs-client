@@ -10,10 +10,12 @@ export default function useClickOutsideUseEffect(
 
 	const handleClickOutside = useCallback((event: MouseEvent) => {
 		const themeToggler = document.getElementById("theme-toggler")
+		const pipAutoConnectSlider = document.getElementById("pip-auto-connect-slider")
 		if (
 			dropdownRef.current &&
             !dropdownRef.current.contains(event.target as Node) &&
-			(!themeToggler || !themeToggler.contains(event.target as Node))
+			(!themeToggler || !themeToggler.contains(event.target as Node)) &&
+			(!pipAutoConnectSlider || !pipAutoConnectSlider.contains(event.target as Node))
 		) {
 			setIsOpen(false)
 		}

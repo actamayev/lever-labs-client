@@ -2,9 +2,12 @@ declare global {
 	interface IncompletePipData {
 		pipName: string
 		pipUUID: PipUUID
+		shouldAutoConnect: boolean
 	}
 
-	interface PipData extends IncompletePipData {
+	interface PipData {
+		pipName: string
+		pipUUID: PipUUID
 		userPipUUIDId: number
 		pipConnectionStatus: PipConnectionStatus
 	}
