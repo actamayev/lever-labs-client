@@ -68,8 +68,6 @@ export default function AddPipModal(props: Props) {
 										() => setPipData(prev => ({ ... prev, shouldAutoConnect: !prev.shouldAutoConnect}))
 									}
 									colorChangeOnToggle={true}
-								// leftIcon={<IoLogoUsd size={10} />}
-								// rightIcon={<SiSolana size={10}/>}
 								/>
 							</div>
 						</div>
