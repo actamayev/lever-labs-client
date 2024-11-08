@@ -11,7 +11,7 @@ export default function useAddPip(): (
 	pipData: IncompletePipData,
 	toggleModalOpen: () => void,
 	isPipNameNeeded: boolean,
-	doesPipUUIDExist: boolean
+	doesPipUUIDExist: boolean,
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const notificationsClass = useNotificationsContext()
@@ -23,7 +23,7 @@ export default function useAddPip(): (
 		pipData: IncompletePipData,
 		toggleModalOpen: () => void,
 		isPipNameNeeded: boolean,
-		doesPipUUIDExist: boolean
+		doesPipUUIDExist: boolean,
 	) => {
 		try {
 			if (validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded) === false) return

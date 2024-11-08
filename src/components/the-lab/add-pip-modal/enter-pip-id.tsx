@@ -8,10 +8,11 @@ interface Props {
 	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>
 	doesPipUUIDExist: boolean
 	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>
+	setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function EnterPipID(props: Props) {
-	const { pipUUID, setPipData, setIsPipNameNeeded, doesPipUUIDExist, setDoesPipUUIDExist } = props
+	const { pipUUID, setPipData, setIsPipNameNeeded, doesPipUUIDExist, setDoesPipUUIDExist, setUserAlreadyAddedUUID } = props
 	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
 	const pipUUIDValid = isPipUUIDValid(pipUUID)
 
@@ -21,9 +22,11 @@ export default function EnterPipID(props: Props) {
 		const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
 		if (allowedInput.length > 5)  return
 		setPipData(prev => ({ ...prev, pipUUID: allowedInput as PipUUID }))
+		setUserAlreadyAddedUUID(false)
+		setDoesPipUUIDExist(false)
 		setIsPipNameNeeded(false)
-		await checkIfPipUUIDIsValid(allowedInput, setIsPipNameNeeded, setDoesPipUUIDExist)
-	}, [checkIfPipUUIDIsValid, setDoesPipUUIDExist, setIsPipNameNeeded, setPipData])
+		await checkIfPipUUIDIsValid(allowedInput, setIsPipNameNeeded, setDoesPipUUIDExist, setUserAlreadyAddedUUID)
+	}, [checkIfPipUUIDIsValid, setDoesPipUUIDExist, setIsPipNameNeeded, setPipData, setUserAlreadyAddedUUID])
 
 	return (
 		<div>

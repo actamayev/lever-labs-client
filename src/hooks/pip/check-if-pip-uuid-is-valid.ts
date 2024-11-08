@@ -8,25 +8,30 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 export default function useCheckIfPipUUIDIsValid(): (
 	pipUUID: PipUUID,
 	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>
+	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
+	setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 
+	// eslint-disable-next-line complexity
 	return useCallback(async (
 		pipUUID: PipUUID,
 		setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-		setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>
+		setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
+		setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
 		try {
 			if (
-				pipClass.isRetrievingPipData === true ||
-				!_.isEmpty(pipClass.pipData) ||
 				_.isNull(blueDotApiClient.httpClient.accessToken) ||
 				!isPipUUIDValid(pipUUID)
 			) return
 
-			setDoesPipUUIDExist(false)
+
+			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
+				setUserAlreadyAddedUUID(true)
+				return
+			}
 			pipClass.setIsRetrievingPipData(true)
 
 			const pipDataResponse = await blueDotApiClient.pipDataService.checkIfPipUUIDIsValid(pipUUID)
