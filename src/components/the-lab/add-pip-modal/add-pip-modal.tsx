@@ -28,7 +28,6 @@ export default function AddPipModal(props: Props) {
 	const addPip = useAddPip()
 	const validatePipData = useValidatePipData()
 
-	//TODO: Add a function that checks if the UUID exists as the user types
 	const addPipCallback = useCallback(async() => {
 		await addPip(pipData, toggleModalOpen, isPipNameNeeded, doesPipUUIDExist)
 	}, [addPip, doesPipUUIDExist, isPipNameNeeded, pipData, toggleModalOpen])
