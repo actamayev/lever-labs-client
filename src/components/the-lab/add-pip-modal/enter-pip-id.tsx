@@ -1,4 +1,5 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
+import ErrorMessage from "../../error-message"
 import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
 import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
 
@@ -8,11 +9,11 @@ interface Props {
 	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>
 	doesPipUUIDExist: boolean
 	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>
-	setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function EnterPipID(props: Props) {
-	const { pipUUID, setPipData, setIsPipNameNeeded, doesPipUUIDExist, setDoesPipUUIDExist, setUserAlreadyAddedUUID } = props
+	const { pipUUID, setPipData, setIsPipNameNeeded, doesPipUUIDExist, setDoesPipUUIDExist } = props
+	const [userAlreadyAddedUUID, setUserAlreadyAddedUUID] = useState(false)
 	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
 	const pipUUIDValid = isPipUUIDValid(pipUUID)
 
@@ -43,6 +44,11 @@ export default function EnterPipID(props: Props) {
 					onChange={cleanPipUUIDInput}
 				/>
 			</div>
+			{(userAlreadyAddedUUID) ? (
+				<ErrorMessage error="You've already added this Pip ID" />
+			) : (!doesPipUUIDExist && pipUUID.length === 5) && (
+				<ErrorMessage error="The entered Pip ID doesn't exist" />
+			)}
 		</div>
 	)
 }

@@ -4,7 +4,6 @@ import Slider from "../../slider"
 import EnterPipID from "./enter-pip-id"
 import FormGroup from "../../form-group"
 import ModalHeader from "../../modal-header"
-import ErrorMessage from "../../error-message"
 import useAddPip from "../../../hooks/pip/add-pip"
 import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
@@ -21,7 +20,6 @@ export default function AddPipModal(props: Props) {
 		shouldAutoConnect: true
 	})
 	const [doesPipUUIDExist, setDoesPipUUIDExist] = useState(false)
-	const [userAlreadyAddedUUID, setUserAlreadyAddedUUID] = useState(false)
 	const [isPipNameNeeded, setIsPipNameNeeded] = useState(false)
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
@@ -52,13 +50,7 @@ export default function AddPipModal(props: Props) {
 							setIsPipNameNeeded={setIsPipNameNeeded}
 							doesPipUUIDExist={doesPipUUIDExist}
 							setDoesPipUUIDExist={setDoesPipUUIDExist}
-							setUserAlreadyAddedUUID={setUserAlreadyAddedUUID}
 						/>
-						{(userAlreadyAddedUUID) ? (
-							<ErrorMessage error="You've already added this Pip ID" />
-						) : (!doesPipUUIDExist && pipData.pipUUID.length === 5) && (
-							<ErrorMessage error="The entered Pip ID doesn't exist" />
-						)}
 						{isPipNameNeeded && (
 							<div>
 								<FormGroup
