@@ -26,7 +26,6 @@ export default function useAddPip(): (
 		doesPipUUIDExist: boolean
 	) => {
 		try {
-			console.log(validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded))
 			if (validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded) === false) return
 			if (pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")

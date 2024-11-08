@@ -15,7 +15,6 @@ export default function useValidatePipData(): (
 		const { pipName, pipUUID } = pipData
 
 		if (!doesPipUUIDExist) return false
-		console.log("here")
 
 		const isUUIDValid = isPipUUIDValid(pipUUID)
 		if (isPipNameNeeded === false) {
