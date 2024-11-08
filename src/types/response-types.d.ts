@@ -27,6 +27,7 @@ declare global {
 
 	// Pip Responses
 	type AddNewPipResponse = {
+		pipName: string
 		userPipUUIDId: number
 		pipConnectionStatus: PipConnectionStatus
 	}

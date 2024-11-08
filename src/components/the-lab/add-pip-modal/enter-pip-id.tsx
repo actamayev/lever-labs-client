@@ -1,23 +1,29 @@
-import { useCallback, useMemo } from "react"
+import { useCallback } from "react"
+import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
+import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
 
 interface Props {
 	pipUUID: PipUUID
 	setPipData: (value: React.SetStateAction<IncompletePipData>) => void
+	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>
+	doesPipUUIDExist: boolean
+	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function EnterPipID(props: Props) {
-	const { pipUUID, setPipData } = props
+	const { pipUUID, setPipData, setIsPipNameNeeded, doesPipUUIDExist, setDoesPipUUIDExist } = props
+	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
+	const pipUUIDValid = isPipUUIDValid(pipUUID)
 
-	const cleanPipUUIDInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+	const cleanPipUUIDInput = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const input = event.target.value
-		const allowedInput = input.replace(/[^a-zA-Z0-9\-.]/g, "") // Allow only alphanumeric characters, dashes, and periods
+		// Allow only alphanumeric characters and enforce a maximum length of 5 characters
+		const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
+		if (allowedInput.length > 5)  return
 		setPipData(prev => ({ ...prev, pipUUID: allowedInput as PipUUID }))
-	}, [setPipData])
-
-	const isUUIDValid = useMemo(() => {
-		const pipUUIDPattern = /^[a-zA-Z0-9]{5}-\d+\.\d+\.\d+$/
-		return pipUUIDPattern.test(pipUUID)
-	}, [pipUUID])
+		setIsPipNameNeeded(false)
+		await checkIfPipUUIDIsValid(allowedInput, setIsPipNameNeeded, setDoesPipUUIDExist)
+	}, [checkIfPipUUIDIsValid, setDoesPipUUIDExist, setIsPipNameNeeded, setPipData])
 
 	return (
 		<div>
@@ -26,9 +32,10 @@ export default function EnterPipID(props: Props) {
 					Pip ID
 				</label>
 				<input
-					className={`mt-1 p-2 w-full border rounded-md text-slate-950 dark:text-slate-200
+					className={`mt-1 p-2 w-full border-2 rounded-md text-slate-950 dark:text-slate-200
 					bg-white dark:bg-slate-800 outline-none
-					${isUUIDValid ? "border-slate-200 dark:border-slate-700" : "border-red-500 dark:border-red-500"}`}
+					${(pipUUIDValid && doesPipUUIDExist) ?
+			"border-green-500 dark:border-green-700" : "border-red-500 dark:border-red-500"}`}
 					value={pipUUID}
 					onChange={cleanPipUUIDInput}
 				/>

@@ -1,30 +1,38 @@
 import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
+import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
-import validatePipData from "../../utils/pip-data-validation"
 import { useNotificationsContext } from "../../contexts/notifications-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useAddPip(): (
 	pipData: IncompletePipData,
-	toggleModalOpen: () => void
+	toggleModalOpen: () => void,
+	isPipNameNeeded: boolean,
+	doesPipUUIDExist: boolean
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
+	const validatePipData = useValidatePipData()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async (
 		pipData: IncompletePipData,
-		toggleModalOpen: () => void
+		toggleModalOpen: () => void,
+		isPipNameNeeded: boolean,
+		doesPipUUIDExist: boolean
 	) => {
 		try {
-			if (validatePipData(pipData) === false) return
+			console.log(validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded))
+			if (validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded) === false) return
 			if (pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
+
+			if (_.isEmpty(pipData.pipName)) delete pipData.pipName
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
 
@@ -32,11 +40,14 @@ export default function useAddPip(): (
 				throw new Error("Add Pip failed")
 			}
 			toggleModalOpen()
-			pipClass.addNewPip({
-				...addPipDataResponse.data,
-				...pipData
-			})
-			notificationsClass.setPositiveNotification(`${pipData.pipName} added`)
+			const pipDataToAdd: PipData = {
+				pipName: pipData.pipName || addPipDataResponse.data.pipName,
+				pipUUID: pipData.pipUUID,
+				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
+				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
+			}
+			pipClass.addNewPip(pipDataToAdd)
+			notificationsClass.setPositiveNotification(`${pipData.pipName || addPipDataResponse.data.pipName} added`)
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
@@ -56,5 +67,5 @@ export default function useAddPip(): (
 			}
 			notificationsClass.setNegativeNotification(`Unable to add ${pipData.pipName} at this time. Please reload page and try again.`)
 		}
-	}, [blueDotApiClient.pipDataService, notificationsClass, pipClass])
+	}, [blueDotApiClient.pipDataService, notificationsClass, pipClass, validatePipData])
 }
