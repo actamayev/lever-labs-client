@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React from "react"
 import BasicHelmet from "../components/helmet/basic-helmet"
 
@@ -36,11 +37,32 @@ const helmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/register-username"
 		/>
 	),
+	"/the-garage": (
+		<BasicHelmet
+			pageTitleData="The Garage"
+			description="Log in to view your connected robots, manage connections, and navigate to the Lab or Sandbox for further exploration."
+			url="https://www.bluedotrobots.com/the-garage"
+		/>
+	),
 	"/the-lab": (
 		<BasicHelmet
 			pageTitleData="The Lab"
-			description="Write code to control your Pip in The Lab."
+			description="Explore guided tutorials, videos, and challenges to learn about robot sensors and control in a structured learning environment."
 			url="https://www.bluedotrobots.com/the-lab"
+		/>
+	),
+	"/the-sandbox": (
+		<BasicHelmet
+			pageTitleData="The Sandbox"
+			description="Freely control your robot with coding block primitives for open-ended exploration and experimentation."
+			url="https://www.bluedotrobots.com/the-sandbox"
+		/>
+	),
+	"/my-account": (
+		<BasicHelmet
+			pageTitleData="My Account"
+			description="View and edit your personal information, profile picture, and login/security settings."
+			url="https://www.bluedotrobots.com/my-account"
 		/>
 	),
 	"/contact": (

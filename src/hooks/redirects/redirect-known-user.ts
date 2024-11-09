@@ -12,6 +12,6 @@ export default function useRedirectKnownUser (): void {
 	useEffect(() => {
 		// if the user is logged in and has a username, go to The Lab
 		if (authClass.isLoggedIn === false || _.isNull(personalInfoClass.username)) return
-		navigate("/the-lab")
+		navigate("/the-garage")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass.username])
 }

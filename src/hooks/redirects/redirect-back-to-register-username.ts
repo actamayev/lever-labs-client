@@ -6,7 +6,10 @@ import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 
 const PrivatePageNames = [
+	"/the-garage",
 	"/the-lab",
+	"/the-sandbox",
+	"/my-account"
 ]
 
 // This hook exists to make sure that Google users who have not registered their username are unable to go to private pages

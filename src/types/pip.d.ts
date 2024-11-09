@@ -1,6 +1,6 @@
 declare global {
 	interface IncompletePipData {
-		pipName: string
+		pipName?: string
 		pipUUID: PipUUID
 		shouldAutoConnect: boolean
 	}
