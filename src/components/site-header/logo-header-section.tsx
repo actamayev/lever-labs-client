@@ -2,7 +2,12 @@ import { Link, useLocation } from "react-router-dom"
 
 function BlueDotRobots() {
 	const location = useLocation()
-	if (location.pathname === "/the-lab") return null
+	if (
+		location.pathname === "/the-garage" ||
+		location.pathname === "/the-lab" ||
+		location.pathname === "/the-sandbox" ||
+		location.pathname === "/my-account"
+	) return null
 
 	return (
 		<span className="ml-2">Blue Dot Robots</span>

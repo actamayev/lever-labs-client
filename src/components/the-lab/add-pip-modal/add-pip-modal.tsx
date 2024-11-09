@@ -5,7 +5,7 @@ import EnterPipID from "./enter-pip-id"
 import FormGroup from "../../form-group"
 import ModalHeader from "../../modal-header"
 import useAddPip from "../../../hooks/pip/add-pip"
-import validatePipData from "../../../utils/pip-data-validation"
+import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
 
 interface Props {
@@ -19,15 +19,17 @@ export default function AddPipModal(props: Props) {
 		pipUUID: "" as PipUUID,
 		shouldAutoConnect: true
 	})
+	const [doesPipUUIDExist, setDoesPipUUIDExist] = useState(false)
+	const [isPipNameNeeded, setIsPipNameNeeded] = useState(false)
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
 	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, toggleModalOpen)
 	const addPip = useAddPip()
+	const validatePipData = useValidatePipData()
 
-	//TODO: Add a function that checks if the UUID exists as the user types
 	const addPipCallback = useCallback(async() => {
-		await addPip(pipData, toggleModalOpen)
-	}, [addPip, pipData, toggleModalOpen])
+		await addPip(pipData, toggleModalOpen, isPipNameNeeded, doesPipUUIDExist)
+	}, [addPip, doesPipUUIDExist, isPipNameNeeded, pipData, toggleModalOpen])
 
 	return (
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
@@ -42,22 +44,27 @@ export default function AddPipModal(props: Props) {
 				/>
 				<div className="p-3">
 					<div className="flex flex-col">
-						<div>
-							<FormGroup
-								label="Pip Name"
-								value={pipData.pipName}
-								onChange={(event) => setPipData(prev => ({ ...prev, pipName: event.target.value }))}
-								maxLength={20}
-								className="w-full"
-							/>
-							<span className="text-xs text-slate-600 dark:text-slate-400 ml-0.5">
-								{pipData.pipName.length}/{20}
-							</span>
-						</div>
 						<EnterPipID
 							pipUUID={pipData.pipUUID}
 							setPipData={setPipData}
+							setIsPipNameNeeded={setIsPipNameNeeded}
+							doesPipUUIDExist={doesPipUUIDExist}
+							setDoesPipUUIDExist={setDoesPipUUIDExist}
 						/>
+						{isPipNameNeeded && (
+							<div>
+								<FormGroup
+									label="Pip Name"
+									value={pipData.pipName}
+									onChange={(event) => setPipData(prev => ({ ...prev, pipName: event.target.value }))}
+									maxLength={20}
+									className="w-full"
+								/>
+								<span className="text-xs text-slate-600 dark:text-slate-400 ml-0.5">
+									{(pipData.pipName || "").length}/{20}
+								</span>
+							</div>
+						)}
 						<div className="mt-3">
 							<label>Auto-connect?</label>
 							<div className="text-black dark:text-white" onClick={(e) => e.stopPropagation()}>
@@ -75,7 +82,7 @@ export default function AddPipModal(props: Props) {
 							<Button
 								title={`Add ${pipData.pipName}`}
 								onClick={addPipCallback}
-								disabled={!validatePipData(pipData)}
+								disabled={!validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded)}
 							/>
 						</div>
 					</div>

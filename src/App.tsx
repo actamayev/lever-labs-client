@@ -4,6 +4,9 @@ import Home from "./pages/home"
 import TheLab from "./pages/the-lab"
 import Missing from "./pages/missing"
 import Contact from "./pages/contact"
+import TheGarage from "./pages/the-garage"
+import MyAccount from "./pages/my-account"
+import TheSandbox from "./pages/the-sandbox"
 import LoginPage from "./pages/auth/login-page"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
@@ -34,7 +37,11 @@ function App() {
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/register" element={<RegisterPage />} />
 			<Route path="/register-username" element={<RegisterUsername />} />
+
+			<Route path="/the-garage" element={<TheGarage />} />
 			<Route path="/the-lab" element={<TheLab />} />
+			<Route path="/the-sandbox" element={<TheSandbox />} />
+			<Route path="/my-account" element={<MyAccount />} />
 
 			<Route path="/contact" element={<Contact />} />
 
