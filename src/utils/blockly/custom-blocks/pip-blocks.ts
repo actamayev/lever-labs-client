@@ -1,11 +1,11 @@
 import * as Blockly from "blockly"
 import { javascriptGenerator, Order } from "blockly/javascript"
-import { BLOCK_TYPES, LEDSensorType, SENSOR_TYPES } from "../block-types"
+import { PIP_BLOCK_TYPES, LEDSensorType, SENSOR_TYPES, PipBlockNames } from "../block-types"
 
-export const pipBlocks: Record<string, CustomBlock> = {
-	[BLOCK_TYPES.ESP32_LED_CONTROL]: {
+export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
+	[PIP_BLOCK_TYPES.ESP32_LED_CONTROL]: {
 		definition: {
-			type: BLOCK_TYPES.ESP32_LED_CONTROL,
+			type: PIP_BLOCK_TYPES.ESP32_LED_CONTROL,
 			message0: "Turn LED %1",
 			args0: [
 				{
@@ -26,9 +26,9 @@ export const pipBlocks: Record<string, CustomBlock> = {
 			return `Digital.write(2, ${state});\n`
 		}
 	},
-	[BLOCK_TYPES.ESP32_DELAY]: {
+	[PIP_BLOCK_TYPES.ESP32_DELAY]: {
 		definition: {
-			type: BLOCK_TYPES.ESP32_DELAY,
+			type: PIP_BLOCK_TYPES.ESP32_DELAY,
 			message0: "Delay %1 milliseconds",
 			args0: [
 				{
@@ -48,9 +48,9 @@ export const pipBlocks: Record<string, CustomBlock> = {
 			return `Timer.delay(${delay});\n`
 		}
 	},
-	[BLOCK_TYPES.ESP32_LOOP]: {
+	[PIP_BLOCK_TYPES.ESP32_LOOP]: {
 		definition: {
-			type: BLOCK_TYPES.ESP32_LOOP,
+			type: PIP_BLOCK_TYPES.ESP32_LOOP,
 			message0: "Repeat forever %1 %2",
 			args0: [
 				{

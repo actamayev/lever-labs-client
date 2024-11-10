@@ -1,11 +1,11 @@
 import * as Blockly from "blockly"
 import { Order } from "blockly/javascript"
-import { BLOCK_TYPES, IMUSensorType, LeftRightSensorType, IRSensorType, SENSOR_TYPES } from "../block-types"
+import { SENSORS_BLOCK_TYPES, IMUSensorType, LeftRightSensorType, IRSensorType, SENSOR_TYPES, SensorsBlockNames } from "../block-types"
 
-export const sensorsBlocks: Record<string, CustomBlock> = {
-	[BLOCK_TYPES.IMU_READ]: {
+export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
+	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		definition: {
-			type: BLOCK_TYPES.IMU_READ,
+			type: SENSORS_BLOCK_TYPES.IMU_READ,
 			message0: "Read IMU %1",
 			args0: [
 				{
@@ -25,9 +25,9 @@ export const sensorsBlocks: Record<string, CustomBlock> = {
 			return [`IMU.read("${value}")`, Order.FUNCTION_CALL]
 		}
 	},
-	[BLOCK_TYPES.TOF_READ]: {
+	[SENSORS_BLOCK_TYPES.TOF_READ]: {
 		definition: {
-			type: BLOCK_TYPES.TOF_READ,
+			type: SENSORS_BLOCK_TYPES.TOF_READ,
 			message0: "Read distance from ToF sensor %1",
 			args0: [
 				{
@@ -47,9 +47,9 @@ export const sensorsBlocks: Record<string, CustomBlock> = {
 			return [`ToF.read("${sensor}")`, Order.FUNCTION_CALL]
 		}
 	},
-	[BLOCK_TYPES.IR_READ]: {
+	[SENSORS_BLOCK_TYPES.IR_READ]: {
 		definition: {
-			type: BLOCK_TYPES.IR_READ,
+			type: SENSORS_BLOCK_TYPES.IR_READ,
 			message0: "Read IR sensor %1",
 			args0: [
 				{
