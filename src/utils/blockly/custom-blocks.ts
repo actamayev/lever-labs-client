@@ -34,7 +34,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.ESP32_DELAY]: {
 				definition: {
 					type: BLOCK_TYPES.ESP32_DELAY,
-					message0: "delay %1 milliseconds",
+					message0: "Delay %1 milliseconds",
 					args0: [
 						{
 							type: "field_number",
@@ -56,7 +56,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.ESP32_MOTOR_CONTROL]: {
 				definition: {
 					type: BLOCK_TYPES.ESP32_MOTOR_CONTROL,
-					message0: "set motor pin %1 to speed %2",
+					message0: "Set motor pin %1 to speed %2",
 					args0: [
 						{
 							type: "field_number",
@@ -87,7 +87,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.ESP32_LOOP]: {
 				definition: {
 					type: BLOCK_TYPES.ESP32_LOOP,
-					message0: "repeat forever %1 %2",
+					message0: "Repeat forever %1 %2",
 					args0: [
 						{
 							type: "input_dummy",
@@ -112,7 +112,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.IMU_READ]: {
 				definition: {
 					type: BLOCK_TYPES.IMU_READ,
-					message0: "read IMU %1",
+					message0: "Read IMU %1",
 					args0: [
 						{
 							type: "field_dropdown",
@@ -136,7 +136,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.TOF_READ]: {
 				definition: {
 					type: BLOCK_TYPES.TOF_READ,
-					message0: "read distance from ToF sensor %1",
+					message0: "Read distance from ToF sensor %1",
 					args0: [
 						{
 							type: "field_dropdown",
@@ -160,7 +160,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.IR_READ]: {
 				definition: {
 					type: BLOCK_TYPES.IR_READ,
-					message0: "read IR sensor %1",
+					message0: "Read IR sensor %1",
 					args0: [
 						{
 							type: "field_dropdown",
@@ -184,7 +184,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.MOTOR_SET_SPEED]: {
 				definition: {
 					type: BLOCK_TYPES.MOTOR_SET_SPEED,
-					message0: "set %1 motor to speed %2",
+					message0: "Set %1 motor to speed %2",
 					args0: [
 						{
 							type: "field_dropdown",
@@ -216,7 +216,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.MOTORS_STOP]: {
 				definition: {
 					type: BLOCK_TYPES.MOTORS_STOP,
-					message0: "stop all motors",
+					message0: "Stop both motors",
 					previousStatement: null,
 					nextStatement: null,
 					colour: 230,
@@ -230,7 +230,7 @@ export const createBlocks = (): CustomBlocks => {
 			[BLOCK_TYPES.MOTORS_TANK_DRIVE]: {
 				definition: {
 					type: BLOCK_TYPES.MOTORS_TANK_DRIVE,
-					message0: "tank drive left speed %1 right speed %2",
+					message0: "Drive left motor %1 and right motor %2",
 					args0: [
 						{
 							type: "input_value",
@@ -246,7 +246,7 @@ export const createBlocks = (): CustomBlocks => {
 					previousStatement: null,
 					nextStatement: null,
 					colour: 230,
-					tooltip: "Set both motor speeds independently"
+					tooltip: "Set motor speeds independently"
 				},
 				generator: (block: Blockly.Block): string => {
 					const leftSpeed = javascriptGenerator.valueToCode(block, "LEFT_SPEED", Order.ATOMIC) || "0"

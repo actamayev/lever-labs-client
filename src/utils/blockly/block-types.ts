@@ -17,7 +17,7 @@ export const BLOCK_TYPES = {
 	ESP32_MOTOR_CONTROL: "esp32_motor_control",
 	MOTOR_SET_SPEED: "motor_set_speed",
 	MOTORS_STOP: "motors_stop",
-	MOTORS_TANK_DRIVE: "motors_tank_drive",
+	MOTORS_TANK_DRIVE: "motors_tank_drive"
 } as const
 
 // Derive the type from the const assertion

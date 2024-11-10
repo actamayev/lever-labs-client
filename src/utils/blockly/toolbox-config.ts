@@ -1,6 +1,6 @@
 import * as Blockly from "blockly"
 
-// Define the Logic category
+// Define the Logic category (doesn't use CustomCategoryInfo because these types are straight from blockly)
 const logicCategory: Blockly.utils.toolbox.CategoryInfo = {
 	kind: "category",
 	name: "Logic",
@@ -24,7 +24,7 @@ const logicCategory: Blockly.utils.toolbox.CategoryInfo = {
 }
 
 // Define the Sensors category
-const sensorsCategory: Blockly.utils.toolbox.CategoryInfo = {
+const sensorsCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Sensors",
 	colour: "180",
@@ -40,7 +40,7 @@ const sensorsCategory: Blockly.utils.toolbox.CategoryInfo = {
 }
 
 // Define the Motors category
-const motorsCategory: Blockly.utils.toolbox.CategoryInfo = {
+const motorsCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Motors",
 	colour: "230",
@@ -51,12 +51,13 @@ const motorsCategory: Blockly.utils.toolbox.CategoryInfo = {
 	contents: [
 		{ kind: "block", type: "motor_set_speed" },
 		{ kind: "block", type: "motors_stop" },
-		{ kind: "block", type: "motors_tank_drive" }
+		{ kind: "block", type: "motors_tank_drive" },
+		{ kind: "block", type: "esp32_motor_control" }
 	]
 }
 
 // Define the Pip category
-const pipCategory: Blockly.utils.toolbox.CategoryInfo = {
+const pipCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Pip",
 	colour: "230",
@@ -67,7 +68,6 @@ const pipCategory: Blockly.utils.toolbox.CategoryInfo = {
 	contents: [
 		{ kind: "block", type: "esp32_led_control" },
 		{ kind: "block", type: "esp32_delay" },
-		{ kind: "block", type: "esp32_motor_control" },
 		{ kind: "block", type: "esp32_loop" },
 		{ kind: "block", type: "imu_read" }
 	]

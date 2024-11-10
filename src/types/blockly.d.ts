@@ -37,6 +37,21 @@ declare global {
 	type ArgTypes = "field_number" | "field_dropdown" | "input_value" | "input_dummy" | "input_statement"
 
 	type OutputType = "Number"
+
+	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> {
+		kind: "category"
+		name: string;
+		id: string | undefined
+		categorystyle: string | undefined
+		colour: string | undefined
+		cssconfig: CssConfig | undefined
+		hidden: string | undefined
+		expanded?: string | boolean
+		contents: Array<
+			| { kind: "block"; type: BlockNames }
+			| { kind: "category"; name: string; colour: string; contents: CustomCategoryInfo["contents"] }
+		>
+	}
 }
 
 export {}
