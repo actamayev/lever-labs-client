@@ -43,7 +43,7 @@ declare global {
 		name: string;
 		id: string | undefined
 		categorystyle: string | undefined
-		colour: string | undefined
+		colour: number
 		cssconfig: CssConfig | undefined
 		hidden: string | undefined
 		expanded?: string | boolean

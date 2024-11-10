@@ -3,7 +3,7 @@ import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
 import { javascriptGenerator } from "blockly/javascript"
 import toolboxConfig from "../utils/blockly/toolbox-config"
-import { createBlocks } from "../utils/blockly/custom-blocks"
+import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 import workspaceConfig from "../utils/blockly/workspace-config"
 
 const initialXml = `
@@ -37,7 +37,7 @@ export default function BlocklyComponent() {
 	}, [])
 
 	const initializeBlocks = useCallback(() => {
-		Object.entries(createBlocks().kinds).forEach(([blockName, blockData]) => {
+		Object.entries(createAllBlocks().kinds).forEach(([blockName, blockData]) => {
 			Blockly.Blocks[blockName] = {
 				init: function() {
 					this.jsonInit(blockData.definition)

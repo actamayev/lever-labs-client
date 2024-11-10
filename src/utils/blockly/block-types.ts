@@ -36,7 +36,7 @@ export const SENSOR_TYPES = {
 		MAG_Y: "MAG_Y",
 		MAG_Z: "MAG_Z",
 	},
-	TOF: {
+	LEFTRIGHT: {
 		LEFT: "LEFT",
 		RIGHT: "RIGHT",
 	},
@@ -52,6 +52,6 @@ export const SENSOR_TYPES = {
 } as const
 
 export type IMUSensorType = typeof SENSOR_TYPES.IMU[keyof typeof SENSOR_TYPES.IMU];
-export type ToFSensorType = typeof SENSOR_TYPES.TOF[keyof typeof SENSOR_TYPES.TOF];
+export type LeftRightSensorType = typeof SENSOR_TYPES.LEFTRIGHT[keyof typeof SENSOR_TYPES.LEFTRIGHT];
 export type IRSensorType = typeof SENSOR_TYPES.IR[keyof typeof SENSOR_TYPES.IR];
-
+export type LEDSensorType = typeof SENSOR_TYPES.LED[keyof typeof SENSOR_TYPES.LED];

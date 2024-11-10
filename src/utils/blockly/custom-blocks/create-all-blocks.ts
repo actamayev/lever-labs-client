@@ -1,9 +1,10 @@
 import * as Blockly from "blockly"
 import { javascriptGenerator, Order } from "blockly/javascript"
-import { BLOCK_TYPES, IMUSensorType, IRSensorType, SENSOR_TYPES, ToFSensorType } from "./block-types"
+import { BLOCK_TYPES, IMUSensorType, IRSensorType, LEDSensorType, LeftRightSensorType, SENSOR_TYPES } from "../block-types"
+import { pipCategory } from "../toolbox-config"
 
 // eslint-disable-next-line max-lines-per-function
-export const createBlocks = (): CustomBlocks => {
+export default function createBlocks (): CustomBlocks {
 	const customBlocks: CustomBlocks = {
 		kinds: {
 			[BLOCK_TYPES.ESP32_LED_CONTROL]: {
@@ -25,7 +26,7 @@ export const createBlocks = (): CustomBlocks => {
 					tooltip: "Change LED Status"
 				},
 				generator: (block: Blockly.Block): string => {
-					const state = block.getFieldValue("STATE")
+					const state = block.getFieldValue("STATE") as LEDSensorType
 					// eslint-disable-next-line @typescript-eslint/naming-convention
 					const LED_PIN = 2
 					return `Digital.write(${LED_PIN}, ${state});\n`  // Return string directly for statement blocks
@@ -141,7 +142,7 @@ export const createBlocks = (): CustomBlocks => {
 						{
 							type: "field_dropdown",
 							name: "SENSOR",
-							options: Object.entries(SENSOR_TYPES.TOF).map(([key, value]) =>
+							options: Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
 								[key.toLowerCase(), value] as [string, string]
 							)
 						}
@@ -151,7 +152,7 @@ export const createBlocks = (): CustomBlocks => {
 					tooltip: "Read distance in mm from Time of Flight sensor"
 				},
 				generator: (block: Blockly.Block): [string, number] => {
-					const sensor = block.getFieldValue("SENSOR") as ToFSensorType
+					const sensor = block.getFieldValue("SENSOR") as LeftRightSensorType
 					return [`ToF.read("${sensor}")`, Order.FUNCTION_CALL]
 				}
 			},
@@ -189,10 +190,9 @@ export const createBlocks = (): CustomBlocks => {
 						{
 							type: "field_dropdown",
 							name: "MOTOR",
-							options: [
-								["left", "LEFT"],
-								["right", "RIGHT"]
-							]
+							options: Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
+								[key.toLowerCase(), value] as [string, string]
+							)
 						},
 						{
 							type: "input_value",
@@ -206,7 +206,7 @@ export const createBlocks = (): CustomBlocks => {
 					tooltip: "Set motor speed (-255 to 255)"
 				},
 				generator: (block: Blockly.Block): string => {
-					const motor = block.getFieldValue("MOTOR")
+					const motor = block.getFieldValue("MOTOR") as LeftRightSensorType
 					const speed = javascriptGenerator.valueToCode(block, "SPEED", Order.ATOMIC) || "0"
 					return `Motors.setSpeed("${motor}", ${speed});\n`
 				}
@@ -235,7 +235,10 @@ export const createBlocks = (): CustomBlocks => {
 						{
 							type: "input_value",
 							name: "LEFT_SPEED",
-							check: "Number"
+							check: "Number",
+							options: Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
+								[key.toLowerCase(), value] as [string, string]
+							)
 						},
 						{
 							type: "input_value",
@@ -245,7 +248,7 @@ export const createBlocks = (): CustomBlocks => {
 					],
 					previousStatement: null,
 					nextStatement: null,
-					colour: 230,
+					colour: pipCategory.colour,
 					tooltip: "Set motor speeds independently"
 				},
 				generator: (block: Blockly.Block): string => {
