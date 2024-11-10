@@ -3,8 +3,8 @@ import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
 import { javascriptGenerator } from "blockly/javascript"
 import toolboxConfig from "../utils/blockly/toolbox-config"
-import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 import workspaceConfig from "../utils/blockly/workspace-config"
+import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 
 const initialXml = `
 	<xml xmlns="https://developers.google.com/blockly/xml">
@@ -53,7 +53,7 @@ export default function BlocklyComponent() {
 
 	return (
 		<div className="h-screen w-full p-4">
-			<div className="h-3/4 border border-gray-300 rounded">
+			<div className="h-3/4 border border-slate-300 rounded">
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}
@@ -63,8 +63,8 @@ export default function BlocklyComponent() {
 				/>
 			</div>
 			<div className="mt-4">
-				<h3 className="text-lg font-bold">Generated JavaScript Code:</h3>
-				<pre className="bg-gray-100 p-4 rounded">
+				<h3 className="text-lg font-bold dark:text-white">Generated JavaScript Code:</h3>
+				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
 					{blocklyState.javascriptCode}
 				</pre>
 			</div>

@@ -1,8 +1,8 @@
 import * as Blockly from "blockly"
 import { javascriptGenerator, Order } from "blockly/javascript"
+import { motorsCategory } from "../toolbox-config"
 import { MOTOR_BLOCK_TYPES, LeftRightSensorType, MotorBlockNames, SENSOR_TYPES } from "../block-types"
 
-//TODO: This shouldn't be a regular string
 export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED]: {
 		definition: {
@@ -24,7 +24,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			],
 			previousStatement: null,
 			nextStatement: null,
-			colour: 230,
+			colour: motorsCategory.colour,
 			tooltip: "Set motor speed (-255 to 255)"
 		},
 		generator: (block: Blockly.Block): string => {
@@ -39,7 +39,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			message0: "Stop both motors",
 			previousStatement: null,
 			nextStatement: null,
-			colour: 230,
+			colour: motorsCategory.colour,
 			tooltip: "Stop both motors"
 		},
 		generator: (_block: Blockly.Block): string => {
@@ -64,7 +64,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			],
 			previousStatement: null,
 			nextStatement: null,
-			colour: 230,
+			colour: motorsCategory.colour,
 			tooltip: "Set motor speeds independently"
 		},
 		generator: (block: Blockly.Block): string => {
@@ -72,36 +72,5 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			const rightSpeed = javascriptGenerator.valueToCode(block, "RIGHT_SPEED", Order.ATOMIC) || "0"
 			return `Motors.tankDrive(${leftSpeed}, ${rightSpeed});\n`
 		}
-	},
-	[MOTOR_BLOCK_TYPES.ESP32_MOTOR_CONTROL]: {
-		definition: {
-			type: MOTOR_BLOCK_TYPES.ESP32_MOTOR_CONTROL,
-			message0: "Set motor pin %1 to speed %2",
-			args0: [
-				{
-					type: "field_number",
-					name: "PIN",
-					value: 0,
-					min: 0,
-					max: 39,
-				},
-				{
-					type: "field_number",
-					name: "SPEED",
-					value: 0,
-					min: -255,
-					max: 255,
-				},
-			],
-			previousStatement: null,
-			nextStatement: null,
-			colour: 230,
-			tooltip: "Set motor to a specific speed"
-		},
-		generator: (block: Blockly.Block): string => {
-			const pin = block.getFieldValue("PIN")
-			const speed = block.getFieldValue("SPEED")
-			return `PWM.write(${pin}, ${speed});\n`
-		},
-	},
+	}
 }

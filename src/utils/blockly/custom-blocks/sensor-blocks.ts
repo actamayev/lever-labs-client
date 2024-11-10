@@ -1,6 +1,7 @@
 import * as Blockly from "blockly"
 import { Order } from "blockly/javascript"
 import { SENSORS_BLOCK_TYPES, IMUSensorType, LeftRightSensorType, IRSensorType, SENSOR_TYPES, SensorsBlockNames } from "../block-types"
+import { sensorsCategory } from "../toolbox-config"
 
 export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
@@ -17,7 +18,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 				}
 			],
 			output: "Number",
-			colour: 180,
+			colour: sensorsCategory.colour,
 			tooltip: "Read value from 9-axis IMU sensor"
 		},
 		generator: (block: Blockly.Block): [string, number] => {
@@ -28,7 +29,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.TOF_READ]: {
 		definition: {
 			type: SENSORS_BLOCK_TYPES.TOF_READ,
-			message0: "Read distance from ToF sensor %1",
+			message0: "Read distance from %1 ToF sensor",
 			args0: [
 				{
 					type: "field_dropdown",
@@ -39,7 +40,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 				}
 			],
 			output: "Number",
-			colour: 180,
+			colour: sensorsCategory.colour,
 			tooltip: "Read distance in mm from Time of Flight sensor"
 		},
 		generator: (block: Blockly.Block): [string, number] => {
@@ -61,7 +62,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 				}
 			],
 			output: "Number",
-			colour: 180,
+			colour: sensorsCategory.colour,
 			tooltip: "Read value from infrared sensor"
 		},
 		generator: (block: Blockly.Block): [string, number] => {

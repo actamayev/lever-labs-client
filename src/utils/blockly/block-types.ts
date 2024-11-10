@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export const PIP_BLOCK_TYPES = {
-	// LED Control
 	ESP32_LED_CONTROL: "esp32_led_control",
-
-	// Basic Controls
 	ESP32_DELAY: "esp32_delay",
 	ESP32_LOOP: "esp32_loop",
 } as const
@@ -18,7 +15,6 @@ export const SENSORS_BLOCK_TYPES = {
 
 export const MOTOR_BLOCK_TYPES = {
 	// Motors
-	ESP32_MOTOR_CONTROL: "esp32_motor_control",
 	MOTOR_SET_SPEED: "motor_set_speed",
 	MOTORS_STOP: "motors_stop",
 	MOTORS_TANK_DRIVE: "motors_tank_drive"

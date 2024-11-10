@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 export const logicCategory: Blockly.utils.toolbox.CategoryInfo = {
 	kind: "category",
 	name: "Logic",
-	colour: "210",
+	colour: "30",
 	id: undefined,
 	categorystyle: undefined,
 	cssconfig: undefined,
@@ -43,7 +43,7 @@ export const sensorsCategory: CustomCategoryInfo = {
 export const motorsCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Motors",
-	colour: 230,
+	colour: 120,
 	id: undefined,
 	categorystyle: undefined,
 	cssconfig: undefined,
@@ -52,7 +52,6 @@ export const motorsCategory: CustomCategoryInfo = {
 		{ kind: "block", type: "motor_set_speed" },
 		{ kind: "block", type: "motors_stop" },
 		{ kind: "block", type: "motors_tank_drive" },
-		{ kind: "block", type: "esp32_motor_control" }
 	]
 }
 
@@ -60,7 +59,7 @@ export const motorsCategory: CustomCategoryInfo = {
 export const pipCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Pip",
-	colour: 20,
+	colour: 218,
 	id: undefined,
 	categorystyle: undefined,
 	cssconfig: undefined,
