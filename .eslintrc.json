@@ -45,7 +45,11 @@
 		"no-empty": ["error", { "allowEmptyCatch": true }],
 		"eol-last": ["error", "always"],
 		"no-unused-vars": "off",
-		"@typescript-eslint/no-unused-vars": "warn",
+		"@typescript-eslint/no-unused-vars": [
+			"warn", {
+				"argsIgnorePattern": "^_"
+			}
+		],
 		"eqeqeq": "error",
 		"space-infix-ops": "warn",
 		"space-before-blocks": "error",
@@ -87,7 +91,8 @@
 			},
 			{
 				"selector": "parameter",
-				"format": ["camelCase"]
+				"format": ["camelCase"],
+				"leadingUnderscore": "allow"
 			},
 			{
 				"selector": "typeLike",
@@ -105,7 +110,7 @@
 
     "overrides": [
 		{
-			"files": ["*.d.ts", "App.tsx"],
+			"files": ["*.d.ts", "App.tsx", "*.config.js"],
 			"rules": {
 				"filenames/match-regex": "off"
 			}
