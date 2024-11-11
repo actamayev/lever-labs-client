@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { Order } from "blockly/javascript"
-import { SENSORS_BLOCK_TYPES, IMUSensorType, LeftRightSensorType, IRSensorType, SENSOR_TYPES, SensorsBlockNames } from "../block-types"
 import { sensorsCategory } from "../toolbox-config"
+import { SENSORS_BLOCK_TYPES, IMUSensorType, LeftRightSensorType, IRSensorType, SENSOR_TYPES, SensorsBlockNames } from "../block-types"
 
 export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {

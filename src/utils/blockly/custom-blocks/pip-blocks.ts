@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { javascriptGenerator, Order } from "blockly/javascript"
-import { PIP_BLOCK_TYPES, LEDSensorType, SENSOR_TYPES, PipBlockNames } from "../block-types"
 import { pipCategory } from "../toolbox-config"
+import { PIP_BLOCK_TYPES, LEDSensorType, SENSOR_TYPES, PipBlockNames } from "../block-types"
 
 export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 	[PIP_BLOCK_TYPES.ESP32_LED_CONTROL]: {
