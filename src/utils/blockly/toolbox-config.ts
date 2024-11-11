@@ -1,50 +1,84 @@
 import * as Blockly from "blockly"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
+// Define the Logic category (doesn't use CustomCategoryInfo because these types are straight from blockly)
+export const logicCategory: Blockly.utils.toolbox.CategoryInfo = {
+	kind: "category",
+	name: "Logic",
+	colour: "30",
+	id: undefined,
+	categorystyle: undefined,
+	cssconfig: undefined,
+	hidden: undefined,
+	contents: [
+		{ kind: "block", type: "controls_if" },
+		{ kind: "block", type: "logic_compare" },
+		{ kind: "block", type: "logic_operation" },
+		{ kind: "block", type: "logic_negate" },
+		{ kind: "block", type: "math_number" },
+		{ kind: "block", type: "math_arithmetic" },
+		{ kind: "block", type: "math_single" },
+		{ kind: "block", type: "math_constrain" },
+		{ kind: "block", type: "controls_whileUntil" },
+		{ kind: "block", type: "controls_repeat_ext" },
+	]
+}
+
+// Define the Sensors category
+export const sensorsCategory: CustomCategoryInfo = {
+	kind: "category",
+	name: "Sensors",
+	colour: 180,
+	id: undefined,
+	categorystyle: undefined,
+	cssconfig: undefined,
+	hidden: undefined,
+	contents: [
+		{ kind: "block", type: "imu_read" },
+		{ kind: "block", type: "tof_read" },
+		{ kind: "block", type: "ir_read" }
+	]
+}
+
+// Define the Motors category
+export const motorsCategory: CustomCategoryInfo = {
+	kind: "category",
+	name: "Motors",
+	colour: 120,
+	id: undefined,
+	categorystyle: undefined,
+	cssconfig: undefined,
+	hidden: undefined,
+	contents: [
+		{ kind: "block", type: "motor_set_speed" },
+		{ kind: "block", type: "motors_stop" },
+		{ kind: "block", type: "motors_tank_drive" },
+	]
+}
+
+// Define the Pip categorye
+export const pipCategory: CustomCategoryInfo = {
+	kind: "category",
+	name: "Pip",
+	colour: 218,
+	id: undefined,
+	categorystyle: undefined,
+	cssconfig: undefined,
+	hidden: undefined,
+	contents: [
+		{ kind: "block", type: "esp32_led_control" },
+		{ kind: "block", type: "esp32_delay" },
+		{ kind: "block", type: "esp32_loop" }
+	]
+}
+
+// Combine all categories into the toolbox configuration
 const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
-		{
-			kind: "category",
-			name: "Logic",
-			colour: "#5C81A6",
-			contents: [
-				{
-					kind: "block",
-					type: "controls_if",
-				},
-				{
-					kind: "block",
-					type: "logic_compare",
-				},
-			],
-		},
-		{
-			kind: "category",
-			name: "Loops",
-			colour: "#5CA65C",
-			contents: [
-				{
-					kind: "block",
-					type: "controls_repeat_ext",
-				},
-				{
-					kind: "block",
-					type: "controls_whileUntil",
-				},
-			],
-		},
-		{
-			kind: "category",
-			name: "Custom",
-			colour: "#5CA699",
-			contents: [
-				{
-					kind: "block",
-					type: "custom_block",
-				}
-			]
-		}
+		logicCategory,
+		sensorsCategory,
+		motorsCategory,
+		pipCategory
 	]
 }
 

@@ -22,7 +22,7 @@ function TheSandbox() {
 			<div className="text-black dark:text-white text-3xl">
 				The Sandbox
 			</div>
-			{/* <BlocklyComponent /> */}
+			<BlocklyComponent />
 		</>
 	)
 }
