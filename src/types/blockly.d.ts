@@ -2,22 +2,7 @@ import { BlockNames } from "../utils/blockly/block-types"
 
 declare global {
 	interface CustomBlockDefinition {
-		type: BlockNames
-		message0: string
-		args0?: Array<{
-			type: ArgTypes
-			name: string
-			value?: number | string
-			min?: number
-			max?: number
-			check?: string
-			options?: Array<[string, string]>
-		}>
-		output?: OutputType
-		previousStatement?: boolean | null
-		nextStatement?: boolean | null
-		colour: number
-		tooltip: string
+		init(this: Blockly.Block): void;
 	}
 
 	interface CustomBlock {
@@ -31,7 +16,7 @@ declare global {
 
 	interface BlocklyState {
 		xml: string
-		javascriptCode: string
+		cppCode: string
 	}
 
 	type ArgTypes = "field_number" | "field_dropdown" | "input_value" | "input_dummy" | "input_statement"

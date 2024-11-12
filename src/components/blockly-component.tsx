@@ -1,7 +1,6 @@
 import * as Blockly from "blockly"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
-import { javascriptGenerator } from "blockly/javascript"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import toolboxConfig from "../utils/blockly/toolbox-config"
 import workspaceConfig from "../utils/blockly/workspace-config"
@@ -14,30 +13,42 @@ const initialXml = `
 export default function BlocklyComponent() {
 	const [blocklyState, setBlocklyState] = useState<BlocklyState>({
 		xml: initialXml,
-		javascriptCode: ""
+		cppCode: ""
 	})
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		const newXml = Blockly.Xml.domToText(
 			Blockly.Xml.workspaceToDom(workspace)
 		)
-		const code = javascriptGenerator.workspaceToCode(workspace)
+		const code = cppGenerator.workspaceToCode(workspace)
 
+		console.log("code", code)
 		setBlocklyState({
 			xml: newXml,
-			javascriptCode: code,
+			cppCode: code,
 		})
-		console.log(cppGenerator.workspaceToCode(workspace))
 	}, [])
 
 	const initializeBlocks = useCallback(() => {
-		Object.entries(createAllBlocks().kinds).forEach(([blockName, blockData]) => {
+		const blocks = createAllBlocks().kinds
+
+		// Register block definitions
+		Object.entries(blocks).forEach(([blockName, blockData]) => {
+			// First, register the block definition
 			Blockly.Blocks[blockName] = {
 				init: function() {
-					this.jsonInit(blockData.definition)
+					// If the block uses the new init function directly, use it
+					if (typeof blockData.definition.init === "function") {
+						blockData.definition.init.call(this)
+					} else {
+						// Otherwise, use jsonInit for backward compatibility
+						this.jsonInit(blockData.definition)
+					}
 				}
 			}
-			javascriptGenerator.forBlock[blockName] = blockData.generator
+
+			// Then, register the generator
+			cppGenerator.forBlock[blockName] = blockData.generator
 		})
 	}, [])
 
@@ -56,10 +67,10 @@ export default function BlocklyComponent() {
 					onWorkspaceChange={handleWorkspaceChange}
 				/>
 			</div>
-			<div className="mt-4">
-				<h3 className="text-lg font-bold dark:text-white">Generated JavaScript Code:</h3>
-				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
-					{blocklyState.javascriptCode}
+			<div className="code-preview">
+				<h3>Generated C++ Code:</h3>
+				<pre>
+					<code>{blocklyState.cppCode}</code>
 				</pre>
 			</div>
 		</div>

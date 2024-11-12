@@ -1,76 +1,82 @@
 import * as Blockly from "blockly"
-import { javascriptGenerator, Order } from "blockly/javascript"
 import { motorsCategory } from "../toolbox-config"
+import { cppGenerator } from "../../cpp/cpp-generator"
 import { MOTOR_BLOCK_TYPES, LeftRightSensorType, MotorBlockNames, SENSOR_TYPES } from "../block-types"
+import { Order } from "../order"
 
 export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED]: {
 		definition: {
-			type: MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED,
-			message0: "Set %1 motor to speed %2",
-			args0: [
-				{
-					type: "field_dropdown",
-					name: "MOTOR",
-					options: Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
-                        [key.toLowerCase(), value] as [string, string]
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Set")
+					.appendField(
+						new Blockly.FieldDropdown(
+							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
+                                [key.toLowerCase(), value] as [string, string]
+							)
+						),
+						"MOTOR"
 					)
-				},
-				{
-					type: "input_value",
-					name: "SPEED",
-					check: "Number"
-				}
-			],
-			previousStatement: null,
-			nextStatement: null,
-			colour: motorsCategory.colour,
-			tooltip: "Set motor speed (-255 to 255)"
+					.appendField("motor to speed")
+
+				this.appendValueInput("SPEED")
+					.setCheck("Number")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategory.colour)
+				this.setTooltip("Set motor speed (-255 to 255)")
+			}
 		},
 		generator: (block: Blockly.Block): string => {
 			const motor = block.getFieldValue("MOTOR") as LeftRightSensorType
-			const speed = javascriptGenerator.valueToCode(block, "SPEED", Order.ATOMIC) || "0"
-			return `Motors.setSpeed("${motor}", ${speed});\n`
+			const speed = (cppGenerator).valueToCode(block, "SPEED", Order.ATOMIC) || "0"
+			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`  // Adjusted for C++
 		}
 	},
+
 	[MOTOR_BLOCK_TYPES.MOTORS_STOP]: {
 		definition: {
-			type: MOTOR_BLOCK_TYPES.MOTORS_STOP,
-			message0: "Stop both motors",
-			previousStatement: null,
-			nextStatement: null,
-			colour: motorsCategory.colour,
-			tooltip: "Stop both motors"
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Stop both motors")
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategory.colour)
+				this.setTooltip("Stop both motors")
+			}
 		},
 		generator: (_block: Blockly.Block): string => {
-			return "Motors.stop();\n"
+			return "stopMotors();\n"  // Adjusted for C++
 		}
 	},
+
 	[MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE]: {
 		definition: {
-			type: MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE,
-			message0: "Drive left motor %1 and right motor %2",
-			args0: [
-				{
-					type: "input_value",
-					name: "LEFT_SPEED",
-					check: "Number"
-				},
-				{
-					type: "input_value",
-					name: "RIGHT_SPEED",
-					check: "Number"
-				}
-			],
-			previousStatement: null,
-			nextStatement: null,
-			colour: motorsCategory.colour,
-			tooltip: "Set motor speeds independently"
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Drive left motor")
+
+				this.appendValueInput("LEFT_SPEED")
+					.setCheck("Number")
+
+				this.appendDummyInput()
+					.appendField("and right motor")
+
+				this.appendValueInput("RIGHT_SPEED")
+					.setCheck("Number")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategory.colour)
+				this.setTooltip("Set motor speeds independently")
+			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const leftSpeed = javascriptGenerator.valueToCode(block, "LEFT_SPEED", Order.ATOMIC) || "0"
-			const rightSpeed = javascriptGenerator.valueToCode(block, "RIGHT_SPEED", Order.ATOMIC) || "0"
-			return `Motors.tankDrive(${leftSpeed}, ${rightSpeed});\n`
+			const leftSpeed = (cppGenerator).valueToCode(block, "LEFT_SPEED", Order.ATOMIC) || "0"
+			const rightSpeed = (cppGenerator).valueToCode(block, "RIGHT_SPEED", Order.ATOMIC) || "0"
+			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`  // Adjusted for C++
 		}
 	}
 }
