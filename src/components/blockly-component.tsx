@@ -2,20 +2,13 @@ import * as Blockly from "blockly"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
 import { javascriptGenerator } from "blockly/javascript"
+import { cppGenerator } from "../utils/cpp/cpp-generator"
 import toolboxConfig from "../utils/blockly/toolbox-config"
 import workspaceConfig from "../utils/blockly/workspace-config"
 import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 
 const initialXml = `
 	<xml xmlns="https://developers.google.com/blockly/xml">
-	<block type="controls_ifelse" x="50" y="50">
-		<value name="IF0">
-		<block type="logic_compare">
-			<field name="OP">EQ</field>
-		</block>
-		</value>
-	</block>
-	</xml>
 `
 
 export default function BlocklyComponent() {
@@ -34,6 +27,7 @@ export default function BlocklyComponent() {
 			xml: newXml,
 			javascriptCode: code,
 		})
+		console.log(cppGenerator.workspaceToCode(workspace))
 	}, [])
 
 	const initializeBlocks = useCallback(() => {
