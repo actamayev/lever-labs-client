@@ -23,8 +23,8 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.IF_DO)
-			return `if (${condition}) {\n${branch}}\n`
+			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.IF_DO) || "\n"
+			return `if (${condition}) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
 		}
 	},
 
@@ -200,13 +200,13 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		generator: (block: Blockly.Block): string => {
 			const until = block.getFieldValue(LOGIC_FIELD_VALUES.WHILE_MODE) === "UNTIL"
 			let condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.WHILE_DO)
+			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.WHILE_DO) || "\n"
 
 			if (until) {
 				condition = `!(${condition})`
 			}
 
-			return `while (${condition}) {\n${branch}}\n`
+			return `while (${condition}) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
 		}
 	},
 
@@ -228,10 +228,11 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const repeats = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.REPEAT_DO)
+			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.REPEAT_DO) || "\n"
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
 
-			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${branch}}\n`
+			// eslint-disable-next-line max-len
+			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
 		}
 	},
 	["math_single"]: {

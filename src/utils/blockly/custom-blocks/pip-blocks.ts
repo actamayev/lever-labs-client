@@ -72,8 +72,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 				.map(line => line ? cppGenerator.INDENT + line : line)
 				.join("\n")
 
-			// Create a properly indented while(true) loop in C++
-			return `while(true) {\n${indentedBody}}\n`
+			return `while(true) {\n${indentedBody || "\n"}${cppGenerator.INDENT}}\n`
 		}
 	}
 }
