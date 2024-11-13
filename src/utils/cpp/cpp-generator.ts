@@ -17,20 +17,30 @@ export class CppGenerator extends Blockly.Generator {
 		let code = "#include <iostream>\n\n"
 		code += "int main() {\n"
 
+		// eslint-disable-next-line complexity
 		const processBlock = (block: Blockly.Block, depth: number = 0): void => {
 			// Debug logging
 			console.log(`Processing block at depth ${depth}:`, {
 				type: block.type,
 				id: block.id,
-				childCount: (block as any).childBlocks_?.length || 0
+				outputConnection: block.outputConnection ? "has output" : "no output",
+				previousConnection: block.previousConnection ? "has previous" : "no previous",
+				nextConnection: block.nextConnection ? "has next" : "no next",
+				parentBlock: block.getParent() ? block.getParent()?.type : "no parent"
 			})
 
-			// Generate code for the current block
-			const blockCode = this.blockToCode(block)
-			if (Array.isArray(blockCode)) {
-				code += this.INDENT + blockCode[0] + "\n"
-			} else if (blockCode) {
-				code += this.INDENT + blockCode + "\n"
+			// Don't generate standalone code for blocks that are used as values
+			if (block.outputConnection && block.outputConnection.isConnected()) {
+				console.log("Skipping code generation for value block:", block.type)
+				// Skip generating code for this block as it will be handled by its parent
+			} else {
+				// Generate code for the current block
+				const blockCode = this.blockToCode(block)
+				if (Array.isArray(blockCode)) {
+					code += this.INDENT + blockCode[0] + "\n"
+				} else if (blockCode) {
+					code += this.INDENT + blockCode + "\n"
+				}
 			}
 
 			// Process child blocks recursively

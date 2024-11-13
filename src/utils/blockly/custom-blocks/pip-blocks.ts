@@ -66,9 +66,8 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			// Get the code inside the loop
 			const loopBody = (cppGenerator).statementToCode(block, "LOOP_BODY") || ""
 
-			// In Arduino, we don't need to create a loop block since the code
-			// will go inside the loop() function
-			return loopBody
+			// Create a proper while(true) loop in C++
+			return `while(true) {\n${loopBody}}\n`
 		}
 	}
 }
