@@ -1,10 +1,9 @@
 import * as Blockly from "blockly"
-import { CppGenerator } from "../../cpp/cpp-generator"
+import { cppGenerator } from "../../cpp/cpp-generator"
 
 export function generateStatementCode(
 	block: Blockly.Block,
-	inputName: string,
-	generator: CppGenerator
+	inputName: string
 ): string {
 	const input = block.getInput(inputName)
 	const firstBlock = input?.connection?.targetBlock()
@@ -13,15 +12,21 @@ export function generateStatementCode(
 	if (firstBlock) {
 		let currentBlock: Blockly.Block | null = firstBlock
 		while (currentBlock) {
-			const code = generator.blockToCode(currentBlock)
+			const code = cppGenerator.blockToCode(currentBlock)
 			if (Array.isArray(code)) {
-				bodyCode += generator.INDENT + code[0] + "\n"
+				// Add additional indentation for each line
+				bodyCode += code[0].split("\n")
+					.map(line => line ? cppGenerator.INDENT + line : line)
+					.join("\n") + "\n"
 			} else if (code) {
-				bodyCode += generator.INDENT + code
+				// Add additional indentation for each line
+				bodyCode += code.split("\n")
+					.map(line => line ? cppGenerator.INDENT + line : line)
+					.join("\n")
 			}
 			currentBlock = currentBlock.getNextBlock()
 		}
 	}
 
-	return bodyCode || generator.INDENT + "\n"
+	return bodyCode || "\n"
 }

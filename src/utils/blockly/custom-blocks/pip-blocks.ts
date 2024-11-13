@@ -65,7 +65,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const bodyCode = generateStatementCode(block, "LOOP_BODY", cppGenerator)
+			const bodyCode = generateStatementCode(block, "LOOP_BODY")
 			return `while(true) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	}

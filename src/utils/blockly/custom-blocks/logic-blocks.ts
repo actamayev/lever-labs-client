@@ -24,7 +24,7 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
-			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.IF_DO, cppGenerator)
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.IF_DO)
 			return `if (${condition}) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
@@ -204,7 +204,7 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 			if (until) {
 				condition = `!(${condition})`
 			}
-			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.WHILE_DO, cppGenerator)
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.WHILE_DO)
 			return `while (${condition}) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
@@ -228,7 +228,7 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		generator: (block: Blockly.Block): string => {
 			const repeats = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
-			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.REPEAT_DO, cppGenerator)
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.REPEAT_DO)
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
