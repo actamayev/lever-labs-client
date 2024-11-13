@@ -7,8 +7,7 @@ import workspaceConfig from "../utils/blockly/workspace-config"
 import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 
 const initialXml = `
-    <xml xmlns="https://developers.google.com/blockly/xml">
-    </xml>
+    <xml xmlns="https://developers.google.com/blockly/xml"/>
 `
 
 export default function BlocklyComponent() {
