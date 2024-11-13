@@ -64,15 +64,26 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			// Get the code inside the loop
-			const loopBody = cppGenerator.statementToCode(block, "LOOP_BODY") || ""
+			// Get all blocks in the loop body
+			const input = block.getInput("LOOP_BODY")
+			const firstBlock = input?.connection?.targetBlock()
+			let bodyCode = ""
 
-			// Add proper indentation to the loop body
-			const indentedBody = loopBody.split("\n")
-				.map(line => line ? cppGenerator.INDENT + line : line)
-				.join("\n")
+			// Manually traverse all blocks in the statement input
+			if (firstBlock) {
+				let currentBlock: Blockly.Block | null = firstBlock
+				while (currentBlock) {
+					const code = cppGenerator.blockToCode(currentBlock)
+					if (Array.isArray(code)) {
+						bodyCode += cppGenerator.INDENT + code[0] + "\n"
+					} else if (code) {
+						bodyCode += cppGenerator.INDENT + code
+					}
+					currentBlock = currentBlock.getNextBlock()
+				}
+			}
 
-			return `while(true) {\n${indentedBody || "\n"}${cppGenerator.INDENT}}\n`
+			return `while(true) {\n${bodyCode || cppGenerator.INDENT + "\n"}${cppGenerator.INDENT}}\n`
 		}
 	}
 }

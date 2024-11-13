@@ -231,11 +231,15 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.REPEAT_DO) || "\n"
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
 
-			// eslint-disable-next-line max-len
-			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
+			// Make sure the branch gets proper indentation
+			const indentedBranch = branch.split("\n")
+				.map(line => line ? cppGenerator.INDENT + line : line)
+				.join("\n")
+
+			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${indentedBranch}${cppGenerator.INDENT}}\n`
 		}
 	},
-	["math_single"]: {
+	[LOGIC_BLOCK_TYPES.MATH_SINGLE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				const OPERATORS: [string, string][] = [
@@ -298,7 +302,7 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		}
 	},
 
-	["math_constrain"]: {
+	[LOGIC_BLOCK_TYPES.MATH_CONSTRAIN]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendValueInput("VALUE")

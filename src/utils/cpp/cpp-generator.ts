@@ -10,58 +10,33 @@ export class CppGenerator extends Blockly.Generator {
 		this.INDENT = "    " // 4 spaces for indentation
 	}
 
-	workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (!workspace) return ""
+	generateBlockSequence(firstBlock: Blockly.Block | null): string {
+		let code = ""
+		let currentBlock = firstBlock
 
-		let code = "#include <iostream>\n\n"
-		code += "int main() {\n"
-
-		// eslint-disable-next-line complexity
-		const processBlock = (block: Blockly.Block, depth: number = 0): void => {
-			// Debug logging
-			// console.info(`Processing block at depth ${depth}:`, {
-			// 	type: block.type,
-			// 	id: block.id,
-			// 	outputConnection: block.outputConnection ? "has output" : "no output",
-			// 	previousConnection: block.previousConnection ? "has previous" : "no previous",
-			// 	nextConnection: block.nextConnection ? "has next" : "no next",
-			// 	parentBlock: block.getParent() ? block.getParent()?.type : "no parent",
-			// 	parentInput: block.getParent()?.getInputWithBlock(block)?.name
-			// })
-
-			// Skip if this block is inside a loop body
-			const parentInput = block.getParent()?.getInputWithBlock(block)
-			if (parentInput && parentInput.name === "LOOP_BODY") {
-				// console.info("Skipping block in loop body:", block.type)
-				return
-			}
-
-			// Skip if this block is being used as a value
-			if (block.outputConnection && block.outputConnection.isConnected()) {
-				// console.info("Skipping value block:", block.type)
-				return
-			}
-
-			// Generate code for the current block
-			const blockCode = this.blockToCode(block)
+		while (currentBlock) {
+			const blockCode = this.blockToCode(currentBlock)
 			if (Array.isArray(blockCode)) {
 				code += this.INDENT + blockCode[0] + "\n"
 			} else if (blockCode) {
 				code += this.INDENT + blockCode
 			}
-
-			// Process next block in the sequence if it exists
-			const nextBlock = block.getNextBlock()
-			if (nextBlock) {
-				processBlock(nextBlock, depth)
-			}
+			currentBlock = currentBlock.getNextBlock()
 		}
 
-		// Start with top-level blocks
+		return code
+	}
+
+	workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
+		if (!workspace) return ""
+
+		let code = "#include <iostream>\n\n"
+		code += "int main() {\n"
+
+		// Generate code for top-level blocks
 		const blocks = workspace.getTopBlocks(true)
 		for (const block of blocks) {
-			processBlock(block, 0)
+			code += this.generateBlockSequence(block)
 		}
 
 		code += this.INDENT + "return 0;\n"
