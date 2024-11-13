@@ -2,7 +2,8 @@ import * as Blockly from "blockly"
 import { Order } from "../order"
 import { motorsCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
-import { MOTOR_BLOCK_TYPES, LeftRightSensorType, MotorBlockNames, SENSOR_TYPES, MOTOR_FIELD_VALUES } from "../block-types"
+import { LeftRightSensorType, SENSOR_TYPES } from "../block-types/block-types"
+import { MotorBlockNames, MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES } from "../block-types/motor-block-types"
 
 export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED]: {

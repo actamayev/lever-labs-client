@@ -1,4 +1,4 @@
-import { BlockNames } from "../utils/blockly/block-types"
+import { BlockNames } from "../utils/blockly/block-types/block-types"
 
 declare global {
 	interface CustomBlockDefinition {
