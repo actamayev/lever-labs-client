@@ -35,7 +35,6 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			return [`readIMU(IMU_${value})`, Order.FUNCTION_CALL]
 		}
 	},
-
 	[SENSORS_BLOCK_TYPES.TOF_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {
@@ -60,7 +59,6 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			return [`readToF(TOF_${sensor})`, Order.FUNCTION_CALL]
 		}
 	},
-
 	[SENSORS_BLOCK_TYPES.IR_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {
