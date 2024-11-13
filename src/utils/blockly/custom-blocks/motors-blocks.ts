@@ -35,7 +35,6 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`  // Adjusted for C++
 		}
 	},
-
 	[MOTOR_BLOCK_TYPES.MOTORS_STOP]: {
 		definition: {
 			init: function(this: Blockly.Block) {
@@ -51,7 +50,6 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			return "stopMotors();\n"  // Adjusted for C++
 		}
 	},
-
 	[MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
