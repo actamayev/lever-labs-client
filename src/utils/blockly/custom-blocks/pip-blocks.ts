@@ -1,6 +1,7 @@
 import * as Blockly from "blockly"
 import { pipCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
+import { generateStatementCode } from "./manual-traversal"
 import { SENSOR_TYPES, LEDSensorType } from "../block-types/sensor-block-types"
 import { PipBlockNames, PIP_BLOCK_TYPES, PIP_FIELD_VALUES } from "../block-types/pip-block-types"
 
@@ -64,26 +65,8 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			// Get all blocks in the loop body
-			const input = block.getInput("LOOP_BODY")
-			const firstBlock = input?.connection?.targetBlock()
-			let bodyCode = ""
-
-			// Manually traverse all blocks in the statement input
-			if (firstBlock) {
-				let currentBlock: Blockly.Block | null = firstBlock
-				while (currentBlock) {
-					const code = cppGenerator.blockToCode(currentBlock)
-					if (Array.isArray(code)) {
-						bodyCode += cppGenerator.INDENT + code[0] + "\n"
-					} else if (code) {
-						bodyCode += cppGenerator.INDENT + code
-					}
-					currentBlock = currentBlock.getNextBlock()
-				}
-			}
-
-			return `while(true) {\n${bodyCode || cppGenerator.INDENT + "\n"}${cppGenerator.INDENT}}\n`
+			const bodyCode = generateStatementCode(block, "LOOP_BODY", cppGenerator)
+			return `while(true) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	}
 }

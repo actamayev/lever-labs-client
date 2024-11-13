@@ -2,6 +2,7 @@ import * as Blockly from "blockly"
 import { Order } from "../order"
 import { logicCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
+import { generateStatementCode } from "./manual-traversal"
 import { LogicBlockNames, LOGIC_BLOCK_TYPES, LOGIC_FIELD_VALUES } from "../block-types/logic-block-types"
 
 export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
@@ -23,8 +24,8 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.IF_DO) || "\n"
-			return `if (${condition}) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.IF_DO, cppGenerator)
+			return `if (${condition}) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
 
@@ -200,13 +201,11 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		generator: (block: Blockly.Block): string => {
 			const until = block.getFieldValue(LOGIC_FIELD_VALUES.WHILE_MODE) === "UNTIL"
 			let condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.WHILE_DO) || "\n"
-
 			if (until) {
 				condition = `!(${condition})`
 			}
-
-			return `while (${condition}) {\n${cppGenerator.INDENT}${branch}${cppGenerator.INDENT}}\n`
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.WHILE_DO, cppGenerator)
+			return `while (${condition}) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
 
@@ -228,15 +227,9 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const repeats = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
-			const branch = cppGenerator.statementToCode(block, LOGIC_FIELD_VALUES.REPEAT_DO) || "\n"
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
-
-			// Make sure the branch gets proper indentation
-			const indentedBranch = branch.split("\n")
-				.map(line => line ? cppGenerator.INDENT + line : line)
-				.join("\n")
-
-			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${indentedBranch}${cppGenerator.INDENT}}\n`
+			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.REPEAT_DO, cppGenerator)
+			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}${cppGenerator.INDENT}}\n`
 		}
 	},
 	[LOGIC_BLOCK_TYPES.MATH_SINGLE]: {
