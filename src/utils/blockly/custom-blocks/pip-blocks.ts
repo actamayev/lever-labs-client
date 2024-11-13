@@ -64,7 +64,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			// Get the code inside the loop
-			const loopBody = (cppGenerator).statementToCode(block, "LOOP_BODY") || ""
+			const loopBody = cppGenerator.statementToCode(block, "LOOP_BODY") || ""
 
 			// Add proper indentation to the loop body
 			const indentedBody = loopBody.split("\n")

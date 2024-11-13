@@ -31,7 +31,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const motor = block.getFieldValue("MOTOR") as LeftRightSensorType
-			const speed = (cppGenerator).valueToCode(block, "SPEED", Order.ATOMIC) || "0"
+			const speed = cppGenerator.valueToCode(block, "SPEED", Order.ATOMIC) || "0"
 			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`  // Adjusted for C++
 		}
 	},
@@ -74,8 +74,8 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const leftSpeed = (cppGenerator).valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE, Order.ATOMIC) || "0"
-			const rightSpeed = (cppGenerator).valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE, Order.ATOMIC) || "0"
+			const leftSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE, Order.ATOMIC) || "0"
+			const rightSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE, Order.ATOMIC) || "0"
 			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`  // Adjusted for C++
 		}
 	}
