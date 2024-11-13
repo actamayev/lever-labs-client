@@ -22,7 +22,6 @@ export default function BlocklyComponent() {
 		)
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
-		console.log(cppCode)
 		setBlocklyState({
 			xml: newXml,
 			cppCode

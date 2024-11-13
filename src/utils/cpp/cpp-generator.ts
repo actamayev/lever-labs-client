@@ -21,26 +21,26 @@ export class CppGenerator extends Blockly.Generator {
 		// eslint-disable-next-line complexity
 		const processBlock = (block: Blockly.Block, depth: number = 0): void => {
 			// Debug logging
-			console.log(`Processing block at depth ${depth}:`, {
-				type: block.type,
-				id: block.id,
-				outputConnection: block.outputConnection ? "has output" : "no output",
-				previousConnection: block.previousConnection ? "has previous" : "no previous",
-				nextConnection: block.nextConnection ? "has next" : "no next",
-				parentBlock: block.getParent() ? block.getParent()?.type : "no parent",
-				parentInput: block.getParent()?.getInputWithBlock(block)?.name
-			})
+			// console.info(`Processing block at depth ${depth}:`, {
+			// 	type: block.type,
+			// 	id: block.id,
+			// 	outputConnection: block.outputConnection ? "has output" : "no output",
+			// 	previousConnection: block.previousConnection ? "has previous" : "no previous",
+			// 	nextConnection: block.nextConnection ? "has next" : "no next",
+			// 	parentBlock: block.getParent() ? block.getParent()?.type : "no parent",
+			// 	parentInput: block.getParent()?.getInputWithBlock(block)?.name
+			// })
 
 			// Skip if this block is inside a loop body
 			const parentInput = block.getParent()?.getInputWithBlock(block)
 			if (parentInput && parentInput.name === "LOOP_BODY") {
-				console.log("Skipping block in loop body:", block.type)
+				// console.info("Skipping block in loop body:", block.type)
 				return
 			}
 
 			// Skip if this block is being used as a value
 			if (block.outputConnection && block.outputConnection.isConnected()) {
-				console.log("Skipping value block:", block.type)
+				// console.info("Skipping value block:", block.type)
 				return
 			}
 
@@ -61,7 +61,6 @@ export class CppGenerator extends Blockly.Generator {
 
 		// Start with top-level blocks
 		const blocks = workspace.getTopBlocks(true)
-		console.log("Top level blocks:", blocks.length)
 		for (const block of blocks) {
 			processBlock(block, 0)
 		}
