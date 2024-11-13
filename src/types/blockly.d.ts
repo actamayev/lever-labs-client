@@ -32,10 +32,10 @@ declare global {
 		cssconfig: CssConfig | undefined
 		hidden: string | undefined
 		expanded?: string | boolean
-		contents: Array<
-			| { kind: "block"; type: BlockNames }
-			| { kind: "category"; name: string; colour: string; contents: CustomCategoryInfo["contents"] }
-		>
+		contents: Array<{
+			kind: "block"
+			type: BlockNames
+		}>
 	}
 
 	type BlockNames = SensorsBlockNames | PipBlockNames | MotorBlockNames | LogicBlockNames
