@@ -27,10 +27,10 @@ export class CppGenerator extends Blockly.Generator {
 				previousConnection: block.previousConnection ? "has previous" : "no previous",
 				nextConnection: block.nextConnection ? "has next" : "no next",
 				parentBlock: block.getParent() ? block.getParent()?.type : "no parent",
-				inputWithBlock: block.getParent()?.getInputWithBlock(block)?.name
+				parentInput: block.getParent()?.getInputWithBlock(block)?.name
 			})
 
-			// Skip if this block is a statement input to another block
+			// Skip if this block is inside a loop body
 			const parentInput = block.getParent()?.getInputWithBlock(block)
 			if (parentInput && parentInput.name === "LOOP_BODY") {
 				console.log("Skipping block in loop body:", block.type)
@@ -50,6 +50,12 @@ export class CppGenerator extends Blockly.Generator {
 			} else if (blockCode) {
 				code += this.INDENT + blockCode
 			}
+
+			// Process next block in the sequence if it exists
+			const nextBlock = block.getNextBlock()
+			if (nextBlock) {
+				processBlock(nextBlock, depth)
+			}
 		}
 
 		// Start with top-level blocks
@@ -64,7 +70,6 @@ export class CppGenerator extends Blockly.Generator {
 
 		return code
 	}
-
 	// Initialize block generators
 	init(): void {
 		// Math number block
