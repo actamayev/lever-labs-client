@@ -2,8 +2,8 @@ import * as Blockly from "blockly"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
-import toolboxConfig from "../utils/blockly/toolbox-config"
 import workspaceConfig from "../utils/blockly/workspace-config"
+import { toolboxConfig } from "../utils/blockly/toolbox-config"
 import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 
 const initialXml = `

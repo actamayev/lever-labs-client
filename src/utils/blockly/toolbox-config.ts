@@ -72,7 +72,7 @@ export const pipCategory: CustomCategoryInfo = {
 }
 
 // Combine all categories into the toolbox configuration
-const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
+export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
 		logicCategory,
@@ -81,5 +81,3 @@ const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		pipCategory
 	]
 }
-
-export default toolboxConfig
