@@ -22,7 +22,7 @@ declare global {
 		"/pip" |
 		"/personal-info"
 
-	type PipUUID = string & { readonly __brand: unique symbol };
+	type PipUUID = string & { readonly __brand: unique symbol }
 }
 
 export {}

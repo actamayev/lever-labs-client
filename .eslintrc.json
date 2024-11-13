@@ -77,7 +77,7 @@
         "react/react-in-jsx-scope": "off",
         "react/jsx-uses-react": "off",
         "react/prop-types": "off",
-        "max-params": ["warn", 100],
+        "max-params": ["warn", 4],
         "max-lines-per-function": ["warn", {"max": 90, "skipBlankLines": true, "skipComments": true}],
 		"@typescript-eslint/naming-convention": [
 			"error",
