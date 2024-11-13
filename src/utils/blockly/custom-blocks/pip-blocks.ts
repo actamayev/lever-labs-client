@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { pipCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
-import { LEDSensorType, SENSOR_TYPES } from "../block-types/block-types"
+import { SENSOR_TYPES, LEDSensorType } from "../block-types/sensor-block-types"
 import { PipBlockNames, PIP_BLOCK_TYPES, PIP_FIELD_VALUES } from "../block-types/pip-block-types"
 
 export const pipBlocks: Record<PipBlockNames, CustomBlock> = {

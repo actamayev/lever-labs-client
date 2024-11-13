@@ -1,5 +1,8 @@
 import * as Blockly from "blockly"
-import { BlockNames } from "../utils/blockly/block-types/block-types"
+import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
+import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
+import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
+import { SensorsBlockNames } from "../utils/blockly/block-types/sensor-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -34,6 +37,8 @@ declare global {
 			| { kind: "category"; name: string; colour: string; contents: CustomCategoryInfo["contents"] }
 		>
 	}
+
+	type BlockNames = SensorsBlockNames | PipBlockNames | MotorBlockNames | LogicBlockNames
 }
 
 export {}

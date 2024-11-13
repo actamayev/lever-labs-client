@@ -2,7 +2,7 @@ import * as Blockly from "blockly"
 import { Order } from "../order"
 import { motorsCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
-import { LeftRightSensorType, SENSOR_TYPES } from "../block-types/block-types"
+import { SENSOR_TYPES, LeftRightSensorType } from "../block-types/sensor-block-types"
 import { MotorBlockNames, MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES } from "../block-types/motor-block-types"
 
 export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {

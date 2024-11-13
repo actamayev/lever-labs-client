@@ -1,13 +1,15 @@
 import * as Blockly from "blockly"
 import { Order } from "../order"
 import {
+	SensorsBlockNames,
+	SENSORS_BLOCK_TYPES,
+	SENSORS_FIELD_VALUES,
+	SENSOR_TYPES,
 	IMUSensorType,
 	LeftRightSensorType,
-	IRSensorType,
-	SENSOR_TYPES,
-} from "../block-types/block-types"
+	IRSensorType
+} from "../block-types/sensor-block-types"
 import { sensorsCategory } from "../toolbox-config"
-import { SensorsBlockNames, SENSORS_BLOCK_TYPES, SENSORS_FIELD_VALUES } from "../block-types/sensor-block-types"
 
 export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
