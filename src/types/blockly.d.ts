@@ -1,8 +1,9 @@
+import * as Blockly from "blockly"
 import { BlockNames } from "../utils/blockly/block-types/block-types"
 
 declare global {
 	interface CustomBlockDefinition {
-		init(this: Blockly.Block): void;
+		init(this: Blockly.Block): void
 	}
 
 	interface CustomBlock {
@@ -19,13 +20,9 @@ declare global {
 		cppCode: string
 	}
 
-	type ArgTypes = "field_number" | "field_dropdown" | "input_value" | "input_dummy" | "input_statement"
-
-	type OutputType = "Number"
-
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> {
 		kind: "category"
-		name: string;
+		name: string
 		id: string | undefined
 		categorystyle: string | undefined
 		colour: number

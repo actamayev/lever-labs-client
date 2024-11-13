@@ -13,7 +13,7 @@ export const LOGIC_BLOCK_TYPES = {
 	REPEAT: "controls_repeat_ext"
 } as const
 
-export type LogicBlockNames = typeof LOGIC_BLOCK_TYPES[keyof typeof LOGIC_BLOCK_TYPES];
+export type LogicBlockNames = typeof LOGIC_BLOCK_TYPES[keyof typeof LOGIC_BLOCK_TYPES]
 
 export const LOGIC_FIELD_VALUES = {
 	IF_CONDITION: "IF0",
