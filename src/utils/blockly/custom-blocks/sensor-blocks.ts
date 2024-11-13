@@ -1,14 +1,15 @@
 import * as Blockly from "blockly"
-import { sensorsCategory } from "../toolbox-config"
 import {
 	SENSORS_BLOCK_TYPES,
 	IMUSensorType,
 	LeftRightSensorType,
 	IRSensorType,
 	SENSOR_TYPES,
-	SensorsBlockNames
+	SensorsBlockNames,
+	SENSORS_FIELD_VALUES
 } from "../block-types"
 import { Order } from "../order"
+import { sensorsCategory } from "../toolbox-config"
 
 export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
@@ -22,7 +23,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
                                 [key.toLowerCase(), value] as [string, string]
 							)
 						),
-						"IMU_VALUE"
+						SENSORS_FIELD_VALUES.IMU_READ
 					)
 				this.setOutput(true, "Number")
 				this.setColour(sensorsCategory.colour)
@@ -30,7 +31,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const value = block.getFieldValue("IMU_VALUE") as IMUSensorType
+			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
 			return [`readIMU(IMU_${value})`, Order.FUNCTION_CALL]
 		}
 	},
@@ -46,7 +47,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
                                 [key.toLowerCase(), value] as [string, string]
 							)
 						),
-						"SENSOR"
+						SENSORS_FIELD_VALUES.TOF_READ
 					)
 					.appendField("ToF sensor")
 				this.setOutput(true, "Number")
@@ -55,7 +56,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const sensor = block.getFieldValue("SENSOR") as LeftRightSensorType
+			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.TOF_READ) as LeftRightSensorType
 			return [`readToF(TOF_${sensor})`, Order.FUNCTION_CALL]
 		}
 	},
@@ -71,7 +72,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
                                 [key.toLowerCase(), value] as [string, string]
 							)
 						),
-						"SENSOR"
+						SENSORS_FIELD_VALUES.IR_READ
 					)
 				this.setOutput(true, "Number")
 				this.setColour(sensorsCategory.colour)
@@ -79,7 +80,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const sensor = block.getFieldValue("SENSOR") as IRSensorType
+			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.IR_READ) as IRSensorType
 			return [`readIR(IR_${sensor})`, Order.FUNCTION_CALL]
 		}
 	}

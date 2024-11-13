@@ -3,21 +3,37 @@
 export const PIP_BLOCK_TYPES = {
 	ESP32_LED_CONTROL: "esp32_led_control",
 	ESP32_DELAY: "esp32_delay",
-	ESP32_LOOP: "esp32_loop",
+	ESP32_LOOP: "esp32_loop"
+} as const
+
+export const PIP_FIELD_VALUES = {
+	ESP32_LED_CONTROL: "led_state",
+	ESP32_DELAY: "delay"
 } as const
 
 export const SENSORS_BLOCK_TYPES = {
-	// Sensors
 	IMU_READ: "imu_read",
 	TOF_READ: "tof_read",
-	IR_READ: "ir_read",
+	IR_READ: "ir_read"
+} as const
+
+export const SENSORS_FIELD_VALUES = {
+	IMU_READ: "imu_value",
+	TOF_READ: "tof_sensor",
+	IR_READ: "ir_sensor"
 } as const
 
 export const MOTOR_BLOCK_TYPES = {
-	// Motors
 	MOTOR_SET_SPEED: "motor_set_speed",
 	MOTORS_STOP: "motors_stop",
 	MOTORS_TANK_DRIVE: "motors_tank_drive"
+} as const
+
+export const MOTOR_FIELD_VALUES = {
+	MOTOR_SET_SPEED: "motor",
+	MOTORS_STOP: "motors_stop",
+	MOTORS_LEFT_TANK_DRIVE: "left_motor_speed",
+	MOTORS_RIGHT_TANK_DRIVE: "right_motor_speed",
 } as const
 
 // Derive the type from the const assertion

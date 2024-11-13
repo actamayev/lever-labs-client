@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { pipCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
-import { PIP_BLOCK_TYPES, LEDSensorType, SENSOR_TYPES, PipBlockNames } from "../block-types"
+import { PIP_BLOCK_TYPES, LEDSensorType, SENSOR_TYPES, PipBlockNames, PIP_FIELD_VALUES } from "../block-types"
 
 export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 	[PIP_BLOCK_TYPES.ESP32_LED_CONTROL]: {
@@ -15,7 +15,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 								[key.toLowerCase(), value]
 							)
 						),
-						"STATE"
+						PIP_FIELD_VALUES.ESP32_LED_CONTROL
 					)
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
@@ -24,7 +24,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const state = block.getFieldValue("STATE") as LEDSensorType
+			const state = block.getFieldValue(PIP_FIELD_VALUES.ESP32_LED_CONTROL) as LEDSensorType
 			return `digitalWrite(LED_PIN, ${state});\n`
 		}
 	},
@@ -35,7 +35,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 					.appendField("Delay")
 					.appendField(
 						new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
-						"DELAY"
+						PIP_FIELD_VALUES.ESP32_DELAY
 					)
 					.appendField("milliseconds")
 				this.setPreviousStatement(true, null)
@@ -45,11 +45,10 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const delay = block.getFieldValue("DELAY")
+			const delay = block.getFieldValue(PIP_FIELD_VALUES.ESP32_DELAY)
 			return `delay(${delay});\n`  // Changed to standard Arduino delay
 		}
 	},
-
 	[PIP_BLOCK_TYPES.ESP32_LOOP]: {
 		definition: {
 			init: function(this: Blockly.Block) {

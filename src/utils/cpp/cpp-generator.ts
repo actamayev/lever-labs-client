@@ -1,64 +1,52 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Blockly from "blockly/core"
+import { Order } from "../blockly/order"
 
 export class CppGenerator extends Blockly.Generator {
-	// Define the order constants as class properties
-	ORDER_ATOMIC: number
-	ORDER_FUNCTION_CALL: number
-	ORDER_MEMBER: number
-	ORDER_UNARY_POSTFIX: number
-	ORDER_UNARY_PREFIX: number
-	ORDER_MULTIPLICATIVE: number
-	ORDER_ADDITIVE: number
-	ORDER_RELATIONAL: number
-	ORDER_EQUALITY: number
-	ORDER_LOGICAL_AND: number
-	ORDER_LOGICAL_OR: number
-	ORDER_NONE: number
-
 	constructor() {
+		// Call the parent constructor
 		super("CPP")
 
 		// Initialize settings
 		this.INDENT = "    " // 4 spaces for indentation
-
-		// Define precedence
-		this.ORDER_ATOMIC = 0
-		this.ORDER_FUNCTION_CALL = 1
-		this.ORDER_MEMBER = 2
-		this.ORDER_UNARY_POSTFIX = 3
-		this.ORDER_UNARY_PREFIX = 4
-		this.ORDER_MULTIPLICATIVE = 5
-		this.ORDER_ADDITIVE = 6
-		this.ORDER_RELATIONAL = 7
-		this.ORDER_EQUALITY = 8
-		this.ORDER_LOGICAL_AND = 9
-		this.ORDER_LOGICAL_OR = 10
-		this.ORDER_NONE = 99
-
-		this.forBlock["math_number"] = this.generateMathNumber
-		this.forBlock["controls_if"] = this.generateIf
-		this.forBlock["controls_whileUntil"] = this.generateWhile
-		this.forBlock["controls_for"] = this.generateFor
-		this.forBlock["controls_whileUntil"] = this.generateWhile
-		this.forBlock["logic_compare"] = this.generateCompare
 	}
 
 	workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!workspace) return ""
 
 		let code = "#include <iostream>\n\n"
 		code += "int main() {\n"
 
-		const blocks = workspace.getTopBlocks(true)
-		for (const block of blocks) {
+		const processBlock = (block: Blockly.Block, depth: number = 0): void => {
+			// Debug logging
+			console.log(`Processing block at depth ${depth}:`, {
+				type: block.type,
+				id: block.id,
+				childCount: (block as any).childBlocks_?.length || 0
+			})
+
+			// Generate code for the current block
 			const blockCode = this.blockToCode(block)
 			if (Array.isArray(blockCode)) {
 				code += this.INDENT + blockCode[0] + "\n"
 			} else if (blockCode) {
 				code += this.INDENT + blockCode + "\n"
 			}
+
+			// Process child blocks recursively
+			const childBlocks = (block as any).childBlocks_
+			if (childBlocks && childBlocks.length > 0) {
+				for (const childBlock of childBlocks) {
+					processBlock(childBlock, depth + 1)
+				}
+			}
+		}
+
+		// Start with top-level blocks
+		const blocks = workspace.getTopBlocks(true)
+		console.log("Top level blocks:", blocks.length)
+		for (const block of blocks) {
+			processBlock(block, 0)
 		}
 
 		code += this.INDENT + "return 0;\n"
@@ -67,101 +55,106 @@ export class CppGenerator extends Blockly.Generator {
 		return code
 	}
 
-	// Generator function for if statements
-	protected generateIf(block: Blockly.Block): string {
-		let code = ""
-		let condition = this.valueToCode(block, "IF0", this.ORDER_NONE) || "false"
-		let branch = this.statementToCode(block, "DO0")
+	// Initialize block generators
+	init(): void {
+		// Math number block
+		this.forBlock["math_number"] = function(this: CppGenerator, block: Blockly.Block): [string, number] {
+			const code = String(block.getFieldValue("NUM"))
+			return [code, Order.ATOMIC]
+		}
 
-		code += "if (" + condition + ") {\n"
-		code += branch
-		code += "}"
+		// Controls if block
+		this.forBlock["controls_if"] = function(this: CppGenerator, block: Blockly.Block): string {
+			let code = ""
+			console.log("value to code", this.valueToCode)
+			let condition = this.valueToCode(block, "IF0", Order.NONE) || "false"
+			let branch = this.statementToCode(block, "DO0")
 
-		// Handle else-if and else cases
-		const elseifCount = (block as any).elseifCount_ || 0
-		const elseCount = (block as any).elseCount_ || 0
-
-		for (let i = 1; i <= elseifCount; i++) {
-			condition = this.valueToCode(block, "IF" + i, this.ORDER_NONE) || "false"
-			branch = this.statementToCode(block, "DO" + i)
-			code += " else if (" + condition + ") {\n"
+			code += "if (" + condition + ") {\n"
 			code += branch
 			code += "}"
+
+			// Handle else-if and else cases
+			const elseifCount = (block as any).elseifCount_ || 0
+			const elseCount = (block as any).elseCount_ || 0
+
+			for (let i = 1; i <= elseifCount; i++) {
+				condition = this.valueToCode(block, "IF" + i, Order.NONE) || "false"
+				branch = this.statementToCode(block, "DO" + i)
+				code += " else if (" + condition + ") {\n"
+				code += branch
+				code += "}"
+			}
+
+			if (elseCount) {
+				branch = this.statementToCode(block, "ELSE")
+				code += " else {\n"
+				code += branch
+				code += "}"
+			}
+
+			return code + "\n"
 		}
 
-		if (elseCount) {
-			branch = this.statementToCode(block, "ELSE")
-			code += " else {\n"
-			code += branch
-			code += "}"
+		// Logic compare block
+		this.forBlock["logic_compare"] = function(this: CppGenerator, block: Blockly.Block): [string, number] {
+			const OPERATORS: {[key: string]: string} = {
+				"EQ": "==",
+				"NEQ": "!=",
+				"LT": "<",
+				"LTE": "<=",
+				"GT": ">",
+				"GTE": ">="
+			}
+			const operator = OPERATORS[block.getFieldValue("OP")]
+			const order = Order.RELATIONAL
+			const argument0 = this.valueToCode(block, "A", order) || "0"
+			const argument1 = this.valueToCode(block, "B", order) || "0"
+
+			return [argument0 + " " + operator + " " + argument1, order]
 		}
 
-		return code + "\n"
-	}
+		// Logic operation block
+		this.forBlock["logic_operation"] = function(this: CppGenerator, block: Blockly.Block): [string, number] {
+			const operator = block.getFieldValue("OP") === "AND" ? "&&" : "||"
+			const order = operator === "&&" ? Order.LOGICAL_AND : Order.LOGICAL_OR
+			const argument0 = this.valueToCode(block, "A", order) || "false"
+			const argument1 = this.valueToCode(block, "B", order) || "false"
 
-	// Generator function for while loop
-	protected generateWhile(block: Blockly.Block): string {
-		const until = block.getFieldValue("MODE") === "UNTIL"
-		let condition = this.valueToCode(block, "BOOL", this.ORDER_NONE) || "false"
-		const branch = this.statementToCode(block, "DO")
-
-		if (until) {
-			condition = "!(" + condition + ")"
+			return [argument0 + " " + operator + " " + argument1, order]
 		}
 
-		return "while (" + condition + ") {\n" + branch + "}\n"
-	}
+		// While until block
+		this.forBlock["controls_whileUntil"] = function(this: CppGenerator, block: Blockly.Block): string {
+			const until = block.getFieldValue("MODE") === "UNTIL"
+			let condition = this.valueToCode(block, "BOOL", Order.NONE) || "false"
+			const branch = this.statementToCode(block, "DO")
 
-	// Generator function for for loop
-	protected generateFor(block: Blockly.Block): string {
-		const variable = (this as any).nameDB_.getName(
-			block.getFieldValue("VAR"),
-			Blockly.VARIABLE_CATEGORY_NAME
-		)
-		const from = this.valueToCode(block, "FROM", this.ORDER_NONE) || "0"
-		const to = this.valueToCode(block, "TO", this.ORDER_NONE) || "0"
-		const by = this.valueToCode(block, "BY", this.ORDER_NONE) || "1"
-		const branch = this.statementToCode(block, "DO")
+			if (until) {
+				condition = "!(" + condition + ")"
+			}
 
-		let code = "for (int " + variable + " = " + from + "; "
-		code += variable + (Number(by) >= 0 ? " <= " : " >= ") + to + "; "
-		code += variable
-		if (by === "1") {
-			code += "++"
-		} else if (by === "-1") {
-			code += "--"
-		} else {
-			code += " += " + by
+			return "while (" + condition + ") {\n" + branch + "}\n"
 		}
-		code += ") {\n" + branch + "}\n"
 
-		return code
-	}
+		// Repeat block
+		this.forBlock["controls_repeat_ext"] = function(this: CppGenerator, block: Blockly.Block): string {
+			let repeats
+			if (block.getField("TIMES")) {
+				repeats = String(Number(block.getFieldValue("TIMES")))
+			} else {
+				repeats = this.valueToCode(block, "TIMES", Order.ASSIGNMENT) || "0"
+			}
 
-	// Generator function for comparison blocks
-	protected generateCompare(block: Blockly.Block): [string, number] {
-		const OPERATORS: {[key: string]: string} = {
-			"EQ": "==",
-			"NEQ": "!=",
-			"LT": "<",
-			"LTE": "<=",
-			"GT": ">",
-			"GTE": ">="
+			let branch = this.statementToCode(block, "DO")
+			branch = this.addLoopTrap(branch, block)
+			const loopVar = (this as any).nameDB_?.getDistinctName("count", "VARIABLE") || "i"
+
+			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${branch}}\n`
 		}
-		const operator = OPERATORS[block.getFieldValue("OP")]
-		const order = this.ORDER_RELATIONAL
-		const argument0 = this.valueToCode(block, "A", order) || "0"
-		const argument1 = this.valueToCode(block, "B", order) || "0"
-
-		return [argument0 + " " + operator + " " + argument1, order]
-	}
-
-	// Generator function for number blocks
-	protected generateMathNumber(block: Blockly.Block): [string, number] {
-		const code = String(block.getFieldValue("NUM"))
-		return [code, this.ORDER_ATOMIC]
 	}
 }
 
 // Create and export a singleton instance
 export const cppGenerator = new CppGenerator()
+cppGenerator.init()  // Initialize all block generators

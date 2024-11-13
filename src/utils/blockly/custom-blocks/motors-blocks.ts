@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import { motorsCategory } from "../toolbox-config"
 import { cppGenerator } from "../../cpp/cpp-generator"
-import { MOTOR_BLOCK_TYPES, LeftRightSensorType, MotorBlockNames, SENSOR_TYPES } from "../block-types"
+import { MOTOR_BLOCK_TYPES, LeftRightSensorType, MotorBlockNames, SENSOR_TYPES, MOTOR_FIELD_VALUES } from "../block-types"
 import { Order } from "../order"
 
 export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
@@ -58,13 +58,13 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Drive left motor")
 
-				this.appendValueInput("LEFT_SPEED")
+				this.appendValueInput(MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE)
 					.setCheck("Number")
 
 				this.appendDummyInput()
 					.appendField("and right motor")
 
-				this.appendValueInput("RIGHT_SPEED")
+				this.appendValueInput(MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE)
 					.setCheck("Number")
 
 				this.setPreviousStatement(true, null)
@@ -74,8 +74,8 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const leftSpeed = (cppGenerator).valueToCode(block, "LEFT_SPEED", Order.ATOMIC) || "0"
-			const rightSpeed = (cppGenerator).valueToCode(block, "RIGHT_SPEED", Order.ATOMIC) || "0"
+			const leftSpeed = (cppGenerator).valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE, Order.ATOMIC) || "0"
+			const rightSpeed = (cppGenerator).valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE, Order.ATOMIC) || "0"
 			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`  // Adjusted for C++
 		}
 	}

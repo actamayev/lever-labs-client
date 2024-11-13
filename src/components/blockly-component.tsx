@@ -7,7 +7,8 @@ import workspaceConfig from "../utils/blockly/workspace-config"
 import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
 
 const initialXml = `
-	<xml xmlns="https://developers.google.com/blockly/xml">
+    <xml xmlns="https://developers.google.com/blockly/xml">
+    </xml>
 `
 
 export default function BlocklyComponent() {
@@ -20,35 +21,31 @@ export default function BlocklyComponent() {
 		const newXml = Blockly.Xml.domToText(
 			Blockly.Xml.workspaceToDom(workspace)
 		)
-		const code = cppGenerator.workspaceToCode(workspace)
+		const cppCode = cppGenerator.workspaceToCode(workspace)
 
-		console.log("code", code)
+		console.log(cppCode)
 		setBlocklyState({
 			xml: newXml,
-			cppCode: code,
+			cppCode
 		})
 	}, [])
 
 	const initializeBlocks = useCallback(() => {
 		const blocks = createAllBlocks().kinds
 
-		// Register block definitions
 		Object.entries(blocks).forEach(([blockName, blockData]) => {
-			// First, register the block definition
 			Blockly.Blocks[blockName] = {
 				init: function() {
-					// If the block uses the new init function directly, use it
 					if (typeof blockData.definition.init === "function") {
 						blockData.definition.init.call(this)
 					} else {
-						// Otherwise, use jsonInit for backward compatibility
 						this.jsonInit(blockData.definition)
 					}
 				}
 			}
 
-			// Then, register the generator
-			cppGenerator.forBlock[blockName] = blockData.generator
+			// Set the generator function
+			cppGenerator.forBlock[blockName] = blockData.generator.bind(cppGenerator)
 		})
 	}, [])
 
@@ -67,10 +64,10 @@ export default function BlocklyComponent() {
 					onWorkspaceChange={handleWorkspaceChange}
 				/>
 			</div>
-			<div className="code-preview">
-				<h3>Generated C++ Code:</h3>
-				<pre>
-					<code>{blocklyState.cppCode}</code>
+			<div className="mt-4">
+				<h3 className="text-lg font-bold dark:text-white">Generated C++ Code:</h3>
+				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
+					{blocklyState.cppCode}
 				</pre>
 			</div>
 		</div>
