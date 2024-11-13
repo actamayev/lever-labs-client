@@ -55,7 +55,7 @@ export default function BlocklyComponent() {
 
 	return (
 		<div className="h-screen w-full p-4">
-			<div className="h-3/4 border border-slate-300 rounded">
+			<div className="h-1/2 border border-slate-300 rounded">
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}

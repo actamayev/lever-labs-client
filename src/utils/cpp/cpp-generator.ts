@@ -26,29 +26,29 @@ export class CppGenerator extends Blockly.Generator {
 				outputConnection: block.outputConnection ? "has output" : "no output",
 				previousConnection: block.previousConnection ? "has previous" : "no previous",
 				nextConnection: block.nextConnection ? "has next" : "no next",
-				parentBlock: block.getParent() ? block.getParent()?.type : "no parent"
+				parentBlock: block.getParent() ? block.getParent()?.type : "no parent",
+				inputWithBlock: block.getParent()?.getInputWithBlock(block)?.name
 			})
 
-			// Don't generate standalone code for blocks that are used as values
-			if (block.outputConnection && block.outputConnection.isConnected()) {
-				console.log("Skipping code generation for value block:", block.type)
-				// Skip generating code for this block as it will be handled by its parent
-			} else {
-				// Generate code for the current block
-				const blockCode = this.blockToCode(block)
-				if (Array.isArray(blockCode)) {
-					code += this.INDENT + blockCode[0] + "\n"
-				} else if (blockCode) {
-					code += this.INDENT + blockCode + "\n"
-				}
+			// Skip if this block is a statement input to another block
+			const parentInput = block.getParent()?.getInputWithBlock(block)
+			if (parentInput && parentInput.name === "LOOP_BODY") {
+				console.log("Skipping block in loop body:", block.type)
+				return
 			}
 
-			// Process child blocks recursively
-			const childBlocks = (block as any).childBlocks_
-			if (childBlocks && childBlocks.length > 0) {
-				for (const childBlock of childBlocks) {
-					processBlock(childBlock, depth + 1)
-				}
+			// Skip if this block is being used as a value
+			if (block.outputConnection && block.outputConnection.isConnected()) {
+				console.log("Skipping value block:", block.type)
+				return
+			}
+
+			// Generate code for the current block
+			const blockCode = this.blockToCode(block)
+			if (Array.isArray(blockCode)) {
+				code += this.INDENT + blockCode[0] + "\n"
+			} else if (blockCode) {
+				code += this.INDENT + blockCode
 			}
 		}
 
@@ -76,7 +76,6 @@ export class CppGenerator extends Blockly.Generator {
 		// Controls if block
 		this.forBlock["controls_if"] = function(this: CppGenerator, block: Blockly.Block): string {
 			let code = ""
-			console.log("value to code", this.valueToCode)
 			let condition = this.valueToCode(block, "IF0", Order.NONE) || "false"
 			let branch = this.statementToCode(block, "DO0")
 

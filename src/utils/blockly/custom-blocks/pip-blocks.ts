@@ -66,8 +66,13 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 			// Get the code inside the loop
 			const loopBody = (cppGenerator).statementToCode(block, "LOOP_BODY") || ""
 
-			// Create a proper while(true) loop in C++
-			return `while(true) {\n${loopBody}}\n`
+			// Add proper indentation to the loop body
+			const indentedBody = loopBody.split("\n")
+				.map(line => line ? cppGenerator.INDENT + line : line)
+				.join("\n")
+
+			// Create a properly indented while(true) loop in C++
+			return `while(true) {\n${indentedBody}}\n`
 		}
 	}
 }
