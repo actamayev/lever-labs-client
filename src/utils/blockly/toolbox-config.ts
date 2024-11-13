@@ -1,10 +1,10 @@
 import * as Blockly from "blockly"
 
 // Define the Logic category (doesn't use CustomCategoryInfo because these types are straight from blockly)
-export const logicCategory: Blockly.utils.toolbox.CategoryInfo = {
+export const logicCategory: CustomCategoryInfo = {
 	kind: "category",
 	name: "Logic",
-	colour: "30",
+	colour: 30,
 	id: undefined,
 	categorystyle: undefined,
 	cssconfig: undefined,
@@ -72,7 +72,7 @@ export const pipCategory: CustomCategoryInfo = {
 }
 
 // Combine all categories into the toolbox configuration
-const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
+export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
 		logicCategory,
@@ -81,5 +81,3 @@ const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		pipCategory
 	]
 }
-
-export default toolboxConfig
