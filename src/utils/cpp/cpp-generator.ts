@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as Blockly from "blockly/core"
-import registerLogicGenerators from "./register-logic-generators"
 
 export class CppGenerator extends Blockly.Generator {
 	constructor() {
@@ -74,4 +73,3 @@ export class CppGenerator extends Blockly.Generator {
 
 // Create and export a singleton instance
 export const cppGenerator = new CppGenerator()
-registerLogicGenerators(cppGenerator)
