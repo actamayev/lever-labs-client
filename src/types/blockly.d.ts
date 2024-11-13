@@ -1,23 +1,12 @@
-import { BlockNames } from "../utils/blockly/block-types"
+import * as Blockly from "blockly"
+import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
+import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
+import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
+import { SensorsBlockNames } from "../utils/blockly/block-types/sensor-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
-		type: BlockNames
-		message0: string
-		args0?: Array<{
-			type: ArgTypes
-			name: string
-			value?: number | string
-			min?: number
-			max?: number
-			check?: string
-			options?: Array<[string, string]>
-		}>
-		output?: OutputType
-		previousStatement?: boolean | null
-		nextStatement?: boolean | null
-		colour: number
-		tooltip: string
+		init(this: Blockly.Block): void
 	}
 
 	interface CustomBlock {
@@ -31,27 +20,25 @@ declare global {
 
 	interface BlocklyState {
 		xml: string
-		javascriptCode: string
+		cppCode: string
 	}
-
-	type ArgTypes = "field_number" | "field_dropdown" | "input_value" | "input_dummy" | "input_statement"
-
-	type OutputType = "Number"
 
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> {
 		kind: "category"
-		name: string;
+		name: string
 		id: string | undefined
 		categorystyle: string | undefined
 		colour: number
 		cssconfig: CssConfig | undefined
 		hidden: string | undefined
 		expanded?: string | boolean
-		contents: Array<
-			| { kind: "block"; type: BlockNames }
-			| { kind: "category"; name: string; colour: string; contents: CustomCategoryInfo["contents"] }
-		>
+		contents: Array<{
+			kind: "block"
+			type: BlockNames
+		}>
 	}
+
+	type BlockNames = SensorsBlockNames | PipBlockNames | MotorBlockNames | LogicBlockNames
 }
 
 export {}

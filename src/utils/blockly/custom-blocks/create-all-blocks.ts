@@ -1,4 +1,5 @@
 import { pipBlocks } from "./pip-blocks"
+import { logicBlocks } from "./logic-blocks"
 import { motorsBlocks } from "./motors-blocks"
 import { sensorsBlocks } from "./sensor-blocks"
 
@@ -7,7 +8,8 @@ export default function createAllBlocks (): CustomBlocks {
 		kinds: {
 			...motorsBlocks,
 			...sensorsBlocks,
-			...pipBlocks
+			...pipBlocks,
+			...logicBlocks
 		}
 	}
 
