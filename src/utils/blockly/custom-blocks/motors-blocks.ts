@@ -17,7 +17,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
                                 [key.toLowerCase(), value] as [string, string]
 							)
 						),
-						"MOTOR"
+						MOTOR_FIELD_VALUES.MOTOR_SET_SPEED
 					)
 					.appendField("motor to speed")
 
@@ -31,9 +31,9 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const motor = block.getFieldValue("MOTOR") as LeftRightSensorType
+			const motor = block.getFieldValue(MOTOR_FIELD_VALUES.MOTOR_SET_SPEED) as LeftRightSensorType
 			const speed = cppGenerator.valueToCode(block, "SPEED", Order.ATOMIC) || "0"
-			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`  // Adjusted for C++
+			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.MOTORS_STOP]: {
@@ -48,7 +48,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (_block: Blockly.Block): string => {
-			return "stopMotors();\n"  // Adjusted for C++
+			return "stopMotors();\n"
 		}
 	},
 	[MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE]: {
@@ -75,7 +75,7 @@ export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
 		generator: (block: Blockly.Block): string => {
 			const leftSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE, Order.ATOMIC) || "0"
 			const rightSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE, Order.ATOMIC) || "0"
-			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`  // Adjusted for C++
+			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`
 		}
 	}
 }
