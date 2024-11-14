@@ -53,6 +53,15 @@ export default function BlocklyComponent() {
 
 	useEffect(() => {
 		initializeBlocks()
+
+		const workspace = Blockly.getMainWorkspace() as Blockly.WorkspaceSvg
+
+		const toolbox = workspace.getToolbox()
+		if (!toolbox) return
+
+		const flyout = toolbox.getFlyout()
+		if (_.isNull(flyout)) return
+		flyout.autoClose = false
 	}, [initializeBlocks])
 
 	const sendCodeToCppCallback = useCallback(async () => {
