@@ -3,10 +3,10 @@ import { Link, useLocation } from "react-router-dom"
 function BlueDotRobots() {
 	const location = useLocation()
 	if (
-		location.pathname === "/the-garage" ||
-		location.pathname === "/the-lab" ||
-		location.pathname === "/the-sandbox" ||
-		location.pathname === "/my-account"
+		location.pathname === "/garage" ||
+		location.pathname === "/lab" ||
+		location.pathname === "/sandbox" ||
+		location.pathname === "/account"
 	) return null
 
 	return (

@@ -1,32 +1,28 @@
 import { observer } from "mobx-react"
-import PipUUIDs from "../components/the-lab/pip-uuids"
 import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
 import ShowAuthToNullUser from "../components/show-auth-to-null-user"
-import useRetrievePipInfoUseEffect from "../hooks/pip/retrieve-pip-info"
 
-function TheGarage() {
-	useRetrievePipInfoUseEffect()
+function Lab() {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
 		return (
 			<>
-				<PageHelmet pageTitle="/the-garage" />
-				<ShowAuthToNullUser whereToNavigate="/the-garage" />
+				<PageHelmet pageTitle="/lab" />
+				<ShowAuthToNullUser whereToNavigate="/lab" />
 			</>
 		)
 	}
 
 	return (
 		<>
-			<PageHelmet pageTitle="/the-garage" />
+			<PageHelmet pageTitle="/lab" />
 			<div className="text-black dark:text-white text-3xl">
-				The Garage
+				Lab
 			</div>
-			<PipUUIDs />
 		</>
 	)
 }
 
-export default observer(TheGarage)
+export default observer(Lab)

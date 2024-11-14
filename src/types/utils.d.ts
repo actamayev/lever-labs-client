@@ -6,10 +6,10 @@ declare global {
 		"/login" |
 		"/register" |
 		"/register-username" |
-		"/the-garage" |
-		"/the-lab" |
-		"/the-sandbox" |
-		"/my-account" |
+		"/garage" |
+		"/lab" |
+		"/sandbox" |
+		"/account" |
 
 		"/contact"
 

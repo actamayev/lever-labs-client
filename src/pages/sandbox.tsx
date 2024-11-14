@@ -4,27 +4,27 @@ import PageHelmet from "../components/helmet/page-helmet"
 import BlocklyComponent from "../components/blockly-component"
 import ShowAuthToNullUser from "../components/show-auth-to-null-user"
 
-function TheSandbox() {
+function Sandbox() {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
 		return (
 			<>
-				<PageHelmet pageTitle="/the-sandbox" />
-				<ShowAuthToNullUser whereToNavigate="/the-sandbox" />
+				<PageHelmet pageTitle="/sandbox" />
+				<ShowAuthToNullUser whereToNavigate="/sandbox" />
 			</>
 		)
 	}
 
 	return (
 		<>
-			<PageHelmet pageTitle="/the-sandbox" />
+			<PageHelmet pageTitle="/sandbox" />
 			<div className="text-black dark:text-white text-3xl">
-				The Sandbox
+				Sandbox
 			</div>
 			<BlocklyComponent />
 		</>
 	)
 }
 
-export default observer(TheSandbox)
+export default observer(Sandbox)
