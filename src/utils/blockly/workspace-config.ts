@@ -16,6 +16,7 @@ const workspaceConfig: Blockly.BlocklyOptions = {
 		scaleSpeed: 1.2,
 	},
 	trashcan: true,
+	sounds: false
 }
 
 export default workspaceConfig
