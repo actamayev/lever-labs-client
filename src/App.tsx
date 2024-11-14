@@ -1,12 +1,12 @@
 import { observer } from "mobx-react"
 import { Routes, Route } from "react-router-dom"
+import Lab from "./pages/lab"
 import Home from "./pages/home"
-import TheLab from "./pages/the-lab"
-import Missing from "./pages/missing"
+import Garage from "./pages/garage"
 import Contact from "./pages/contact"
-import TheGarage from "./pages/the-garage"
-import MyAccount from "./pages/my-account"
-import TheSandbox from "./pages/the-sandbox"
+import Missing from "./pages/missing"
+import Sandbox from "./pages/sandbox"
+import MyAccount from "./pages/account"
 import LoginPage from "./pages/auth/login-page"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
@@ -38,10 +38,10 @@ function App() {
 			<Route path="/register" element={<RegisterPage />} />
 			<Route path="/register-username" element={<RegisterUsername />} />
 
-			<Route path="/the-garage" element={<TheGarage />} />
-			<Route path="/the-lab" element={<TheLab />} />
-			<Route path="/the-sandbox" element={<TheSandbox />} />
-			<Route path="/my-account" element={<MyAccount />} />
+			<Route path="/garage" element={<Garage />} />
+			<Route path="/lab" element={<Lab />} />
+			<Route path="/sandbox" element={<Sandbox />} />
+			<Route path="/account" element={<MyAccount />} />
 
 			<Route path="/contact" element={<Contact />} />
 
