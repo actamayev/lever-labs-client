@@ -1,6 +1,5 @@
 import * as Blockly from "blockly"
 import { pipCategory } from "../toolbox-config"
-import { cppGenerator } from "../../cpp/cpp-generator"
 import { generateStatementCode } from "./manual-traversal"
 import { SENSOR_TYPES, LEDSensorType } from "../block-types/sensor-block-types"
 import { PipBlockNames, PIP_BLOCK_TYPES, PIP_FIELD_VALUES } from "../block-types/pip-block-types"
@@ -66,7 +65,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const bodyCode = generateStatementCode(block, "LOOP_BODY")
-			return `while(true) {\n${bodyCode}${cppGenerator.INDENT}}\n`
+			return `while(true) {\n${bodyCode}}\n`
 		}
 	}
 }

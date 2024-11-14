@@ -1,7 +1,9 @@
 import * as Blockly from "blockly"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
+import Button from "./button"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
+import useSendCppToPip from "../hooks/pip/send-cpp-to-pip"
 import workspaceConfig from "../utils/blockly/workspace-config"
 import { toolboxConfig } from "../utils/blockly/toolbox-config"
 import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
@@ -15,6 +17,7 @@ export default function BlocklyComponent() {
 		xml: initialXml,
 		cppCode: ""
 	})
+	const sendCppToPip = useSendCppToPip()
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		const newXml = Blockly.Xml.domToText(
@@ -51,6 +54,10 @@ export default function BlocklyComponent() {
 		initializeBlocks()
 	}, [initializeBlocks])
 
+	const sendCodeToCppCallback = useCallback(async () => {
+		await sendCppToPip("9YhsJ" as PipUUID, blocklyState.cppCode)
+	}, [blocklyState.cppCode, sendCppToPip])
+
 	return (
 		<div className="h-screen w-full p-4">
 			<div className="h-1/2 border border-slate-300 rounded">
@@ -68,6 +75,10 @@ export default function BlocklyComponent() {
 					{blocklyState.cppCode}
 				</pre>
 			</div>
+			<Button
+				title="Send code to Pip"
+				onClick={sendCodeToCppCallback}
+			/>
 		</div>
 	)
 }

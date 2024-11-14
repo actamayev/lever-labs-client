@@ -30,4 +30,10 @@ export default class PipDataService {
 			`${this.pathHeader}/check-if-pip-uuid-is-valid/${pipUUID}`
 		)
 	}
+
+	async sendCppToPip(pipUUID: PipUUID, cppCode: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/compile-and-send-cpp-to-pip`, { pipUUID, cppCode }
+		)
+	}
 }
