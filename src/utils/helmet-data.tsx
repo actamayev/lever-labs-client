@@ -37,32 +37,32 @@ const helmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/register-username"
 		/>
 	),
-	"/the-garage": (
+	"/garage": (
 		<BasicHelmet
-			pageTitleData="The Garage"
+			pageTitleData="Garage"
 			description="Log in to view your connected robots, manage connections, and navigate to the Lab or Sandbox for further exploration."
-			url="https://www.bluedotrobots.com/the-garage"
+			url="https://www.bluedotrobots.com/garage"
 		/>
 	),
-	"/the-lab": (
+	"/lab": (
 		<BasicHelmet
-			pageTitleData="The Lab"
+			pageTitleData="Lab"
 			description="Explore guided tutorials, videos, and challenges to learn about robot sensors and control in a structured learning environment."
-			url="https://www.bluedotrobots.com/the-lab"
+			url="https://www.bluedotrobots.com/lab"
 		/>
 	),
-	"/the-sandbox": (
+	"/sandbox": (
 		<BasicHelmet
-			pageTitleData="The Sandbox"
+			pageTitleData="Sandbox"
 			description="Freely control your robot with coding block primitives for open-ended exploration and experimentation."
-			url="https://www.bluedotrobots.com/the-sandbox"
+			url="https://www.bluedotrobots.com/sandbox"
 		/>
 	),
-	"/my-account": (
+	"/account": (
 		<BasicHelmet
 			pageTitleData="My Account"
 			description="View and edit your personal information, profile picture, and login/security settings."
-			url="https://www.bluedotrobots.com/my-account"
+			url="https://www.bluedotrobots.com/account"
 		/>
 	),
 	"/contact": (

@@ -22,21 +22,21 @@ export default function ProfileDropdownItems() {
 
 	return (
 		<div className="text-base text-slate-950 dark:text-slate-200">
-			<Link to="/the-garage" className={classes.middle}>
+			<Link to="/garage" className={classes.middle}>
 				<GiTinker className="mr-2" size={20} />
-				The Garage
+				Garage
 			</Link>
-			<Link to="/the-lab" className={classes.middle}>
+			<Link to="/lab" className={classes.middle}>
 				<HiBeaker className="mr-2" size={20} />
-				The Lab
+				Lab
 			</Link>
-			<Link to="/the-sandbox" className={classes.middle}>
+			<Link to="/sandbox" className={classes.middle}>
 				<TbSandbox className="mr-2" size={20} />
-				The Sandbox
+				Sandbox
 			</Link>
-			<Link to="/my-account" className={classes.middle}>
+			<Link to="/account" className={classes.middle}>
 				<FaUserCircle className="mr-2" size={20} />
-				My Account
+				Account
 			</Link>
 			<div className="block border-t border-slate-200 dark:border-slate-800">
 				<button

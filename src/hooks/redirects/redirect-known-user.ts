@@ -10,8 +10,8 @@ export default function useRedirectKnownUser (): void {
 	const personalInfoClass = usePersonalInfoContext()
 
 	useEffect(() => {
-		// if the user is logged in and has a username, go to The Lab
+		// if the user is logged in and has a username, go to Garage
 		if (authClass.isLoggedIn === false || _.isNull(personalInfoClass.username)) return
-		navigate("/the-garage")
+		navigate("/garage")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass.username])
 }

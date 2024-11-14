@@ -28,7 +28,7 @@ export default function useUsernameSubmit (
 				return
 			}
 			personalInfoClass.setUsername(username)
-			navigate("/the-garage")
+			navigate("/garage")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError, "Unable to register username")
 		} finally {
