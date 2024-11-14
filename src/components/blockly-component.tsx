@@ -1,3 +1,4 @@
+import _ from "lodash"
 import * as Blockly from "blockly"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
@@ -78,6 +79,7 @@ export default function BlocklyComponent() {
 			<Button
 				title="Send code to Pip"
 				onClick={sendCodeToCppCallback}
+				disabled={_.isEmpty(blocklyState.cppCode)}
 			/>
 		</div>
 	)
