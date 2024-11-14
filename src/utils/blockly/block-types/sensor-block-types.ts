@@ -37,8 +37,8 @@ export const SENSOR_TYPES = {
 		RIGHT: "RIGHT",
 	},
 	LED: {
-		ON: "ON",
-		OFF: "OFF"
+		ON: "HIGH",
+		OFF: "LOW"
 	}
 } as const
 
