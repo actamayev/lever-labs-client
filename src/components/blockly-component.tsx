@@ -51,9 +51,7 @@ export default function BlocklyComponent() {
 		})
 	}, [])
 
-	useEffect(() => {
-		initializeBlocks()
-
+	const disableFlyoutAutoclose = useCallback(() => {
 		const workspace = Blockly.getMainWorkspace() as Blockly.WorkspaceSvg
 
 		const toolbox = workspace.getToolbox()
@@ -62,7 +60,13 @@ export default function BlocklyComponent() {
 		const flyout = toolbox.getFlyout()
 		if (_.isNull(flyout)) return
 		flyout.autoClose = false
-	}, [initializeBlocks])
+	}, [])
+
+	useEffect(() => {
+		initializeBlocks()
+		// Blockly.Tooltip.HOVER_MS = 100
+		disableFlyoutAutoclose()
+	}, [initializeBlocks, disableFlyoutAutoclose])
 
 	const sendCodeToCppCallback = useCallback(async () => {
 		await sendCppToPip("9YhsJ" as PipUUID, blocklyState.cppCode)
