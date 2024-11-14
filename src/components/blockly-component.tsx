@@ -64,8 +64,10 @@ export default function BlocklyComponent() {
 
 	useEffect(() => {
 		initializeBlocks()
-		// Blockly.Tooltip.HOVER_MS = 100
 		disableFlyoutAutoclose()
+		// TODO: Fix, not working
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to 50 milliseconds
 	}, [initializeBlocks, disableFlyoutAutoclose])
 
 	const sendCodeToCppCallback = useCallback(async () => {
