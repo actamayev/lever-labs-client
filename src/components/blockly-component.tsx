@@ -91,11 +91,11 @@ export default function BlocklyComponent() {
 					{blocklyState.cppCode}
 				</pre>
 			</div>
-			<Button
+			{/* <Button
 				title="Send code to Pip"
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode)}
-			/>
+			/> */}
 		</div>
 	)
 }
