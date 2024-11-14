@@ -17,9 +17,12 @@ export class CppGenerator extends Blockly.Generator {
 		while (currentBlock) {
 			const blockCode = this.blockToCode(currentBlock)
 			if (Array.isArray(blockCode)) {
-				code += this.INDENT + blockCode[0] + "\n"
+				// code += this.INDENT + blockCode[0] + "\n"
+				code += blockCode[0] + "\n"
+
 			} else if (blockCode) {
-				code += this.INDENT + blockCode
+				// code += this.INDENT + blockCode
+				code += blockCode
 			}
 			currentBlock = currentBlock.getNextBlock()
 		}
@@ -28,10 +31,12 @@ export class CppGenerator extends Blockly.Generator {
 	}
 
 	workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!workspace) return ""
 
-		let code = "#include <iostream>\n\n"
-		code += "int main() {\n"
+		let code = ""
+		// let code = "#include <iostream>\n\n"
+		// code += "int main() {\n"
 
 		// Generate code for top-level blocks
 		const blocks = workspace.getTopBlocks(true)
@@ -39,8 +44,8 @@ export class CppGenerator extends Blockly.Generator {
 			code += this.generateBlockSequence(block)
 		}
 
-		code += this.INDENT + "return 0;\n"
-		code += "}\n"
+		// code += this.INDENT + "return 0;\n"
+		// code += "}\n"
 
 		return code
 	}
