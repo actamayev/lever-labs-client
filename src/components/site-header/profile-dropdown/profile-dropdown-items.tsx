@@ -22,10 +22,10 @@ export default function ProfileDropdownItems() {
 
 	return (
 		<div className="text-base text-slate-950 dark:text-slate-200">
-			<Link to="/garage" className={classes.middle}>
+			{/* <Link to="/garage" className={classes.middle}>
 				<GiTinker className="mr-2" size={20} />
 				Garage
-			</Link>
+			</Link> */}
 			{/* <Link to="/lab" className={classes.middle}>
 				<HiBeaker className="mr-2" size={20} />
 				Lab
