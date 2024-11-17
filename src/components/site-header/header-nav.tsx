@@ -1,4 +1,4 @@
-import PipUuids from "../lab/pip-uuids"
+import PipUuids from "./pip-uuids/pip-uuids"
 import ChooseSiteTheme from "../choose-site-theme"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "./login-logout-header-item"

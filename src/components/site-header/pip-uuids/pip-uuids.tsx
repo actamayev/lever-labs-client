@@ -1,11 +1,11 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import AddPipModal from "./add-pip-modal/add-pip-modal"
-import { usePipContext } from "../../contexts/pip-context"
-import { useAuthContext } from "../../contexts/auth-context"
-import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
-import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
+import AddPipModal from "./add-pip-modal"
+import { usePipContext } from "../../../contexts/pip-context"
+import { useAuthContext } from "../../../contexts/auth-context"
+import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
+import useClickOutsideUseEffect from "../../../hooks/click-outside/click-outside-use-effect"
 
 // eslint-disable-next-line max-lines-per-function
 function PipUUIDs() {
