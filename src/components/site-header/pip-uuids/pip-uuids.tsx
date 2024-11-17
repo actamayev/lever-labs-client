@@ -19,11 +19,6 @@ function PipUUIDs() {
 	const requestToConnectToPip = useRequestToConnectToPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
 
-	const handleSelectPip = useCallback(async (pip: PipData) => {
-		await requestToConnectToPip(pip)
-		// TODO: If pip is connected already, make it disconnect
-	}, [requestToConnectToPip])
-
 	useEffect(() => {
 		pipClass.setSelectedPipToFirstPip()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,17 +27,12 @@ function PipUUIDs() {
 	const handlePipNameClick = useCallback(async (e: React.MouseEvent) => {
 		e.stopPropagation()
 		if (!_.isNull(pipClass.selectedPip)) {
-			return await handleSelectPip(pipClass.selectedPip)
+			return await requestToConnectToPip(pipClass.selectedPip)
 		}
 		if (_.isEmpty(pipClass.pipData)) {
 			setIsModalOpen(true)
 		}
-	}, [handleSelectPip, pipClass.pipData, pipClass.selectedPip])
-
-	const toggleDropdown = useCallback((e: React.MouseEvent) => {
-		e.stopPropagation()
-		setIsDropdownOpen(prev => !prev)
-	}, [])
+	}, [pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
 	if (authClass.isLoggedIn === false) return null
 
@@ -59,15 +49,12 @@ function PipUUIDs() {
 				<PipName />
 				<DropdownArrow
 					isDropdownOpen={isDropdownOpen}
-					toggleDropdown={toggleDropdown}
+					setIsDropdownOpen={setIsDropdownOpen}
 				/>
 			</div>
 
 			{isDropdownOpen && (
-				<AvailablePipsDropdown
-					setIsModalOpen={setIsModalOpen}
-					handleSelectPip={handleSelectPip}
-				/>
+				<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
 			)}
 
 			{isModalOpen && <AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />}

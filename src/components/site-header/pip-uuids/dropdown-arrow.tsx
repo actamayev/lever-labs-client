@@ -1,15 +1,21 @@
 import _ from "lodash"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { usePipContext } from "../../../contexts/pip-context"
 
 interface Props {
 	isDropdownOpen: boolean
-	toggleDropdown: (e: React.MouseEvent) => void
+	setIsDropdownOpen: (value: React.SetStateAction<boolean>) => void
 }
 
 function DropdownArrow(props: Props) {
-	const { isDropdownOpen, toggleDropdown } = props
+	const { isDropdownOpen, setIsDropdownOpen } = props
 	const pipClass = usePipContext()
+
+	const toggleDropdown = useCallback((e: React.MouseEvent) => {
+		e.stopPropagation()
+		setIsDropdownOpen(prev => !prev)
+	}, [setIsDropdownOpen])
 
 	if (_.isEmpty(pipClass.pipData)) return null
 

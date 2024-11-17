@@ -2,16 +2,17 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { usePipContext } from "../../../contexts/pip-context"
 import useGetStatusColor from "../../../hooks/pip/get-status-color"
+import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
-	handleSelectPip: (pip: PipData) => Promise<void>
 }
 
 function AvailablePipsDropdown(props: Props) {
-	const { setIsModalOpen, handleSelectPip } = props
+	const { setIsModalOpen } = props
 	const pipClass = usePipContext()
 	const getStatusColor = useGetStatusColor()
+	const requestToConnectToPip = useRequestToConnectToPip()
 
 	const availablePips = useMemo(() => {
 		return pipClass.pipData.filter(pip => pip.pipUUID !== pipClass.selectedPip?.pipUUID)
@@ -25,7 +26,7 @@ function AvailablePipsDropdown(props: Props) {
 					key={pip.pipUUID}
 					className="flex items-center justify-between px-4 py-2 cursor-pointer
 					hover:bg-slate-100 dark:hover:bg-slate-700"
-					onClick={() => handleSelectPip(pip)}
+					onClick={() => requestToConnectToPip(pip)}
 				>
 					<div className="flex items-center gap-2">
 						<span className={`h-3 w-3 rounded-full ${getStatusColor(pip.pipConnectionStatus)}`}/>
