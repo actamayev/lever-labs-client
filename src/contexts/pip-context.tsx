@@ -5,6 +5,7 @@ import { createContext, useContext, useMemo } from "react"
 class PipClass {
 	public pipData: PipData[] = []
 	public isRetrievingPipData = false
+	public selectedPip: PipData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -50,9 +51,19 @@ class PipClass {
 		this.isRetrievingPipData = newState
 	})
 
+	public setSelectedPip = action((newSelectedPip: PipData): void => {
+		this.selectedPip = newSelectedPip
+	})
+
+	public setSelectedPipToFirstPip = action((): void => {
+		if (!_.isNull(this.selectedPip) || _.isEmpty(this.pipData)) return
+		this.setSelectedPip(this.pipData[0])
+	})
+
 	public logout() {
 		this.pipData = []
 		this.isRetrievingPipData = false
+		this.selectedPip = null
 	}
 }
 

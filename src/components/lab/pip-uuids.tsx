@@ -1,25 +1,31 @@
-import { useCallback, useRef, useState } from "react"
+import _ from "lodash"
 import { observer } from "mobx-react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import AddPipModal from "./add-pip-modal/add-pip-modal"
 import { usePipContext } from "../../contexts/pip-context"
-import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import { useAuthContext } from "../../contexts/auth-context"
+import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
 
+// eslint-disable-next-line max-lines-per-function
 function PipUUIDs() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-	const [selectedPip, setSelectedPip] = useState<PipData | null>(null)
 	const dropdownRef = useRef<HTMLDivElement>(null)
-	const authClass = useAuthContext()
 	const pipClass = usePipContext()
+	const authClass = useAuthContext()
 	const requestToConnectToPip = useRequestToConnectToPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
 
 	const handleSelectPip = useCallback(async (pip: PipData) => {
-		await requestToConnectToPip(pip, setSelectedPip)
+		await requestToConnectToPip(pip)
 		// TODO: If pip is connected already, make it disconnect
 	}, [requestToConnectToPip])
+
+	useEffect(() => {
+		pipClass.setSelectedPipToFirstPip()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.pipData.length])
 
 	const getStatusColor = useCallback((status: PipConnectionStatus) => {
 		switch (status) {
@@ -36,6 +42,19 @@ function PipUUIDs() {
 		}
 	}, [])
 
+	const availablePips = useMemo(() => {
+		return pipClass.pipData.filter(pip => pip.pipUUID !== pipClass.selectedPip?.pipUUID)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.selectedPip, pipClass.pipData.length])
+
+	const clickDropdown = useCallback(async () => {
+		if (_.isNull(pipClass.selectedPip)) {
+			setIsDropdownOpen((prev) => !prev)
+			return
+		}
+		await handleSelectPip(pipClass.selectedPip)
+	}, [handleSelectPip, pipClass.selectedPip])
+
 	if (authClass.isLoggedIn === false) return null
 
 	return (
@@ -44,30 +63,49 @@ function PipUUIDs() {
 			ref={dropdownRef}
 		>
 			<div
-				className="flex items-center justify-between bg-slate-200 dark:bg-slate-700 text-black dark:text-white
+				className="flex w-52 items-center justify-between bg-slate-200 dark:bg-slate-700 text-black dark:text-white
 				rounded-lg px-3 py-1.5 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600"
-				onClick={() => setIsDropdownOpen((prev) => !prev)}
+				onClick={clickDropdown}
 			>
-				<div className="mr-2">{selectedPip?.pipName || "Connect to your Pip"}</div>
 				<div>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						className={`h-5 w-5 transform transition-transform ${
-							isDropdownOpen ? "rotate-180" : "rotate-0"
-						}`}
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-					>
-						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-					</svg>
+					{_.isEmpty(pipClass.pipData) ? (
+						<div onClick={() => setIsModalOpen(true)}>
+							+ Add Pip
+						</div>
+					) : (
+						<>
+							{!pipClass.selectedPip ? (
+								<div>Connect to your Pip</div>
+							) : (
+								<div className="flex items-center gap-2">
+									<span className={`h-3 w-3 rounded-full ${getStatusColor(pipClass.selectedPip.pipConnectionStatus)}`}/>
+									<div>{pipClass.selectedPip.pipName || "Connect to your Pip"}</div>
+								</div>
+							)}
+						</>
+					)}
 				</div>
+				{!_.isEmpty(pipClass.pipData) && (
+					<div>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className={`h-5 w-5 transform transition-transform ${
+								isDropdownOpen ? "rotate-180" : "rotate-0"
+							}`}
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+						</svg>
+					</div>
+				)}
 			</div>
 
 			{/* Dropdown */}
 			{isDropdownOpen && (
 				<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50 overflow-hidden">
-					{pipClass.pipData.map((pip) => (
+					{availablePips.map((pip) => (
 						<div
 							key={pip.pipUUID}
 							className="flex items-center justify-between px-4 py-2 cursor-pointer

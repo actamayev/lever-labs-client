@@ -8,7 +8,6 @@ import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks
 
 export default function useRequestToConnectToPip(): (
 	pipData: PipData,
-	setSelectedPip: React.Dispatch<React.SetStateAction<PipData | null>>
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const notificationsClass = useNotificationsContext()
@@ -16,7 +15,6 @@ export default function useRequestToConnectToPip(): (
 
 	return useCallback(async (
 		pipData: PipData,
-		setSelectedPip: React.Dispatch<React.SetStateAction<PipData | null>>
 	) => {
 		try {
 			if (pipClass.checkIfPipAlreadyConnected(pipData.pipUUID) === true) return
@@ -27,7 +25,7 @@ export default function useRequestToConnectToPip(): (
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: pipData.pipUUID, newConnectionStatus: "connected" })
 			notificationsClass.setPositiveNotification(`Connected to ${pipData.pipName}`)
-			setSelectedPip(pipData)
+			pipClass.setSelectedPip(pipData)
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
