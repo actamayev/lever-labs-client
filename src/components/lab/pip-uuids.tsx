@@ -6,7 +6,6 @@ import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import { useAuthContext } from "../../contexts/auth-context"
 import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
 
-// eslint-disable-next-line max-lines-per-function
 function PipUUIDs() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -19,9 +18,6 @@ function PipUUIDs() {
 
 	const handleSelectPip = useCallback(async (pip: PipData) => {
 		await requestToConnectToPip(pip, setSelectedPip)
-		// if (pip.pipConnectionStatus === "online") {
-		// 	setIsDropdownOpen(false)
-		// }
 		// TODO: If pip is connected already, make it disconnect
 	}, [requestToConnectToPip])
 
@@ -52,7 +48,7 @@ function PipUUIDs() {
 				rounded-lg px-3 py-1.5 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600"
 				onClick={() => setIsDropdownOpen((prev) => !prev)}
 			>
-				<div>{selectedPip?.pipName || "Connect your Pip"}</div>
+				<div className="mr-2">{selectedPip?.pipName || "Connect to your Pip"}</div>
 				<div>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +66,7 @@ function PipUUIDs() {
 
 			{/* Dropdown */}
 			{isDropdownOpen && (
-				<div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50">
+				<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50 overflow-hidden">
 					{pipClass.pipData.map((pip) => (
 						<div
 							key={pip.pipUUID}
