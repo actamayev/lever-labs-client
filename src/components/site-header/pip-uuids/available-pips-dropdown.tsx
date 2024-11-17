@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
 import SingleAvailablePip from "./single-available-pip"
+import { usePipContext } from "../../../contexts/pip-context"
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>

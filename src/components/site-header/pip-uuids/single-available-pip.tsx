@@ -2,12 +2,7 @@ import { observer } from "mobx-react"
 import PipStatusTooltip from "./pip-status-tooltip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 
-interface Props {
-	pip: PipData
-}
-
-function SingleAvailablePip(props: Props) {
-	const { pip } = props
+function SingleAvailablePip({ pip } : { pip: PipData }) {
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	return (

@@ -7,36 +7,25 @@ interface Props {
 
 function PipStatusTooltip(props: Props) {
 	const { pipData } = props
-
 	const [showTooltip, setShowTooltip] = useState(false)
 
-	const getStatusColor = useCallback((pipStatus: PipConnectionStatus): string => {
+	const getStatusColor = useCallback((pipStatus: PipConnectionStatus) => {
 		switch (pipStatus) {
-		case "inactive":
-			return "bg-red-500"
-		case "online":
-			return "bg-blue-500"
-		case "connected to other user":
-			return "bg-purple-500"
-		case "connected":
-			return "bg-green-500"
-		default:
-			return "bg-slate-500"
+		case "inactive": return "bg-red-500"
+		case "online": return "bg-blue-500"
+		case "connected to other user": return "bg-purple-500"
+		case "connected": return "bg-green-500"
+		default: return "bg-slate-500"
 		}
 	}, [])
 
-	const getStatusMessage = useCallback((pipStatus: PipConnectionStatus): string => {
+	const getStatusMessage = useCallback((pipStatus: PipConnectionStatus) => {
 		switch (pipStatus) {
-		case "inactive":
-			return `${pipData.pipName} is either not turned on, or not connected to the internet`
-		case "online":
-			return `${pipData.pipName} is online and ready to connect`
-		case "connected to other user":
-			return `${pipData.pipName} is connected to another user`
-		case "connected":
-			return `You are connected to ${pipData.pipName}`
-		default:
-			return "Unknown status"
+		case "inactive": return `${pipData.pipName} is either not turned on, or not connected to the internet`
+		case "online": return `${pipData.pipName} is online and ready to connect`
+		case "connected to other user": return `${pipData.pipName} is connected to another user`
+		case "connected": return `You are connected to ${pipData.pipName}`
+		default: return "Unknown status"
 		}
 	}, [pipData.pipName])
 
