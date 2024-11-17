@@ -40,10 +40,10 @@ function App() {
 			<Route path="/register" element={<RegisterPage />} />
 			<Route path="/register-username" element={<RegisterUsername />} />
 
-			<Route path="/garage" element={<Garage />} />
-			<Route path="/lab" element={<Lab />} />
+			{/* <Route path="/garage" element={<Garage />} />
+			<Route path="/lab" element={<Lab />} /> */}
 			<Route path="/sandbox" element={<Sandbox />} />
-			<Route path="/account" element={<MyAccount />} />
+			{/* <Route path="/account" element={<MyAccount />} /> */}
 
 			<Route path="/contact" element={<Contact />} />
 

@@ -91,7 +91,7 @@ function PipUUIDs() {
 							) : (
 								<div className="flex items-center gap-2">
 									<span className={`h-3 w-3 rounded-full ${getStatusColor(pipClass.selectedPip.pipConnectionStatus)}`}/>
-									<div>{pipClass.selectedPip.pipName || "Connect to your Pip"}</div>
+									<div className="truncate max-w-[160px]">{pipClass.selectedPip.pipName || "Connect to your Pip"}</div>
 								</div>
 							)}
 						</>
@@ -133,7 +133,7 @@ function PipUUIDs() {
 							<div className="flex items-center gap-2">
 								{/* Status Indicator */}
 								<span className={`h-3 w-3 rounded-full ${getStatusColor(pip.pipConnectionStatus)}`}/>
-								<span className="text-black dark:text-white">{pip.pipName}</span>
+								<span className="text-black dark:text-white truncate max-w-[160px]">{pip.pipName}</span>
 							</div>
 							<span className="text-sm text-slate-500">{pip.pipUUID}</span>
 						</div>
