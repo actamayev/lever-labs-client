@@ -1,11 +1,10 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
+import PipStatusTooltip from "./pip-status-tooltip"
 import { usePipContext } from "../../../contexts/pip-context"
-import useGetStatusColor from "../../../hooks/pip/get-status-color"
 
 function PipName() {
 	const pipClass = usePipContext()
-	const getStatusColor = useGetStatusColor()
 
 	return (
 		<div
@@ -22,7 +21,7 @@ function PipName() {
 						<div>Connect to your Pip</div>
 					) : (
 						<div className="flex items-center gap-2">
-							<span className={`h-3 w-3 rounded-full ${getStatusColor(pipClass.selectedPip.pipConnectionStatus)}`}/>
+							<PipStatusTooltip pipData={pipClass.selectedPip} />
 							<div className="truncate max-w-[160px]">{pipClass.selectedPip.pipName || "Connect to your Pip"}</div>
 						</div>
 					)}
