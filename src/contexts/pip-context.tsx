@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -37,6 +38,12 @@ class PipClass {
 				data.pipConnectionStatus === "connected to other user"
 			)
 		)
+	}
+
+	public findPipNameFromUUID(pipUUID: PipUUID): string {
+		const pip = this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
+		if (_.isUndefined(pip)) return "Pip"
+		return pip.pipName
 	}
 
 	public setIsRetrievingPipData = action((newState: boolean): void => {

@@ -2,6 +2,7 @@ import ChooseSiteTheme from "../choose-site-theme"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "./login-logout-header-item"
 
+// TODO: Add a section for connecting to a previously added Pip
 export default function HeaderNav() {
 	return (
 		<nav id="header" className="bg-white dark:bg-slate-800 fixed top-0 left-0 w-full z-20 pt-0.5">

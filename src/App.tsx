@@ -12,6 +12,7 @@ import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
 
 import useScrollToTop from "./hooks/scroll-to-top"
+import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
 import useGetAuthDataFromStorage from "./hooks/auth/get-auth-data-from-storage"
 import useLogoutListenerUseEffect from "./hooks/listeners/logout-listener-use-effect"
 import useSocketEventsUseEffect from "./hooks/socket-events/socket-events-use-effect"
@@ -30,6 +31,7 @@ function App() {
 	useRedirectBackToRegisterUsername()
 	useRetrievePersonalInfoUseEffect()
 	useSocketEventsUseEffect()
+	useRetrievePipInfoUseEffect()
 
 	return (
 		<Routes>

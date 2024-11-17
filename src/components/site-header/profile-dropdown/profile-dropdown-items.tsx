@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { HiBeaker } from "react-icons/hi"
+// import { HiBeaker } from "react-icons/hi"
 import { GiTinker } from "react-icons/gi"
 import { TbSandbox } from "react-icons/tb"
-import { FaUserCircle } from "react-icons/fa"
+// import { FaUserCircle } from "react-icons/fa"
 import { RiLogoutBoxRLine } from "react-icons/ri"
 import useHandleLogout from "../../../hooks/auth/handle-logout"
 
@@ -26,18 +26,18 @@ export default function ProfileDropdownItems() {
 				<GiTinker className="mr-2" size={20} />
 				Garage
 			</Link>
-			<Link to="/lab" className={classes.middle}>
+			{/* <Link to="/lab" className={classes.middle}>
 				<HiBeaker className="mr-2" size={20} />
 				Lab
-			</Link>
+			</Link> */}
 			<Link to="/sandbox" className={classes.middle}>
 				<TbSandbox className="mr-2" size={20} />
 				Sandbox
 			</Link>
-			<Link to="/account" className={classes.middle}>
+			{/* <Link to="/account" className={classes.middle}>
 				<FaUserCircle className="mr-2" size={20} />
 				Account
-			</Link>
+			</Link> */}
 			<div className="block border-t border-slate-200 dark:border-slate-800">
 				<button
 					onClick={handleLogout}
