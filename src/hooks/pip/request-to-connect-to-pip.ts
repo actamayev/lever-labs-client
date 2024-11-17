@@ -36,7 +36,7 @@ export default function useRequestToConnectToPip(): (
 						return
 					} else if (error.response.data.message === "This Pip is not active/connected to the internet") {
 						notificationsClass.setNegativeNotification(
-							`Unable to connect: ${pipData.pipName} is not active/connected to the internet`
+							`Unable to connect: ${pipData.pipName} is not connected to the internet`
 						)
 						return
 					}  else if (error.response.data.message === "User hasn't registered this UUID") {

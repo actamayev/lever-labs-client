@@ -47,13 +47,21 @@ function PipUUIDs() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pipClass.selectedPip, pipClass.pipData.length])
 
-	const clickDropdown = useCallback(async () => {
-		if (_.isNull(pipClass.selectedPip)) {
-			setIsDropdownOpen((prev) => !prev)
+	const handlePipNameClick = useCallback(async (e: React.MouseEvent) => {
+		e.stopPropagation()
+		if (!_.isNull(pipClass.selectedPip)) {
+			await handleSelectPip(pipClass.selectedPip)
 			return
 		}
-		await handleSelectPip(pipClass.selectedPip)
-	}, [handleSelectPip, pipClass.selectedPip])
+		if (_.isEmpty(pipClass.pipData)) {
+			setIsModalOpen(true)
+		}
+	}, [handleSelectPip, pipClass.pipData, pipClass.selectedPip])
+
+	const toggleDropdown = useCallback((e: React.MouseEvent) => {
+		e.stopPropagation()
+		setIsDropdownOpen(prev => !prev)
+	}, [])
 
 	if (authClass.isLoggedIn === false) return null
 
@@ -63,14 +71,18 @@ function PipUUIDs() {
 			ref={dropdownRef}
 		>
 			<div
-				className="flex w-52 items-center justify-between bg-slate-200 dark:bg-slate-700 text-black dark:text-white
-				rounded-lg px-3 py-1.5 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600"
-				onClick={clickDropdown}
+				className="flex w-52 h-9 items-stretch justify-between bg-slate-200 dark:bg-slate-700
+			text-black dark:text-white rounded-lg"
+				onClick={handlePipNameClick}
 			>
-				<div>
+				{/* Pip Name Section */}
+				<div
+					className={`flex flex-grow items-center px-3 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600
+						${_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"}`}
+				>
 					{_.isEmpty(pipClass.pipData) ? (
-						<div onClick={() => setIsModalOpen(true)}>
-							+ Add Pip
+						<div>
+                            + Add Pip
 						</div>
 					) : (
 						<>
@@ -85,8 +97,14 @@ function PipUUIDs() {
 						</>
 					)}
 				</div>
+
+				{/* Dropdown Arrow Section */}
 				{!_.isEmpty(pipClass.pipData) && (
-					<div>
+					<div
+						className="flex items-center px-2 cursor-pointer hover:bg-slate-300
+						dark:hover:bg-slate-600 rounded-r-lg border-l border-slate-300 dark:border-slate-600"
+						onClick={toggleDropdown}
+					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
 							className={`h-5 w-5 transform transition-transform ${
@@ -109,7 +127,7 @@ function PipUUIDs() {
 						<div
 							key={pip.pipUUID}
 							className="flex items-center justify-between px-4 py-2 cursor-pointer
-							hover:bg-slate-100 dark:hover:bg-slate-700"
+                            hover:bg-slate-100 dark:hover:bg-slate-700"
 							onClick={() => handleSelectPip(pip)}
 						>
 							<div className="flex items-center gap-2">
@@ -123,10 +141,10 @@ function PipUUIDs() {
 					{/* Add Pip Option */}
 					<div
 						className="px-4 py-2 text-center text-black dark:text-white cursor-pointer
-						hover:bg-slate-100 dark:hover:bg-slate-700"
+                        hover:bg-slate-100 dark:hover:bg-slate-700"
 						onClick={() => setIsModalOpen(true)}
 					>
-						+ Add Pip
+                        + Add Pip
 					</div>
 				</div>
 			)}
