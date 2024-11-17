@@ -18,11 +18,10 @@ function PipUUIDs() {
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
 
 	const handleSelectPip = useCallback(async (pip: PipData) => {
-		setSelectedPip(pip)
-		if (pip.pipConnectionStatus === "online") {
-			await requestToConnectToPip(pip)
-			setIsDropdownOpen(false)
-		}
+		await requestToConnectToPip(pip, setSelectedPip)
+		// if (pip.pipConnectionStatus === "online") {
+		// 	setIsDropdownOpen(false)
+		// }
 		// TODO: If pip is connected already, make it disconnect
 	}, [requestToConnectToPip])
 
