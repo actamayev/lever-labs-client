@@ -19,11 +19,11 @@ function AvailablePipsDropdown(props: Props) {
 	}, [pipClass.selectedPip, pipClass.pipData.length])
 
 	return (
-		<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50 overflow-hidden">
+		<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50">
 			{availablePips.map((pip) => (
 				<div
 					key={pip.pipUUID}
-					className="flex items-center justify-between px-4 py-2 cursor-pointer
+					className="flex items-center justify-between px-3 py-2 cursor-pointer
 					hover:bg-slate-100 dark:hover:bg-slate-700"
 					onClick={() => requestToConnectToPip(pip)}
 				>

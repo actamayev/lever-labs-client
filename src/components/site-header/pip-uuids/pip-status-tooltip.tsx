@@ -46,10 +46,8 @@ function PipStatusTooltip(props: Props) {
 			onMouseEnter={() => setShowTooltip(true)}
 			onMouseLeave={() => setShowTooltip(false)}
 		>
-			{/* Status Dot */}
 			<div className={`h-3 w-3 rounded-full ${getStatusColor(pipData.pipConnectionStatus)}`} />
 
-			{/* Tooltip */}
 			{showTooltip && (
 				<div
 					className="absolute right-0 bg-slate-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50
