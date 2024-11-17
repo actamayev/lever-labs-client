@@ -7,6 +7,7 @@ import DropdownArrow from "./dropdown-arrow"
 import AvailablePipsDropdown from "./available-pips-dropdown"
 import { usePipContext } from "../../../contexts/pip-context"
 import { useAuthContext } from "../../../contexts/auth-context"
+import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../../hooks/click-outside/click-outside-use-effect"
 
@@ -17,6 +18,7 @@ function PipUUIDs() {
 	const pipClass = usePipContext()
 	const authClass = useAuthContext()
 	const requestToConnectToPip = useRequestToConnectToPip()
+	const diconnectFromPip = useDisconnectFromPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
 
 	useEffect(() => {
@@ -27,12 +29,16 @@ function PipUUIDs() {
 	const handlePipNameClick = useCallback(async (e: React.MouseEvent) => {
 		e.stopPropagation()
 		if (!_.isNull(pipClass.selectedPip)) {
-			return await requestToConnectToPip(pipClass.selectedPip)
+			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
+				return await diconnectFromPip(pipClass.selectedPip)
+			} else {
+				return await requestToConnectToPip(pipClass.selectedPip)
+			}
 		}
 		if (_.isEmpty(pipClass.pipData)) {
 			setIsModalOpen(true)
 		}
-	}, [pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
+	}, [diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
 	if (authClass.isLoggedIn === false) return null
 

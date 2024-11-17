@@ -33,16 +33,16 @@ class PipClass {
 
 	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
 		return this.pipData.some(
-			data => data.pipUUID === pipUUID &&
-			(
-				data.pipConnectionStatus === "connected" ||
-				data.pipConnectionStatus === "connected to other user"
-			)
+			data => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
 		)
 	}
 
+	public findPipFromUUID(pipUUID: PipUUID): PipData | undefined {
+		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
+	}
+
 	public findPipNameFromUUID(pipUUID: PipUUID): string {
-		const pip = this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
+		const pip = this.findPipFromUUID(pipUUID)
 		if (_.isUndefined(pip)) return "Pip"
 		return pip.pipName
 	}

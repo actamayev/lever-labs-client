@@ -7,17 +7,27 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useRequestToConnectToPip(): (
-	pipData: PipData,
+	pipData: PipData
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
 
-	return useCallback(async (
-		pipData: PipData,
-	) => {
+	// eslint-disable-next-line complexity
+	return useCallback(async (pipData: PipData) => {
 		try {
-			if (pipClass.checkIfPipAlreadyConnected(pipData.pipUUID) === true) return
+			const foundPip = pipClass.findPipFromUUID(pipData.pipUUID)
+			switch (foundPip?.pipConnectionStatus) {
+			case "connected": return
+			case "connected to other user": {
+				notificationsClass.setNegativeNotification("Someone is already connected to this Pip")
+				return
+			}
+			case "inactive": {
+				notificationsClass.setNegativeNotification(`Unable to connect: ${pipData.pipName} is not connected to the internet`)
+				return
+			}
+			}
 			const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(pipData.pipUUID)
 
 			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
