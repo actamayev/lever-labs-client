@@ -5,7 +5,7 @@ export default function RegisterPage() {
 	return (
 		<>
 			<PageHelmet pageTitle="/register" />
-			<Register whereToNavigate="/garage" />
+			<Register whereToNavigate="/sandbox" />
 		</>
 	)
 }

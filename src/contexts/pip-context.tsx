@@ -1,9 +1,11 @@
+import _ from "lodash"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
 class PipClass {
 	public pipData: PipData[] = []
 	public isRetrievingPipData = false
+	public selectedPip: PipData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -31,21 +33,37 @@ class PipClass {
 
 	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
 		return this.pipData.some(
-			data => data.pipUUID === pipUUID &&
-			(
-				data.pipConnectionStatus === "connected" ||
-				data.pipConnectionStatus === "connected to other user"
-			)
+			data => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
 		)
+	}
+
+	public findPipFromUUID(pipUUID: PipUUID): PipData | undefined {
+		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
+	}
+
+	public findPipNameFromUUID(pipUUID: PipUUID): string {
+		const pip = this.findPipFromUUID(pipUUID)
+		if (_.isUndefined(pip)) return "Pip"
+		return pip.pipName
 	}
 
 	public setIsRetrievingPipData = action((newState: boolean): void => {
 		this.isRetrievingPipData = newState
 	})
 
+	public setSelectedPip = action((newSelectedPip: PipData): void => {
+		this.selectedPip = newSelectedPip
+	})
+
+	public setSelectedPipToFirstPip = action((): void => {
+		if (!_.isNull(this.selectedPip) || _.isEmpty(this.pipData)) return
+		this.setSelectedPip(this.pipData[0])
+	})
+
 	public logout() {
 		this.pipData = []
 		this.isRetrievingPipData = false
+		this.selectedPip = null
 	}
 }
 
