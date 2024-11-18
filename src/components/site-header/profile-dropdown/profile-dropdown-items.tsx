@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
 // import { HiBeaker } from "react-icons/hi"
-import { GiTinker } from "react-icons/gi"
+// import { GiTinker } from "react-icons/gi"
 import { TbSandbox } from "react-icons/tb"
 // import { FaUserCircle } from "react-icons/fa"
 import { RiLogoutBoxRLine } from "react-icons/ri"
