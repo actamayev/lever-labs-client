@@ -22,7 +22,7 @@ function PipName() {
 					) : (
 						<div className="flex items-center gap-2">
 							<PipStatusTooltip pipData={pipClass.selectedPip} />
-							<div className="truncate max-w-[160px]">{pipClass.selectedPip.pipName || "Connect to your Pip"}</div>
+							<div className="truncate max-w-[160px]">{pipClass.selectedPip.pipName}</div>
 						</div>
 					)}
 				</>
