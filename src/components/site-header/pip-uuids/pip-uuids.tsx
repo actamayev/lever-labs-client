@@ -4,9 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import PipName from "./pip-name"
 import AddPipModal from "./add-pip-modal"
 import DropdownArrow from "./dropdown-arrow"
+import useUsername from "../../../hooks/memos/username"
 import AvailablePipsDropdown from "./available-pips-dropdown"
 import { usePipContext } from "../../../contexts/pip-context"
-import { useAuthContext } from "../../../contexts/auth-context"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../../hooks/click-outside/click-outside-use-effect"
@@ -16,7 +16,7 @@ function PipUUIDs() {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const pipClass = usePipContext()
-	const authClass = useAuthContext()
+	const username = useUsername()
 	const requestToConnectToPip = useRequestToConnectToPip()
 	const diconnectFromPip = useDisconnectFromPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
@@ -40,7 +40,7 @@ function PipUUIDs() {
 		}
 	}, [diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
-	if (authClass.isLoggedIn === false) return null
+	if (_.isNull(username)) return null
 
 	return (
 		<div
