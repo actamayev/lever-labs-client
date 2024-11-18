@@ -67,7 +67,7 @@ export default function BlocklyComponent() {
 		disableFlyoutAutoclose()
 		// TODO: Fix, not working
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to 50 milliseconds
+		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
 	}, [initializeBlocks, disableFlyoutAutoclose])
 
 	const sendCodeToCppCallback = useCallback(async () => {
@@ -86,7 +86,7 @@ export default function BlocklyComponent() {
 				/>
 			</div>
 			<div className="mt-4">
-				<h3 className="text-lg font-bold dark:text-white">Generated C++ Code:</h3>
+				<h3 className="text-lg font-bold dark:text-white">Generated C++</h3>
 				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
 					{blocklyState.cppCode}
 				</pre>

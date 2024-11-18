@@ -13,11 +13,21 @@ export default function useRequestToConnectToPip(): (
 	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
 
-	return useCallback(async (
-		pipData: PipData
-	) => {
+	// eslint-disable-next-line complexity
+	return useCallback(async (pipData: PipData) => {
 		try {
-			if (pipClass.checkIfPipAlreadyConnected(pipData.pipUUID) === true) return
+			const foundPip = pipClass.findPipFromUUID(pipData.pipUUID)
+			switch (foundPip?.pipConnectionStatus) {
+			case "connected": return
+			case "connected to other user": {
+				notificationsClass.setNegativeNotification("Someone is already connected to this Pip")
+				return
+			}
+			case "inactive": {
+				notificationsClass.setNegativeNotification(`Unable to connect: ${pipData.pipName} is not connected to the internet`)
+				return
+			}
+			}
 			const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(pipData.pipUUID)
 
 			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
@@ -25,6 +35,7 @@ export default function useRequestToConnectToPip(): (
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: pipData.pipUUID, newConnectionStatus: "connected" })
 			notificationsClass.setPositiveNotification(`Connected to ${pipData.pipName}`)
+			pipClass.setSelectedPip(pipData)
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
@@ -34,7 +45,9 @@ export default function useRequestToConnectToPip(): (
 						notificationsClass.setNegativeNotification("Someone is already connected to this Pip")
 						return
 					} else if (error.response.data.message === "This Pip is not active/connected to the internet") {
-						notificationsClass.setNegativeNotification("This Pip is not active/connected to the internet")
+						notificationsClass.setNegativeNotification(
+							`Unable to connect: ${pipData.pipName} is not connected to the internet`
+						)
 						return
 					}  else if (error.response.data.message === "User hasn't registered this UUID") {
 						notificationsClass.setNegativeNotification("You haven't regsitered this Pip ID")

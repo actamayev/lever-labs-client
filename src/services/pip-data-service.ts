@@ -36,4 +36,10 @@ export default class PipDataService {
 			`${this.pathHeader}/compile-and-send-cpp-to-pip`, { pipUUID, cppCode }
 		)
 	}
+
+	async disconnectFromPip(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/disconnect-from-pip`, { pipUUID }
+		)
+	}
 }
