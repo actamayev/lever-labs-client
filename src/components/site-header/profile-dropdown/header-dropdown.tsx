@@ -1,6 +1,7 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
 import { useState, useRef, useCallback, useMemo } from "react"
+import useUsername from "../../../hooks/memos/username"
 import ProfileDropdownItems from "./profile-dropdown-items"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useClickOutsideUseEffect from "../../../hooks/click-outside/click-outside-use-effect"
@@ -10,6 +11,7 @@ function HeaderDropdown () {
 	const [isOpen, setIsOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const personalInfoClass = usePersonalInfoContext()
+	const username = useUsername()
 	useClickOutsideUseEffect(dropdownRef, setIsOpen)
 
 	const isOpenCallback = useCallback(() => setIsOpen(prevState => !prevState), [])
@@ -17,10 +19,6 @@ function HeaderDropdown () {
 	const profilePictureUrl = useMemo(() => {
 		return personalInfoClass.profilePictureUrl
 	}, [personalInfoClass.profilePictureUrl])
-
-	const username = useMemo(() => {
-		return personalInfoClass.username
-	}, [personalInfoClass.username])
 
 	if (_.isNull(username)) return null
 
