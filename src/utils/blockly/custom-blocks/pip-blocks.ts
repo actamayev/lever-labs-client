@@ -12,7 +12,7 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 					.appendField("Turn LED")
 					.appendField(
 						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.LED).map(([key, value]) =>
+							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]) =>
 								[key.toLowerCase(), value]
 							)
 						),
@@ -26,7 +26,8 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const state = block.getFieldValue(PIP_FIELD_VALUES.ESP32_LED_CONTROL) as LEDSensorType
-			return `digitalWrite(LED_PIN, ${state});\n`
+			if (state === "OFF") return "rgbLed.turn_led_off();\n"
+			else return `rgbLed.set_led_${state.toLowerCase()}();\n`
 		}
 	},
 	[PIP_BLOCK_TYPES.ESP32_DELAY]: {

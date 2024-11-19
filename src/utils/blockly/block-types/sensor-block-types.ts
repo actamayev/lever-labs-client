@@ -36,13 +36,16 @@ export const SENSOR_TYPES = {
 		MIDDLE: "MIDDLE",
 		RIGHT: "RIGHT",
 	},
-	LED: {
-		ON: "HIGH",
-		OFF: "LOW"
+	LED_COLORS: {
+		WHITE: "WHITE",
+		RED: "RED",
+		GREEN: "GREEN",
+		BLUE: "BLUE",
+		OFF: "OFF"
 	}
 } as const
 
 export type IMUSensorType = typeof SENSOR_TYPES.IMU[keyof typeof SENSOR_TYPES.IMU]
 export type LeftRightSensorType = typeof SENSOR_TYPES.LEFTRIGHT[keyof typeof SENSOR_TYPES.LEFTRIGHT]
 export type IRSensorType = typeof SENSOR_TYPES.IR[keyof typeof SENSOR_TYPES.IR]
-export type LEDSensorType = typeof SENSOR_TYPES.LED[keyof typeof SENSOR_TYPES.LED]
+export type LEDSensorType = typeof SENSOR_TYPES.LED_COLORS[keyof typeof SENSOR_TYPES.LED_COLORS]
