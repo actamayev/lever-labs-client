@@ -1,24 +1,28 @@
 import _ from "lodash"
 import * as Blockly from "blockly"
+import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
 import Button from "./button"
+import { usePipContext } from "../contexts/pip-context"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import useSendCppToPip from "../hooks/pip/send-cpp-to-pip"
 import workspaceConfig from "../utils/blockly/workspace-config"
 import { toolboxConfig } from "../utils/blockly/toolbox-config"
-import createAllBlocks from "../utils/blockly/custom-blocks/create-all-blocks"
+import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
 
 const initialXml = `
     <xml xmlns="https://developers.google.com/blockly/xml"/>
 `
 
-export default function BlocklyComponent() {
+function BlocklyComponent() {
 	const [blocklyState, setBlocklyState] = useState<BlocklyState>({
 		xml: initialXml,
 		cppCode: ""
 	})
+	const pipClass = usePipContext()
 	const sendCppToPip = useSendCppToPip()
+	const initializeBlocks = useInitializeBlocks()
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		const newXml = Blockly.Xml.domToText(
@@ -29,25 +33,6 @@ export default function BlocklyComponent() {
 		setBlocklyState({
 			xml: newXml,
 			cppCode
-		})
-	}, [])
-
-	const initializeBlocks = useCallback(() => {
-		const blocks = createAllBlocks().kinds
-
-		Object.entries(blocks).forEach(([blockName, blockData]) => {
-			Blockly.Blocks[blockName] = {
-				init: function() {
-					if (typeof blockData.definition.init === "function") {
-						blockData.definition.init.call(this)
-					} else {
-						this.jsonInit(blockData.definition)
-					}
-				}
-			}
-
-			// Set the generator function
-			cppGenerator.forBlock[blockName] = blockData.generator.bind(cppGenerator)
 		})
 	}, [])
 
@@ -94,8 +79,10 @@ export default function BlocklyComponent() {
 			<Button
 				title="Send code to Pip"
 				onClick={sendCodeToCppCallback}
-				disabled={_.isEmpty(blocklyState.cppCode)}
+				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
 			/>
 		</div>
 	)
 }
+
+export default observer(BlocklyComponent)
