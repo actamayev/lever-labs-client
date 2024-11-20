@@ -6,6 +6,7 @@ class PipClass {
 	public pipData: PipData[] = []
 	public isRetrievingPipData = false
 	public selectedPip: PipData | null = null
+	public isSendingCppToPip: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -60,10 +61,15 @@ class PipClass {
 		this.setSelectedPip(this.pipData[0])
 	})
 
+	public setIsSendingCppToPip = action((newState: boolean): void => {
+		this.isSendingCppToPip = newState
+	})
+
 	public logout() {
 		this.pipData = []
 		this.isRetrievingPipData = false
 		this.selectedPip = null
+		this.isSendingCppToPip = false
 	}
 }
 
