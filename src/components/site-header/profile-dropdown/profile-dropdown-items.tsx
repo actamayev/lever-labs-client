@@ -10,6 +10,7 @@ import useHandleLogout from "../../../hooks/auth/handle-logout"
 const useDropdownItemClasses = () => {
 	const baseClass = "px-3 py-2 flex items-center hover:bg-slate-200 dark:hover:bg-slate-800"
 	return {
+		top: `${baseClass} rounded-t-md`,
 		bottom: `${baseClass} rounded-b-md`,
 		middle: baseClass
 	}
@@ -30,7 +31,7 @@ export default function ProfileDropdownItems() {
 				<HiBeaker className="mr-2" size={20} />
 				Lab
 			</Link> */}
-			<Link to="/sandbox" className={classes.middle}>
+			<Link to="/sandbox" className={classes.top}>
 				<TbSandbox className="mr-2" size={20} />
 				Sandbox
 			</Link>
