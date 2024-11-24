@@ -6,7 +6,6 @@ import { useNotificationsContext } from "../../contexts/notifications-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useSendCppToPip(): (
-	pipUUID: PipUUID,
 	cppCode: string
 ) => Promise<void> {
 	const pipClass = usePipContext()
@@ -14,14 +13,16 @@ export default function useSendCppToPip(): (
 	const notificationsClass = useNotificationsContext()
 
 	return useCallback(async (
-		pipUUID: PipUUID,
 		cppCode: string
 	) => {
 		try {
-			if (pipClass.isSendingCppToPip === true) return
+			if (
+				pipClass.isSendingCppToPip === true ||
+				_.isNull(pipClass.selectedPip)
+			) return
 			pipClass.setIsSendingCppToPip(true)
 
-			const connectToPipResponse = await blueDotApiClient.pipDataService.sendCppToPip(pipUUID, cppCode)
+			const connectToPipResponse = await blueDotApiClient.pipDataService.sendCppToPip(pipClass.selectedPip.pipUUID, cppCode)
 
 			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")

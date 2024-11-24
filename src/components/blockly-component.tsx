@@ -56,7 +56,7 @@ function BlocklyComponent() {
 	}, [initializeBlocks, disableFlyoutAutoclose])
 
 	const sendCodeToCppCallback = useCallback(async () => {
-		await sendCppToPip("9YhsJ" as PipUUID, blocklyState.cppCode)
+		await sendCppToPip(blocklyState.cppCode)
 	}, [blocklyState.cppCode, sendCppToPip])
 
 	return (
