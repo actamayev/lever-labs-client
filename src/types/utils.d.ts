@@ -9,6 +9,7 @@ declare global {
 		"/garage" |
 		"/lab" |
 		"/sandbox" |
+		"/sandbox-new" |
 		"/account" |
 
 		"/contact"

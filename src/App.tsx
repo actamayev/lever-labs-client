@@ -20,6 +20,7 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
+import SandboxNew from "./pages/sandbox-new"
 
 function App() {
 	useScrollToTop()
@@ -43,6 +44,8 @@ function App() {
 			{/* <Route path="/garage" element={<Garage />} />
 			<Route path="/lab" element={<Lab />} /> */}
 			<Route path="/sandbox" element={<Sandbox />} />
+			<Route path="/sandbox-new" element={<SandboxNew />} />
+
 			{/* <Route path="/account" element={<MyAccount />} /> */}
 
 			<Route path="/contact" element={<Contact />} />
