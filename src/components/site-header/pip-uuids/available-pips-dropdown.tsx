@@ -17,7 +17,7 @@ function AvailablePipsDropdown(props: Props) {
 	}, [pipClass.selectedPip, pipClass.pipData.length])
 
 	return (
-		<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-slate-800 rounded-lg shadow-lg z-50">
+		<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-zinc-800 rounded-lg shadow-lg z-50">
 			{availablePips.map((pip) => (
 				<SingleAvailablePip
 					key={pip.pipUUID}
@@ -26,7 +26,7 @@ function AvailablePipsDropdown(props: Props) {
 			))}
 			<div
 				className="px-4 py-2 text-center text-black dark:text-white cursor-pointer
-				hover:bg-slate-100 dark:hover:bg-slate-700"
+				hover:bg-zinc-100 dark:hover:bg-zinc-700"
 				onClick={() => setIsModalOpen(true)}
 			>
 				+ Add Pip

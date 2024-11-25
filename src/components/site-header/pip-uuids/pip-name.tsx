@@ -8,7 +8,7 @@ function PipName() {
 
 	return (
 		<div
-			className={`flex flex-grow items-center px-3 cursor-pointer hover:bg-slate-300 dark:hover:bg-slate-600
+			className={`flex flex-grow items-center px-3 cursor-pointer hover:bg-zinc-300 dark:hover:bg-zinc-600
 			${_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"}`}
 		>
 			{_.isEmpty(pipClass.pipData) ? (

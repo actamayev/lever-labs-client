@@ -11,6 +11,7 @@ import LoginPage from "./pages/auth/login-page"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
 
+import SandboxNew from "./pages/sandbox-new"
 import useScrollToTop from "./hooks/scroll-to-top"
 import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
 import useGetAuthDataFromStorage from "./hooks/auth/get-auth-data-from-storage"
@@ -20,7 +21,6 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
-import SandboxNew from "./pages/sandbox-new"
 
 function App() {
 	useScrollToTop()

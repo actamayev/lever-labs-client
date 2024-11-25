@@ -21,7 +21,7 @@ export default function Contact() {
 					<div className="flex flex-col items-center">
 						<div
 							className="border border-slate-200 dark:border-slate-700 rounded-lg py-1 \
-							px-0.5 mx-auto bg-white dark:bg-slate-800 w-80 mt-10"
+							px-0.5 mx-auto bg-white dark:bg-zinc-800 w-80 mt-10"
 						>
 							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
 							{/* <ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" /> */}

@@ -15,7 +15,7 @@ function PipStatusTooltip(props: Props) {
 		case "online": return "bg-blue-500"
 		case "connected to other user": return "bg-purple-500"
 		case "connected": return "bg-green-500"
-		default: return "bg-slate-500"
+		default: return "bg-zinc-500"
 		}
 	}, [])
 
@@ -39,7 +39,7 @@ function PipStatusTooltip(props: Props) {
 
 			{showTooltip && (
 				<div
-					className="absolute right-0 bg-slate-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50
+					className="absolute right-0 bg-zinc-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50
                     opacity-0 transition-opacity duration-500"
 					style={{ opacity: 1 }}
 				>

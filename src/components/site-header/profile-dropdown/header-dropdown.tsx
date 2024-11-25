@@ -26,8 +26,8 @@ function HeaderDropdown () {
 		<div className="flex items-center">
 			<div className="relative inline-block" ref={dropdownRef}>
 				<div
-					className="flex items-center cursor-pointer hover:bg-slate-100 text-slate-950 \
-					dark:text-slate-100 dark:hover:bg-slate-700 p-2 rounded"
+					className="flex items-center cursor-pointer hover:bg-zinc-100 text-slate-950 \
+					dark:text-slate-100 dark:hover:bg-zinc-700 p-2 rounded"
 					onClick={isOpenCallback}
 				>
 					<div className="w-8 h-8 rounded-full overflow-hidden flex justify-center items-center
@@ -42,7 +42,7 @@ function HeaderDropdown () {
 				{isOpen && (
 					<div
 						className="origin-top-right absolute right-0 mt-1 rounded-md bg-white ring-1 ring-slate-950 ring-opacity-20 \
-							dark:bg-slate-950 dark:ring-white dark:ring-opacity-20"
+							dark:bg-zinc-950 dark:ring-white dark:ring-opacity-20"
 						style={{ width: "170px"}}
 						aria-orientation="vertical"
 						aria-labelledby="menu-button"

@@ -37,7 +37,7 @@ export default function EnterPipID(props: Props) {
 				</label>
 				<input
 					className={`mt-1 p-2 w-full border-2 rounded-md text-slate-950 dark:text-slate-200
-					bg-white dark:bg-slate-800 outline-none
+					bg-white dark:bg-zinc-800 outline-none
 					${(pipUUIDValid && doesPipUUIDExist) ?
 			"border-green-500 dark:border-green-700" : "border-red-500 dark:border-red-500"}`}
 					value={pipUUID}

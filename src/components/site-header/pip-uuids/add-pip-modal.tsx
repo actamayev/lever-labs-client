@@ -35,7 +35,7 @@ export default function AddPipModal(props: Props) {
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
 			<div
 				ref={modalRef}
-				className="bg-white dark:bg-slate-800 rounded-lg shadow-lg w-1/4 max-h-full overflow-visible"
+				className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg w-1/4 max-h-full overflow-visible"
 				onClick={e => e.stopPropagation()}
 			>
 				<ModalHeader

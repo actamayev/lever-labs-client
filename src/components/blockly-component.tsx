@@ -72,7 +72,7 @@ function BlocklyComponent() {
 			</div>
 			<div className="mt-4">
 				<h3 className="text-lg font-bold dark:text-white">Generated C++</h3>
-				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
+				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded">
 					{blocklyState.cppCode}
 				</pre>
 			</div>

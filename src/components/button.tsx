@@ -19,8 +19,8 @@ export default function Button (props: Props) {
 	let backgroundColor
 	let hoverColor
 	if (disabled) {
-		backgroundColor = "bg-slate-400"
-		hoverColor = "hover:bg-slate-400"
+		backgroundColor = "bg-zinc-400"
+		hoverColor = "hover:bg-zinc-400"
 	} else {
 		backgroundColor = colorClass || ""
 		hoverColor = hoverClass || ""

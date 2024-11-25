@@ -21,9 +21,9 @@ root.render(
 			<ContextLevelComponent>
 				<HelmetProvider>
 					<BrowserRouter>
-						<Layout>
-							<App />
-						</Layout>
+						{/* <Layout> */}
+						<App />
+						{/* </Layout> */}
 					</BrowserRouter>
 				</HelmetProvider>
 			</ContextLevelComponent>

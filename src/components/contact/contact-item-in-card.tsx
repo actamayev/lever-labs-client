@@ -22,7 +22,7 @@ function ContactItemInCard(props: Props) {
 
 	return (
 		<div
-			className="flex justify-between py-2 hover:bg-slate-100 dark:hover:bg-slate-700 m-1 rounded-lg cursor-pointer"
+			className="flex justify-between py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 m-1 rounded-lg cursor-pointer"
 			onClick={copyToClipboard}
 		>
 			<span className="text-left ml-2">{name}</span>

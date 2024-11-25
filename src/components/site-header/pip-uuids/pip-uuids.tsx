@@ -48,7 +48,7 @@ function PipUUIDs() {
 			ref={dropdownRef}
 		>
 			<div
-				className="flex w-52 h-9 items-stretch justify-between bg-slate-200 dark:bg-slate-700
+				className="flex w-52 h-9 items-stretch justify-between bg-zinc-200 dark:bg-zinc-700
 			text-black dark:text-white rounded-lg"
 				onClick={handlePipNameClick}
 			>
