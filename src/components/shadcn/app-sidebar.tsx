@@ -16,6 +16,7 @@ import {
 import { Link } from "react-router-dom"
 import { HiBeaker } from "react-icons/hi"
 import { TbSandbox } from "react-icons/tb"
+import NavTheme from "./nav-theme"
 
 // This is sample data
 const data = {
@@ -97,6 +98,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
+          <NavTheme />
           <NavUser />
         </SidebarFooter>
       </Sidebar>

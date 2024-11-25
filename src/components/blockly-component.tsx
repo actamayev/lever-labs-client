@@ -80,6 +80,7 @@ function BlocklyComponent() {
 				title="Send code to Pip"
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
+				className="mt-2"
 			/>
 		</div>
 	)
