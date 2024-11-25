@@ -10,11 +10,7 @@ import PipUuids from "../site-header/pip-uuids/pip-uuids"
 export default function MySidebar() {
 	return (
 		<SidebarProvider
-			style={
-		{
-			"--sidebar-width": "350px",
-		} as React.CSSProperties
-			}
+			style={ { "--sidebar-width": "350px" } as React.CSSProperties }
 		>
 			<AppSidebar />
 			<SidebarInset>
