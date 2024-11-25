@@ -6,7 +6,7 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"
 import "./index.css"
 import App from "./App"
-import Layout from "./components/layout"
+// import Layout from "./components/layout"
 import ContextLevelComponent from "./context-level-component"
 
 if (process.env.NODE_ENV === "production") disableReactDevTools()
