@@ -1,8 +1,5 @@
 import * as React from "react"
-import { Command, File, Inbox } from "lucide-react"
-
 import NavUser from "@/components/shadcn/nav-user"
-import { Label } from "@/components/shadcn/ui/label"
 import {
   Sidebar,
   SidebarContent,
@@ -16,8 +13,9 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/shadcn/ui/sidebar"
-import { Switch } from "@/components/shadcn/ui/switch"
 import { Link } from "react-router-dom"
+import { HiBeaker } from "react-icons/hi"
+import { TbSandbox } from "react-icons/tb"
 
 // This is sample data
 const data = {
@@ -25,13 +23,13 @@ const data = {
     {
       title: "Sandbox",
       url: "#",
-      icon: Inbox,
+      icon: TbSandbox,
       isActive: true,
     },
     {
       title: "Lab",
       url: "#",
-      icon: File,
+      icon: HiBeaker,
       isActive: false,
     }
   ]
@@ -59,27 +57,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
-            <Link
-              to="/"
-              className="flex items-center font-semibold text-3xl flex-shrink-0 dark:text-white"
-            >
-            <img
-              src="/favicon.svg"
-              alt="Logo"
-              style={{ height: "30px", verticalAlign: "middle" }}
-            />
-            </Link>
-              {/* <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
-                <a href="#">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    <Command className="size-4" />
-                  </div>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">Acme Inc</span>
-                    <span className="truncate text-xs">Enterprise</span>
-                  </div>
-                </a>
-              </SidebarMenuButton> */}
+              <Link
+                to="/"
+                className="flex items-center flex-shrink-0 dark:text-white"
+              >
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <img
+                    src="/favicon.svg"
+                    alt="Logo"
+                    className="h-8 w-8" // This will make the logo fill the container
+                  />
+                </div>
+              </Link>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
@@ -120,10 +109,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <div className="text-base font-medium text-foreground">
               {activeItem.title}
             </div>
-            <Label className="flex items-center gap-2 text-sm">
-              <span>Unreads</span>
-              <Switch className="shadow-none" />
-            </Label>
           </div>
           <SidebarInput placeholder="Type to search..." />
         </SidebarHeader>
