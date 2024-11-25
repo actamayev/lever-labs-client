@@ -9,7 +9,7 @@ export default function HeaderNav() {
 			<div className="flex justify-between items-center w-full px-2 relative h-14">
 				<LogoHeaderSection />
 				<div className="flex items-center z-10">
-					<PipUUIDs />
+					{/* <PipUUIDs /> */}
 					<ChooseSiteTheme />
 					<LoginLogoutHeaderItem />
 				</div>

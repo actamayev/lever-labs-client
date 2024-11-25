@@ -2,7 +2,7 @@ import { observer } from "mobx-react"
 import { useLocation } from "react-router-dom"
 import NullUserNavLink from "../null-user-nav-link"
 import { useAuthContext } from "../../contexts/auth-context"
-import HeaderDropdown from "./profile-dropdown/header-dropdown"
+// import HeaderDropdown from "./profile-dropdown/header-dropdown"
 
 function LoginLogoutHeaderItem() {
 	const authClass = useAuthContext()
@@ -15,7 +15,7 @@ function LoginLogoutHeaderItem() {
 		return <NullUserNavLink />
 	}
 
-	return <HeaderDropdown />
+	// return <HeaderDropdown />
 }
 
 export default observer(LoginLogoutHeaderItem)

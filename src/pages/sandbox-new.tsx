@@ -4,7 +4,6 @@ import PageHelmet from "../components/helmet/page-helmet"
 import MySidebar from "../components/my-sidebar/my-sidebar"
 // import BlocklyComponent from "../components/blockly-component"
 import ShowAuthToNullUser from "../components/show-auth-to-null-user"
-import Page from "../app/dashboard/page"
 
 function SandboxNew() {
 	const authClass = useAuthContext()
@@ -21,9 +20,7 @@ function SandboxNew() {
 	return (
 		<>
 			<PageHelmet pageTitle="/sandbox-new" />
-			<Page />
-			{/* <MySidebar >
-			</MySidebar> */}
+			<MySidebar />
 		</>
 	)
 }

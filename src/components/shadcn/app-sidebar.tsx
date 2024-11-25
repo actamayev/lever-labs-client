@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react"
 
-import { NavUser } from "@/components/shadcn/nav-user"
+import NavUser from "@/components/shadcn/nav-user"
 import { Label } from "@/components/shadcn/ui/label"
 import {
   Sidebar,
@@ -20,12 +20,7 @@ import { Switch } from "@/components/shadcn/ui/switch"
 
 // This is sample data
 const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
+   navMain: [
     {
       title: "Inbox",
       url: "#",
@@ -213,7 +208,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
-          <NavUser user={data.user} />
+          <NavUser />
         </SidebarFooter>
       </Sidebar>
 
