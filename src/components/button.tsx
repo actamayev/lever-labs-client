@@ -10,6 +10,7 @@ interface Props {
 	style?: object
 }
 
+// TODO: Remove this from being used everywhere: transition to using shadcn button
 export default function Button (props: Props) {
 	const {
 		title, titleIcon, colorClass, hoverClass,

@@ -2,6 +2,7 @@ import { observer } from "mobx-react"
 import { CSSTransition } from "react-transition-group"
 import { useNotificationsContext } from "../contexts/notifications-context"
 
+// TODO: Remove this and replace with shadcn toast
 function NotificationBox() {
 	const notificationsClass = useNotificationsContext()
 
