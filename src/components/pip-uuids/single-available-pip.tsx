@@ -16,7 +16,7 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 		<Button
 			className={cn(
 				"w-full flex items-center justify-between px-3 h-7",
-				"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
+				"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-800 cursor-pointer mb-2"
 			)}
 			onClick={requestToConnectToPipCallback}
 		>

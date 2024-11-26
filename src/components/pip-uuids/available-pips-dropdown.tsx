@@ -30,7 +30,7 @@ function AvailablePipsDropdown(props: Props) {
 			<Button
 				onClick={() => setIsModalOpen(true)}
 				className={cn(
-					"w-full px-4 py-2 h-7 flex items-center gap-2 text-black dark:text-white mt-2",
+					"w-full px-4 py-2 h-7 flex items-center gap-2 text-black dark:text-white",
 					"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
 				)}
 			>

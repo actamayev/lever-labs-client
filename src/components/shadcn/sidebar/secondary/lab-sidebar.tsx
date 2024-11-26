@@ -11,7 +11,7 @@ export default function LabSidebar() {
 		<Sidebar collapsible="none" className="hidden flex-1 md:flex">
 			<SidebarHeader className="gap-3.5 border-b p-4">
 				<div className="flex w-full items-center justify-between">
-					<div className="text-base font-medium text-foreground">
+					<div className="text-lg font-medium text-foreground">
 						Lab
 					</div>
 				</div>

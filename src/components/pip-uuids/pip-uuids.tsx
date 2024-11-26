@@ -15,6 +15,8 @@ import {
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import { Button } from "../shadcn/ui/button"
+import { cn } from "../../lib/shadcn/utils"
 
 function PipUUIDs() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -49,24 +51,34 @@ function PipUUIDs() {
 
 	return (
 		<div className="relative mr-2" ref={dropdownRef}>
-			<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-				<DropdownMenuTrigger asChild>
-					<div
-						className="flex w-52 h-7 items-stretch justify-between bg-zinc-100
-						dark:bg-zinc-800 text-black dark:text-white rounded-lg"
-						onClick={handlePipNameClick}
-					>
-						<PipName />
-						<DropdownArrow
-							isDropdownOpen={isDropdownOpen}
-							setIsDropdownOpen={setIsDropdownOpen}
-						/>
-					</div>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent className="w-52">
-					<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
-				</DropdownMenuContent>
-			</DropdownMenu>
+			<div className="flex w-52 h-7 items-stretch justify-between bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
+				<Button
+					variant="ghost"
+					onClick={handlePipNameClick}
+					className={cn(
+						"flex-grow h-full px-3 justify-start",
+						"hover:bg-zinc-300 dark:hover:bg-zinc-600",
+						"rounded-none",
+						_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"
+					)}
+				>
+					<PipName />
+				</Button>
+
+				<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+					<DropdownMenuTrigger asChild>
+						<div className="h-full">
+							<DropdownArrow
+								isDropdownOpen={isDropdownOpen}
+								setIsDropdownOpen={setIsDropdownOpen}
+							/>
+						</div>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent className="w-52">
+						<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</div>
 
 			{isModalOpen && <AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />}
 		</div>
