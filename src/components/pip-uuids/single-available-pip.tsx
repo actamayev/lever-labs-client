@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import PipStatusTooltip from "./pip-status-tooltip"
-import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
+import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 
 function SingleAvailablePip({ pip } : { pip: PipData }) {
 	const requestToConnectToPip = useRequestToConnectToPip()

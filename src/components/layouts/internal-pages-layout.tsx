@@ -5,7 +5,7 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import { AppSidebar } from "@/components/shadcn/app-sidebar"
 import { Separator } from "@/components/shadcn/ui/separator"
-import PipUuids from "../site-header/pip-uuids/pip-uuids"
+import PipUuids from "../pip-uuids/pip-uuids"
 
 interface Props {
 	children: React.ReactNode

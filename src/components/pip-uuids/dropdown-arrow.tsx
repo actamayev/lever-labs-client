@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
+import { usePipContext } from "../../contexts/pip-context"
 
 interface Props {
 	isDropdownOpen: boolean

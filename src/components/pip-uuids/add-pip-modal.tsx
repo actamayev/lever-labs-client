@@ -1,13 +1,13 @@
-import { useCallback, useRef, useState } from "react"
-import Slider from "../../slider"
-import EnterPipID from "./enter-pip-id"
-import FormGroup from "../../form-group"
-import ModalHeader from "../../modal-header"
-import { Button } from "../../shadcn/ui/button"
-import useAddPip from "../../../hooks/pip/add-pip"
-import useValidatePipData from "../../../hooks/pip/validate-pip-data"
-import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
 import { createPortal } from "react-dom"
+import { useCallback, useRef, useState } from "react"
+import Slider from "../slider"
+import EnterPipID from "./enter-pip-id"
+import FormGroup from "../form-group"
+import ModalHeader from "../modal-header"
+import { Button } from "../shadcn/ui/button"
+import useAddPip from "../../hooks/pip/add-pip"
+import useValidatePipData from "../../hooks/pip/validate-pip-data"
+import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 
 interface Props {
 	toggleModalOpen: () => void

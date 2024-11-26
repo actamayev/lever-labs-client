@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react"
-import ErrorMessage from "../../error-message"
-import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
-import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
+import ErrorMessage from "../error-message"
+import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
+import useCheckIfPipUUIDIsValid from "../../hooks/pip/check-if-pip-uuid-is-valid"
 
 interface Props {
 	pipUUID: PipUUID

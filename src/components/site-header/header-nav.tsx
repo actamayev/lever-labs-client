@@ -1,5 +1,5 @@
+import GoToSandboxButton from "./go-to-sandbox-button"
 import LogoHeaderSection from "./logo-header-section"
-import LoginLogoutHeaderItem from "./login-logout-header-item"
 
 export default function HeaderNav() {
 	return (
@@ -7,7 +7,7 @@ export default function HeaderNav() {
 			<div className="flex justify-between items-center w-full px-2 relative h-14">
 				<LogoHeaderSection />
 				<div className="flex items-center z-10">
-					<LoginLogoutHeaderItem />
+					<GoToSandboxButton />
 				</div>
 			</div>
 		</nav>

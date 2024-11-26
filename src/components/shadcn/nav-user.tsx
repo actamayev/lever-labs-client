@@ -57,7 +57,6 @@ function NavUser() {
                   extraClasses="min-w-full min-h-full object-cover"
                   profileImageUrl={profilePictureUrl}
                 />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{username}</span>

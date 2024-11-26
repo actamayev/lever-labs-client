@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
 import PipStatusTooltip from "./pip-status-tooltip"
-import { usePipContext } from "../../../contexts/pip-context"
+import { usePipContext } from "../../contexts/pip-context"
 
 function PipName() {
 	const pipClass = usePipContext()
