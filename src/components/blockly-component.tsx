@@ -61,8 +61,8 @@ function BlocklyComponent() {
 	}, [blocklyState.cppCode, sendCppToPip])
 
 	return (
-		<div className="h-screen w-full p-4">
-			<div className="h-1/2 border border-zinc-300 rounded">
+		<div className="h-screen w-full p-4 mt-4">
+			<div className="h-1/2 border border-zinc-300 rounded relative z-0">
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}

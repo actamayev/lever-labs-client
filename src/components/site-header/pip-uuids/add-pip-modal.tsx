@@ -1,12 +1,13 @@
 import { useCallback, useRef, useState } from "react"
-import Button from "../../button"
 import Slider from "../../slider"
 import EnterPipID from "./enter-pip-id"
 import FormGroup from "../../form-group"
 import ModalHeader from "../../modal-header"
+import { Button } from "../../shadcn/ui/button"
 import useAddPip from "../../../hooks/pip/add-pip"
 import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
+import { createPortal } from "react-dom"
 
 interface Props {
 	toggleModalOpen: () => void
@@ -31,7 +32,7 @@ export default function AddPipModal(props: Props) {
 		await addPip(pipData, toggleModalOpen, isPipNameNeeded, doesPipUUIDExist)
 	}, [addPip, doesPipUUIDExist, isPipNameNeeded, pipData, toggleModalOpen])
 
-	return (
+	return createPortal(
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-zinc-800 dark:text-zinc-50">
 			<div
 				ref={modalRef}
@@ -80,14 +81,16 @@ export default function AddPipModal(props: Props) {
 						</div>
 						<div className="flex justify-between mt-2 items-center">
 							<Button
-								title={`Add ${pipData.pipName}`}
 								onClick={addPipCallback}
 								disabled={!validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded)}
-							/>
+							>
+								Add {pipData.pipName}
+							</Button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>,
+		document.body
 	)
 }

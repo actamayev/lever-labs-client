@@ -1,9 +1,9 @@
 import { useState } from "react"
-import Button from "../button"
 import EmailInput from "./email-input"
 import ErrorMessage from "../error-message"
 import PasswordInput from "./password-input"
 import UsernameInput from "./username-input"
+import { Button } from "../shadcn/ui/button"
 import ConfirmPassword from "./confirm-password"
 import SubRegisterInfo from "./sub-register-info"
 import GoogleSignIn from "./google/google-sign-in"
@@ -61,10 +61,11 @@ export default function Register(props: Props) {
 					/>
 
 					<Button
-						title="Register"
 						className="my-3 w-full font-semibold text-lg text-white"
 						disabled={loading}
-					/>
+					>
+						Register
+					</Button>
 
 					<ErrorMessage error={error} />
 				</form>
