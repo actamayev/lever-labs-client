@@ -35,6 +35,7 @@ function PipUUIDs() {
 
 	const handlePipNameClick = useCallback(async (e: React.MouseEvent) => {
 		e.stopPropagation()
+		console.log("here")
 		if (!_.isNull(pipClass.selectedPip)) {
 			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 				return await diconnectFromPip(pipClass.selectedPip)
@@ -51,21 +52,22 @@ function PipUUIDs() {
 
 	return (
 		<div className="relative mr-2" ref={dropdownRef}>
-			<div className="flex w-52 h-7 items-stretch justify-between bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
-				<Button
-					variant="ghost"
-					onClick={handlePipNameClick}
-					className={cn(
-						"flex-grow h-full px-3 justify-start",
-						"hover:bg-zinc-300 dark:hover:bg-zinc-600",
-						"rounded-none",
-						_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"
-					)}
-				>
-					<PipName />
-				</Button>
+			<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+				<div className="flex w-52 h-7 items-stretch justify-between
+				bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
+					<Button
+						variant="ghost"
+						onClick={handlePipNameClick}
+						className={cn(
+							"flex-grow h-full px-3 justify-start",
+							"hover:bg-zinc-300 dark:hover:bg-zinc-600",
+							"rounded-none",
+							_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"
+						)}
+					>
+						<PipName />
+					</Button>
 
-				<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
 					<DropdownMenuTrigger asChild>
 						<div className="h-full">
 							<DropdownArrow
@@ -74,11 +76,16 @@ function PipUUIDs() {
 							/>
 						</div>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent className="w-52">
-						<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
-					</DropdownMenuContent>
-				</DropdownMenu>
-			</div>
+				</div>
+
+				<DropdownMenuContent
+					align="start"
+					className="w-52"
+					sideOffset={8}
+				>
+					<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
+				</DropdownMenuContent>
+			</DropdownMenu>
 
 			{isModalOpen && <AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />}
 		</div>
