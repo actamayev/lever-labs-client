@@ -1,13 +1,18 @@
 import { observer } from "mobx-react"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+	TooltipProvider
+} from "@/components/shadcn/ui/tooltip"
 
 interface Props {
-    pipData: PipData
+  pipData: PipData
 }
 
 function PipStatusTooltip(props: Props) {
 	const { pipData } = props
-	const [showTooltip, setShowTooltip] = useState(false)
 
 	const getStatusColor = useCallback((pipStatus: PipConnectionStatus) => {
 		switch (pipStatus) {
@@ -30,23 +35,16 @@ function PipStatusTooltip(props: Props) {
 	}, [pipData.pipName])
 
 	return (
-		<div
-			className="relative"
-			onMouseEnter={() => setShowTooltip(true)}
-			onMouseLeave={() => setShowTooltip(false)}
-		>
-			<div className={`h-3 w-3 rounded-full ${getStatusColor(pipData.pipConnectionStatus)}`} />
-
-			{showTooltip && (
-				<div
-					className="absolute right-0 bg-zinc-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap z-50
-                    opacity-0 transition-opacity duration-500"
-					style={{ opacity: 1 }}
-				>
+		<TooltipProvider delayDuration={0}>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className={`h-3 w-3 rounded-full ${getStatusColor(pipData.pipConnectionStatus)}`} />
+				</TooltipTrigger>
+				<TooltipContent side="bottom" className="bg-zinc-700 text-zinc-100">
 					{getStatusMessage(pipData.pipConnectionStatus)}
-				</div>
-			)}
-		</div>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
 

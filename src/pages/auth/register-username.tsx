@@ -1,9 +1,9 @@
 import _ from "lodash"
 import { useMemo, useState } from "react"
 import FormGroup from "../../components/form-group"
-import Button from "../../components/button"
-import PageHelmet from "../../components/helmet/page-helmet"
 import ErrorMessage from "../../components/error-message"
+import { Button } from "../../components/shadcn/ui/button"
+import PageHelmet from "../../components/helmet/page-helmet"
 import AuthTemplate from "../../components/templates/auth-template"
 import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import useHandleTypeUsername from "../../hooks/handle-type-validation/handle-type-username"
@@ -38,12 +38,11 @@ export default function RegisterUsername() {
 					/>
 
 					<Button
-						title = {_.isEmpty(username) ? "Register username" : `Register ${username}`}
-						className="mt-3 w-full font-semibold text-lg text-white"
-						colorClass="bg-blue-600"
-						hoverClass="hover:bg-blue-700"
+						className="my-3 w-full font-semibold text-lg text-white dark:text-black"
 						disabled={loading || isDisabled}
-					/>
+					>
+						{_.isEmpty(username) ? "Register username" : `Register ${username}`}
+					</Button>
 
 					<ErrorMessage error={error} />
 				</form>
