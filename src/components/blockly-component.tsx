@@ -27,6 +27,7 @@ function BlocklyComponent() {
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const isDarkMode = defaultSiteTheme === "dark"
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
+	const containerRef = useRef<HTMLDivElement>(null)
 
 	const workspaceConfig = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
@@ -43,6 +44,22 @@ function BlocklyComponent() {
 			xml: newXml,
 			cppCode
 		})
+	}, [])
+
+	useEffect(() => {
+		if (!containerRef.current) return
+
+		const resizeObserver = new ResizeObserver(() => {
+			if (workspaceRef.current) {
+				Blockly.svgResize(workspaceRef.current)
+			}
+		})
+
+		resizeObserver.observe(containerRef.current)
+
+		return () => {
+			resizeObserver.disconnect()
+		}
 	}, [])
 
 	useEffect(() => {
@@ -76,7 +93,10 @@ function BlocklyComponent() {
 
 	return (
 		<div className="h-screen w-full p-4 mt-4">
-			<div className="h-1/2 border border-zinc-300 rounded relative z-0">
+			<div
+				ref={containerRef}
+				className="h-1/2 border border-zinc-300 dark:border-zinc-700 rounded relative z-0"
+			>
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}
