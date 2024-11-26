@@ -79,7 +79,7 @@ function PipUUIDs() {
 				</div>
 
 				<DropdownMenuContent
-					align="start"
+					align="end"
 					className="w-52"
 					sideOffset={8}
 				>
