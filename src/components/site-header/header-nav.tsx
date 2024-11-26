@@ -1,5 +1,3 @@
-import PipUUIDs from "./pip-uuids/pip-uuids"
-import ChooseSiteTheme from "../choose-site-theme"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "./login-logout-header-item"
 
@@ -9,8 +7,6 @@ export default function HeaderNav() {
 			<div className="flex justify-between items-center w-full px-2 relative h-14">
 				<LogoHeaderSection />
 				<div className="flex items-center z-10">
-					{/* <PipUUIDs /> */}
-					<ChooseSiteTheme />
 					<LoginLogoutHeaderItem />
 				</div>
 			</div>

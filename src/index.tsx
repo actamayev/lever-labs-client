@@ -6,8 +6,9 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"
 import "./index.css"
 import App from "./App"
-// import Layout from "./components/layout"
+// import ClassicLayout from "./components/layout"
 import ContextLevelComponent from "./context-level-component"
+import ConditionalLayout from "./components/layouts/conditional-layout"
 
 if (process.env.NODE_ENV === "production") disableReactDevTools()
 
@@ -21,9 +22,9 @@ root.render(
 			<ContextLevelComponent>
 				<HelmetProvider>
 					<BrowserRouter>
-						{/* <Layout> */}
-						<App />
-						{/* </Layout> */}
+						<ConditionalLayout>
+							<App />
+						</ConditionalLayout>
 					</BrowserRouter>
 				</HelmetProvider>
 			</ContextLevelComponent>

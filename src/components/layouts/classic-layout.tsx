@@ -1,12 +1,12 @@
-import Footer from "./footer/footer"
-import NotificationBox from "./notification-box"
-import HeaderNav from "./site-header/header-nav"
+import Footer from "../footer/footer"
+import NotificationBox from "../notification-box"
+import HeaderNav from "../site-header/header-nav"
 
 interface Props {
 	children: React.ReactNode
 }
 
-export default function Layout (props: Props) {
+export default function ClassicLayout (props: Props) {
 	const { children } = props
 
 	return (

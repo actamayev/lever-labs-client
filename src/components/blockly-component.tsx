@@ -3,13 +3,14 @@ import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
 import { useState, useEffect, useCallback } from "react"
-import Button from "./button"
+// import Button from "./button"
 import { usePipContext } from "../contexts/pip-context"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import useSendCppToPip from "../hooks/pip/send-cpp-to-pip"
 import workspaceConfig from "../utils/blockly/workspace-config"
 import { toolboxConfig } from "../utils/blockly/toolbox-config"
 import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
+import { Button } from "./shadcn/ui/button"
 
 const initialXml = `
     <xml xmlns="https://developers.google.com/blockly/xml"/>
@@ -77,11 +78,12 @@ function BlocklyComponent() {
 				</pre>
 			</div>
 			<Button
-				title="Send code to Pip"
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
 				className="mt-2"
-			/>
+			>
+				Send code to Pip
+			</Button>
 		</div>
 	)
 }

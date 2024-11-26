@@ -1,9 +1,9 @@
 import { useState } from "react"
-import Button from "../button"
 import ContactInput from "./contact-input"
 import ErrorMessage from "../error-message"
 import SubLoginInfo from "./sub-login-info"
 import PasswordInput from "./password-input"
+import { Button } from "../shadcn/ui/button"
 import GoogleSignIn from "./google/google-sign-in"
 import AuthTemplate from "../templates/auth-template"
 import useLoginSubmit from "../../hooks/auth/login-submit"
@@ -47,10 +47,11 @@ export default function Login(props: Props) {
 					/>
 
 					<Button
-						title="Login"
 						className="my-3 w-full font-semibold text-lg text-white"
 						disabled={loading}
-					/>
+					>
+						Login
+					</Button>
 
 					<ErrorMessage error={error} />
 				</form>

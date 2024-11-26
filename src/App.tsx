@@ -11,7 +11,6 @@ import LoginPage from "./pages/auth/login-page"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
 
-import SandboxNew from "./pages/sandbox-new"
 import useScrollToTop from "./hooks/scroll-to-top"
 import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
 import useGetAuthDataFromStorage from "./hooks/auth/get-auth-data-from-storage"
@@ -44,7 +43,6 @@ function App() {
 			{/* <Route path="/garage" element={<Garage />} />
 			<Route path="/lab" element={<Lab />} /> */}
 			<Route path="/sandbox" element={<Sandbox />} />
-			<Route path="/sandbox-new" element={<SandboxNew />} />
 
 			{/* <Route path="/account" element={<MyAccount />} /> */}
 

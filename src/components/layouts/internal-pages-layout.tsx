@@ -5,10 +5,15 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import { AppSidebar } from "@/components/shadcn/app-sidebar"
 import { Separator } from "@/components/shadcn/ui/separator"
-import BlocklyComponent from "../blockly-component"
 import PipUuids from "../site-header/pip-uuids/pip-uuids"
 
-export default function MySidebar() {
+interface Props {
+	children: React.ReactNode
+}
+
+export default function InternalPagesLayout(props: Props) {
+	const { children } = props
+
 	return (
 		<SidebarProvider style={ { "--sidebar-width": "350px" } as React.CSSProperties }>
 			<AppSidebar />
@@ -18,7 +23,7 @@ export default function MySidebar() {
 					<Separator orientation="vertical" className="mr-2 h-4" />
 					<PipUuids />
 				</header>
-				<BlocklyComponent />
+				{ children }
 			</SidebarInset>
 		</SidebarProvider>
 	)

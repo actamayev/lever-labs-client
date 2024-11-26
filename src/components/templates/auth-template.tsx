@@ -1,3 +1,10 @@
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/components/shadcn/ui/card"
+
 interface Props {
 	title: string
 	customStyles?: object
@@ -5,19 +12,48 @@ interface Props {
 }
 
 export default function AuthTemplate(props: Props) {
-	const { title, children, customStyles = {} } = props
-
+	const { title, children } = props
 	return (
-		<div className="flex justify-center">
-			<div
-				className="bg-white dark:bg-zinc-800 border rounded-lg p-5 mx-auto border-slate-100 dark:border-slate-700"
-				style={customStyles}
-			>
-				<h1 className="flex mx-auto mb-4 text-5xl font-extrabold leading-none tracking-tight text-slate-950 dark:text-slate-200">
-					{title}
-				</h1>
+		<Card className="mx-auto max-w-sm">
+			<CardHeader>
+				<CardTitle className="text-2xl">{title}</CardTitle>
+			</CardHeader>
+			<CardContent>
 				{children}
-			</div>
-		</div>
+			</CardContent>
+			{/* <div className="grid gap-4">
+					<div className="grid gap-2">
+						<Label htmlFor="email">Email</Label>
+						<Input
+							id="email"
+							type="email"
+							placeholder="m@example.com"
+							required
+						/>
+					</div>
+					<div className="grid gap-2">
+						<div className="flex items-center">
+							<Label htmlFor="password">Password</Label>
+							<Link to="#" className="ml-auto inline-block text-sm underline">
+								Forgot your password?
+							</Link>
+						</div>
+						<Input id="password" type="password" required />
+					</div>
+					<Button type="submit" className="w-full">
+						Login
+					</Button>
+					<Button variant="outline" className="w-full">
+						Login with Google
+					</Button>
+				</div>
+				<div className="mt-4 text-center text-sm">
+					Don&apos;t have an account?{" "}
+					<Link to="#" className="underline">
+						Sign up
+					</Link>
+				</div>
+			</CardContent> */}
+		</Card>
 	)
 }
