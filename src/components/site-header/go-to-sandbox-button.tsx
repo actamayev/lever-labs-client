@@ -1,8 +1,15 @@
-import { ArrowRight } from "lucide-react"
-import { Button } from "@/components/shadcn/ui/button"
+import _ from "lodash"
+import { observer } from "mobx-react"
 import { Link } from "react-router-dom"
+import { ArrowRight } from "lucide-react"
+import useUsername from "../../hooks/memos/username"
+import { Button } from "@/components/shadcn/ui/button"
 
-export default function GoToSandboxButton() {
+function GoToSandboxButton() {
+	const username = useUsername()
+
+	if (_.isNull(username)) return null
+
 	return (
 		<Button
 			asChild
@@ -26,3 +33,5 @@ export default function GoToSandboxButton() {
 		</Button>
 	)
 }
+
+export default observer(GoToSandboxButton)
