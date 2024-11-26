@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { observer } from "mobx-react"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
