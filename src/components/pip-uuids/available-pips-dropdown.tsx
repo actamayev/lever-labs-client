@@ -2,6 +2,9 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import SingleAvailablePip from "./single-available-pip"
 import { usePipContext } from "../../contexts/pip-context"
+import { cn } from "../../lib/shadcn/utils"
+import { Plus } from "lucide-react"
+import { Button } from "../shadcn/ui/button"
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,21 +20,24 @@ function AvailablePipsDropdown(props: Props) {
 	}, [pipClass.selectedPip, pipClass.pipData.length])
 
 	return (
-		<div className="absolute top-full left-0 mt-2 w-full bg-white dark:bg-zinc-800 rounded-lg shadow-lg z-50">
+		<>
 			{availablePips.map((pip) => (
 				<SingleAvailablePip
 					key={pip.pipUUID}
 					pip={pip}
 				/>
 			))}
-			<div
-				className="px-4 py-2 text-center text-black dark:text-white cursor-pointer
-				hover:bg-zinc-100 dark:hover:bg-zinc-700"
+			<Button
 				onClick={() => setIsModalOpen(true)}
+				className={cn(
+					"w-full px-4 py-2 h-7 flex items-center gap-2 text-black dark:text-white mt-2",
+					"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-800 cursor-pointer"
+				)}
 			>
-				+ Add Pip
-			</div>
-		</div>
+				<Plus className="h-4 w-4" />
+				<span>Add Pip</span>
+			</Button>
+		</>
 	)
 }
 

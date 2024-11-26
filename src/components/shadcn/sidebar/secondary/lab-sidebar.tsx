@@ -15,7 +15,7 @@ export default function LabSidebar() {
 						Lab
 					</div>
 				</div>
-				<SidebarInput placeholder="Type to search..." />
+				<SidebarInput placeholder="Search lessons..." />
 			</SidebarHeader>
 			<LabGroupMap
 				groupName="Platform"

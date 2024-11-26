@@ -14,7 +14,7 @@ export default function SandboxSidebar() {
 						Sandbox
 					</div>
 				</div>
-				<SidebarInput placeholder="Type to search..." />
+				<SidebarInput placeholder="Search projects..." />
 			</SidebarHeader>
 		</Sidebar>
 	)

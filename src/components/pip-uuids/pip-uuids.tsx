@@ -10,6 +10,11 @@ import { usePipContext } from "../../contexts/pip-context"
 import useDisconnectFromPip from "../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuTrigger,
+} from "@/components/shadcn/ui/dropdown-menu"
 
 function PipUUIDs() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -43,25 +48,25 @@ function PipUUIDs() {
 	if (_.isNull(username)) return null
 
 	return (
-		<div
-			className="relative mr-2"
-			ref={dropdownRef}
-		>
-			<div
-				className="flex w-52 h-7 items-stretch justify-between bg-zinc-100 dark:bg-zinc-800
-			text-black dark:text-white rounded-lg"
-				onClick={handlePipNameClick}
-			>
-				<PipName />
-				<DropdownArrow
-					isDropdownOpen={isDropdownOpen}
-					setIsDropdownOpen={setIsDropdownOpen}
-				/>
-			</div>
-
-			{isDropdownOpen && (
-				<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
-			)}
+		<div className="relative mr-2" ref={dropdownRef}>
+			<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+				<DropdownMenuTrigger asChild>
+					<div
+						className="flex w-52 h-7 items-stretch justify-between bg-zinc-100
+						dark:bg-zinc-800 text-black dark:text-white rounded-lg"
+						onClick={handlePipNameClick}
+					>
+						<PipName />
+						<DropdownArrow
+							isDropdownOpen={isDropdownOpen}
+							setIsDropdownOpen={setIsDropdownOpen}
+						/>
+					</div>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent className="w-52">
+					<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
+				</DropdownMenuContent>
+			</DropdownMenu>
 
 			{isModalOpen && <AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />}
 		</div>
