@@ -2,15 +2,16 @@ import _ from "lodash"
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo, useRef } from "react"
 // import Button from "./button"
+import { Button } from "./shadcn/ui/button"
 import { usePipContext } from "../contexts/pip-context"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import useSendCppToPip from "../hooks/pip/send-cpp-to-pip"
-import workspaceConfig from "../utils/blockly/workspace-config"
 import { toolboxConfig } from "../utils/blockly/toolbox-config"
+import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
-import { Button } from "./shadcn/ui/button"
+import getWorkspaceConfig, { darkTheme, lightTheme } from "../utils/blockly/workspace-config"
 
 const initialXml = `
     <xml xmlns="https://developers.google.com/blockly/xml"/>
@@ -24,8 +25,17 @@ function BlocklyComponent() {
 	const pipClass = usePipContext()
 	const sendCppToPip = useSendCppToPip()
 	const initializeBlocks = useInitializeBlocks()
+	const defaultSiteTheme = useDefaultSiteTheme()
+	const isDarkMode = defaultSiteTheme === "dark"
+	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
+
+	const workspaceConfig = useMemo(() => {
+		console.log("here")
+		return getWorkspaceConfig(isDarkMode)
+	}, [isDarkMode])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+		workspaceRef.current = workspace
 		const newXml = Blockly.Xml.domToText(
 			Blockly.Xml.workspaceToDom(workspace)
 		)
@@ -36,6 +46,12 @@ function BlocklyComponent() {
 			cppCode
 		})
 	}, [])
+
+	useEffect(() => {
+		if (workspaceRef.current) {
+			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
+		}
+	}, [isDarkMode])
 
 	const disableFlyoutAutoclose = useCallback(() => {
 		const workspace = Blockly.getMainWorkspace() as Blockly.WorkspaceSvg
