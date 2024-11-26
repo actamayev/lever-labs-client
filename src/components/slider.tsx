@@ -19,6 +19,7 @@ export default function Slider(props: SliderProps) {
 			onCheckedChange={onChangeCheckedCondition}
 			disabled={disabledCondition}
 			className={cn(
+				"dark:bg-zinc-400",
 				colorChangeOnToggle && "data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-500"
 			)}
 		/>
