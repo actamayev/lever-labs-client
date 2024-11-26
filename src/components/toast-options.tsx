@@ -9,7 +9,7 @@ interface ToastOptions {
 }
 
 export default function useStyledToast() {
-	const { toast } = useToast()
+	const { toast, dismiss } = useToast()
 
 	const superPositive = ({ title, description, action, duration = 5000 }: ToastOptions) => {
 		toast({
@@ -18,8 +18,13 @@ export default function useStyledToast() {
 			action,
 			duration,
 			className: "bg-green-500 text-white border-green-600 text-bold",
-			// Style any action buttons to match the toast theme
-			// classNameActions: "text-white hover:text-green-200"
+			onOpenChange: (open) => {
+				if (open) {
+					setTimeout(() => {
+						dismiss()
+					}, duration)
+				}
+			}
 		})
 	}
 
@@ -30,7 +35,13 @@ export default function useStyledToast() {
 			action,
 			duration,
 			className: "bg-blue-500 text-white border-blue-600",
-			// classNameActions: "text-white hover:text-blue-200"
+			onOpenChange: (open) => {
+				if (open) {
+					setTimeout(() => {
+						dismiss()
+					}, duration)
+				}
+			}
 		})
 	}
 
@@ -39,8 +50,14 @@ export default function useStyledToast() {
 			title,
 			description,
 			action,
-			duration
-			// Uses default shadcn styling
+			duration,
+			onOpenChange: (open) => {
+				if (open) {
+					setTimeout(() => {
+						dismiss()
+					}, duration)
+				}
+			}
 		})
 	}
 
@@ -50,7 +67,14 @@ export default function useStyledToast() {
 			description,
 			action,
 			duration,
-			variant: "destructive"
+			variant: "destructive",
+			onOpenChange: (open) => {
+				if (open) {
+					setTimeout(() => {
+						dismiss()
+					}, duration)
+				}
+			}
 		})
 	}
 
