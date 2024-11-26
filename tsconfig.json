@@ -35,6 +35,7 @@
 	  "src/",
 	  "**/*.ts",
 	  "**/*.tsx",
+	  "./tailwind.config.ts",
 	  "./.eslintrc.json",
 	  "./postcss.config.js",
 	  "./craco.config.js"
