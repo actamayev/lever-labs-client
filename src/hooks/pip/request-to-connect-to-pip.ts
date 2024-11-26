@@ -2,7 +2,7 @@ import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
-import { useNotificationsContext } from "../../contexts/notifications-context"
+import useStyledToast from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
@@ -10,8 +10,8 @@ export default function useRequestToConnectToPip(): (
 	pipData: PipData
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
+	const toast = useStyledToast()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async (pipData: PipData) => {
@@ -20,11 +20,17 @@ export default function useRequestToConnectToPip(): (
 			switch (foundPip?.pipConnectionStatus) {
 			case "connected": return
 			case "connected to other user": {
-				notificationsClass.setNegativeNotification("Someone is already connected to this Pip")
+				toast.negative({
+					title: "Unable to connect",
+					description: "Someone is already connected to this Pip"
+				})
 				return
 			}
 			case "inactive": {
-				notificationsClass.setNegativeNotification(`Unable to connect: ${pipData.pipName} is not connected to the internet`)
+				toast.negative({
+					title: "Unable to connect",
+					description: `${pipData.pipName} is not connected to the internet`
+				})
 				return
 			}
 			}
@@ -34,7 +40,10 @@ export default function useRequestToConnectToPip(): (
 				throw new Error("Connect to Pip failed")
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: pipData.pipUUID, newConnectionStatus: "connected" })
-			notificationsClass.setPositiveNotification(`Connected to ${pipData.pipName}`)
+			toast.positive({
+				title: `Connected to ${pipData.pipName}`,
+				description: "Happy building!"
+			})
 			pipClass.setSelectedPip(pipData)
 		} catch (error) {
 			console.error(error)
@@ -42,22 +51,30 @@ export default function useRequestToConnectToPip(): (
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "Someone is already connected to this Pip") {
-						notificationsClass.setNegativeNotification("Someone is already connected to this Pip")
+						toast.negative({
+							title: "Unable to connect",
+							description: "Someone is already connected to this Pip"
+						})
 						return
 					} else if (error.response.data.message === "This Pip is not active/connected to the internet") {
-						notificationsClass.setNegativeNotification(
-							`Unable to connect: ${pipData.pipName} is not connected to the internet`
-						)
+						toast.negative({
+							title: "Unable to connect",
+							description: `${pipData.pipName} is not connected to the internet`
+						})
 						return
 					}  else if (error.response.data.message === "User hasn't registered this UUID") {
-						notificationsClass.setNegativeNotification("You haven't regsitered this Pip ID")
+						toast.negative({
+							title: "Unable to connect",
+							description: "You haven't regsitered this Pip ID"
+						})
 						return
 					}
 				}
 			}
-			notificationsClass.setNegativeNotification(
-				`Unable to connect to ${pipData.pipName} at this time. Please reload page and try again.`
-			)
+			toast.negative({
+				title: `Unable to connect to ${pipData.pipName} at this time`,
+				description: "Please reload page and try again"
+			})
 		}
-	}, [blueDotApiClient.pipDataService, notificationsClass, pipClass])
+	}, [blueDotApiClient.pipDataService, pipClass, toast])
 }

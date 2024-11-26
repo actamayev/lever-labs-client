@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom"
-import InternalPagesLayout from "./internal-pages-layout"
 import ClassicLayout from "./classic-layout"
+import InternalPagesLayout from "./internal-pages-layout"
 
 const PrivatePageNames = [
 	"/garage",

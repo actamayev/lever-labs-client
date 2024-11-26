@@ -2,12 +2,12 @@ import _ from "lodash"
 import { useEffect } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import { useSocketContext } from "../../contexts/socket-context"
-import { useNotificationsContext } from "../../contexts/notifications-context"
+import useStyledToast from "../../components/toast-options"
 
 export default function useSocketEventsUseEffect(): void {
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
-	const notificationsClass = useNotificationsContext()
+	const toast = useStyledToast()
 
 	useEffect(() => {
 		if (_.isNull(socketClass.accessToken)) return
@@ -15,16 +15,19 @@ export default function useSocketEventsUseEffect(): void {
 			pipClass.updatePipConnectionStatus(data)
 			const { newConnectionStatus } = data
 			if (newConnectionStatus === "online") {
-				notificationsClass.setPositiveNotification(`${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`)
-				// TODO: Add a button in the notification to connect
+				toast.positive({
+					description: `${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`,
+					// action:
+					// TODO: Add a button in the notification to connect
+				})
 			} else if (newConnectionStatus === "inactive") {
-				notificationsClass.setNeutralNotification(
-					`${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`
-				)
+				toast.neutral({
+					description: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`
+				})
 			} else if (newConnectionStatus === "connected") {
-				notificationsClass.setSuperPositiveNotification(
-					`Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`
-				)
+				toast.superPositive({
+					description: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`
+				})
 			}
 		}
 
@@ -34,5 +37,5 @@ export default function useSocketEventsUseEffect(): void {
 		return (): void => {
 			socketClass.off("pipStatusUpdate", handlePipStatusUpdate) // Remove listener when the component unmounts
 		}
-	}, [notificationsClass, pipClass, socketClass])
+	}, [pipClass, socketClass, toast])
 }

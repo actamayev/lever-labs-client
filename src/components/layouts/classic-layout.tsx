@@ -1,5 +1,4 @@
 import Footer from "../footer/footer"
-import NotificationBox from "../notification-box"
 import HeaderNav from "../site-header/header-nav"
 
 interface Props {
@@ -16,7 +15,6 @@ export default function ClassicLayout (props: Props) {
 				{children}
 			</div>
 			<Footer />
-			<NotificationBox />
 		</div>
 	)
 }

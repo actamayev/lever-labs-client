@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { useNotificationsContext } from "../../contexts/notifications-context"
+import useStyledToast from "../toast-options"
 
 interface Props {
 	name: string
@@ -9,16 +9,19 @@ interface Props {
 
 function ContactItemInCard(props: Props) {
 	const { name, email } = props
-	const notificationsClass = useNotificationsContext()
+	const toast = useStyledToast()
 
 	const copyToClipboard = useCallback(async () => {
 		try {
+			console.log("here")
 			await navigator.clipboard.writeText(email)
-			notificationsClass.setNeutralNotification(`${email} copied to clipboard`)
+			toast.neutral({
+				description: `${email} copied to clipboard`
+			})
 		} catch (error) {
 			console.error(error)
 		}
-	}, [email, notificationsClass])
+	}, [email, toast])
 
 	return (
 		<div

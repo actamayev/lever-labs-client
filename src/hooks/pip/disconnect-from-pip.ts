@@ -1,16 +1,16 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
+import useStyledToast from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useNotificationsContext } from "../../contexts/notifications-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useDisconnectFromPip(): (
 	pipData: PipData
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const notificationsClass = useNotificationsContext()
 	const pipClass = usePipContext()
+	const toast = useStyledToast()
 
 	return useCallback(async (pipData: PipData) => {
 		try {
@@ -23,13 +23,16 @@ export default function useDisconnectFromPip(): (
 				throw new Error("Disconnect from Pip failed")
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: pipData.pipUUID, newConnectionStatus: "online" })
-			notificationsClass.setPositiveNotification(`Disconnected from ${pipData.pipName}`)
+			toast.positive({
+				description: `Disconnected from ${pipData.pipName}`
+			})
 			pipClass.setSelectedPipToFirstPip()
 		} catch (error) {
 			console.error(error)
-			notificationsClass.setNegativeNotification(
-				`Unable to disconnect from ${pipData.pipName} at this time. Please reload page and try again.`
-			)
+			toast.negative({
+				title: `Unable to disconnect from ${pipData.pipName} at this time`,
+				description: "Please reload page and try again."
+			})
 		}
-	}, [blueDotApiClient.pipDataService, notificationsClass, pipClass])
+	}, [blueDotApiClient.pipDataService, pipClass, toast])
 }
