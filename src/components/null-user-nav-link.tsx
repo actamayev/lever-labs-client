@@ -6,7 +6,8 @@ export default function NullUserNavLink() {
 			<AuthHeaderLinks
 				title="Log in"
 				variant="ghost"
-				className="text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white text-base font-medium"
+				className="dark:hover:bg-zinc-600 text-black dark:text-white
+				hover:text-zinc-900 dark:hover:text-white text-base font-medium"
 				linkTo="/login"
 			/>
 			<AuthHeaderLinks
