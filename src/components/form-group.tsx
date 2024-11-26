@@ -18,7 +18,7 @@ interface Props {
 	step?: number
 	value?: string
 }
-
+// TODO: Delete this componet after transiionting to form field
 export default function FormGroup(props: Props) {
 	const {
 		as,

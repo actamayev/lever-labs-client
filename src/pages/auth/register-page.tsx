@@ -1,4 +1,4 @@
-import Register from "../../components/auth/register"
+import Register from "../../components/auth/register/register"
 import PageHelmet from "../../components/helmet/page-helmet"
 
 export default function RegisterPage() {

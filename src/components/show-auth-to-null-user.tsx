@@ -1,6 +1,6 @@
 import { useState } from "react"
-import Login from "./auth/login"
-import Register from "./auth/register"
+import Login from "./auth/login/login"
+import Register from "./auth/register/register"
 
 interface Props {
 	whereToNavigate: PageNames
