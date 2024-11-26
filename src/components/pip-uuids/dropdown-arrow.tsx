@@ -1,6 +1,9 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
+import { ChevronDown } from "lucide-react"
+import { cn } from "@/lib/shadcn/utils"
+import { Button } from "@/components/shadcn/ui/button"
 import { usePipContext } from "../../contexts/pip-context"
 
 interface Props {
@@ -20,23 +23,22 @@ function DropdownArrow(props: Props) {
 	if (_.isEmpty(pipClass.pipData)) return null
 
 	return (
-		<div
-			className="flex items-center px-2 cursor-pointer hover:bg-zinc-300
-				dark:hover:bg-zinc-600 rounded-r-lg border-l border-zinc-300 dark:border-zinc-600"
+		<Button
+			variant="ghost"
+			size="icon"
+			className={cn(
+				"h-full px-2 rounded-none rounded-r-lg border-l border-zinc-300",
+				"dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-600"
+			)}
 			onClick={toggleDropdown}
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				className={`h-5 w-5 transform transition-transform ${
-					isDropdownOpen ? "rotate-180" : "rotate-0"
-				}`}
-				fill="none"
-				viewBox="0 0 24 24"
-				stroke="currentColor"
-			>
-				<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-			</svg>
-		</div>
+			<ChevronDown
+				className={cn(
+					"h-5 w-5 transition-transform duration-200",
+					isDropdownOpen && "rotate-180"
+				)}
+			/>
+		</Button>
 	)
 }
 
