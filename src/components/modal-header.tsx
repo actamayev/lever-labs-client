@@ -1,5 +1,5 @@
-import { FaTimes } from "react-icons/fa"
-import HoverOutlineComponent from "./hover-outline-component"
+import { X } from "lucide-react"
+import { Button } from "./shadcn/ui/button"
 
 interface Props {
 	modalTitle: string
@@ -14,13 +14,17 @@ export default function ModalHeader(props: Props) {
 			<div className="text-lg font-bold">
 				{modalTitle}
 			</div>
-			<HoverOutlineComponent
-				classes="relative flex items-center justify-center inline-block"
-				onClickAction={toggleModalOpen}
-				circlePixelSize="33px"
+			<Button
+				variant="ghost"
+				size="sm"
+				className="h-8 w-8 p-0 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800
+          transition-colors focus-visible:ring-1 focus-visible:ring-zinc-950
+          dark:focus-visible:ring-zinc-300"
+				onClick={toggleModalOpen}
 			>
-				<FaTimes />
-			</HoverOutlineComponent>
+				<X className="h-4 w-4" />
+				<span className="sr-only">Close</span>
+			</Button>
 		</div>
 	)
 }
