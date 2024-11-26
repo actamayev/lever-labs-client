@@ -30,7 +30,6 @@ function BlocklyComponent() {
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 
 	const workspaceConfig = useMemo(() => {
-		console.log("here")
 		return getWorkspaceConfig(isDarkMode)
 	}, [isDarkMode])
 
