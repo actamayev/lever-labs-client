@@ -1,7 +1,6 @@
+/** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line filenames/match-regex
-import type { Config } from "tailwindcss"
-
-export default {
+module.exports = {
 	darkMode: ["class"],
 	content: [
 		"./src/**/*.{js,ts,jsx,tsx}"
@@ -125,4 +124,4 @@ export default {
 	},
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require("tailwindcss-animate")],
-} satisfies Config
+}

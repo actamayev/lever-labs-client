@@ -1,7 +1,7 @@
-/* global require */
-
-// eslint-disable-next-line filenames/match-regex
-export const plugins = [
-	require("tailwindcss"),
-	require("autoprefixer"),
-]
+/** @type {import('postcss-load-config').Config} */
+module.exports = {
+	plugins: {
+	  tailwindcss: {},
+	  autoprefixer: {},
+	}
+}
