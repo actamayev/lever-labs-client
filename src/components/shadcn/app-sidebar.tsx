@@ -1,4 +1,5 @@
-import * as React from "react"
+import { memo, useCallback, useMemo, useState } from "react"
+import { IconType } from "react-icons"
 import NavUser from "@/components/shadcn/nav-user"
 import {
   Sidebar,
@@ -13,34 +14,44 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/shadcn/ui/sidebar"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import { HiBeaker } from "react-icons/hi"
 import { TbSandbox } from "react-icons/tb"
 import NavTheme from "./nav-theme"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
-// This is sample data
-const data = {
-   navMain: [
-    {
-      title: "Sandbox",
-      url: "#",
-      icon: TbSandbox,
-      isActive: true,
-    },
-    {
-      title: "Lab",
-      url: "#",
-      icon: HiBeaker,
-      isActive: false,
-    }
-  ]
+interface NavData {
+  title: string
+  url: StaticPageNames
+  icon: IconType
+  isActive: boolean
 }
 
+// This is sample navData
+const navData: NavData[] = [
+  {
+    title: "Sandbox",
+    url: "/sandbox",
+    icon: TbSandbox,
+    isActive: true,
+  },
+  {
+    title: "Lab",
+    url: "/lab",
+    icon: HiBeaker,
+    isActive: false,
+  }
+]
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // Note: I'm using state to show active item.
-  // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0])
-  const { setOpen } = useSidebar()
+  const navigate = useTypedNavigate()
+  const location = useLocation()
+
+  const getTitle = useMemo(() => {
+    if (location.pathname === "/sandbox") return "Sandbox"
+    else if (location.pathname === "/lab") return "Lab"
+    else return ""
+  }, [location.pathname])
 
   return (
     <Sidebar
@@ -77,15 +88,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
               <SidebarMenu>
-                {data.navMain.map((item) => (
+                {navData.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       tooltip={{
                         children: item.title,
                         hidden: false,
                       }}
-                      onClick={() => setActiveItem(item)}
-                      isActive={activeItem.title === item.title}
+                      onClick={() => navigate(item.url)}
+                      isActive={location.pathname === item.url}
                       className="px-2.5 md:px-2"
                     >
                       <item.icon />
@@ -109,7 +120,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-foreground">
-              {activeItem.title}
+              {getTitle}
             </div>
           </div>
           <SidebarInput placeholder="Type to search..." />
