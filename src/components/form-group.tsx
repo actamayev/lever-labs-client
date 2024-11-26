@@ -46,10 +46,10 @@ export default function FormGroup(props: Props) {
 
 	return (
 		<div className={className}>
-			{label && <label className="block text-sm text-slate-600 dark:text-slate-200 font-semibold">{label}</label>}
+			{label && <label className="block text-sm text-zinc-600 dark:text-zinc-200 font-semibold">{label}</label>}
 			<Component
-				className={`mt-1 p-2 w-full border rounded-md text-slate-950 dark:text-slate-200 bg-white dark:bg-zinc-800 outline-none
-					${value?.length === maxLength ? "border-red-500 dark:border-red-500" : "border-slate-200 dark:border-slate-700"}`}
+				className={`mt-1 p-2 w-full border rounded-md text-zinc-950 dark:text-zinc-200 bg-white dark:bg-zinc-800 outline-none
+					${value?.length === maxLength ? "border-red-500 dark:border-red-500" : "border-zinc-200 dark:border-zinc-700"}`}
 				max={maxValue}
 				min={minAttribute}
 				maxLength={maxLength}

@@ -21,7 +21,7 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 				<PipStatusTooltip pipData={pip} />
 				<span className="text-black dark:text-white truncate max-w-[160px]">{pip.pipName}</span>
 			</div>
-			<span className="text-sm text-slate-500">{pip.pipUUID}</span>
+			<span className="text-sm text-zinc-500">{pip.pipUUID}</span>
 		</div>
 	)
 }

@@ -32,11 +32,11 @@ export default function EnterPipID(props: Props) {
 	return (
 		<div>
 			<div className="w-full">
-				<label className="block text-sm text-slate-600 dark:text-slate-200 font-semibold">
+				<label className="block text-sm text-zinc-600 dark:text-zinc-200 font-semibold">
 					Pip ID
 				</label>
 				<input
-					className={`mt-1 p-2 w-full border-2 rounded-md text-slate-950 dark:text-slate-200
+					className={`mt-1 p-2 w-full border-2 rounded-md text-zinc-950 dark:text-zinc-200
 					bg-white dark:bg-zinc-800 outline-none
 					${(pipUUIDValid && doesPipUUIDExist) ?
 			"border-green-500 dark:border-green-700" : "border-red-500 dark:border-red-500"}`}

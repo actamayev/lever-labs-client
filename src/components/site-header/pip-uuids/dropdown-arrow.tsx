@@ -22,7 +22,7 @@ function DropdownArrow(props: Props) {
 	return (
 		<div
 			className="flex items-center px-2 cursor-pointer hover:bg-zinc-300
-				dark:hover:bg-zinc-600 rounded-r-lg border-l border-slate-300 dark:border-slate-600"
+				dark:hover:bg-zinc-600 rounded-r-lg border-l border-zinc-300 dark:border-zinc-600"
 			onClick={toggleDropdown}
 		>
 			<svg

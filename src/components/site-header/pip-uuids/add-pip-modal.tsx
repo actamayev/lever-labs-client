@@ -32,7 +32,7 @@ export default function AddPipModal(props: Props) {
 	}, [addPip, doesPipUUIDExist, isPipNameNeeded, pipData, toggleModalOpen])
 
 	return (
-		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-slate-800 dark:text-slate-50">
+		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-zinc-800 dark:text-zinc-50">
 			<div
 				ref={modalRef}
 				className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg w-1/4 max-h-full overflow-visible"
@@ -60,7 +60,7 @@ export default function AddPipModal(props: Props) {
 									maxLength={20}
 									className="w-full"
 								/>
-								<span className="text-xs text-slate-600 dark:text-slate-400 ml-0.5">
+								<span className="text-xs text-zinc-600 dark:text-zinc-400 ml-0.5">
 									{(pipData.pipName || "").length}/{20}
 								</span>
 							</div>

@@ -22,7 +22,7 @@
 // 	const classes = useDropdownItemClasses()
 
 // 	return (
-// 		<div className="text-base text-slate-950 dark:text-slate-200">
+// 		<div className="text-base text-zinc-950 dark:text-zinc-200">
 // 			{/* <Link to="/garage" className={classes.middle}>
 // 				<GiTinker className="mr-2" size={20} />
 // 				Garage
@@ -39,7 +39,7 @@
 // 				<FaUserCircle className="mr-2" size={20} />
 // 				Account
 // 			</Link> */}
-// 			<div className="block border-t border-slate-200 dark:border-slate-800">
+// 			<div className="block border-t border-zinc-200 dark:border-zinc-800">
 // 				<button
 // 					onClick={handleLogout}
 // 					className={`${classes.bottom} w-full text-left`}

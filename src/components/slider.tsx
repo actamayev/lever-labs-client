@@ -27,7 +27,7 @@ export default function Slider(props: Props) {
 					position: "absolute",
 					top: "50%",
 					left: "50%",
-					transform: "translate(-50%, -50%)",
+					transform: "tranzinc(-50%, -50%)",
 					pointerEvents: "none"
 				}}
 			>
@@ -61,7 +61,7 @@ export default function Slider(props: Props) {
 						width: "13px",
 						left: "2px",
 						bottom: "2px",
-						transform: checkedCondition ? "translateX(13px)" : "translateX(0)",
+						transform: checkedCondition ? "tranzincX(13px)" : "tranzincX(0)",
 						transition: ".05s",
 						borderRadius: "50%",
 						pointerEvents: "auto"
