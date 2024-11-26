@@ -18,8 +18,8 @@ export default function ModalHeader(props: Props) {
 				variant="ghost"
 				size="sm"
 				className="h-8 w-8 p-0 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-800
-          transition-colors focus-visible:ring-1 focus-visible:ring-zinc-950
-          dark:focus-visible:ring-zinc-300"
+					transition-colors focus-visible:ring-1 focus-visible:ring-zinc-950
+					dark:focus-visible:ring-zinc-300"
 				onClick={toggleModalOpen}
 			>
 				<X className="h-4 w-4" />

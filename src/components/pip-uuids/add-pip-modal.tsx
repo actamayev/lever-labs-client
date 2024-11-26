@@ -68,7 +68,7 @@ export default function AddPipModal(props: Props) {
 						)}
 						<div className="mt-3">
 							<label>Auto-connect?</label>
-							<div className="text-black dark:text-white" onClick={(e) => e.stopPropagation()}>
+							<div className="text-black dark:text-white">
 								<Slider
 									id="pip-auto-connect-slider"
 									checkedCondition={pipData.shouldAutoConnect}
