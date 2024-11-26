@@ -21,7 +21,7 @@ interface Props {
 }
 
 export default function Register(props: Props) {
-	const { whereToNavigate, setLoginOrRegister, customStyles = { width: "32%" }} = props
+	const { whereToNavigate, setLoginOrRegister } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -42,7 +42,7 @@ export default function Register(props: Props) {
 	}, [registerSubmit])
 
 	return (
-		<AuthTemplate title="Register" customStyles={customStyles}>
+		<AuthTemplate title="Register">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<UsernameInput control={form.control} />

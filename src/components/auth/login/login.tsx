@@ -1,16 +1,16 @@
 import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "@/components/shadcn/ui/form"
-import { Button } from "@/components/shadcn/ui/button"
+import ContactInput from "./contact-input"
+import PasswordField from "../password-input"
 import ErrorMessage from "../../error-message"
 import SubLoginInfo from "./sub-login-info"
+import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button } from "@/components/shadcn/ui/button"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
-import ContactInput from "./contact-input"
-import PasswordField from "../password-input"
 import { LoginFormValues, loginSchema } from "../../../utils/auth/auth-schemas"
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
 }
 
 export default function Login(props: Props) {
-	const { whereToNavigate, setLoginOrRegister, customStyles = { width: "32%" } } = props
+	const { whereToNavigate, setLoginOrRegister } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -39,7 +39,7 @@ export default function Login(props: Props) {
 	}, [loginSubmit])
 
 	return (
-		<AuthTemplate title="Login" customStyles={customStyles}>
+		<AuthTemplate title="Login">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<ContactInput control={form.control} />
