@@ -1,11 +1,9 @@
 import { Control } from "react-hook-form"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../shadcn/ui/form"
 import { Input } from "../../shadcn/ui/input"
-import { LoginFormValues } from "../../../utils/auth/auth-schemas"
 
 interface Props {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	control: Control<LoginFormValues, any>
+	control: Control<LoginFormValues>
 }
 
 export default function ContactInput (props: Props) {

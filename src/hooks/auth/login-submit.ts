@@ -6,7 +6,6 @@ import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
-import { LoginFormValues } from "../../utils/auth/auth-schemas"
 
 export default function useLoginSubmit (
 	whereToNavigate: PageNames,

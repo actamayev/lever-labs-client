@@ -11,7 +11,7 @@ import { Button } from "@/components/shadcn/ui/button"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
-import { LoginFormValues, loginSchema } from "../../../utils/auth/auth-schemas"
+import { loginSchema } from "../../../utils/auth/auth-schemas"
 
 interface Props {
 	whereToNavigate: PageNames

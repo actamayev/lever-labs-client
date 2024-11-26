@@ -1,4 +1,5 @@
 import { z } from "zod"
+// TODO: Ajust the validation to be correct (ie password should be 6 ormore chars)
 
 export const loginSchema = z.object({
 	contact: z.string()
@@ -9,7 +10,11 @@ export const loginSchema = z.object({
 		.max(100, "Password cannot exceed 100 characters")
 })
 
-export type LoginFormValues = z.infer<typeof loginSchema>
+export const registerUsernameSchema = z.object({
+	username: z.string()
+		.min(3, "Username is required")
+		.max(100, "Username cannot exceed 100 characters"),
+})
 
 export const registerSchema = z.object({
 	email: z.string()
@@ -25,5 +30,3 @@ export const registerSchema = z.object({
 		.min(1, "Password confirmation is required")
 		.max(100, "Password confrimatino cannot exceed 100 characters")
 })
-
-export type RegisterFormValues = z.infer<typeof registerSchema>

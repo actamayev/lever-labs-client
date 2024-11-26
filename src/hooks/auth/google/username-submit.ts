@@ -7,18 +7,16 @@ import { useApiClientContext } from "../../../contexts/blue-dot-api-client-conte
 import setErrorAxiosResponse from "../../../utils/error-handling/set-error-axios-response"
 
 export default function useUsernameSubmit (
-	username: string,
 	setError: (error: string) => void,
 	setLoading: (loading: boolean) => void
 ): (
-	e: React.FormEvent<HTMLFormElement>
+	username: RegisterUsernameFormValues
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()
 
-	return useCallback(async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-		e.preventDefault()
+	return useCallback(async (username: RegisterUsernameFormValues): Promise<void> => {
 		setError("")
 		try {
 			setLoading(true)
@@ -34,5 +32,5 @@ export default function useUsernameSubmit (
 		} finally {
 			setLoading(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, personalInfoClass, setError, setLoading, username])
+	}, [blueDotApiClient.authDataService, navigate, personalInfoClass, setError, setLoading])
 }

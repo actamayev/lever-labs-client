@@ -6,7 +6,6 @@ import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
-import { RegisterFormValues } from "../../utils/auth/auth-schemas"
 
 export default function useRegisterSubmit (
 	whereToNavigate: PageNames,

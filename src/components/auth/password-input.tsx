@@ -1,10 +1,9 @@
 import { useState } from "react"
+import { Eye, EyeOff } from "lucide-react"
 import { Control, FieldPath } from "react-hook-form"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/shadcn/ui/form"
 import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
-import { Eye, EyeOff } from "lucide-react"
-import { LoginFormValues, RegisterFormValues } from "../../utils/auth/auth-schemas"
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/shadcn/ui/form"
 
 interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
 	control: Control<T>

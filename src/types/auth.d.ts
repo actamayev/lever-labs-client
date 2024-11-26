@@ -1,3 +1,6 @@
+import { z } from "zod"
+import { loginSchema } from "../utils/auth/auth-schemas"
+
 declare global {
 	interface LoginCredentials {
 		contact: string
@@ -19,6 +22,10 @@ declare global {
 	}
 
 	type LoginOrRegister = "Login" | "Register"
+
+	type LoginFormValues = z.infer<typeof loginSchema>
+	type RegisterUsernameFormValues = z.infer<typeof registerUsernameSchema>
+	type RegisterFormValues = z.infer<typeof registerSchema>
 }
 
 export {}

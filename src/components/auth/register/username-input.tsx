@@ -1,11 +1,9 @@
 import { Control } from "react-hook-form"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../shadcn/ui/form"
 import { Input } from "../../shadcn/ui/input"
-import { RegisterFormValues } from "../../../utils/auth/auth-schemas"
 
 interface Props {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	control: Control<RegisterFormValues, any>
+	control: Control<RegisterFormValues>
 }
 
 export default function UsernameInput (props: Props) {

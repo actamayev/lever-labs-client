@@ -1,18 +1,18 @@
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "@/components/shadcn/ui/form"
 import EmailInput from "./email-input"
 import UsernameInput from "./username-input"
 import ErrorMessage from "../../error-message"
 import PasswordField from "../password-input"
 import { Button } from "../../shadcn/ui/button"
 import SubRegisterInfo from "./sub-register-info"
+import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
+import { zodResolver } from "@hookform/resolvers/zod"
 import AuthTemplate from "../../templates/auth-template"
+import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
-import { RegisterFormValues, registerSchema } from "../../../utils/auth/auth-schemas"
 
 interface Props {
 	whereToNavigate: PageNames
