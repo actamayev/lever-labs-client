@@ -2,21 +2,21 @@ import _ from "lodash"
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import PipName from "./pip-name"
-import AddPipModal from "./add-pip-modal"
+import { cn } from "../../lib/shadcn/utils"
+import { Button } from "../shadcn/ui/button"
 import DropdownArrow from "./dropdown-arrow"
-import useUsername from "../../hooks/memos/username"
-import AvailablePipsDropdown from "./available-pips-dropdown"
-import { usePipContext } from "../../contexts/pip-context"
-import useDisconnectFromPip from "../../hooks/pip/disconnect-from-pip"
-import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
-import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
-import { Button } from "../shadcn/ui/button"
-import { cn } from "../../lib/shadcn/utils"
+import useUsername from "../../hooks/memos/username"
+import AddPipModal from "./add-pip-modal/add-pip-modal"
+import { usePipContext } from "../../contexts/pip-context"
+import AvailablePipsDropdown from "./available-pips-dropdown"
+import useDisconnectFromPip from "../../hooks/pip/disconnect-from-pip"
+import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
+import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
 
 function PipUUIDs() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
