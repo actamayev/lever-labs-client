@@ -1,6 +1,6 @@
 import _ from "lodash"
 
-export default function confirmLoginFields(credentials: LoginCredentials, setError: (error: string) => void): boolean {
+export default function confirmLoginFields(credentials: LoginFormValues, setError: (error: string) => void): boolean {
 	if (_.isEmpty(credentials.contact) && _.isEmpty(credentials.password)) {
 		setError("Please enter an Email/Username and password")
 		return false
