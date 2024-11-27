@@ -40,7 +40,7 @@ export default function useRequestToConnectToPip(): (
 				throw new Error("Connect to Pip failed")
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: pipData.pipUUID, newConnectionStatus: "connected" })
-			toast.positive({
+			toast.superPositive({
 				title: `Connected to ${pipData.pipName}`,
 				description: "Happy building!"
 			})

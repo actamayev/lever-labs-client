@@ -17,7 +17,7 @@ export default function useStyledToast() {
 			description,
 			action,
 			duration,
-			className: "bg-green-500 text-white border-green-600 text-bold",
+			className: "bg-green-500 text-white border-green-600 font-bold",
 			onOpenChange: (open) => {
 				if (open) {
 					setTimeout(() => {

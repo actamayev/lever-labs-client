@@ -1,8 +1,8 @@
 import _ from "lodash"
 import { useEffect } from "react"
 import { usePipContext } from "../../contexts/pip-context"
-import { useSocketContext } from "../../contexts/socket-context"
 import useStyledToast from "../../components/toast-options"
+import { useSocketContext } from "../../contexts/socket-context"
 
 export default function useSocketEventsUseEffect(): void {
 	const pipClass = usePipContext()
@@ -26,7 +26,8 @@ export default function useSocketEventsUseEffect(): void {
 				})
 			} else if (newConnectionStatus === "connected") {
 				toast.superPositive({
-					description: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`
+					title: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`,
+					description: "Happy building!"
 				})
 			}
 		}
