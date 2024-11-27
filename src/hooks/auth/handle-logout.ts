@@ -7,12 +7,12 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 export default function useHandleLogout(
 	setLogoutDisabled: React.Dispatch<React.SetStateAction<boolean>>
 ): (
-	e: React.MouseEvent<HTMLButtonElement>
+	e: React.MouseEvent<HTMLDivElement, MouseEvent>
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const logout = useLogout()
 
-	return useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+	return useCallback(async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		try {
 			e.preventDefault()
 			setLogoutDisabled(true)

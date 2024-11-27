@@ -18,7 +18,7 @@ function Lab() {
 	return (
 		<>
 			<PageHelmet pageTitle="/lab" />
-			<div className="text-black dark:text-white text-3xl">
+			<div className="text-black dark:text-white text-3xl p-4">
 				Lab
 			</div>
 		</>

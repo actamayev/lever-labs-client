@@ -1,23 +1,25 @@
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/components/shadcn/ui/card"
+
 interface Props {
 	title: string
-	customStyles?: object
 	children: React.ReactNode
 }
 
 export default function AuthTemplate(props: Props) {
-	const { title, children, customStyles = {} } = props
-
+	const { title, children } = props
 	return (
-		<div className="flex justify-center">
-			<div
-				className="bg-white dark:bg-slate-800 border rounded-lg p-5 mx-auto border-slate-100 dark:border-slate-700"
-				style={customStyles}
-			>
-				<h1 className="flex mx-auto mb-4 text-5xl font-extrabold leading-none tracking-tight text-slate-950 dark:text-slate-200">
-					{title}
-				</h1>
+		<Card className="mx-auto max-w-sm">
+			<CardHeader>
+				<CardTitle className="text-2xl font-bold">{title}</CardTitle>
+			</CardHeader>
+			<CardContent>
 				{children}
-			</div>
-		</div>
+			</CardContent>
+		</Card>
 	)
 }

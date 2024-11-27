@@ -1,0 +1,76 @@
+import { useCallback, useState } from "react"
+import { useForm } from "react-hook-form"
+import OrComponent from "../or-component"
+import ContactInput from "./contact-input"
+import SubLoginInfo from "./sub-login-info"
+import PasswordField from "../password-input"
+import ErrorMessage from "../../error-message"
+import { Form } from "@/components/shadcn/ui/form"
+import GoogleSignIn from "../google/google-sign-in"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button } from "@/components/shadcn/ui/button"
+import AuthTemplate from "../../templates/auth-template"
+import useLoginSubmit from "../../../hooks/auth/login-submit"
+import { loginSchema } from "../../../utils/auth/auth-schemas"
+import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
+
+interface Props {
+	whereToNavigate: PageNames
+	setLoginOrRegister?: React.Dispatch<React.SetStateAction<LoginOrRegister>>
+	customStyles?: object
+}
+
+export default function Login(props: Props) {
+	const { whereToNavigate, setLoginOrRegister } = props
+	useRedirectKnownUser()
+	const [error, setError] = useState("")
+	const [loading, setLoading] = useState(false)
+	const loginSubmit = useLoginSubmit(whereToNavigate, setError, setLoading)
+
+	const form = useForm<LoginFormValues>({
+		resolver: zodResolver(loginSchema),
+		defaultValues: {
+			contact: "",
+			password: ""
+		}
+	})
+
+	const onSubmit = useCallback(async (values: LoginFormValues) => {
+		await loginSubmit(values)
+	}, [loginSubmit])
+
+	return (
+		<AuthTemplate title="Login">
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+					<ContactInput control={form.control} />
+					<PasswordField<LoginFormValues>
+						control={form.control}
+						name="password"
+						// showForgotPassword={true}
+					/>
+
+					<Button
+						type="submit"
+						className="w-full"
+						disabled={loading}
+					>
+						Login
+					</Button>
+
+					{error && <ErrorMessage error={error} />}
+
+					<OrComponent />
+
+					<div className="grid gap-2">
+						<GoogleSignIn whereToNavigate={whereToNavigate} />
+					</div>
+				</form>
+			</Form>
+
+			<div className="mt-4">
+				<SubLoginInfo setLoginOrRegister={setLoginOrRegister} />
+			</div>
+		</AuthTemplate>
+	)
+}

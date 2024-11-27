@@ -1,17 +1,15 @@
-import _ from "lodash"
+import { AlertCircle } from "lucide-react"
+import { Alert, AlertDescription } from "./shadcn/ui/alert"
 
-interface Props {
-	error: string
-}
-
-export default function ErrorMessage (props: Props) {
-	const { error } = props
-
-	if (_.isEmpty(error)) return null
-
+export default function ErrorMessage({ error }: { error: string}) {
 	return (
-		<div className="mt-2 bg-red-100 text-red-700 px-4 py-3 rounded relative">
-			{error}
-		</div>
+		<Alert variant="destructive" className="dark:text-red-500 dark:border-red-500">
+			<div className="flex items-center gap-2">
+				<AlertCircle className="h-4 w-4 flex-shrink-0" />
+				<AlertDescription className="flex-1 text-center">
+					{error}
+				</AlertDescription>
+			</div>
+		</Alert>
 	)
 }

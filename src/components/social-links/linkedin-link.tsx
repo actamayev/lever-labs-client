@@ -5,7 +5,7 @@ export default function LinkedinLink() {
 		<a
 			href="https://www.linkedin.com/company/blue-dot-robots"
 			aria-label="LinkedIn"
-			className="text-slate-800 hover:text-slate-950 dark:text-slate-200 dark:hover:text-white"
+			className="text-zinc-800 hover:text-zinc-950 dark:text-zinc-200 dark:hover:text-white"
 			target="_blank"
 			rel="noopener noreferrer"
 		>

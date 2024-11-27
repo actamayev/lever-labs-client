@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
-import { useNotificationsContext } from "../../contexts/notifications-context"
+import useStyledToast from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
@@ -14,7 +14,7 @@ export default function useAddPip(): (
 	doesPipUUIDExist: boolean
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const notificationsClass = useNotificationsContext()
+	const toast = useStyledToast()
 	const pipClass = usePipContext()
 	const validatePipData = useValidatePipData()
 
@@ -46,25 +46,39 @@ export default function useAddPip(): (
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			notificationsClass.setPositiveNotification(`${pipData.pipName || addPipDataResponse.data.pipName} added`)
+			toast.positive({
+				description: `${pipData.pipName || addPipDataResponse.data.pipName} added`
+			})
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
-				notificationsClass.setNegativeNotification("You've already added a Pip with this ID")
+				toast.negative({
+					title: "Unable to add Pip ID",
+					description: "You've already added a Pip with this ID"
+				})
 				return
 			} else if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {
-						notificationsClass.setNegativeNotification("You have a Pip with this ID")
+						toast.negative({
+							title: "Unable to add Pip ID",
+							description: "You have a Pip with this ID"
+						})
 						return
 					} else if (error.response.data.message === "Pip UUID doesn't exist") {
-						notificationsClass.setNegativeNotification("The Pip ID you entered does not exist")
+						toast.negative({
+							title: "Unable to add Pip ID",
+							description: "The Pip ID you entered does not exist"
+						})
 						return
 					}
 				}
 			}
-			notificationsClass.setNegativeNotification(`Unable to add ${pipData.pipName} at this time. Please reload page and try again.`)
+			toast.negative({
+				title: `Unable to add ${pipData.pipName} at this time`,
+				description: "Please reload page and try again"
+			})
 		}
-	}, [blueDotApiClient.pipDataService, notificationsClass, pipClass, validatePipData])
+	}, [blueDotApiClient.pipDataService, pipClass, toast, validatePipData])
 }
