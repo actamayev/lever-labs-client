@@ -28,7 +28,7 @@ function DropdownArrow(props: Props) {
 			size="icon"
 			className={cn(
 				"h-full px-2 rounded-none rounded-r-lg border-l border-zinc-300",
-				"dark:border-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-600"
+				"dark:border-zinc-600 hover:bg-zinc-200 dark:hover:bg-zinc-700"
 			)}
 			onClick={toggleDropdown}
 		>

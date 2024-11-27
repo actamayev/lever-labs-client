@@ -58,8 +58,8 @@ function PipUUIDs() {
 						variant="ghost"
 						onClick={handlePipNameClick}
 						className={cn(
-							"flex-grow h-full px-3 justify-start",
-							"hover:bg-zinc-300 dark:hover:bg-zinc-600",
+							"h-full flex flex-grow items-center justify-between px-3 ",
+							"hover:bg-zinc-200 dark:hover:bg-zinc-700",
 							"rounded-none",
 							_.isEmpty(pipClass.pipData) ? "rounded-lg" : "rounded-l-lg"
 						)}

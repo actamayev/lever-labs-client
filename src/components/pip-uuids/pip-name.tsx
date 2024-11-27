@@ -21,10 +21,13 @@ function PipName() {
 		)
 	}
 	return (
-		<div className="flex items-center gap-2">
-			<PipStatusTooltip pipData={pipClass.selectedPip} />
-			<div className="truncate max-w-[160px] text-2xl">{pipClass.selectedPip.pipName}</div>
-		</div>
+		<>
+			<div className="flex items-center gap-2">
+				<PipStatusTooltip pipData={pipClass.selectedPip} />
+				<div className="truncate max-w-[160px] text-xl">{pipClass.selectedPip.pipName}</div>
+			</div>
+			<span className="text-zinc-800 dark:text-zinc-200">{pipClass.selectedPip.pipUUID}</span>
+		</>
 	)
 }
 

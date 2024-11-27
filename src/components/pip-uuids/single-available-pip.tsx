@@ -15,18 +15,18 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 	return (
 		<Button
 			className={cn(
-				"w-full flex items-center justify-between px-3 h-7",
-				"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-700 dark:hover:bg-zinc-800 cursor-pointer mb-2"
+				"w-full flex items-center justify-between px-3 h-8",
+				"bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 cursor-pointer mb-2"
 			)}
 			onClick={requestToConnectToPipCallback}
 		>
 			<div className="flex items-center gap-2">
 				<PipStatusTooltip pipData={pip} />
-				<span className="text-black dark:text-white truncate max-w-[160px]">
+				<span className="text-black dark:text-white truncate max-w-[160px] text-xl">
 					{pip.pipName}
 				</span>
 			</div>
-			<span className="text-sm text-zinc-800 dark:text-zinc-200">{pip.pipUUID}</span>
+			<span className="text-zinc-800 dark:text-zinc-200">{pip.pipUUID}</span>
 		</Button>
 	)
 }
