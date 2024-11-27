@@ -18,7 +18,7 @@ export default function PrimarySidebar() {
 		>
 			<SidebarHeader>
 				<SidebarMenu>
-					<SidebarMenuItem>
+					<SidebarMenuItem className="flex justify-center">
 						<Link
 							to="/"
 							className="flex items-center flex-shrink-0 dark:text-white"
@@ -27,7 +27,7 @@ export default function PrimarySidebar() {
 								<img
 									src="/favicon.svg"
 									alt="Logo"
-									className="h-8 w-8" // This will make the logo fill the container
+									className="h-8 w-8"
 								/>
 							</div>
 						</Link>
