@@ -5,7 +5,7 @@ import Slider from "../slider"
 import EnterPipID from "./enter-pip-id"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../shadcn/ui/form"
 import ModalHeader from "../modal-header"
-import PipNameInput from "./enter-pip-name"
+import EnterPipName from "./enter-pip-name"
 import { Button } from "../shadcn/ui/button"
 import useAddPip from "../../hooks/pip/add-pip"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -64,7 +64,7 @@ export default function AddPipModal(props: Props) {
 									setDoesPipUUIDExist={setDoesPipUUIDExist}
 								/>
 								{isPipNameNeeded && (
-									<PipNameInput control={form.control}/>
+									<EnterPipName control={form.control}/>
 								)}
 								<FormField
 									control={form.control}

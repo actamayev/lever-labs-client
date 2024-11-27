@@ -6,7 +6,7 @@ interface Props {
     control: Control<IncompletePipData>
 }
 
-export default function PipNameInput(props: Props) {
+export default function EnterPipName(props: Props) {
 	const { control } = props
 
 	return (

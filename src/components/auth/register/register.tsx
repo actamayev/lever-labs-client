@@ -67,6 +67,8 @@ export default function Register(props: Props) {
 						Create account
 					</Button>
 
+					{error && <ErrorMessage error={error} />}
+
 					<div className="relative">
 						<div className="absolute inset-0 flex items-center">
 							<span className="w-full border-t" />
@@ -81,8 +83,6 @@ export default function Register(props: Props) {
 					<div className="grid gap-2">
 						<GoogleSignIn whereToNavigate={whereToNavigate} />
 					</div>
-
-					{error && <ErrorMessage error={error} />}
 				</form>
 			</Form>
 

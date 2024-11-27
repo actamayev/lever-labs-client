@@ -8,7 +8,7 @@ import {
 } from "@/components/shadcn/ui/tooltip"
 
 interface Props {
-  pipData: PipData
+	pipData: PipData
 }
 
 function PipStatusTooltip(props: Props) {
