@@ -39,15 +39,16 @@ function NavUser() {
 
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem>
+			<SidebarMenuItem className="flex justify-center">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
-							size="lg"
+							// size="lg"
 							className="relative flex w-full items-center justify-center
 							data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
+							style={{ height: "54px", width: "54px" }}
 						>
-							<Avatar className="h-6 w-6 rounded-lg">
+							<Avatar className="rounded-lg" style={{ height: "35px", width: "35px" }}>
 								<ShowUserProfileImageOrDefaultImage
 									extraClasses="min-w-full min-h-full rounded-lg object-cover"
 									profileImageUrl={profilePictureUrl}
