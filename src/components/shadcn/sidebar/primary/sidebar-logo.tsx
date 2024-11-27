@@ -14,11 +14,10 @@ export default function SidebarLogo() {
 						to="/"
 						className="flex items-center flex-shrink-0 dark:text-white"
 					>
-						<div className="flex aspect-square size-8 items-center justify-center rounded-lg">
+						<div className="flex aspect-square size-16 items-center justify-center rounded-lg">
 							<img
 								src="/favicon.svg"
 								alt="Logo"
-								className="h-8 w-8"
 							/>
 						</div>
 					</Link>
