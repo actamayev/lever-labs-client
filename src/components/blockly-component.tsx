@@ -95,7 +95,7 @@ function BlocklyComponent() {
 		<div className="h-screen w-full p-4 mt-4">
 			<div
 				ref={containerRef}
-				className="h-1/2 border border-zinc-300 dark:border-zinc-700 rounded relative z-0"
+				className="h-1/2 relative z-0 rounded-lg overflow-hidden border border-border"
 			>
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
