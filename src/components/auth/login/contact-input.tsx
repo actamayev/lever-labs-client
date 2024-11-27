@@ -15,10 +15,9 @@ export default function ContactInput (props: Props) {
 			name="contact"
 			render={({ field }) => (
 				<FormItem className="grid gap-2">
-					<FormLabel>Email</FormLabel>
 					<FormControl>
 						<Input
-							placeholder="ada@lovelace.com"
+							placeholder="Email or username"
 							{...field}
 							maxLength={100}
 						/>

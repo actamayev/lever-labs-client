@@ -1,12 +1,12 @@
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../shadcn/ui/form"
+import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
 interface Props {
 	control: Control<RegisterFormValues>
 }
 
-export default function EmailInput (props: Props) {
+export default function EmailInput(props: Props) {
 	const { control } = props
 
 	return (
@@ -15,10 +15,9 @@ export default function EmailInput (props: Props) {
 			name="email"
 			render={({ field }) => (
 				<FormItem className="grid gap-2">
-					<FormLabel>Email</FormLabel>
 					<FormControl>
 						<Input
-							placeholder="ada@lovelace.com"
+							placeholder="Email"
 							{...field}
 							maxLength={100}
 						/>

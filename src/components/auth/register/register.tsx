@@ -42,7 +42,7 @@ export default function Register(props: Props) {
 	}, [registerSubmit])
 
 	return (
-		<AuthTemplate title="Create an Account">
+		<AuthTemplate title="Create a new account">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 					<UsernameInput control={form.control} />
@@ -51,15 +51,12 @@ export default function Register(props: Props) {
 					<PasswordField<RegisterFormValues>
 						control={form.control}
 						name="password"
-						label="Password"
-						placeholder="Create a password"
 					/>
 
 					<PasswordField<RegisterFormValues>
 						control={form.control}
 						name="passwordConfirmation"
-						label="Confirm Password"
-						placeholder="Confirm your password"
+						placeholder="Confirm Password"
 					/>
 
 					<Button
@@ -74,9 +71,9 @@ export default function Register(props: Props) {
 						<div className="absolute inset-0 flex items-center">
 							<span className="w-full border-t" />
 						</div>
-						<div className="relative flex justify-center text-xs uppercase">
+						<div className="relative flex justify-center text-xs">
 							<span className="bg-background px-2 text-muted-foreground">
-									Or continue with
+								or
 							</span>
 						</div>
 					</div>

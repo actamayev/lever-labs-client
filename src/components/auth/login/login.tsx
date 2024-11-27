@@ -46,7 +46,6 @@ export default function Login(props: Props) {
 					<PasswordField<LoginFormValues>
 						control={form.control}
 						name="password"
-						label="Password"
 						// showForgotPassword={true}
 					/>
 
@@ -62,9 +61,9 @@ export default function Login(props: Props) {
 						<div className="absolute inset-0 flex items-center">
 							<span className="w-full border-t" />
 						</div>
-						<div className="relative flex justify-center text-xs uppercase">
+						<div className="relative flex justify-center text-xs">
 							<span className="bg-background px-2 text-muted-foreground">
-								Or continue with
+								or
 							</span>
 						</div>
 					</div>
