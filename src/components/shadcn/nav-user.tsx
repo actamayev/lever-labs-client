@@ -1,13 +1,9 @@
 import _ from "lodash"
-import {
-	ChevronsUpDown,
-	LogOut,
-} from "lucide-react"
+import { LogOut } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import {
 	Avatar,
-	AvatarFallback,
 } from "@/components/shadcn/ui/avatar"
 import {
 	DropdownMenu,
@@ -50,19 +46,19 @@ function NavUser() {
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							size="lg"
-							className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
+							className="relative flex w-full items-center justify-center
+							data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
 						>
-							<Avatar className="h-8 w-8 rounded-lg">
+							<Avatar className="h-6 w-6 rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
-									extraClasses="min-w-full min-h-full object-cover"
+									extraClasses="min-w-full min-h-full rounded-lg object-cover"
 									profileImageUrl={profilePictureUrl}
 								/>
 							</Avatar>
-							<div className="grid flex-1 text-left text-sm leading-tight">
+							<div className="absolute left-full ml-2 hidden grid-cols-1 text-left text-sm leading-tight lg:grid">
 								<span className="truncate font-semibold">{username}</span>
 								<span className="truncate text-xs">{personalInfoClass.email}</span>
 							</div>
-							<ChevronsUpDown className="ml-auto size-4" />
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
@@ -75,10 +71,9 @@ function NavUser() {
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 								<Avatar className="h-8 w-8 rounded-lg">
 									<ShowUserProfileImageOrDefaultImage
-										extraClasses="min-w-full min-h-full object-cover"
+										extraClasses="min-w-full min-h-full rounded-lg object-cover"
 										profileImageUrl={profilePictureUrl}
 									/>
-									<AvatarFallback className="rounded-lg">CN</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
 									<span className="truncate font-semibold">{username}</span>
@@ -92,8 +87,8 @@ function NavUser() {
 							disabled={logoutDisabled}
 							className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
 						>
-							<LogOut />
-              Log out
+							<LogOut className="mr-2 size-4" />
+				Log out
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
