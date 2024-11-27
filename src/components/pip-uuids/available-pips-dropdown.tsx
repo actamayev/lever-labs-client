@@ -1,10 +1,10 @@
 import { useMemo } from "react"
+import { Plus } from "lucide-react"
 import { observer } from "mobx-react"
+import { cn } from "../../lib/shadcn/utils"
+import { Button } from "../shadcn/ui/button"
 import SingleAvailablePip from "./single-available-pip"
 import { usePipContext } from "../../contexts/pip-context"
-import { cn } from "../../lib/shadcn/utils"
-import { Plus } from "lucide-react"
-import { Button } from "../shadcn/ui/button"
 
 interface Props {
 	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
