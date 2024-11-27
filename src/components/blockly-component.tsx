@@ -111,13 +111,13 @@ function BlocklyComponent() {
 					{blocklyState.cppCode}
 				</pre>
 			</div>
-			<Button
+			{/* <Button
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
 				className="mt-2"
 			>
 				Send code to Pip
-			</Button>
+			</Button> */}
 		</div>
 	)
 }
