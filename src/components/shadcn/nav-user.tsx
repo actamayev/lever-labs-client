@@ -1,10 +1,14 @@
 import _ from "lodash"
 import { LogOut } from "lucide-react"
+import { observer } from "mobx-react"
 import { useMemo, useState } from "react"
 
 import {
-	Avatar,
-} from "@/components/shadcn/ui/avatar"
+	SidebarMenu,
+	SidebarMenuButton,
+	SidebarMenuItem,
+	useSidebar,
+} from "@/components/shadcn/ui/sidebar"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -13,17 +17,11 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
-import {
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	useSidebar,
-} from "@/components/shadcn/ui/sidebar"
-import { observer } from "mobx-react"
+import useUsername from "../../hooks/memos/username"
+import { Avatar } from "@/components/shadcn/ui/avatar"
+import useHandleLogout from "../../hooks/auth/handle-logout"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import ShowUserProfileImageOrDefaultImage from "../show-user-profile-image-or-default-image"
-import useUsername from "../../hooks/memos/username"
-import useHandleLogout from "../../hooks/auth/handle-logout"
 
 function NavUser() {
 	const { isMobile } = useSidebar()
