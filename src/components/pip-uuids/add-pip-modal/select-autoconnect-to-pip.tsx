@@ -10,7 +10,7 @@ export default function SelectAutoreconnectToPip({ control } : { control: Contro
 			render={({ field }) => (
 				<FormItem className="flex items-center justify-between space-x-2">
 					<FormLabel className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-						Auto-connect?
+						Auto-connect
 					</FormLabel>
 					<FormControl>
 						<Slider

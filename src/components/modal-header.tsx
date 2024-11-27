@@ -17,7 +17,7 @@ export default function ModalHeader(props: Props) {
 			<Button
 				variant="ghost"
 				size="sm"
-				className="h-8 w-8 p-0 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-700
+				className="flex h-8 w-8 items-center justify-center p-0 rounded-full hover:bg-zinc-100 dark:hover:bg-zinc-700
 					transition-colors focus-visible:ring-1 focus-visible:ring-zinc-950
 					dark:focus-visible:ring-zinc-300"
 				onClick={toggleModalOpen}

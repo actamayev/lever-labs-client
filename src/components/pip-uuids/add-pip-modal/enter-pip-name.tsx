@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../shadcn/ui/form"
+import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
 export default function EnterPipName({ control } : { control: Control<IncompletePipData> }) {
 	return (
@@ -8,13 +8,13 @@ export default function EnterPipName({ control } : { control: Control<Incomplete
 			control={control}
 			name="pipName"
 			render={({ field }) => (
-				<FormItem className="space-y-0">
-					<FormLabel>Pip Name</FormLabel>
+				<FormItem className="space-y-0 mt-2">
 					<FormControl>
 						<Input
 							{...field}
 							maxLength={20}
-							className="w-full"
+							className="w-full dark:border-zinc-600 pr-8"
+							placeholder="Name your Pip"
 						/>
 					</FormControl>
 					<div className="h-1"/> {/* Small spacer */}
