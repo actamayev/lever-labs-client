@@ -8,19 +8,22 @@ export default function EnterPipName({ control } : { control: Control<Incomplete
 			control={control}
 			name="pipName"
 			render={({ field }) => (
-				<FormItem className="space-y-0 mt-2">
+				<FormItem className="mt-2">
 					<FormControl>
-						<Input
-							{...field}
-							maxLength={20}
-							className="w-full dark:border-zinc-600 pr-8"
-							placeholder="Name your Pip"
-						/>
+						<div className="relative">
+							<Input
+								{...field}
+								maxLength={20}
+								className="w-full dark:border-zinc-600 pr-16"
+								placeholder="Name your Pip"
+							/>
+							<div className="absolute inset-y-0 right-3 flex items-center">
+								<span className="text-xs text-muted-foreground">
+									{field.value?.length || 0}/20
+								</span>
+							</div>
+						</div>
 					</FormControl>
-					<div className="h-1"/> {/* Small spacer */}
-					<span className="text-xs text-zinc-600 dark:text-zinc-400 ml-0.5">
-						{field.value?.length || 0}/20
-					</span>
 					<FormMessage />
 				</FormItem>
 			)}
