@@ -26,7 +26,7 @@ function GoToSandboxButton() {
 				Go to Sandbox
 				<ArrowRight
 					className="absolute right-4 transform opacity-0 group-hover:opacity-100
-					transition-all duration-300 ease-out translate-x-[-10px] group-hover:translate-x-0"
+					transition-all duration-50 ease-out translate-x-[-10px] group-hover:translate-x-0"
 					size={18}
 				/>
 			</Link>
