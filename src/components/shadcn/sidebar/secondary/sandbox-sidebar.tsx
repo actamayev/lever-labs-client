@@ -10,11 +10,11 @@ export default function SandboxSidebar() {
 		<Sidebar collapsible="none" className="hidden flex-1 md:flex">
 			<SidebarHeader className="gap-3.5 border-b p-4">
 				<div className="flex w-full items-center justify-between">
-					<div className="text-lg font-medium text-foreground">
+					<div className="text-4xl font-medium text-foreground">
 						Sandbox
 					</div>
 				</div>
-				<SidebarInput placeholder="Search projects..." />
+				{/* <SidebarInput placeholder="Search projects..." /> */}
 			</SidebarHeader>
 		</Sidebar>
 	)
