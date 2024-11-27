@@ -47,7 +47,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								variant="ghost"
 								size="sm"
 								className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1"
-								onClick={() => setShowPassword(!showPassword)}
+								onClick={() => setShowPassword(prevState => !prevState)}
 							>
 								{showPassword ? (
 									<EyeOff className="h-4 w-4" />
