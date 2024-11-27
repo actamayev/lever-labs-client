@@ -1,5 +1,4 @@
 import { z } from "zod"
-// TODO: Ajust the validation to be correct (ie password should be 6 ormore chars)
 
 export const loginSchema = z.object({
 	contact: z.string()

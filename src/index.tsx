@@ -6,7 +6,6 @@ import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"
 import "./styles/index.css"
 import App from "./App"
-// import ClassicLayout from "./components/layout"
 import ContextLevelComponent from "./context-level-component"
 import ConditionalLayout from "./components/layouts/conditional-layout"
 

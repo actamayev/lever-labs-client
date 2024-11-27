@@ -2,10 +2,10 @@ import { useToast } from "../hooks/shadcn/use-toast"
 import { type ToastActionElement } from "./shadcn/ui/toast"
 
 interface ToastOptions {
-    title?: string
-    description: string
+	title?: string
+	description: string
 	action?: ToastActionElement
-    duration?: number
+	duration?: number
 }
 
 export default function useStyledToast() {
