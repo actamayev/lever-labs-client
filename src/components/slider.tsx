@@ -20,7 +20,7 @@ export default function Slider(props: SliderProps) {
 			disabled={disabledCondition}
 			className={cn(
 				"dark:bg-zinc-600",
-				colorChangeOnToggle && "data-[state=checked]:bg-zinc-200 dark:data-[state=checked]:bg-zinc-100"
+				colorChangeOnToggle && "data-[state=checked]:bg-zinc-900 dark:data-[state=checked]:bg-zinc-100"
 			)}
 		/>
 	)
