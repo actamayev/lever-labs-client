@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
+import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
 import SubLoginInfo from "./sub-login-info"
 import PasswordField from "../password-input"
@@ -59,16 +60,7 @@ export default function Login(props: Props) {
 
 					{error && <ErrorMessage error={error} />}
 
-					<div className="relative">
-						<div className="absolute inset-0 flex items-center">
-							<span className="w-full border-t" />
-						</div>
-						<div className="relative flex justify-center text-xs">
-							<span className="bg-background px-2 text-muted-foreground">
-								or
-							</span>
-						</div>
-					</div>
+					<OrComponent />
 
 					<div className="grid gap-2">
 						<GoogleSignIn whereToNavigate={whereToNavigate} />
