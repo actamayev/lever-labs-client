@@ -7,7 +7,7 @@ export default class AuthDataService {
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
-	async login(loginInformation: LoginCredentials): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
+	async login(loginInformation: LoginFormValues): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
 		return await this.httpClient.http.post<LoginSuccess | NonSuccessResponse>(
 			`${this.pathHeader}/login`, { loginInformation }, { headers: { "No-Auth-Required": "true" }}
 		)

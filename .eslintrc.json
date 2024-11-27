@@ -116,7 +116,7 @@
 			}
 		},
         {
-          "files": ["*.jsx", "*.tsx", "./src/services/*.ts"],
+          "files": ["*.jsx", "*.tsx"],
           "rules": {
 				"@typescript-eslint/explicit-function-return-type": "off"
           }
@@ -132,6 +132,48 @@
             "parserOptions": {
 				"project": "./tsconfig.json"
             }
-		}
+		},
+		{
+            "files": ["src/components/shadcn/ui**/*", "src/lib/**/*", "src/hooks/shadcn/**/*", "src/app/dashboard/**/*"],
+            "rules": {
+                "indent": "off",
+                "linebreak-style": "off",
+                "quotes": "off",
+                "semi": "off",
+                "no-empty": "off",
+                "eol-last": "off",
+                "no-unused-vars": "off",
+                "@typescript-eslint/no-unused-vars": "off",
+                "eqeqeq": "off",
+                "space-infix-ops": "off",
+                "space-before-blocks": "off",
+                "keyword-spacing": "off",
+                "no-trailing-spaces": "off",
+                "prefer-const": "off",
+                "max-len": "off",
+                "@typescript-eslint/explicit-function-return-type": "off",
+                "require-await": "off",
+                "@typescript-eslint/no-explicit-any": "off",
+                "@typescript-eslint/prefer-as-const": "off",
+                "no-eval": "off",
+                "no-duplicate-imports": "off",
+                "no-var": "off",
+                "prefer-spread": "off",
+                "@typescript-eslint/no-empty-interface": "off",
+                "max-depth": "off",
+                "no-nested-ternary": "off",
+                "@typescript-eslint/no-unnecessary-condition": "off",
+                "complexity": "off",
+                "@typescript-eslint/no-shadow": "off",
+                "filenames/match-regex": "off",
+                "@typescript-eslint/no-non-null-assertion": "off",
+                "max-params": "off",
+                "max-lines-per-function": "off",
+                "@typescript-eslint/naming-convention": "off",
+                "react-hooks/rules-of-hooks": "off",
+                "react-hooks/exhaustive-deps": "off",
+                "react/jsx-no-constructed-context-values": "off"
+            }
+        }
     ]
 }

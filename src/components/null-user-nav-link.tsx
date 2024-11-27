@@ -5,13 +5,16 @@ export default function NullUserNavLink() {
 		<>
 			<AuthHeaderLinks
 				title="Log in"
-				className="bg-inherit hover:bg-slate-200 dark:text-slate-100 dark:hover:bg-slate-700 text-slate-950 mx-2"
+				variant="ghost"
+				className="dark:hover:bg-zinc-600 text-black dark:text-white
+				hover:text-zinc-900 dark:hover:text-white text-base font-medium"
 				linkTo="/login"
 			/>
 			<AuthHeaderLinks
 				title="Sign up"
-				className="bg-pipTheme hover:bg-pipThemeHover
-				dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-950"
+				variant="default"
+				className="bg-blue-600 hover:bg-blue-700 text-primary-foreground ml-2 text-base
+				dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-medium transition-colors"
 				linkTo="/register"
 			/>
 		</>

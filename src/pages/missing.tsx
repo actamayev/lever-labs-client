@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom"
-import { FaHome } from "react-icons/fa"
+import { Home } from "lucide-react"
+import { Button } from "@/components/shadcn/ui/button"
 
 export default function Missing() {
 	return (
-		<div className="text-center">
-			<div className="text-lg text-slate-800 mb-8 dark:text-slate-200">
+		<div className="flex flex-col items-center gap-8">
+			<h1 className="text-lg font-semibold">
 				Page Not Found
-			</div>
-			<Link to="/" className="inline-block">
-				<div
-					className="bg-blue-500 hover:bg-blue-600 text-white rounded focus:outline-none \
-            		dark:text-slate-950 dark:bg-blue-400 dark:hover:bg-blue-500 inline-flex items-center px-4 py-2"
-				>
-					Return home <FaHome className="ml-2" size={20}/>
-				</div>
+			</h1>
+			<Link to="/">
+				<Button>
+					Return home
+					<Home className="ml-2 h-5 w-5" />
+				</Button>
 			</Link>
 		</div>
 	)

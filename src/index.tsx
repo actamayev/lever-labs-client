@@ -4,10 +4,10 @@ import { BrowserRouter } from "react-router-dom"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"
+import "./styles/index.css"
 import App from "./App"
-import "../src/styles/index.css"
-import Layout from "./components/layout"
 import ContextLevelComponent from "./context-level-component"
+import ConditionalLayout from "./components/layouts/conditional-layout"
 
 if (process.env.NODE_ENV === "production") disableReactDevTools()
 
@@ -21,9 +21,9 @@ root.render(
 			<ContextLevelComponent>
 				<HelmetProvider>
 					<BrowserRouter>
-						<Layout>
+						<ConditionalLayout>
 							<App />
-						</Layout>
+						</ConditionalLayout>
 					</BrowserRouter>
 				</HelmetProvider>
 			</ContextLevelComponent>

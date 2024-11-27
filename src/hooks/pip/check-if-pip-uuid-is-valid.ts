@@ -27,7 +27,6 @@ export default function useCheckIfPipUUIDIsValid(): (
 				!isPipUUIDValid(pipUUID)
 			) return
 
-
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				setUserAlreadyAddedUUID(true)
 				return

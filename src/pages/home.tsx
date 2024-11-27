@@ -10,7 +10,7 @@ export default function Home() {
 					<div className="w-full max-w-3xl">
 						<div className="flex flex-col items-center">
 							<BlueDot />
-							<div className="text-slate-800 dark:text-slate-50">
+							<div className="text-zinc-800 dark:text-zinc-50">
 							Stay tuned, coming soon...
 							</div>
 						</div>

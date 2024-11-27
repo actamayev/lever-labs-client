@@ -1,32 +1,66 @@
 import { useState } from "react"
-import FormGroup from "../form-group"
-import ShowOrHidePasswordButton from "./show-or-hide-password-button"
+import { Eye, EyeOff } from "lucide-react"
+import { Control, FieldPath } from "react-hook-form"
+import { Input } from "@/components/shadcn/ui/input"
+import { Button } from "@/components/shadcn/ui/button"
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
+// import { Link } from "react-router-dom"
 
-interface Props {
-	credentials: LoginCredentials | RegisterCredentials
-	setCredentials: (newCredentials: Partial<LoginCredentials | RegisterCredentials>) => void
+interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
+	control: Control<T>
+	name: FieldPath<T>
+	placeholder?: string
+	// showForgotPassword?: boolean
 }
 
-export default function PasswordInput (props: Props) {
-	const { credentials, setCredentials } = props
+export default function PasswordField<T extends LoginFormValues | RegisterFormValues>({
+	control,
+	name,
+	placeholder = "Password"
+	// showForgotPassword = false
+}: PasswordFieldProps<T>) {
 	const [showPassword, setShowPassword] = useState(false)
 
 	return (
-		<div className="relative">
-			<FormGroup
-				label="Password"
-				type={showPassword ? "text" : "password"}
-				placeholder="Password"
-				onChange={(event) => setCredentials({ ...credentials, password: event.target.value })}
-				required
-				value={credentials.password || ""}
-				maxLength={100}
-				className="mb-4"
-			/>
-			<ShowOrHidePasswordButton
-				showPassword={showPassword}
-				setShowPassword={setShowPassword}
-			/>
-		</div>
+		<FormField
+			control={control}
+			name={name}
+			render={({ field }) => (
+				<FormItem className="grid gap-2">
+					{/* <div className="flex items-center justify-between">
+						{showForgotPassword && (
+							<Link to="/forgot-password" className="text-sm text-foreground/60 hover:text-foreground underline">
+								Forgot your password?
+							</Link>
+						)}
+					</div> */}
+					<FormControl>
+						<div className="relative">
+							<Input
+								type={showPassword ? "text" : "password"}
+								placeholder={placeholder}
+								{...field}
+								maxLength={100}
+								minLength={6}
+							/>
+							<Button
+								type="button"
+								variant="ghost"
+								size="sm"
+								className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1"
+								onClick={() => setShowPassword(prevState => !prevState)}
+							>
+								{showPassword ? (
+									<EyeOff className="h-4 w-4" />
+								) : (
+									<Eye className="h-4 w-4" />
+								)}
+							</Button>
+						</div>
+					</FormControl>
+					<FormMessage />
+				</FormItem>
+			)}
+		/>
 	)
 }

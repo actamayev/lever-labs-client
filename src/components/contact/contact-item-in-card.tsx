@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { useNotificationsContext } from "../../contexts/notifications-context"
+import useStyledToast from "../toast-options"
+import { Button } from "../shadcn/ui/button"
 
 interface Props {
 	name: string
@@ -9,24 +10,29 @@ interface Props {
 
 function ContactItemInCard(props: Props) {
 	const { name, email } = props
-	const notificationsClass = useNotificationsContext()
+	const toast = useStyledToast()
 
 	const copyToClipboard = useCallback(async () => {
 		try {
 			await navigator.clipboard.writeText(email)
-			notificationsClass.setNeutralNotification(`${email} copied to clipboard`)
+			toast.neutral({
+				description: `${email} copied to clipboard`
+			})
 		} catch (error) {
 			console.error(error)
 		}
-	}, [email, notificationsClass])
+	}, [email, toast])
 
 	return (
-		<div
-			className="flex justify-between py-2 hover:bg-slate-100 dark:hover:bg-slate-700 m-1 rounded-lg cursor-pointer"
-			onClick={copyToClipboard}
-		>
-			<span className="text-left ml-2">{name}</span>
-			<span className="text-right font-semibold mr-2">{email}</span>
+		<div className="w-full px-0.5">
+			<Button
+				variant="ghost"
+				onClick={copyToClipboard}
+				className="w-full flex justify-between items-center py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg"
+			>
+				<span className="text-left">{name}</span>
+				<span className="text-right font-semibold">{email}</span>
+			</Button>
 		</div>
 	)
 }

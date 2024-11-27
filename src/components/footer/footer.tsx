@@ -4,7 +4,7 @@ import FooterSupportSection from "./footer-support-section"
 
 export default function Footer() {
 	return (
-		<footer id="footer" className="bg-slate-100 dark:bg-slate-800 w-full py-3">
+		<footer id="footer" className="bg-zinc-100 dark:bg-zinc-800 w-full py-3">
 			<div className="flex justify-center w-full">
 				<div className="flex flex-row w-full max-w-screen-xl justify-between">
 					<div className="flex items-center">

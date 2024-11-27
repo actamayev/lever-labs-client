@@ -1,4 +1,4 @@
-import Login from "../../components/auth/login"
+import Login from "../../components/auth/login/login"
 import PageHelmet from "../../components/helmet/page-helmet"
 
 export default function LoginPage() {

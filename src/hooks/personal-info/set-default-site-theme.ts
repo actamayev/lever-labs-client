@@ -1,15 +1,15 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
+import useStyledToast from "../../components/toast-options"
 import useDefaultSiteTheme from "../memos/default-site-theme"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useNotificationsContext } from "../../contexts/notifications-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
-	const notificationsClass = useNotificationsContext()
+	const toast = useStyledToast()
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return useCallback(async () => {
@@ -24,10 +24,10 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			notificationsClass.setNegativeNotification(
-				"Unable to change site theme at this time. Please reload page and try again."
-			)
+			toast.negative({
+				title: "Unable to change site theme at this time",
+				description: "Please reload page and try again"
+			})
 		}
-	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken,
-		blueDotApiClient.personalInfoDataService, notificationsClass])
+	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])
 }

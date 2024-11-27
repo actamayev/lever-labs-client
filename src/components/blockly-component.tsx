@@ -2,14 +2,15 @@ import _ from "lodash"
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useState, useEffect, useCallback } from "react"
-import Button from "./button"
+import { useState, useEffect, useCallback, useMemo, useRef } from "react"
+import { Button } from "./shadcn/ui/button"
 import { usePipContext } from "../contexts/pip-context"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import useSendCppToPip from "../hooks/pip/send-cpp-to-pip"
-import workspaceConfig from "../utils/blockly/workspace-config"
 import { toolboxConfig } from "../utils/blockly/toolbox-config"
+import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
+import getWorkspaceConfig, { darkTheme, lightTheme } from "../utils/blockly/workspace-config"
 
 const initialXml = `
     <xml xmlns="https://developers.google.com/blockly/xml"/>
@@ -23,8 +24,17 @@ function BlocklyComponent() {
 	const pipClass = usePipContext()
 	const sendCppToPip = useSendCppToPip()
 	const initializeBlocks = useInitializeBlocks()
+	const defaultSiteTheme = useDefaultSiteTheme()
+	const isDarkMode = defaultSiteTheme === "dark"
+	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
+	const containerRef = useRef<HTMLDivElement>(null)
+
+	const workspaceConfig = useMemo(() => {
+		return getWorkspaceConfig(isDarkMode)
+	}, [isDarkMode])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+		workspaceRef.current = workspace
 		const newXml = Blockly.Xml.domToText(
 			Blockly.Xml.workspaceToDom(workspace)
 		)
@@ -35,6 +45,28 @@ function BlocklyComponent() {
 			cppCode
 		})
 	}, [])
+
+	useEffect(() => {
+		if (!containerRef.current) return
+
+		const resizeObserver = new ResizeObserver(() => {
+			if (workspaceRef.current) {
+				Blockly.svgResize(workspaceRef.current)
+			}
+		})
+
+		resizeObserver.observe(containerRef.current)
+
+		return () => {
+			resizeObserver.disconnect()
+		}
+	}, [])
+
+	useEffect(() => {
+		if (workspaceRef.current) {
+			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
+		}
+	}, [isDarkMode])
 
 	const disableFlyoutAutoclose = useCallback(() => {
 		const workspace = Blockly.getMainWorkspace() as Blockly.WorkspaceSvg
@@ -60,8 +92,11 @@ function BlocklyComponent() {
 	}, [blocklyState.cppCode, sendCppToPip])
 
 	return (
-		<div className="h-screen w-full p-4">
-			<div className="h-1/2 border border-slate-300 rounded">
+		<div className="h-screen w-full p-4 mt-4">
+			<div
+				ref={containerRef}
+				className="h-1/2 relative z-0 rounded-lg overflow-hidden border border-border"
+			>
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}
@@ -72,15 +107,17 @@ function BlocklyComponent() {
 			</div>
 			<div className="mt-4">
 				<h3 className="text-lg font-bold dark:text-white">Generated C++</h3>
-				<pre className="bg-slate-100 dark:bg-slate-800 dark:text-white p-4 rounded">
+				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded">
 					{blocklyState.cppCode}
 				</pre>
 			</div>
-			<Button
-				title="Send code to Pip"
+			{/* <Button
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
-			/>
+				className="mt-2"
+			>
+				Send code to Pip
+			</Button> */}
 		</div>
 	)
 }

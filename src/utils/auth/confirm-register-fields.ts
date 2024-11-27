@@ -2,7 +2,7 @@ import _ from "lodash"
 import isEmailValid from "./is-email-valid"
 
 export default function confirmRegisterFields(
-	credentials: RegisterCredentials,
+	credentials: RegisterFormValues,
 	setError: (error: string) => void
 ): boolean {
 	const contactType = isEmailValid(credentials.email)
