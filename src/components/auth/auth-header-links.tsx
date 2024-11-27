@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
-import { Button } from "@/components/shadcn/ui/button"
+import { Button, type ButtonProps } from "@/components/shadcn/ui/button"
 
 interface Props {
 	title: string
-	variant?: "default" | "secondary" | "outline" | "ghost"
+	variant?: ButtonProps["variant"]
 	className?: string
 	linkTo: PageNames
 }
