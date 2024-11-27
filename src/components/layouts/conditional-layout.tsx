@@ -1,5 +1,8 @@
+import _ from "lodash"
+import { observer } from "mobx-react"
 import { useLocation } from "react-router-dom"
 import ClassicLayout from "./classic-layout"
+import useUsername from "../../hooks/memos/username"
 import InternalPagesLayout from "./internal-pages-layout"
 
 const PrivatePageNames = [
@@ -13,21 +16,25 @@ interface Props {
 	children: React.ReactNode
 }
 
-export default function ConditionalLayout(props: Props) {
+function ConditionalLayout(props: Props) {
 	const { children } = props
 	const location = useLocation()
+	const username = useUsername()
 
-	if (PrivatePageNames.includes(location.pathname)) {
+	if (!PrivatePageNames.includes(location.pathname) || _.isNull(username)) {
 		return (
-			<InternalPagesLayout>
+			<ClassicLayout>
 				{children}
-			</InternalPagesLayout>
+			</ClassicLayout>
+
 		)
 	}
 
 	return (
-		<ClassicLayout>
+		<InternalPagesLayout>
 			{children}
-		</ClassicLayout>
+		</InternalPagesLayout>
 	)
 }
+
+export default observer(ConditionalLayout)
