@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import ErrorMessage from "../../error-message"
@@ -19,6 +19,27 @@ export default function EnterPipID(props: Props) {
 	const [userAlreadyAddedUUID, setUserAlreadyAddedUUID] = useState(false)
 	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
 
+	const cleanPipUUIDInput = useCallback(async (
+		event: React.ChangeEvent<HTMLInputElement>,
+		onChange: (value: PipUUID) => void
+	) => {
+		const input = event.target.value
+		// Allow only alphanumeric characters and enforce a maximum length of 5 characters
+		const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
+		if (allowedInput.length > 5) return
+
+		onChange(allowedInput)
+		setUserAlreadyAddedUUID(false)
+		setDoesPipUUIDExist(false)
+		setIsPipNameNeeded(false)
+		await checkIfPipUUIDIsValid(
+			allowedInput,
+			setIsPipNameNeeded,
+			setDoesPipUUIDExist,
+			setUserAlreadyAddedUUID
+		)
+	}, [setUserAlreadyAddedUUID, setDoesPipUUIDExist, setIsPipNameNeeded, checkIfPipUUIDIsValid])
+
 	return (
 		<FormField
 			control={control}
@@ -26,31 +47,13 @@ export default function EnterPipID(props: Props) {
 			render={({ field }) => {
 				const pipUUIDValid = isPipUUIDValid(field.value)
 
-				const cleanPipUUIDInput = async (event: React.ChangeEvent<HTMLInputElement>) => {
-					const input = event.target.value
-					// Allow only alphanumeric characters and enforce a maximum length of 5 characters
-					const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
-					if (allowedInput.length > 5) return
-
-					field.onChange(allowedInput)
-					setUserAlreadyAddedUUID(false)
-					setDoesPipUUIDExist(false)
-					setIsPipNameNeeded(false)
-					await checkIfPipUUIDIsValid(
-						allowedInput,
-						setIsPipNameNeeded,
-						setDoesPipUUIDExist,
-						setUserAlreadyAddedUUID
-					)
-				}
-
 				return (
 					<FormItem>
 						<FormLabel>Pip ID</FormLabel>
 						<FormControl>
 							<Input
 								{...field}
-								onChange={cleanPipUUIDInput}
+								onChange={(e) => cleanPipUUIDInput(e, field.onChange)}
 								className={cn(
 									"text-zinc-950 dark:text-zinc-200 bg-white dark:bg-zinc-800",
 									(pipUUIDValid && doesPipUUIDExist)
