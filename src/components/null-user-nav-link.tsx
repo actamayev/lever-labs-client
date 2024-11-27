@@ -14,8 +14,7 @@ export default function NullUserNavLink() {
 				title="Sign up"
 				variant="default"
 				className="bg-blue-600 hover:bg-blue-700 text-primary-foreground ml-2 text-base
-				dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-medium
-				transition-colors"
+				dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-medium transition-colors"
 				linkTo="/register"
 			/>
 		</>

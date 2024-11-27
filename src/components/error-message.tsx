@@ -2,7 +2,7 @@ import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "./shadcn/ui/alert"
 
 interface Props {
-  error: string
+	error: string
 }
 
 export default function ErrorMessage({ error }: Props) {
