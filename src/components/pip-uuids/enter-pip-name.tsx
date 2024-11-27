@@ -2,13 +2,7 @@ import { Control } from "react-hook-form"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../shadcn/ui/form"
 import { Input } from "../shadcn/ui/input"
 
-interface Props {
-    control: Control<IncompletePipData>
-}
-
-export default function EnterPipName(props: Props) {
-	const { control } = props
-
+export default function EnterPipName({ control } : { control: Control<IncompletePipData> }) {
 	return (
 		<FormField
 			control={control}

@@ -3,17 +3,11 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/shadcn/ui/sidebar"
-import { AppSidebar } from "@/components/shadcn/sidebar/app-sidebar"
-import { Separator } from "@/components/shadcn/ui/separator"
 import PipUuids from "../pip-uuids/pip-uuids"
+import { Separator } from "@/components/shadcn/ui/separator"
+import { AppSidebar } from "@/components/shadcn/sidebar/app-sidebar"
 
-interface Props {
-	children: React.ReactNode
-}
-
-export default function InternalPagesLayout(props: Props) {
-	const { children } = props
-
+export default function InternalPagesLayout({ children } : {children: React.ReactNode}) {
 	return (
 		<SidebarProvider style={ { "--sidebar-width": "350px" } as React.CSSProperties }>
 			<AppSidebar />

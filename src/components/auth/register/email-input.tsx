@@ -2,13 +2,7 @@ import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
-interface Props {
-	control: Control<RegisterFormValues>
-}
-
-export default function EmailInput(props: Props) {
-	const { control } = props
-
+export default function EmailInput({ control }: { control: Control<RegisterFormValues> }) {
 	return (
 		<FormField
 			control={control}

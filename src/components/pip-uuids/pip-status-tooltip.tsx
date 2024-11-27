@@ -7,12 +7,7 @@ import {
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
 
-interface Props {
-	pipData: PipData
-}
-
-function PipStatusTooltip(props: Props) {
-	const { pipData } = props
+function PipStatusTooltip({ pipData} : { pipData: PipData }) {
 
 	const getStatusColor = useCallback((pipStatus: PipConnectionStatus) => {
 		switch (pipStatus) {

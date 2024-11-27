@@ -13,12 +13,7 @@ import { addPipSchema } from "../../utils/auth/auth-schemas"
 import useValidatePipData from "../../hooks/pip/validate-pip-data"
 import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 
-interface Props {
-	toggleModalOpen: () => void
-}
-
-export default function AddPipModal(props: Props) {
-	const { toggleModalOpen } = props
+export default function AddPipModal({ toggleModalOpen } : { toggleModalOpen: () => void }) {
 	const [doesPipUUIDExist, setDoesPipUUIDExist] = useState(false)
 	const [isPipNameNeeded, setIsPipNameNeeded] = useState(false)
 	const modalRef = useRef<HTMLDivElement>(null)

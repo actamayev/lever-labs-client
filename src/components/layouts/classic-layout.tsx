@@ -1,13 +1,7 @@
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"
 
-interface Props {
-	children: React.ReactNode
-}
-
-export default function ClassicLayout (props: Props) {
-	const { children } = props
-
+export default function ClassicLayout ({ children } : {children: React.ReactNode}) {
 	return (
 		<div className="min-h-screen bg-zinc-200 dark:bg-zinc-900 flex flex-col">
 			<HeaderNav />
