@@ -12,8 +12,7 @@ const PrivatePageNames = [
 	"/account"
 ]
 
-
-function ConditionalLayout({ children } : {children: React.ReactNode}) {
+function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const location = useLocation()
 	const username = useUsername()
 

@@ -121,24 +121,6 @@ module.exports = {
 				"accordion-up": "accordion-up 0.2s ease-out"
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	},
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require("tailwindcss-animate")],
