@@ -18,7 +18,7 @@ export default function EmailInput (props: Props) {
 					<FormLabel>Email</FormLabel>
 					<FormControl>
 						<Input
-							placeholder="abc@123.com"
+							placeholder="ada@lovelace.com"
 							{...field}
 							maxLength={100}
 						/>

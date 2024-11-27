@@ -50,7 +50,7 @@ export default function RegisterUsername() {
 									<FormLabel>Username</FormLabel>
 									<FormControl>
 										<Input
-											placeholder="abc123"
+											placeholder="adalovelace"
 											{...field}
 											onChange={(event) => {
 												const sanitizedValue = handleTypeUsername(event)

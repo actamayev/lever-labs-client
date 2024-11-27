@@ -18,7 +18,7 @@ export default function UsernameInput (props: Props) {
 					<FormLabel>Username</FormLabel>
 					<FormControl>
 						<Input
-							placeholder="abcxyz"
+							placeholder="adalovelace"
 							{...field}
 							maxLength={100}
 						/>
