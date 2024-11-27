@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import useStyledToast from "../toast-options"
+import { Button } from "../shadcn/ui/button"
 
 interface Props {
 	name: string
@@ -23,12 +24,15 @@ function ContactItemInCard(props: Props) {
 	}, [email, toast])
 
 	return (
-		<div
-			className="flex justify-between py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 m-1 rounded-lg cursor-pointer"
-			onClick={copyToClipboard}
-		>
-			<span className="text-left ml-2">{name}</span>
-			<span className="text-right font-semibold mr-2">{email}</span>
+		<div className="w-full px-0.5">
+			<Button
+				variant="ghost"
+				onClick={copyToClipboard}
+				className="w-full flex justify-between items-center py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg"
+			>
+				<span className="text-left">{name}</span>
+				<span className="text-right font-semibold">{email}</span>
+			</Button>
 		</div>
 	)
 }
