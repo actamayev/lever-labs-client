@@ -50,9 +50,9 @@ function PipUUIDs() {
 	if (_.isNull(username)) return null
 
 	return (
-		<div className="relative mr-2" ref={dropdownRef}>
+		<div className="relative" ref={dropdownRef}>
 			<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-				<div className="flex w-52 h-7 items-stretch justify-between
+				<div className="flex w-52 h-10 items-stretch justify-between
 				bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
 					<Button
 						variant="ghost"

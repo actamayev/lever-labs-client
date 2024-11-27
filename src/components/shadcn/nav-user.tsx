@@ -68,7 +68,7 @@ function NavUser() {
 					>
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-								<Avatar className="h-8 w-8 rounded-lg">
+								<Avatar className="rounded-lg" style={{ height: "35px", width: "35px" }}>
 									<ShowUserProfileImageOrDefaultImage
 										extraClasses="min-w-full min-h-full rounded-lg object-cover"
 										profileImageUrl={profilePictureUrl}
@@ -86,8 +86,10 @@ function NavUser() {
 							disabled={logoutDisabled}
 							className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
 						>
-							<LogOut className="mr-2 size-4" />
+							<LogOut className="mr-2" style={{ width: "25px", height: "25px"}}/>
+							<span className="text-base">
 							Log out
+							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
