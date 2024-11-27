@@ -1,6 +1,6 @@
 import { Control } from "react-hook-form"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../shadcn/ui/form"
 import { Input } from "../../shadcn/ui/input"
+import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
 interface Props {
 	control: Control<LoginFormValues>

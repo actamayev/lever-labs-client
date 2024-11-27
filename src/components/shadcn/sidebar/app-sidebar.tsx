@@ -1,5 +1,5 @@
 import { Sidebar } from "@/components/shadcn/ui/sidebar"
-import PrimarySidebar from "./primary-sidebar"
+import PrimarySidebar from "./primary/primary-sidebar"
 import SecondarySidebar from "./secondary/secondary-sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
