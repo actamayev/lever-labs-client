@@ -1,14 +1,8 @@
-import { Link } from "react-router-dom"
-import {
-	Sidebar,
-	SidebarFooter,
-	SidebarHeader,
-	SidebarMenu,
-	SidebarMenuItem,
-} from "@/components/shadcn/ui/sidebar"
-import NavUser from "@/components/shadcn/nav-user"
 import NavTheme from "../../nav-theme"
+import SidebarLogo from "./sidebar-logo"
 import MappedNavData from "./mapped-nav-data"
+import NavUser from "@/components/shadcn/nav-user"
+import { Sidebar, SidebarFooter } from "@/components/shadcn/ui/sidebar"
 
 export default function PrimarySidebar() {
 	return (
@@ -16,24 +10,7 @@ export default function PrimarySidebar() {
 			collapsible="none"
 			className="!w-[calc(var(--sidebar-width-icon)_+_1px)] border-r"
 		>
-			<SidebarHeader>
-				<SidebarMenu>
-					<SidebarMenuItem className="flex justify-center">
-						<Link
-							to="/"
-							className="flex items-center flex-shrink-0 dark:text-white"
-						>
-							<div className="flex aspect-square size-8 items-center justify-center rounded-lg">
-								<img
-									src="/favicon.svg"
-									alt="Logo"
-									className="h-8 w-8"
-								/>
-							</div>
-						</Link>
-					</SidebarMenuItem>
-				</SidebarMenu>
-			</SidebarHeader>
+			<SidebarLogo />
 			<MappedNavData />
 			<SidebarFooter>
 				<NavTheme />
