@@ -86,7 +86,7 @@ function NavUser() {
 							className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
 						>
 							<LogOut className="mr-2 size-4" />
-				Log out
+							Log out
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

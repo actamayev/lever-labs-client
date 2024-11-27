@@ -10,17 +10,16 @@ import { HiBeaker } from "react-icons/hi"
 import { TbSandbox } from "react-icons/tb"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 
-// This is sample navData
 const navData: SidebarNavData[] = [
 	{
 		title: "Sandbox",
 		url: "/sandbox",
-		icon: TbSandbox,
+		icon: TbSandbox
 	},
 	{
 		title: "Lab",
 		url: "/lab",
-		icon: HiBeaker,
+		icon: HiBeaker
 	}
 ]
 
