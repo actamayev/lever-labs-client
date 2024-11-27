@@ -27,6 +27,7 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 								field.onChange(sanitizedValue)
 							}}
 							maxLength={100}
+							minLength={3}
 						/>
 					</FormControl>
 					<FormMessage />

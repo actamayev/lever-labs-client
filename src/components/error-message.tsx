@@ -7,10 +7,12 @@ interface Props {
 
 export default function ErrorMessage({ error }: Props) {
 	return (
-		<Alert variant="destructive" className="mt-2">
+		<Alert variant="destructive" className="dark:text-red-500 dark:border-red-500">
 			<div className="flex items-center gap-2">
 				<AlertCircle className="h-4 w-4 flex-shrink-0" />
-				<AlertDescription className="flex-1 text-center">{error}</AlertDescription>
+				<AlertDescription className="flex-1 text-center">
+					{error}
+				</AlertDescription>
 			</div>
 		</Alert>
 	)

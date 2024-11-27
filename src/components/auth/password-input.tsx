@@ -41,6 +41,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								placeholder={placeholder}
 								{...field}
 								maxLength={100}
+								minLength={6}
 							/>
 							<Button
 								type="button"

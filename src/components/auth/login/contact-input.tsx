@@ -20,6 +20,7 @@ export default function ContactInput (props: Props) {
 							placeholder="Email or username"
 							{...field}
 							maxLength={100}
+							min={3}
 						/>
 					</FormControl>
 					<FormMessage />
