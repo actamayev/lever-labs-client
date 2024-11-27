@@ -3,7 +3,7 @@ import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import useHandleTypeUsername from "../../../hooks/handle-type-validation/handle-type-username"
 
-interface Props<T extends RegisterUsernameFormValues | RegisterFormValues>{
+interface Props<T extends RegisterUsernameFormValues | RegisterFormValues> {
 	control: Control<T>
 }
 
@@ -19,16 +19,24 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 			render={({ field }) => (
 				<FormItem className="grid gap-2">
 					<FormControl>
-						<Input
-							placeholder="Username"
-							{...field}
-							onChange={(event) => {
-								const sanitizedValue = handleTypeUsername(event)
-								field.onChange(sanitizedValue)
-							}}
-							maxLength={100}
-							minLength={3}
-						/>
+						<div className="relative">
+							<Input
+								placeholder="Username"
+								{...field}
+								onChange={(event) => {
+									const sanitizedValue = handleTypeUsername(event)
+									field.onChange(sanitizedValue)
+								}}
+								className="w-full pr-16 truncate"
+								maxLength={100}
+								minLength={3}
+							/>
+							<div className="absolute inset-y-0 right-3 flex items-center">
+								<span className="text-xs text-muted-foreground">
+									{field.value.length || 0}/100
+								</span>
+							</div>
+						</div>
 					</FormControl>
 					<FormMessage />
 				</FormItem>

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,7 +12,7 @@ import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import UsernameInput from "../../components/auth/register/username-input"
 import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-with-username"
 
-export default function RegisterUsername() {
+function RegisterUsername() {
 	useRedirectUserWithUsername()
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -26,9 +26,7 @@ export default function RegisterUsername() {
 	})
 
 	const username = form.watch("username")
-	const isDisabled = useMemo(() => {
-		return username.length < 4
-	}, [username])
+	const isDisabled = useMemo(() => username.length < 4, [username])
 
 	const onSubmit = useCallback(async (values: RegisterUsernameFormValues) => {
 		await usernameSubmit(values.username)
@@ -47,7 +45,7 @@ export default function RegisterUsername() {
 							className="w-full"
 							disabled={loading || isDisabled}
 						>
-							{_.isEmpty(username) ? "Continue" : `Continue as ${username}`}
+							Continue
 						</Button>
 
 						{error && <ErrorMessage error={error} />}
@@ -57,3 +55,5 @@ export default function RegisterUsername() {
 		</>
 	)
 }
+
+export default observer(RegisterUsername)
