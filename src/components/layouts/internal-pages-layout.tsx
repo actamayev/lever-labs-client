@@ -12,8 +12,8 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 		<SidebarProvider style={ { "--sidebar-width": "400px" } as React.CSSProperties }>
 			<AppSidebar />
 			<SidebarInset>
-				<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
-					<SidebarTrigger className="-ml-1" />
+				<header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4 z-40">
+					<SidebarTrigger className="-ml-1 size-10"/>
 					<Separator orientation="vertical" className="mr-2 h-4" />
 					<PipUuids />
 				</header>
