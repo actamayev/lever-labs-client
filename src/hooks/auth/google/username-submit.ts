@@ -10,13 +10,13 @@ export default function useUsernameSubmit (
 	setError: (error: string) => void,
 	setLoading: (loading: boolean) => void
 ): (
-	username: RegisterUsernameFormValues
+	username: string
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()
 
-	return useCallback(async (username: RegisterUsernameFormValues): Promise<void> => {
+	return useCallback(async (username: string): Promise<void> => {
 		setError("")
 		try {
 			setLoading(true)

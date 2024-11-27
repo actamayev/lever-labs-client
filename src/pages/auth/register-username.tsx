@@ -33,7 +33,7 @@ export default function RegisterUsername() {
 	}, [username])
 
 	const onSubmit = useCallback(async (values: RegisterUsernameFormValues) => {
-		await usernameSubmit(values)
+		await usernameSubmit(values.username)
 	}, [usernameSubmit])
 
 	return (

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { loginSchema } from "../utils/auth/auth-schemas"
+import { loginSchema, registerSchema, registerUsernameSchema } from "../utils/auth/auth-schemas"
 
 declare global {
 	interface LoginCredentials {

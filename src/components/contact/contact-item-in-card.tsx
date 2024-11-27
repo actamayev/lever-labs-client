@@ -13,7 +13,6 @@ function ContactItemInCard(props: Props) {
 
 	const copyToClipboard = useCallback(async () => {
 		try {
-			console.log("here")
 			await navigator.clipboard.writeText(email)
 			toast.neutral({
 				description: `${email} copied to clipboard`

@@ -13,7 +13,7 @@ interface Props {
 export default function AuthTemplate(props: Props) {
 	const { title, children } = props
 	return (
-		<Card className="mx-auto max-w-sm">
+		<Card className="mx-auto w-1/3">
 			<CardHeader className="space-y-1">
 				<CardTitle className="text-2xl font-bold">{title}</CardTitle>
 			</CardHeader>

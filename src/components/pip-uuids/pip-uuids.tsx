@@ -35,7 +35,6 @@ function PipUUIDs() {
 
 	const handlePipNameClick = useCallback(async (e: React.MouseEvent) => {
 		e.stopPropagation()
-		console.log("here")
 		if (!_.isNull(pipClass.selectedPip)) {
 			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 				return await diconnectFromPip(pipClass.selectedPip)
