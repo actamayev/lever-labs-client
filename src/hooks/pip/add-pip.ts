@@ -76,8 +76,8 @@ export default function useAddPip(): (
 				}
 			}
 			toast.negative({
-				title: `Unable to add ${pipData.pipName} at this time.`,
-				description: "Please reload page and try again."
+				title: `Unable to add ${pipData.pipName} at this time`,
+				description: "Please reload page and try again"
 			})
 		}
 	}, [blueDotApiClient.pipDataService, pipClass, toast, validatePipData])

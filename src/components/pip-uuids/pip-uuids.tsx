@@ -39,7 +39,7 @@ function PipUUIDs() {
 			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 				return await diconnectFromPip(pipClass.selectedPip)
 			} else {
-				return await requestToConnectToPip(pipClass.selectedPip)
+				return await requestToConnectToPip(pipClass.selectedPip.pipUUID)
 			}
 		}
 		if (_.isEmpty(pipClass.pipData)) {

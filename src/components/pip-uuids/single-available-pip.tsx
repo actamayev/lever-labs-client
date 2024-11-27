@@ -9,7 +9,7 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	const requestToConnectToPipCallback = useCallback(async () => {
-		await requestToConnectToPip(pip)
+		await requestToConnectToPip(pip.pipUUID)
 	}, [pip, requestToConnectToPip])
 
 	return (

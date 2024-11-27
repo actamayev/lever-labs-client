@@ -4,7 +4,7 @@ import { type ToastActionElement } from "./shadcn/ui/toast"
 interface ToastOptions {
     title?: string
     description: string
-    action?: ToastActionElement
+	action?: ToastActionElement
     duration?: number
 }
 
