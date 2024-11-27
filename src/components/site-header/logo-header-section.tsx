@@ -1,18 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
-
-function BlueDotRobots() {
-	const location = useLocation()
-	if (
-		location.pathname === "/garage" ||
-		location.pathname === "/lab" ||
-		location.pathname === "/sandbox" ||
-		location.pathname === "/account"
-	) return null
-
-	return (
-		<span className="ml-2">Blue Dot Robots</span>
-	)
-}
+import { Link } from "react-router-dom"
 
 export default function LogoHeaderSection() {
 	return (
@@ -20,7 +6,7 @@ export default function LogoHeaderSection() {
 			<Link
 				to="/"
 				className="flex items-center font-semibold text-3xl flex-shrink-0
-				text-slate-950 hover:text-pipTheme dark:text-white dark:hover:text-slate-200"
+				text-zinc-950 hover:text-pipTheme dark:text-white dark:hover:text-zinc-200"
 			>
 				<img
 					src="/favicon.svg"
@@ -28,7 +14,7 @@ export default function LogoHeaderSection() {
 					className="ml-1"
 					style={{ height: "40px", verticalAlign: "middle" }}
 				/>
-				<BlueDotRobots />
+				<span className="ml-2">Blue Dot Robots</span>
 			</Link>
 		</div>
 	)

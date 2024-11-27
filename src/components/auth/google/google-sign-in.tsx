@@ -3,12 +3,7 @@ import { GoogleLogin } from "@react-oauth/google"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
 
-interface Props {
-	whereToNavigate: PageNames
-}
-
-function GoogleSignIn(props: Props) {
-	const { whereToNavigate } = props
+function GoogleSignIn({ whereToNavigate }: { whereToNavigate: PageNames }) {
 	const googleAuthCallback = useGoogleAuthCallback(whereToNavigate)
 	const defaultSiteTheme = useDefaultSiteTheme()
 

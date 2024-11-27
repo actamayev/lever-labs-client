@@ -1,20 +1,26 @@
 import { Link } from "react-router-dom"
+import { Button, type ButtonProps } from "@/components/shadcn/ui/button"
 
 interface Props {
 	title: string
-	className: string
+	variant?: ButtonProps["variant"]
+	className?: string
 	linkTo: PageNames
 }
 
-export default function AuthHeaderLinks (props: Props) {
-	const { title, className, linkTo } = props
+export default function AuthHeaderLinks(props: Props) {
+	const { title, variant = "ghost", className, linkTo } = props
 
 	return (
-		<Link
-			to={linkTo}
-			className={`inline-flex items-center justify-center h-9 p-2 rounded-[3px] ${className}`}
+		<Button
+			variant={variant}
+			size="sm"
+			className={className}
+			asChild
 		>
-			{title}
-		</Link>
+			<Link to={linkTo}>
+				{title}
+			</Link>
+		</Button>
 	)
 }

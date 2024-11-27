@@ -9,18 +9,14 @@ import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-re
 
 export default function useLoginSubmit (
 	whereToNavigate: PageNames,
-	loginInformation: LoginCredentials,
 	setError: (error: string) => void,
 	setLoading: (loading: boolean) => void
-): (
-	e: React.FormEvent<HTMLFormElement>,
-) => Promise<void> {
+): (loginInformation: LoginFormValues) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
 
-	return useCallback(async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-		e.preventDefault()
+	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
 		setError("")
 		try {
 			const areCredentialsValid = confirmLoginFields(loginInformation, setError)
@@ -39,5 +35,5 @@ export default function useLoginSubmit (
 		} finally {
 			setLoading(false)
 		}
-	}, [blueDotApiClient.authDataService, loginInformation, navigate, setDataAfterLogin, setError, setLoading, whereToNavigate])
+	}, [blueDotApiClient.authDataService, navigate, setDataAfterLogin, setError, setLoading, whereToNavigate])
 }
