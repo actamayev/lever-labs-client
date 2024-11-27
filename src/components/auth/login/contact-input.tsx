@@ -14,11 +14,11 @@ export default function ContactInput (props: Props) {
 			control={control}
 			name="contact"
 			render={({ field }) => (
-				<FormItem className="mb-4">
-					<FormLabel>Username or Email</FormLabel>
+				<FormItem className="grid gap-2">
+					<FormLabel>Email</FormLabel>
 					<FormControl>
 						<Input
-							placeholder="abc@123.com"
+							placeholder="ada@lovelace.com"
 							{...field}
 							maxLength={100}
 						/>

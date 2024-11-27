@@ -1,22 +1,25 @@
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { Control, FieldPath } from "react-hook-form"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "@/components/shadcn/ui/input"
+import { Button } from "@/components/shadcn/ui/button"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/shadcn/ui/form"
+// import { Link } from "react-router-dom"
 
 interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
 	control: Control<T>
 	name: FieldPath<T>
 	label?: string
 	placeholder?: string
+	// showForgotPassword?: boolean
 }
 
 export default function PasswordField<T extends LoginFormValues | RegisterFormValues>({
 	control,
 	name,
 	label = "Password",
-	placeholder = "Enter password"
+	placeholder = "Enter password",
+	// showForgotPassword = false
 }: PasswordFieldProps<T>) {
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -25,8 +28,15 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 			control={control}
 			name={name}
 			render={({ field }) => (
-				<FormItem className="mb-4">
-					<FormLabel>{label}</FormLabel>
+				<FormItem className="grid gap-2">
+					<div className="flex items-center justify-between">
+						<FormLabel>{label}</FormLabel>
+						{/* {showForgotPassword && (
+							<Link to="/forgot-password" className="text-sm text-foreground/60 hover:text-foreground underline">
+								Forgot your password?
+							</Link>
+						)} */}
+					</div>
 					<FormControl>
 						<div className="relative">
 							<Input

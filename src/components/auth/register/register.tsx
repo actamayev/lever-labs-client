@@ -42,38 +42,55 @@ export default function Register(props: Props) {
 	}, [registerSubmit])
 
 	return (
-		<AuthTemplate title="Register">
+		<AuthTemplate title="Create an Account">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 					<UsernameInput control={form.control} />
-
 					<EmailInput control={form.control} />
 
 					<PasswordField<RegisterFormValues>
 						control={form.control}
 						name="password"
 						label="Password"
+						placeholder="Create a password"
 					/>
+
 					<PasswordField<RegisterFormValues>
 						control={form.control}
 						name="passwordConfirmation"
 						label="Confirm Password"
+						placeholder="Confirm your password"
 					/>
 
 					<Button
 						type="submit"
-						className="my-3 w-full font-semibold text-lg text-white"
+						className="w-full"
 						disabled={loading}
 					>
-						Register
+						Create account
 					</Button>
+
+					<div className="relative">
+						<div className="absolute inset-0 flex items-center">
+							<span className="w-full border-t" />
+						</div>
+						<div className="relative flex justify-center text-xs uppercase">
+							<span className="bg-background px-2 text-muted-foreground">
+									Or continue with
+							</span>
+						</div>
+					</div>
+
+					<div className="grid gap-2">
+						<GoogleSignIn whereToNavigate={whereToNavigate} />
+					</div>
 
 					{error && <ErrorMessage error={error} />}
 				</form>
 			</Form>
-			<SubRegisterInfo setLoginOrRegister = {setLoginOrRegister}/>
+
 			<div className="mt-4">
-				<GoogleSignIn whereToNavigate={whereToNavigate}/>
+				<SubRegisterInfo setLoginOrRegister={setLoginOrRegister} />
 			</div>
 		</AuthTemplate>
 	)

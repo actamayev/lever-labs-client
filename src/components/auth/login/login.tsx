@@ -1,17 +1,17 @@
 import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
 import ContactInput from "./contact-input"
+import SubLoginInfo from "./sub-login-info"
 import PasswordField from "../password-input"
 import ErrorMessage from "../../error-message"
-import SubLoginInfo from "./sub-login-info"
 import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "@/components/shadcn/ui/button"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
-import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
+import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
 interface Props {
 	whereToNavigate: PageNames
@@ -41,29 +41,44 @@ export default function Login(props: Props) {
 	return (
 		<AuthTemplate title="Login">
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
+				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 					<ContactInput control={form.control} />
-
 					<PasswordField<LoginFormValues>
 						control={form.control}
 						name="password"
 						label="Password"
+						// showForgotPassword={true}
 					/>
 
 					<Button
 						type="submit"
-						className="my-3 w-full font-semibold text-lg"
+						className="w-full"
 						disabled={loading}
 					>
 						Login
 					</Button>
 
+					<div className="relative">
+						<div className="absolute inset-0 flex items-center">
+							<span className="w-full border-t" />
+						</div>
+						<div className="relative flex justify-center text-xs uppercase">
+							<span className="bg-background px-2 text-muted-foreground">
+								Or continue with
+							</span>
+						</div>
+					</div>
+
+					<div className="grid gap-2">
+						<GoogleSignIn whereToNavigate={whereToNavigate} />
+					</div>
+
 					{error && <ErrorMessage error={error} />}
 				</form>
 			</Form>
-			<SubLoginInfo setLoginOrRegister={setLoginOrRegister}/>
+
 			<div className="mt-4">
-				<GoogleSignIn whereToNavigate={whereToNavigate}/>
+				<SubLoginInfo setLoginOrRegister={setLoginOrRegister} />
 			</div>
 		</AuthTemplate>
 	)

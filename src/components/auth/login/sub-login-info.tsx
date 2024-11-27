@@ -1,36 +1,33 @@
-import _ from "lodash"
 import { Link } from "react-router-dom"
 import { Button } from "@/components/shadcn/ui/button"
 
 interface Props {
-  setLoginOrRegister?: React.Dispatch<React.SetStateAction<LoginOrRegister>>
+	setLoginOrRegister?: React.Dispatch<React.SetStateAction<LoginOrRegister>>
 }
 
 export default function SubLoginInfo(props: Props) {
 	const { setLoginOrRegister } = props
 
-	if (_.isUndefined(setLoginOrRegister)) {
+	if (!setLoginOrRegister) {
 		return (
-			<div className="flex items-center justify-center gap-1 text-sm text-foreground">
-				<span>Need an account?</span>
-				<Link to="/register">
-					<Button variant="link" className="p-0 h-auto font-semibold">
-						Register
-					</Button>
+			<div className="text-center text-sm text-foreground/60">
+				Don&apos;t have an account?{" "}
+				<Link to="/register" className="underline hover:text-foreground">
+					Sign up
 				</Link>
 			</div>
 		)
 	}
 
 	return (
-		<div className="flex items-center justify-center gap-1 text-sm text-foreground">
-			<span>Need an account?</span>
+		<div className="text-center text-sm text-foreground/60">
+			Don&apos;t have an account?{" "}
 			<Button
 				variant="link"
-				className="p-0 h-auto font-semibold"
+				className="p-0 h-auto"
 				onClick={() => setLoginOrRegister("Register")}
 			>
-				Register
+				Sign up
 			</Button>
 		</div>
 	)
