@@ -1,7 +1,7 @@
 import {
 	Sidebar,
 	SidebarHeader,
-	SidebarInput,
+	// SidebarInput,
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
 import { platformNavData, sensorsNavData } from "../../../../utils/lab/nav-data"

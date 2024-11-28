@@ -1,7 +1,7 @@
 import {
 	Sidebar,
 	SidebarHeader,
-	SidebarInput,
+	// SidebarInput,
 } from "@/components/shadcn/ui/sidebar"
 
 export default function SandboxSidebar() {
