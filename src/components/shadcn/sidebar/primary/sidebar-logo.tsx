@@ -12,12 +12,14 @@ export default function SidebarLogo() {
 				<SidebarMenuItem className="flex justify-center">
 					<Link
 						to="/"
-						className="flex items-center flex-shrink-0 dark:text-white"
+						className="flex !h-16 !w-16 !min-w-[64px] items-center
+						justify-center rounded-lg group-data-[collapsible=icon]:!h-16 group-data-[collapsible=icon]:!w-16"
 					>
-						<div className="flex aspect-square size-16 items-center justify-center rounded-lg">
+						<div className="flex aspect-square !h-16 !w-16 items-center justify-center">
 							<img
 								src="/favicon.svg"
 								alt="Logo"
+								className="!h-16 !w-16"
 							/>
 						</div>
 					</Link>

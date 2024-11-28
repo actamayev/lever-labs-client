@@ -40,11 +40,11 @@ export default function MappedNavData() {
 									}}
 									onClick={() => navigate(item.url)}
 									isActive={location.pathname === item.url}
-									className="flex items-center justify-center px-2.5 md:px-2" // Added justify-center
-									style={{ height: "60px", width: "60px" }}
+									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
+									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]"
 								>
-									<div className="flex items-center justify-center">
-										<item.icon style={{ width: "50px", height: "50px" }}/>
+									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
+										<item.icon className="!h-[50px] !w-[50px]" />
 									</div>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
