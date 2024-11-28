@@ -22,11 +22,11 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 		>
 			<div className="flex items-center gap-2">
 				<PipStatusTooltip pipData={pip} />
-				<span className="text-black dark:text-white truncate max-w-[160px] text-xl">
+				<span className="text-black dark:text-white truncate max-w-[100px] text-xl">
 					{pip.pipName}
 				</span>
 			</div>
-			<span className="text-zinc-800 dark:text-zinc-200">{pip.pipUUID}</span>
+			<span className="text-zinc-600 dark:text-zinc-200">{pip.pipUUID}</span>
 		</Button>
 	)
 }
