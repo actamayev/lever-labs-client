@@ -17,8 +17,11 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const username = useUsername()
 
 	if (!PrivatePageNames.includes(location.pathname) || _.isNull(username)) {
+		let extraClasses = undefined
+		if (location.pathname === "/") extraClasses = ""
+
 		return (
-			<ClassicLayout>
+			<ClassicLayout extraClasses={extraClasses}>
 				{children}
 			</ClassicLayout>
 

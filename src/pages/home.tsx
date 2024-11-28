@@ -1,21 +1,18 @@
-import BlueDot from "../components/blue-dot"
+import BlueDot from "../components/home/blue-dot"
 import PageHelmet from "../components/helmet/page-helmet"
+import DotPattern from "../components/shadcn/ui/dot-pattern"
+import { cn } from "../lib/shadcn/utils"
+import LandingHeader from "../components/home/landing-header"
 
 export default function Home() {
 	return (
 		<>
 			<PageHelmet pageTitle="/" />
-			<div>
-				<div className="flex justify-center w-full mt-32">
-					<div className="w-full max-w-3xl">
-						<div className="flex flex-col items-center">
-							<BlueDot />
-							<div className="text-zinc-800 dark:text-zinc-50">
-							Stay tuned, coming soon...
-							</div>
-						</div>
-					</div>
-				</div>
+			<div className="relative flex h-[1000px] w-full flex-col items-center justify-center
+			overflow-hidden rounded-lg border bg-background md:shadow-xl">
+				<DotPattern />
+				<LandingHeader />
+				{/* <BlueDot /> */}
 			</div>
 		</>
 	)
