@@ -32,7 +32,7 @@ function PipStatusTooltip({ pipData} : { pipData: PipData }) {
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div className={`h-3 w-3 rounded-full ${getStatusColor}`} />
+					<div className={`size-4 rounded-full ${getStatusColor}`} />
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="bg-zinc-700 text-zinc-100">
 					{getStatusMessage}

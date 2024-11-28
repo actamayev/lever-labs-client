@@ -32,7 +32,7 @@ export default function MappedNavData() {
 				<SidebarGroupContent className="px-1.5 md:px-0">
 					<SidebarMenu>
 						{navData.map((item) => (
-							<SidebarMenuItem key={item.title}>
+							<SidebarMenuItem key={item.title} className="flex justify-center">
 								<SidebarMenuButton
 									tooltip={{
 										children: item.title,
@@ -40,10 +40,12 @@ export default function MappedNavData() {
 									}}
 									onClick={() => navigate(item.url)}
 									isActive={location.pathname === item.url}
-									className="px-2.5 md:px-2"
+									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
+									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]"
 								>
-									<item.icon />
-									<span>{item.title}</span>
+									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
+										<item.icon className="!h-[50px] !w-[50px]" />
+									</div>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						))}
