@@ -9,7 +9,7 @@ import { AppSidebar } from "@/components/shadcn/sidebar/app-sidebar"
 
 export default function InternalPagesLayout({ children } : { children: React.ReactNode }) {
 	return (
-		<SidebarProvider style={{ "--sidebar-width": "400px" } as React.CSSProperties}>
+		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
 				<header className="fixed w-full top-0 flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3 z-40">

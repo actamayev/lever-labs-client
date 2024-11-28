@@ -44,8 +44,8 @@ function NavUser() {
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
 							className="!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center
-				group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
-				data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
+							group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
+							data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
 						>
 							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
@@ -87,7 +87,7 @@ function NavUser() {
 						>
 							<LogOut className="mr-2 !h-[25px] !w-[25px] !min-w-[25px]" />
 							<span className="text-base">
-				Log out
+								Log out
 							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
