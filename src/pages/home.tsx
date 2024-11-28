@@ -4,7 +4,11 @@ import DotPattern from "../components/shadcn/ui/dot-pattern"
 import { cn } from "../lib/shadcn/utils"
 import LandingHeader from "../components/home/landing-header"
 import { Frictionless } from "../components/home/frictionless"
+import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
 
+// TODO: Consider moving frmo Dot pattern to grid.
+// Pros of dot pattern: looks just like the sandbox
+// Pros of grid: looks like a blueprint (engineeringy)
 export default function Home() {
 	return (
 		<>
@@ -15,6 +19,7 @@ export default function Home() {
 				<LandingHeader />
 				<div className="px-14 mt-6">
 					<Frictionless />
+					<DesignThatInspiresCard />
 				</div>
 				{/* <BlueDot /> */}
 			</div>

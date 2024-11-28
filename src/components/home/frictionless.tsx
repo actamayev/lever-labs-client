@@ -3,11 +3,12 @@ import { IoIosRocket } from "react-icons/io"
 import { BentoCard, BentoGrid } from "../shadcn/ui/bento-grid"
 import { FaHammer } from "react-icons/fa"
 
+// TODO: Build just keep building
 const features = [
 	{
 		Icon: IoIosRocket,
-		name: "Efortless setup. Limitless expoloration",
-		description: "Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions. Just connect to WiFi, and you’re ready to go. Every detail has been crafted for one purpose: to help you just keep building.",
+		name: "Effortless setup. Limitless exploration.",
+		description: "Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions. Just connect to WiFi, and you're ready to go. Every detail has been crafted for one purpose: to help you just keep building.",
 		href: "#",
 		// cta: "Learn more",
 		className: "col-span-2",
