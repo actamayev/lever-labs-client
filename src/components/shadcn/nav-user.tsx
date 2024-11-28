@@ -39,15 +39,15 @@ function NavUser() {
 
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem>
+			<SidebarMenuItem className="flex justify-center">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
-							size="lg"
-							className="relative flex w-full items-center justify-center
-							data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
+							className="!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center
+							group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
+							data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
 						>
-							<Avatar className="h-6 w-6 rounded-lg">
+							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
 									extraClasses="min-w-full min-h-full rounded-lg object-cover"
 									profileImageUrl={profilePictureUrl}
@@ -67,7 +67,7 @@ function NavUser() {
 					>
 						<DropdownMenuLabel className="p-0 font-normal">
 							<div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-								<Avatar className="h-8 w-8 rounded-lg">
+								<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 									<ShowUserProfileImageOrDefaultImage
 										extraClasses="min-w-full min-h-full rounded-lg object-cover"
 										profileImageUrl={profilePictureUrl}
@@ -85,8 +85,10 @@ function NavUser() {
 							disabled={logoutDisabled}
 							className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
 						>
-							<LogOut className="mr-2 size-4" />
-							Log out
+							<LogOut className="mr-2 !h-[25px] !w-[25px] !min-w-[25px]" />
+							<span className="text-base">
+								Log out
+							</span>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>

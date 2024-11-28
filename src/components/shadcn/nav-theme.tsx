@@ -14,10 +14,15 @@ function NavTheme() {
 					variant="ghost"
 					size="icon"
 					onClick={setDefaultSiteTheme}
-					className="relative size-8"
+					className="!h-[54px] !w-[54px] !min-w-[54px] relative group-data-[collapsible=icon]:!h-[54px]
+					group-data-[collapsible=icon]:!w-[54px]"
 				>
-					<Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-					<Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+					<Sun
+						className="!h-[35px] !w-[35px] !min-w-[35px] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+					/>
+					<Moon
+						className="!h-[35px] !w-[35px] !min-w-[35px] absolute rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+					/>
 				</Button>
 			</SidebarMenuItem>
 		</SidebarMenu>
