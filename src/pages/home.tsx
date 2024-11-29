@@ -17,7 +17,7 @@ export default function Home() {
 			overflow-hidden rounded-lg border bg-background md:shadow-xl">
 				<DotPattern />
 				<LandingHeader />
-				<div className="px-14 mt-6">
+				<div className="px-80 mt-6">
 					<Frictionless />
 					<DesignThatInspiresCard />
 				</div>
