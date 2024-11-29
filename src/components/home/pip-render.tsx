@@ -12,6 +12,7 @@ export default function PipRender() {
 				<TextRevealByWord
 					text="Designed to make learning robotics fun and seamless."
 					className="w-full"
+					instantTransition={true}
 				/>
 			</div>
 		</div>
