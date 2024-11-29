@@ -36,13 +36,13 @@ export default function LandingHeader() {
 							Fig. 1: Pip
 						</div>
 					</BlurFade>
-					<div className="my-24">
+					{/* <div className="my-24">
 						<TextRevealByWord
 							text="Designed to make learning robotics fun and seamless."
 							className="w-full"
 							instantTransition={true}
 						/>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</>

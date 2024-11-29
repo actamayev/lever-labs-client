@@ -16,8 +16,8 @@ export default function DesignThatInspiresCard() {
 					className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10"
 					style={{ height: "400px" }}
 				>
-					<div className="flex flex-col p-6 w-full space-y-4 bg-white dark:bg-black h-full justify-center">
-						<div className="space-y-2 mb-12">
+					<div className="flex flex-col p-6 w-full h-full justify-between">
+						<div className="space-y-6">
 							<h2 className="text-4xl font-bold">
 								Design That Inspires
 							</h2>
@@ -27,7 +27,11 @@ export default function DesignThatInspiresCard() {
 						</div>
 						<p className="text-zinc-600 dark:text-zinc-300 text-lg">
 							Pip's clear shell isn't just for show - it's an invitation. See how sensors,
-							motors, and circuits work together in perfect harmony. With features like
+							motors, and circuits work together&nbsp;
+							<span className="text-black dark:text-white">
+								in perfect harmony.&nbsp;
+							</span>
+							With features like
 							distance sensors, gyroscopes, and encoders, Pip sparks curiosity at every
 							turn. And it's built to last, ready to tackle anything from classroom chaos
 							to home experiments.
