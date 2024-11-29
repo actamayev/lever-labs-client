@@ -88,7 +88,7 @@ export default function Sensors() {
 	return (
 		<div className="mt-10">
 			<p className="flex justify-center text-center whitespace-pre-wrap text-6xl
-			font-medium tracking-tight text-black dark:text-white">
+			font-medium tracking-tight text-black dark:text-white mb-10">
 				Pip comes with <NumberTicker value={10} /> onboard sensors.
 			</p>
 			<div className="flex">
