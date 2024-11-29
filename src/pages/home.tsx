@@ -18,7 +18,7 @@ export default function Home() {
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full bg-background relative">
 				<DotPattern />
-				<div className="relative z-10 flex flex-col items-center justify-center py-36">
+				<div className="relative z-10 flex flex-col items-center justify-center py-32">
 					<LandingHeader />
 					<div className="px-80 mt-10">
 						<PipRender />

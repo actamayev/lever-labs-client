@@ -14,7 +14,6 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   className,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const textRef = useRef<HTMLParagraphElement | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,26 +24,19 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
 
   return (
     <div ref={containerRef} className={cn("relative", className)}>
-      <div className="sticky top-1/2 -translate-y-1/2 flex items-center justify-center w-full">
-        <p
-          ref={textRef}
-          className={cn(
-            "flex flex-wrap justify-center p-5 text-2xl font-bold text-black/20 dark:text-white/20",
-            "md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl"
-          )}
-        >
-          {words.map((word, i) => {
-            // Compress the range to make words appear faster
-            const start = (i / words.length) * 0.5; // Multiply by 0.5 to make it happen in first half of scroll
-            const end = start + (1 / words.length) * 0.5;
-            return (
-              <Word key={i} progress={scrollYProgress} range={[start, end]}>
-                {word}
-              </Word>
-            );
-          })}
-        </p>
-      </div>
+      <p className={cn(
+        "flex flex-wrap justify-center text-8xl font-bold text-black/20 dark:text-white/20"
+      )}>
+        {words.map((word, i) => {
+          const start = (i / words.length) * 0.5;
+          const end = start + (1 / words.length) * 0.5;
+          return (
+            <Word key={i} progress={scrollYProgress} range={[start, end]}>
+              {word}
+            </Word>
+          );
+        })}
+      </p>
     </div>
   );
 };

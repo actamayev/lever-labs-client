@@ -8,8 +8,7 @@ export default function PipRender() {
 				alt="Product visualization"
 				className="rounded-lg object-cover w-full max-w-[700px]"
 			/>
-			<div className="mt-20">
-				{/* test */}
+			<div className="my-24">
 				<TextRevealByWord
 					text="Designed to make learning robotics fun and seamless."
 					className="w-full"
