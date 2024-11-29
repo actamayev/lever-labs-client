@@ -18,7 +18,7 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]  // This makes the animation start as soon as the container enters view
+    offset: ["start end", "center start"]
   });
 
   const words = text.split(" ");
@@ -34,8 +34,9 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
           )}
         >
           {words.map((word, i) => {
-            const start = i / words.length;
-            const end = start + 1 / words.length;
+            // Compress the range to make words appear faster
+            const start = (i / words.length) * 0.5; // Multiply by 0.5 to make it happen in first half of scroll
+            const end = start + (1 / words.length) * 0.5;
             return (
               <Word key={i} progress={scrollYProgress} range={[start, end]}>
                 {word}

@@ -28,7 +28,7 @@ const features = [
 
 export function Frictionless() {
 	return (
-		<div className="mt-20">
+		<div className="">
 			<div className="text-4xl text-center mb-8">
 				Just keep building.
 			</div>
