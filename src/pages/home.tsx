@@ -13,7 +13,7 @@ export default function Home() {
 		<>
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
-				<GridPattern />
+				<GridPattern isDashed={true} dashSize={5} orientation="both" />
 				{/* <DotPattern /> */}
 				<div className="relative z-10 flex flex-col items-center justify-center py-32">
 					<LandingHeader />

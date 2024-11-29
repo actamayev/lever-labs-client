@@ -1,5 +1,4 @@
 import { useId } from "react";
-
 import { cn } from "@/lib/shadcn/utils";
 
 interface GridPatternProps {
@@ -10,6 +9,9 @@ interface GridPatternProps {
   squares?: Array<[x: number, y: number]>;
   strokeDasharray?: string;
   className?: string;
+  isDashed?: boolean;
+  dashSize?: number;
+  orientation?: "both" | "vertical" | "horizontal"; // New prop for line orientation
   [key: string]: unknown;
 }
 
@@ -21,9 +23,26 @@ export function GridPattern({
   strokeDasharray = "0",
   squares,
   className,
+  isDashed = false,
+  dashSize = 4,
+  orientation = "both", // Default to showing both lines
   ...props
 }: GridPatternProps) {
   const id = useId();
+
+  const dashPattern = isDashed ? `${dashSize},${dashSize}` : strokeDasharray;
+
+  // Create path based on orientation
+  const getPath = () => {
+    switch (orientation) {
+      case "vertical":
+        return `M.5 ${height}V.5`;
+      case "horizontal":
+        return `M.5.5H${width}`;
+      default: // "both"
+        return `M.5 ${height}V.5H${width}`;
+    }
+  };
 
   return (
     <svg
@@ -44,9 +63,9 @@ export function GridPattern({
           y={y}
         >
           <path
-            d={`M.5 ${height}V.5H${width}`}
+            d={getPath()}
             fill="none"
-            strokeDasharray={strokeDasharray}
+            strokeDasharray={dashPattern}
           />
         </pattern>
       </defs>

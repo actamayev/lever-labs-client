@@ -21,8 +21,8 @@ const features: Feature[] = [
 	{
 		Icon: FaLightbulb,
 		title: "Grows With You",
-		subtitle: "Perfect for beginners. Essential for experts",
-		description: "Whether you're exploring robotics for the first time or designing calculus-based control systems, Pip evolves with you. Regularly updated lessons ensure you're always inspired and never out of depth. From elementary school to college and beyond, Pip adapts to your curiosity and ambition.",
+		subtitle: "Perfect for beginners. Essential for experts.",
+		description: "Whether you're exploring robotics for the first time or designing calculus-based control systems, Pip evolves with you. Regularly updated lessons ensure you're always inspired and never out of depth. From elementary school to college and beyond, Pip is one robot that does it all.",
 	}
 ]
 
@@ -32,16 +32,16 @@ function FeatureSection({ feature }: { feature: Feature }) {
 			<BoxReveal boxColor={"#003da5"} duration={0.25}>
 				<div className="flex items-center space-x-2 text-lg">
 					<feature.Icon size={35} />
-					<span className="font-medium tracking-wide text-zinc-800 text-4xl">
+					<span className="font-medium tracking-wide text-zinc-900 dark:text-zinc-100 text-4xl">
 						{feature.title}
 					</span>
 				</div>
 			</BoxReveal>
 			<BoxReveal boxColor={"#003da5"} duration={0.45}>
-				<h3 className="text-3xl font-light my-6">{feature.subtitle}</h3>
+				<h3 className="text-3xl font-light my-6 text-zinc-800 dark:text-zinc-200">{feature.subtitle}</h3>
 			</BoxReveal>
 			<BoxReveal boxColor={"#003da5"} duration={0.65}>
-				<p className="text-zinc-500 dark:text-zinc-400 text-2xl">
+				<p className="text-zinc-500 dark:text-zinc-300 text-2xl">
 					{feature.description}
 				</p>
 			</BoxReveal>
@@ -56,7 +56,7 @@ export function JustKeepBuilding() {
 				<h2 className="text-5xl text-center font-extralight">
 					Just keep building.
 				</h2>
-				<p className="mt-4 text-2xl text-center text-zinc-600 dark:text-zinc-400">
+				<p className="mt-4 text-2xl text-center text-zinc-600 dark:text-zinc-300">
 					Every detail has been crafted for one purpose: to help you&nbsp;
 					<span className="font-bold">just keep building.</span>
 				</p>
