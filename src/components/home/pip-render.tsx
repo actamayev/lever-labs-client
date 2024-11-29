@@ -2,15 +2,17 @@ import TextRevealByWord from "../shadcn/ui/text-reveal"
 
 export default function PipRender() {
 	return (
-		<div className="flex flex-col items-center justify-center">
+		<div className="flex flex-col items-center justify-center w-full">
 			<img
 				src="pip-render-11-28.png"
 				alt="Product visualization"
-				className="rounded-lg object-cover mb-12"
-				style={{ width: "700px" }}
+				className="rounded-lg object-cover w-full max-w-[700px]"
 			/>
-			<div className="z-10 flex items-center justify-center rounded-lg border bg-white dark:bg-black">
-				<TextRevealByWord text="Designed to make learning robotics fun and seamless." />
+			<div className="mt-20">
+				<TextRevealByWord
+					text="Designed to make learning robotics fun and seamless."
+					className="w-full"
+				/>
 			</div>
 		</div>
 	)
