@@ -18,7 +18,7 @@ export default function LandingHeader() {
 				</div>
 				<div>
 					<BlurFade delay={0.25 * 3} inView>
-						<span className="text-2xl justify-center flex mt-2">
+						<span className="text-2xl justify-center flex mt-5">
 						Designed to make learning robotics fun and seamless.
 						</span>
 					</BlurFade>

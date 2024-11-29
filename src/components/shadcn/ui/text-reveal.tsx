@@ -18,14 +18,17 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   });
   const words = text.split(" ");
 
+  // Define specific reveal points for each word
+  const revealPoints = [0.15, 0.25];
+
   return (
     <div ref={targetRef} className={cn("relative z-0", className)}>
       <div className="sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]">
         <p className="flex flex-wrap p-5 text-2xl font-bold text-black/20 dark:text-white/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl">
           {words.map((word, i) => {
-            // Adjust the range to control the sequence of revealing
-            const start = i / words.length;
-            const end = (i + 1) / words.length;
+            // Use predefined reveal points instead of calculating them
+            const start = revealPoints[i];
+            const end = start + 0.1; // Quick transition over 10% of scroll
             return (
               <Word key={i} progress={scrollYProgress} range={[start, end]}>
                 {word}
@@ -45,10 +48,9 @@ interface WordProps {
 }
 
 const Word: FC<WordProps> = ({ children, progress, range }) => {
-  // Reverse the opacity transformation
   const opacity = useTransform(progress, 
-    [0, range[0], range[1]], // Three points in the scroll progress
-    [0, 0, 1] // Corresponding opacity values
+    [0, range[0], range[1]], 
+    [0, 0, 1]
   );
   
   return (
