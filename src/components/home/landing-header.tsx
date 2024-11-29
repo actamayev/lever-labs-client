@@ -6,21 +6,23 @@ export default function LandingHeader() {
 			<div className="flex flex-col">
 				<div className="flex flex-row">
 					<BlurFade delay={0.25} inView>
-						<h2 className="text-6xl">
+						<h2 className="text-7xl">
 							Pip:&nbsp;
 						</h2>
 					</BlurFade>
 					<BlurFade delay={0.25 * 2} inView>
-						<span className="text-6xl">
+						<span className="text-7xl">
 							Robotics, Re-imagined.
 						</span>
 					</BlurFade>
 				</div>
-				<BlurFade delay={0.25 * 3} inView>
-					<span className="text-xl justify-center flex mt-2">
+				<div>
+					<BlurFade delay={0.25 * 3} inView>
+						<span className="text-2xl justify-center flex mt-2">
 						Designed to make learning robotics fun and seamless.
-					</span>
-				</BlurFade>
+						</span>
+					</BlurFade>
+				</div>
 			</div>
 		</section>
 	)

@@ -3,7 +3,7 @@ import { IoIosRocket } from "react-icons/io"
 import { BentoCard, BentoGrid } from "../shadcn/ui/bento-grid"
 import { FaHammer } from "react-icons/fa"
 
-// TODO: Build just keep building
+// TODO: Bold just keep building
 const features = [
 	{
 		Icon: IoIosRocket,
@@ -27,8 +27,8 @@ const features = [
 
 export function Frictionless() {
 	return (
-		<>
-			<div className="text-4xl text-center">
+		<div className="mt-20">
+			<div className="text-4xl text-center mb-8">
 				Frictionless
 			</div>
 			<BentoGrid>
@@ -36,6 +36,6 @@ export function Frictionless() {
 					<BentoCard key={idx} {...feature} />
 				))}
 			</BentoGrid>
-		</>
+		</div>
 	)
 }
