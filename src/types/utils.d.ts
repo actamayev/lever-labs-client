@@ -13,8 +13,7 @@ declare global {
 		"/sandbox" |
 		"/account" |
 
-		"/contact" |
-		"#"
+		"/contact"
 
 	type PageNames = StaticPageNames
 
