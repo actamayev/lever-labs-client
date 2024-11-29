@@ -1,6 +1,6 @@
 import TextRevealByWord from "../shadcn/ui/text-reveal"
 
-export default function MeetPip() {
+export default function PipRender() {
 	return (
 		<div className="flex flex-col items-center justify-center">
 			<img
@@ -10,7 +10,7 @@ export default function MeetPip() {
 				style={{ width: "700px" }}
 			/>
 			<div className="z-10 flex items-center justify-center rounded-lg border bg-white dark:bg-black">
-				<TextRevealByWord text="Meet Pip." />
+				<TextRevealByWord text="Designed to make learning robotics fun and seamless." />
 			</div>
 		</div>
 	)

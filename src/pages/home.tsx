@@ -1,4 +1,4 @@
-import MeetPip from "../components/home/meet-pip"
+import PipRender from "../components/home/pip-render"
 import PageHelmet from "../components/helmet/page-helmet"
 import DotPattern from "../components/shadcn/ui/dot-pattern"
 import LandingHeader from "../components/home/landing-header"
@@ -18,10 +18,10 @@ export default function Home() {
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full bg-background relative">
 				<DotPattern />
-				<div className="relative z-10 flex flex-col items-center justify-center py-40">
+				<div className="relative z-10 flex flex-col items-center justify-center py-36">
 					<LandingHeader />
-					<div className="px-80 mt-12">
-						<MeetPip />
+					<div className="px-80 mt-10">
+						<PipRender />
 						<Frictionless />
 						<DesignThatInspiresCard />
 					</div>

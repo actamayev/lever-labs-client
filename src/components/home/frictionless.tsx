@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { IoIosRocket } from "react-icons/io"
+import { FaLightbulb } from "react-icons/fa"
 import { BentoCard, BentoGrid } from "../shadcn/ui/bento-grid"
-import { FaHammer } from "react-icons/fa"
 
 // TODO: Bold just keep building
 const features = [
@@ -15,9 +15,10 @@ const features = [
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 	},
 	{
-		Icon: FaHammer,
-		name: "Built by engineers, for future engineers",
-		description: "We know getting started robotics can appear tough and feel daunting. We've been there...",
+		Icon: FaLightbulb,
+		name: "Grows with you",
+		// TODO: Rephrase the experts part
+		description: "Whether you're exploring robotics for the first time or designing calculus-based control systems, Pip evolves with you. Regularly updated lessons ensure you’re always inspired and never out of depth. From elementary school to college and beyond, Pip adapts to your curiosity and ambition.",
 		href: "#",
 		// cta: "Learn more",
 		className: "col-span-2",
@@ -29,7 +30,7 @@ export function Frictionless() {
 	return (
 		<div className="mt-20">
 			<div className="text-4xl text-center mb-8">
-				Frictionless
+				Just keep building.
 			</div>
 			<BentoGrid>
 				{features.map((feature, idx) => (
