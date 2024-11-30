@@ -44,7 +44,7 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 	)
 }
 
-function BoldedDescription({ children } : { children: React.ReactNode }) {
+export function BoldedDescription({ children } : { children: React.ReactNode }) {
 	return (
 		<BoldSpanText extraClasses="text-2xl font-bol">
 			{children}
