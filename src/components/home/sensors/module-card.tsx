@@ -43,7 +43,7 @@ export default function ModuleCard() {
 									scale: [1, 1.2, 1, 1.2, 1]
 								}}
 								transition={{
-									duration: 2.5,
+									duration: 1.5,
 									repeat: Infinity,
 									ease: "linear"
 								}}
