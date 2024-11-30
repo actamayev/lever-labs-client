@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { FaHammer } from "react-icons/fa"
 import BlueDot from "./blue-dot"
-import { BoldedDescription } from "./just-keep-building"
+import { BoldedDescription } from "../just-keep-building"
 
 export default function WhoWeAre() {
 	return (

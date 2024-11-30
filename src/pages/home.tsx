@@ -1,5 +1,5 @@
 import Features from "../components/home/features"
-import WhoWeAre from "../components/home/who-we-are"
+import WhoWeAre from "../components/home/who-we-are/who-we-are"
 import Sensors from "../components/home/sensors/sensors"
 import PageHelmet from "../components/helmet/page-helmet"
 import LandingHeader from "../components/home/landing-header"
