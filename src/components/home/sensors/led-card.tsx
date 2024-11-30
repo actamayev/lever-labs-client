@@ -9,7 +9,7 @@ function getRandomRGBColor() {
 	return `rgb(${r}, ${g}, ${b})`
 }
 
-function LEDCard() {
+export default function LEDCard() {
 	const [ledColor, setLedColor] = useState<string | null>(null)
 
 	const handleIconClick = useCallback((e: React.MouseEvent) => {
@@ -47,5 +47,3 @@ function LEDCard() {
 		</div>
 	)
 }
-
-export default LEDCard

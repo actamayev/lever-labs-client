@@ -5,8 +5,9 @@ import { RiRadioButtonFill } from "react-icons/ri"
 import { FaInfinity, FaLightbulb, FaTachometerAlt } from "react-icons/fa"
 import NumberTicker from "../../shadcn/ui/number-ticker"
 import { BentoGrid, BentoCard } from "../../shadcn/ui/bento-grid"
-import LEDCard from "./led"
-import MotorCard from "./motors"
+import LEDCard from "./led-card"
+import MotorCard from "./motor-card"
+import ButtonCard from "./button-card"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -54,6 +55,7 @@ const features: SensorsFeatures[] = [
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-3 row-span-1 col-start-1 col-span-1",
+		component: <ButtonCard />
 	},
 	{
 		Icon: FaInfinity,
