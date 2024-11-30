@@ -7,7 +7,7 @@ export function BoldSpanText(props: Props) {
 	const { extraClasses = "", children } = props
 
 	return (
-		<span className={`text-black dark:text-white ${extraClasses}`}>
+		<span className={`text-black dark:text-white font-semibold ${extraClasses}`}>
 			{ children }
 		</span>
 	)

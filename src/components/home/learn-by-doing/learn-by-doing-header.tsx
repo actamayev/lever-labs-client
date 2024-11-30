@@ -1,8 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Card } from "../../shadcn/ui/card"
+import { BoldSpanText } from "../bold-span-text"
 import { CoolMode } from "../../shadcn/ui/cool-mode"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
-import { BoldSpanText } from "../bold-span-text"
 
 export default function LearnByDoing() {
 	return (
@@ -41,7 +41,10 @@ export default function LearnByDoing() {
 							</BoldSpanText>
 							Theory comes alive through your hands, not through pages.
 							Because real innovation doesn't start with reading about robots - it starts with building them.
-							That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.
+							That's why&nbsp;
+							<BoldSpanText>
+								we place as much emphasis on the practical aspects of robotics as the theoretical ones.&nbsp;
+							</BoldSpanText>
 							Textbooks have their place. You won't find them here.
 						</p>
 					</div>
