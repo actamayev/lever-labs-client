@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router"
 
 export default function useTypedNavigate (): (route: PageNames) => void {
 	const navigate = useNavigate()

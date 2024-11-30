@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router"
 import LabSidebar from "./lab-sidebar"
 import SandboxSidebar from "./sandbox-sidebar"
 

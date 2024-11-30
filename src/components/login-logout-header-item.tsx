@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router"
 import useUsername from "../hooks/memos/username"
 import NullUserNavLink from "./null-user-nav-link"
 

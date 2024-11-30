@@ -1,5 +1,5 @@
 import { observer } from "mobx-react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router"
 import Lab from "./pages/lab"
 import Home from "./pages/home"
 // import Garage from "./pages/garage"

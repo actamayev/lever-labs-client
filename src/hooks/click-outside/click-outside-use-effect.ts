@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { useCallback, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router"
 
 export default function useClickOutsideUseEffect(
 	dropdownRef: React.RefObject<HTMLDivElement>,

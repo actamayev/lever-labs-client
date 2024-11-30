@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 import { Button, type ButtonProps } from "@/components/shadcn/ui/button"
 
 interface Props {

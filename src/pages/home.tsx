@@ -11,6 +11,11 @@ import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-heade
 import SignUpForUpdates from "../components/home/sign-up-for-updates"
 
 // TODO: Consider dot pattern to be less on the sides (gradiented) (or not at all [similar to stripe's grid, doesn't start at the end])
+// TODO: Make the landing header a gradient from light to darker blue as you scroll down,
+// until you hit just keep building, when it should trasnition to the grid. Similar to mercury landing
+// then it should be grid for a while, and then it should be a color (or a ful-screen side by side view of the lab/sandbox
+// (like Apple.com (ipad air and airpods pro 2 side by side))
+// after which it should trasnition to a new background (either the dotted background, or a single color))
 export default function Home() {
 	return (
 		<>

@@ -1,5 +1,4 @@
 import BlurFade from "../shadcn/ui/blur-fade"
-import TextRevealByWord from "../shadcn/ui/text-reveal"
 
 export default function LandingHeader() {
 	return (
@@ -31,18 +30,6 @@ export default function LandingHeader() {
 							className="rounded-lg object-cover w-full max-w-[700px]"
 						/>
 					</BlurFade>
-					<BlurFade delay={0.3 * 4} inView>
-						<div className="mt-10 text-2xl italic">
-							Fig. 1: Pip
-						</div>
-					</BlurFade>
-					{/* <div className="my-24">
-						<TextRevealByWord
-							text="Designed to make learning robotics fun and seamless."
-							className="w-full"
-							instantTransition={true}
-						/>
-					</div> */}
 				</div>
 			</div>
 		</>
