@@ -13,13 +13,10 @@ export default function WhoWeAre() {
 			<div className="flex-1">
 				<div className="flex items-center space-x-2 text-lg text-zinc-900 dark:text-zinc-100">
 					<FaHammer size={35} />
-					<span className="font-medium tracking-wide text-4xl">
-						Blue Dot Robots
+					<span className="font-medium tracking-wide text-3xl my-6">
+					Built by engineers, for future engineers
 					</span>
 				</div>
-				<h3 className="text-3xl font-light my-6 text-zinc-800 dark:text-zinc-200">
-					Built by engineers, for future engineers
-				</h3>
 				<p className="text-2xl">
 					<div className="text-zinc-500 dark:text-zinc-400">
 						We know getting started robotics can appear tough and feel daunting. We've been there...
