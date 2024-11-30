@@ -1,9 +1,7 @@
 import { useCallback, useState } from "react"
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
+import { RainbowButton } from "../shadcn/ui/rainbow-button"
 import useSubscribeForUpdates from "../../hooks/subscribe-for-updates"
-import { AnimatedSubscribeButton } from "../shadcn/ui/animated-subscribe-button"
-import { AnimatedRainbowSubscribeButton } from "../shadcn/ui/animated-rainbow-subscribe-button"
 
 export default function SignUpForUpdates() {
 	const subscribeForUpdates = useSubscribeForUpdates()
@@ -45,7 +43,10 @@ export default function SignUpForUpdates() {
 					className="flex-1"
 					disabled={isSubscribed || isLoading}
 				/>
-				<AnimatedRainbowSubscribeButton
+				<RainbowButton>
+					Test
+				</RainbowButton>
+				{/* <RainbowButton
 					// buttonColor="#000000"
 					// buttonTextColor="#ffffff"
 					subscribeStatus={isSubscribed}
@@ -61,7 +62,7 @@ export default function SignUpForUpdates() {
 							Subscribed{" "}
 						</span>
 					}
-				/>
+				/> */}
 			</form>
 		</>
 	)

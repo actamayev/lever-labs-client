@@ -68,7 +68,7 @@ module.exports = {
 				"color-2": "hsl(var(--color-2))",
 				"color-3": "hsl(var(--color-3))",
 				"color-4": "hsl(var(--color-4))",
-				"color-5": "hsl(var(--color-5))",
+				"color-5": "hsl(var(--color-5))"
 			},
 			borderRadius: {
 				lg: "var(--radius)",
@@ -107,31 +107,45 @@ module.exports = {
 					}
 				},
 				float: {
-					"0%": { transform: "translateY(-50px) rotate(-12deg)" },
-					"50%": { transform: "translateY(50px) rotate(5deg)" },
-					"100%": { transform: "translateY(-50px) rotate(-12deg)" }
+					"0%": {
+						transform: "translateY(-50px) rotate(-12deg)"
+					},
+					"50%": {
+						transform: "translateY(50px) rotate(5deg)"
+					},
+					"100%": {
+						transform: "translateY(-50px) rotate(-12deg)"
+					}
 				},
 				slideBoxes: {
-					"0%": { transform: "translateX(0)" },
-					"100%": { transform: "translateX(-130%)" }
+					"0%": {
+						transform: "translateX(0)"
+					},
+					"100%": {
+						transform: "translateX(-130%)"
+					}
 				},
 				bobbing: {
 					"0%, 100%": {
-						transform: "translateY(0)",
+						transform: "translateY(0)"
 					},
 					"50%": {
-						transform: "translateY(-30px)",
+						transform: "translateY(-30px)"
 					}
 				},
 				rainbow: {
-					"0%": { "background-position": "0%" },
-					"100%": { "background-position": "200%" },
-				},
+					"0%": {
+						"background-position": "0%"
+					},
+					"100%": {
+						"background-position": "200%"
+					},
+				}
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
 				"accordion-up": "accordion-up 0.2s ease-out",
-				rainbow: "rainbow var(--speed, 2s) infinite linear",
+				rainbow: "rainbow var(--speed, 2s) infinite linear"
 			}
 		}
 	},
