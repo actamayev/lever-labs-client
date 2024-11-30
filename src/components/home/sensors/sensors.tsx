@@ -70,9 +70,9 @@ const features: SensorsFeatures[] = [
 
 export default function Sensors() {
 	return (
-		<div className="mt-10">
+		<div className="mt-20">
 			<p className="flex justify-center text-center whitespace-pre-wrap text-6xl
-			font-medium tracking-tight text-black dark:text-white mb-10">
+			font-medium tracking-tight text-black dark:text-white mb-14">
 				Pip comes with <NumberTicker value={10} /> onboard sensors.
 			</p>
 			<div className="flex">

@@ -1,10 +1,25 @@
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { FaInfinity } from "react-icons/fa"
 import { cn } from "@/lib/shadcn/utils"
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const COLORS = [
+	"rgb(255, 0, 0)",    // Red
+	"rgb(0, 255, 0)",    // Green
+	"rgb(0, 0, 255)",    // Blue
+	"currentColor"       // White/Default color
+]
+
 export default function ModuleCard() {
 	const [isHovered, setIsHovered] = useState(false)
+	const [colorIndex, setColorIndex] = useState(-1) // -1 for initial state
+
+	const handleClick = useCallback(() => {
+		setColorIndex((prevIndex) => (prevIndex + 1) % COLORS.length)
+	}, [])
+
+	const currentColor = colorIndex === -1 ? "currentColor" : COLORS[colorIndex]
 
 	return (
 		<div
@@ -21,22 +36,27 @@ export default function ModuleCard() {
 			</div>
 			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div
-					className="pointer-events-auto w-fit relative"
+					className="pointer-events-auto w-fit relative cursor-pointer"
 					onMouseEnter={() => setIsHovered(true)}
 					onMouseLeave={() => setIsHovered(false)}
+					onClick={handleClick}
 				>
 					{/* Static infinity icon */}
-					<FaInfinity className="h-12 w-12 text-neutral-700 dark:text-neutral-200" />
+					<FaInfinity
+						className="h-12 w-12 transition-all duration-300"
+						style={{ color: currentColor }}
+					/>
 
 					{/* Animated dot following infinity path */}
 					{isHovered && (
 						<motion.div
-							className="absolute inset-0 text-blue-500"
+							className="absolute inset-0 transition-all duration-300"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 						>
 							<motion.div
-								className="absolute h-2 w-2 rounded-full bg-blue-500"
+								className="absolute h-2 w-2 rounded-full"
+								style={{ backgroundColor: currentColor }}
 								animate={{
 									x: [7, 20, 35, 20, 7],
 									y: [20, 0, 20, 40, 20],
@@ -48,7 +68,10 @@ export default function ModuleCard() {
 									ease: "linear"
 								}}
 							/>
-							<FaInfinity className="h-12 w-12" />
+							<FaInfinity
+								className="h-12 w-12 transition-all duration-300"
+								style={{ color: currentColor }}
+							/>
 						</motion.div>
 					)}
 				</div>

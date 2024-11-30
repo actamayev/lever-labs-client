@@ -8,11 +8,13 @@ interface TextRevealByWordProps {
   text: string;
   className?: string;
   instantTransition?: boolean; // New prop to control transition style
+  wordClasses?: string
 }
 
 export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   text,
   className,
+  wordClasses,
   instantTransition = false, // Default to gradual transition
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -27,7 +29,8 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   return (
     <div ref={containerRef} className={cn("relative", className)}>
       <p className={cn(
-        "flex flex-wrap justify-center text-8xl font-bold text-black/20 dark:text-white/20"
+        "flex flex-wrap justify-center text-8xl font-bold text-black/20 dark:text-white/20",
+        wordClasses
       )}>
         {words.map((word, i) => {
           const start = (i / words.length) * 0.5;

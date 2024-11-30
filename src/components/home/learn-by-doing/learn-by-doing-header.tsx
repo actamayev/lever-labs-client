@@ -1,0 +1,45 @@
+import { Card } from "../../shadcn/ui/card"
+import TextRevealByWord from "../../shadcn/ui/text-reveal"
+
+// TODO: Consider making cards flippable so people can read more when they flip the card.
+export default function LearnByDoingHeader() {
+	return (
+		<div className="flex">
+			<div className="w-1/2">
+				<TextRevealByWord
+					text="Blink an LED today, balance an inverted pendulum tomorrow."
+					className=""
+					instantTransition
+					wordClasses="text-6xl"
+				/>
+			</div>
+			<div className="w-1/2">
+				<Card
+					className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10"
+					style={{ height: "350px" }}
+				>
+					<div className="flex flex-col p-6 w-full h-full justify-between">
+						<div className="space-y-6">
+							<h2 className="text-4xl font-bold">
+								Learn by Doing
+							</h2>
+							<h3 className="text-2xl text-zinc-700 dark:text-zinc-300">
+								Forget textbooks. Start building.
+							</h3>
+						</div>
+						<p className="text-zinc-600 dark:text-zinc-300 text-lg">
+							At Blue Dot, practice finally meets theory. We believe in&nbsp;
+							<span className="text-black dark:text-white">
+								learning by doing.&nbsp;
+							</span>
+							Theory comes alive through your hands, not through pages.
+							Because real innovation doesn&apos;t start with reading about robots – it starts with building them.
+							That&apos;s why we place as much emphasis on the practical aspects of robotics as the theoretical aspects.
+							Textbooks have their place. You won&apos;t find them here.
+						</p>
+					</div>
+				</Card>
+			</div>
+		</div>
+	)
+}
