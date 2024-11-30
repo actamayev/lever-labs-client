@@ -89,7 +89,7 @@ const applyParticleEffect = (
       circle.setAttributeNS(
         null,
         "fill",
-        `hsl(${Math.random() * 360}, 70%, 50%)`,
+        "#003da5",
       );
 
       circleSVG.appendChild(circle);
