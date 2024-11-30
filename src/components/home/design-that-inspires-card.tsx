@@ -25,7 +25,7 @@ export default function DesignThatInspiresCard() {
 								Beautifully transparent. Inside and out.
 							</h3>
 						</div>
-						<p className="text-zinc-600 dark:text-zinc-300 text-lg">
+						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
 							Pip's clear shell isn't just for show - it's an invitation. See how sensors,
 							motors, and circuits work together&nbsp;
 							<span className="text-black dark:text-white">

@@ -2,9 +2,9 @@
 import { Card } from "../../shadcn/ui/card"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
 
-export default function LearnByDoingHeader() {
+export default function LearnByDoing() {
 	return (
-		<div className="flex gap-8">
+		<div className="flex gap-8 mt-28">
 			<div className="w-1/2 flex items-center">
 				<TextRevealByWord
 					text="Blink an LED today, balance an inverted pendulum tomorrow"
@@ -28,14 +28,14 @@ export default function LearnByDoingHeader() {
 								Forget textbooks. Start building.
 							</h3>
 						</div>
-						<p className="text-zinc-600 dark:text-zinc-300 text-lg">
+						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
 							At Blue Dot, practice finally meets theory. We believe in&nbsp;
 							<span className="text-black dark:text-white">
 								learning by doing.&nbsp;
 							</span>
 							Theory comes alive through your hands, not through pages.
 							Because real innovation doesn't start with reading about robots - it starts with building them.
-							That's why we place as much emphasis on the practical aspects of robotics as the theoretical aspects.
+							That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.
 							Textbooks have their place. You won't find them here.
 						</p>
 					</div>
