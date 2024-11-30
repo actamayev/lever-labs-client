@@ -1,18 +1,19 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Card } from "../../shadcn/ui/card"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
 
-// TODO: Consider making cards flippable so people can read more when they flip the card.
 export default function LearnByDoingHeader() {
 	return (
-		<div className="flex">
-			<div className="w-1/2">
+		<div className="flex gap-8">
+			<div className="w-1/2 flex items-center">
 				<TextRevealByWord
-					text="Blink an LED today, balance an inverted pendulum tomorrow."
-					className=""
+					text="Blink an LED today, balance an inverted pendulum tomorrow"
+					className="block"
 					instantTransition
-					wordClasses="text-6xl"
+					wordClasses="text-6xl font-bold"
 				/>
 			</div>
+
 			<div className="w-1/2">
 				<Card
 					className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10"
@@ -33,9 +34,9 @@ export default function LearnByDoingHeader() {
 								learning by doing.&nbsp;
 							</span>
 							Theory comes alive through your hands, not through pages.
-							Because real innovation doesn&apos;t start with reading about robots – it starts with building them.
-							That&apos;s why we place as much emphasis on the practical aspects of robotics as the theoretical aspects.
-							Textbooks have their place. You won&apos;t find them here.
+							Because real innovation doesn't start with reading about robots - it starts with building them.
+							That's why we place as much emphasis on the practical aspects of robotics as the theoretical aspects.
+							Textbooks have their place. You won't find them here.
 						</p>
 					</div>
 				</Card>
