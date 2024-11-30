@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Card } from "@/components/shadcn/ui/card"
+import BoldSpanText from "./bold-span-text"
 
 export default function DesignThatInspiresCard() {
 	return (
@@ -28,9 +29,9 @@ export default function DesignThatInspiresCard() {
 						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
 							Pip's clear shell isn't just for show - it's an invitation. See how sensors,
 							motors, and circuits work together&nbsp;
-							<span className="text-black dark:text-white">
+							<BoldSpanText>
 								in perfect harmony.&nbsp;
-							</span>
+							</BoldSpanText>
 							With features like
 							distance sensors, gyroscopes, and encoders, Pip sparks curiosity at every
 							turn. And it's built to last, ready to tackle anything from classroom chaos

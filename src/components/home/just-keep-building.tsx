@@ -5,6 +5,7 @@ import { IoIosRocket } from "react-icons/io"
 import { FaLightbulb } from "react-icons/fa"
 import BoxReveal from "../shadcn/ui/box-reveal"
 import TextRevealByWord from "../shadcn/ui/text-reveal"
+import BoldSpanText from "./bold-span-text"
 
 interface Feature {
 	Icon: IconType
@@ -45,9 +46,9 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 
 function BoldedDescription({ children } : { children: React.ReactNode }) {
 	return (
-		<span className="text-black dark:text-white text-2xl font-bold">
+		<BoldSpanText extraClasses="text-2xl font-bol">
 			{children}
-		</span>
+		</BoldSpanText>
 	)
 }
 
@@ -55,7 +56,7 @@ function FrictionlessDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-2xl">
-				<span className="text-zinc-500 dark:text-zinc-300">
+				<span className="text-zinc-500 dark:text-zinc-400">
 					Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.&nbsp;
 				</span>
 				<BoldedDescription>
@@ -70,11 +71,11 @@ function GrowsWithYouDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-2xl">
-				<span className="text-zinc-500 dark:text-zinc-300 text-2xl">
+				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
 					Whether you're exploring robotics for the first time or designing calculus-based control systems,&nbsp;
 				</span>
 				<BoldedDescription>Pip evolves with you.&nbsp;</BoldedDescription>
-				<span className="text-zinc-500 dark:text-zinc-300 text-2xl">
+				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
 					Regularly updated lessons ensure you're always inspired and never out of depth. From elementary school to college and beyond:&nbsp;
 				</span>
 				<BoldedDescription>Pip is one robot that does it all.</BoldedDescription>

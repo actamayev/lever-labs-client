@@ -4,6 +4,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import PipStatusTooltip from "./pip-status-tooltip"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
+import BoldSpanText from "../home/bold-span-text"
 
 function SingleAvailablePip({ pip } : { pip: PipData }) {
 	const requestToConnectToPip = useRequestToConnectToPip()
@@ -22,9 +23,9 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 		>
 			<div className="flex items-center gap-2">
 				<PipStatusTooltip pipData={pip} />
-				<span className="text-black dark:text-white truncate max-w-[100px] text-xl">
+				<BoldSpanText extraClasses="truncate max-w-[100px] text-xl">
 					{pip.pipName}
-				</span>
+				</BoldSpanText>
 			</div>
 			<span className="text-zinc-600 dark:text-zinc-200">{pip.pipUUID}</span>
 		</Button>

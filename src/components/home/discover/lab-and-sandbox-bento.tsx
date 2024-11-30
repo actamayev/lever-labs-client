@@ -18,7 +18,7 @@ const features = [
 		Icon: HiBeaker,
 		name: "Lab",
 		description: "Get notified when something happens.",
-		href: "#",
+		href: "/lab",
 		cta: "Learn more",
 		className: "col-span-1", // Changed to take up one column
 		background: (

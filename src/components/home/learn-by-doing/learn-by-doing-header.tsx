@@ -1,7 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Card } from "../../shadcn/ui/card"
+import { CoolMode } from "../../shadcn/ui/cool-mode"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
+import BoldSpanText from "../bold-span-text"
 
+// TODO: anywhere where the word blue dot appears, when pressing on blue dot, it should make a blue dot jump
+//
 export default function LearnByDoing() {
 	return (
 		<div className="flex gap-8 mt-28">
@@ -29,10 +33,14 @@ export default function LearnByDoing() {
 							</h3>
 						</div>
 						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
-							At Blue Dot, practice finally meets theory. We believe in&nbsp;
-							<span className="text-black dark:text-white">
+							At
+							<CoolMode>
+								<span className="cursor-pointer">Blue Dot,</span>
+							</CoolMode>
+							practice finally meets theory. We believe in&nbsp;
+							<BoldSpanText>
 								learning by doing.&nbsp;
-							</span>
+							</BoldSpanText>
 							Theory comes alive through your hands, not through pages.
 							Because real innovation doesn't start with reading about robots - it starts with building them.
 							That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.
@@ -44,3 +52,21 @@ export default function LearnByDoing() {
 		</div>
 	)
 }
+
+// import { Button } from "@/components/ui/button";
+// import { CoolMode } from "@/components/magicui/cool-mode";
+
+// export function CoolModeCustom() {
+//   return (
+//     <div className="relative justify-center">
+//       <CoolMode
+//         options={{
+//           particle:
+//             "https://pbs.twimg.com/profile_images/1782811051504885763/YR5-kWOI_400x400.jpg",
+//         }}
+//       >
+//         <Button>Click Me!</Button>
+//       </CoolMode>
+//     </div>
+//   );
+// }
