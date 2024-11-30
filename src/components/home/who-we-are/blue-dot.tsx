@@ -5,9 +5,6 @@ export default function BlueDot() {
 				className="size-96 rounded-full"
 				style={{ backgroundColor: "rgb(0,61,165)" }}
 			/>
-			<div className="text-3xl font-semibold my-4 text-zinc-800 dark:text-zinc-50 text-center">
-				Blue Dot Robots
-			</div>
 		</div>
 	)
 }

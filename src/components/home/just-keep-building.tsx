@@ -5,7 +5,7 @@ import { IoIosRocket } from "react-icons/io"
 import { FaLightbulb } from "react-icons/fa"
 import BoxReveal from "../shadcn/ui/box-reveal"
 import TextRevealByWord from "../shadcn/ui/text-reveal"
-import BoldSpanText from "./bold-span-text"
+import { BoldedDescription } from "./bold-span-text"
 
 interface Feature {
 	Icon: IconType
@@ -44,13 +44,6 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 	)
 }
 
-export function BoldedDescription({ children } : { children: React.ReactNode }) {
-	return (
-		<BoldSpanText extraClasses="text-2xl font-bol">
-			{children}
-		</BoldSpanText>
-	)
-}
 
 function FrictionlessDescription() {
 	return (

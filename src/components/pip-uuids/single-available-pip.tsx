@@ -4,7 +4,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import PipStatusTooltip from "./pip-status-tooltip"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
-import BoldSpanText from "../home/bold-span-text"
+import { BoldSpanText } from "../home/bold-span-text"
 
 function SingleAvailablePip({ pip } : { pip: PipData }) {
 	const requestToConnectToPip = useRequestToConnectToPip()

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Card } from "@/components/shadcn/ui/card"
-import BoldSpanText from "./bold-span-text"
+import { BoldSpanText } from "./bold-span-text"
 
 export default function DesignThatInspiresCard() {
 	return (

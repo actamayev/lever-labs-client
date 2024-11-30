@@ -1,7 +1,5 @@
-/* eslint-disable react/no-unescaped-entities */
-import { FaHammer } from "react-icons/fa"
 import BlueDot from "./blue-dot"
-import { BoldedDescription } from "../just-keep-building"
+import { BoldedDescription } from "../bold-span-text"
 
 export default function WhoWeAre() {
 	return (
@@ -12,18 +10,23 @@ export default function WhoWeAre() {
 			<div className="mx-16 h-full border-l border-dashed border-zinc-200 dark:border-zinc-800 self-stretch" />
 			<div className="flex-1">
 				<div className="flex items-center space-x-2 text-lg text-zinc-900 dark:text-zinc-100">
-					<FaHammer size={35} />
-					<span className="font-medium tracking-wide text-3xl my-6">
-					Built by engineers, for future engineers
+					<span className="font-medium tracking-wide text-6xl my-6">
+						Built by engineers,
+						<div>for future engineers</div>
 					</span>
 				</div>
-				<p className="text-2xl">
+				<p className="text-3xl">
 					<div className="text-zinc-500 dark:text-zinc-400">
-						We know getting started robotics can appear tough and feel daunting. We've been there...
+						We know getting started robotics can appear tough and feel daunting. We&apos;ve been there...
 					</div>
+					<br />
 					<div className="text-zinc-500 dark:text-zinc-400">
 						We designed Pip to make learning robotics&nbsp;
-						<BoldedDescription>seamless and exciting.</BoldedDescription>
+						<div>
+							<BoldedDescription extraClasses="text-3xl">
+							fun and seamless.
+							</BoldedDescription>
+						</div>
 					</div>
 				</p>
 			</div>

@@ -3,6 +3,7 @@ import { CheckIcon, ChevronRightIcon } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import useSubscribeForUpdates from "../../hooks/subscribe-for-updates"
 import { AnimatedSubscribeButton } from "../shadcn/ui/animated-subscribe-button"
+import { AnimatedRainbowSubscribeButton } from "../shadcn/ui/animated-rainbow-subscribe-button"
 
 export default function SignUpForUpdates() {
 	const subscribeForUpdates = useSubscribeForUpdates()
@@ -29,7 +30,10 @@ export default function SignUpForUpdates() {
 	return (
 		<>
 			<div className="text-3xl mt-24">
-				Pip isn&apos;t available yet - but it will be soon. Enter your email below to sign up for updates.
+				Pip isn&apos;t available yet - but it will be soon.
+			</div>
+			<div className="text-3xl my-6">
+				Enter your email below to sign up for updates.
 			</div>
 			<form onSubmit={handleSubmit} className="flex gap-2 max-w-md">
 				<Input
@@ -41,9 +45,9 @@ export default function SignUpForUpdates() {
 					className="flex-1"
 					disabled={isSubscribed || isLoading}
 				/>
-				<AnimatedSubscribeButton
-					buttonColor="#000000"
-					buttonTextColor="#ffffff"
+				<AnimatedRainbowSubscribeButton
+					// buttonColor="#000000"
+					// buttonTextColor="#ffffff"
 					subscribeStatus={isSubscribed}
 					initialText={
 						<span className="group inline-flex items-center">

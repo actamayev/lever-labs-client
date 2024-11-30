@@ -2,7 +2,7 @@
 import { Card } from "../../shadcn/ui/card"
 import { CoolMode } from "../../shadcn/ui/cool-mode"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
-import BoldSpanText from "../bold-span-text"
+import { BoldSpanText } from "../bold-span-text"
 
 export default function LearnByDoing() {
 	return (

@@ -1,4 +1,4 @@
-import BoldSpanText from "../bold-span-text"
+import { BoldSpanText } from "../bold-span-text"
 import { LabAndSandboxBento } from "./lab-and-sandbox-bento"
 import DottedUnderlineText from "../../dotted-underline-text"
 
