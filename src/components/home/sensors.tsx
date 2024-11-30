@@ -1,14 +1,13 @@
-import NumberTicker from "../shadcn/ui/number-ticker"
-
-
-import { FileTextIcon } from "@radix-ui/react-icons"
-
-import { BentoGrid, BentoCard } from "../shadcn/ui/bento-grid"
 import { IconType } from "react-icons"
+import { GiCarWheel } from "react-icons/gi"
+import { TbRulerMeasure } from "react-icons/tb"
+import { RiRadioButtonFill } from "react-icons/ri"
+import { FaInfinity, FaLightbulb, FaTachometerAlt } from "react-icons/fa"
+import NumberTicker from "../shadcn/ui/number-ticker"
+import { BentoGrid, BentoCard } from "../shadcn/ui/bento-grid"
 
 interface SensorsFeatures {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	Icon: any
+	Icon: IconType
 	name: string
 	description: string
 	className: string
@@ -17,72 +16,49 @@ interface SensorsFeatures {
 
 const features: SensorsFeatures[] = [
 	{
-		Icon: FileTextIcon,
-		name: "RGB",
+		// TODO: When pressed, should change color. should start as black/white, but then be random
+		Icon: FaLightbulb,
+		name: "RGB LEDs",
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-1 col-start-1 col-end-1",
 	},
 	{
-		Icon: FileTextIcon,
+		Icon: FaTachometerAlt,
 		name: "IMU",
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-1 col-start-2 col-end-2",
 	},
 	{
-		Icon: FileTextIcon,
+		Icon: TbRulerMeasure,
 		name: "TOF",
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-1 row-span-2 col-start-3 col-end-3",
 	},
 	{
-		Icon: FileTextIcon,
-		name: "Motors",
+		Icon: GiCarWheel,
+		name: "2 Motors + Encoders",
 		description: "We automatically save your files as you type.",
-		background: <img className="absolute -right-20 -top-20 opacity-60" />,
+		background: <img src="wheels_encoders.png" className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-2 col-start-1 col-span-2",
 	},
 	{
-		Icon: FileTextIcon,
-		name: "TOF",
-		description: "We automatically save your files as you type.",
-		background: <img className="absolute -right-20 -top-20 opacity-60" />,
-		className: "row-start-1 row-span-2 col-start-3 col-end-3",
-	},
-	{
-		Icon: FileTextIcon,
-		name: "TOF",
-		description: "We automatically save your files as you type.",
-		background: <img className="absolute -right-20 -top-20 opacity-60" />,
-		className: "row-start-1 row-span-2 col-start-3 col-end-3",
-	},
-	{
-		Icon: FileTextIcon,
+		Icon: RiRadioButtonFill,
 		name: "Buttons",
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-3 row-span-1 col-start-1 col-span-1",
 	},
 	{
-		Icon: FileTextIcon,
+		Icon: FaInfinity,
 		name: "Module",
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-3 row-span-1 col-start-2 col-span-2",
-	},
+	}
 ]
-
-export function BentoDemo() {
-	return (
-		<BentoGrid className="lg:grid-rows-3">
-			{features.map((feature) => (
-				<BentoCard key={feature.name} {...feature} />
-			))}
-		</BentoGrid>
-	)
-}
 
 export default function Sensors() {
 	return (
@@ -92,7 +68,11 @@ export default function Sensors() {
 				Pip comes with <NumberTicker value={10} /> onboard sensors.
 			</p>
 			<div className="flex">
-				<BentoDemo />
+				<BentoGrid className="lg:grid-rows-3">
+					{features.map((feature) => (
+						<BentoCard key={feature.name} {...feature} />
+					))}
+				</BentoGrid>
 			</div>
 		</div>
 	)
