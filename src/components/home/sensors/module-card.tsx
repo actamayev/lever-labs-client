@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
-import { useCallback, useState } from "react"
 import { FaInfinity } from "react-icons/fa"
+import { useCallback, useState } from "react"
 import { cn } from "@/lib/shadcn/utils"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

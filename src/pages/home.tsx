@@ -5,6 +5,7 @@ import GridPattern from "../components/shadcn/ui/grid-pattern"
 import { JustKeepBuilding } from "../components/home/just-keep-building"
 import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
 import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-header"
+import DiscoverSection from "../components/home/discover/discover-section"
 
 // Add a section with a blue dot with a description to the side of it that says who we are.
 // TODO: Transition the current Built by engineers, for future engineers to the who we are section.
@@ -23,6 +24,7 @@ export default function Home() {
 					<DesignThatInspiresCard />
 					<Sensors />
 					<LearnByDoing />
+					<DiscoverSection />
 				</div>
 			</div>
 		</>
