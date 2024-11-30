@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useMotionValueEvent, useScroll, motion } from "framer-motion"
 import { cn } from "@/lib/shadcn/utils"
 
+// TODO: Use when discussing features
 export const StickyScroll = ({
 	content,
 	contentClassName,

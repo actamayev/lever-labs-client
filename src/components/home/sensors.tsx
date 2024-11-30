@@ -5,6 +5,7 @@ import { RiRadioButtonFill } from "react-icons/ri"
 import { FaInfinity, FaLightbulb, FaTachometerAlt } from "react-icons/fa"
 import NumberTicker from "../shadcn/ui/number-ticker"
 import { BentoGrid, BentoCard } from "../shadcn/ui/bento-grid"
+import LEDCard from "./led"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -12,6 +13,7 @@ interface SensorsFeatures {
 	description: string
 	className: string
 	background: React.ReactNode
+	component?: React.ReactNode
 }
 
 const features: SensorsFeatures[] = [
@@ -22,6 +24,7 @@ const features: SensorsFeatures[] = [
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-1 col-start-1 col-end-1",
+		component: <LEDCard />
 	},
 	{
 		Icon: FaTachometerAlt,
@@ -70,7 +73,7 @@ export default function Sensors() {
 			<div className="flex">
 				<BentoGrid className="lg:grid-rows-3">
 					{features.map((feature) => (
-						<BentoCard key={feature.name} {...feature} />
+						feature.component || <BentoCard key={feature.name} {...feature} />
 					))}
 				</BentoGrid>
 			</div>
