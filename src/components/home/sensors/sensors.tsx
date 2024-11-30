@@ -8,6 +8,7 @@ import { BentoGrid, BentoCard } from "../../shadcn/ui/bento-grid"
 import LEDCard from "./led-card"
 import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
+import ModuleCard from "./module-card"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -63,6 +64,7 @@ const features: SensorsFeatures[] = [
 		description: "We automatically save your files as you type.",
 		background: <img className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-3 row-span-1 col-start-2 col-span-2",
+		component: <ModuleCard />
 	}
 ]
 

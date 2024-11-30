@@ -27,7 +27,7 @@ function ButtonCard() {
 						}}
 					>
 						<RiRadioButtonFill
-							className="h-12 w-12 text-neutral-700 dark:text-neutral-200 cursor-pointer"
+							className="h-12 w-12 text-black dark:text-white cursor-pointer"
 						/>
 					</motion.div>
 				</div>
