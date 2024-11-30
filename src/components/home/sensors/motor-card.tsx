@@ -30,12 +30,12 @@ export default function MotorCard() {
 				>
 					<GiCarWheel
 						className={cn(
-							"h-12 w-12 origin-center text-neutral-700 dark:text-neutral-200",
+							"h-12 w-12 origin-center text-neutral-800 dark:text-neutral-200",
 							isSpinning && "spin-wheel"
 						)}
 					/>
 				</div>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+				<h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
 					2 Motors + Encoders
 				</h3>
 				<p className="max-w-lg text-neutral-400">

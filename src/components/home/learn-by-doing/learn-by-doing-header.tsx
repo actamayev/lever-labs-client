@@ -9,7 +9,7 @@ export default function LearnByDoing() {
 		<div className="flex gap-8 mt-28">
 			<div className="w-1/2 flex items-center">
 				<TextRevealByWord
-					text="Blink an LED today, balance an inverted pendulum tomorrow"
+					text="Blink an LED today, balance an inverted pendulum tomorrow."
 					className="block"
 					instantTransition
 					wordClasses="text-6xl font-bold"
