@@ -1,0 +1,10 @@
+.spin-wheel {
+	animation: spin 0.3s linear infinite;
+  }
+  
+  @keyframes spin {
+	to {
+	  transform: rotate(360deg);
+	}
+  }
+  

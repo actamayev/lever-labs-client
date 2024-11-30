@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { FaLightbulb } from "react-icons/fa"
 import { cn } from "@/lib/shadcn/utils"
 
@@ -12,10 +12,10 @@ function getRandomRGBColor() {
 function LEDCard() {
 	const [ledColor, setLedColor] = useState<string | null>(null)
 
-	const handleIconClick = (e: React.MouseEvent) => {
-		e.stopPropagation() // Prevent event from bubbling to card
+	const handleIconClick = useCallback((e: React.MouseEvent) => {
+		e.stopPropagation()
 		setLedColor(getRandomRGBColor())
-	}
+	}, [])
 
 	return (
 		<div

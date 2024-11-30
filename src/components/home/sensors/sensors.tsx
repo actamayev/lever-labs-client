@@ -3,9 +3,10 @@ import { GiCarWheel } from "react-icons/gi"
 import { TbRulerMeasure } from "react-icons/tb"
 import { RiRadioButtonFill } from "react-icons/ri"
 import { FaInfinity, FaLightbulb, FaTachometerAlt } from "react-icons/fa"
-import NumberTicker from "../shadcn/ui/number-ticker"
-import { BentoGrid, BentoCard } from "../shadcn/ui/bento-grid"
+import NumberTicker from "../../shadcn/ui/number-ticker"
+import { BentoGrid, BentoCard } from "../../shadcn/ui/bento-grid"
 import LEDCard from "./led"
+import MotorCard from "./motors"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -18,7 +19,6 @@ interface SensorsFeatures {
 
 const features: SensorsFeatures[] = [
 	{
-		// TODO: When pressed, should change color. should start as black/white, but then be random
 		Icon: FaLightbulb,
 		name: "RGB LEDs",
 		description: "We automatically save your files as you type.",
@@ -46,6 +46,7 @@ const features: SensorsFeatures[] = [
 		description: "We automatically save your files as you type.",
 		background: <img src="wheels_encoders.png" className="absolute -right-20 -top-20 opacity-60" />,
 		className: "row-start-2 col-start-1 col-span-2",
+		component: <MotorCard />
 	},
 	{
 		Icon: RiRadioButtonFill,
