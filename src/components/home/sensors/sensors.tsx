@@ -9,6 +9,7 @@ import LEDCard from "./led-card"
 import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
+import React from "react"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -78,7 +79,9 @@ export default function Sensors() {
 			<div className="flex">
 				<BentoGrid className="lg:grid-rows-3">
 					{features.map((feature) => (
-						feature.component || <BentoCard key={feature.name} {...feature} />
+						<React.Fragment key={feature.name}>
+							{feature.component || <BentoCard key={feature.name} {...feature} />}
+						</React.Fragment>
 					))}
 				</BentoGrid>
 			</div>

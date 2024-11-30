@@ -33,7 +33,7 @@ export default function LearnByDoing() {
 						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
 							At{" "}
 							<CoolMode>
-								<div className="inline-block cursor-pointer">Blue Dot,</div>
+								<span className="inline-block cursor-pointer">Blue Dot,</span>
 							</CoolMode>
 							{" "}practice finally meets theory. We believe in&nbsp;
 							<BoldSpanText>

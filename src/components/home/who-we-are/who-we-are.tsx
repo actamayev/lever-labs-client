@@ -15,7 +15,7 @@ export default function WhoWeAre() {
 						<div>for future engineers</div>
 					</span>
 				</div>
-				<p className="text-3xl">
+				<div className="text-3xl">
 					<div className="text-zinc-500 dark:text-zinc-400">
 						We know getting started robotics can appear tough and feel daunting. We&apos;ve been there...
 					</div>
@@ -28,7 +28,7 @@ export default function WhoWeAre() {
 							</BoldedDescription>
 						</div>
 					</div>
-				</p>
+				</div>
 			</div>
 		</div>
 	)
