@@ -1,30 +1,36 @@
-import { useCallback, useState } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useCallback, useMemo, useState } from "react"
 import { Input } from "../shadcn/ui/input"
-import { RainbowButton } from "../shadcn/ui/rainbow-button"
+import isEmailValid from "../../utils/auth/is-email-valid"
+import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"
+import RainbowSubscribeButton from "../shadcn/ui/rainbox-subscribe"
 import useSubscribeForUpdates from "../../hooks/subscribe-for-updates"
+import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
 export default function SignUpForUpdates() {
-	const subscribeForUpdates = useSubscribeForUpdates()
-	const [email, setEmail] = useState("")
-	const [isSubscribed, setIsSubscribed] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
+	const [isSubscribed, setIsSubscribed] = useState(false)
+	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading, setIsSubscribed)
 
-	const handleSubmit = useCallback(async (e: React.FormEvent) => {
-		e.preventDefault()
-		if (!email || isLoading) return
+	const onSubmit = useCallback(async (values: EmailUpdatesFormValues) => {
+		console.log(values)
+		await subscribeForUpdates(values)
+	}, [subscribeForUpdates])
 
-		setIsLoading(true)
-		try {
-			await subscribeForUpdates(email)
-			setIsSubscribed(true)
-		} catch (error) {
-			console.error("Failed to subscribe:", error)
-		} finally {
-			setIsLoading(false)
+	const form = useForm<EmailUpdatesFormValues>({
+		resolver: zodResolver(emailUpdatesSchema),
+		defaultValues: {
+			email: ""
 		}
-	}, [email, isLoading, subscribeForUpdates])
+	})
 
-	// TODO: Combine the aniated subscribe button with the rainbow button
+	const formValues = form.watch()
+
+	const isEmailValidMemo = useMemo(() => {
+		return isEmailValid(formValues.email) === "Email"
+	}, [formValues.email])
+
 	return (
 		<>
 			<div className="text-3xl mt-24">
@@ -33,37 +39,37 @@ export default function SignUpForUpdates() {
 			<div className="text-3xl my-6">
 				Enter your email below to sign up for updates.
 			</div>
-			<form onSubmit={handleSubmit} className="flex gap-2 max-w-md">
-				<Input
-					type="email"
-					placeholder="Enter your email"
-					value={email}
-					onChange={(e) => setEmail(e.target.value)}
-					required
-					className="flex-1"
-					disabled={isSubscribed || isLoading}
-				/>
-				<RainbowButton>
-					Test
-				</RainbowButton>
-				{/* <RainbowButton
-					// buttonColor="#000000"
-					// buttonTextColor="#ffffff"
-					subscribeStatus={isSubscribed}
-					initialText={
-						<span className="group inline-flex items-center">
-							Subscribe{" "}
-							<ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
-						</span>
-					}
-					changeText={
-						<span className="group inline-flex items-center">
-							<CheckIcon className="mr-2 size-4" />
-							Subscribed{" "}
-						</span>
-					}
-				/> */}
-			</form>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 max-w-md">
+					<FormField
+						control={form.control}
+						name="email"
+						render={({ field }) => (
+							<FormItem>
+								<FormControl>
+									<Input
+										type="email"
+										placeholder="Enter your email"
+										required
+										className="flex-1 border-black dark:border-white border-2"
+										disabled={isSubscribed || isLoading}
+										{...field}
+									/>
+								</FormControl>
+							</FormItem>
+						)}
+					>
+
+					</FormField>
+					<RainbowSubscribeButton
+						initialText="Subscribe"
+						changeText="Subscribed!"
+						isSubscribed={isSubscribed}
+						isDisabled={!isEmailValidMemo}
+						isLoading={isLoading}
+					/>
+				</form>
+			</Form>
 		</>
 	)
 }
