@@ -1,6 +1,7 @@
 import BlueDot from "./blue-dot"
 import { BoldedDescription } from "../bold-span-text"
 
+// TODO: Refine the text here.
 export default function WhoWeAre() {
 	return (
 		<div className="relative flex my-20 z-10 px-20">

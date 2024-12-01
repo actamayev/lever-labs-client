@@ -8,7 +8,8 @@ interface Feature {
 	description: string
 }
 
-// Example features array - you can move this to a separate file
+// TODO: Come up with more features
+// TODO: Get the features to be the same width as one another
 const features: Feature[] = [
 	{
 		icon: IoMdBatteryCharging,  // Replace with your actual icons
