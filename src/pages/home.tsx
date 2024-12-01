@@ -40,7 +40,7 @@ export default function Home() {
 					<LearnByDoing />
 					<DiscoverSection />
 				</div>
-				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative pb-20">
+				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
 					<ProductShowcase />
 					<Features />
 				</div>
