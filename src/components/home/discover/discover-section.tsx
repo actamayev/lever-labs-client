@@ -1,10 +1,9 @@
 import { BoldSpanText } from "../bold-span-text"
-import { LabAndSandboxBento } from "./lab-and-sandbox-bento"
 import DottedUnderlineText from "../../dotted-underline-text"
 
 export default function DiscoverSection() {
 	return (
-		<div className="mt-20">
+		<div className="mt-20 mb-10">
 			<h1
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
 				font-medium tracking-tight text-black dark:text-white mb-14"
@@ -28,7 +27,6 @@ export default function DiscoverSection() {
 					uniquely yours.
 				</BoldSpanText>
 			</p>
-			<LabAndSandboxBento />
 		</div>
 	)
 }

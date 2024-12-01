@@ -9,6 +9,7 @@ import { JustKeepBuilding } from "../components/home/just-keep-building"
 import DiscoverSection from "../components/home/discover/discover-section"
 import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
 import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-header"
+import ProductShowcase from "../components/home/discover/product-showcase"
 
 // TODO: Consider dot pattern to be less on the sides (gradiented) (or not at all [similar to stripe's grid, doesn't start at the end])
 // eslint-disable-next-line max-len
@@ -35,6 +36,9 @@ export default function Home() {
 				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-28">
 					<LearnByDoing />
 					<DiscoverSection />
+				</div>
+				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
+					<ProductShowcase />
 				</div>
 				<Features />
 				<WhoWeAre />
