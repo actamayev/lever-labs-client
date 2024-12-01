@@ -1,14 +1,12 @@
 /* eslint-disable max-len */
 import { GiBrickWall } from "react-icons/gi"
-import { StickyScroll } from "../aceternity/sticky-scroll-reveal"
 import { IoMdBatteryCharging } from "react-icons/io"
+import { FullPageStickyScroll } from "../aceternity/full-page-sticky-scroll"
 
 export default function Features() {
 	return (
-		<div className="mt-32">
-			<div className="p-10">
-				<StickyScroll content={content} />
-			</div>
+		<div className="w-full">
+			<FullPageStickyScroll content={content} />
 		</div>
 	)
 }
@@ -27,7 +25,7 @@ const content = [
 		title: "Built to last",
 		description: "Talk about the durability",
 		content: (
-			<div className="h-full w-full  flex items-center justify-center text-white">
+			<div className="h-full w-full flex items-center justify-center text-white">
 				<GiBrickWall size={100}/>
 			</div>
 		),
