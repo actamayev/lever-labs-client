@@ -1,13 +1,12 @@
-/* eslint-disable max-len */
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
 import { IconType } from "react-icons"
 import { Card } from "@/components/shadcn/ui/card"
 
 interface Feature {
-  icon: IconType
-  title: string
-  description: string
+	icon: IconType
+	title: string
+	description: string
 }
 
 // Example features array - you can move this to a separate file
