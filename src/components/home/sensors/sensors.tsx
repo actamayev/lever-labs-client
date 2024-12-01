@@ -1,15 +1,15 @@
+import React from "react"
 import { IconType } from "react-icons"
 import { GiCarWheel } from "react-icons/gi"
 import { TbRulerMeasure } from "react-icons/tb"
 import { RiRadioButtonFill } from "react-icons/ri"
 import { FaInfinity, FaLightbulb, FaTachometerAlt } from "react-icons/fa"
-import NumberTicker from "../../shadcn/ui/number-ticker"
-import { BentoGrid, BentoCard } from "../../shadcn/ui/custom-bento-grid"
 import LEDCard from "./led-card"
 import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
-import React from "react"
+import NumberTicker from "../../shadcn/ui/number-ticker"
+import { BentoGrid, BentoCard } from "../../shadcn/ui/custom-bento-grid"
 
 interface SensorsFeatures {
 	Icon: IconType
@@ -20,6 +20,7 @@ interface SensorsFeatures {
 	component?: React.ReactNode
 }
 
+// TODO: Need custom cards for imu and tof (need cool animations)
 const features: SensorsFeatures[] = [
 	{
 		Icon: FaLightbulb,
@@ -71,10 +72,15 @@ const features: SensorsFeatures[] = [
 
 export default function Sensors() {
 	return (
-		<div className="mt-20">
-			<p className="flex justify-center text-center whitespace-pre-wrap text-6xl
-			font-medium tracking-tight text-black dark:text-white mb-14">
-				Pip comes with <NumberTicker value={10} /> onboard sensors.
+		<div
+			className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center"
+			style={{ backgroundColor: "rgb(10, 37, 64)" }}
+		>
+			<p
+				className="flex justify-center text-center whitespace-pre-wrap text-6xl
+				font-medium tracking-tight text-white mb-14"
+			>
+				Pip comes with <NumberTicker className="text-white" value={10} /> onboard sensors.
 			</p>
 			<div className="flex">
 				<BentoGrid className="lg:grid-rows-3">

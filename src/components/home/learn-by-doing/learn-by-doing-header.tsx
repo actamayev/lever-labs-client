@@ -6,17 +6,8 @@ import TextRevealByWord from "../../shadcn/ui/text-reveal"
 
 export default function LearnByDoing() {
 	return (
-		<div className="flex gap-8 mt-28">
-			<div className="w-1/2 flex items-center">
-				<TextRevealByWord
-					text="Blink an LED today, balance an inverted pendulum tomorrow."
-					className="block"
-					instantTransition
-					wordClasses="text-6xl font-bold"
-				/>
-			</div>
-
-			<div className="w-1/2">
+		<div className="flex mt-16">
+			<div className="w-1/2 flex items-center mr-8">
 				<Card
 					className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10"
 					style={{ height: "350px" }}
@@ -49,6 +40,14 @@ export default function LearnByDoing() {
 						</p>
 					</div>
 				</Card>
+			</div>
+			<div className="w-1/2">
+				<TextRevealByWord
+					text="Blink an LED today, balance an inverted pendulum tomorrow."
+					className="block"
+					instantTransition
+					wordClasses="text-6xl font-bold"
+				/>
 			</div>
 		</div>
 	)

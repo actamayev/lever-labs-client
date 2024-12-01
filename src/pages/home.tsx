@@ -28,9 +28,11 @@ export default function Home() {
 					<LandingHeader />
 				</div>
 				<JustKeepBuilding />
-				<div className="relative z-10 flex flex-col items-center justify-center pt-32 px-64 pb-20">
+				<div className="relative z-10 flex flex-col items-center justify-center px-36 h-screen">
 					<DesignThatInspiresCard />
-					<Sensors />
+				</div>
+				<Sensors />
+				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-28">
 					<LearnByDoing />
 					<DiscoverSection />
 				</div>

@@ -7,17 +7,14 @@ export default function DesignThatInspiresCard() {
 		<div className="flex md:flex-row w-full gap-8 items-center mt-20">
 			<div className="w-1/2">
 				<img
-					src="https://placehold.co/600x400"
+					src="pip-render-11-28.png"
 					alt="Product visualization"
 					className="w-full h-auto rounded-lg object-cover"
 				/>
 			</div>
-			<div className="w-full md:w-1/2 h-full">
-				<Card
-					className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10"
-					style={{ height: "400px" }}
-				>
-					<div className="flex flex-col p-6 w-full h-full justify-between">
+			<div className="flex items-center w-full md:w-1/2">
+				<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
+					<div className="flex flex-col p-8 w-full space-y-6">
 						<div className="space-y-6">
 							<h2 className="text-4xl font-bold">
 								Design That Inspires
