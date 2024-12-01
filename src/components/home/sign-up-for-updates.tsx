@@ -14,7 +14,6 @@ export default function SignUpForUpdates() {
 	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading, setIsSubscribed)
 
 	const onSubmit = useCallback(async (values: EmailUpdatesFormValues) => {
-		console.log(values)
 		await subscribeForUpdates(values)
 	}, [subscribeForUpdates])
 
@@ -31,8 +30,6 @@ export default function SignUpForUpdates() {
 		return isEmailValid(formValues.email) === "Email"
 	}, [formValues.email])
 
-	// TODO: On hover, button should change color
-	// TODO: Make the hook that registers the email to DB.
 	return (
 		<>
 			<div className="text-3xl mt-24">
