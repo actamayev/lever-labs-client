@@ -63,11 +63,11 @@ function FeatureItem({ feature }: FeatureItemProps) {
 
 	return (
 		<div className="carousel-item">
-			<Card className="bg-white dark:bg-zinc-900 p-6 mx-4 flex flex-col items-start text-start min-h-[300px] w-[300px]">
-				<Icon className="w-12 h-12 text-white mb-4" />
+			<div className="bg-white dark:bg-zinc-900 p-6 mx-4 flex flex-col rounded-xl shadow-lg items-start text-start min-h-[300px]">
+				<Icon className="w-12 h-12 text-blue-500 mb-4" />
 				<h3 className="text-xl font-semibold mb-2">{title}</h3>
 				<p className="text-zinc-600 dark:text-zinc-400 line-clamp-4">{description}</p>
-			</Card>
+			</div>
 		</div>
 	)
 }
@@ -75,7 +75,6 @@ function FeatureItem({ feature }: FeatureItemProps) {
 export default function FeatureCarousel() {
 	return (
 		<div className="w-full py-32">
-			{/* Your existing Carousel component */}
 			<div className="carousel rounded-box">
 				{features.map((feature, index) => (
 					<FeatureItem key={index} feature={feature} />

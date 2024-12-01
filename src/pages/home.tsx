@@ -42,6 +42,8 @@ export default function Home() {
 				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
 					<ProductShowcase />
+				</div>
+				<div className="flex z-10 relative bg-white dark:bg-blue-900">
 					<Features />
 				</div>
 				<WhoWeAre />
