@@ -31,8 +31,10 @@ export default function Home() {
 					<Sensors />
 					<LearnByDoing />
 					<DiscoverSection />
-					<Features />
-					<WhoWeAre />
+				</div>
+				<Features />
+				<WhoWeAre />
+				<div className="flex flex-col items-center justify-center pb-20">
 					<SignUpForUpdates />
 				</div>
 			</div>

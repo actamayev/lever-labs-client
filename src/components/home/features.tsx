@@ -1,12 +1,12 @@
 /* eslint-disable max-len */
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
-import { FullPageStickyScroll } from "../aceternity/full-page-sticky-scroll"
+import { StickyScroll } from "../aceternity/sticky-scroll-reveal"
 
 export default function Features() {
 	return (
 		<div className="w-full">
-			<FullPageStickyScroll content={content} />
+			<StickyScroll content={content} />
 		</div>
 	)
 }
