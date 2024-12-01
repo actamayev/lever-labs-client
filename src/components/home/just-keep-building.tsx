@@ -79,7 +79,7 @@ function GrowsWithYouDescription() {
 
 export function JustKeepBuilding() {
 	return (
-		<div>
+		<div className="h-screen relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
 			<div className="mb-24 text-center text-4xl">
 				<p className="my-8 text-zinc-600 dark:text-zinc-300">
 					Every detail has been crafted for one purpose: to let you

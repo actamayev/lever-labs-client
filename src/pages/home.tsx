@@ -22,18 +22,22 @@ export default function Home() {
 		<>
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
-				<GridPattern isDashed={true} dashSize={7} orientation="both" />
+				<GridPattern isDashed={true} dashSize={2} orientation="both" />
 				{/* <DotPattern /> */}
 				<div className="relative z-10 flex flex-col items-center justify-center pt-32 px-64 pb-20">
 					<LandingHeader />
-					<JustKeepBuilding />
+				</div>
+				<JustKeepBuilding />
+				<div className="relative z-10 flex flex-col items-center justify-center pt-32 px-64 pb-20">
 					<DesignThatInspiresCard />
 					<Sensors />
 					<LearnByDoing />
 					<DiscoverSection />
 				</div>
 				<Features />
-				<WhoWeAre />
+				<div className="px-12">
+					<WhoWeAre />
+				</div>
 				<div className="flex flex-col items-center justify-center pb-20">
 					<SignUpForUpdates />
 				</div>
