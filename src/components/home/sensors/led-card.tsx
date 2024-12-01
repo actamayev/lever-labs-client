@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react"
-import { FaLightbulb } from "react-icons/fa"
 import { cn } from "@/lib/shadcn/utils"
+import { FaLightbulb } from "react-icons/fa"
+import { useCallback, useState } from "react"
 
 function getRandomRGBColor() {
 	const r = Math.floor(Math.random() * 256)

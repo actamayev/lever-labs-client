@@ -1,7 +1,6 @@
+import { IconType } from "react-icons"
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
-import { IconType } from "react-icons"
-import { Card } from "@/components/shadcn/ui/card"
 
 interface Feature {
 	icon: IconType
