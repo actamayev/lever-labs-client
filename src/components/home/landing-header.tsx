@@ -21,14 +21,16 @@ export default function LandingHeader() {
 					</div>
 				</div>
 			</section>
-			<div className="px-80 mt-10">
+			<div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-32 mt-10">
 				<div className="flex flex-col items-center justify-center w-full">
 					<BlurFade delay={0.3 * 3} inView>
-						<img
-							src="pip-render-11-28.png"
-							alt="Product visualization"
-							className="rounded-lg object-cover w-full max-w-[700px]"
-						/>
+						<div className="max-w-6xl w-full">
+							<img
+								src="pip-render-11-28.png"
+								alt="Product visualization"
+								className="rounded-lg object-contain w-full min-w-[300px]"
+							/>
+						</div>
 					</BlurFade>
 				</div>
 			</div>
