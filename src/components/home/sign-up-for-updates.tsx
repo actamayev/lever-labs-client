@@ -32,11 +32,11 @@ export default function SignUpForUpdates() {
 
 	return (
 		<>
-			<div className="text-3xl mt-24">
+			<div className="text-3xl">
 				Pip isn&apos;t available yet - but it will be soon.
 			</div>
-			<div className="text-3xl my-6">
-				Enter your email below to sign up for updates.
+			<div className="text-3xl mt-6 mb-10">
+				Please enter your email below to sign up for updates.
 			</div>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 max-w-md">

@@ -12,7 +12,7 @@ export default function DiscoverSection() {
 				Discover
 			</h1>
 			<p className="my-8 text-zinc-600 dark:text-zinc-400 text-center text-3xl">
-				Pip pairs with Blue Dot, our dynamic web platform, purpose-built to make your robotics education journey fun and powerful.
+				Pip pairs with our web platform, purpose-built to make your robotics education journey fun and powerful.
 				Start with beginner-friendly coding blocks, then graduate to real-world programming.
 				Whether you&apos;re solving guided challenges in the&nbsp;
 				<DottedUnderlineText linkTo="/lab">

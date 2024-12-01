@@ -37,10 +37,8 @@ export default function Home() {
 					<DiscoverSection />
 				</div>
 				<Features />
-				<div className="px-12">
-					<WhoWeAre />
-				</div>
-				<div className="flex flex-col items-center justify-center pb-20">
+				<WhoWeAre />
+				<div className="flex flex-col items-center justify-center py-32 z-10 bg-zinc-100 dark:bg-black relative">
 					<SignUpForUpdates />
 				</div>
 			</div>
