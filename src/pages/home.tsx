@@ -25,8 +25,10 @@ export default function Home() {
 			<div className="min-h-screen w-full relative">
 				<GridPattern isDashed={true} dashSize={2} orientation="both" />
 				{/* <DotPattern /> */}
-				<div className="relative z-10 flex flex-col items-center justify-center pt-32 px-64 pb-20">
-					<LandingHeader />
+				<div className="relative z-10 bg-gradient-to-b from-sky-200 to-white dark:from-zinc-700 dark:to-black">
+					<div className="flex flex-col items-center justify-center pt-32 px-64 pb-20">
+						<LandingHeader />
+					</div>
 				</div>
 				<JustKeepBuilding />
 				<div className="relative z-10 flex flex-col items-center justify-center px-36 h-screen">
@@ -42,7 +44,8 @@ export default function Home() {
 				</div>
 				<Features />
 				<WhoWeAre />
-				<div className="flex flex-col items-center justify-center py-32 z-10 bg-zinc-100 dark:bg-black relative">
+				<div className="flex flex-col relative items-center justify-center py-32 z-10
+				bg-gradient-to-b from-sky-200 to-white dark:from-sky-900 dark:to-black">
 					<SignUpForUpdates />
 				</div>
 			</div>

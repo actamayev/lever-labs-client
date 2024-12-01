@@ -12,18 +12,19 @@ interface ProductProps {
 	cta: string
 	href: StaticPageNames
 	Icon: IconType
-	extraClasses?: string
+	extraClasses: string
+	ctaClasses: string
 }
 
 function SectionCard(props: ProductProps) {
-	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses = "" } = props
+	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses, ctaClasses } = props
 
 	return (
 		<Card className={`overflow-hidden !border-0 rounded-none ${extraClasses}`}>
 			<div className="flex flex-col items-center text-center p-8 h-full">
 				<h2 className="text-4xl font-medium mb-2 flex flex-row items-center">
 					<Icon className="size-9 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75" />
-		&nbsp;{sectionTitle}
+					&nbsp;{sectionTitle}
 				</h2>
 				<p className="text-xl mb-4 opacity-80">
 					{sectionSubtitle}
@@ -31,7 +32,8 @@ function SectionCard(props: ProductProps) {
 				<div className="flex items-center gap-6 mb-8">
 					<Button variant="link" className="text-lg font-medium p-0 hover:no-underline">
 						<Link to={href}>
-							<div className="flex flex-row items-center">
+							<div className={`flex flex-row items-center transition-all duration-200 no-underline
+								hover:underline hover:decoration-dotted ${ctaClasses}`}>
 								{cta}
 								<ChevronRight className="h-4 w-4 ml-1" />
 							</div>
@@ -60,7 +62,8 @@ export default function ProductShowcase() {
 					cta="See the sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-br from-indigo-900 to-indigo-200 text-white"
+					extraClasses="bg-gradient-to-b from-indigo-900 to-indigo-200 text-white"
+					ctaClasses="text-white"
 				/>
 
 				<SectionCard
@@ -69,7 +72,8 @@ export default function ProductShowcase() {
 					cta="See the lab"
 					href="/lab"
 					Icon={HiBeaker}
-					extraClasses="bg-gradient-to-br from-sky-200 to-white dark:from-sky-900 dark:to-sky-700"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-900 dark:to-emerald-200"
+					ctaClasses=""
 				/>
 			</div>
 		</div>
