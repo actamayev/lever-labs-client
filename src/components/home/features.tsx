@@ -1,42 +1,64 @@
 /* eslint-disable max-len */
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
-import { StickyScroll } from "../aceternity/sticky-scroll-reveal"
+import { IconType } from "react-icons"
+import { Card } from "@/components/shadcn/ui/card"
 
-export default function Features() {
+interface Feature {
+  icon: IconType
+  title: string
+  description: string
+}
+
+// Example features array - you can move this to a separate file
+const features: Feature[] = [
+	{
+		icon: IoMdBatteryCharging,  // Replace with your actual icons
+		title: "Just keep building",
+		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times."
+	},
+	{
+		icon: GiBrickWall,
+		title: "Built to last",
+		description: "Talk about the durability."
+	},
+	{
+		icon: IoMdBatteryCharging,  // Replace with your actual icons
+		title: "Just keep building",
+		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times."
+	},
+	{
+		icon: GiBrickWall,
+		title: "Built to last",
+		description: "Talk about the durability."
+	},
+]
+
+interface FeatureItemProps {
+  feature: Feature
+}
+
+function FeatureItem({ feature }: FeatureItemProps) {
+	const { icon: Icon, title, description } = feature
+
 	return (
-		<div className="w-full">
-			<StickyScroll content={content} />
-		</div>
+		<Card className="bg-white dark:bg-zinc-900 p-6 mx-4 flex flex-col items-center text-center h-full">
+			<Icon className="w-12 h-12 text-blue-500 mb-4" />
+			<h3 className="text-xl font-semibold mb-2">{title}</h3>
+			<p className="text-zinc-600 dark:text-zinc-400">{description}</p>
+		</Card>
 	)
 }
 
-const content = [
-	{
-		title: "Just keep building",
-		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times",
-		content: (
-			<div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] flex items-center justify-center text-white">
-				<IoMdBatteryCharging size={100}/>
+export default function FeatureCarousel() {
+	return (
+		<div className="w-full">
+			{/* Your existing Carousel component */}
+			<div className="carousel rounded-box">
+				{features.map((feature, index) => (
+					<FeatureItem key={index} feature={feature} />
+				))}
 			</div>
-		),
-	},
-	{
-		title: "Built to last",
-		description: "Talk about the durability",
-		content: (
-			<div className="h-full w-full flex items-center justify-center text-white">
-				<GiBrickWall size={100}/>
-			</div>
-		),
-	},
-	{
-		title: "We need another section",
-		description: "We need another section + description",
-		content: (
-			<div className="h-full w-full bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] flex items-center justify-center text-white">
-				Other section icon
-			</div>
-		),
-	}
-]
+		</div>
+	)
+}
