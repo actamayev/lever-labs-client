@@ -40,10 +40,10 @@ export default function Home() {
 					<LearnByDoing />
 					<DiscoverSection />
 				</div>
-				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
+				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative pb-20">
 					<ProductShowcase />
+					<Features />
 				</div>
-				<Features />
 				<WhoWeAre />
 				<div className="flex flex-col relative items-center justify-center py-32 z-10
 				bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white">
