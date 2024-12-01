@@ -1,14 +1,17 @@
 /* eslint-disable max-len */
-export default function Features() {
-	return (
-		<div className="mt-32">
-			<StickyScrollRevealDemo />
-		</div>
-	)
-}
 import { GiBrickWall } from "react-icons/gi"
 import { StickyScroll } from "../aceternity/sticky-scroll-reveal"
 import { IoMdBatteryCharging } from "react-icons/io"
+
+export default function Features() {
+	return (
+		<div className="mt-32">
+			<div className="p-10">
+				<StickyScroll content={content} />
+			</div>
+		</div>
+	)
+}
 
 const content = [
 	{
@@ -39,10 +42,3 @@ const content = [
 		),
 	}
 ]
-export function StickyScrollRevealDemo() {
-	return (
-		<div className="p-10">
-			<StickyScroll content={content} />
-		</div>
-	)
-}
