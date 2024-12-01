@@ -53,7 +53,7 @@ function FrictionlessDescription() {
 					Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.&nbsp;
 				</span>
 				<BoldedDescription>
-					Just connect to WiFi, and you're ready to go.
+					Just connect to Wi-Fi, and you're ready to go.
 				</BoldedDescription>
 			</p>
 		</BoxReveal>
