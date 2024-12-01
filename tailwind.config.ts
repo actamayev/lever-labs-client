@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable filenames/match-regex */
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette")
+// const defaultTheme = require("tailwindcss/defaultTheme")
+// const colors = require("tailwindcss/colors")
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -151,7 +153,8 @@ module.exports = {
 	},
 	plugins: [
 		// eslint-disable-next-line @typescript-eslint/no-require-imports
-		require("tailwindcss-animate")
+		require("tailwindcss-animate"),
+		addVariablesForColors
 	],
 }
 
