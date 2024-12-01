@@ -27,16 +27,16 @@ export default function Home() {
 				{/* <DotPattern /> */}
 				<div className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-zinc-700 dark:to-black
 				text-black dark:text-white">
-					<div className="flex flex-col items-center justify-center pt-32 px-64 pb-20">
+					<div className="flex flex-col items-center justify-center pt-32 px-64">
 						<LandingHeader />
 					</div>
 				</div>
 				<JustKeepBuilding />
-				<div className="relative z-10 flex flex-col items-center justify-center px-24 h-screen">
+				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-screen">
 					<DesignThatInspiresCard />
 				</div>
 				<Sensors />
-				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-28">
+				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-20">
 					<LearnByDoing />
 					<DiscoverSection />
 				</div>
