@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable max-len */
 import { IconType } from "react-icons"
 import { IoIosRocket } from "react-icons/io"
 import { FaLightbulb } from "react-icons/fa"
 import BoxReveal from "../shadcn/ui/box-reveal"
-import TextRevealByWord from "../shadcn/ui/text-reveal"
 import { BoldedDescription } from "./bold-span-text"
+import TextRevealByWord from "../shadcn/ui/text-reveal"
 
 interface Feature {
 	Icon: IconType
@@ -69,7 +68,8 @@ function GrowsWithYouDescription() {
 				</span>
 				<BoldedDescription>Pip evolves with you.&nbsp;</BoldedDescription>
 				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
-					Regularly updated lessons ensure you're always inspired and never out of depth. From elementary school to college and beyond:&nbsp;
+					Regularly updated lessons ensure you're always inspired and never out of depth.
+					From elementary school to college and beyond:&nbsp;
 				</span>
 				<BoldedDescription>Pip is one robot that does it all.</BoldedDescription>
 			</p>

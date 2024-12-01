@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
-export default class MiscDataService {
+export default class MischDataService {
 	private readonly pathHeader: EndpointHeaders = "/misc"
 
 	constructor(private readonly httpClient: BlueDotHttpClient) {
