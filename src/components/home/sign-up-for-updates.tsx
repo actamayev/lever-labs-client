@@ -31,6 +31,8 @@ export default function SignUpForUpdates() {
 		return isEmailValid(formValues.email) === "Email"
 	}, [formValues.email])
 
+	// TODO: On hover, button should change color
+	// TODO: Make the hook that registers the email to DB.
 	return (
 		<>
 			<div className="text-3xl mt-24">
@@ -49,9 +51,9 @@ export default function SignUpForUpdates() {
 								<FormControl>
 									<Input
 										type="email"
-										placeholder="Enter your email"
+										placeholder="Email"
 										required
-										className="flex-1 border-black dark:border-white border-2"
+										className="flex-1 h-11 w-56 border-black dark:border-white border-2 rounded-md"
 										disabled={isSubscribed || isLoading}
 										{...field}
 									/>
