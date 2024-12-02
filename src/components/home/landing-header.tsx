@@ -4,7 +4,7 @@ import { FaChevronDown } from "react-icons/fa6"
 import BlurFade from "../shadcn/ui/blur-fade"
 
 function ScrollIndicator () {
-	const handleClick = () => {
+	const handleClick = useCallback(() => {
 		const element = document.getElementById("just-keep-building")
 		if (element) {
 			const headerHeight = 56 // Height of your fixed header
@@ -16,7 +16,7 @@ function ScrollIndicator () {
 				behavior: "smooth"
 			})
 		}
-	}
+	}, [])
 
 	return (
 		<div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
@@ -58,6 +58,13 @@ export default function LandingHeader() {
 								</h2>
 							</BlurFade>
 						</div>
+						<div>
+							<BlurFade delay={0.3 * 3} inView>
+								<h2 className="text-3xl text-zinc-800 dark:text-white mt-12 font-medium">
+									Pip is a powerful educational robot that&apos;s designed to be simple and easy to use.
+								</h2>
+							</BlurFade>
+						</div>
 					</div>
 				</section>
 
@@ -72,7 +79,9 @@ export default function LandingHeader() {
 					</BlurFade>
 				</div>
 			</div>
-			<ScrollIndicator />
+			<BlurFade delay={1} inView>
+				<ScrollIndicator />
+			</BlurFade>
 		</div>
 	)
 }

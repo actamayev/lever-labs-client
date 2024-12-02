@@ -2,6 +2,7 @@ import { useState } from "react"
 import { GiCarWheel } from "react-icons/gi"
 import { cn } from "@/lib/shadcn/utils"
 import "../../../styles/motor-spin.css"
+import { bentoIconSize } from "../../../utils/constants"
 
 export default function MotorCard() {
 	const [isSpinning, setIsSpinning] = useState(false)
@@ -24,9 +25,10 @@ export default function MotorCard() {
 				>
 					<GiCarWheel
 						className={cn(
-							"h-12 w-12 origin-center text-neutral-800 dark:text-neutral-200",
+							"origin-center text-black dark:text-white",
 							isSpinning && "spin-wheel"
 						)}
+						size={bentoIconSize}
 					/>
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">

@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { FaInfinity } from "react-icons/fa"
 import { useCallback, useState } from "react"
 import { cn } from "@/lib/shadcn/utils"
+import { bentoIconSize } from "../../../utils/constants"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const COLORS = [
@@ -43,8 +44,9 @@ export default function ModuleCard() {
 				>
 					{/* Static infinity icon */}
 					<FaInfinity
-						className="h-12 w-12 transition-all duration-300"
+						className="transition-all duration-300"
 						style={{ color: currentColor }}
+						size={bentoIconSize}
 					/>
 
 					{/* Animated dot following infinity path */}
@@ -69,17 +71,18 @@ export default function ModuleCard() {
 								}}
 							/>
 							<FaInfinity
-								className="h-12 w-12 transition-all duration-300"
+								className="transition-all duration-300"
 								style={{ color: currentColor }}
+								size={bentoIconSize}
 							/>
 						</motion.div>
 					)}
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-          Module
+					Module
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-          We automatically save your files as you type.
+					We automatically save your files as you type.
 				</p>
 			</div>
 		</div>

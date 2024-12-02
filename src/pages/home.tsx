@@ -26,7 +26,7 @@ export default function Home() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="h-[85vh] relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
+				<div className="relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black py-8">
 					<JustKeepBuilding />
 				</div>
 				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-[50vh]">
@@ -35,7 +35,6 @@ export default function Home() {
 				<div
 					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center dark:bg-pipTheme
 					bg-gradient-to-b dark:from-black dark:to-pipTheme from-white to-pipTheme"
-					// style={{ backgroundColor: "rgb(10, 37, 64)" }}
 				>
 					<Sensors />
 				</div>

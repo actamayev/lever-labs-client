@@ -25,7 +25,7 @@ const features: Feature[] = [
 function FeatureSectionHeader({ feature }: { feature: Feature }) {
 	return (
 		<>
-			<BoxReveal boxColor={"#013da5"} duration={0.25}>
+			<BoxReveal boxColor={"#003da5"} duration={0.25}>
 				<div className="flex items-center space-x-2 text-lg text-zinc-900 dark:text-zinc-100">
 					<feature.Icon size={35} />
 					<span className="font-medium tracking-wide text-4xl">
@@ -39,7 +39,7 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 
 function FrictionlessDescription() {
 	return (
-		<BoxReveal boxColor={"#013da5"} duration={0.65}>
+		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-2xl mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400">
 					Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.&nbsp;
@@ -54,7 +54,7 @@ function FrictionlessDescription() {
 
 function GrowsWithYouDescription() {
 	return (
-		<BoxReveal boxColor={"#013da5"} duration={0.65}>
+		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-2xl mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
 					Whether you're exploring robotics for the first time or designing calculus-based control systems,&nbsp;
@@ -73,8 +73,8 @@ function GrowsWithYouDescription() {
 export function JustKeepBuilding() {
 	return (
 		<div id="just-keep-building">
-			<div className="mb-24 text-center text-4xl">
-				<p className="my-8 text-zinc-600 dark:text-zinc-300">
+			<div className="mb-20 text-center text-4xl">
+				<p className="text-zinc-600 dark:text-zinc-300 mb-8">
 					Every detail has been crafted for one purpose: to let you
 				</p>
 				<TextRevealByWord

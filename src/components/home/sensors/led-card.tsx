@@ -1,6 +1,7 @@
 import { cn } from "@/lib/shadcn/utils"
 import { FaLightbulb } from "react-icons/fa"
 import { useCallback, useState } from "react"
+import { bentoIconSize } from "../../../utils/constants"
 
 function getRandomRGBColor() {
 	const r = Math.floor(Math.random() * 256)
@@ -30,11 +31,12 @@ export default function LEDCard() {
 			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div className="pointer-events-auto w-fit" onClick={handleIconClick}> {/* w-fit to contain click area to icon */}
 					<FaLightbulb
-						className="h-12 w-12 origin-left transition-all duration-300 cursor-pointer"
+						className="origin-left transition-all duration-300 cursor-pointer"
 						style={{
 							color: ledColor || "currentColor",
 							filter: ledColor ? `drop-shadow(0 0 8px ${ledColor})` : "none"
 						}}
+						size={bentoIconSize}
 					/>
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
