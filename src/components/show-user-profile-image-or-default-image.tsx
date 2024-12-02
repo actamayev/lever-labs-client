@@ -3,6 +3,7 @@ import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { FaUserCircle } from "react-icons/fa"
+import { cn } from "../lib/shadcn/utils"
 
 interface Props {
 	profileImageUrl: string | null
@@ -21,7 +22,10 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 	if (_.isNull(profileImageUrl)) {
 		return (
 			<FaUserCircle
-				className={`text-black dark:text-white transition-all duration-300 ${extraClasses}`}
+				className={cn(
+					"text-black dark:text-white transition-all duration-300",
+					extraClasses
+				)}
 				onClick={(e) => handleClick(e as unknown as React.MouseEvent<HTMLElement, MouseEvent>)}
 			/>
 		)
