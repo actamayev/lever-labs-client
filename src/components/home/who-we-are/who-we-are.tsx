@@ -23,11 +23,9 @@ export default function WhoWeAre() {
 					<br />
 					<div className="text-zinc-500 dark:text-zinc-400">
 						We designed Pip to make learning robotics&nbsp;
-						<div>
-							<BoldedDescription extraClasses="text-3xl">
-								fun and seamless.
-							</BoldedDescription>
-						</div>
+						<BoldedDescription extraClasses="text-3xl">
+							fun and seamless.
+						</BoldedDescription>
 					</div>
 				</div>
 			</div>

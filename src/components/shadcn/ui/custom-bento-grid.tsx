@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-
 import { cn } from "@/lib/shadcn/utils";
 import { Button } from "./button";
+import { bentoIconSize } from "../../../utils/constants";
 
 const BentoGrid = ({
   children,
@@ -53,7 +53,7 @@ const BentoCard = ({
   >
     <div>{background}</div>
     <div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
-      <Icon className="h-12 w-12 origin-left transform-gpu text-zinc-700 dark:text-white" />
+      <Icon className="transition-all duration-300 origin-left transform-gpu text-black dark:text-white" size={bentoIconSize} />
       <h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
         {name}
       </h3>
@@ -72,7 +72,7 @@ const BentoCard = ({
         </a>
       </Button>
     </div>
-    <div className="pointer-events-none absolute inset-0 transform-gpu group-hover:bg-black/[.03] group-hover:dark:bg-neutral-800/10" />
+    <div className="pointer-events-none absolute inset-0 transform-gpu" />
   </div>
 );
 

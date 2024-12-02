@@ -67,34 +67,15 @@ function ProductShowcase() {
 	const siteTheme = useDefaultSiteTheme()
 
 	return (
-		<div className="w-full px-6 my-10">
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-				<SectionCard
-					sectionTitle="Sandbox"
-					sectionSubtitle={
-						<div>
-							Freely control your robot with coding blocks for&nbsp;
-							<BoldSpanText extraClasses="font-medium">
-							limitless open-ended exploration&nbsp;
-							</BoldSpanText>
-							and experimentation.
-						</div>
-					}
-					cta="Jump into the Sandbox"
-					href="/sandbox"
-					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-black"
-					linkToShow="bluedotrobots.com/sandbox"
-					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
-				/>
-
+		<div className="w-full px-4 mb-10">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<SectionCard
 					sectionTitle="Lab"
 					sectionSubtitle={
 						<>
-							Explore guided&nbsp;
+							Explore&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-								tutorials, videos, and challenges&nbsp;
+							guided tutorials, videos, and challenges&nbsp;
 							</BoldSpanText>
 							to learn about robot sensors and control in&nbsp;
 							<BoldSpanText extraClasses="font-medium">
@@ -108,6 +89,25 @@ function ProductShowcase() {
 					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-black"
 					linkToShow="bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
+				/>
+
+				<SectionCard
+					sectionTitle="Sandbox"
+					sectionSubtitle={
+						<div>
+							Freely control your robot with coding blocks for&nbsp;
+							<BoldSpanText extraClasses="font-medium">
+								limitless open-ended exploration&nbsp;
+							</BoldSpanText>
+							and experimentation.
+						</div>
+					}
+					cta="Jump into the Sandbox"
+					href="/sandbox"
+					Icon={TbSandbox}
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-black"
+					linkToShow="bluedotrobots.com/sandbox"
+					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>
 			</div>
 		</div>

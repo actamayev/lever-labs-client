@@ -3,14 +3,14 @@ import DottedUnderlineText from "../../dotted-underline-text"
 
 export default function DiscoverSection() {
 	return (
-		<div className="mt-20 mb-10">
+		<div className="mt-10">
 			<h1
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
-				font-medium tracking-tight text-black dark:text-white mb-14"
+				font-medium tracking-tight text-black dark:text-white"
 			>
 				Discover
 			</h1>
-			<p className="my-8 text-zinc-600 dark:text-zinc-400 text-center text-3xl">
+			<p className="text-zinc-600 dark:text-zinc-400 text-center text-3xl my-10">
 				Pip pairs with our web platform, purpose-built to make your robotics education journey fun and powerful.
 				Start with beginner-friendly coding blocks, then graduate to real-world programming.
 				Whether you&apos;re solving guided challenges in the&nbsp;

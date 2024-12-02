@@ -21,33 +21,36 @@ export default function Home() {
 					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
 					text-black dark:text-white"
 				>
-					<div className="flex flex-col items-center justify-center pt-32 px-64">
+					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
+					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center md:px-8 lg:px-16">
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="h-screen relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 bg-white dark:bg-black py-8">
 					<JustKeepBuilding />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-screen">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[50vh]">
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center"
-					style={{ backgroundColor: "rgb(10, 37, 64)" }}
+					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center dark:bg-pipTheme
+					bg-gradient-to-b dark:from-black dark:to-pipTheme from-white to-pipTheme"
 				>
 					<Sensors />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-20">
-					<LearnByDoing />
-					<DiscoverSection />
-				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
+					<div className="px-16">
+						<DiscoverSection />
+					</div>
 					<ProductShowcase />
 				</div>
-				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-indigo-600">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16">
+					<LearnByDoing />
+				</div>
+				<div className="flex z-10 relative bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme">
 					<Features />
 				</div>
-				<div className="relative flex my-20 z-10 px-20">
+				<div className="relative flex my-20 z-10 px-16">
 					<WhoWeAre />
 				</div>
 				<div

@@ -63,7 +63,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 	return (
 		<div className="carousel-item mb-10">
 			<div className="bg-white dark:bg-zinc-900 p-6 mx-4 flex flex-col rounded-xl shadow-lg items-start text-start min-h-[300px]">
-				<Icon className="w-12 h-12 text-blue-500 mb-4" />
+				<Icon className="w-12 h-12 text-pipTheme mb-4" />
 				<h3 className="text-xl font-semibold mb-2">{title}</h3>
 				<p className="text-zinc-600 dark:text-zinc-400 line-clamp-4">{description}</p>
 			</div>

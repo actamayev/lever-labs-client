@@ -75,9 +75,9 @@ export default function Sensors() {
 		<div>
 			<p
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
-				font-medium tracking-tight text-white mb-14"
+				font-medium tracking-tight text-black dark:text-white pt-10 pb-12"
 			>
-				Pip comes with <NumberTicker className="text-white" value={10} /> onboard sensors.
+				Pip comes with <NumberTicker className="text-black dark:text-white" value={10} /> onboard sensors.
 			</p>
 			<div className="flex">
 				<BentoGrid className="lg:grid-rows-3">

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { GiCarWheel } from "react-icons/gi"
 import { cn } from "@/lib/shadcn/utils"
 import "../../../styles/motor-spin.css"
+import { bentoIconSize } from "../../../utils/constants"
 
 export default function MotorCard() {
 	const [isSpinning, setIsSpinning] = useState(false)
@@ -16,12 +17,6 @@ export default function MotorCard() {
 				"row-start-2 col-start-1 col-span-2"
 			)}
 		>
-			<div>
-				<img
-					src="wheels_encoders.png"
-					className="absolute -right-20 -top-20 opacity-60"
-				/>
-			</div>
 			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div
 					className="pointer-events-auto w-fit cursor-pointer"
@@ -30,9 +25,10 @@ export default function MotorCard() {
 				>
 					<GiCarWheel
 						className={cn(
-							"h-12 w-12 origin-center text-neutral-800 dark:text-neutral-200",
+							"origin-center text-black dark:text-white",
 							isSpinning && "spin-wheel"
 						)}
+						size={bentoIconSize}
 					/>
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">

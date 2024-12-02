@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { cn } from "@/lib/shadcn/utils"
 import { RiRadioButtonFill } from "react-icons/ri"
+import { bentoIconSize } from "../../../utils/constants"
 
 function ButtonCard() {
 	return (
@@ -27,7 +28,8 @@ function ButtonCard() {
 						}}
 					>
 						<RiRadioButtonFill
-							className="h-12 w-12 text-black dark:text-white cursor-pointer"
+							className="text-black dark:text-white cursor-pointer"
+							size={bentoIconSize}
 						/>
 					</motion.div>
 				</div>
