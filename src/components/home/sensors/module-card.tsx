@@ -60,9 +60,9 @@ export default function ModuleCard() {
 								className="absolute h-2 w-2 rounded-full"
 								style={{ backgroundColor: currentColor }}
 								animate={{
-									x: [7, 20, 35, 20, 7],
-									y: [20, 0, 20, 40, 20],
-									scale: [1, 1.2, 1, 1.2, 1]
+									x: [7, 31, 50, 31, 7],
+									y: [30, 0, 30, 55, 30],
+									scale: [1, 1, 1, 1, 1]
 								}}
 								transition={{
 									duration: 1.5,
