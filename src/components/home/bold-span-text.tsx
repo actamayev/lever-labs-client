@@ -5,7 +5,6 @@ interface Props {
 	children: React.ReactNode
 }
 
-// TODO: look for all cases of class contatentation. repalce with cn
 export function BoldSpanText(props: Props) {
 	const { extraClasses, children } = props
 
