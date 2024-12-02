@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Card } from "@/components/shadcn/ui/card"
 import { BoldSpanText } from "./bold-span-text"
+import { Card } from "@/components/shadcn/ui/card"
 
 export default function DesignThatInspiresCard() {
 	return (
 		<div className="flex md:flex-row w-full gap-8 items-center mt-20">
 			<div className="w-1/2">
 				<img
-					src="pip-render-11-28.png"
+					src="pip_right.png"
 					alt="Product visualization"
 					className="w-full h-auto rounded-lg object-cover"
 				/>

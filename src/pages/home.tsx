@@ -11,7 +11,6 @@ import ProductShowcase from "../components/home/discover/product-showcase"
 import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
 import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-header"
 
-// TODO: Figuer out the header-body transition. There is a sudden jump. Almost as if the top of the body isn't exactly white
 export default function Home() {
 	return (
 		<>
@@ -49,7 +48,7 @@ export default function Home() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-20">
 					<LearnByDoing />
 				</div>
-				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-pipTheme">
+				<div className="flex z-10 relative bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme">
 					<Features />
 				</div>
 				<div className="relative flex my-20 z-10 px-20">

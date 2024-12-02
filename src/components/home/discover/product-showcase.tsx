@@ -73,9 +73,9 @@ function ProductShowcase() {
 					sectionTitle="Lab"
 					sectionSubtitle={
 						<>
-							Explore guided&nbsp;
+							Explore&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-								tutorials, videos, and challenges&nbsp;
+							guided tutorials, videos, and challenges&nbsp;
 							</BoldSpanText>
 							to learn about robot sensors and control in&nbsp;
 							<BoldSpanText extraClasses="font-medium">

@@ -13,14 +13,12 @@ function GoToSandboxButton() {
 	return (
 		<Button
 			asChild
-			className="group relative bg-gradient-to-r from-blue-600 to-blue-500
-				hover:from-blue-700 hover:to-blue-600
-				dark:from-blue-500 dark:to-blue-400
-				dark:hover:from-blue-600 dark:hover:to-blue-500
+			className="group relative bg-gradient-to-r
+				from-pipTheme to-blue-500 hover:bg-pipTheme
+				dark:from-pipTheme dark:to-blue-500 dark:hover:bg-pipTheme
 				text-white font-medium px-6
 				shadow-md hover:shadow-lg
-				transition-all duration-300 hover:pr-12
-				border border-white/10"
+				transition-all duration-300 hover:pr-12"
 		>
 			<Link to="/sandbox">
 				Go to Sandbox

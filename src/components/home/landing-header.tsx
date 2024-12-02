@@ -1,8 +1,23 @@
+import { useCallback } from "react"
 import { motion } from "framer-motion"
-import BlurFade from "../shadcn/ui/blur-fade"
 import { FaChevronDown } from "react-icons/fa6"
+import BlurFade from "../shadcn/ui/blur-fade"
 
 function ScrollIndicator () {
+	const handleClick = () => {
+		const element = document.getElementById("just-keep-building")
+		if (element) {
+			const headerHeight = 56 // Height of your fixed header
+			const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+			const offsetPosition = elementPosition - headerHeight
+
+			window.scrollTo({
+				top: offsetPosition,
+				behavior: "smooth"
+			})
+		}
+	}
+
 	return (
 		<div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
 			<motion.div
@@ -14,7 +29,8 @@ function ScrollIndicator () {
 					repeat: Infinity,
 					ease: "easeInOut"
 				}}
-				className="cursor-pointer"
+				className="cursor-pointer hover:opacity-70 transition-all duration-300"
+				onClick={handleClick}
 			>
 				<FaChevronDown size={45}/>
 			</motion.div>
@@ -51,7 +67,6 @@ export default function LandingHeader() {
 							<img
 								src="pip_top_right.png"
 								alt="Product visualization"
-								// style={{ width: "100"}}
 							/>
 						</div>
 					</BlurFade>
