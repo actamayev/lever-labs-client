@@ -11,6 +11,7 @@ import ProductShowcase from "../components/home/discover/product-showcase"
 import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
 import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-header"
 
+// TODO: Figuer out the header-body transition. There is a sudden jump. Almost as if the top of the body isn't exactly white
 export default function Home() {
 	return (
 		<>
@@ -21,7 +22,7 @@ export default function Home() {
 					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
 					text-black dark:text-white"
 				>
-					<div className="min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-16">
+					<div className="flex items-center justify-center px-4 md:px-8 lg:px-16">
 						<LandingHeader />
 					</div>
 				</div>
