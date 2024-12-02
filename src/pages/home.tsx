@@ -47,7 +47,9 @@ export default function Home() {
 				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-indigo-600">
 					<Features />
 				</div>
-				<WhoWeAre />
+				<div className="relative flex my-20 z-10 px-20">
+					<WhoWeAre />
+				</div>
 				<div
 					className="flex flex-col relative items-center justify-center py-32 z-10
 					bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white"

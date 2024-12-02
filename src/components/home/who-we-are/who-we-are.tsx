@@ -4,7 +4,7 @@ import { BoldedDescription } from "../bold-span-text"
 // TODO: Refine the text here.
 export default function WhoWeAre() {
 	return (
-		<div className="relative flex my-20 z-10 px-20">
+		<>
 			<div className="flex-1">
 				<BlueDot />
 			</div>
@@ -31,6 +31,6 @@ export default function WhoWeAre() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	)
 }
