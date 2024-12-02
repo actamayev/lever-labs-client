@@ -22,7 +22,7 @@ export default function Home() {
 					text-black dark:text-white"
 				>
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center px-4 md:px-8 lg:px-16">
+					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center md:px-8 lg:px-20">
 						<LandingHeader />
 					</div>
 				</div>
@@ -50,7 +50,7 @@ export default function Home() {
 				<div className="flex z-10 relative bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme">
 					<Features />
 				</div>
-				<div className="relative flex my-20 z-10 px-20">
+				<div className="relative flex my-20 z-10 px-">
 					<WhoWeAre />
 				</div>
 				<div

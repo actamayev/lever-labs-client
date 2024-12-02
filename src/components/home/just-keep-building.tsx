@@ -28,7 +28,7 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 			<BoxReveal boxColor={"#003da5"} duration={0.25}>
 				<div className="flex items-center space-x-2 text-lg text-zinc-900 dark:text-zinc-100">
 					<feature.Icon size={35} />
-					<span className="font-medium tracking-wide text-4xl">
+					<span className="font-semibold tracking-wide text-4xl">
 						{feature.title}
 					</span>
 				</div>
@@ -77,11 +77,7 @@ export function JustKeepBuilding() {
 				<p className="text-zinc-600 dark:text-zinc-300 mb-8">
 					Every detail has been crafted for one purpose: to let you
 				</p>
-				<TextRevealByWord
-					text="just keep building"
-					className=""
-					instantTransition
-				/>
+				<TextRevealByWord text="just keep building" />
 			</div>
 			<div className="mx-auto flex items-start">
 				<div className="flex-1">

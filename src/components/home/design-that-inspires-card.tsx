@@ -16,14 +16,14 @@ export default function DesignThatInspiresCard() {
 				<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
 					<div className="flex flex-col p-8 w-full space-y-6">
 						<div className="space-y-6">
-							<h2 className="text-4xl font-bold">
+							<h2 className="text-4xl font-semibold">
 								Design That Inspires
 							</h2>
 							<h3 className="text-2xl text-zinc-700 dark:text-zinc-300">
 								Beautifully transparent. Inside and out.
 							</h3>
 						</div>
-						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
+						<p className="text-zinc-600 dark:text-zinc-400 text-xl">
 							Pip's clear shell isn't just for show - it's an invitation. See how sensors,
 							motors, and circuits work together&nbsp;
 							<BoldSpanText>
