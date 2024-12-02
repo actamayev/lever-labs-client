@@ -18,7 +18,7 @@ export default function Home() {
 			<div className="min-h-screen w-full relative">
 				<GridPattern isDashed={true} dashSize={2} orientation="both" />
 				<div
-					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-zinc-700 dark:to-black
+					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
 					text-black dark:text-white"
 				>
 					<div className="flex flex-col items-center justify-center pt-32 px-64">

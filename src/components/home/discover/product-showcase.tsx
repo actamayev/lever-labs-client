@@ -1,23 +1,29 @@
 import { Link } from "react-router"
+import { observer } from "mobx-react"
 import { IconType } from "react-icons"
 import { HiBeaker } from "react-icons/hi"
 import { TbSandbox } from "react-icons/tb"
 import { ChevronRight } from "lucide-react"
+import Safari from "../../shadcn/ui/safari"
+import { cn } from "../../../lib/shadcn/utils"
+import { BoldSpanText } from "../bold-span-text"
 import { Card } from "@/components/shadcn/ui/card"
 import { Button } from "@/components/shadcn/ui/button"
-import { cn } from "../../../lib/shadcn/utils"
+import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ProductProps {
 	sectionTitle: string
-	sectionSubtitle: string
+	sectionSubtitle: React.ReactNode
 	cta: string
 	href: StaticPageNames
 	Icon: IconType
 	extraClasses: string
+	imgSrc: string
+	linkToShow: string
 }
 
 function SectionCard(props: ProductProps) {
-	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses } = props
+	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses, linkToShow, imgSrc } = props
 
 	return (
 		<Card className={cn(
@@ -29,10 +35,7 @@ function SectionCard(props: ProductProps) {
 					<Icon className="size-9 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75" />
 					&nbsp;{sectionTitle}
 				</h2>
-				<p className="text-xl mb-4 opacity-80">
-					{sectionSubtitle}
-				</p>
-				<div className="flex items-center gap-6 mb-8">
+				<div className="flex items-center gap-6">
 					<Button variant="link" className="text-lg font-medium p-0 hover:no-underline">
 						<Link to={href}>
 							<div className={cn(
@@ -45,40 +48,68 @@ function SectionCard(props: ProductProps) {
 						</Link>
 					</Button>
 				</div>
-				<div className="mt-auto">
-					<img
-						src="/pip-render-11-28.png"
-						alt="Pip One Robot"
-						className="w-full max-w-lg h-auto object-contain"
+				<div className="relative">
+					<Safari
+						url={linkToShow}
+						className="size-full"
+						src={imgSrc}
 					/>
 				</div>
+				<p className="text-2xl mt-4 dark:text-zinc-400">
+					{sectionSubtitle}
+				</p>
 			</div>
 		</Card>
 	)
 }
 
-export default function ProductShowcase() {
+function ProductShowcase() {
+	const siteTheme = useDefaultSiteTheme()
+
 	return (
 		<div className="w-full px-6 my-10">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 				<SectionCard
 					sectionTitle="Sandbox"
-					sectionSubtitle="Creative freedom"
-					cta="See the sandbox"
+					sectionSubtitle={
+						<div>
+							Freely control your robot with coding blocks for&nbsp;
+							<BoldSpanText extraClasses="font-medium">
+							limitless open-ended exploration and experimentation.
+							</BoldSpanText>
+						</div>
+					}
+					cta="Jump into the Sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-orange-950"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-black"
+					linkToShow="bluedotrobots.com/sandbox"
+					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>
 
 				<SectionCard
 					sectionTitle="Lab"
-					sectionSubtitle="Learn in the lab"
-					cta="See the lab"
+					sectionSubtitle={
+						<div>
+							<BoldSpanText extraClasses="font-medium">
+							Explore guided tutorials, videos, and challenges&nbsp;
+							</BoldSpanText>
+							to learn about robot sensors and control in&nbsp;
+							<BoldSpanText extraClasses="font-medium">
+							a structured learning environment
+							</BoldSpanText>
+						</div>
+					}
+					cta="See the Lab"
 					href="/lab"
 					Icon={HiBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-emerald-950"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-black"
+					linkToShow="bluedotrobots.com/lab"
+					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
 				/>
 			</div>
 		</div>
 	)
 }
+
+export default observer(ProductShowcase)
