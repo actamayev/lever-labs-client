@@ -9,19 +9,16 @@ import TextRevealByWord from "../shadcn/ui/text-reveal"
 interface Feature {
 	Icon: IconType
 	title: string
-	subtitle: string
 }
 
 const features: Feature[] = [
 	{
 		Icon: IoIosRocket,
-		title: "Frictionless",
-		subtitle: "Effortless setup. Limitless exploration.",
+		title: "Frictionless"
 	},
 	{
 		Icon: FaLightbulb,
-		title: "Grows With You",
-		subtitle: "Perfect for beginners. Essential for experts.",
+		title: "Grows With You"
 	}
 ]
 
@@ -36,9 +33,6 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 					</span>
 				</div>
 			</BoxReveal>
-			<BoxReveal boxColor={"#003da5"} duration={0.45}>
-				<h3 className="text-3xl font-light my-6 text-zinc-800 dark:text-zinc-200">{feature.subtitle}</h3>
-			</BoxReveal>
 		</>
 	)
 }
@@ -47,7 +41,7 @@ function FeatureSectionHeader({ feature }: { feature: Feature }) {
 function FrictionlessDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
-			<p className="text-2xl">
+			<p className="text-2xl mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400">
 					Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.&nbsp;
 				</span>
@@ -62,7 +56,7 @@ function FrictionlessDescription() {
 function GrowsWithYouDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
-			<p className="text-2xl">
+			<p className="text-2xl mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
 					Whether you're exploring robotics for the first time or designing calculus-based control systems,&nbsp;
 				</span>

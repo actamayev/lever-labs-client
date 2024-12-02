@@ -34,8 +34,9 @@ export default function Home() {
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center"
-					style={{ backgroundColor: "rgb(10, 37, 64)" }}
+					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center dark:bg-pipTheme
+					bg-gradient-to-b dark:from-black dark:to-pipTheme from-white to-pipTheme"
+					// style={{ backgroundColor: "rgb(10, 37, 64)" }}
 				>
 					<Sensors />
 				</div>
@@ -48,7 +49,7 @@ export default function Home() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-20">
 					<LearnByDoing />
 				</div>
-				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-indigo-600">
+				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-pipTheme">
 					<Features />
 				</div>
 				<div className="relative flex my-20 z-10 px-20">
