@@ -23,8 +23,8 @@ const features: Feature[] = [
 	},
 	{
 		icon: IoMdBatteryCharging,  // Replace with your actual icons
-		title: "Just keep building",
-		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times."
+		title: "Say something about saving your projects ",
+		description: "so they're available anywhere."
 	},
 	{
 		icon: GiBrickWall,

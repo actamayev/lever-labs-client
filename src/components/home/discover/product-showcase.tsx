@@ -31,11 +31,11 @@ function SectionCard(props: ProductProps) {
 			extraClasses
 		)}>
 			<div className="flex flex-col items-center text-center p-8 h-full">
-				<h2 className="text-4xl font-medium mb-2 flex flex-row items-center">
+				<h2 className="text-4xl font-medium flex flex-row items-center">
 					<Icon className="size-9 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75" />
 					&nbsp;{sectionTitle}
 				</h2>
-				<div className="flex items-center gap-6">
+				<div className="flex items-center gap-6 my-2">
 					<Button variant="link" className="text-lg font-medium p-0 hover:no-underline">
 						<Link to={href}>
 							<div className={cn(
@@ -55,7 +55,7 @@ function SectionCard(props: ProductProps) {
 						src={imgSrc}
 					/>
 				</div>
-				<p className="text-2xl mt-4 dark:text-zinc-400">
+				<p className="text-2xl mt-4 dark:text-zinc-400 text-zinc-400">
 					{sectionSubtitle}
 				</p>
 			</div>
@@ -75,8 +75,9 @@ function ProductShowcase() {
 						<div>
 							Freely control your robot with coding blocks for&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-							limitless open-ended exploration and experimentation.
+							limitless open-ended exploration&nbsp;
 							</BoldSpanText>
+							and experimentation.
 						</div>
 					}
 					cta="Jump into the Sandbox"
@@ -90,15 +91,16 @@ function ProductShowcase() {
 				<SectionCard
 					sectionTitle="Lab"
 					sectionSubtitle={
-						<div>
+						<>
+							Explore guided&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-							Explore guided tutorials, videos, and challenges&nbsp;
+								tutorials, videos, and challenges&nbsp;
 							</BoldSpanText>
 							to learn about robot sensors and control in&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-							a structured learning environment
+								a structured learning environment.
 							</BoldSpanText>
-						</div>
+						</>
 					}
 					cta="See the Lab"
 					href="/lab"
