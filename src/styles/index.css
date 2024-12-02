@@ -100,3 +100,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  /* Reset webkit autofill styles */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px hsl(var(--background)) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  /* Force text color and cursor color to always be foreground color */
+  input,
+  input:focus,
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+    color: hsl(var(--foreground)) !important;
+    -webkit-text-fill-color: hsl(var(--foreground)) !important;
+    caret-color: hsl(var(--foreground)) !important;
+  }
+}
