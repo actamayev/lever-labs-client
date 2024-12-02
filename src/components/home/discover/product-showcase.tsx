@@ -59,7 +59,7 @@ function SectionCard(props: ProductProps) {
 
 export default function ProductShowcase() {
 	return (
-		<div className="w-full px-4 my-10">
+		<div className="w-full px-6 my-10">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 				<SectionCard
 					sectionTitle="Sandbox"
@@ -67,7 +67,7 @@ export default function ProductShowcase() {
 					cta="See the sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-organge-50 dark:from-orange-200 dark:to-orange-950"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-orange-950"
 				/>
 
 				<SectionCard

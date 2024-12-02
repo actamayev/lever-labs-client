@@ -74,7 +74,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 export default function FeatureCarousel() {
 	return (
 		<div className="w-full pt-32 pb-24">
-			<div className="carousel rounded-box">
+			<div className="carousel">
 				{features.map((feature, index) => (
 					<FeatureItem key={index} feature={feature} />
 				))}
