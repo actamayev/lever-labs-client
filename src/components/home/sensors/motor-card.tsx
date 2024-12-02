@@ -16,12 +16,6 @@ export default function MotorCard() {
 				"row-start-2 col-start-1 col-span-2"
 			)}
 		>
-			<div>
-				<img
-					src="wheels_encoders.png"
-					className="absolute -right-20 -top-20 opacity-60"
-				/>
-			</div>
 			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div
 					className="pointer-events-auto w-fit cursor-pointer"

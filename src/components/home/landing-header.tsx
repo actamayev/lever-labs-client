@@ -8,7 +8,7 @@ export default function LandingHeader() {
 					<div>
 						<BlurFade delay={0.3} inView>
 							<span className="text-8xl font-semibold">
-								Robotics, Re-imagined.
+								Hey there,
 							</span>
 						</BlurFade>
 					</div>
