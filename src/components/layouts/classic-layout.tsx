@@ -7,18 +7,18 @@ interface Props {
 	children: React.ReactNode
 }
 
-export default function ClassicLayout (props: Props) {
-	const { extraClasses = "px-14 py-6 mt-14", children } = props
+export default function ClassicLayout(props: Props) {
+	const { extraClasses = "px-14", children } = props  // Remove py-6 mt-14 from default
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-black flex flex-col">
 			<HeaderNav />
-			<div className={cn(
-				"flex-1 w-full overflow-y-auto",
+			<main className={cn(
+				"flex-1 w-full overflow-y-auto pt-14", // Add pt-14 here instead
 				extraClasses
 			)}>
 				{children}
-			</div>
+			</main>
 			<Footer />
 		</div>
 	)
