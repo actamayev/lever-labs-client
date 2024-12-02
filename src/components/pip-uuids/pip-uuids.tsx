@@ -52,7 +52,7 @@ function PipUUIDs() {
 	return (
 		<div className="relative" ref={dropdownRef}>
 			<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-				<div className="flex w-52 h-10 items-stretch justify-between
+				<div className="flex w-56 h-10 items-stretch justify-between max-w-56
 				bg-zinc-100 dark:bg-zinc-800 text-black dark:text-white rounded-lg">
 					<Button
 						variant="ghost"
