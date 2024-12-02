@@ -21,7 +21,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 	if (_.isNull(profileImageUrl)) {
 		return (
 			<FaUserCircle
-				className={`text-black dark:text-white ${extraClasses}`}
+				className={`text-black dark:text-white transition-all duration-300 ${extraClasses}`}
 				onClick={(e) => handleClick(e as unknown as React.MouseEvent<HTMLElement, MouseEvent>)}
 			/>
 		)

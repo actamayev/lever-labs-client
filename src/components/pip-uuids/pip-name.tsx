@@ -26,7 +26,7 @@ function PipName() {
 				<PipStatusTooltip pipData={pipClass.selectedPip} />
 				<div className="truncate max-w-[75px] text-xl">{pipClass.selectedPip.pipName}</div>
 			</div>
-			<span className="text-zinc-600 dark:text-zinc-200">{pipClass.selectedPip.pipUUID}</span>
+			<span className="text-zinc-600 dark:text-zinc-200 transition-all duration-300">{pipClass.selectedPip.pipUUID}</span>
 		</>
 	)
 }

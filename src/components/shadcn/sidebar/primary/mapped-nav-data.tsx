@@ -41,7 +41,8 @@ export default function MappedNavData() {
 									onClick={() => navigate(item.url)}
 									isActive={location.pathname === item.url}
 									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
-									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]"
+									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]
+									transition-all duration-300"
 								>
 									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
 										<item.icon className="!h-[50px] !w-[50px]" />
