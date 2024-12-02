@@ -100,14 +100,14 @@ function BlocklyComponent() {
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialXml={blocklyState.xml}
-					className="h-full"
+					className="h-full transition-all duration-300"
 					workspaceConfiguration={workspaceConfig}
 					onWorkspaceChange={handleWorkspaceChange}
 				/>
 			</div>
 			<div className="mt-4">
-				<h3 className="text-lg font-bold dark:text-white">Generated C++</h3>
-				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded">
+				<h3 className="text-lg font-bold text-black dark:text-white">Generated C++</h3>
+				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded transition-all duration-300">
 					{blocklyState.cppCode}
 				</pre>
 			</div>

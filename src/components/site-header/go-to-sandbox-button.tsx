@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
 import { ArrowRight } from "lucide-react"
 import useUsername from "../../hooks/memos/username"
 import { Button } from "@/components/shadcn/ui/button"

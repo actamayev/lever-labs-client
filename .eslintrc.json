@@ -134,7 +134,7 @@
             }
 		},
 		{
-            "files": ["src/components/shadcn/ui**/*", "src/lib/**/*", "src/hooks/shadcn/**/*", "src/app/dashboard/**/*"],
+            "files": ["src/components/shadcn/ui/**/*", "src/lib/**/*", "src/hooks/shadcn/**/*", "src/components/aceternity/**"],
             "rules": {
                 "indent": "off",
                 "linebreak-style": "off",

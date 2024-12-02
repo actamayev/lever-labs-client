@@ -21,6 +21,7 @@ declare global {
 
 	type EndpointHeaders =
 		"/auth" |
+		"/misc" |
 		"/pip" |
 		"/personal-info"
 

@@ -52,6 +52,7 @@ class PersonalInfoClass {
 		this.email = null
 		this.setIsRetrievingPersonalDetails(false)
 		this.setProfilePictureUrl(null)
+		this.setDefaultSiteTheme("light")
 	}
 }
 

@@ -15,10 +15,18 @@ export const registerUsernameSchema = z.object({
 		.max(100, "Username cannot exceed 100 characters"),
 })
 
+export const emailUpdatesSchema = z.object({
+	email: z.string()
+		.min(3, "Email is required")
+		.max(100, "Email cannot exceed 100 characters")
+		.email("Invalid email format")  // Add this line
+})
+
 export const registerSchema = z.object({
 	email: z.string()
 		.min(3, "Email is required")
-		.max(100, "Email cannot exceed 100 characters"),
+		.max(100, "Email cannot exceed 100 characters")
+		.email("Invalid email format"),
 	username: z.string()
 		.min(3, "Username is required")
 		.max(100, "Username cannot exceed 100 characters"),

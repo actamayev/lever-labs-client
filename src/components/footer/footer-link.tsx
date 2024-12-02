@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router"
+import { cn } from "../../lib/shadcn/utils"
 
 interface Props {
 	linkTo: StaticPageNames
@@ -13,7 +14,10 @@ export default function FooterLink(props: Props) {
 		<div className="text-sm">
 			<Link
 				to={linkTo}
-				className={`text-zinc-950 dark:text-zinc-50 hover:underline ${extraClasses}`}
+				className={cn(
+					"text-zinc-950 dark:text-zinc-50 hover:underline",
+					extraClasses
+				)}
 			>
 				{linkTitle}
 			</Link>

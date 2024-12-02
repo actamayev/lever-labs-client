@@ -1,0 +1,42 @@
+/* eslint-disable react/no-unescaped-entities */
+import { Card } from "@/components/shadcn/ui/card"
+import { BoldSpanText } from "./bold-span-text"
+
+export default function DesignThatInspiresCard() {
+	return (
+		<div className="flex md:flex-row w-full gap-8 items-center mt-20">
+			<div className="w-1/2">
+				<img
+					src="pip-render-11-28.png"
+					alt="Product visualization"
+					className="w-full h-auto rounded-lg object-cover"
+				/>
+			</div>
+			<div className="flex items-center w-full md:w-1/2">
+				<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
+					<div className="flex flex-col p-8 w-full space-y-6">
+						<div className="space-y-6">
+							<h2 className="text-4xl font-bold">
+								Design That Inspires
+							</h2>
+							<h3 className="text-2xl text-zinc-700 dark:text-zinc-300">
+								Beautifully transparent. Inside and out.
+							</h3>
+						</div>
+						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
+							Pip's clear shell isn't just for show - it's an invitation. See how sensors,
+							motors, and circuits work together&nbsp;
+							<BoldSpanText>
+								in perfect harmony.&nbsp;
+							</BoldSpanText>
+							With features like
+							distance sensors, gyroscopes, and encoders, Pip sparks curiosity at every
+							turn. And it's built to last, ready to tackle anything from classroom chaos
+							to home experiments.
+						</p>
+					</div>
+				</Card>
+			</div>
+		</div>
+	)
+}

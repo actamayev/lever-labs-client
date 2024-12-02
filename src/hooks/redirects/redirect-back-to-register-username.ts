@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
