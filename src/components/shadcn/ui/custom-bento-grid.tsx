@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
-
 import { cn } from "@/lib/shadcn/utils";
 import { Button } from "./button";
 import { bentoIconSize } from "../../../utils/constants";
