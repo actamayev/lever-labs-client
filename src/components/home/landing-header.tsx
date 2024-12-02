@@ -2,8 +2,8 @@ import BlurFade from "../shadcn/ui/blur-fade"
 
 export default function LandingHeader() {
 	return (
-		<>
-			<section id="header">
+		<div className="flex flex-col lg:flex-row items-center justify-between gap-16 w-full max-w-7xl mx-auto">
+			<section id="header" className="flex-1">
 				<div className="flex flex-col">
 					<div>
 						<BlurFade delay={0.3} inView>
@@ -14,26 +14,25 @@ export default function LandingHeader() {
 					</div>
 					<div>
 						<BlurFade delay={0.3 * 2} inView>
-							<h2 className="text-8xl justify-center flex dark:text-white mt-8 font-semibold">
-								Meet Pip.
+							<h2 className="text-8xl dark:text-white mt-8 font-semibold">
+								Meet Pip
 							</h2>
 						</BlurFade>
 					</div>
 				</div>
 			</section>
-			<div className="container mx-auto px-4 md:px-8 lg:px-16 xl:px-32 mt-10">
-				<div className="flex flex-col items-center justify-center w-full">
-					<BlurFade delay={0.3 * 3} inView>
-						<div className="max-w-6xl w-full">
-							<img
-								src="pip-render-11-28.png"
-								alt="Product visualization"
-								className="rounded-lg object-contain w-full min-w-[300px]"
-							/>
-						</div>
-					</BlurFade>
-				</div>
+
+			<div className="flex-1">
+				<BlurFade delay={0.3 * 3} inView>
+					<div className="w-full">
+						<img
+							src="pip-render-11-28.png"
+							alt="Product visualization"
+							className="rounded-lg object-contain w-full"
+						/>
+					</div>
+				</BlurFade>
 			</div>
-		</>
+		</div>
 	)
 }
