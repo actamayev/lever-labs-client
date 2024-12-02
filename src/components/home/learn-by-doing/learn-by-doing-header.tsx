@@ -6,7 +6,7 @@ import TextRevealByWord from "../../shadcn/ui/text-reveal"
 
 export default function LearnByDoing() {
 	return (
-		<div className="flex mt-16">
+		<div className="flex my-16">
 			<div className="w-1/2 flex items-center mr-8">
 				<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
 					<div className="flex flex-col p-8 w-full space-y-6">

@@ -3,7 +3,7 @@ import DottedUnderlineText from "../../dotted-underline-text"
 
 export default function DiscoverSection() {
 	return (
-		<div className="mt-20 mb-10">
+		<div className="my-10">
 			<h1
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
 				font-medium tracking-tight text-black dark:text-white mb-14"

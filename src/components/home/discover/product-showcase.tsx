@@ -67,15 +67,15 @@ function ProductShowcase() {
 	const siteTheme = useDefaultSiteTheme()
 
 	return (
-		<div className="w-full px-6 my-10">
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+		<div className="w-full px-4 mb-10">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<SectionCard
 					sectionTitle="Sandbox"
 					sectionSubtitle={
 						<div>
 							Freely control your robot with coding blocks for&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-							limitless open-ended exploration&nbsp;
+								limitless open-ended exploration&nbsp;
 							</BoldSpanText>
 							and experimentation.
 						</div>

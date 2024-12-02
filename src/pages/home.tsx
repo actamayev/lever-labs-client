@@ -25,10 +25,10 @@ export default function Home() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="h-screen relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
+				<div className="h-[75vh] relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
 					<JustKeepBuilding />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-screen">
+				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-[75vh]">
 					<DesignThatInspiresCard />
 				</div>
 				<div
@@ -37,12 +37,14 @@ export default function Home() {
 				>
 					<Sensors />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-20">
-					<LearnByDoing />
-					<DiscoverSection />
-				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
+					<div className="px-20">
+						<DiscoverSection />
+					</div>
 					<ProductShowcase />
+				</div>
+				<div className="relative z-10 flex flex-col items-center justify-center px-20">
+					<LearnByDoing />
 				</div>
 				<div className="flex z-10 relative bg-gradient-to-b from-white to-indigo-800 dark:from-black dark:to-indigo-600">
 					<Features />
