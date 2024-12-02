@@ -23,7 +23,7 @@ function SingleAvailablePip({ pip } : { pip: PipData }) {
 		>
 			<div className="flex items-center gap-2">
 				<PipStatusTooltip pipData={pip} />
-				<BoldSpanText extraClasses="truncate max-w-[100px] text-xl">
+				<BoldSpanText extraClasses="truncate max-w-[100px] text-xl font-normal">
 					{pip.pipName}
 				</BoldSpanText>
 			</div>

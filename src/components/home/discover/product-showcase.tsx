@@ -5,6 +5,7 @@ import { TbSandbox } from "react-icons/tb"
 import { ChevronRight } from "lucide-react"
 import { Card } from "@/components/shadcn/ui/card"
 import { Button } from "@/components/shadcn/ui/button"
+import { cn } from "../../../lib/shadcn/utils"
 
 interface ProductProps {
 	sectionTitle: string
@@ -20,7 +21,10 @@ function SectionCard(props: ProductProps) {
 	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses, ctaClasses } = props
 
 	return (
-		<Card className={`overflow-hidden !border-0 rounded-none ${extraClasses}`}>
+		<Card className={cn(
+			"overflow-hidden !border-0 rounded-none",
+			extraClasses
+		)}>
 			<div className="flex flex-col items-center text-center p-8 h-full">
 				<h2 className="text-4xl font-medium mb-2 flex flex-row items-center">
 					<Icon className="size-9 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75" />
@@ -32,8 +36,11 @@ function SectionCard(props: ProductProps) {
 				<div className="flex items-center gap-6 mb-8">
 					<Button variant="link" className="text-lg font-medium p-0 hover:no-underline">
 						<Link to={href}>
-							<div className={`flex flex-row items-center transition-all duration-200 no-underline
-								hover:underline hover:decoration-dotted ${ctaClasses}`}>
+							<div className={cn(
+								"flex flex-row items-center transition-all duration-200 no-underline",
+								"hover:underline hover:decoration-dotted",
+								ctaClasses
+							)}>
 								{cta}
 								<ChevronRight className="h-4 w-4 ml-1" />
 							</div>

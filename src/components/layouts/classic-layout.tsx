@@ -1,3 +1,4 @@
+import { cn } from "../../lib/shadcn/utils"
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"
 
@@ -12,7 +13,10 @@ export default function ClassicLayout (props: Props) {
 	return (
 		<div className="min-h-screen bg-white dark:bg-black flex flex-col">
 			<HeaderNav />
-			<div className={`flex-1 w-full overflow-y-auto ${extraClasses}`}>
+			<div className={cn(
+				"flex-1 w-full overflow-y-auto",
+				extraClasses
+			)}>
 				{children}
 			</div>
 			<Footer />
