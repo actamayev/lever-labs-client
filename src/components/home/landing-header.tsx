@@ -63,8 +63,6 @@ export default function LandingHeader() {
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-14 font-medium">
 									Pip is a powerful educational robot that&apos;s simple and easy to use.
 								</h2>
-							</BlurFade>
-							<BlurFade delay={0.35 * 3} inView>
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-8 font-medium">
 									Get started on your robotics journey today.
 								</h2>
