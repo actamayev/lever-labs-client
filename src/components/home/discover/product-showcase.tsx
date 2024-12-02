@@ -14,15 +14,14 @@ interface ProductProps {
 	href: StaticPageNames
 	Icon: IconType
 	extraClasses: string
-	ctaClasses: string
 }
 
 function SectionCard(props: ProductProps) {
-	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses, ctaClasses } = props
+	const { sectionTitle, sectionSubtitle, cta, href, Icon, extraClasses } = props
 
 	return (
 		<Card className={cn(
-			"overflow-hidden !border-0 rounded-none",
+			"overflow-hidden !border-0 rounded-none dark:text-black",
 			extraClasses
 		)}>
 			<div className="flex flex-col items-center text-center p-8 h-full">
@@ -38,8 +37,7 @@ function SectionCard(props: ProductProps) {
 						<Link to={href}>
 							<div className={cn(
 								"flex flex-row items-center transition-all duration-200 no-underline",
-								"hover:underline hover:decoration-dotted",
-								ctaClasses
+								"hover:underline hover:decoration-dotted dark:text-black"
 							)}>
 								{cta}
 								<ChevronRight className="h-4 w-4 ml-1" />
@@ -69,8 +67,7 @@ export default function ProductShowcase() {
 					cta="See the sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-organge-50 dark:from-orange-200 dark:to-orange-950 dark:text-black"
-					ctaClasses="dark:text-black"
+					extraClasses="bg-gradient-to-b from-orange-400 to-organge-50 dark:from-orange-200 dark:to-orange-950"
 				/>
 
 				<SectionCard
@@ -79,8 +76,7 @@ export default function ProductShowcase() {
 					cta="See the lab"
 					href="/lab"
 					Icon={HiBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-emerald-950 dark:text-black"
-					ctaClasses="dark:text-black"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-emerald-950"
 				/>
 			</div>
 		</div>
