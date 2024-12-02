@@ -82,7 +82,9 @@ export default function ModuleCard() {
 					Module
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-					We automatically save your files as you type.
+					Add super-powers to your robot with plug-in modules!
+					Want your robot to recognize faces? Track colors?
+					Or something even cooler in the future? These modules make it possible.
 				</p>
 			</div>
 		</div>

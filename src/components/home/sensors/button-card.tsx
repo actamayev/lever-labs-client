@@ -37,7 +37,9 @@ function ButtonCard() {
 					Buttons
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-					We automatically save your files as you type.
+					Program these buttons to do anything you want!
+					Start a dance routine, change LED colors, or activate secret robot modes -
+					it&apos;s like giving your robot its own control panel.
 				</p>
 			</div>
 		</div>

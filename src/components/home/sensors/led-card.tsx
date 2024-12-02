@@ -43,7 +43,9 @@ export default function LEDCard() {
 					RGB LEDs
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-					Interactive RGB LEDs that can display any color.
+					Light up your robot with colorful LEDs!
+					Program them to blink in any pattern, show your robot&apos;s status,
+					or create an awesome light show - your imagination is the limit.
 				</p>
 			</div>
 		</div>

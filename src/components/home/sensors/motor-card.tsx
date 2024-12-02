@@ -35,7 +35,9 @@ export default function MotorCard() {
 					2 Motors + Encoders
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-					We automatically save your files as you type.
+					The mighty muscles of your robot!
+					These smart motors know exactly how far they&apos;ve turned,
+					letting your robot drive in perfect squares, circles, or any path you can dream up.
 				</p>
 			</div>
 		</div>

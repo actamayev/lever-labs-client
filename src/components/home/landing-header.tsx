@@ -45,26 +45,26 @@ export default function LandingHeader() {
 				<section id="header" className="flex-1">
 					<div className="flex flex-col">
 						<div>
-							<BlurFade delay={0.3} inView>
+							<BlurFade delay={0.35} inView>
 								<span className="text-8xl font-semibold">
 									Hey there,
 								</span>
 							</BlurFade>
 						</div>
 						<div>
-							<BlurFade delay={0.3 * 2} inView>
+							<BlurFade delay={0.35 * 2} inView>
 								<h2 className="text-8xl dark:text-white mt-8 font-semibold">
 									Meet Pip
 								</h2>
 							</BlurFade>
 						</div>
 						<div>
-							<BlurFade delay={0.3 * 3} inView>
+							<BlurFade delay={0.35 * 3} inView>
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-14 font-medium">
 									Pip is a powerful educational robot that&apos;s simple and easy to use.
 								</h2>
 							</BlurFade>
-							<BlurFade delay={0.3 * 3} inView>
+							<BlurFade delay={0.35 * 3} inView>
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-8 font-medium">
 									Get started on your robotics journey today.
 								</h2>
@@ -74,7 +74,7 @@ export default function LandingHeader() {
 				</section>
 
 				<div className="flex-1">
-					<BlurFade delay={0.3 * 3} inView>
+					<BlurFade delay={0.35 * 3} inView>
 						<div className="w-full">
 							<img
 								src="pip_top_right.png"
