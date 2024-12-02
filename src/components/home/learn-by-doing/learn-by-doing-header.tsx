@@ -11,14 +11,14 @@ export default function LearnByDoing() {
 				<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
 					<div className="flex flex-col p-8 w-full space-y-6">
 						<div className="space-y-6">
-							<h2 className="text-4xl font-bold">
+							<h2 className="text-4xl font-semibold">
 								Learn by Doing
 							</h2>
 							<h3 className="text-2xl text-zinc-700 dark:text-zinc-300">
 								Forget textbooks. Start building.
 							</h3>
 						</div>
-						<p className="text-zinc-600 dark:text-zinc-400 text-lg">
+						<p className="text-zinc-600 dark:text-zinc-400 text-xl">
 							At{" "}
 							<CoolMode>
 								<span className="inline-block cursor-pointer">Blue Dot,</span>

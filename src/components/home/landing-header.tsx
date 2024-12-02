@@ -65,7 +65,7 @@ export default function LandingHeader() {
 								</h2>
 							</BlurFade>
 							<BlurFade delay={0.3 * 3} inView>
-								<h2 className="text-3xl text-zinc-800 dark:text-white mt-14 font-medium">
+								<h2 className="text-3xl text-zinc-800 dark:text-white mt-8 font-medium">
 									Get started on your robotics journey today.
 								</h2>
 							</BlurFade>
