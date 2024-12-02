@@ -17,18 +17,26 @@ export default function Home() {
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
 				<GridPattern isDashed={true} dashSize={2} orientation="both" />
-				{/* <DotPattern /> */}
-				<div className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-zinc-700 dark:to-black
-				text-black dark:text-white">
+				<div
+					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-zinc-700 dark:to-black
+					text-black dark:text-white"
+				>
 					<div className="flex flex-col items-center justify-center pt-32 px-64">
 						<LandingHeader />
 					</div>
 				</div>
-				<JustKeepBuilding />
+				<div className="h-screen relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
+					<JustKeepBuilding />
+				</div>
 				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-screen">
 					<DesignThatInspiresCard />
 				</div>
-				<Sensors />
+				<div
+					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center"
+					style={{ backgroundColor: "rgb(10, 37, 64)" }}
+				>
+					<Sensors />
+				</div>
 				<div className="relative z-10 flex flex-col items-center justify-center mb-14 px-20">
 					<LearnByDoing />
 					<DiscoverSection />
@@ -40,8 +48,10 @@ export default function Home() {
 					<Features />
 				</div>
 				<WhoWeAre />
-				<div className="flex flex-col relative items-center justify-center py-32 z-10
-				bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white">
+				<div
+					className="flex flex-col relative items-center justify-center py-32 z-10
+					bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white"
+				>
 					<SignUpForUpdates />
 				</div>
 			</div>

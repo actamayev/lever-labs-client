@@ -72,10 +72,7 @@ const features: SensorsFeatures[] = [
 
 export default function Sensors() {
 	return (
-		<div
-			className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center"
-			style={{ backgroundColor: "rgb(10, 37, 64)" }}
-		>
+		<div>
 			<p
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
 				font-medium tracking-tight text-white mb-14"
