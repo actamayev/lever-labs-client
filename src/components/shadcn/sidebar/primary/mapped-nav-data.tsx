@@ -45,7 +45,11 @@ export default function MappedNavData() {
 									transition-all duration-300"
 								>
 									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
-										<item.icon className="!h-[50px] !w-[50px]" />
+										<item.icon
+											className="!h-[50px] !w-[50px] transition-all duration-300 ease-in-out text-sidebar-foreground
+											data-[active=true]:text-sidebar-accent-foreground"
+											data-active={location.pathname === item.url}
+										/>
 									</div>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
