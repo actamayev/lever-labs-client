@@ -67,7 +67,7 @@ export default function ProductShowcase() {
 					cta="See the sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-orange-950"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-black"
 				/>
 
 				<SectionCard
@@ -76,7 +76,7 @@ export default function ProductShowcase() {
 					cta="See the lab"
 					href="/lab"
 					Icon={HiBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-emerald-950"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-black"
 				/>
 			</div>
 		</div>
