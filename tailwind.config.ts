@@ -10,6 +10,9 @@ module.exports = {
 	],
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ["Lexend", "sans-serif"],
+			},
 			colors: {
 				background: "hsl(var(--background))",
 				pipTheme: "rgb(0,61,165)",

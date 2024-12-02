@@ -26,10 +26,10 @@ export default function Home() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="h-[75vh] relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
+				<div className="h-[85vh] relative z-10 flex flex-col items-center justify-center px-20 bg-white dark:bg-black">
 					<JustKeepBuilding />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-[75vh]">
+				<div className="relative z-10 flex flex-col items-center justify-center px-20 h-[50vh]">
 					<DesignThatInspiresCard />
 				</div>
 				<div
