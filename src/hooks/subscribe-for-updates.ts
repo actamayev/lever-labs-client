@@ -20,6 +20,7 @@ export default function useSubscribeForUpdates(
 	): Promise<void> => {
 		try {
 			if (!values.email || isLoading) return
+			setIsLoading(true)
 			const subscribeForUpdatesResponse = await blueDotApiClient.miscDataService.subscribeForUpdates(values.email)
 			if (!_.isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
 				throw new Error("Email subscription failed")
