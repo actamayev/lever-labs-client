@@ -1,16 +1,15 @@
 import PageHelmet from "../components/helmet/page-helmet"
-import Sensors from "../components/landing/sensors/sensors"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import FeaturesBento from "../components/landing/features-bento"
 import WhoWeAre from "../components/landing/who-we-are/who-we-are"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import { JustKeepBuilding } from "../components/landing/just-keep-building"
+import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
-import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 
 export default function Landing() {
 	return (

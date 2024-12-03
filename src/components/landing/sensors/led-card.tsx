@@ -28,8 +28,8 @@ export default function LEDCard() {
 				"row-start-1 col-start-1"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
-				<div className="pointer-events-auto w-fit" onClick={handleIconClick}> {/* w-fit to contain click area to icon */}
+			<div className="pointer-events-none z-10 flex transform-gpu gap-4 p-4">
+				<div className="pointer-events-auto w-fit" onClick={handleIconClick}>
 					<FaLightbulb
 						className="origin-left transition-all duration-300 cursor-pointer"
 						style={{
@@ -39,12 +39,14 @@ export default function LEDCard() {
 						size={bentoIconSize}
 					/>
 				</div>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					5× RGB LEDs
-				</h3>
-				<p className="max-w-lg text-neutral-400">
-					Create dazzling light displays and visual indicators
-				</p>
+				<div className="flex flex-col">
+					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+						5× RGB LEDs
+					</h3>
+					<p className="max-w-lg text-neutral-400">
+						Create dazzling light displays and visual indicators
+					</p>
+				</div>
 			</div>
 		</div>
 	)

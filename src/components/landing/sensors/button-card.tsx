@@ -17,7 +17,7 @@ function ButtonCard() {
 			<div>
 				<img className="absolute -right-20 -top-20 opacity-60" />
 			</div>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-1 p-4">
 				<div className="pointer-events-auto w-fit">
 					<motion.div
 						whileTap={{ scale: 0.8 }}
@@ -33,12 +33,14 @@ function ButtonCard() {
 						/>
 					</motion.div>
 				</div>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+				<div className="flex flex-col">
+					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 					2× Programmable Buttons
-				</h3>
-				<p className="max-w-lg text-neutral-400">
+					</h3>
+					<p className="max-w-lg text-neutral-400">
 					Add custom controls to your Pip
-				</p>
+					</p>
+				</div>
 			</div>
 		</div>
 	)

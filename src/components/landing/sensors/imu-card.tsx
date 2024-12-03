@@ -14,17 +14,21 @@ export default function IMUCard() {
 				"row-start-1 col-start-2 col-end-2"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
-				<FaTachometerAlt
-					className="origin-left transition-all duration-300 cursor-pointer"
-					size={bentoIconSize}
-				/>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					9-Axis IMU (BNO085)
-				</h3>
-				<p className="max-w-lg text-neutral-400">
-					Track orientation, acceleration, and motion with professional precision
-				</p>
+			<div className="pointer-events-none z-10 flex transform-gpu gap-4 p-4">
+				<div className="w-fit">
+					<FaTachometerAlt
+						className="origin-left transition-all duration-300 text-black dark:text-white"
+						size={bentoIconSize}
+					/>
+				</div>
+				<div className="flex flex-col">
+					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+						9-Axis IMU (BNO085)
+					</h3>
+					<p className="max-w-lg text-neutral-400">
+						Track orientation, acceleration, and motion with precision
+					</p>
+				</div>
 			</div>
 		</div>
 	)

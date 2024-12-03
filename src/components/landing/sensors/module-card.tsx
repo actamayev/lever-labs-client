@@ -12,6 +12,7 @@ const COLORS = [
 	"currentColor"       // White/Default color
 ]
 
+// TODO: Fix the animation
 export default function ModuleCard() {
 	const [isHovered, setIsHovered] = useState(false)
 	const [colorIndex, setColorIndex] = useState(-1) // -1 for initial state
@@ -35,7 +36,7 @@ export default function ModuleCard() {
 			<div>
 				<img className="absolute -right-20 -top-20 opacity-60" />
 			</div>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-1 p-4">
 				<div
 					className="pointer-events-auto w-fit relative cursor-pointer"
 					onMouseEnter={() => setIsHovered(true)}
@@ -78,12 +79,14 @@ export default function ModuleCard() {
 						</motion.div>
 					)}
 				</div>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+				<div className="flex flex-col">
+					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 					Module: Expandable Capabilities
-				</h3>
-				<p className="max-w-lg text-neutral-400 whitespace-nowrap">
+					</h3>
+					<p className="max-w-lg text-neutral-400 whitespace-nowrap">
 					Add optional modules like a camera or laser pointers to extend Pip&apos;s functionality!
-				</p>
+					</p>
+				</div>
 			</div>
 		</div>
 	)

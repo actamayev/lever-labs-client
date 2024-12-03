@@ -3,7 +3,7 @@ import { Cpu, LucideProps, Navigation, Scale, Shield, Users } from "lucide-react
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import Sensors from "../sensors/sensors"
 import { BalancingDescription, CollaborativeRobotsDescription,
-	LineFollowingDescription, ObstacleDescription, SensorSuiteDescription } from "./use-case-descriptions"
+	LineFollowingDescription, ObstacleDescription } from "./use-case-descriptions"
 
 interface Category {
 	title: CategoryTitle
@@ -44,7 +44,7 @@ const categories: Category[] = [
 	{
 		title: "Pip's full sensor suite",
 		icon: Cpu,
-		description: <SensorSuiteDescription />
+		description: <></>
 	},
 ]
 
