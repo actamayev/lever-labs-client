@@ -1,11 +1,11 @@
 import PageHelmet from "../components/helmet/page-helmet"
-import Sensors from "../components/landing/sensors/sensors"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import FeaturesBento from "../components/landing/features-bento"
 import WhoWeAre from "../components/landing/who-we-are/who-we-are"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import { JustKeepBuilding } from "../components/landing/just-keep-building"
+import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
@@ -26,17 +26,14 @@ export default function Landing() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 bg-white dark:bg-black py-8">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 py-8">
 					<JustKeepBuilding />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[50vh]">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh] bg-white dark:bg-black">
 					<DesignThatInspiresCard />
 				</div>
-				<div
-					className="flex flex-col relative items-center justify-center mt-20 h-screen z-10
-					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
-				>
-					<Sensors />
+				<div className="flex flex-col relative items-center justify-center z-10 px-12">
+					<PipUseCases />
 				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
 					<div className="px-16">
@@ -47,8 +44,10 @@ export default function Landing() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-16">
 					<LearnByDoing />
 				</div>
-				<div className="flex relative items-center justify-center z-10 py-12
-				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32">
+				<div
+					className="flex relative items-center justify-center z-10 py-12
+					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32"
+				>
 					<FeaturesBento />
 				</div>
 				<div className="relative flex my-20 z-10 px-16">
