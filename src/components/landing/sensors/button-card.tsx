@@ -34,13 +34,11 @@ function ButtonCard() {
 					</motion.div>
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					2 Buttons
+					2× Programmable Buttons
 				</h3>
-				{/* <p className="max-w-lg text-neutral-400">
-					Program these buttons to do anything you want!
-					Start a dance routine, change LED colors, or activate secret robot modes -
-					it&apos;s like giving your robot its own control panel.
-				</p> */}
+				<p className="max-w-lg text-neutral-400">
+					Add custom controls and interactions to your Pip
+				</p>
 			</div>
 		</div>
 	)

@@ -81,11 +81,9 @@ export default function ModuleCard() {
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 					Module
 				</h3>
-				{/* <p className="max-w-lg text-neutral-400">
-					Add super-powers to your robot with plug-in modules!
-					Want your robot to recognize faces? Track colors?
-					Or something even cooler in the future? These modules make it possible.
-				</p> */}
+				<p className="max-w-lg text-neutral-400">
+					Add optional modules like a camera or laser pointers to extend Pip&apos;s functionality even further!
+				</p>
 			</div>
 		</div>
 	)

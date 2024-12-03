@@ -61,16 +61,14 @@ export default function PipUseCases() {
 				So what can Pip do anyway?
 			</p>
 			<div className="w-full p-6 bg-transparent">
-				<div className="flex gap-6 max-w-6xl mx-auto">
+				<div className="flex gap-6">
 					{/* Left side - Category cards */}
 					<div className="w-1/3 space-y-4">
 						{categories.map((category) => (
 							<Card
 								key={category.title}
 								className={`cursor-pointer transition-colors hover:bg-accent
-									${
-							selectedCategory === category.title ? "border-primary border" : ""
-							}
+									${selectedCategory === category.title ? "border-primary border" : ""}
 								`}
 								onClick={() => setSelectedCategory(category.title)}
 							>

@@ -2,6 +2,7 @@ import { cn } from "@/lib/shadcn/utils"
 import { FaTachometerAlt } from "react-icons/fa"
 import { bentoIconSize } from "../../../utils/constants"
 
+// TODO: BNO085 should only appear as a tooltip on hover on imu
 export default function IMUCard() {
 	return (
 		<div
@@ -19,12 +20,11 @@ export default function IMUCard() {
 					size={bentoIconSize}
 				/>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					IMU
+					9-Axis IMU (BNO085)
 				</h3>
-				{/* <p className="max-w-lg text-neutral-400">
-					Think of this as your robot&apos;s inner ear - it helps with balance and knows which way is up!
-					Make your robot detect flips, measure turns precisely, or even use it as a virtual steering wheel in your games.
-				</p> */}
+				<p className="max-w-lg text-neutral-400">
+					Track orientation, acceleration, and motion with professional precision
+				</p>
 			</div>
 		</div>
 	)

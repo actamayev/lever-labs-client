@@ -202,7 +202,7 @@ export const SensorSuiteDescription = () => (
 		<div className="bg-accent/50 p-4 rounded-lg">
 			<p className="text-base">
 				<span className="font-semibold">Expandable Capabilities:</span> Add optional modules
-		like cameras and laser pointers to extend Pip's functionality even further!
+				like cameras and laser pointers to extend Pip's functionality even further!
 			</p>
 		</div>
 	</div>

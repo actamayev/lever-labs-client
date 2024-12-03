@@ -1,1 +1,1 @@
-export const bentoIconSize = 65
+export const bentoIconSize = 40

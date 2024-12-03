@@ -20,8 +20,11 @@ export default function DistanceSensorsCard() {
 						size={bentoIconSize}
 					/>
 					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-						2 Distance Sensors
+					2× Time of Flight Sensors (VL53L5CX)
 					</h3>
+					<p className="max-w-lg text-neutral-400">
+						Measure distances with millimeter accuracy for precise navigation
+					</p>
 				</div>
 			</div>
 		</div>
