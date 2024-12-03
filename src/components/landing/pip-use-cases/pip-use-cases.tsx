@@ -100,14 +100,14 @@ export default function PipUseCases() {
 		<div>
 			<p
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
-				font-medium tracking-tight text-black dark:text-white pt-10 pb-12"
+				font-medium tracking-tight text-black dark:text-white py-6"
 			>
 				So what can Pip do?
 			</p>
-			<div className="w-full p-6 bg-transparent">
+			<div className="w-full py-4 bg-transparent">
 				<div className="flex gap-6">
 					{/* Left side - Category cards */}
-					<div className="w-1/5 space-y-4">
+					<div className="w-1/5 space-y-6">
 						{categories.map((category) => (
 							<Card
 								key={category.title}
