@@ -1,17 +1,17 @@
 /* eslint-disable max-len */
 import { IconType } from "react-icons"
+// import { FaWifi } from "react-icons/fa"
+import { HiCode } from "react-icons/hi"
+import { CiCloudOn } from "react-icons/ci"
+// import { MdSensors } from "react-icons/md"
 import { GiBrickWall } from "react-icons/gi"
+import { IoAnalytics } from "react-icons/io5"
+import { LuCircuitBoard } from "react-icons/lu"
+// import { ChartNoAxesCombined } from "lucide-react"
 import { IoMdBatteryCharging } from "react-icons/io"
 import { cn } from "../../lib/shadcn/utils"
 import { bentoIconSize } from "../../utils/constants"
 import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
-import { CiCloudOn } from "react-icons/ci"
-// import { FaWifi } from "react-icons/fa"
-import { LuCircuitBoard } from "react-icons/lu"
-import { HiCode } from "react-icons/hi"
-// import { MdSensors } from "react-icons/md"
-// import { ChartNoAxesCombined } from "lucide-react"
-import { IoAnalytics } from "react-icons/io5"
 
 interface Feature {
 	icon: IconType
@@ -20,7 +20,6 @@ interface Feature {
 	bentoClasses: string
 }
 
-// TODO: Get the features to be the same width as one another
 const features: Feature[] = [
 	{
 		icon: IoMdBatteryCharging,
