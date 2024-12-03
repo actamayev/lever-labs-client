@@ -14,7 +14,7 @@ export default function IMUCard() {
 				"row-start-1 col-start-2 col-end-2"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-4 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
 				<div className="w-fit">
 					<FaTachometerAlt
 						className="origin-left transition-all duration-300 text-black dark:text-white"

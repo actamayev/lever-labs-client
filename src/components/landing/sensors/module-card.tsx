@@ -36,7 +36,7 @@ export default function ModuleCard() {
 			<div>
 				<img className="absolute -right-20 -top-20 opacity-60" />
 			</div>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-1 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
 				<div
 					className="pointer-events-auto w-fit relative cursor-pointer"
 					onMouseEnter={() => setIsHovered(true)}
@@ -84,7 +84,7 @@ export default function ModuleCard() {
 					Module: Expandable Capabilities
 					</h3>
 					<p className="max-w-lg text-neutral-400 whitespace-nowrap">
-					Add optional modules like a camera or laser pointers to extend Pip&apos;s functionality!
+					Add optional modules like a camera to extend Pip&apos;s functionality!
 					</p>
 				</div>
 			</div>

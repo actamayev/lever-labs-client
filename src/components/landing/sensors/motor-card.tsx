@@ -17,7 +17,7 @@ export default function MotorCard() {
 				"row-start-2 col-start-1 col-span-2"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-1 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
 				<div
 					className="pointer-events-auto w-fit cursor-pointer"
 					onMouseEnter={() => setIsSpinning(true)}

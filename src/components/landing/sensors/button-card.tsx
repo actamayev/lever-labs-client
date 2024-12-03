@@ -1,9 +1,9 @@
 import { motion } from "framer-motion"
-import { cn } from "@/lib/shadcn/utils"
 import { RiRadioButtonFill } from "react-icons/ri"
+import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
 
-function ButtonCard() {
+export default function ButtonCard() {
 	return (
 		<div
 			className={cn(
@@ -14,10 +14,7 @@ function ButtonCard() {
 				"row-start-3 row-span-1 col-start-1 col-span-1"
 			)}
 		>
-			<div>
-				<img className="absolute -right-20 -top-20 opacity-60" />
-			</div>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-1 p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
 				<div className="pointer-events-auto w-fit">
 					<motion.div
 						whileTap={{ scale: 0.8 }}
@@ -35,7 +32,7 @@ function ButtonCard() {
 				</div>
 				<div className="flex flex-col">
 					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					2× Programmable Buttons
+					2× Buttons
 					</h3>
 					<p className="max-w-lg text-neutral-400">
 					Add custom controls to your Pip
@@ -45,5 +42,3 @@ function ButtonCard() {
 		</div>
 	)
 }
-
-export default ButtonCard

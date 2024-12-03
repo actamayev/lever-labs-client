@@ -13,7 +13,7 @@ export default function DistanceSensorsCard() {
 				"row-start-1 row-span-2 col-start-3 col-end-3"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu h-full justify-end p-4">
+			<div className="pointer-events-none z-10 flex transform-gpu h-full justify-end p-4 gap-6">
 				<div className="flex flex-col gap-1">
 					<TbRulerMeasure
 						className="origin-left transition-all duration-300 cursor-pointer"
@@ -21,10 +21,10 @@ export default function DistanceSensorsCard() {
 					/>
 					<div className="flex flex-col">
 						<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-						2× Time of Flight Sensors (VL53L5CX)
+							2× Time of Flight Sensors (VL53L5CX)
 						</h3>
 						<p className="max-w-lg text-neutral-400">
-						Measure distances with millimeter accuracy for precise navigation
+							Measure distances with millimeter accuracy for precise navigation
 						</p>
 					</div>
 				</div>
