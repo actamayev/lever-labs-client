@@ -32,10 +32,7 @@ export default function Landing() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh] bg-white dark:bg-black">
 					<DesignThatInspiresCard />
 				</div>
-				<div
-					className="flex flex-col relative items-center justify-center z-10 px-12"
-					// bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
-				>
+				<div className="flex flex-col relative items-center justify-center z-10 px-12">
 					<PipUseCases />
 				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
@@ -47,8 +44,10 @@ export default function Landing() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-16">
 					<LearnByDoing />
 				</div>
-				<div className="flex relative items-center justify-center z-10 py-12
-				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32">
+				<div
+					className="flex relative items-center justify-center z-10 py-12
+					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32"
+				>
 					<FeaturesBento />
 				</div>
 				<div className="relative flex my-20 z-10 px-16">
