@@ -1,9 +1,9 @@
-/* eslint-disable max-len */
 import React, { useState } from "react"
 import { Cpu, LucideProps, Navigation, Scale, Shield, Users } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import { BalancingDescription, CollaborativeRobotsDescription, LineFollowingDescription, ObstacleDescription, SensorSuiteDescription } from "./use-case-descriptions"
 import Sensors from "../sensors/sensors"
+import { BalancingDescription, CollaborativeRobotsDescription,
+	LineFollowingDescription, ObstacleDescription, SensorSuiteDescription } from "./use-case-descriptions"
 
 interface Category {
 	title: CategoryTitle
@@ -18,7 +18,7 @@ type CategoryTitle =
 	| "Obstacle Detection"
 	| "Balancing"
 	| "Collaborative robots"
-	| "See Pip's full sensor suite"
+	| "Pip's full sensor suite"
 
 const categories: Category[] = [
 	{
@@ -27,7 +27,6 @@ const categories: Category[] = [
 		description: <LineFollowingDescription />
 	},
 	{
-		// TODO: Make the golden treasure sparkle on hover
 		title: "Obstacle Detection",
 		icon: Shield,
 		description: <ObstacleDescription />
@@ -43,14 +42,59 @@ const categories: Category[] = [
 		description: <CollaborativeRobotsDescription />
 	},
 	{
-		title: "See Pip's full sensor suite",
+		title: "Pip's full sensor suite",
 		icon: Cpu,
 		description: <SensorSuiteDescription />
 	},
 ]
 
+interface Props {
+	title: string
+	content: React.ReactNode
+}
+
+function RightSideContentSkeloton(props: Props) {
+	const { title, content } = props
+
+	return (
+		<div className="w-4/5">
+			<Card className="h-full">
+				<CardHeader className="p-6">
+					<CardTitle className="text-2xl">{title}</CardTitle>
+				</CardHeader>
+				<CardContent>
+					{content}
+				</CardContent>
+			</Card>
+		</div>
+	)
+
+}
+
 export default function PipUseCases() {
 	const [selectedCategory, setSelectedCategory] = useState<CategoryTitle>("Line following")
+
+	const renderRightSideContent = () => {
+		if (selectedCategory === "Pip's full sensor suite") {
+			return (
+				<RightSideContentSkeloton
+					title={selectedCategory}
+					content={<Sensors />}
+				/>
+			)
+		}
+
+		return (
+			<RightSideContentSkeloton
+				title={selectedCategory}
+				content={
+					<p className="text-lg text-muted-foreground">
+						{categories.find(c => c.title === selectedCategory)?.description}
+					</p>
+				}
+			/>
+		)
+	}
 
 	return (
 		<div>
@@ -58,12 +102,12 @@ export default function PipUseCases() {
 				className="flex justify-center text-center whitespace-pre-wrap text-6xl
 				font-medium tracking-tight text-black dark:text-white pt-10 pb-12"
 			>
-				So what can Pip do anyway?
+				So what can Pip do?
 			</p>
 			<div className="w-full p-6 bg-transparent">
 				<div className="flex gap-6">
 					{/* Left side - Category cards */}
-					<div className="w-1/3 space-y-4">
+					<div className="w-1/5 space-y-4">
 						{categories.map((category) => (
 							<Card
 								key={category.title}
@@ -85,19 +129,8 @@ export default function PipUseCases() {
 						))}
 					</div>
 
-					{/* Right side - Details card */}
-					<div className="w-2/3">
-						<Card className="h-full">
-							<CardHeader className="p-6">
-								<CardTitle className="text-2xl">{selectedCategory}</CardTitle>
-							</CardHeader>
-							<CardContent className="">
-								<p className="text-lg text-muted-foreground">
-									{categories.find(c => c.title === selectedCategory)?.description}
-								</p>
-							</CardContent>
-						</Card>
-					</div>
+					{/* Right side - Conditional rendering */}
+					{renderRightSideContent()}
 				</div>
 			</div>
 		</div>

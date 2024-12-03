@@ -34,11 +34,10 @@ export default function Landing() {
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="flex flex-col relative items-center justify-center z-10 px-16"
+					className="flex flex-col relative items-center justify-center z-10 px-12"
 					// bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
 				>
 					<PipUseCases />
-					<Sensors />
 				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
 					<div className="px-16">
