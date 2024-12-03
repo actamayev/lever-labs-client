@@ -40,13 +40,13 @@ export default function LEDCard() {
 					/>
 				</div>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					RGB LEDs
+					5 RGB LEDs
 				</h3>
-				<p className="max-w-lg text-neutral-400">
+				{/* <p className="max-w-lg text-neutral-400">
 					Light up your robot with colorful LEDs!
 					Program them to blink in any pattern, show your robot&apos;s status,
 					or create an awesome light show - your imagination is the limit.
-				</p>
+				</p> */}
 			</div>
 		</div>
 	)

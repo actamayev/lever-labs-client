@@ -21,10 +21,10 @@ export default function IMUCard() {
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 					IMU
 				</h3>
-				<p className="max-w-lg text-neutral-400">
+				{/* <p className="max-w-lg text-neutral-400">
 					Think of this as your robot&apos;s inner ear - it helps with balance and knows which way is up!
 					Make your robot detect flips, measure turns precisely, or even use it as a virtual steering wheel in your games.
-				</p>
+				</p> */}
 			</div>
 		</div>
 	)

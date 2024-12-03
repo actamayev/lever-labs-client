@@ -13,18 +13,16 @@ export default function DistanceSensorsCard() {
 				"row-start-1 row-span-2 col-start-3 col-end-3"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
-				<TbRulerMeasure
-					className="origin-left transition-all duration-300 cursor-pointer"
-					size={bentoIconSize}
-				/>
-				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					2 Distance Sensors
-				</h3>
-				<p className="max-w-lg text-neutral-400">
-					Give your robot a pair of eyes! These sensors help your robot see how far away things are,
-					avoid bumping into walls, or follow objects around like a curious puppy.
-				</p>
+			<div className="pointer-events-none z-10 flex transform-gpu flex-col h-full justify-end p-6">
+				<div className="flex flex-col gap-1">
+					<TbRulerMeasure
+						className="origin-left transition-all duration-300 cursor-pointer"
+						size={bentoIconSize}
+					/>
+					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+						2 Distance Sensors
+					</h3>
+				</div>
 			</div>
 		</div>
 	)
