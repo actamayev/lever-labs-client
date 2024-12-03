@@ -1,4 +1,4 @@
-import { FaTachometerAlt } from "react-icons/fa"
+import { TbRulerMeasure } from "react-icons/tb"
 import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
 
@@ -14,12 +14,12 @@ export default function DistanceSensorsCard() {
 			)}
 		>
 			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
-				<FaTachometerAlt
+				<TbRulerMeasure
 					className="origin-left transition-all duration-300 cursor-pointer"
 					size={bentoIconSize}
 				/>
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-					Distance Sensors
+					2 Distance Sensors
 				</h3>
 				<p className="max-w-lg text-neutral-400">
 					Give your robot a pair of eyes! These sensors help your robot see how far away things are,
