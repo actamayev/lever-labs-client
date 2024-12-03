@@ -68,7 +68,6 @@ function RightSideContentSkeloton(props: Props) {
 			</Card>
 		</div>
 	)
-
 }
 
 export default function PipUseCases() {

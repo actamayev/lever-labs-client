@@ -1,7 +1,7 @@
-import { cn } from "@/lib/shadcn/utils"
 import { FaLightbulb } from "react-icons/fa"
 import { useCallback, useState } from "react"
 import { bentoIconSize } from "../../../utils/constants"
+import SensorsSkeloton from "./sensors-skeloton"
 
 function getRandomRGBColor() {
 	const r = Math.floor(Math.random() * 256)
@@ -19,16 +19,10 @@ export default function LEDCard() {
 	}, [])
 
 	return (
-		<div
-			className={cn(
-				"group relative flex flex-col justify-between overflow-hidden rounded-xl",
-				"bg-white [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-				"transform-gpu dark:bg-black dark:[border:1px_solid_rgba(255,255,255,.1)]",
-				"dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]",
-				"row-start-1 col-start-1"
-			)}
-		>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
+		<SensorsSkeloton
+			title="5× RGB LEDs"
+			description="Create dazzling light displays and visual indicators"
+			icon={
 				<div className="pointer-events-auto w-fit" onClick={handleIconClick}>
 					<FaLightbulb
 						className="origin-left transition-all duration-300 cursor-pointer"
@@ -39,15 +33,8 @@ export default function LEDCard() {
 						size={bentoIconSize}
 					/>
 				</div>
-				<div className="flex flex-col">
-					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-						5× RGB LEDs
-					</h3>
-					<p className="max-w-lg text-neutral-400">
-						Create dazzling light displays and visual indicators
-					</p>
-				</div>
-			</div>
-		</div>
+			}
+			outerDivStyles="row-start-1 col-start-1"
+		/>
 	)
 }
