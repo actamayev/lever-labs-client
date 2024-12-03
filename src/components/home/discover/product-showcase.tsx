@@ -55,7 +55,7 @@ function SectionCard(props: ProductProps) {
 						src={imgSrc}
 					/>
 				</div>
-				<p className="text-2xl mt-4 dark:text-zinc-400 text-zinc-400">
+				<p className="text-2xl mt-4 dark:text-zinc-400 text-zinc-500">
 					{sectionSubtitle}
 				</p>
 			</div>
@@ -86,7 +86,7 @@ function ProductShowcase() {
 					cta="See the Lab"
 					href="/lab"
 					Icon={HiBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-50 dark:from-emerald-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-black"
 					linkToShow="bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
 				/>
@@ -105,7 +105,7 @@ function ProductShowcase() {
 					cta="Jump into the Sandbox"
 					href="/sandbox"
 					Icon={TbSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-50 dark:from-orange-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-black"
 					linkToShow="bluedotrobots.com/sandbox"
 					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>
