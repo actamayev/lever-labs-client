@@ -34,7 +34,7 @@ export default function MotorCard() {
 				<h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
 					2× Dual Hall Effect Encoders + Motors
 				</h3>
-				<p className="max-w-lg text-neutral-400">
+				<p className="max-w-lg text-neutral-400 whitespace-nowrap">
 					98RPM motors with precise position tracking for controlled movement
 				</p>
 			</div>

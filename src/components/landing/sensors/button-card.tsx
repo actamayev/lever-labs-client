@@ -37,7 +37,7 @@ function ButtonCard() {
 					2× Programmable Buttons
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-					Add custom controls and interactions to your Pip
+					Add custom controls to your Pip
 				</p>
 			</div>
 		</div>

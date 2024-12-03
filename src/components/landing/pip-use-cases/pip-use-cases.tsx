@@ -107,7 +107,7 @@ export default function PipUseCases() {
 			<div className="w-full py-4 bg-transparent">
 				<div className="flex gap-6">
 					{/* Left side - Category cards */}
-					<div className="w-1/5 space-y-6">
+					<div className="w-1/5 space-y-7">
 						{categories.map((category) => (
 							<Card
 								key={category.title}

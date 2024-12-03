@@ -43,7 +43,8 @@ export default function LEDCard() {
 					5× RGB LEDs
 				</h3>
 				<p className="max-w-lg text-neutral-400">
-				Create dazzling light displays and visual indicators				</p>
+					Create dazzling light displays and visual indicators
+				</p>
 			</div>
 		</div>
 	)

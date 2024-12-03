@@ -81,8 +81,8 @@ export default function ModuleCard() {
 				<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 					Module: Expandable Capabilities
 				</h3>
-				<p className="max-w-lg text-neutral-400">
-					Add optional modules like a camera or laser pointers to extend Pip&apos;s functionality even further!
+				<p className="max-w-lg text-neutral-400 whitespace-nowrap">
+					Add optional modules like a camera or laser pointers to extend Pip&apos;s functionality!
 				</p>
 			</div>
 		</div>
