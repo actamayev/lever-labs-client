@@ -10,6 +10,7 @@ import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
+import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 
 export default function Landing() {
 	return (
@@ -26,17 +27,18 @@ export default function Landing() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 bg-white dark:bg-black py-8">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 py-8">
 					<JustKeepBuilding />
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[50vh]">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh] bg-white dark:bg-black">
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="flex flex-col relative items-center justify-center mt-20 h-screen z-10
-					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
+					className="flex flex-col relative items-center justify-center z-10"
+					// bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
 				>
-					<Sensors />
+					<PipUseCases />
+					{/* <Sensors /> */}
 				</div>
 				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
 					<div className="px-16">
