@@ -1,9 +1,17 @@
+/* eslint-disable max-len */
 import { IconType } from "react-icons"
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
 import { cn } from "../../lib/shadcn/utils"
 import { bentoIconSize } from "../../utils/constants"
 import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
+import { CiCloudOn } from "react-icons/ci"
+// import { FaWifi } from "react-icons/fa"
+import { LuCircuitBoard } from "react-icons/lu"
+import { HiCode } from "react-icons/hi"
+// import { MdSensors } from "react-icons/md"
+// import { ChartNoAxesCombined } from "lucide-react"
+import { IoAnalytics } from "react-icons/io5"
 
 interface Feature {
 	icon: IconType
@@ -16,28 +24,52 @@ interface Feature {
 const features: Feature[] = [
 	{
 		icon: IoMdBatteryCharging,
-		title: "Just keep building",
-		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times.",
-		bentoClasses: "row-start-1 col-start-1"
+		title: "Never Stop Building",
+		description: "2 hours of continuous learning on a single charge, with USB-C fast charging that gets you back to building in just 30 minutes.",
+		bentoClasses: ""
 	},
 	{
 		icon: GiBrickWall,
-		title: "Built to last",
-		description: "Talk about the durability.",
-		bentoClasses: "row-start-1 col-start-2 col-end-2"
+		title: "Stress Tested",
+		description: "Built and stress-tested to handle the demands of hands-on learning, from classroom drops to home experiments.",
+		bentoClasses: ""
 	},
 	{
-		icon: IoMdBatteryCharging,
-		title: "Say something about saving your projects ",
-		description: "so they're available anywhere.",
-		bentoClasses: "row-start-1 row-span-2 col-start-3 col-end-3"
+		icon: CiCloudOn,
+		title: "Progress Lives in the Cloud",
+		description: "Your projects and learning progress sync instantly across devices, just like Google Docs. Pick up right where you left off.",
+		bentoClasses: ""
+	},
+	// {
+	// 	icon: FaWifi,
+	// 	title: "Minimal Setup",
+	// 	description: "Connect to Wi-Fi and start coding immediately. No complicated installations or downloads needed.",
+	// 	bentoClasses: ""
+	// },
+	{
+		icon: LuCircuitBoard,
+		title: "See How It Works",
+		description: "Clear shell design reveals real sensors and circuits in action, turning abstract concepts into visible technology.",
+		bentoClasses: ""
 	},
 	{
-		icon: GiBrickWall,
-		title: "Built to last",
-		description: "Talk about the durability.",
-		bentoClasses: "row-start-2 col-start-1 col-span-2"
-	}
+		icon: HiCode,
+		title: "Code Your Way",
+		description: "Start with drag-and-drop blocks and advance to text-based coding when you're ready. Your pace, your journey.",
+		bentoClasses: ""
+	},
+	{
+		icon: IoAnalytics,
+		title: "Track Your Growth",
+		description: "Watch your skills evolve with progress tracking that celebrates every milestone, from basic movements to advanced robotics.",
+		bentoClasses: ""
+	},
+	// {
+	// 	icon: MdSensors,
+	// 	title: "10 Built-in Sensors",
+	// 	description: "Packed with distance sensors, encoders, IMU, and RGB LEDs. Everything you need to bring your ideas to life.",
+	// 	bentoClasses: ""
+	// }
 ]
 
 interface FeatureItemProps {
