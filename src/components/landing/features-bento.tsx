@@ -77,20 +77,15 @@ function FeatureItem({ feature }: FeatureItemProps) {
 
 export default function FeaturesBento() {
 	return (
-		<div>
-			<p
-				className="flex justify-center text-center whitespace-pre-wrap text-6xl
-				font-medium tracking-tight text-black dark:text-white pt-10 pb-12"
-			>
+		<div className="flex flex-col gap-8">
+			<p className="text-center text-6xl font-medium tracking-tight text-black dark:text-white">
 				It&apos;s the little things that count
 			</p>
-			<div className="flex">
-				<BentoGrid className="lg:grid-rows-3">
-					{features.map((feature, index) => (
-						<FeatureItem key={index} feature={feature} />
-					))}
-				</BentoGrid>
-			</div>
+			<BentoGrid>
+				{features.map((feature, index) => (
+					<FeatureItem key={index} feature={feature} />
+				))}
+			</BentoGrid>
 		</div>
 	)
 }

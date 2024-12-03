@@ -28,7 +28,7 @@ export default function Sensors() {
 				Pip comes with <NumberTicker className="text-black dark:text-white" value={10} /> onboard sensors
 			</p>
 			<div className="flex">
-				<BentoGrid className="lg:grid-rows-3">
+				<BentoGrid>
 					{features.map((feature, index) => (
 						<React.Fragment key={index}>
 							{feature}
