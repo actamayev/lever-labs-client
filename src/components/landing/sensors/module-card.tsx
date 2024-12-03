@@ -12,7 +12,6 @@ const COLORS = [
 	"currentColor"       // White/Default color
 ]
 
-// TODO: Fix the animation
 export default function ModuleCard() {
 	const [isHovered, setIsHovered] = useState(false)
 	const [colorIndex, setColorIndex] = useState(-1) // -1 for initial state

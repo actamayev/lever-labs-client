@@ -1,7 +1,7 @@
 import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
-	title: string
+	title: React.ReactNode
 	description: string
 	icon: React.ReactNode
 	outerDivStyles: string
@@ -21,7 +21,7 @@ export default function SensorsSkeloton(props: Props) {
 				outerDivStyles
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu gap-6 p-4 items-center">
+			<div className="z-10 flex transform-gpu gap-6 p-4 items-center">
 				{Icon}
 				<div className="flex flex-col">
 					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">

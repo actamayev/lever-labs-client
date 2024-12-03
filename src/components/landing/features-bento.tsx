@@ -132,7 +132,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 				"dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
+			<div className="z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div className="pointer-events-auto w-fit">
 					<Icon
 						className="text-pipTheme duration-300 cursor-pointer"

@@ -1,12 +1,19 @@
 import { FaTachometerAlt } from "react-icons/fa"
 import SensorsSkeloton from "./sensors-skeloton"
 import { bentoIconSize } from "../../../utils/constants"
+import { DottedTextTooltip } from "../../dotted-underline-text"
 
-// TODO: BNO085 should only appear as a tooltip on hover on imu
 export default function IMUCard() {
 	return (
 		<SensorsSkeloton
-			title="9-Axis IMU (BNO085)"
+			title={(
+				<>
+					9-Axis&nbsp;
+					<DottedTextTooltip tooltipMessage="BNO085">
+						IMU
+					</DottedTextTooltip>
+				</>
+			)}
 			description="Track orientation, acceleration, and motion with precision"
 			icon={
 				<div className="w-fit">
