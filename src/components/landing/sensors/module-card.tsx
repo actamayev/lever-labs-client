@@ -35,7 +35,7 @@ export default function ModuleCard() {
 			<div>
 				<img className="absolute -right-20 -top-20 opacity-60" />
 			</div>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
+			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
 				<div
 					className="pointer-events-auto w-fit relative cursor-pointer"
 					onMouseEnter={() => setIsHovered(true)}

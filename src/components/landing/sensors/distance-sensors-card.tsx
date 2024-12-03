@@ -13,7 +13,7 @@ export default function DistanceSensorsCard() {
 				"row-start-1 row-span-2 col-start-3 col-end-3"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col h-full justify-end p-6">
+			<div className="pointer-events-none z-10 flex transform-gpu flex-col h-full justify-end p-4">
 				<div className="flex flex-col gap-1">
 					<TbRulerMeasure
 						className="origin-left transition-all duration-300 cursor-pointer"

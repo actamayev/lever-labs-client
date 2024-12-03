@@ -28,7 +28,7 @@ export default function LEDCard() {
 				"row-start-1 col-start-1"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
+			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
 				<div className="pointer-events-auto w-fit" onClick={handleIconClick}> {/* w-fit to contain click area to icon */}
 					<FaLightbulb
 						className="origin-left transition-all duration-300 cursor-pointer"

@@ -14,7 +14,7 @@ export default function IMUCard() {
 				"row-start-1 col-start-2 col-end-2"
 			)}
 		>
-			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-6">
+			<div className="pointer-events-none z-10 flex transform-gpu flex-col gap-1 p-4">
 				<FaTachometerAlt
 					className="origin-left transition-all duration-300 cursor-pointer"
 					size={bentoIconSize}
