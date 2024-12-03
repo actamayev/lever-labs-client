@@ -31,43 +31,13 @@ const features: Feature[] = [
 		icon: IoMdBatteryCharging,  // Replace with your actual icons
 		title: "Say something about saving your projects ",
 		description: "so they're available anywhere.",
-		bentoClasses: "row-start-1 col-start-3 col-end-3"
+		bentoClasses: "row-start-1 row-span-2 col-start-3 col-end-3"
 	},
 	{
 		icon: GiBrickWall,
 		title: "Built to last",
 		description: "Talk about the durability.",
-		bentoClasses: "row-start-2 col-start-1"
-	},
-	{
-		icon: IoMdBatteryCharging,  // Replace with your actual icons
-		title: "Just keep building",
-		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times.",
-		bentoClasses: "row-start-2 col-start-2 col-end-2"
-	},
-	{
-		icon: GiBrickWall,
-		title: "Built to last",
-		description: "Talk about the durability.",
-		bentoClasses: "row-start-2 col-start-3 col-end-3"
-	},
-	{
-		icon: IoMdBatteryCharging,  // Replace with your actual icons
-		title: "Just keep building",
-		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times.",
-		bentoClasses: "row-start-3 col-start-1 col-end-1"
-	},
-	{
-		icon: GiBrickWall,
-		title: "Built to last",
-		description: "Talk about the durability.",
-		bentoClasses: "row-start-3 col-start-2 col-end-2"
-	},
-	{
-		icon: GiBrickWall,
-		title: "Built to last",
-		description: "Talk about the durability.",
-		bentoClasses: "row-start-3 col-start-3 col-end-3"
+		bentoClasses: "row-start-2 col-start-1 col-span-2"
 	}
 ]
 
