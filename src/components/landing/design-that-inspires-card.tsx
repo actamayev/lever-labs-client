@@ -18,15 +18,13 @@ export default function DesignThatInspiresCard() {
 					subTitle="Beautifully transparent. Inside and out."
 					description={
 						<>
-						Pip's clear shell isn't just for show - it's an invitation. See how sensors,
-						motors, and circuits work together&nbsp;
+						Pip's clear shell isn't just for show - it's an invitation.
+						It reveals how sensors, circuits, and advanced components work together&nbsp;
 							<BoldSpanText>
-							in perfect harmony.&nbsp;
+								in perfect harmony.&nbsp;
 							</BoldSpanText>
-						With features like
-						distance sensors, gyroscopes, and encoders, Pip sparks curiosity at every
-						turn. And it's built to last, ready to tackle anything from classroom chaos
-						to home experiments.
+						With features like distance measurement, gyroscopes, and encoders, Pip sparks curiosity at every turn.
+						Built to last, it's ready to tackle anything from classroom chaos to home experiments.
 						</>
 					}
 				/>

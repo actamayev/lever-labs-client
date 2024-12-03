@@ -1,17 +1,17 @@
-import Features from "../components/home/features"
-import Sensors from "../components/home/sensors/sensors"
 import PageHelmet from "../components/helmet/page-helmet"
-import LandingHeader from "../components/home/landing-header"
+import Sensors from "../components/landing/sensors/sensors"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
-import WhoWeAre from "../components/home/who-we-are/who-we-are"
-import SignUpForUpdates from "../components/home/sign-up-for-updates"
-import { JustKeepBuilding } from "../components/home/just-keep-building"
-import DiscoverSection from "../components/home/discover/discover-section"
-import ProductShowcase from "../components/home/discover/product-showcase"
-import DesignThatInspiresCard from "../components/home/design-that-inspires-card"
-import LearnByDoing from "../components/home/learn-by-doing/learn-by-doing-header"
+import LandingHeader from "../components/landing/landing-header"
+import FeaturesBento from "../components/landing/features-bento"
+import WhoWeAre from "../components/landing/who-we-are/who-we-are"
+import SignUpForUpdates from "../components/landing/sign-up-for-updates"
+import { JustKeepBuilding } from "../components/landing/just-keep-building"
+import DiscoverSection from "../components/landing/discover/discover-section"
+import ProductShowcase from "../components/landing/discover/product-showcase"
+import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
+import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
 
-export default function Home() {
+export default function Landing() {
 	return (
 		<>
 			<PageHelmet pageTitle="/" />
@@ -33,8 +33,8 @@ export default function Home() {
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center dark:bg-pipTheme
-					bg-gradient-to-b dark:from-black dark:to-pipTheme from-white to-pipTheme"
+					className="flex flex-col relative items-center justify-center mt-20 h-screen z-10
+					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
 				>
 					<Sensors />
 				</div>
@@ -47,8 +47,9 @@ export default function Home() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-16">
 					<LearnByDoing />
 				</div>
-				<div className="flex z-10 relative bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme">
-					<Features />
+				<div className="flex relative items-center justify-center z-10 py-12
+				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32">
+					<FeaturesBento />
 				</div>
 				<div className="relative flex my-20 z-10 px-16">
 					<WhoWeAre />

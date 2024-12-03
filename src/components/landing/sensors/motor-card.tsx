@@ -34,9 +34,11 @@ export default function MotorCard() {
 				<h3 className="text-xl font-semibold text-neutral-800 dark:text-neutral-200">
 					2 Motors + Encoders
 				</h3>
-				<p className="max-w-lg text-neutral-400">
-					We automatically save your files as you type.
-				</p>
+				{/* <p className="max-w-lg text-neutral-400">
+					The mighty muscles of your robot!
+					These smart motors know exactly how far they&apos;ve turned,
+					letting your robot drive in perfect squares, circles, or any path you can dream up.
+				</p> */}
 			</div>
 		</div>
 	)
