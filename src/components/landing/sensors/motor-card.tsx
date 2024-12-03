@@ -11,7 +11,7 @@ export default function MotorCard() {
 	return (
 		<SensorsSkeloton
 			title="2× Dual Hall Effect Encoders + Motors"
-			description="98RPM motors with precise position tracking for controlled movement"
+			description="Motors with precise position tracking for controlled movement"
 			icon={
 				<div
 					className="pointer-events-auto w-fit cursor-pointer"

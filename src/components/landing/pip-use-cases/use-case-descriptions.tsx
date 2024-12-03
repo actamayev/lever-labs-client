@@ -1,3 +1,5 @@
+// TODO: Confirm each section has a descriptive footer section
+
 /* eslint-disable react/no-unescaped-entities */
 export const BalancingDescription = () => (
 	<div className="space-y-4">
@@ -82,7 +84,7 @@ export const LineFollowingDescription = () => (
 				</li>
 				<li className="flex items-center">
 					<div className="w-2 h-2 bg-primary rounded-full mr-2" />
-					<span>Motor control for precise steering</span>
+					<span>Motor control for exact steering</span>
 				</li>
 			</ul>
 		</div>
@@ -99,8 +101,8 @@ export const LineFollowingDescription = () => (
 export const CollaborativeRobotsDescription = () => (
 	<div className="space-y-4">
 		<p className="text-lg">
-	Why use one Pip when you can have many? Discover the exciting world of multi-robot systems
-	where Pips work together in various fun and educational scenarios!
+			Why use one Pip when you can have many? Discover the exciting world of multi-robot systems
+			where Pips work together in various fun and educational scenarios!
 		</p>
 
 		<div className="mt-4">

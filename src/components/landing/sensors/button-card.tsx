@@ -3,6 +3,7 @@ import { RiRadioButtonFill } from "react-icons/ri"
 import { bentoIconSize } from "../../../utils/constants"
 import SensorsSkeloton from "./sensors-skeloton"
 
+// TODO: remove 'add' from Add custom controls to your Pip" either here or in the modules page
 export default function ButtonCard() {
 	return (
 		<SensorsSkeloton

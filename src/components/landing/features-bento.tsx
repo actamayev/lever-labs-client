@@ -35,7 +35,7 @@ const features: Feature[] = [
 				</BoldSpanText>
 				&nbsp;that gets you back to building&nbsp;
 				<BoldSpanText>
-					in just 30 minutes
+					in just 30 minutes.
 				</BoldSpanText>
 			</>
 		)
@@ -76,7 +76,7 @@ const features: Feature[] = [
 		title: "See How It Works",
 		description: (
 			<>
-				Clear shell design reveals&nbsp;
+				Pip&apos;s clear shell design reveals&nbsp;
 				<BoldSpanText>
 					real sensors and circuits in action,
 				</BoldSpanText>

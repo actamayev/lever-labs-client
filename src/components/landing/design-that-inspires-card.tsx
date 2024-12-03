@@ -19,7 +19,7 @@ export default function DesignThatInspiresCard() {
 					description={
 						<>
 							Pip's clear shell isn't just for show - it's an invitation.
-							It reveals how sensors, circuits, and advanced components work together&nbsp;
+							See how sensors, circuits, and advanced components work together&nbsp;
 							<BoldSpanText>
 								in perfect harmony.&nbsp;
 							</BoldSpanText>
