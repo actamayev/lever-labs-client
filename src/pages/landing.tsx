@@ -1,8 +1,8 @@
-import Features from "../components/landing/features"
-import Sensors from "../components/landing/sensors/sensors"
 import PageHelmet from "../components/helmet/page-helmet"
-import LandingHeader from "../components/landing/landing-header"
+import Sensors from "../components/landing/sensors/sensors"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
+import LandingHeader from "../components/landing/landing-header"
+import FeaturesBento from "../components/landing/features-bento"
 import WhoWeAre from "../components/landing/who-we-are/who-we-are"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import { JustKeepBuilding } from "../components/landing/just-keep-building"
@@ -33,7 +33,7 @@ export default function Landing() {
 					<DesignThatInspiresCard />
 				</div>
 				<div
-					className="mt-20 h-screen relative z-10 flex flex-col items-center justify-center
+					className="flex flex-col relative items-center justify-center mt-20 h-screen z-10
 					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
 				>
 					<Sensors />
@@ -47,9 +47,9 @@ export default function Landing() {
 				<div className="relative z-10 flex flex-col items-center justify-center px-16">
 					<LearnByDoing />
 				</div>
-				<div className="flex z-10 relative flex-col items-center justify-center
-				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme">
-					<Features />
+				<div className="flex relative items-center justify-center z-10
+				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32">
+					<FeaturesBento />
 				</div>
 				<div className="relative flex my-20 z-10 px-16">
 					<WhoWeAre />

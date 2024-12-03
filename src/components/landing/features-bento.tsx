@@ -1,9 +1,9 @@
 import { IconType } from "react-icons"
 import { GiBrickWall } from "react-icons/gi"
 import { IoMdBatteryCharging } from "react-icons/io"
-import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
-import { bentoIconSize } from "../../utils/constants"
 import { cn } from "../../lib/shadcn/utils"
+import { bentoIconSize } from "../../utils/constants"
+import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
 
 interface Feature {
 	icon: IconType
@@ -12,11 +12,10 @@ interface Feature {
 	bentoClasses: string
 }
 
-// TODO: Come up with more features
 // TODO: Get the features to be the same width as one another
 const features: Feature[] = [
 	{
-		icon: IoMdBatteryCharging,  // Replace with your actual icons
+		icon: IoMdBatteryCharging,
 		title: "Just keep building",
 		description: "Pip is efficient. Up to 2 hours of continuous use, with 30 minute charge times.",
 		bentoClasses: "row-start-1 col-start-1"
@@ -28,7 +27,7 @@ const features: Feature[] = [
 		bentoClasses: "row-start-1 col-start-2 col-end-2"
 	},
 	{
-		icon: IoMdBatteryCharging,  // Replace with your actual icons
+		icon: IoMdBatteryCharging,
 		title: "Say something about saving your projects ",
 		description: "so they're available anywhere.",
 		bentoClasses: "row-start-1 row-span-2 col-start-3 col-end-3"
@@ -76,14 +75,22 @@ function FeatureItem({ feature }: FeatureItemProps) {
 	)
 }
 
-export default function FeatureCarousel() {
+export default function FeaturesBento() {
 	return (
-		<div className="flex">
-			<BentoGrid className="lg:grid-rows-3">
-				{features.map((feature, index) => (
-					<FeatureItem key={index} feature={feature} />
-				))}
-			</BentoGrid>
+		<div>
+			<p
+				className="flex justify-center text-center whitespace-pre-wrap text-6xl
+				font-medium tracking-tight text-black dark:text-white pt-10 pb-12"
+			>
+				It&apos;s the little things that count
+			</p>
+			<div className="flex">
+				<BentoGrid className="lg:grid-rows-3">
+					{features.map((feature, index) => (
+						<FeatureItem key={index} feature={feature} />
+					))}
+				</BentoGrid>
+			</div>
 		</div>
 	)
 }
