@@ -23,7 +23,7 @@ export default function DesignThatInspiresCard() {
 							<BoldSpanText>
 								in perfect harmony.&nbsp;
 							</BoldSpanText>
-							With features like distance measurement, gyroscopes, and encoders, Pip sparks curiosity at every turn.
+							With capabilities like distance measurement, gyroscopes, and encoders, Pip sparks curiosity at every turn.
 							Built to last, it's ready to tackle anything from classroom chaos to home experiments.
 						</>
 					}
