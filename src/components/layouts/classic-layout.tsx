@@ -1,13 +1,24 @@
+import { cn } from "../../lib/shadcn/utils"
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"
 
-export default function ClassicLayout ({ children } : { children: React.ReactNode }) {
+interface Props {
+	extraClasses?: string
+	children: React.ReactNode
+}
+
+export default function ClassicLayout(props: Props) {
+	const { extraClasses = "px-14", children } = props  // Remove py-6 mt-14 from default
+
 	return (
-		<div className="min-h-screen bg-zinc-200 dark:bg-zinc-900 flex flex-col">
+		<div className="min-h-screen bg-white dark:bg-black flex flex-col transition-all duration-300">
 			<HeaderNav />
-			<div className="flex-1 w-full overflow-y-auto px-14 py-6 mt-14">
+			<main className={cn(
+				"flex-1 w-full overflow-y-auto pt-14", // Add pt-14 here instead
+				extraClasses
+			)}>
 				{children}
-			</div>
+			</main>
 			<Footer />
 		</div>
 	)

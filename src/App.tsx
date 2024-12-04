@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router"
 import Lab from "./pages/lab"
-import Home from "./pages/home"
+import Landing from "./pages/landing"
 // import Garage from "./pages/garage"
 import Contact from "./pages/contact"
 import Missing from "./pages/missing"
@@ -35,7 +35,7 @@ function App() {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Home />} />
+			<Route path="/" element={<Landing />} />
 			<Route path="/login" element={<LoginPage />} />
 			<Route path="/register" element={<RegisterPage />} />
 			<Route path="/register-username" element={<RegisterUsername />} />

@@ -4,7 +4,7 @@ import { Control, FieldPath } from "react-hook-form"
 import { Input } from "@/components/shadcn/ui/input"
 import { Button } from "@/components/shadcn/ui/button"
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
-// import { Link } from "react-router-dom"
+// import { Link } from "react-router"
 
 interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
 	control: Control<T>
