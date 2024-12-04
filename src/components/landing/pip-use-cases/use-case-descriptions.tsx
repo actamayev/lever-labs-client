@@ -1,5 +1,3 @@
-// TODO: Confirm each section has a descriptive footer section
-
 /* eslint-disable react/no-unescaped-entities */
 export const BalancingDescription = () => (
 	<div className="space-y-4">

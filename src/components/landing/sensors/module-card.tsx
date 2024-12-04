@@ -24,8 +24,8 @@ export default function ModuleCard() {
 
 	return (
 		<SensorsSkeleton
-			title="Module: Expandable Capabilities"
-			description="Add optional modules like a camera to extend Pip&apos;s functionality!"
+			title="Modules: Expandable Capabilities"
+			description="Snap on optional modules like a camera to extend Pip's functionality!"
 			icon={
 				<div
 					className="pointer-events-auto w-fit relative cursor-pointer"
