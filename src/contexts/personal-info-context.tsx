@@ -7,7 +7,7 @@ class PersonalInfoClass {
 	public email: string | null = null
 
 	public isRetrievingPersonalInfo = false
-	public defaultSiteTheme: SiteThemes = "light"
+	public defaultSiteTheme: SiteThemes = "dark"
 	public profilePictureUrl: string | null = null
 
 	constructor() {
@@ -17,7 +17,10 @@ class PersonalInfoClass {
 
 	private setDefaultsFromLocalStorage(): void {
 		const locallyStoredDefaultSiteTheme = localStorage.getItem("defaultSiteTheme")
-		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) return
+		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) {
+			this.setDefaultSiteTheme("dark")
+			return
+		}
 		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
 	}
 
@@ -52,7 +55,7 @@ class PersonalInfoClass {
 		this.email = null
 		this.setIsRetrievingPersonalDetails(false)
 		this.setProfilePictureUrl(null)
-		this.setDefaultSiteTheme("light")
+		this.setDefaultSiteTheme("dark")
 	}
 }
 

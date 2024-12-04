@@ -16,8 +16,8 @@ export default function useGoogleAuthCallback(whereToNavigate: PageNames): (succ
 			if (_.isUndefined(successResponse.credential) || _.isUndefined(successResponse.clientId)) return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-			let siteTheme: SiteThemes = "light"
-			if (siteThemeFromStorage === "dark") siteTheme = "dark"
+			let siteTheme: SiteThemes = "dark"
+			if (siteThemeFromStorage === "light") siteTheme = "light"
 
 			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
