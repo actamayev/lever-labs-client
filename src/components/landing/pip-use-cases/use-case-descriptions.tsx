@@ -53,7 +53,7 @@ export const ObstacleDescription = () => (
 				</li>
 				<li className="flex items-center">
 					<div className="w-2 h-2 bg-primary rounded-full mr-2" />
-					<span>Motors for precise movement control</span>
+					<span>Motors for fine-tuned movement control</span>
 				</li>
 				<li className="flex items-center">
 					<div className="w-2 h-2 bg-primary rounded-full mr-2" />
@@ -75,8 +75,8 @@ export const ObstacleDescription = () => (
 export const LineFollowingDescription = () => (
 	<div className="space-y-4">
 		<p className="text-lg">
-	Watch Pip navigate any path with precision! Using three RGB sensors on it's underside, Pip can follow tracks of any color,
-	stay in its lane, and even handle complex intersections - just like a tiny autonomous vehicle.
+			Watch Pip smoothly navigate any path! Using three RGB sensors on it's underside, Pip can follow tracks of any color,
+			stay in its lane, and even handle complex intersections - just like a tiny autonomous vehicle.
 		</p>
 
 		<div className="mt-4">

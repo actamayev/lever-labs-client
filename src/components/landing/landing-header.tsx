@@ -22,12 +22,13 @@ function ScrollIndicator () {
 		<div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
 			<motion.div
 				animate={{
-					y: [0, 10, 0]
+					y: [0, 60, 0]
 				}}
 				transition={{
-					duration: 1.5,
+					duration: 1,
 					repeat: Infinity,
-					ease: "easeInOut"
+					ease: "easeInOut",
+					repeatType: "reverse"
 				}}
 				className="cursor-pointer hover:opacity-70 transition-all duration-300"
 				onClick={handleClick}

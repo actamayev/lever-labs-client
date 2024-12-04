@@ -3,7 +3,6 @@ import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import { DottedTextTooltip } from "../../dotted-underline-text"
 
-// TODO: Remove precision from 2 of the three sensor bento boxes
 export default function IMUCard() {
 	return (
 		<SensorsSkeleton
@@ -15,7 +14,7 @@ export default function IMUCard() {
 					</DottedTextTooltip>
 				</>
 			)}
-			description="Track orientation, acceleration, and motion with precision"
+			description="Seemlessly track orientation, acceleration, and motion"
 			icon={
 				<div className="w-fit">
 					<FaTachometerAlt
