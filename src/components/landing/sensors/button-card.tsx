@@ -1,12 +1,12 @@
 import { motion } from "framer-motion"
 import { RiRadioButtonFill } from "react-icons/ri"
 import { bentoIconSize } from "../../../utils/constants"
-import SensorsSkeloton from "./sensors-skeloton"
+import SensorsSkeleton from "./sensors-skeleton"
 
 // TODO: remove 'add' from Add custom controls to your Pip" either here or in the modules page
 export default function ButtonCard() {
 	return (
-		<SensorsSkeloton
+		<SensorsSkeleton
 			title="2× Buttons"
 			description="Add custom controls to your Pip"
 			icon= {
