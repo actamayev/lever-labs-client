@@ -14,7 +14,7 @@ export default function MotorCard() {
 			description="Motors with precise position tracking for controlled movement"
 			icon={
 				<div
-					className="pointer-events-auto w-fit cursor-pointer"
+					className="pointer-events-auto w-fit"
 					onMouseEnter={() => setIsSpinning(true)}
 					onMouseLeave={() => setIsSpinning(false)}
 				>
