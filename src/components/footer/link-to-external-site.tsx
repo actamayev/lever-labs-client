@@ -13,7 +13,7 @@ export default function LinkToExternalSite(props: Props) {
 				aria-label="Help Center"
 				target="_blank"
 				rel="noopener noreferrer"
-				className="cursor:pointer text-zinc-950 dark:text-zinc-50 hover:underline"
+				className="cursor:pointer text-zinc-950 dark:text-zinc-50 hover:underline transition-all duration-300"
 			>
 				{title}
 			</a>

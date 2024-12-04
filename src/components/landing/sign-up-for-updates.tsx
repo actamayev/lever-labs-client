@@ -50,7 +50,8 @@ export default function SignUpForUpdates() {
 										type="email"
 										placeholder="Email"
 										required
-										className="flex-1 h-11 w-56 border-black dark:border-white border-2 rounded-md"
+										className="flex-1 h-11 w-56 border-black dark:border-white border-2 rounded-md
+										transition-all duration-300"
 										disabled={isSubscribed || isLoading}
 										{...field}
 									/>
@@ -66,6 +67,7 @@ export default function SignUpForUpdates() {
 						isSubscribed={isSubscribed}
 						isDisabled={!isEmailValidMemo}
 						isLoading={isLoading}
+						className="transition-all duration-300"
 					/>
 				</form>
 			</Form>
