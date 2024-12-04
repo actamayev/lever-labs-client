@@ -19,11 +19,11 @@ export default function DesignThatInspiresCard() {
 					description={
 						<>
 							Pip's clear shell isn't just for show - it's an invitation.
-							It reveals how sensors, circuits, and advanced components work together&nbsp;
+							See how sensors, circuits, and advanced components work together&nbsp;
 							<BoldSpanText>
 								in perfect harmony.&nbsp;
 							</BoldSpanText>
-							With features like distance measurement, gyroscopes, and encoders, Pip sparks curiosity at every turn.
+							With capabilities like distance measurement, gyroscopes, and encoders, Pip sparks curiosity at every turn.
 							Built to last, it's ready to tackle anything from classroom chaos to home experiments.
 						</>
 					}

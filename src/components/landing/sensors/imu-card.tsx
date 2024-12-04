@@ -1,11 +1,11 @@
 import { FaTachometerAlt } from "react-icons/fa"
-import SensorsSkeloton from "./sensors-skeloton"
+import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import { DottedTextTooltip } from "../../dotted-underline-text"
 
 export default function IMUCard() {
 	return (
-		<SensorsSkeloton
+		<SensorsSkeleton
 			title={(
 				<>
 					9-Axis&nbsp;
@@ -14,7 +14,7 @@ export default function IMUCard() {
 					</DottedTextTooltip>
 				</>
 			)}
-			description="Track orientation, acceleration, and motion with precision"
+			description="Seemlessly track orientation, acceleration, and motion"
 			icon={
 				<div className="w-fit">
 					<FaTachometerAlt

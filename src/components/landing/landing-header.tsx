@@ -22,12 +22,13 @@ function ScrollIndicator () {
 		<div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
 			<motion.div
 				animate={{
-					y: [0, 10, 0]
+					y: [0, 60, 0]
 				}}
 				transition={{
-					duration: 1.5,
+					duration: 1,
 					repeat: Infinity,
-					ease: "easeInOut"
+					ease: "easeInOut",
+					repeatType: "reverse"
 				}}
 				className="cursor-pointer hover:opacity-70 transition-all duration-300"
 				onClick={handleClick}
@@ -61,7 +62,7 @@ export default function LandingHeader() {
 						<div>
 							<BlurFade delay={0.35 * 3} inView>
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-14 font-medium">
-									Pip is a powerful educational robot that&apos;s simple and easy to use.
+									Pip is a powerful educational robot that&apos;s easy to use.
 								</h2>
 								<h2 className="text-3xl text-zinc-800 dark:text-white mt-8 font-medium">
 									Get started on your robotics journey today.

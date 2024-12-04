@@ -28,7 +28,7 @@ export default function DistanceSensorsCard() {
 							</DottedTextTooltip>
 						</h3>
 						<p className="max-w-lg text-neutral-400">
-							Measure distances with millimeter accuracy for precise navigation
+							Measure distances with millimeter accuracy for smart navigation
 						</p>
 					</div>
 				</div>

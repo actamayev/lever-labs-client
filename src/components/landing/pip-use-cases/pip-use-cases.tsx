@@ -53,17 +53,19 @@ interface Props {
 	content: React.ReactNode
 }
 
-function RightSideContentSkeloton(props: Props) {
+function RightSideContentSkeleton(props: Props) {
 	const { title, content } = props
 
 	return (
-		<div className="w-4/5">
+		<div className="w-4/5 flex-shrink-0">
 			<Card className="h-full">
 				<CardHeader className="p-6">
 					<CardTitle className="text-2xl">{title}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					{content}
+					<div className="w-full">
+						{content}
+					</div>
 				</CardContent>
 			</Card>
 		</div>
@@ -76,7 +78,7 @@ export default function PipUseCases() {
 	const renderRightSideContent = () => {
 		if (selectedCategory === "Pip's full sensor suite") {
 			return (
-				<RightSideContentSkeloton
+				<RightSideContentSkeleton
 					title={selectedCategory}
 					content={<Sensors />}
 				/>
@@ -84,7 +86,7 @@ export default function PipUseCases() {
 		}
 
 		return (
-			<RightSideContentSkeloton
+			<RightSideContentSkeleton
 				title={selectedCategory}
 				content={
 					<p className="text-lg text-muted-foreground">

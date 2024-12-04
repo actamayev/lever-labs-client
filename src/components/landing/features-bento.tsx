@@ -35,7 +35,7 @@ const features: Feature[] = [
 				</BoldSpanText>
 				&nbsp;that gets you back to building&nbsp;
 				<BoldSpanText>
-					in just 30 minutes
+					in just 30 minutes.
 				</BoldSpanText>
 			</>
 		)
@@ -58,11 +58,11 @@ const features: Feature[] = [
 		title: "Progress Lives in the Cloud",
 		description: (
 			<>
-				Your projects and learning progress&nbsp;
+				Your progress saves automatically (just like Google Docs), so&nbsp;
 				<BoldSpanText>
-					sync instantly across devices, just like Google Docs.
+				you can pick up where you left off -
 				</BoldSpanText>
-				&nbsp;Pick up right where you left off.
+				&nbsp;on any Pip, from any computer.
 			</>
 		)
 	},
@@ -76,7 +76,7 @@ const features: Feature[] = [
 		title: "See How It Works",
 		description: (
 			<>
-				Clear shell design reveals&nbsp;
+				Pip&apos;s clear shell design reveals&nbsp;
 				<BoldSpanText>
 					real sensors and circuits in action,
 				</BoldSpanText>

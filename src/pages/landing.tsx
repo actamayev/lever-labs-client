@@ -16,26 +16,33 @@ export default function Landing() {
 		<>
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
-				<GridPattern isDashed={true} dashSize={2} orientation="both" />
+				<div className="fixed inset-0">
+					<GridPattern isDashed={true} dashSize={2} orientation="both" />
+				</div>
 				<div
 					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
-					text-black dark:text-white"
+						text-black dark:text-white transition-all duration-300"
 				>
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
 					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center md:px-8 lg:px-16">
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 py-8">
-					<JustKeepBuilding />
+				<div className="relative z-10">
+					<div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white
+					dark:from-black dark:via-transparent dark:to-black transition-all duration-300" />
+					<div className="relative z-20 flex flex-col items-center justify-center px-16 py-8">
+						<JustKeepBuilding />
+					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh] bg-white dark:bg-black">
+				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh]
+				bg-white dark:bg-black transition-all duration-300">
 					<DesignThatInspiresCard />
 				</div>
 				<div className="flex flex-col relative items-center justify-center z-10 px-12">
 					<PipUseCases />
 				</div>
-				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative">
+				<div className="flex flex-col items-center justify-center z-10 bg-white dark:bg-black relative transition-all duration-300">
 					<div className="px-16">
 						<DiscoverSection />
 					</div>
@@ -45,8 +52,8 @@ export default function Landing() {
 					<LearnByDoing />
 				</div>
 				<div
-					className="flex relative items-center justify-center z-10 py-12
-					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32"
+					className="flex relative items-center justify-center z-10 py-12 px-32
+					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme transition-all duration-300"
 				>
 					<FeaturesBento />
 				</div>
@@ -55,7 +62,7 @@ export default function Landing() {
 				</div>
 				<div
 					className="flex flex-col relative items-center justify-center py-32 z-10
-					bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white"
+					bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white transition-all duration-300"
 				>
 					<SignUpForUpdates />
 				</div>

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { FaInfinity } from "react-icons/fa"
 import { useCallback, useState } from "react"
-import SensorsSkeloton from "./sensors-skeloton"
+import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -23,9 +23,9 @@ export default function ModuleCard() {
 	const currentColor = colorIndex === -1 ? "currentColor" : COLORS[colorIndex]
 
 	return (
-		<SensorsSkeloton
-			title="Module: Expandable Capabilities"
-			description="Add optional modules like a camera to extend Pip&apos;s functionality!"
+		<SensorsSkeleton
+			title="Modules: Expandable Capabilities"
+			description="Snap on optional modules like a camera to extend Pip's functionality!"
 			icon={
 				<div
 					className="pointer-events-auto w-fit relative cursor-pointer"

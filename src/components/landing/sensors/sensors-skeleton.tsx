@@ -8,7 +8,7 @@ interface Props {
 	paragraphStyles?: string
 }
 
-export default function SensorsSkeloton(props: Props) {
+export default function SensorsSkeleton(props: Props) {
 	const { title, description, icon: Icon, outerDivStyles, paragraphStyles } = props
 
 	return (

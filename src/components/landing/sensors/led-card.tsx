@@ -1,7 +1,7 @@
 import { FaLightbulb } from "react-icons/fa"
 import { useCallback, useState } from "react"
 import { bentoIconSize } from "../../../utils/constants"
-import SensorsSkeloton from "./sensors-skeloton"
+import SensorsSkeleton from "./sensors-skeleton"
 
 function getRandomRGBColor() {
 	const r = Math.floor(Math.random() * 256)
@@ -19,7 +19,7 @@ export default function LEDCard() {
 	}, [])
 
 	return (
-		<SensorsSkeloton
+		<SensorsSkeleton
 			title="5× RGB LEDs"
 			description="Create dazzling light displays and visual indicators"
 			icon={

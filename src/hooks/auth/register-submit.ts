@@ -28,8 +28,8 @@ export default function useRegisterSubmit (
 			const { passwordConfirmation, ...restOfCredentials } = registerCredentials
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-			let siteTheme: SiteThemes = "light"
-			if (siteThemeFromStorage === "dark") siteTheme = "dark"
+			let siteTheme: SiteThemes = "dark"
+			if (siteThemeFromStorage === "light") siteTheme = "light"
 
 			const response = await blueDotApiClient.authDataService.register({ ...restOfCredentials, siteTheme })
 

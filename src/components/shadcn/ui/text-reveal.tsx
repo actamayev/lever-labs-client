@@ -7,15 +7,15 @@ import { cn } from "@/lib/shadcn/utils";
 interface TextRevealByWordProps {
   text: string;
   className?: string;
-  instantTransition?: boolean; // New prop to control transition style
-  wordClasses?: string
+  instantTransition?: boolean;
+  wordClasses?: string;
 }
 
 export const TextRevealByWord: FC<TextRevealByWordProps> = ({
   text,
   className,
   wordClasses,
-  instantTransition = false, // Default to gradual transition
+  instantTransition = false,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,27 +24,38 @@ export const TextRevealByWord: FC<TextRevealByWordProps> = ({
     offset: ["start end", "center start"]
   });
 
-  const words = text.split(" ");
+  const lines = text.split('¤'); // Split into lines first
+  const processedLines = lines.map(line => line.split(" ")); // Then split each line into words
 
   return (
     <div ref={containerRef} className={cn("relative", className)}>
-      <p className={cn(
-        "flex flex-wrap justify-center text-8xl font-bold text-black/20 dark:text-white/20",
+      <div className={cn(
+        "flex flex-col items-center text-8xl font-bold text-black/20 dark:text-white/20",
         wordClasses
       )}>
-        {words.map((word, i) => {
-          const start = (i / words.length) * 0.5;
-          // If instant transition, make the range tiny, otherwise use normal range
-          const end = instantTransition 
-            ? start + 0.001 
-            : start + (1 / words.length) * 0.5;
-          return (
-            <Word key={i} progress={scrollYProgress} range={[start, end]}>
-              {word}
-            </Word>
-          );
-        })}
-      </p>
+        {processedLines.map((line, lineIndex) => (
+          <div key={lineIndex} className="flex flex-wrap justify-center">
+            {line.map((word, i) => {
+              const totalWords = lines.join(" ").split(" ").length;
+              const wordsBeforeLine = lines
+                .slice(0, lineIndex)
+                .join(" ")
+                .split(" ").length;
+              const wordIndex = wordsBeforeLine + i;
+              const start = (wordIndex / totalWords) * 0.5;
+              const end = instantTransition 
+                ? start + 0.001 
+                : start + (1 / totalWords) * 0.5;
+
+              return (
+                <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                  {word}
+                </Word>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -22,19 +22,18 @@ export default function LearnByDoing() {
 								learning by doing.&nbsp;
 							</BoldSpanText>
 							Theory comes alive through your hands, not through pages.
-							Because real innovation doesn't start with reading about robots - it starts with building them.
-							That's why&nbsp;
+							Because real learning doesn't start with reading about robots - it starts with building them.
+							That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.&nbsp;
 							<BoldSpanText>
-								we place as much emphasis on the practical aspects of robotics as the theoretical ones.&nbsp;
+								Textbooks have their place. You won't find them here.
 							</BoldSpanText>
-							Textbooks have their place. You won't find them here.
 						</>
 					}
 				/>
 			</div>
 			<div className="w-1/2 flex items-center">
 				<TextRevealByWord
-					text="Blink an LED today, balance an inverted pendulum tomorrow."
+					text='"The best way to predict the future is to create it."¤- Alan Kay'
 					className="block"
 					instantTransition
 					wordClasses="text-6xl font-bold"

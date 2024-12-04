@@ -2,16 +2,16 @@ import { useState } from "react"
 import { GiCarWheel } from "react-icons/gi"
 import { cn } from "@/lib/shadcn/utils"
 import "../../../styles/motor-spin.css"
-import SensorsSkeloton from "./sensors-skeloton"
+import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 
 export default function MotorCard() {
 	const [isSpinning, setIsSpinning] = useState(false)
 
 	return (
-		<SensorsSkeloton
+		<SensorsSkeleton
 			title="2× Dual Hall Effect Encoders + Motors"
-			description="98RPM motors with precise position tracking for controlled movement"
+			description="Motors with precise position tracking for controlled movement"
 			icon={
 				<div
 					className="pointer-events-auto w-fit cursor-pointer"
