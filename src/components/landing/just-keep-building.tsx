@@ -57,7 +57,7 @@ function GrowsWithYouDescription() {
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-2xl mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">
-					Whether you're exploring robotics for the first time or designing calculus-based control systems,&nbsp;
+					Whether you're exploring robotics for the first time or you're a seasoned veteran,&nbsp;
 				</span>
 				<BoldedDescription>Pip evolves with you.&nbsp;</BoldedDescription>
 				<span className="text-zinc-500 dark:text-zinc-400 text-2xl">

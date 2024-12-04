@@ -22,7 +22,7 @@ export default function LearnByDoing() {
 								learning by doing.&nbsp;
 							</BoldSpanText>
 							Theory comes alive through your hands, not through pages.
-							Because real innovation doesn't start with reading about robots - it starts with building them.
+							Because real learning doesn't start with reading about robots - it starts with building them.
 							That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.&nbsp;
 							<BoldSpanText>
 								Textbooks have their place. You won't find them here.
