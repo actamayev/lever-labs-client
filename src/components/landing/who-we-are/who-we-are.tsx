@@ -1,7 +1,6 @@
 import BlueDot from "./blue-dot"
 import { BoldedDescription } from "../bold-span-text"
 
-// TODO: Refine the text here.
 export default function WhoWeAre() {
 	return (
 		<>
@@ -18,7 +17,7 @@ export default function WhoWeAre() {
 				</div>
 				<div className="text-3xl">
 					<div className="text-zinc-500 dark:text-zinc-400">
-						We know getting started robotics can appear tough and feel daunting. We&apos;ve been there...
+						We know getting started with robotics can seem tough and feel daunting. We&apos;ve been there...
 					</div>
 					<br />
 					<div className="text-zinc-500 dark:text-zinc-400">
