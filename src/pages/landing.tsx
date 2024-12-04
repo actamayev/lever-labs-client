@@ -16,10 +16,12 @@ export default function Landing() {
 		<>
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
-				<GridPattern isDashed={true} dashSize={2} orientation="both" />
+				<div className="fixed inset-0">
+					<GridPattern isDashed={true} dashSize={2} orientation="both" />
+				</div>
 				<div
 					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
-					text-black dark:text-white"
+						text-black dark:text-white"
 				>
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
 					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center md:px-8 lg:px-16">
