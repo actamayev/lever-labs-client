@@ -1,7 +1,8 @@
-import validator from "validator"
+import { z } from "zod"
 
 export default function isEmailValid(input: string): EmailOrUnknown {
-	if (validator.isEmail(input) === true) return "Email"
+	const emailSchema = z.string().email()
+	const result = emailSchema.safeParse(input)
 
-	return "Unknown"
+	return result.success ? "Email" : "Unknown"
 }

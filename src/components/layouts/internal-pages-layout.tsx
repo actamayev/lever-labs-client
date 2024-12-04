@@ -12,12 +12,13 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				<header className="fixed w-full top-0 flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3 z-40">
-					<SidebarTrigger className="-ml-1 w-12 h-12"/>
+				<header className="fixed w-full top-0 flex shrink-0 items-center gap-2 border-b bg-background px-4 py-3 z-40
+				transition-all duration-300">
+					<SidebarTrigger className="-ml-1 w-12 h-12 transition-all duration-300"/>
 					<Separator orientation="vertical" className="mr-2 h-10" />
 					<PipUuids />
 				</header>
-				<div className="pt-16">
+				<div className="pt-16 transition-all duration-300">
 					{children}
 				</div>
 			</SidebarInset>

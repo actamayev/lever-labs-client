@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter } from "react-router"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { HelmetProvider } from "react-helmet-async"

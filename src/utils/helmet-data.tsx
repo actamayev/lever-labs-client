@@ -10,7 +10,7 @@ const helmetData: HelmetData = {
 	"/": (
 		<BasicHelmet
 			pageTitleData="Blue Dot Robots | Coming Soon"
-			description="Explore Pip, the educational robot designed to make learning robotics fun and accessible.
+			description="Explore Pip, the educational robot designed to make learning robotics fun and seamless.
 			From coding basics to advanced control algorithms, start your robotics journey today."
 			url="https://www.bluedotrobots.com"
 			needsBlueDotSuffix={false}
