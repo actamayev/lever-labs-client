@@ -26,8 +26,12 @@ export default function Landing() {
 						<LandingHeader />
 					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 py-8">
-					<JustKeepBuilding />
+				<div className="relative z-10">
+					<div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white
+					dark:from-black dark:via-transparent dark:to-black" />
+					<div className="relative z-20 flex flex-col items-center justify-center px-16 py-8">
+						<JustKeepBuilding />
+					</div>
 				</div>
 				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh] bg-white dark:bg-black">
 					<DesignThatInspiresCard />
@@ -45,8 +49,8 @@ export default function Landing() {
 					<LearnByDoing />
 				</div>
 				<div
-					className="flex relative items-center justify-center z-10 py-12
-					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme px-32"
+					className="flex relative items-center justify-center z-10 py-12 px-32
+					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme"
 				>
 					<FeaturesBento />
 				</div>
