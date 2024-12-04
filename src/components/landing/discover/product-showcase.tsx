@@ -10,6 +10,7 @@ import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ProductProps {
 	sectionTitle: string
+	titleSubHeader: string
 	sectionSubtitle: React.ReactNode
 	Icon: IconType
 	extraClasses: string
@@ -18,7 +19,7 @@ interface ProductProps {
 }
 
 function SectionCard(props: ProductProps) {
-	const { sectionTitle, sectionSubtitle, Icon, extraClasses, linkToShow, imgSrc } = props
+	const { sectionTitle, titleSubHeader, sectionSubtitle, Icon, extraClasses, linkToShow, imgSrc } = props
 
 	return (
 		<Card className={cn(
@@ -26,10 +27,13 @@ function SectionCard(props: ProductProps) {
 			extraClasses
 		)}>
 			<div className="flex flex-col items-center text-center p-5 h-full">
-				<h2 className="text-4xl font-medium flex flex-row items-center mb-5">
+				<h2 className="text-4xl font-medium flex flex-row items-center">
 					<Icon className="size-9 origin-left transform-gpu transition-all duration-300 ease-in-out group-hover:scale-75" />
 					&nbsp;{sectionTitle}
 				</h2>
+				<div className="my-2 text-xl">
+					{titleSubHeader}
+				</div>
 				<div className="relative">
 					<Safari
 						url={linkToShow}
@@ -53,15 +57,13 @@ function ProductShowcase() {
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<SectionCard
 					sectionTitle="Lab"
+					titleSubHeader="Dive into guided tutorials, videos, and challenges"
 					sectionSubtitle={
 						<>
-							Explore&nbsp;
+							Master robotics through interactive labs with Pip - from programming and mathematics, to sensors and control.
+							Engineer clever solutions to&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-							guided tutorials, videos, and challenges&nbsp;
-							</BoldSpanText>
-								to learn about robot sensors and control in&nbsp;
-							<BoldSpanText extraClasses="font-medium">
-								a structured learning environment.
+								carefully crafted labs that bridge theory and practice.
 							</BoldSpanText>
 						</>
 					}
@@ -73,13 +75,14 @@ function ProductShowcase() {
 
 				<SectionCard
 					sectionTitle="Sandbox"
+					titleSubHeader="Your Pip, your rules"
 					sectionSubtitle={
 						<div>
-							Freely control your robot with coding blocks for&nbsp;
+							Jump into an open playground where you control Pip your way. Use coding blocks to&nbsp;
 							<BoldSpanText extraClasses="font-medium">
-								limitless open-ended exploration&nbsp;
+								bring your wildest ideas to life&nbsp;
 							</BoldSpanText>
-							and experimentation.
+							with no limits or restrictions.
 						</div>
 					}
 					Icon={TbSandbox}
