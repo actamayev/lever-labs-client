@@ -33,7 +33,7 @@ export default function LearnByDoing() {
 			</div>
 			<div className="w-1/2 flex items-center">
 				<TextRevealByWord
-					text="Blink an LED today, balance an inverted pendulum tomorrow."
+					text='"The best way to predict the future is to create it."¤- Alan Kay'
 					className="block"
 					instantTransition
 					wordClasses="text-6xl font-bold"
