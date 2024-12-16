@@ -20,6 +20,20 @@ export default function useSendCppToPip(): (
 				pipClass.isSendingCppToPip === true ||
 				_.isNull(pipClass.selectedPip)
 			) return
+
+			if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
+				toast.negative({
+					title: `${pipClass.selectedPip.pipName} is not online`,
+					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code.`
+				})
+				return
+			} else if (pipClass.selectedPip.pipConnectionStatus === "connected to other user") {
+				toast.negative({
+					title: `Unable to upload code to ${pipClass.selectedPip.pipName} at this time`,
+					description: `${pipClass.selectedPip.pipName} is connected to another user.`
+				})
+				return
+			}
 			pipClass.setIsSendingCppToPip(true)
 
 			const connectToPipResponse = await blueDotApiClient.pipDataService.sendCppToPip(pipClass.selectedPip.pipUUID, cppCode)
@@ -38,5 +52,5 @@ export default function useSendCppToPip(): (
 			pipClass.setIsSendingCppToPip(false)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blueDotApiClient.pipDataService, pipClass.isSendingCppToPip, toast])
+	}, [blueDotApiClient.pipDataService, pipClass.isSendingCppToPip, pipClass.selectedPip?.pipConnectionStatus, toast])
 }
