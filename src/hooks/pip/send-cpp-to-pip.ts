@@ -27,7 +27,7 @@ export default function useSendCppToPip(): (
 			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
-			toast.positive({ description: "Code sent to Pip" })
+			toast.positive({ description: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
 		} catch (error) {
 			console.error(error)
 			toast.negative({
