@@ -109,11 +109,6 @@ const features: Feature[] = [
 			</>
 		)
 	},
-	// {
-	// 	icon: MdSensors,
-	// 	title: "10 Built-in Sensors",
-	// 	description: "Packed with distance sensors, encoders, IMU, and RGB LEDs. Everything you need to bring your ideas to life.",
-	// }
 ]
 
 interface FeatureItemProps {
@@ -135,7 +130,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 			<div className="z-10 flex transform-gpu flex-col gap-1 p-6">
 				<div className="pointer-events-auto w-fit">
 					<Icon
-						className="text-pipTheme duration-300 cursor-pointer"
+						className="text-pipTheme duration-300 cursor-default"
 						size={bentoIconSize}
 					/>
 				</div>
