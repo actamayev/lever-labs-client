@@ -19,5 +19,9 @@
   ],
   "editor.insertSpaces": false,
   "editor.tabSize": 4,
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "shellcheck.exclude": ["SC2148", "SC2034"],
+	"shellcheck.ignorePatterns": {
+		"**/*.env*": true
+	}
 }
