@@ -5,6 +5,8 @@ import useStyledToast from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
+// TODO: Go through all callbacks/hooks that make use the API. Never have it return early without a toast.
+// This should say: please select a pip to upload, or: currently sending cpp to pip
 export default function useSendCppToPip(): (
 	cppCode: string
 ) => Promise<void> {
