@@ -23,6 +23,7 @@ declare global {
 		email: string | null
 		defaultSiteTheme: SiteThemes
 		profilePictureUrl: string | null
+		defaultSidebarState: SidebarStates
 	}
 
 	// Pip Responses
