@@ -38,8 +38,8 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<div className="flex flex-col">
 						<EnterPipID form={form} />
-						<EnterPipName control={form.control}/>
-						<EnterWifiCreds form={form} formValues={formValues}/>
+						<EnterPipName control={form.control} formValues={formValues}/>
+						<EnterWifiCreds control={form.control} formValues={formValues}/>
 						<SelectAutoreconnectToPip control={form.control} />
 						<div className="flex justify-between mt-2 items-center">
 							<Button

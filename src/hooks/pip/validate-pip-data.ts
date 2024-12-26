@@ -9,7 +9,8 @@ export default function useValidatePipData(): (pipData: IncompletePipData) => bo
 	return useCallback((pipData: IncompletePipData) => {
 		if (!pipClass.addingNewPipRequirements.doesPipUUIDExist) return false
 
-		const { pipName, pipUUID } = pipData
+		const { pipName, pipUUID, wifiNetworkName } = pipData
+		if (!pipClass.addingNewPipRequirements.isPipOnline === true && !wifiNetworkName) return false
 
 		const isUUIDValid = isPipUUIDValid(pipUUID)
 		if (pipClass.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded === true) {
@@ -21,5 +22,8 @@ export default function useValidatePipData(): (pipData: IncompletePipData) => bo
 		const isNameValid = pipName.length >= 3 && pipName.length <= 20
 
 		return isNameValid && isUUIDValid
-	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist, pipClass.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded])
+	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist,
+		pipClass.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded,
+		pipClass.addingNewPipRequirements.isPipOnline
+	])
 }

@@ -1,19 +1,19 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
+import { Control } from "react-hook-form"
 import { Eye, EyeOff } from "lucide-react"
-import { UseFormReturn } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
 interface Props {
-	form: UseFormReturn<IncompletePipData>
+	control: Control<IncompletePipData>
 	formValues: IncompletePipData
 }
 
 function EnterWifiCreds(props: Props) {
-	const { form, formValues } = props
+	const { control, formValues } = props
 	const pipClass = usePipContext()
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -26,7 +26,7 @@ function EnterWifiCreds(props: Props) {
 		<>
 			<p className="my-1">Step 2: Connect {formValues.pipName} to Wi-Fi</p>
 			<FormField
-				control={form.control}
+				control={control}
 				name="wifiNetworkName"
 				render={({ field }) => (
 					<FormItem className="mt-2">
@@ -47,7 +47,7 @@ function EnterWifiCreds(props: Props) {
 				)}
 			/>
 			<FormField
-				control={form.control}
+				control={control}
 				name="wifiPassword"
 				render={({ field }) => (
 					<FormItem className="mt-2">
