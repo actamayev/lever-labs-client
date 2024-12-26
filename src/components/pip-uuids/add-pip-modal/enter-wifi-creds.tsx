@@ -1,13 +1,19 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
-import { Control } from "react-hook-form"
 import { Eye, EyeOff } from "lucide-react"
+import { UseFormReturn } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
-function EnterWifiCreds({ control } : { control: Control<IncompletePipData> }) {
+interface Props {
+	form: UseFormReturn<IncompletePipData>
+	formValues: IncompletePipData
+}
+
+function EnterWifiCreds(props: Props) {
+	const { form, formValues } = props
 	const pipClass = usePipContext()
 	const [showPassword, setShowPassword] = useState(false)
 
@@ -18,8 +24,9 @@ function EnterWifiCreds({ control } : { control: Control<IncompletePipData> }) {
 
 	return (
 		<>
+			<p className="my-1">Step 2: Connect {formValues.pipName} to Wi-Fi</p>
 			<FormField
-				control={control}
+				control={form.control}
 				name="wifiNetworkName"
 				render={({ field }) => (
 					<FormItem className="mt-2">
@@ -28,7 +35,8 @@ function EnterWifiCreds({ control } : { control: Control<IncompletePipData> }) {
 								<Input
 									{...field}
 									maxLength={200}
-									className="w-full dark:border-zinc-600 pr-16"
+									className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
+									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 									placeholder="Network Name"
 									autoComplete="off"
 								/>
@@ -39,7 +47,7 @@ function EnterWifiCreds({ control } : { control: Control<IncompletePipData> }) {
 				)}
 			/>
 			<FormField
-				control={control}
+				control={form.control}
 				name="wifiPassword"
 				render={({ field }) => (
 					<FormItem className="mt-2">
@@ -49,7 +57,8 @@ function EnterWifiCreds({ control } : { control: Control<IncompletePipData> }) {
 									type={showPassword ? "text" : "password"}
 									{...field}
 									maxLength={200}
-									className="w-full dark:border-zinc-600 pr-16"
+									className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
+									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 									placeholder="Password"
 									autoComplete="new-password"
 									autoSave="off"

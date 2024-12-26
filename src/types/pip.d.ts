@@ -19,7 +19,7 @@ declare global {
 
 	interface AddingNewPipRequirements {
 		doesPipUUIDExist: boolean
-		isPipNameNeeded: boolean
+		hasPipNamePreviouslyBeenAdded: boolean
 		isPipOnline: boolean
 		userAlreadyAddedUUID: boolean
 	}

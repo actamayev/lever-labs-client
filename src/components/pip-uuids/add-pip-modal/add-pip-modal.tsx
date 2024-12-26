@@ -13,7 +13,7 @@ export default function AddPipModal({ toggleModalOpen } : { toggleModalOpen: () 
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-zinc-800 dark:text-zinc-50">
 			<div
 				ref={modalRef}
-				className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg w-1/4 max-h-full overflow-visible"
+				className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg w-1/3 max-h-full overflow-visible"
 				onClick={e => e.stopPropagation()}
 			>
 				<ModalHeader

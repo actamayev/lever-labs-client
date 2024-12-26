@@ -1,15 +1,22 @@
 import _ from "lodash"
 import { useCallback } from "react"
+import { UseFormReturn } from "react-hook-form"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promise<void> {
+export default function useCheckIfPipUUIDIsValid(): (
+	pipUUID: PipUUID,
+    form: UseFormReturn<IncompletePipData>  // Change this from Control to UseFormReturn
+) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 
-	return useCallback(async (pipUUID: PipUUID) => {
+	return useCallback(async (
+		pipUUID: PipUUID,
+		form: UseFormReturn<IncompletePipData>  // Change this from Control to UseFormReturn
+	) => {
 		try {
 			if (
 				_.isNull(blueDotApiClient.httpClient.accessToken) ||
@@ -27,8 +34,11 @@ export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promis
 				throw Error ("Unable to retrieve pip Data")
 			}
 			pipClass.updateAddingNewPipRequirements("doesPipUUIDExist", true)
-			pipClass.updateAddingNewPipRequirements("isPipNameNeeded", pipDataResponse.data.needsToAddName)
+			pipClass.updateAddingNewPipRequirements("hasPipNamePreviouslyBeenAdded", !_.isNull(pipDataResponse.data.pipName))
 			pipClass.updateAddingNewPipRequirements("isPipOnline", pipDataResponse.data.pipConnectionStatus !== "inactive")
+			if (!_.isNull(pipDataResponse.data.pipName)) {
+				form.setValue("pipName", pipDataResponse.data.pipName)
+			}
 		} catch (error) {
 			console.error(error)
 		} finally {

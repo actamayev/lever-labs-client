@@ -9,7 +9,7 @@ class PipClass {
 	public isSendingCppToPip: boolean = false
 	public addingNewPipRequirements: AddingNewPipRequirements = {
 		doesPipUUIDExist: false,
-		isPipNameNeeded: false,
+		hasPipNamePreviouslyBeenAdded: false,
 		isPipOnline: false,
 		userAlreadyAddedUUID: false
 	}
@@ -74,7 +74,7 @@ class PipClass {
 
 	public resetAddingPipRequirements = action(() => {
 		this.addingNewPipRequirements.doesPipUUIDExist = false
-		this.addingNewPipRequirements.isPipNameNeeded = false
+		this.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded = false
 		this.addingNewPipRequirements.isPipOnline = false
 		this.addingNewPipRequirements.userAlreadyAddedUUID = false
 	})

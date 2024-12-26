@@ -13,8 +13,6 @@ import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 
 export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () => void }) {
 	const addPip = useAddPip()
-	const validatePipData = useValidatePipData()
-
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
@@ -28,6 +26,8 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 
 	const formValues = form.watch()
 
+	const validatePipData = useValidatePipData()
+
 	const onSubmit = useCallback(async (values: IncompletePipData) => {
 		await addPip(values, toggleModalOpen)
 	}, [addPip, toggleModalOpen])
@@ -37,9 +37,9 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<div className="flex flex-col">
-						<EnterPipID control={form.control} />
+						<EnterPipID form={form} />
 						<EnterPipName control={form.control}/>
-						<EnterWifiCreds control={form.control}/>
+						<EnterWifiCreds form={form} formValues={formValues}/>
 						<SelectAutoreconnectToPip control={form.control} />
 						<div className="flex justify-between mt-2 items-center">
 							<Button

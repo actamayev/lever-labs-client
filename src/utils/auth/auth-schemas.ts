@@ -45,8 +45,8 @@ export const addPipSchema = z.object({
 	shouldAutoConnect: z.boolean(), // TODO: Should auto-connect should only show up if pip is online
 	pipName: z.union([
 		z.string()
-			.min(3, "Username must be at least 3 characters")
-			.max(20, "Username cannot exceed 100 characters"),
+			.min(3, "Pip's name must be at least 3 characters")
+			.max(20, "Pip's name cannot exceed 20 characters"),
 		z.string().length(0),  // Allow empty string
 	]).optional(),
 	wifiSSID: z.union([

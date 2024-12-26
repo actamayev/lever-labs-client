@@ -37,7 +37,7 @@ declare global {
 	}
 
 	type IsValidPipUUIDResponse = {
-		needsToAddName: boolean
+		pipName: string | null
 		pipConnectionStatus: ESPConnectionStatus
 	}
 

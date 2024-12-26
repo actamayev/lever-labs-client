@@ -12,7 +12,7 @@ export default function useValidatePipData(): (pipData: IncompletePipData) => bo
 		const { pipName, pipUUID } = pipData
 
 		const isUUIDValid = isPipUUIDValid(pipUUID)
-		if (pipClass.addingNewPipRequirements.isPipNameNeeded === false) {
+		if (pipClass.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded === true) {
 			return isUUIDValid
 		}
 
@@ -21,5 +21,5 @@ export default function useValidatePipData(): (pipData: IncompletePipData) => bo
 		const isNameValid = pipName.length >= 3 && pipName.length <= 20
 
 		return isNameValid && isUUIDValid
-	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist, pipClass.addingNewPipRequirements.isPipNameNeeded])
+	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist, pipClass.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded])
 }
