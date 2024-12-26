@@ -19,6 +19,8 @@ declare global {
 
 	type SiteThemes = "light" | "dark"
 
+	type SidebarStates = "expanded" | "collapsed"
+
 	type EndpointHeaders =
 		"/auth" |
 		"/misc" |

@@ -1,6 +1,6 @@
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
-import { isValidSiteTheme } from "../utils/type-checks"
+import { isValidSidebarState, isValidSiteTheme } from "../utils/type-checks"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -8,6 +8,7 @@ class PersonalInfoClass {
 
 	public isRetrievingPersonalInfo = false
 	public defaultSiteTheme: SiteThemes = "dark"
+	public defaultSidebarState: SidebarStates = "expanded"
 	public profilePictureUrl: string | null = null
 
 	constructor() {
@@ -22,6 +23,12 @@ class PersonalInfoClass {
 			return
 		}
 		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
+		const locallyStoredDefaultSidebarState = localStorage.getItem("defaultSidebarState")
+		if (!isValidSidebarState(locallyStoredDefaultSidebarState)) {
+			this.setDefaultSidebarState("expanded")
+			return
+		}
+		this.setDefaultSidebarState(locallyStoredDefaultSidebarState)
 	}
 
 	public setIsRetrievingPersonalDetails = action((newState: boolean): void => {
@@ -33,6 +40,7 @@ class PersonalInfoClass {
 		this.email = retrievedData.email
 		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
+		this.setDefaultSidebarState(retrievedData.defaultSidebarState)
 	})
 
 	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, addToLocalStorage: boolean = true): void => {
@@ -40,6 +48,11 @@ class PersonalInfoClass {
 		if (addToLocalStorage === true) localStorage.setItem("defaultSiteTheme", newSiteTheme)
 		if (newSiteTheme === "dark") document.documentElement.classList.add("dark")
 		else document.documentElement.classList.remove("dark")
+	})
+
+	public setDefaultSidebarState = action((newSidebarState: SidebarStates): void => {
+		this.defaultSidebarState = newSidebarState
+		localStorage.setItem("defaultSidebarState", newSidebarState)
 	})
 
 	public setProfilePictureUrl = action((newProfilePictureUrl: string | null): void => {
@@ -56,6 +69,7 @@ class PersonalInfoClass {
 		this.setIsRetrievingPersonalDetails(false)
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("dark")
+		this.setDefaultSidebarState("expanded")
 	}
 }
 

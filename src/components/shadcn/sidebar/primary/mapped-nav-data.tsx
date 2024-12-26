@@ -12,14 +12,14 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 
 const navData: SidebarNavData[] = [
 	{
-		title: "Sandbox",
-		url: "/sandbox",
-		icon: TbSandbox
-	},
-	{
 		title: "Lab",
 		url: "/lab",
 		icon: HiBeaker
+	},
+	{
+		title: "Sandbox",
+		url: "/sandbox",
+		icon: TbSandbox
 	}
 ]
 
