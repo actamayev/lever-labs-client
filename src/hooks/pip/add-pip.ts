@@ -28,6 +28,8 @@ export default function useAddPip(): (
 			}
 
 			if (_.isEmpty(pipData.pipName)) delete pipData.pipName
+			// delete pipData.wifiNetworkName
+			// delete pipData.wifiPassword
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
 

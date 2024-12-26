@@ -17,9 +17,11 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
-			pipName: "",
 			pipUUID: "",
-			shouldAutoConnect: true
+			shouldAutoConnect: true,
+			pipName: "",
+			wifiNetworkName: "",
+			wifiPassword: ""
 		}
 	})
 

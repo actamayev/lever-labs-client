@@ -1,8 +1,13 @@
 declare global {
-	interface IncompletePipData {
-		pipName?: string
+	interface IncompletePipData extends AddPipData {
+		wifiNetworkName?: string
+		wifiPassword?: string
+	}
+
+	interface AddPipData {
 		pipUUID: PipUUID
 		shouldAutoConnect: boolean
+		pipName?: string
 	}
 
 	interface PipData {
