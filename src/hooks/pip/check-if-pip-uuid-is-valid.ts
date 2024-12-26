@@ -5,22 +5,11 @@ import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useCheckIfPipUUIDIsValid(): (
-	pipUUID: PipUUID,
-	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
-	setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
-) => Promise<void> {
+export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 
-	// eslint-disable-next-line complexity
-	return useCallback(async (
-		pipUUID: PipUUID,
-		setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-		setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
-		setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
-	) => {
+	return useCallback(async (pipUUID: PipUUID) => {
 		try {
 			if (
 				_.isNull(blueDotApiClient.httpClient.accessToken) ||
@@ -28,7 +17,7 @@ export default function useCheckIfPipUUIDIsValid(): (
 			) return
 
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
-				setUserAlreadyAddedUUID(true)
+				pipClass.updateAddingNewPipRequirements("userAlreadyAddedUUID", true)
 				return
 			}
 			pipClass.setIsRetrievingPipData(true)
@@ -37,12 +26,12 @@ export default function useCheckIfPipUUIDIsValid(): (
 			if (!_.isEqual(pipDataResponse.status, 200) || isNonSuccessResponse(pipDataResponse.data)) {
 				throw Error ("Unable to retrieve pip Data")
 			}
-			setDoesPipUUIDExist(true)
-			setIsPipNameNeeded(pipDataResponse.data.needsToAddName)
+			pipClass.updateAddingNewPipRequirements("doesPipUUIDExist", true)
+			pipClass.updateAddingNewPipRequirements("isPipNameNeeded", pipDataResponse.data.needsToAddName)
 		} catch (error) {
 			console.error(error)
 		} finally {
 			pipClass.setIsRetrievingPipData(false)
 		}
-	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService])
+	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass])
 }

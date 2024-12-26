@@ -1,8 +1,14 @@
+import { observer } from "mobx-react"
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
+import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
-export default function EnterPipName({ control } : { control: Control<IncompletePipData> }) {
+function EnterPipName({ control } : { control: Control<IncompletePipData> }) {
+	const pipClass = usePipContext()
+
+	if (!pipClass.addingNewPipRequirements.isPipNameNeeded) return null
+
 	return (
 		<FormField
 			control={control}
@@ -30,3 +36,5 @@ export default function EnterPipName({ control } : { control: Control<Incomplete
 		/>
 	)
 }
+
+export default observer(EnterPipName)

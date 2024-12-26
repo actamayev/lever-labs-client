@@ -12,6 +12,13 @@ declare global {
 		pipConnectionStatus: PipConnectionStatus
 	}
 
+	interface AddingNewPipRequirements {
+		doesPipUUIDExist: boolean
+		isPipNameNeeded: boolean
+		isPipOnline: boolean
+		userAlreadyAddedUUID: boolean
+	}
+
 	type PipConnectionStatus =
 		ESPConnectionStatus |
 		// "inactive" | // Pip is not connected to the internet/ is turned off.

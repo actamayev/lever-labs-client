@@ -7,6 +7,12 @@ class PipClass {
 	public isRetrievingPipData = false
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
+	public addingNewPipRequirements: AddingNewPipRequirements = {
+		doesPipUUIDExist: false,
+		isPipNameNeeded: false,
+		isPipOnline: false,
+		userAlreadyAddedUUID: false
+	}
 
 	constructor() {
 		makeAutoObservable(this)
@@ -23,6 +29,7 @@ class PipClass {
 	public addNewPip(pipData: PipData): void {
 		if (this.checkIfUUIDAlreadyExists(pipData.pipUUID)) return
 		this.pipData.push(pipData)
+		this.resetAddingPipRequirements()
 	}
 
 	public updatePipConnectionStatus(data: PipStatusUpdate): void {
@@ -65,11 +72,26 @@ class PipClass {
 		this.isSendingCppToPip = newState
 	})
 
+	public resetAddingPipRequirements = action(() => {
+		this.addingNewPipRequirements.doesPipUUIDExist = false
+		this.addingNewPipRequirements.isPipNameNeeded = false
+		this.addingNewPipRequirements.isPipOnline = false
+		this.addingNewPipRequirements.userAlreadyAddedUUID = false
+	})
+
+	public updateAddingNewPipRequirements<K extends keyof AddingNewPipRequirements>(
+		field: K,
+		value: boolean
+	): void {
+		this.addingNewPipRequirements[field] = value
+	}
+
 	public logout() {
 		this.pipData = []
 		this.isRetrievingPipData = false
 		this.selectedPip = null
 		this.isSendingCppToPip = false
+		this.resetAddingPipRequirements()
 	}
 }
 

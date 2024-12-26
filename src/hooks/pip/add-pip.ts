@@ -10,8 +10,6 @@ import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks
 export default function useAddPip(): (
 	pipData: IncompletePipData,
 	toggleModalOpen: () => void,
-	isPipNameNeeded: boolean,
-	doesPipUUIDExist: boolean
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
@@ -22,11 +20,9 @@ export default function useAddPip(): (
 	return useCallback(async (
 		pipData: IncompletePipData,
 		toggleModalOpen: () => void,
-		isPipNameNeeded: boolean,
-		doesPipUUIDExist: boolean
 	) => {
 		try {
-			if (validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded) === false) return
+			if (validatePipData(pipData) === false) return
 			if (pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
