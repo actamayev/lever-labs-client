@@ -6,6 +6,7 @@ import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import LockIconAndTooltip from "../../lock-icon-and-tooltip"
 
 interface Props {
 	control: Control<IncompletePipData>
@@ -40,6 +41,9 @@ function EnterWifiCreds(props: Props) {
 									placeholder="Network Name"
 									autoComplete="off"
 								/>
+								<div className="absolute inset-y-0 right-2 flex items-center">
+									<LockIconAndTooltip />
+								</div>
 							</div>
 						</FormControl>
 						<FormMessage />
@@ -59,7 +63,7 @@ function EnterWifiCreds(props: Props) {
 									maxLength={200}
 									className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
-									placeholder="Password"
+									placeholder="Network Password"
 									autoComplete="new-password"
 									autoSave="off"
 								/>
@@ -67,7 +71,7 @@ function EnterWifiCreds(props: Props) {
 									type="button"
 									variant="ghost"
 									size="sm"
-									className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1
+									className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1
 									dark:hover:bg-zinc-600 hover:bg-slate-100"
 									onClick={() => setShowPassword(prevState => !prevState)}
 								>
@@ -77,6 +81,9 @@ function EnterWifiCreds(props: Props) {
 										<Eye className="h-4 w-4" />
 									)}
 								</Button>
+								<div className="absolute inset-y-0 right-2 flex items-center">
+									<LockIconAndTooltip />
+								</div>
 							</div>
 						</FormControl>
 						<FormMessage />

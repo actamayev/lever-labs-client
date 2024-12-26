@@ -4,12 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
-import { Button } from "../../shadcn/ui/button"
+import AddPipButton from "./add-pip-button"
 import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../../hooks/pip/add-pip"
 import { addPipSchema } from "../../../utils/auth/auth-schemas"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
-import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 
 export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () => void }) {
 	const addPip = useAddPip()
@@ -26,8 +25,6 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 
 	const formValues = form.watch()
 
-	const validatePipData = useValidatePipData()
-
 	const onSubmit = useCallback(async (values: IncompletePipData) => {
 		await addPip(values, toggleModalOpen)
 	}, [addPip, toggleModalOpen])
@@ -41,14 +38,7 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 						<EnterPipName control={form.control} formValues={formValues}/>
 						<EnterWifiCreds control={form.control} formValues={formValues}/>
 						<SelectAutoreconnectToPip control={form.control} />
-						<div className="flex justify-between mt-2 items-center">
-							<Button
-								type="submit"
-								disabled={!validatePipData(formValues)}
-							>
-								Add {formValues.pipName}
-							</Button>
-						</div>
+						<AddPipButton formValues={formValues}/>
 					</div>
 				</form>
 			</Form>
