@@ -41,7 +41,7 @@ function EnterPipID(props: Props) {
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
 		if (pipUUIDValid && pipClass.addingNewPipRequirements.doesPipUUIDExist) return "Valid Pip ID"
 		else if (pipClass.addingNewPipRequirements.userAlreadyAddedUUID) return "You've already added this Pip ID"
-		else if (!pipUUIDValid) return "Invalid Pip ID: Pip ID must be 5 characters"
+		else if (!pipUUIDValid) return "Invalid: Pip ID must be 5 characters"
 		return "The entered Pip ID doesn't exist"
 	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist, pipClass.addingNewPipRequirements.userAlreadyAddedUUID])
 

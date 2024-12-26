@@ -1,11 +1,12 @@
-import { useForm } from "react-hook-form"
 import { useCallback } from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import { Button } from "../../shadcn/ui/button"
+import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../../hooks/pip/add-pip"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { addPipSchema } from "../../../utils/auth/auth-schemas"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import useValidatePipData from "../../../hooks/pip/validate-pip-data"
@@ -38,6 +39,7 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 					<div className="flex flex-col">
 						<EnterPipID control={form.control} />
 						<EnterPipName control={form.control}/>
+						<EnterWifiCreds control={form.control}/>
 						<SelectAutoreconnectToPip control={form.control} />
 						<div className="flex justify-between mt-2 items-center">
 							<Button

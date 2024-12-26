@@ -28,6 +28,7 @@ export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promis
 			}
 			pipClass.updateAddingNewPipRequirements("doesPipUUIDExist", true)
 			pipClass.updateAddingNewPipRequirements("isPipNameNeeded", pipDataResponse.data.needsToAddName)
+			pipClass.updateAddingNewPipRequirements("isPipOnline", pipDataResponse.data.pipConnectionStatus !== "inactive")
 		} catch (error) {
 			console.error(error)
 		} finally {
