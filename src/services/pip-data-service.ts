@@ -25,8 +25,8 @@ export default class PipDataService {
 		)
 	}
 
-	async checkIfPipUUIDIsValid(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.get<AllCommonResponses>(
+	async checkIfPipUUIDIsValid(pipUUID: PipUUID): Promise<AxiosResponse<IsValidPipUUIDResponse | NonSuccessResponse>> {
+		return await this.httpClient.http.get<IsValidPipUUIDResponse | NonSuccessResponse>(
 			`${this.pathHeader}/check-if-pip-uuid-is-valid/${pipUUID}`
 		)
 	}

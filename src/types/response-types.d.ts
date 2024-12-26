@@ -36,6 +36,11 @@ declare global {
 		userPipData: PipData[]
 	}
 
+	type IsValidPipUUIDResponse = {
+		needsToAddName: boolean
+		pipConnectionStatus: ESPConnectionStatus
+	}
+
 	// Socket Events:
 	type PipStatusUpdate = {
 		pipUUID: PipUUID

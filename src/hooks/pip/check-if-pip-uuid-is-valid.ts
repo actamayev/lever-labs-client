@@ -38,11 +38,7 @@ export default function useCheckIfPipUUIDIsValid(): (
 				throw Error ("Unable to retrieve pip Data")
 			}
 			setDoesPipUUIDExist(true)
-			if (pipDataResponse.data.success === "Please add name.") {
-				setIsPipNameNeeded(true)
-			} else if (pipDataResponse.data.success === "Name already added") {
-				setIsPipNameNeeded(false)
-			}
+			setIsPipNameNeeded(pipDataResponse.data.needsToAddName)
 		} catch (error) {
 			console.error(error)
 		} finally {
