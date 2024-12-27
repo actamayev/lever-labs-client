@@ -11,9 +11,13 @@ export default function ConnectToPipInstructions(props: Props) {
 	const { formValues, encodedWifiCredentials } = props
 	const toast = useStyledToast()
 
+	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
 	const openIpAddrTab = useCallback(() => {
 		try {
-			window.open(`http://192.168.4.1/setup/${encodedWifiCredentials}`, "_blank")
+			const newWindow = window.open(`http://192.168.4.1/setup?credentials=${encodedWifiCredentials}`, "_blank")
+			if (!newWindow) {
+				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
+			}
 		} catch (error) {
 			console.error("Failed to open setup page:", error)
 			toast.negative({
