@@ -8,25 +8,28 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useCheckIfPipUUIDIsValid(): (
 	pipUUID: PipUUID,
-    form: UseFormReturn<IncompletePipData>  // Change this from Control to UseFormReturn
+    form: UseFormReturn<IncompletePipData>
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 
 	return useCallback(async (
 		pipUUID: PipUUID,
-		form: UseFormReturn<IncompletePipData>  // Change this from Control to UseFormReturn
+		form: UseFormReturn<IncompletePipData>
 	) => {
 		try {
-			if (
-				_.isNull(blueDotApiClient.httpClient.accessToken) ||
-				!isPipUUIDValid(pipUUID)
-			) return
+			if (!isPipUUIDValid(pipUUID)) {
+				form.setValue("pipName", "")
+				return
+			}
 
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				pipClass.updateAddingNewPipRequirements("userAlreadyAddedUUID", true)
 				return
 			}
+
+			if (_.isNull(blueDotApiClient.httpClient.accessToken)) return
+
 			pipClass.setIsRetrievingPipData(true)
 
 			const pipDataResponse = await blueDotApiClient.pipDataService.checkIfPipUUIDIsValid(pipUUID)

@@ -1,23 +1,25 @@
+import _ from "lodash"
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { Control } from "react-hook-form"
 import { Eye, EyeOff } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
+import LockIconAndTooltip from "../../lock-icon-and-tooltip"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
-import LockIconAndTooltip from "../../lock-icon-and-tooltip"
+import EncodeWifiDataButton from "./encode-wifi-data-button"
 
 interface Props {
 	control: Control<IncompletePipData>
 	formValues: IncompletePipData
+	setEncodedWifiCredentials: React.Dispatch<React.SetStateAction<string | null>>
 }
 
 function EnterWifiCreds(props: Props) {
-	const { control, formValues } = props
+	const { control, formValues, setEncodedWifiCredentials } = props
 	const pipClass = usePipContext()
 	const [showPassword, setShowPassword] = useState(false)
-
 	if (
 		pipClass.addingNewPipRequirements.doesPipUUIDExist === false ||
 		pipClass.addingNewPipRequirements.isPipOnline
@@ -25,7 +27,7 @@ function EnterWifiCreds(props: Props) {
 
 	return (
 		<>
-			<p className="my-1">Step 2: Connect {formValues.pipName} to Wi-Fi</p>
+			<p className="my-1">Step 3: Connect {formValues.pipName} to Wi-Fi</p>
 			<FormField
 				control={control}
 				name="wifiNetworkName"
@@ -40,6 +42,10 @@ function EnterWifiCreds(props: Props) {
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 									placeholder="Network Name"
 									autoComplete="off"
+									onChange={(e) => {
+										field.onChange(e.target.value)
+										if (_.isEmpty(e.target.value)) setEncodedWifiCredentials(null)
+									}}
 								/>
 								<div className="absolute inset-y-0 right-2 flex items-center">
 									<LockIconAndTooltip />
@@ -89,6 +95,10 @@ function EnterWifiCreds(props: Props) {
 						<FormMessage />
 					</FormItem>
 				)}
+			/>
+			<EncodeWifiDataButton
+				formValues={formValues}
+				setEncodedWifiCredentials={setEncodedWifiCredentials}
 			/>
 		</>
 	)

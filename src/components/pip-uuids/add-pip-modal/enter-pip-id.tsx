@@ -48,7 +48,7 @@ function EnterPipID(props: Props) {
 
 	return (
 		<>
-			<p className="mb-1">Step 1: Add your Pip&apos;s ID and Name</p>
+			<p className="mb-1">Step 2: Add your Pip&apos;s ID and give it a name</p>
 			<FormField
 				control={form.control}
 				name="pipUUID"

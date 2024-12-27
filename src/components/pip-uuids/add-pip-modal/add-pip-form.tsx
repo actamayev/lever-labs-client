@@ -1,5 +1,5 @@
-import { useCallback } from "react"
 import { useForm } from "react-hook-form"
+import { useCallback, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../../shadcn/ui/form"
@@ -22,7 +22,7 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 			wifiPassword: ""
 		}
 	})
-
+	const [encodedWifiCredentials, setEncodedWifiCredentials] = useState<string | null>(null)
 	const formValues = form.watch()
 
 	const onSubmit = useCallback(async (values: IncompletePipData) => {
@@ -34,11 +34,19 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<div className="flex flex-col">
+						<p className="mb-1">Step 1: Turn on your Pip</p>
 						<EnterPipID form={form} />
-						<EnterPipName control={form.control} formValues={formValues}/>
-						<EnterWifiCreds control={form.control} formValues={formValues}/>
+						<EnterPipName
+							control={form.control}
+							formValues={formValues}
+						/>
+						<EnterWifiCreds
+							control={form.control}
+							formValues={formValues}
+							setEncodedWifiCredentials={setEncodedWifiCredentials}
+						/>
 						<SelectAutoreconnectToPip control={form.control} />
-						<AddPipButton formValues={formValues}/>
+						<AddPipButton formValues={formValues} />
 					</div>
 				</form>
 			</Form>
