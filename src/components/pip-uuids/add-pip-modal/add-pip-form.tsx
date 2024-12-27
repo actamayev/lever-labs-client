@@ -7,7 +7,7 @@ import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
 import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../../hooks/pip/add-pip"
-import { addPipSchema } from "../../../utils/auth/auth-schemas"
+import { addPipSchema } from "../../../utils/pip/pip-schemas"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 

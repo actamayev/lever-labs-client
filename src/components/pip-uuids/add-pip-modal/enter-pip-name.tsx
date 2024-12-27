@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { FormControl, FormField, FormItem } from "../../shadcn/ui/form"
 import {
 	Tooltip,
 	TooltipContent,
@@ -31,8 +31,8 @@ function EnterPipName(props: Props) {
 
 	const tooltipMessage = useCallback(() => {
 		if (!formValues.pipName) return "Please give your Pip a name"
-		if (formValues.pipName.length < 3) return "Pip name must be at least 3 characters"
-		if (formValues.pipName.length > 20) return "Pip name can't be more than 20 characters"
+		if (formValues.pipName.length < 3) return "Pip's name must be at least 3 characters"
+		if (formValues.pipName.length > 20) return "Pip's name can't be more than 20 characters"
 		return "Valid Name"
 	}, [formValues.pipName])
 
@@ -87,7 +87,6 @@ function EnterPipName(props: Props) {
 							)}
 						</div>
 					</FormControl>
-					<FormMessage />
 				</FormItem>
 			)}
 		/>
