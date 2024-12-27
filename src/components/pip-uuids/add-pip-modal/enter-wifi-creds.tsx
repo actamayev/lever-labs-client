@@ -1,14 +1,13 @@
 import _ from "lodash"
-import { useState } from "react"
 import { observer } from "mobx-react"
 import { Control } from "react-hook-form"
 import { Eye, EyeOff } from "lucide-react"
+import { useCallback, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import LockIconAndTooltip from "../../lock-icon-and-tooltip"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
-import EncodeWifiDataButton from "./encode-wifi-data-button"
 
 interface Props {
 	control: Control<IncompletePipData>
@@ -16,10 +15,21 @@ interface Props {
 	setEncodedWifiCredentials: React.Dispatch<React.SetStateAction<string | null>>
 }
 
+// eslint-disable-next-line max-lines-per-function
 function EnterWifiCreds(props: Props) {
 	const { control, formValues, setEncodedWifiCredentials } = props
 	const pipClass = usePipContext()
 	const [showPassword, setShowPassword] = useState(false)
+
+	const encodeWifiData = useCallback((ssid: string, password: string) => {
+		if (_.isEmpty(ssid)) {
+			setEncodedWifiCredentials(null)
+			return
+		}
+		const data = JSON.stringify({ ssid, password })
+		setEncodedWifiCredentials(btoa(data))
+	}, [setEncodedWifiCredentials])
+
 	if (
 		pipClass.addingNewPipRequirements.doesPipUUIDExist === false ||
 		pipClass.addingNewPipRequirements.isPipOnline
@@ -44,7 +54,7 @@ function EnterWifiCreds(props: Props) {
 									autoComplete="off"
 									onChange={(e) => {
 										field.onChange(e.target.value)
-										if (_.isEmpty(e.target.value)) setEncodedWifiCredentials(null)
+										encodeWifiData(e.target.value, formValues.wifiPassword || "")
 									}}
 								/>
 								<div className="absolute inset-y-0 right-2 flex items-center">
@@ -72,6 +82,10 @@ function EnterWifiCreds(props: Props) {
 									placeholder="Network Password"
 									autoComplete="new-password"
 									autoSave="off"
+									onChange={(e) => {
+										field.onChange(e.target.value)
+										encodeWifiData(formValues.wifiNetworkName || "", e.target.value)
+									}}
 								/>
 								<Button
 									type="button"
@@ -95,10 +109,6 @@ function EnterWifiCreds(props: Props) {
 						<FormMessage />
 					</FormItem>
 				)}
-			/>
-			<EncodeWifiDataButton
-				formValues={formValues}
-				setEncodedWifiCredentials={setEncodedWifiCredentials}
 			/>
 		</>
 	)

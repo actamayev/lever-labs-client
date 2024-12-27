@@ -3,6 +3,7 @@ import { Check, X } from "lucide-react"
 import { Control } from "react-hook-form"
 import { useCallback, useMemo } from "react"
 import { Input } from "../../shadcn/ui/input"
+import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import {
@@ -11,7 +12,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import { Button } from "../../shadcn/ui/button"
 
 interface Props {
 	control: Control<IncompletePipData>
@@ -42,7 +42,7 @@ function EnterPipName(props: Props) {
 			name="pipName"
 			disabled={isDisabled}
 			render={({ field }) => (
-				<FormItem className="mt-2">
+				<FormItem>
 					<FormControl>
 						<div className="relative">
 							<Input

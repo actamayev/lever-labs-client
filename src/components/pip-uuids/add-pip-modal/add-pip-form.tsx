@@ -9,6 +9,7 @@ import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../../hooks/pip/add-pip"
 import { addPipSchema } from "../../../utils/auth/auth-schemas"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
+import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 
 export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () => void }) {
 	const addPip = useAddPip()
@@ -35,15 +36,23 @@ export default function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () =
 				<form onSubmit={form.handleSubmit(onSubmit)} className="mb-3">
 					<div className="flex flex-col">
 						<p className="mb-1">Step 1: Turn on your Pip</p>
-						<EnterPipID form={form} />
-						<EnterPipName
-							control={form.control}
-							formValues={formValues}
-						/>
+						<p className="mb-1">Step 2: Add your Pip&apos;s ID and give it a name</p>
+						<div className="flex flex-row gap-4">
+							<div className="w-1/3">
+								<EnterPipID form={form} />
+							</div>
+							<div className="flex-1">
+								<EnterPipName control={form.control} formValues={formValues} />
+							</div>
+						</div>
 						<EnterWifiCreds
 							control={form.control}
 							formValues={formValues}
 							setEncodedWifiCredentials={setEncodedWifiCredentials}
+						/>
+						<ConnectToPipInstructions
+							encodedWifiCredentials={encodedWifiCredentials}
+							formValues={formValues}
 						/>
 						<SelectAutoreconnectToPip control={form.control} />
 						<AddPipButton formValues={formValues} />
