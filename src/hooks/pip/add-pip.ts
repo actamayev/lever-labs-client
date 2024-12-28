@@ -4,50 +4,51 @@ import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
 import useStyledToast from "../../components/toast-options"
+import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
-export default function useAddPip(): (
-	pipData: IncompletePipData,
-	toggleModalOpen: () => void,
-	isPipNameNeeded: boolean,
-	doesPipUUIDExist: boolean
-) => Promise<void> {
+export default function useAddPip(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 	const pipClass = usePipContext()
+	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
 
 	// eslint-disable-next-line complexity
-	return useCallback(async (
-		pipData: IncompletePipData,
-		toggleModalOpen: () => void,
-		isPipNameNeeded: boolean,
-		doesPipUUIDExist: boolean
-	) => {
+	return useCallback(async () => {
 		try {
-			if (validatePipData(pipData, doesPipUUIDExist, isPipNameNeeded) === false) return
-			if (pipClass.checkIfUUIDAlreadyExists(pipData.pipUUID) === true) {
+			if (_.isNull(addPipClass)) return
+			if (pipClass.checkIfUUIDAlreadyExists(addPipClass.form.getValues("pipUUID")) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
 
-			if (_.isEmpty(pipData.pipName)) delete pipData.pipName
+			if (validatePipData() === false) return
 
-			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(pipData)
+			if (_.isEmpty(addPipClass.form.getValues("pipName"))) addPipClass.form.setValue("pipName", undefined)
+			addPipClass.form.setValue("wifiNetworkName", undefined)
+			addPipClass.form.setValue("wifiPassword", undefined)
+			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
+				addPipClass.form.setValue("shouldAutoConnect", false)
+			}
+
+			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(addPipClass.form.getValues())
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
-			toggleModalOpen()
+			addPipClass.store.setIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
-				pipName: pipData.pipName || addPipDataResponse.data.pipName,
-				pipUUID: pipData.pipUUID,
+				pipName: addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName,
+				pipUUID: addPipClass.form.getValues("pipUUID"),
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
+			addPipClass.store.resetAddingPipRequirements()
+			addPipClass.form.reset()
 			toast.positive({
-				description: `${pipData.pipName || addPipDataResponse.data.pipName} added`
+				description: `${addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName} added`
 			})
 		} catch (error) {
 			console.error(error)
@@ -75,10 +76,11 @@ export default function useAddPip(): (
 					}
 				}
 			}
+			if (_.isNull(addPipClass)) return
 			toast.negative({
-				title: `Unable to add ${pipData.pipName} at this time`,
+				title: `Unable to add ${addPipClass.form.getValues("pipName")} at this time`,
 				description: "Please reload page and try again"
 			})
 		}
-	}, [blueDotApiClient.pipDataService, pipClass, toast, validatePipData])
+	}, [addPipClass, blueDotApiClient.pipDataService, pipClass, toast, validatePipData])
 }

@@ -1,23 +1,20 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
+import { useAddPipContext } from "../../contexts/add-pip-context"
 
-export default function useValidatePipData(): (
-	pipData: IncompletePipData,
-	doesPipUUIDExist: boolean,
-	isPipNameNeeded: boolean
-) => boolean {
-	return useCallback((
-		pipData: IncompletePipData,
-		doesPipUUIDExist: boolean,
-		isPipNameNeeded: boolean
-	) => {
-		if (!doesPipUUIDExist) return false
+export default function useValidatePipData(): () => boolean {
+	const addPipClass = useAddPipContext()
 
-		const { pipName, pipUUID } = pipData
+	return useCallback(() => {
+		if (_.isNull(addPipClass)) return false
+		if (!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) return false
+
+		const [pipName, pipUUID, wifiNetworkName] = addPipClass.form.getValues(["pipName", "pipUUID", "wifiNetworkName"])
+		if (!addPipClass.store.addingNewPipRequirements.isPipOnline === true && !wifiNetworkName) return false
 
 		const isUUIDValid = isPipUUIDValid(pipUUID)
-		if (isPipNameNeeded === false) {
+		if (addPipClass.store.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded === true) {
 			return isUUIDValid
 		}
 
@@ -26,5 +23,5 @@ export default function useValidatePipData(): (
 		const isNameValid = pipName.length >= 3 && pipName.length <= 20
 
 		return isNameValid && isUUIDValid
-	}, [])
+	}, [addPipClass])
 }
