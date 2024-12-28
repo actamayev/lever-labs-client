@@ -13,15 +13,13 @@ function AddPipButton() {
 		!addPipClass.store.addingNewPipRequirements.isPipOnline
 	) return null
 
-	const { pipName } = addPipClass.form.watch()
-
 	return (
 		<div className="flex justify-between mt-2 items-center">
 			<Button
 				type="submit"
 				disabled={!validatePipData}
 			>
-				Add {pipName}
+				Add
 			</Button>
 		</div>
 	)

@@ -35,8 +35,6 @@ function EnterPipName() {
 
 	if (_.isNull(addPipClass)) return null
 
-	const { pipName } = addPipClass.form.watch()
-
 	return (
 		<FormField
 			control={addPipClass.form.control}
@@ -71,7 +69,7 @@ function EnterPipName() {
 													size="sm"
 													className="h-auto p-1 dark:hover:bg-zinc-700"
 												>
-													{(pipName && pipName.length >= 3 && pipName.length <= 20) ? (
+													{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
 														<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
 													) : (
 														<X className="h-4 w-4 text-red-500 dark:text-red-500" />

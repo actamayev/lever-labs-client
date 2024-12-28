@@ -42,7 +42,8 @@ function EnterPipID() {
 		else if (!pipUUIDValid) return "Pip ID must be 5 alphanumeric characters"
 		return "The entered Pip ID doesn't exist"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [addPipClass, addPipClass?.store.addingNewPipRequirements])
+	}, [addPipClass, addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist,
+		addPipClass?.store.addingNewPipRequirements.userAlreadyAddedUUID])
 
 	if (_.isNull(addPipClass)) return null
 
