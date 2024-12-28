@@ -64,8 +64,8 @@ interface AddPipContextValue {
 
 const AddPipContext = createContext<AddPipContextValue | null>(null)
 
-function useAddPipForm() {
-	return useForm<IncompletePipData>({
+export default function AddPipProvider({ children }: { children: React.ReactNode }) {
+	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
 			pipUUID: "",
@@ -75,10 +75,6 @@ function useAddPipForm() {
 			wifiPassword: ""
 		}
 	})
-}
-
-export default function AddPipProvider ({ children }: { children: React.ReactNode }) {
-	const form = useAddPipForm()
 
 	const contextValue = useMemo(() => ({
 		store: new AddPipClass(),
