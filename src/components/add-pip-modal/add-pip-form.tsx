@@ -34,7 +34,7 @@ function AddPipForm() {
 						<EnterWifiCreds />
 						<ConnectToPipInstructions />
 						<SelectAutoreconnectToPip />
-						{/* <AddPipButton /> */}
+						<AddPipButton />
 					</div>
 				</form>
 			</Form>
