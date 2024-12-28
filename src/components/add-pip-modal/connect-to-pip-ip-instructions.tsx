@@ -20,7 +20,7 @@ function ConnectToPipInstructions() {
 		} catch (error) {
 			console.error("Failed to open setup page:", error)
 			toast.negative({
-				title: `Unable to connect ${addPipClass?.form.getValues().pipName} to Wi-Fi at this time`,
+				title: `Unable to connect ${addPipClass?.form.getValues("pipName")} to Wi-Fi at this time`,
 				description: "Please reload page and try again"
 			})
 		}
