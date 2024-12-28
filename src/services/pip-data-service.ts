@@ -7,7 +7,7 @@ export default class PipDataService {
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
-	async addPip(addPipToAccountData: IncompletePipData): Promise<AxiosResponse<AddNewPipResponse | NonSuccessResponse>> {
+	async addPip(addPipToAccountData: AddPipData): Promise<AxiosResponse<AddNewPipResponse | NonSuccessResponse>> {
 		return await this.httpClient.http.post<AddNewPipResponse | NonSuccessResponse>(
 			`${this.pathHeader}/add-pip-to-account`, { addPipToAccountData }
 		)
@@ -25,8 +25,8 @@ export default class PipDataService {
 		)
 	}
 
-	async checkIfPipUUIDIsValid(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.get<AllCommonResponses>(
+	async checkIfPipUUIDIsValid(pipUUID: PipUUID): Promise<AxiosResponse<IsValidPipUUIDResponse | NonSuccessResponse>> {
+		return await this.httpClient.http.get<IsValidPipUUIDResponse | NonSuccessResponse>(
 			`${this.pathHeader}/check-if-pip-uuid-is-valid/${pipUUID}`
 		)
 	}

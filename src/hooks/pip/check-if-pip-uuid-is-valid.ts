@@ -3,50 +3,45 @@ import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { isNonSuccessResponse } from "../../utils/type-checks"
+import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useCheckIfPipUUIDIsValid(): (
-	pipUUID: PipUUID,
-	setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-	setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
-	setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
-) => Promise<void> {
+export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
+	const addPipClass = useAddPipContext()
 
-	// eslint-disable-next-line complexity
-	return useCallback(async (
-		pipUUID: PipUUID,
-		setIsPipNameNeeded: React.Dispatch<React.SetStateAction<boolean>>,
-		setDoesPipUUIDExist: React.Dispatch<React.SetStateAction<boolean>>,
-		setUserAlreadyAddedUUID: React.Dispatch<React.SetStateAction<boolean>>
-	) => {
+	return useCallback(async (pipUUID: PipUUID) => {
 		try {
-			if (
-				_.isNull(blueDotApiClient.httpClient.accessToken) ||
-				!isPipUUIDValid(pipUUID)
-			) return
-
-			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
-				setUserAlreadyAddedUUID(true)
+			if (_.isNull(addPipClass)) return
+			if (!isPipUUIDValid(pipUUID)) {
+				addPipClass.form.setValue("pipName", "")
 				return
 			}
+
+			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
+				addPipClass.store.updateAddingNewPipRequirements("userAlreadyAddedUUID", true)
+				return
+			}
+
+			if (_.isNull(blueDotApiClient.httpClient.accessToken)) return
+
 			pipClass.setIsRetrievingPipData(true)
 
 			const pipDataResponse = await blueDotApiClient.pipDataService.checkIfPipUUIDIsValid(pipUUID)
 			if (!_.isEqual(pipDataResponse.status, 200) || isNonSuccessResponse(pipDataResponse.data)) {
 				throw Error ("Unable to retrieve pip Data")
 			}
-			setDoesPipUUIDExist(true)
-			if (pipDataResponse.data.success === "Please add name.") {
-				setIsPipNameNeeded(true)
-			} else if (pipDataResponse.data.success === "Name already added") {
-				setIsPipNameNeeded(false)
+			addPipClass.store.updateAddingNewPipRequirements("doesPipUUIDExist", true)
+			addPipClass.store.updateAddingNewPipRequirements("hasPipNamePreviouslyBeenAdded", !_.isNull(pipDataResponse.data.pipName))
+			addPipClass.store.updateAddingNewPipRequirements("isPipOnline", pipDataResponse.data.pipConnectionStatus !== "inactive")
+			if (!_.isNull(pipDataResponse.data.pipName)) {
+				addPipClass.form.setValue("pipName", pipDataResponse.data.pipName)
 			}
 		} catch (error) {
 			console.error(error)
 		} finally {
 			pipClass.setIsRetrievingPipData(false)
 		}
-	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService])
+	}, [addPipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass])
 }
