@@ -28,7 +28,7 @@ function EnterWifiNetworkName() {
 			control={addPipClass.form.control}
 			name="wifiNetworkName"
 			render={({ field }) => (
-				<FormItem className="mt-2">
+				<FormItem>
 					<FormControl>
 						<div className="relative">
 							<Input

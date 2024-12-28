@@ -32,7 +32,7 @@ function ConnectToPipInstructions() {
 	) return null
 
 	return (
-		<div className="my-1">
+		<div className="my-2">
 			<div className="flex flex-col">
 				<div>
 					Step 4: Send your Wi-Fi credentials to {addPipClass.store.mirroredFormValues.pipName}
@@ -48,7 +48,7 @@ function ConnectToPipInstructions() {
 				</div>
 				<Button
 					type="button"
-					className="mt-1"
+					className="mt-2"
 					onClick={openIpAddrTab}
 				>
 					Send Wi-Fi credentials
