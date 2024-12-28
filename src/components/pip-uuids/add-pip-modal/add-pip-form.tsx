@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
@@ -11,21 +11,17 @@ import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import { useAddPipContext } from "../../../contexts/add-pip-context"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 
-function AddPipForm({ toggleModalOpen } : { toggleModalOpen: () => void }) {
+function AddPipForm() {
 	const addPip = useAddPip()
 	const [encodedWifiCredentials, setEncodedWifiCredentials] = useState<string | null>(null)
 	const addPipClass = useAddPipContext()
-
-	const onSubmit = useCallback(async () => {
-		await addPip(toggleModalOpen)
-	}, [addPip, toggleModalOpen])
 
 	if (_.isNull(addPipClass)) return null
 
 	return (
 		<div className="p-3">
 			<Form {...addPipClass.form}>
-				<form onSubmit={addPipClass.form.handleSubmit(onSubmit)} className="mb-3">
+				<form onSubmit={addPipClass.form.handleSubmit(addPip)} className="mb-3">
 					<div className="flex flex-col">
 						<p className="mb-1">Step 1: Turn on your Pip</p>
 						<p className="mb-1">Step 2: Add your Pip&apos;s ID and give it a name</p>

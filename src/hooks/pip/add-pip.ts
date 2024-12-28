@@ -8,7 +8,7 @@ import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
-export default function useAddPip(): (toggleModalOpen: () => void) => Promise<void> {
+export default function useAddPip(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 	const pipClass = usePipContext()
@@ -16,7 +16,7 @@ export default function useAddPip(): (toggleModalOpen: () => void) => Promise<vo
 	const validatePipData = useValidatePipData()
 
 	// eslint-disable-next-line complexity
-	return useCallback(async (toggleModalOpen: () => void) => {
+	return useCallback(async () => {
 		try {
 			if (_.isNull(addPipClass)) return
 			if (pipClass.checkIfUUIDAlreadyExists(addPipClass.form.getValues().pipUUID) === true) {
@@ -37,7 +37,7 @@ export default function useAddPip(): (toggleModalOpen: () => void) => Promise<vo
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
-			toggleModalOpen()
+			addPipClass.store.updateIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
 				pipName: addPipClass.form.getValues().pipName || addPipDataResponse.data.pipName,
 				pipUUID: addPipClass.form.getValues().pipUUID,

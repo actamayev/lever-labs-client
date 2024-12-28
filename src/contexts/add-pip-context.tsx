@@ -11,6 +11,7 @@ class AddPipClass {
 		isPipOnline: false,
 		userAlreadyAddedUUID: false
 	}
+	public isAddPipModalOpen = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -30,8 +31,13 @@ class AddPipClass {
 		this.addingNewPipRequirements[field] = value
 	}
 
+	public updateIsAppPipModalOpen = action((newState: boolean) => {
+		this.isAddPipModalOpen = newState
+	})
+
 	public logout() {
 		this.resetAddingPipRequirements()
+		this.isAddPipModalOpen = false
 	}
 }
 

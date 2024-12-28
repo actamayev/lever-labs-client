@@ -1,13 +1,24 @@
-import { useRef } from "react"
+import _ from "lodash"
+import { useCallback, useRef } from "react"
+import { observer } from "mobx-react"
 import { createPortal } from "react-dom"
 import AddPipForm from "./add-pip-form"
 import ModalHeader from "../../modal-header"
+import { useAddPipContext } from "../../../contexts/add-pip-context"
 import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
 
-export default function AddPipModal({ toggleModalOpen } : { toggleModalOpen: () => void }) {
+function AddPipModal() {
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
-	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, toggleModalOpen)
+	const addPipClass = useAddPipContext()
+
+	const updateIsAppPipModalOpen = useCallback(() => {
+		if (_.isNull(addPipClass)) return
+		addPipClass.store.updateIsAppPipModalOpen(false)
+	}, [addPipClass])
+	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, () => updateIsAppPipModalOpen())
+
+	if (_.isNull(addPipClass) || !addPipClass.store.isAddPipModalOpen) return null
 
 	return createPortal(
 		<div className="fixed inset-0 flex items-start justify-center z-50 bg-black bg-opacity-50 pt-28 text-zinc-800 dark:text-zinc-50">
@@ -18,11 +29,13 @@ export default function AddPipModal({ toggleModalOpen } : { toggleModalOpen: () 
 			>
 				<ModalHeader
 					modalTitle="Add Pip"
-					toggleModalOpen={toggleModalOpen}
+					closeModal={() => updateIsAppPipModalOpen()}
 				/>
-				<AddPipForm toggleModalOpen = {toggleModalOpen}/>
+				<AddPipForm/>
 			</div>
 		</div>,
 		document.body
 	)
 }
+
+export default observer(AddPipModal)

@@ -12,14 +12,12 @@ import {
 import ErrorMessage from "../../error-message"
 import { Button } from "../../shadcn/ui/button"
 import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
-import { usePipContext } from "../../../contexts/pip-context"
 import { useAddPipContext } from "../../../contexts/add-pip-context"
 import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
 import { FormField, FormItem, FormControl, FormMessage } from "../../shadcn/ui/form"
 
 // TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
 function EnterPipID() {
-	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
 

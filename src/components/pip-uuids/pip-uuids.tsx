@@ -14,15 +14,16 @@ import useUsername from "../../hooks/memos/username"
 import AddPipModal from "./add-pip-modal/add-pip-modal"
 import { usePipContext } from "../../contexts/pip-context"
 import AvailablePipsDropdown from "./available-pips-dropdown"
+import { useAddPipContext } from "../../contexts/add-pip-context"
 import useDisconnectFromPip from "../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
 
 function PipUUIDs() {
-	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
 	const pipClass = usePipContext()
+	const addPipClass = useAddPipContext()
 	const username = useUsername()
 	const requestToConnectToPip = useRequestToConnectToPip()
 	const diconnectFromPip = useDisconnectFromPip()
@@ -42,10 +43,10 @@ function PipUUIDs() {
 				return await requestToConnectToPip(pipClass.selectedPip.pipUUID)
 			}
 		}
-		if (_.isEmpty(pipClass.pipData)) {
-			setIsModalOpen(true)
+		if (_.isEmpty(pipClass.pipData) && !_.isNull(addPipClass)) {
+			addPipClass.store.updateIsAppPipModalOpen(true)
 		}
-	}, [diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
+	}, [addPipClass, diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
 	if (_.isNull(username)) return null
 
@@ -82,11 +83,11 @@ function PipUUIDs() {
 					className="w-52"
 					sideOffset={8}
 				>
-					<AvailablePipsDropdown setIsModalOpen={setIsModalOpen} />
+					<AvailablePipsDropdown />
 				</DropdownMenuContent>
 			</DropdownMenu>
 
-			{isModalOpen && <AddPipModal toggleModalOpen={() => setIsModalOpen(false)} />}
+			<AddPipModal />
 		</div>
 	)
 }
