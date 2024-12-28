@@ -30,6 +30,7 @@ function EnterPipID() {
 		if (_.isNull(addPipClass)) return
 
 		onChange(allowedInput)
+		addPipClass.store.updateMirroredFormValues("pipUUID", allowedInput)
 
 		addPipClass.store.resetAddingPipRequirements()
 		await checkIfPipUUIDIsValid(allowedInput)

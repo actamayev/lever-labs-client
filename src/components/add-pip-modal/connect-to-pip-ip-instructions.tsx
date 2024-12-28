@@ -20,7 +20,7 @@ function ConnectToPipInstructions() {
 		} catch (error) {
 			console.error("Failed to open setup page:", error)
 			toast.negative({
-				title: `Unable to connect ${addPipClass?.form.getValues("pipName")} to Wi-Fi at this time`,
+				title: `Unable to connect ${addPipClass?.store.mirroredFormValues.pipName} to Wi-Fi at this time`,
 				description: "Please reload page and try again"
 			})
 		}
@@ -35,7 +35,7 @@ function ConnectToPipInstructions() {
 		<div className="my-1">
 			<div className="flex flex-col">
 				<div>
-					Step 4: Send your Wi-Fi credentials to {addPipClass.form.watch().pipName}
+					Step 4: Send your Wi-Fi credentials to {addPipClass.store.mirroredFormValues.pipName}
 				</div>
 				<div>
 					1. Open your computer&apos;s Wi-Fi settings
@@ -43,7 +43,7 @@ function ConnectToPipInstructions() {
 				<div>
 					2. Connect to the Wi-Fi network:&nbsp;
 					<span className="font-bold">
-						pip-{addPipClass.form.watch().pipUUID}
+						pip-{addPipClass.store.mirroredFormValues.pipUUID}
 					</span>
 				</div>
 				<Button

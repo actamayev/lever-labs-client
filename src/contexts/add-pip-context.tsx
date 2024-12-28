@@ -14,6 +14,13 @@ class AddPipClass {
 	}
 	public isAddPipModalOpen = false
 	public encodedWifiCredentials: string | null = null
+	public mirroredFormValues: IncompletePipData = {
+		pipUUID: "" as PipUUID,
+		shouldAutoConnect: true,
+		pipName: "",
+		wifiNetworkName: "",
+		wifiPassword: ""
+	}
 
 	constructor() {
 		makeAutoObservable(this)
@@ -50,10 +57,33 @@ class AddPipClass {
 		this.setEncodedWifiCredentials(btoa(data))
 	})
 
+	public updateMirroredFormValues<K extends keyof IncompletePipData>(
+		field: K,
+		value: IncompletePipData[K]
+	): void {
+		this.mirroredFormValues[field] = value
+	}
+
+	public resetMirroredFormValues = action(() => {
+		this.mirroredFormValues = {
+			pipUUID: "" as PipUUID,
+			shouldAutoConnect: true,
+			pipName: "",
+			wifiNetworkName: "",
+			wifiPassword: ""
+		}
+	})
+
+	get isPipNameValid (): boolean {
+		if (!this.mirroredFormValues.pipName) return false
+		return this.mirroredFormValues.pipName.length >= 3 && this.mirroredFormValues.pipName.length <= 20
+	}
+
 	public logout() {
 		this.resetAddingPipRequirements()
 		this.setIsAppPipModalOpen(false)
 		this.setEncodedWifiCredentials(null)
+		this.resetMirroredFormValues()
 	}
 }
 

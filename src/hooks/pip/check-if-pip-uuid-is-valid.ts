@@ -16,6 +16,7 @@ export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promis
 			if (_.isNull(addPipClass)) return
 			if (!isPipUUIDValid(pipUUID)) {
 				addPipClass.form.setValue("pipName", "")
+				addPipClass.store.updateMirroredFormValues("pipName", "")
 				return
 			}
 
@@ -37,6 +38,7 @@ export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promis
 			addPipClass.store.updateAddingNewPipRequirements("isPipOnline", pipDataResponse.data.pipConnectionStatus !== "inactive")
 			if (!_.isNull(pipDataResponse.data.pipName)) {
 				addPipClass.form.setValue("pipName", pipDataResponse.data.pipName)
+				addPipClass.store.updateMirroredFormValues("pipName", pipDataResponse.data.pipName)
 			}
 		} catch (error) {
 			console.error(error)

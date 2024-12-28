@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import _ from "lodash"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
@@ -10,7 +11,12 @@ function AddPipButton() {
 
 	if (
 		_.isNull(addPipClass) ||
-		!addPipClass.store.addingNewPipRequirements.isPipOnline
+		!addPipClass.store.mirroredFormValues.pipName
+	) return null
+
+	if (
+		addPipClass.store.addingNewPipRequirements.isPipOnline &&
+		!addPipClass.store.isPipNameValid
 	) return null
 
 	return (

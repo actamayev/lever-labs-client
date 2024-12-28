@@ -13,11 +13,9 @@ function EnterWifiCreds() {
 		addPipClass.store.addingNewPipRequirements.isPipOnline
 	) return null
 
-	const { pipName } = addPipClass.form.watch()
-
 	return (
 		<>
-			<p className="my-1">Step 3: Connect {pipName} to Wi-Fi</p>
+			<p className="my-1">Step 3: Connect {addPipClass.store.mirroredFormValues.pipName} to Wi-Fi</p>
 			<EnterWifiNetworkName />
 			<EnterWifiPassword />
 		</>
