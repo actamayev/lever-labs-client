@@ -10,6 +10,8 @@ declare global {
 		pipName?: string
 	}
 
+	type WifiPipDataKeys = "wifiNetworkName" | "wifiPassword"
+
 	interface PipData {
 		pipName: string
 		pipUUID: PipUUID

@@ -48,13 +48,16 @@ class AddPipClass {
 		this.encodedWifiCredentials = newState
 	})
 
-	public encodeWifiData = action((ssid: string, password: string) => {
-		if (_.isEmpty(ssid)) {
-			this.setEncodedWifiCredentials(null)
-			return
+	private encodeWifiData = action((field: WifiPipDataKeys, value: string) => {
+		if (field === "wifiNetworkName" && _.isEmpty(value)) {
+			return this.setEncodedWifiCredentials(null)
 		}
-		const data = JSON.stringify({ ssid, password })
-		this.setEncodedWifiCredentials(btoa(data))
+
+		const data = {
+			ssid: field === "wifiNetworkName" ? value : "",
+			password: field === "wifiPassword" ? value : ""
+		}
+		this.setEncodedWifiCredentials(btoa(JSON.stringify(data)))
 	})
 
 	public updateMirroredFormValues<K extends keyof IncompletePipData>(
@@ -62,6 +65,16 @@ class AddPipClass {
 		value: IncompletePipData[K]
 	): void {
 		this.mirroredFormValues[field] = value
+		if (
+			this.isWifiField(field) &&
+			typeof value === "string"
+		) {
+			this.encodeWifiData(field, value)
+		}
+	}
+
+	private isWifiField(field: keyof IncompletePipData): field is WifiPipDataKeys {
+		return field === "wifiNetworkName" || field === "wifiPassword"
 	}
 
 	public resetMirroredFormValues = action(() => {

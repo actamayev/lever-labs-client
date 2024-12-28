@@ -19,8 +19,6 @@ function EnterWifiNetworkName() {
 
 		onChange(input)
 		addPipClass.store.updateMirroredFormValues("wifiNetworkName", input)
-		// TOOD: Make this method internal to the class: (trigger when the updateMirroredFormValues key is netowrk name or passwrod)
-		addPipClass.store.encodeWifiData(input, addPipClass.form.getValues("wifiPassword") || "")
 	}, [addPipClass])
 
 	if (_.isNull(addPipClass)) return null
