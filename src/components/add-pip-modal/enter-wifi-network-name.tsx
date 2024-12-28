@@ -10,8 +10,6 @@ function EnterWifiNetworkName() {
 
 	if (_.isNull(addPipClass)) return null
 
-	const { wifiPassword } = addPipClass.form.watch()
-
 	return (
 		<FormField
 			control={addPipClass.form.control}
@@ -29,7 +27,7 @@ function EnterWifiNetworkName() {
 								autoComplete="off"
 								onChange={(e) => {
 									field.onChange(e.target.value)
-									addPipClass.store.encodeWifiData(e.target.value, wifiPassword || "")
+									addPipClass.store.encodeWifiData(e.target.value, addPipClass.form.getValues("wifiPassword") || "")
 								}}
 							/>
 							<div className="absolute inset-y-0 right-2 flex items-center">

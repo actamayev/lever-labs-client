@@ -14,8 +14,6 @@ function EnterWifiPassword() {
 
 	if (_.isNull(addPipClass)) return null
 
-	const { wifiNetworkName } = addPipClass.form.watch()
-
 	return (
 		<FormField
 			control={addPipClass.form.control}
@@ -35,7 +33,7 @@ function EnterWifiPassword() {
 								autoSave="off"
 								onChange={(e) => {
 									field.onChange(e.target.value)
-									addPipClass.store.encodeWifiData(wifiNetworkName || "", e.target.value)
+									addPipClass.store.encodeWifiData(addPipClass.form.getValues("wifiNetworkName") || "", e.target.value)
 								}}
 							/>
 							<Button
