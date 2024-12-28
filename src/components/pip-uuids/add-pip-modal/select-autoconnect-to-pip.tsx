@@ -2,6 +2,7 @@ import { Info } from "lucide-react"
 import { observer } from "mobx-react"
 import { Control } from "react-hook-form"
 import Slider from "../../slider"
+import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import { FormControl, FormField, FormItem, FormLabel } from "../../shadcn/ui/form"
 import {
@@ -10,7 +11,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import { Button } from "../../shadcn/ui/button"
 
 function SelectAutoreconnectToPip({ control } : { control: Control<IncompletePipData>}) {
 	const pipClass = usePipContext()

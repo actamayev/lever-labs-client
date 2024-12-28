@@ -8,7 +8,7 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useCheckIfPipUUIDIsValid(): (
 	pipUUID: PipUUID,
-    form: UseFormReturn<IncompletePipData>
+	form: UseFormReturn<IncompletePipData>
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
