@@ -9,12 +9,11 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import ErrorMessage from "../error-message"
 import { Button } from "../shadcn/ui/button"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import { FormField, FormItem, FormControl } from "../shadcn/ui/form"
 import useCheckIfPipUUIDIsValid from "../../hooks/pip/check-if-pip-uuid-is-valid"
-import { FormField, FormItem, FormControl, FormMessage } from "../shadcn/ui/form"
 
 // TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
 function EnterPipID() {
@@ -48,69 +47,56 @@ function EnterPipID() {
 	if (_.isNull(addPipClass)) return null
 
 	return (
-		<>
-			<FormField
-				control={addPipClass.form.control}
-				name="pipUUID"
-				render={({ field }) => {
-					const pipUUIDValid = isPipUUIDValid(field.value)
-					const showStatus = field.value.length > 0
+		<FormField
+			control={addPipClass.form.control}
+			name="pipUUID"
+			render={({ field }) => {
+				const pipUUIDValid = isPipUUIDValid(field.value)
+				const showStatus = field.value.length > 0
 
-					return (
-						<FormItem>
-							<FormControl>
-								<div className="relative">
-									<Input
-										{...field}
-										onChange={(e) => cleanPipUUIDInput(e, field.onChange)}
-										className="w-full dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
+				return (
+					<FormItem>
+						<FormControl>
+							<div className="relative">
+								<Input
+									{...field}
+									onChange={(e) => cleanPipUUIDInput(e, field.onChange)}
+									className="w-full dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
-										placeholder="Pip ID"
-									/>
-									{showStatus && (
-										<div className="absolute inset-y-0 right-2 flex items-center">
-											<TooltipProvider delayDuration={0}>
-												<Tooltip>
-													<TooltipTrigger asChild>
-														<Button
-															type="button"
-															variant="ghost"
-															size="sm"
-															className="h-auto p-1 dark:hover:bg-zinc-700"
-														>
-															{(pipUUIDValid &&
+									placeholder="Pip ID"
+								/>
+								{showStatus && (
+									<div className="absolute inset-y-0 right-2 flex items-center">
+										<TooltipProvider delayDuration={0}>
+											<Tooltip>
+												<TooltipTrigger asChild>
+													<Button
+														type="button"
+														variant="ghost"
+														size="sm"
+														className="h-auto p-1 dark:hover:bg-zinc-700"
+													>
+														{(pipUUIDValid &&
 															addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
-																	<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
-																) : (
-																	<X className="h-4 w-4 text-red-500 dark:text-red-500" />
-																)}
-														</Button>
-													</TooltipTrigger>
-													<TooltipContent side="top">
-														{tooltipMessage(pipUUIDValid)}
-													</TooltipContent>
-												</Tooltip>
-											</TooltipProvider>
-										</div>
-									)}
-								</div>
-							</FormControl>
-							{addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID ? (
-								<div className="mt-1">
-									<ErrorMessage error="You've already added this Pip ID" />
-								</div>
-							) : (!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist && field.value.length === 5) && (
-								<div className="mt-1">
-									<ErrorMessage error="The entered Pip ID doesn't exist" />
-								</div>
-							)}
-							<FormMessage />
-						</FormItem>
-					)
-				}}
-			/>
-		</>
-
+																<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
+															) : (
+																<X className="h-4 w-4 text-red-500 dark:text-red-500" />
+															)}
+													</Button>
+												</TooltipTrigger>
+												<TooltipContent side="top">
+													{tooltipMessage(pipUUIDValid)}
+												</TooltipContent>
+											</Tooltip>
+										</TooltipProvider>
+									</div>
+								)}
+							</div>
+						</FormControl>
+					</FormItem>
+				)
+			}}
+		/>
 	)
 }
 
