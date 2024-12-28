@@ -44,23 +44,23 @@ class SocketClass extends EventEmitter {
 
 		this._socket.on("connect", () => {
 			this.isConnected = true
-			console.log("Connected to the backend")
+			console.info("Connected to the backend")
 		})
 
 		this._socket.on("disconnect", (reason: Socket.DisconnectReason) => {
 			this.isConnected = false
-			console.log("Disconnected from backend:", reason)
+			console.info("Disconnected from backend:", reason)
 		})
 
 		// Handle reconnection attempts
 		this._socket.on("reconnect_attempt", (attempt) => {
-			console.log(`Attempting to reconnect... (${attempt})`)
+			console.info(`Attempting to reconnect... (${attempt})`)
 		})
 	})
 
 	private setupPipEvents = action((): void => {
 		this._socket?.on("pip-connection-status-update", (data: PipStatusUpdate) => {
-			console.log("Received pip-connection-status-update:", data)
+			console.info("Received pip-connection-status-update:", data)
 			this.emit("pipStatusUpdate", data) // Emit event with processed data
 		})
 	})
