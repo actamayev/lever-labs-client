@@ -3,20 +3,20 @@ import { useCallback, useRef } from "react"
 import { observer } from "mobx-react"
 import { createPortal } from "react-dom"
 import AddPipForm from "./add-pip-form"
-import ModalHeader from "../../modal-header"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
-import useClickOutsideModalUseEffect from "../../../hooks/click-outside/click-outside-modal-use-effect"
+import ModalHeader from "../modal-header"
+import { useAddPipContext } from "../../contexts/add-pip-context"
+import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 
 function AddPipModal() {
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
 	const addPipClass = useAddPipContext()
 
-	const updateIsAppPipModalOpen = useCallback(() => {
+	const setIsAppPipModalOpen = useCallback(() => {
 		if (_.isNull(addPipClass)) return
-		addPipClass.store.updateIsAppPipModalOpen(false)
+		addPipClass.store.setIsAppPipModalOpen(false)
 	}, [addPipClass])
-	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, () => updateIsAppPipModalOpen())
+	useClickOutsideModalUseEffect(mouseDownTarget, modalRef, () => setIsAppPipModalOpen())
 
 	if (_.isNull(addPipClass) || !addPipClass.store.isAddPipModalOpen) return null
 
@@ -29,7 +29,7 @@ function AddPipModal() {
 			>
 				<ModalHeader
 					modalTitle="Add Pip"
-					closeModal={() => updateIsAppPipModalOpen()}
+					closeModal={() => setIsAppPipModalOpen()}
 				/>
 				<AddPipForm/>
 			</div>

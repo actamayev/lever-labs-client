@@ -1,3 +1,4 @@
+import _ from "lodash"
 import { action, makeAutoObservable } from "mobx"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
@@ -12,6 +13,7 @@ class AddPipClass {
 		userAlreadyAddedUUID: false
 	}
 	public isAddPipModalOpen = false
+	public encodedWifiCredentials: string | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -31,13 +33,27 @@ class AddPipClass {
 		this.addingNewPipRequirements[field] = value
 	}
 
-	public updateIsAppPipModalOpen = action((newState: boolean) => {
+	public setIsAppPipModalOpen = action((newState: boolean) => {
 		this.isAddPipModalOpen = newState
+	})
+
+	public setEncodedWifiCredentials = action((newState: string | null) => {
+		this.encodedWifiCredentials = newState
+	})
+
+	public encodeWifiData = action((ssid: string, password: string) => {
+		if (_.isEmpty(ssid)) {
+			this.setEncodedWifiCredentials(null)
+			return
+		}
+		const data = JSON.stringify({ ssid, password })
+		this.setEncodedWifiCredentials(btoa(data))
 	})
 
 	public logout() {
 		this.resetAddingPipRequirements()
-		this.isAddPipModalOpen = false
+		this.setIsAppPipModalOpen(false)
+		this.setEncodedWifiCredentials(null)
 	}
 }
 

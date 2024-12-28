@@ -2,10 +2,10 @@ import _ from "lodash"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
 import { useCallback, useMemo } from "react"
-import { Input } from "../../shadcn/ui/input"
-import { Button } from "../../shadcn/ui/button"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
-import { FormControl, FormField, FormItem } from "../../shadcn/ui/form"
+import { Input } from "../shadcn/ui/input"
+import { Button } from "../shadcn/ui/button"
+import { useAddPipContext } from "../../contexts/add-pip-context"
+import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
 import {
 	Tooltip,
 	TooltipContent,

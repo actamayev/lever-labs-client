@@ -28,7 +28,7 @@ function AvailablePipsDropdown() {
 				/>
 			))}
 			<Button
-				onClick={() => addPipClass.store.updateIsAppPipModalOpen(true)}
+				onClick={() => addPipClass.store.setIsAppPipModalOpen(true)}
 				className={cn(
 					"w-full px-4 py-2 h-7 flex items-center gap-2 text-black dark:text-white",
 					"bg-zinc-100 hover:bg-zinc-300 dark:bg-zinc-800 dark:hover:bg-zinc-600 cursor-pointer"

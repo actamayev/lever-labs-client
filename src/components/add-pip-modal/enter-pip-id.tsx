@@ -2,19 +2,19 @@ import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
-import { Input } from "../../shadcn/ui/input"
+import { Input } from "../shadcn/ui/input"
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import ErrorMessage from "../../error-message"
-import { Button } from "../../shadcn/ui/button"
-import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
-import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
-import { FormField, FormItem, FormControl, FormMessage } from "../../shadcn/ui/form"
+import ErrorMessage from "../error-message"
+import { Button } from "../shadcn/ui/button"
+import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
+import { useAddPipContext } from "../../contexts/add-pip-context"
+import useCheckIfPipUUIDIsValid from "../../hooks/pip/check-if-pip-uuid-is-valid"
+import { FormField, FormItem, FormControl, FormMessage } from "../shadcn/ui/form"
 
 // TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
 function EnterPipID() {

@@ -7,10 +7,10 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import Slider from "../../slider"
-import { Button } from "../../shadcn/ui/button"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
-import { FormControl, FormField, FormItem, FormLabel } from "../../shadcn/ui/form"
+import Slider from "../slider"
+import { Button } from "../shadcn/ui/button"
+import { useAddPipContext } from "../../contexts/add-pip-context"
+import { FormControl, FormField, FormItem, FormLabel } from "../shadcn/ui/form"
 
 function SelectAutoreconnectToPip() {
 	const addPipClass = useAddPipContext()

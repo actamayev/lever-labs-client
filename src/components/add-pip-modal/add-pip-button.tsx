@@ -1,8 +1,8 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
-import { Button } from "../../shadcn/ui/button"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
-import useValidatePipData from "../../../hooks/pip/validate-pip-data"
+import { Button } from "../shadcn/ui/button"
+import { useAddPipContext } from "../../contexts/add-pip-context"
+import useValidatePipData from "../../hooks/pip/validate-pip-data"
 
 function AddPipButton() {
 	const addPipClass = useAddPipContext()

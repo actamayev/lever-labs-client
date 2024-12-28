@@ -11,7 +11,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import useUsername from "../../hooks/memos/username"
-import AddPipModal from "./add-pip-modal/add-pip-modal"
+import AddPipModal from "../add-pip-modal/add-pip-modal"
 import { usePipContext } from "../../contexts/pip-context"
 import AvailablePipsDropdown from "./available-pips-dropdown"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -44,7 +44,7 @@ function PipUUIDs() {
 			}
 		}
 		if (_.isEmpty(pipClass.pipData) && !_.isNull(addPipClass)) {
-			addPipClass.store.updateIsAppPipModalOpen(true)
+			addPipClass.store.setIsAppPipModalOpen(true)
 		}
 	}, [addPipClass, diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 

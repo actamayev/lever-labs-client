@@ -37,7 +37,7 @@ export default function useAddPip(): () => Promise<void> {
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
-			addPipClass.store.updateIsAppPipModalOpen(false)
+			addPipClass.store.setIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
 				pipName: addPipClass.form.getValues().pipName || addPipDataResponse.data.pipName,
 				pipUUID: addPipClass.form.getValues().pipUUID,

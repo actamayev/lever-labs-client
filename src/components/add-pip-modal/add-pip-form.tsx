@@ -1,19 +1,17 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
-import { useState } from "react"
 import EnterPipID from "./enter-pip-id"
-import { Form } from "../../shadcn/ui/form"
+import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
 import EnterWifiCreds from "./enter-wifi-creds"
-import useAddPip from "../../../hooks/pip/add-pip"
+import useAddPip from "../../hooks/pip/add-pip"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
-import { useAddPipContext } from "../../../contexts/add-pip-context"
+import { useAddPipContext } from "../../contexts/add-pip-context"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 
 function AddPipForm() {
 	const addPip = useAddPip()
-	const [encodedWifiCredentials, setEncodedWifiCredentials] = useState<string | null>(null)
 	const addPipClass = useAddPipContext()
 
 	if (_.isNull(addPipClass)) return null
@@ -33,8 +31,8 @@ function AddPipForm() {
 								<EnterPipName />
 							</div>
 						</div>
-						<EnterWifiCreds setEncodedWifiCredentials={setEncodedWifiCredentials} />
-						<ConnectToPipInstructions encodedWifiCredentials={encodedWifiCredentials} />
+						<EnterWifiCreds />
+						<ConnectToPipInstructions />
 						<SelectAutoreconnectToPip />
 						{/* <AddPipButton /> */}
 					</div>
