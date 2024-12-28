@@ -14,9 +14,17 @@ function AddPipButton() {
 		!addPipClass.store.mirroredFormValues.pipName
 	) return null
 
+	// If the pip is online, but the inputed name isn't valid, show nothing
 	if (
 		addPipClass.store.addingNewPipRequirements.isPipOnline &&
 		!addPipClass.store.isPipNameValid
+	) return null
+
+	// If the Pip isn't online, and we haven't receieved confirmation it's connected yet, don't show add.
+	// The confirmation comes when the pip connects to backend
+	if (
+		!addPipClass.store.addingNewPipRequirements.isPipOnline &&
+		!addPipClass.store.receivedConfirmationPipConnected
 	) return null
 
 	return (

@@ -21,6 +21,7 @@ class AddPipClass {
 		wifiNetworkName: "",
 		wifiPassword: ""
 	}
+	public receivedConfirmationPipConnected = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -46,6 +47,10 @@ class AddPipClass {
 
 	public setEncodedWifiCredentials = action((newState: string | null) => {
 		this.encodedWifiCredentials = newState
+	})
+
+	public setReceivedConfirmationPipConnected = action((newState: boolean) => {
+		this.receivedConfirmationPipConnected = newState
 	})
 
 	private encodeWifiData = action((field: WifiPipDataKeys, value: string) => {
@@ -97,6 +102,7 @@ class AddPipClass {
 		this.setIsAppPipModalOpen(false)
 		this.setEncodedWifiCredentials(null)
 		this.resetMirroredFormValues()
+		this.setReceivedConfirmationPipConnected(false)
 	}
 }
 
