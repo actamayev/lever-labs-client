@@ -42,4 +42,3 @@ function AvailablePipsDropdown(props: Props) {
 }
 
 export default observer(AvailablePipsDropdown)
-

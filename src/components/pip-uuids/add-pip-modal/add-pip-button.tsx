@@ -1,25 +1,27 @@
+import _ from "lodash"
 import { observer } from "mobx-react"
 import { Button } from "../../shadcn/ui/button"
-import { usePipContext } from "../../../contexts/pip-context"
+import { useAddPipContext } from "../../../contexts/add-pip-context"
 import useValidatePipData from "../../../hooks/pip/validate-pip-data"
 
-interface Props {
-	formValues: IncompletePipData
-}
-
-function AddPipButton(props: Props) {
-	const { formValues } = props
-	const pipClass = usePipContext()
+function AddPipButton() {
+	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
 
-	if (!pipClass.addingNewPipRequirements.isPipOnline) return null
+	if (
+		_.isNull(addPipClass) ||
+		!addPipClass.store.addingNewPipRequirements.isPipOnline
+	) return null
+
+	const { pipName } = addPipClass.form.watch()
+
 	return (
 		<div className="flex justify-between mt-2 items-center">
 			<Button
 				type="submit"
-				disabled={!validatePipData(formValues)}
+				disabled={!validatePipData}
 			>
-					Add {formValues.pipName}
+				Add {pipName}
 			</Button>
 		</div>
 	)

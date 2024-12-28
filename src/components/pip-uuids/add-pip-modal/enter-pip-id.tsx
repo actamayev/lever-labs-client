@@ -1,7 +1,7 @@
+import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
-import { UseFormReturn } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import {
 	Tooltip,
@@ -13,17 +13,14 @@ import ErrorMessage from "../../error-message"
 import { Button } from "../../shadcn/ui/button"
 import isPipUUIDValid from "../../../utils/is-pip-uuid-valid"
 import { usePipContext } from "../../../contexts/pip-context"
+import { useAddPipContext } from "../../../contexts/add-pip-context"
 import useCheckIfPipUUIDIsValid from "../../../hooks/pip/check-if-pip-uuid-is-valid"
 import { FormField, FormItem, FormControl, FormMessage } from "../../shadcn/ui/form"
 
-interface Props {
-	form: UseFormReturn<IncompletePipData>
-}
-
 // TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
-function EnterPipID(props: Props) {
-	const { form } = props
+function EnterPipID() {
 	const pipClass = usePipContext()
+	const addPipClass = useAddPipContext()
 	const checkIfPipUUIDIsValid = useCheckIfPipUUIDIsValid()
 
 	const cleanPipUUIDInput = useCallback(async (
@@ -33,23 +30,29 @@ function EnterPipID(props: Props) {
 		const input = event.target.value
 		const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
 		if (allowedInput.length > 5) return
+		if (_.isNull(addPipClass)) return
 
 		onChange(allowedInput)
-		pipClass.resetAddingPipRequirements()
-		await checkIfPipUUIDIsValid(allowedInput, form)
-	}, [checkIfPipUUIDIsValid, form, pipClass])
+
+		addPipClass.store.resetAddingPipRequirements()
+		await checkIfPipUUIDIsValid(allowedInput)
+	}, [addPipClass, checkIfPipUUIDIsValid])
 
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
-		if (pipUUIDValid && pipClass.addingNewPipRequirements.doesPipUUIDExist) return "Valid Pip ID"
-		else if (pipClass.addingNewPipRequirements.userAlreadyAddedUUID) return "You've already added this Pip ID"
+		if (_.isNull(addPipClass)) return ""
+		if (pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) return "Valid Pip ID"
+		else if (addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID) return "You've already added this Pip ID"
 		else if (!pipUUIDValid) return "Pip ID must be 5 alphanumeric characters"
 		return "The entered Pip ID doesn't exist"
-	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist, pipClass.addingNewPipRequirements.userAlreadyAddedUUID])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [addPipClass, addPipClass?.store.addingNewPipRequirements])
+
+	if (_.isNull(addPipClass)) return null
 
 	return (
 		<>
 			<FormField
-				control={form.control}
+				control={addPipClass.form.control}
 				name="pipUUID"
 				render={({ field }) => {
 					const pipUUIDValid = isPipUUIDValid(field.value)
@@ -77,11 +80,12 @@ function EnterPipID(props: Props) {
 															size="sm"
 															className="h-auto p-1 dark:hover:bg-zinc-700"
 														>
-															{(pipUUIDValid && pipClass.addingNewPipRequirements.doesPipUUIDExist) ? (
-																<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
-															) : (
-																<X className="h-4 w-4 text-red-500 dark:text-red-500" />
-															)}
+															{(pipUUIDValid &&
+															addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
+																	<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
+																) : (
+																	<X className="h-4 w-4 text-red-500 dark:text-red-500" />
+																)}
 														</Button>
 													</TooltipTrigger>
 													<TooltipContent side="top">
@@ -93,11 +97,11 @@ function EnterPipID(props: Props) {
 									)}
 								</div>
 							</FormControl>
-							{pipClass.addingNewPipRequirements.userAlreadyAddedUUID ? (
+							{addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID ? (
 								<div className="mt-1">
 									<ErrorMessage error="You've already added this Pip ID" />
 								</div>
-							) : (!pipClass.addingNewPipRequirements.doesPipUUIDExist && field.value.length === 5) && (
+							) : (!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist && field.value.length === 5) && (
 								<div className="mt-1">
 									<ErrorMessage error="The entered Pip ID doesn't exist" />
 								</div>

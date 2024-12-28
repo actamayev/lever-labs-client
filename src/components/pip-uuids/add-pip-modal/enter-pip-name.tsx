@@ -1,10 +1,10 @@
+import _ from "lodash"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
-import { Control } from "react-hook-form"
 import { useCallback, useMemo } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import { usePipContext } from "../../../contexts/pip-context"
+import { useAddPipContext } from "../../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem } from "../../shadcn/ui/form"
 import {
 	Tooltip,
@@ -13,32 +13,33 @@ import {
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
 
-interface Props {
-	control: Control<IncompletePipData>
-	formValues: IncompletePipData
-}
-
-function EnterPipName(props: Props) {
-	const { control, formValues } = props
-	const pipClass = usePipContext()
+function EnterPipName() {
+	const addPipClass = useAddPipContext()
 
 	const isDisabled = useMemo(() => {
-		return !pipClass.addingNewPipRequirements.doesPipUUIDExist
-	}, [pipClass.addingNewPipRequirements.doesPipUUIDExist])
+		return !addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist
+	}, [addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist])
 
 	// If the backend retrieves a name for the pip, it should autofill this field, make it disabled, remove the /20, and
 	// if (!pipClass.addingNewPipRequirements.isPipNameNeeded) return null
 
 	const tooltipMessage = useCallback(() => {
+		if (_.isNull(addPipClass)) return ""
+		const formValues = addPipClass.form.watch()
 		if (!formValues.pipName) return "Please give your Pip a name"
 		if (formValues.pipName.length < 3) return "Pip's name must be at least 3 characters"
 		if (formValues.pipName.length > 20) return "Pip's name can't be more than 20 characters"
 		return "Valid Name"
-	}, [formValues.pipName])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [addPipClass, addPipClass?.form.watch().pipName])
+
+	if (_.isNull(addPipClass)) return null
+
+	const { pipName } = addPipClass.form.watch()
 
 	return (
 		<FormField
-			control={control}
+			control={addPipClass.form.control}
 			name="pipName"
 			disabled={isDisabled}
 			render={({ field }) => (
@@ -70,12 +71,11 @@ function EnterPipName(props: Props) {
 													size="sm"
 													className="h-auto p-1 dark:hover:bg-zinc-700"
 												>
-													{(formValues.pipName &&
-												formValues.pipName.length >= 3 && formValues.pipName.length <= 20) ? (
-															<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
-														) : (
-															<X className="h-4 w-4 text-red-500 dark:text-red-500" />
-														)}
+													{(pipName && pipName.length >= 3 && pipName.length <= 20) ? (
+														<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
+													) : (
+														<X className="h-4 w-4 text-red-500 dark:text-red-500" />
+													)}
 												</Button>
 											</TooltipTrigger>
 											<TooltipContent side="top">
