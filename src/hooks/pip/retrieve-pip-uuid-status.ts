@@ -6,7 +6,7 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promise<void> {
+export default function useRetrievePipUUIDStatus(): (pipUUID: PipUUID) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
@@ -29,7 +29,7 @@ export default function useCheckIfPipUUIDIsValid(): (pipUUID: PipUUID) => Promis
 
 			pipClass.setIsRetrievingPipData(true)
 
-			const pipDataResponse = await blueDotApiClient.pipDataService.checkIfPipUUIDIsValid(pipUUID)
+			const pipDataResponse = await blueDotApiClient.pipDataService.retrievePipUUIDStatus(pipUUID)
 			if (!_.isEqual(pipDataResponse.status, 200) || isNonSuccessResponse(pipDataResponse.data)) {
 				throw Error ("Unable to retrieve pip Data")
 			}
