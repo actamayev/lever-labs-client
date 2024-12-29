@@ -13,12 +13,12 @@ import { Button } from "../shadcn/ui/button"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormField, FormItem, FormControl } from "../shadcn/ui/form"
-import useRetrievePipUUIDStatus from "../../hooks/pip/retrieve-pip-uuid-status"
+import useRetrievePipUUIDStatusInForm from "../../hooks/pip/retrieve-pip-uuid-status-in-form"
 
 // TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
 function EnterPipID() {
 	const addPipClass = useAddPipContext()
-	const retrievePipUUIDStatus = useRetrievePipUUIDStatus()
+	const retrievePipUUIDStatusInForm = useRetrievePipUUIDStatusInForm()
 
 	const cleanPipUUIDInput = useCallback(async (
 		event: React.ChangeEvent<HTMLInputElement>,
@@ -33,8 +33,8 @@ function EnterPipID() {
 		addPipClass.store.updateMirroredFormValues("pipUUID", allowedInput)
 
 		addPipClass.store.resetAddingPipRequirements()
-		await retrievePipUUIDStatus(allowedInput)
-	}, [addPipClass, retrievePipUUIDStatus])
+		await retrievePipUUIDStatusInForm(allowedInput)
+	}, [addPipClass, retrievePipUUIDStatusInForm])
 
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
 		if (_.isNull(addPipClass)) return ""

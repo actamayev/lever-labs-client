@@ -6,7 +6,7 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useRetrievePipUUIDStatus(): (pipUUID: PipUUID) => Promise<void> {
+export default function useRetrievePipUUIDStatusInForm(): (pipUUID: PipUUID) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
