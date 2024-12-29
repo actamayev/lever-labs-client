@@ -13,7 +13,13 @@ function ConnectToPipInstructions() {
 	const openIpAddrTab = useCallback(() => {
 		try {
 			if (_.isNull(addPipClass)) return
-			const newWindow = window.open(`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`, "_blank")
+
+			const newWindow = window.open(
+				`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`,
+				"_blank",
+				"width=400,height=300"
+			)
+
 			if (!newWindow) {
 				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
 			}
