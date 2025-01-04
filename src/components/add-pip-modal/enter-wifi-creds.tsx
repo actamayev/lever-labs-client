@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { Info } from "lucide-react"
 import { observer } from "mobx-react"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
@@ -10,7 +11,6 @@ import {
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
 import { Button } from "../shadcn/ui/button"
-import { Info } from "lucide-react"
 
 function EnterWifiCreds() {
 	const addPipClass = useAddPipContext()

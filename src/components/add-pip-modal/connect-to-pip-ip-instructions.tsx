@@ -1,16 +1,22 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import useStyledToast from "../toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import useRetrievePipStatusWhileAdding from "../../hooks/pip/retrieve-pip-status-while-adding"
 
 function ConnectToPipInstructions() {
 	const toast = useStyledToast()
 	const addPipClass = useAddPipContext()
+	const retrievePipStatusWhileAdding = useRetrievePipStatusWhileAdding()
 
 	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
 	const openIpAddrTab = useCallback(() => {
+		const MAX_RETRIES = 5
+		const POLLING_INTERVAL = 1000 // 1 second
+
 		try {
 			if (_.isNull(addPipClass)) return
 
@@ -23,6 +29,50 @@ function ConnectToPipInstructions() {
 			if (!newWindow) {
 				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
 			}
+
+			// Initialize connection monitoring
+			let retryCount = 0
+			let pollingInterval: NodeJS.Timeout | null = null
+
+			// Function to clear interval and cleanup
+			const cleanup = () => {
+				if (pollingInterval) {
+					clearInterval(pollingInterval)
+					pollingInterval = null
+				}
+				window.removeEventListener("online", startPolling)
+			}
+
+			// The polling function that calls useRetrievePipStatusWhileAdding
+			const pollPipStatus = async () => {
+				retryCount++
+
+				try {
+					await retrievePipStatusWhileAdding()
+
+					// If we've connected or hit max retries, stop polling
+					if (addPipClass.store.hasPipConnectedToInternet || retryCount >= MAX_RETRIES) {
+						cleanup()
+					}
+				} catch (error) {
+					console.error("Error polling PIP status:", error)
+					cleanup()
+				}
+			}
+
+			// Function to start polling when we're back online
+			const startPolling = () => {
+				console.log("online?", navigator.onLine)
+				if (navigator.onLine && !pollingInterval) {
+					pollingInterval = setInterval(pollPipStatus, POLLING_INTERVAL)
+				}
+			}
+
+			// Listen for when we come back online
+			window.addEventListener("online", startPolling)
+
+			// Cleanup if component unmounts
+			return () => cleanup()
 		} catch (error) {
 			console.error("Failed to open setup page:", error)
 			toast.negative({
@@ -30,7 +80,7 @@ function ConnectToPipInstructions() {
 				description: "Please reload page and try again"
 			})
 		}
-	}, [addPipClass, toast])
+	}, [addPipClass, retrievePipStatusWhileAdding, toast])
 
 	if (
 		_.isNull(addPipClass) ||

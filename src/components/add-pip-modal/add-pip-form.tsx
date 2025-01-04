@@ -9,6 +9,7 @@ import useAddPip from "../../hooks/pip/add-pip"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
+import ShowLoadingPipConnectionStatus from "./show-loading-pip-connection-status"
 
 function AddPipForm() {
 	const addPip = useAddPip()
@@ -34,6 +35,7 @@ function AddPipForm() {
 						<EnterWifiCreds />
 						<ConnectToPipInstructions />
 						<SelectAutoreconnectToPip />
+						<ShowLoadingPipConnectionStatus />
 						<AddPipButton />
 					</div>
 				</form>

@@ -19,13 +19,14 @@ export default function useAddPip(): () => Promise<void> {
 	return useCallback(async () => {
 		try {
 			if (_.isNull(addPipClass)) return
-			if (pipClass.checkIfUUIDAlreadyExists(addPipClass.form.getValues("pipUUID")) === true) {
+			const { pipUUID, pipName } = addPipClass.store.mirroredFormValues as { pipUUID: PipUUID, pipName: string }
+			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
 
 			if (validatePipData() === false) return
 
-			if (_.isEmpty(addPipClass.form.getValues("pipName"))) addPipClass.form.setValue("pipName", undefined)
+			if (_.isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
 			addPipClass.form.setValue("wifiNetworkName", undefined)
 			addPipClass.form.setValue("wifiPassword", undefined)
 			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
@@ -39,17 +40,15 @@ export default function useAddPip(): () => Promise<void> {
 			}
 			addPipClass.store.setIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
-				pipName: addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName,
-				pipUUID: addPipClass.form.getValues("pipUUID"),
+				pipName: pipName || addPipDataResponse.data.pipName,
+				pipUUID: pipUUID,
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
 			addPipClass.store.resetAddingPipRequirements()
 			addPipClass.form.reset()
-			toast.positive({
-				description: `${addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName} added`
-			})
+			toast.positive({ description: `${pipName || addPipDataResponse.data.pipName} added` })
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
@@ -77,8 +76,9 @@ export default function useAddPip(): () => Promise<void> {
 				}
 			}
 			if (_.isNull(addPipClass)) return
+			const { pipName } = addPipClass.store.mirroredFormValues
 			toast.negative({
-				title: `Unable to add ${addPipClass.form.getValues("pipName")} at this time`,
+				title: `Unable to add ${pipName} at this time`,
 				description: "Please reload page and try again"
 			})
 		}

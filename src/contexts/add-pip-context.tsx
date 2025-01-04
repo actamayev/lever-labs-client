@@ -22,6 +22,7 @@ class AddPipClass {
 		wifiPassword: ""
 	}
 	public receivedConfirmationPipConnected = false
+	public hasPipConnectedToInternet: null | boolean = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -51,6 +52,11 @@ class AddPipClass {
 
 	public setReceivedConfirmationPipConnected = action((newState: boolean) => {
 		this.receivedConfirmationPipConnected = newState
+	})
+
+	// TODO: Don't show the "makign contact with pip" mesasge until this is not null
+	public setHasPipConnectedToInternet = action((newState: boolean | null) => {
+		this.hasPipConnectedToInternet = newState
 	})
 
 	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
@@ -103,6 +109,7 @@ class AddPipClass {
 		this.setEncodedWifiCredentials(null)
 		this.resetMirroredFormValues()
 		this.setReceivedConfirmationPipConnected(false)
+		this.setHasPipConnectedToInternet(null)
 	}
 }
 

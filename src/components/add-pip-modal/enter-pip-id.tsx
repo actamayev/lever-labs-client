@@ -33,7 +33,7 @@ function EnterPipID() {
 		addPipClass.store.updateMirroredFormValues("pipUUID", allowedInput)
 
 		addPipClass.store.resetAddingPipRequirements()
-		await retrievePipUUIDStatusInForm(allowedInput)
+		await retrievePipUUIDStatusInForm()
 	}, [addPipClass, retrievePipUUIDStatusInForm])
 
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
