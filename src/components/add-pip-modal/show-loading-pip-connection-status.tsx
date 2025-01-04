@@ -8,23 +8,23 @@ function ShowLoadingPipConnectionStatus() {
 	const addPipClass = useAddPipContext()
 
 	if (
-		_.isNull(addPipClass) //||
-		// _.isNull(addPipClass.store.hasPipConnectedToInternet)
+		_.isNull(addPipClass) ||
+		_.isNull(addPipClass.store.hasPipConnectedToInternet)
 	) return null
 
-	// if (addPipClass.store.hasPipConnectedToInternet === false) {
+	if (addPipClass.store.hasPipConnectedToInternet === false) {
+		return (
+			<div className="my-2">
+				<LoadingMessage message="Connecting to Pip..." />
+			</div>
+		)
+	}
+
 	return (
 		<div className="my-2">
-			<LoadingMessage message="Connecting to Pip..." />
+			<SuccessMessage message="Connected!" />
 		</div>
 	)
-	// }
-
-	// return (
-	// 	<div className="my-2">
-	// 		<SuccessMessage message="Connected!" />
-	// 	</div>
-	// )
 }
 
 export default observer(ShowLoadingPipConnectionStatus)
