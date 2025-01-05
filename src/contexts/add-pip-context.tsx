@@ -21,7 +21,7 @@ class AddPipClass {
 		wifiNetworkName: "",
 		wifiPassword: ""
 	}
-	public newPipConnectionStatus: null | NewPipConnectionStatuses = null
+	public newPipConnectionStatus: NewPipConnectionStatuses | null = null
 	public isUserReadyToConnectToPipDialog: boolean | null = null
 
 	constructor() {
