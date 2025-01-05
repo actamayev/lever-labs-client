@@ -12,7 +12,6 @@ function ConnectToPipInstructions() {
 	const addPipClass = useAddPipContext()
 	const pipStatusPoll = usePipStatusPoll()
 
-	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
 	const openIpAddrTab = useCallback(async () => {
 		if (_.isNull(addPipClass)) return
 
