@@ -8,10 +8,22 @@ import { useAddPipContext } from "../../contexts/add-pip-context"
 function ShowLoadingPipConnectionStatus() {
 	const addPipClass = useAddPipContext()
 
-	if (
-		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.newPipConnectionStatus)
-	) return null
+	if (_.isNull(addPipClass)) return null
+
+	if (addPipClass.store.isUserReadyToConnectToPipDialog === false) {
+		return (
+			<div className="my-2">
+				<ErrorMessage
+					error={
+						`Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID}).
+						You are not currently connected`
+					}
+				/>
+			</div>
+		)
+	}
+
+	if (_.isNull(addPipClass.store.newPipConnectionStatus)) return null
 
 	if (addPipClass.store.newPipConnectionStatus === "connecting") {
 		return (
