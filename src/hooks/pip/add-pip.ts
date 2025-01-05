@@ -21,7 +21,9 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 	return useCallback(async () => {
 		try {
 			if (_.isNull(addPipClass)) return
-			const { pipUUID, pipName } = addPipClass.store.mirroredFormValues as { pipUUID: PipUUID, pipName: string }
+			const { pipUUID, pipName, shouldAutoConnect } = addPipClass.store.mirroredFormValues as {
+				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
+			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
@@ -33,9 +35,9 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				addPipClass.form.setValue("shouldAutoConnect", false)
 			}
 			const dataToSend: AddPipData = {
-				pipUUID: addPipClass.form.getValues("pipUUID") as PipUUID,
-				pipName: addPipClass.form.getValues("pipName"),
-				shouldAutoConnect: addPipClass.form.getValues("shouldAutoConnect"),
+				pipUUID,
+				pipName,
+				shouldAutoConnect,
 			}
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)

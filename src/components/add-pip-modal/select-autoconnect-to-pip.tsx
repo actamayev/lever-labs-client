@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { Info } from "lucide-react"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import {
 	Tooltip,
@@ -14,6 +15,17 @@ import { FormControl, FormField, FormItem, FormLabel } from "../shadcn/ui/form"
 
 function SelectAutoreconnectToPip() {
 	const addPipClass = useAddPipContext()
+
+	const chooseAutoConnect = useCallback((
+		onChange: (value: boolean) => void,
+		currentValue: boolean
+	) => {
+		if (_.isNull(addPipClass)) return
+
+		const newValue = !currentValue
+		onChange(newValue)
+		addPipClass.store.updateMirroredFormValues("shouldAutoConnect", newValue)
+	}, [addPipClass])
 
 	if (
 		_.isNull(addPipClass) ||
@@ -56,7 +68,7 @@ function SelectAutoreconnectToPip() {
 							<Slider
 								id="pip-auto-connect-slider"
 								checkedCondition={field.value}
-								onChangeCheckedCondition={() => field.onChange(!field.value)}
+								onChangeCheckedCondition={() => chooseAutoConnect(field.onChange, field.value)}
 								colorChangeOnToggle={true}
 							/>
 						</FormControl>
