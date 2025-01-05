@@ -1,23 +1,19 @@
 /* eslint-disable max-lines-per-function */
-/* eslint-disable @typescript-eslint/naming-convention */
 import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import useStyledToast from "../toast-options"
+import usePipStatusPoll from "../../hooks/pip/pip-status-poll"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import useRetrievePipStatusWhileAdding from "../../hooks/pip/retrieve-pip-status-while-adding"
 
 function ConnectToPipInstructions() {
 	const toast = useStyledToast()
 	const addPipClass = useAddPipContext()
-	const retrievePipStatusWhileAdding = useRetrievePipStatusWhileAdding()
+	const pipStatusPoll = usePipStatusPoll()
 
 	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
 	const openIpAddrTab = useCallback(() => {
-		const MAX_RETRIES = 10
-		const POLLING_INTERVAL = 1000 // 1 second
-
 		try {
 			if (_.isNull(addPipClass)) return
 			addPipClass.store.setHasPipConnectedToInternet("connecting")
@@ -31,61 +27,7 @@ function ConnectToPipInstructions() {
 			if (!newWindow) {
 				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
 			}
-
-			// Initialize connection monitoring
-			let retryCount = 0
-			let pollingInterval: NodeJS.Timeout | null = null
-
-			// Function to clear interval and cleanup
-			const cleanup = (shouldMarkAsFailed: boolean = false) => {
-				if (pollingInterval) {
-					clearInterval(pollingInterval)
-					pollingInterval = null
-				}
-				if (shouldMarkAsFailed) {
-					addPipClass.store.setHasPipConnectedToInternet("failed")
-				}
-				window.removeEventListener("online", startPolling)
-			}
-
-			// The polling function that calls useRetrievePipStatusWhileAdding
-			const pollPipStatus = async () => {
-				retryCount++
-
-				try {
-					await retrievePipStatusWhileAdding()
-
-					// If we've connected, cleanup without marking as failed
-					if (addPipClass.store.hasPipConnectedToInternet) {
-						cleanup(false)
-					}
-					// If we've hit max retries, cleanup and mark as failed
-					else if (retryCount >= MAX_RETRIES) {
-						cleanup(true)
-						toast.negative({
-							title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-							description: "Maximum connection attempts reached. Please try again."
-						})
-					}
-				} catch (error) {
-					console.error("Error polling PIP status:", error)
-					cleanup(true)  // Mark as failed on error
-				}
-			}
-
-			// Function to start polling when we're back online
-			const startPolling = () => {
-				console.log("online?", navigator.onLine)
-				if (navigator.onLine && !pollingInterval) {
-					pollingInterval = setInterval(pollPipStatus, POLLING_INTERVAL)
-				}
-			}
-
-			// Listen for when we come back online
-			window.addEventListener("online", startPolling)
-
-			// Cleanup if component unmounts
-			return () => cleanup()
+			pipStatusPoll()
 		} catch (error) {
 			console.error("Failed to open setup page:", error)
 			toast.negative({
@@ -93,7 +35,7 @@ function ConnectToPipInstructions() {
 				description: "Please reload page and try again"
 			})
 		}
-	}, [addPipClass, retrievePipStatusWhileAdding, toast])
+	}, [addPipClass, pipStatusPoll, toast])
 
 	if (
 		_.isNull(addPipClass) ||

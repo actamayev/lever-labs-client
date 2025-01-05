@@ -29,13 +29,16 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 			if (validatePipData() === false) return
 
 			if (_.isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
-			addPipClass.form.setValue("wifiNetworkName", undefined)
-			addPipClass.form.setValue("wifiPassword", undefined)
 			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
 				addPipClass.form.setValue("shouldAutoConnect", false)
 			}
+			const dataToSend: AddPipData = {
+				pipUUID: addPipClass.form.getValues("pipUUID") as PipUUID,
+				pipName: addPipClass.form.getValues("pipName"),
+				shouldAutoConnect: addPipClass.form.getValues("shouldAutoConnect"),
+			}
 
-			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(addPipClass.form.getValues())
+			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
@@ -83,5 +86,5 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				description: "Please reload page and try again"
 			})
 		}
-	}, [addPipClass, blueDotApiClient.pipDataService, pipClass, toast, validatePipData])
+	}, [addPipClass, autoCloseModalAfterAddPip, blueDotApiClient.pipDataService, pipClass, shouldAutoCloseModal, toast, validatePipData])
 }

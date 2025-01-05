@@ -21,7 +21,6 @@ function AddPipButton() {
 		addPipClass.store.addingNewPipRequirements.isPipOnline &&
 		!addPipClass.store.isPipNameValid
 	) return null
-	console.log("here")
 
 	// If the Pip isn't online, and we haven't receieved confirmation it's connected yet, don't show add.
 	// The confirmation comes when the pip connects to backend
@@ -30,7 +29,6 @@ function AddPipButton() {
 		addPipClass.store.hasPipConnectedToInternet !== "connected"
 	) return null
 
-	console.log("here")
 	if (addPipClass.store.hasPipConnectedToInternet === "connected") {
 		return (
 			<div className="flex justify-between mt-2 items-center">
