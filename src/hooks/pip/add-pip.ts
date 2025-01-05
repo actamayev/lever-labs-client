@@ -28,7 +28,12 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				throw new Error("You've already added a Pip with this ID")
 			}
 
-			if (validatePipData() === false) return
+			if (validatePipData() === false) {
+				return toast.negative({
+					title: "Unable to validate Pip data",
+					description: "Please enter data and try submitting again"
+				})
+			}
 
 			if (_.isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
 			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {

@@ -21,7 +21,6 @@ export default function usePipStatusPoll(): () => void {
 		let cloudflareStartTime: number | null = null
 
 		const cleanup = (shouldMarkAsFailed: boolean): void => {
-			console.log("here, cleaning up")
 			if (pollingInterval) {
 				clearInterval(pollingInterval)
 				pollingInterval = null
@@ -33,7 +32,6 @@ export default function usePipStatusPoll(): () => void {
 		}
 
 		const startPolling = (): void => {
-			console.log("Checking internet connectivity...")
 			if (pollingInterval) return
 
 			cloudflareStartTime = Date.now()
@@ -43,11 +41,10 @@ export default function usePipStatusPoll(): () => void {
 				// Check if we've exceeded the Cloudflare timeout
 				if (cloudflareStartTime && (Date.now() - cloudflareStartTime > CLOUDFLARE_TIMEOUT)) {
 					cleanup(true)
-					toast.negative({
+					return toast.negative({
 						title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 						description: "Please confirm the Wi-Fi credentials you provided."
 					})
-					return
 				}
 
 				try {
@@ -58,8 +55,7 @@ export default function usePipStatusPoll(): () => void {
 					})
 
 					if (!response.ok) {
-						console.log("No internet connectivity - just wifi")
-						return
+						return console.info("No internet connectivity - just wifi")
 					}
 
 					// Clear the Cloudflare checking interval
@@ -75,13 +71,12 @@ export default function usePipStatusPoll(): () => void {
 							await retrievePipStatusWhileAdding()
 
 							if (addPipClass.store.newPipConnectionStatus === "connected") {
-								cleanup(false)
-								return
+								return cleanup(false)
 							}
 
 							if (retryCount >= MAX_RETRIES) {
 								cleanup(true)
-								toast.negative({
+								return toast.negative({
 									title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 									description: "Maximum connection attempts reached. Please try again."
 								})
@@ -94,8 +89,7 @@ export default function usePipStatusPoll(): () => void {
 					}, POLLING_INTERVAL)
 
 				} catch (error) {
-					console.log("Failed to verify internet connectivity:", error)
-					return
+					return console.error("Failed to verify internet connectivity:", error)
 				}
 			}, POLLING_INTERVAL)
 		}
