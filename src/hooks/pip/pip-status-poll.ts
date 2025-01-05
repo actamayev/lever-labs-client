@@ -29,36 +29,52 @@ export default function usePipStatusPoll(): () => void {
 			window.removeEventListener("online", startPolling)
 		}
 
-		const startPolling = (): void => {
-			console.log("online?", navigator.onLine)
-			if (!navigator.onLine || pollingInterval) return
-			pollingInterval = setInterval(async () => {
-				retryCount++
+		const startPolling = async (): Promise<void> => {
+			console.log("Checking internet connectivity...")
+			if (pollingInterval) return
 
-				try {
-					await retrievePipStatusWhileAdding()
+			try {
+				// Try to check real internet connectivity
+				const response = await fetch("https://cloudflare.com/cdn-cgi/trace", {
+					method: "GET",
+					cache: "no-cache"
+				})
 
-					if (addPipClass.store.hasPipConnectedToInternet) {
-						cleanup(false)
-						return
-					}
-
-					if (retryCount >= MAX_RETRIES) {
-						cleanup(true)
-						toast.negative({
-							title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-							description: "Maximum connection attempts reached. Please try again."
-						})
-						throw new Error("Max retries reached")
-					}
-				} catch (error) {
-					console.error("Error polling PIP status:", error)
-					cleanup(true)
-					throw error
+				if (!response.ok) {
+					console.log("No internet connectivity - just wifi")
+					return
 				}
-			}, POLLING_INTERVAL)
-		}
 
+				pollingInterval = setInterval(async () => {
+					retryCount++
+
+					try {
+						await retrievePipStatusWhileAdding()
+
+						if (addPipClass.store.hasPipConnectedToInternet) {
+							cleanup(false)
+							return
+						}
+
+						if (retryCount >= MAX_RETRIES) {
+							cleanup(true)
+							toast.negative({
+								title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+								description: "Maximum connection attempts reached. Please try again."
+							})
+							throw new Error("Max retries reached")
+						}
+					} catch (error) {
+						console.error("Error polling PIP status:", error)
+						cleanup(true)
+						throw error
+					}
+				}, POLLING_INTERVAL)
+			} catch (error) {
+				console.log("Failed to verify internet connectivity:", error)
+				return
+			}
+		}
 		window.addEventListener("online", startPolling)
 		startPolling()
 	}, [addPipClass, retrievePipStatusWhileAdding, toast])
