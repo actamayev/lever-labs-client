@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Input } from "../shadcn/ui/input"
 import LockIconAndTooltip from "../lock-icon-and-tooltip"
@@ -8,6 +9,18 @@ import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form
 function EnterWifiNetworkName() {
 	const addPipClass = useAddPipContext()
 
+	const typeNetworkName = useCallback((
+		event: React.ChangeEvent<HTMLInputElement>,
+		onChange: (value: string) => void
+	) => {
+		const input = event.target.value
+		if (input.length > 50) return
+		if (_.isNull(addPipClass)) return
+
+		onChange(input)
+		addPipClass.store.updateMirroredFormValues("wifiNetworkName", input)
+	}, [addPipClass])
+
 	if (_.isNull(addPipClass)) return null
 
 	return (
@@ -15,7 +28,7 @@ function EnterWifiNetworkName() {
 			control={addPipClass.form.control}
 			name="wifiNetworkName"
 			render={({ field }) => (
-				<FormItem className="mt-2">
+				<FormItem>
 					<FormControl>
 						<div className="relative">
 							<Input
@@ -25,10 +38,7 @@ function EnterWifiNetworkName() {
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Network Name"
 								autoComplete="off"
-								onChange={(e) => {
-									field.onChange(e.target.value)
-									addPipClass.store.encodeWifiData(e.target.value, addPipClass.form.getValues("wifiPassword") || "")
-								}}
+								onChange={(e) => typeNetworkName(e, field.onChange)}
 							/>
 							<div className="absolute inset-y-0 right-2 flex items-center">
 								<LockIconAndTooltip />
