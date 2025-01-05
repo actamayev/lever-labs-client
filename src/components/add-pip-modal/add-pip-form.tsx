@@ -12,7 +12,7 @@ import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 import ShowLoadingPipConnectionStatus from "./show-loading-pip-connection-status"
 
 function AddPipForm() {
-	const addPip = useAddPip()
+	const addPip = useAddPip(true)
 	const addPipClass = useAddPipContext()
 
 	if (_.isNull(addPipClass)) return null

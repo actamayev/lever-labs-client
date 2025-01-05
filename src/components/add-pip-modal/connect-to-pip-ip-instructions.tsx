@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 /* eslint-disable @typescript-eslint/naming-convention */
 import _ from "lodash"
 import { useCallback } from "react"
@@ -19,6 +20,7 @@ function ConnectToPipInstructions() {
 
 		try {
 			if (_.isNull(addPipClass)) return
+			addPipClass.store.setHasPipConnectedToInternet("connecting")
 
 			const newWindow = window.open(
 				`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`,
@@ -35,10 +37,13 @@ function ConnectToPipInstructions() {
 			let pollingInterval: NodeJS.Timeout | null = null
 
 			// Function to clear interval and cleanup
-			const cleanup = () => {
+			const cleanup = (shouldMarkAsFailed: boolean = false) => {
 				if (pollingInterval) {
 					clearInterval(pollingInterval)
 					pollingInterval = null
+				}
+				if (shouldMarkAsFailed) {
+					addPipClass.store.setHasPipConnectedToInternet("failed")
 				}
 				window.removeEventListener("online", startPolling)
 			}
@@ -50,13 +55,21 @@ function ConnectToPipInstructions() {
 				try {
 					await retrievePipStatusWhileAdding()
 
-					// If we've connected or hit max retries, stop polling
-					if (addPipClass.store.hasPipConnectedToInternet || retryCount >= MAX_RETRIES) {
-						cleanup()
+					// If we've connected, cleanup without marking as failed
+					if (addPipClass.store.hasPipConnectedToInternet) {
+						cleanup(false)
+					}
+					// If we've hit max retries, cleanup and mark as failed
+					else if (retryCount >= MAX_RETRIES) {
+						cleanup(true)
+						toast.negative({
+							title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+							description: "Maximum connection attempts reached. Please try again."
+						})
 					}
 				} catch (error) {
 					console.error("Error polling PIP status:", error)
-					cleanup()
+					cleanup(true)  // Mark as failed on error
 				}
 			}
 

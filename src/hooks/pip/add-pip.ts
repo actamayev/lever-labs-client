@@ -5,15 +5,17 @@ import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import useAutoCloseModalAfterAddPip from "./auto-close-modal-after-add-pip"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
-export default function useAddPip(): () => Promise<void> {
+export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
+	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -38,7 +40,6 @@ export default function useAddPip(): () => Promise<void> {
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
-			addPipClass.store.setIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
 				pipName: pipName || addPipDataResponse.data.pipName,
 				pipUUID: pipUUID,
@@ -46,9 +47,9 @@ export default function useAddPip(): () => Promise<void> {
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			addPipClass.store.resetAddingPipRequirements()
-			addPipClass.form.reset()
-			toast.positive({ description: `${pipName || addPipDataResponse.data.pipName} added` })
+			if (shouldAutoCloseModal) {
+				autoCloseModalAfterAddPip(shouldAutoCloseModal)
+			}
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {

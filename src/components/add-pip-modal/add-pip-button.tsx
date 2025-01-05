@@ -4,10 +4,12 @@ import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useValidatePipData from "../../hooks/pip/validate-pip-data"
+import useAutoCloseModalAfterAddPip from "../../hooks/pip/auto-close-modal-after-add-pip"
 
 function AddPipButton() {
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
+	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
 
 	if (
 		_.isNull(addPipClass) ||
@@ -19,13 +21,25 @@ function AddPipButton() {
 		addPipClass.store.addingNewPipRequirements.isPipOnline &&
 		!addPipClass.store.isPipNameValid
 	) return null
+	console.log("here")
 
 	// If the Pip isn't online, and we haven't receieved confirmation it's connected yet, don't show add.
 	// The confirmation comes when the pip connects to backend
 	if (
 		!addPipClass.store.addingNewPipRequirements.isPipOnline &&
-		!addPipClass.store.receivedConfirmationPipConnected
+		addPipClass.store.hasPipConnectedToInternet !== "connected"
 	) return null
+
+	console.log("here")
+	if (addPipClass.store.hasPipConnectedToInternet === "connected") {
+		return (
+			<div className="flex justify-between mt-2 items-center">
+				<Button type="button" onClick={() => autoCloseModalAfterAddPip(true)}>
+					Close
+				</Button>
+			</div>
+		)
+	}
 
 	return (
 		<div className="flex justify-between mt-2 items-center">

@@ -11,10 +11,11 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
-	const addPip = useAddPip()
+	const addPip = useAddPip(false)
 
 	// TODO: Call this function once per second, for 5 seconds.
 	// Start it after the user's online status changes back to true.
+	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
 			const pipUUID = addPipClass?.store.mirroredFormValues.pipUUID as PipUUID
@@ -23,7 +24,8 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 				!isPipUUIDValid(pipUUID) ||
 				pipClass.checkIfUUIDAlreadyExists(pipUUID) === true ||
 				_.isNull(blueDotApiClient.httpClient.accessToken) ||
-				addPipClass.store.hasPipConnectedToInternet === true
+				addPipClass.store.hasPipConnectedToInternet === "connected" ||
+				addPipClass.store.hasPipConnectedToInternet === "failed"
 			) return
 			console.log("retrieving pip status")
 
@@ -33,11 +35,11 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 			}
 			console.log(pipUUIDStatusData.data.pipConnectionStatus, "pipUUIDStatusData.data.pipConnectionStatus")
 			if (pipUUIDStatusData.data.pipConnectionStatus === "connected") {
-				addPipClass.store.setHasPipConnectedToInternet(true)
+				addPipClass.store.setHasPipConnectedToInternet("connected")
 				await addPip()
 				// TODO: Exit the loop if we're in this block
 			} else {
-				addPipClass.store.setHasPipConnectedToInternet(false)
+				addPipClass.store.setHasPipConnectedToInternet("connecting")
 				return
 			}
 		} catch (error) {
