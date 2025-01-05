@@ -19,7 +19,12 @@ export default function useDisconnectFromPip(): (
 	return useCallback(async (pipData: PipData) => {
 		try {
 			const foundPip = pipClass.findPipFromUUID(pipData.pipUUID)
-			if (foundPip?.pipConnectionStatus !== "connected") return
+			if (foundPip?.pipConnectionStatus !== "connected") {
+				return toast.neutral({
+					title: "Unable to disconnect from Pip",
+					description: "You're not currently connected to this Pip. Please reload page and try again."
+				})
+			}
 
 			const connectToPipResponse = await blueDotApiClient.pipDataService.disconnectFromPip(pipData.pipUUID)
 

@@ -14,9 +14,7 @@ export default function useSendCppToPip(): (
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 
-	return useCallback(async (
-		cppCode: string
-	) => {
+	return useCallback(async (cppCode: string) => {
 		try {
 			if (
 				pipClass.isSendingCppToPip === true ||
@@ -24,17 +22,15 @@ export default function useSendCppToPip(): (
 			) return
 
 			if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
-				toast.negative({
+				return toast.negative({
 					title: `${pipClass.selectedPip.pipName} is not online`,
 					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code.`
 				})
-				return
 			} else if (pipClass.selectedPip.pipConnectionStatus === "connected to other user") {
-				toast.negative({
+				return toast.negative({
 					title: `Unable to upload code to ${pipClass.selectedPip.pipName} at this time`,
 					description: `${pipClass.selectedPip.pipName} is connected to another user.`
 				})
-				return
 			}
 			pipClass.setIsSendingCppToPip(true)
 

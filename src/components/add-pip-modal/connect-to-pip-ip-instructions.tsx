@@ -29,7 +29,7 @@ function ConnectToPipInstructions() {
 
 		} catch (error) {
 			// Network error means we're likely connected to the Pip's AP
-			console.log("Network error - potentially connected to Pip AP:", error)
+			console.error("Network error - potentially connected to Pip AP:", error)
 
 			try {
 				addPipClass.store.setIsUserReadyToConnectToPipDialog(true)
