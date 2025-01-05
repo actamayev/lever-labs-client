@@ -21,7 +21,8 @@ class AddPipClass {
 		wifiNetworkName: "",
 		wifiPassword: ""
 	}
-	public hasPipConnectedToInternet: null | HasPipConnectedStatuses = null
+	public newPipConnectionStatus: NewPipConnectionStatuses | null = null
+	public isUserReadyToConnectToPipDialog: boolean | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -49,8 +50,12 @@ class AddPipClass {
 		this.encodedWifiCredentials = newState
 	})
 
-	public setHasPipConnectedToInternet = action((newState: HasPipConnectedStatuses | null) => {
-		this.hasPipConnectedToInternet = newState
+	public setNewPipConnectionStatus = action((newState: NewPipConnectionStatuses | null) => {
+		this.newPipConnectionStatus = newState
+	})
+
+	public setIsUserReadyToConnectToPipDialog = action((newState: boolean | null) => {
+		this.isUserReadyToConnectToPipDialog = newState
 	})
 
 	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
@@ -102,7 +107,8 @@ class AddPipClass {
 		this.setIsAppPipModalOpen(false)
 		this.setEncodedWifiCredentials(null)
 		this.resetMirroredFormValues()
-		this.setHasPipConnectedToInternet(null)
+		this.setNewPipConnectionStatus(null)
+		this.setIsUserReadyToConnectToPipDialog(null)
 	}
 }
 

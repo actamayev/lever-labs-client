@@ -8,12 +8,24 @@ import { useAddPipContext } from "../../contexts/add-pip-context"
 function ShowLoadingPipConnectionStatus() {
 	const addPipClass = useAddPipContext()
 
-	if (
-		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.hasPipConnectedToInternet)
-	) return null
+	if (_.isNull(addPipClass)) return null
 
-	if (addPipClass.store.hasPipConnectedToInternet === "connecting") {
+	if (addPipClass.store.isUserReadyToConnectToPipDialog === false) {
+		return (
+			<div className="my-2">
+				<ErrorMessage
+					error={
+						`Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID}).
+						You are not currently connected`
+					}
+				/>
+			</div>
+		)
+	}
+
+	if (_.isNull(addPipClass.store.newPipConnectionStatus)) return null
+
+	if (addPipClass.store.newPipConnectionStatus === "connecting") {
 		return (
 			<div className="my-2">
 				<LoadingMessage message="Connecting to Pip..." />
@@ -21,10 +33,13 @@ function ShowLoadingPipConnectionStatus() {
 		)
 	}
 
-	else if (addPipClass.store.hasPipConnectedToInternet === "failed") {
+	else if (addPipClass.store.newPipConnectionStatus === "failed") {
 		return (
 			<div className="my-2">
-				<ErrorMessage error="Unable to connect to Pip. Please make sure the Wi-Fi password is correct" />
+				<ErrorMessage
+					error={`Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.
+					Please confirm the Wi-Fi credentials you provided above.`}
+				/>
 			</div>
 		)
 	}

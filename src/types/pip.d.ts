@@ -39,7 +39,7 @@ declare global {
 		"updating firmware" | // ESP changed to this state when client approves firmware update
 		"connected" // Connected to the internet/is active
 
-	type HasPipConnectedStatuses = "connected" | "connecting" | "failed"
+	type NewPipConnectionStatuses = "connected" | "connecting" | "failed"
 }
 
 export {}

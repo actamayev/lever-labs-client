@@ -12,28 +12,52 @@ function ConnectToPipInstructions() {
 	const addPipClass = useAddPipContext()
 	const pipStatusPoll = usePipStatusPoll()
 
-	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
-	const openIpAddrTab = useCallback(() => {
+	const openIpAddrTab = useCallback(async () => {
+		if (_.isNull(addPipClass)) return
+
 		try {
-			if (_.isNull(addPipClass)) return
-			addPipClass.store.setHasPipConnectedToInternet("connecting")
-
-			const newWindow = window.open(
-				`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`,
-				"_blank",
-				"width=400,height=300"
-			)
-
-			if (!newWindow) {
-				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
-			}
-			pipStatusPoll()
-		} catch (error) {
-			console.error("Failed to open setup page:", error)
-			toast.negative({
-				title: `Unable to connect ${addPipClass?.store.mirroredFormValues.pipName} to Wi-Fi at this time`,
-				description: "Please reload page and try again"
+			// Try to reach Cloudflare to check internet connectivity
+			await fetch("https://cloudflare.com/cdn-cgi/trace", {
+				method: "GET",
+				cache: "no-cache"
 			})
+
+			// If we get here, we're still connected to regular internet
+			console.info("User still connected to Wi-Fi, not opening Pip connection window")
+			addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
+			toast.negative({
+				title: `Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID}).`,
+				description: "You are not currently connected"
+			})
+			return
+
+		} catch (error) {
+			// Network error means we're likely connected to the Pip's AP
+			console.log("Network error - potentially connected to Pip AP:", error)
+
+			try {
+				addPipClass.store.setIsUserReadyToConnectToPipDialog(true)
+				addPipClass.store.setNewPipConnectionStatus("connecting")
+
+				const newWindow = window.open(
+					`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`,
+					"_blank",
+					"width=400,height=300"
+				)
+
+				if (!newWindow) {
+					throw new Error("Popup was blocked. Please allow popups for this site and try again.")
+				}
+
+				pipStatusPoll()
+
+			} catch (popupError) {
+				console.error("Failed to open setup window:", popupError)
+				toast.negative({
+					title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+					description: "Please ensure popups are allowed and try again"
+				})
+			}
 		}
 	}, [addPipClass, pipStatusPoll, toast])
 
@@ -57,13 +81,15 @@ function ConnectToPipInstructions() {
 						pip-{addPipClass.store.mirroredFormValues.pipUUID}
 					</span>
 				</div>
-				<Button
-					type="button"
-					className="mt-2"
-					onClick={openIpAddrTab}
-				>
-					Send Wi-Fi credentials
-				</Button>
+				{addPipClass.store.newPipConnectionStatus !== "connected" && (
+					<Button
+						type="button"
+						className="mt-2"
+						onClick={openIpAddrTab}
+					>
+						Send Wi-Fi credentials
+					</Button>
+				)}
 			</div>
 		</div>
 	)

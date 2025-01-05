@@ -26,10 +26,10 @@ function AddPipButton() {
 	// The confirmation comes when the pip connects to backend
 	if (
 		!addPipClass.store.addingNewPipRequirements.isPipOnline &&
-		addPipClass.store.hasPipConnectedToInternet !== "connected"
+		addPipClass.store.newPipConnectionStatus !== "connected"
 	) return null
 
-	if (addPipClass.store.hasPipConnectedToInternet === "connected") {
+	if (addPipClass.store.newPipConnectionStatus === "connected") {
 		return (
 			<div className="flex justify-between mt-2 items-center">
 				<Button type="button" onClick={() => autoCloseModalAfterAddPip(true)}>
