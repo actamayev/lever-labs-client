@@ -36,7 +36,10 @@ function ShowLoadingPipConnectionStatus() {
 	else if (addPipClass.store.newPipConnectionStatus === "failed") {
 		return (
 			<div className="my-2">
-				<ErrorMessage error="Unable to connect to Pip. Please make sure the Wi-Fi password is correct" />
+				<ErrorMessage
+					error={`Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.
+					Please confirm the Wi-Fi credentials you provided above.`}
+				/>
 			</div>
 		)
 	}

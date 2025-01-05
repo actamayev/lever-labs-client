@@ -15,8 +15,10 @@ export default function usePipStatusPoll(): () => void {
 
 		const MAX_RETRIES = 10
 		const POLLING_INTERVAL = 750
+		const CLOUDFLARE_TIMEOUT = 12000 // 12 seconds
 		let retryCount = 0
 		let pollingInterval: NodeJS.Timeout | null = null
+		let cloudflareStartTime: number | null = null
 
 		const cleanup = (shouldMarkAsFailed: boolean): void => {
 			console.log("here, cleaning up")
@@ -34,8 +36,20 @@ export default function usePipStatusPoll(): () => void {
 			console.log("Checking internet connectivity...")
 			if (pollingInterval) return
 
+			cloudflareStartTime = Date.now()
+
 			// First interval to check Cloudflare
 			pollingInterval = setInterval(async () => {
+				// Check if we've exceeded the Cloudflare timeout
+				if (cloudflareStartTime && (Date.now() - cloudflareStartTime > CLOUDFLARE_TIMEOUT)) {
+					cleanup(true)
+					toast.negative({
+						title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+						description: "Please confirm the Wi-Fi credentials you provided."
+					})
+					return
+				}
+
 				try {
 					// Try to check real internet connectivity
 					const response = await fetch("https://cloudflare.com/cdn-cgi/trace", {
