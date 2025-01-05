@@ -25,10 +25,6 @@ function ConnectToPipInstructions() {
 			// If we get here, we're still connected to regular internet
 			console.info("User still connected to Wi-Fi, not opening Pip connection window")
 			addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
-			toast.negative({
-				title: `Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID}).`,
-				description: "You are not currently connected"
-			})
 			return
 
 		} catch (error) {

@@ -15,7 +15,7 @@ export default function usePipStatusPoll(): () => void {
 
 		const MAX_RETRIES = 10
 		const POLLING_INTERVAL = 750
-		const CLOUDFLARE_TIMEOUT = 12000 // 12 seconds
+		const CLOUDFLARE_TIMEOUT = 15000 // 15 seconds
 		let retryCount = 0
 		let pollingInterval: NodeJS.Timeout | null = null
 		let cloudflareStartTime: number | null = null
@@ -85,7 +85,6 @@ export default function usePipStatusPoll(): () => void {
 									title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 									description: "Maximum connection attempts reached. Please try again."
 								})
-								throw new Error("Max retries reached")
 							}
 						} catch (error) {
 							console.error("Error polling PIP status:", error)

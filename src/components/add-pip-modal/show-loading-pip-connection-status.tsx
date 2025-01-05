@@ -14,10 +14,7 @@ function ShowLoadingPipConnectionStatus() {
 		return (
 			<div className="my-2">
 				<ErrorMessage
-					error={
-						`Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID}).
-						You are not currently connected`
-					}
+					error={`Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID})`}
 				/>
 			</div>
 		)
