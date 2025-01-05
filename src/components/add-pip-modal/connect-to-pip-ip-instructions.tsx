@@ -14,7 +14,7 @@ function ConnectToPipInstructions() {
 
 	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
 	const openIpAddrTab = useCallback(() => {
-		const MAX_RETRIES = 5
+		const MAX_RETRIES = 10
 		const POLLING_INTERVAL = 1000 // 1 second
 
 		try {
