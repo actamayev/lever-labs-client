@@ -49,7 +49,6 @@ class AddPipClass {
 		this.encodedWifiCredentials = newState
 	})
 
-	// TODO: Don't show the "makign contact with pip" mesasge until this is not null
 	public setHasPipConnectedToInternet = action((newState: HasPipConnectedStatuses | null) => {
 		this.hasPipConnectedToInternet = newState
 	})
