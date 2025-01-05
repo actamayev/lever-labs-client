@@ -10,7 +10,8 @@ function ConnectToPipInstructions() {
 
 	if (
 		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.encodedWifiCredentials)
+		_.isNull(addPipClass.store.encodedWifiCredentials) ||
+		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false
 	) return null
 
 	return (
