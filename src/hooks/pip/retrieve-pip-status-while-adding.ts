@@ -22,8 +22,7 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 				!isPipUUIDValid(pipUUID) ||
 				pipClass.checkIfUUIDAlreadyExists(pipUUID) === true ||
 				_.isNull(blueDotApiClient.httpClient.accessToken) ||
-				addPipClass.store.hasPipConnectedToInternet === "connected" ||
-				addPipClass.store.hasPipConnectedToInternet === "failed"
+				addPipClass.store.newPipConnectionStatus !== "connecting"
 			) return
 
 			const pipUUIDStatusData = await blueDotApiClient.pipDataService.retrievePipUUIDStatus(pipUUID)
@@ -31,10 +30,10 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 				throw Error ("Unable to retrieve pipUUID status")
 			}
 			if (pipUUIDStatusData.data.pipConnectionStatus === "connected") {
-				addPipClass.store.setHasPipConnectedToInternet("connected")
+				addPipClass.store.setNewPipConnectionStatus("connected")
 				await addPip()
 			} else {
-				addPipClass.store.setHasPipConnectedToInternet("connecting")
+				addPipClass.store.setNewPipConnectionStatus("connecting")
 				return
 			}
 		} catch (error) {

@@ -14,17 +14,18 @@ export default function usePipStatusPoll(): () => void {
 		if (_.isNull(addPipClass)) return
 
 		const MAX_RETRIES = 10
-		const POLLING_INTERVAL = 1000
+		const POLLING_INTERVAL = 750
 		let retryCount = 0
 		let pollingInterval: NodeJS.Timeout | null = null
 
-		const cleanup = (shouldMarkAsFailed: boolean = false): void => {
+		const cleanup = (shouldMarkAsFailed: boolean): void => {
+			console.log("here, cleaning up")
 			if (pollingInterval) {
 				clearInterval(pollingInterval)
 				pollingInterval = null
 			}
 			if (shouldMarkAsFailed) {
-				addPipClass.store.setHasPipConnectedToInternet("failed")
+				addPipClass.store.setNewPipConnectionStatus("failed")
 			}
 			window.removeEventListener("online", startPolling)
 		}
@@ -59,7 +60,7 @@ export default function usePipStatusPoll(): () => void {
 						try {
 							await retrievePipStatusWhileAdding()
 
-							if (addPipClass.store.hasPipConnectedToInternet) {
+							if (addPipClass.store.newPipConnectionStatus === "connected") {
 								cleanup(false)
 								return
 							}

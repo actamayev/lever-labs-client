@@ -16,7 +16,7 @@ function ConnectToPipInstructions() {
 	const openIpAddrTab = useCallback(() => {
 		try {
 			if (_.isNull(addPipClass)) return
-			addPipClass.store.setHasPipConnectedToInternet("connecting")
+			addPipClass.store.setNewPipConnectionStatus("connecting")
 
 			const newWindow = window.open(
 				`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`,

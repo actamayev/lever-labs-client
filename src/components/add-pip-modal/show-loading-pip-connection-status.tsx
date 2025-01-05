@@ -10,10 +10,10 @@ function ShowLoadingPipConnectionStatus() {
 
 	if (
 		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.hasPipConnectedToInternet)
+		_.isNull(addPipClass.store.newPipConnectionStatus)
 	) return null
 
-	if (addPipClass.store.hasPipConnectedToInternet === "connecting") {
+	if (addPipClass.store.newPipConnectionStatus === "connecting") {
 		return (
 			<div className="my-2">
 				<LoadingMessage message="Connecting to Pip..." />
@@ -21,7 +21,7 @@ function ShowLoadingPipConnectionStatus() {
 		)
 	}
 
-	else if (addPipClass.store.hasPipConnectedToInternet === "failed") {
+	else if (addPipClass.store.newPipConnectionStatus === "failed") {
 		return (
 			<div className="my-2">
 				<ErrorMessage error="Unable to connect to Pip. Please make sure the Wi-Fi password is correct" />
