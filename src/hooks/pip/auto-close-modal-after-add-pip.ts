@@ -9,7 +9,6 @@ export default function useAutoCloseModalAfterAddPip(): (
 	const toast = useStyledToast()
 	const addPipClass = useAddPipContext()
 
-	// eslint-disable-next-line complexity
 	return useCallback(() => {
 		try {
 			if (_.isNull(addPipClass)) return

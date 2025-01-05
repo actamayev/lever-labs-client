@@ -13,8 +13,6 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 	const addPipClass = useAddPipContext()
 	const addPip = useAddPip(false)
 
-	// TODO: Call this function once per second, for 5 seconds.
-	// Start it after the user's online status changes back to true.
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
@@ -35,7 +33,6 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 			if (pipUUIDStatusData.data.pipConnectionStatus === "connected") {
 				addPipClass.store.setHasPipConnectedToInternet("connected")
 				await addPip()
-				// TODO: Exit the loop if we're in this block
 			} else {
 				addPipClass.store.setHasPipConnectedToInternet("connecting")
 				return
