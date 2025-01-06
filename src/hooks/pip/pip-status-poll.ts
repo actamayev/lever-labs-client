@@ -14,12 +14,17 @@ export default function usePipStatusPoll(): () => void {
 	return useCallback(() => {
 		if (_.isNull(addPipClass)) return
 
-		const MAX_RETRIES = 10
-		const POLLING_INTERVAL = 750
-		const CLOUDFLARE_TIMEOUT = 15000 // 15 seconds
-		let retryCount = 0
+		const POLLING_INTERVAL = 1000 // 1 second
+		const GOOGLE_TIMEOUT = 20000 // 20 seconds
+		const PIP_STATUS_TIMEOUT = 20000 // 20 seconds
+
+		// Calculate retries based on timeouts
+		const GOOGLE_MAX_RETRIES = Math.ceil(GOOGLE_TIMEOUT / POLLING_INTERVAL) // 20 retries
+		const PIP_STATUS_MAX_RETRIES = Math.ceil(PIP_STATUS_TIMEOUT / POLLING_INTERVAL) // 20 retries
+
+		let googleRetryCount = 0
+		let pipStatusRetryCount = 0
 		let pollingInterval: NodeJS.Timeout | null = null
-		let cloudflareStartTime: number | null = null
 
 		const cleanup = (shouldMarkAsFailed: boolean): void => {
 			if (pollingInterval) {
@@ -35,12 +40,16 @@ export default function usePipStatusPoll(): () => void {
 		const startPolling = (): void => {
 			if (pollingInterval) return
 
-			cloudflareStartTime = Date.now()
-
-			// First interval to check Cloudflare
+			// First phase: Check for internet connectivity
+			// The GOOGLE_TIMEOUT has to do with checking for internet connectivity after the Pip kicks the user off it's AP.
+			// The user should be back on their network in GOOGLE_TIMEOUT seconds.
+			// This cannot be made infinite in the event that the Pip didn't kick off the user
+			// (ie. when the provided credentials were invalid)
 			pollingInterval = setInterval(async () => {
-				// Check if we've exceeded the Cloudflare timeout
-				if (cloudflareStartTime && (Date.now() - cloudflareStartTime > CLOUDFLARE_TIMEOUT)) {
+				googleRetryCount++
+
+				// Check if we've exceeded the Google timeout
+				if (googleRetryCount >= GOOGLE_MAX_RETRIES) {
 					cleanup(true)
 					return toast.negative({
 						title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
@@ -51,17 +60,19 @@ export default function usePipStatusPoll(): () => void {
 				const hasInternet = await checkInternetConnectivity()
 
 				if (!hasInternet) {
-					return console.info("No internet connectivity - just wifi")
+					return console.info(`No internet connectivity - attempt ${googleRetryCount}/${GOOGLE_MAX_RETRIES}`)
 				}
 
-				// Clear the Cloudflare checking interval
+				// Clear the Google checking interval
 				if (pollingInterval) {
 					clearInterval(pollingInterval)
 				}
 
-				// Start the PIP status polling
+				// Second phase: Check PIP status
+				// The PIP_STATUS_TIMEOUT timeout has to do with the time necessary for the users computer to auto-reconnect to their Wi-Fi
+				// (after getting kicked off Pip's)
 				pollingInterval = setInterval(async () => {
-					retryCount++
+					pipStatusRetryCount++
 
 					try {
 						await retrievePipStatusWhileAdding()
@@ -70,13 +81,15 @@ export default function usePipStatusPoll(): () => void {
 							return cleanup(false)
 						}
 
-						if (retryCount >= MAX_RETRIES) {
+						if (pipStatusRetryCount >= PIP_STATUS_MAX_RETRIES) {
 							cleanup(true)
 							return toast.negative({
 								title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 								description: "Maximum connection attempts reached. Please try again."
 							})
 						}
+
+						console.info(`Checking PIP status - attempt ${pipStatusRetryCount}/${PIP_STATUS_MAX_RETRIES}`)
 					} catch (error) {
 						console.error("Error polling PIP status:", error)
 						cleanup(true)
@@ -86,6 +99,7 @@ export default function usePipStatusPoll(): () => void {
 
 			}, POLLING_INTERVAL)
 		}
+
 		window.addEventListener("online", startPolling)
 		startPolling()
 	}, [addPipClass, retrievePipStatusWhileAdding, toast])

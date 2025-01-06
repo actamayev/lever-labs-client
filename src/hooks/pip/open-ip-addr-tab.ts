@@ -3,7 +3,7 @@ import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import checkEspConnectivity from "../../utils/pip/check-esp-connectivity"
+import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function useOpenIpAddrTab(): () => void {
 	const toast = useStyledToast()
@@ -14,19 +14,17 @@ export default function useOpenIpAddrTab(): () => void {
 		if (_.isNull(addPipClass)) return
 
 		try {
-			const isConnectedToEsp = await checkEspConnectivity()
+			const connectedToInternet = await checkInternetConnectivity()
 
-			if (!isConnectedToEsp) {
-				console.info("Not connected to ESP AP, showing connection instructions")
+			if (connectedToInternet) {
+				console.info("Still connected to internet, user needs to connect to ESP AP first")
 				addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
 				return toast.neutral({
-					title: "Wi-Fi Connection Required",
+					title: "WiFi Connection Required",
 					description: `Please connect to the pip-${addPipClass.store.mirroredFormValues.pipUUID} network first`
 				})
 			}
-
-			// If we get here, we're connected to the Pip's AP
-			console.log("Connected to ESP AP - proceeding with setup")
+			console.log("No internet connectivity - likely connected to ESP AP")
 
 			addPipClass.store.setIsUserReadyToConnectToPipDialog(true)
 			addPipClass.store.setNewPipConnectionStatus("connecting")
