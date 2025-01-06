@@ -34,6 +34,7 @@ function ConnectToPipInstructions() {
 						type="button"
 						className="mt-2"
 						onClick={openIpAddrTab}
+						disabled={addPipClass.store.newPipConnectionStatus === "connecting"}
 					>
 						Send Wi-Fi credentials
 					</Button>
