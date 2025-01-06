@@ -63,11 +63,10 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
-				toast.negative({
+				return toast.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
-				return
 			} else if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth

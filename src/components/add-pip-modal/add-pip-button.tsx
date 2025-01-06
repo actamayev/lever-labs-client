@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import _ from "lodash"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -10,6 +11,13 @@ function AddPipButton() {
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
 	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
+
+	const closeButtonAfterAddPipAction = useCallback(() => {
+		if (_.isNull(addPipClass)) return
+		addPipClass.store.setIsUserReadyToConnectToPipDialog(null)
+		addPipClass.store.setNewPipConnectionStatus(null)
+		autoCloseModalAfterAddPip(true)
+	}, [addPipClass, autoCloseModalAfterAddPip])
 
 	if (
 		_.isNull(addPipClass) ||
@@ -32,7 +40,7 @@ function AddPipButton() {
 	if (addPipClass.store.newPipConnectionStatus === "connected") {
 		return (
 			<div className="flex justify-between mt-2 items-center">
-				<Button type="button" onClick={() => autoCloseModalAfterAddPip(true)}>
+				<Button type="button" onClick={closeButtonAfterAddPipAction}>
 					Close
 				</Button>
 			</div>
