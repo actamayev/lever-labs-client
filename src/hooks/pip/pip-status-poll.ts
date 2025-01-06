@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useRetrievePipStatusWhileAdding from "./retrieve-pip-status-while-adding"
+import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function usePipStatusPoll(): () => void {
 	const toast = useStyledToast()
@@ -47,50 +48,42 @@ export default function usePipStatusPoll(): () => void {
 					})
 				}
 
-				try {
-					// Try to check real internet connectivity
-					const response = await fetch("https://cloudflare.com/cdn-cgi/trace", {
-						method: "GET",
-						cache: "no-cache"
-					})
+				const hasInternet = await checkInternetConnectivity()
 
-					if (!response.ok) {
-						return console.info("No internet connectivity - just wifi")
-					}
-
-					// Clear the Cloudflare checking interval
-					if (pollingInterval) {
-						clearInterval(pollingInterval)
-					}
-
-					// Start the PIP status polling
-					pollingInterval = setInterval(async () => {
-						retryCount++
-
-						try {
-							await retrievePipStatusWhileAdding()
-
-							if (addPipClass.store.newPipConnectionStatus === "connected") {
-								return cleanup(false)
-							}
-
-							if (retryCount >= MAX_RETRIES) {
-								cleanup(true)
-								return toast.negative({
-									title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-									description: "Maximum connection attempts reached. Please try again."
-								})
-							}
-						} catch (error) {
-							console.error("Error polling PIP status:", error)
-							cleanup(true)
-							throw error
-						}
-					}, POLLING_INTERVAL)
-
-				} catch (error) {
-					return console.error("Failed to verify internet connectivity:", error)
+				if (!hasInternet) {
+					return console.info("No internet connectivity - just wifi")
 				}
+
+				// Clear the Cloudflare checking interval
+				if (pollingInterval) {
+					clearInterval(pollingInterval)
+				}
+
+				// Start the PIP status polling
+				pollingInterval = setInterval(async () => {
+					retryCount++
+
+					try {
+						await retrievePipStatusWhileAdding()
+
+						if (addPipClass.store.newPipConnectionStatus === "connected") {
+							return cleanup(false)
+						}
+
+						if (retryCount >= MAX_RETRIES) {
+							cleanup(true)
+							return toast.negative({
+								title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+								description: "Maximum connection attempts reached. Please try again."
+							})
+						}
+					} catch (error) {
+						console.error("Error polling PIP status:", error)
+						cleanup(true)
+						throw error
+					}
+				}, POLLING_INTERVAL)
+
 			}, POLLING_INTERVAL)
 		}
 		window.addEventListener("online", startPolling)
