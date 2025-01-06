@@ -10,10 +10,20 @@ class AddPipClass {
 		doesPipUUIDExist: false,
 		hasPipNamePreviouslyBeenAdded: false,
 		isPipOnline: false,
-		userAlreadyAddedUUID: false
+		userAlreadyAddedUUID: false,
+		checkedConnectedToWifi: false
 	}
 	public isAddPipModalOpen = false
 	public encodedWifiCredentials: string | null = null
+	public mirroredFormValues: IncompletePipData = {
+		pipUUID: "" as PipUUID,
+		shouldAutoConnect: true,
+		pipName: "",
+		wifiNetworkName: "",
+		wifiPassword: ""
+	}
+	public newPipConnectionStatus: NewPipConnectionStatuses | null = null
+	public isUserReadyToConnectToPipDialog: boolean | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -24,6 +34,7 @@ class AddPipClass {
 		this.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded = false
 		this.addingNewPipRequirements.isPipOnline = false
 		this.addingNewPipRequirements.userAlreadyAddedUUID = false
+		this.addingNewPipRequirements.checkedConnectedToWifi = false
 	})
 
 	public updateAddingNewPipRequirements<K extends keyof AddingNewPipRequirements>(
@@ -41,19 +52,65 @@ class AddPipClass {
 		this.encodedWifiCredentials = newState
 	})
 
-	public encodeWifiData = action((ssid: string, password: string) => {
-		if (_.isEmpty(ssid)) {
-			this.setEncodedWifiCredentials(null)
-			return
-		}
-		const data = JSON.stringify({ ssid, password })
-		this.setEncodedWifiCredentials(btoa(data))
+	public setNewPipConnectionStatus = action((newState: NewPipConnectionStatuses | null) => {
+		this.newPipConnectionStatus = newState
 	})
+
+	public setIsUserReadyToConnectToPipDialog = action((newState: boolean | null) => {
+		this.isUserReadyToConnectToPipDialog = newState
+	})
+
+	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
+		if (field === "wifiNetworkName" && _.isEmpty(value)) {
+			return this.setEncodedWifiCredentials(null)
+		}
+		this.setEncodedWifiCredentials(btoa(JSON.stringify(
+			{
+				ssid: this.mirroredFormValues.wifiNetworkName,
+				password: this.mirroredFormValues.wifiPassword
+			}
+		)))
+	})
+
+	public updateMirroredFormValues<K extends keyof IncompletePipData>(
+		field: K,
+		value: IncompletePipData[K]
+	): void {
+		this.mirroredFormValues[field] = value
+		if (
+			this.isWifiField(field) &&
+			typeof value === "string"
+		) {
+			this.encodeWifiData(field, value)
+		}
+	}
+
+	private isWifiField(field: keyof IncompletePipData): field is WifiPipDataKeys {
+		return field === "wifiNetworkName" || field === "wifiPassword"
+	}
+
+	public resetMirroredFormValues = action(() => {
+		this.mirroredFormValues = {
+			pipUUID: "" as PipUUID,
+			shouldAutoConnect: true,
+			pipName: "",
+			wifiNetworkName: "",
+			wifiPassword: ""
+		}
+	})
+
+	get isPipNameValid (): boolean {
+		if (!this.mirroredFormValues.pipName) return false
+		return this.mirroredFormValues.pipName.length >= 3 && this.mirroredFormValues.pipName.length <= 20
+	}
 
 	public logout() {
 		this.resetAddingPipRequirements()
 		this.setIsAppPipModalOpen(false)
 		this.setEncodedWifiCredentials(null)
+		this.resetMirroredFormValues()
+		this.setNewPipConnectionStatus(null)
+		this.setIsUserReadyToConnectToPipDialog(null)
 	}
 }
 
@@ -64,8 +121,8 @@ interface AddPipContextValue {
 
 const AddPipContext = createContext<AddPipContextValue | null>(null)
 
-function useAddPipForm() {
-	return useForm<IncompletePipData>({
+export default function AddPipProvider({ children }: { children: React.ReactNode }) {
+	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
 			pipUUID: "",
@@ -75,10 +132,6 @@ function useAddPipForm() {
 			wifiPassword: ""
 		}
 	})
-}
-
-export default function AddPipProvider ({ children }: { children: React.ReactNode }) {
-	const form = useAddPipForm()
 
 	const contextValue = useMemo(() => ({
 		store: new AddPipClass(),

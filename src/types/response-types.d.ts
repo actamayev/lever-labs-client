@@ -36,7 +36,7 @@ declare global {
 		userPipData: PipData[]
 	}
 
-	type IsValidPipUUIDResponse = {
+	type RetrieveIsPipUUIDValidResponse = {
 		pipName: string | null
 		pipConnectionStatus: ESPConnectionStatus
 	}

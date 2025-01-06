@@ -25,13 +25,25 @@ function EnterPipName() {
 
 	const tooltipMessage = useCallback(() => {
 		if (_.isNull(addPipClass)) return ""
-		const formValues = addPipClass.form.watch()
-		if (!formValues.pipName) return "Please give your Pip a name"
-		if (formValues.pipName.length < 3) return "Pip's name must be at least 3 characters"
-		if (formValues.pipName.length > 20) return "Pip's name can't be more than 20 characters"
+		const {pipName} = addPipClass.store.mirroredFormValues
+		if (!pipName) return "Please give your Pip a name"
+		if (pipName.length < 3) return "Pip's name must be at least 3 characters"
+		if (pipName.length > 20) return "Pip's name can't be more than 20 characters"
 		return "Valid Name"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [addPipClass, addPipClass?.form.watch().pipName])
+	}, [addPipClass, addPipClass?.store.mirroredFormValues.pipName])
+
+	const typePipName = useCallback((
+		event: React.ChangeEvent<HTMLInputElement>,
+		onChange: (value: string) => void
+	) => {
+		const input = event.target.value
+		if (input.length > 20) return
+		if (_.isNull(addPipClass)) return
+
+		onChange(input)
+		addPipClass.store.updateMirroredFormValues("pipName", input)
+	}, [addPipClass])
 
 	if (_.isNull(addPipClass)) return null
 
@@ -50,6 +62,7 @@ function EnterPipName() {
 								className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Name"
+								onChange={(e) => typePipName(e, field.onChange)}
 							/>
 							{field.value && (
 								<div className="absolute inset-y-0 right-9 flex items-center">

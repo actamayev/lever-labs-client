@@ -4,7 +4,7 @@ export const addPipSchema = z.object({
 	pipUUID: z.string()
 		.min(5, "Pip ID must be 5 alphanumeric characters")
 		.max(5, "Pip ID must be 5 alphanumeric characters"),
-	shouldAutoConnect: z.boolean(), // TODO: Should auto-connect should only show up if pip is online
+	shouldAutoConnect: z.boolean(),
 	pipName: z.union([
 		z.string()
 			.min(3, "Pip's name must be at least 3 characters")
