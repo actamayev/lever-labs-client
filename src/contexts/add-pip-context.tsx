@@ -10,7 +10,8 @@ class AddPipClass {
 		doesPipUUIDExist: false,
 		hasPipNamePreviouslyBeenAdded: false,
 		isPipOnline: false,
-		userAlreadyAddedUUID: false
+		userAlreadyAddedUUID: false,
+		checkedConnectedToWifi: false
 	}
 	public isAddPipModalOpen = false
 	public encodedWifiCredentials: string | null = null
@@ -33,6 +34,7 @@ class AddPipClass {
 		this.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded = false
 		this.addingNewPipRequirements.isPipOnline = false
 		this.addingNewPipRequirements.userAlreadyAddedUUID = false
+		this.addingNewPipRequirements.checkedConnectedToWifi = false
 	})
 
 	public updateAddingNewPipRequirements<K extends keyof AddingNewPipRequirements>(

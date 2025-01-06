@@ -24,8 +24,13 @@ function EnterWifiCreds() {
 	return (
 		<>
 			<div className="flex flex-row items-center">
-				<div>
-					<p className="my-2">Step 3: Connect {addPipClass.store.mirroredFormValues.pipName} to Wi-Fi</p>
+				<div className="my-2">
+					<div className="flex flex-row">
+						<p className="font-bold">
+							Step 3:&nbsp;
+						</p>
+						Connect {addPipClass.store.mirroredFormValues.pipName} to Wi-Fi
+					</div>
 				</div>
 				<div className="ml-2">
 					<TooltipProvider delayDuration={0}>

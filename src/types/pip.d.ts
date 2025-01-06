@@ -24,6 +24,7 @@ declare global {
 		hasPipNamePreviouslyBeenAdded: boolean
 		isPipOnline: boolean
 		userAlreadyAddedUUID: boolean
+		checkedConnectedToWifi: boolean
 	}
 
 	type PipConnectionStatus =
