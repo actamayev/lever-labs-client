@@ -5,59 +5,68 @@ import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import useAutoCloseModalAfterAddPip from "./auto-close-modal-after-add-pip"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
-export default function useAddPip(): () => Promise<void> {
+export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
+	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
 			if (_.isNull(addPipClass)) return
-			if (pipClass.checkIfUUIDAlreadyExists(addPipClass.form.getValues("pipUUID")) === true) {
+			const { pipUUID, pipName, shouldAutoConnect } = addPipClass.store.mirroredFormValues as {
+				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
+			}
+			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				throw new Error("You've already added a Pip with this ID")
 			}
 
-			if (validatePipData() === false) return
+			if (validatePipData() === false) {
+				return toast.negative({
+					title: "Unable to validate Pip data",
+					description: "Please enter data and try submitting again"
+				})
+			}
 
-			if (_.isEmpty(addPipClass.form.getValues("pipName"))) addPipClass.form.setValue("pipName", undefined)
-			addPipClass.form.setValue("wifiNetworkName", undefined)
-			addPipClass.form.setValue("wifiPassword", undefined)
+			if (_.isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
 			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
 				addPipClass.form.setValue("shouldAutoConnect", false)
 			}
+			const dataToSend: AddPipData = {
+				pipUUID,
+				pipName,
+				shouldAutoConnect,
+			}
 
-			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(addPipClass.form.getValues())
+			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
 
 			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
-			addPipClass.store.setIsAppPipModalOpen(false)
 			const pipDataToAdd: PipData = {
-				pipName: addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName,
-				pipUUID: addPipClass.form.getValues("pipUUID"),
+				pipName: pipName || addPipDataResponse.data.pipName,
+				pipUUID: pipUUID,
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			addPipClass.store.resetAddingPipRequirements()
-			addPipClass.form.reset()
-			toast.positive({
-				description: `${addPipClass.form.getValues("pipName") || addPipDataResponse.data.pipName} added`
-			})
+			if (shouldAutoCloseModal) {
+				autoCloseModalAfterAddPip(shouldAutoCloseModal)
+			}
 		} catch (error) {
 			console.error(error)
 			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
-				toast.negative({
+				return toast.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
-				return
 			} else if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
@@ -77,10 +86,11 @@ export default function useAddPip(): () => Promise<void> {
 				}
 			}
 			if (_.isNull(addPipClass)) return
+			const { pipName } = addPipClass.store.mirroredFormValues
 			toast.negative({
-				title: `Unable to add ${addPipClass.form.getValues("pipName")} at this time`,
+				title: `Unable to add ${pipName} at this time`,
 				description: "Please reload page and try again"
 			})
 		}
-	}, [addPipClass, blueDotApiClient.pipDataService, pipClass, toast, validatePipData])
+	}, [addPipClass, autoCloseModalAfterAddPip, blueDotApiClient.pipDataService, pipClass, shouldAutoCloseModal, toast, validatePipData])
 }

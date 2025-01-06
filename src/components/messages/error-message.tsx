@@ -1,7 +1,7 @@
 import { AlertCircle } from "lucide-react"
-import { Alert, AlertDescription } from "./shadcn/ui/alert"
+import { Alert, AlertDescription } from "../shadcn/ui/alert"
 
-export default function ErrorMessage({ error }: { error: string}) {
+export default function ErrorMessage({ error }: { error: string }) {
 	return (
 		<Alert variant="destructive" className="dark:text-red-500 dark:border-red-500">
 			<div className="flex items-center gap-2">

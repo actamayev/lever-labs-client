@@ -1,58 +1,64 @@
 import _ from "lodash"
-import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
-import useStyledToast from "../toast-options"
+import { Checkbox } from "../shadcn/ui/checkbox"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import useOpenIpAddrTab from "../../hooks/pip/open-ip-addr-tab"
 
 function ConnectToPipInstructions() {
-	const toast = useStyledToast()
 	const addPipClass = useAddPipContext()
-
-	// TODO: After the user's pip connects, it should send a request to the websocket which should notify the client it's connected
-	const openIpAddrTab = useCallback(() => {
-		try {
-			if (_.isNull(addPipClass)) return
-			const newWindow = window.open(`http://192.168.4.1/setup?credentials=${addPipClass.store.encodedWifiCredentials}`, "_blank")
-			if (!newWindow) {
-				throw new Error("Popup was blocked. Please allow popups for this site and try again.")
-			}
-		} catch (error) {
-			console.error("Failed to open setup page:", error)
-			toast.negative({
-				title: `Unable to connect ${addPipClass?.form.getValues("pipName")} to Wi-Fi at this time`,
-				description: "Please reload page and try again"
-			})
-		}
-	}, [addPipClass, toast])
+	const openIpAddrTab = useOpenIpAddrTab()
 
 	if (
 		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.encodedWifiCredentials)
+		_.isNull(addPipClass.store.encodedWifiCredentials) ||
+		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false
 	) return null
 
+	console.log("updateAddingNewPipRequirements", addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi)
 	return (
-		<div className="my-1">
+		<div className="my-2">
 			<div className="flex flex-col">
-				<div>
-					Step 4: Send your Wi-Fi credentials to {addPipClass.form.watch().pipName}
+				<div className="font-bold">
+					Step 4
 				</div>
 				<div>
 					1. Open your computer&apos;s Wi-Fi settings
 				</div>
 				<div>
-					2. Connect to the Wi-Fi network:&nbsp;
-					<span className="font-bold">
-						pip-{addPipClass.form.watch().pipUUID}
-					</span>
+					<div className="flex items-center space-x-2">
+						<div>
+							2. Connect to the Wi-Fi network:&nbsp;
+							<span className="font-bold">
+								pip-{addPipClass.store.mirroredFormValues.pipUUID}
+							</span>
+						</div>
+						<Checkbox
+							id="wifi-connected"
+							checked={addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi}
+							onCheckedChange={() =>
+								addPipClass.store.updateAddingNewPipRequirements(
+									"checkedConnectedToWifi",
+									!addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi
+								)
+							}
+							className="size-6"
+							showPlaceholder={true}
+						/>
+					</div>
 				</div>
-				<Button
-					type="button"
-					className="mt-1"
-					onClick={openIpAddrTab}
-				>
-					Send Wi-Fi credentials
-				</Button>
+				{
+					addPipClass.store.newPipConnectionStatus !== "connected" &&
+					addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi === true && (
+						<Button
+							type="button"
+							className="mt-2"
+							onClick={openIpAddrTab}
+							disabled={addPipClass.store.newPipConnectionStatus === "connecting"}
+						>
+							Send Wi-Fi credentials
+						</Button>
+					)}
 			</div>
 		</div>
 	)

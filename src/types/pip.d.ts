@@ -10,6 +10,8 @@ declare global {
 		pipName?: string
 	}
 
+	type WifiPipDataKeys = "wifiNetworkName" | "wifiPassword"
+
 	interface PipData {
 		pipName: string
 		pipUUID: PipUUID
@@ -22,6 +24,7 @@ declare global {
 		hasPipNamePreviouslyBeenAdded: boolean
 		isPipOnline: boolean
 		userAlreadyAddedUUID: boolean
+		checkedConnectedToWifi: boolean
 	}
 
 	type PipConnectionStatus =
@@ -36,6 +39,8 @@ declare global {
 		"inactive" | // Not connected to internet/is turned off.
 		"updating firmware" | // ESP changed to this state when client approves firmware update
 		"connected" // Connected to the internet/is active
+
+	type NewPipConnectionStatuses = "connected" | "connecting" | "failed"
 }
 
 export {}
