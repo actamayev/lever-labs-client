@@ -32,7 +32,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
-			return [`readIMU(IMU_${value})`, Order.FUNCTION_CALL]
+			return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.TOF_READ]: {
