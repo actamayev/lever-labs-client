@@ -17,7 +17,6 @@ export const logicCategory: CustomCategoryInfo = {
 		{ kind: "block", type: "math_number" },
 		{ kind: "block", type: "math_arithmetic" },
 		{ kind: "block", type: "math_single" },
-		{ kind: "block", type: "math_constrain" },
 		{ kind: "block", type: "controls_whileUntil" },
 		{ kind: "block", type: "controls_repeat_ext" },
 	]

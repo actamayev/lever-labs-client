@@ -293,33 +293,5 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 				throw new Error("Unknown math operator: " + operator)
 			}
 		}
-	},
-
-	[LOGIC_BLOCK_TYPES.MATH_CONSTRAIN]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendValueInput("VALUE")
-					.setCheck("Number")
-					.appendField("constrain")
-
-				this.appendValueInput("LOW")
-					.setCheck("Number")
-					.appendField("between")
-
-				this.appendValueInput("HIGH")
-					.setCheck("Number")
-					.appendField("and")
-
-				this.setOutput(true, "Number")
-				this.setColour(logicCategory.colour)
-				this.setTooltip("Constrain a number to be between the specified limits")
-			}
-		},
-		generator: (block: Blockly.Block): [string, number] => {
-			const value = cppGenerator.valueToCode(block, "VALUE", Order.NONE) || "0"
-			const low = cppGenerator.valueToCode(block, "LOW", Order.NONE) || "0"
-			const high = cppGenerator.valueToCode(block, "HIGH", Order.NONE) || "0"
-			return [`constrain(${value}, ${low}, ${high})`, Order.FUNCTION_CALL]
-		}
 	}
 }

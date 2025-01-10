@@ -8,7 +8,6 @@ export const LOGIC_BLOCK_TYPES = {
 	NUMBER: "math_number",
 	ARITHMETIC: "math_arithmetic",
 	MATH_SINGLE: "math_single",        // Changed from SINGLE to MATH_SINGLE
-	MATH_CONSTRAIN: "math_constrain",  // Changed from CONSTRAIN to MATH_CONSTRAIN
 	WHILE_UNTIL: "controls_whileUntil",
 	REPEAT: "controls_repeat_ext"
 } as const

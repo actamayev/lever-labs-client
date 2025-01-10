@@ -17,15 +17,18 @@ export type SensorsBlockNames = typeof SENSORS_BLOCK_TYPES[keyof typeof SENSORS_
 // Custom type for sensor types
 export const SENSOR_TYPES = {
 	IMU: {
-		ACCEL_X: "ACCEL_X",
-		ACCEL_Y: "ACCEL_Y",
-		ACCEL_Z: "ACCEL_Z",
-		GYRO_X: "GYRO_X",
-		GYRO_Y: "GYRO_Y",
-		GYRO_Z: "GYRO_Z",
-		MAG_X: "MAG_X",
-		MAG_Y: "MAG_Y",
-		MAG_Z: "MAG_Z",
+		Yaw: "getYaw()",
+		Pitch: "getPitch()",
+		Roll: "getRoll()",
+		"X Acceleration": "getXAccel()",
+		"Y Acceleration": "getYAccel()",
+		"Z Acceleration": "getZAccel()",
+		"Acceleration Magnitude": "getAccelMagnitude()",
+		"X Rotation Rate": "getXRotationRate()",
+		"Y Rotation Rate": "getYRotationRate()",
+		"Magnetic Field X": "getMagneticFieldX()",
+		"Magnetic Field Y": "getMagneticFieldY()",
+		"Magnetic Field Z": "getMagneticFieldZ()",
 	},
 	LEFTRIGHT: {
 		LEFT: "LEFT",
