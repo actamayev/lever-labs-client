@@ -3,20 +3,6 @@ import { IconType } from "react-icons"
 declare global {
 	type EmailOrUnknown = "Email" | "Unknown"
 
-	type StaticPageNames =
-		"/" |
-		"/login" |
-		"/register" |
-		"/register-username" |
-		"/garage" |
-		"/lab" |
-		"/sandbox" |
-		"/account" |
-
-		"/contact"
-
-	type PageNames = StaticPageNames
-
 	type SiteThemes = "light" | "dark"
 
 	type SidebarStates = "expanded" | "collapsed"

@@ -1,10 +1,10 @@
 import {
 	Sidebar,
 	SidebarHeader,
-	// SidebarInput,
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
-import { platformNavData, sensorsNavData } from "../../../../utils/lab/nav-data"
+import WelcomeSidebarSection from "./welcome-sidebar-section"
+import { platformNavData, sensorsNavData } from "../../../../../utils/lab/nav-data"
 
 export default function LabSidebar() {
 	return (
@@ -17,6 +17,7 @@ export default function LabSidebar() {
 				</div>
 				{/* <SidebarInput placeholder="Search lessons..." /> */}
 			</SidebarHeader>
+			<WelcomeSidebarSection />
 			<LabGroupMap
 				groupName="Platform"
 				navData={platformNavData}

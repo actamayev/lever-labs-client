@@ -2,7 +2,7 @@ import { Link } from "react-router"
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from "./shadcn/ui/tooltip"
 
 interface Props {
-	linkTo: StaticPageNames
+	linkTo: PageNames
 	children: React.ReactNode
 }
 

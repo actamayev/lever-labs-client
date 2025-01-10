@@ -12,13 +12,15 @@ const PrivatePageNames = [
 	"/account"
 ]
 
-// TODO: When running BDR on mac app, try scrolling right on the landing page. It shouldn't be able to
-// it should be fixed
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const location = useLocation()
 	const username = useUsername()
 
-	if (!PrivatePageNames.includes(location.pathname) || _.isNull(username)) {
+	const isPrivatePage = PrivatePageNames.some(privatePath =>
+		location.pathname.startsWith(privatePath)
+	)
+
+	if (!isPrivatePage || _.isNull(username)) {
 		let extraClasses = undefined
 		if (location.pathname === "/") extraClasses = ""
 
@@ -26,7 +28,6 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 			<ClassicLayout extraClasses={extraClasses}>
 				{children}
 			</ClassicLayout>
-
 		)
 	}
 

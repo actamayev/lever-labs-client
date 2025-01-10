@@ -14,7 +14,7 @@ import {
 	SidebarMenuSubButton,
 	SidebarMenuSubItem,
 } from "@/components/shadcn/ui/sidebar"
-import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 
 interface Props {
 	groupName: string

@@ -51,6 +51,13 @@ const helmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/lab"
 		/>
 	),
+	"/lab/welcome": (
+		<BasicHelmet
+			pageTitleData="Lab Welcome"
+			description="Welcome to the Lab! This is where the magic happens. Where you'll learn the same fundamental skills you need to land rockets, design self-driving cars, and build robotics that can walk (and talk)."
+			url="https://www.bluedotrobots.com/lab/welcome"
+		/>
+	),
 	"/sandbox": (
 		<BasicHelmet
 			pageTitleData="Sandbox"
