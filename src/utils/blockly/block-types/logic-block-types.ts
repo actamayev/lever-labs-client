@@ -2,6 +2,9 @@
 
 export const LOGIC_BLOCK_TYPES = {
 	IF: "controls_if",
+	IF_ELSE: "controls_if_else",           // if/else
+	IF_ELSEIF_ELSE: "controls_if_elseif",  // if/elseif/else
+	IF_2ELSEIF_ELSE: "controls_if_2elseif", // if/elseif/elseif/else
 	COMPARE: "logic_compare",
 	OPERATION: "logic_operation",
 	NEGATE: "logic_negate",
@@ -17,6 +20,13 @@ export type LogicBlockNames = typeof LOGIC_BLOCK_TYPES[keyof typeof LOGIC_BLOCK_
 export const LOGIC_FIELD_VALUES = {
 	IF_CONDITION: "IF0",
 	IF_DO: "DO0",
+	IF1_CONDITION: "IF1",
+	IF1_DO: "DO1",
+	IF2_CONDITION: "IF2",
+	IF2_DO: "DO2",
+	IF3_CONDITION: "IF3",
+	IF3_DO: "DO3",
+	ELSE_DO: "ELSE",
 	IF_ELSE: "ELSE",
 	COMPARE_A: "A",
 	COMPARE_B: "B",

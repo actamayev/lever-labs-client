@@ -11,6 +11,9 @@ export const logicCategory: CustomCategoryInfo = {
 	hidden: undefined,
 	contents: [
 		{ kind: "block", type: "controls_if" },
+		{ kind: "block", type: "controls_if_else" },
+		{ kind: "block", type: "controls_if_elseif" },
+		{ kind: "block", type: "controls_if_2elseif" },
 		{ kind: "block", type: "logic_compare" },
 		{ kind: "block", type: "logic_operation" },
 		{ kind: "block", type: "logic_negate" },
