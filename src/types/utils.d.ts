@@ -17,11 +17,11 @@ declare global {
 
 	interface SidebarNavData {
 		title: string
-		url: StaticPageNames
+		url: PageNames
 		icon: IconType
 		items?: {
 			title: string
-			url: StaticPageNames
+			url: LabPages
 		}[]
 	}
 }

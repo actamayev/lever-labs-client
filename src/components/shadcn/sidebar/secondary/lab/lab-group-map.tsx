@@ -59,7 +59,7 @@ export default function LabGroupMap(props: Props) {
 										<SidebarMenuSubItem key={subItem.title}>
 											<SidebarMenuSubButton
 												asChild
-												onClick={() => navigate(item.url)}
+												onClick={() => navigate(subItem.url)}
 												className="ml-2 text-sm"
 											>
 												<span className="cursor-pointer">

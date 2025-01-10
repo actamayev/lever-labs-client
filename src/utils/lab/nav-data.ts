@@ -4,77 +4,77 @@ import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
 export const platformNavData: SidebarNavData[] = [
 	{
 		title: "LED",
-		url: "/lab",
+		url: "/lab/led",
 		icon: FaLightbulb,
 		items: [
 			{
-				title: "Turn LED On",
-				url: "/lab",
+				title: "Reading",
+				url: "/lab/led/reading",
 			},
 			{
-				title: "Flash LED",
-				url: "/lab",
+				title: "Video",
+				url: "/lab/led/video",
 			},
 			{
-				title: "Choose LED color by hex",
-				url: "/lab",
+				title: "Code",
+				url: "/lab/led/code",
 			},
 		],
 	},
 	{
 		title: "Motors",
-		url: "/lab",
+		url: "/lab/motor",
 		icon: GiCarWheel,
 		items: [
 			{
-				title: "Spin motors forward",
-				url: "/lab",
+				title: "Reading",
+				url: "/lab/motor/reading",
 			},
 			{
-				title: "Spin motors backward",
-				url: "/lab",
+				title: "Video",
+				url: "/lab/motor/video",
 			},
 			{
-				title: "Spin motors in different directions",
-				url: "/lab",
+				title: "Code",
+				url: "/lab/motor/code",
 			},
 		],
 	}
 ]
 
-export const sensorsNavData: SidebarNavData[] = [
-	{
-		title: "Time of Flight Sensor",
-		url: "/lab",
-		icon: GiShieldReflect,
-		items: [
-			{
-				title: "Learn what a ToF Sensor is",
-				url: "/lab",
-			},
-			{
-				title: "Measure Distance",
-				url: "/lab"
-			}
-		],
-	},
-	{
-		title: "IMU",
-		url: "/lab",
-		icon: FaCompass,
-		items: [
-			{
-				title: "Learn what an IMU is",
-				url: "/lab",
-			},
-			{
-				title: "Read Linear Acceleration",
-				url: "/lab",
-			},
-			{
-				title: "Read Rotational Acceleration",
-				url: "/lab",
-			},
-		],
-	}
-]
+// export const sensorsNavData: SidebarNavData[] = [
+// 	{
+// 		title: "Time of Flight Sensor",
+// 		url: "/lab",
+// 		icon: GiShieldReflect,
+// 		items: [
+// 			{
+// 				title: "Learn what a ToF Sensor is",
+// 				url: "/lab",
+// 			},
+// 			{
+// 				title: "Measure Distance",
+// 				url: "/lab"
+// 			}
+// 		],
+// 	},
+// 	{
+// 		title: "IMU",
+// 		url: "/lab",
+// 		icon: FaCompass,
+// 		items: [
+// 			{
+// 				title: "Learn what an IMU is",
+// 				url: "/lab",
+// 			},
+// 			{
+// 				title: "Read Linear Acceleration",
+// 				url: "/lab",
+// 			},
+// 			{
+// 				title: "Read Rotational Acceleration",
+// 				url: "/lab",
+// 			},
+// 		],
+// 	}
+// ]

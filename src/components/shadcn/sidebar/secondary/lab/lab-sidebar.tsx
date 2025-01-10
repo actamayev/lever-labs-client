@@ -4,7 +4,7 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
 import WelcomeSidebarSection from "./welcome-sidebar-section"
-import { platformNavData, sensorsNavData } from "../../../../../utils/lab/nav-data"
+import { platformNavData } from "../../../../../utils/lab/nav-data"
 
 export default function LabSidebar() {
 	return (
@@ -22,10 +22,10 @@ export default function LabSidebar() {
 				groupName="Platform"
 				navData={platformNavData}
 			/>
-			<LabGroupMap
+			{/* <LabGroupMap
 				groupName="Sensors"
 				navData={sensorsNavData}
-			/>
+			/> */}
 		</Sidebar>
 	)
 }

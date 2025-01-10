@@ -1,5 +1,5 @@
 import { observer } from "mobx-react"
-import { Routes, Route, Navigate } from "react-router"
+import { Routes, Route } from "react-router"
 import Lab from "./pages/lab"
 import Landing from "./pages/landing"
 // import Garage from "./pages/garage"
@@ -43,22 +43,27 @@ function App() {
 
 			{/* <Route path="/garage" element={<Garage />} /> */}
 			<Route path="/lab" element={<Lab />}>
-				<Route index element={<Navigate to="welcome" replace />} />
-				{labRoutes.map((route) => (
-					<Route
-						key={route.path}
-						path={route.path}
-						element={route.element}
-					>
-						{route.children?.map((childRoute) => (
-							<Route
-								key={childRoute.path}
-								path={childRoute.path}
-								element={childRoute.element}
-							/>
-						))}
-					</Route>
-				))}
+				{labRoutes.map((route) => {
+					if (route.index) {
+						return <Route key="index" index element={route.element} />
+					}
+
+					return (
+						<Route
+							key={route.path}
+							path={route.path}
+							element={route.element}
+						>
+							{route.children?.map((childRoute) => (
+								<Route
+									key={childRoute.path}
+									path={childRoute.path}
+									element={childRoute.element}
+								/>
+							))}
+						</Route>
+					)
+				})}
 			</Route>
 			<Route path="/sandbox" element={<Sandbox />} />
 

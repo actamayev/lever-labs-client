@@ -11,11 +11,13 @@ declare global {
 		"/contact"
 
 	type MotorLabPages =
+		| "/lab/motor"
 		| "/lab/motor/reading"
 		| "/lab/motor/video"
 		| "/lab/motor/code"
 
 	type LedLabPages =
+		| "/lab/led"
 		| "/lab/led/reading"
 		| "/lab/led/video"
 		| "/lab/led/code"
