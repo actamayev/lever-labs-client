@@ -7,6 +7,7 @@ import ModalHeader from "../modal-header"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useClickOutsideModalUseEffect from "../../hooks/click-outside/click-outside-modal-use-effect"
 
+// TODO: Make this into it's own page. Consider adding a plus button in the left panel (above light/dark mode)
 function AddPipModal() {
 	const modalRef = useRef<HTMLDivElement>(null)
 	const mouseDownTarget = useRef<EventTarget | null>(null)
