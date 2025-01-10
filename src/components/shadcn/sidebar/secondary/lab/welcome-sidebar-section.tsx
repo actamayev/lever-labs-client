@@ -9,7 +9,7 @@ export default function WelcomeSidebarSection() {
 		<SidebarGroup>
 			<SidebarGroupLabel
 				className="text-xl dark:text-white text-black cursor-pointer
-				dark:hover:bg-zinc-800 transition-all"
+				hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all"
 				onClick={() => navigate("/lab/welcome")}
 			>
 				<div className="space-x-2 flex flex-row">
