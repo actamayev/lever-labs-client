@@ -294,32 +294,102 @@ export const logicBlocks: Record<LogicBlockNames, CustomBlock> = {
 			}
 		}
 	},
+	// Add these to your logicBlocks object in logic-blocks.ts
 
-	[LOGIC_BLOCK_TYPES.MATH_CONSTRAIN]: {
+	[LOGIC_BLOCK_TYPES.IF_ELSE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
-				this.appendValueInput("VALUE")
-					.setCheck("Number")
-					.appendField("constrain")
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF1_CONDITION)
+					.setCheck("Boolean")
+					.appendField("if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF1_DO)
+					.appendField("do")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.ELSE_DO)
+					.appendField("else")
 
-				this.appendValueInput("LOW")
-					.setCheck("Number")
-					.appendField("between")
-
-				this.appendValueInput("HIGH")
-					.setCheck("Number")
-					.appendField("and")
-
-				this.setOutput(true, "Number")
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
 				this.setColour(logicCategory.colour)
-				this.setTooltip("Constrain a number to be between the specified limits")
+				this.setTooltip("If-else statement with one condition")
 			}
 		},
-		generator: (block: Blockly.Block): [string, number] => {
-			const value = cppGenerator.valueToCode(block, "VALUE", Order.NONE) || "0"
-			const low = cppGenerator.valueToCode(block, "LOW", Order.NONE) || "0"
-			const high = cppGenerator.valueToCode(block, "HIGH", Order.NONE) || "0"
-			return [`constrain(${value}, ${low}, ${high})`, Order.FUNCTION_CALL]
+		generator: (block: Blockly.Block): string => {
+			const condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const ifCode = generateStatementCode(block, LOGIC_FIELD_VALUES.IF1_DO)
+			const elseCode = generateStatementCode(block, LOGIC_FIELD_VALUES.ELSE_DO)
+			return `if (${condition}) {\n${ifCode}} else {\n${elseCode}}\n`
+		}
+	},
+
+	[LOGIC_BLOCK_TYPES.IF_ELSEIF_ELSE]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF1_CONDITION)
+					.setCheck("Boolean")
+					.appendField("if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF1_DO)
+					.appendField("do")
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF2_CONDITION)
+					.setCheck("Boolean")
+					.appendField("else if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF2_DO)
+					.appendField("do")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.ELSE_DO)
+					.appendField("else")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(logicCategory.colour)
+				this.setTooltip("If-else statement with two conditions")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const condition1 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const condition2 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
+			const if1Code = generateStatementCode(block, LOGIC_FIELD_VALUES.IF1_DO)
+			const if2Code = generateStatementCode(block, LOGIC_FIELD_VALUES.IF2_DO)
+			const elseCode = generateStatementCode(block, LOGIC_FIELD_VALUES.ELSE_DO)
+			return `if (${condition1}) {\n${if1Code}} else if (${condition2}) {\n${if2Code}} else {\n${elseCode}}\n`
+		}
+	},
+
+	[LOGIC_BLOCK_TYPES.IF_2ELSEIF_ELSE]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF1_CONDITION)
+					.setCheck("Boolean")
+					.appendField("if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF1_DO)
+					.appendField("do")
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF2_CONDITION)
+					.setCheck("Boolean")
+					.appendField("else if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF2_DO)
+					.appendField("do")
+				this.appendValueInput(LOGIC_FIELD_VALUES.IF3_CONDITION)
+					.setCheck("Boolean")
+					.appendField("else if")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.IF3_DO)
+					.appendField("do")
+				this.appendStatementInput(LOGIC_FIELD_VALUES.ELSE_DO)
+					.appendField("else")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(logicCategory.colour)
+				this.setTooltip("If-else statement with three conditions")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const condition1 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const condition2 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
+			const condition3 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.IF3_CONDITION, Order.NONE) || "false"
+			const if1Code = generateStatementCode(block, LOGIC_FIELD_VALUES.IF1_DO)
+			const if2Code = generateStatementCode(block, LOGIC_FIELD_VALUES.IF2_DO)
+			const if3Code = generateStatementCode(block, LOGIC_FIELD_VALUES.IF3_DO)
+			const elseCode = generateStatementCode(block, LOGIC_FIELD_VALUES.ELSE_DO)
+			// eslint-disable-next-line max-len
+			return `if (${condition1}) {\n${if1Code}} else if (${condition2}) {\n${if2Code}} else if (${condition3}) {\n${if3Code}} else {\n${elseCode}}\n`
 		}
 	}
 }
