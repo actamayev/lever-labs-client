@@ -36,7 +36,7 @@ export default function PathToMastery() {
 						</div>
 					</div>
 					<SubIconTitleText text="Element 1" />
-					<SubIconSubtitleText text="Getting Started with sensors" />
+					<SubIconSubtitleText text="Get started with sensor basics" />
 				</div>
 
 				<RightArrow />
