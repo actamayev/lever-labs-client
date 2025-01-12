@@ -6,7 +6,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import RightArrow from "./right-arrow"
-import SubIconText from "./sub-icon-text"
+import { SubIconTitleText } from "./sub-icon-text"
 import WelcomePageCard from "./welcome-page-card"
 
 export default function AddPipWelcomeSection() {
@@ -21,7 +21,7 @@ export default function AddPipWelcomeSection() {
 					<div className="w-24 h-24 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
 						<Tag className="w-10 h-10 text-blue-600 dark:text-blue-400" />
 					</div>
-					<SubIconText text="Name your Pip" />
+					<SubIconTitleText text="Name your Pip" />
 				</div>
 
 				<RightArrow />
@@ -31,7 +31,7 @@ export default function AddPipWelcomeSection() {
 					<div className="w-24 h-24 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mb-2">
 						<Wifi className="w-10 h-10 text-purple-600 dark:text-purple-400" />
 					</div>
-					<SubIconText text="Connect to Wi-Fi" />
+					<SubIconTitleText text="Connect to Wi-Fi" />
 				</div>
 
 				<RightArrow />
@@ -41,7 +41,7 @@ export default function AddPipWelcomeSection() {
 					<div className="w-24 h-24 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center mb-2">
 						<Upload className="w-10 h-10 text-green-600 dark:text-green-400" />
 					</div>
-					<SubIconText text="Upload credentials" />
+					<SubIconTitleText text="Upload credentials" />
 				</div>
 			</div>
 

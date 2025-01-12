@@ -2,9 +2,9 @@
 import {
 	Bot,
 } from "lucide-react"
-import AddPipWelcomeSection from "./add-pip-welcome-section"
 import PathToMastery from "./path-to-mastery"
 import InsideEachLesson from "./inside-each-lesson"
+import AddPipWelcomeSection from "./add-pip-welcome-section"
 
 // eslint-disable-next-line max-lines-per-function
 export default function LabWelcome() {

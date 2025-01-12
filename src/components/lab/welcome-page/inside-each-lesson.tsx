@@ -6,8 +6,8 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import RightArrow from "./right-arrow"
-import SubIconText from "./sub-icon-text"
 import WelcomePageCard from "./welcome-page-card"
+import { SubIconTitleText } from "./sub-icon-text"
 
 export default function InsideEachLesson() {
 	return (
@@ -22,7 +22,7 @@ export default function InsideEachLesson() {
 							<BookOpen className="w-10 h-10 text-blue-600 dark:text-blue-400" />
 						</div>
 					</div>
-					<SubIconText text="Read" />
+					<SubIconTitleText text="Read" />
 				</div>
 
 				<RightArrow />
@@ -33,7 +33,7 @@ export default function InsideEachLesson() {
 							<Play className="w-10 h-10 text-purple-600 dark:text-purple-400" />
 						</div>
 					</div>
-					<SubIconText text="Watch" />
+					<SubIconTitleText text="Watch" />
 				</div>
 
 				<RightArrow />
@@ -44,7 +44,7 @@ export default function InsideEachLesson() {
 							<Code className="w-10 h-10 text-green-600 dark:text-green-400" />
 						</div>
 					</div>
-					<SubIconText text="Code" />
+					<SubIconTitleText text="Code" />
 				</div>
 			</div>
 
