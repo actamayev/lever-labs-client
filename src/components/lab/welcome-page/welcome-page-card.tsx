@@ -6,6 +6,7 @@ interface Props {
     children: React.ReactNode
 }
 
+// TODO: Bring back the magic card
 export default function WelcomePageCard(props: Props) {
 	const { headerText, children } = props
 
