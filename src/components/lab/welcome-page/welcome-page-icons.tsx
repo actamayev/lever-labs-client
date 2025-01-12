@@ -4,16 +4,15 @@ import { LucideIcon } from "lucide-react"
 import { SubIconSubtitleText, SubIconTitleText } from "./sub-icon-text"
 
 interface IconStepProps {
-	icon: LucideIcon;
-	bgColor?: string;
-	iconColor?: string;
-	darkBgColor?: string;
-	darkIconColor?: string;
-	title: string;
-	subtitle?: string;
-	orbitingIcons?: React.ReactNode;
-	className?: string;
-  }
+	icon: LucideIcon
+	bgColor?: string
+	iconColor?: string
+	darkBgColor?: string
+	darkIconColor?: string
+	title: string
+	subtitle?: string
+	orbitingIcons?: React.ReactNode
+}
 
 export function IconStep({
 	icon: Icon,
@@ -24,10 +23,9 @@ export function IconStep({
 	title,
 	subtitle,
 	orbitingIcons,
-	className
 }: IconStepProps) {
 	return (
-		<div className={`flex flex-col items-center group ${className || ""}`}>
+		<div className="flex flex-col items-center group">
 			<div className="relative mb-4">
 				<div
 					className={`w-24 h-24 rounded-full ${bgColor} ${darkBgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
