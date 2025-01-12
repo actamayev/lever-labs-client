@@ -1,42 +1,42 @@
 import { FaLightbulb, FaCompass } from "react-icons/fa"
 import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
 
-export const platformNavData: SidebarNavData[] = [
+export const platformNavData: LabNavData[] = [
 	{
 		title: "LED",
-		url: "/lab/led",
+		url: "/lab/element-1/led",
 		icon: FaLightbulb,
 		items: [
 			{
 				title: "Reading",
-				url: "/lab/led/reading",
+				url: "/lab/element-1/led/reading",
 			},
 			{
 				title: "Video",
-				url: "/lab/led/video",
+				url: "/lab/element-1/led/video",
 			},
 			{
 				title: "Code",
-				url: "/lab/led/code",
+				url: "/lab/element-1/led/code",
 			},
 		],
 	},
 	{
 		title: "Motors",
-		url: "/lab/motor",
+		url: "/lab/element-1/motor",
 		icon: GiCarWheel,
 		items: [
 			{
 				title: "Reading",
-				url: "/lab/motor/reading",
+				url: "/lab/element-1/motor/reading",
 			},
 			{
 				title: "Video",
-				url: "/lab/motor/video",
+				url: "/lab/element-1/motor/video",
 			},
 			{
 				title: "Code",
-				url: "/lab/motor/code",
+				url: "/lab/element-1/motor/code",
 			},
 		],
 	}

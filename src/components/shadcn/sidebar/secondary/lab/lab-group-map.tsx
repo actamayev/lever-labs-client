@@ -19,22 +19,26 @@ import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 
 interface Props {
 	groupName: string
-	navData: SidebarNavData[]
+	navData: LabNavData[]
+	elementName: ElementLabPages
 }
 
 export default function LabGroupMap(props: Props) {
-	const { groupName, navData } = props
+	const { groupName, navData, elementName } = props
 	const navigate = useTypedNavigate()
 	const location = useLocation()
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel className="text-xl dark:text-white text-black">
+			<SidebarGroupLabel
+				className="text-xl dark:text-white text-black"
+				onClick={() => navigate(elementName)}
+			>
 				{groupName}
 			</SidebarGroupLabel>
 			<SidebarMenu>
 				{navData.map((item) => {
-					const basePath = item.items?.[0]?.url.split("/").slice(0, -1).join("/") || ""
+					const basePath = item.items[0]?.url.split("/").slice(0, -1).join("/") || ""
 					const isCurrentSection = location.pathname.startsWith(basePath)
 					return (
 						<Collapsible
@@ -61,7 +65,7 @@ export default function LabGroupMap(props: Props) {
 								</CollapsibleTrigger>
 								<CollapsibleContent>
 									<SidebarMenuSub>
-										{item.items?.map((subItem) => (
+										{item.items.map((subItem) => (
 											<SidebarMenuSubItem key={subItem.title}>
 												<SidebarMenuSubButton
 													asChild

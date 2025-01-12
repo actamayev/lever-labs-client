@@ -10,20 +10,26 @@ declare global {
 		"/account" |
 		"/contact"
 
+	type ElementLabPages =
+		| "/lab/element-1"
+		| "/lab/element-2"
+		| "/lab/element-3"
+
 	type MotorLabPages =
-		| "/lab/motor"
-		| "/lab/motor/reading"
-		| "/lab/motor/video"
-		| "/lab/motor/code"
+		| "/lab/element-1/motor"
+		| "/lab/element-1/motor/reading"
+		| "/lab/element-1/motor/video"
+		| "/lab/element-1/motor/code"
 
 	type LedLabPages =
-		| "/lab/led"
-		| "/lab/led/reading"
-		| "/lab/led/video"
-		| "/lab/led/code"
+		| "/lab/element-1/led"
+		| "/lab/element-1/led/reading"
+		| "/lab/element-1/led/video"
+		| "/lab/element-1/led/code"
 
 	type LabPages =
 		| "/lab/welcome"
+		| ElementLabPages
 		| MotorLabPages
 		| LedLabPages
 

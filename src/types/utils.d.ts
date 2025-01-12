@@ -19,7 +19,10 @@ declare global {
 		title: string
 		url: PageNames
 		icon: IconType
-		items?: {
+	}
+
+	interface LabNavData extends SidebarNavData {
+		items: {
 			title: string
 			url: LabPages
 		}[]

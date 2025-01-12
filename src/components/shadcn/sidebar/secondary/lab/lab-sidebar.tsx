@@ -19,8 +19,9 @@ export default function LabSidebar() {
 			</SidebarHeader>
 			<WelcomeSidebarSection />
 			<LabGroupMap
-				groupName="Platform"
+				groupName="Element 1: Sensor Basics"
 				navData={platformNavData}
+				elementName="/lab/element-1"
 			/>
 			{/* <LabGroupMap
 				groupName="Sensors"
