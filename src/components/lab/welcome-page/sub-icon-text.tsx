@@ -1,17 +1,21 @@
-export function SubIconTitleText({ text }: { text: string }) {
+interface TitleTextProps {
+	text: string
+}
+
+export function SubIconTitleText({ text }: TitleTextProps) {
 	return (
-		<div className="flex flex-col items-center min-h-[20px] justify-center">
-			<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center">
+		<div className="w-52 text-center">
+			<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
 				{text}
 			</span>
 		</div>
 	)
 }
 
-export function SubIconSubtitleText({ text }: { text: string }) {
+export function SubIconSubtitleText({ text }: TitleTextProps) {
 	return (
-		<div className="flex flex-col items-center min-h-[16px] justify-center mt-1">
-			<span className="text-xs text-gray-500 dark:text-gray-400 text-center">
+		<div className="w-52 text-center mt-1">
+			<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
 				{text}
 			</span>
 		</div>
