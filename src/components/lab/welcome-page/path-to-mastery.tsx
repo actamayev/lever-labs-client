@@ -11,6 +11,7 @@ import {
 	Timer
 } from "lucide-react"
 import RightArrow from "./right-arrow"
+import SubIconText from "./sub-icon-text"
 import WelcomePageCard from "./welcome-page-card"
 
 // eslint-disable-next-line max-lines-per-function
@@ -34,11 +35,9 @@ export default function PathToMastery() {
 							<Compass className="w-6 h-6 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
 						</div>
 					</div>
-					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-							Element 1
-					</span>
+					<SubIconText text="Element 1" />
 					<span className="text-xs text-gray-500 dark:text-gray-400">
-							Getting Started with sensors
+						Getting Started with sensors
 					</span>
 				</div>
 
@@ -54,11 +53,9 @@ export default function PathToMastery() {
 								<Combine className="w-8 h-8 text-purple-500/50 absolute animate-pulse" />
 							</div> */}
 					</div>
-					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-							Element 2
-					</span>
+					<SubIconText text="Element 2" />
 					<span className="text-xs text-gray-500 dark:text-gray-400">
-							Combine & Create
+						Combine & Create
 					</span>
 				</div>
 
@@ -74,11 +71,9 @@ export default function PathToMastery() {
 						<Target className="w-6 h-6 text-green-500/70 absolute -top-2 -right-2 animate-ping" />
 						<Timer className="w-6 h-6 text-green-500/70 absolute -bottom-2 -left-2 animate-pulse" />
 					</div>
-					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
-							Element 3
-					</span>
+					<SubIconText text="Element 3" />
 					<span className="text-xs text-gray-500 dark:text-gray-400">
-							Missions: Complete Challenges
+						Missions: Complete Challenges
 					</span>
 				</div>
 			</div>
