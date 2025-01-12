@@ -19,7 +19,7 @@ export default function PathToMastery() {
 		<Card className="bg-white dark:bg-zinc-800 border-2 border-purple-100 dark:border-purple-800">
 			<CardContent className="pt-6">
 				<div className="text-xl font-semibold text-purple-700 dark:text-purple-400 mb-6 flex justify-center">
-            Your Path to Mastery
+					Your Path to Mastery
 				</div>
 
 				<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative px-20">
@@ -39,8 +39,12 @@ export default function PathToMastery() {
 								<Compass className="w-6 h-6 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
 							</div>
 						</div>
-						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">Getting Started</span>
-						<span className="text-xs text-gray-500 dark:text-gray-400">Master the Sensors</span>
+						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+							Element 1
+						</span>
+						<span className="text-xs text-gray-500 dark:text-gray-400">
+							Getting Started with sensors
+						</span>
 					</div>
 
 					<div className="hidden md:flex items-center h-24">
@@ -53,12 +57,16 @@ export default function PathToMastery() {
 							<div className="w-24 h-24 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300">
 								<CircuitBoard className="w-10 h-10 text-purple-600 dark:text-purple-400" />
 							</div>
-							<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
+							{/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16">
 								<Combine className="w-8 h-8 text-purple-500/50 absolute animate-pulse" />
-							</div>
+							</div> */}
 						</div>
-						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">Sensor Fusion</span>
-						<span className="text-xs text-gray-500 dark:text-gray-400">Combine & Create</span>
+						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+							Element 2
+						</span>
+						<span className="text-xs text-gray-500 dark:text-gray-400">
+							Combine & Create
+						</span>
 					</div>
 
 					<div className="hidden md:flex items-center h-24">
@@ -75,8 +83,12 @@ export default function PathToMastery() {
 							<Target className="w-6 h-6 text-green-500/70 absolute -top-2 -right-2 animate-ping" />
 							<Timer className="w-6 h-6 text-green-500/70 absolute -bottom-2 -left-2 animate-pulse" />
 						</div>
-						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">Missions</span>
-						<span className="text-xs text-gray-500 dark:text-gray-400">Complete Challenges</span>
+						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300">
+							Element 3
+						</span>
+						<span className="text-xs text-gray-500 dark:text-gray-400">
+							Missions: Complete Challenges
+						</span>
 					</div>
 				</div>
 			</CardContent>

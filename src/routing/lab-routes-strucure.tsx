@@ -1,11 +1,11 @@
 import LedCode from "../lessons/led/led-code"
 import LedVideo from "../lessons/led/led-video"
+import LabIndex from "../components/lab/lab-index"
 import LedReading from "../lessons/led/led-reading"
 import MotorCode from "../lessons/motor/motor-code"
 import MotorVideo from "../lessons/motor/motor-video"
-import LabWelcome from "../components/lab/lab-welcome"
 import MotorReading from "../lessons/motor/motor-reading"
-import LabIndex from "../components/lab/lab-index"
+import LabWelcome from "../components/lab/welcome-page/lab-welcome"
 
 const labRoutes = [
 	{
