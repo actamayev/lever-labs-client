@@ -7,7 +7,7 @@ import {
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
 
-function PipStatusTooltip({ pipData} : { pipData: PipData }) {
+function PipStatusTooltip({ pipData } : { pipData: PipData }) {
 	const getStatusColor = useMemo(() => {
 		switch (pipData.pipConnectionStatus) {
 		case "inactive": return "bg-red-500"
@@ -20,10 +20,10 @@ function PipStatusTooltip({ pipData} : { pipData: PipData }) {
 
 	const getStatusMessage = useMemo(() => {
 		switch (pipData.pipConnectionStatus) {
-		case "inactive": return `${pipData.pipName} is either not turned on, or not connected to the internet`
+		case "inactive": return `Please turn ${pipData.pipName} on and connect it to the internet`
 		case "online": return `${pipData.pipName} is online and ready to connect`
 		case "connected to other user": return `${pipData.pipName} is connected to another user`
-		case "connected": return `You are connected to ${pipData.pipName}`
+		case "connected": return "Connected"
 		default: return "Unknown status"
 		}
 	}, [pipData.pipConnectionStatus, pipData.pipName])
@@ -32,7 +32,10 @@ function PipStatusTooltip({ pipData} : { pipData: PipData }) {
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div className={`size-4 rounded-full ${getStatusColor}`} />
+					<div
+						className={`absolute !h-[16px] !w-[16px] rounded-full ${getStatusColor} bg-background`}
+						style={{ right: "2px", top: "3px" }}
+					/>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="bg-zinc-700 text-zinc-100">
 					{getStatusMessage}

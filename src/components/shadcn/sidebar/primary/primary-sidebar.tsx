@@ -2,7 +2,7 @@ import { Sidebar, SidebarFooter } from "@/components/shadcn/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
 import NavUser from "./nav-user/nav-user"
 import MappedNavData from "./mapped-nav-data"
-import AddPipSidebarButton from "./add-pip-sidebar-button"
+import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 
 // TODO: Add an add pip button above nav user
 export default function PrimarySidebar() {

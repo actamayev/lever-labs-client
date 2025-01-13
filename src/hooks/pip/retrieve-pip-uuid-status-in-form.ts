@@ -1,11 +1,12 @@
 import _ from "lodash"
+import { AxiosError } from "axios"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import useStyledToast from "../../components/toast-options"
-import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -13,6 +14,7 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 	const addPipClass = useAddPipContext()
 	const toast = useStyledToast()
 
+	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
 			if (_.isNull(addPipClass)) return
@@ -43,6 +45,14 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
+			if (error instanceof AxiosError) {
+				if (isMessageResponse(error.response?.data)) {
+					// eslint-disable-next-line max-depth
+					if (error.response.data.message === "Pip UUID doesn't exist") {
+						return
+					}
+				}
+			}
 			toast.negative({
 				title: "Unable to retrieve Pip Status",
 				description: ""

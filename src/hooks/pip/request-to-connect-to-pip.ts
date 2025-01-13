@@ -29,7 +29,7 @@ export default function useRequestToConnectToPip(): (
 			case "inactive": {
 				return toast.negative({
 					title: "Unable to connect",
-					description: `${foundPip.pipName} is not connected to the internet`
+					description: `Please turn ${foundPip.pipName} on and connect it to the internet`
 				})
 			}
 			}
