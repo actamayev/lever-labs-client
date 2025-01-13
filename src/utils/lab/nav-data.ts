@@ -1,6 +1,8 @@
-import { FaLightbulb, FaCompass } from "react-icons/fa"
-import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
+import { IoRadioSharp } from "react-icons/io5"
 import { RiRadioButtonFill } from "react-icons/ri"
+import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
+import { MdOutlineTimer, MdSettingsRemote } from "react-icons/md"
+import { FaLightbulb, FaCompass, FaPalette } from "react-icons/fa"
 
 export const element1NavData: LabNavData[] = [
 	{
@@ -41,7 +43,7 @@ export const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Encoders",
-		icon: GiCarWheel,
+		icon: MdOutlineTimer,
 		items: [
 			{
 				title: "Reading",
@@ -76,26 +78,8 @@ export const element1NavData: LabNavData[] = [
 		],
 	},
 	{
-		title: "Encoders",
-		icon: RiRadioButtonFill,
-		items: [
-			{
-				title: "Reading",
-				url: "/lab/element-1/encoder/reading",
-			},
-			{
-				title: "Video",
-				url: "/lab/element-1/encoder/video",
-			},
-			{
-				title: "Code",
-				url: "/lab/element-1/encoder/code",
-			},
-		],
-	},
-	{
 		title: "Color Sensors",
-		icon: RiRadioButtonFill,
+		icon: FaPalette,
 		items: [
 			{
 				title: "Reading",
@@ -113,7 +97,7 @@ export const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Color Sensors",
-		icon: RiRadioButtonFill,
+		icon: IoRadioSharp,
 		items: [
 			{
 				title: "Reading",
@@ -131,7 +115,7 @@ export const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Communication Sensors",
-		icon: RiRadioButtonFill,
+		icon: MdSettingsRemote,
 		items: [
 			{
 				title: "Reading",
