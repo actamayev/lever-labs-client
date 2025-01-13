@@ -4,7 +4,6 @@ import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
 import ShowAuthToNullUser from "../components/show-auth-to-null-user"
 
-// TODO: Create a base component with the authClass.isLoggedIn === false logic
 function Lab() {
 	const authClass = useAuthContext()
 
