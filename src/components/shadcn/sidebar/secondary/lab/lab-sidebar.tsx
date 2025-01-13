@@ -6,6 +6,7 @@ import {
 import LabGroupMap from "./lab-group-map"
 import WelcomeSidebarSection from "./welcome-sidebar-section"
 import element2NavData from "../../../../../utils/lab/element-two-nav-data"
+import element3NavData from "../../../../../utils/lab/element-three-nav-data"
 import { element1NavData } from "../../../../../utils/lab/element-one-nav-data"
 
 export default function LabSidebar() {
@@ -33,7 +34,7 @@ export default function LabSidebar() {
 				/>
 				<LabGroupMap
 					groupName="Element 3: Missions"
-					navData={[]}
+					navData={element3NavData}
 					elementName="/lab/element-3"
 				/>
 			</SidebarContent>

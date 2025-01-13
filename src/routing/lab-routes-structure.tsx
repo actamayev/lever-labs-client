@@ -1,6 +1,7 @@
 import element2Routes from "./element-two-routes"
 import element1Routes from "./element-one-routes"
 import LabIndex from "../components/lab/lab-index"
+import element3Routes from "./element-three-routes"
 import Element1 from "../components/lab/element-1/element-1"
 import Element2 from "../components/lab/element-2/element-2"
 import Element3 from "../components/lab/element-3/element-3"
@@ -28,7 +29,8 @@ const labRoutes: RouteType[] = [
 		element: <Element3 />
 	},
 	...element1Routes,
-	...element2Routes
+	...element2Routes,
+	...element3Routes
 ]
 
 export default labRoutes

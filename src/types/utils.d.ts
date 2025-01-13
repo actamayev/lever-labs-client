@@ -1,4 +1,5 @@
 import { IconType } from "react-icons"
+import { LucideIcon } from "lucide-react"
 
 declare global {
 	type EmailOrUnknown = "Email" | "Unknown"
@@ -25,7 +26,7 @@ declare global {
 
 	interface LabNavData {
 		title: string
-		icon: IconType
+		icon: IconType | LucideIcon
 		items: {
 			title: ActivityTitles
 			url: LabPages
