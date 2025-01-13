@@ -13,7 +13,6 @@ class AddPipClass {
 		userAlreadyAddedUUID: false,
 		checkedConnectedToWifi: false
 	}
-	public isAddPipModalOpen = false
 	public encodedWifiCredentials: string | null = null
 	public mirroredFormValues: IncompletePipData = {
 		pipUUID: "" as PipUUID,
@@ -43,10 +42,6 @@ class AddPipClass {
 	): void {
 		this.addingNewPipRequirements[field] = value
 	}
-
-	public setIsAppPipModalOpen = action((newState: boolean) => {
-		this.isAddPipModalOpen = newState
-	})
 
 	public setEncodedWifiCredentials = action((newState: string | null) => {
 		this.encodedWifiCredentials = newState
@@ -106,7 +101,6 @@ class AddPipClass {
 
 	public logout() {
 		this.resetAddingPipRequirements()
-		this.setIsAppPipModalOpen(false)
 		this.setEncodedWifiCredentials(null)
 		this.resetMirroredFormValues()
 		this.setNewPipConnectionStatus(null)

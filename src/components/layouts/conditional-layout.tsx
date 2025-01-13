@@ -9,7 +9,8 @@ const PrivatePageNames = [
 	"/garage",
 	"/lab",
 	"/sandbox",
-	"/account"
+	"/account",
+	"/add-pip"
 ]
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {

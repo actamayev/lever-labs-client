@@ -21,6 +21,7 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
+import AddPip from "./pages/add-pip"
 
 function App() {
 	useScrollToTop()
@@ -68,6 +69,7 @@ function App() {
 				})}
 			</Route>
 			<Route path="/sandbox" element={<Sandbox />} />
+			<Route path="/add-pip" element={<AddPip />} />
 
 			{/* <Route path="/account" element={<MyAccount />} /> */}
 

@@ -3,7 +3,7 @@ import { useCallback } from "react"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 
-export default function useAutoCloseModalAfterAddPip(): (
+export default function useResetAddingPipValuesAfterAddPip(): (
 	shouldAutoCloseModal: boolean
 ) => void {
 	const toast = useStyledToast()
@@ -13,7 +13,6 @@ export default function useAutoCloseModalAfterAddPip(): (
 		try {
 			if (_.isNull(addPipClass)) return
 			const { pipName } = addPipClass.store.mirroredFormValues as { pipUUID: PipUUID, pipName: string }
-			addPipClass.store.setIsAppPipModalOpen(false)
 			addPipClass.store.resetAddingPipRequirements()
 			addPipClass.form.reset()
 			toast.positive({ description: `${pipName} added` })

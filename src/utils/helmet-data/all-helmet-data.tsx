@@ -2,6 +2,7 @@
 import labHelmetData from "./lab-helmet-data"
 import BasicHelmet from "../../components/helmet/basic-helmet"
 
+// TODO: Add add pip helmet
 const allHelmetData: HelmetData = {
 	"/": (
 		<BasicHelmet

@@ -5,9 +5,9 @@ import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import useAutoCloseModalAfterAddPip from "./auto-close-modal-after-add-pip"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
+import useResetAddingPipValuesAfterAddPip from "./reset-adding-pip-values-after-add-pip"
 
 export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -15,7 +15,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
-	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
+	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -61,7 +61,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 			}
 			pipClass.addNewPip(pipDataToAdd)
 			if (shouldAutoCloseModal) {
-				autoCloseModalAfterAddPip(shouldAutoCloseModal)
+				resetAddingPipValuesAfterAddPip(shouldAutoCloseModal)
 			}
 		} catch (error) {
 			console.error(error)
@@ -90,5 +90,6 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, autoCloseModalAfterAddPip, blueDotApiClient.pipDataService, pipClass, shouldAutoCloseModal, toast, validatePipData])
+	}, [addPipClass, resetAddingPipValuesAfterAddPip, blueDotApiClient.pipDataService,
+		pipClass, shouldAutoCloseModal, toast, validatePipData])
 }

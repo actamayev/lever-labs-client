@@ -11,13 +11,13 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import useUsername from "../../hooks/memos/username"
-import AddPipModal from "../add-pip-modal/add-pip-modal"
 import { usePipContext } from "../../contexts/pip-context"
 import AvailablePipsDropdown from "./available-pips-dropdown"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useDisconnectFromPip from "../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../hooks/pip/request-to-connect-to-pip"
 import useClickOutsideUseEffect from "../../hooks/click-outside/click-outside-use-effect"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
 function PipUUIDs() {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -28,6 +28,7 @@ function PipUUIDs() {
 	const requestToConnectToPip = useRequestToConnectToPip()
 	const diconnectFromPip = useDisconnectFromPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
+	const navigate = useTypedNavigate()
 
 	useEffect(() => {
 		pipClass.setSelectedPipToFirstPip()
@@ -44,9 +45,9 @@ function PipUUIDs() {
 			}
 		}
 		if (_.isEmpty(pipClass.pipData) && !_.isNull(addPipClass)) {
-			addPipClass.store.setIsAppPipModalOpen(true)
+			navigate("/add-pip")
 		}
-	}, [addPipClass, diconnectFromPip, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
+	}, [addPipClass, diconnectFromPip, navigate, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
 	if (_.isNull(username)) return null
 
@@ -86,8 +87,6 @@ function PipUUIDs() {
 					<AvailablePipsDropdown />
 				</DropdownMenuContent>
 			</DropdownMenu>
-
-			<AddPipModal />
 		</div>
 	)
 }

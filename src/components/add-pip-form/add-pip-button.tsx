@@ -5,19 +5,19 @@ import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useValidatePipData from "../../hooks/pip/validate-pip-data"
-import useAutoCloseModalAfterAddPip from "../../hooks/pip/auto-close-modal-after-add-pip"
+import useResetAddingPipValuesAfterAddPip from "../../hooks/pip/reset-adding-pip-values-after-add-pip"
 
 function AddPipButton() {
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
-	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
+	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
 
 	const closeButtonAfterAddPipAction = useCallback(() => {
 		if (_.isNull(addPipClass)) return
 		addPipClass.store.setIsUserReadyToConnectToPipDialog(null)
 		addPipClass.store.setNewPipConnectionStatus(null)
-		autoCloseModalAfterAddPip(true)
-	}, [addPipClass, autoCloseModalAfterAddPip])
+		resetAddingPipValuesAfterAddPip(true)
+	}, [addPipClass, resetAddingPipValuesAfterAddPip])
 
 	if (
 		_.isNull(addPipClass) ||
