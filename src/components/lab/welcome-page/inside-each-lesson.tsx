@@ -13,10 +13,7 @@ export default function InsideEachLesson() {
 	return (
 		<WelcomePageCard headerText="Inside Each Lesson">
 			<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative px-20">
-				<IconStep
-					icon={BookOpen}
-					title="Read"
-				/>
+				<IconStep icon={BookOpen} title="Read" />
 
 				<RightArrow />
 

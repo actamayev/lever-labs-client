@@ -22,6 +22,7 @@ export default function PathToMastery() {
 					icon={CircuitBoard}
 					title="Element 1"
 					subtitle="Get started with sensor basics"
+					elementLink="/lab/element-1"
 				/>
 
 				<RightArrow />
@@ -41,6 +42,7 @@ export default function PathToMastery() {
 							<Compass className="w-6 h-6 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
 						</div>
 					}
+					elementLink="/lab/element-2"
 				/>
 
 				<RightArrow />
@@ -59,6 +61,7 @@ export default function PathToMastery() {
 							<Timer className="w-6 h-6 text-green-500/70 absolute -bottom-2 -left-2 animate-pulse" />
 						</>
 					}
+					elementLink="/lab/element-3"
 				/>
 			</div>
 		</WelcomePageCard>

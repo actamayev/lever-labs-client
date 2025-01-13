@@ -6,6 +6,7 @@ interface HelmetData {
 	[key: string]: React.ReactNode
 }
 
+// TODO: Put a helmet for each of the lab pages
 const helmetData: HelmetData = {
 	"/": (
 		<BasicHelmet

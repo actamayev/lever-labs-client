@@ -21,7 +21,9 @@ declare global {
 		icon: IconType
 	}
 
-	interface LabNavData extends SidebarNavData {
+	interface LabNavData {
+		title: string
+		icon: IconType
 		items: {
 			title: string
 			url: LabPages

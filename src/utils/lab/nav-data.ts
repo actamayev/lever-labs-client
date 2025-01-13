@@ -1,10 +1,10 @@
 import { FaLightbulb, FaCompass } from "react-icons/fa"
 import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
+import { RiRadioButtonFill } from "react-icons/ri"
 
-export const platformNavData: LabNavData[] = [
+export const element1NavData: LabNavData[] = [
 	{
 		title: "LED",
-		url: "/lab/element-1/led",
 		icon: FaLightbulb,
 		items: [
 			{
@@ -23,7 +23,6 @@ export const platformNavData: LabNavData[] = [
 	},
 	{
 		title: "Motors",
-		url: "/lab/element-1/motor",
 		icon: GiCarWheel,
 		items: [
 			{
@@ -39,42 +38,149 @@ export const platformNavData: LabNavData[] = [
 				url: "/lab/element-1/motor/code",
 			},
 		],
+	},
+	{
+		title: "Encoders",
+		icon: GiCarWheel,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/encoder/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/encoder/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/encoder/code",
+			},
+		],
+	},
+	{
+		title: "Buttons",
+		icon: RiRadioButtonFill,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/button/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/button/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/button/code",
+			},
+		],
+	},
+	{
+		title: "Encoders",
+		icon: RiRadioButtonFill,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/encoder/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/encoder/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/encoder/code",
+			},
+		],
+	},
+	{
+		title: "Color Sensors",
+		icon: RiRadioButtonFill,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/color-sensor/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/color-sensor/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/color-sensor/code",
+			},
+		],
+	},
+	{
+		title: "IR Color Sensors",
+		icon: RiRadioButtonFill,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/ir-color-sensor/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/ir-color-sensor/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/ir-color-sensor/code",
+			},
+		],
+	},
+	{
+		title: "IR Communication Sensors",
+		icon: RiRadioButtonFill,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/ir-communication-sensor/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/ir-communication-sensor/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/ir-communication-sensor/code",
+			},
+		],
+	},
+	{
+		title: "Time of Flight Sensors",
+		icon: GiShieldReflect,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/tof/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/tof/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/tof/code",
+			},
+		],
+	},
+	{
+		title: "IMU",
+		icon: FaCompass,
+		items: [
+			{
+				title: "Reading",
+				url: "/lab/element-1/imu/reading",
+			},
+			{
+				title: "Video",
+				url: "/lab/element-1/imu/video",
+			},
+			{
+				title: "Code",
+				url: "/lab/element-1/imu/code",
+			},
+		],
 	}
 ]
-
-// export const sensorsNavData: SidebarNavData[] = [
-// 	{
-// 		title: "Time of Flight Sensor",
-// 		url: "/lab",
-// 		icon: GiShieldReflect,
-// 		items: [
-// 			{
-// 				title: "Learn what a ToF Sensor is",
-// 				url: "/lab",
-// 			},
-// 			{
-// 				title: "Measure Distance",
-// 				url: "/lab"
-// 			}
-// 		],
-// 	},
-// 	{
-// 		title: "IMU",
-// 		url: "/lab",
-// 		icon: FaCompass,
-// 		items: [
-// 			{
-// 				title: "Learn what an IMU is",
-// 				url: "/lab",
-// 			},
-// 			{
-// 				title: "Read Linear Acceleration",
-// 				url: "/lab",
-// 			},
-// 			{
-// 				title: "Read Rotational Acceleration",
-// 				url: "/lab",
-// 			},
-// 		],
-// 	}
-// ]

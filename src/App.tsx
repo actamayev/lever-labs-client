@@ -43,16 +43,18 @@ function App() {
 
 			{/* <Route path="/garage" element={<Garage />} /> */}
 			<Route path="/lab" element={<Lab />}>
-				{labRoutes.map((route) => {
-					if (route.index) {
+				{labRoutes.map((route: RouteType) => {
+					// Handle index routes
+					if ("index" in route && route.index) {
 						return <Route key="index" index element={route.element} />
 					}
 
+					// Handle element routes and base routes
 					return (
 						<Route
 							key={route.path}
 							path={route.path}
-							element={route.element}
+							element={"element" in route ? route.element : undefined}
 						>
 							{route.children?.map((childRoute) => (
 								<Route

@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
+import { useCallback } from "react"
 import { LucideIcon } from "lucide-react"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import { SubIconSubtitleText, SubIconTitleText } from "./sub-icon-text"
 
 interface IconStepProps {
@@ -12,6 +14,7 @@ interface IconStepProps {
 	title: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
+	elementLink?: ElementLabPages
 }
 
 export function IconStep({
@@ -23,9 +26,20 @@ export function IconStep({
 	title,
 	subtitle,
 	orbitingIcons,
+	elementLink
 }: IconStepProps) {
+	const navigate = useTypedNavigate()
+
+	const navigateToElement = useCallback(() => {
+		if (!elementLink) return
+		navigate(elementLink)
+	}, [elementLink, navigate])
+
 	return (
-		<div className="flex flex-col items-center group">
+		<div
+			className={`flex flex-col items-center group ${elementLink ? "cursor-pointer" : ""}`}
+			onClick={navigateToElement}
+		>
 			<div className="relative mb-4">
 				<div
 					className={`w-24 h-24 rounded-full ${bgColor} ${darkBgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}

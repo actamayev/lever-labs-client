@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useLocation } from "react-router"
 import { ChevronRight } from "lucide-react"
 import {
@@ -12,8 +13,8 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
-	SidebarMenuSubButton,
 	SidebarMenuSubItem,
+	SidebarMenuSubButton,
 } from "@/components/shadcn/ui/sidebar"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 
@@ -31,7 +32,7 @@ export default function LabGroupMap(props: Props) {
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel
-				className="text-xl dark:text-white text-black"
+				className="text-xl dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer mb-2"
 				onClick={() => navigate(elementName)}
 			>
 				{groupName}
@@ -51,16 +52,13 @@ export default function LabGroupMap(props: Props) {
 								<CollapsibleTrigger asChild>
 									<SidebarMenuButton
 										tooltip={item.title}
-										className="py-6 px-2"
+										className="py-4 px-2"
 									>
-										<item.icon style={{ width: "25px", height: "25px" }}/>
+										<item.icon style={{ width: "25px", height: "25px" }} />
 										<span className="text-lg">
 											{item.title}
 										</span>
-										<ChevronRight
-											className="ml-auto transition-transform
-                                            duration-200 group-data-[state=open]/collapsible:rotate-90"
-										/>
+										<ChevronRight className="ml-auto transition-transform duration-100 group-data-[state=open]/collapsible:rotate-90" />
 									</SidebarMenuButton>
 								</CollapsibleTrigger>
 								<CollapsibleContent>
@@ -70,7 +68,7 @@ export default function LabGroupMap(props: Props) {
 												<SidebarMenuSubButton
 													asChild
 													onClick={() => navigate(subItem.url)}
-													className={`ml-2 text-sm transition-all ${
+													className={`ml-2 text-sm transition-all duration-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
 														location.pathname === subItem.url
 															? "bg-zinc-100 dark:bg-zinc-800"
 															: ""
