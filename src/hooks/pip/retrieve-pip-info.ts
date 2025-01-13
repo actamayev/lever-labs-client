@@ -15,7 +15,8 @@ export default function useRetrievePipInfoUseEffect(): void {
 			if (
 				pipClass.isRetrievingPipData === true ||
 				!_.isEmpty(pipClass.pipData) ||
-				_.isNull(blueDotApiClient.httpClient.accessToken)
+				_.isNull(blueDotApiClient.httpClient.accessToken) ||
+				pipClass.retrievedPipData === true
 			) return
 
 			pipClass.setIsRetrievingPipData(true)
@@ -25,6 +26,7 @@ export default function useRetrievePipInfoUseEffect(): void {
 				throw Error ("Unable to retrieve pip Data")
 			}
 			pipClass.setPipData(pipDataResponse.data.userPipData)
+			pipClass.setRetrievedPipData(true)
 		} catch (error) {
 			console.error(error)
 			return toast.negative({

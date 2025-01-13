@@ -77,8 +77,12 @@ const SidebarProvider = React.forwardRef<
     // We use openProp and setOpenProp for control from outside the component.
     const [_open, _setOpen] = React.useState(initialState)
     const open = openProp ?? _open
+
+    // Store the previous state before auto-closing
+    const [previousState, setPreviousState] = React.useState<boolean | null>(null)
+    
     const setOpen = React.useCallback(
-      async (value: boolean | ((value: boolean) => boolean)) => {
+      async (value: boolean | ((value: boolean) => boolean), persist: boolean = true) => {
         const openState = typeof value === "function" ? value(open) : value
         if (setOpenProp) {
           setOpenProp(openState)
@@ -86,9 +90,11 @@ const SidebarProvider = React.forwardRef<
           _setOpen(openState)
         }
 
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
-        await setDefaultSidebarState()
+        // Only persist state when explicitly requested
+        if (persist) {
+          document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+          await setDefaultSidebarState()
+        }
       },
       [setOpenProp, open, setDefaultSidebarState]
     )
@@ -97,19 +103,27 @@ const SidebarProvider = React.forwardRef<
     const toggleSidebar = React.useCallback(() => {
       return isMobile
         ? setOpenMobile((open) => !open)
-        : setOpen((open) => !open)
+        : setOpen((open) => !open, true) // User-initiated toggle should persist
     }, [isMobile, setOpen, setOpenMobile])
 
-    // Auto-close sidebar on specific routes
+    // Auto-close sidebar on specific routes and restore previous state
     React.useEffect(() => {
       const pathname = window.location.pathname
       const autoCloseRoutes = ['/add-pip', '/settings']
       
       if (autoCloseRoutes.includes(pathname)) {
-        setOpen(false)
+        // Store current state before closing
+        if (open) {
+          setPreviousState(open)
+        }
+        setOpen(false, false) // Don't persist auto-close state
         setOpenMobile(false)
+      } else if (previousState !== null) {
+        // Restore previous state when leaving auto-close routes
+        setOpen(previousState, false) // Don't persist state restoration
+        setPreviousState(null) // Reset previous state
       }
-    }, [setOpen, setOpenMobile])
+    }, [setOpen, setOpenMobile, open, previousState])
 
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
