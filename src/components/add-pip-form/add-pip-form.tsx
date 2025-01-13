@@ -24,7 +24,7 @@ function AddPipForm() {
 	if (_.isNull(addPipClass)) return null
 
 	return (
-		<Card className="mx-auto max-w-4xl mt-10">
+		<Card className="mx-auto max-w-4xl">
 			<CardHeader>
 				<CardTitle className="text-6xl font-bold">Add Pip</CardTitle>
 			</CardHeader>

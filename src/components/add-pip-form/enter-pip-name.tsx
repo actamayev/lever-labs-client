@@ -65,7 +65,7 @@ function EnterPipName() {
 								onChange={(e) => typePipName(e, field.onChange)}
 							/>
 							{field.value && (
-								<div className="absolute inset-y-0 right-9 flex items-center">
+								<div className="absolute inset-y-0 right-14 flex items-center">
 									<span className="text-xs text-muted-foreground">
 										{field.value.length}/20
 									</span>

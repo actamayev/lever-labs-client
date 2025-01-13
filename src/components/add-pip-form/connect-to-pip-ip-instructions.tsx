@@ -41,7 +41,7 @@ function ConnectToPipInstructions() {
 									!addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi
 								)
 							}
-							className="size-6"
+							className="size-8"
 							showPlaceholder={true}
 						/>
 					</div>
