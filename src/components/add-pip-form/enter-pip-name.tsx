@@ -59,7 +59,7 @@ function EnterPipName() {
 							<Input
 								{...field}
 								maxLength={20}
-								className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
+								className="w-full h-12 text-xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Name"
 								onChange={(e) => typePipName(e, field.onChange)}

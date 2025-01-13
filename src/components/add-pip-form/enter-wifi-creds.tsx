@@ -24,7 +24,7 @@ function EnterWifiCreds() {
 	return (
 		<>
 			<div className="flex flex-row items-center">
-				<div className="my-2">
+				<div className="my-6">
 					<div className="flex flex-row">
 						<p className="font-bold">
 							Step 3:&nbsp;
@@ -39,10 +39,10 @@ function EnterWifiCreds() {
 								<Button
 									type="button"
 									variant="ghost"
-									size="sm"
-									className="h-auto p-1 dark:hover:bg-zinc-700"
+									size="lg"
+									className="h-auto p-2 dark:hover:bg-zinc-700"
 								>
-									<Info />
+									<Info style={{ width: "25px", height: "25px" }}/>
 								</Button>
 							</TooltipTrigger>
 							<TooltipContent side="top">

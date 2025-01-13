@@ -38,7 +38,7 @@ function EnterWifiPassword() {
 								type={showPassword ? "text" : "password"}
 								{...field}
 								maxLength={200}
-								className="w-full dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
+								className="w-full h-12 dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Network Password"
 								autoComplete="new-password"
