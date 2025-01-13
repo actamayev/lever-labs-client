@@ -45,7 +45,7 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 						</span>
 						<ChevronRight
 							className="ml-auto transition-transform duration-100
-	group-data-[state=open]/collapsible:rotate-90"
+							group-data-[state=open]/collapsible:rotate-90"
 						/>
 					</SidebarMenuButton>
 				</CollapsibleTrigger>
@@ -57,7 +57,7 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 									asChild
 									onClick={() => navigate(subItem.url)}
 									className={`ml-2 text-sm transition-all duration-100
-		  hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
+									hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
 							location.pathname === subItem.url
 								? "bg-zinc-100 dark:bg-zinc-800"
 								: ""
