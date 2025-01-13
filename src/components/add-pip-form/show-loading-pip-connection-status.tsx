@@ -12,7 +12,7 @@ function ShowLoadingPipConnectionStatus() {
 
 	if (addPipClass.store.isUserReadyToConnectToPipDialog === false) {
 		return (
-			<div className="my-2">
+			<div className="my-6">
 				<ErrorMessage
 					error={`Please connect to Pip's Wi-Fi (pip-${addPipClass.store.mirroredFormValues.pipUUID})`}
 				/>
@@ -24,7 +24,7 @@ function ShowLoadingPipConnectionStatus() {
 
 	if (addPipClass.store.newPipConnectionStatus === "connecting") {
 		return (
-			<div className="my-2">
+			<div className="my-6">
 				<LoadingMessage message="Connecting to Pip..." />
 			</div>
 		)
@@ -32,7 +32,7 @@ function ShowLoadingPipConnectionStatus() {
 
 	else if (addPipClass.store.newPipConnectionStatus === "failed") {
 		return (
-			<div className="my-2">
+			<div className="my-6">
 				<ErrorMessage
 					error={`Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.
 					Please confirm the Wi-Fi credentials you provided above.`}
@@ -42,7 +42,7 @@ function ShowLoadingPipConnectionStatus() {
 	}
 
 	return (
-		<div className="my-2">
+		<div className="my-6">
 			<SuccessMessage message="Connected!" />
 		</div>
 	)

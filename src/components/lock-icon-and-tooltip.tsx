@@ -16,9 +16,9 @@ export default function LockIconAndTooltip() {
 						type="button"
 						variant="ghost"
 						size="sm"
-						className="h-auto p-1 dark:hover:bg-zinc-700"
+						className="h-auto p-1.5 dark:hover:bg-zinc-700"
 					>
-						<FaLock className="h-4 w-4" />
+						<FaLock className="!h-7 !w-7" />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent side="top">

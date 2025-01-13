@@ -16,9 +16,9 @@ function ConnectToPipInstructions() {
 	) return null
 
 	return (
-		<div className="my-2">
+		<div className="mt-6">
 			<div className="flex flex-col">
-				<div className="font-bold">
+				<div className="font-bold mb-2">
 					Step 4
 				</div>
 				<div>
@@ -51,7 +51,7 @@ function ConnectToPipInstructions() {
 					addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi === true && (
 						<Button
 							type="button"
-							className="mt-2 text-xl"
+							className="mt-6 text-2xl h-12"
 							onClick={openIpAddrTab}
 							disabled={addPipClass.store.newPipConnectionStatus === "connecting"}
 						>

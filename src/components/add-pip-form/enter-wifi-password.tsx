@@ -38,8 +38,8 @@ function EnterWifiPassword() {
 								type={showPassword ? "text" : "password"}
 								{...field}
 								maxLength={200}
-								className="w-full h-12 dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0
-									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
+								className="w-full h-14 dark:border-zinc-600 pr-16 focus:ring-0 focus:ring-offset-0 !text-2xl
+								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Network Password"
 								autoComplete="new-password"
 								autoSave="off"
@@ -49,14 +49,14 @@ function EnterWifiPassword() {
 								type="button"
 								variant="ghost"
 								size="sm"
-								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1
-									dark:hover:bg-zinc-600 hover:bg-slate-100"
+								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1.5 mr-4
+								dark:hover:bg-zinc-600 hover:bg-slate-100"
 								onClick={() => setShowPassword(prevState => !prevState)}
 							>
 								{showPassword ? (
-									<EyeOff className="h-4 w-4" />
+									<EyeOff className="!h-7 !w-7" />
 								) : (
-									<Eye className="h-4 w-4" />
+									<Eye className="!h-7 !w-7" />
 								)}
 							</Button>
 							<div className="absolute inset-y-0 right-2 flex items-center">

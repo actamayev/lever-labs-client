@@ -63,7 +63,7 @@ function EnterPipID() {
 								<Input
 									{...field}
 									onChange={(e) => cleanPipUUIDInput(e, field.onChange)}
-									className="w-full h-12 text-xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
+									className="w-full h-14 !text-2xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 									placeholder="Pip ID"
 								/>
@@ -76,14 +76,13 @@ function EnterPipID() {
 														type="button"
 														variant="ghost"
 														size="sm"
-														className="h-auto p-2 dark:hover:bg-zinc-700"
+														className="h-auto p-1.5 dark:hover:bg-zinc-700"
 													>
-														{(pipUUIDValid &&
-                                        addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
-																<Check className="h-5 w-5 text-green-700 dark:text-green-500" />
-															) : (
-																<X className="h-5 w-5 text-red-500 dark:text-red-500" />
-															)}
+														{(pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
+															<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
+														) : (
+															<X className="!h-7 !w-7 text-red-500 dark:text-red-500" />
+														)}
 													</Button>
 												</TooltipTrigger>
 												<TooltipContent side="top">
