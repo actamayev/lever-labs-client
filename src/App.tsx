@@ -2,11 +2,12 @@ import { observer } from "mobx-react"
 import { Routes, Route } from "react-router"
 import Lab from "./pages/lab"
 import Landing from "./pages/landing"
+import AddPip from "./pages/add-pip"
 // import Garage from "./pages/garage"
 import Contact from "./pages/contact"
 import Missing from "./pages/missing"
 import Sandbox from "./pages/sandbox"
-// import MyAccount from "./pages/account"
+import Settings from "./pages/settings"
 import LoginPage from "./pages/auth/login-page"
 import labRoutes from "./routing/lab-routes-structure"
 import RegisterPage from "./pages/auth/register-page"
@@ -21,7 +22,6 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
-import AddPip from "./pages/add-pip"
 
 function App() {
 	useScrollToTop()
@@ -71,7 +71,7 @@ function App() {
 			<Route path="/sandbox" element={<Sandbox />} />
 			<Route path="/add-pip" element={<AddPip />} />
 
-			{/* <Route path="/account" element={<MyAccount />} /> */}
+			<Route path="/settings" element={<Settings />} />
 
 			<Route path="/contact" element={<Contact />} />
 

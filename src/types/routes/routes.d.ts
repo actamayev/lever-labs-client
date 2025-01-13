@@ -8,7 +8,7 @@ declare global {
 		| "/lab"
 		| "/add-pip"
 		| "/sandbox"
-		| "/account"
+		| "/settings"
 		| "/contact"
 
 	type PageNames = StaticPageNames | LabPages

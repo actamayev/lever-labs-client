@@ -1,6 +1,6 @@
 import SidebarLogo from "./sidebar-logo"
 import MappedNavData from "./mapped-nav-data"
-import NavUser from "@/components/shadcn/nav-user"
+import NavUser from "@/components/shadcn/nav-user/nav-user"
 import { Sidebar, SidebarFooter } from "@/components/shadcn/ui/sidebar"
 
 // TODO: Add an add pip button above nav user

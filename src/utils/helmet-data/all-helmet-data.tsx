@@ -48,11 +48,11 @@ const allHelmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/sandbox"
 		/>
 	),
-	"/account": (
+	"/settings": (
 		<BasicHelmet
-			pageTitleData="My Account"
+			pageTitleData="Settings"
 			description="View and edit your personal information, profile picture, and login/security settings."
-			url="https://www.bluedotrobots.com/account"
+			url="https://www.bluedotrobots.com/settings"
 		/>
 	),
 	"/contact": (

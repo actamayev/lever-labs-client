@@ -9,7 +9,7 @@ const PrivatePageRoots = [
 	"/garage",
 	"/lab",
 	"/sandbox",
-	"/account",
+	"/settings",
 	"/add-pip"
 ]
 

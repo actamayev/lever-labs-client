@@ -9,7 +9,7 @@ const PrivatePageNames = [
 	"/garage",
 	"/lab",
 	"/sandbox",
-	"/account",
+	"/settings",
 	"/add-pip"
 ]
 

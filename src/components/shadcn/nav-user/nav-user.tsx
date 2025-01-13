@@ -1,7 +1,6 @@
 import _ from "lodash"
-import { LogOut } from "lucide-react"
+import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { useMemo, useState } from "react"
 
 import {
 	SidebarMenu,
@@ -12,29 +11,26 @@ import {
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
-import useUsername from "../../hooks/memos/username"
 import { Avatar } from "@/components/shadcn/ui/avatar"
-import useHandleLogout from "../../hooks/auth/handle-logout"
+import LogoutButton from "./logout-button"
+import useUsername from "../../../hooks/memos/username"
+import NavigateToSettingsPage from "./navigate-to-settings-page"
 import ThemeTogglerDropdownMenu from "./theme-toggler-dropdown-menu"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import ShowUserProfileImageOrDefaultImage from "../show-user-profile-image-or-default-image"
+import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import ShowUserProfileImageOrDefaultImage from "../../show-user-profile-image-or-default-image"
 
 function NavUser() {
 	const { isMobile } = useSidebar()
-	const [logoutDisabled, setLogoutDisabled] = useState(false)
 	const personalInfoClass = usePersonalInfoContext()
 	const username = useUsername()
 
 	const profilePictureUrl = useMemo(() => {
 		return personalInfoClass.profilePictureUrl
 	}, [personalInfoClass.profilePictureUrl])
-
-	const handleLogout = useHandleLogout(setLogoutDisabled)
 
 	if (_.isNull(username)) return null
 
@@ -82,14 +78,9 @@ function NavUser() {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<ThemeTogglerDropdownMenu />
-						<DropdownMenuItem
-							onClick={handleLogout}
-							disabled={logoutDisabled}
-							className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
-						>
-							<LogOut className="mr-2 !h-[25px] !w-[25px] !min-w-[25px]" />
-							<span className="text-base">Log out</span>
-						</DropdownMenuItem>
+						<NavigateToSettingsPage />
+						<DropdownMenuSeparator />
+						<LogoutButton />
 					</DropdownMenuContent>
 				</DropdownMenu>
 			</SidebarMenuItem>
