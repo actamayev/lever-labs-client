@@ -1,20 +1,10 @@
 declare global {
-	type StaticPageNames =
-		"/" |
-		"/login" |
-		"/register" |
-		"/register-username" |
-		"/garage" |
-		"/lab" |
-		"/sandbox" |
-		"/account" |
-		"/contact"
-
 	type ElementLabPages =
 		| "/lab/element-1"
 		| "/lab/element-2"
 		| "/lab/element-3"
 
+	// Element 1:
 	type MotorLabPages =
 		| "/lab/element-1/motor/reading"
 		| "/lab/element-1/motor/video"
@@ -60,9 +50,7 @@ declare global {
 		| "/lab/element-1/imu/video"
 		| "/lab/element-1/imu/code"
 
-	type LabPages =
-		| "/lab/welcome"
-		| ElementLabPages
+	type Element1LabPages =
 		| MotorLabPages
 		| LedLabPages
 		| EncoderLabPages
@@ -73,29 +61,26 @@ declare global {
 		| TofSensorLabPages
 		| ImuLabPages
 
-	type PageNames = StaticPageNames | LabPages
+	// Element 2:
+	type ChameleonLabPages =
+		| "/lab/element-2/chameleon/reading"
+		| "/lab/element-2/chameleon/video"
+		| "/lab/element-2/chameleon/code"
 
-	interface ElementChild {
-		path: "reading" | "video" | "code"
-		element: JSX.Element
-	}
+	type AvoidObstaclesLabPages =
+		| "/lab/element-2/chameleon/reading"
+		| "/lab/element-2/chameleon/video"
+		| "/lab/element-2/chameleon/code"
 
-	// Define the element routes structure
-	interface ElementRoutes {
-		path: string
-		children: ElementChild[]
-	}
+	type Element2LabPages =
+		| ChameleonLabPages
+		| AvoidObstaclesLabPages
 
-	// Define the base route structure
-	interface BaseRoute {
-		index?: boolean
-		path?: string
-		element: JSX.Element
-		children?: ElementChild[]
-	}
-
-	// Create a union type for all possible route types
-	type RouteType = ElementRoutes | BaseRoute
+	type LabPages =
+		| "/lab/welcome"
+		| ElementLabPages
+		| Element1LabPages
+		| Element2LabPages
 }
 
 export {}

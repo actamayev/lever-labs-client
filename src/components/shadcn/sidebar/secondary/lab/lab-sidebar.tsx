@@ -5,7 +5,8 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
 import WelcomeSidebarSection from "./welcome-sidebar-section"
-import { element1NavData } from "../../../../../utils/lab/nav-data"
+import element2NavData from "../../../../../utils/lab/element-two-nav-data"
+import { element1NavData } from "../../../../../utils/lab/element-one-nav-data"
 
 export default function LabSidebar() {
 	return (
@@ -27,7 +28,7 @@ export default function LabSidebar() {
 				/>
 				<LabGroupMap
 					groupName="Element 2: Combine & Create"
-					navData={[]}
+					navData={element2NavData}
 					elementName="/lab/element-2"
 				/>
 				<LabGroupMap

@@ -29,6 +29,29 @@ declare global {
 			url: LabPages
 		}[]
 	}
+
+
+	interface ElementChild {
+		path: "reading" | "video" | "code"
+		element: JSX.Element
+	}
+
+	// Define the element routes structure
+	interface ElementRoutes {
+		path: string
+		children: ElementChild[]
+	}
+
+	// Define the base route structure
+	interface BaseRoute {
+		index?: boolean
+		path?: string
+		element: JSX.Element
+		children?: ElementChild[]
+	}
+
+	// Create a union type for all possible route types
+	type RouteType = ElementRoutes | BaseRoute
 }
 
 export {}

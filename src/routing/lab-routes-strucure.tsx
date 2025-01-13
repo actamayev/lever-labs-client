@@ -1,8 +1,9 @@
-import Element1 from "../components/lab/element-1"
-import Element2 from "../components/lab/element-2"
-import Element3 from "../components/lab/element-3"
-import LabIndex from "../components/lab/lab-index"
+import element2Routes from "./element-two-routes"
 import element1Routes from "./element-one-routes"
+import LabIndex from "../components/lab/lab-index"
+import Element1 from "../components/lab/element-1/element-1"
+import Element2 from "../components/lab/element-2/element-2"
+import Element3 from "../components/lab/element-3/element-3"
 import LabWelcome from "../components/lab/welcome-page/lab-welcome"
 
 const labRoutes: RouteType[] = [
@@ -26,7 +27,8 @@ const labRoutes: RouteType[] = [
 		path: "element-3",
 		element: <Element3 />
 	},
-	...element1Routes
+	...element1Routes,
+	...element2Routes
 ]
 
 export default labRoutes
