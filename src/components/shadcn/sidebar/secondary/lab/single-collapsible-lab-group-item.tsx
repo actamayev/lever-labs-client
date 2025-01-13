@@ -35,9 +35,7 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 		>
 			<SidebarMenuItem>
 				<CollapsibleTrigger asChild>
-					<SidebarMenuButton
-						className="py-5 px-2 my-1"
-					>
+					<SidebarMenuButton className="py-5 px-2 my-1 duration-75">
 						<item.icon
 							style={{ width: "25px", height: "25px" }}
 							className="ml-2"

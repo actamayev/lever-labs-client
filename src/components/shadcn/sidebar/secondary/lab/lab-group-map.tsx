@@ -34,7 +34,7 @@ export default function LabGroupMap(props: Props) {
 			<div className="flex items-center justify-between mb-2">
 				<SidebarGroupLabel
 					className={`text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800 \
-					transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer flex-grow
+					transition-colors duration-75 rounded-lg px-1 mx-1 py-1 cursor-pointer flex-grow
 					${location.pathname === elementName
 			? "bg-zinc-100 dark:bg-zinc-800"
 			: ""}`}

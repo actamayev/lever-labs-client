@@ -22,7 +22,7 @@ export default function ToggleAllLessons(props: Props) {
 	return (
 		<Button
 			onClick={() => toggleAll(Object.values(openSections).some(v => !v))}
-			className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors duration-100 mx-1"
+			className="py-1 px-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors duration-75"
 			title={Object.values(openSections).some(v => !v) ? "Expand all" : "Collapse all"}
 			variant="ghost"
 		>
