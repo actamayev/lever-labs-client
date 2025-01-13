@@ -31,15 +31,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/led",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <LedReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <LedVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <LedCode />
 			}
 		]
@@ -48,15 +48,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/motor",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <MotorReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <MotorVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <MotorCode />
 			}
 		]
@@ -65,15 +65,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/encoder",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <EncoderReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <EncoderVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <EncoderCode />
 			}
 		]
@@ -82,15 +82,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/button",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <ButtonReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <ButtonVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <ButtonCode />
 			}
 		]
@@ -99,15 +99,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/color-sensor",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <ColorSensorReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <ColorSensorVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <ColorSensorCode />
 			}
 		]
@@ -116,15 +116,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/ir-color-sensor",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <IrColorSensorReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <IrColorSensorVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <IrColorSensorCode />
 			}
 		]
@@ -133,15 +133,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/ir-communication-sensor",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <IrCommunicationSensorReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <IrCommunicationSensorVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <IrCommuncationSensorCode />
 			}
 		]
@@ -150,15 +150,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/tof",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <TofReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <TofVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <TofCode />
 			}
 		]
@@ -167,15 +167,15 @@ const element1Routes: ElementRoutes[] = [
 		path: "element-1/imu",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <ImuReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <ImuVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <ImuCode />
 			}
 		]

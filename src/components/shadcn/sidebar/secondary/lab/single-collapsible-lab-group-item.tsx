@@ -8,10 +8,8 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
-	SidebarMenuSubItem,
-	SidebarMenuSubButton,
 } from "@/components/shadcn/ui/sidebar"
-import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import SingleActivityTitle from "./single-activity-title"
 
 interface Props {
 	item: LabNavData
@@ -21,7 +19,6 @@ interface Props {
 
 export default function SingleCollapsibleLabGroupItem(props: Props) {
 	const { item, openSections, setOpenSections } = props
-	const navigate = useTypedNavigate()
 
 	return (
 		<Collapsible
@@ -52,23 +49,10 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 				<CollapsibleContent>
 					<SidebarMenuSub>
 						{item.items.map((subItem) => (
-							<SidebarMenuSubItem key={subItem.title}>
-								<SidebarMenuSubButton
-									asChild
-									onClick={() => navigate(subItem.url)}
-									className={`text-sm transition-all duration-100
-									hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
-							location.pathname === subItem.url
-								? "bg-zinc-100 dark:bg-zinc-800"
-								: ""
-							}`}
-									style={{ marginLeft: "3px" }}
-								>
-									<span className="cursor-pointer">
-										{subItem.title}
-									</span>
-								</SidebarMenuSubButton>
-							</SidebarMenuSubItem>
+							<SingleActivityTitle
+								key={subItem.title}
+								subItem={subItem}
+							/>
 						))}
 					</SidebarMenuSub>
 				</CollapsibleContent>

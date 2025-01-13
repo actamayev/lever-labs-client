@@ -15,6 +15,8 @@ declare global {
 
 	type PipUUID = string & { readonly __brand: unique symbol }
 
+	type ActivityTitles = "Reading" | "Video" | "Code"
+
 	interface SidebarNavData {
 		title: string
 		url: PageNames
@@ -25,14 +27,13 @@ declare global {
 		title: string
 		icon: IconType
 		items: {
-			title: string
+			title: ActivityTitles
 			url: LabPages
 		}[]
 	}
 
-
 	interface ElementChild {
-		path: "reading" | "video" | "code"
+		path: ActivityTitles
 		element: JSX.Element
 	}
 

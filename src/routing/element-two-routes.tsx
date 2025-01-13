@@ -7,15 +7,15 @@ const element2Routes: ElementRoutes[] = [
 		path: "element-2/chameleon",
 		children: [
 			{
-				path: "reading",
+				path: "Reading",
 				element: <ChameleonReading />
 			},
 			{
-				path: "video",
+				path: "Video",
 				element: <ChameleonVideo />
 			},
 			{
-				path: "code",
+				path: "Code",
 				element: <ChameleonCode />
 			}
 		]
