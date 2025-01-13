@@ -21,7 +21,7 @@ export default function PathToMastery() {
 				<IconStep
 					icon={CircuitBoard}
 					title="Element 1"
-					subtitle="Get started with sensor basics"
+					subtitle="Sensor basics"
 					elementLink="/lab/element-1"
 				/>
 
@@ -54,7 +54,7 @@ export default function PathToMastery() {
 					darkBgColor="dark:bg-green-900/50"
 					darkIconColor="dark:text-green-400"
 					title="Element 3"
-					subtitle="Missions: Complete Challenges"
+					subtitle="Missions"
 					orbitingIcons={
 						<>
 							<Target className="w-6 h-6 text-green-500/70 absolute -top-2 -right-2 animate-ping" />
