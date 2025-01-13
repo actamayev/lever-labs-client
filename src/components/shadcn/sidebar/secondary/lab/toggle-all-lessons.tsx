@@ -1,5 +1,6 @@
 import { useCallback } from "react"
 import { ChevronsDown, ChevronsUp } from "lucide-react"
+import { Button } from "../../../ui/button"
 
 interface Props {
 	navData: LabNavData[]
@@ -19,16 +20,17 @@ export default function ToggleAllLessons(props: Props) {
 	}, [navData, setOpenSections])
 
 	return (
-		<button
+		<Button
 			onClick={() => toggleAll(Object.values(openSections).some(v => !v))}
-			className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors duration-100"
+			className="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors duration-100 mx-1"
 			title={Object.values(openSections).some(v => !v) ? "Expand all" : "Collapse all"}
+			variant="ghost"
 		>
 			{Object.values(openSections).some(v => !v) ? (
 				<ChevronsDown className="w-4 h-4" />
 			) : (
 				<ChevronsUp className="w-4 h-4" />
 			)}
-		</button>
+		</Button>
 	)
 }

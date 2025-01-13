@@ -2,7 +2,7 @@ import { GiChameleonGlyph } from "react-icons/gi"
 
 const element2NavData: LabNavData[] = [
 	{
-		title: "Chameleon",
+		title: "Chameleon Mode",
 		icon: GiChameleonGlyph,
 		items: [
 			{

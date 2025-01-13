@@ -14,7 +14,7 @@ export default function WelcomeSidebarSection() {
 			<SidebarGroupLabel
 				className={`
 					text-xl dark:text-white text-black cursor-pointer
-					transition-all
+					transition-all duration-100
 					${isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}
 					`}
 				onClick={() => navigate("/lab/welcome")}

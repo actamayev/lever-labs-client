@@ -33,8 +33,11 @@ export default function LabGroupMap(props: Props) {
 		<SidebarGroup>
 			<div className="flex items-center justify-between mb-2">
 				<SidebarGroupLabel
-					className="text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800
-					transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer flex-grow"
+					className={`text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800 \
+					transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer flex-grow
+					${location.pathname === elementName
+			? "bg-zinc-100 dark:bg-zinc-800"
+			: ""}`}
 					onClick={() => navigate(elementName)}
 				>
 					{groupName}

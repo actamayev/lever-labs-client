@@ -8,8 +8,11 @@ import { Button } from "@/components/shadcn/ui/button"
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function InsideEachLesson() {
+	const navigate = useTypedNavigate()
+
 	return (
 		<WelcomePageCard headerText="Inside Each Lesson">
 			<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative px-20">
@@ -38,7 +41,10 @@ export default function InsideEachLesson() {
 				/>
 			</div>
 
-			<Button className="w-full bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800">
+			<Button
+				className="w-full bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
+				onClick={() => navigate("/lab/element-1")}
+			>
 				Start Learning
 			</Button>
 		</WelcomePageCard>

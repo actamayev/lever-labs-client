@@ -36,10 +36,12 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 			<SidebarMenuItem>
 				<CollapsibleTrigger asChild>
 					<SidebarMenuButton
-						tooltip={item.title}
-						className="py-4 px-2 my-1"
+						className="py-5 px-2 my-1"
 					>
-						<item.icon style={{ width: "25px", height: "25px" }} />
+						<item.icon
+							style={{ width: "25px", height: "25px" }}
+							className="ml-2"
+						/>
 						<span className="text-base">
 							{item.title}
 						</span>
@@ -56,12 +58,13 @@ export default function SingleCollapsibleLabGroupItem(props: Props) {
 								<SidebarMenuSubButton
 									asChild
 									onClick={() => navigate(subItem.url)}
-									className={`ml-2 text-sm transition-all duration-100
+									className={`text-sm transition-all duration-100
 									hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
 							location.pathname === subItem.url
 								? "bg-zinc-100 dark:bg-zinc-800"
 								: ""
 							}`}
+									style={{ marginLeft: "3px" }}
 								>
 									<span className="cursor-pointer">
 										{subItem.title}
