@@ -15,7 +15,6 @@ function ConnectToPipInstructions() {
 		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false
 	) return null
 
-	console.log("updateAddingNewPipRequirements", addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi)
 	return (
 		<div className="my-2">
 			<div className="flex flex-col">

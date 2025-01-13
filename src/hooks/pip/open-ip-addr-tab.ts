@@ -24,8 +24,6 @@ export default function useOpenIpAddrTab(): () => void {
 					description: `Please connect to the pip-${addPipClass.store.mirroredFormValues.pipUUID} network first`
 				})
 			}
-			console.log("No internet connectivity - likely connected to ESP AP")
-
 			addPipClass.store.setIsUserReadyToConnectToPipDialog(true)
 			addPipClass.store.setNewPipConnectionStatus("connecting")
 
