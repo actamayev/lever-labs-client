@@ -2,7 +2,6 @@
 import labHelmetData from "./lab-helmet-data"
 import BasicHelmet from "../../components/helmet/basic-helmet"
 
-// TODO: Add add pip helmet
 const allHelmetData: HelmetData = {
 	"/": (
 		<BasicHelmet
@@ -32,6 +31,13 @@ const allHelmetData: HelmetData = {
 			pageTitleData="Register Username"
 			description="Choose a username for your Blue Dot account."
 			url="https://www.bluedotrobots.com/register-username"
+		/>
+	),
+	"/add-pip": (
+		<BasicHelmet
+			pageTitleData="Add Pip"
+			description="Add your Pip to your account. Get it connected to the Wi-Fi in under a minute to start hands-on experimentation."
+			url="https://www.bluedotrobots.com/add-pip"
 		/>
 	),
 	// "/garage": (

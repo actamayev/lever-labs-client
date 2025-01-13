@@ -9,7 +9,6 @@ import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 import useDisconnectFromPip from "../../../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../../../hooks/pip/request-to-connect-to-pip"
 
-//TODO: Change this from cricle plus to circle plus and a robot (show that you're adding a bot)
 function AddPipSidebarButton() {
 	const navigate = useTypedNavigate()
 	const pipClass = usePipContext()
