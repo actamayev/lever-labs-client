@@ -2,11 +2,13 @@ import _ from "lodash"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { usePipContext } from "../../contexts/pip-context"
+import useStyledToast from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useRetrievePipInfoUseEffect(): void {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
+	const toast = useStyledToast()
 
 	const retrievePipInfo = useCallback(async () => {
 		try {
@@ -25,10 +27,14 @@ export default function useRetrievePipInfoUseEffect(): void {
 			pipClass.setPipData(pipDataResponse.data.userPipData)
 		} catch (error) {
 			console.error(error)
+			return toast.negative({
+				title: "Unable to retrieve Pip Info",
+				description: "Please reload the page and try again."
+			})
 		} finally {
 			pipClass.setIsRetrievingPipData(false)
 		}
-	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService])
+	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, toast])
 
 	useEffect(() => {
 		void retrievePipInfo()

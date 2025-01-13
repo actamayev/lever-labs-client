@@ -15,9 +15,7 @@ export default function useSubscribeForUpdates(
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 
-	return useCallback(async (
-		values: EmailUpdatesFormValues
-	): Promise<void> => {
+	return useCallback(async (values: EmailUpdatesFormValues): Promise<void> => {
 		try {
 			if (!values.email || isLoading) return
 			setIsLoading(true)

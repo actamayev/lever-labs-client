@@ -22,7 +22,7 @@ export default function useDisconnectFromPip(): (
 			if (foundPip?.pipConnectionStatus !== "connected") {
 				return toast.neutral({
 					title: "Unable to disconnect from Pip",
-					description: "You're not currently connected to this Pip. Please reload page and try again."
+					description: "You're not currently connected to this Pip. Please reload the page and try again."
 				})
 			}
 
@@ -50,7 +50,7 @@ export default function useDisconnectFromPip(): (
 			console.error(error)
 			toast.negative({
 				title: `Unable to disconnect from ${pipData.pipName} at this time`,
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		}
 	}, [blueDotApiClient.pipDataService, pipClass, requestToConnectToPip, toast])

@@ -5,21 +5,25 @@ import useStyledToast from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-// TODO: Go through all callbacks/hooks that make use the API. Never have it return early without a toast.
-// This should say: please select a pip to upload, or: currently sending cpp to pip
-export default function useSendCppToPip(): (
-	cppCode: string
-) => Promise<void> {
+export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 	const pipClass = usePipContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 
 	return useCallback(async (cppCode: string) => {
 		try {
-			if (
-				pipClass.isSendingCppToPip === true ||
-				_.isNull(pipClass.selectedPip)
-			) return
+			if (_.isNull(pipClass.selectedPip)) {
+				return toast.neutral({
+					title: "You have not connected to a Pip",
+					description: "Please connect to a Pip to upload code."
+				})
+			}
+			if (pipClass.isSendingCppToPip === true) {
+				return toast.neutral({
+					title: "Currently sending code to Pip",
+					description: `We're beaming your code over to ${pipClass.selectedPip.pipName} as fast as we can!`
+				})
+			}
 
 			if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
 				return toast.negative({
@@ -44,7 +48,7 @@ export default function useSendCppToPip(): (
 			console.error(error)
 			toast.negative({
 				title: "Unable to upload code to Pip at this time",
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		} finally {
 			pipClass.setIsSendingCppToPip(false)

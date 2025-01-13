@@ -34,7 +34,8 @@ export default function useSocketEventsUseEffect(): void {
 				})
 			} else if (newConnectionStatus === "inactive") {
 				toast.neutral({
-					description: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`
+					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`,
+					description: ""
 				})
 			} else if (newConnectionStatus === "connected") {
 				toast.superPositive({

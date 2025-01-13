@@ -25,7 +25,10 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
 			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
-				throw new Error("You've already added a Pip with this ID")
+				return toast.negative({
+					title: "Unable to add Pip ID",
+					description: "You've already added a Pip with this ID"
+				})
 			}
 
 			if (validatePipData() === false) {
@@ -62,12 +65,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 			}
 		} catch (error) {
 			console.error(error)
-			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
-				return toast.negative({
-					title: "Unable to add Pip ID",
-					description: "You've already added a Pip with this ID"
-				})
-			} else if (error instanceof AxiosError) {
+			if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {
@@ -89,7 +87,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 			const { pipName } = addPipClass.store.mirroredFormValues
 			toast.negative({
 				title: `Unable to add ${pipName} at this time`,
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		}
 	}, [addPipClass, autoCloseModalAfterAddPip, blueDotApiClient.pipDataService, pipClass, shouldAutoCloseModal, toast, validatePipData])

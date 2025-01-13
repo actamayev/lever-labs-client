@@ -3,6 +3,7 @@ import { useCallback } from "react"
 import useAddPip from "./add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
+import useStyledToast from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -12,6 +13,7 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const addPip = useAddPip(false)
+	const toast = useStyledToast()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -33,11 +35,14 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 				addPipClass.store.setNewPipConnectionStatus("connected")
 				await addPip()
 			} else {
-				addPipClass.store.setNewPipConnectionStatus("connecting")
-				return
+				return addPipClass.store.setNewPipConnectionStatus("connecting")
 			}
 		} catch (error) {
 			console.error(error)
+			toast.negative({
+				title: "Unable to retrieve Pip Status",
+				description: ""
+			})
 		}
-	}, [addPip, addPipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass])
+	}, [addPip, addPipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass, toast])
 }

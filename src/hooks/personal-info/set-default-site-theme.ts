@@ -16,17 +16,21 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 		try {
 			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
-			if (!_.isNull(blueDotApiClient.httpClient.accessToken)) {
-				const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
-				if (!_.isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
-					throw Error("Unable to save new default site theme")
-				}
+			if (_.isNull(blueDotApiClient.httpClient.accessToken)) {
+				return toast.negative({
+					title: "Please login to save the new default site theme",
+					description: ""
+				})
+			}
+			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
+			if (!_.isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
+				throw Error("Unable to save new default site theme")
 			}
 		} catch (error) {
 			console.error(error)
 			toast.negative({
 				title: "Unable to change site theme at this time",
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		}
 	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])
