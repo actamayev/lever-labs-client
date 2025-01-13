@@ -34,16 +34,23 @@ function AddPipSidebarButton() {
 		}
 	}, [diconnectFromPip, navigate, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
+	const tooltipContent = () => {
+		if (_.isNull(pipClass.selectedPip)) {
+			return <>Add Pip</>
+		} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
+			return ( <>Disconnect from {pipClass.selectedPip.pipName}</>
+			)
+		} else {
+			return <>Connect to {pipClass.selectedPip.pipName}</>
+		}
+	}
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-center">
 				<SidebarMenuButton
 					tooltip={{
-						children: (
-							<>
-								{pipClass.selectedPip ? (<>Connect to {pipClass.selectedPip.pipName}</>) : (<>Add Pip</>)}
-							</>
-						),
+						children: tooltipContent(),
 						hidden: false
 					}}
 					onClick={handleButtonClick}

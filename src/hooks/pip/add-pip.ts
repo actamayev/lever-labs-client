@@ -2,6 +2,7 @@ import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
+import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../contexts/pip-context"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -16,6 +17,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
 	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
+	const navigate = useTypedNavigate()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -63,6 +65,7 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 			if (shouldAutoCloseModal) {
 				resetAddingPipValuesAfterAddPip(shouldAutoCloseModal)
 			}
+			navigate("/lab/element-1")
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
@@ -90,6 +93,6 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, resetAddingPipValuesAfterAddPip, blueDotApiClient.pipDataService,
-		pipClass, shouldAutoCloseModal, toast, validatePipData])
+	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoCloseModal,
+		navigate, toast, resetAddingPipValuesAfterAddPip])
 }

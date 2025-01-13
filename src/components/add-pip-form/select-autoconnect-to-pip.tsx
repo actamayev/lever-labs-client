@@ -11,7 +11,7 @@ import {
 import Slider from "../slider"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import { FormControl, FormField, FormItem, FormLabel } from "../shadcn/ui/form"
+import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
 function SelectAutoreconnectToPip() {
 	const addPipClass = useAddPipContext()
@@ -33,19 +33,16 @@ function SelectAutoreconnectToPip() {
 	) return null
 
 	return (
-		<div className="mt-2">
+		<div className="mt-6">
 			<FormField
 				control={addPipClass.form.control}
 				name="shouldAutoConnect"
 				render={({ field }) => (
 					<FormItem className="flex items-center justify-between space-x-2">
 						<div className="flex items-center space-x-2">
-							<FormLabel
-								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed
-								peer-disabled:opacity-70 flex items-center"
-							>
-								Auto-connect
-							</FormLabel>
+							<div className="flex items-center font-semibold text-3xl">
+								<p>Auto-connect</p>
+							</div>
 							<TooltipProvider delayDuration={0}>
 								<Tooltip>
 									<TooltipTrigger asChild>
@@ -55,7 +52,7 @@ function SelectAutoreconnectToPip() {
 											size="sm"
 											className="h-auto p-1 dark:hover:bg-zinc-700 flex items-center"
 										>
-											<Info size={15}/>
+											<Info style={{ width: "25px", height: "25px" }}/>
 										</Button>
 									</TooltipTrigger>
 									<TooltipContent side="top">
@@ -70,6 +67,7 @@ function SelectAutoreconnectToPip() {
 								checkedCondition={field.value}
 								onChangeCheckedCondition={() => chooseAutoConnect(field.onChange, field.value)}
 								colorChangeOnToggle={true}
+								size="xl"
 							/>
 						</FormControl>
 					</FormItem>
