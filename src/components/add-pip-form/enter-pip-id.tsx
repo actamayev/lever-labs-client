@@ -76,7 +76,7 @@ function EnterPipID() {
 														type="button"
 														variant="ghost"
 														size="sm"
-														className="h-auto p-1.5 dark:hover:bg-zinc-700"
+														className="h-auto p-2 dark:hover:bg-zinc-700"
 													>
 														{(pipUUIDValid &&
                                         addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (

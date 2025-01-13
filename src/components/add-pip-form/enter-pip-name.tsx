@@ -80,7 +80,7 @@ function EnterPipName() {
 													type="button"
 													variant="ghost"
 													size="sm"
-													className="h-auto p-1 dark:hover:bg-zinc-700"
+													className="h-auto p-2 dark:hover:bg-zinc-700"
 												>
 													{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
 														<Check className="h-4 w-4 text-green-700 dark:text-green-500" />
