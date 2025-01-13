@@ -22,6 +22,7 @@ import ThemeTogglerDropdownMenu from "./theme-toggler-dropdown-menu"
 import useUsername from "../../../../../hooks/memos/username"
 import { usePersonalInfoContext } from "../../../../../contexts/personal-info-context"
 import ShowUserProfileImageOrDefaultImage from "../../../../show-user-profile-image-or-default-image"
+import AddAnotherPipButton from "./add-another-pip-button"
 
 function NavUser() {
 	const { isMobile } = useSidebar()
@@ -78,6 +79,7 @@ function NavUser() {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<ThemeTogglerDropdownMenu />
+						<AddAnotherPipButton />
 						<NavigateToSettingsPage />
 						<DropdownMenuSeparator />
 						<LogoutButton />

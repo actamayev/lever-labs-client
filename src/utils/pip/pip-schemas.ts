@@ -13,13 +13,13 @@ export const addPipSchema = z.object({
 	]).optional(),
 	wifiSSID: z.union([
 		z.string()
-			.min(1, "Wifi network name must be at least 1 character")
-			.max(50, "Wifi network name cannot exceed 50 characters"),
+			.min(1, "Wi-Fi network name must be at least 1 character")
+			.max(50, "Wi-Fi network name cannot exceed 50 characters"),
 		z.string().length(0),  // Allow empty string
 	]).optional(),
 	wifiPassword: z.union([
 		z.string()
-			.max(200, "Wifi password cannot exceed 200 characters"),
+			.max(200, "Wi-Fi password cannot exceed 200 characters"),
 		z.string().length(0),  // Allow empty string
 	]).optional(),
 })

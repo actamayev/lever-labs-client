@@ -52,7 +52,7 @@ function ConnectToPipInstructions() {
 					addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi === true && (
 						<Button
 							type="button"
-							className="mt-2"
+							className="mt-2 text-xl"
 							onClick={openIpAddrTab}
 							disabled={addPipClass.store.newPipConnectionStatus === "connecting"}
 						>

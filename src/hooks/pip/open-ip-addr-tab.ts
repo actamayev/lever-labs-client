@@ -20,7 +20,7 @@ export default function useOpenIpAddrTab(): () => void {
 				console.info("Still connected to internet, user needs to connect to ESP AP first")
 				addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
 				return toast.neutral({
-					title: "WiFi Connection Required",
+					title: "Wi-Fi Connection Required",
 					description: `Please connect to the pip-${addPipClass.store.mirroredFormValues.pipUUID} network first`
 				})
 			}
