@@ -1,6 +1,7 @@
 import {
 	Sidebar,
 	SidebarHeader,
+	SidebarContent,
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
 import WelcomeSidebarSection from "./welcome-sidebar-section"
@@ -12,27 +13,29 @@ export default function LabSidebar() {
 			<SidebarHeader className="gap-3.5 border-b p-4">
 				<div className="flex w-full items-center justify-between">
 					<div className="text-4xl font-medium text-foreground">
-						Lab
+                        Lab
 					</div>
 				</div>
 				{/* <SidebarInput placeholder="Search lessons..." /> */}
 			</SidebarHeader>
-			<WelcomeSidebarSection />
-			<LabGroupMap
-				groupName="Element 1: Sensor Basics"
-				navData={element1NavData}
-				elementName="/lab/element-1"
-			/>
-			<LabGroupMap
-				groupName="Element 2: Combine & Create"
-				navData={[]}
-				elementName="/lab/element-2"
-			/>
-			<LabGroupMap
-				groupName="Element 3: Missions"
-				navData={[]}
-				elementName="/lab/element-3"
-			/>
+			<SidebarContent>
+				<WelcomeSidebarSection />
+				<LabGroupMap
+					groupName="Element 1: Sensor Basics"
+					navData={element1NavData}
+					elementName="/lab/element-1"
+				/>
+				<LabGroupMap
+					groupName="Element 2: Combine & Create"
+					navData={[]}
+					elementName="/lab/element-2"
+				/>
+				<LabGroupMap
+					groupName="Element 3: Missions"
+					navData={[]}
+					elementName="/lab/element-3"
+				/>
+			</SidebarContent>
 		</Sidebar>
 	)
 }
