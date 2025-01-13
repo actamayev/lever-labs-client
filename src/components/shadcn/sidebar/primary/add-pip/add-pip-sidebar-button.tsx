@@ -1,6 +1,6 @@
 import _ from "lodash"
-import { useCallback } from "react"
 import { observer } from "mobx-react"
+import { useCallback, useEffect } from "react"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import PipStatusTooltip from "./pip-status-tooltip"
@@ -16,6 +16,11 @@ function AddPipSidebarButton() {
 	const diconnectFromPip = useDisconnectFromPip()
 	const requestToConnectToPip = useRequestToConnectToPip()
 
+	useEffect(() => {
+		pipClass.setSelectedPipToFirstPip()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.pipData.length])
+
 	const handleButtonClick = useCallback(async () => {
 		if (!_.isNull(pipClass.selectedPip)) {
 			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
@@ -29,8 +34,6 @@ function AddPipSidebarButton() {
 		}
 	}, [diconnectFromPip, navigate, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
-	if (_.isNull(pipClass)) return null
-
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-center">
@@ -38,7 +41,7 @@ function AddPipSidebarButton() {
 					tooltip={{
 						children: (
 							<>
-								{_.isEmpty(pipClass.pipData) ? (<>Add Pip</>) : (<>Connect to {pipClass.pipData[0].pipName}</>)}
+								{pipClass.selectedPip ? (<>Connect to {pipClass.selectedPip.pipName}</>) : (<>Add Pip</>)}
 							</>
 						),
 						hidden: false
@@ -50,8 +53,8 @@ function AddPipSidebarButton() {
 					isActive={location.pathname === "/add-pip"}
 				>
 					<Bot className="!h-[35px] !w-[35px] !min-w-[35px]" />
-					{!_.isEmpty(pipClass.pipData) ? (
-						<PipStatusTooltip pipData={pipClass.pipData[0]} />
+					{pipClass.selectedPip ? (
+						<PipStatusTooltip pipData={pipClass.selectedPip} />
 					) : (
 						<PlusCircle
 							className="absolute !h-[20px] !w-[20px] bg-background rounded-full"

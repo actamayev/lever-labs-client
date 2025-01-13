@@ -9,7 +9,7 @@ function AddAnotherPipButton() {
 	const navigate = useTypedNavigate()
 	const pipClass = usePipContext()
 
-	if (_.isNull(pipClass) || _.isEmpty(pipClass.pipData)) return null
+	if (_.isEmpty(pipClass.pipData)) return null
 
 	return (
 		<DropdownMenuItem
