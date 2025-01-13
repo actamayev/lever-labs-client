@@ -1,13 +1,8 @@
 /* eslint-disable max-len */
-import React from "react"
-import BasicHelmet from "../components/helmet/basic-helmet"
+import labHelmetData from "./lab-helmet-data"
+import BasicHelmet from "../../components/helmet/basic-helmet"
 
-interface HelmetData {
-	[key: string]: React.ReactNode
-}
-
-// TODO: Put a helmet for each of the lab pages
-const helmetData: HelmetData = {
+const allHelmetData: HelmetData = {
 	"/": (
 		<BasicHelmet
 			pageTitleData="Blue Dot Robots | Coming Soon"
@@ -38,27 +33,13 @@ const helmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/register-username"
 		/>
 	),
-	"/garage": (
-		<BasicHelmet
-			pageTitleData="Garage"
-			description="Log in to view your connected robots, manage connections, and navigate to the Lab or Sandbox for further exploration."
-			url="https://www.bluedotrobots.com/garage"
-		/>
-	),
-	"/lab": (
-		<BasicHelmet
-			pageTitleData="Lab"
-			description="Explore guided tutorials, videos, and challenges to learn about robot sensors and control in a structured learning environment."
-			url="https://www.bluedotrobots.com/lab"
-		/>
-	),
-	"/lab/welcome": (
-		<BasicHelmet
-			pageTitleData="Lab Welcome"
-			description="Welcome to the Lab! This is where the magic happens. Where you'll learn the same fundamental skills you need to land rockets, design self-driving cars, and build robotics that can walk (and talk)."
-			url="https://www.bluedotrobots.com/lab/welcome"
-		/>
-	),
+	// "/garage": (
+	// 	<BasicHelmet
+	// 		pageTitleData="Garage"
+	// 		description="Log in to view your connected robots, manage connections, and navigate to the Lab or Sandbox for further exploration."
+	// 		url="https://www.bluedotrobots.com/garage"
+	// 	/>
+	// ),
 	"/sandbox": (
 		<BasicHelmet
 			pageTitleData="Sandbox"
@@ -79,7 +60,8 @@ const helmetData: HelmetData = {
 			description="Get in touch with the Blue Dot team."
 			url="https://www.bluedotrobots.com/contact"
 		/>
-	)
+	),
+	...labHelmetData
 }
 
-export default helmetData
+export default allHelmetData

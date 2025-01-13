@@ -54,6 +54,10 @@ declare global {
 
 	// Create a union type for all possible route types
 	type RouteType = ElementRoutes | BaseRoute
+
+	interface HelmetData {
+		[key: string]: React.ReactNode
+	}
 }
 
 export {}
