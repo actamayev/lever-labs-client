@@ -1,21 +1,13 @@
+import { useState } from "react"
 import { useLocation } from "react-router"
-import { ChevronRight } from "lucide-react"
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/shadcn/ui/collapsible"
 import {
 	SidebarGroup,
 	SidebarGroupLabel,
 	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuSubItem,
-	SidebarMenuSubButton,
 } from "@/components/shadcn/ui/sidebar"
+import ToggleAllLessons from "./toggle-all-lessons"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import SingleCollapsibleLabGroupItem from "./single-collapsible-lab-group-item"
 
 interface Props {
 	groupName: string
@@ -27,69 +19,41 @@ export default function LabGroupMap(props: Props) {
 	const { groupName, navData, elementName } = props
 	const navigate = useTypedNavigate()
 	const location = useLocation()
+	const [openSections, setOpenSections] = useState<Record<string, boolean>>(() => {
+		// Initialize with current section open
+		const initialState: Record<string, boolean> = {}
+		navData.forEach((item) => {
+			const basePath = item.items[0]?.url.split("/").slice(0, -1).join("/") || ""
+			initialState[item.title] = location.pathname.startsWith(basePath)
+		})
+		return initialState
+	})
 
 	return (
 		<SidebarGroup>
-			<SidebarGroupLabel
-				className="text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800
-				transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer mb-2"
-				onClick={() => navigate(elementName)}
-			>
-				{groupName}
-			</SidebarGroupLabel>
+			<div className="flex items-center justify-between mb-2">
+				<SidebarGroupLabel
+					className="text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800
+					transition-colors duration-100 rounded-lg px-2 py-1 cursor-pointer flex-grow"
+					onClick={() => navigate(elementName)}
+				>
+					{groupName}
+				</SidebarGroupLabel>
+				<ToggleAllLessons
+					navData={navData}
+					openSections={openSections}
+					setOpenSections={setOpenSections}
+				/>
+			</div>
 			<SidebarMenu>
-				{navData.map((item) => {
-					const basePath = item.items[0]?.url.split("/").slice(0, -1).join("/") || ""
-					const isCurrentSection = location.pathname.startsWith(basePath)
-					return (
-						<Collapsible
-							key={item.title}
-							asChild
-							defaultOpen={isCurrentSection}
-							className="group/collapsible"
-						>
-							<SidebarMenuItem>
-								<CollapsibleTrigger asChild>
-									<SidebarMenuButton
-										tooltip={item.title}
-										className="py-4 px-2 my-1"
-									>
-										<item.icon style={{ width: "25px", height: "25px" }} />
-										<span className="text-base">
-											{item.title}
-										</span>
-										<ChevronRight
-											className="ml-auto transition-transform duration-100
-											group-data-[state=open]/collapsible:rotate-90"
-										/>
-									</SidebarMenuButton>
-								</CollapsibleTrigger>
-								<CollapsibleContent>
-									<SidebarMenuSub>
-										{item.items.map((subItem) => (
-											<SidebarMenuSubItem key={subItem.title}>
-												<SidebarMenuSubButton
-													asChild
-													onClick={() => navigate(subItem.url)}
-													className={`ml-2 text-sm transition-all duration-100
-														hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
-											location.pathname === subItem.url
-												? "bg-zinc-100 dark:bg-zinc-800"
-												: ""
-											}`}
-												>
-													<span className="cursor-pointer">
-														{subItem.title}
-													</span>
-												</SidebarMenuSubButton>
-											</SidebarMenuSubItem>
-										))}
-									</SidebarMenuSub>
-								</CollapsibleContent>
-							</SidebarMenuItem>
-						</Collapsible>
-					)
-				})}
+				{navData.map((item) => (
+					<SingleCollapsibleLabGroupItem
+						key={item.title}
+						item={item}
+						openSections={openSections}
+						setOpenSections={setOpenSections}
+					/>
+				))}
 			</SidebarMenu>
 		</SidebarGroup>
 	)
