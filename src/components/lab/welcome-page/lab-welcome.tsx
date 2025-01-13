@@ -9,10 +9,10 @@ import AddPipWelcomeSection from "./add-pip-welcome-section"
 // eslint-disable-next-line max-lines-per-function
 export default function LabWelcome() {
 	return (
-		<div className="p-6 space-y-12 bg-gradient-to-b from-slate-50 to-purple-50 dark:from-zinc-900 dark:to-purple-900 rounded-xl">
+		<div className="p-6 space-y-12 bg-gradient-to-b from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-pipTheme rounded-xl">
 			<div className="text-center mb-12">
-				<Bot className="w-16 h-16 text-purple-600 dark:text-purple-400 animate-bounce mx-auto" />
-				<h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 dark:from-purple-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+				<Bot className="w-16 h-16 text-emerald-600 dark:text-emerald-400 animate-bounce mx-auto" />
+				<h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-blue-600 to-blue-600 dark:from-blue-400 dark:via-blue-400 dark:to-blue-400 bg-clip-text text-transparent">
 					Welcome to The Lab
 				</h1>
 			</div>

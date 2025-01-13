@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
-import { DropdownMenuItem } from "../ui/dropdown-menu"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import { DropdownMenuItem } from "../../../ui/dropdown-menu"
+import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 
 function NavigateToSettingsPage() {
 	const navigate = useTypedNavigate()

@@ -17,11 +17,11 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Avatar } from "@/components/shadcn/ui/avatar"
 import LogoutButton from "./logout-button"
-import useUsername from "../../../hooks/memos/username"
 import NavigateToSettingsPage from "./navigate-to-settings-page"
 import ThemeTogglerDropdownMenu from "./theme-toggler-dropdown-menu"
-import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
-import ShowUserProfileImageOrDefaultImage from "../../show-user-profile-image-or-default-image"
+import useUsername from "../../../../../hooks/memos/username"
+import { usePersonalInfoContext } from "../../../../../contexts/personal-info-context"
+import ShowUserProfileImageOrDefaultImage from "../../../../show-user-profile-image-or-default-image"
 
 function NavUser() {
 	const { isMobile } = useSidebar()

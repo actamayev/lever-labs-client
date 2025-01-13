@@ -1,5 +1,6 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
+import { useLocation } from "react-router"
 import { useCallback, useEffect, useRef, useState } from "react"
 import PipName from "./pip-name"
 import { cn } from "../../lib/shadcn/utils"
@@ -29,6 +30,7 @@ function PipUUIDs() {
 	const diconnectFromPip = useDisconnectFromPip()
 	useClickOutsideUseEffect(dropdownRef, setIsDropdownOpen)
 	const navigate = useTypedNavigate()
+	const location = useLocation()
 
 	useEffect(() => {
 		pipClass.setSelectedPipToFirstPip()
@@ -49,7 +51,10 @@ function PipUUIDs() {
 		}
 	}, [addPipClass, diconnectFromPip, navigate, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
-	if (_.isNull(username)) return null
+	if (
+		_.isNull(username) ||
+		location.pathname === "/add-pip"
+	) return null
 
 	return (
 		<div className="relative" ref={dropdownRef}>

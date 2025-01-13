@@ -42,7 +42,7 @@ export default function InsideEachLesson() {
 			</div>
 
 			<Button
-				className="w-full bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
+				className="w-full bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800"
 				onClick={() => navigate("/lab/element-1")}
 			>
 				Start Learning

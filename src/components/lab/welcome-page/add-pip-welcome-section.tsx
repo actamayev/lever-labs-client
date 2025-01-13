@@ -8,8 +8,11 @@ import { Button } from "@/components/shadcn/ui/button"
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function AddPipWelcomeSection() {
+	const navigate = useTypedNavigate()
+
 	return (
 		<WelcomePageCard headerText="Have a Pip? Let's get started!" >
 			<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative px-20">
@@ -41,7 +44,10 @@ export default function AddPipWelcomeSection() {
 				/>
 			</div>
 
-			<Button className="w-full bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800">
+			<Button
+				className="w-full bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800"
+				onClick={() => navigate("/add-pip")}
+			>
 				Add Your Pip
 			</Button>
 		</WelcomePageCard>

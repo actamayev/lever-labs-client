@@ -71,8 +71,8 @@ const SidebarProvider = React.forwardRef<
     const [openMobile, setOpenMobile] = React.useState(false)
     const defaultSideBarState = useDefaultSidebarState()
     const setDefaultSidebarState = useSetDefaultSidebarState()
-    const initialState = defaultSideBarState === "expanded"    
-  
+    const initialState = defaultSideBarState === "expanded"
+    
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
     const [_open, _setOpen] = React.useState(initialState)
@@ -99,6 +99,17 @@ const SidebarProvider = React.forwardRef<
         ? setOpenMobile((open) => !open)
         : setOpen((open) => !open)
     }, [isMobile, setOpen, setOpenMobile])
+
+    // Auto-close sidebar on specific routes
+    React.useEffect(() => {
+      const pathname = window.location.pathname
+      const autoCloseRoutes = ['/add-pip', '/settings']
+      
+      if (autoCloseRoutes.includes(pathname)) {
+        setOpen(false)
+        setOpenMobile(false)
+      }
+    }, [setOpen, setOpenMobile])
 
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {

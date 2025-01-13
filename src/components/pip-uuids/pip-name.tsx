@@ -1,11 +1,15 @@
 import _ from "lodash"
 import { Plus } from "lucide-react"
 import { observer } from "mobx-react"
+import { useLocation } from "react-router"
 import PipStatusTooltip from "./pip-status-tooltip"
 import { usePipContext } from "../../contexts/pip-context"
 
 function PipName() {
 	const pipClass = usePipContext()
+	const location = useLocation()
+
+	if (location.pathname === "/add-pip") return null
 
 	if (_.isEmpty(pipClass.pipData)) {
 		return (

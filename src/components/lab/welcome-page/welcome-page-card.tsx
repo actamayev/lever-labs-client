@@ -18,9 +18,9 @@ export default function WelcomePageCard(props: Props) {
 		// 	gradientOpacity={0.2}
 		// 	gradientSize={250}
 		// >
-		<Card className="bg-white dark:bg-zinc-800 border-2 border-purple-100 dark:border-purple-800">
+		<Card className="bg-white dark:bg-zinc-800 border-2 border-purple-100 dark:border-pipTheme">
 			<CardContent className="pt-6">
-				<div className="text-xl font-semibold text-purple-700 dark:text-purple-400 mb-6 flex justify-center">
+				<div className="text-xl font-semibold text-pipTheme dark:text-blue-400 mb-6 flex justify-center">
 					{headerText}
 				</div>
 				{children}

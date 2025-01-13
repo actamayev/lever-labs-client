@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { LogOut } from "lucide-react"
-import { DropdownMenuItem } from "../ui/dropdown-menu"
-import useHandleLogout from "../../../hooks/auth/handle-logout"
+import { DropdownMenuItem } from "../../../ui/dropdown-menu"
+import useHandleLogout from "../../../../../hooks/auth/handle-logout"
 
 function LogoutButton() {
 	const [logoutDisabled, setLogoutDisabled] = useState(false)
