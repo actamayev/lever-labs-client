@@ -1,5 +1,6 @@
 import { Control, FieldPath } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
+import CharacterCounter from "../../character-counter"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import useHandleTypeUsername from "../../../hooks/handle-type-validation/handle-type-username"
 
@@ -31,11 +32,10 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 								maxLength={100}
 								minLength={3}
 							/>
-							<div className="absolute inset-y-0 right-3 flex items-center">
-								<span className="text-xs text-muted-foreground">
-									{field.value.length || 0}/100
-								</span>
-							</div>
+							<CharacterCounter
+								value={field.value}
+								characterLimit={100}
+							/>
 						</div>
 					</FormControl>
 					<FormMessage />

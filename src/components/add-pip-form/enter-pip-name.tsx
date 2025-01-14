@@ -12,6 +12,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
+import CharacterCounter from "../character-counter"
 
 function EnterPipName() {
 	const addPipClass = useAddPipContext()
@@ -60,17 +61,14 @@ function EnterPipName() {
 								{...field}
 								maxLength={20}
 								className="w-full h-14 !text-2xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
-								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
+								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none rounded-xl border-2"
 								placeholder="Name"
 								onChange={(e) => typePipName(e, field.onChange)}
 							/>
-							{field.value && (
-								<div className="absolute inset-y-0 right-14 flex items-center">
-									<span className="text-xs text-muted-foreground">
-										{field.value.length}/20
-									</span>
-								</div>
-							)}
+							<CharacterCounter
+								value={field.value}
+								characterLimit={20}
+							/>
 							{!isDisabled && (
 								<div className="absolute inset-y-0 right-2 flex items-center">
 									<TooltipProvider delayDuration={0}>
