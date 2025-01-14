@@ -27,7 +27,6 @@
     "lucide-react": "^0.460.0",
     "mobx": "^6.13.5",
     "mobx-react": "^9.1.1",
-    "motion": "^11.17.0",
     "react": "^18.3.1",
     "react-blockly": "^9.0.0",
     "react-dom": "^18.3.1",

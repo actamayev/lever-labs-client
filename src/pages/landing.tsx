@@ -11,6 +11,7 @@ import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
 
+// TODO: Figure out why the load times are so high. I'm guessing it's because there are so many components being loaded simultaneously.
 // TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
 	return (
