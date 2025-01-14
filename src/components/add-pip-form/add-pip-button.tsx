@@ -5,19 +5,23 @@ import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useValidatePipData from "../../hooks/pip/validate-pip-data"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useResetAddingPipValuesAfterAddPip from "../../hooks/pip/reset-adding-pip-values-after-add-pip"
 
 function AddPipButton() {
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
 	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
+	const navigate = useTypedNavigate()
 
 	const closeButtonAfterAddPipAction = useCallback(() => {
 		if (_.isNull(addPipClass)) return
 		addPipClass.store.setIsUserReadyToConnectToPipDialog(null)
 		addPipClass.store.setNewPipConnectionStatus(null)
-		resetAddingPipValuesAfterAddPip(true)
-	}, [addPipClass, resetAddingPipValuesAfterAddPip])
+		resetAddingPipValuesAfterAddPip()
+		navigate("/lab/element-1")
+
+	}, [addPipClass, navigate, resetAddingPipValuesAfterAddPip])
 
 	if (
 		_.isNull(addPipClass) ||

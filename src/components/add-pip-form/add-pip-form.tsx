@@ -16,6 +16,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/shadcn/ui/card"
+import { DottedTextTooltip } from "../dotted-underline-text"
 
 function AddPipForm() {
 	const addPip = useAddPip(true)
@@ -24,13 +25,13 @@ function AddPipForm() {
 	if (_.isNull(addPipClass)) return null
 
 	return (
-		<Card className="mx-auto max-w-4xl">
+		<Card className="mx-auto max-w-5xl border-0 mt-0 shadow-none">
 			<CardHeader>
 				<CardTitle className="text-6xl font-bold">Add Pip</CardTitle>
 			</CardHeader>
 			<CardContent>
 				<Form {...addPipClass.form}>
-					<form onSubmit={addPipClass.form.handleSubmit(addPip)} className="mb-3">
+					<form onSubmit={addPipClass.form.handleSubmit(addPip)} className="">
 						<div className="flex flex-col text-3xl">
 							<div className="flex flex-row mb-6">
 								<p className="font-bold">Step 1:&nbsp;</p>
@@ -38,7 +39,13 @@ function AddPipForm() {
 							</div>
 							<div className="flex flex-row mb-6">
 								<p className="font-bold">Step 2:&nbsp;</p>
-								<p>Add your Pip&apos;s ID and give it a name</p>
+								<p>
+									Enter your&nbsp;
+									<DottedTextTooltip tooltipMessage="Look for a 5-character code in Pip's package">
+										Pip&apos;s ID
+									</DottedTextTooltip>
+									&nbsp;and pick a name for your new friend
+								</p>
 							</div>
 							<div className="flex flex-row gap-4">
 								<div className="w-1/3">

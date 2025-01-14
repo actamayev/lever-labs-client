@@ -52,8 +52,8 @@ export default function usePipStatusPoll(): () => void {
 				if (googleRetryCount >= GOOGLE_MAX_RETRIES) {
 					cleanup(true)
 					return toast.negative({
-						title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-						description: "Please confirm the Wi-Fi credentials you provided."
+						title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.`,
+						description: "Please check if your Wi-Fi name and password are entered correctly."
 					})
 				}
 

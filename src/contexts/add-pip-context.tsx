@@ -56,8 +56,11 @@ class AddPipClass {
 	})
 
 	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
-		if (field === "wifiNetworkName" && _.isEmpty(value)) {
-			return this.setEncodedWifiCredentials(null)
+		if (field === "wifiNetworkName") {
+			this.newPipConnectionStatus = null
+			if (_.isEmpty(value)) {
+				return this.setEncodedWifiCredentials(null)
+			}
 		}
 		this.setEncodedWifiCredentials(btoa(JSON.stringify(
 			{

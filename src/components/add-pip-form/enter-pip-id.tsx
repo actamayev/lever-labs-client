@@ -38,9 +38,13 @@ function EnterPipID() {
 
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
 		if (_.isNull(addPipClass)) return ""
-		if (pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) return "Valid Pip ID"
-		else if (addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID) return "You've already added this Pip ID"
-		else if (!pipUUIDValid) return "Pip ID must be 5 alphanumeric characters"
+		if (pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) {
+			return "Perfect! That's a valid Pip ID"
+		}
+		else if (addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID) {
+			return "Looks like this Pip is already in your collection!"
+		}
+		else if (!pipUUIDValid) return "The Pip ID should be 5 characters long - check your Pip's package"
 		return "The entered Pip ID doesn't exist"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addPipClass, addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist,

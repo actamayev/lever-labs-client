@@ -39,7 +39,7 @@ export default function useOpenIpAddrTab(): () => void {
 		} catch (popupError) {
 			console.error("Failed to open setup window:", popupError)
 			toast.negative({
-				title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+				title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.`,
 				description: "Please ensure popups are allowed and try again"
 			})
 		}

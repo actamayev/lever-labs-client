@@ -3,9 +3,7 @@ import { useCallback } from "react"
 import useStyledToast from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 
-export default function useResetAddingPipValuesAfterAddPip(): (
-	shouldAutoCloseModal: boolean
-) => void {
+export default function useResetAddingPipValuesAfterAddPip(): () => void {
 	const toast = useStyledToast()
 	const addPipClass = useAddPipContext()
 

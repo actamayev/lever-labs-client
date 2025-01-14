@@ -10,7 +10,7 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 import useResetAddingPipValuesAfterAddPip from "./reset-adding-pip-values-after-add-pip"
 
-export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<void> {
+export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useStyledToast()
 	const pipClass = usePipContext()
@@ -62,27 +62,25 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			if (shouldAutoCloseModal) {
-				resetAddingPipValuesAfterAddPip(shouldAutoCloseModal)
+			if (shouldAutoNavigateToLab) {
+				resetAddingPipValuesAfterAddPip()
+				navigate("/lab/element-1")
 			}
-			navigate("/lab/element-1")
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {
-						toast.negative({
+						return toast.negative({
 							title: "Unable to add Pip ID",
 							description: "You have a Pip with this ID"
 						})
-						return
 					} else if (error.response.data.message === "Pip UUID doesn't exist") {
-						toast.negative({
+						return toast.negative({
 							title: "Unable to add Pip ID",
 							description: "The Pip ID you entered does not exist"
 						})
-						return
 					}
 				}
 			}
@@ -93,6 +91,6 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoCloseModal,
+	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoNavigateToLab,
 		navigate, toast, resetAddingPipValuesAfterAddPip])
 }
