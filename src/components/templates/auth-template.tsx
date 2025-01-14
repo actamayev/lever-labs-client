@@ -12,10 +12,16 @@ interface Props {
 
 export default function AuthTemplate(props: Props) {
 	const { title, children } = props
+
 	return (
-		<Card className="mx-auto max-w-sm">
+		<Card
+			className="mx-auto border-0 bg-inherit shadow-none mt-12"
+			style={{ "maxWidth": "420px" }}
+		>
 			<CardHeader>
-				<CardTitle className="text-2xl font-bold">{title}</CardTitle>
+				<CardTitle className="text-2xl font-bold flex justify-center items-center mb-4">
+					{title}
+				</CardTitle>
 			</CardHeader>
 			<CardContent>
 				{children}

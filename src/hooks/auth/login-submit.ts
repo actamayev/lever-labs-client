@@ -25,13 +25,13 @@ export default function useLoginSubmit (
 			setLoading(true)
 			const response = await blueDotApiClient.authDataService.login(loginInformation)
 			if (!_.isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
-				setError("Unable to login. Please reload the page and try again.")
+				setError("Unable to log in. Please reload the page and try again.")
 				return
 			}
 			setDataAfterLogin(response.data)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to login")
+			setErrorAxiosResponse(error, setError, "Unable to log in")
 		} finally {
 			setLoading(false)
 		}

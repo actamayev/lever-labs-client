@@ -27,7 +27,7 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
 								}}
-								className="w-full pr-16 truncate"
+								className="w-full pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
 								maxLength={100}
 								minLength={3}
 							/>

@@ -9,8 +9,8 @@ export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate: Pag
 			<GoogleLogin
 				onSuccess={googleAuthCallback}
 				onError={() => console.error("Login Failed")}
-				shape="rectangular"
-				width={200}
+				shape="pill"
+				width={300}
 				text="continue_with"
 				logo_alignment="center"
 			/>

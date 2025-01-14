@@ -1,8 +1,7 @@
-import { useCallback, useState } from "react"
 import { useForm } from "react-hook-form"
+import { useCallback, useState } from "react"
 import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
-import SubLoginInfo from "./sub-login-info"
 import PasswordField from "../password-input"
 import ErrorMessage from "../../messages/error-message"
 import { Form } from "@/components/shadcn/ui/form"
@@ -16,12 +15,11 @@ import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
 interface Props {
 	whereToNavigate: PageNames
-	setLoginOrRegister?: React.Dispatch<React.SetStateAction<LoginOrRegister>>
 	customStyles?: object
 }
 
 export default function Login(props: Props) {
-	const { whereToNavigate, setLoginOrRegister } = props
+	const { whereToNavigate } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -40,7 +38,7 @@ export default function Login(props: Props) {
 	}, [loginSubmit])
 
 	return (
-		<AuthTemplate title="Login">
+		<AuthTemplate title="Log in">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 					<ContactInput control={form.control} />
@@ -52,10 +50,10 @@ export default function Login(props: Props) {
 
 					<Button
 						type="submit"
-						className="w-full"
+						className="w-full h-12 rounded-2xl mb-4 mt-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white"
 						disabled={loading}
 					>
-						Login
+						LOG IN
 					</Button>
 
 					{error && <ErrorMessage error={error} />}
@@ -67,10 +65,6 @@ export default function Login(props: Props) {
 					</div>
 				</form>
 			</Form>
-
-			<div className="mt-4">
-				<SubLoginInfo setLoginOrRegister={setLoginOrRegister} />
-			</div>
 		</AuthTemplate>
 	)
 }

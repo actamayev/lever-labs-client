@@ -17,10 +17,7 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
 			if (_.isNull(blueDotApiClient.httpClient.accessToken)) {
-				return toast.negative({
-					title: "Please login to save the new default site theme",
-					description: ""
-				})
+				return // No toast because we don't want a negative toast if someone isn't logged in
 			}
 			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
 			if (!_.isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {

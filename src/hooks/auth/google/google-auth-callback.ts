@@ -23,7 +23,7 @@ export default function useGoogleAuthCallback(whereToNavigate: PageNames): (succ
 				successResponse.credential, siteTheme
 			)
 			if (!_.isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
-				throw Error("Unable to login")
+				throw Error("Unable to log in")
 			}
 			setDataAfterLogin(googleCallbackResponse.data)
 			if (googleCallbackResponse.data.isNewUser === true) {

@@ -89,9 +89,9 @@ export default function PipUseCases() {
 			<RightSideContentSkeleton
 				title={selectedCategory}
 				content={
-					<p className="text-lg text-muted-foreground">
+					<div className="text-lg text-muted-foreground">
 						{categories.find(c => c.title === selectedCategory)?.description}
-					</p>
+					</div>
 				}
 			/>
 		)
