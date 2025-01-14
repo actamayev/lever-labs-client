@@ -60,7 +60,7 @@ export default function Register(props: Props) {
 
 					<Button
 						type="submit"
-						className="w-full h-12 rounded-2xl mb-4 mt-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white"
+						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white"
 						disabled={loading}
 					>
 						CREATE ACCOUNT

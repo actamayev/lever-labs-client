@@ -31,7 +31,7 @@ export default function useLoginSubmit (
 			setDataAfterLogin(response.data)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to log in")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}

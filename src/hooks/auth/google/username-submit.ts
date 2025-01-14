@@ -28,7 +28,7 @@ export default function useUsernameSubmit (
 			personalInfoClass.setUsername(username)
 			navigate("/sandbox")
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to register username")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}

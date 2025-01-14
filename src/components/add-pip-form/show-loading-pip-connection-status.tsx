@@ -43,7 +43,7 @@ function ShowLoadingPipConnectionStatus() {
 
 	return (
 		<div className="my-6">
-			<SuccessMessage message="Connected!" />
+			<SuccessMessage message="Connected" />
 		</div>
 	)
 }

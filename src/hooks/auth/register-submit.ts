@@ -40,7 +40,7 @@ export default function useRegisterSubmit (
 			setDataAfterRegister(response.data)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to Register")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}
