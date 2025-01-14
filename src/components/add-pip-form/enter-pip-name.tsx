@@ -68,6 +68,7 @@ function EnterPipName() {
 							<CharacterCounter
 								value={field.value}
 								characterLimit={20}
+								extraClasses={isDisabled ? "right-3" : "right-14"}
 							/>
 							{!isDisabled && (
 								<div className="absolute inset-y-0 right-2 flex items-center">

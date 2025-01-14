@@ -42,7 +42,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								{...field}
 								maxLength={100}
 								minLength={6}
-								className="h-12 rounded-xl !text-xl font-light border-2"
+								className="pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
 							/>
 							<Button
 								type="button"

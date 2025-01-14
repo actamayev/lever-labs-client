@@ -35,6 +35,7 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 							<CharacterCounter
 								value={field.value}
 								characterLimit={100}
+								extraClasses="right-3"
 							/>
 						</div>
 					</FormControl>
