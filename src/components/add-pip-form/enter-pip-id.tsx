@@ -44,7 +44,7 @@ function EnterPipID() {
 		else if (addPipClass.store.addingNewPipRequirements.userAlreadyAddedUUID) {
 			return "Looks like this Pip is already in your collection!"
 		}
-		else if (!pipUUIDValid) return "The Pip ID should be 5 characters long - check your Pip's package"
+		else if (!pipUUIDValid) return "The Pip ID should be 5 characters long - check the package Pip came with"
 		return "The entered Pip ID doesn't exist"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addPipClass, addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist,

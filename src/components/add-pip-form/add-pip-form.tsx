@@ -31,7 +31,12 @@ function AddPipForm() {
 			</CardHeader>
 			<CardContent>
 				<Form {...addPipClass.form}>
-					<form onSubmit={addPipClass.form.handleSubmit(addPip)} className="">
+					<form
+						onSubmit={addPipClass.form.handleSubmit(addPip)}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") e.preventDefault()
+						}}
+					>
 						<div className="flex flex-col text-3xl">
 							<div className="flex flex-row mb-6">
 								<p className="font-bold">Step 1:&nbsp;</p>
@@ -41,7 +46,7 @@ function AddPipForm() {
 								<p className="font-bold">Step 2:&nbsp;</p>
 								<p>
 									Enter your&nbsp;
-									<DottedTextTooltip tooltipMessage="Look for a 5-character code in Pip's package">
+									<DottedTextTooltip tooltipMessage="Look for a 5-character code in the package Pip came with">
 										Pip&apos;s ID
 									</DottedTextTooltip>
 									&nbsp;and pick a name for your new friend
