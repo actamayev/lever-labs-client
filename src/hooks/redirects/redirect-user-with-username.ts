@@ -14,6 +14,6 @@ export default function useRedirectUserWithUsername (): void  {
 			return navigate("/")
 		}
 		if (_.isNull(personalInfoClass.username)) return
-		navigate("/sandbox")
+		navigate("/lab")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass, personalInfoClass.username])
 }

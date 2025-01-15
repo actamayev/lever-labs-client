@@ -6,7 +6,9 @@ import { isErrorResponses } from "../../../utils/type-checks"
 import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
 
-export default function useGoogleAuthCallback(whereToNavigate: PageNames): (successResponse: CredentialResponse) => Promise<void> {
+export default function useGoogleAuthCallback(
+	whereToNavigate?: PageNames
+): (successResponse: CredentialResponse) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
@@ -29,7 +31,7 @@ export default function useGoogleAuthCallback(whereToNavigate: PageNames): (succ
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
-			navigate(whereToNavigate)
+			if (whereToNavigate) navigate(whereToNavigate)
 		} catch (error) {
 			console.error(error)
 		}

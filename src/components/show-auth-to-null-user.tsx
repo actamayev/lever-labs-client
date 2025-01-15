@@ -5,26 +5,19 @@ import { useAuthContext } from "../contexts/auth-context"
 
 interface Props {
 	whereToNavigate: PageNames
-	customStyles?: object
 }
 
 function ShowAuthToNullUser(props: Props) {
-	const { whereToNavigate, customStyles } = props
+	const { whereToNavigate } = props
 	const authClass = useAuthContext()
 
 	if (authClass.showLoginOrRegister === "Login") {
 		return (
-			<Register
-				whereToNavigate={whereToNavigate}
-				customStyles={customStyles}
-			/>
+			<Register />
 		)
 	}
 	return (
-		<Login
-			whereToNavigate={whereToNavigate}
-			customStyles={customStyles}
-		/>
+		<Login whereToNavigate={whereToNavigate} />
 	)
 }
 

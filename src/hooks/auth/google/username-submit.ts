@@ -26,7 +26,7 @@ export default function useUsernameSubmit (
 				return
 			}
 			personalInfoClass.setUsername(username)
-			navigate("/sandbox")
+			navigate("/lab/welcome")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

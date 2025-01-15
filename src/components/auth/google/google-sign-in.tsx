@@ -1,7 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
 
-export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate: PageNames }) {
+export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate?: PageNames }) {
 	const googleAuthCallback = useGoogleAuthCallback(whereToNavigate)
 
 	return (

@@ -15,7 +15,6 @@ import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
 interface Props {
 	whereToNavigate: PageNames
-	customStyles?: object
 }
 
 export default function Login(props: Props) {
