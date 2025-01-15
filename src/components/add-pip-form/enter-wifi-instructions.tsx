@@ -38,7 +38,7 @@ function EnterWifiInstructions() {
 								<Info style={{ width: "25px", height: "25px" }}/>
 							</Button>
 						</TooltipTrigger>
-						<TooltipContent side="top">
+						<TooltipContent>
 							{addPipClass.store.mirroredFormValues.pipName
 								? `Help ${addPipClass.store.mirroredFormValues.pipName} connect to your Wi-Fi network`
 								: "Enter your Wi-Fi details to get connected"}

@@ -88,7 +88,7 @@ function EnterPipName() {
 													)}
 												</Button>
 											</TooltipTrigger>
-											<TooltipContent side="top">
+											<TooltipContent>
 												{tooltipMessage()}
 											</TooltipContent>
 										</Tooltip>

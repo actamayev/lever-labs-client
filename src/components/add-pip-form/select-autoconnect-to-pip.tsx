@@ -55,7 +55,7 @@ function SelectAutoreconnectToPip() {
 											<Info style={{ width: "25px", height: "25px" }}/>
 										</Button>
 									</TooltipTrigger>
-									<TooltipContent side="top">
+									<TooltipContent>
 										This Pip is currently online. Auto-connect will connect you to this Pip
 									</TooltipContent>
 								</Tooltip>

@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useCallback } from "react"
 import { LucideIcon } from "lucide-react"

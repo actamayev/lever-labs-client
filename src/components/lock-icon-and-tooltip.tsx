@@ -21,7 +21,7 @@ export default function LockIconAndTooltip() {
 						<FaLock className="!h-7 !w-7" />
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent side="top">
+				<TooltipContent>
 					Encrypted
 				</TooltipContent>
 			</Tooltip>

@@ -1,7 +1,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import useToastOptions from "../toast-options"
 import { Button } from "../shadcn/ui/button"
+import useToastOptions from "../toast-options"
 
 interface Props {
 	name: string

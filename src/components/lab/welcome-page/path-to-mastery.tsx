@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
 	Cpu,
 	CircuitBoard,
@@ -10,8 +9,8 @@ import {
 	Timer
 } from "lucide-react"
 import RightArrow from "./right-arrow"
-import WelcomePageCard from "./welcome-page-card"
 import { IconStep } from "./welcome-page-icons"
+import WelcomePageCard from "./welcome-page-card"
 
 // eslint-disable-next-line max-lines-per-function
 export default function PathToMastery() {

@@ -41,7 +41,7 @@ function PipStatusTooltip({ pipData } : { pipData: PipData }) {
 						style={{ right: "2px", top: "3px" }}
 					/>
 				</TooltipTrigger>
-				<TooltipContent side="bottom" className="bg-zinc-700 text-zinc-100">
+				<TooltipContent side="right" className="text-zinc-100 dark:text-zinc-900">
 					{getStatusMessage}
 				</TooltipContent>
 			</Tooltip>

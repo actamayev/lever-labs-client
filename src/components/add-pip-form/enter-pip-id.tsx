@@ -89,7 +89,7 @@ function EnterPipID() {
 														)}
 													</Button>
 												</TooltipTrigger>
-												<TooltipContent side="top">
+												<TooltipContent>
 													{tooltipMessage(pipUUIDValid)}
 												</TooltipContent>
 											</Tooltip>
