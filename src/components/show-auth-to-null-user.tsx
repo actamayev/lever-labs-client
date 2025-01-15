@@ -11,10 +11,10 @@ function ShowAuthToNullUser(props: Props) {
 	const { whereToNavigate } = props
 	const authClass = useAuthContext()
 
-	if (authClass.showLoginOrRegister === "Login") {
-		return <Login whereToNavigate={whereToNavigate} />
+	if (authClass.showLoginOrRegister === "Register") {
+		return <Register />
 	}
-	return <Register />
+	return <Login whereToNavigate={whereToNavigate} />
 }
 
 export default observer(ShowAuthToNullUser)
