@@ -16,7 +16,7 @@ function ContactItemInCard(props: Props) {
 		try {
 			await navigator.clipboard.writeText(email)
 			toast.neutral({
-				description: `${email} copied to clipboard`
+				title: `${email} copied to clipboard`,
 			})
 		} catch (error) {
 			console.error(error)

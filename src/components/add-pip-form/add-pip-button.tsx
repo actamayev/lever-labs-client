@@ -1,27 +1,14 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import _ from "lodash"
-import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useValidatePipData from "../../hooks/pip/validate-pip-data"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useResetAddingPipValuesAfterAddPip from "../../hooks/pip/reset-adding-pip-values-after-add-pip"
+import useExitAfterAddPip from "../../hooks/pip/exit-after-add-pip"
 
 function AddPipButton() {
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
-	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
-	const navigate = useTypedNavigate()
-
-	const closeButtonAfterAddPipAction = useCallback(() => {
-		if (_.isNull(addPipClass)) return
-		addPipClass.store.setIsUserReadyToConnectToPipDialog(null)
-		addPipClass.store.setNewPipConnectionStatus(null)
-		resetAddingPipValuesAfterAddPip()
-		navigate("/lab/element-1")
-
-	}, [addPipClass, navigate, resetAddingPipValuesAfterAddPip])
+	const exitAfterAddPip = useExitAfterAddPip()
 
 	if (
 		_.isNull(addPipClass) ||
@@ -44,7 +31,11 @@ function AddPipButton() {
 	if (addPipClass.store.newPipConnectionStatus === "connected") {
 		return (
 			<div className="flex justify-between mt-2 items-center">
-				<Button type="button" onClick={closeButtonAfterAddPipAction}>
+				<Button
+					type="button"
+					onClick={exitAfterAddPip}
+					className="p-5 text-2xl"
+				>
 					Close
 				</Button>
 			</div>

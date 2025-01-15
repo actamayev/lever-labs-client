@@ -2,13 +2,12 @@ import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
-import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
-import useResetAddingPipValuesAfterAddPip from "./reset-adding-pip-values-after-add-pip"
+import useExitAfterAddPip from "./exit-after-add-pip"
 
 export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -16,8 +15,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
-	const resetAddingPipValuesAfterAddPip = useResetAddingPipValuesAfterAddPip()
-	const navigate = useTypedNavigate()
+	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -63,8 +61,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 			}
 			pipClass.addNewPip(pipDataToAdd)
 			if (shouldAutoNavigateToLab) {
-				resetAddingPipValuesAfterAddPip()
-				navigate("/lab/element-1")
+				exitAfterAddPip()
 			}
 		} catch (error) {
 			console.error(error)
@@ -91,6 +88,5 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoNavigateToLab,
-		navigate, toast, resetAddingPipValuesAfterAddPip])
+	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoNavigateToLab, toast, exitAfterAddPip])
 }

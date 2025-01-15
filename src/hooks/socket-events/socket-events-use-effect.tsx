@@ -28,7 +28,8 @@ export default function useSocketEventsUseEffect(): void {
 				)
 
 				toast.positive({
-					description: `${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`,
+					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`,
+					description: "",
 					action: actionElement
 				})
 			} else if (newConnectionStatus === "inactive") {

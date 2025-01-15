@@ -2,8 +2,8 @@ import { toast } from "react-toastify"
 import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
 
 interface ToastOptions {
-	title?: string
-	description: string
+	title: string
+	description?: string
 	action?: React.ReactNode
 	duration?: number
 }
@@ -11,14 +11,18 @@ interface ToastOptions {
 export default function useToastOptions() {
 	const defaultSiteTheme = useDefaultSiteTheme()
 
-	const createToastContent = (title: string | undefined, description: string, action: React.ReactNode | undefined) => (
-		<div className="flex flex-col gap-1">
-			{title && (
-				<div className="font-semibold text-[1.05em]">{title}</div>
-			)}
-			<div className="flex justify-between items-center gap-2 text-sm">
-				<span>{description}</span>
-				{action && <div>{action}</div>}
+	const createToastContent = (
+		title: string,
+		description: string | undefined,
+		action: React.ReactNode | undefined
+	) => (
+		<div className="flex flex-col w-full">
+			<div className="flex justify-between items-center w-full">
+				<div className="flex flex-col gap-1">
+					{title && <div className="font-semibold text-[1.05em]">{title}</div>}
+					{description && <div className="text-sm">{description}</div>}
+				</div>
+				{action && <div className="mx-4 flex-shrink-0">{action}</div>}
 			</div>
 		</div>
 	)

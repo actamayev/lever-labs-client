@@ -41,7 +41,7 @@ export default function useDisconnectFromPip(): (
 			)
 
 			toast.positive({
-				description: `Disconnected from ${pipData.pipName}`,
+				title: `Disconnected from ${pipData.pipName}`,
 				action: actionElement
 			})
 			pipClass.setSelectedPipToFirstPip()
