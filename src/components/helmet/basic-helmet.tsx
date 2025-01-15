@@ -24,6 +24,7 @@ export default function BasicHelmet(props: Props) {
 			<meta name="twitter:description" content={truncatedDescription}/>
 
 			<meta property="og:url" content={url} />
+			<link rel="canonical" href={url} />
 		</Helmet>
 	)
 }

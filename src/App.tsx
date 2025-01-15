@@ -9,9 +9,10 @@ import Missing from "./pages/missing"
 import Sandbox from "./pages/sandbox"
 import Settings from "./pages/settings"
 import LoginPage from "./pages/auth/login-page"
-import labRoutes from "./routing/lab-routes-structure"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
+
+import labRoutes from "./routing/lab-routes-structure"
 
 import useScrollToTop from "./hooks/scroll-to-top"
 import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
