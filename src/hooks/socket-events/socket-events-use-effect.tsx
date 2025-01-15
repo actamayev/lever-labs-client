@@ -2,7 +2,7 @@ import _ from "lodash"
 import { useEffect } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import { Button } from "../../components/shadcn/ui/button"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useSocketContext } from "../../contexts/socket-context"
 import { ToastActionElement } from "../../components/shadcn/ui/toast"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
@@ -10,7 +10,7 @@ import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
 export default function useSocketEventsUseEffect(): void {
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	useEffect(() => {

@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import useDefaultSidebarState from "../memos/default-sidebar-state"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -9,7 +9,7 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 export default function useSetDefaultSidebarState(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const defaultSidebarState = useDefaultSidebarState()
 
 	return useCallback(async () => {

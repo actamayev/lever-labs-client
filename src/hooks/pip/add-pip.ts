@@ -4,7 +4,7 @@ import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../contexts/pip-context"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
@@ -12,7 +12,7 @@ import useResetAddingPipValuesAfterAddPip from "./reset-adding-pip-values-after-
 
 export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()

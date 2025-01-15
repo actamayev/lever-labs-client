@@ -1,12 +1,12 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function useOpenIpAddrTab(): () => void {
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const addPipClass = useAddPipContext()
 	const pipStatusPoll = usePipStatusPoll()
 

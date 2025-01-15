@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import _ from "lodash"
 import { useCallback } from "react"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useRetrievePipStatusWhileAdding from "./retrieve-pip-status-while-adding"
 import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function usePipStatusPoll(): () => void {
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const addPipClass = useAddPipContext()
 	const retrievePipStatusWhileAdding = useRetrievePipStatusWhileAdding()
 

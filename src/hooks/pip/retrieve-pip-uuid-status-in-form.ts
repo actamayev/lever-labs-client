@@ -3,7 +3,7 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
@@ -12,7 +12,7 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {

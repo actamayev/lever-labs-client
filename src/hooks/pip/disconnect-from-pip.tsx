@@ -2,7 +2,7 @@ import _ from "lodash"
 import { useCallback } from "react"
 import { Button } from "../../components/shadcn/ui/button"
 import { usePipContext } from "../../contexts/pip-context"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import useRequestToConnectToPip from "./request-to-connect-to-pip"
 import { ToastActionElement } from "../../components/shadcn/ui/toast"
@@ -13,7 +13,7 @@ export default function useDisconnectFromPip(): (
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	return useCallback(async (pipData: PipData) => {

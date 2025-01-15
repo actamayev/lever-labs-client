@@ -2,7 +2,7 @@ import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
@@ -11,7 +11,7 @@ export default function useRequestToConnectToPip(): (
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async (pipUUID: PipUUID) => {

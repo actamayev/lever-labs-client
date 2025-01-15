@@ -3,7 +3,7 @@ import { useCallback } from "react"
 import useAddPip from "./add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -13,7 +13,7 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const addPip = useAddPip(false)
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {

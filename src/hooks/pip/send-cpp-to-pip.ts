@@ -1,14 +1,14 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 	const pipClass = usePipContext()
 	const blueDotApiClient = useApiClientContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	return useCallback(async (cppCode: string) => {
 		try {

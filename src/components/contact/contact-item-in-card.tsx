@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import useStyledToast from "../toast-options"
+import useToastOptions from "../toast-options"
 import { Button } from "../shadcn/ui/button"
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 function ContactItemInCard(props: Props) {
 	const { name, email } = props
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	const copyToClipboard = useCallback(async () => {
 		try {

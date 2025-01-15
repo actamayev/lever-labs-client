@@ -1,10 +1,10 @@
 import _ from "lodash"
 import { useCallback } from "react"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 
 export default function useResetAddingPipValuesAfterAddPip(): () => void {
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const addPipClass = useAddPipContext()
 
 	return useCallback(() => {

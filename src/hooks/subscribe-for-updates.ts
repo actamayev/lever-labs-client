@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
-import useStyledToast from "../components/toast-options"
+import useToastOptions from "../components/toast-options"
 import { useApiClientContext } from "../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
 
@@ -13,7 +13,7 @@ export default function useSubscribeForUpdates(
 	values: EmailUpdatesFormValues
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 
 	return useCallback(async (values: EmailUpdatesFormValues): Promise<void> => {
 		try {
