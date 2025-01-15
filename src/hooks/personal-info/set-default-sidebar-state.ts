@@ -18,8 +18,7 @@ export default function useSetDefaultSidebarState(): () => Promise<void> {
 			personalInfoClass.setDefaultSidebarState(newSidebarState)
 			if (_.isNull(blueDotApiClient.httpClient.accessToken)) {
 				return toast.negative({
-					title: "Please login to save the new sidebar state",
-					description: ""
+					title: "Please login to save the new sidebar state"
 				})
 			}
 			const sidebarStateResponse = await blueDotApiClient.personalInfoDataService.setDefaultSidebarState(newSidebarState)

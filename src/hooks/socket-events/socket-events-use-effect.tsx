@@ -15,6 +15,7 @@ export default function useSocketEventsUseEffect(): void {
 	useEffect(() => {
 		if (_.isNull(socketClass.accessToken)) return
 		const handlePipStatusUpdate = (data: PipStatusUpdate): void => {
+			const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
 			pipClass.updatePipConnectionStatus(data)
 			const { newConnectionStatus } = data
 			if (newConnectionStatus === "online") {
@@ -23,19 +24,24 @@ export default function useSocketEventsUseEffect(): void {
 						onClick={() => requestToConnectToPip(data.pipUUID)}
 						className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-black dark:text-white"
 					>
-						Connect
+						{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
 					</Button>
 				)
 
+				let title
+				if (previousPipConnectionStatus === "connected") {
+					title = `Disconnected from ${pipClass.findPipNameFromUUID(data.pipUUID)}`
+				} else {
+					title = `${pipClass.findPipNameFromUUID(data.pipUUID)} is online. Ready to connect?`
+				}
+
 				toast.positive({
-					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`,
-					description: "",
+					title,
 					action: actionElement
 				})
 			} else if (newConnectionStatus === "inactive") {
 				toast.neutral({
-					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`,
-					description: ""
+					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`
 				})
 			} else if (newConnectionStatus === "connected") {
 				toast.superPositive({

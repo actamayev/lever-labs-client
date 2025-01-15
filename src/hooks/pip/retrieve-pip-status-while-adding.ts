@@ -40,8 +40,7 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 		} catch (error) {
 			console.error(error)
 			toast.negative({
-				title: "Unable to retrieve Pip Status",
-				description: ""
+				title: "Unable to retrieve Pip Status"
 			})
 		}
 	}, [addPip, addPipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass, toast])

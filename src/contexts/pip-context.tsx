@@ -43,6 +43,10 @@ class PipClass {
 		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
 	}
 
+	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {
+		return this.findPipFromUUID(pipUUID)?.pipConnectionStatus
+	}
+
 	public findPipNameFromUUID(pipUUID: PipUUID): string {
 		const pip = this.findPipFromUUID(pipUUID)
 		if (_.isUndefined(pip)) return "Pip"

@@ -54,8 +54,7 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 				}
 			}
 			toast.negative({
-				title: "Unable to retrieve Pip Status",
-				description: ""
+				title: "Unable to retrieve Pip Status"
 			})
 		}
 	}, [addPipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, pipClass, toast])
