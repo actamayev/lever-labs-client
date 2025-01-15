@@ -27,10 +27,10 @@ function EnterPipName() {
 	const tooltipMessage = useCallback(() => {
 		if (_.isNull(addPipClass)) return ""
 		const {pipName} = addPipClass.store.mirroredFormValues
-		if (!pipName) return "Please give your Pip a name"
-		if (pipName.length < 3) return "Pip's name must be at least 3 characters"
-		if (pipName.length > 20) return "Pip's name can't be more than 20 characters"
-		return "Valid Name"
+		if (!pipName) return "What would you like to name your Pip?"
+		if (pipName.length < 3) return "Let's make the name a bit longer - at least 3 characters"
+		if (pipName.length > 20) return "That's a bit long! Could you shorten it to 20 characters?"
+		return "Perfect name!"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [addPipClass, addPipClass?.store.mirroredFormValues.pipName])
 
@@ -61,7 +61,7 @@ function EnterPipName() {
 								{...field}
 								maxLength={20}
 								className="w-full h-14 !text-2xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
-								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none rounded-xl border-2"
+								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Name"
 								onChange={(e) => typePipName(e, field.onChange)}
 							/>
