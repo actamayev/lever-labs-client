@@ -14,6 +14,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
           "focus-visible:outline-none focus-visible:border-ring", // Changed here
           "disabled:cursor-not-allowed disabled:opacity-50",
           "md:text-sm",
+          "focus-visible:!border-pipTheme",
+          "dark:focus-visible:!border-pipThemeOffWhite",
           className
         )}
         ref={ref}
