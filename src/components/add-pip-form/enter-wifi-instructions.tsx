@@ -22,7 +22,7 @@ function EnterWifiInstructions() {
 					<p className="font-bold">
 						Step 3:&nbsp;
 					</p>
-						Connect {addPipClass.store.mirroredFormValues.pipName} to Wi-Fi
+					Connect {addPipClass.store.mirroredFormValues.pipName} to Wi-Fi
 				</div>
 			</div>
 			<div className="ml-2">

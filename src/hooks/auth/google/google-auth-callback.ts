@@ -27,8 +27,7 @@ export default function useGoogleAuthCallback(whereToNavigate: PageNames): (succ
 			}
 			setDataAfterLogin(googleCallbackResponse.data)
 			if (googleCallbackResponse.data.isNewUser === true) {
-				navigate("/register-username")
-				return
+				return navigate("/register-username")
 			}
 			navigate(whereToNavigate)
 		} catch (error) {

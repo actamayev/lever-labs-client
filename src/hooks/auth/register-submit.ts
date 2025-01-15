@@ -8,7 +8,6 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 
 export default function useRegisterSubmit (
-	whereToNavigate: PageNames,
 	setError: (error: string) => void,
 	setLoading: (loading: boolean) => void
 ): (registerCredentials: RegisterFormValues) => Promise<void> {
@@ -38,11 +37,11 @@ export default function useRegisterSubmit (
 				return
 			}
 			setDataAfterRegister(response.data)
-			navigate(whereToNavigate)
+			navigate("/lab/welcome")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError, setLoading, whereToNavigate])
+	}, [blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError, setLoading])
 }

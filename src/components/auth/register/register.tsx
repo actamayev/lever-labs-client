@@ -24,7 +24,7 @@ export default function Register(props: Props) {
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const [loading, setLoading] = useState(false)
-	const registerSubmit = useRegisterSubmit(whereToNavigate, setError, setLoading)
+	const registerSubmit = useRegisterSubmit(setError, setLoading)
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -60,8 +60,10 @@ export default function Register(props: Props) {
 
 					<Button
 						type="submit"
-						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white"
+						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
+						variant="tactile"
+						// shadowColor="rgb(220,38,38)"
 					>
 						CREATE ACCOUNT
 					</Button>

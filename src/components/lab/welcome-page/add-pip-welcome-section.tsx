@@ -45,8 +45,10 @@ export default function AddPipWelcomeSection() {
 			</div>
 
 			<Button
-				className="w-full bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800"
+				className="w-full bg-blue-600 hover:bg-blue-500 text-white dark:bg-blue-700 dark:hover:bg-blue-600
+				text-xl transition-none"
 				onClick={() => navigate("/add-pip")}
+				variant="tactile"
 			>
 				Add Your Pip
 			</Button>

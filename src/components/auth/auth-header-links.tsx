@@ -8,15 +8,15 @@ interface LinkAuthHeaderProps {
 	linkTo: PageNames
 }
 
+// TODO: Transition all buttons to be tactile.
 export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 	const { title, linkTo } = props
 
 	return (
 		<Button
-			variant="default"
-			size="sm"
-			className="bg-blue-600 hover:bg-blue-700 text-primary-foreground text-sm rounded-xl
-		dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-normal transition-all duration-300"
+			variant="tactile"
+			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
+			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
 			asChild
 		>
 			<Link to={linkTo}>
@@ -37,10 +37,9 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 
 	return (
 		<Button
-			variant="default"
-			size="sm"
-			className="bg-blue-600 hover:bg-blue-700 text-primary-foreground text-base
-			dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-normal transition-all duration-300"
+			variant="tactile"
+			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
+			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
 			onClick={() => authClass.setShowLoginOrRegister(loginOrRegister)}
 		>
 			{title}
