@@ -4,7 +4,6 @@ import { usePipContext } from "../../contexts/pip-context"
 import { Button } from "../../components/shadcn/ui/button"
 import useToastOptions from "../../components/toast-options"
 import { useSocketContext } from "../../contexts/socket-context"
-import { ToastActionElement } from "../../components/shadcn/ui/toast"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
 
 export default function useSocketEventsUseEffect(): void {
@@ -20,13 +19,13 @@ export default function useSocketEventsUseEffect(): void {
 			const { newConnectionStatus } = data
 			if (newConnectionStatus === "online") {
 				const actionElement = (
-						<Button
-							onClick={() => requestToConnectToPip(data.pipUUID)}
-							className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-black dark:text-white"
-						>
-							Connect
-						</Button>
-				) as ToastActionElement
+					<Button
+						onClick={() => requestToConnectToPip(data.pipUUID)}
+						className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-black dark:text-white"
+					>
+						Connect
+					</Button>
+				)
 
 				toast.positive({
 					description: `${pipClass.findPipNameFromUUID(data.pipUUID)} is online.`,

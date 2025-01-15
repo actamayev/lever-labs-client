@@ -5,7 +5,6 @@ import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import useRequestToConnectToPip from "./request-to-connect-to-pip"
-import { ToastActionElement } from "../../components/shadcn/ui/toast"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useDisconnectFromPip(): (
@@ -39,7 +38,7 @@ export default function useDisconnectFromPip(): (
 				>
 					Reconnect
 				</Button>
-				) as ToastActionElement
+			)
 
 			toast.positive({
 				description: `Disconnected from ${pipData.pipName}`,
