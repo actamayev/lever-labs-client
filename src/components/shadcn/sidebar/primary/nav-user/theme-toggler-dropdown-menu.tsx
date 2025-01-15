@@ -15,8 +15,8 @@ function ThemeTogglerDropdownMenu() {
 			className="hover:cursor-pointer my-1.5"
 		>
 			<div className="mr-2 relative !h-[25px] !w-[25px] !min-w-[25px]">
-				<Sun className="h-full w-full scale-100 transition-all dark:scale-0" />
-				<Moon className="absolute top-0 h-full w-full scale-0 transition-all dark:scale-100" />
+				<Sun className="absolute top-0 h-full w-full transition-all scale-100 dark:scale-0" />
+				<Moon className="absolute top-0 h-full w-full transition-all scale-0 dark:scale-100" />
 			</div>
 			<span className="text-base">Toggle theme</span>
 		</DropdownMenuItem>

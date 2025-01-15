@@ -1,7 +1,6 @@
 import _ from "lodash"
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-
 import {
 	SidebarMenu,
 	SidebarMenuButton,
@@ -17,12 +16,12 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Avatar } from "@/components/shadcn/ui/avatar"
 import LogoutButton from "./logout-button"
+import AddAnotherPipButton from "./add-another-pip-button"
+import useUsername from "../../../../../hooks/memos/username"
 import NavigateToSettingsPage from "./navigate-to-settings-page"
 import ThemeTogglerDropdownMenu from "./theme-toggler-dropdown-menu"
-import useUsername from "../../../../../hooks/memos/username"
 import { usePersonalInfoContext } from "../../../../../contexts/personal-info-context"
 import ShowUserProfileImageOrDefaultImage from "../../../../show-user-profile-image-or-default-image"
-import AddAnotherPipButton from "./add-another-pip-button"
 
 function NavUser() {
 	const { isMobile } = useSidebar()
