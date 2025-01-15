@@ -63,7 +63,7 @@ export default function useRequestToConnectToPip(): (
 					}
 				}
 			}
-			toast.negative({
+			return toast.negative({
 				title: `Unable to connect to ${foundPip?.pipName} at this time`,
 				description: "Please reload the page and try again"
 			})

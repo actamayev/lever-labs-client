@@ -31,7 +31,7 @@ export default function useDisconnectFromPip(): (
 			pipClass.setSelectedPipToFirstPip()
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: `Unable to disconnect from ${pipData.pipName} at this time`,
 				description: "Please reload the page and try again"
 			})

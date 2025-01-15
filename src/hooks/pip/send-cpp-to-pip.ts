@@ -43,10 +43,10 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
-			toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
+			return toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: "Unable to upload code to Pip at this time",
 				description: "Please reload the page and try again"
 			})

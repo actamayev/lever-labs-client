@@ -37,16 +37,16 @@ export default function useSocketEventsUseEffect(): void {
 					title = `${pipClass.findPipNameFromUUID(data.pipUUID)} is online. Ready to connect?`
 				}
 
-				toast.positive({
+				return toast.positive({
 					title,
 					action: actionElement
 				})
 			} else if (newConnectionStatus === "inactive") {
-				toast.neutral({
+				return toast.neutral({
 					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet.`
 				})
 			} else if (newConnectionStatus === "connected") {
-				toast.superPositive({
+				return toast.superPositive({
 					title: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`,
 					description: "Happy building!"
 				})

@@ -39,7 +39,7 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: "Unable to retrieve Pip Status"
 			})
 		}

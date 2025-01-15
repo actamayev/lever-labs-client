@@ -25,7 +25,7 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: "Unable to change site theme at this time",
 				description: "Please reload the page and try again"
 			})

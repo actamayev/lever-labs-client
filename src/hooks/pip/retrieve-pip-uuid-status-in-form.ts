@@ -53,7 +53,7 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 					}
 				}
 			}
-			toast.negative({
+			return toast.negative({
 				title: "Unable to retrieve Pip Status"
 			})
 		}

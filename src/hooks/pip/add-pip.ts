@@ -83,7 +83,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 			}
 			if (_.isNull(addPipClass)) return
 			const { pipName } = addPipClass.store.mirroredFormValues
-			toast.negative({
+			return toast.negative({
 				title: `Unable to add ${pipName} at this time`,
 				description: "Please reload the page and try again"
 			})
