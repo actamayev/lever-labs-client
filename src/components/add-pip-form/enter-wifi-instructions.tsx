@@ -39,7 +39,9 @@ function EnterWifiInstructions() {
 							</Button>
 						</TooltipTrigger>
 						<TooltipContent side="top">
-							Enter the Wi-Fi credentials you want {addPipClass.store.mirroredFormValues.pipName} to connect to
+							{addPipClass.store.mirroredFormValues.pipName
+								? `Help ${addPipClass.store.mirroredFormValues.pipName} connect to your Wi-Fi network`
+								: "Enter your Wi-Fi details to get connected"}
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>

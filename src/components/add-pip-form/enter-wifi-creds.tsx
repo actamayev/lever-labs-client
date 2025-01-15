@@ -11,7 +11,9 @@ function EnterWifiCreds() {
 	if (
 		_.isNull(addPipClass) ||
 		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false ||
-		addPipClass.store.addingNewPipRequirements.isPipOnline
+		addPipClass.store.addingNewPipRequirements.isPipOnline ||
+		!addPipClass.store.mirroredFormValues.pipName ||
+		addPipClass.store.mirroredFormValues.pipName.length < 3
 	) return null
 
 	return (
