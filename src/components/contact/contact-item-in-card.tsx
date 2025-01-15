@@ -20,6 +20,10 @@ function ContactItemInCard(props: Props) {
 			})
 		} catch (error) {
 			console.error(error)
+			return toast.neutral({
+				title: "Unable to copy email to clipboard at this time",
+				description: "Please reload the page and try again"
+			})
 		}
 	}, [email, toast])
 

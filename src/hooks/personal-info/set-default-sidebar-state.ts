@@ -27,7 +27,7 @@ export default function useSetDefaultSidebarState(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: "Unable to change sidebar state at this time",
 				description: "Please reload the page and try again"
 			})
