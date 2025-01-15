@@ -4,7 +4,7 @@ import { createContext, useContext, useMemo } from "react"
 
 class AuthClass {
 	private _accessToken: string | null = null
-	public showLoginOrRegister: LoginOrRegister = "Login"
+	public showLoginOrRegister: LoginOrRegister = "Register"
 
 	constructor() {
 		makeAutoObservable(this)

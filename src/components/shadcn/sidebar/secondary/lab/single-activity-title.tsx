@@ -3,8 +3,8 @@ import {
 	SidebarMenuSubItem,
 	SidebarMenuSubButton,
 } from "@/components/shadcn/ui/sidebar"
-import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 import { cn } from "../../../../../lib/shadcn/utils"
+import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 
 interface Props {
 	subItem: {

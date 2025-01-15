@@ -27,11 +27,11 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 
 interface SetLoginOrRegisterAuthHeaderProps {
 	title: string
-	loginOrRegister: LoginOrRegister
+	setShowLoginOrRegister: LoginOrRegister
 }
 
 function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderProps) {
-	const { title, loginOrRegister } = props
+	const { title, setShowLoginOrRegister } = props
 	const authClass = useAuthContext()
 
 	return (
@@ -39,7 +39,7 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 			variant="tactile"
 			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
 			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
-			onClick={() => authClass.setShowLoginOrRegister(loginOrRegister)}
+			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}
 		</Button>

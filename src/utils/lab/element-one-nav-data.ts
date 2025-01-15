@@ -4,7 +4,7 @@ import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
 import { MdOutlineTimer, MdSettingsRemote } from "react-icons/md"
 import { FaLightbulb, FaCompass, FaPalette } from "react-icons/fa"
 
-export const element1NavData: LabNavData[] = [
+const element1NavData: LabNavData[] = [
 	{
 		title: "LED",
 		icon: FaLightbulb,
@@ -168,3 +168,5 @@ export const element1NavData: LabNavData[] = [
 		],
 	}
 ]
+
+export default element1NavData

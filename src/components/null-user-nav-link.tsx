@@ -24,11 +24,11 @@ function NullUserNavLink() {
 		)
 	} else if (authClass.showLoginOrRegister === "Login") {
 		return (
-			<SetLoginOrRegisterAuthHeaderButton title="LOG IN" loginOrRegister="Register" />
+			<SetLoginOrRegisterAuthHeaderButton title="SIGN UP" setShowLoginOrRegister="Register" />
 		)
 	}
 	return (
-		<SetLoginOrRegisterAuthHeaderButton title="SIGN UP" loginOrRegister="Login" />
+		<SetLoginOrRegisterAuthHeaderButton title="LOG IN" setShowLoginOrRegister="Login" />
 	)
 }
 

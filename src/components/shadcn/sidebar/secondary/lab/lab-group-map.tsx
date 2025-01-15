@@ -6,9 +6,9 @@ import {
 	SidebarMenu,
 } from "@/components/shadcn/ui/sidebar"
 import ToggleAllLessons from "./toggle-all-lessons"
+import { cn } from "../../../../../lib/shadcn/utils"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 import SingleCollapsibleLabGroupItem from "./single-collapsible-lab-group-item"
-import { cn } from "../../../../../lib/shadcn/utils"
 
 interface Props {
 	groupName: string

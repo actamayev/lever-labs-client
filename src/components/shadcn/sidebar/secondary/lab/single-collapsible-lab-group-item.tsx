@@ -1,14 +1,6 @@
 import { ChevronRight } from "lucide-react"
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/components/shadcn/ui/collapsible"
-import {
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarMenuSub,
-} from "@/components/shadcn/ui/sidebar"
+import { SidebarMenuButton, SidebarMenuItem, SidebarMenuSub } from "@/components/shadcn/ui/sidebar"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/shadcn/ui/collapsible"
 import SingleActivityTitle from "./single-activity-title"
 
 interface Props {

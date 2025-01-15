@@ -5,9 +5,9 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import LabGroupMap from "./lab-group-map"
 import WelcomeSidebarSection from "./welcome-sidebar-section"
+import element1NavData from "../../../../../utils/lab/element-one-nav-data"
 import element2NavData from "../../../../../utils/lab/element-two-nav-data"
 import element3NavData from "../../../../../utils/lab/element-three-nav-data"
-import { element1NavData } from "../../../../../utils/lab/element-one-nav-data"
 
 export default function LabSidebar() {
 	return (
