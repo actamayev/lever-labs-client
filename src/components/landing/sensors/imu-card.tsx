@@ -3,6 +3,7 @@ import { FaTachometerAlt } from "react-icons/fa"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import { DottedTextTooltip } from "../../dotted-underline-text"
+import { cn } from "../../../lib/shadcn/utils"
 
 const vibrationStyles = `
   @keyframes vibrate {
@@ -36,8 +37,10 @@ export default function IMUCard() {
 						onMouseLeave={() => setIsHovered(false)}
 					>
 						<FaTachometerAlt
-							className={`origin-center text-black dark:text-white transform
-                ${isHovered ? "animate-[vibrate_100ms_ease-in-out_infinite]" : ""}`}
+							className={cn(
+								"origin-center text-black dark:text-white transform",
+								isHovered ? "animate-[vibrate_100ms_ease-in-out_infinite]" : ""
+							)}
 							size={bentoIconSize}
 						/>
 					</div>

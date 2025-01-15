@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { LogOut } from "lucide-react"
+import { cn } from "../../../../../lib/shadcn/utils"
 import { DropdownMenuItem } from "../../../ui/dropdown-menu"
 import useHandleLogout from "../../../../../hooks/auth/handle-logout"
 
@@ -12,7 +13,10 @@ function LogoutButton() {
 		<DropdownMenuItem
 			onClick={handleLogout}
 			disabled={logoutDisabled}
-			className={`hover:cursor-pointer ${logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+			className={cn(
+				"hover:cursor-pointer",
+				logoutDisabled ? "cursor-not-allowed" : "cursor-pointer"
+			)}
 		>
 			<LogOut className="mr-2 !h-[25px] !w-[25px] !min-w-[25px]" />
 			<span className="text-base">Log out</span>

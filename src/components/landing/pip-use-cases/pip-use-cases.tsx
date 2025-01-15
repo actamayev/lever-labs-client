@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { Cpu, LucideProps, Navigation, Scale, Shield, Users } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import Sensors from "../sensors/sensors"
+import { cn } from "../../../lib/shadcn/utils"
+import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import { BalancingDescription, CollaborativeRobotsDescription,
 	LineFollowingDescription, ObstacleDescription } from "./use-case-descriptions"
 
@@ -112,9 +113,10 @@ export default function PipUseCases() {
 						{categories.map((category) => (
 							<Card
 								key={category.title}
-								className={`cursor-pointer transition-colors hover:bg-accent
-									${selectedCategory === category.title ? "border-primary border" : ""}
-								`}
+								className={cn(
+									"cursor-pointer transition-colors hover:bg-accent",
+									selectedCategory === category.title ? "border-primary border" : ""
+								)}
 								onClick={() => setSelectedCategory(category.title)}
 							>
 								<CardHeader className="flex flex-row items-center space-y-0 p-4">

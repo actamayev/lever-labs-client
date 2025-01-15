@@ -8,6 +8,7 @@ import {
 import ToggleAllLessons from "./toggle-all-lessons"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 import SingleCollapsibleLabGroupItem from "./single-collapsible-lab-group-item"
+import { cn } from "../../../../../lib/shadcn/utils"
 
 interface Props {
 	groupName: string
@@ -33,11 +34,11 @@ export default function LabGroupMap(props: Props) {
 		<SidebarGroup>
 			<div className="flex items-center justify-between mb-2">
 				<SidebarGroupLabel
-					className={`text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800 \
-					transition-colors duration-75 rounded-lg px-1 mx-1 py-1 cursor-pointer flex-grow
-					${location.pathname === elementName
-			? "bg-zinc-100 dark:bg-zinc-800"
-			: ""}`}
+					className={cn(
+						"text-lg dark:text-white text-black hover:bg-zinc-100 dark:hover:bg-zinc-800",
+						"transition-colors duration-75 rounded-lg px-1 mx-1 py-1 cursor-pointer flex-grow",
+						location.pathname !== elementName ? "" : "bg-zinc-100 dark:bg-zinc-800"
+					)}
 					onClick={() => navigate(elementName)}
 				>
 					{groupName}

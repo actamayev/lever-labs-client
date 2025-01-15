@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useCallback } from "react"
 import { LucideIcon } from "lucide-react"
+import { cn } from "../../../lib/shadcn/utils"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import { SubIconSubtitleText, SubIconTitleText } from "./sub-icon-text"
 
 interface IconStepProps {
 	icon: LucideIcon
@@ -37,20 +37,37 @@ export function IconStep({
 
 	return (
 		<div
-			className={`flex flex-col items-center group ${elementLink ? "cursor-pointer" : ""}`}
+			className={cn(
+				"flex flex-col items-center group",
+				elementLink ? "cursor-pointer" : ""
+			)}
 			onClick={navigateToElement}
 		>
 			<div className="relative mb-4">
 				<div
-					className={`w-24 h-24 rounded-full ${bgColor} ${darkBgColor} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
+					className={cn(
+						"w-24 h-24 rounded-full flex items-center justify-center group-hover:scale-110",
+						"transition-transform duration-300",
+						bgColor, darkBgColor
+					)}
 				>
-					<Icon className={`w-10 h-10 ${iconColor} ${darkIconColor}`} />
+					<Icon className={cn("w-10 h-10", iconColor, darkIconColor)}/>
 				</div>
 				{orbitingIcons}
 			</div>
 			<div className="flex flex-col items-center space-y-1">
-				<SubIconTitleText text={title} />
-				{subtitle && <SubIconSubtitleText text={subtitle} />}
+				<div className="w-52 text-center">
+					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
+						{title}
+					</span>
+				</div>
+				{subtitle && (
+					<div className="w-52 text-center mt-1">
+						<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
+							{subtitle}
+						</span>
+					</div>
+				)}
 			</div>
 		</div>
 	)

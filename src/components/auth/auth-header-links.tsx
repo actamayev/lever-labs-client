@@ -8,7 +8,6 @@ interface LinkAuthHeaderProps {
 	linkTo: PageNames
 }
 
-// TODO: Transition all buttons to be tactile.
 export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 	const { title, linkTo } = props
 

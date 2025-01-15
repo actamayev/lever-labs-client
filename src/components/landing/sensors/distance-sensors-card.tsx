@@ -40,8 +40,10 @@ export default function DistanceSensorsCard() {
 							className="cursor-pointer"
 						>
 							<TbRulerMeasure
-								className={`origin-left text-black dark:text-white
-                  ${isAnimating ? "animate-[measure_1s_ease-in-out]" : ""}`}
+								className={cn(
+									"origin-left text-black dark:text-white",
+									isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
+								)}
 								size={bentoIconSize}
 							/>
 						</div>

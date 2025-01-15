@@ -6,6 +6,7 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
+import { cn } from "../../../../../lib/shadcn/utils"
 
 function PipStatusTooltip({ pipData } : { pipData: PipData }) {
 	const getStatusColor = useMemo(() => {
@@ -33,7 +34,10 @@ function PipStatusTooltip({ pipData } : { pipData: PipData }) {
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<div
-						className={`absolute !h-[16px] !w-[16px] rounded-full ${getStatusColor} bg-background`}
+						className={cn(
+							"absolute !h-[16px] !w-[16px] rounded-full bg-background",
+							getStatusColor
+						)}
 						style={{ right: "2px", top: "3px" }}
 					/>
 				</TooltipTrigger>

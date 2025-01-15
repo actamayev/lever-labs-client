@@ -4,6 +4,7 @@ import {
 	SidebarMenuSubButton,
 } from "@/components/shadcn/ui/sidebar"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import { cn } from "../../../../../lib/shadcn/utils"
 
 interface Props {
 	subItem: {
@@ -28,12 +29,11 @@ export default function SingleActivityTitle(props: Props) {
 			<SidebarMenuSubButton
 				asChild
 				onClick={() => navigate(subItem.url)}
-				className={`text-sm transition-all duration-100
-					hover:bg-zinc-100 dark:hover:bg-zinc-800 ${
-		location.pathname === subItem.url
-			? "bg-zinc-100 dark:bg-zinc-800"
-			: ""
-		}`}
+				className={cn(
+					"text-sm transition-all duration-100",
+					"hover:bg-zinc-100 dark:hover:bg-zinc-800",
+					location.pathname !== subItem.url ? "" : "bg-zinc-100 dark:bg-zinc-800"
+				)}
 				style={{ marginLeft: "3px" }}
 			>
 				<span className="cursor-pointer flex items-center gap-2">

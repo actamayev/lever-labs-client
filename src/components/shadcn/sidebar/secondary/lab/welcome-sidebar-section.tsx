@@ -2,6 +2,7 @@ import { House } from "lucide-react"
 import { useLocation } from "react-router"
 import { SidebarGroup, SidebarGroupLabel } from "@/components/shadcn/ui/sidebar"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import { cn } from "../../../../../lib/shadcn/utils"
 
 export default function WelcomeSidebarSection() {
 	const navigate = useTypedNavigate()
@@ -12,11 +13,11 @@ export default function WelcomeSidebarSection() {
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel
-				className={`
-					text-xl dark:text-white text-black cursor-pointer
-					transition-all duration-100
-					${isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"}
-					`}
+				className={cn(
+					"text-xl dark:text-white text-black cursor-pointer",
+					"transition-all duration-100",
+					isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+				)}
 				onClick={() => navigate("/lab/welcome")}
 			>
 				<div className="space-x-2 flex flex-row">
