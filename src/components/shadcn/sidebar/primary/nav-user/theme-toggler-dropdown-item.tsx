@@ -3,7 +3,7 @@ import { Moon, Sun } from "lucide-react"
 import { DropdownMenuItem } from "../../../ui/dropdown-menu"
 import useSetDefaultSiteTheme from "../../../../../hooks/personal-info/set-default-site-theme"
 
-function ThemeTogglerDropdownMenu() {
+function ThemeTogglerDropdownItem() {
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
 
 	return (
@@ -23,4 +23,4 @@ function ThemeTogglerDropdownMenu() {
 	)
 }
 
-export default observer(ThemeTogglerDropdownMenu)
+export default observer(ThemeTogglerDropdownItem)
