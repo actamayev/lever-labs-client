@@ -8,9 +8,9 @@ import InternalPagesLayout from "./internal-pages-layout"
 const PrivatePageNames = [
 	"/garage",
 	"/lab",
+	"/add-pip",
 	"/sandbox",
-	"/settings",
-	"/add-pip"
+	"/settings"
 ]
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {

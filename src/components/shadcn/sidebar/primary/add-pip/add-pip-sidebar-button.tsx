@@ -37,11 +37,9 @@ function AddPipSidebarButton() {
 		if (_.isNull(pipClass.selectedPip)) {
 			return <>Add Pip</>
 		} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
-			return ( <>Disconnect from {pipClass.selectedPip.pipName}</>
-			)
-		} else {
-			return <>Connect to {pipClass.selectedPip.pipName}</>
+			return <>Disconnect from {pipClass.selectedPip.pipName}</>
 		}
+		return <>Connect to {pipClass.selectedPip.pipName}</>
 	}
 
 	return (

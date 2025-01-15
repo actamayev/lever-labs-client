@@ -12,7 +12,6 @@ import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
 
-// eslint-disable-next-line max-lines-per-function
 export default function PathToMastery() {
 	return (
 		<WelcomePageCard headerText="Your Path to Mastery">

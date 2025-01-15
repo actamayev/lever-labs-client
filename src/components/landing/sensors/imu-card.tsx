@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { FaTachometerAlt } from "react-icons/fa"
+import { cn } from "../../../lib/shadcn/utils"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import { DottedTextTooltip } from "../../dotted-underline-text"
-import { cn } from "../../../lib/shadcn/utils"
 
 const vibrationStyles = `
   @keyframes vibrate {
