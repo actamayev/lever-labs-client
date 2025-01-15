@@ -42,8 +42,9 @@ function RegisterUsername() {
 
 						<Button
 							type="submit"
-							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white"
+							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 							disabled={loading || isDisabled}
+							variant="tactile"
 						>
 							CONTINUE
 						</Button>

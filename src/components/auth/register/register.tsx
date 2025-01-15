@@ -63,7 +63,6 @@ export default function Register(props: Props) {
 						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
 						variant="tactile"
-						// shadowColor="rgb(220,38,38)"
 					>
 						CREATE ACCOUNT
 					</Button>

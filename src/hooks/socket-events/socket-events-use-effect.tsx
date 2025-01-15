@@ -22,7 +22,9 @@ export default function useSocketEventsUseEffect(): void {
 				const actionElement = (
 					<Button
 						onClick={() => requestToConnectToPip(data.pipUUID)}
-						className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800 text-black dark:text-white"
+						className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800
+						text-black dark:text-white transition-none"
+						variant="tactile"
 					>
 						{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
 					</Button>
