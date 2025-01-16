@@ -87,7 +87,7 @@ class AddPipClass {
 		return field === "wifiNetworkName" || field === "wifiPassword"
 	}
 
-	public resetMirroredFormValues = action(() => {
+	private resetMirroredFormValues = action(() => {
 		this.mirroredFormValues = {
 			pipUUID: "" as PipUUID,
 			shouldAutoConnect: true,
@@ -102,12 +102,16 @@ class AddPipClass {
 		return this.mirroredFormValues.pipName.length >= 3 && this.mirroredFormValues.pipName.length <= 20
 	}
 
-	public logout() {
-		this.resetAddingPipRequirements()
-		this.setEncodedWifiCredentials(null)
-		this.resetMirroredFormValues()
-		this.setNewPipConnectionStatus(null)
+	public resetAddPipMethods = action(() => {
 		this.setIsUserReadyToConnectToPipDialog(null)
+		this.setNewPipConnectionStatus(null)
+		this.resetAddingPipRequirements()
+		this.resetMirroredFormValues()
+	})
+
+	public logout() {
+		this.resetAddPipMethods()
+		this.setEncodedWifiCredentials(null)
 	}
 }
 

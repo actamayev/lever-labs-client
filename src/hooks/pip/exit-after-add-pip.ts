@@ -9,9 +9,7 @@ export default function useExitAfterAddPip(): () => void {
 
 	return useCallback(() => {
 		if (_.isNull(addPipClass)) return
-		addPipClass.store.setIsUserReadyToConnectToPipDialog(null)
-		addPipClass.store.setNewPipConnectionStatus(null)
-		addPipClass.store.resetAddingPipRequirements()
+		addPipClass.store.resetAddPipMethods()
 		addPipClass.form.reset()
 		navigate("/lab/element-1")
 	}, [addPipClass, navigate])

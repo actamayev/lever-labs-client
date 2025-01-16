@@ -12,8 +12,7 @@ function ShowLoadingPipConnectionStatus() {
 
 	if (
 		!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist ||
-		!addPipClass.store.mirroredFormValues.pipName ||
-		addPipClass.store.mirroredFormValues.pipName.length < 3 ||
+		!addPipClass.store.isPipNameValid ||
 		!addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi
 	) return null
 	if (addPipClass.store.isUserReadyToConnectToPipDialog === false) {

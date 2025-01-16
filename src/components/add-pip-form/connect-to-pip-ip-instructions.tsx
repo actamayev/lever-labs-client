@@ -13,8 +13,7 @@ function ConnectToPipInstructions() {
 		_.isNull(addPipClass) ||
 		_.isNull(addPipClass.store.encodedWifiCredentials) ||
 		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false ||
-		!addPipClass.store.mirroredFormValues.pipName ||
-		addPipClass.store.mirroredFormValues.pipName.length < 3
+		!addPipClass.store.isPipNameValid
 	) return null
 
 	return (

@@ -18,7 +18,7 @@ export default function useDisconnectFromPip(): (
 			if (foundPip?.pipConnectionStatus !== "connected") {
 				return toast.neutral({
 					title: "Unable to disconnect from Pip",
-					description: "You're not currently connected to this Pip. Please reload the page and try again."
+					description: "Looks like you're not currently connected to this Pip. Please reload the page and try again."
 				})
 			}
 
