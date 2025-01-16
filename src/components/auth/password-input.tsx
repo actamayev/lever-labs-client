@@ -41,7 +41,6 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								placeholder={placeholder}
 								{...field}
 								maxLength={100}
-								minLength={6}
 								className="pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
 							/>
 							<Button

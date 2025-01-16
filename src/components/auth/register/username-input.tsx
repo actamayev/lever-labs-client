@@ -30,7 +30,6 @@ export default function UsernameInput<T extends RegisterUsernameFormValues | Reg
 								}}
 								className="w-full pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
 								maxLength={100}
-								minLength={3}
 							/>
 							<CharacterCounter
 								value={field.value}
