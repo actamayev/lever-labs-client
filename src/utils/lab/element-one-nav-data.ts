@@ -96,20 +96,20 @@ const element1NavData: LabNavData[] = [
 		],
 	},
 	{
-		title: "IR Color Sensors",
+		title: "IR Sensor Array",
 		icon: IoRadioSharp,
 		items: [
 			{
 				title: "Reading",
-				url: "/lab/element-1/ir-color-sensor/reading",
+				url: "/lab/element-1/ir-sensor-array/reading",
 			},
 			{
 				title: "Video",
-				url: "/lab/element-1/ir-color-sensor/video",
+				url: "/lab/element-1/ir-sensor-array/video",
 			},
 			{
 				title: "Code",
-				url: "/lab/element-1/ir-color-sensor/code",
+				url: "/lab/element-1/ir-sensor-array/code",
 			},
 		],
 	},

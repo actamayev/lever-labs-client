@@ -5,21 +5,15 @@ import SingleActivityTitle from "./single-activity-title"
 
 interface Props {
 	item: LabNavData
-	openSections: Record<string, boolean>
-	setOpenSections: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
 }
 
 export default function SingleCollapsibleLabGroupItem(props: Props) {
-	const { item, openSections, setOpenSections } = props
+	const { item } = props
 
 	return (
 		<Collapsible
 			key={item.title}
 			asChild
-			open={openSections[item.title]}
-			onOpenChange={(open) => {
-				setOpenSections(prev => ({ ...prev, [item.title]: open }))
-			}}
 			className="group/collapsible"
 		>
 			<SidebarMenuItem>

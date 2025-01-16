@@ -30,10 +30,10 @@ declare global {
 		| "/lab/element-1/color-sensor/video"
 		| "/lab/element-1/color-sensor/code"
 
-	type IrColorSensorLabPages =
-		| "/lab/element-1/ir-color-sensor/reading"
-		| "/lab/element-1/ir-color-sensor/video"
-		| "/lab/element-1/ir-color-sensor/code"
+	type IRSensorArrayLabPages =
+		| "/lab/element-1/ir-sensor-array/reading"
+		| "/lab/element-1/ir-sensor-array/video"
+		| "/lab/element-1/ir-sensor-array/code"
 
 	type IrCommunicationSensorLabPages =
 		| "/lab/element-1/ir-communication-sensor/reading"
@@ -56,7 +56,7 @@ declare global {
 		| EncoderLabPages
 		| ButtonLabPages
 		| ColorSensorLabPages
-		| IrColorSensorLabPages
+		| IRSensorArrayLabPages
 		| IrCommunicationSensorLabPages
 		| TofSensorLabPages
 		| ImuLabPages

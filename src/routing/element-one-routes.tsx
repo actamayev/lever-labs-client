@@ -19,9 +19,9 @@ import EncoderReading from "../components/lab/element-1/encoder/encoder-reading"
 import ColorSensorCode from "../components/lab/element-1/color-sensor/color-sensor-code"
 import ColorSensorVideo from "../components/lab/element-1/color-sensor/color-sensor-video"
 import ColorSensorReading from "../components/lab/element-1/color-sensor/color-sensor-reading"
-import IrColorSensorCode from "../components/lab/element-1/ir-color-sensor/ir-color-sensor-code"
-import IrColorSensorVideo from "../components/lab/element-1/ir-color-sensor/ir-color-sensor-video"
-import IrColorSensorReading from "../components/lab/element-1/ir-color-sensor/ir-color-sensor-reading"
+import IRSensorArrayCode from "../components/lab/element-1/ir-sensor-array/ir-sensor-array-code"
+import IRSensorArrayVideo from "../components/lab/element-1/ir-sensor-array/ir-sensor-array-video"
+import IRSensorArrayReading from "../components/lab/element-1/ir-sensor-array/ir-sensor-array-reading"
 import IrCommuncationSensorCode from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-code"
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
@@ -113,19 +113,19 @@ const element1Routes: ElementRoutes[] = [
 		]
 	},
 	{
-		path: "element-1/ir-color-sensor",
+		path: "element-1/ir-sensor-array",
 		children: [
 			{
 				path: "Reading",
-				element: <IrColorSensorReading />
+				element: <IRSensorArrayReading />
 			},
 			{
 				path: "Video",
-				element: <IrColorSensorVideo />
+				element: <IRSensorArrayVideo />
 			},
 			{
 				path: "Code",
-				element: <IrColorSensorCode />
+				element: <IRSensorArrayCode />
 			}
 		]
 	},

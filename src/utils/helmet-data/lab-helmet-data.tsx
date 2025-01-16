@@ -129,25 +129,25 @@ const labHelmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/lab/element-1/color-sensor/code"
 		/>
 	),
-	"/lab/element-1/ir-color-sensor/reading": (
+	"/lab/element-1/ir-sensor-array/reading": (
 		<BasicHelmet
-			pageTitleData="IR Color Sensors: Advanced Color Detection"
+			pageTitleData="IR Sensor Array: Advanced Color Detection"
 			description="Learn about infrared color sensing, its advantages, and applications in robotics and automation."
-			url="https://www.bluedotrobots.com/lab/element-1/ir-color-sensor/reading"
+			url="https://www.bluedotrobots.com/lab/element-1/ir-sensor-array/reading"
 		/>
 	),
-	"/lab/element-1/ir-color-sensor/video": (
+	"/lab/element-1/ir-sensor-array/video": (
 		<BasicHelmet
-			pageTitleData="IR Color Sensors: Video Tutorial"
+			pageTitleData="IR Sensor Array: Video Tutorial"
 			description="Watch a comprehensive guide on using IR color sensors for advanced color detection tasks."
-			url="https://www.bluedotrobots.com/lab/element-1/ir-color-sensor/video"
+			url="https://www.bluedotrobots.com/lab/element-1/ir-sensor-array/video"
 		/>
 	),
-	"/lab/element-1/ir-color-sensor/code": (
+	"/lab/element-1/ir-sensor-array/code": (
 		<BasicHelmet
-			pageTitleData="IR Color Sensors: Coding Exercise"
+			pageTitleData="IR Sensor Array: Coding Exercise"
 			description="Practice IR color sensor programming and calibration through interactive coding exercises."
-			url="https://www.bluedotrobots.com/lab/element-1/ir-color-sensor/code"
+			url="https://www.bluedotrobots.com/lab/element-1/ir-sensor-array/code"
 		/>
 	),
 	"/lab/element-1/ir-communication-sensor/reading": (
