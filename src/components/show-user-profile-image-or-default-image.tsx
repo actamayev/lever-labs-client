@@ -37,6 +37,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 			alt="Creator's Profile"
 			className={extraClasses}
 			onClick={handleClick}
+			loading="lazy"
 		/>
 	)
 }

@@ -77,7 +77,6 @@ export default function LandingHeader() {
 						<div className="w-full">
 							<img
 								src="pip_top_right.png"
-								loading="lazy"
 								alt="Product visualization"
 							/>
 						</div>

@@ -20,6 +20,7 @@ export default function SidebarLogo() {
 								src="/favicon.svg"
 								alt="Logo"
 								className="!h-16 !w-16"
+								loading="lazy"
 							/>
 						</div>
 					</Link>
