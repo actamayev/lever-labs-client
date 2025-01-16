@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const loginSchema = z.object({
 	contact: z.string()
-		.min(3, "Please enter your username or email")
+		.min(3, "Please enter your username or email (at least 3 characters)")
 		.max(100, "That's a bit long for a username or email - could you check it?"),
 	password: z.string()
 		.min(6, "Please enter your password (at least 6 characters)")
