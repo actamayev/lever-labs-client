@@ -23,19 +23,19 @@ export default function LabSidebar() {
 			<SidebarContent>
 				<WelcomeSidebarSection />
 				<LabGroupMap
-					groupName="Element 1: Sensor Basics"
+					elementName="Element 1: Sensor Basics"
 					navData={element1NavData}
-					elementName="/lab/element-1"
+					elementRoute="/lab/element-1"
 				/>
 				<LabGroupMap
-					groupName="Element 2: Combine & Create"
+					elementName="Element 2: Combine & Create"
 					navData={element2NavData}
-					elementName="/lab/element-2"
+					elementRoute="/lab/element-2"
 				/>
 				<LabGroupMap
-					groupName="Element 3: Missions"
+					elementName="Element 3: Missions"
 					navData={element3NavData}
-					elementName="/lab/element-3"
+					elementRoute="/lab/element-3"
 				/>
 			</SidebarContent>
 		</Sidebar>

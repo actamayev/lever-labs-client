@@ -55,8 +55,8 @@ export default function PathToMastery() {
 					subtitle="Missions"
 					orbitingIcons={
 						<>
-							<Target className="w-6 h-6 text-green-500/70 absolute -top-2 -right-2 animate-ping" />
-							<Timer className="w-6 h-6 text-green-500/70 absolute -bottom-2 -left-2 animate-pulse" />
+							<Target className="w-6 h-6 text-green-500/70 absolute -top-2 -right-2" />
+							<Timer className="w-6 h-6 text-green-500/70 absolute -bottom-2 -left-2" />
 						</>
 					}
 					elementLink="/lab/element-3"
