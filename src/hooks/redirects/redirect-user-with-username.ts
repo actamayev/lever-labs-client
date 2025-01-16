@@ -11,10 +11,9 @@ export default function useRedirectUserWithUsername (): void  {
 
 	useEffect(() => {
 		if (authClass.isLoggedIn === false) {
-			navigate("/")
-			return
+			return navigate("/")
 		}
 		if (_.isNull(personalInfoClass.username)) return
-		navigate("/sandbox")
+		navigate("/lab")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass, personalInfoClass.username])
 }

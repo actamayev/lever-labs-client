@@ -1,22 +1,35 @@
-import AuthHeaderLinks from "./auth/auth-header-links"
+import { observer } from "mobx-react"
+import { useLocation } from "react-router"
+import { useAuthContext } from "../contexts/auth-context"
+import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth/auth-header-links"
 
-export default function NullUserNavLink() {
+function NullUserNavLink() {
+	const location = useLocation()
+	const authClass = useAuthContext()
+
+	if (location.pathname === "/") {
+		return (
+			<div className="space-x-2">
+				<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
+				<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
+			</div>
+		)
+	} else if (location.pathname === "/register") {
+		return (
+			<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
+		)
+	} else if (location.pathname === "/login") {
+		return (
+			<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
+		)
+	} else if (authClass.showLoginOrRegister === "Login") {
+		return (
+			<SetLoginOrRegisterAuthHeaderButton title="SIGN UP" setShowLoginOrRegister="Register" />
+		)
+	}
 	return (
-		<>
-			<AuthHeaderLinks
-				title="Log in"
-				variant="ghost"
-				className="dark:hover:bg-zinc-600 text-black dark:text-white
-				hover:text-zinc-900 dark:hover:text-white text-base font-medium transition-all duration-300"
-				linkTo="/login"
-			/>
-			<AuthHeaderLinks
-				title="Sign up"
-				variant="default"
-				className="bg-blue-600 hover:bg-blue-700 text-primary-foreground ml-2 text-base
-				dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 font-medium transition-all duration-300"
-				linkTo="/register"
-			/>
-		</>
+		<SetLoginOrRegisterAuthHeaderButton title="LOG IN" setShowLoginOrRegister="Login" />
 	)
 }
+
+export default observer(NullUserNavLink)

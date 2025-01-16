@@ -1,12 +1,12 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function useOpenIpAddrTab(): () => void {
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const addPipClass = useAddPipContext()
 	const pipStatusPoll = usePipStatusPoll()
 
@@ -20,12 +20,10 @@ export default function useOpenIpAddrTab(): () => void {
 				console.info("Still connected to internet, user needs to connect to ESP AP first")
 				addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
 				return toast.neutral({
-					title: "WiFi Connection Required",
+					title: "Wi-Fi connection required",
 					description: `Please connect to the pip-${addPipClass.store.mirroredFormValues.pipUUID} network first`
 				})
 			}
-			console.log("No internet connectivity - likely connected to ESP AP")
-
 			addPipClass.store.setIsUserReadyToConnectToPipDialog(true)
 			addPipClass.store.setNewPipConnectionStatus("connecting")
 
@@ -40,8 +38,8 @@ export default function useOpenIpAddrTab(): () => void {
 			pipStatusPoll()
 		} catch (popupError) {
 			console.error("Failed to open setup window:", popupError)
-			toast.negative({
-				title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+			return toast.negative({
+				title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 				description: "Please ensure popups are allowed and try again"
 			})
 		}

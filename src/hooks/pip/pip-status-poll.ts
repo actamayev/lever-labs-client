@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import _ from "lodash"
 import { useCallback } from "react"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import useRetrievePipStatusWhileAdding from "./retrieve-pip-status-while-adding"
 import checkInternetConnectivity from "../../utils/pip/check-internet-connectivity"
 
 export default function usePipStatusPoll(): () => void {
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const addPipClass = useAddPipContext()
 	const retrievePipStatusWhileAdding = useRetrievePipStatusWhileAdding()
 
@@ -52,8 +52,8 @@ export default function usePipStatusPoll(): () => void {
 				if (googleRetryCount >= GOOGLE_MAX_RETRIES) {
 					cleanup(true)
 					return toast.negative({
-						title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-						description: "Please confirm the Wi-Fi credentials you provided."
+						title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
+						description: "Please check if your Wi-Fi name and password are entered correctly"
 					})
 				}
 
@@ -85,7 +85,7 @@ export default function usePipStatusPoll(): () => void {
 							cleanup(true)
 							return toast.negative({
 								title: `Unable to connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
-								description: "Maximum connection attempts reached. Please try again."
+								description: "Maximum connection attempts reached. Please try again"
 							})
 						}
 

@@ -22,13 +22,13 @@ export default function useUsernameSubmit (
 			setLoading(true)
 			const response = await blueDotApiClient.authDataService.registerUsername(username)
 			if (!_.isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
-				setError("Unable to register username. Please reload page and try again.")
+				setError("Unable to register username. Please reload the page and try again")
 				return
 			}
 			personalInfoClass.setUsername(username)
-			navigate("/sandbox")
+			navigate("/lab/welcome")
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to register username")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}

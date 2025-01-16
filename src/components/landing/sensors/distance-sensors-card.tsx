@@ -40,20 +40,22 @@ export default function DistanceSensorsCard() {
 							className="cursor-pointer"
 						>
 							<TbRulerMeasure
-								className={`origin-left text-black dark:text-white
-                  ${isAnimating ? "animate-[measure_1s_ease-in-out]" : ""}`}
+								className={cn(
+									"origin-left text-black dark:text-white",
+									isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
+								)}
 								size={bentoIconSize}
 							/>
 						</div>
 						<div className="flex flex-col">
 							<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-                2×&nbsp;
+								2×&nbsp;
 								<DottedTextTooltip tooltipMessage="VL53L5CX Time of Flight Sensors">
-                  Distance Sensors
+									Distance Sensors
 								</DottedTextTooltip>
 							</h3>
 							<p className="max-w-lg text-neutral-400">
-                Measure distances with millimeter accuracy for smart navigation
+								Measure distances with millimeter accuracy for smart navigation
 							</p>
 						</div>
 					</div>

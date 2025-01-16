@@ -2,14 +2,17 @@ import { observer } from "mobx-react"
 import { Routes, Route } from "react-router"
 import Lab from "./pages/lab"
 import Landing from "./pages/landing"
+import AddPip from "./pages/add-pip"
 // import Garage from "./pages/garage"
 import Contact from "./pages/contact"
 import Missing from "./pages/missing"
 import Sandbox from "./pages/sandbox"
-// import MyAccount from "./pages/account"
+import Settings from "./pages/settings"
 import LoginPage from "./pages/auth/login-page"
 import RegisterPage from "./pages/auth/register-page"
 import RegisterUsername from "./pages/auth/register-username"
+
+import labRoutes from "./routing/lab-routes-structure"
 
 import useScrollToTop from "./hooks/scroll-to-top"
 import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
@@ -41,10 +44,35 @@ function App() {
 			<Route path="/register-username" element={<RegisterUsername />} />
 
 			{/* <Route path="/garage" element={<Garage />} /> */}
-			<Route path="/lab" element={<Lab />} />
-			<Route path="/sandbox" element={<Sandbox />} />
+			<Route path="/lab" element={<Lab />}>
+				{labRoutes.map((route: RouteType) => {
+					// Handle index routes
+					if ("index" in route && route.index) {
+						return <Route key="index" index element={route.element} />
+					}
 
-			{/* <Route path="/account" element={<MyAccount />} /> */}
+					// Handle element routes and base routes
+					return (
+						<Route
+							key={route.path}
+							path={route.path}
+							element={"element" in route ? route.element : undefined}
+						>
+							{route.children?.map((childRoute) => (
+								<Route
+									key={childRoute.path}
+									path={childRoute.path}
+									element={childRoute.element}
+								/>
+							))}
+						</Route>
+					)
+				})}
+			</Route>
+			<Route path="/sandbox" element={<Sandbox />} />
+			<Route path="/add-pip" element={<AddPip />} />
+
+			<Route path="/settings" element={<Settings />} />
 
 			<Route path="/contact" element={<Contact />} />
 

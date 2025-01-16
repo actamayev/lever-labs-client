@@ -11,6 +11,7 @@ import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
 
+// TODO: Figure out why the load times are so high. I'm guessing it's because there are so many components being loaded simultaneously.
 // TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
 	return (
@@ -22,7 +23,7 @@ export default function Landing() {
 				</div>
 				<div
 					className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-black dark:to-zinc-700
-						text-black dark:text-white transition-all duration-300"
+					text-black dark:text-white transition-all duration-300"
 				>
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
 					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center md:px-8 lg:px-16">

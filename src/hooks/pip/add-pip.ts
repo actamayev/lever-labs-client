@@ -3,19 +3,19 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import useValidatePipData from "./validate-pip-data"
 import { usePipContext } from "../../contexts/pip-context"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import useAutoCloseModalAfterAddPip from "./auto-close-modal-after-add-pip"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
+import useExitAfterAddPip from "./exit-after-add-pip"
 
-export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<void> {
+export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const pipClass = usePipContext()
 	const addPipClass = useAddPipContext()
 	const validatePipData = useValidatePipData()
-	const autoCloseModalAfterAddPip = useAutoCloseModalAfterAddPip()
+	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -25,7 +25,10 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
 			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
-				throw new Error("You've already added a Pip with this ID")
+				return toast.negative({
+					title: "Unable to add Pip ID",
+					description: "You've already added a Pip with this ID"
+				})
 			}
 
 			if (validatePipData() === false) {
@@ -57,40 +60,33 @@ export default function useAddPip(shouldAutoCloseModal: boolean): () => Promise<
 				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			if (shouldAutoCloseModal) {
-				autoCloseModalAfterAddPip(shouldAutoCloseModal)
+			if (shouldAutoNavigateToLab) {
+				exitAfterAddPip()
 			}
 		} catch (error) {
 			console.error(error)
-			if (error instanceof Error && error.message === "You've already added a Pip with this ID") {
-				return toast.negative({
-					title: "Unable to add Pip ID",
-					description: "You've already added a Pip with this ID"
-				})
-			} else if (error instanceof AxiosError) {
+			if (error instanceof AxiosError) {
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {
-						toast.negative({
+						return toast.negative({
 							title: "Unable to add Pip ID",
 							description: "You have a Pip with this ID"
 						})
-						return
 					} else if (error.response.data.message === "Pip UUID doesn't exist") {
-						toast.negative({
+						return toast.negative({
 							title: "Unable to add Pip ID",
 							description: "The Pip ID you entered does not exist"
 						})
-						return
 					}
 				}
 			}
 			if (_.isNull(addPipClass)) return
 			const { pipName } = addPipClass.store.mirroredFormValues
-			toast.negative({
+			return toast.negative({
 				title: `Unable to add ${pipName} at this time`,
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, autoCloseModalAfterAddPip, blueDotApiClient.pipDataService, pipClass, shouldAutoCloseModal, toast, validatePipData])
+	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoNavigateToLab, toast, exitAfterAddPip])
 }

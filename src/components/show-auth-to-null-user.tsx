@@ -1,30 +1,20 @@
-import { useState } from "react"
+import { observer } from "mobx-react"
 import Login from "./auth/login/login"
 import Register from "./auth/register/register"
+import { useAuthContext } from "../contexts/auth-context"
 
 interface Props {
 	whereToNavigate: PageNames
-	customStyles?: object
 }
 
-export default function ShowAuthToNullUser(props: Props) {
-	const { whereToNavigate, customStyles } = props
-	const [loginOrRegister, setLoginOrRegister] = useState<LoginOrRegister>("Register")
+function ShowAuthToNullUser(props: Props) {
+	const { whereToNavigate } = props
+	const authClass = useAuthContext()
 
-	if (loginOrRegister === "Register") {
-		return (
-			<Register
-				whereToNavigate={whereToNavigate}
-				setLoginOrRegister={setLoginOrRegister}
-				customStyles={customStyles}
-			/>
-		)
+	if (authClass.showLoginOrRegister === "Register") {
+		return <Register />
 	}
-	return (
-		<Login
-			whereToNavigate={whereToNavigate}
-			setLoginOrRegister={setLoginOrRegister}
-			customStyles={customStyles}
-		/>
-	)
+	return <Login whereToNavigate={whereToNavigate} />
 }
+
+export default observer(ShowAuthToNullUser)

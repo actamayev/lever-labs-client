@@ -114,7 +114,8 @@ function BlocklyComponent() {
 			<Button
 				onClick={sendCodeToCppCallback}
 				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
-				className="mt-2"
+				className="mt-2 transition-none"
+				variant="tactile"
 			>
 				Send code to Pip
 			</Button>

@@ -41,7 +41,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								placeholder={placeholder}
 								{...field}
 								maxLength={100}
-								minLength={6}
+								className="pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
 							/>
 							<Button
 								type="button"
@@ -51,9 +51,9 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								onClick={() => setShowPassword(prevState => !prevState)}
 							>
 								{showPassword ? (
-									<EyeOff className="h-4 w-4" />
+									<EyeOff className="!h-6 !w-6" />
 								) : (
-									<Eye className="h-4 w-4" />
+									<Eye className="!h-6 !w-6" />
 								)}
 							</Button>
 						</div>

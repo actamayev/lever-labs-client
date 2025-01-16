@@ -7,6 +7,7 @@ class PipClass {
 	public isRetrievingPipData = false
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
+	public retrievedPipData: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -42,6 +43,10 @@ class PipClass {
 		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
 	}
 
+	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {
+		return this.findPipFromUUID(pipUUID)?.pipConnectionStatus
+	}
+
 	public findPipNameFromUUID(pipUUID: PipUUID): string {
 		const pip = this.findPipFromUUID(pipUUID)
 		if (_.isUndefined(pip)) return "Pip"
@@ -52,7 +57,7 @@ class PipClass {
 		this.isRetrievingPipData = newState
 	})
 
-	public setSelectedPip = action((newSelectedPip: PipData): void => {
+	public setSelectedPip = action((newSelectedPip: PipData | null): void => {
 		this.selectedPip = newSelectedPip
 	})
 
@@ -65,11 +70,16 @@ class PipClass {
 		this.isSendingCppToPip = newState
 	})
 
+	public setRetrievedPipData = action((newState: boolean): void => {
+		this.retrievedPipData = newState
+	})
+
 	public logout() {
 		this.pipData = []
-		this.isRetrievingPipData = false
-		this.selectedPip = null
-		this.isSendingCppToPip = false
+		this.setIsRetrievingPipData(false)
+		this.setSelectedPip(null)
+		this.setIsSendingCppToPip(false)
+		this.setRetrievedPipData(false)
 	}
 }
 

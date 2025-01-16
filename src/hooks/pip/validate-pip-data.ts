@@ -10,18 +10,17 @@ export default function useValidatePipData(): () => boolean {
 		if (_.isNull(addPipClass)) return false
 		if (!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) return false
 
-		const [pipName, pipUUID, wifiNetworkName] = addPipClass.form.getValues(["pipName", "pipUUID", "wifiNetworkName"])
-		if (!addPipClass.store.addingNewPipRequirements.isPipOnline === true && !wifiNetworkName) return false
+		const { pipUUID, wifiNetworkName } = addPipClass.store.mirroredFormValues
+		if (
+			addPipClass.store.addingNewPipRequirements.isPipOnline === false &&
+			!wifiNetworkName
+		) return false
 
 		const isUUIDValid = isPipUUIDValid(pipUUID)
 		if (addPipClass.store.addingNewPipRequirements.hasPipNamePreviouslyBeenAdded === true) {
 			return isUUIDValid
 		}
 
-		if (_.isUndefined(pipName)) return false
-
-		const isNameValid = pipName.length >= 3 && pipName.length <= 20
-
-		return isNameValid && isUUIDValid
+		return addPipClass.store.isPipNameValid && isUUIDValid
 	}, [addPipClass])
 }

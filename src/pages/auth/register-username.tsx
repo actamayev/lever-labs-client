@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../components/shadcn/ui/form"
-import ErrorMessage from "../../components/messages/error-message"
 import { Button } from "../../components/shadcn/ui/button"
 import PageHelmet from "../../components/helmet/page-helmet"
+import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
 import { registerUsernameSchema } from "../../utils/auth/auth-schemas"
 import useUsernameSubmit from "../../hooks/auth/google/username-submit"
@@ -42,10 +42,11 @@ function RegisterUsername() {
 
 						<Button
 							type="submit"
-							className="w-full"
+							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 							disabled={loading || isDisabled}
+							variant="tactile"
 						>
-							Continue
+							CONTINUE
 						</Button>
 
 						{error && <ErrorMessage error={error} />}

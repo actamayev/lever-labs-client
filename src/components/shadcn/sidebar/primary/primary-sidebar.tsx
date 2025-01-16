@@ -1,8 +1,8 @@
-import NavTheme from "../../nav-theme"
-import SidebarLogo from "./sidebar-logo"
-import MappedNavData from "./mapped-nav-data"
-import NavUser from "@/components/shadcn/nav-user"
 import { Sidebar, SidebarFooter } from "@/components/shadcn/ui/sidebar"
+import SidebarLogo from "./sidebar-logo"
+import NavUser from "./nav-user/nav-user"
+import MappedNavData from "./mapped-nav-data"
+import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 
 export default function PrimarySidebar() {
 	return (
@@ -13,7 +13,7 @@ export default function PrimarySidebar() {
 			<SidebarLogo />
 			<MappedNavData />
 			<SidebarFooter>
-				<NavTheme />
+				<AddPipSidebarButton />
 				<NavUser />
 			</SidebarFooter>
 		</Sidebar>
