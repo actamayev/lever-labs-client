@@ -31,7 +31,7 @@ export default function useRetrievePipInfoUseEffect(): void {
 			console.error(error)
 			return toast.negative({
 				title: "Unable to retrieve Pip Info",
-				description: "Please reload the page and try again."
+				description: "Please reload the page and try again"
 			})
 		} finally {
 			pipClass.setIsRetrievingPipData(false)

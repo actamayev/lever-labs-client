@@ -38,8 +38,8 @@ export default function useSubscribeForUpdates(
 				})
 			}
 			return toast.negative({
-				title: "Unable to subscribe for updates.",
-				description: "Please reload the page and try again."
+				title: "Unable to subscribe for updates",
+				description: "Please reload the page and try again"
 			})
 		} finally {
 			setIsLoading(false)

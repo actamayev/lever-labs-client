@@ -15,7 +15,7 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 			if (_.isNull(pipClass.selectedPip)) {
 				return toast.neutral({
 					title: "You have not connected to a Pip",
-					description: "Please connect to a Pip to upload code."
+					description: "Please connect to a Pip to upload code"
 				})
 			}
 			if (pipClass.isSendingCppToPip === true) {
@@ -28,12 +28,12 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 			if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
 				return toast.negative({
 					title: `${pipClass.selectedPip.pipName} is not online`,
-					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code.`
+					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code`
 				})
 			} else if (pipClass.selectedPip.pipConnectionStatus === "connected to other user") {
 				return toast.negative({
 					title: `Unable to upload code to ${pipClass.selectedPip.pipName} at this time`,
-					description: `${pipClass.selectedPip.pipName} is connected to another user.`
+					description: `${pipClass.selectedPip.pipName} is connected to another user`
 				})
 			}
 			pipClass.setIsSendingCppToPip(true)

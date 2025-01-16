@@ -20,7 +20,7 @@ export default function useOpenIpAddrTab(): () => void {
 				console.info("Still connected to internet, user needs to connect to ESP AP first")
 				addPipClass.store.setIsUserReadyToConnectToPipDialog(false)
 				return toast.neutral({
-					title: "Wi-Fi Connection Required",
+					title: "Wi-Fi connection required",
 					description: `Please connect to the pip-${addPipClass.store.mirroredFormValues.pipUUID} network first`
 				})
 			}
@@ -39,7 +39,7 @@ export default function useOpenIpAddrTab(): () => void {
 		} catch (popupError) {
 			console.error("Failed to open setup window:", popupError)
 			return toast.negative({
-				title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi.`,
+				title: `We couldn't connect ${addPipClass.store.mirroredFormValues.pipName} to Wi-Fi`,
 				description: "Please ensure popups are allowed and try again"
 			})
 		}
