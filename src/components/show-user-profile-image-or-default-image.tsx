@@ -2,8 +2,8 @@
 import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { CircleUserRound } from "lucide-react"
 import { cn } from "../lib/shadcn/utils"
+import { CustomUserCircle } from "./icons/custom-user-circle"
 
 interface Props {
 	profileImageUrl: string | null
@@ -21,7 +21,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 
 	if (_.isNull(profileImageUrl)) {
 		return (
-			<CircleUserRound
+			<CustomUserCircle
 				className={cn(
 					"text-black dark:text-white transition-all duration-300",
 					extraClasses

@@ -1,8 +1,7 @@
 import { motion } from "framer-motion"
-import { CircleDot } from "lucide-react"
-// TODO: Bring this back: import { RiRadioButtonFill } from "react-icons/ri"
-import { bentoIconSize } from "../../../utils/constants"
 import SensorsSkeleton from "./sensors-skeleton"
+import { bentoIconSize } from "../../../utils/constants"
+import { CustomButton } from "../../icons/custom-button"
 
 export default function ButtonCard() {
 	return (
@@ -19,7 +18,7 @@ export default function ButtonCard() {
 							damping: 10
 						}}
 					>
-						<CircleDot
+						<CustomButton
 							className="text-black dark:text-white cursor-pointer"
 							size={bentoIconSize}
 						/>

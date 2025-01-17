@@ -1,10 +1,10 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-// TODO: Search for all cases of flask and code sandbox and replace
-import { FlaskConical, Home } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import { useAuthContext } from "../contexts/auth-context"
 import useTypedNavigate from "../hooks/navigate/typed-navigate"
+import { CustomBeaker } from "../components/icons/custom-beaker"
+import { CustomHouse } from "../components/icons/custom-house"
 
 function Missing() {
 	const authClass = useAuthContext()
@@ -20,14 +20,14 @@ function Missing() {
 			return (
 				<>
 					Return to the Lab
-					<FlaskConical className="ml-2 !h-7 !w-7" />
+					<CustomBeaker className="ml-2 !h-7 !w-7" />
 				</>
 			)
 		}
 		return (
 			<>
 				Return home
-				<Home className="ml-2 !h-7 !w-7" />
+				<CustomHouse className="ml-2 !h-7 !w-7" />
 			</>
 		)
 	}

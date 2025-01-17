@@ -3,9 +3,9 @@ import { LucideIcon } from "lucide-react"
 import { Card } from "@/components/shadcn/ui/card"
 import Safari from "../../shadcn/ui/safari"
 import { cn } from "../../../lib/shadcn/utils"
-import { Sandbox, Beaker } from "../../icons/all-icons"
+import { Sandbox } from "../../icons/all-icons"
 import { BoldSpanText } from "../bold-span-text"
-// import { CustomBeaker } from "../../icons/custom-beaker"
+import { CustomBeaker } from "../../icons/custom-beaker"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ProductProps {
@@ -18,7 +18,6 @@ interface ProductProps {
 	linkToShow: string
 }
 
-// TODO: Consider just saving an SVG of the previously ued lab and sandbox to public folder.
 function SectionCard(props: ProductProps) {
 	const { sectionTitle, titleSubHeader, sectionSubtitle, Icon, extraClasses, linkToShow, imgSrc } = props
 
@@ -68,7 +67,7 @@ function ProductShowcase() {
 							</BoldSpanText>
 						</>
 					}
-					Icon={Beaker}
+					Icon={CustomBeaker}
 					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-black"
 					linkToShow="www.bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}

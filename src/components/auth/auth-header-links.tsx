@@ -12,16 +12,15 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 	const { title, linkTo } = props
 
 	return (
-		<Button
-			variant="tactile"
-			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
-			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
-			asChild
-		>
-			<Link to={linkTo}>
+		<Link to={linkTo}>
+			<Button
+				variant="tactile"
+				className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
+				dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+			>
 				{title}
-			</Link>
-		</Button>
+			</Button>
+		</Link>
 	)
 }
 

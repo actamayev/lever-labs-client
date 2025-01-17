@@ -7,13 +7,14 @@ import {
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
-import { Beaker, Sandbox } from "../../../icons/all-icons"
+import { Sandbox } from "../../../icons/all-icons"
+import { CustomBeaker } from "../../../icons/custom-beaker"
 
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
 		url: "/lab",
-		icon: Beaker
+		icon: CustomBeaker
 	},
 	{
 		title: "Sandbox",

@@ -2,15 +2,15 @@ import {
 	Cpu,
 	CircuitBoard,
 	Flag,
-	Lightbulb,
 	Gauge,
-	Compass,
 	Target,
 	Timer
 } from "lucide-react"
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
+import { CustomLightbulb } from "../../icons/custom-lightbulb"
+import { CustomCompass } from "../../icons/custom-compass"
 
 export default function PathToMastery() {
 	return (
@@ -35,9 +35,9 @@ export default function PathToMastery() {
 					subtitle="Combine & Create"
 					orbitingIcons={
 						<div className="absolute top-0 left-0 w-full h-full animate-spin-slow">
-							<Lightbulb className="w-6 h-6 text-yellow-500 absolute top-0 left-1/2 -translate-x-1/2" />
+							<CustomLightbulb className="w-6 h-6 text-yellow-500 absolute top-0 left-1/2 -translate-x-1/2" />
 							<Gauge className="w-6 h-6 text-green-500 absolute bottom-0 left-1/2 -translate-x-1/2" />
-							<Compass className="w-6 h-6 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
+							<CustomCompass className="w-6 h-6 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
 						</div>
 					}
 					elementLink="/lab/element-2"

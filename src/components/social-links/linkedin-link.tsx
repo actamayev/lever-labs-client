@@ -1,4 +1,4 @@
-import { Linkedin } from "lucide-react"
+import { CustomLinkedin } from "../icons/custom-linkedin"
 
 export default function LinkedinLink() {
 	return (
@@ -9,7 +9,7 @@ export default function LinkedinLink() {
 			target="_blank"
 			rel="noopener noreferrer"
 		>
-			<Linkedin size={24} />
+			<CustomLinkedin />
 		</a>
 	)
 }

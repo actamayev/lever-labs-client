@@ -1,10 +1,17 @@
-// TODO: Bring back both of these: mport { GiCarWheel, GiShieldReflect } from "react-icons/gi"
-import { Compass, Palette, Lightbulb, Timer, Waves, Radio, CircleDot } from "lucide-react"
+import { Radio } from "lucide-react"
+import { CustomTimer } from "../../components/icons/custom-timer"
+import { CustomWheel } from "../../components/icons/custom-wheel"
+import { CustomRemote } from "../../components/icons/custom-remote"
+import { CustomButton } from "../../components/icons/custom-button"
+import { CustomCompass } from "../../components/icons/custom-compass"
+import { CustomPalette } from "../../components/icons/custom-palette"
+import { CustomLightbulb } from "../../components/icons/custom-lightbulb"
+import { CustomShieldReflect } from "../../components/icons/custom-shield-reflect"
 
 const element1NavData: LabNavData[] = [
 	{
 		title: "LED",
-		icon: Lightbulb,
+		icon: CustomLightbulb,
 		items: [
 			{
 				title: "Reading",
@@ -22,7 +29,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Motors",
-		icon: Compass,
+		icon: CustomWheel,
 		items: [
 			{
 				title: "Reading",
@@ -40,7 +47,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Encoders",
-		icon: Timer,
+		icon: CustomTimer,
 		items: [
 			{
 				title: "Reading",
@@ -58,7 +65,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Buttons",
-		icon: CircleDot,
+		icon: CustomButton,
 		items: [
 			{
 				title: "Reading",
@@ -76,7 +83,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Color Sensors",
-		icon: Palette,
+		icon: CustomPalette,
 		items: [
 			{
 				title: "Reading",
@@ -112,7 +119,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Communication Sensors",
-		icon: Waves,
+		icon: CustomRemote,
 		items: [
 			{
 				title: "Reading",
@@ -130,7 +137,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Time of Flight Sensors",
-		icon: Compass,
+		icon: CustomShieldReflect,
 		items: [
 			{
 				title: "Reading",
@@ -148,7 +155,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IMU",
-		icon: Compass,
+		icon: CustomCompass,
 		items: [
 			{
 				title: "Reading",

@@ -1,4 +1,4 @@
-import { BookOpen, Play, Code } from "lucide-react"
+import { BookOpen, Play, CodeXml } from "lucide-react"
 import {
 	SidebarMenuSubItem,
 	SidebarMenuSubButton,
@@ -16,7 +16,7 @@ interface Props {
 const activityIcons = {
 	Reading: BookOpen,
 	Video: Play,
-	Code: Code
+	Code: CodeXml
 } as const
 
 export default function SingleActivityTitle(props: Props) {

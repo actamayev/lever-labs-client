@@ -1,10 +1,9 @@
 import { useState } from "react"
-// TODO: Bring this back: import { GiCarWheel } from "react-icons/gi"
 import { cn } from "@/lib/shadcn/utils"
 import "../../../styles/motor-spin.css"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
-import { Car } from "lucide-react"
+import { CustomWheel } from "../../icons/custom-wheel"
 
 export default function MotorCard() {
 	const [isSpinning, setIsSpinning] = useState(false)
@@ -19,7 +18,7 @@ export default function MotorCard() {
 					onMouseEnter={() => setIsSpinning(true)}
 					onMouseLeave={() => setIsSpinning(false)}
 				>
-					<Car
+					<CustomWheel
 						className={cn(
 							"origin-center text-black dark:text-white",
 							isSpinning && "spin-wheel"

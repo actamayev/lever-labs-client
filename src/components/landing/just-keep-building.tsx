@@ -1,8 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-import { LucideIcon , Rocket, Lightbulb } from "lucide-react"
+import { LucideIcon } from "lucide-react"
 import BoxReveal from "../shadcn/ui/box-reveal"
 import { BoldedDescription } from "./bold-span-text"
 import TextRevealByWord from "../shadcn/ui/text-reveal"
+import { GrowingTree } from "./growing-tree"
+import { RocketLiftoff } from "./rocket-liftoff"
 
 interface Feature {
 	Icon: LucideIcon
@@ -11,11 +13,11 @@ interface Feature {
 
 const features: Feature[] = [
 	{
-		Icon: Rocket,
+		Icon: RocketLiftoff,
 		title: "Frictionless"
 	},
 	{
-		Icon: Lightbulb,
+		Icon: GrowingTree,
 		title: "Grows With You"
 	}
 ]
