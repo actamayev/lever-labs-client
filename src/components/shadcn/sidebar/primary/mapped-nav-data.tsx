@@ -6,9 +6,9 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
-import { Sandbox } from "../../../icons/all-icons"
 import { CustomBeaker } from "../../../icons/custom-beaker"
+import { CustomSandbox } from "../../../icons/custom-sandbox"
+import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 
 const navData: SidebarNavData[] = [
 	{
@@ -19,7 +19,7 @@ const navData: SidebarNavData[] = [
 	{
 		title: "Sandbox",
 		url: "/sandbox",
-		icon: Sandbox
+		icon: CustomSandbox
 	}
 ]
 

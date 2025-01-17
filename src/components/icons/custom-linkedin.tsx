@@ -20,5 +20,3 @@ export const CustomLinkedin: LucideIcon = forwardRef<SVGSVGElement, LucideProps>
 )
 
 CustomLinkedin.displayName = "CustomLinkedin"
-
-// To make an SVG like this, paste it into https://www.svgviewer.dev/svg-to-react-jsx, copy the svg settings from above, and insert the website's generated path

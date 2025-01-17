@@ -3,9 +3,9 @@ import { LucideIcon } from "lucide-react"
 import { Card } from "@/components/shadcn/ui/card"
 import Safari from "../../shadcn/ui/safari"
 import { cn } from "../../../lib/shadcn/utils"
-import { Sandbox } from "../../icons/all-icons"
 import { BoldSpanText } from "../bold-span-text"
 import { CustomBeaker } from "../../icons/custom-beaker"
+import { CustomSandbox } from "../../icons/custom-sandbox"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ProductProps {
@@ -85,7 +85,7 @@ function ProductShowcase() {
 							with no limits or restrictions.
 						</div>
 					}
-					Icon={Sandbox}
+					Icon={CustomSandbox}
 					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-black"
 					linkToShow="www.bluedotrobots.com/sandbox"
 					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}

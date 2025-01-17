@@ -24,5 +24,3 @@ export const CustomBeaker: LucideIcon = forwardRef<SVGSVGElement, LucideProps>(
 )
 
 CustomBeaker.displayName = "CustomBeaker"
-
-// To make an SVG like this, paste it into https://www.svgviewer.dev/svg-to-react-jsx, copy the svg settings from above, and insert the website's generated path
