@@ -1,13 +1,10 @@
-import { IoRadioSharp } from "react-icons/io5"
-import { RiRadioButtonFill } from "react-icons/ri"
-import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
-import { MdOutlineTimer, MdSettingsRemote } from "react-icons/md"
-import { FaLightbulb, FaCompass, FaPalette } from "react-icons/fa"
+// TODO: Bring back both of these: mport { GiCarWheel, GiShieldReflect } from "react-icons/gi"
+import { Compass, Palette, Lightbulb, Timer, Waves, Radio, CircleDot } from "lucide-react"
 
 const element1NavData: LabNavData[] = [
 	{
 		title: "LED",
-		icon: FaLightbulb,
+		icon: Lightbulb,
 		items: [
 			{
 				title: "Reading",
@@ -25,7 +22,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Motors",
-		icon: GiCarWheel,
+		icon: Compass,
 		items: [
 			{
 				title: "Reading",
@@ -43,7 +40,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Encoders",
-		icon: MdOutlineTimer,
+		icon: Timer,
 		items: [
 			{
 				title: "Reading",
@@ -61,7 +58,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Buttons",
-		icon: RiRadioButtonFill,
+		icon: CircleDot,
 		items: [
 			{
 				title: "Reading",
@@ -79,7 +76,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Color Sensors",
-		icon: FaPalette,
+		icon: Palette,
 		items: [
 			{
 				title: "Reading",
@@ -97,7 +94,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Sensor Array",
-		icon: IoRadioSharp,
+		icon: Radio,
 		items: [
 			{
 				title: "Reading",
@@ -115,7 +112,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Communication Sensors",
-		icon: MdSettingsRemote,
+		icon: Waves,
 		items: [
 			{
 				title: "Reading",
@@ -133,7 +130,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Time of Flight Sensors",
-		icon: GiShieldReflect,
+		icon: Compass,
 		items: [
 			{
 				title: "Reading",
@@ -151,7 +148,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IMU",
-		icon: FaCompass,
+		icon: Compass,
 		items: [
 			{
 				title: "Reading",

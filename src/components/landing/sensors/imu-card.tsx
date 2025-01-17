@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { FaTachometerAlt } from "react-icons/fa"
+import { Gauge } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
@@ -36,7 +36,7 @@ export default function IMUCard() {
 						onMouseEnter={() => setIsHovered(true)}
 						onMouseLeave={() => setIsHovered(false)}
 					>
-						<FaTachometerAlt
+						<Gauge
 							className={cn(
 								"origin-center text-black dark:text-white transform",
 								isHovered ? "animate-[vibrate_100ms_ease-in-out_infinite]" : ""

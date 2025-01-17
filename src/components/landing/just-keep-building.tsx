@@ -1,23 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
-import { IconType } from "react-icons"
-import { IoIosRocket } from "react-icons/io"
-import { FaLightbulb } from "react-icons/fa"
+import { LucideIcon , Rocket, Lightbulb } from "lucide-react"
 import BoxReveal from "../shadcn/ui/box-reveal"
 import { BoldedDescription } from "./bold-span-text"
 import TextRevealByWord from "../shadcn/ui/text-reveal"
 
 interface Feature {
-	Icon: IconType
+	Icon: LucideIcon
 	title: string
 }
 
 const features: Feature[] = [
 	{
-		Icon: IoIosRocket,
+		Icon: Rocket,
 		title: "Frictionless"
 	},
 	{
-		Icon: FaLightbulb,
+		Icon: Lightbulb,
 		title: "Grows With You"
 	}
 ]

@@ -4,6 +4,7 @@ import { Link } from "react-router"
 import { ArrowRight } from "lucide-react"
 import useUsername from "../../hooks/memos/username"
 import { Button } from "@/components/shadcn/ui/button"
+import { Sandbox } from "../icons/all-icons"
 
 function GoToSandboxButton() {
 	const username = useUsername()
@@ -22,6 +23,7 @@ function GoToSandboxButton() {
 		>
 			<Link to="/sandbox">
 				Go to Sandbox
+				<Sandbox />
 				<ArrowRight
 					className="absolute right-4 transform opacity-0 group-hover:opacity-100
 					transition-all duration-50 ease-out translate-x-[-10px] group-hover:translate-x-0"

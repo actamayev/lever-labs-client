@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
-import ShowAuthToNullUser from "../components/show-auth-to-null-user"
+import ShowAuthToNullUser from "../components/auth/show-auth-to-null-user"
 
 function Settings() {
 	const authClass = useAuthContext()

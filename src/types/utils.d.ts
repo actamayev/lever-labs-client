@@ -1,4 +1,3 @@
-import { IconType } from "react-icons"
 import { LucideIcon } from "lucide-react"
 
 declare global {
@@ -21,12 +20,12 @@ declare global {
 	interface SidebarNavData {
 		title: string
 		url: PageNames
-		icon: IconType
+		icon: LucideIcon
 	}
 
 	interface LabNavData {
 		title: string
-		icon: IconType | LucideIcon
+		icon: LucideIcon
 		items: {
 			title: ActivityTitles
 			url: LabPages

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion"
-import { FaInfinity } from "react-icons/fa"
+// TODO: Make sure the animation is good
+import { InfinityIcon } from "lucide-react"
 import { useCallback, useState } from "react"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
@@ -34,7 +35,7 @@ export default function ModuleCard() {
 					onClick={handleClick}
 				>
 					{/* Static infinity icon */}
-					<FaInfinity
+					<InfinityIcon
 						className="transition-all duration-300"
 						style={{ color: currentColor }}
 						size={bentoIconSize}
@@ -61,7 +62,7 @@ export default function ModuleCard() {
 									ease: "linear"
 								}}
 							/>
-							<FaInfinity
+							<InfinityIcon
 								className="transition-all duration-300"
 								style={{ color: currentColor }}
 								size={bentoIconSize}

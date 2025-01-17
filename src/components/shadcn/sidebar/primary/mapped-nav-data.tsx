@@ -6,20 +6,19 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import { HiBeaker } from "react-icons/hi"
-import { TbSandbox } from "react-icons/tb"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
+import { Beaker, Sandbox } from "../../../icons/all-icons"
 
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
 		url: "/lab",
-		icon: HiBeaker
+		icon: Beaker
 	},
 	{
 		title: "Sandbox",
 		url: "/sandbox",
-		icon: TbSandbox
+		icon: Sandbox
 	}
 ]
 

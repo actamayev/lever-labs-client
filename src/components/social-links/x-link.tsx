@@ -1,4 +1,5 @@
-import { FaXTwitter } from "react-icons/fa6"
+import { Twitter } from "lucide-react"
+// TODO: Bring tihs back: import { FaXTwitter } from "react-icons/fa6"
 
 export default function XLink() {
 	return (
@@ -9,7 +10,7 @@ export default function XLink() {
 			target="_blank"
 			rel="noopener noreferrer"
 		>
-			<FaXTwitter size={24} />
+			<Twitter size={24} />
 		</a>
 	)
 }

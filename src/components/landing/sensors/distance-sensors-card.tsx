@@ -1,5 +1,6 @@
 import { useState } from "react"
-import { TbRulerMeasure } from "react-icons/tb"
+// TODO: Confirm the ruler stretch correctly. consider bringing back the other one svg
+import { Ruler } from "lucide-react"
 import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
 import { DottedTextTooltip } from "../../dotted-underline-text"
@@ -39,7 +40,7 @@ export default function DistanceSensorsCard() {
 							onClick={handleClick}
 							className="cursor-pointer"
 						>
-							<TbRulerMeasure
+							<Ruler
 								className={cn(
 									"origin-left text-black dark:text-white",
 									isAnimating ? "animate-[measure_1s_ease-in-out]" : ""

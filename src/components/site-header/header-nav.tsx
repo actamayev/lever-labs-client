@@ -1,6 +1,6 @@
 import LogoHeaderSection from "./logo-header-section"
 import GoToSandboxButton from "./go-to-sandbox-button"
-import LoginLogoutHeaderItem from "../login-logout-header-item"
+import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 
 export default function HeaderNav() {
 	return (

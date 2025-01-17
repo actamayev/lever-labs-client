@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { observer } from "mobx-react"
 import { useLocation } from "react-router"
-import useUsername from "../hooks/memos/username"
+import useUsername from "../../hooks/memos/username"
 import NullUserNavLink from "./null-user-nav-link"
 
 function LoginLogoutHeaderItem() {

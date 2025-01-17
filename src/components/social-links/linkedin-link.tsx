@@ -1,4 +1,4 @@
-import { FaLinkedin } from "react-icons/fa"
+import { Linkedin } from "lucide-react"
 
 export default function LinkedinLink() {
 	return (
@@ -9,7 +9,7 @@ export default function LinkedinLink() {
 			target="_blank"
 			rel="noopener noreferrer"
 		>
-			<FaLinkedin size={24} />
+			<Linkedin size={24} />
 		</a>
 	)
 }
