@@ -1,28 +1,18 @@
-/* eslint-disable max-len */
-import { IconType } from "react-icons"
-// import { FaWifi } from "react-icons/fa"
-import { HiCode } from "react-icons/hi"
-import { CiCloudOn } from "react-icons/ci"
-// import { MdSensors } from "react-icons/md"
-import { GiBrickWall } from "react-icons/gi"
-import { IoAnalytics } from "react-icons/io5"
-import { LuCircuitBoard } from "react-icons/lu"
-// import { ChartNoAxesCombined } from "lucide-react"
-import { IoMdBatteryCharging } from "react-icons/io"
+import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesCombined, CircuitBoard } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { BoldSpanText } from "./bold-span-text"
 import { bentoIconSize } from "../../utils/constants"
 import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
 
 interface Feature {
-	icon: IconType
+	icon: LucideIcon
 	title: string
 	description: React.ReactNode
 }
 
 const features: Feature[] = [
 	{
-		icon: IoMdBatteryCharging,
+		icon: BatteryCharging,
 		title: "Never Stop Building",
 		description: (
 			<>
@@ -41,7 +31,7 @@ const features: Feature[] = [
 		)
 	},
 	{
-		icon: GiBrickWall,
+		icon: BrickWall,
 		title: "Stress Tested",
 		description: (
 			<>
@@ -54,7 +44,7 @@ const features: Feature[] = [
 		)
 	},
 	{
-		icon: CiCloudOn,
+		icon: Cloud,
 		title: "Progress Lives in the Cloud",
 		description: (
 			<>
@@ -72,7 +62,7 @@ const features: Feature[] = [
 	// 	description: "Connect to Wi-Fi and start coding immediately. No complicated installations or downloads needed.",
 	// },
 	{
-		icon: LuCircuitBoard,
+		icon: CircuitBoard,
 		title: "See How It Works",
 		description: (
 			<>
@@ -85,7 +75,7 @@ const features: Feature[] = [
 		)
 	},
 	{
-		icon: HiCode,
+		icon: CodeXml,
 		title: "Code Your Way",
 		description: (
 			<>
@@ -97,7 +87,7 @@ const features: Feature[] = [
 		)
 	},
 	{
-		icon: IoAnalytics,
+		icon: ChartNoAxesCombined,
 		title: "Track Your Growth",
 		description: (
 			<>

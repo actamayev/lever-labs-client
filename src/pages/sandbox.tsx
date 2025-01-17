@@ -1,8 +1,8 @@
 import { observer } from "mobx-react"
 import { useAuthContext } from "../contexts/auth-context"
 import PageHelmet from "../components/helmet/page-helmet"
-import ShowAuthToNullUser from "../components/show-auth-to-null-user"
-import BlocklyComponent from "../components/blockly-component"
+import ShowAuthToNullUser from "../components/auth/show-auth-to-null-user"
+import SandboxBlocklyComponent from "../components/sandbox/sandbox-blockly-component"
 
 function Sandbox() {
 	const authClass = useAuthContext()
@@ -19,7 +19,7 @@ function Sandbox() {
 	return (
 		<>
 			<PageHelmet pageTitle="/sandbox" />
-			<BlocklyComponent />
+			<SandboxBlocklyComponent />
 		</>
 	)
 }

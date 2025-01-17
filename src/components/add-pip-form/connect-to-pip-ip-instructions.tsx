@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { Checkbox } from "../shadcn/ui/checkbox"
@@ -10,8 +10,8 @@ function ConnectToPipInstructions() {
 	const openIpAddrTab = useOpenIpAddrTab()
 
 	if (
-		_.isNull(addPipClass) ||
-		_.isNull(addPipClass.store.encodedWifiCredentials) ||
+		isNull(addPipClass) ||
+		isNull(addPipClass.store.encodedWifiCredentials) ||
 		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false ||
 		!addPipClass.store.isPipNameValid
 	) return null

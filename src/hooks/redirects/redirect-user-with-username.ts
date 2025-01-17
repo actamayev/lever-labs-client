@@ -1,6 +1,6 @@
-import _ from "lodash"
-import { useEffect } from "react"
+import isNull from "lodash-es/isNull"
 import useTypedNavigate from "../navigate/typed-navigate"
+import { useEffect } from "react"
 import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 
@@ -13,7 +13,7 @@ export default function useRedirectUserWithUsername (): void  {
 		if (authClass.isLoggedIn === false) {
 			return navigate("/")
 		}
-		if (_.isNull(personalInfoClass.username)) return
+		if (isNull(personalInfoClass.username)) return
 		navigate("/lab")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass, personalInfoClass.username])
 }

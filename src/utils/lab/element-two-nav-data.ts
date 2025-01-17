@@ -1,10 +1,10 @@
 import { Radar } from "lucide-react"
-import { GiChameleonGlyph } from "react-icons/gi"
+import { CustomChameleon } from "../../components/icons/custom-chameleon"
 
 const element2NavData: LabNavData[] = [
 	{
 		title: "Chameleon Mode",
-		icon: GiChameleonGlyph,
+		icon: CustomChameleon,
 		items: [
 			{
 				title: "Reading",

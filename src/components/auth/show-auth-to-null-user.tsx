@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
-import Login from "./auth/login/login"
-import Register from "./auth/register/register"
-import { useAuthContext } from "../contexts/auth-context"
+import Login from "./login/login"
+import Register from "./register/register"
+import { useAuthContext } from "../../contexts/auth-context"
 
 interface Props {
 	whereToNavigate: PageNames

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { useLocation } from "react-router"
 import ClassicLayout from "./classic-layout"
@@ -21,7 +21,7 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 		location.pathname.startsWith(privatePath)
 	)
 
-	if (!isPrivatePage || _.isNull(username)) {
+	if (!isPrivatePage || isNull(username)) {
 		let extraClasses = undefined
 		if (location.pathname === "/") extraClasses = ""
 

@@ -1,5 +1,5 @@
 .spin-wheel {
-	animation: spin 0.3s linear infinite;
+	animation: spin 0.2s linear infinite;
 }
   
 @keyframes spin {

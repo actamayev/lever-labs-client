@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { cn } from "../lib/shadcn/utils"
+import isUndefined from "lodash-es/isUndefined"
 
 interface Props {
 	value: string | undefined
@@ -10,7 +10,7 @@ interface Props {
 export default function CharacterCounter(props: Props) {
 	const { value, characterLimit, extraClasses = ""} = props
 
-	if (_.isUndefined(value)) return null
+	if (isUndefined(value)) return null
 
 	return (
 		<div className={cn("absolute inset-y-0 flex items-center transition-all", extraClasses)}>

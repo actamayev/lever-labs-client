@@ -1,13 +1,15 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
+import isEmpty from "lodash-es/isEmpty"
 import useValidatePipData from "./validate-pip-data"
+import useExitAfterAddPip from "./exit-after-add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
-import useExitAfterAddPip from "./exit-after-add-pip"
 
 export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -20,7 +22,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
-			if (_.isNull(addPipClass)) return
+			if (isNull(addPipClass)) return
 			const { pipUUID, pipName, shouldAutoConnect } = addPipClass.store.mirroredFormValues as {
 				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
 			}
@@ -38,7 +40,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 				})
 			}
 
-			if (_.isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
+			if (isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
 			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
 				addPipClass.form.setValue("shouldAutoConnect", false)
 			}
@@ -50,7 +52,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
 
-			if (!_.isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
+			if (!isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
 			}
 			const pipDataToAdd: PipData = {
@@ -81,7 +83,7 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 					}
 				}
 			}
-			if (_.isNull(addPipClass)) return
+			if (isNull(addPipClass)) return
 			const { pipName } = addPipClass.store.mirroredFormValues
 			return toast.negative({
 				title: `Unable to add ${pipName} at this time`,

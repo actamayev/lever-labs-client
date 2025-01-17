@@ -1,13 +1,13 @@
-import _ from "lodash"
+import isEmpty from "lodash-es/isEmpty"
 
 export default function confirmLoginFields(credentials: LoginFormValues, setError: (error: string) => void): boolean {
-	if (_.isEmpty(credentials.contact) && _.isEmpty(credentials.password)) {
+	if (isEmpty(credentials.contact) && isEmpty(credentials.password)) {
 		setError("Welcome back! Please enter your email/username and password to log in")
 		return false
-	} else if (_.isEmpty(credentials.password)) {
+	} else if (isEmpty(credentials.password)) {
 		setError("Almost there! Just need your password")
 		return false
-	} else if (_.isEmpty(credentials.contact)) {
+	} else if (isEmpty(credentials.contact)) {
 		setError("To get started, enter your email or username")
 		return false
 	} else if (credentials.contact.length < 3) {

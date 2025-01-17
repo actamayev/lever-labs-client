@@ -1,4 +1,6 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
+import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { usePipContext } from "../../contexts/pip-context"
@@ -14,15 +16,15 @@ export default function useRetrievePipInfoUseEffect(): void {
 		try {
 			if (
 				pipClass.isRetrievingPipData === true ||
-				!_.isEmpty(pipClass.pipData) ||
-				_.isNull(blueDotApiClient.httpClient.accessToken) ||
+				!isEmpty(pipClass.pipData) ||
+				isNull(blueDotApiClient.httpClient.accessToken) ||
 				pipClass.retrievedPipData === true
 			) return
 
 			pipClass.setIsRetrievingPipData(true)
 
 			const pipDataResponse = await blueDotApiClient.pipDataService.retrievePreviouslyAddedPips()
-			if (!_.isEqual(pipDataResponse.status, 200) || isErrorResponse(pipDataResponse.data)) {
+			if (!isEqual(pipDataResponse.status, 200) || isErrorResponse(pipDataResponse.data)) {
 				throw Error ("Unable to retrieve pip Data")
 			}
 			pipClass.setPipData(pipDataResponse.data.userPipData)

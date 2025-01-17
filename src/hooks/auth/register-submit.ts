@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
@@ -32,7 +32,7 @@ export default function useRegisterSubmit (
 
 			const response = await blueDotApiClient.authDataService.register({ ...restOfCredentials, siteTheme })
 
-			if (!_.isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
+			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to register. Please reload the page and try again")
 				return
 			}

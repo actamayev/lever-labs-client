@@ -1,3 +1,4 @@
+import { Lock } from "lucide-react"
 import {
 	Tooltip,
 	TooltipContent,
@@ -5,7 +6,6 @@ import {
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
 import { Button } from "./shadcn/ui/button"
-import { FaLock } from "react-icons/fa6"
 
 export default function LockIconAndTooltip() {
 	return (
@@ -18,7 +18,7 @@ export default function LockIconAndTooltip() {
 						size="sm"
 						className="h-auto p-1.5 dark:hover:bg-zinc-700"
 					>
-						<FaLock className="!h-7 !w-7" />
+						<Lock className="!h-7 !w-7" />
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>

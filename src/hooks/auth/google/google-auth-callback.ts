@@ -1,5 +1,6 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
+import isUndefined from "lodash-es/isUndefined"
 import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
@@ -15,7 +16,7 @@ export default function useGoogleAuthCallback(
 
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
-			if (_.isUndefined(successResponse.credential) || _.isUndefined(successResponse.clientId)) return
+			if (isUndefined(successResponse.credential) || isUndefined(successResponse.clientId)) return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
 			let siteTheme: SiteThemes = "dark"
@@ -24,7 +25,7 @@ export default function useGoogleAuthCallback(
 			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
-			if (!_.isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
+			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
 				throw Error("Unable to log in")
 			}
 			setDataAfterLogin(googleCallbackResponse.data)

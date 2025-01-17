@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { useLocation } from "react-router"
-import { useAuthContext } from "../contexts/auth-context"
-import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth/auth-header-links"
+import { useAuthContext } from "../../contexts/auth-context"
+import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
 function NullUserNavLink() {
 	const location = useLocation()

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"
 import useToastOptions from "../../components/toast-options"
@@ -11,7 +11,7 @@ export default function useOpenIpAddrTab(): () => void {
 	const pipStatusPoll = usePipStatusPoll()
 
 	return useCallback(async () => {
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		try {
 			const connectedToInternet = await checkInternetConnectivity()

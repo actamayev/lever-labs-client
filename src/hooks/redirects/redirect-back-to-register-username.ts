@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { useEffect } from "react"
 import { useLocation } from "react-router"
 import useTypedNavigate from "../navigate/typed-navigate"
@@ -24,7 +24,7 @@ export default function useRedirectBackToRegisterUsername(): void {
 		// If the user isn't logged in, no need to re-direct (return)
 		if (authClass.isLoggedIn === false) return
 		// If the user already has a username, no need to re-direct (return)
-		if (!_.isNull(personalInfoClass.username) || _.isNull(personalInfoClass.email)) return
+		if (!isNull(personalInfoClass.username) || isNull(personalInfoClass.email)) return
 		// Check if the current path starts with any of the private page roots
 		const isPrivatePage = PrivatePageRoots.some(root =>
 			location.pathname === root || location.pathname.startsWith(`${root}/`)

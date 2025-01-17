@@ -1,4 +1,5 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
@@ -12,7 +13,7 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 
 	return useCallback(async (cppCode: string) => {
 		try {
-			if (_.isNull(pipClass.selectedPip)) {
+			if (isNull(pipClass.selectedPip)) {
 				return toast.neutral({
 					title: "You have not connected to a Pip",
 					description: "Please connect to a Pip to upload code"
@@ -40,7 +41,7 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 
 			const connectToPipResponse = await blueDotApiClient.pipDataService.sendCppToPip(pipClass.selectedPip.pipUUID, cppCode)
 
-			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
+			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
 			return toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })

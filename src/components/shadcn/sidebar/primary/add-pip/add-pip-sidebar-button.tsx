@@ -1,4 +1,5 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import { useCallback, useEffect } from "react"
 import { Bot, PlusCircle } from "lucide-react"
@@ -21,20 +22,20 @@ function AddPipSidebarButton() {
 	}, [pipClass.pipData.length])
 
 	const handleButtonClick = useCallback(async () => {
-		if (!_.isNull(pipClass.selectedPip)) {
+		if (!isNull(pipClass.selectedPip)) {
 			if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 				return await diconnectFromPip(pipClass.selectedPip)
 			} else {
 				return await requestToConnectToPip(pipClass.selectedPip.pipUUID)
 			}
 		}
-		if (_.isEmpty(pipClass.pipData)) {
+		if (isEmpty(pipClass.pipData)) {
 			navigate("/add-pip")
 		}
 	}, [diconnectFromPip, navigate, pipClass.pipData, pipClass.selectedPip, requestToConnectToPip])
 
 	const tooltipContent = () => {
-		if (_.isNull(pipClass.selectedPip)) {
+		if (isNull(pipClass.selectedPip)) {
 			return <>Add Pip</>
 		} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 			return <>Disconnect from {pipClass.selectedPip.pipName}</>

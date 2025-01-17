@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import _ from "lodash"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { FaUserCircle } from "react-icons/fa"
 import { cn } from "../lib/shadcn/utils"
+import { CustomUserCircle } from "./icons/custom-user-circle"
+import isNull from "lodash-es/isNull"
 
 interface Props {
 	profileImageUrl: string | null
@@ -19,9 +19,9 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 		if (onClickCreatorPicture) onClickCreatorPicture(e)
 	}, [onClickCreatorPicture])
 
-	if (_.isNull(profileImageUrl)) {
+	if (isNull(profileImageUrl)) {
 		return (
-			<FaUserCircle
+			<CustomUserCircle
 				className={cn(
 					"text-black dark:text-white transition-all duration-300",
 					extraClasses
@@ -37,6 +37,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 			alt="Creator's Profile"
 			className={extraClasses}
 			onClick={handleClick}
+			loading="lazy"
 		/>
 	)
 }

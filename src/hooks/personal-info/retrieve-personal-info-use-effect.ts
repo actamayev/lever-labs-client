@@ -1,4 +1,5 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
@@ -12,13 +13,13 @@ export default function useRetrievePersonalInfoUseEffect(): void {
 		try {
 			if (
 				personalInfoClass.isRetrievingPersonalInfo === true ||
-				_.isNull(blueDotApiClient.httpClient.accessToken)
+				isNull(blueDotApiClient.httpClient.accessToken)
 			) return
 
 			personalInfoClass.setIsRetrievingPersonalDetails(true)
 
 			const personalInfoResponse = await blueDotApiClient.personalInfoDataService.retrievePersonalInfo()
-			if (!_.isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
+			if (!isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
 				throw Error ("Unable to retrieve personal info")
 			}
 			personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)

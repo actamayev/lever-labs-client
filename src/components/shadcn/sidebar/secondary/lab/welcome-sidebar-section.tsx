@@ -1,8 +1,8 @@
-import { House } from "lucide-react"
 import { useLocation } from "react-router"
 import { SidebarGroup, SidebarGroupLabel } from "@/components/shadcn/ui/sidebar"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
 import { cn } from "../../../../../lib/shadcn/utils"
+import { CustomHouse } from "../../../../icons/custom-house"
 
 export default function WelcomeSidebarSection() {
 	const navigate = useTypedNavigate()
@@ -15,13 +15,13 @@ export default function WelcomeSidebarSection() {
 			<SidebarGroupLabel
 				className={cn(
 					"text-xl dark:text-white text-black cursor-pointer",
-					"transition-all duration-100",
+					"transition-all duration-100 ml-2",
 					isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
 				)}
 				onClick={() => navigate("/lab/welcome")}
 			>
 				<div className="space-x-2 flex flex-row">
-					<House style={{ width: "25px", height: "25px" }} />
+					<CustomHouse style={{ width: "25px", height: "25px" }} />
 					<span className="text-lg">
 						Welcome
 					</span>

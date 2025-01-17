@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -7,7 +7,7 @@ export default function useValidatePipData(): () => boolean {
 	const addPipClass = useAddPipContext()
 
 	return useCallback(() => {
-		if (_.isNull(addPipClass)) return false
+		if (isNull(addPipClass)) return false
 		if (!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) return false
 
 		const { pipUUID, wifiNetworkName } = addPipClass.store.mirroredFormValues

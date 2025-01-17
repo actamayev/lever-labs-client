@@ -1,7 +1,7 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { useLocation } from "react-router"
-import useUsername from "../hooks/memos/username"
+import useUsername from "../../hooks/memos/username"
 import NullUserNavLink from "./null-user-nav-link"
 
 function LoginLogoutHeaderItem() {
@@ -9,7 +9,7 @@ function LoginLogoutHeaderItem() {
 	const username = useUsername()
 
 	if (
-		!_.isNull(username) ||
+		!isNull(username) ||
 		location.pathname === "/register-username"
 	) return null
 	return <NullUserNavLink />

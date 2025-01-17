@@ -1,13 +1,17 @@
-import { IoRadioSharp } from "react-icons/io5"
-import { RiRadioButtonFill } from "react-icons/ri"
-import { GiCarWheel, GiShieldReflect } from "react-icons/gi"
-import { MdOutlineTimer, MdSettingsRemote } from "react-icons/md"
-import { FaLightbulb, FaCompass, FaPalette } from "react-icons/fa"
+import { Radio } from "lucide-react"
+import { CustomTimer } from "../../components/icons/custom-timer"
+import { CustomWheel } from "../../components/icons/custom-wheel"
+import { CustomRemote } from "../../components/icons/custom-remote"
+import { CustomButton } from "../../components/icons/custom-button"
+import { CustomCompass } from "../../components/icons/custom-compass"
+import { CustomPalette } from "../../components/icons/custom-palette"
+import { CustomLightbulb } from "../../components/icons/custom-lightbulb"
+import { CustomShieldReflect } from "../../components/icons/custom-shield-reflect"
 
 const element1NavData: LabNavData[] = [
 	{
 		title: "LED",
-		icon: FaLightbulb,
+		icon: CustomLightbulb,
 		items: [
 			{
 				title: "Reading",
@@ -25,7 +29,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Motors",
-		icon: GiCarWheel,
+		icon: CustomWheel,
 		items: [
 			{
 				title: "Reading",
@@ -43,7 +47,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Encoders",
-		icon: MdOutlineTimer,
+		icon: CustomTimer,
 		items: [
 			{
 				title: "Reading",
@@ -61,7 +65,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Buttons",
-		icon: RiRadioButtonFill,
+		icon: CustomButton,
 		items: [
 			{
 				title: "Reading",
@@ -79,7 +83,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Color Sensors",
-		icon: FaPalette,
+		icon: CustomPalette,
 		items: [
 			{
 				title: "Reading",
@@ -97,7 +101,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Sensor Array",
-		icon: IoRadioSharp,
+		icon: Radio,
 		items: [
 			{
 				title: "Reading",
@@ -115,7 +119,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IR Communication Sensors",
-		icon: MdSettingsRemote,
+		icon: CustomRemote,
 		items: [
 			{
 				title: "Reading",
@@ -133,7 +137,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Time of Flight Sensors",
-		icon: GiShieldReflect,
+		icon: CustomShieldReflect,
 		items: [
 			{
 				title: "Reading",
@@ -151,7 +155,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "IMU",
-		icon: FaCompass,
+		icon: CustomCompass,
 		items: [
 			{
 				title: "Reading",

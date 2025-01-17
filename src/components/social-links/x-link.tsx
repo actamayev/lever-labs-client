@@ -1,4 +1,4 @@
-import { FaXTwitter } from "react-icons/fa6"
+import { CustomX } from "../icons/custom-x"
 
 export default function XLink() {
 	return (
@@ -9,7 +9,7 @@ export default function XLink() {
 			target="_blank"
 			rel="noopener noreferrer"
 		>
-			<FaXTwitter size={24} />
+			<CustomX />
 		</a>
 	)
 }

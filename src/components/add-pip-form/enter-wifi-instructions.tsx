@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { Info } from "lucide-react"
 import { observer } from "mobx-react"
 import {
@@ -13,7 +13,7 @@ import { useAddPipContext } from "../../contexts/add-pip-context"
 function EnterWifiInstructions() {
 	const addPipClass = useAddPipContext()
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<div className="flex flex-row items-center">

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../shadcn/ui/form"
@@ -22,7 +22,7 @@ function AddPipForm() {
 	const addPip = useAddPip(true)
 	const addPipClass = useAddPipContext()
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<Card className="mx-auto max-w-5xl border-0 mt-0 shadow-none">

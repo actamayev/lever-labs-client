@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useEffect } from "react"
+import isNull from "lodash-es/isNull"
 import { usePipContext } from "../../contexts/pip-context"
 import { Button } from "../../components/shadcn/ui/button"
 import useToastOptions from "../../components/toast-options"
@@ -13,7 +13,7 @@ export default function useSocketEventsUseEffect(): void {
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	useEffect(() => {
-		if (_.isNull(socketClass.accessToken)) return
+		if (isNull(socketClass.accessToken)) return
 		const handlePipStatusUpdate = (data: PipStatusUpdate): void => {
 			const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
 			pipClass.updatePipConnectionStatus(data)

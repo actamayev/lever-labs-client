@@ -1,6 +1,6 @@
-import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -35,7 +35,7 @@ export default function useRequestToConnectToPip(): (
 			}
 			const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(foundPip.pipUUID)
 
-			if (!_.isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
+			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
 			pipClass.updatePipConnectionStatus({ pipUUID: foundPip.pipUUID, newConnectionStatus: "connected" })

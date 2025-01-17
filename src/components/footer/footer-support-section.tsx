@@ -9,7 +9,7 @@ export default function FooterSupportSection() {
 			/> */}
 			<LinkToExternalSite
 				title="About Us"
-				link="https://help.bluedotrobots.com"
+				link="https://help.bluedotrobots.com/bdr"
 			/>
 			{/* <LinkToExternalSite
 				title="FAQ"

@@ -1,4 +1,6 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -49,7 +51,7 @@ class PipClass {
 
 	public findPipNameFromUUID(pipUUID: PipUUID): string {
 		const pip = this.findPipFromUUID(pipUUID)
-		if (_.isUndefined(pip)) return "Pip"
+		if (isUndefined(pip)) return "Pip"
 		return pip.pipName
 	}
 
@@ -62,7 +64,7 @@ class PipClass {
 	})
 
 	public setSelectedPipToFirstPip = action((): void => {
-		if (!_.isNull(this.selectedPip) || _.isEmpty(this.pipData)) return
+		if (!isNull(this.selectedPip) || isEmpty(this.pipData)) return
 		this.setSelectedPip(this.pipData[0])
 	})
 

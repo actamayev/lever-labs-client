@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -11,20 +11,20 @@ class AuthClass {
 	}
 
 	get isLoggedIn(): boolean {
-		return !_.isNull(this._accessToken)
+		return !isNull(this._accessToken)
 	}
 
 	public getAuthDataFromStorage(): string | null {
 		const storedAccessToken = localStorage.getItem("Access Token")
-		if (!_.isNull(storedAccessToken)) this.setAccessToken(storedAccessToken)
+		if (!isNull(storedAccessToken)) this.setAccessToken(storedAccessToken)
 		return this._accessToken
 	}
 
 	public setAccessToken = action((accessToken: string | null, saveToStorage = false): void => {
 		this._accessToken = accessToken
-		if (!_.isNull(accessToken) && saveToStorage === true) {
+		if (!isNull(accessToken) && saveToStorage === true) {
 			localStorage.setItem("Access Token", accessToken as string)
-		} else if (_.isNull(accessToken) && saveToStorage === true) {
+		} else if (isNull(accessToken) && saveToStorage === true) {
 			localStorage.removeItem("Access Token")
 		}
 	})

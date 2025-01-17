@@ -1,16 +1,7 @@
+import { Suspense, lazy } from "react"
 import { observer } from "mobx-react"
 import { Routes, Route } from "react-router"
-import Lab from "./pages/lab"
-import Landing from "./pages/landing"
-import AddPip from "./pages/add-pip"
 // import Garage from "./pages/garage"
-import Contact from "./pages/contact"
-import Missing from "./pages/missing"
-import Sandbox from "./pages/sandbox"
-import Settings from "./pages/settings"
-import LoginPage from "./pages/auth/login-page"
-import RegisterPage from "./pages/auth/register-page"
-import RegisterUsername from "./pages/auth/register-username"
 
 import labRoutes from "./routing/lab-routes-structure"
 
@@ -23,6 +14,18 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
+import generateLabRoutes from "./utils/generate-lab-routes"
+
+const Landing = lazy(() => import("./pages/landing"))
+const LoginPage = lazy(() => import("./pages/auth/login-page"))
+const RegisterPage = lazy(() => import("./pages/auth/register-page"))
+const RegisterUsername = lazy(() => import("./pages/auth/register-username"))
+const Lab = lazy(() => import("./pages/lab"))
+const AddPip = lazy(() => import("./pages/add-pip"))
+const Settings = lazy(() => import("./pages/settings"))
+const Contact = lazy(() => import("./pages/contact"))
+const Missing = lazy(() => import("./pages/missing"))
+const Sandbox = lazy(() => import("./pages/sandbox"))
 
 function App() {
 	useScrollToTop()
@@ -37,47 +40,23 @@ function App() {
 	useRetrievePipInfoUseEffect()
 
 	return (
-		<Routes>
-			<Route path="/" element={<Landing />} />
-			<Route path="/login" element={<LoginPage />} />
-			<Route path="/register" element={<RegisterPage />} />
-			<Route path="/register-username" element={<RegisterUsername />} />
-
-			{/* <Route path="/garage" element={<Garage />} /> */}
-			<Route path="/lab" element={<Lab />}>
-				{labRoutes.map((route: RouteType) => {
-					// Handle index routes
-					if ("index" in route && route.index) {
-						return <Route key="index" index element={route.element} />
-					}
-
-					// Handle element routes and base routes
-					return (
-						<Route
-							key={route.path}
-							path={route.path}
-							element={"element" in route ? route.element : undefined}
-						>
-							{route.children?.map((childRoute) => (
-								<Route
-									key={childRoute.path}
-									path={childRoute.path}
-									element={childRoute.element}
-								/>
-							))}
-						</Route>
-					)
-				})}
-			</Route>
-			<Route path="/sandbox" element={<Sandbox />} />
-			<Route path="/add-pip" element={<AddPip />} />
-
-			<Route path="/settings" element={<Settings />} />
-
-			<Route path="/contact" element={<Contact />} />
-
-			<Route path="*" element={<Missing />} />
-		</Routes>
+		<Suspense>
+			<Routes>
+				<Route path="/" element={<Landing />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/register-username" element={<RegisterUsername />} />
+				<Route path="/lab" element={<Lab />}>
+					{generateLabRoutes(labRoutes)}
+				</Route>
+				{/* <Route path="/garage" element={<Garage />} /> */}
+				<Route path="/sandbox" element={<Sandbox />} />
+				<Route path="/add-pip" element={<AddPip />} />
+				<Route path="/settings" element={<Settings />} />
+				<Route path="/contact" element={<Contact />} />
+				<Route path="*" element={<Missing />} />
+			</Routes>
+		</Suspense>
 	)
 }
 

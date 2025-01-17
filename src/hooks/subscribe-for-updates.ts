@@ -1,6 +1,6 @@
-import _ from "lodash"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../components/toast-options"
 import { useApiClientContext } from "../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
@@ -20,7 +20,7 @@ export default function useSubscribeForUpdates(
 			if (!values.email || isLoading) return
 			setIsLoading(true)
 			const subscribeForUpdatesResponse = await blueDotApiClient.miscDataService.subscribeForUpdates(values.email)
-			if (!_.isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
+			if (!isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
 				throw new Error("Email subscription failed")
 			}
 			setIsSubscribed(true)

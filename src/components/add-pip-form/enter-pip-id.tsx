@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
@@ -27,7 +27,7 @@ function EnterPipID() {
 		const input = event.target.value
 		const allowedInput = input.replace(/[^a-zA-Z0-9]/g, "") as PipUUID
 		if (allowedInput.length > 5) return
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		onChange(allowedInput)
 		addPipClass.store.updateMirroredFormValues("pipUUID", allowedInput)
@@ -37,7 +37,7 @@ function EnterPipID() {
 	}, [addPipClass, retrievePipUUIDStatusInForm])
 
 	const tooltipMessage = useCallback((pipUUIDValid: boolean) => {
-		if (_.isNull(addPipClass)) return ""
+		if (isNull(addPipClass)) return ""
 		if (pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) {
 			return "Perfect! That's a valid Pip ID"
 		}
@@ -50,7 +50,7 @@ function EnterPipID() {
 	}, [addPipClass, addPipClass?.store.addingNewPipRequirements.doesPipUUIDExist,
 		addPipClass?.store.addingNewPipRequirements.userAlreadyAddedUUID])
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<FormField
