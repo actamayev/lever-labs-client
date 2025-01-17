@@ -1,7 +1,7 @@
-import _ from "lodash"
 import { Info } from "lucide-react"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
+import isNull from "lodash-es/isNull"
 import {
 	Tooltip,
 	TooltipContent,
@@ -20,7 +20,7 @@ function SelectAutoreconnectToPip() {
 		onChange: (value: boolean) => void,
 		currentValue: boolean
 	) => {
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		const newValue = !currentValue
 		onChange(newValue)
@@ -28,7 +28,7 @@ function SelectAutoreconnectToPip() {
 	}, [addPipClass])
 
 	if (
-		_.isNull(addPipClass) ||
+		isNull(addPipClass) ||
 		!addPipClass.store.addingNewPipRequirements.isPipOnline
 	) return null
 

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -11,7 +11,7 @@ function AddPipButton() {
 	const exitAfterAddPip = useExitAfterAddPip()
 
 	if (
-		_.isNull(addPipClass) ||
+		isNull(addPipClass) ||
 		!addPipClass.store.mirroredFormValues.pipName
 	) return null
 

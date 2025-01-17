@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useMemo } from "react"
+import isNull from "lodash/isNull"
 import { observer } from "mobx-react"
 import {
 	SidebarMenu,
@@ -32,7 +32,7 @@ function NavUser() {
 		return personalInfoClass.profilePictureUrl
 	}, [personalInfoClass.profilePictureUrl])
 
-	if (_.isNull(username)) return null
+	if (isNull(username)) return null
 
 	return (
 		<SidebarMenu>

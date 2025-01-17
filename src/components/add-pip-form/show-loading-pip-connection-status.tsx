@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import ErrorMessage from "../messages/error-message"
 import LoadingMessage from "../messages/loading-message"
@@ -8,7 +8,7 @@ import { useAddPipContext } from "../../contexts/add-pip-context"
 function ShowLoadingPipConnectionStatus() {
 	const addPipClass = useAddPipContext()
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	if (
 		!addPipClass.store.addingNewPipRequirements.doesPipUUIDExist ||
@@ -25,7 +25,7 @@ function ShowLoadingPipConnectionStatus() {
 		)
 	}
 
-	if (_.isNull(addPipClass.store.newPipConnectionStatus)) return null
+	if (isNull(addPipClass.store.newPipConnectionStatus)) return null
 
 	if (addPipClass.store.newPipConnectionStatus === "connecting") {
 		return (

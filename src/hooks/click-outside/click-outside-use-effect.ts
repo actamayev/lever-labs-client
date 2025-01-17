@@ -1,6 +1,6 @@
-import _ from "lodash"
 import { useLocation } from "react-router"
 import { useCallback, useEffect } from "react"
+import isUndefined from "lodash-es/isUndefined"
 
 export default function useClickOutsideUseEffect(
 	dropdownRef: React.RefObject<HTMLDivElement>,
@@ -27,7 +27,7 @@ export default function useClickOutsideUseEffect(
 	}, [handleClickOutside])
 
 	useEffect(() => {
-		if (_.isUndefined(setIsOpen)) return
+		if (isUndefined(setIsOpen)) return
 		setIsOpen(false)
 	}, [location, setIsOpen])
 }

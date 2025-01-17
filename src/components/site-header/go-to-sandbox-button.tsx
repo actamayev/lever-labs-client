@@ -1,15 +1,15 @@
-import _ from "lodash"
-import { observer } from "mobx-react"
+import isNull from "lodash/isNull"
 import { Link } from "react-router"
+import { observer } from "mobx-react"
 import { ArrowRight } from "lucide-react"
-import useUsername from "../../hooks/memos/username"
 import { Button } from "@/components/shadcn/ui/button"
 import { Sandbox } from "../icons/all-icons"
+import useUsername from "../../hooks/memos/username"
 
 function GoToSandboxButton() {
 	const username = useUsername()
 
-	if (_.isNull(username)) return null
+	if (isNull(username)) return null
 
 	return (
 		<Button

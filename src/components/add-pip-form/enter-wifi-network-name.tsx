@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Input } from "../shadcn/ui/input"
@@ -15,13 +15,13 @@ function EnterWifiNetworkName() {
 	) => {
 		const input = event.target.value
 		if (input.length > 50) return
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		onChange(input)
 		addPipClass.store.updateMirroredFormValues("wifiNetworkName", input)
 	}, [addPipClass])
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<FormField

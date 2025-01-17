@@ -1,5 +1,6 @@
-import _ from "lodash"
+import isNull from "lodash/isNull"
 import { useCallback } from "react"
+import isEqual from "lodash/isEqual"
 import useAddPip from "./add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
@@ -20,15 +21,15 @@ export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 		try {
 			const pipUUID = addPipClass?.store.mirroredFormValues.pipUUID as PipUUID
 			if (
-				_.isNull(addPipClass) ||
+				isNull(addPipClass) ||
 				!isPipUUIDValid(pipUUID) ||
 				pipClass.checkIfUUIDAlreadyExists(pipUUID) === true ||
-				_.isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClient.httpClient.accessToken) ||
 				addPipClass.store.newPipConnectionStatus !== "connecting"
 			) return
 
 			const pipUUIDStatusData = await blueDotApiClient.pipDataService.retrievePipUUIDStatus(pipUUID)
-			if (!_.isEqual(pipUUIDStatusData.status, 200) || isNonSuccessResponse(pipUUIDStatusData.data)) {
+			if (!isEqual(pipUUIDStatusData.status, 200) || isNonSuccessResponse(pipUUIDStatusData.data)) {
 				throw Error ("Unable to retrieve pipUUID status")
 			}
 			if (pipUUIDStatusData.data.pipConnectionStatus === "connected") {

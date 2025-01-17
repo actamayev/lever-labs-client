@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
@@ -58,7 +58,7 @@ class AddPipClass {
 	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
 		if (field === "wifiNetworkName") {
 			this.newPipConnectionStatus = null
-			if (_.isEmpty(value)) {
+			if (isEmpty(value)) {
 				return this.setEncodedWifiCredentials(null)
 			}
 		}

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Eye, EyeOff } from "lucide-react"
 import { useCallback, useState } from "react"
@@ -18,13 +18,13 @@ function EnterWifiPassword() {
 	) => {
 		const input = event.target.value
 		if (input.length > 200) return
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		onChange(input)
 		addPipClass.store.updateMirroredFormValues("wifiPassword", input)
 	}, [addPipClass])
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<FormField

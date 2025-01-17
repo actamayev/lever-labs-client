@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import _ from "lodash"
+import isNull from "lodash/isNull"
 import { useCallback } from "react"
 import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
@@ -12,7 +12,7 @@ export default function usePipStatusPoll(): () => void {
 	const retrievePipStatusWhileAdding = useRetrievePipStatusWhileAdding()
 
 	return useCallback(() => {
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		const POLLING_INTERVAL = 1000 // 1 second
 		const GOOGLE_TIMEOUT = 20000 // 20 seconds

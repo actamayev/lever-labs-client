@@ -1,4 +1,5 @@
-import _ from "lodash"
+import isNull from "lodash/isNull"
+import isEqual from "lodash/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
@@ -16,11 +17,11 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 		try {
 			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
-			if (_.isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClient.httpClient.accessToken)) {
 				return // No toast because we don't want a negative toast if someone isn't logged in
 			}
 			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
-			if (!_.isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
+			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
 				throw Error("Unable to save new default site theme")
 			}
 		} catch (error) {

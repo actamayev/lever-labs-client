@@ -1,5 +1,6 @@
-import _ from "lodash"
+import isNull from "lodash/isNull"
 import * as Blockly from "blockly"
+import isEmpty from "lodash/isEmpty"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from "react"
 import { Button } from "../shadcn/ui/button"
@@ -80,7 +81,7 @@ function SandboxBlocklyComponent() {
 		if (!toolbox) return
 
 		const flyout = toolbox.getFlyout()
-		if (_.isNull(flyout)) return
+		if (isNull(flyout)) return
 		flyout.autoClose = false
 	}, [])
 
@@ -120,7 +121,7 @@ function SandboxBlocklyComponent() {
 			</div>
 			<Button
 				onClick={sendCodeToCppCallback}
-				disabled={_.isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
+				disabled={isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
 				className="mt-2 transition-none"
 				variant="tactile"
 			>

@@ -1,5 +1,6 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import useDefaultSidebarState from "../memos/default-sidebar-state"
@@ -16,13 +17,13 @@ export default function useSetDefaultSidebarState(): () => Promise<void> {
 		try {
 			const newSidebarState = defaultSidebarState === "expanded" ? "collapsed" : "expanded"
 			personalInfoClass.setDefaultSidebarState(newSidebarState)
-			if (_.isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClient.httpClient.accessToken)) {
 				return toast.negative({
 					title: "Please log in to save the new sidebar state"
 				})
 			}
 			const sidebarStateResponse = await blueDotApiClient.personalInfoDataService.setDefaultSidebarState(newSidebarState)
-			if (!_.isEqual(sidebarStateResponse.status, 200) || isErrorResponse(sidebarStateResponse.data)) {
+			if (!isEqual(sidebarStateResponse.status, 200) || isErrorResponse(sidebarStateResponse.data)) {
 				throw Error("Unable to save new sidebar state")
 			}
 		} catch (error) {

@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
 import { useCallback, useMemo } from "react"
@@ -25,7 +25,7 @@ function EnterPipName() {
 	// if (!pipClass.addingNewPipRequirements.isPipNameNeeded) return null
 
 	const tooltipMessage = useCallback(() => {
-		if (_.isNull(addPipClass)) return ""
+		if (isNull(addPipClass)) return ""
 		const {pipName} = addPipClass.store.mirroredFormValues
 		if (!pipName) return "What would you like to name your Pip?"
 		if (pipName.length < 3) return "Let's make the name a bit longer - at least 3 characters"
@@ -40,13 +40,13 @@ function EnterPipName() {
 	) => {
 		const input = event.target.value
 		if (input.length > 20) return
-		if (_.isNull(addPipClass)) return
+		if (isNull(addPipClass)) return
 
 		onChange(input)
 		addPipClass.store.updateMirroredFormValues("pipName", input)
 	}, [addPipClass])
 
-	if (_.isNull(addPipClass)) return null
+	if (isNull(addPipClass)) return null
 
 	return (
 		<FormField

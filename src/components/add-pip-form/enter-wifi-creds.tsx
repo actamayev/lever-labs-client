@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
@@ -9,7 +9,7 @@ function EnterWifiCreds() {
 	const addPipClass = useAddPipContext()
 
 	if (
-		_.isNull(addPipClass) ||
+		isNull(addPipClass) ||
 		addPipClass.store.addingNewPipRequirements.doesPipUUIDExist === false ||
 		addPipClass.store.addingNewPipRequirements.isPipOnline ||
 		!addPipClass.store.isPipNameValid
