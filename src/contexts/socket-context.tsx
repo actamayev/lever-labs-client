@@ -1,5 +1,5 @@
 import EventEmitter from "events"
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { action, makeObservable, observable } from "mobx"
 import { createContext, useContext, useMemo } from "react"

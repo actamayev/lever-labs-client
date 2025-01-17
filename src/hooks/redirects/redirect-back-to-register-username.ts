@@ -1,4 +1,4 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { useEffect } from "react"
 import { useLocation } from "react-router"
 import useTypedNavigate from "../navigate/typed-navigate"

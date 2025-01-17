@@ -1,5 +1,5 @@
-import isNull from "lodash/isNull"
-import isEqual from "lodash/isEqual"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"

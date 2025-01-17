@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"

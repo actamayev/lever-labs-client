@@ -1,4 +1,4 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 

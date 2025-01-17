@@ -1,4 +1,4 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"
 import useToastOptions from "../../components/toast-options"

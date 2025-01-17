@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { usePipContext } from "../../contexts/pip-context"
 import { Button } from "../../components/shadcn/ui/button"
 import useToastOptions from "../../components/toast-options"

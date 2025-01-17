@@ -1,6 +1,6 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import * as Blockly from "blockly"
-import isEmpty from "lodash/isEmpty"
+import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from "react"
 import { Button } from "../shadcn/ui/button"

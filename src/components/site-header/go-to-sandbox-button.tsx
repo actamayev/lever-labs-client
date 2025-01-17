@@ -1,4 +1,4 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { Link } from "react-router"
 import { observer } from "mobx-react"
 import { ArrowRight } from "lucide-react"

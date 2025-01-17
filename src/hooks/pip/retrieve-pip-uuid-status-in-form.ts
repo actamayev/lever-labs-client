@@ -1,5 +1,5 @@
-import isNull from "lodash/isNull"
-import isEqual from "lodash/isEqual"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"

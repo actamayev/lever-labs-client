@@ -1,5 +1,5 @@
-import isNull from "lodash/isNull"
-import isEmpty from "lodash/isEmpty"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import { useCallback, useEffect } from "react"
 import { Bot, PlusCircle } from "lucide-react"

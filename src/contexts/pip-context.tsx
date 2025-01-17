@@ -1,6 +1,6 @@
-import isNull from "lodash/isNull"
-import isEmpty from "lodash/isEmpty"
-import isUndefined from "lodash/isUndefined"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 

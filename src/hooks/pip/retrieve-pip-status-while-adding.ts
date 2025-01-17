@@ -1,6 +1,6 @@
-import isNull from "lodash/isNull"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
-import isEqual from "lodash/isEqual"
+import isEqual from "lodash-es/isEqual"
 import useAddPip from "./add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
