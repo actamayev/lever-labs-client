@@ -1,7 +1,7 @@
-import helmetData from "../../utils/helmet-data"
+import allHelmetData from "../../utils/helmet-data/all-helmet-data"
 
-export default function PageHelmet({ pageTitle } : { pageTitle: StaticPageNames }) {
-	const helmetContent = helmetData[pageTitle]
+export default function PageHelmet({ pageTitle } : { pageTitle: PageNames }) {
+	const helmetContent = allHelmetData[pageTitle]
 
 	return <>{helmetContent || null}</>
 }

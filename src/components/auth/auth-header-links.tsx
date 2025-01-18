@@ -1,26 +1,48 @@
 import { Link } from "react-router"
-import { Button, type ButtonProps } from "@/components/shadcn/ui/button"
+import { observer } from "mobx-react"
+import { Button } from "@/components/shadcn/ui/button"
+import { useAuthContext } from "../../contexts/auth-context"
 
-interface Props {
+interface LinkAuthHeaderProps {
 	title: string
-	variant?: ButtonProps["variant"]
-	className?: string
 	linkTo: PageNames
 }
 
-export default function AuthHeaderLinks(props: Props) {
-	const { title, variant = "ghost", className, linkTo } = props
+export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
+	const { title, linkTo } = props
+
+	return (
+		<Link to={linkTo}>
+			<Button
+				variant="tactile"
+				className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
+				dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+			>
+				{title}
+			</Button>
+		</Link>
+	)
+}
+
+interface SetLoginOrRegisterAuthHeaderProps {
+	title: string
+	setShowLoginOrRegister: LoginOrRegister
+}
+
+function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderProps) {
+	const { title, setShowLoginOrRegister } = props
+	const authClass = useAuthContext()
 
 	return (
 		<Button
-			variant={variant}
-			size="sm"
-			className={className}
-			asChild
+			variant="tactile"
+			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
+			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
-			<Link to={linkTo}>
-				{title}
-			</Link>
+			{title}
 		</Button>
 	)
 }
+
+export default observer(SetLoginOrRegisterAuthHeaderButton)

@@ -15,8 +15,10 @@ module.exports = {
 			},
 			colors: {
 				background: "hsl(var(--background))",
-				pipTheme: "rgb(0,61,165)",
+				pipTheme: "rgb(0, 61, 165)",
 				pipThemeHover: "rgb(0, 45, 130)",
+				pipThemeOffWhite: "rgb(226, 232, 240)",
+				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
 				foreground: "hsl(var(--foreground))",
 				card: {
 					DEFAULT: "hsl(var(--card))",

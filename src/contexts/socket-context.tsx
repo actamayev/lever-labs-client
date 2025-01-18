@@ -1,5 +1,5 @@
-import _ from "lodash"
 import EventEmitter from "events"
+import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { action, makeObservable, observable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
@@ -19,14 +19,14 @@ class SocketClass extends EventEmitter {
 
 	public setAccessToken = action((accessToken: string | null) => {
 		this.accessToken = accessToken
-		if (_.isNull(accessToken)) return
+		if (isNull(accessToken)) return
 		this.connect()
 	})
 
 	private connect = action((): void => {
 		if (
-			_.isNull(this.accessToken) ||
-			!_.isNull(this._socket)
+			isNull(this.accessToken) ||
+			!isNull(this._socket)
 		) return
 
 		this._socket = io(process.env.REACT_APP_BASE_URL as string, {

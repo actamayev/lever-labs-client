@@ -1,4 +1,6 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -7,6 +9,7 @@ class PipClass {
 	public isRetrievingPipData = false
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
+	public retrievedPipData: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -42,9 +45,13 @@ class PipClass {
 		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
 	}
 
+	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {
+		return this.findPipFromUUID(pipUUID)?.pipConnectionStatus
+	}
+
 	public findPipNameFromUUID(pipUUID: PipUUID): string {
 		const pip = this.findPipFromUUID(pipUUID)
-		if (_.isUndefined(pip)) return "Pip"
+		if (isUndefined(pip)) return "Pip"
 		return pip.pipName
 	}
 
@@ -52,12 +59,12 @@ class PipClass {
 		this.isRetrievingPipData = newState
 	})
 
-	public setSelectedPip = action((newSelectedPip: PipData): void => {
+	public setSelectedPip = action((newSelectedPip: PipData | null): void => {
 		this.selectedPip = newSelectedPip
 	})
 
 	public setSelectedPipToFirstPip = action((): void => {
-		if (!_.isNull(this.selectedPip) || _.isEmpty(this.pipData)) return
+		if (!isNull(this.selectedPip) || isEmpty(this.pipData)) return
 		this.setSelectedPip(this.pipData[0])
 	})
 
@@ -65,11 +72,16 @@ class PipClass {
 		this.isSendingCppToPip = newState
 	})
 
+	public setRetrievedPipData = action((newState: boolean): void => {
+		this.retrievedPipData = newState
+	})
+
 	public logout() {
 		this.pipData = []
-		this.isRetrievingPipData = false
-		this.selectedPip = null
-		this.isSendingCppToPip = false
+		this.setIsRetrievingPipData(false)
+		this.setSelectedPip(null)
+		this.setIsSendingCppToPip(false)
+		this.setRetrievedPipData(false)
 	}
 }
 

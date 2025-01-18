@@ -1,4 +1,4 @@
-import _ from "lodash"
+import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
@@ -13,7 +13,6 @@ class AddPipClass {
 		userAlreadyAddedUUID: false,
 		checkedConnectedToWifi: false
 	}
-	public isAddPipModalOpen = false
 	public encodedWifiCredentials: string | null = null
 	public mirroredFormValues: IncompletePipData = {
 		pipUUID: "" as PipUUID,
@@ -44,10 +43,6 @@ class AddPipClass {
 		this.addingNewPipRequirements[field] = value
 	}
 
-	public setIsAppPipModalOpen = action((newState: boolean) => {
-		this.isAddPipModalOpen = newState
-	})
-
 	public setEncodedWifiCredentials = action((newState: string | null) => {
 		this.encodedWifiCredentials = newState
 	})
@@ -61,8 +56,11 @@ class AddPipClass {
 	})
 
 	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
-		if (field === "wifiNetworkName" && _.isEmpty(value)) {
-			return this.setEncodedWifiCredentials(null)
+		if (field === "wifiNetworkName") {
+			this.newPipConnectionStatus = null
+			if (isEmpty(value)) {
+				return this.setEncodedWifiCredentials(null)
+			}
 		}
 		this.setEncodedWifiCredentials(btoa(JSON.stringify(
 			{
@@ -89,7 +87,7 @@ class AddPipClass {
 		return field === "wifiNetworkName" || field === "wifiPassword"
 	}
 
-	public resetMirroredFormValues = action(() => {
+	private resetMirroredFormValues = action(() => {
 		this.mirroredFormValues = {
 			pipUUID: "" as PipUUID,
 			shouldAutoConnect: true,
@@ -104,13 +102,16 @@ class AddPipClass {
 		return this.mirroredFormValues.pipName.length >= 3 && this.mirroredFormValues.pipName.length <= 20
 	}
 
-	public logout() {
-		this.resetAddingPipRequirements()
-		this.setIsAppPipModalOpen(false)
-		this.setEncodedWifiCredentials(null)
-		this.resetMirroredFormValues()
-		this.setNewPipConnectionStatus(null)
+	public resetAddPipMethods = action(() => {
 		this.setIsUserReadyToConnectToPipDialog(null)
+		this.setNewPipConnectionStatus(null)
+		this.resetAddingPipRequirements()
+		this.resetMirroredFormValues()
+	})
+
+	public logout() {
+		this.resetAddPipMethods()
+		this.setEncodedWifiCredentials(null)
 	}
 }
 

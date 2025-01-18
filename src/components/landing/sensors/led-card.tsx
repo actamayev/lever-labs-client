@@ -1,7 +1,7 @@
-import { FaLightbulb } from "react-icons/fa"
 import { useCallback, useState } from "react"
-import { bentoIconSize } from "../../../utils/constants"
 import SensorsSkeleton from "./sensors-skeleton"
+import { bentoIconSize } from "../../../utils/constants"
+import { CustomLightbulb } from "../../icons/custom-lightbulb"
 
 function getRandomRGBColor() {
 	const r = Math.floor(Math.random() * 256)
@@ -24,7 +24,7 @@ export default function LEDCard() {
 			description="Create dazzling light displays and visual indicators"
 			icon={
 				<div className="pointer-events-auto w-fit" onClick={handleIconClick}>
-					<FaLightbulb
+					<CustomLightbulb
 						className="origin-left transition-all duration-300 cursor-pointer"
 						style={{
 							color: ledColor || "currentColor",

@@ -22,13 +22,13 @@ const Checkbox = React.forwardRef<
     {/* Add optional placeholder check */}
     {showPlaceholder && (
       <span className="absolute inset-0 flex items-center justify-center opacity-100 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:text-white dark:group-hover:text-black">
-        <Check className="h-4 w-4" />
+        <Check className="h-7 w-7" />
       </span>
     )}
     <CheckboxPrimitive.Indicator
       className={cn("flex items-center justify-center text-current")}
     >
-      <Check className="h-4 w-4" />
+      <Check className="h-7 w-7" />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ))

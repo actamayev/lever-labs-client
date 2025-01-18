@@ -1,18 +1,18 @@
 import { observer } from "mobx-react"
-import { IconType } from "react-icons"
-import { HiBeaker } from "react-icons/hi"
-import { TbSandbox } from "react-icons/tb"
+import { LucideIcon } from "lucide-react"
+import { Card } from "@/components/shadcn/ui/card"
 import Safari from "../../shadcn/ui/safari"
 import { cn } from "../../../lib/shadcn/utils"
 import { BoldSpanText } from "../bold-span-text"
-import { Card } from "@/components/shadcn/ui/card"
+import { CustomBeaker } from "../../icons/custom-beaker"
+import { CustomSandbox } from "../../icons/custom-sandbox"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ProductProps {
 	sectionTitle: string
 	titleSubHeader: string
 	sectionSubtitle: React.ReactNode
-	Icon: IconType
+	Icon: LucideIcon
 	extraClasses: string
 	imgSrc: string
 	linkToShow: string
@@ -41,9 +41,9 @@ function SectionCard(props: ProductProps) {
 						src={imgSrc}
 					/>
 				</div>
-				<p className="text-2xl mt-4 dark:text-zinc-400 text-zinc-500">
+				<div className="text-2xl mt-4 dark:text-zinc-400 text-zinc-500">
 					{sectionSubtitle}
-				</p>
+				</div>
 			</div>
 		</Card>
 	)
@@ -67,9 +67,9 @@ function ProductShowcase() {
 							</BoldSpanText>
 						</>
 					}
-					Icon={HiBeaker}
+					Icon={CustomBeaker}
 					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-black"
-					linkToShow="bluedotrobots.com/lab"
+					linkToShow="www.bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
 				/>
 
@@ -85,9 +85,9 @@ function ProductShowcase() {
 							with no limits or restrictions.
 						</div>
 					}
-					Icon={TbSandbox}
+					Icon={CustomSandbox}
 					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-black"
-					linkToShow="bluedotrobots.com/sandbox"
+					linkToShow="www.bluedotrobots.com/sandbox"
 					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>
 			</div>
