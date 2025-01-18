@@ -26,6 +26,7 @@ const Settings = lazy(() => import("./pages/settings"))
 const Contact = lazy(() => import("./pages/contact"))
 const Missing = lazy(() => import("./pages/missing"))
 const Sandbox = lazy(() => import("./pages/sandbox"))
+// /add-pip is not being lazy loaded. When it is, there's a strange indexOf error
 
 function App() {
 	useScrollToTop()
