@@ -19,14 +19,12 @@ class PersonalInfoClass {
 	private setDefaultsFromLocalStorage(): void {
 		const locallyStoredDefaultSiteTheme = localStorage.getItem("defaultSiteTheme")
 		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) {
-			this.setDefaultSiteTheme("light")
-			return
+			return this.setDefaultSiteTheme("light")
 		}
 		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
 		const locallyStoredDefaultSidebarState = localStorage.getItem("defaultSidebarState")
 		if (!isValidSidebarState(locallyStoredDefaultSidebarState)) {
-			this.setDefaultSidebarState("expanded")
-			return
+			return this.setDefaultSidebarState("expanded")
 		}
 		this.setDefaultSidebarState(locallyStoredDefaultSidebarState)
 	}
