@@ -15,13 +15,13 @@ import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
 import generateLabRoutes from "./utils/generate-lab-routes"
+import AddPip from "./pages/add-pip"
 
 const Landing = lazy(() => import("./pages/landing"))
 const LoginPage = lazy(() => import("./pages/auth/login-page"))
 const RegisterPage = lazy(() => import("./pages/auth/register-page"))
 const RegisterUsername = lazy(() => import("./pages/auth/register-username"))
 const Lab = lazy(() => import("./pages/lab"))
-const AddPip = lazy(() => import("./pages/add-pip"))
 const Settings = lazy(() => import("./pages/settings"))
 const Contact = lazy(() => import("./pages/contact"))
 const Missing = lazy(() => import("./pages/missing"))
