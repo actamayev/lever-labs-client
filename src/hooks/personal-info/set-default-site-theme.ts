@@ -1,7 +1,8 @@
-import _ from "lodash"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import useStyledToast from "../../components/toast-options"
+import useToastOptions from "../../components/toast-options"
 import useDefaultSiteTheme from "../memos/default-site-theme"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -9,24 +10,25 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
-	const toast = useStyledToast()
+	const toast = useToastOptions()
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return useCallback(async () => {
 		try {
 			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
-			if (!_.isNull(blueDotApiClient.httpClient.accessToken)) {
-				const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
-				if (!_.isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
-					throw Error("Unable to save new default site theme")
-				}
+			if (isNull(blueDotApiClient.httpClient.accessToken)) {
+				return // No toast because we don't want a negative toast if someone isn't logged in
+			}
+			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
+			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
+				throw Error("Unable to save new default site theme")
 			}
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			return toast.negative({
 				title: "Unable to change site theme at this time",
-				description: "Please reload page and try again"
+				description: "Please reload the page and try again"
 			})
 		}
 	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])

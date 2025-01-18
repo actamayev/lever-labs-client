@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
@@ -24,14 +24,14 @@ export default function useLoginSubmit (
 
 			setLoading(true)
 			const response = await blueDotApiClient.authDataService.login(loginInformation)
-			if (!_.isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
-				setError("Unable to login. Please reload page and try again.")
+			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
+				setError("Unable to log in. Please reload the page and try again")
 				return
 			}
 			setDataAfterLogin(response.data)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to login")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}

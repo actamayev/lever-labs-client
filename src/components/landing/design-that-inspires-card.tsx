@@ -10,6 +10,7 @@ export default function DesignThatInspiresCard() {
 					src="pip_right.png"
 					alt="Product visualization"
 					className="w-full h-auto rounded-lg object-cover"
+					loading="lazy"
 				/>
 			</div>
 			<div className="flex items-center w-full md:w-1/2">

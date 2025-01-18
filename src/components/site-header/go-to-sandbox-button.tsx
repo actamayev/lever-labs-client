@@ -1,14 +1,15 @@
-import _ from "lodash"
-import { observer } from "mobx-react"
+import isNull from "lodash-es/isNull"
 import { Link } from "react-router"
+import { observer } from "mobx-react"
 import { ArrowRight } from "lucide-react"
-import useUsername from "../../hooks/memos/username"
 import { Button } from "@/components/shadcn/ui/button"
+import useUsername from "../../hooks/memos/username"
+import { CustomSandbox } from "../icons/custom-sandbox"
 
 function GoToSandboxButton() {
 	const username = useUsername()
 
-	if (_.isNull(username)) return null
+	if (isNull(username)) return null
 
 	return (
 		<Button
@@ -22,6 +23,7 @@ function GoToSandboxButton() {
 		>
 			<Link to="/sandbox">
 				Go to Sandbox
+				<CustomSandbox />
 				<ArrowRight
 					className="absolute right-4 transform opacity-0 group-hover:opacity-100
 					transition-all duration-50 ease-out translate-x-[-10px] group-hover:translate-x-0"

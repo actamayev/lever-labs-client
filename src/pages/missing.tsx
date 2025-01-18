@@ -1,19 +1,50 @@
-import { Link } from "react-router"
-import { Home } from "lucide-react"
+import { useCallback } from "react"
+import { observer } from "mobx-react"
 import { Button } from "@/components/shadcn/ui/button"
+import { useAuthContext } from "../contexts/auth-context"
+import useTypedNavigate from "../hooks/navigate/typed-navigate"
+import { CustomBeaker } from "../components/icons/custom-beaker"
+import { CustomHouse } from "../components/icons/custom-house"
 
-export default function Missing() {
+function Missing() {
+	const authClass = useAuthContext()
+	const navigate = useTypedNavigate()
+
+	const conditionalNavigation = useCallback(() => {
+		if (authClass.isLoggedIn) return navigate("/lab")
+		return navigate("/")
+	}, [authClass.isLoggedIn, navigate])
+
+	const conditionalText = () => {
+		if (authClass.isLoggedIn) {
+			return (
+				<>
+					Return to the Lab
+					<CustomBeaker className="ml-2 !h-7 !w-7" />
+				</>
+			)
+		}
+		return (
+			<>
+				Return home
+				<CustomHouse className="ml-2 !h-7 !w-7" />
+			</>
+		)
+	}
 	return (
-		<div className="flex flex-col items-center gap-8">
-			<h1 className="text-lg font-semibold">
+		<div className="flex flex-col items-center gap-8 pt-16">
+			<h1 className="text-2xl font-semibold">
 				Page Not Found
 			</h1>
-			<Link to="/">
-				<Button>
-					Return home
-					<Home className="ml-2 h-5 w-5" />
-				</Button>
-			</Link>
+			<Button
+				variant="tactile"
+				onClick={conditionalNavigation}
+				className="transition-none text-2xl p-5"
+			>
+				{conditionalText()}
+			</Button>
 		</div>
 	)
 }
+
+export default observer(Missing)

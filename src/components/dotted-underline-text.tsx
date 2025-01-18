@@ -2,7 +2,7 @@ import { Link } from "react-router"
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from "./shadcn/ui/tooltip"
 
 interface Props {
-	linkTo: StaticPageNames
+	linkTo: PageNames
 	children: React.ReactNode
 }
 
@@ -35,8 +35,7 @@ export function DottedTextTooltip(props: TooltipProps) {
 					</span>
 				</TooltipTrigger>
 				<TooltipContent
-					side="top"
-					className="bg-zinc-700 text-zinc-100 px-3 py-1.5 text-sm z-50"
+					className="px-3 py-1.5 text-sm z-50"
 					sideOffset={5}
 				>
 					<p>

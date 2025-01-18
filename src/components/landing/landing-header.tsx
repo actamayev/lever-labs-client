@@ -1,6 +1,6 @@
 import { useCallback } from "react"
 import { motion } from "framer-motion"
-import { FaChevronDown } from "react-icons/fa6"
+import { ChevronDown } from "lucide-react"
 import BlurFade from "../shadcn/ui/blur-fade"
 
 function ScrollIndicator () {
@@ -33,7 +33,7 @@ function ScrollIndicator () {
 				className="cursor-pointer hover:opacity-70 transition-all duration-300"
 				onClick={handleClick}
 			>
-				<FaChevronDown size={45}/>
+				<ChevronDown size={45}/>
 			</motion.div>
 		</div>
 	)

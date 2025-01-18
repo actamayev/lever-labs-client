@@ -1,8 +1,7 @@
 import { useState } from "react"
-import { TbRulerMeasure } from "react-icons/tb"
 import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
-import { DottedTextTooltip } from "../../dotted-underline-text"
+import { CustomRuler } from "../../icons/custom-ruler"
 
 const measureStyles = `
   @keyframes measure {
@@ -39,21 +38,20 @@ export default function DistanceSensorsCard() {
 							onClick={handleClick}
 							className="cursor-pointer"
 						>
-							<TbRulerMeasure
-								className={`origin-left text-black dark:text-white
-                  ${isAnimating ? "animate-[measure_1s_ease-in-out]" : ""}`}
+							<CustomRuler
+								className={cn(
+									"origin-left text-black dark:text-white",
+									isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
+								)}
 								size={bentoIconSize}
 							/>
 						</div>
 						<div className="flex flex-col">
 							<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
-                2×&nbsp;
-								<DottedTextTooltip tooltipMessage="VL53L5CX Time of Flight Sensors">
-                  Distance Sensors
-								</DottedTextTooltip>
+								Distance Sensor
 							</h3>
 							<p className="max-w-lg text-neutral-400">
-                Measure distances with millimeter accuracy for smart navigation
+								Measure distances with millimeter accuracy for smart navigation
 							</p>
 						</div>
 					</div>

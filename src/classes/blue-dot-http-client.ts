@@ -1,5 +1,5 @@
-import _ from "lodash"
 import axios, { AxiosInstance } from "axios"
+import isNull from "lodash-es/isNull"
 
 export default class BlueDotHttpClient {
 	public readonly http: AxiosInstance
@@ -20,7 +20,7 @@ export default class BlueDotHttpClient {
 				return config
 			}
 
-			if (!_.isNull(this.accessToken)) {
+			if (!isNull(this.accessToken)) {
 				config.headers["Authorization"] = this.accessToken
 			} else {
 				throw new Error("Access token is not set.")
@@ -37,7 +37,7 @@ export default class BlueDotHttpClient {
 
 	set accessToken(accessToken: string | null) {
 		this._accessToken = accessToken
-		if (!_.isNull(accessToken)) {
+		if (!isNull(accessToken)) {
 			this.http.defaults.headers["authorization"] = accessToken
 		} else {
 			delete this.http.defaults.headers["authorization"]

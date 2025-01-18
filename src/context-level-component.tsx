@@ -1,8 +1,8 @@
+import { Slide, ToastContainer } from "react-toastify"
 import PipProvider from "./contexts/pip-context"
 import AuthProvider from "./contexts/auth-context"
 import SocketProvider from "./contexts/socket-context"
 import AddPipProvider from "./contexts/add-pip-context"
-import { Toaster } from "./components/shadcn/ui/toaster"
 import PersonalInfoProvider from "./contexts/personal-info-context"
 import BlueDotApiClientProvider from "./contexts/blue-dot-api-client-context"
 
@@ -22,7 +22,20 @@ export default function ContextLevelComponent ({ children } : { children: React.
 					</PipProvider>
 				</PersonalInfoProvider>
 			</AuthProvider>
-			<Toaster />
+			<ToastContainer
+				position="bottom-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick={false}
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				transition={Slide}
+				style={{ width: "min(400px, 90vw)" }}
+				toastStyle={{ width: "min(400px, 90vw)" }}
+			/>
 		</>
 	)
 }

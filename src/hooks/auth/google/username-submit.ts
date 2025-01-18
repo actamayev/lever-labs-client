@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isNonSuccessResponse } from "../../../utils/type-checks"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
@@ -21,14 +21,14 @@ export default function useUsernameSubmit (
 		try {
 			setLoading(true)
 			const response = await blueDotApiClient.authDataService.registerUsername(username)
-			if (!_.isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
-				setError("Unable to register username. Please reload page and try again.")
+			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
+				setError("Unable to register username. Please reload the page and try again")
 				return
 			}
 			personalInfoClass.setUsername(username)
-			navigate("/sandbox")
+			navigate("/lab/welcome")
 		} catch (error: unknown) {
-			setErrorAxiosResponse(error, setError, "Unable to register username")
+			setErrorAxiosResponse(error, setError)
 		} finally {
 			setLoading(false)
 		}

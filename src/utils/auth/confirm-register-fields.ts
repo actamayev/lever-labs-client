@@ -1,4 +1,5 @@
-import _ from "lodash"
+import isEmpty from "lodash-es/isEmpty"
+import isEqual from "lodash-es/isEqual"
 import isEmailValid from "./is-email-valid"
 
 export default function confirmRegisterFields(
@@ -8,19 +9,19 @@ export default function confirmRegisterFields(
 	const contactType = isEmailValid(credentials.email)
 
 	if (
-		_.isEmpty(credentials.email) || _.isEmpty(credentials.password) ||
-		_.isEmpty(credentials.passwordConfirmation) || _.isEmpty(credentials.username)
+		isEmpty(credentials.email) || isEmpty(credentials.password) ||
+		isEmpty(credentials.passwordConfirmation) || isEmpty(credentials.username)
 	) {
-		setError("Please enter an email and password")
+		setError("Let's get your account set up! Fill in all fields to get started")
 		return false
-	} else if (_.isEqual(contactType, "Unknown")) {
-		setError("Please enter a valid email")
+	} else if (isEqual(contactType, "Unknown")) {
+		setError("Oops! Double-check your email format")
 		return false
 	} else if (credentials.password.length < 6) {
-		setError("Password must be at least 6 characters")
+		setError("For better security, please use at least 6 characters for your password")
 		return false
-	} else if (!_.isEqual(credentials.password, credentials.passwordConfirmation)) {
-		setError("Passwords do not match")
+	} else if (!isEqual(credentials.password, credentials.passwordConfirmation)) {
+		setError("The passwords don't quite match - please try again")
 		return false
 	} else {
 		setError("")

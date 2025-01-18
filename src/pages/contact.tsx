@@ -8,7 +8,7 @@ export default function Contact() {
 	return (
 		<div>
 			<PageHelmet pageTitle="/contact" />
-			<div className="text-zinc-950 dark:text-zinc-200 py-5 px-48">
+			<div className="text-zinc-950 dark:text-zinc-200 py-12 px-48">
 				<div className="text-3xl text-zinc-950 dark:text-zinc-200 mb-2">
 					Contact Us
 				</div>

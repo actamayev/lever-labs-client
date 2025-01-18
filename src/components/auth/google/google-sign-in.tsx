@@ -1,7 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
 
-export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate: PageNames }) {
+export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate?: PageNames }) {
 	const googleAuthCallback = useGoogleAuthCallback(whereToNavigate)
 
 	return (
@@ -9,8 +9,8 @@ export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate: Pag
 			<GoogleLogin
 				onSuccess={googleAuthCallback}
 				onError={() => console.error("Login Failed")}
-				shape="rectangular"
-				width={200}
+				shape="pill"
+				width={300}
 				text="continue_with"
 				logo_alignment="center"
 			/>
