@@ -1,6 +1,6 @@
 import { Radio } from "lucide-react"
+import { CustomMotor } from "../../components/icons/custom-motor"
 import { CustomTimer } from "../../components/icons/custom-timer"
-import { CustomWheel } from "../../components/icons/custom-wheel"
 import { CustomRemote } from "../../components/icons/custom-remote"
 import { CustomButton } from "../../components/icons/custom-button"
 import { CustomCompass } from "../../components/icons/custom-compass"
@@ -29,7 +29,7 @@ const element1NavData: LabNavData[] = [
 	},
 	{
 		title: "Motors",
-		icon: CustomWheel,
+		icon: CustomMotor,
 		items: [
 			{
 				title: "Reading",

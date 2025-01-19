@@ -15,6 +15,11 @@ function Settings() {
 		)
 	}
 
+	// Edit how old the user is
+	// Forgot password
+	// Login history
+	// Edit name (fname, lname), email,
+
 	return (
 		<>
 			<PageHelmet pageTitle="/settings" />
