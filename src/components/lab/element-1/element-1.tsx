@@ -1,5 +1,9 @@
+import NavigateThroughElementsButton from "../navigate-through-elements-button"
+
 export default function Element1() {
 	return (
-		<>Element 1: Sensor Basics</>
+		<div>
+			<NavigateThroughElementsButton />
+		</div>
 	)
 }

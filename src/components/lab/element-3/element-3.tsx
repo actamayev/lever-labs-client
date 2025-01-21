@@ -1,5 +1,9 @@
+import NavigateThroughElementsButton from "../navigate-through-elements-button"
+
 export default function Element3() {
 	return (
-		<>Element 3: Missions</>
+		<div>
+			<NavigateThroughElementsButton />
+		</div>
 	)
 }

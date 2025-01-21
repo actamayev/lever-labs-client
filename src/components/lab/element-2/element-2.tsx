@@ -1,5 +1,9 @@
+import NavigateThroughElementsButton from "../navigate-through-elements-button"
+
 export default function Element2() {
 	return (
-		<>Element 2: Combine and Create</>
+		<div>
+			<NavigateThroughElementsButton />
+		</div>
 	)
 }
