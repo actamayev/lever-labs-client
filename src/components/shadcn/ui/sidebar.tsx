@@ -110,8 +110,12 @@ const SidebarProvider = React.forwardRef<
     React.useEffect(() => {
       const pathname = window.location.pathname
       const autoCloseRoutes = ['/add-pip', '/settings']
+      const autoClosePrefixes = ['/lab']
       
-      if (autoCloseRoutes.includes(pathname)) {
+      if (
+        autoCloseRoutes.includes(pathname) || 
+        autoClosePrefixes.some(prefix => pathname.startsWith(prefix))
+      ) {
         // Store current state before closing
         if (open) {
           setPreviousState(open)

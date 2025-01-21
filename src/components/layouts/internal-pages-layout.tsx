@@ -11,7 +11,11 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 	const location = useLocation()
 
 	const shouldShowSidebarTrigger = useMemo(() => {
-		if (location.pathname === "/add-pip" || location.pathname === "/settings") return false
+		if (
+			location.pathname === "/add-pip" ||
+			location.pathname === "/settings" ||
+			location.pathname.startsWith("/lab")
+		) return false
 		return true
 	}, [location.pathname])
 
