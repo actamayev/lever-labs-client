@@ -4,6 +4,11 @@ declare global {
 		| "/lab/element-2"
 		| "/lab/element-3"
 
+	type ElementStartPages =
+		| "/lab/element-1/start"
+		| "/lab/element-2/start"
+		| "/lab/element-3/start"
+
 	// Element 1:
 	type MotorLabPages =
 		| "/lab/element-1/motor/reading"
@@ -93,6 +98,7 @@ declare global {
 
 	type LabPages =
 		| "/lab/welcome"
+		| ElementStartPages
 		| ElementLabPages
 		| Element1LabPages
 		| Element2LabPages
