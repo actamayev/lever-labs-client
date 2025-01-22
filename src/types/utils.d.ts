@@ -15,8 +15,6 @@ declare global {
 
 	type PipUUID = string & { readonly __brand: unique symbol }
 
-	type ActivityTitles = "Reading" | "Video" | "Code"
-
 	interface SidebarNavData {
 		title: string
 		url: PageNames

@@ -1,4 +1,4 @@
-import NavigateThroughElementsButton from "../navigate-through-elements-button"
+import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 
 export default function Element2() {
 	return (
