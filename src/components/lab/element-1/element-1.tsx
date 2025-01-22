@@ -1,41 +1,37 @@
 import Lilypad from "../lilypad"
 import NavigateThroughElementsButton from "../navigate-through-elements-button"
 
-export default function Element1() {
-	const lessons = [
-		{ progress: 100, url: "/lab/element-1/start" },
-		{ progress: 75, url: "/lab/element-1/lesson-2" },
-		{ progress: null, url: "/lab/element-1/lesson-3" },
-		{ progress: null, url: "/lab/element-1/lesson-4" },
-		{ progress: null, url: "/lab/element-1/lesson-5" },
-		{ progress: null, url: "/lab/element-1/lesson-6" },
-		{ progress: null, url: "/lab/element-1/lesson-6" },
-		{ progress: null, url: "/lab/element-1/lesson-6" },
-		{ progress: null, url: "/lab/element-1/lesson-6" },
-		{ progress: null, url: "/lab/element-1/lesson-6" },
+interface Lessons {
+	progress: number | null
+	url: LabPages
+	title: string
+}
 
+export default function Element1() {
+	const ledLessons: Lessons[] = [
+		{ progress: 0, url: "/lab/element-1/start", title: "Start" },
+		{ progress: 0, url: "/lab/element-1/led/reading", title: "What is an LED?" },
+		{ progress: null, url: "/lab/element-1/led/video", title: "Video title" },
+		{ progress: null, url: "/lab/element-1/led/video", title: "Optional bubble" },
+		{ progress: null, url: "/lab/element-1/led/code", title: "LED Code 1" },
+		{ progress: null, url: "/lab/element-1/led/code", title: "LED Code 2" },
+		{ progress: null, url: "/lab/element-1/led/code", title: "LED Code 3" },
 	]
 
 	return (
-		<div className="">
+		<div>
 			<NavigateThroughElementsButton />
 
 			{/* Scrollable Lilypads Container */}
 			<div className="pt-32 px-8">
 				<div className="relative w-full overflow-x-auto pb-8">
 					<div className="flex space-x-24 min-w-max px-8">
-						<div
-							className="absolute top-1/2 left-0 w-full h-0 border-t-2
-							border-dotted border-green-200 -translate-y-1/2"
-						/>
-
-						{/* Lilypads */}
-						{lessons.map((lesson, index) => (
-							<div key={index} className="relative z-10">
+						{ledLessons.map((lesson, index) => (
+							<div key={index}>
 								<Lilypad
 									lessonProgress={lesson.progress}
 									lessonUrl={lesson.url as LabPages}
-									lessonName="Test"
+									lessonName={lesson.title}
 								/>
 							</div>
 						))}
