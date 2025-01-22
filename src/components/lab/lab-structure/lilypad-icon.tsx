@@ -1,7 +1,8 @@
-import { BookOpen, CodeXml, Play, Rabbit } from "lucide-react"
-import { CustomStart } from "../../icons/custom-start"
-import { useCallback } from "react"
 import { isNull } from "lodash-es"
+import { useCallback } from "react"
+import { BookOpen, CodeXml, Play } from "lucide-react"
+import { CustomStart } from "../../icons/custom-start"
+import { CustomWizardHat } from "../../icons/custom-wizard-hat"
 
 interface Props {
 	progress: number | null
@@ -25,5 +26,5 @@ export default function LilypadIcon(props: Props) {
 	} else if (activityType === "Video") {
 		return <Play className={classes()} />
 	}
-	return <Rabbit className={classes()} />
+	return <CustomWizardHat className={classes()} />
 }

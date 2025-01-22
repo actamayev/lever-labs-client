@@ -31,7 +31,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 						<SidebarTrigger className="-ml-1 w-12 h-12 transition-all duration-300"/>
 					</header>
 				)}
-				<div className="pt-16 transition-all duration-300">
+				<div className="transition-all duration-300">
 					{children}
 				</div>
 			</SidebarInset>

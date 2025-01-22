@@ -5,15 +5,17 @@ import NavigateThroughElementsButton from "../lab-structure/navigate-through-ele
 
 export default function Element1() {
 	return (
-		<div>
+		<div className="pt-8">
 			<NavigateThroughElementsButton />
 			{/* Scrollable Lilypads Container */}
 			<LilypadContainer>
 				{ledLessons.map((lesson, index) => (
-					<Lilypad
-						lesson={lesson}
-						key={index}
-					/>
+					<div key={index}>
+						<Lilypad
+							lesson={lesson}
+							// key={index}
+						/>
+					</div>
 				))}
 			</LilypadContainer>
 		</div>

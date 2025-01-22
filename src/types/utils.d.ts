@@ -8,10 +8,10 @@ declare global {
 	type SidebarStates = "expanded" | "collapsed"
 
 	type EndpointHeaders =
-		"/auth" |
-		"/misc" |
-		"/pip" |
-		"/personal-info"
+		| "/auth"
+		| "/misc"
+		| "/pip"
+		| "/personal-info"
 
 	type PipUUID = string & { readonly __brand: unique symbol }
 

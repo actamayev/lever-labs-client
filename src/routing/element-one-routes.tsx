@@ -25,6 +25,7 @@ import IRSensorArrayReading from "../components/lab/element-1/ir-sensor-array/ir
 import IrCommuncationSensorCode from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-code"
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
+import LedDemo from "../components/lab/element-1/led/led-demo"
 
 const element1Routes: ElementRoutes[] = [
 	{
@@ -41,6 +42,10 @@ const element1Routes: ElementRoutes[] = [
 			{
 				path: "Code",
 				element: <LedCode />
+			},
+			{
+				path: "Demo",
+				element: <LedDemo />
 			}
 		]
 	},

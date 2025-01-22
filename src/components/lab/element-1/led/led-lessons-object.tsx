@@ -1,45 +1,59 @@
 const ledLessons: Lesson[] = [
 	{
-		progress: 0,
+		progress: 100,
 		lessonUrl: "/lab/element-1/start",
 		lessonName: "Start",
-		activityType: "Start"
+		activityType: "Start",
+		verticalPosition: 5
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading",
 		lessonName: "What is an LED?",
-		activityType: "Reading"
+		activityType: "Reading",
+		verticalPosition: 5
+	},
+	{
+		progress: 0,
+		lessonUrl: "/lab/element-1/led/demo",
+		lessonName: "LED Demo",
+		activityType: "Demo",
+		verticalPosition: 3
 	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/video",
-		lessonName: "Video lessonName",
-		activityType: "Video"
+		lessonName: "Video lesson",
+		activityType: "Video",
+		verticalPosition: 5
 	},
-	{
-		progress: null,
-		lessonUrl: "/lab/element-1/led/video",
-		lessonName: "Optional bubble",
-		activityType: "Optional"
-	},
+	// {
+	// 	progress: null,
+	// 	lessonUrl: "/lab/element-1/led/optional-bubble",
+	// 	lessonName: "Optional bubble",
+	// 	activityType: "Optional",
+	// 	verticalPosition: 5
+	// },
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code",
 		lessonName: "LED Code 1",
-		activityType: "Code"
+		activityType: "Code",
+		verticalPosition: 5
 	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code",
 		lessonName: "LED Code 2",
-		activityType: "Code"
+		activityType: "Code",
+		verticalPosition: 5
 	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code",
 		lessonName: "LED Code 3",
-		activityType: "Code"
+		activityType: "Code",
+		verticalPosition: 5
 	},
 ]
 
