@@ -18,31 +18,31 @@ export default function NavigateThroughElementsButton () {
 		const path = location.pathname
 		if (path.startsWith("/lab/element-1")) {
 			return (
-				<><CircuitBoard className="!size-7"/>Element 1: Sensor Basics</>
+				<><CircuitBoard className="!size-8"/>Element 1: Sensor Basics</>
 			)
 		}
 		else if (path.startsWith("/lab/element-2")) {
 			return (
-				<><Cpu className="!size-7"/>Element 2: Combine & Create</>
+				<><Cpu className="!size-8"/>Element 2: Combine & Create</>
 			)
 		}
 		else if (path.startsWith("/lab/element-3")) {
 			return (
-				<><Flag className="!size-7"/>Element 3: Missions</>
+				<><Flag className="!size-8"/>Element 3: Missions</>
 			)
 		}
 		return (
-			<><CustomHouse className="!size-7"/>Welcome</>
+			<><CustomHouse className="!size-8"/>Welcome</>
 		)
 	}
 
 	return (
-		<div className="fixed">
+		<div className="fixed ml-2">
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<Button
 						variant="ghost"
-						className="flex items-center gap-2 text-3xl px-8 py-6
+						className="flex items-center gap-2 text-3xl px-6 py-6
 						hover:bg-zinc-100 dark:hover:bg-zinc-800 duration-100"
 					>
 						<GetCurrentElement />

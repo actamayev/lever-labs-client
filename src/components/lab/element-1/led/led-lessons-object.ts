@@ -18,7 +18,7 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/demo",
 		lessonName: "LED Demo",
 		activityType: "Demo",
-		verticalPosition: 3
+		verticalPosition: 2
 	},
 	{
 		progress: null,
@@ -39,7 +39,7 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/code",
 		lessonName: "LED Code 1",
 		activityType: "Code",
-		verticalPosition: 5
+		verticalPosition: 1
 	},
 	{
 		progress: null,
@@ -53,7 +53,7 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/code",
 		lessonName: "LED Code 3",
 		activityType: "Code",
-		verticalPosition: 5
+		verticalPosition: 9
 	},
 ]
 

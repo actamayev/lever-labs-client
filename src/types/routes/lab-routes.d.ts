@@ -14,6 +14,7 @@ declare global {
 		| "/lab/element-1/motor/reading"
 		| "/lab/element-1/motor/video"
 		| "/lab/element-1/motor/code"
+		| "/lab/element-1/motor/demo"
 
 	type LedLabPages =
 		| "/lab/element-1/led/reading"

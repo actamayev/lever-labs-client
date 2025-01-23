@@ -32,7 +32,7 @@ export default function Lilypad(props: Props) {
 			"hover:shadow-[0_5px_0_0_rgb(22,163,74)]", // slightly compressed on hover
 			"hover:transform hover:translate-y-0.5", // move down slightly to match shadow
 			"active:shadow-[0_0_0_0_rgb(22,163,74)]", // fully compressed on click
-			"active:transform active:translate-y-2", // move down to match shadow
+			"active:transform active:translate-y-2 duration-0", // move down to match shadow
 		],
 		!isNull(progress) && progress < 100 && [
 			"bg-blue-500 cursor-pointer",
@@ -55,13 +55,6 @@ export default function Lilypad(props: Props) {
 					activityType={activityType}
 					progress={progress}
 				/>
-				{/* {isNull(progress) ? (
-					<Lock className="w-10 h-10 text-gray-500" />
-				) : progress === 100 ? (
-					<CheckCircle className="w-10 h-10 text-white" />
-				) : (
-					<div className="w-10 h-10 rounded-full bg-white/90" />
-				)} */}
 			</button>
 			<span className="font-medium text-sm text-zinc-700 dark:text-zinc-300">
 				{lessonName}
