@@ -22,7 +22,6 @@ export default function Element1() {
 					))}
 				</LilypadSection>
 				<div className="h-full min-h-[600px] w-1 dark:bg-zinc-700 bg-zinc-300 rounded-full" />
-
 				<LilypadSection>
 					{motorLessons.map((lesson, index) => (
 						<div
