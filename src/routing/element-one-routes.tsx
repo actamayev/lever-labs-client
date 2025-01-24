@@ -1,4 +1,5 @@
 import ImuCode from "../components/lab/element-1/imu/imu-code"
+import LedDemo from "../components/lab/element-1/led/led-demo"
 import LedCode from "../components/lab/element-1/led/led-code"
 import LedVideo from "../components/lab/element-1/led/led-video"
 import ImuVideo from "../components/lab/element-1/imu/imu-video"
@@ -25,7 +26,6 @@ import IRSensorArrayReading from "../components/lab/element-1/ir-sensor-array/ir
 import IrCommuncationSensorCode from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-code"
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
-import LedDemo from "../components/lab/element-1/led/led-demo"
 
 const element1Routes: ElementRoutes[] = [
 	{

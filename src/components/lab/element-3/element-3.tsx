@@ -2,7 +2,7 @@ import NavigateThroughElementsButton from "../lab-structure/navigate-through-ele
 
 export default function Element3() {
 	return (
-		<div>
+		<div className="pt-8 h-screen overflow-y-auto">
 			<NavigateThroughElementsButton />
 		</div>
 	)
