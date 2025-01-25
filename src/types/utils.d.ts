@@ -25,13 +25,13 @@ declare global {
 		title: string
 		icon: LucideIcon
 		items: {
-			title: ActivityTitles
+			title: ActivityType
 			url: LabPages
 		}[]
 	}
 
 	interface ElementChild {
-		path: ActivityTitles
+		path: ActivityType
 		element: JSX.Element
 	}
 

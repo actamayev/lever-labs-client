@@ -1,5 +1,5 @@
 declare global {
-	type ActivityTitles =
+	type ActivityType =
 	| "Start"
 	| "Demo"
 	| "Reading"
@@ -14,7 +14,7 @@ declare global {
 		progress: number | null
 		lessonUrl: LabPages
 		lessonName: string
-		activityType: ActivityTitles
+		activityType: ActivityType
 		verticalPosition: VerticalPosition
 	}
 }

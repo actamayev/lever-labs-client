@@ -1,20 +1,35 @@
 import { observer } from "mobx-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
+import { CustomBeaker } from "../../icons/custom-beaker"
 import { usePipContext } from "../../../contexts/pip-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import GetActivityIconFromActivityName from "../lab-structure/get-activity-icon-from-name"
 
 interface Props {
     videoTitle: string
     ytVideoId: string
 	ytVideoTitle: string
+	previousPageLink: LabPages
+	previousPageActivity: ActivityType
     nextPageLink: LabPages
-    whereToGoOnExist: PageNames
+	nextPageActivity: ActivityType
+    element: 1 | 2 | 3
     isNextPageDemo?: boolean
 }
 
 function LabVideoComponent(props: Props) {
-	const { videoTitle, ytVideoId, nextPageLink, ytVideoTitle, whereToGoOnExist, isNextPageDemo = false } = props
+	const {
+		videoTitle,
+		ytVideoId,
+		ytVideoTitle,
+		previousPageLink,
+		previousPageActivity,
+		nextPageLink,
+		nextPageActivity,
+		element,
+		isNextPageDemo = false
+	} = props
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
 
@@ -26,19 +41,20 @@ function LabVideoComponent(props: Props) {
 				{/* Header area with back button and title */}
 				<div className="w-full max-w-7xl relative mt-12">
 					<Button
+						className="absolute left-0 !text-2xl flex items-center gap-2"
+						onClick={() => navigate(`/lab/element-${element}`)}
 						variant="ghost"
-						className="absolute left-0 !text-2xl"
-						onClick={() => navigate(whereToGoOnExist)}
 					>
-						<ArrowLeft className="mr-2 !h-6 !w-6" />
-                        Back
+						<ArrowLeft className="!h-6 !w-6" />
+						<CustomBeaker className="!h-6 !w-6" />
+						Lab
 					</Button>
 					<h2 className="text-4xl font-semibold text-center">{videoTitle}</h2>
 				</div>
 
 				{/* Video container with separator */}
-				<div className="w-full max-w-4xl flex-1 flex flex-col items-center justify-center">
-					<div className="w-full">
+				<div className="w-full flex-1 flex flex-col items-center justify-center">
+					<div className="w-full max-w-4xl">
 						<div className="relative aspect-video">
 							<iframe
 								className="w-full h-full rounded-xl"
@@ -48,19 +64,39 @@ function LabVideoComponent(props: Props) {
 								allowFullScreen
 							/>
 						</div>
-						<div className="w-full h-1 dark:bg-zinc-700 bg-zinc-300 rounded-full mt-8" />
 					</div>
+					<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 mt-8" />
 				</div>
 
-				{/* Next button */}
 				<div className="w-full max-w-7xl relative">
 					<Button
-						className="absolute bottom-4 right-4 !text-2xl"
+						className="absolute bottom-4 left-4 !text-2xl transition-none rounded-2xl flex items-center gap-2"
+						onClick={() => navigate(previousPageLink)}
+						disabled={isNextButtonDisabled}
+						variant="tactile"
+					>
+						<ArrowLeft className="!h-6 !w-6" />
+						<GetActivityIconFromActivityName
+							activityType={previousPageActivity}
+							className="!h-6 !w-6"
+						/>
+						Previous Lesson
+					</Button>
+				</div>
+
+				<div className="w-full max-w-7xl relative">
+					<Button
+						className="absolute bottom-4 right-4 !text-2xl transition-none rounded-2xl flex items-center gap-2"
 						onClick={() => navigate(nextPageLink)}
 						disabled={isNextButtonDisabled}
+						variant="tactile"
 					>
-                        Next
-						<ArrowRight className="ml-2 !h-6 !w-6" />
+						Next Lesson
+						<GetActivityIconFromActivityName
+							activityType={nextPageActivity}
+							className="!h-6 !w-6"
+						/>
+						<ArrowRight className="!h-6 !w-6" />
 					</Button>
 				</div>
 			</div>

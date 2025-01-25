@@ -1,13 +1,33 @@
+import { useMemo } from "react"
+import { observer } from "mobx-react"
+import { usePipContext } from "../../../../contexts/pip-context"
 import LabVideoComponent from "../../video/lab-video-component"
 
-export default function LedVideo() {
+function LedVideo() {
+	const pipClass = usePipContext()
+
+	const previousPageLink = useMemo((): LabPages => {
+		if (pipClass.doesUserHaveAPip) return "/lab/element-1/led/demo"
+		return "/lab/element-1/led/reading"
+	}, [pipClass.doesUserHaveAPip])
+
+	const previousPageActivity = useMemo((): ActivityType => {
+		if (pipClass.doesUserHaveAPip) return "Demo"
+		return "Reading"
+	}, [pipClass.doesUserHaveAPip])
+
 	return (
 		<LabVideoComponent
 			videoTitle="What is an LED?"
-			ytVideoTitle="LED Video"
 			ytVideoId="FWer01zHNTw"
+			ytVideoTitle="LED Video"
+			previousPageLink={previousPageLink}
+			previousPageActivity={previousPageActivity}
 			nextPageLink="/lab/element-1/led/code"
-			whereToGoOnExist="/lab/element-1"
+			nextPageActivity="Code"
+			element={1}
 		/>
 	)
 }
+
+export default observer(LedVideo)
