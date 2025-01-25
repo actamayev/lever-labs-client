@@ -37,7 +37,7 @@ function LabVideoComponent(props: Props) {
 
 	return (
 		<div className="h-screen relative">
-			<div className="h-full flex flex-col items-center">
+			<div className="h-full flex flex-col items-center justify-center">
 				<div className="w-full max-w-full relative mt-6 flex items-center">
 					<Button
 						className="ml-2 absolute left-0 !text-2xl flex items-center duration-100"
