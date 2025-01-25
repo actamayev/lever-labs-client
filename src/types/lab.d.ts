@@ -5,6 +5,9 @@ declare global {
 	| "Reading"
 	| "Video"
 	| "Code"
+	| "Code-1"
+	| "Code-2"
+	| "Code-3"
 	| "Optional"
 
 	// Top: 1, bottom: 9

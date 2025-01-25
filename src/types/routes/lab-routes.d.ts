@@ -19,7 +19,9 @@ declare global {
 	type LedLabPages =
 		| "/lab/element-1/led/reading"
 		| "/lab/element-1/led/video"
-		| "/lab/element-1/led/code"
+		| "/lab/element-1/led/code-1"
+		| "/lab/element-1/led/code-2"
+		| "/lab/element-1/led/code-3"
 		| "/lab/element-1/led/demo"
 
 	type EncoderLabPages =

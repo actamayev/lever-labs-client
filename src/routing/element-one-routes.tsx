@@ -1,8 +1,10 @@
 import ImuCode from "../components/lab/element-1/imu/imu-code"
 import LedDemo from "../components/lab/element-1/led/led-demo"
-import LedCode from "../components/lab/element-1/led/led-code"
 import LedVideo from "../components/lab/element-1/led/led-video"
 import ImuVideo from "../components/lab/element-1/imu/imu-video"
+import LedCode1 from "../components/lab/element-1/led/led-code-1"
+import LedCode2 from "../components/lab/element-1/led/led-code-2"
+import LedCode3 from "../components/lab/element-1/led/led-code-3"
 import LedReading from "../components/lab/element-1/led/led-reading"
 import ImuReading from "../components/lab/element-1/imu/imu-reading"
 import MotorCode from "../components/lab/element-1/motor/motor-code"
@@ -40,8 +42,16 @@ const element1Routes: ElementRoutes[] = [
 				element: <LedVideo />
 			},
 			{
-				path: "Code",
-				element: <LedCode />
+				path: "Code-1",
+				element: <LedCode1 />
+			},
+			{
+				path: "Code-2",
+				element: <LedCode2 />
+			},
+			{
+				path: "Code-3",
+				element: <LedCode3 />
 			},
 			{
 				path: "Demo",

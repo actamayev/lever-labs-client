@@ -75,7 +75,7 @@ export default function LessonProgressIconContainer({ icon, progressPercent }: P
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">
-					{progressPercent}% complete
+					{Math.round(progressPercent)}% complete
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

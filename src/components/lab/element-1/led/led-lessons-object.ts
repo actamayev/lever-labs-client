@@ -36,21 +36,21 @@ const ledLessons: Lesson[] = [
 	// },
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/led/code",
+		lessonUrl: "/lab/element-1/led/code-1",
 		lessonName: "LED Code 1",
 		activityType: "Code",
 		verticalPosition: 1
 	},
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/led/code",
+		lessonUrl: "/lab/element-1/led/code-2",
 		lessonName: "LED Code 2",
 		activityType: "Code",
 		verticalPosition: 5
 	},
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/led/code",
+		lessonUrl: "/lab/element-1/led/code-3",
 		lessonName: "LED Code 3",
 		activityType: "Code",
 		verticalPosition: 9

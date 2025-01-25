@@ -1,18 +1,35 @@
-import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
+import { useMemo } from "react"
+import { observer } from "mobx-react"
+import { usePipContext } from "../../../../contexts/pip-context"
 import LabReadingComponent from "../../reading/lab-reading-component"
+import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 
-export default function LedReading() {
+function LedReading() {
+	const pipClass = usePipContext()
+
+	const nextPageLink = useMemo((): LabPages => {
+		if (pipClass.doesUserHaveAPip) return "/lab/element-1/led/demo"
+		return "/lab/element-1/led/video"
+	}, [pipClass.doesUserHaveAPip])
+
+	const nextPageActivity = useMemo((): ActivityType => {
+		if (pipClass.doesUserHaveAPip) return "Demo"
+		return "Video"
+	}, [pipClass.doesUserHaveAPip])
+
 	return (
 		<LabReadingComponent
-			readingTitle="How LEDs work"
+			readingTitle="What is an LED?"
 			previousPageLink="/lab/element-1/start"
 			previousPageActivity="Start"
-			nextPageLink="/lab/element-1/led/code"
-			nextPageActivity="Code"
+			nextPageLink={nextPageLink}
+			nextPageActivity={nextPageActivity}
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={20}
+			progressPercent={100 / 6}
 			isNextPageDemo={true}
 		/>
 	)
 }
+
+export default observer(LedReading)

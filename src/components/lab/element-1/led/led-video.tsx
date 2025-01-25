@@ -24,11 +24,11 @@ function LedVideo() {
 			ytVideoTitle="How does an LED work"
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
-			nextPageLink="/lab/element-1/led/code"
+			nextPageLink="/lab/element-1/led/code-1"
 			nextPageActivity="Code"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={60}
+			progressPercent={300 / 6}
 		/>
 	)
 }
