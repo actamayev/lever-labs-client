@@ -19,7 +19,7 @@ function LedVideo() {
 
 	return (
 		<LabVideoComponent
-			videoTitle="What is an LED?"
+			videoTitle="How LEDs work"
 			ytVideoId="FWer01zHNTw"
 			ytVideoTitle="LED Video"
 			previousPageLink={previousPageLink}

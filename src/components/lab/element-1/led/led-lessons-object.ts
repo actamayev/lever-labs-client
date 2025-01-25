@@ -23,7 +23,7 @@ const ledLessons: Lesson[] = [
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/video",
-		lessonName: "Video lesson",
+		lessonName: "How LEDs work",
 		activityType: "Video",
 		verticalPosition: 5
 	},

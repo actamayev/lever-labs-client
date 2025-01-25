@@ -1,4 +1,10 @@
 import { ReactElement } from "react"
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+	TooltipProvider
+} from "@/components/shadcn/ui/tooltip"
 
 interface Props {
     icon: ReactElement
@@ -21,48 +27,57 @@ export default function LessonProgressIconContainer({ icon, progressPercent }: P
 	const strokeDashoffset = circumference - (progress / 100) * circumference
 
 	return (
-		<div className="relative inline-flex items-center justify-center">
-			{/* Background circle */}
-			<svg
-				width={size}
-				height={size}
-				className="absolute"
-			>
-				<circle
-					cx={center}
-					cy={center}
-					r={radius}
-					fill="none"
-					stroke="currentColor"
-					strokeWidth={strokeWidth}
-					className="opacity-10"
-				/>
-			</svg>
+		<TooltipProvider delayDuration={0}>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className="relative inline-flex items-center justify-center">
+						{/* Background circle */}
+						<svg
+							width={size}
+							height={size}
+							className="absolute"
+						>
+							<circle
+								cx={center}
+								cy={center}
+								r={radius}
+								fill="none"
+								stroke="currentColor"
+								strokeWidth={strokeWidth}
+								className="opacity-10"
+							/>
+						</svg>
 
-			{/* Progress circle */}
-			<svg
-				width={size}
-				height={size}
-				className="absolute transform -rotate-90"
-			>
-				<circle
-					cx={center}
-					cy={center}
-					r={radius}
-					fill="none"
-					stroke="rgb(34, 197, 94)"  // Tailwind's green-500
-					strokeWidth={strokeWidth}
-					strokeLinecap="round"
-					strokeDasharray={circumference}
-					strokeDashoffset={strokeDashoffset}
-					className="transition-all duration-300"
-				/>
-			</svg>
+						{/* Progress circle */}
+						<svg
+							width={size}
+							height={size}
+							className="absolute transform -rotate-90"
+						>
+							<circle
+								cx={center}
+								cy={center}
+								r={radius}
+								fill="none"
+								stroke="rgb(34, 197, 94)"  // Tailwind's green-500
+								strokeWidth={strokeWidth}
+								strokeLinecap="round"
+								strokeDasharray={circumference}
+								strokeDashoffset={strokeDashoffset}
+								className="transition-all duration-300"
+							/>
+						</svg>
 
-			{/* Icon */}
-			<div className="relative z-10">
-				{icon}
-			</div>
-		</div>
+						{/* Icon */}
+						<div className="relative z-10">
+							{icon}
+						</div>
+					</div>
+				</TooltipTrigger>
+				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">
+					{progressPercent}% complete
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	)
 }
