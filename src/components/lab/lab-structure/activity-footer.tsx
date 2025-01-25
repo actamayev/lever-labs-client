@@ -27,7 +27,7 @@ function ActivityFooter(props: Props) {
 	const isNextButtonDisabled = isNextPageDemo && !pipClass.doesUserHaveAPip
 
 	return (
-		<footer className="h-20 flex items-center justify-between px-16 border-t border-zinc-300 dark:border-zinc-700">
+		<footer className="h-20 flex items-center justify-between px-16 border-t-2 border-zinc-300 dark:border-zinc-700">
 			<Button
 				className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 				onClick={() => navigate(previousPageLink)}

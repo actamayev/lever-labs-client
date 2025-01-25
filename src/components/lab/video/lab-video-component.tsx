@@ -39,7 +39,6 @@ export default function LabVideoComponent(props: Props) {
 				progressPercent={progressPercent}
 			/>
 
-			{/* Main content - fills remaining space */}
 			<main className="flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-4xl">
 					<div className="relative aspect-video">
@@ -54,7 +53,6 @@ export default function LabVideoComponent(props: Props) {
 				</div>
 			</main>
 
-			{/* Footer - fixed height */}
 			<ActivityFooter
 				previousPageLink={previousPageLink}
 				previousPageActivity={previousPageActivity}

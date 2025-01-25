@@ -20,14 +20,14 @@ function LedVideo() {
 	return (
 		<LabVideoComponent
 			videoTitle="How LEDs work"
-			ytVideoId="FWer01zHNTw"
-			ytVideoTitle="LED Video"
+			ytVideoId="Iwv5momDiKQ"
+			ytVideoTitle="How does an LED work"
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink="/lab/element-1/led/code"
 			nextPageActivity="Code"
 			element={1}
-			lessonIcon={<LEDColorChangeAnimation iconSize={25} />}
+			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
 			progressPercent={60}
 		/>
 	)

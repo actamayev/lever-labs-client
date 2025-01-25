@@ -17,7 +17,7 @@ export default function ActivityHeader(props: Props) {
 	const navigate = useTypedNavigate()
 
 	return (
-		<header className="h-20 flex items-center px-16 border-b border-zinc-300 dark:border-zinc-700">
+		<header className="h-20 flex items-center px-16 border-b-2 border-zinc-300 dark:border-zinc-700">
 			<Button
 				className="!text-2xl flex items-center duration-100"
 				onClick={() => navigate(`/lab/element-${element}`)}
