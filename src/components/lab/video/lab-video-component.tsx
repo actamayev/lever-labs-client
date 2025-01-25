@@ -38,9 +38,9 @@ function LabVideoComponent(props: Props) {
 	return (
 		<div className="h-screen relative">
 			<div className="h-full flex flex-col items-center">
-				<div className="w-full max-w-7xl relative mt-6">
+				<div className="w-full max-w-full relative mt-6 flex items-center">
 					<Button
-						className="absolute left-0 !text-2xl flex items-center gap-2"
+						className="ml-2 absolute left-0 !text-2xl flex items-center duration-100"
 						onClick={() => navigate(`/lab/element-${element}`)}
 						variant="ghost"
 					>
@@ -48,8 +48,9 @@ function LabVideoComponent(props: Props) {
 						<CustomBeaker className="!h-6 !w-6" />
 						Lab
 					</Button>
-					<h2 className="text-4xl font-semibold text-center">{videoTitle}</h2>
+					<h2 className="text-4xl font-semibold flex-1 text-center">{videoTitle}</h2>
 				</div>
+				<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 my-4" />
 
 				<div className="w-full flex-1 flex flex-col items-center justify-center">
 					<div className="w-full max-w-4xl">
@@ -63,12 +64,13 @@ function LabVideoComponent(props: Props) {
 							/>
 						</div>
 					</div>
-					<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 mt-8" />
+					<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 my-4" />
 				</div>
 
 				<div className="w-full max-w-7xl relative">
 					<Button
-						className="absolute bottom-4 left-4 !text-2xl transition-none rounded-2xl flex items-center gap-2"
+						className="absolute bottom-4 left-4 !text-2xl rounded-2xl flex items-center
+						bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						onClick={() => navigate(previousPageLink)}
 						disabled={isNextButtonDisabled}
 						variant="tactile"
@@ -84,7 +86,8 @@ function LabVideoComponent(props: Props) {
 
 				<div className="w-full max-w-7xl relative">
 					<Button
-						className="absolute bottom-4 right-4 !text-2xl transition-none rounded-2xl flex items-center gap-2"
+						className="absolute bottom-4 right-4 !text-2xl rounded-2xl flex items-center
+						bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						onClick={() => navigate(nextPageLink)}
 						disabled={isNextButtonDisabled}
 						variant="tactile"
