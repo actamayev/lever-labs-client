@@ -7,8 +7,8 @@ import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import GetActivityIconFromActivityName from "../lab-structure/get-activity-icon-from-name"
 
 interface Props {
-    previousPageLink: LabPages
-    previousPageActivity: ActivityType
+    previousPageLink: LabPages | null
+    previousPageActivity: ActivityType | null
     nextPageLink: LabPages
     nextPageActivity: ActivityType
     isNextPageDemo?: boolean
@@ -29,21 +29,24 @@ function ActivityFooter(props: Props) {
 
 	return (
 		<footer className="h-20 flex items-center justify-between px-16 border-t-2 border-zinc-300 dark:border-zinc-700">
-			<Button
-				className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-				onClick={() => navigate(previousPageLink)}
-				variant="tactile"
-			>
-				<ArrowLeft className="!h-6 !w-6" />
-				<GetActivityIconFromActivityName
-					activityType={previousPageActivity}
-					className="!h-6 !w-6"
-				/>
-				Back to {toLower(previousPageActivity)}
-			</Button>
+			{previousPageLink && previousPageActivity && (
+				<Button
+					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
+					onClick={() => navigate(previousPageLink)}
+					variant="tactile"
+				>
+					<ArrowLeft className="!h-6 !w-6" />
+					<GetActivityIconFromActivityName
+						activityType={previousPageActivity}
+						className="!h-6 !w-6"
+					/>
+					Back to {toLower(previousPageActivity)}
+				</Button>
+			)}
 
 			<Button
-				className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
+				className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover
+				dark:text-white transition-none ml-auto"
 				onClick={() => navigate(nextPageLink)}
 				disabled={isNextButtonDisabled}
 				variant="tactile"

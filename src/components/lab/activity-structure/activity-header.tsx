@@ -8,8 +8,8 @@ import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-c
 interface Props {
 	element: 1 | 2 | 3
 	lessonTitle: string
-	lessonIcon: ReactElement
-	progressPercent: number
+	lessonIcon: ReactElement | null
+	progressPercent: number | null
 }
 
 export default function ActivityHeader(props: Props) {
@@ -18,21 +18,25 @@ export default function ActivityHeader(props: Props) {
 
 	return (
 		<header className="h-20 flex items-center px-16 border-b-2 border-zinc-300 dark:border-zinc-700">
-			<Button
-				className="!text-2xl flex items-center duration-100"
-				onClick={() => navigate(`/lab/element-${element}`)}
-				variant="ghost"
-			>
-				<ArrowLeft className="!h-6 !w-6" />
-				<CustomBeaker className="!h-6 !w-6" />
-				Lab
-			</Button>
+			<div className="flex w-32">
+				<Button
+					className="!text-2xl flex items-center duration-100"
+					onClick={() => navigate(`/lab/element-${element}`)}
+					variant="ghost"
+				>
+					<ArrowLeft className="!h-6 !w-6" />
+					<CustomBeaker className="!h-6 !w-6" />
+					Lab
+				</Button>
+			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
 			<div className="w-32 flex justify-end">
-				<LessonProgressIconContainer
-					icon={lessonIcon}
-					progressPercent={progressPercent}
-				/>
+				{lessonIcon && progressPercent && (
+					<LessonProgressIconContainer
+						icon={lessonIcon}
+						progressPercent={progressPercent}
+					/>
+				)}
 			</div>
 		</header>
 	)
