@@ -9,11 +9,11 @@ import GetActivityIconFromActivityName from "../lab-structure/get-activity-icon-
 interface Props {
     videoTitle: string
     ytVideoId: string
-	ytVideoTitle: string
-	previousPageLink: LabPages
-	previousPageActivity: ActivityType
+    ytVideoTitle: string
+    previousPageLink: LabPages
+    previousPageActivity: ActivityType
     nextPageLink: LabPages
-	nextPageActivity: ActivityType
+    nextPageActivity: ActivityType
     element: 1 | 2 | 3
     isNextPageDemo?: boolean
 }
@@ -36,71 +36,66 @@ function LabVideoComponent(props: Props) {
 	const isNextButtonDisabled = isNextPageDemo && !pipClass.doesUserHaveAPip
 
 	return (
-		<div className="h-screen relative">
-			<div className="h-full flex flex-col items-center justify-center">
-				<div className="w-full max-w-full relative mt-6 flex items-center">
-					<Button
-						className="ml-2 absolute left-0 !text-2xl flex items-center duration-100"
-						onClick={() => navigate(`/lab/element-${element}`)}
-						variant="ghost"
-					>
-						<ArrowLeft className="!h-6 !w-6" />
-						<CustomBeaker className="!h-6 !w-6" />
-						Lab
-					</Button>
-					<h2 className="text-4xl font-semibold flex-1 text-center">{videoTitle}</h2>
-				</div>
-				<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 my-4" />
+		<div className="h-screen flex flex-col">
+			{/* Header - fixed height */}
+			<header className="h-20 flex items-center px-4 border-b border-zinc-300 dark:border-zinc-700">
+				<Button
+					className="!text-2xl flex items-center duration-100"
+					onClick={() => navigate(`/lab/element-${element}`)}
+					variant="ghost"
+				>
+					<ArrowLeft className="!h-6 !w-6" />
+					<CustomBeaker className="!h-6 !w-6" />
+                    Lab
+				</Button>
+				<h2 className="text-4xl font-semibold flex-1 text-center">{videoTitle}</h2>
+				<div className="w-32" /> {/* Spacer to balance the button */}
+			</header>
 
-				<div className="w-full flex-1 flex flex-col items-center justify-center">
-					<div className="w-full max-w-4xl">
-						<div className="relative aspect-video">
-							<iframe
-								className="w-full h-full rounded-xl"
-								src={`https://www.youtube.com/embed/${ytVideoId}`}
-								title={ytVideoTitle}
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-								allowFullScreen
-							/>
-						</div>
+			{/* Main content - fills remaining space */}
+			<main className="flex-1 flex items-center justify-center p-4">
+				<div className="w-full max-w-4xl">
+					<div className="relative aspect-video">
+						<iframe
+							className="w-full h-full rounded-xl"
+							src={`https://www.youtube.com/embed/${ytVideoId}`}
+							title={ytVideoTitle}
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowFullScreen
+						/>
 					</div>
-					<div className="w-full h-0.5 dark:bg-zinc-700 bg-zinc-300 my-4" />
 				</div>
+			</main>
 
-				<div className="w-full max-w-7xl relative">
-					<Button
-						className="absolute bottom-4 left-4 !text-2xl rounded-2xl flex items-center
-						bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-						onClick={() => navigate(previousPageLink)}
-						disabled={isNextButtonDisabled}
-						variant="tactile"
-					>
-						<ArrowLeft className="!h-6 !w-6" />
-						<GetActivityIconFromActivityName
-							activityType={previousPageActivity}
-							className="!h-6 !w-6"
-						/>
-						Previous Lesson
-					</Button>
-				</div>
+			{/* Footer - fixed height */}
+			<footer className="h-20 flex items-center justify-between px-4 border-t border-zinc-300 dark:border-zinc-700">
+				<Button
+					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
+					onClick={() => navigate(previousPageLink)}
+					variant="tactile"
+				>
+					<ArrowLeft className="!h-6 !w-6" />
+					<GetActivityIconFromActivityName
+						activityType={previousPageActivity}
+						className="!h-6 !w-6"
+					/>
+                    Previous Lesson
+				</Button>
 
-				<div className="w-full max-w-7xl relative">
-					<Button
-						className="absolute bottom-4 right-4 !text-2xl rounded-2xl flex items-center
-						bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-						onClick={() => navigate(nextPageLink)}
-						disabled={isNextButtonDisabled}
-						variant="tactile"
-					>
-						Next Lesson
-						<GetActivityIconFromActivityName
-							activityType={nextPageActivity}
-							className="!h-6 !w-6"
-						/>
-						<ArrowRight className="!h-6 !w-6" />
-					</Button>
-				</div>
-			</div>
+				<Button
+					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
+					onClick={() => navigate(nextPageLink)}
+					disabled={isNextButtonDisabled}
+					variant="tactile"
+				>
+                    Next Lesson
+					<GetActivityIconFromActivityName
+						activityType={nextPageActivity}
+						className="!h-6 !w-6"
+					/>
+					<ArrowRight className="!h-6 !w-6" />
+				</Button>
+			</footer>
 		</div>
 	)
 }
