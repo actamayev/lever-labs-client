@@ -38,8 +38,7 @@ function LabVideoComponent(props: Props) {
 	return (
 		<div className="h-screen relative">
 			<div className="h-full flex flex-col items-center">
-				{/* Header area with back button and title */}
-				<div className="w-full max-w-7xl relative mt-12">
+				<div className="w-full max-w-7xl relative mt-6">
 					<Button
 						className="absolute left-0 !text-2xl flex items-center gap-2"
 						onClick={() => navigate(`/lab/element-${element}`)}
@@ -52,7 +51,6 @@ function LabVideoComponent(props: Props) {
 					<h2 className="text-4xl font-semibold text-center">{videoTitle}</h2>
 				</div>
 
-				{/* Video container with separator */}
 				<div className="w-full flex-1 flex flex-col items-center justify-center">
 					<div className="w-full max-w-4xl">
 						<div className="relative aspect-video">
