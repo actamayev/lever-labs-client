@@ -1,3 +1,4 @@
+import { toLower } from "lodash-es"
 import { observer } from "mobx-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
@@ -38,7 +39,7 @@ function ActivityFooter(props: Props) {
 					activityType={previousPageActivity}
 					className="!h-6 !w-6"
 				/>
-                    Previous Lesson
+				Back to {toLower(previousPageActivity)}
 			</Button>
 
 			<Button
@@ -47,7 +48,7 @@ function ActivityFooter(props: Props) {
 				disabled={isNextButtonDisabled}
 				variant="tactile"
 			>
-				Next Lesson
+				Up next: {toLower(nextPageActivity)}
 				<GetActivityIconFromActivityName
 					activityType={nextPageActivity}
 					className="!h-6 !w-6"

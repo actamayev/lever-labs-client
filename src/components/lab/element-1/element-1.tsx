@@ -1,8 +1,8 @@
-import Lilypad from "../lab-structure/lilypad"
+import Lilypad from "../lab-structure/lilypad/lilypad"
 import ledLessons from "./led/led-lessons-object"
 import motorLessons from "./motor/motor-lessons-object"
-import { LilypadContainer, LilypadSection } from "../lab-structure/lilypad-container"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
+import { LilypadContainer, LilypadSection } from "../lab-structure/lilypad/lilypad-container"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 
 export default function Element1() {

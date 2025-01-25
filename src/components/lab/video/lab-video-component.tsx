@@ -1,6 +1,5 @@
 import { ReactElement } from "react"
-import ActivityHeader from "../lab-structure/activity-header"
-import ActivityFooter from "../lab-structure/activity-footer"
+import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
     videoTitle: string
@@ -31,14 +30,18 @@ export default function LabVideoComponent(props: Props) {
 		isNextPageDemo = false
 	} = props
 	return (
-		<div className="h-screen flex flex-col">
-			<ActivityHeader
-				element={element}
-				lessonTitle={videoTitle}
-				lessonIcon={lessonIcon}
-				progressPercent={progressPercent}
-			/>
-
+		<ActivityTemplate
+			element={element}
+			lessonTitle={videoTitle}
+			lessonIcon={lessonIcon}
+			progressPercent={progressPercent}
+			previousPageLink={previousPageLink}
+			previousPageActivity={previousPageActivity}
+			nextPageLink={nextPageLink}
+			nextPageActivity={nextPageActivity}
+			isNextPageDemo={isNextPageDemo}
+			extraClasses="h-screen"
+		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-4xl">
 					<div className="relative aspect-video">
@@ -52,14 +55,6 @@ export default function LabVideoComponent(props: Props) {
 					</div>
 				</div>
 			</main>
-
-			<ActivityFooter
-				previousPageLink={previousPageLink}
-				previousPageActivity={previousPageActivity}
-				nextPageLink={nextPageLink}
-				nextPageActivity={nextPageActivity}
-				isNextPageDemo={isNextPageDemo}
-			/>
-		</div>
+		</ActivityTemplate>
 	)
 }

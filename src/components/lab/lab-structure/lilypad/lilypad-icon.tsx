@@ -1,6 +1,6 @@
 import { isNull } from "lodash-es"
 import { useCallback } from "react"
-import GetActivityIconFromActivityName from "./get-activity-icon-from-name"
+import GetActivityIconFromActivityName from "../get-activity-icon-from-name"
 
 interface Props {
 	progress: number | null

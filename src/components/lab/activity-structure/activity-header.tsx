@@ -3,7 +3,7 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
 import { CustomBeaker } from "../../icons/custom-beaker"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import LessonProgressIconContainer from "./lesson-progress-icon-container"
+import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-container"
 
 interface Props {
 	element: 1 | 2 | 3

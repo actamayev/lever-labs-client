@@ -1,29 +1,14 @@
 import { isNull } from "lodash-es"
 import { useCallback } from "react"
-import LilypadIcon from "./lilypad-icon"
-import { cn } from "../../../lib/shadcn/utils"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import { cn } from "../../lib/shadcn/utils"
 
-interface Props {
-	lesson: Lesson
-}
-
-export default function Lilypad(props: Props) {
-	const { lesson } = props
-	const { progress, lessonUrl, lessonName, activityType } = lesson
-	const navigate = useTypedNavigate()
-
-	const navigateToLesson = useCallback(() => {
-		if (isNull(progress)) return
-		navigate(lessonUrl)
-	}, [progress, lessonUrl, navigate])
-
-	const lilypadVariants = useCallback(() => cn(
+export default function useLilypadVariants(): (progress: number | null) => string {
+	return useCallback((progress) => cn(
 		// Base styles
-		"w-24 h-24 rounded-full flex items-center justify-center transform transition-all duration-50",
+		"w-24 h-24 rounded-full flex items-center justify-center transform transition-all duration-50 relative",
 		// Shadow and press effect
 		isNull(progress) && [
-			"bg-gray-300 cursor-not-allowed",
+			"bg-gray-300",
 			"shadow-[0_7px_0_0_rgb(156,163,175)]", // gray shadow
 		],
 		progress === 100 && [
@@ -42,23 +27,5 @@ export default function Lilypad(props: Props) {
 			"active:shadow-[0_0_0_0_rgb(30,64,175)]", // fully compressed on click
 			"active:transform active:translate-y-2 duration-0", // move down to match shadow
 		],
-	), [progress])
-
-	return (
-		<div className="flex flex-col items-center gap-3">
-			<button
-				className={lilypadVariants()}
-				onClick={navigateToLesson}
-				disabled={isNull(progress)}
-			>
-				<LilypadIcon
-					activityType={activityType}
-					progress={progress}
-				/>
-			</button>
-			<span className="font-medium text-sm text-zinc-700 dark:text-zinc-300">
-				{lessonName}
-			</span>
-		</div>
-	)
+	), [])
 }
