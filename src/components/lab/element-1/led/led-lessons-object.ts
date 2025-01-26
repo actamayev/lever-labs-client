@@ -38,7 +38,7 @@ const ledLessons: Lesson[] = [
 		skipConnection: true
 	},
 	{
-		progress: null,
+		progress: 0,
 		lessonUrl: "/lab/element-1/led/code-1",
 		lessonName: "LED Code 1",
 		activityType: "Code",

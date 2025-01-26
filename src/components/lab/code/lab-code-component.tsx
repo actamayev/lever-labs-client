@@ -2,7 +2,7 @@ import { ReactElement } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	codeTitle: string
+	lessonTitle: string
 	previousPageLink: LabPages
 	previousPageActivity: ActivityType
 	nextPageLink: LabPages
@@ -11,11 +11,13 @@ interface Props {
 	lessonIcon: ReactElement
 	progressPercent: number
 	isNextPageDemo?: boolean
+	codingTitle: string
+	codingDescription: string
 }
 
 export default function LabCodeComponent(props: Props) {
 	const {
-		codeTitle,
+		lessonTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
@@ -28,7 +30,7 @@ export default function LabCodeComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={codeTitle}
+			lessonTitle={lessonTitle}
 			lessonIcon={lessonIcon}
 			progressPercent={progressPercent}
 			previousPageLink={previousPageLink}

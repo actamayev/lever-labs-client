@@ -4,7 +4,7 @@ import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-a
 export default function LedCode3() {
 	return (
 		<LabCodeComponent
-			codeTitle="LED Code 3"
+			lessonTitle="LED Code 3"
 			previousPageLink="/lab/element-1/led/code-2"
 			previousPageActivity="Code"
 			nextPageLink="/lab/element-1/led/summary"
@@ -12,6 +12,8 @@ export default function LedCode3() {
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
 			progressPercent={100}
+			codingTitle="Choose an LED color"
+			codingDescription="Here, you'll turn your LED to a color of your choosing"
 		/>
 	)
 }
