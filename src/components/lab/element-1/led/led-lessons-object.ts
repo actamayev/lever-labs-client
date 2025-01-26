@@ -46,14 +46,16 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/code-2",
 		lessonName: "LED Code 2",
 		activityType: "Code",
-		verticalPosition: 5
+		verticalPosition: 5,
+		needsleftXMargin: false
 	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code-3",
 		lessonName: "LED Code 3",
 		activityType: "Code",
-		verticalPosition: 9
+		verticalPosition: 9,
+		needsleftXMargin: false
 	},
 	{
 		progress: null,

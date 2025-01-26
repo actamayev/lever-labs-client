@@ -19,6 +19,7 @@ declare global {
 		lessonName: string
 		activityType: ActivityType
 		verticalPosition: VerticalPosition
+		needsleftXMargin?: boolean
 	}
 }
 
