@@ -20,6 +20,7 @@ declare global {
 		activityType: ActivityType
 		verticalPosition: VerticalPosition
 		stackWithPrevious?: boolean
+		skipConnection?: boolean
 	}
 }
 

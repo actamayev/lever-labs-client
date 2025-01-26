@@ -4,7 +4,7 @@ const motorLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/motor/demo",
 		lessonName: "Motor Demo",
 		activityType: "Demo",
-		verticalPosition: 2
+		verticalPosition: 5
 	},
 	{
 		progress: 0,

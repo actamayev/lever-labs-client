@@ -1,8 +1,9 @@
+import { isNull } from "lodash-es"
 import { useMemo, useRef, useEffect, useState } from "react"
 import ledLessons from "./led-lessons-object"
 import Lilypad from "../../lab-structure/lilypad/lilypad"
-import setLessonVerticalPosition from "../../../../utils/lab/set-lesson-vertical-position"
 import PathTickMark from "../../lab-structure/path-tick-mark"
+import setLessonVerticalPosition from "../../../../utils/lab/set-lesson-vertical-position"
 
 const getStackPosition = (index: number, defaultPosition: VerticalPosition): VerticalPosition => {
 	if (!index) return defaultPosition
@@ -29,12 +30,12 @@ export default function ShowLEDLessons() {
 		if (!containerRef.current) return
 
 		const positions: Array<{ x: number; y: number }> = []
-		const lilypads = containerRef.current.querySelectorAll("[data-lilypad]")
+		const lilypads = containerRef.current.querySelectorAll("[data-lilypad-icon]")
 
 		lilypads.forEach((lilypad) => {
 			const rect = lilypad.getBoundingClientRect()
-			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			const containerRect = containerRef.current!.getBoundingClientRect()
+			if (isNull(containerRef.current)) return
+			const containerRect = containerRef.current.getBoundingClientRect()
 			positions.push({
 				x: rect.left - containerRect.left + rect.width / 2,
 				y: rect.top - containerRect.top + rect.height / 2

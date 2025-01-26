@@ -7,7 +7,7 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LilypadStatusIndicatorTooltip from "./lilypad-status-indicator-tooltip"
 
 interface Props {
-	lesson: Lesson
+  lesson: Lesson
 }
 
 export default function Lilypad(props: Props) {
@@ -33,6 +33,7 @@ export default function Lilypad(props: Props) {
 				<button
 					className={lilypadVariants(progress)}
 					disabled={isNull(progress)}
+					data-lilypad-icon
 				>
 					<LilypadIcon
 						activityType={activityType}
