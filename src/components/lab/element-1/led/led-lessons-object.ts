@@ -4,14 +4,16 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/start",
 		lessonName: "Start",
 		activityType: "Start",
-		verticalPosition: 5
+		verticalPosition: 5,
+		arcDirection: "up"
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading",
 		lessonName: "What is an LED?",
 		activityType: "Reading",
-		verticalPosition: 5
+		verticalPosition: 5,
+		arcDirection: "down"
 	},
 	{
 		progress: 0,

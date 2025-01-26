@@ -10,8 +10,14 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 	return index === 1 ? 5 : 9
 }
 
+// eslint-disable-next-line max-lines-per-function
 export default function ShowLEDLessons() {
-	const [lilypadPositions, setLilypadPositions] = useState<Array<{ x: number; y: number; skipConnection?: boolean }>>([])
+	const [lilypadPositions, setLilypadPositions] = useState<Array<{
+		x: number
+		y: number
+		skipConnection?: boolean
+		arcDirection?: "up" | "down"
+	}>>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 
 	const groups = useMemo(() => {
@@ -29,7 +35,13 @@ export default function ShowLEDLessons() {
 	useEffect(() => {
 		if (!containerRef.current) return
 
-		const positions: Array<{ x: number; y: number; skipConnection?: boolean }> = []
+		const positions: Array<{
+			x: number
+			y: number
+			skipConnection?: boolean
+			arcDirection?: "up" | "down"
+		}> = []
+
 		const lilypads = containerRef.current.querySelectorAll("[data-lilypad-icon]")
 
 		lilypads.forEach((lilypad) => {
@@ -37,11 +49,13 @@ export default function ShowLEDLessons() {
 			if (isNull(containerRef.current)) return
 			const containerRect = containerRef.current.getBoundingClientRect()
 			const skipConnection = lilypad.getAttribute("data-skip-connection") === "true"
+			const arcDirection = lilypad.getAttribute("data-arc-direction") as "up" | "down" | null
 
 			positions.push({
 				x: rect.left - containerRect.left + rect.width / 2,
 				y: rect.top - containerRect.top + rect.height / 2,
-				skipConnection
+				skipConnection,
+				arcDirection: arcDirection || undefined
 			})
 		})
 
@@ -66,6 +80,7 @@ export default function ShowLEDLessons() {
 					key={i}
 					startPosition={pos}
 					endPosition={renderablePositions[i + 1]}
+					arcDirection={pos.arcDirection}
 				/>
 			))}
 

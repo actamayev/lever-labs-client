@@ -21,6 +21,7 @@ declare global {
 		verticalPosition: VerticalPosition
 		stackWithPrevious?: boolean
 		skipConnection?: boolean
+		arcDirection?: "up" | "down"
 	}
 }
 

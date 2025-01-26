@@ -1,9 +1,10 @@
 interface PathMarkProps {
 	startPosition: { x: number; y: number }
 	endPosition: { x: number; y: number }
+	arcDirection?: "up" | "down"  // Add arc direction to props
 }
 
-export default function PathMark({ startPosition, endPosition }: PathMarkProps) {
+export default function PathMark({ startPosition, endPosition, arcDirection = "up" }: PathMarkProps) {
 // Calculate basic path properties
 	const dx = endPosition.x - startPosition.x
 	const dy = endPosition.y - startPosition.y
@@ -12,14 +13,20 @@ export default function PathMark({ startPosition, endPosition }: PathMarkProps) 
 	// Generate path and control points based on positions
 	const getPathData = () => {
 		const isHorizontal = Math.abs(dy) < 50 // If points are roughly on same level
-		const isAscending = endPosition.y < startPosition.y
 
-		// For horizontal paths, create a simple arc
+		// For horizontal paths, create a more pronounced arc
 		if (isHorizontal) {
-			const controlY = startPosition.y + (isAscending ? -50 : 50) // Arc height
+			const arcHeight = 65
+			const controlY = startPosition.y + (arcDirection === "up" ? -arcHeight : arcHeight)
+
+			// Use cubic bezier for more control over the curve shape
+			const control1X = startPosition.x + dx * 0.25
+			const control2X = startPosition.x + dx * 0.75
+
 			return `
 				M ${startPosition.x} ${startPosition.y}
-				Q ${(startPosition.x + endPosition.x) / 2} ${controlY}
+				C ${control1X} ${controlY}
+				${control2X} ${controlY}
 				${endPosition.x} ${endPosition.y}
 			`
 		}
