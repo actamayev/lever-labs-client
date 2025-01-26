@@ -30,6 +30,7 @@ import IrCommuncationSensorCode from "../components/lab/element-1/ir-communicati
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
 import LedSummary from "../components/lab/element-1/led/led-summary"
+import MotorSummary from "../components/lab/element-1/motor/motor-summary"
 
 const element1Routes: ElementRoutes[] = [
 	{
@@ -77,13 +78,25 @@ const element1Routes: ElementRoutes[] = [
 				element: <MotorVideo />
 			},
 			{
-				path: "Code",
+				path: "Code-1",
+				element: <MotorCode />
+			},
+			{
+				path: "Code-2",
+				element: <MotorCode />
+			},
+			{
+				path: "Code-3",
 				element: <MotorCode />
 			},
 			{
 				path: "Demo",
 				element: <MotorDemo />
-			}
+			},
+			{
+				path: "Summary",
+				element: <MotorSummary />
+			},
 		]
 	},
 	{

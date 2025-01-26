@@ -13,7 +13,9 @@ declare global {
 	type MotorLabPages =
 		| "/lab/element-1/motor/reading"
 		| "/lab/element-1/motor/video"
-		| "/lab/element-1/motor/code"
+		| "/lab/element-1/motor/code-1"
+		| "/lab/element-1/motor/code-2"
+		| "/lab/element-1/motor/code-3"
 		| "/lab/element-1/motor/demo"
 		| "/lab/element-1/motor/summary"
 

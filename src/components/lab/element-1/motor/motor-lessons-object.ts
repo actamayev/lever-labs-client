@@ -29,24 +29,31 @@ const motorLessons: Lesson[] = [
 	// },
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/motor/code",
+		lessonUrl: "/lab/element-1/motor/code-1",
 		lessonName: "Motor Code 1",
 		activityType: "Code",
 		verticalPosition: 1
 	},
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/motor/code",
+		lessonUrl: "/lab/element-1/motor/code-2",
 		lessonName: "Motor Code 2",
 		activityType: "Code",
 		verticalPosition: 5
 	},
 	{
 		progress: null,
-		lessonUrl: "/lab/element-1/motor/code",
+		lessonUrl: "/lab/element-1/motor/code-3",
 		lessonName: "Motor Code 3",
 		activityType: "Code",
 		verticalPosition: 9
+	},
+	{
+		progress: null,
+		lessonUrl: "/lab/element-1/motor/summary",
+		lessonName: "Motor Summary",
+		activityType: "Summary",
+		verticalPosition: 5
 	},
 ]
 

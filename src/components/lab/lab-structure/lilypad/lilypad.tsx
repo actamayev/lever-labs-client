@@ -10,7 +10,6 @@ interface Props {
 	lesson: Lesson
 }
 
-// TODO: Make hover a state so that hovering on the name of the exercise makes the lilypad go down
 export default function Lilypad(props: Props) {
 	const { lesson } = props
 	const { progress, lessonUrl, lessonName, activityType } = lesson
@@ -24,10 +23,15 @@ export default function Lilypad(props: Props) {
 
 	return (
 		<LilypadStatusIndicatorTooltip progress={progress}>
-			<div className="flex flex-col items-center gap-3">
+			<div
+				className={cn(
+					"flex flex-col items-center gap-3 group",
+					!isNull(progress) ? "group cursor-pointer" : "cursor-default"
+				)}
+				onClick={navigateToLesson}
+			>
 				<button
 					className={lilypadVariants(progress)}
-					onClick={navigateToLesson}
 					disabled={isNull(progress)}
 				>
 					<LilypadIcon
