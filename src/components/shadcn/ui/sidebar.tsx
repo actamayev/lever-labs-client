@@ -71,7 +71,7 @@ const SidebarProvider = React.forwardRef<
     const [openMobile, setOpenMobile] = React.useState(false)
     const defaultSideBarState = useDefaultSidebarState()
     const setDefaultSidebarState = useSetDefaultSidebarState()
-    const initialState = defaultSideBarState === "expanded"
+    const initialState = defaultSideBarState === "expanded" && location.pathname.startsWith("/sandbox")
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.

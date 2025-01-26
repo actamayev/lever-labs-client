@@ -1,6 +1,6 @@
 import { useLocation } from "react-router"
 import { Sidebar } from "@/components/shadcn/ui/sidebar"
-import SecondarySidebar from "./secondary/secondary-sidebar"
+import SandboxSidebar from "./sandbox-sidebar"
 import PrimarySidebar from "./primary/primary-sidebar"
 import { showPrimarySidebarPages } from "../../../utils/constants"
 
@@ -16,7 +16,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
 			{...props}
 		>
 			<PrimarySidebar />
-			<SecondarySidebar />
+			{location.pathname.startsWith("/sandbox") && <SandboxSidebar />}
 		</Sidebar>
 	)
 }
