@@ -20,9 +20,8 @@ export default function ActivityHeader(props: Props) {
 		<header className="h-20 flex items-center px-16 border-b-2 border-zinc-300 dark:border-zinc-700">
 			<div className="flex w-32">
 				<Button
-					className="!text-2xl flex items-center duration-100"
+					className="!text-2xl flex items-center duration-100 rounded-2xl"
 					onClick={() => navigate(`/lab/element-${element}`)}
-					variant="ghost"
 				>
 					<ArrowLeft className="!h-6 !w-6" />
 					<CustomBeaker className="!h-6 !w-6" />

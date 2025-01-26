@@ -1,4 +1,4 @@
-import { BookOpen, CodeXml, Play } from "lucide-react"
+import { BookOpen, ClipboardList, CodeXml, Play } from "lucide-react"
 import { CustomStart } from "../../icons/custom-start"
 import { CustomWizardHat } from "../../icons/custom-wizard-hat"
 
@@ -14,10 +14,12 @@ export default function GetActivityIconFromActivityName(props: Props) {
 		return <CustomStart className={className} />
 	} else if (activityType === "Reading") {
 		return <BookOpen className={className} />
-	} else if (activityType === "Code") {
-		return <CodeXml className={className} />
+	} else if (activityType === "Demo") {
+		return <CustomWizardHat className={className} />
 	} else if (activityType === "Video") {
 		return <Play className={className} />
+	} else if (activityType === "Summary") {
+		return <ClipboardList className={className} />
 	}
-	return <CustomWizardHat className={className} />
+	return <CodeXml className={className} />
 }

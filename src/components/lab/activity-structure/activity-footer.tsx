@@ -25,6 +25,7 @@ function ActivityFooter(props: Props) {
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
 
+	// TODO: Test this (there should be two buttons if the user doesn't have a pip. demo disabled, and the other option)
 	const isNextButtonDisabled = isNextPageDemo && !pipClass.doesUserHaveAPip
 
 	return (

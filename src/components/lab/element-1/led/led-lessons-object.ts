@@ -55,6 +55,13 @@ const ledLessons: Lesson[] = [
 		activityType: "Code",
 		verticalPosition: 9
 	},
+	{
+		progress: null,
+		lessonUrl: "/lab/element-1/led/summary",
+		lessonName: "LED Summary",
+		activityType: "Summary",
+		verticalPosition: 5
+	},
 ]
 
 export default ledLessons

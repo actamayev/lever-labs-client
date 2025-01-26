@@ -7,8 +7,8 @@ export default function LedCode3() {
 			codeTitle="LED Code 3"
 			previousPageLink="/lab/element-1/led/code-2"
 			previousPageActivity="Code"
-			nextPageLink="/lab/element-1/motor/demo"
-			nextPageActivity="Demo"
+			nextPageLink="/lab/element-1/led/summary"
+			nextPageActivity="Summary"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
 			progressPercent={100}

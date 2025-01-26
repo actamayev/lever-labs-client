@@ -22,7 +22,6 @@ export default function Lilypad(props: Props) {
 		navigate(lessonUrl)
 	}, [progress, lessonUrl, navigate])
 
-	// Tooltip doesn't work
 	return (
 		<LilypadStatusIndicatorTooltip progress={progress}>
 			<div className="flex flex-col items-center gap-3">

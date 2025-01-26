@@ -5,6 +5,7 @@ import ImuVideo from "../components/lab/element-1/imu/imu-video"
 import LedCode1 from "../components/lab/element-1/led/led-code-1"
 import LedCode2 from "../components/lab/element-1/led/led-code-2"
 import LedCode3 from "../components/lab/element-1/led/led-code-3"
+import MotorDemo from "../components/lab/element-1/motor/motor-demo"
 import LedReading from "../components/lab/element-1/led/led-reading"
 import ImuReading from "../components/lab/element-1/imu/imu-reading"
 import MotorCode from "../components/lab/element-1/motor/motor-code"
@@ -28,6 +29,7 @@ import IRSensorArrayReading from "../components/lab/element-1/ir-sensor-array/ir
 import IrCommuncationSensorCode from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-code"
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
+import LedSummary from "../components/lab/element-1/led/led-summary"
 
 const element1Routes: ElementRoutes[] = [
 	{
@@ -56,7 +58,11 @@ const element1Routes: ElementRoutes[] = [
 			{
 				path: "Demo",
 				element: <LedDemo />
-			}
+			},
+			{
+				path: "Summary",
+				element: <LedSummary />
+			},
 		]
 	},
 	{
@@ -73,6 +79,10 @@ const element1Routes: ElementRoutes[] = [
 			{
 				path: "Code",
 				element: <MotorCode />
+			},
+			{
+				path: "Demo",
+				element: <MotorDemo />
 			}
 		]
 	},

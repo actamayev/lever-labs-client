@@ -2,7 +2,6 @@ interface LilypadContainerProps {
 	children: React.ReactNode
 }
 
-// TODO: Make this vertically centered
 export function LilypadContainer({ children }: LilypadContainerProps) {
 	return (
 		<div className="pt-16 px-8">
