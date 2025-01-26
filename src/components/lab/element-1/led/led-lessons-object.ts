@@ -27,13 +27,14 @@ const ledLessons: Lesson[] = [
 		activityType: "Video",
 		verticalPosition: 5
 	},
-	// {
-	// 	progress: null,
-	// 	lessonUrl: "/lab/element-1/led/optional-bubble",
-	// 	lessonName: "Optional bubble",
-	// 	activityType: "Optional",
-	// 	verticalPosition: 5
-	// },
+	{
+		progress: null,
+		lessonUrl: "/lab/element-1/led/video",
+		lessonName: "Optional bubble",
+		activityType: "Video",
+		verticalPosition: 8,
+		skipConnection: true
+	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code-1",

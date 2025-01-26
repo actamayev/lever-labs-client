@@ -11,7 +11,7 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 }
 
 export default function ShowLEDLessons() {
-	const [lilypadPositions, setLilypadPositions] = useState<Array<{ x: number; y: number }>>([])
+	const [lilypadPositions, setLilypadPositions] = useState<Array<{ x: number; y: number; skipConnection?: boolean }>>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 
 	const groups = useMemo(() => {
@@ -29,30 +29,43 @@ export default function ShowLEDLessons() {
 	useEffect(() => {
 		if (!containerRef.current) return
 
-		const positions: Array<{ x: number; y: number }> = []
+		const positions: Array<{ x: number; y: number; skipConnection?: boolean }> = []
 		const lilypads = containerRef.current.querySelectorAll("[data-lilypad-icon]")
 
 		lilypads.forEach((lilypad) => {
 			const rect = lilypad.getBoundingClientRect()
 			if (isNull(containerRef.current)) return
 			const containerRect = containerRef.current.getBoundingClientRect()
+			const skipConnection = lilypad.getAttribute("data-skip-connection") === "true"
+
 			positions.push({
 				x: rect.left - containerRect.left + rect.width / 2,
-				y: rect.top - containerRect.top + rect.height / 2
+				y: rect.top - containerRect.top + rect.height / 2,
+				skipConnection
 			})
 		})
 
 		setLilypadPositions(positions)
 	}, [groups])
 
+	// Filter out positions that should be skipped when rendering path marks
+	const renderablePositions = useMemo(() => {
+		return lilypadPositions.reduce<typeof lilypadPositions>((acc, pos) => {
+			if (!pos.skipConnection) {
+				acc.push(pos)
+			}
+			return acc
+		}, [])
+	}, [lilypadPositions])
+
 	return (
 		<div ref={containerRef} className="flex">
 			{/* Path marks between Lilypads */}
-			{lilypadPositions.slice(0, -1).map((pos, i) => (
+			{renderablePositions.slice(0, -1).map((pos, i) => (
 				<PathTickMark
 					key={i}
 					startPosition={pos}
-					endPosition={lilypadPositions[i + 1]}
+					endPosition={renderablePositions[i + 1]}
 				/>
 			))}
 
@@ -71,7 +84,6 @@ export default function ShowLEDLessons() {
 						<div
 							key={lesson.lessonUrl}
 							className="absolute"
-							data-lilypad
 							style={{
 								top: setLessonVerticalPosition(
 									lesson.stackWithPrevious
