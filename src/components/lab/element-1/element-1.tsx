@@ -50,7 +50,7 @@ export default function Element1() {
 
 	return (
 		<div className="h-screen overflow-y-auto relative">
-			<div className="fixed mt-4 ml-2 flex flex-col items-start gap-2 z-50">
+			<div className="fixed mt-6 ml-2 flex flex-col items-start gap-4 z-50">
 				<NavigateThroughElementsButton />
 				<SeeLessonIconsInElement
 					sectionRefs={{
