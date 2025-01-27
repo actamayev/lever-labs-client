@@ -7,7 +7,7 @@ interface Props {
 	previousPageActivity: ActivityType
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
-	element: 1 | 2 | 3
+	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
 	isNextPageDemo?: boolean

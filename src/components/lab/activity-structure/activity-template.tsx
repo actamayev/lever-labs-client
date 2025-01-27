@@ -4,17 +4,17 @@ import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
-    lessonTitle: string
-    previousPageLink: LabPages | null
-    previousPageActivity: ActivityType | null
-    nextPageLink: LabPages
-    nextPageActivity: ActivityType
-    element: 1 | 2 | 3
+	lessonTitle: string
+	previousPageLink: LabPages | null
+	previousPageActivity: ActivityType | null
+	nextPageLink: LabPages
+	nextPageActivity: ActivityType
+	element: ElementNumbers
 	lessonIcon: ReactElement | null
 	progressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
-    isNextPageDemo?: boolean
+	isNextPageDemo?: boolean
 }
 
 export default function ActivityTemplate(props: Props) {

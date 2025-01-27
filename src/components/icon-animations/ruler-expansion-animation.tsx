@@ -10,30 +10,25 @@ const measureStyles = `
   }
 `
 
-export default function RulerExpansionAnimation({ iconSize } : { iconSize: number }) {
+export default function RulerExpansionAnimation({ iconSize }: { iconSize: number }) {
 	const [isAnimating, setIsAnimating] = useState(false)
 
 	const handleClick = useCallback(() => {
 		setIsAnimating(true)
-		// Reset animation state after animation completes
-		setTimeout(() => setIsAnimating(false), 1000) // 1000ms = 1s animation duration
+		setTimeout(() => setIsAnimating(false), 1000)
 	}, [])
 
 	return (
 		<>
 			<style>{measureStyles}</style>
-			<div
+			<CustomRuler
 				onClick={handleClick}
-				className="cursor-pointer"
-			>
-				<CustomRuler
-					className={cn(
-						"origin-left text-black dark:text-white",
-						isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
-					)}
-					size={iconSize}
-				/>
-			</div>
+				className={cn(
+					"origin-left text-black dark:text-white cursor-pointer",
+					isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
+				)}
+				size={iconSize}
+			/>
 		</>
 	)
 }

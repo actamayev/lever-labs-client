@@ -1,5 +1,4 @@
 import LabDemoComponent from "../../demo/lab-demo-component"
-import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 import MotorSpinAnimation from "../../../icon-animations/motor-spin-animation"
 
 export default function MotorDemo() {

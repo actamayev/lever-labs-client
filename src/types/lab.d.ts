@@ -23,6 +23,8 @@ declare global {
 		skipConnection?: boolean
 		arcDirection?: "up" | "down"
 	}
+
+	type ElementNumbers = 1 | 2 | 3
 }
 
 export {}
