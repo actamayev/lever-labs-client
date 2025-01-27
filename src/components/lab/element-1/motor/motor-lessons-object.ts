@@ -7,7 +7,7 @@ const motorLessons: Lesson[] = [
 		verticalPosition: 5
 	},
 	{
-		progress: 0,
+		progress: null,
 		lessonUrl: "/lab/element-1/motor/reading",
 		lessonName: "What is a Motor?",
 		activityType: "Reading",
