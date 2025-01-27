@@ -15,7 +15,7 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
-		url: "/lab",
+		url: "/lab/element-1",
 		icon: CustomBeaker
 	},
 	{
@@ -30,6 +30,7 @@ export default function MappedNavData() {
 	const location = useLocation()
 
 	const isActive = useCallback((itemUrl: string) => {
+		if (itemUrl === "/lab/element-1") return location.pathname.startsWith("/lab")
 		return location.pathname.startsWith(itemUrl)
 	}, [location.pathname])
 

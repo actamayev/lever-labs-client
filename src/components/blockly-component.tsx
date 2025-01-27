@@ -98,6 +98,7 @@ function BlocklyComponent(props: Props) {
 	useEffect(() => {
 		initializeBlocks()
 		setupToolbox()
+		// TODO: Make tooltip appear when hovering on block faster
 	}, [initializeBlocks, setupToolbox])
 
 	return (

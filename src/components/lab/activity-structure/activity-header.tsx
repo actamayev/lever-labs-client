@@ -4,6 +4,7 @@ import { Button } from "../../shadcn/ui/button"
 import { CustomBeaker } from "../../icons/custom-beaker"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-container"
+import { isNull } from "lodash-es"
 
 interface Props {
 	element: 1 | 2 | 3
@@ -32,7 +33,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
 			<div className="w-32 flex justify-end">
-				{lessonIcon && progressPercent && (
+				{lessonIcon && !isNull(progressPercent) && (
 					<LessonProgressIconContainer
 						icon={lessonIcon}
 						progressPercent={progressPercent}
