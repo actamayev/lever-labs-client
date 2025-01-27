@@ -1,5 +1,5 @@
+import GoToLabButton from "./go-to-lab-button"
 import LogoHeaderSection from "./logo-header-section"
-import GoToLabButton from "./go-to-sandbox-button"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 
 export default function HeaderNav() {

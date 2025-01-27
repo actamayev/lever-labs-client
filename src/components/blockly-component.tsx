@@ -98,7 +98,9 @@ function BlocklyComponent(props: Props) {
 	useEffect(() => {
 		initializeBlocks()
 		setupToolbox()
-		// TODO: Make tooltip appear when hovering on block faster
+		// TODO: Fix, not working
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
 	}, [initializeBlocks, setupToolbox])
 
 	return (

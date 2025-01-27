@@ -11,7 +11,6 @@ import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
 
-// TODO: Add an h1 header
 // TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
 	return (

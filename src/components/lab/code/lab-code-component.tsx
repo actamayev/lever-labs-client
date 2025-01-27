@@ -70,8 +70,8 @@ export default function LabCodeComponent(props: Props) {
 						<Suspense>
 							<BlocklyComponent
 								toolboxConfig={toolboxConfig}
-								extraClasses="h-full"
 								setCppCode={setCppCode}
+								extraClasses="h-full"
 							/>
 						</Suspense>
 					</div>
