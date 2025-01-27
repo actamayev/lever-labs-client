@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from "react"
 import ShowLEDLessons from "./led/show-led-lessons"
 import Lilypad from "../lab-structure/lilypad/lilypad"
+import Element1StartCard from "./element-1-start-card"
 import motorLessons from "./motor/motor-lessons-object"
 import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import { LilypadContainer } from "../lab-structure/lilypad/lilypad-container"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
-import Element1StartCard from "./element-1-start-card"
 
 interface Section {
 	ref: React.RefObject<HTMLDivElement>
 	name: Element1Sections
 }
 
+// 1/27/25 ASAP TODO: Clicking the led icon doesn't take me back to the start of the led track
 export default function Element1() {
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	const motorSectionRef = useRef<HTMLDivElement>(null)
