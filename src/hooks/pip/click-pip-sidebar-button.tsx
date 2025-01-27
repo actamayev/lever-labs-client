@@ -1,5 +1,6 @@
 import { useCallback } from "react"
-import { isEmpty, isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
 import useDisconnectFromPip from "./disconnect-from-pip"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../contexts/pip-context"

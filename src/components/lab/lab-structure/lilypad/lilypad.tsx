@@ -1,4 +1,4 @@
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import LilypadIcon from "./lilypad-icon"
 import { cn } from "../../../../lib/shadcn/utils"

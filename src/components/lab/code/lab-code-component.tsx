@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { isEmpty } from "lodash-es"
+import isEmpty from "lodash-es/isEmpty"
 import { lazy, ReactElement, Suspense, useState } from "react"
 import { Button } from "../../shadcn/ui/button"
 import ActivityTemplate from "../activity-structure/activity-template"

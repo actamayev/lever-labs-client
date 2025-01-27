@@ -1,4 +1,4 @@
-import { toLower } from "lodash-es"
+import toLower from "lodash-es/toLower"
 import { observer } from "mobx-react"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"

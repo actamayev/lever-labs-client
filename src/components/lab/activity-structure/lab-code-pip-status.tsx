@@ -1,4 +1,4 @@
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import {

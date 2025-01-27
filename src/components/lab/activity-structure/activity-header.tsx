@@ -1,4 +1,4 @@
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
 import { ReactElement } from "react"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
