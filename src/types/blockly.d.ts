@@ -1,4 +1,5 @@
 import * as Blockly from "blockly"
+import { CssConfig } from "blockly/core/toolbox/category"
 import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
 import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
 import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
