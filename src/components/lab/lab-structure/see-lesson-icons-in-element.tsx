@@ -15,17 +15,24 @@ interface SectionRefs {
 interface SeeLessonIconsProps {
 	sectionRefs: SectionRefs
 	activeSection: Element1Sections
+	setClickedSection: (section: Element1Sections) => void
 }
 
-export default function SeeLessonIconsInElement({ sectionRefs, activeSection }: SeeLessonIconsProps) {
+export default function SeeLessonIconsInElement({
+	sectionRefs,
+	activeSection,
+	setClickedSection
+}: SeeLessonIconsProps) {
 	const scrollToSection = useCallback((sectionName: Element1Sections) => {
+		setClickedSection(sectionName)
 		const ref = sectionRefs[sectionName]
 		if (!ref.current) return
 		ref.current.scrollIntoView({
 			behavior: "smooth",
-			block: "start"
+			block: "start",
+			inline: "start"
 		})
-	}, [sectionRefs])
+	}, [sectionRefs, setClickedSection])
 
 	const lessons: Lesson[] = [
 		{
