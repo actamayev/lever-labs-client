@@ -4,11 +4,15 @@ import motorLessons from "./motor/motor-lessons-object"
 import { LilypadContainer } from "../lab-structure/lilypad/lilypad-container"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
 
 export default function Element1() {
 	return (
-		<div className="pt-8 h-screen overflow-y-auto">
-			<NavigateThroughElementsButton />
+		<div className="h-screen overflow-y-auto">
+			<div className="fixed mt-4 flex items-center gap-2 ml-2">
+				<NavigateThroughElementsButton />
+				<SeeLessonIconsInElement />
+			</div>
 			<LilypadContainer>
 				<ShowLEDLessons />
 				<div className="h-full min-h-[600px] w-1 dark:bg-zinc-700 bg-zinc-300 rounded-full" />
