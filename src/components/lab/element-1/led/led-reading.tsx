@@ -20,8 +20,8 @@ function LedReading() {
 	return (
 		<LabReadingComponent
 			readingTitle="What is an LED?"
-			previousPageLink="/lab/element-1/start"
-			previousPageActivity="Start"
+			previousPageLink={null}
+			previousPageActivity={null}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
 			element={1}

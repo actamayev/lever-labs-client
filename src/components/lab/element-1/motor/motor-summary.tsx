@@ -7,8 +7,8 @@ export default function MotorSummary() {
 			summaryTitle="Motor Summary"
 			previousPageLink="/lab/element-1/motor/code-3"
 			previousPageActivity="Code"
-			nextPageLink="/lab/element-1/start"
-			nextPageActivity="Start"
+			nextPageLink="/lab/element-1/led/reading"
+			nextPageActivity="Reading"
 			element={1}
 			lessonIcon={<MotorSpinAnimation iconSize={30} />}
 			progressPercent={100}

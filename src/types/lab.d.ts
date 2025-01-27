@@ -1,6 +1,5 @@
 declare global {
 	type ActivityType =
-	| "Start"
 	| "Demo"
 	| "Reading"
 	| "Video"
