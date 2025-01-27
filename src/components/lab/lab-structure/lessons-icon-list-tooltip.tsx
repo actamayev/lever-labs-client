@@ -4,16 +4,18 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
+import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface Props {
 	tooltipMessage: string
 	children: React.ReactNode
 	onClick: () => void
+	isActive: boolean
 }
 
 export default function LessonsIconListTooltip(props: Props) {
-	const { tooltipMessage, children, onClick } = props
+	const { tooltipMessage, children, onClick, isActive } = props
 
 	return (
 		<TooltipProvider delayDuration={0}>
@@ -21,8 +23,10 @@ export default function LessonsIconListTooltip(props: Props) {
 				<TooltipTrigger onClick={onClick}>
 					<Button
 						variant="ghost"
-						className="flex size-12 items-center justify-center rounded-lg
-						hover:bg-zinc-100 dark:hover:bg-zinc-800 duration-100"
+						className={cn(
+							"flex size-12 items-center justify-center rounded-lg duration-100",
+							isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+						)}
 					>
 						{children}
 					</Button>

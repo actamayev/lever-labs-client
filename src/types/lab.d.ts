@@ -25,6 +25,10 @@ declare global {
 	}
 
 	type ElementNumbers = 1 | 2 | 3
+
+	type Element1Sections =
+	| "LED"
+	| "Motor"
 }
 
 export {}

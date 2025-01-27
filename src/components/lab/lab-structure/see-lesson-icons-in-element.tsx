@@ -4,7 +4,7 @@ import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import LessonsIconListTooltip from "./lessons-icon-list-tooltip"
 
 interface Lesson {
-	tooltipMessage: string
+	tooltipMessage: Element1Sections
 	icon: React.ReactNode
 }
 
@@ -14,10 +14,11 @@ interface SectionRefs {
 
 interface SeeLessonIconsProps {
 	sectionRefs: SectionRefs
+	activeSection: Element1Sections
 }
 
-export default function SeeLessonIconsInElement({ sectionRefs }: SeeLessonIconsProps) {
-	const scrollToSection = useCallback((sectionName: string) => {
+export default function SeeLessonIconsInElement({ sectionRefs, activeSection }: SeeLessonIconsProps) {
+	const scrollToSection = useCallback((sectionName: Element1Sections) => {
 		const ref = sectionRefs[sectionName]
 		if (!ref.current) return
 		ref.current.scrollIntoView({
@@ -44,6 +45,7 @@ export default function SeeLessonIconsInElement({ sectionRefs }: SeeLessonIconsP
 					key={lesson.tooltipMessage}
 					tooltipMessage={lesson.tooltipMessage}
 					onClick={() => scrollToSection(lesson.tooltipMessage)}
+					isActive={activeSection === lesson.tooltipMessage}
 				>
 					{lesson.icon}
 				</LessonsIconListTooltip>
