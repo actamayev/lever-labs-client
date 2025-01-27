@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import { CustomMotor } from "../../icons/custom-motor"
 import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import LessonsIconListTooltip from "./lessons-icon-list-tooltip"
@@ -7,24 +8,42 @@ interface Lesson {
 	icon: React.ReactNode
 }
 
-const lessons: Lesson[] = [
-	{
-		tooltipMessage: "LED",
-		icon: <CustomLightbulb className="!w-8 !h-8" />
-	},
-	{
-		tooltipMessage: "Motor",
-		icon: <CustomMotor className="!w-8 !h-8" />
-	}
-]
+interface SectionRefs {
+	[key: string]: React.RefObject<HTMLDivElement>
+}
 
-export default function SeeLessonIconsInElement() {
+interface SeeLessonIconsProps {
+	sectionRefs: SectionRefs
+}
+
+export default function SeeLessonIconsInElement({ sectionRefs }: SeeLessonIconsProps) {
+	const scrollToSection = useCallback((sectionName: string) => {
+		const ref = sectionRefs[sectionName]
+		if (!ref.current) return
+		ref.current.scrollIntoView({
+			behavior: "smooth",
+			block: "start"
+		})
+	}, [sectionRefs])
+
+	const lessons: Lesson[] = [
+		{
+			tooltipMessage: "LED",
+			icon: <CustomLightbulb className="!w-8 !h-8" />
+		},
+		{
+			tooltipMessage: "Motor",
+			icon: <CustomMotor className="!w-8 !h-8" />
+		}
+	]
+
 	return (
 		<div className="flex gap-2">
 			{lessons.map(lesson => (
 				<LessonsIconListTooltip
 					key={lesson.tooltipMessage}
 					tooltipMessage={lesson.tooltipMessage}
+					onClick={() => scrollToSection(lesson.tooltipMessage)}
 				>
 					{lesson.icon}
 				</LessonsIconListTooltip>

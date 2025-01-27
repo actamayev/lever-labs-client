@@ -9,15 +9,16 @@ import { Button } from "../../shadcn/ui/button"
 interface Props {
 	tooltipMessage: string
 	children: React.ReactNode
+	onClick: () => void
 }
 
 export default function LessonsIconListTooltip(props: Props) {
-	const { tooltipMessage, children } = props
+	const { tooltipMessage, children, onClick } = props
 
 	return (
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
-				<TooltipTrigger>
+				<TooltipTrigger onClick={onClick}>
 					<Button
 						variant="ghost"
 						className="flex size-12 items-center justify-center rounded-lg
