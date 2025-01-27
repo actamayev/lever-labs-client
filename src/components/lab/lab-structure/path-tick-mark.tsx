@@ -1,10 +1,10 @@
 interface PathMarkProps {
 	startPosition: { x: number; y: number }
 	endPosition: { x: number; y: number }
-	arcDirection?: "up" | "down"  // Add arc direction to props
+	arcDirection?: ArcDirection
 }
 
-export default function PathMark({ startPosition, endPosition, arcDirection = "up" }: PathMarkProps) {
+export default function PathMark({ startPosition, endPosition, arcDirection = "straight" }: PathMarkProps) {
 // Calculate basic path properties
 	const dx = endPosition.x - startPosition.x
 	const dy = endPosition.y - startPosition.y
@@ -12,6 +12,14 @@ export default function PathMark({ startPosition, endPosition, arcDirection = "u
 
 	// Generate path and control points based on positions
 	const getPathData = () => {
+	// Handle straight path option
+		if (arcDirection === "straight") {
+			return `
+				M ${startPosition.x} ${startPosition.y}
+				L ${endPosition.x} ${endPosition.y}
+			`
+		}
+
 		const isHorizontal = Math.abs(dy) < 50 // If points are roughly on same level
 
 		// For horizontal paths, create a more pronounced arc

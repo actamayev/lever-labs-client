@@ -7,7 +7,7 @@ import setLessonVerticalPosition from "../../../../utils/lab/set-lesson-vertical
 
 const getStackPosition = (index: number, defaultPosition: VerticalPosition): VerticalPosition => {
 	if (!index) return defaultPosition
-	return index === 1 ? 5 : 9
+	return index === 1 ? 5 : 8
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -16,7 +16,7 @@ export default function ShowLEDLessons() {
 		x: number
 		y: number
 		skipConnection?: boolean
-		arcDirection?: "up" | "down"
+		arcDirection?: ArcDirection
 	}>>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 
@@ -39,7 +39,7 @@ export default function ShowLEDLessons() {
 			x: number
 			y: number
 			skipConnection?: boolean
-			arcDirection?: "up" | "down"
+			arcDirection?: ArcDirection
 		}> = []
 
 		const lilypads = containerRef.current.querySelectorAll("[data-lilypad-icon]")
@@ -49,13 +49,13 @@ export default function ShowLEDLessons() {
 			if (isNull(containerRef.current)) return
 			const containerRect = containerRef.current.getBoundingClientRect()
 			const skipConnection = lilypad.getAttribute("data-skip-connection") === "true"
-			const arcDirection = lilypad.getAttribute("data-arc-direction") as "up" | "down" | null
+			const arcDirection = lilypad.getAttribute("data-arc-direction") as (ArcDirection | null)
 
 			positions.push({
 				x: rect.left - containerRect.left + rect.width / 2,
 				y: rect.top - containerRect.top + rect.height / 2,
 				skipConnection,
-				arcDirection: arcDirection || undefined
+				arcDirection: arcDirection || "straight"
 			})
 		})
 
