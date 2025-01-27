@@ -63,7 +63,7 @@ export default function Element1() {
 				/>
 			</div>
 			<LilypadContainer>
-				{/* <Element1StartCard /> */}
+				<Element1StartCard />
 				<div ref={ledSectionRef} className="flex">
 					<ShowLEDLessons />
 				</div>
