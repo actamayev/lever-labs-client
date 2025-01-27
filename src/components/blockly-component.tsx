@@ -3,6 +3,7 @@ import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { cn } from "../lib/shadcn/utils"
 import { cppGenerator } from "../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
@@ -14,22 +15,35 @@ const initialXml = `
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	setCppCode?: React.Dispatch<React.SetStateAction<string>>
+	setCppCode: React.Dispatch<React.SetStateAction<string>>
+	extraClasses?: string
 	// TODO: Consider addign a prop to make the sidebar be open by default
 }
 
-function BlocklyComponent (props: Props) {
-	const { toolboxConfig, setCppCode } = props
+function BlocklyComponent(props: Props) {
+	const { toolboxConfig, setCppCode, extraClasses = "h-1/2" } = props
 	const [blocklyXml, setBlocklyXml] = useState(initialXml)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const isDarkMode = defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
+	const isFirstRender = useRef(true)
 	const initializeBlocks = useInitializeBlocks()
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
 	}, [isDarkMode])
+
+	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
+		const metrics = workspace.getMetrics()
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		if (!metrics) return
+
+		const x = (metrics.viewWidth / 2) - (metrics.contentWidth / 2)
+		const y = (metrics.viewHeight / 2) - (metrics.contentHeight / 2)
+
+		workspace.scroll(x, y)
+	}, [])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
@@ -39,8 +53,14 @@ function BlocklyComponent (props: Props) {
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
 		setBlocklyXml(newXml)
-		if (setCppCode) setCppCode(cppCode)
-	}, [setCppCode])
+		setCppCode(cppCode)
+
+		// Center workspace only on first render
+		if (isFirstRender.current) {
+			centerWorkspace(workspace)
+			isFirstRender.current = false
+		}
+	}, [setCppCode, centerWorkspace])
 
 	useEffect(() => {
 		if (!containerRef.current) return
@@ -64,13 +84,10 @@ function BlocklyComponent (props: Props) {
 		}
 	}, [isDarkMode])
 
-	const disableFlyoutAutoclose = useCallback(() => {
-		if (!workspaceRef.current) return // Exit if workspace isn't ready
+	const setupToolbox = useCallback(() => {
+		if (!workspaceRef.current) return
 
 		const toolbox = workspaceRef.current.getToolbox()
-		// const workspace = Blockly.getMainWorkspace() as Blockly.WorkspaceSvg
-
-		// const toolbox = workspace.getToolbox()
 		if (!toolbox) return
 
 		const flyout = toolbox.getFlyout()
@@ -80,16 +97,13 @@ function BlocklyComponent (props: Props) {
 
 	useEffect(() => {
 		initializeBlocks()
-		disableFlyoutAutoclose()
-		// TODO: Fix, not working
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
-	}, [initializeBlocks, disableFlyoutAutoclose])
+		setupToolbox()
+	}, [initializeBlocks, setupToolbox])
 
 	return (
 		<div
 			ref={containerRef}
-			className="h-1/2 relative z-0 rounded-lg overflow-hidden border border-border"
+			className={cn("relative z-0 rounded-lg overflow-hidden border border-border", extraClasses)}
 		>
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}

@@ -20,12 +20,14 @@ export default function ActivityHeader(props: Props) {
 		<header className="h-20 flex items-center px-16 border-b-2 border-zinc-300 dark:border-zinc-700">
 			<div className="flex w-32">
 				<Button
-					className="!text-2xl flex items-center duration-100 rounded-2xl"
+					className="!text-2xl flex items-center duration-100 rounded-2xl cursor-pointer w-full"
 					onClick={() => navigate(`/lab/element-${element}`)}
 				>
-					<ArrowLeft className="!h-6 !w-6" />
-					<CustomBeaker className="!h-6 !w-6" />
-					Lab
+					<div className="flex items-center">
+						<ArrowLeft className="!h-6 !w-6" />
+						<CustomBeaker className="!h-6 !w-6" />
+						<span>Lab</span>
+					</div>
 				</Button>
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>

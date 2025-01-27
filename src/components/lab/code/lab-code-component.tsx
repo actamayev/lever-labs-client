@@ -1,7 +1,9 @@
 import * as Blockly from "blockly"
-import { lazy, ReactElement, Suspense } from "react"
+import { isEmpty } from "lodash-es"
+import { lazy, ReactElement, Suspense, useState } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
+import { Button } from "../../shadcn/ui/button"
 
 interface Props {
     lessonTitle: string
@@ -35,6 +37,7 @@ export default function LabCodeComponent(props: Props) {
 		toolboxConfig,
 		isNextPageDemo = false
 	} = props
+	const [cppCode, setCppCode] = useState("")
 
 	return (
 		<ActivityTemplate
@@ -49,18 +52,41 @@ export default function LabCodeComponent(props: Props) {
 			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 		>
-			<main className="flex-1 flex flex-col p-4 justify-center max-w-4xl">
-				<Card>
+			<main className="flex-1 flex min-h-0">
+				<Card className="w-2/5 p-4 flex flex-col m-4">
 					<CardHeader>
-						<CardTitle className="text-6xl font-bold">{codingTitle}</CardTitle>
+						<CardTitle>
+							<h1 className="text-4xl font-bold mb-6">{codingTitle}</h1>
+						</CardTitle>
 					</CardHeader>
-					<CardContent className="text-xl font-medium">{codingDescription}</CardContent>
+					<CardContent>
+						<CardDescription className="text-xl font-medium">{codingDescription}
+						</CardDescription>
+					</CardContent>
 				</Card>
-				<div className="flex-1 min-h-0 mt-4">
+				<div className="w-3/5 min-h-0 m-4">
 					<Suspense>
-						<BlocklyComponent toolboxConfig={toolboxConfig} />
+						<BlocklyComponent
+							toolboxConfig={toolboxConfig}
+							extraClasses="h-full"
+							setCppCode={setCppCode}
+						/>
 					</Suspense>
 				</div>
+				<Button
+					disabled={isEmpty(cppCode)}
+					className="mt-2 transition-none"
+					variant="tactile"
+				>
+					Check my work
+				</Button>
+				<Button
+					disabled={isEmpty(cppCode)}
+					className="mt-2 transition-none"
+					variant="tactile"
+				>
+					Send code to Pip
+				</Button>
 			</main>
 		</ActivityTemplate>
 	)
