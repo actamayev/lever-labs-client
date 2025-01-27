@@ -30,7 +30,7 @@ function ActivityFooter(props: Props) {
 	// 1/26/25 TODO: If user has no pip, make two back buttons also.
 
 	return (
-		<footer className="h-20 flex items-center justify-between px-16 border-t-2 border-zinc-300 dark:border-zinc-700">
+		<footer className="h-20 flex items-center justify-between px-4 border-t-2 border-zinc-300 dark:border-zinc-700">
 			{previousPageLink && previousPageActivity && (
 				<Button
 					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"

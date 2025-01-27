@@ -20,7 +20,7 @@ export default function ActivityHeader(props: Props) {
 	const navigate = useTypedNavigate()
 
 	return (
-		<header className="h-20 flex items-center justify-between px-16 border-b-2 border-zinc-300 dark:border-zinc-700">
+		<header className="h-20 flex items-center justify-between px-4 border-b-2 border-zinc-300 dark:border-zinc-700">
 			<div className="flex w-32">
 				<Button
 					className="!text-2xl flex items-center duration-100 rounded-2xl cursor-pointer w-full"
@@ -35,7 +35,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
 			{isCode && <LabCodePipStatus />}
-			<div className="w-32 flex justify-end">
+			<div className="w-32 flex justify-end mr-4">
 				{lessonIcon && !isNull(progressPercent) && (
 					<LessonProgressIconContainer
 						icon={lessonIcon}
