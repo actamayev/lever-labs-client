@@ -17,7 +17,7 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
-	// TODO: Consider addign a prop to make the sidebar be open by default
+	// 1/27/25 TODO: Consider addign a prop to make the sidebar be open by default
 }
 
 function BlocklyComponent(props: Props) {
@@ -98,7 +98,7 @@ function BlocklyComponent(props: Props) {
 	useEffect(() => {
 		initializeBlocks()
 		setupToolbox()
-		// TODO: Fix, not working
+		// 12/1/25 TODO: Fix, not working
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
 	}, [initializeBlocks, setupToolbox])

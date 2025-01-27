@@ -25,9 +25,9 @@ function ActivityFooter(props: Props) {
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
 
-	// TODO: Test this (there should be two buttons if the user doesn't have a pip. demo disabled, and the other option)
+	// 1/26/25 TODO: Test this (there should be two buttons if the user doesn't have a pip. demo disabled, and the other option)
 	const isNextButtonDisabled = isNextPageDemo && !pipClass.doesUserHaveAPip
-	// TODO: If user has no pip, make two back buttons also.
+	// 1/26/25 TODO: If user has no pip, make two back buttons also.
 
 	return (
 		<footer className="h-20 flex items-center justify-between px-16 border-t-2 border-zinc-300 dark:border-zinc-700">

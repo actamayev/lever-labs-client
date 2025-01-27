@@ -51,6 +51,7 @@ export default function LabCodeComponent(props: Props) {
 			nextPageActivity={nextPageActivity}
 			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
+			isCode={true}
 		>
 			<main className="flex-1 flex min-h-0">
 				<Card className="w-2/5 p-4 flex flex-col m-4 rounded-lg">

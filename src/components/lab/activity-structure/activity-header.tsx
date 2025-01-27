@@ -2,6 +2,7 @@ import { isNull } from "lodash-es"
 import { ReactElement } from "react"
 import { ArrowLeft } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
+import LabCodePipStatus from "./lab-code-pip-status"
 import { CustomBeaker } from "../../icons/custom-beaker"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-container"
@@ -11,10 +12,11 @@ interface Props {
 	lessonTitle: string
 	lessonIcon: ReactElement | null
 	progressPercent: number | null
+	isCode?: boolean
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, lessonIcon, progressPercent } = props
+	const { element, lessonTitle, lessonIcon, progressPercent, isCode = false } = props
 	const navigate = useTypedNavigate()
 
 	return (
@@ -32,6 +34,7 @@ export default function ActivityHeader(props: Props) {
 				</Button>
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
+			{isCode && <LabCodePipStatus />}
 			<div className="w-32 flex justify-end">
 				{lessonIcon && !isNull(progressPercent) && (
 					<LessonProgressIconContainer
