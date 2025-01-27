@@ -1,9 +1,9 @@
 import * as Blockly from "blockly"
 import { isEmpty } from "lodash-es"
 import { lazy, ReactElement, Suspense, useState } from "react"
+import { Button } from "../../shadcn/ui/button"
 import ActivityTemplate from "../activity-structure/activity-template"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import { Button } from "../../shadcn/ui/button"
 
 interface Props {
     lessonTitle: string
@@ -60,33 +60,40 @@ export default function LabCodeComponent(props: Props) {
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<CardDescription className="text-xl font-medium">{codingDescription}
+						<CardDescription className="text-xl font-medium">
+							{codingDescription}
 						</CardDescription>
 					</CardContent>
 				</Card>
-				<div className="w-3/5 min-h-0 m-4">
-					<Suspense>
-						<BlocklyComponent
-							toolboxConfig={toolboxConfig}
-							extraClasses="h-full"
-							setCppCode={setCppCode}
-						/>
-					</Suspense>
+				<div className="w-3/5 flex flex-col min-h-0 m-4">
+					<div className="flex-1 min-h-0">
+						<Suspense>
+							<BlocklyComponent
+								toolboxConfig={toolboxConfig}
+								extraClasses="h-full"
+								setCppCode={setCppCode}
+							/>
+						</Suspense>
+					</div>
+					<div className="flex justify-between mt-4">
+						<Button
+							disabled={isEmpty(cppCode)}
+							className="!text-xl rounded-2xl flex items-center bg-pipTheme
+							hover:bg-pipThemeHover dark:text-white transition-none"
+							variant="tactile"
+						>
+							Check my work
+						</Button>
+						<Button
+							disabled={isEmpty(cppCode)}
+							className="!text-xl rounded-2xl flex items-center bg-pipTheme
+							hover:bg-pipThemeHover dark:text-white transition-none"
+							variant="tactile"
+						>
+							Send code to Pip
+						</Button>
+					</div>
 				</div>
-				<Button
-					disabled={isEmpty(cppCode)}
-					className="mt-2 transition-none"
-					variant="tactile"
-				>
-					Check my work
-				</Button>
-				<Button
-					disabled={isEmpty(cppCode)}
-					className="mt-2 transition-none"
-					variant="tactile"
-				>
-					Send code to Pip
-				</Button>
 			</main>
 		</ActivityTemplate>
 	)
