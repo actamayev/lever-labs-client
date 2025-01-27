@@ -2,28 +2,19 @@ import isNull from "lodash-es/isNull"
 import * as Blockly from "blockly"
 import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
-import { useState, useEffect, useCallback, useMemo, useRef, lazy, Suspense } from "react"
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react"
 import { Button } from "../shadcn/ui/button"
 import { usePipContext } from "../../contexts/pip-context"
-import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useSendCppToPip from "../../hooks/pip/send-cpp-to-pip"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
-import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-
-const initialXml = `
-    <xml xmlns="https://developers.google.com/blockly/xml"/>
-`
+import { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
-// eslint-disable-next-line max-lines-per-function
 function SandboxBlocklyComponent() {
-	const [blocklyState, setBlocklyState] = useState<BlocklyState>({
-		xml: initialXml,
-		cppCode: ""
-	})
+	const [cppCode, setCppCode] = useState("")
 	const pipClass = usePipContext()
 	const sendCppToPip = useSendCppToPip()
 	const initializeBlocks = useInitializeBlocks()
@@ -31,23 +22,6 @@ function SandboxBlocklyComponent() {
 	const isDarkMode = defaultSiteTheme === "dark"
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
-
-	const workspaceConfig = useMemo(() => {
-		return getWorkspaceConfig(isDarkMode)
-	}, [isDarkMode])
-
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		workspaceRef.current = workspace
-		const newXml = Blockly.Xml.domToText(
-			Blockly.Xml.workspaceToDom(workspace)
-		)
-		const cppCode = cppGenerator.workspaceToCode(workspace)
-
-		setBlocklyState({
-			xml: newXml,
-			cppCode
-		})
-	}, [])
 
 	useEffect(() => {
 		if (!containerRef.current) return
@@ -94,34 +68,26 @@ function SandboxBlocklyComponent() {
 	}, [initializeBlocks, disableFlyoutAutoclose])
 
 	const sendCodeToCppCallback = useCallback(async () => {
-		await sendCppToPip(blocklyState.cppCode)
-	}, [blocklyState.cppCode, sendCppToPip])
+		await sendCppToPip(cppCode)
+	}, [cppCode, sendCppToPip])
 
 	return (
 		<div className="h-screen w-full p-4 mt-4">
-			<div
-				ref={containerRef}
-				className="h-1/2 relative z-0 rounded-lg overflow-hidden border border-border"
-			>
-				<Suspense>
-					<BlocklyComponent
-						toolboxConfiguration={toolboxConfig}
-						initialXml={blocklyState.xml}
-						className="h-full transition-all duration-300"
-						workspaceConfiguration={workspaceConfig}
-						onWorkspaceChange={handleWorkspaceChange}
-					/>
-				</Suspense>
-			</div>
+			<Suspense>
+				<BlocklyComponent
+					toolboxConfig={toolboxConfig}
+					setCppCode={setCppCode}
+				/>
+			</Suspense>
 			<div className="mt-4">
 				<h3 className="text-lg font-bold text-black dark:text-white">Generated C++</h3>
 				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded transition-all duration-300">
-					{blocklyState.cppCode}
+					{cppCode}
 				</pre>
 			</div>
 			<Button
 				onClick={sendCodeToCppCallback}
-				disabled={isEmpty(blocklyState.cppCode) || pipClass.isSendingCppToPip}
+				disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 				className="mt-2 transition-none"
 				variant="tactile"
 			>
