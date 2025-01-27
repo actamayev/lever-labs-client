@@ -1,4 +1,3 @@
-import { useMemo } from "react"
 import { useLocation } from "react-router"
 import {
 	SidebarInset,
@@ -11,20 +10,11 @@ import { cn } from "../../lib/shadcn/utils"
 export default function InternalPagesLayout({ children } : { children: React.ReactNode }) {
 	const location = useLocation()
 
-	const shouldShowSidebarTrigger = useMemo(() => {
-		if (
-			location.pathname === "/add-pip" ||
-			location.pathname === "/settings" ||
-			location.pathname.startsWith("/lab")
-		) return false
-		return true
-	}, [location.pathname])
-
 	return (
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				{shouldShowSidebarTrigger && (
+				{location.pathname.startsWith("/sandbox") && (
 					<header
 						className={cn(
 							"fixed w-full top-0 flex shrink-0 items-center",

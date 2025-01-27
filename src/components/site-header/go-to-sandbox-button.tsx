@@ -21,7 +21,7 @@ function GoToLabButton() {
 				shadow-md hover:shadow-lg
 				transition-all duration-300 hover:pr-12"
 		>
-			<Link to="/lab">
+			<Link to="/lab/element-1">
 				Go to the Lab
 				<CustomBeaker />
 				<ArrowRight

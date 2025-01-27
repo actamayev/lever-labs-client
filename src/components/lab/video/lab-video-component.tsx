@@ -2,17 +2,17 @@ import { ReactElement } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-    videoTitle: string
-    ytVideoId: string
-    ytVideoTitle: string
-    previousPageLink: LabPages
-    previousPageActivity: ActivityType
-    nextPageLink: LabPages
-    nextPageActivity: ActivityType
-    element: ElementNumbers
+	videoTitle: string
+	ytVideoId: string
+	ytVideoTitle: string
+	previousPageLink: LabPages
+	previousPageActivity: ActivityType
+	nextPageLink: LabPages
+	nextPageActivity: ActivityType
+	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
-    isNextPageDemo?: boolean
+	isNextPageDemo?: boolean
 }
 
 export default function LabVideoComponent(props: Props) {
