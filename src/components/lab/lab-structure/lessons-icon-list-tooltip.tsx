@@ -31,7 +31,7 @@ export default function LessonsIconListTooltip(props: Props) {
 						{children}
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent side="top" className="text-zinc-100 dark:text-zinc-900">
+				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900">
 					{tooltipMessage}
 				</TooltipContent>
 			</Tooltip>
