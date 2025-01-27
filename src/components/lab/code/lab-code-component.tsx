@@ -6,18 +6,18 @@ import ActivityTemplate from "../activity-structure/activity-template"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 interface Props {
-    lessonTitle: string
-    previousPageLink: LabPages
-    previousPageActivity: ActivityType
-    nextPageLink: LabPages
-    nextPageActivity: ActivityType
-    element: ElementNumbers
-    lessonIcon: ReactElement
-    progressPercent: number
-    isNextPageDemo?: boolean
-    codingTitle: string
-    codingDescription: string
-    toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
+	lessonTitle: string
+	previousPageLink: LabPages
+	previousPageActivity: ActivityType
+	nextPageLink: LabPages
+	nextPageActivity: ActivityType
+	element: ElementNumbers
+	lessonIcon: ReactElement
+	progressPercent: number
+	isNextPageDemo?: boolean
+	codingTitle: string
+	codingDescription: string
+	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
 
 const BlocklyComponent = lazy(() => import("../../blockly-component"))

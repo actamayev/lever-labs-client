@@ -1,4 +1,3 @@
-import { useLocation } from "react-router"
 import { ChevronDown, CircuitBoard, Cpu, Flag } from "lucide-react"
 import {
 	DropdownMenu,
@@ -7,34 +6,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Button } from "@/components/shadcn/ui/button"
+import GetCurrentElement from "./get-current-element"
 import { CustomHouse } from "../../icons/custom-house"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function NavigateThroughElementsButton () {
 	const navigate = useTypedNavigate()
-	const location = useLocation()
-
-	function GetCurrentElement () {
-		const path = location.pathname
-		if (path.startsWith("/lab/element-1")) {
-			return (
-				<><CircuitBoard className="!size-8"/>Element 1: Sensor Basics</>
-			)
-		}
-		else if (path.startsWith("/lab/element-2")) {
-			return (
-				<><Cpu className="!size-8"/>Element 2: Combine & Create</>
-			)
-		}
-		else if (path.startsWith("/lab/element-3")) {
-			return (
-				<><Flag className="!size-8"/>Element 3: Missions</>
-			)
-		}
-		return (
-			<><CustomHouse className="!size-8"/>Welcome</>
-		)
-	}
 
 	return (
 		<div className="fixed ml-2">
