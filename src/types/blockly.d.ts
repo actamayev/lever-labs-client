@@ -25,10 +25,10 @@ declare global {
 
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> {
 		kind: "category"
-		name: string
+		name: BlocklyCategoryName
 		id: string | undefined
 		categorystyle: string | undefined
-		colour: number
+		colour: BlocklyCategoryColours
 		cssconfig: CssConfig | undefined
 		hidden: string | undefined
 		expanded?: string | boolean

@@ -21,20 +21,6 @@ declare global {
 		icon: LucideIcon
 	}
 
-	interface LabNavData {
-		title: string
-		icon: LucideIcon
-		items: {
-			title: ActivityType
-			url: LabPages
-		}[]
-	}
-
-	interface ElementChild {
-		path: ActivityType
-		element: JSX.Element
-	}
-
 	// Define the element routes structure
 	interface ElementRoutes {
 		path: string
@@ -49,12 +35,21 @@ declare global {
 		children?: ElementChild[]
 	}
 
+	interface ElementChild {
+		path: ActivityType
+		element: JSX.Element
+	}
+
 	// Create a union type for all possible route types
 	type RouteType = ElementRoutes | BaseRoute
 
 	interface HelmetData {
 		[key: string]: React.ReactNode
 	}
+
+	type BlocklyCategoryColours = 30 | 120 | 180 | 218
+
+	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
 }
 
 export {}

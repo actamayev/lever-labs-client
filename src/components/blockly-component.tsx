@@ -14,10 +14,11 @@ const initialXml = `
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	setCppCode: React.Dispatch<React.SetStateAction<string>>
+	setCppCode?: React.Dispatch<React.SetStateAction<string>>
+	// TODO: Consider addign a prop to make the sidebar be open by default
 }
 
-function EnhancedBlocklyComponent (props: Props) {
+function BlocklyComponent (props: Props) {
 	const { toolboxConfig, setCppCode } = props
 	const [blocklyXml, setBlocklyXml] = useState(initialXml)
 	const defaultSiteTheme = useDefaultSiteTheme()
@@ -38,7 +39,7 @@ function EnhancedBlocklyComponent (props: Props) {
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
 		setBlocklyXml(newXml)
-		setCppCode(cppCode)
+		if (setCppCode) setCppCode(cppCode)
 	}, [setCppCode])
 
 	useEffect(() => {
@@ -101,4 +102,4 @@ function EnhancedBlocklyComponent (props: Props) {
 	)
 }
 
-export default observer(EnhancedBlocklyComponent)
+export default observer(BlocklyComponent)

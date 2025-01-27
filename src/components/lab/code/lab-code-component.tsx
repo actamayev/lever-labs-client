@@ -1,5 +1,7 @@
-import { ReactElement } from "react"
+import * as Blockly from "blockly"
+import { lazy, ReactElement, Suspense } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
+import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 interface Props {
 	lessonTitle: string
@@ -13,7 +15,10 @@ interface Props {
 	isNextPageDemo?: boolean
 	codingTitle: string
 	codingDescription: string
+	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
+
+const BlocklyComponent = lazy(() => import("../../blockly-component"))
 
 export default function LabCodeComponent(props: Props) {
 	const {
@@ -25,6 +30,9 @@ export default function LabCodeComponent(props: Props) {
 		element,
 		lessonIcon,
 		progressPercent,
+		codingTitle,
+		codingDescription,
+		toolboxConfig,
 		isNextPageDemo = false
 	} = props
 	return (
@@ -40,9 +48,15 @@ export default function LabCodeComponent(props: Props) {
 			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 		>
-			<main className="flex-1 flex items-center justify-center p-4">
-				Code
-			</main>
+			<Card>
+				<CardHeader>
+					<CardTitle className="text-6xl font-bold">{codingTitle}</CardTitle>
+				</CardHeader>
+				<CardContent className="text-xl font-medium">{codingDescription}</CardContent>
+			</Card>
+			<Suspense>
+				<BlocklyComponent toolboxConfig={toolboxConfig}/>
+			</Suspense>
 		</ActivityTemplate>
 	)
 }

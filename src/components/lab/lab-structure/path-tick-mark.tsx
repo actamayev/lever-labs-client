@@ -65,7 +65,7 @@ export default function PathMark({ startPosition, endPosition, arcDirection = "u
 					<circle
 						key={i}
 						r="2"
-						className="fill-zinc-300 dark:fill-zinc-700"
+						className="fill-zinc-400 dark:fill-zinc-500"
 					>
 						<animateMotion
 							dur="0.01s"
