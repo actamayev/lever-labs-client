@@ -49,6 +49,7 @@ function SectionCard(props: ProductProps) {
 	)
 }
 
+// TODO: Update these images of the lab/sandbox once we have a legit lab to show
 function ProductShowcase() {
 	const siteTheme = useDefaultSiteTheme()
 

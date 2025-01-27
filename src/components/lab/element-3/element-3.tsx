@@ -1,5 +1,9 @@
+import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+
 export default function Element3() {
 	return (
-		<>Element 3: Missions</>
+		<div className="pt-8 h-screen overflow-y-auto">
+			<NavigateThroughElementsButton />
+		</div>
 	)
 }

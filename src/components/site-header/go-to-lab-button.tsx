@@ -1,12 +1,12 @@
-import isNull from "lodash-es/isNull"
 import { Link } from "react-router"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import useUsername from "../../hooks/memos/username"
-import { CustomSandbox } from "../icons/custom-sandbox"
+import { CustomBeaker } from "../icons/custom-beaker"
 
-function GoToSandboxButton() {
+function GoToLabButton() {
 	const username = useUsername()
 
 	if (isNull(username)) return null
@@ -21,9 +21,9 @@ function GoToSandboxButton() {
 				shadow-md hover:shadow-lg
 				transition-all duration-300 hover:pr-12"
 		>
-			<Link to="/sandbox">
-				Go to Sandbox
-				<CustomSandbox />
+			<Link to="/lab/element-1">
+				Go to the Lab
+				<CustomBeaker />
 				<ArrowRight
 					className="absolute right-4 transform opacity-0 group-hover:opacity-100
 					transition-all duration-50 ease-out translate-x-[-10px] group-hover:translate-x-0"
@@ -34,4 +34,4 @@ function GoToSandboxButton() {
 	)
 }
 
-export default observer(GoToSandboxButton)
+export default observer(GoToLabButton)

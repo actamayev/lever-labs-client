@@ -4,16 +4,29 @@ declare global {
 		| "/lab/element-2"
 		| "/lab/element-3"
 
+	type ElementStartPages =
+		| "/lab/element-1/start"
+		| "/lab/element-2/start"
+		| "/lab/element-3/start"
+
 	// Element 1:
 	type MotorLabPages =
 		| "/lab/element-1/motor/reading"
 		| "/lab/element-1/motor/video"
-		| "/lab/element-1/motor/code"
+		| "/lab/element-1/motor/code-1"
+		| "/lab/element-1/motor/code-2"
+		| "/lab/element-1/motor/code-3"
+		| "/lab/element-1/motor/demo"
+		| "/lab/element-1/motor/summary"
 
 	type LedLabPages =
 		| "/lab/element-1/led/reading"
 		| "/lab/element-1/led/video"
-		| "/lab/element-1/led/code"
+		| "/lab/element-1/led/code-1"
+		| "/lab/element-1/led/code-2"
+		| "/lab/element-1/led/code-3"
+		| "/lab/element-1/led/demo"
+		| "/lab/element-1/led/summary"
 
 	type EncoderLabPages =
 		| "/lab/element-1/encoder/reading"
@@ -93,6 +106,7 @@ declare global {
 
 	type LabPages =
 		| "/lab/welcome"
+		| ElementStartPages
 		| ElementLabPages
 		| Element1LabPages
 		| Element2LabPages

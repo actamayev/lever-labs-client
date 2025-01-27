@@ -15,6 +15,10 @@ class PipClass {
 		makeAutoObservable(this)
 	}
 
+	get doesUserHaveAPip(): boolean {
+		return !isEmpty(this.pipData)
+	}
+
 	public checkIfUUIDAlreadyExists(pipUUID: PipUUID): boolean {
 		return this.pipData.some(data => data.pipUUID === pipUUID)
 	}
