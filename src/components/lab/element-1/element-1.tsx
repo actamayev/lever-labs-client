@@ -66,9 +66,6 @@ export default function Element1() {
 					<ShowLEDLessons />
 				</div>
 				<div className="h-full min-h-[600px] w-1 dark:bg-zinc-700 bg-zinc-300 rounded-full" />
-				{/* <div className="flex items-center pt-12">
-					<div className="h-[500px] w-1 dark:bg-zinc-700 bg-zinc-300 rounded-full" />
-				</div> */}
 				<div ref={motorSectionRef} className="flex">
 					{motorLessons.map((lesson, index) => (
 						<div className="mx-10" key={index}>
