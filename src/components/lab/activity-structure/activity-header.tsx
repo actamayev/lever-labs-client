@@ -34,14 +34,16 @@ export default function ActivityHeader(props: Props) {
 				</Button>
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
-			{isCode && <LabCodePipStatus />}
-			<div className="w-32 flex justify-end mr-4">
-				{lessonIcon && !isNull(progressPercent) && (
-					<LessonProgressIconContainer
-						icon={lessonIcon}
-						progressPercent={progressPercent}
-					/>
-				)}
+			<div className="flex items-center w-32">
+				{isCode && <div className="mr-4"><LabCodePipStatus /></div>}
+				<div className="flex justify-end ml-auto mr-4">
+					{lessonIcon && !isNull(progressPercent) && (
+						<LessonProgressIconContainer
+							icon={lessonIcon}
+							progressPercent={progressPercent}
+						/>
+					)}
+				</div>
 			</div>
 		</header>
 	)
