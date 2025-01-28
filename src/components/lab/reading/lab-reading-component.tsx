@@ -10,7 +10,6 @@ interface Props {
 	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
-	isNextPageDemo?: boolean
 }
 
 export default function LabReadingComponent(props: Props) {
@@ -23,7 +22,6 @@ export default function LabReadingComponent(props: Props) {
 		element,
 		lessonIcon,
 		progressPercent,
-		isNextPageDemo = false
 	} = props
 	return (
 		<ActivityTemplate
@@ -35,7 +33,6 @@ export default function LabReadingComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">

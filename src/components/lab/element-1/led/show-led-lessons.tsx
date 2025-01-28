@@ -10,10 +10,10 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 }
 
 interface LilyPadPositions {
-	x: number
-	y: number
-	skipConnection?: boolean
-	arcDirection?: ArcDirection
+  x: number
+  y: number
+  skipConnection?: boolean
+  arcDirection?: ArcDirection
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -79,33 +79,52 @@ export default function ShowLEDLessons() {
 				))}
 
 				<div className="flex">
-					{groups.map((groupLessons) => (
-						<div
-							key={groupLessons[0].lessonUrl}
-							className="relative mr-56"
-							style={{
-								height: setLessonVerticalPosition(
-									groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
-								)
-							}}
-						>
-							{groupLessons.map((lesson, index) => (
-								<div
-									key={lesson.lessonUrl}
-									className="absolute"
-									style={{
-										top: setLessonVerticalPosition(
-											lesson.stackWithPrevious
-												? getStackPosition(index, lesson.verticalPosition)
-												: lesson.verticalPosition
-										)
-									}}
-								>
-									<Lilypad lesson={lesson} />
-								</div>
-							))}
-						</div>
-					))}
+					{groups.map((groupLessons) => {
+						const isCodeGroup = groupLessons.some(lesson =>
+							lesson.lessonName.includes("LED Code")
+						)
+
+						return (
+							<div
+								key={groupLessons[0].lessonUrl}
+								className="relative mr-56"
+								style={{
+									height: setLessonVerticalPosition(
+										groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
+									)
+								}}
+							>
+								{isCodeGroup && (
+									<div
+										className="absolute rounded-full border-2 border-zinc-300 dark:border-zinc-700
+										bg-zinc-50 dark:bg-zinc-900"
+										style={{
+											height: "530px",
+											width: "125px",
+											left: "-15px",
+											top: "40px"
+										}}
+									/>
+
+								)}
+								{groupLessons.map((lesson, index) => (
+									<div
+										key={lesson.lessonUrl}
+										className="absolute"
+										style={{
+											top: setLessonVerticalPosition(
+												lesson.stackWithPrevious
+													? getStackPosition(index, lesson.verticalPosition)
+													: lesson.verticalPosition
+											)
+										}}
+									>
+										<Lilypad lesson={lesson} />
+									</div>
+								))}
+							</div>
+						)
+					})}
 				</div>
 			</div>
 		</div>

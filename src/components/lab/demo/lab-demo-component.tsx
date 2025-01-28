@@ -1,4 +1,6 @@
 import { ReactElement } from "react"
+import { observer } from "mobx-react"
+import { usePipContext } from "../../../contexts/pip-context"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -10,10 +12,9 @@ interface Props {
 	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
-	isNextPageDemo?: boolean
 }
 
-export default function LabDemoComponent(props: Props) {
+function LabDemoComponent(props: Props) {
 	const {
 		demoTitle,
 		previousPageLink,
@@ -23,8 +24,9 @@ export default function LabDemoComponent(props: Props) {
 		element,
 		lessonIcon,
 		progressPercent,
-		isNextPageDemo = false
 	} = props
+	const pipClass = usePipContext()
+
 	return (
 		<ActivityTemplate
 			element={element}
@@ -35,12 +37,18 @@ export default function LabDemoComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
-				Demo
+				Demo:&nbsp;
+				{pipClass.doesUserHaveAPip ? (
+					<>You have a Pip</>
+				) : (
+					<>You do not have a Pip</>
+				)}
 			</main>
 		</ActivityTemplate>
 	)
 }
+
+export default observer(LabDemoComponent)

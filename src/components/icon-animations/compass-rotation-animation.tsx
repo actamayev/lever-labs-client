@@ -5,24 +5,24 @@ import { CustomCompass } from "../icons/custom-compass"
 type AnimationKey = "spin" | "wobble" | "finder"
 
 const animations: Record<AnimationKey, string> = {
-	spin: "animate-[spin_3s_linear_infinite]",
-	wobble: "animate-[wobble_2s_ease-in-out_infinite]",
-	finder: "animate-[finder_4s_ease-in-out_infinite]"
+	spin: "animate-compass-spin",
+	wobble: "animate-compass-wobble",
+	finder: "animate-compass-finder"
 } as const
 
 const animationStyles = `
-  @keyframes spin {
+  @keyframes compass-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
 
-  @keyframes wobble {
+  @keyframes compass-wobble {
     0%, 100% { transform: rotate(0deg); }
     25% { transform: rotate(-20deg); }
     75% { transform: rotate(20deg); }
   }
 
-  @keyframes finder {
+  @keyframes compass-finder {
     0% { transform: rotate(0deg); }
     25% { transform: rotate(90deg); }
     50% { transform: rotate(180deg); }
@@ -30,6 +30,18 @@ const animationStyles = `
     100% { transform: rotate(360deg); }
     from { transform-origin: center; }
     to { transform-origin: center; }
+  }
+
+  .animate-compass-spin {
+    animation: compass-spin 3s linear infinite;
+  }
+
+  .animate-compass-wobble {
+    animation: compass-wobble 2s ease-in-out infinite;
+  }
+
+  .animate-compass-finder {
+    animation: compass-finder 4s ease-in-out infinite;
   }
 `
 
@@ -39,7 +51,8 @@ export default function CompassRotationAnimation({ iconSize } : { iconSize: numb
 	const getRandomAnimation = useCallback(() => {
 		const animationKeys = Object.keys(animations) as AnimationKey[]
 		const randomIndex = Math.floor(Math.random() * animationKeys.length)
-		return animations[animationKeys[randomIndex]]
+		const randomKey = animationKeys[randomIndex]
+		return animations[randomKey]
 	}, [])
 
 	return (
@@ -59,6 +72,5 @@ export default function CompassRotationAnimation({ iconSize } : { iconSize: numb
 				/>
 			</div>
 		</>
-
 	)
 }

@@ -27,7 +27,6 @@ function LedReading() {
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
 			progressPercent={100 / 6}
-			isNextPageDemo={true}
 		/>
 	)
 }
