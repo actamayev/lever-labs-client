@@ -96,7 +96,8 @@ export default function ShowLEDLessons() {
 							>
 								{isCodeGroup && (
 									<div
-										className="absolute rounded-full border-2 border-zinc-300 dark:border-zinc-700"
+										className="absolute rounded-full border-2 border-zinc-300 dark:border-zinc-700
+										bg-zinc-50 dark:bg-zinc-900"
 										style={{
 											height: "530px",
 											width: "125px",
