@@ -95,8 +95,16 @@ export default function ShowLEDLessons() {
 								}}
 							>
 								{isCodeGroup && (
-									<div className="absolute inset-y-16 inset-x-12 -m-14 rounded-full border-2 border-zinc-200
-									dark:border-zinc-700 opacity-100 transition-opacity" />
+									<div
+										className="absolute rounded-full border-2 border-zinc-300 dark:border-zinc-700"
+										style={{
+											height: "530px",
+											width: "125px",
+											left: "-15px",
+											top: "40px"
+										}}
+									/>
+
 								)}
 								{groupLessons.map((lesson, index) => (
 									<div
