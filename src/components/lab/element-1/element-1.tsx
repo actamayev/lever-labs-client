@@ -65,7 +65,8 @@ export default function Element1() {
 			</div>
 			<LilypadContainer>
 				<Element1StartCard />
-				<div ref={ledSectionRef} className="flex">
+				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
+				<div ref={ledSectionRef} className="flex pl-32">
 					<ShowLEDLessons />
 				</div>
 				<LabVerticalDivider />
