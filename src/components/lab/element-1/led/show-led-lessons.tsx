@@ -10,10 +10,10 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 }
 
 interface LilyPadPositions {
-	x: number
-	y: number
-	skipConnection?: boolean
-	arcDirection?: ArcDirection
+  x: number
+  y: number
+  skipConnection?: boolean
+  arcDirection?: ArcDirection
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -79,33 +79,43 @@ export default function ShowLEDLessons() {
 				))}
 
 				<div className="flex">
-					{groups.map((groupLessons) => (
-						<div
-							key={groupLessons[0].lessonUrl}
-							className="relative mr-56"
-							style={{
-								height: setLessonVerticalPosition(
-									groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
-								)
-							}}
-						>
-							{groupLessons.map((lesson, index) => (
-								<div
-									key={lesson.lessonUrl}
-									className="absolute"
-									style={{
-										top: setLessonVerticalPosition(
-											lesson.stackWithPrevious
-												? getStackPosition(index, lesson.verticalPosition)
-												: lesson.verticalPosition
-										)
-									}}
-								>
-									<Lilypad lesson={lesson} />
-								</div>
-							))}
-						</div>
-					))}
+					{groups.map((groupLessons) => {
+						const isCodeGroup = groupLessons.some(lesson =>
+							lesson.lessonName.includes("LED Code")
+						)
+
+						return (
+							<div
+								key={groupLessons[0].lessonUrl}
+								className="relative mr-56"
+								style={{
+									height: setLessonVerticalPosition(
+										groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
+									)
+								}}
+							>
+								{isCodeGroup && (
+									<div className="absolute inset-y-16 inset-x-12 -m-14 rounded-full border-2 border-zinc-200
+									dark:border-zinc-700 opacity-100 transition-opacity" />
+								)}
+								{groupLessons.map((lesson, index) => (
+									<div
+										key={lesson.lessonUrl}
+										className="absolute"
+										style={{
+											top: setLessonVerticalPosition(
+												lesson.stackWithPrevious
+													? getStackPosition(index, lesson.verticalPosition)
+													: lesson.verticalPosition
+											)
+										}}
+									>
+										<Lilypad lesson={lesson} />
+									</div>
+								))}
+							</div>
+						)
+					})}
 				</div>
 			</div>
 		</div>
