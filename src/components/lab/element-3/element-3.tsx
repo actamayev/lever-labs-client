@@ -3,7 +3,7 @@ import NavigateThroughElementsButton from "../lab-structure/navigate-through-ele
 export default function Element3() {
 	return (
 		<div className="h-screen overflow-y-auto">
-			<div className="fixed mt-4 flex items-center gap-2 ml-2">
+			<div className="fixed mt-6 ml-2 flex flex-row items-start gap-4 z-50">
 				<NavigateThroughElementsButton />
 			</div>
 		</div>

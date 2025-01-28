@@ -12,7 +12,8 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/demo",
 		lessonName: "LED Demo",
 		activityType: "Demo",
-		verticalPosition: 5
+		verticalPosition: 5,
+		arcDirection: "up"
 	},
 	{
 		progress: 0,

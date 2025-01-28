@@ -9,14 +9,16 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 	return index === 1 ? 5 : 8
 }
 
+interface LilyPadPositions {
+	x: number
+	y: number
+	skipConnection?: boolean
+	arcDirection?: ArcDirection
+}
+
 // eslint-disable-next-line max-lines-per-function
 export default function ShowLEDLessons() {
-	const [lilypadPositions, setLilypadPositions] = useState<Array<{
-        x: number
-        y: number
-        skipConnection?: boolean
-        arcDirection?: ArcDirection
-    }>>([])
+	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
 
@@ -34,12 +36,7 @@ export default function ShowLEDLessons() {
 	useEffect(() => {
 		if (!containerRef.current || !lilypadSectionRef.current) return
 
-		const positions: Array<{
-            x: number
-            y: number
-            skipConnection?: boolean
-            arcDirection?: ArcDirection
-        }> = []
+		const positions: LilyPadPositions[] = []
 
 		const lilypads = containerRef.current.querySelectorAll("[data-lilypad-icon]")
 		const lilypadSectionRect = lilypadSectionRef.current.getBoundingClientRect()

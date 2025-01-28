@@ -4,7 +4,8 @@ interface PathMarkProps {
     arcDirection?: ArcDirection
 }
 
-export default function PathMark({ startPosition, endPosition, arcDirection = "straight" }: PathMarkProps) {
+export default function PathMark(props: PathMarkProps) {
+	const { startPosition, endPosition, arcDirection = "straight" } = props
 	const dx = endPosition.x - startPosition.x
 	const dy = endPosition.y - startPosition.y
 	const length = Math.sqrt(dx * dx + dy * dy)
