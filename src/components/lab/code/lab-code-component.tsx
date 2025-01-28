@@ -14,7 +14,6 @@ interface Props {
 	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
-	isNextPageDemo?: boolean
 	codingTitle: string
 	codingDescription: string
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -34,8 +33,7 @@ export default function LabCodeComponent(props: Props) {
 		progressPercent,
 		codingTitle,
 		codingDescription,
-		toolboxConfig,
-		isNextPageDemo = false
+		toolboxConfig
 	} = props
 	const [cppCode, setCppCode] = useState("")
 
@@ -49,7 +47,6 @@ export default function LabCodeComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 			isCode={true}
 		>

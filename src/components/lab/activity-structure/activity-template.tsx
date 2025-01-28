@@ -14,7 +14,6 @@ interface Props {
 	progressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
-	isNextPageDemo?: boolean
 	isCode?: boolean
 }
 
@@ -30,7 +29,6 @@ export default function ActivityTemplate(props: Props) {
 		progressPercent,
 		children,
 		extraClasses = "",
-		isNextPageDemo = false,
 		isCode = false
 	} = props
 	return (
@@ -50,7 +48,6 @@ export default function ActivityTemplate(props: Props) {
 				previousPageActivity={previousPageActivity}
 				nextPageLink={nextPageLink}
 				nextPageActivity={nextPageActivity}
-				isNextPageDemo={isNextPageDemo}
 			/>
 		</div>
 	)

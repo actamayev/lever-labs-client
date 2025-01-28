@@ -12,7 +12,6 @@ interface Props {
 	element: ElementNumbers
 	lessonIcon: ReactElement
 	progressPercent: number
-	isNextPageDemo?: boolean
 }
 
 function LabDemoComponent(props: Props) {
@@ -25,7 +24,6 @@ function LabDemoComponent(props: Props) {
 		element,
 		lessonIcon,
 		progressPercent,
-		isNextPageDemo = false
 	} = props
 	const pipClass = usePipContext()
 
@@ -39,7 +37,6 @@ function LabDemoComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
