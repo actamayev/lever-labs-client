@@ -51,7 +51,7 @@ export default function Element1StartCard() {
 						After Completing This Element:
 					</h2>
 					<p className="text-lg text-zinc-600 dark:text-zinc-400">
-						You&apos;ll be able to read, control, and understand how each of Pip&apos;s sensors works.
+						You&apos;ll master reading sensor data, controlling each component, and understanding the core robotics principles.
 					</p>
 				</div>
 			</CardContent>

@@ -1,4 +1,3 @@
-import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import {
@@ -8,6 +7,7 @@ import {
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
 import { Button } from "../../shadcn/ui/button"
+import PipButtonTooltip from "../../pip-button-tooltip"
 import { usePipContext } from "../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../hooks/pip/click-pip-sidebar-button"
 import PipStatusTooltip from "../../shadcn/sidebar/primary/add-pip/pip-status-tooltip"
@@ -17,15 +17,6 @@ function LabCodePipStatus() {
 	const pipClass = usePipContext()
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
-
-	const tooltipContent = () => {
-		if (isNull(pipClass.selectedPip)) {
-			return <>Add Pip</>
-		} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
-			return <>Disconnect from {pipClass.selectedPip.pipName}</>
-		}
-		return <>Connect to {pipClass.selectedPip.pipName}</>
-	}
 
 	return (
 		<TooltipProvider delayDuration={0}>
@@ -50,11 +41,10 @@ function LabCodePipStatus() {
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent>
-					{tooltipContent()}
+					<PipButtonTooltip />
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>
-
 	)
 }
 

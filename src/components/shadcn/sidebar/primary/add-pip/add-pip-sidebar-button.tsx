@@ -1,8 +1,8 @@
-import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import PipStatusTooltip from "./pip-status-tooltip"
+import PipButtonTooltip from "../../../../pip-button-tooltip"
 import { usePipContext } from "../../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar-button"
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
@@ -12,21 +12,12 @@ function AddPipSidebarButton() {
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
 
-	const tooltipContent = () => {
-		if (isNull(pipClass.selectedPip)) {
-			return <>Add Pip</>
-		} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
-			return <>Disconnect from {pipClass.selectedPip.pipName}</>
-		}
-		return <>Connect to {pipClass.selectedPip.pipName}</>
-	}
-
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-center">
 				<SidebarMenuButton
 					tooltip={{
-						children: tooltipContent(),
+						children: <PipButtonTooltip />,
 						hidden: false
 					}}
 					onClick={clickPipSidebarButton}
