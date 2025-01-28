@@ -198,7 +198,7 @@ export default function LabReadingComponent(props: Props) {
 			nextPageActivity={nextPageActivity}
 			extraClasses="h-screen"
 		>
-			<main className="flex-1 flex items-center justify-center p-4">
+			<main className="h-full overflow-hidden">
 				<ReadingContainer blocks={sampleBlocks} />
 			</main>
 		</ActivityTemplate>

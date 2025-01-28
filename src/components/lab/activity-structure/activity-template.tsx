@@ -32,7 +32,7 @@ export default function ActivityTemplate(props: Props) {
 		isCode = false
 	} = props
 	return (
-		<div className={cn("flex flex-col", extraClasses)}>
+		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
 			<ActivityHeader
 				element={element}
 				lessonTitle={lessonTitle}
@@ -41,7 +41,9 @@ export default function ActivityTemplate(props: Props) {
 				isCode={isCode}
 			/>
 
-			{ children }
+			<div className="flex-1 min-h-0 pt-20 pb-20">
+				{children}
+			</div>
 
 			<ActivityFooter
 				previousPageLink={previousPageLink}

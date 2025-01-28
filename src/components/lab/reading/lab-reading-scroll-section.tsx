@@ -43,9 +43,9 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 	}
 
 	return (
-		<div className="flex h-screen">
-			{/* Reading section - 3/5 width */}
-			<div className="w-3/5 overflow-y-auto border-r">
+		<div className="h-full flex">
+			{/* Reading section - 3/5 width, scrollable */}
+			<div className="w-3/5 h-full overflow-y-auto border-r">
 				<ContentManager
 					blocks={blocks}
 					readingState={readingState}
@@ -55,7 +55,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 			</div>
 
 			{/* Right section - 2/5 width */}
-			<div className="w-2/5 flex flex-col">
+			<div className="w-2/5 h-full flex flex-col">
 				{/* Image section - 2/5 height */}
 				<div className="h-2/5 border-b">
 					<ImageSection
@@ -66,7 +66,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 				</div>
 
 				{/* Quiz section - 3/5 height */}
-				<div className="h-3/5">
+				<div className="h-3/5 overflow-y-auto">
 					<QuizSection
 						blocks={blocks}
 						readingState={readingState}

@@ -20,7 +20,8 @@ export default function ActivityHeader(props: Props) {
 	const navigate = useTypedNavigate()
 
 	return (
-		<header className="h-20 flex items-center justify-between px-4 border-b-2 border-zinc-300 dark:border-zinc-700">
+		<header className="h-20 flex items-center justify-between px-4 border-b-2
+		border-zinc-300 dark:border-zinc-700 fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 z-10">
 			<div className="flex w-32">
 				<Button
 					className="!text-2xl flex items-center duration-100 rounded-2xl cursor-pointer w-full"
