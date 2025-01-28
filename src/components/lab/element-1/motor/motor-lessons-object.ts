@@ -32,7 +32,7 @@ const motorLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/motor/code-1",
 		lessonName: "Motor Code 1",
 		activityType: "Code",
-		verticalPosition: 1
+		verticalPosition: 2
 	},
 	{
 		progress: null,
@@ -46,7 +46,7 @@ const motorLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/motor/code-3",
 		lessonName: "Motor Code 3",
 		activityType: "Code",
-		verticalPosition: 9
+		verticalPosition: 8
 	},
 	{
 		progress: null,

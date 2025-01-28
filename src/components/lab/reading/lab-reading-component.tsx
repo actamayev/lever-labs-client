@@ -3,8 +3,8 @@ import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
 	readingTitle: string
-	previousPageLink: LabPages
-	previousPageActivity: ActivityType
+	previousPageLink: LabPages | null
+	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers

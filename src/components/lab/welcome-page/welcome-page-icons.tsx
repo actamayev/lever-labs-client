@@ -10,6 +10,8 @@ interface IconStepProps {
 	iconColor?: string
 	darkBgColor?: string
 	darkIconColor?: string
+	iconSize?: string
+	backgroundSize?: string
 	title: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
@@ -22,6 +24,8 @@ export function IconStep({
 	iconColor = "text-blue-600",
 	darkBgColor = "dark:bg-blue-900/50",
 	darkIconColor = "dark:text-blue-400",
+	iconSize = "size-10",
+	backgroundSize = "size-24",
 	title,
 	subtitle,
 	orbitingIcons,
@@ -45,12 +49,12 @@ export function IconStep({
 			<div className="relative mb-4">
 				<div
 					className={cn(
-						"w-24 h-24 rounded-full flex items-center justify-center group-hover:scale-110",
+						"rounded-full flex items-center justify-center group-hover:scale-110",
 						"transition-transform duration-300",
-						bgColor, darkBgColor
+						bgColor, darkBgColor, backgroundSize
 					)}
 				>
-					<Icon className={cn("w-10 h-10", iconColor, darkIconColor)}/>
+					<Icon className={cn(iconColor, darkIconColor, iconSize)}/>
 				</div>
 				{orbitingIcons}
 			</div>

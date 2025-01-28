@@ -1,5 +1,5 @@
 import * as Blockly from "blockly"
-import { isEmpty } from "lodash-es"
+import isEmpty from "lodash-es/isEmpty"
 import { lazy, ReactElement, Suspense, useState } from "react"
 import { Button } from "../../shadcn/ui/button"
 import ActivityTemplate from "../activity-structure/activity-template"
@@ -51,9 +51,10 @@ export default function LabCodeComponent(props: Props) {
 			nextPageActivity={nextPageActivity}
 			isNextPageDemo={isNextPageDemo}
 			extraClasses="h-screen"
+			isCode={true}
 		>
 			<main className="flex-1 flex min-h-0">
-				<Card className="w-2/5 p-4 flex flex-col m-4">
+				<Card className="w-2/5 p-4 flex flex-col m-4 rounded-lg">
 					<CardHeader>
 						<CardTitle>
 							<h1 className="text-4xl font-bold mb-6">{codingTitle}</h1>

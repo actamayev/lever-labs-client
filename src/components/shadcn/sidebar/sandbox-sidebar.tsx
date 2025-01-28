@@ -17,7 +17,8 @@ export default function SandboxSidebar() {
 				{/* <SidebarInput placeholder="Search projects..." /> */}
 			</SidebarHeader>
 			<SidebarContent>
-				{/* // TODO: Add a map of the user's past projects here. search should filter, there should be an add project button */}
+				{/* // 12/1/25 TODO: Add a map of the user's past projects here.
+				// search should filter, there should be an add project button */}
 			</SidebarContent>
 		</Sidebar>
 	)

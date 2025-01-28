@@ -15,6 +15,7 @@ interface Props {
 	children: React.ReactNode
 	extraClasses?: string
 	isNextPageDemo?: boolean
+	isCode?: boolean
 }
 
 export default function ActivityTemplate(props: Props) {
@@ -29,7 +30,8 @@ export default function ActivityTemplate(props: Props) {
 		progressPercent,
 		children,
 		extraClasses = "",
-		isNextPageDemo = false
+		isNextPageDemo = false,
+		isCode = false
 	} = props
 	return (
 		<div className={cn("flex flex-col", extraClasses)}>
@@ -38,6 +40,7 @@ export default function ActivityTemplate(props: Props) {
 				lessonTitle={lessonTitle}
 				lessonIcon={lessonIcon}
 				progressPercent={progressPercent}
+				isCode={isCode}
 			/>
 
 			{ children }

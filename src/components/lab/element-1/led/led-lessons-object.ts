@@ -1,13 +1,5 @@
 const ledLessons: Lesson[] = [
 	{
-		progress: 100,
-		lessonUrl: "/lab/element-1/start",
-		lessonName: "Start",
-		activityType: "Start",
-		verticalPosition: 5,
-		arcDirection: "up"
-	},
-	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading",
 		lessonName: "What is an LED?",
@@ -20,7 +12,8 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/demo",
 		lessonName: "LED Demo",
 		activityType: "Demo",
-		verticalPosition: 5
+		verticalPosition: 5,
+		arcDirection: "up"
 	},
 	{
 		progress: 0,
@@ -42,7 +35,8 @@ const ledLessons: Lesson[] = [
 		lessonUrl: "/lab/element-1/led/code-1",
 		lessonName: "LED Code 1",
 		activityType: "Code",
-		verticalPosition: 1,
+		verticalPosition: 2,
+		skipConnection: true
 	},
 	{
 		progress: null,
@@ -50,15 +44,17 @@ const ledLessons: Lesson[] = [
 		lessonName: "LED Code 2",
 		activityType: "Code",
 		verticalPosition: 5,
-		stackWithPrevious: true
+		stackWithPrevious: true,
+		skipConnection: true
 	},
 	{
 		progress: null,
 		lessonUrl: "/lab/element-1/led/code-3",
 		lessonName: "LED Code 3",
 		activityType: "Code",
-		verticalPosition: 9,
-		stackWithPrevious: true
+		verticalPosition: 8,
+		stackWithPrevious: true,
+		skipConnection: true
 	},
 	{
 		progress: null,
