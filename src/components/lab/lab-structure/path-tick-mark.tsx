@@ -27,11 +27,11 @@ export default function PathMark(props: PathMarkProps) {
 			const control2X = startPosition.x + dx * 0.75
 
 			return `
-                M ${startPosition.x} ${startPosition.y}
-                C ${control1X} ${controlY}
-                ${control2X} ${controlY}
-                ${endPosition.x} ${endPosition.y}
-            `
+				M ${startPosition.x} ${startPosition.y}
+				C ${control1X} ${controlY}
+				${control2X} ${controlY}
+				${endPosition.x} ${endPosition.y}
+			`
 		}
 
 		const control1X = startPosition.x + dx * 0.25
@@ -40,11 +40,11 @@ export default function PathMark(props: PathMarkProps) {
 		const control2Y = endPosition.y
 
 		return `
-            M ${startPosition.x} ${startPosition.y}
-            C ${control1X} ${control1Y}
-                ${control2X} ${control2Y}
-                ${endPosition.x} ${endPosition.y}
-        `
+			M ${startPosition.x} ${startPosition.y}
+			C ${control1X} ${control1Y}
+			${control2X} ${control2Y}
+			${endPosition.x} ${endPosition.y}
+		`
 	}
 
 	const numberOfDashes = Math.floor(length / 20)
