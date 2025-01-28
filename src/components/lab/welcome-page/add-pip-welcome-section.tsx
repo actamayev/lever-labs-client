@@ -21,7 +21,7 @@ export default function AddPipWelcomeSection() {
 					title="Name your Pip"
 				/>
 
-				<RightArrow />
+				<RightArrow iconSize="size-10"/>
 
 				<IconStep
 					icon={Wifi}
@@ -32,7 +32,7 @@ export default function AddPipWelcomeSection() {
 					title="Connect to Wi-Fi"
 				/>
 
-				<RightArrow />
+				<RightArrow iconSize="size-10"/>
 
 				<IconStep
 					icon={Upload}

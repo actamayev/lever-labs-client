@@ -19,7 +19,7 @@ const labHelmetData: HelmetData = {
 	// Element 1
 	"/lab/element-1": (
 		<BasicHelmet
-			pageTitleData="Element 1: Robot Basics"
+			pageTitleData="Element 1: Sensor Basics"
 			description="Learn the fundamental components of robotics including motors, sensors, and basic control mechanisms."
 			url="https://www.bluedotrobots.com/lab/element-1"
 		/>
@@ -217,7 +217,7 @@ const labHelmetData: HelmetData = {
 	// Element 2
 	"/lab/element-2": (
 		<BasicHelmet
-			pageTitleData="Element 2: Interactive Behaviors"
+			pageTitleData="Element 2: Combine & Create"
 			description="Explore more advanced robotics concepts and create interactive behaviors with your Pip."
 			url="https://www.bluedotrobots.com/lab/element-2"
 		/>
@@ -268,7 +268,7 @@ const labHelmetData: HelmetData = {
 	// Element 3
 	"/lab/element-3": (
 		<BasicHelmet
-			pageTitleData="Element 3: Advanced Control"
+			pageTitleData="Element 3: Misions"
 			description="Master advanced robotics concepts including autonomous navigation and complex control systems."
 			url="https://www.bluedotrobots.com/lab/element-3"
 		/>

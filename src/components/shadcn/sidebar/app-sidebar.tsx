@@ -1,8 +1,14 @@
-import PrimarySidebar from "./primary/primary-sidebar"
+import { useLocation } from "react-router"
 import { Sidebar } from "@/components/shadcn/ui/sidebar"
-import SecondarySidebar from "./secondary/secondary-sidebar"
+import SandboxSidebar from "./sandbox-sidebar"
+import PrimarySidebar from "./primary/primary-sidebar"
+import { showPrimarySidebarPages } from "../../../utils/constants"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+	const location = useLocation()
+	const shouldShowSidebar = showPrimarySidebarPages.includes(location.pathname as PageNames)
+	if (!shouldShowSidebar) return null
+
 	return (
 		<Sidebar
 			collapsible="icon"
@@ -10,7 +16,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			{...props}
 		>
 			<PrimarySidebar />
-			<SecondarySidebar />
+			{location.pathname.startsWith("/sandbox") && <SandboxSidebar />}
 		</Sidebar>
 	)
 }

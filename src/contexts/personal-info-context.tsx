@@ -7,6 +7,7 @@ class PersonalInfoClass {
 	public email: string | null = null
 
 	public isRetrievingPersonalInfo = false
+	public retrievedPeronsalInfo = false
 	public defaultSiteTheme: SiteThemes = "light"
 	public defaultSidebarState: SidebarStates = "expanded"
 	public profilePictureUrl: string | null = null
@@ -31,6 +32,10 @@ class PersonalInfoClass {
 
 	public setIsRetrievingPersonalDetails = action((newState: boolean): void => {
 		this.isRetrievingPersonalInfo = newState
+	})
+
+	public setRetrievedPersonalInfo = action((newState: boolean): void => {
+		this.retrievedPeronsalInfo = newState
 	})
 
 	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
@@ -65,6 +70,7 @@ class PersonalInfoClass {
 		this.username = null
 		this.email = null
 		this.setIsRetrievingPersonalDetails(false)
+		this.setRetrievedPersonalInfo(false)
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("light")
 		this.setDefaultSidebarState("expanded")

@@ -8,33 +8,17 @@ declare global {
 	type SidebarStates = "expanded" | "collapsed"
 
 	type EndpointHeaders =
-		"/auth" |
-		"/misc" |
-		"/pip" |
-		"/personal-info"
+		| "/auth"
+		| "/misc"
+		| "/pip"
+		| "/personal-info"
 
 	type PipUUID = string & { readonly __brand: unique symbol }
-
-	type ActivityTitles = "Reading" | "Video" | "Code"
 
 	interface SidebarNavData {
 		title: string
 		url: PageNames
 		icon: LucideIcon
-	}
-
-	interface LabNavData {
-		title: string
-		icon: LucideIcon
-		items: {
-			title: ActivityTitles
-			url: LabPages
-		}[]
-	}
-
-	interface ElementChild {
-		path: ActivityTitles
-		element: JSX.Element
 	}
 
 	// Define the element routes structure
@@ -51,12 +35,21 @@ declare global {
 		children?: ElementChild[]
 	}
 
+	interface ElementChild {
+		path: ActivityType
+		element: JSX.Element
+	}
+
 	// Create a union type for all possible route types
 	type RouteType = ElementRoutes | BaseRoute
 
 	interface HelmetData {
 		[key: string]: React.ReactNode
 	}
+
+	type BlocklyCategoryColours = 30 | 120 | 180 | 218
+
+	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
 }
 
 export {}

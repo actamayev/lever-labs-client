@@ -14,7 +14,7 @@ import useInitializeGoogleAnalytics from "./hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "./hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "./hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "./hooks/personal-info/retrieve-personal-info-use-effect"
-import generateLabRoutes from "./utils/generate-lab-routes"
+import generateLabRoutes from "./utils/lab/generate-lab-routes"
 import AddPip from "./pages/add-pip"
 
 const Landing = lazy(() => import("./pages/landing"))
