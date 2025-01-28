@@ -71,7 +71,7 @@ const SidebarProvider = React.forwardRef<
     const [openMobile, setOpenMobile] = React.useState(false)
     const defaultSideBarState = useDefaultSidebarState()
     const setDefaultSidebarState = useSetDefaultSidebarState()
-    const initialState = defaultSideBarState === "expanded"
+    const initialState = defaultSideBarState === "expanded" && location.pathname.startsWith("/sandbox")
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
@@ -110,8 +110,12 @@ const SidebarProvider = React.forwardRef<
     React.useEffect(() => {
       const pathname = window.location.pathname
       const autoCloseRoutes = ['/add-pip', '/settings']
+      const autoClosePrefixes = ['/lab']
       
-      if (autoCloseRoutes.includes(pathname)) {
+      if (
+        autoCloseRoutes.includes(pathname) || 
+        autoClosePrefixes.some(prefix => pathname.startsWith(prefix))
+      ) {
         // Store current state before closing
         if (open) {
           setPreviousState(open)
@@ -128,14 +132,23 @@ const SidebarProvider = React.forwardRef<
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {
-        if (
-          event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-          (event.metaKey || event.ctrlKey)
-        ) {
-          event.preventDefault()
-          toggleSidebar()
+        if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
+          const pathname = window.location.pathname
+          const autoCloseRoutes = ['/add-pip', '/settings']
+          const autoClosePrefixes = ['/lab']
+          
+          // Check if current route is in routes without sidebar
+          const isRouteWithoutSidebar = 
+            autoCloseRoutes.includes(pathname) || 
+            autoClosePrefixes.some(prefix => pathname.startsWith(prefix))
+    
+          // Only prevent default and toggle sidebar if we're not on a route without sidebar
+          if (!isRouteWithoutSidebar) {
+            event.preventDefault()
+            toggleSidebar()
+          }
         }
-      }
+      }    
 
       window.addEventListener("keydown", handleKeyDown)
       return () => window.removeEventListener("keydown", handleKeyDown)

@@ -1,7 +1,11 @@
 import ImuCode from "../components/lab/element-1/imu/imu-code"
-import LedCode from "../components/lab/element-1/led/led-code"
+import LedDemo from "../components/lab/element-1/led/led-demo"
 import LedVideo from "../components/lab/element-1/led/led-video"
 import ImuVideo from "../components/lab/element-1/imu/imu-video"
+import LedCode1 from "../components/lab/element-1/led/led-code-1"
+import LedCode2 from "../components/lab/element-1/led/led-code-2"
+import LedCode3 from "../components/lab/element-1/led/led-code-3"
+import MotorDemo from "../components/lab/element-1/motor/motor-demo"
 import LedReading from "../components/lab/element-1/led/led-reading"
 import ImuReading from "../components/lab/element-1/imu/imu-reading"
 import MotorCode from "../components/lab/element-1/motor/motor-code"
@@ -25,6 +29,8 @@ import IRSensorArrayReading from "../components/lab/element-1/ir-sensor-array/ir
 import IrCommuncationSensorCode from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-code"
 import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-video"
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
+import LedSummary from "../components/lab/element-1/led/led-summary"
+import MotorSummary from "../components/lab/element-1/motor/motor-summary"
 
 const element1Routes: ElementRoutes[] = [
 	{
@@ -39,9 +45,25 @@ const element1Routes: ElementRoutes[] = [
 				element: <LedVideo />
 			},
 			{
-				path: "Code",
-				element: <LedCode />
-			}
+				path: "Code-1",
+				element: <LedCode1 />
+			},
+			{
+				path: "Code-2",
+				element: <LedCode2 />
+			},
+			{
+				path: "Code-3",
+				element: <LedCode3 />
+			},
+			{
+				path: "Demo",
+				element: <LedDemo />
+			},
+			{
+				path: "Summary",
+				element: <LedSummary />
+			},
 		]
 	},
 	{
@@ -56,9 +78,25 @@ const element1Routes: ElementRoutes[] = [
 				element: <MotorVideo />
 			},
 			{
-				path: "Code",
+				path: "Code-1",
 				element: <MotorCode />
-			}
+			},
+			{
+				path: "Code-2",
+				element: <MotorCode />
+			},
+			{
+				path: "Code-3",
+				element: <MotorCode />
+			},
+			{
+				path: "Demo",
+				element: <MotorDemo />
+			},
+			{
+				path: "Summary",
+				element: <MotorSummary />
+			},
 		]
 	},
 	{

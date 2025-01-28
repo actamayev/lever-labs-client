@@ -13,7 +13,8 @@ export default function useRetrievePersonalInfoUseEffect(): void {
 		try {
 			if (
 				personalInfoClass.isRetrievingPersonalInfo === true ||
-				isNull(blueDotApiClient.httpClient.accessToken)
+				isNull(blueDotApiClient.httpClient.accessToken) ||
+				personalInfoClass.retrievedPeronsalInfo === true
 			) return
 
 			personalInfoClass.setIsRetrievingPersonalDetails(true)
@@ -23,6 +24,7 @@ export default function useRetrievePersonalInfoUseEffect(): void {
 				throw Error ("Unable to retrieve personal info")
 			}
 			personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
+			personalInfoClass.setRetrievedPersonalInfo(true)
 		} catch (error) {
 			console.error(error)
 		} finally {

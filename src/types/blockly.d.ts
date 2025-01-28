@@ -1,4 +1,5 @@
 import * as Blockly from "blockly"
+import { CssConfig } from "blockly/core/toolbox/category"
 import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
 import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
 import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
@@ -25,10 +26,10 @@ declare global {
 
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> {
 		kind: "category"
-		name: string
+		name: BlocklyCategoryName
 		id: string | undefined
 		categorystyle: string | undefined
-		colour: number
+		colour: BlocklyCategoryColours
 		cssconfig: CssConfig | undefined
 		hidden: string | undefined
 		expanded?: string | boolean

@@ -83,3 +83,23 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		pipCategory
 	]
 }
+
+export function createCustomCategory(
+	name: BlocklyCategoryName,
+	colour: BlocklyCategoryColours,
+	blocks: BlockNames[]
+): CustomCategoryInfo {
+	return {
+		kind: "category",
+		name,
+		colour,
+		id: undefined,
+		categorystyle: undefined,
+		cssconfig: undefined,
+		hidden: undefined,
+		contents: blocks.map(blockType => ({
+			kind: "block",
+			type: blockType
+		}))
+	}
+}

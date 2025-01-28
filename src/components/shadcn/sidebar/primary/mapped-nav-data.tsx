@@ -1,3 +1,5 @@
+import { useCallback } from "react"
+import { useLocation } from "react-router"
 import {
 	SidebarContent,
 	SidebarGroup,
@@ -13,7 +15,7 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
-		url: "/lab",
+		url: "/lab/element-1",
 		icon: CustomBeaker
 	},
 	{
@@ -25,6 +27,12 @@ const navData: SidebarNavData[] = [
 
 export default function MappedNavData() {
 	const navigate = useTypedNavigate()
+	const location = useLocation()
+
+	const isActive = useCallback((itemUrl: string) => {
+		if (itemUrl === "/lab/element-1") return location.pathname.startsWith("/lab")
+		return location.pathname.startsWith(itemUrl)
+	}, [location.pathname])
 
 	return (
 		<SidebarContent>
@@ -39,16 +47,17 @@ export default function MappedNavData() {
 										hidden: false,
 									}}
 									onClick={() => navigate(item.url)}
-									isActive={location.pathname === item.url}
+									isActive={isActive(item.url)}
 									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
 									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]
-									transition-all duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+									transition-all duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-800
+									active:bg-zinc-200 dark:active:bg-zinc-800"
 								>
 									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
 										<item.icon
 											className="!h-[50px] !w-[50px] transition-all duration-300 ease-in-out text-sidebar-foreground
 											data-[active=true]:text-sidebar-accent-foreground"
-											data-active={location.pathname === item.url}
+											data-active={isActive(item.url)}
 										/>
 									</div>
 								</SidebarMenuButton>

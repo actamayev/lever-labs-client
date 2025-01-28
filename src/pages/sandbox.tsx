@@ -9,18 +9,18 @@ function Sandbox() {
 
 	if (authClass.isLoggedIn === false) {
 		return (
-			<>
+			<div className="pt-16">
 				<PageHelmet pageTitle="/sandbox" />
 				<ShowAuthToNullUser whereToNavigate="/sandbox" />
-			</>
+			</div>
 		)
 	}
 
 	return (
-		<>
+		<div className="pt-16">
 			<PageHelmet pageTitle="/sandbox" />
 			<SandboxBlocklyComponent />
-		</>
+		</div>
 	)
 }
 
