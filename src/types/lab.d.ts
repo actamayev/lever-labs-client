@@ -30,6 +30,35 @@ declare global {
 	type Element1Sections =
 	| "LED"
 	| "Motor"
+
+	interface ContentBlock {
+		id: string
+		text: React.ReactNode
+		action: {
+			type: "continue" | "quiz"
+			imageChange?: {
+				images: string[]  // New images to add to navigation
+				autoSelect?: number  // Which image to show
+			}
+			quiz?: {
+				questions: Array<{
+						question: string
+						choices: Array<{
+						text: string
+						correct: boolean
+						explanation?: string
+					}>
+				}>
+			}
+		}
+	}
+
+	interface ReadingState {
+		revealedBlocks: string[]
+		completedQuizzes: string[]
+		availableImages: string[]
+		currentImageIndex: number
+	}
 }
 
 export {}
