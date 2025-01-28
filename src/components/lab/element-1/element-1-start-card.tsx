@@ -1,8 +1,11 @@
+import { CircuitBoard, Hourglass } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
+// 1/28/25 TODO: consider adding a scroll to component for the LED, motors, etc.
+// should be dotted hover underline. onclick leds, auto-scrolls to led section
 export default function Element1StartCard() {
 	return (
-		<Card className="w-[1000px] p-4 flex flex-col m-4 rounded-lg">
+		<Card className="w-[1100px] p-2 flex flex-col m-2 rounded-lg">
 			<CardHeader>
 				<CardTitle>
 					<h1 className="text-4xl font-bold">Element 1: Sensor Basics</h1>
@@ -30,14 +33,18 @@ export default function Element1StartCard() {
 						We&apos;ll investigate how Pip&apos;s sensors actually work under the surface, their applications,
 						and you&apos;ll learn how to control them.
 					</p>
-					<div className="grid grid-cols-2 gap-4">
+					<div className="grid grid-cols-3 gap-4">
 						<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
 							<li>LEDs</li>
 							<li>Motors</li>
-							<li>Buttons</li>
+
 						</ul>
 						<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
+							<li>Buttons</li>
 							<li>Distance sensors</li>
+
+						</ul>
+						<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
 							<li>IR sensors</li>
 							<li>And much more</li>
 						</ul>
@@ -53,6 +60,19 @@ export default function Element1StartCard() {
 					<p className="text-lg text-zinc-600 dark:text-zinc-400">
 						You&apos;ll master reading sensor data, controlling each component, and understanding the core robotics principles.
 					</p>
+				</div>
+				<div className="space-y-2 p-4 border border-zinc-200 dark:border-zinc-700 rounded-lg
+					bg-zinc-50 dark:bg-zinc-800/50">
+					<div className="grid grid-cols-2 gap-4">
+						<div className="text-lg text-zinc-600 dark:text-zinc-400 flex flex-row items-center justify-center gap-2">
+							<CircuitBoard />
+							9 Peripherals
+						</div>
+						<div className="text-lg text-zinc-600 dark:text-zinc-400 flex flex-row items-center justify-center gap-2">
+							<Hourglass />
+							10 hours
+						</div>
+					</div>
 				</div>
 			</CardContent>
 		</Card>
