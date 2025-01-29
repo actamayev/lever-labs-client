@@ -16,6 +16,7 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 			<TactileButton
 				className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
 				dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+				shadowHeight={4}
 			>
 				{title}
 			</TactileButton>
@@ -37,6 +38,7 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
 			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
 			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
+			shadowHeight={4}
 		>
 			{title}
 		</TactileButton>

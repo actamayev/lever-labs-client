@@ -21,6 +21,7 @@ interface Props {
 
 const BlocklyComponent = lazy(() => import("../../blockly-component"))
 
+// TODO: Figure out why the code isn't stretching all the way
 export default function LabCodeComponent(props: Props) {
 	const {
 		lessonTitle,

@@ -1,10 +1,10 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Button } from "@/components/shadcn/ui/button"
 import { useAuthContext } from "../contexts/auth-context"
 import useTypedNavigate from "../hooks/navigate/typed-navigate"
 import { CustomBeaker } from "../components/icons/custom-beaker"
 import { CustomHouse } from "../components/icons/custom-house"
+import { TactileButton } from "../components/shadcn/ui/tactile-button"
 
 function Missing() {
 	const authClass = useAuthContext()
@@ -36,13 +36,14 @@ function Missing() {
 			<h1 className="text-2xl font-semibold">
 				Page Not Found
 			</h1>
-			<Button
-				variant="tactile"
+			<TactileButton
 				onClick={conditionalNavigation}
 				className="transition-none text-2xl p-5"
+				shadowColor="black"
+				shadowHeight={4}
 			>
 				{conditionalText()}
-			</Button>
+			</TactileButton>
 		</div>
 	)
 }

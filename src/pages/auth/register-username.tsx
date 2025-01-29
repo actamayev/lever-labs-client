@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../components/shadcn/ui/form"
-import { Button } from "../../components/shadcn/ui/button"
 import PageHelmet from "../../components/helmet/page-helmet"
 import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
@@ -11,6 +10,7 @@ import { registerUsernameSchema } from "../../utils/auth/auth-schemas"
 import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import UsernameInput from "../../components/auth/register/username-input"
 import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-with-username"
+import { TactileButton } from "../../components/shadcn/ui/tactile-button"
 
 function RegisterUsername() {
 	useRedirectUserWithUsername()
@@ -40,14 +40,14 @@ function RegisterUsername() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 						<UsernameInput control={form.control} />
 
-						<Button
+						<TactileButton
 							type="submit"
 							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 							disabled={loading || isDisabled}
-							variant="tactile"
+							shadowHeight={4}
 						>
 							CONTINUE
-						</Button>
+						</TactileButton>
 
 						{error && <ErrorMessage error={error} />}
 					</form>

@@ -4,7 +4,6 @@ import EmailInput from "./email-input"
 import OrComponent from "../or-component"
 import UsernameInput from "./username-input"
 import PasswordField from "../password-input"
-import { Button } from "../../shadcn/ui/button"
 import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -13,6 +12,7 @@ import AuthTemplate from "../../templates/auth-template"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 export default function Register() {
 	useRedirectKnownUser()
@@ -52,14 +52,14 @@ export default function Register() {
 						placeholder="Confirm Password"
 					/>
 
-					<Button
+					<TactileButton
 						type="submit"
 						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
-						variant="tactile"
+						shadowHeight={4}
 					>
 						CREATE ACCOUNT
-					</Button>
+					</TactileButton>
 
 					{error && <ErrorMessage error={error} />}
 

@@ -22,7 +22,7 @@ export default function AnswerChoiceButton(props: Props) {
 
 		// When answer is selected but not yet checked
 		if (isSelected && !isShowingExplanation) {
-			return cn(baseStyles, "ring-2 ring-pipTheme border-none bg-zinc-100 text-pipTheme")
+			return cn(baseStyles, "border-pipTheme bg-zinc-100 text-pipTheme")
 		}
 
 		const isCorrect = currentQuestion.choices[index].correct
@@ -33,7 +33,7 @@ export default function AnswerChoiceButton(props: Props) {
 				baseStyles,
 				isCorrect
 					? "bg-green-100 border-green-500 text-black"
-					: "ring-2 ring-pipTheme border-none bg-zinc-100 text-pipTheme"
+					: "border-pipTheme bg-zinc-100 text-pipTheme"
 			)
 		}
 
@@ -42,12 +42,14 @@ export default function AnswerChoiceButton(props: Props) {
 	}, [activeQuiz, currentQuestion.choices, index, selectedAnswer])
 
 	const shadowColor = useMemo(() => {
-		if (!activeQuiz.showExplanation || selectedAnswer !== index) {
-			return "rgb(228,228,231)"
+		const isSelected = selectedAnswer === index
+		if (!activeQuiz.showExplanation || !isSelected) {
+			if (isSelected) return "rgb(0, 61, 165)" //piptheme
+			else return "rgb(228,228,231)" // Zinc
 		}
 		const isCorrect = currentQuestion.choices[index].correct
 		if (isCorrect) return "rgb(34,197,94)" // green-500
-		else return "rgb(228,228,231"
+		else return "rgb(0, 61, 165)" // Zinc
 	}, [activeQuiz.showExplanation, currentQuestion.choices, index, selectedAnswer])
 
 	return (

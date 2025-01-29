@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import { Form } from "@/components/shadcn/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/shadcn/ui/button"
 import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
 import PasswordField from "../password-input"
@@ -12,6 +11,7 @@ import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface Props {
 	whereToNavigate: PageNames
@@ -47,14 +47,14 @@ export default function Login(props: Props) {
 						// showForgotPassword={true}
 					/>
 
-					<Button
+					<TactileButton
 						type="submit"
 						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
-						variant="tactile"
+						shadowHeight={4}
 					>
 						LOG IN
-					</Button>
+					</TactileButton>
 
 					{error && <ErrorMessage error={error} />}
 
