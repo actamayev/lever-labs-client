@@ -1,4 +1,6 @@
+import { ArrowLeft } from "lucide-react"
 import { useEffect, useCallback } from "react"
+import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface QuizSectionProps {
@@ -9,7 +11,7 @@ interface QuizSectionProps {
 	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 export default function QuizSection (props: QuizSectionProps) {
 	const { blocks, readingState, onQuizComplete, activeQuiz, setActiveQuiz } = props
 	const currentBlock = blocks.find(b => b.id === activeQuiz?.blockId)
@@ -71,9 +73,57 @@ export default function QuizSection (props: QuizSectionProps) {
 
 	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
 
+	const completedQuizBlocks = blocks
+		.filter(block =>
+			block.action.type === "quiz" &&
+      readingState.completedQuizzes.includes(block.id) &&
+      blocks.findIndex(b => b.id === block.id) <=
+      blocks.findIndex(b => b.id === activeQuiz.blockId)
+		)
+
+	const navigateToQuiz = (blockId: LEDReadingBlockID) => {
+		setActiveQuiz({
+			blockId,
+			questionIndex: 0,
+			selectedChoice: null,
+			showExplanation: false,
+			isReview: true
+		})
+	}
+
 	return (
-		<div className="h-full p-6 flex flex-col">
-			<div className="mb-6">
+		<div className="h-full flex flex-col">
+			<div className="p-4 border-b border-zinc-300 dark:border-zinc-700">
+				<div className="flex items-center gap-4">
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => setActiveQuiz(null)}
+					>
+						<ArrowLeft className="h-4 w-4" />
+					</Button>
+					<h3 className="text-lg font-semibold">
+						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
+					</h3>
+				</div>
+
+				{/* Quiz navigation buttons */}
+				{completedQuizBlocks.length > 1 && (
+					<div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+						{completedQuizBlocks.map((block, index) => (
+							<Button
+								key={block.id}
+								variant={block.id === activeQuiz.blockId ? "default" : "outline"}
+								size="sm"
+								onClick={() => navigateToQuiz(block.id)}
+							>
+								Quiz {index + 1}
+							</Button>
+						))}
+					</div>
+				)}
+			</div>
+			<div className="flex-1 overflow-y-auto p-6">
 				<h3 className="text-xl font-semibold mb-4">{currentQuestion.question}</h3>
 				<div className="space-y-4">
 					{currentQuestion.choices.map((choice, index) => (
@@ -96,23 +146,26 @@ export default function QuizSection (props: QuizSectionProps) {
 				</div>
 			</div>
 
-			{activeQuiz.showExplanation && activeQuiz.selectedChoice !== null && (
-				<div className="">
-					<div className={`p-4 rounded-lg mb-4 text-lg ${
-						currentQuestion.choices[activeQuiz.selectedChoice].correct
-							? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-							: "bg-red-100 text-red-800"
-					}`}>
-						{currentQuestion.choices[activeQuiz.selectedChoice].explanation ||
+			{(activeQuiz.showExplanation || activeQuiz.isReview) && (
+				<div className="p-4 border-t border-zinc-300 dark:border-zinc-700">
+					{activeQuiz.selectedChoice !== null && (
+						<div className={cn(
+							"p-4 rounded-lg mb-4",
+							currentQuestion.choices[activeQuiz.selectedChoice].correct
+								? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
+								: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
+						)}>
+							{currentQuestion.choices[activeQuiz.selectedChoice].explanation ||
 			(currentQuestion.choices[activeQuiz.selectedChoice].correct
 				? "Correct!"
 				: "Incorrect. Try again.")}
-					</div>
+						</div>
+					)}
 
-					{currentQuestion.choices[activeQuiz.selectedChoice].correct && (
+					{!activeQuiz.isReview && activeQuiz.selectedChoice && currentQuestion.choices[activeQuiz.selectedChoice]?.correct && (
 						<Button
 							onClick={handleNextQuestion}
-							className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+							className="w-full"
 						>
 							{activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 								? "Complete Quiz"

@@ -33,8 +33,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 
 	return (
 		<div className="h-full flex">
-			{/* Reading section - 3/5 width, scrollable */}
-			<div className="w-3/5 h-full overflow-y-auto border-r-2 border-zinc-300 dark:border-zinc-700">
+			<div className="w-2/3 h-full overflow-y-auto border-r-2 border-zinc-300 dark:border-zinc-700">
 				<div ref={contentRef} className="p-6">
 					{blocks.map((block) => (
 						<ReadingBlock
@@ -49,7 +48,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 			</div>
 
 			<div className={cn(
-				"fixed right-0 top-20 bottom-20 w-2/5 bg-white dark:bg-gray-900 shadow-lg transition-transform",
+				"fixed right-0 top-20 bottom-20 w-1/3 bg-white dark:bg-gray-900 shadow-lg transition-transform",
 				activeQuiz ? "translate-x-0" : "translate-x-full"
 			)}>
 				<QuizSection

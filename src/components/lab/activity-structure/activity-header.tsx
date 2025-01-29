@@ -1,9 +1,8 @@
+import { X } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import { ReactElement } from "react"
-import { ArrowLeft } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
-import { CustomBeaker } from "../../icons/custom-beaker"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-container"
 
@@ -23,16 +22,16 @@ export default function ActivityHeader(props: Props) {
 		<header className="h-20 flex items-center justify-between px-4 border-b-2
 		border-zinc-300 dark:border-zinc-700 fixed top-0 left-0 right-0 bg-white dark:bg-gray-900 z-10">
 			<div className="flex w-32">
-				<Button
-					className="!text-2xl flex items-center duration-100 rounded-2xl cursor-pointer w-full"
-					onClick={() => navigate(`/lab/element-${element}`)}
-				>
-					<div className="flex items-center">
-						<ArrowLeft className="!h-6 !w-6" />
-						<CustomBeaker className="!h-6 !w-6" />
-						<span>Lab</span>
-					</div>
-				</Button>
+				<div className="flex items-center justify-start duration-100 rounded-2xl cursor-pointer w-full">
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => navigate(`/lab/element-${element}`)}
+						className="!p-6"
+					>
+						<X className="!h-6 !w-6" />
+					</Button>
+				</div>
 			</div>
 			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
 			<div className="flex items-center w-32">

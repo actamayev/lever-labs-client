@@ -32,6 +32,7 @@ declare global {
 		questionIndex: number
 		selectedChoice: number | null
 		showExplanation: boolean
+		isReview?: boolean
 	}
 }
 

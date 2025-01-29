@@ -1,16 +1,18 @@
+import { CheckCircle } from "lucide-react"
 import { useCallback, useState } from "react"
+import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
-import { Card, CardContent } from "../../shadcn/ui/card"
 
 interface Props {
 	block: ContentBlock
 	blocks: ContentBlock[]
 	readingState: ReadingState
 	onContinue: (blockId: string) => void
+	setActiveQuiz?: (quiz: ActiveQuiz | null) => void;
 }
 
 export default function ReadingBlock(props: Props) {
-	const { block, blocks, readingState, onContinue } = props
+	const { block, blocks, readingState, onContinue, setActiveQuiz } = props
 	const [isContinued, setIsContinued] = useState(false)
 
 	const isRevealed = readingState.revealedBlocks.includes(block.id)
@@ -30,11 +32,25 @@ export default function ReadingBlock(props: Props) {
 		setIsContinued(true)
 	}, [blocks, onContinue])
 
+	const handleQuizClick = useCallback(() => {
+		if (!setActiveQuiz) return
+		setActiveQuiz({
+			blockId: block.id,
+			questionIndex: 0,
+			selectedChoice: null,
+			showExplanation: false,
+			isReview: isQuizCompleted
+		})
+	}, [block.id, isQuizCompleted, setActiveQuiz])
+
 	return (
 		<div
 			key={block.id}
 			id={`block-${block.id}`}
-			className={`mb-6 transition-opacity duration-300 ${isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
+			className={cn(
+				"mb-6 transition-opacity duration-300",
+				isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden"
+			)}
 		>
 			<div className="max-w-none">
 				{block.text}
@@ -50,18 +66,23 @@ export default function ReadingBlock(props: Props) {
 				</Button>
 			)}
 
-			{isRevealed && block.action.type === "quiz" && !isQuizCompleted && (
-				<Card className="bg-zinc-100 dark:bg-zinc-900">
-					<CardContent className="flex item-center justify-center mt-2">
-						Take Quiz
-					</CardContent>
-				</Card>
-			)}
-
-			{isQuizCompleted && (
-				<div className="mt-4 p-4 bg-green-100 dark:bg-green-900 rounded-lg">
-					Quiz Completed ✓
-				</div>
+			{isRevealed && block.action.type === "quiz" && (
+				<Button
+					onClick={handleQuizClick}
+					className={cn(
+						"mt-4",
+						isQuizCompleted ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-blue-500 text-white hover:bg-blue-600"
+					)}
+				>
+					{isQuizCompleted ? (
+						<>
+							<CheckCircle className="w-4 h-4 mr-2" />
+							Quiz Completed
+						</>
+					) : (
+						"Take Quiz"
+					)}
+				</Button>
 			)}
 		</div>
 	)
