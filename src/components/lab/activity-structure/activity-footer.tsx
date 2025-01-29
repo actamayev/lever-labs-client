@@ -1,6 +1,6 @@
 import toLower from "lodash-es/toLower"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { Button } from "@/components/shadcn/ui/button"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import GetActivityIconFromActivityName from "../lab-structure/get-activity-icon-from-name"
 
@@ -24,10 +24,9 @@ export default function ActivityFooter(props: Props) {
 		<footer className="h-20 flex items-center justify-between px-4 border-t-2
 		border-zinc-300 dark:border-zinc-700 fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10">
 			{previousPageLink && previousPageActivity && (
-				<Button
+				<TactileButton
 					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 					onClick={() => navigate(previousPageLink)}
-					variant="tactile"
 				>
 					<ArrowLeft className="!h-6 !w-6" />
 					<GetActivityIconFromActivityName
@@ -35,14 +34,13 @@ export default function ActivityFooter(props: Props) {
 						className="!h-6 !w-6"
 					/>
 					Back to {toLower(previousPageActivity)}
-				</Button>
+				</TactileButton>
 			)}
 
-			<Button
+			<TactileButton
 				className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover
 				dark:text-white transition-none ml-auto"
 				onClick={() => navigate(nextPageLink)}
-				variant="tactile"
 			>
 				Up next: {toLower(nextPageActivity)}
 				<GetActivityIconFromActivityName
@@ -50,7 +48,7 @@ export default function ActivityFooter(props: Props) {
 					className="!h-6 !w-6"
 				/>
 				<ArrowRight className="!h-6 !w-6" />
-			</Button>
+			</TactileButton>
 		</footer>
 	)
 }
