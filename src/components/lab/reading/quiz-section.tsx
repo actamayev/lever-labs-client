@@ -1,8 +1,8 @@
 import { X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
-import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import AnswerChoiceButton from "./answer-choice-button"
+import QuizExplanationSection from "./quiz-explanation-section"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -27,10 +27,9 @@ export default function QuizSection(props: Props) {
 	// Initialize answers from previous attempt if reviewing
 	useEffect(() => {
 		if (activeQuiz?.isReview && activeQuiz.previousAnswers) {
-			setQuizAnswers(activeQuiz.previousAnswers)
-		} else {
-			setQuizAnswers([])
+			return setQuizAnswers(activeQuiz.previousAnswers)
 		}
+		setQuizAnswers([])
 	}, [activeQuiz?.isReview, activeQuiz?.previousAnswers])
 
 	const handleAnswerSelect = useCallback((choiceIndex: number) => {
@@ -91,7 +90,7 @@ export default function QuizSection(props: Props) {
 
 	return (
 		<div className="h-full flex flex-col">
-			<div className="p-4 border-b border-zinc-300 dark:border-zinc-700">
+			<div className="p-4 border-b-2 border-zinc-300 dark:border-zinc-700">
 				<div className="flex items-center justify-between">
 					<h3 className="text-lg font-semibold">
 						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
@@ -134,48 +133,15 @@ export default function QuizSection(props: Props) {
 				</div>
 			</div>
 
-			<div className="p-4 border-t border-zinc-300 dark:border-zinc-700">
-				{activeQuiz.showExplanation ? (
-					<>
-						{selectedAnswer !== null && (
-							<div className={cn(
-								"p-4 rounded-lg mb-4",
-								currentQuestion.choices[selectedAnswer].correct
-									? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
-									: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
-							)}>
-								{currentQuestion.choices[selectedAnswer].explanation ||
-				(currentQuestion.choices[selectedAnswer].correct
-					? "Correct!"
-					: "Incorrect. Try again.")}
-							</div>
-						)}
-
-						{(!activeQuiz.isReview &&
-              selectedAnswer !== null &&
-              currentQuestion.choices[selectedAnswer]?.correct) ||
-              activeQuiz.isReview ? (
-								<Button
-									onClick={handleNextQuestion}
-									className="w-full"
-									disabled={activeQuiz.isReview &&
-                  activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1}
-								>
-									{activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
-										? "Complete Quiz"
-										: "Next Question"}
-								</Button>
-							) : null}
-					</>
-				) : (
-					<Button
-						onClick={handleCheckAnswer}
-						className="w-full"
-						disabled={selectedAnswer === null}
-					>
-						Check Answer
-					</Button>
-				)}
+			<div className="p-4 border-t-2 border-zinc-300 dark:border-zinc-700">
+				<QuizExplanationSection
+					activeQuiz={activeQuiz}
+					selectedAnswer={selectedAnswer}
+					handleCheckAnswer={handleCheckAnswer}
+					currentQuestion={currentQuestion}
+					handleNextQuestion={handleNextQuestion}
+					currentBlock={currentBlock}
+				/>
 			</div>
 		</div>
 	)
