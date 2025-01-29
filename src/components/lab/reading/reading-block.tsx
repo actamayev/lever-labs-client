@@ -59,17 +59,18 @@ export default function ReadingBlock(props: Props) {
 				<Button
 					onClick={() => onQuizOpen(block.id)}
 					className={cn(
-						"mt-4",
-						isQuizCompleted ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-blue-500 text-white hover:bg-blue-600"
+						"mt-4 duration-0",
+						isQuizCompleted ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-purple-500 text-white hover:bg-purple-600"
 					)}
+					variant="tactile"
 				>
-					{isQuizCompleted ? (
+					{!isQuizCompleted ? (
+						"Take Quiz"
+					) : (
 						<>
 							<CheckCircle className="w-4 h-4 mr-2" />
 							Review Quiz
 						</>
-					) : (
-						"Take Quiz"
 					)}
 				</Button>
 			)}

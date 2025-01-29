@@ -4,10 +4,10 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface QuizSectionProps {
-  blocks: ContentBlock[]
-  onQuizComplete: (blockId: ContentBlockID) => void
-  activeQuiz: ActiveQuiz | null
-  setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
+	blocks: ContentBlock[]
+	onQuizComplete: (blockId: ContentBlockID) => void
+	activeQuiz: ActiveQuiz | null
+	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
@@ -102,7 +102,7 @@ export default function QuizSection(props: QuizSectionProps) {
 				<div className="p-4 border-t border-zinc-300 dark:border-zinc-700">
 					{activeQuiz.selectedChoice !== null && (
 						<div className={cn(
-							"p-4 rounded-lg mb-4",
+							"p-4 rounded-lg mb-4 text-xl",
 							currentQuestion.choices[activeQuiz.selectedChoice].correct
 								? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
 								: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
