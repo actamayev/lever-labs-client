@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
-import ActivityTemplate from "../activity-structure/activity-template"
-import ReadingContainer from "./lab-reading-scroll-section"
+import ReadingContainer from "./reading-container"
 import ledReadingBlocks from "../element-1/led/led-reading-blocks"
+import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
 	readingTitle: string
