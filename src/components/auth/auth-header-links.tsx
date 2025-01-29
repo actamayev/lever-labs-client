@@ -1,6 +1,5 @@
 import { Link } from "react-router"
 import { observer } from "mobx-react"
-import { Button } from "@/components/shadcn/ui/button"
 import { useAuthContext } from "../../contexts/auth-context"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 

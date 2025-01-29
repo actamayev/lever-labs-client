@@ -7,23 +7,23 @@ type TactileButtonProps = Omit<ButtonProps, 'variant'> & {
 }
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
-  ({ className, shadowColor = "rgb(30, 64, 175)", ...props }, ref) => {
-    // Convert RGB color to CSS-compatible format by removing spaces
-    const formattedShadowColor = shadowColor.replace(/\s+/g, '')
-
+  ({ className, shadowColor = "rgb(30, 64, 175)", style, ...props }, ref) => {
     return (
       <Button 
         ref={ref}
         variant="tactile"
         className={cn(
           "transform",
-          // Use the formatted shadow color in the shadow classes
-          `shadow-[0_2px_0_0_${formattedShadowColor}]`,
+          "shadow-[0_2px_0_0_var(--shadow-color)]",
           "hover:bg-primary/90",
           "active:translate-y-0.5",
-          `active:shadow-[0_0_0_0_${formattedShadowColor}]`,
+          "active:shadow-[0_0_0_0_var(--shadow-color)]",
           className
         )}
+        style={{
+          ...style,
+          '--shadow-color': shadowColor,
+        } as React.CSSProperties}
         {...props}
       />
     )

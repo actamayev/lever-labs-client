@@ -25,9 +25,8 @@ export default function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleCheckAnswer}
-				className="w-full h-12 text-xl duration-0 rounded-2xl"
+				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover"
 				disabled={isNull(selectedAnswer)}
-				shadowColor="rgb(256, 0, 0)"
 			>
 				Check Answer
 			</TactileButton>
@@ -67,7 +66,7 @@ export default function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleNextQuestion}
-				className="w-full h-12 rounded-2xl bg-zinc-800"
+				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover"
 				disabled={isReviewMode && isLastQuestion}
 			>
 				{isLastQuestion ? "Complete Quiz" : "Next Question"}
