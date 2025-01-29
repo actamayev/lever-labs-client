@@ -4,11 +4,11 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface Props {
-  block: ContentBlock
-  blocks: ContentBlock[]
-  readingState: ReadingState
-  onContinue: (blockId: ContentBlockID) => void
-  onQuizOpen: (blockId: ContentBlockID) => void
+	block: ContentBlock
+	blocks: ContentBlock[]
+	readingState: ReadingState
+	onContinue: (blockId: ContentBlockID) => void
+	onQuizOpen: (blockId: ContentBlockID) => void
 }
 
 export default function ReadingBlock(props: Props) {

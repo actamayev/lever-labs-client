@@ -10,9 +10,11 @@ declare global {
 		}
 	}
 
+	type FourAnswers = readonly [AnswerChoice, AnswerChoice, AnswerChoice, AnswerChoice]
+
 	interface Question {
 		question: string
-		choices: AnswerChoice[]
+		choices: FourAnswers
 	}
 
 	interface AnswerChoice {

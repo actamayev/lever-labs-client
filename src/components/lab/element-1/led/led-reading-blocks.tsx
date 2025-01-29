@@ -56,6 +56,11 @@ const ledReadingBlocks: ContentBlock[] = [
 								correct: false,
 								explanation: "These are actually the products of photosynthesis, not the ingredients.",
 							},
+							{
+								text: "Test text",
+								correct: false,
+								explanation: "Test explanation.",
+							},
 						],
 					},
 				],
@@ -111,6 +116,11 @@ const ledReadingBlocks: ContentBlock[] = [
 								explanation: "Correct! While it uses products from the light-dependent reaction,\
 								the Calvin Cycle itself doesn't require direct sunlight.",
 							},
+							{
+								text: "Test text",
+								correct: false,
+								explanation: "Test explanation.",
+							},
 						],
 					},
 					{
@@ -130,6 +140,11 @@ const ledReadingBlocks: ContentBlock[] = [
 								text: "Carbon dioxide",
 								correct: false,
 								explanation: "Carbon dioxide is an ingredient used in the Calvin Cycle, not a product.",
+							},
+							{
+								text: "Test text",
+								correct: false,
+								explanation: "Test explanation.",
 							},
 						],
 					},

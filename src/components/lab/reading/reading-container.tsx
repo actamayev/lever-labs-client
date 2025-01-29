@@ -8,7 +8,7 @@ interface QuizAttempt {
 }
 
 interface ReadingStateWithAttempts extends ReadingState {
-  quizAttempts: QuizAttempt[]
+	quizAttempts: QuizAttempt[]
 }
 
 export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] }) {
