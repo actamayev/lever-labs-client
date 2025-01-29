@@ -26,7 +26,6 @@ declare global {
 		completedQuizzes: string[]
 	}
 
-	// TODO: make blockid be a special string
 	interface ActiveQuiz {
 		blockId: ContentBlockID
 		questionIndex: number

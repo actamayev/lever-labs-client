@@ -4,21 +4,21 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface Props {
-	block: ContentBlock
-	blocks: ContentBlock[]
-	readingState: ReadingState
-	onContinue: (blockId: string) => void
-	setActiveQuiz?: (quiz: ActiveQuiz | null) => void;
+  block: ContentBlock
+  blocks: ContentBlock[]
+  readingState: ReadingState
+  onContinue: (blockId: ContentBlockID) => void
+  onQuizOpen: (blockId: ContentBlockID) => void
 }
 
 export default function ReadingBlock(props: Props) {
-	const { block, blocks, readingState, onContinue, setActiveQuiz } = props
+	const { block, blocks, readingState, onContinue, onQuizOpen } = props
 	const [isContinued, setIsContinued] = useState(false)
 
 	const isRevealed = readingState.revealedBlocks.includes(block.id)
 	const isQuizCompleted = readingState.completedQuizzes.includes(block.id)
 
-	const handleContinue = useCallback((blockId: string) => {
+	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 		if (nextBlock) {
 			// Find the element for the next block
@@ -31,17 +31,6 @@ export default function ReadingBlock(props: Props) {
 		onContinue(blockId)
 		setIsContinued(true)
 	}, [blocks, onContinue])
-
-	const handleQuizClick = useCallback(() => {
-		if (!setActiveQuiz) return
-		setActiveQuiz({
-			blockId: block.id,
-			questionIndex: 0,
-			selectedChoice: null,
-			showExplanation: false,
-			isReview: isQuizCompleted
-		})
-	}, [block.id, isQuizCompleted, setActiveQuiz])
 
 	return (
 		<div
@@ -68,7 +57,7 @@ export default function ReadingBlock(props: Props) {
 
 			{isRevealed && block.action.type === "quiz" && (
 				<Button
-					onClick={handleQuizClick}
+					onClick={() => onQuizOpen(block.id)}
 					className={cn(
 						"mt-4",
 						isQuizCompleted ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-blue-500 text-white hover:bg-blue-600"
@@ -77,7 +66,7 @@ export default function ReadingBlock(props: Props) {
 					{isQuizCompleted ? (
 						<>
 							<CheckCircle className="w-4 h-4 mr-2" />
-							Quiz Completed
+							Review Quiz
 						</>
 					) : (
 						"Take Quiz"

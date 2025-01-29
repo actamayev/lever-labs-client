@@ -1,38 +1,25 @@
-import { ArrowLeft } from "lucide-react"
-import { useEffect, useCallback } from "react"
+import { X } from "lucide-react"
+import { useCallback } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 
 interface QuizSectionProps {
-	blocks: ContentBlock[]
-	readingState: ReadingState
-	onQuizComplete: (blockId: string) => void
-	activeQuiz: ActiveQuiz| null
-	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
+  blocks: ContentBlock[]
+  onQuizComplete: (blockId: ContentBlockID) => void
+  activeQuiz: ActiveQuiz | null
+  setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-export default function QuizSection (props: QuizSectionProps) {
-	const { blocks, readingState, onQuizComplete, activeQuiz, setActiveQuiz } = props
+export default function QuizSection(props: QuizSectionProps) {
+	const {
+		blocks,
+		onQuizComplete,
+		activeQuiz,
+		setActiveQuiz
+	} = props
+
 	const currentBlock = blocks.find(b => b.id === activeQuiz?.blockId)
-
-	// Find the first uncompleted quiz in revealed blocks
-	useEffect(() => {
-		const uncompleted = blocks.find(block =>
-			block.action.type === "quiz" &&
-			readingState.revealedBlocks.includes(block.id) &&
-			!readingState.completedQuizzes.includes(block.id)
-		)
-
-		if (uncompleted && !activeQuiz) {
-			setActiveQuiz({
-				blockId: uncompleted.id,
-				questionIndex: 0,
-				selectedChoice: null,
-				showExplanation: false,
-			})
-		}
-	}, [blocks, readingState, activeQuiz, setActiveQuiz])
 
 	const handleAnswerSelect = useCallback((choiceIndex: number) => {
 		setActiveQuiz(prev => {
@@ -46,18 +33,15 @@ export default function QuizSection (props: QuizSectionProps) {
 	}, [setActiveQuiz])
 
 	const handleNextQuestion = useCallback(() => {
-		if (
-			!activeQuiz ||
-			!currentBlock ||
-			!currentBlock.action.quiz
-		) return
+		if (!activeQuiz || !currentBlock || !currentBlock.action.quiz) return
+
 		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 
 		if (isLastQuestion) {
 			onQuizComplete(activeQuiz.blockId)
-			setActiveQuiz(null)
 			return
 		}
+
 		setActiveQuiz(prev => {
 			if (!prev) return null
 			return {
@@ -73,56 +57,23 @@ export default function QuizSection (props: QuizSectionProps) {
 
 	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
 
-	const completedQuizBlocks = blocks
-		.filter(block =>
-			block.action.type === "quiz" &&
-      readingState.completedQuizzes.includes(block.id) &&
-      blocks.findIndex(b => b.id === block.id) <=
-      blocks.findIndex(b => b.id === activeQuiz.blockId)
-		)
-
-	const navigateToQuiz = (blockId: LEDReadingBlockID) => {
-		setActiveQuiz({
-			blockId,
-			questionIndex: 0,
-			selectedChoice: null,
-			showExplanation: false,
-			isReview: true
-		})
-	}
-
 	return (
 		<div className="h-full flex flex-col">
 			<div className="p-4 border-b border-zinc-300 dark:border-zinc-700">
-				<div className="flex items-center gap-4">
+				<div className="flex items-center justify-between">
+					<h3 className="text-lg font-semibold">
+						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
+					</h3>
 					<Button
 						variant="ghost"
 						size="icon"
 						onClick={() => setActiveQuiz(null)}
 					>
-						<ArrowLeft className="h-4 w-4" />
+						<X className="h-4 w-4" />
 					</Button>
-					<h3 className="text-lg font-semibold">
-						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
-					</h3>
 				</div>
-
-				{/* Quiz navigation buttons */}
-				{completedQuizBlocks.length > 1 && (
-					<div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-						{completedQuizBlocks.map((block, index) => (
-							<Button
-								key={block.id}
-								variant={block.id === activeQuiz.blockId ? "default" : "outline"}
-								size="sm"
-								onClick={() => navigateToQuiz(block.id)}
-							>
-								Quiz {index + 1}
-							</Button>
-						))}
-					</div>
-				)}
 			</div>
+
 			<div className="flex-1 overflow-y-auto p-6">
 				<h3 className="text-xl font-semibold mb-4">{currentQuestion.question}</h3>
 				<div className="space-y-4">
@@ -131,14 +82,15 @@ export default function QuizSection (props: QuizSectionProps) {
 							key={index}
 							onClick={() => handleAnswerSelect(index)}
 							disabled={activeQuiz.showExplanation}
-							className={`w-full p-4 text-left rounded-lg border transition-colors ${
+							className={cn(
+								"w-full p-4 text-left rounded-lg border transition-colors",
 								// eslint-disable-next-line no-nested-ternary
 								activeQuiz.selectedChoice === index
 									? choice.correct
 										? "bg-green-100 border-green-500 text-black"
 										: "bg-red-100 border-red-500"
 									: "hover:bg-gray-100 border-gray-200"
-							}`}
+							)}
 						>
 							{choice.text}
 						</Button>
@@ -162,7 +114,9 @@ export default function QuizSection (props: QuizSectionProps) {
 						</div>
 					)}
 
-					{!activeQuiz.isReview && activeQuiz.selectedChoice && currentQuestion.choices[activeQuiz.selectedChoice]?.correct && (
+					{!activeQuiz.isReview &&
+           activeQuiz.selectedChoice !== null &&
+           currentQuestion.choices[activeQuiz.selectedChoice]?.correct && (
 						<Button
 							onClick={handleNextQuestion}
 							className="w-full"
