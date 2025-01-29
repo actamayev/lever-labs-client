@@ -2,8 +2,9 @@ import { X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
+import AnswerChoiceButton from "./answer-choice-button"
 
-interface QuizSectionProps {
+interface Props {
 	blocks: ContentBlock[]
 	onQuizComplete: (blockId: ContentBlockID, answers: QuizAnswerAttempt[]) => void
 	activeQuiz: ActiveQuiz | null
@@ -11,7 +12,7 @@ interface QuizSectionProps {
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-export default function QuizSection(props: QuizSectionProps) {
+export default function QuizSection(props: Props) {
 	const {
 		blocks,
 		onQuizComplete,
@@ -111,42 +112,24 @@ export default function QuizSection(props: QuizSectionProps) {
 				{/* 2x2 Grid Layout for Answer Choices */}
 				<div className="grid grid-cols-2 gap-4">
 					{[0, 1].map((index) => (
-						<Button
+						<AnswerChoiceButton
+							activeQuiz={activeQuiz}
+							currentQuestion={currentQuestion}
+							index={index}
+							selectedAnswer={selectedAnswer}
+							handleAnswerSelect={handleAnswerSelect}
 							key={index}
-							onClick={() => handleAnswerSelect(index)}
-							disabled={activeQuiz.showExplanation}
-							className={cn(
-								"h-32 p-4 text-left rounded-lg border transition-colors",
-								selectedAnswer === index && !activeQuiz.showExplanation && "ring-2 ring-blue-500",
-								// eslint-disable-next-line no-nested-ternary
-								activeQuiz.showExplanation && selectedAnswer === index
-									? currentQuestion.choices[index].correct
-										? "bg-green-100 border-green-500 text-black"
-										: "bg-red-100 border-red-500"
-									: "hover:bg-gray-100 border-gray-200"
-							)}
-						>
-							{currentQuestion.choices[index].text}
-						</Button>
+						/>
 					))}
 					{[2, 3].map((index) => (
-						<Button
+						<AnswerChoiceButton
+							activeQuiz={activeQuiz}
+							currentQuestion={currentQuestion}
+							index={index}
+							selectedAnswer={selectedAnswer}
+							handleAnswerSelect={handleAnswerSelect}
 							key={index}
-							onClick={() => handleAnswerSelect(index)}
-							disabled={activeQuiz.showExplanation}
-							className={cn(
-								"h-32 p-4 text-left rounded-lg border transition-colors",
-								selectedAnswer === index && !activeQuiz.showExplanation && "ring-2 ring-blue-500",
-								// eslint-disable-next-line no-nested-ternary
-								activeQuiz.showExplanation && selectedAnswer === index
-									? currentQuestion.choices[index].correct
-										? "bg-green-100 border-green-500 text-black"
-										: "bg-red-100 border-red-500"
-									: "hover:bg-gray-100 border-gray-200"
-							)}
-						>
-							{currentQuestion.choices[index].text}
-						</Button>
+						/>
 					))}
 				</div>
 			</div>
@@ -190,7 +173,7 @@ export default function QuizSection(props: QuizSectionProps) {
 						className="w-full"
 						disabled={selectedAnswer === null}
 					>
-            Check Answer
+						Check Answer
 					</Button>
 				)}
 			</div>

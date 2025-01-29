@@ -59,7 +59,7 @@ export default function ReadingBlock(props: Props) {
 				<Button
 					onClick={() => onQuizOpen(block.id)}
 					className={cn(
-						"mt-4 duration-0",
+						"px-6 !py-5 text-xl transition-none rounded-2xl",
 						isQuizCompleted ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-purple-500 text-white hover:bg-purple-600"
 					)}
 					variant="tactile"
