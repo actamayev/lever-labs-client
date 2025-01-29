@@ -4,10 +4,6 @@ declare global {
 		text: React.ReactNode
 		action: {
 			type: "continue" | "quiz"
-			imageChange?: {
-				images: string[]  // New images to add to navigation
-				autoSelect?: number  // Which image to show
-			}
 			quiz?: {
 				questions: Question[]
 			}
@@ -28,8 +24,6 @@ declare global {
 	interface ReadingState {
 		revealedBlocks: string[]
 		completedQuizzes: string[]
-		availableImages: string[]
-		currentImageIndex: number
 	}
 
 	// TODO: make blockid be a special string

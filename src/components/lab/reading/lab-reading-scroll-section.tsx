@@ -1,30 +1,18 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useCallback, useRef, useState } from "react"
 import QuizSection from "./quiz-section"
-import ImageSection from "./image-section"
 import ReadingBlock from "./reading-block"
+import { cn } from "../../../lib/shadcn/utils"
 
 export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] }) {
 	const [readingState, setReadingState] = useState<ReadingState>({
 		revealedBlocks: [blocks[0].id], // First block always visible
-		completedQuizzes: [],
-		availableImages: [],
-		currentImageIndex: -1,
+		completedQuizzes: []
 	})
+	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz| null>(null)
 	const contentRef = useRef<HTMLDivElement>(null)
 
 	const handleContinue = useCallback((blockId: string) => {
-		const currentBlock = blocks.find(block => block.id === blockId)
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-
-		if (currentBlock?.action.imageChange) {
-			setReadingState(prev => ({
-				...prev,
-				availableImages: [...prev.availableImages, ...currentBlock.action.imageChange!.images],
-				currentImageIndex: currentBlock.action.imageChange!.autoSelect ?? prev.currentImageIndex,
-			}))
-		}
-
 		if (nextBlock) {
 			setReadingState(prev => ({
 				...prev,
@@ -60,25 +48,17 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 				</div>
 			</div>
 
-			{/* Right section - 2/5 width */}
-			<div className="w-2/5 h-full flex flex-col">
-				{/* Image section - 2/5 height */}
-				<div className="h-2/5 border-b-2 border-zinc-300 dark:border-zinc-700">
-					<ImageSection
-						images={readingState.availableImages}
-						currentIndex={readingState.currentImageIndex}
-						onNavigate={(index) => setReadingState(prev => ({ ...prev, currentImageIndex: index }))}
-					/>
-				</div>
-
-				{/* Quiz section - 3/5 height */}
-				<div className="h-3/5 overflow-y-auto">
-					<QuizSection
-						blocks={blocks}
-						readingState={readingState}
-						onQuizComplete={handleQuizComplete}
-					/>
-				</div>
+			<div className={cn(
+				"fixed right-0 top-20 bottom-20 w-2/5 bg-white dark:bg-gray-900 shadow-lg transition-transform",
+				activeQuiz ? "translate-x-0" : "translate-x-full"
+			)}>
+				<QuizSection
+					blocks={blocks}
+					readingState={readingState}
+					onQuizComplete={handleQuizComplete}
+					activeQuiz={activeQuiz}
+					setActiveQuiz={setActiveQuiz}
+				/>
 			</div>
 		</div>
 	)

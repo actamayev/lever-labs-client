@@ -3,29 +3,33 @@ const ledReadingBlocks: ContentBlock[] = [
 		id: "led-intro",
 		text: (
 			<div>
-				<h2 className="text-2xl font-bold mb-4">Introduction to Photosynthesis</h2>
-				<p className="mb-4">
-		Photosynthesis is one of nature&apos;s most remarkable processes. It&apos;s how plants convert sunlight
-		into energy, producing oxygen as a byproduct. This process is essential for all life on Earth.
+				<h2 className="text-3xl font-bold mb-4">Introduction to Photosynthesis</h2>
+				<p className="mb-4 text-2xl">
+					Photosynthesis is one of nature&apos;s most remarkable processes. It&apos;s how plants convert sunlight
+					into energy, producing oxygen as a byproduct. This process is essential for all life on Earth.
+				</p>
+				<img
+					src="https://2.img-dpreview.com/files/p/E~C1000x0S4000x4000T1200x1200~articles/3925134721/0266554465.jpeg"
+					alt="Overview of photosynthesis"
+					className="w-1/4 rounded-lg mb-4 shadow-lg"
+				/>
+				<p className="mb-4 text-sm text-gray-600 dark:text-gray-400 italic">
+					Figure 1: Overview diagram of the photosynthesis process
 				</p>
 			</div>
 		),
 		action: {
 			type: "continue",
-			imageChange: {
-				images: ["https://2.img-dpreview.com/files/p/E~C1000x0S4000x4000T1200x1200~articles/3925134721/0266554465.jpeg"],
-				autoSelect: 0,
-			},
 		},
 	},
 	{
 		id: "led-process-overview",
 		text: (
 			<div>
-				<h3 className="text-xl font-bold mb-3">The Process Overview</h3>
-				<p className="mb-4">
-		During photosynthesis, plants take in carbon dioxide from the air and water from the soil.
-		Using sunlight as energy, they convert these ingredients into glucose and oxygen.
+				<h3 className="text-3xl font-bold mb-3">The Process Overview</h3>
+				<p className="mb-4 text-2xl">
+					During photosynthesis, plants take in carbon dioxide from the air and water from the soil.
+					Using sunlight as energy, they convert these ingredients into glucose and oxygen.
 				</p>
 			</div>
 		),
@@ -63,21 +67,14 @@ const ledReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">The Light-Dependent Reaction</h3>
-				<p className="mb-4">
-		The first stage of photosynthesis is the light-dependent reaction. This occurs in the
-		thylakoid membrane of the chloroplast, where chlorophyll molecules capture sunlight.
+				<p className="mb-4 text-2xl">
+					The first stage of photosynthesis is the light-dependent reaction. This occurs in the
+					thylakoid membrane of the chloroplast, where chlorophyll molecules capture sunlight.
 				</p>
 			</div>
 		),
 		action: {
-			type: "continue",
-			imageChange: {
-				images: [
-					"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0G4Jj47yiz5zOPtf3AAha0jxUcoX4SAo_Gw&s",
-					"https://www.sony.net/Products/di_photo-gallery/images/extralarge/1887.JPG"
-				],
-				autoSelect: 0,
-			},
+			type: "continue"
 		},
 	},
 	{
@@ -85,9 +82,9 @@ const ledReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">The Calvin Cycle (Dark Reaction)</h3>
-				<p className="mb-4">
-		The second stage is the Calvin Cycle, also known as the dark reaction. This process doesn&apos;t
-		require direct sunlight and uses the products from the light-dependent reaction to produce glucose.
+				<p className="mb-4 text-2xl">
+					The second stage is the Calvin Cycle, also known as the dark reaction. This process doesn&apos;t
+					require direct sunlight and uses the products from the light-dependent reaction to produce glucose.
 				</p>
 			</div>
 		),
@@ -145,18 +142,14 @@ const ledReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">Conclusion</h3>
-				<p className="mb-4">
+				<p className="mb-4 text-2xl">
 					Understanding photosynthesis helps us appreciate how plants sustain life on Earth. This
 					process not only provides food for plants but also produces the oxygen we breathe.
 				</p>
 			</div>
 		),
 		action: {
-			type: "continue",
-			imageChange: {
-				images: ["/api/placeholder/800/600"],  // Replace with actual image URL
-				autoSelect: 0,
-			},
+			type: "continue"
 		},
 	},
 ]

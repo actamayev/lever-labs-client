@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { useState, useEffect, useCallback } from "react"
+import { useEffect, useCallback } from "react"
 import { Button } from "../../shadcn/ui/button"
 
 interface QuizSectionProps {
-	blocks: ContentBlock[];
-	readingState: ReadingState;
-	onQuizComplete: (blockId: string) => void;
+	blocks: ContentBlock[]
+	readingState: ReadingState
+	onQuizComplete: (blockId: string) => void
+	activeQuiz: ActiveQuiz| null
+	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 }
 
 // eslint-disable-next-line max-lines-per-function
 export default function QuizSection (props: QuizSectionProps) {
-	const { blocks, readingState, onQuizComplete } = props
-	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz| null>(null)
+	const { blocks, readingState, onQuizComplete, activeQuiz, setActiveQuiz } = props
 	const currentBlock = blocks.find(b => b.id === activeQuiz?.blockId)
 
 	// Find the first uncompleted quiz in revealed blocks
@@ -30,8 +30,7 @@ export default function QuizSection (props: QuizSectionProps) {
 				showExplanation: false,
 			})
 		}
-	}, [blocks, readingState, activeQuiz])
-
+	}, [blocks, readingState, activeQuiz, setActiveQuiz])
 
 	const handleAnswerSelect = useCallback((choiceIndex: number) => {
 		setActiveQuiz(prev => {
@@ -42,27 +41,31 @@ export default function QuizSection (props: QuizSectionProps) {
 				showExplanation: true,
 			}
 		})
-	}, [])
+	}, [setActiveQuiz])
 
 	const handleNextQuestion = useCallback(() => {
-		if (!activeQuiz || !currentBlock) return
-		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz!.questions.length - 1
+		if (
+			!activeQuiz ||
+			!currentBlock ||
+			!currentBlock.action.quiz
+		) return
+		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 
 		if (isLastQuestion) {
 			onQuizComplete(activeQuiz.blockId)
 			setActiveQuiz(null)
-		} else {
-			setActiveQuiz(prev => {
-				if (!prev) return null
-				return {
-					...prev,
-					questionIndex: prev.questionIndex + 1,
-					selectedChoice: null,
-					showExplanation: false,
-				}
-			})
+			return
 		}
-	}, [activeQuiz, currentBlock, onQuizComplete])
+		setActiveQuiz(prev => {
+			if (!prev) return null
+			return {
+				...prev,
+				questionIndex: prev.questionIndex + 1,
+				selectedChoice: null,
+				showExplanation: false,
+			}
+		})
+	}, [activeQuiz, currentBlock, onQuizComplete, setActiveQuiz])
 
 	if (!activeQuiz || !currentBlock?.action.quiz) return null
 
@@ -111,7 +114,7 @@ export default function QuizSection (props: QuizSectionProps) {
 							onClick={handleNextQuestion}
 							className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
 						>
-							{activeQuiz.questionIndex === currentBlock.action.quiz!.questions.length - 1
+							{activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 								? "Complete Quiz"
 								: "Next Question"}
 						</Button>

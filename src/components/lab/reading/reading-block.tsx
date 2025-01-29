@@ -36,7 +36,7 @@ export default function ReadingBlock(props: Props) {
 			id={`block-${block.id}`}
 			className={`mb-6 transition-opacity duration-300 ${isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden"}`}
 		>
-			<div className="prose dark:prose-invert max-w-none">
+			<div className="max-w-none">
 				{block.text}
 			</div>
 
