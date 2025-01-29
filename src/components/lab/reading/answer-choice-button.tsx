@@ -42,7 +42,7 @@ function AnswerChoiceButton(props: Props) {
 		}
 
 		// Default state
-		return cn(baseStyles, "hover:bg-zinc-100 border-zinc-200 hover:bg-zinc-900 dark:border-zinc-800")
+		return cn(baseStyles, "hover:bg-zinc-100 border-zinc-200 dark:hover:bg-zinc-800 dark:border-zinc-700")
 	}, [activeQuiz, currentQuestion.choices, index, selectedAnswer])
 
 	const shadowColor = useMemo(() => {
@@ -58,7 +58,7 @@ function AnswerChoiceButton(props: Props) {
 		}
 		if (!activeQuiz.showExplanation || !isSelected) {
 			if (isSelected) return "rgb(0, 61, 165)" //piptheme
-			else return "rgb(39, 39, 42)" // Zinc
+			else return "rgb(63, 63, 70)" // Zinc-800
 		}
 		const isCorrect = currentQuestion.choices[index].correct
 		if (isCorrect) return "rgb(34,197,94)" // green-500

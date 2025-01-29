@@ -25,7 +25,7 @@ export default function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleCheckAnswer}
-				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover text-white"
+				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover dark:text-white"
 				disabled={isNull(selectedAnswer)}
 				shadowHeight={4}
 			>
@@ -67,7 +67,7 @@ export default function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleNextQuestion}
-				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover"
+				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover dark:text-white"
 				disabled={isReviewMode && isLastQuestion}
 				shadowHeight={4}
 			>
