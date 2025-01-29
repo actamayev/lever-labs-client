@@ -59,6 +59,14 @@ declare global {
 		availableImages: string[]
 		currentImageIndex: number
 	}
+
+	// TODO: make blockid be a special string
+	interface ActiveQuiz {
+		blockId: string
+		questionIndex: number
+		selectedChoice: number | null
+		showExplanation: boolean
+	}
 }
 
 export {}

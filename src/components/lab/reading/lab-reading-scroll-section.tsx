@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import QuizSection from "./quiz-section"
 import ImageSection from "./image-section"
-import ContentManager from "./content-manager"
+import ReadingBlock from "./reading-block"
 
 export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] }) {
 	const [readingState, setReadingState] = useState<ReadingState>({
@@ -11,8 +11,9 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 		availableImages: [],
 		currentImageIndex: -1,
 	})
+	const contentRef = useRef<HTMLDivElement>(null)
 
-	const handleContinue = (blockId: string) => {
+	const handleContinue = useCallback((blockId: string) => {
 		const currentBlock = blocks.find(block => block.id === blockId)
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 
@@ -30,9 +31,9 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 				revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
 			}))
 		}
-	}
+	}, [blocks])
 
-	const handleQuizComplete = (blockId: string) => {
+	const handleQuizComplete = useCallback((blockId: string) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 
 		setReadingState(prev => ({
@@ -40,18 +41,24 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 			completedQuizzes: [...prev.completedQuizzes, blockId],
 			revealedBlocks: nextBlock ? [...prev.revealedBlocks, nextBlock.id] : prev.revealedBlocks,
 		}))
-	}
+	}, [blocks])
 
 	return (
 		<div className="h-full flex">
 			{/* Reading section - 3/5 width, scrollable */}
 			<div className="w-3/5 h-full overflow-y-auto border-r">
-				<ContentManager
-					blocks={blocks}
-					readingState={readingState}
-					onContinue={handleContinue}
-					onQuizComplete={handleQuizComplete}
-				/>
+				<div ref={contentRef} className="p-6">
+					{blocks.map((block) => (
+						<ReadingBlock
+							key={block.id}
+							block={block}
+							blocks={blocks}
+							readingState={readingState}
+							onContinue={handleContinue}
+							onQuizComplete={handleQuizComplete}
+						/>
+					))}
+				</div>
 			</div>
 
 			{/* Right section - 2/5 width */}

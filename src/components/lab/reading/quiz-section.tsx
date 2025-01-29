@@ -1,31 +1,24 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import React, { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 
 interface QuizSectionProps {
-  blocks: ContentBlock[];
-  readingState: ReadingState;
-  onQuizComplete: (blockId: string) => void;
+	blocks: ContentBlock[];
+	readingState: ReadingState;
+	onQuizComplete: (blockId: string) => void;
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function QuizSection ({
-	blocks,
-	readingState,
-	onQuizComplete,
-} : QuizSectionProps) {
-	const [activeQuiz, setActiveQuiz] = useState<{
-    blockId: string;
-    questionIndex: number;
-    selectedChoice: number | null;
-    showExplanation: boolean;
-  } | null>(null)
+export default function QuizSection (props: QuizSectionProps) {
+	const { blocks, readingState, onQuizComplete } = props
+	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz| null>(null)
+	const currentBlock = blocks.find(b => b.id === activeQuiz?.blockId)
 
 	// Find the first uncompleted quiz in revealed blocks
 	useEffect(() => {
 		const uncompleted = blocks.find(block =>
 			block.action.type === "quiz" &&
-      readingState.revealedBlocks.includes(block.id) &&
-      !readingState.completedQuizzes.includes(block.id)
+			readingState.revealedBlocks.includes(block.id) &&
+			!readingState.completedQuizzes.includes(block.id)
 		)
 
 		if (uncompleted && !activeQuiz) {
@@ -38,20 +31,8 @@ export default function QuizSection ({
 		}
 	}, [blocks, readingState, activeQuiz])
 
-	if (!activeQuiz) {
-		return (
-			<div className="h-full flex items-center justify-center text-gray-500">
-        No active quiz
-			</div>
-		)
-	}
 
-	const currentBlock = blocks.find(b => b.id === activeQuiz.blockId)
-	if (!currentBlock?.action.quiz) return null
-
-	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
-
-	const handleAnswerSelect = (choiceIndex: number) => {
+	const handleAnswerSelect = useCallback((choiceIndex: number) => {
 		setActiveQuiz(prev => {
 			if (!prev) return null
 			return {
@@ -60,9 +41,10 @@ export default function QuizSection ({
 				showExplanation: true,
 			}
 		})
-	}
+	}, [])
 
-	const handleNextQuestion = () => {
+	const handleNextQuestion = useCallback(() => {
+		if (!activeQuiz || !currentBlock) return
 		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz!.questions.length - 1
 
 		if (isLastQuestion) {
@@ -79,7 +61,11 @@ export default function QuizSection ({
 				}
 			})
 		}
-	}
+	}, [activeQuiz, currentBlock, onQuizComplete])
+
+	if (!activeQuiz || !currentBlock?.action.quiz) return null
+
+	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
 
 	return (
 		<div className="h-full p-6 flex flex-col">
