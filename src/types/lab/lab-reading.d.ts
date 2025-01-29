@@ -26,12 +26,19 @@ declare global {
 		completedQuizzes: string[]
 	}
 
+	interface QuizAnswerAttempt {
+		questionIndex: number
+		selectedChoice: number
+		isCorrect: boolean
+	}
+
 	interface ActiveQuiz {
 		blockId: ContentBlockID
 		questionIndex: number
 		selectedChoice: number | null
 		showExplanation: boolean
 		isReview?: boolean
+		previousAnswers: QuizAnswerAttempt[]
 	}
 }
 

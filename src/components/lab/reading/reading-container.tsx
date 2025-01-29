@@ -1,12 +1,21 @@
 import { useCallback, useRef, useState } from "react"
 import ReadingBlock from "./reading-block"
 import QuizSection from "./quiz-section"
-import { cn } from "../../../lib/shadcn/utils"
+
+interface QuizAttempt {
+	blockId: ContentBlockID
+	answers: QuizAnswerAttempt[]
+}
+
+interface ReadingStateWithAttempts extends ReadingState {
+  quizAttempts: QuizAttempt[]
+}
 
 export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] }) {
-	const [readingState, setReadingState] = useState<ReadingState>({
-		revealedBlocks: [blocks[0].id], // First block always visible
-		completedQuizzes: []
+	const [readingState, setReadingState] = useState<ReadingStateWithAttempts>({
+		revealedBlocks: [blocks[0].id],
+		completedQuizzes: [],
+		quizAttempts: []
 	})
 	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
 	const contentRef = useRef<HTMLDivElement>(null)
@@ -21,26 +30,34 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 		}
 	}, [blocks])
 
-	const handleQuizComplete = useCallback((blockId: ContentBlockID) => {
+	const handleQuizComplete = useCallback((
+		blockId: ContentBlockID,
+		answers: { questionIndex: number; selectedChoice: number; isCorrect: boolean }[]
+	) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 
 		setReadingState(prev => ({
 			...prev,
 			completedQuizzes: [...prev.completedQuizzes, blockId],
 			revealedBlocks: nextBlock ? [...prev.revealedBlocks, nextBlock.id] : prev.revealedBlocks,
+			quizAttempts: [...prev.quizAttempts, { blockId, answers }]
 		}))
-		setActiveQuiz(null) // Close quiz section after completion
+		setActiveQuiz(null)
 	}, [blocks])
 
 	const handleQuizOpen = useCallback((blockId: ContentBlockID) => {
+		const isReview = readingState.completedQuizzes.includes(blockId)
+		const previousAttempt = readingState.quizAttempts.find(attempt => attempt.blockId === blockId)
+
 		setActiveQuiz({
 			blockId,
 			questionIndex: 0,
-			selectedChoice: null,
-			showExplanation: false,
-			isReview: readingState.completedQuizzes.includes(blockId)
+			selectedChoice: previousAttempt?.answers[0]?.selectedChoice ?? null,
+			showExplanation: isReview,
+			isReview,
+			previousAnswers: previousAttempt?.answers ?? []
 		})
-	}, [readingState.completedQuizzes])
+	}, [readingState.completedQuizzes, readingState.quizAttempts])
 
 	return (
 		<div className="h-full flex relative">
@@ -64,11 +81,9 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 			</div>
 
 			<div
-				className={cn(
-					"h-full w-1/3 transition-all duration-300 transform",
-					activeQuiz ? "translate-x-0" : "translate-x-full",
-					"absolute right-0 top-0 border-l-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-900"
-				)}
+				className={`h-full w-1/3 transition-all duration-300 transform ${
+					activeQuiz ? "translate-x-0" : "translate-x-full"
+				} absolute right-0 top-0 border-l-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-900`}
 			>
 				<QuizSection
 					blocks={blocks}
