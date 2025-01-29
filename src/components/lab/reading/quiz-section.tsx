@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useState, useEffect, useCallback } from "react"
+import { Button } from "../../shadcn/ui/button"
 
 interface QuizSectionProps {
 	blocks: ContentBlock[];
@@ -73,7 +74,7 @@ export default function QuizSection (props: QuizSectionProps) {
 				<h3 className="text-xl font-semibold mb-4">{currentQuestion.question}</h3>
 				<div className="space-y-4">
 					{currentQuestion.choices.map((choice, index) => (
-						<button
+						<Button
 							key={index}
 							onClick={() => handleAnswerSelect(index)}
 							disabled={activeQuiz.showExplanation}
@@ -81,22 +82,22 @@ export default function QuizSection (props: QuizSectionProps) {
 								// eslint-disable-next-line no-nested-ternary
 								activeQuiz.selectedChoice === index
 									? choice.correct
-										? "bg-green-100 border-green-500"
+										? "bg-green-100 border-green-500 text-black"
 										: "bg-red-100 border-red-500"
 									: "hover:bg-gray-100 border-gray-200"
 							}`}
 						>
 							{choice.text}
-						</button>
+						</Button>
 					))}
 				</div>
 			</div>
 
 			{activeQuiz.showExplanation && activeQuiz.selectedChoice !== null && (
-				<div className="mt-auto">
-					<div className={`p-4 rounded-lg mb-4 ${
+				<div className="">
+					<div className={`p-4 rounded-lg mb-4 text-lg ${
 						currentQuestion.choices[activeQuiz.selectedChoice].correct
-							? "bg-green-100 text-green-800"
+							? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
 							: "bg-red-100 text-red-800"
 					}`}>
 						{currentQuestion.choices[activeQuiz.selectedChoice].explanation ||
@@ -106,14 +107,14 @@ export default function QuizSection (props: QuizSectionProps) {
 					</div>
 
 					{currentQuestion.choices[activeQuiz.selectedChoice].correct && (
-						<button
+						<Button
 							onClick={handleNextQuestion}
 							className="w-full py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
 						>
 							{activeQuiz.questionIndex === currentBlock.action.quiz!.questions.length - 1
 								? "Complete Quiz"
 								: "Next Question"}
-						</button>
+						</Button>
 					)}
 				</div>
 			)}

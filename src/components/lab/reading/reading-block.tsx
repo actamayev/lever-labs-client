@@ -1,15 +1,17 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
+import { Button } from "../../shadcn/ui/button"
+import { Card, CardContent } from "../../shadcn/ui/card"
 
 interface Props {
 	block: ContentBlock
 	blocks: ContentBlock[]
 	readingState: ReadingState
 	onContinue: (blockId: string) => void
-	onQuizComplete: (blockId: string) => void
 }
 
 export default function ReadingBlock(props: Props) {
-	const { block, blocks, readingState, onContinue, onQuizComplete } = props
+	const { block, blocks, readingState, onContinue } = props
+	const [isContinued, setIsContinued] = useState(false)
 
 	const isRevealed = readingState.revealedBlocks.includes(block.id)
 	const isQuizCompleted = readingState.completedQuizzes.includes(block.id)
@@ -25,6 +27,7 @@ export default function ReadingBlock(props: Props) {
 			}
 		}
 		onContinue(blockId)
+		setIsContinued(true)
 	}, [blocks, onContinue])
 
 	return (
@@ -37,22 +40,22 @@ export default function ReadingBlock(props: Props) {
 				{block.text}
 			</div>
 
-			{isRevealed && block.action.type === "continue" && (
-				<button
+			{isRevealed && block.action.type === "continue" && !isContinued && (
+				<Button
 					onClick={() => handleContinue(block.id)}
-					className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+					className="px-6 !py-5 text-xl bg-pipTheme text-white hover:bg-pipThemeHover transition-none rounded-2xl"
+					variant="tactile"
 				>
 					Continue
-				</button>
+				</Button>
 			)}
 
 			{isRevealed && block.action.type === "quiz" && !isQuizCompleted && (
-				<button
-					onClick={() => onQuizComplete(block.id)}
-					className="mt-4 px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-				>
-					Take Quiz
-				</button>
+				<Card className="bg-zinc-100 dark:bg-zinc-900">
+					<CardContent className="flex item-center justify-center mt-2">
+						Take Quiz
+					</CardContent>
+				</Card>
 			)}
 
 			{isQuizCompleted && (

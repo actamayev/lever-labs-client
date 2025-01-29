@@ -46,7 +46,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 	return (
 		<div className="h-full flex">
 			{/* Reading section - 3/5 width, scrollable */}
-			<div className="w-3/5 h-full overflow-y-auto border-r">
+			<div className="w-3/5 h-full overflow-y-auto border-r-2 border-zinc-300 dark:border-zinc-700">
 				<div ref={contentRef} className="p-6">
 					{blocks.map((block) => (
 						<ReadingBlock
@@ -55,7 +55,6 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 							blocks={blocks}
 							readingState={readingState}
 							onContinue={handleContinue}
-							onQuizComplete={handleQuizComplete}
 						/>
 					))}
 				</div>
@@ -64,7 +63,7 @@ export default function ReadingContainer ({ blocks } : { blocks: ContentBlock[] 
 			{/* Right section - 2/5 width */}
 			<div className="w-2/5 h-full flex flex-col">
 				{/* Image section - 2/5 height */}
-				<div className="h-2/5 border-b">
+				<div className="h-2/5 border-b-2 border-zinc-300 dark:border-zinc-700">
 					<ImageSection
 						images={readingState.availableImages}
 						currentIndex={readingState.currentImageIndex}
