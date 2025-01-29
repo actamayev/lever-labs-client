@@ -1,6 +1,6 @@
 const ledReadingBlocks: ContentBlock[] = [
 	{
-		id: "intro",
+		id: "led-intro",
 		text: (
 			<div>
 				<h2 className="text-2xl font-bold mb-4">Introduction to Photosynthesis</h2>
@@ -19,7 +19,7 @@ const ledReadingBlocks: ContentBlock[] = [
 		},
 	},
 	{
-		id: "process-overview",
+		id: "led-process-overview",
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">The Process Overview</h3>
@@ -59,7 +59,7 @@ const ledReadingBlocks: ContentBlock[] = [
 		},
 	},
 	{
-		id: "light-reaction",
+		id: "led-light-reaction",
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">The Light-Dependent Reaction</h3>
@@ -81,7 +81,7 @@ const ledReadingBlocks: ContentBlock[] = [
 		},
 	},
 	{
-		id: "dark-reaction",
+		id: "led-dark-reaction",
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">The Calvin Cycle (Dark Reaction)</h3>
@@ -141,13 +141,13 @@ const ledReadingBlocks: ContentBlock[] = [
 		},
 	},
 	{
-		id: "conclusion",
+		id: "led-conclusion",
 		text: (
 			<div>
 				<h3 className="text-xl font-bold mb-3">Conclusion</h3>
 				<p className="mb-4">
-		Understanding photosynthesis helps us appreciate how plants sustain life on Earth. This
-		process not only provides food for plants but also produces the oxygen we breathe.
+					Understanding photosynthesis helps us appreciate how plants sustain life on Earth. This
+					process not only provides food for plants but also produces the oxygen we breathe.
 				</p>
 			</div>
 		),
