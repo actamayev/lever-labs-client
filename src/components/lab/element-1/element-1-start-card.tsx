@@ -18,6 +18,7 @@ export default function Element1StartCard() {
 					<h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">
 						Getting Started
 					</h2>
+					{/* 1/29/25 TODO: Add a button that allows the user to do so */}
 					<p className="text-lg text-zinc-600 dark:text-zinc-400">
 						First: if you have a Pip, we recommend getting it connected to the internet (it&apos;s quick & easy).
 					</p>

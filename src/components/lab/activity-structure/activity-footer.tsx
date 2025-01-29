@@ -22,7 +22,7 @@ export default function ActivityFooter(props: Props) {
 
 	return (
 		<footer className="h-20 flex items-center justify-between px-4 border-t-2
-		border-zinc-300 dark:border-zinc-700 fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 z-10">
+		border-zinc-300 dark:border-zinc-700 fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10">
 			{previousPageLink && previousPageActivity && (
 				<Button
 					className="!text-2xl rounded-2xl flex items-center bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"

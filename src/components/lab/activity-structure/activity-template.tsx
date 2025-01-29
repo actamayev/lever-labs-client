@@ -13,6 +13,7 @@ interface Props {
 	lessonIcon: ReactElement | null
 	progressPercent: number
 	children: React.ReactNode
+	shouldShowFooter?: boolean
 	extraClasses?: string
 	isCode?: boolean
 }
@@ -29,8 +30,11 @@ export default function ActivityTemplate(props: Props) {
 		progressPercent,
 		children,
 		extraClasses = "",
+		shouldShowFooter = true,
 		isCode = false
 	} = props
+	// 1/29/25 TODO: Add styles for when the footer is not shown
+
 	return (
 		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
 			<ActivityHeader
@@ -45,12 +49,14 @@ export default function ActivityTemplate(props: Props) {
 				{children}
 			</div>
 
-			<ActivityFooter
-				previousPageLink={previousPageLink}
-				previousPageActivity={previousPageActivity}
-				nextPageLink={nextPageLink}
-				nextPageActivity={nextPageActivity}
-			/>
+			{shouldShowFooter && (
+				<ActivityFooter
+					previousPageLink={previousPageLink}
+					previousPageActivity={previousPageActivity}
+					nextPageLink={nextPageLink}
+					nextPageActivity={nextPageActivity}
+				/>
+			)}
 		</div>
 	)
 }

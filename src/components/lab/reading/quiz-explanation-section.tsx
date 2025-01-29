@@ -25,11 +25,11 @@ export default function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleCheckAnswer}
-				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover"
+				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover text-white"
 				disabled={isNull(selectedAnswer)}
 				shadowHeight={4}
 			>
-				Check Answer
+				CHECK
 			</TactileButton>
 		)
 	}
@@ -53,7 +53,7 @@ export default function QuizExplanationSection(props: Props) {
 
 	function HandleNextQuestion() {
 		// Early returns if quiz interaction is not allowed
-		if (!activeQuiz || !currentBlock.action.quiz) return null
+		if (!currentBlock.action.quiz) return null
 
 		const isReviewMode = activeQuiz.isReview
 		const hasSelectedAnswer = selectedAnswer !== null

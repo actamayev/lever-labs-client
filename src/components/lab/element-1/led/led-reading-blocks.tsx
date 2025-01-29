@@ -13,7 +13,7 @@ const ledReadingBlocks: ContentBlock[] = [
 					alt="Overview of photosynthesis"
 					className="w-1/4 rounded-lg mb-4 shadow-lg"
 				/>
-				<p className="mb-4 text-sm text-gray-600 dark:text-gray-400 italic">
+				<p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400 italic">
 					Figure 1: Overview diagram of the photosynthesis process
 				</p>
 			</div>

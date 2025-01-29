@@ -79,7 +79,7 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 
 			<div
 				className={cn(
-					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-gray-900 shadow-lg",
+					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-zinc-900 shadow-lg",
 					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
 					activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}

@@ -92,15 +92,16 @@ export default function QuizSection(props: Props) {
 		<div className="h-full flex flex-col">
 			<div className="p-4 border-b-2 border-zinc-300 dark:border-zinc-700">
 				<div className="flex items-center justify-between">
-					<h3 className="text-lg font-semibold">
+					<h3 className="text-2xl font-semibold">
 						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
 					</h3>
 					<Button
 						variant="ghost"
 						size="icon"
+						className="!p-5"
 						onClick={() => setActiveQuiz(null)}
 					>
-						<X className="h-4 w-4" />
+						<X className="!h-6 !w-6" />
 					</Button>
 				</div>
 			</div>
