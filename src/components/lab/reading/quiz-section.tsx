@@ -133,7 +133,7 @@ export default function QuizSection(props: Props) {
 				</div>
 			</div>
 
-			<div className="p-4 border-t-2 border-zinc-300 dark:border-zinc-700">
+			<div className="p-4">
 				<QuizExplanationSection
 					activeQuiz={activeQuiz}
 					selectedAnswer={selectedAnswer}

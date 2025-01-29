@@ -1,6 +1,6 @@
 import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface Props {
 	activeQuiz: ActiveQuiz
@@ -23,13 +23,14 @@ export default function QuizExplanationSection(props: Props) {
 
 	if (!activeQuiz.showExplanation) {
 		return (
-			<Button
+			<TactileButton
 				onClick={handleCheckAnswer}
-				className="w-full"
-				disabled={selectedAnswer === null}
+				className="w-full h-12 text-xl duration-0 rounded-2xl"
+				disabled={isNull(selectedAnswer)}
+				shadowColor="rgb(256, 0, 0)"
 			>
 				Check Answer
-			</Button>
+			</TactileButton>
 		)
 	}
 
@@ -64,14 +65,13 @@ export default function QuizExplanationSection(props: Props) {
 		if (!shouldShowNextButton) return null
 
 		return (
-			<Button
+			<TactileButton
 				onClick={handleNextQuestion}
-				className="w-full duration-0 rounded-2xl bg-zinc-800"
+				className="w-full h-12 rounded-2xl bg-zinc-800"
 				disabled={isReviewMode && isLastQuestion}
-				variant="tactile"
 			>
 				{isLastQuestion ? "Complete Quiz" : "Next Question"}
-			</Button>
+			</TactileButton>
 		)
 	}
 

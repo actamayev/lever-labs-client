@@ -1,6 +1,7 @@
 import { useMemo } from "react"
+import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface Props {
     activeQuiz: ActiveQuiz | null
@@ -15,7 +16,9 @@ export default function AnswerChoiceButton(props: Props) {
 
 	const getAnswerStyles = useMemo(() => {
 		if (!activeQuiz) return ""
-		const baseStyles = "h-16 p-4 text-left rounded-lg border transition-colors bg-inherit text-black hover:bg-zinc-200"
+		// Added whitespace-normal and flex-col to allow text wrapping
+		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
+		transition-colors bg-inherit text-black hover:bg-zinc-200 whitespace-normal items-center"
 		const isSelected = selectedAnswer === index
 		const isShowingExplanation = activeQuiz.showExplanation
 
@@ -40,16 +43,16 @@ export default function AnswerChoiceButton(props: Props) {
 		return cn(baseStyles, "hover:bg-zinc-100 border-zinc-200")
 	}, [activeQuiz, currentQuestion.choices, index, selectedAnswer])
 
-	if (!activeQuiz) return null
+	if (isNull(activeQuiz)) return null
 
 	return (
-		<Button
+		<TactileButton
 			onClick={() => handleAnswerSelect(index)}
 			disabled={activeQuiz.showExplanation}
 			className={getAnswerStyles}
-			variant="tactile"
+			shadowColor="rgb(30,64,15)"
 		>
 			{currentQuestion.choices[index].text}
-		</Button>
+		</TactileButton>
 	)
 }
