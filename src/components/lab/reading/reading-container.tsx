@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react"
-import ReadingBlock from "./reading-block"
 import QuizSection from "./quiz-section"
+import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface QuizAttempt {
@@ -62,9 +62,7 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 
 	return (
 		<div className="h-full flex relative">
-			<div
-				className={cn("h-full transition-all duration-300", activeQuiz ? "w-2/3" : "w-full")}
-			>
+			<div className={cn("h-full transition-all duration-300", activeQuiz ? "w-2/3" : "w-full")}>
 				<div ref={contentRef} className="px-16 py-6 h-full overflow-y-auto">
 					{blocks.map((block) => (
 						<ReadingBlock
@@ -79,12 +77,13 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 				</div>
 			</div>
 
-			<div className={cn(
-				"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-gray-900 shadow-lg",
-				"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
-				activeQuiz ? "translate-x-0" : "translate-x-full"
-			)}
-			style={{ top: "5rem", bottom: "5rem" }} // 5rem = 80px (h-20)
+			<div
+				className={cn(
+					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-gray-900 shadow-lg",
+					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
+					activeQuiz ? "translate-x-0" : "translate-x-full"
+				)}
+				style={{ top: "5rem", bottom: "5rem" }} // 5rem = 80px (h-20)
 			>
 				<QuizSection
 					blocks={blocks}

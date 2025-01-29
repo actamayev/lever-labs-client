@@ -37,7 +37,6 @@ function LabDemoComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				Demo:&nbsp;

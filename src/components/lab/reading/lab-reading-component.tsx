@@ -35,7 +35,6 @@ export default function LabReadingComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
 		>
 			<main className="h-full overflow-hidden">
 				<ReadingContainer blocks={ledReadingBlocks} />
