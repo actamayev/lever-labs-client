@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react"
 import ReadingBlock from "./reading-block"
 import QuizSection from "./quiz-section"
+import { cn } from "../../../lib/shadcn/utils"
 
 export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] }) {
 	const [readingState, setReadingState] = useState<ReadingState>({
@@ -10,7 +11,7 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
 	const contentRef = useRef<HTMLDivElement>(null)
 
-	const handleContinue = useCallback((blockId: string) => {
+	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 		if (nextBlock) {
 			setReadingState(prev => ({
@@ -63,9 +64,11 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 			</div>
 
 			<div
-				className={`h-full w-1/3 transition-all duration-300 transform ${
-					activeQuiz ? "translate-x-0" : "translate-x-full"
-				} absolute right-0 top-0 border-l-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-900`}
+				className={cn(
+					"h-full w-1/3 transition-all duration-300 transform",
+					activeQuiz ? "translate-x-0" : "translate-x-full",
+					"absolute right-0 top-0 border-l-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-gray-900"
+				)}
 			>
 				<QuizSection
 					blocks={blocks}
