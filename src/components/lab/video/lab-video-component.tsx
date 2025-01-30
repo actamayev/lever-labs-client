@@ -11,7 +11,7 @@ interface Props {
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement
-	progressPercent: number
+	lessonProgressPercent: number
 }
 
 export default function LabVideoComponent(props: Props) {
@@ -25,18 +25,19 @@ export default function LabVideoComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent,
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
 			lessonTitle={videoTitle}
 			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			activityType="Video"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-4xl">

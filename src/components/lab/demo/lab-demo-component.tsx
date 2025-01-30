@@ -11,7 +11,7 @@ interface Props {
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement
-	progressPercent: number
+	lessonProgressPercent: number
 }
 
 function LabDemoComponent(props: Props) {
@@ -23,7 +23,7 @@ function LabDemoComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent,
 	} = props
 	const pipClass = usePipContext()
 
@@ -32,11 +32,12 @@ function LabDemoComponent(props: Props) {
 			element={element}
 			lessonTitle={demoTitle}
 			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			activityType="Demo"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				Demo:&nbsp;

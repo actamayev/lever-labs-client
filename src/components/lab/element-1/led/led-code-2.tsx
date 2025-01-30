@@ -23,7 +23,7 @@ export default function LedCode2() {
 			nextPageActivity="Code"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={500 / 6}
+			lessonProgressPercent={500 / 6}
 			codingTitle="Choose an LED color"
 			codingDescription="Here, you'll turn your LED to a color of your choosing"
 			toolboxConfig={toolboxConfig}

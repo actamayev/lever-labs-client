@@ -28,7 +28,7 @@ function LedVideo() {
 			nextPageActivity="Code"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={300 / 6}
+			lessonProgressPercent={300 / 6}
 		/>
 	)
 }

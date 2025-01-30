@@ -8,12 +8,12 @@ import {
 
 interface Props {
     icon: ReactElement
-    progressPercent: number
+    lessonProgressPercent: number
 }
 
-export default function LessonProgressIconContainer({ icon, progressPercent }: Props) {
+export default function LessonProgressIconContainer({ icon, lessonProgressPercent }: Props) {
 	// Ensure progress is between 0 and 100
-	const progress = Math.min(100, Math.max(0, progressPercent))
+	const progress = Math.min(100, Math.max(0, lessonProgressPercent))
 
 	// SVG circle properties
 	const size = 50
@@ -75,7 +75,7 @@ export default function LessonProgressIconContainer({ icon, progressPercent }: P
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">
-					{Math.round(progressPercent)}% complete
+					{Math.round(lessonProgressPercent)}% complete
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

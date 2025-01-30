@@ -11,7 +11,7 @@ export default function LedDemo() {
 			nextPageActivity="Video"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={200 / 6}
+			lessonProgressPercent={200 / 6}
 		/>
 	)
 }

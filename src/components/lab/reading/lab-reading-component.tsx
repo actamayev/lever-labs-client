@@ -11,7 +11,7 @@ interface Props {
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement
-	progressPercent: number
+	lessonProgressPercent: number
 }
 
 export default function LabReadingComponent(props: Props) {
@@ -23,18 +23,19 @@ export default function LabReadingComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
 			lessonTitle={readingTitle}
 			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			activityType="Reading"
 		>
 			<main className="h-full overflow-hidden">
 				<ReadingContainer blocks={ledReadingBlocks} />

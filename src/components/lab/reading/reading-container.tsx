@@ -33,7 +33,7 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 
 	const handleQuizComplete = useCallback((
 		blockId: ContentBlockID,
-		answers: { questionIndex: number; selectedChoice: number; isCorrect: boolean }[]
+		answers: QuizAnswerAttempt[]
 	) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 

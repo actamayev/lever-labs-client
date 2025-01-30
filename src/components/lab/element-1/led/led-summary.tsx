@@ -11,7 +11,7 @@ export default function LedSummary() {
 			nextPageActivity="Demo"
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={100}
+			lessonProgressPercent={100}
 		/>
 	)
 }

@@ -9,7 +9,7 @@ interface Props {
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement | null
-	progressPercent: number
+	lessonProgressPercent: number
 }
 
 export default function LabSummaryComponent(props: Props) {
@@ -21,18 +21,19 @@ export default function LabSummaryComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent,
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
 			lessonTitle={summaryTitle}
 			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			activityType="Summary"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				Summary

@@ -26,7 +26,7 @@ function LedReading() {
 			nextPageActivity={nextPageActivity}
 			element={1}
 			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={100 / 6}
+			lessonProgressPercent={100 / 6}
 		/>
 	)
 }

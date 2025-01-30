@@ -11,7 +11,7 @@ export default function MotorDemo() {
 			nextPageActivity="Reading"
 			element={1}
 			lessonIcon={<MotorSpinAnimation iconSize={30} />}
-			progressPercent={0 / 6}
+			lessonProgressPercent={0 / 6}
 		/>
 	)
 }

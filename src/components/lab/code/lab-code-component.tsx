@@ -11,7 +11,7 @@ interface Props {
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement
-	progressPercent: number
+	lessonProgressPercent: number
 	codingTitle: string
 	codingDescription: string
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -27,7 +27,7 @@ export default function LabCodeComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent,
 		codingTitle,
 		codingDescription,
 		toolboxConfig
@@ -37,12 +37,13 @@ export default function LabCodeComponent(props: Props) {
 			element={element}
 			lessonTitle={lessonTitle}
 			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
 			isCode={true}
+			activityType="Code"
 		>
 			<LabCodeMainContent
 				codingTitle={codingTitle}

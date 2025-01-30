@@ -5,17 +5,19 @@ import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
 	lessonTitle: string
+	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonIcon: ReactElement | null
-	progressPercent: number
+	lessonProgressPercent: number
 	children: React.ReactNode
 	shouldShowFooter?: boolean
 	extraClasses?: string
 	isCode?: boolean
+	isReading?: boolean
 }
 
 export default function ActivityTemplate(props: Props) {
@@ -27,11 +29,11 @@ export default function ActivityTemplate(props: Props) {
 		nextPageActivity,
 		element,
 		lessonIcon,
-		progressPercent,
+		lessonProgressPercent,
 		children,
 		extraClasses = "",
 		shouldShowFooter = true,
-		isCode = false
+		activityType
 	} = props
 	// 1/29/25 TODO: Add styles for when the footer is not shown
 
@@ -41,8 +43,8 @@ export default function ActivityTemplate(props: Props) {
 				element={element}
 				lessonTitle={lessonTitle}
 				lessonIcon={lessonIcon}
-				progressPercent={progressPercent}
-				isCode={isCode}
+				lessonProgressPercent={lessonProgressPercent}
+				activityType={activityType}
 			/>
 
 			<div className="flex-1 min-h-0 pt-20 pb-20">
