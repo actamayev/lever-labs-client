@@ -1,9 +1,9 @@
 import { CheckCircle, X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { Button } from "../../shadcn/ui/button"
+import { CustomQuiz } from "../../icons/custom-quiz"
 import AnswerChoiceButton from "./answer-choice-button"
 import QuizExplanationSection from "./quiz-explanation-section"
-import { CustomQuiz } from "../../icons/custom-quiz"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -27,7 +27,7 @@ export default function QuizSection(props: Props) {
 
 	// Initialize answers from previous attempt if reviewing
 	useEffect(() => {
-		if (activeQuiz?.isReview && activeQuiz.previousAnswers) {
+		if (activeQuiz?.isReview) {
 			return setQuizAnswers(activeQuiz.previousAnswers)
 		}
 		setQuizAnswers([])
