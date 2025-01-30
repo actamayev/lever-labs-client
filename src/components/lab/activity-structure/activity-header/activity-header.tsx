@@ -4,9 +4,9 @@ import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
+import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
-import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 
 interface Props {
 	element: ElementNumbers
@@ -49,7 +49,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-end">
-				{activityType.includes("Code") && <div className="mr-4"><LabCodePipStatus /></div>}
+				{activityType === "Code" && <div className="mr-4"><LabCodePipStatus /></div>}
 				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer

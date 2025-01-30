@@ -47,7 +47,7 @@ export default function ActivityTemplate(props: Props) {
 			<div
 				className={cn(
 					"flex-1 min-h-0 pt-20",
-					(readingProgressPercentage === 100 || activityType.includes("Code")) && "pb-20"
+					((readingProgressPercentage === 100) || (activityType === "Code")) && "pb-20"
 				)}
 			>
 				{children}
