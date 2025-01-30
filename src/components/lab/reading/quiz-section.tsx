@@ -111,17 +111,7 @@ export default function QuizSection(props: Props) {
 
 				{/* 2x2 Grid Layout for Answer Choices */}
 				<div className="grid grid-cols-2 gap-4">
-					{[0, 1].map((index) => (
-						<AnswerChoiceButton
-							activeQuiz={activeQuiz}
-							currentQuestion={currentQuestion}
-							index={index}
-							selectedAnswer={selectedAnswer}
-							handleAnswerSelect={handleAnswerSelect}
-							key={index}
-						/>
-					))}
-					{[2, 3].map((index) => (
+					{[0, 1, 2, 3].map((index) => (
 						<AnswerChoiceButton
 							activeQuiz={activeQuiz}
 							currentQuestion={currentQuestion}
