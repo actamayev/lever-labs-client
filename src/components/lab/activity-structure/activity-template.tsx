@@ -1,5 +1,5 @@
 import { ReactElement } from "react"
-import ActivityHeader from "./activity-header"
+import ActivityHeader from "./activity-header/activity-header"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 

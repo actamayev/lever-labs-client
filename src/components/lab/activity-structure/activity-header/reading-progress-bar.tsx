@@ -10,7 +10,7 @@ export default function ReadingProgressBar({ readingProgressPercentage }: { read
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div className={"w-1/3 h-4 bg-zinc-200 rounded-full dark:bg-zinc-700 overflow-hidden"}>
+					<div className="w-full h-3 bg-zinc-200 rounded-full dark:bg-zinc-700 overflow-hidden">
 						<div
 							className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full
 							transition-all duration-300 ease-out"
