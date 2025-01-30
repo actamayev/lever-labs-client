@@ -1,4 +1,3 @@
-import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 import LabSummaryComponent from "../../summary/lab-summary-component"
 
 export default function LedSummary() {
@@ -10,7 +9,7 @@ export default function LedSummary() {
 			nextPageLink="/lab/element-1/motor/demo"
 			nextPageActivity="Demo"
 			element={1}
-			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
+			lessonTitle="LED"
 			lessonProgressPercent={100}
 		/>
 	)

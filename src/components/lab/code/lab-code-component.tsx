@@ -1,32 +1,30 @@
 import * as Blockly from "blockly"
-import { ReactElement } from "react"
 import LabCodeMainContent from "./lab-code-main-content"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	lessonTitle: string
+	activityTitle: string
 	previousPageLink: LabPages
 	previousPageActivity: ActivityType
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
+	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	codingTitle: string
 	codingDescription: string
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
 
-// TODO: Figure out why the code isn't stretching all the way
 export default function LabCodeComponent(props: Props) {
 	const {
-		lessonTitle,
+		activityTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
+		lessonTitle,
 		lessonProgressPercent,
 		codingTitle,
 		codingDescription,
@@ -35,8 +33,8 @@ export default function LabCodeComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
+			activityTitle={activityTitle}
 			lessonTitle={lessonTitle}
-			lessonIcon={lessonIcon}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}

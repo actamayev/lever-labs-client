@@ -1,4 +1,3 @@
-import { ReactElement } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -8,7 +7,7 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement | null
+	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 }
 
@@ -20,14 +19,14 @@ export default function LabSummaryComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
+		lessonTitle,
 		lessonProgressPercent,
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={summaryTitle}
-			lessonIcon={lessonIcon}
+			activityTitle={summaryTitle}
+			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}

@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react"
+import { useState } from "react"
 import ReadingContainer from "./reading-container"
 import ledReadingBlocks from "../element-1/led/led-reading-blocks"
 import ActivityTemplate from "../activity-structure/activity-template"
@@ -10,7 +10,7 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
+	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 }
 
@@ -22,7 +22,7 @@ export default function LabReadingComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
+		lessonTitle,
 		lessonProgressPercent
 	} = props
 	const [readingProgressPercentage, setReadingProgressPercentage] = useState(0)
@@ -30,8 +30,8 @@ export default function LabReadingComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={readingTitle}
-			lessonIcon={lessonIcon}
+			activityTitle={readingTitle}
+			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}

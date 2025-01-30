@@ -9,9 +9,10 @@ import {
 interface Props {
     icon: ReactElement
     lessonProgressPercent: number
+	lessonTitle: Element1Lessons
 }
 
-export default function LessonProgressIconContainer({ icon, lessonProgressPercent }: Props) {
+export default function LessonProgressIconContainer({ icon, lessonProgressPercent, lessonTitle }: Props) {
 	// Ensure progress is between 0 and 100
 	const progress = Math.min(100, Math.max(0, lessonProgressPercent))
 
@@ -75,7 +76,7 @@ export default function LessonProgressIconContainer({ icon, lessonProgressPercen
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">
-					{Math.round(lessonProgressPercent)}% complete
+					{lessonTitle} progress: {Math.round(lessonProgressPercent)}% complete
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

@@ -1,17 +1,16 @@
-import { ReactElement } from "react"
 import ActivityHeader from "./activity-header/activity-header"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
-	lessonTitle: string
+	activityTitle: string
 	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement | null
+	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
@@ -20,13 +19,13 @@ interface Props {
 
 export default function ActivityTemplate(props: Props) {
 	const {
-		lessonTitle,
+		activityTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
+		lessonTitle,
 		lessonProgressPercent,
 		children,
 		extraClasses = "",
@@ -38,8 +37,8 @@ export default function ActivityTemplate(props: Props) {
 		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
 			<ActivityHeader
 				element={element}
+				activityTitle={activityTitle}
 				lessonTitle={lessonTitle}
-				lessonIcon={lessonIcon}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}
 				readingProgressPercentage={readingProgressPercentage}

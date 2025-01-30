@@ -1,5 +1,4 @@
 import { X } from "lucide-react"
-import { ReactElement } from "react"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"
@@ -7,18 +6,19 @@ import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
+import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 
 interface Props {
 	element: ElementNumbers
-	lessonTitle: string
-	lessonIcon: ReactElement | null
+	activityTitle: string
+	lessonTitle: Element1Lessons
 	lessonProgressPercent: number | null
 	activityType: ActivityType
 	readingProgressPercentage?: number
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, lessonIcon, lessonProgressPercent, activityType, readingProgressPercentage } = props
+	const { element, lessonTitle, activityTitle, lessonProgressPercent, activityType, readingProgressPercentage } = props
 	const navigate = useTypedNavigate()
 
 	return (
@@ -36,7 +36,7 @@ export default function ActivityHeader(props: Props) {
 					>
 						<X className="!h-6 !w-6" />
 					</Button>
-					<h2 className="text-4xl font-semibold ml-8">{lessonTitle}</h2>
+					<h2 className="text-4xl font-semibold ml-8">{activityTitle}</h2>
 				</div>
 			</div>
 
@@ -51,10 +51,11 @@ export default function ActivityHeader(props: Props) {
 			<div className="flex items-center w-32">
 				{activityType.includes("Code") && <div className="mr-4"><LabCodePipStatus /></div>}
 				<div className="flex justify-end ml-auto mr-4">
-					{lessonIcon && !isNull(lessonProgressPercent) && (
+					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer
-							icon={lessonIcon}
+							icon={<GetLessonIconFromActivityName lessonTitle={lessonTitle} />}
 							lessonProgressPercent={lessonProgressPercent}
+							lessonTitle={lessonTitle}
 						/>
 					)}
 				</div>
