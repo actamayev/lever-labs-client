@@ -1,6 +1,8 @@
 import isNull from "lodash-es/isNull"
+import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface Props {
 	activeQuiz: ActiveQuiz
@@ -11,7 +13,7 @@ interface Props {
 	currentBlock: ContentBlock
 }
 
-export default function QuizExplanationSection(props: Props) {
+function QuizExplanationSection(props: Props) {
 	const {
 		activeQuiz,
 		selectedAnswer,
@@ -20,13 +22,16 @@ export default function QuizExplanationSection(props: Props) {
 		handleNextQuestion,
 		currentBlock
 	} = props
+	const defaultSiteTheme = useDefaultSiteTheme()
 
 	if (!activeQuiz.showExplanation) {
 		return (
 			<TactileButton
 				onClick={handleCheckAnswer}
-				className="w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover dark:text-white"
+				className="w-full h-12 text-xl border-2 duration-0 rounded-2xl bg-blue-100 hover:bg-blue-200 border-blue-400 text-blue-800
+				dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800"
 				disabled={isNull(selectedAnswer)}
+				shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={4}
 			>
 				CHECK
@@ -83,3 +88,5 @@ export default function QuizExplanationSection(props: Props) {
 		</>
 	)
 }
+
+export default observer(QuizExplanationSection)
