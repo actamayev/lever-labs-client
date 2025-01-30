@@ -26,7 +26,7 @@ export default function ActivityFooter(props: Props) {
 			{previousPageLink && previousPageActivity && (
 				<BlueTactileButton
 					onClick={() => navigate(previousPageLink)}
-					extraClasses="!text-xl h-12"
+					className="!text-xl h-12"
 				>
 					<ArrowLeft className="!h-6 !w-6" />
 					<GetActivityIconFromActivityName
@@ -39,7 +39,7 @@ export default function ActivityFooter(props: Props) {
 
 			<BlueTactileButton
 				onClick={() => navigate(nextPageLink)}
-				extraClasses="!text-xl h-12"
+				className="!text-xl h-12"
 			>
 				UP NEXT: {toUpper(nextPageActivity)}
 				<GetActivityIconFromActivityName

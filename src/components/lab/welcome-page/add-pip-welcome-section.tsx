@@ -6,8 +6,8 @@ import {
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
+import { BlueTactileButton } from "../../tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 export default function AddPipWelcomeSection() {
 	const navigate = useTypedNavigate()
@@ -42,15 +42,13 @@ export default function AddPipWelcomeSection() {
 					title="Upload credentials"
 				/>
 			</div>
-
-			<TactileButton
-				className="w-full bg-blue-600 hover:bg-blue-500 text-white dark:bg-blue-700 dark:hover:bg-blue-600
-				text-xl transition-none"
+			<BlueTactileButton
 				onClick={() => navigate("/add-pip")}
+				className="w-full text-xl h-12"
 				shadowHeight={4}
 			>
-				Add Your Pip
-			</TactileButton>
+				ADD YOUR PIP
+			</BlueTactileButton>
 		</WelcomePageCard>
 	)
 }

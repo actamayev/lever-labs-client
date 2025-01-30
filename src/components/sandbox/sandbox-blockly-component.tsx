@@ -1,10 +1,10 @@
-import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import { useState, useCallback, lazy, Suspense } from "react"
+import { BlueTactileButton } from "../tactile-buttons"
 import { usePipContext } from "../../contexts/pip-context"
 import useSendCppToPip from "../../hooks/pip/send-cpp-to-pip"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
-import { TactileButton } from "../shadcn/ui/tactile-button"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -31,13 +31,13 @@ function SandboxBlocklyComponent() {
 					{cppCode}
 				</pre>
 			</div>
-			<TactileButton
+			<BlueTactileButton
 				onClick={sendCodeToCppCallback}
 				disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-				className="mt-2 transition-none"
+				className="mt-2"
 			>
-				Send code to Pip
-			</TactileButton>
+				SEND TO {pipClass.selectedPip?.pipName}
+			</BlueTactileButton>
 		</div>
 	)
 }

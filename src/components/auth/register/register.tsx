@@ -9,10 +9,10 @@ import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
+import { BlueTactileButton } from "../../tactile-buttons"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 export default function Register() {
 	useRedirectKnownUser()
@@ -52,14 +52,14 @@ export default function Register() {
 						placeholder="Confirm Password"
 					/>
 
-					<TactileButton
+					<BlueTactileButton
 						type="submit"
-						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
 						shadowHeight={4}
+						className="w-full h-12 my-2"
 					>
 						CREATE ACCOUNT
-					</TactileButton>
+					</BlueTactileButton>
 
 					{error && <ErrorMessage error={error} />}
 

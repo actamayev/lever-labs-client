@@ -15,7 +15,7 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 		<Link to={linkTo}>
 			<BlueTactileButton
 				shadowHeight={2}
-				extraClasses="text-sm font-normal"
+				className="text-sm font-normal"
 			>
 				{title}
 			</BlueTactileButton>
@@ -35,7 +35,7 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 	return (
 		<BlueTactileButton
 			shadowHeight={2}
-			extraClasses="text-sm font-normal"
+			className="text-sm font-normal"
 			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}

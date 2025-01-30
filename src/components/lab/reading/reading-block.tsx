@@ -71,7 +71,7 @@ function ReadingBlock(props: Props) {
 			{isRevealed && block.action.type === "continue" && !isContinued && (
 				<BlueTactileButton
 					onClick={() => handleContinue(block.id)}
-					extraClasses="px-6 !py-5 text-xl w-1/2 h-14"
+					className="px-6 !py-5 text-xl w-1/2 h-14"
 					shadowHeight={4}
 				>
 					<StepForward className="!w-6 !h-6" />

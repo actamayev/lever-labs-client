@@ -6,11 +6,11 @@ import { Form } from "../../components/shadcn/ui/form"
 import PageHelmet from "../../components/helmet/page-helmet"
 import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
+import { BlueTactileButton } from "../../components/tactile-buttons"
 import { registerUsernameSchema } from "../../utils/auth/auth-schemas"
 import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import UsernameInput from "../../components/auth/register/username-input"
 import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-with-username"
-import { TactileButton } from "../../components/shadcn/ui/tactile-button"
 
 function RegisterUsername() {
 	useRedirectUserWithUsername()
@@ -40,14 +40,14 @@ function RegisterUsername() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 						<UsernameInput control={form.control} />
 
-						<TactileButton
+						<BlueTactileButton
 							type="submit"
-							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 							disabled={loading || isDisabled}
 							shadowHeight={4}
+							className="w-full h-12 my-2"
 						>
 							CONTINUE
-						</TactileButton>
+						</BlueTactileButton>
 
 						{error && <ErrorMessage error={error} />}
 					</form>

@@ -8,10 +8,10 @@ import PasswordField from "../password-input"
 import GoogleSignIn from "../google/google-sign-in"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
+import { BlueTactileButton } from "../../tactile-buttons"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface Props {
 	whereToNavigate: PageNames
@@ -46,15 +46,14 @@ export default function Login(props: Props) {
 						name="password"
 						// showForgotPassword={true}
 					/>
-
-					<TactileButton
+					<BlueTactileButton
 						type="submit"
-						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
 						disabled={loading}
 						shadowHeight={4}
+						className="w-full h-12 my-2"
 					>
 						LOG IN
-					</TactileButton>
+					</BlueTactileButton>
 
 					{error && <ErrorMessage error={error} />}
 

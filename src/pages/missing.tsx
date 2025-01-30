@@ -4,7 +4,7 @@ import { useAuthContext } from "../contexts/auth-context"
 import useTypedNavigate from "../hooks/navigate/typed-navigate"
 import { CustomBeaker } from "../components/icons/custom-beaker"
 import { CustomHouse } from "../components/icons/custom-house"
-import { TactileButton } from "../components/shadcn/ui/tactile-button"
+import { BlackWhiteTactileButton } from "../components/tactile-buttons"
 
 function Missing() {
 	const authClass = useAuthContext()
@@ -19,14 +19,14 @@ function Missing() {
 		if (authClass.isLoggedIn) {
 			return (
 				<>
-					Return to the Lab
+					RETURN TO THE LAB
 					<CustomBeaker className="ml-2 !h-7 !w-7" />
 				</>
 			)
 		}
 		return (
 			<>
-				Return home
+				RETURN HOME
 				<CustomHouse className="ml-2 !h-7 !w-7" />
 			</>
 		)
@@ -36,14 +36,13 @@ function Missing() {
 			<h1 className="text-2xl font-semibold">
 				Page Not Found
 			</h1>
-			<TactileButton
+			<BlackWhiteTactileButton
 				onClick={conditionalNavigation}
-				className="transition-none text-2xl p-5"
-				shadowColor="black"
+				className="text-2xl p-5"
 				shadowHeight={4}
 			>
 				{conditionalText()}
-			</TactileButton>
+			</BlackWhiteTactileButton>
 		</div>
 	)
 }
