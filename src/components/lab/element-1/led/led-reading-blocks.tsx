@@ -161,7 +161,7 @@ const ledReadingBlocks: ContentBlock[] = [
 				</p>
 			</div>
 		),
-		action: { type: "continue" }
+		action: { type: null }
 	}
 ]
 

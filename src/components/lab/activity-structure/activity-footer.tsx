@@ -23,19 +23,21 @@ export default function ActivityFooter(props: Props) {
 	return (
 		<footer className="h-20 flex items-center justify-between px-4 border-t-2
 		border-zinc-300 dark:border-zinc-700 fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10">
-			{previousPageLink && previousPageActivity && (
-				<BlueTactileButton
-					onClick={() => navigate(previousPageLink)}
-					className="!text-xl h-12"
-				>
-					<ArrowLeft className="!h-6 !w-6" />
-					<GetActivityIconFromActivityName
-						activityType={previousPageActivity}
-						className="!h-6 !w-6"
-					/>
-					BACK TO {toUpper(previousPageActivity)}
-				</BlueTactileButton>
-			)}
+			<div className="flex-1 flex">
+				{previousPageLink && previousPageActivity && (
+					<BlueTactileButton
+						onClick={() => navigate(previousPageLink)}
+						className="!text-xl h-12"
+					>
+						<ArrowLeft className="!h-6 !w-6" />
+						<GetActivityIconFromActivityName
+							activityType={previousPageActivity}
+							className="!h-6 !w-6"
+						/>
+                        BACK TO {toUpper(previousPageActivity)}
+					</BlueTactileButton>
+				)}
+			</div>
 
 			<BlueTactileButton
 				onClick={() => navigate(nextPageLink)}
