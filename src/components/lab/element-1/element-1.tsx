@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import ShowLEDLessons from "./led/show-led-lessons"
 import Lilypad from "../lab-structure/lilypad/lilypad"
-import Element1StartCard from "./element-1-start-card"
+import Element1StartCard from "./start-card/element-1-start-card"
 import motorLessons from "./motor/motor-lessons-object"
 import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import { LilypadContainer } from "../lab-structure/lilypad/lilypad-container"
