@@ -23,11 +23,11 @@ export default function ActivityHeader(props: Props) {
 
 	return (
 		<header
-			className="h-20 flex items-center justify-between px-4 border-b-2
+			className="h-20 flex items-center justify-between px-3 border-b-2
 			border-zinc-300 dark:border-zinc-700 fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
 		>
-			<div className="flex">
-				<div className="flex items-center justify-start duration-100 rounded-2xl w-full">
+			<div className="w-1/3">
+				<div className="flex items-center">
 					<Button
 						variant="ghost"
 						size="icon"
@@ -36,21 +36,21 @@ export default function ActivityHeader(props: Props) {
 					>
 						<X className="!h-6 !w-6" />
 					</Button>
-					<h2 className="text-4xl font-semibold ml-8">{activityTitle}</h2>
+					<h2 className="text-4xl font-semibold ml-9">{activityTitle}</h2>
 				</div>
 			</div>
 
-			{(activityType === "Reading") && (!isUndefined(readingProgressPercentage)) && (
-				<div className="flex-1 flex flex-row items-center justify-center space-y-0">
-					<div className="w-1/2">
+			<div className="w-1/3 flex justify-center">
+				{(activityType === "Reading") && (!isUndefined(readingProgressPercentage)) && (
+					<div className="w-full">
 						<ReadingProgressBar readingProgressPercentage={readingProgressPercentage}/>
 					</div>
-				</div>
-			)}
+				)}
+			</div>
 
-			<div className="flex items-center w-32">
+			<div className="w-1/3 flex justify-end">
 				{activityType.includes("Code") && <div className="mr-4"><LabCodePipStatus /></div>}
-				<div className="flex justify-end ml-auto mr-4">
+				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer
 							icon={<GetLessonIconFromActivityName lessonTitle={lessonTitle} />}
