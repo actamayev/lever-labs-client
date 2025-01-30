@@ -44,12 +44,12 @@ export default function ReadingContainer(props: Props) {
 
 	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-		if (nextBlock) {
-			setReadingState(prev => ({
-				...prev,
-				revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
-			}))
-		}
+		if (!nextBlock) return
+
+		setReadingState(prev => ({
+			...prev,
+			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
+		}))
 	}, [blocks])
 
 	const handleQuizComplete = useCallback((
@@ -57,11 +57,11 @@ export default function ReadingContainer(props: Props) {
 		answers: QuizAnswerAttempt[]
 	) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-
+		if (!nextBlock) return
 		setReadingState(prev => ({
 			...prev,
 			completedQuizzes: [...prev.completedQuizzes, blockId],
-			revealedBlocks: nextBlock ? [...prev.revealedBlocks, nextBlock.id] : prev.revealedBlocks,
+			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
 			quizAttempts: [...prev.quizAttempts, { blockId, answers }]
 		}))
 		setActiveQuiz(null)

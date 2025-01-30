@@ -49,7 +49,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-end">
-				{activityType === "Code" && <div className="mr-4"><LabCodePipStatus /></div>}
+				{activityType === "Code" && <div className="mr-6"><LabCodePipStatus /></div>}
 				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer

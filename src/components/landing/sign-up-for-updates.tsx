@@ -62,8 +62,8 @@ export default function SignUpForUpdates() {
 
 					</FormField>
 					<RainbowSubscribeButton
-						initialText="Subscribe"
-						changeText="Subscribed!"
+						initialText="SUBSCRIBE"
+						changeText="SUBSCRIBED!"
 						isSubscribed={isSubscribed}
 						isDisabled={!isEmailValidMemo}
 						isLoading={isLoading}

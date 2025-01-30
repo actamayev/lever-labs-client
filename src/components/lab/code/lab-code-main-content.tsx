@@ -1,7 +1,7 @@
 import * as Blockly from "blockly"
 import isEmpty from "lodash-es/isEmpty"
 import { lazy, Suspense, useState } from "react"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { BlueTactileButton } from "../../tactile-buttons"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 interface Props {
@@ -47,22 +47,12 @@ export default function LabCodeMainContent(props: Props) {
 				</div>
 
 				<div className="flex justify-between mt-4">
-					<TactileButton
-						disabled={isEmpty(cppCode)}
-						className="!text-xl rounded-2xl flex items-center bg-pipTheme
-                            hover:bg-pipThemeHover dark:text-white transition-none"
-						shadowHeight={4}
-					>
-                        Check my work
-					</TactileButton>
-					<TactileButton
-						disabled={isEmpty(cppCode)}
-						className="!text-xl rounded-2xl flex items-center bg-pipTheme
-                            hover:bg-pipThemeHover dark:text-white transition-none"
-						shadowHeight={4}
-					>
-                        Send code to Pip
-					</TactileButton>
+					<BlueTactileButton disabled={isEmpty(cppCode)}>
+                        CHECK
+					</BlueTactileButton>
+					<BlueTactileButton disabled={isEmpty(cppCode)}>
+                        SEND TO PIP
+					</BlueTactileButton>
 				</div>
 			</div>
 		</main>

@@ -1,9 +1,11 @@
 import { observer } from "mobx-react"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle, StepForward } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
+import { CustomQuiz } from "../../icons/custom-quiz"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import { BlueTactileButton } from "../../tactile-buttons"
 
 interface Props {
 	block: ContentBlock
@@ -67,34 +69,35 @@ function ReadingBlock(props: Props) {
 			</div>
 
 			{isRevealed && block.action.type === "continue" && !isContinued && (
-				<TactileButton
+				<BlueTactileButton
 					onClick={() => handleContinue(block.id)}
-					className="px-6 !py-5 text-2xl transition-none border-2 w-1/2 h-14
-					bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-200 rounded-2xl
-					dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800"
-					shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
+					extraClasses="px-6 !py-5 text-xl w-1/2 h-14"
 					shadowHeight={4}
 				>
-					Continue
-				</TactileButton>
+					<StepForward className="!w-6 !h-6" />
+					CONTINUE
+				</BlueTactileButton>
 			)}
 
 			{isRevealed && block.action.type === "quiz" && (
 				<TactileButton
 					onClick={() => onQuizOpen(block.id)}
 					className={cn(
-						"px-6 !py-5 text-2xl transition-none rounded-2xl border-2 w-1/2 h-14",
+						"px-6 !py-5 text-xl transition-none rounded-2xl border-2 w-1/2 h-14",
 						quizButtonClasses
 					)}
 					shadowColor={getShadowColor}
 					shadowHeight={4}
 				>
 					{!isQuizCompleted ? (
-						"Take Quiz"
+						<>
+							<CustomQuiz className="!w-6 !h-6" />
+							QUIZ
+						</>
 					) : (
 						<>
-							<CheckCircle className="w-4 h-4 mr-2" />
-							Review Quiz
+							<CheckCircle className="!w-6 !h-6" />
+							REVIEW QUIZ
 						</>
 					)}
 				</TactileButton>

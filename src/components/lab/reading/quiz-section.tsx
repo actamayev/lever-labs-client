@@ -1,8 +1,9 @@
-import { X } from "lucide-react"
+import { CheckCircle, X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { Button } from "../../shadcn/ui/button"
 import AnswerChoiceButton from "./answer-choice-button"
 import QuizExplanationSection from "./quiz-explanation-section"
+import { CustomQuiz } from "../../icons/custom-quiz"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -92,7 +93,8 @@ export default function QuizSection(props: Props) {
 		<div className="h-full flex flex-col">
 			<div className="py-3 px-6 border-b-2 border-zinc-300 dark:border-zinc-700">
 				<div className="flex items-center justify-between">
-					<h3 className="text-2xl font-semibold">
+					<h3 className="text-2xl font-semibold flex flex-row items-center gap-4">
+						{activeQuiz.isReview ? <CheckCircle /> : <CustomQuiz />}
 						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
 					</h3>
 					<Button

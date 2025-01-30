@@ -70,8 +70,13 @@ function QuizExplanationSection(props: Props) {
 		return (
 			<TactileButton
 				onClick={handleNextQuestion}
-				className="mt-4 w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover dark:text-white"
+				// className="mt-4 w-full h-12 text-xl duration-0 rounded-2xl bg-pipTheme hover:bg-pipThemeHover dark:text-white"
 				disabled={isReviewMode && isLastQuestion}
+				// shadowHeight={4}
+				className="mt-4 w-full px-6 !py-5 text-xl transition-none border-2 h-14
+				bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-200 rounded-2xl
+				dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800"
+				shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={4}
 			>
 				{isLastQuestion ? "Complete Quiz" : "Next Question"}
