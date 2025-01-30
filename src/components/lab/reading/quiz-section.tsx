@@ -6,13 +6,13 @@ import AnswerChoiceButton from "./answer-choice-button"
 import QuizExplanationSection from "./quiz-explanation-section"
 
 interface Props {
-	blocks: ContentBlock[]
-	onQuizComplete: (blockId: ContentBlockID, answers: QuizAnswerAttempt[]) => void
-	activeQuiz: ActiveQuiz | null
-	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
+    blocks: ContentBlock[]
+    onQuizComplete: (blockId: ContentBlockID, answers: QuizAnswerAttempt[]) => void
+    activeQuiz: ActiveQuiz | null
+    setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 export default function QuizSection(props: Props) {
 	const {
 		blocks,
@@ -21,32 +21,52 @@ export default function QuizSection(props: Props) {
 		setActiveQuiz
 	} = props
 
+	// Store answers for each question separately
 	const [quizAnswers, setQuizAnswers] = useState<QuizAnswerAttempt[]>([])
-	const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
+	// Store selected answers for each question index
+	const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>([])
 	const currentBlock = blocks.find(b => b.id === activeQuiz?.blockId)
 
 	// Initialize answers from previous attempt if reviewing
 	useEffect(() => {
 		if (activeQuiz?.isReview) {
-			return setQuizAnswers(activeQuiz.previousAnswers)
+			setQuizAnswers(activeQuiz.previousAnswers)
+			// Initialize selectedAnswers from previous answers
+			const maxIndex = Math.max(...activeQuiz.previousAnswers.map(a => a.questionIndex))
+			const initialSelected = Array(maxIndex + 1).fill(null)
+			activeQuiz.previousAnswers.forEach(answer => {
+				initialSelected[answer.questionIndex] = answer.selectedChoice
+			})
+			setSelectedAnswers(initialSelected)
+		} else {
+			setQuizAnswers([])
+			setSelectedAnswers([])
 		}
-		setQuizAnswers([])
 	}, [activeQuiz?.isReview, activeQuiz?.previousAnswers])
 
 	const handleAnswerSelect = useCallback((choiceIndex: number) => {
 		if (activeQuiz?.showExplanation) return
-		setSelectedAnswer(choiceIndex)
-	}, [activeQuiz?.showExplanation])
+
+		setSelectedAnswers(prev => {
+			const newAnswers = [...prev]
+			newAnswers[activeQuiz?.questionIndex ?? 0] = choiceIndex
+			return newAnswers
+		})
+	}, [activeQuiz?.showExplanation, activeQuiz?.questionIndex])
 
 	const handleCheckAnswer = useCallback(() => {
-		if (!currentBlock?.action.quiz?.questions[activeQuiz?.questionIndex ?? 0] || selectedAnswer === null) return
+		if (!currentBlock?.action.quiz?.questions[activeQuiz?.questionIndex ?? 0]) return
 
-		const isCorrect = currentBlock.action.quiz.questions[activeQuiz?.questionIndex ?? 0].choices[selectedAnswer].correct
+		const currentQuestionIndex = activeQuiz?.questionIndex ?? 0
+		const selectedAnswer = selectedAnswers[currentQuestionIndex]
+		if (selectedAnswer === null || selectedAnswer === undefined) return
+
+		const isCorrect = currentBlock.action.quiz.questions[currentQuestionIndex].choices[selectedAnswer].correct
 
 		setQuizAnswers(prev => {
 			const newAnswers = [...prev]
-			newAnswers[activeQuiz?.questionIndex ?? 0] = {
-				questionIndex: activeQuiz?.questionIndex ?? 0,
+			newAnswers[currentQuestionIndex] = {
+				questionIndex: currentQuestionIndex,
 				selectedChoice: selectedAnswer,
 				isCorrect
 			}
@@ -61,7 +81,7 @@ export default function QuizSection(props: Props) {
 				showExplanation: true,
 			}
 		})
-	}, [activeQuiz?.questionIndex, currentBlock?.action.quiz?.questions, selectedAnswer, setActiveQuiz])
+	}, [activeQuiz?.questionIndex, currentBlock?.action.quiz?.questions, selectedAnswers, setActiveQuiz])
 
 	const handleNextQuestion = useCallback(() => {
 		if (!activeQuiz || !currentBlock?.action.quiz) return
@@ -73,17 +93,17 @@ export default function QuizSection(props: Props) {
 			return
 		}
 
+		const nextQuestionIndex = activeQuiz.questionIndex + 1
 		setActiveQuiz(prev => {
 			if (!prev) return null
 			return {
 				...prev,
-				questionIndex: prev.questionIndex + 1,
-				selectedChoice: prev.previousAnswers[prev.questionIndex + 1]?.selectedChoice ?? null,
+				questionIndex: nextQuestionIndex,
+				selectedChoice: selectedAnswers[nextQuestionIndex] ?? null,
 				showExplanation: prev.isReview || false,
 			}
 		})
-		setSelectedAnswer(null)
-	}, [activeQuiz, currentBlock?.action.quiz, onQuizComplete, quizAnswers, setActiveQuiz])
+	}, [activeQuiz, currentBlock?.action.quiz, onQuizComplete, quizAnswers, selectedAnswers, setActiveQuiz])
 
 	if (!activeQuiz || !currentBlock?.action.quiz) return null
 
@@ -111,14 +131,13 @@ export default function QuizSection(props: Props) {
 			<div className="flex-1 overflow-y-auto p-6">
 				<h3 className="text-xl font-semibold mb-6">{currentQuestion.question}</h3>
 
-				{/* 2x2 Grid Layout for Answer Choices */}
 				<div className="grid grid-cols-2 gap-4">
 					{[0, 1, 2, 3].map((index) => (
 						<AnswerChoiceButton
 							activeQuiz={activeQuiz}
 							currentQuestion={currentQuestion}
 							index={index}
-							selectedAnswer={selectedAnswer}
+							selectedAnswer={selectedAnswers[activeQuiz.questionIndex] ?? null}
 							handleAnswerSelect={handleAnswerSelect}
 							key={index}
 						/>
@@ -129,7 +148,7 @@ export default function QuizSection(props: Props) {
 			<div className="p-4">
 				<QuizExplanationSection
 					activeQuiz={activeQuiz}
-					selectedAnswer={selectedAnswer}
+					selectedAnswer={selectedAnswers[activeQuiz.questionIndex] ?? null}
 					handleCheckAnswer={handleCheckAnswer}
 					currentQuestion={currentQuestion}
 					handleNextQuestion={handleNextQuestion}
