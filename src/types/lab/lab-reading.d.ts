@@ -4,10 +4,12 @@ declare global {
 		text: React.ReactNode
 		action: {
 			type: "continue" | "quiz"
-			quiz?: {
-				questions: Question[]
-			}
+			quiz?: QuizQuestions
 		}
+	}
+
+	interface QuizQuestions {
+		questions: Question[]
 	}
 
 	type FourAnswers = readonly [AnswerChoice, AnswerChoice, AnswerChoice, AnswerChoice]

@@ -5,12 +5,12 @@ import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface Props {
-	activeQuiz: ActiveQuiz
-	selectedAnswer: number | null
-	handleCheckAnswer: () => void
-	currentQuestion: Question
-	handleNextQuestion: () => void
-	currentBlock: ContentBlock
+    activeQuiz: ActiveQuiz
+    selectedAnswer: number | null
+    handleCheckAnswer: () => void
+    currentQuestion: Question
+    handleNextQuestion: () => void
+    currentBlock: ContentBlock
 }
 
 function QuizExplanationSection(props: Props) {
@@ -29,12 +29,12 @@ function QuizExplanationSection(props: Props) {
 			<TactileButton
 				onClick={handleCheckAnswer}
 				className="w-full h-12 text-xl border-2 duration-0 rounded-2xl bg-blue-100 hover:bg-blue-200 border-blue-400 text-blue-800
-				dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800"
+                dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-800"
 				disabled={isNull(selectedAnswer)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={4}
 			>
-				CHECK
+                CHECK
 			</TactileButton>
 		)
 	}
@@ -49,15 +49,14 @@ function QuizExplanationSection(props: Props) {
 					: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
 			)}>
 				{currentQuestion.choices[selectedAnswer].explanation ||
-						(currentQuestion.choices[selectedAnswer].correct
-							? "Correct!"
-							: "Incorrect. Try again.")}
+				(currentQuestion.choices[selectedAnswer].correct
+					? "Correct!"
+					: "Incorrect. Try again.")}
 			</div>
 		)
 	}
 
 	function HandleNextQuestion() {
-		// Early returns if quiz interaction is not allowed
 		if (!currentBlock.action.quiz) return null
 
 		const isReviewMode = activeQuiz.isReview
@@ -65,7 +64,6 @@ function QuizExplanationSection(props: Props) {
 		const isAnswerCorrect = hasSelectedAnswer && currentQuestion.choices[selectedAnswer]?.correct
 		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 
-		// In review mode OR (when not reviewing, must have selected correct answer)
 		const shouldShowNextButton = isReviewMode || (hasSelectedAnswer && isAnswerCorrect)
 		if (!shouldShowNextButton) return null
 

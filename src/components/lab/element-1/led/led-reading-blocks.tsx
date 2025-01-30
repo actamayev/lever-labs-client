@@ -18,9 +18,7 @@ const ledReadingBlocks: ContentBlock[] = [
 				</p>
 			</div>
 		),
-		action: {
-			type: "continue",
-		},
+		action: { type: "continue" },
 	},
 	{
 		id: "led-process-overview",
@@ -60,12 +58,12 @@ const ledReadingBlocks: ContentBlock[] = [
 								text: "Test text",
 								correct: false,
 								explanation: "Test explanation.",
-							},
-						],
-					},
-				],
-			},
-		},
+							}
+						]
+					}
+				]
+			}
+		}
 	},
 	{
 		id: "led-light-reaction",
@@ -163,10 +161,8 @@ const ledReadingBlocks: ContentBlock[] = [
 				</p>
 			</div>
 		),
-		action: {
-			type: "continue"
-		},
-	},
+		action: { type: "continue" }
+	}
 ]
 
 export default ledReadingBlocks
