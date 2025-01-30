@@ -91,7 +91,7 @@ export default function ReadingContainer(props: Props) {
 	return (
 		<div className="h-full flex relative">
 			<div className={cn("h-full transition-all duration-300", activeQuiz ? "w-2/3" : "w-full")}>
-				<div ref={contentRef} className="px-16 py-6 h-full overflow-y-auto">
+				<div ref={contentRef} className="px-24 py-6 h-full overflow-y-auto">
 					{blocks.map((block) => (
 						<ReadingBlock
 							key={block.id}
