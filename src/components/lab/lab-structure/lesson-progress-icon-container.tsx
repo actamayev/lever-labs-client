@@ -17,7 +17,7 @@ export default function LessonProgressIconContainer({ icon, lessonProgressPercen
 
 	// SVG circle properties
 	const size = 50
-	const strokeWidth = 2
+	const strokeWidth = 4
 	const radius = (size - strokeWidth) / 2
 	const center = size / 2
 	const circumference = 2 * Math.PI * radius

@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
@@ -12,7 +12,14 @@ interface ReadingStateWithAttempts extends ReadingState {
 	quizAttempts: QuizAttempt[]
 }
 
-export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] }) {
+interface Props {
+	readingProgressPercentage: number
+	setReadingProgressPercentage: React.Dispatch<React.SetStateAction<number>>
+	blocks: ContentBlock[]
+}
+
+export default function ReadingContainer(props: Props) {
+	const { blocks, readingProgressPercentage, setReadingProgressPercentage } = props
 	const [readingState, setReadingState] = useState<ReadingStateWithAttempts>({
 		revealedBlocks: [blocks[0].id],
 		completedQuizzes: [],
@@ -20,6 +27,20 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 	})
 	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
 	const contentRef = useRef<HTMLDivElement>(null)
+
+	useEffect(() => {
+		// Count total required actions (continues + quizzes)
+		const totalActions = blocks.length
+
+		// Count completed actions (revealed blocks + completed quizzes)
+		const completedActions = readingState.revealedBlocks.length +
+            readingState.completedQuizzes.length - 1
+
+		// Calculate percentage
+		const percentage = Math.min((completedActions / totalActions) * 100, 100)
+
+		setReadingProgressPercentage(percentage)
+	}, [blocks.length, readingState.revealedBlocks, readingState.completedQuizzes, setReadingProgressPercentage])
 
 	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
@@ -60,6 +81,13 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 		})
 	}, [readingState.completedQuizzes, readingState.quizAttempts])
 
+	const quizStyle = useMemo(() => {
+		if (readingProgressPercentage !== 100) {
+			return  { top: "5rem" }
+		}
+		return { top: "5rem", bottom: "5rem" }
+	}, [readingProgressPercentage])
+
 	return (
 		<div className="h-full flex relative">
 			<div className={cn("h-full transition-all duration-300", activeQuiz ? "w-2/3" : "w-full")}>
@@ -83,7 +111,7 @@ export default function ReadingContainer({ blocks }: { blocks: ContentBlock[] })
 					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
 					activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}
-				style={{ top: "5rem", bottom: "5rem" }} // 5rem = 80px (h-20)
+				style={quizStyle} // 5rem = 80px (h-20)
 			>
 				<QuizSection
 					blocks={blocks}

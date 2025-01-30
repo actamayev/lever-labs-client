@@ -1,8 +1,10 @@
 import { X } from "lucide-react"
-import isNull from "lodash-es/isNull"
 import { ReactElement } from "react"
+import isNull from "lodash-es/isNull"
+import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
+import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "../lab-structure/lesson-progress-icon-container"
 
@@ -12,10 +14,11 @@ interface Props {
 	lessonIcon: ReactElement | null
 	lessonProgressPercent: number | null
 	activityType: ActivityType
+	readingProgressPercentage?: number
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, lessonIcon, lessonProgressPercent, activityType } = props
+	const { element, lessonTitle, lessonIcon, lessonProgressPercent, activityType, readingProgressPercentage } = props
 	const navigate = useTypedNavigate()
 
 	return (
@@ -35,10 +38,14 @@ export default function ActivityHeader(props: Props) {
 					</Button>
 				</div>
 			</div>
-			<h2 className="text-4xl font-semibold flex-1 text-center">{lessonTitle}</h2>
-			{activityType === "Reading" && (
-				<></>
-			)}
+
+			<div className="flex-1 flex items-center justify-center gap-6">
+				{(activityType === "Reading") && (!isUndefined(readingProgressPercentage)) && (
+					<ReadingProgressBar readingProgressPercentage={readingProgressPercentage}/>
+				)}
+				<h2 className="text-4xl font-semibold">{lessonTitle}</h2>
+			</div>
+
 			<div className="flex items-center w-32">
 				{activityType.includes("Code") && <div className="mr-4"><LabCodePipStatus /></div>}
 				<div className="flex justify-end ml-auto mr-4">

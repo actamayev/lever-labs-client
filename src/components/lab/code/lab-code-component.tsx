@@ -42,7 +42,6 @@ export default function LabCodeComponent(props: Props) {
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			isCode={true}
 			activityType="Code"
 		>
 			<LabCodeMainContent
