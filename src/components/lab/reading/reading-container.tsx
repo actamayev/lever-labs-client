@@ -3,15 +3,6 @@ import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 
-interface QuizAttempt {
-	blockId: ContentBlockID
-	answers: QuizAnswerAttempt[]
-}
-
-interface ReadingStateWithAttempts extends ReadingState {
-	quizAttempts: QuizAttempt[]
-}
-
 interface Props {
 	readingProgressPercentage: number
 	setReadingProgressPercentage: React.Dispatch<React.SetStateAction<number>>
@@ -41,31 +32,6 @@ export default function ReadingContainer(props: Props) {
 
 		setReadingProgressPercentage(percentage)
 	}, [blocks.length, readingState.revealedBlocks, readingState.completedQuizzes, setReadingProgressPercentage])
-
-	const handleContinue = useCallback((blockId: ContentBlockID) => {
-		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-		if (!nextBlock) return
-
-		setReadingState(prev => ({
-			...prev,
-			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
-		}))
-	}, [blocks])
-
-	const handleQuizComplete = useCallback((
-		blockId: ContentBlockID,
-		answers: QuizAnswerAttempt[]
-	) => {
-		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-		if (!nextBlock) return
-		setReadingState(prev => ({
-			...prev,
-			completedQuizzes: [...prev.completedQuizzes, blockId],
-			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
-			quizAttempts: [...prev.quizAttempts, { blockId, answers }]
-		}))
-		setActiveQuiz(null)
-	}, [blocks])
 
 	const handleQuizOpen = useCallback((blockId: ContentBlockID) => {
 		const isReview = readingState.completedQuizzes.includes(blockId)
@@ -98,7 +64,7 @@ export default function ReadingContainer(props: Props) {
 							block={block}
 							blocks={blocks}
 							readingState={readingState}
-							onContinue={handleContinue}
+							setReadingState={setReadingState}
 							onQuizOpen={handleQuizOpen}
 						/>
 					))}
@@ -115,9 +81,9 @@ export default function ReadingContainer(props: Props) {
 			>
 				<QuizSection
 					blocks={blocks}
-					onQuizComplete={handleQuizComplete}
 					activeQuiz={activeQuiz}
 					setActiveQuiz={setActiveQuiz}
+					setReadingState={setReadingState}
 				/>
 			</div>
 		</div>

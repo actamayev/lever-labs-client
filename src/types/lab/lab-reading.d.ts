@@ -44,6 +44,15 @@ declare global {
 		isReview?: boolean
 		previousAnswers: QuizAnswerAttempt[]
 	}
+
+	interface QuizAttempt {
+		blockId: ContentBlockID
+		answers: QuizAnswerAttempt[]
+	}
+
+	interface ReadingStateWithAttempts extends ReadingState {
+		quizAttempts: QuizAttempt[]
+	}
 }
 
 export {}

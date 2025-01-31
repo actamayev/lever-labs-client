@@ -11,12 +11,12 @@ interface Props {
 	block: ContentBlock
 	blocks: ContentBlock[]
 	readingState: ReadingState
-	onContinue: (blockId: ContentBlockID) => void
+	setReadingState: (value: React.SetStateAction<ReadingStateWithAttempts>) => void
 	onQuizOpen: (blockId: ContentBlockID) => void
 }
 
 function ReadingBlock(props: Props) {
-	const { block, blocks, readingState, onContinue, onQuizOpen } = props
+	const { block, blocks, readingState, setReadingState, onQuizOpen } = props
 	const [isContinued, setIsContinued] = useState(false)
 	const defaultSiteTheme = useDefaultSiteTheme()
 
@@ -25,17 +25,19 @@ function ReadingBlock(props: Props) {
 
 	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
-		if (nextBlock) {
-			// Find the element for the next block
-			const nextElement = document.getElementById(`block-${nextBlock.id}`)
-			if (nextElement) {
-				// Smooth scroll to the next block
-				nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
-			}
+		if (!nextBlock) return
+		// Find the element for the next block
+		const nextElement = document.getElementById(`block-${nextBlock.id}`)
+		if (nextElement) {
+			// Smooth scroll to the next block
+			nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
 		}
-		onContinue(blockId)
+		setReadingState(prev => ({
+			...prev,
+			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
+		}))
 		setIsContinued(true)
-	}, [blocks, onContinue])
+	}, [blocks, setReadingState])
 
 	const getShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {

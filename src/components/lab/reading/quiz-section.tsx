@@ -1,3 +1,4 @@
+import isNil from "lodash-es/isNil"
 import { CheckCircle, X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { Button } from "../../shadcn/ui/button"
@@ -7,18 +8,18 @@ import QuizExplanationSection from "./quiz-explanation-section"
 
 interface Props {
     blocks: ContentBlock[]
-    onQuizComplete: (blockId: ContentBlockID, answers: QuizAnswerAttempt[]) => void
     activeQuiz: ActiveQuiz | null
     setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
+	setReadingState: React.Dispatch<React.SetStateAction<ReadingStateWithAttempts>>
 }
 
 // eslint-disable-next-line max-lines-per-function
 export default function QuizSection(props: Props) {
 	const {
 		blocks,
-		onQuizComplete,
 		activeQuiz,
-		setActiveQuiz
+		setActiveQuiz,
+		setReadingState
 	} = props
 
 	// Store answers for each question separately
@@ -59,7 +60,7 @@ export default function QuizSection(props: Props) {
 
 		const currentQuestionIndex = activeQuiz?.questionIndex ?? 0
 		const selectedAnswer = selectedAnswers[currentQuestionIndex]
-		if (selectedAnswer === null || selectedAnswer === undefined) return
+		if (isNil(selectedAnswer)) return
 
 		const isCorrect = currentBlock.action.quiz.questions[currentQuestionIndex].choices[selectedAnswer].correct
 
@@ -83,14 +84,28 @@ export default function QuizSection(props: Props) {
 		})
 	}, [activeQuiz?.questionIndex, currentBlock?.action.quiz?.questions, selectedAnswers, setActiveQuiz])
 
+	const handleQuizComplete = useCallback((
+		blockId: ContentBlockID,
+		answers: QuizAnswerAttempt[]
+	) => {
+		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
+		if (!nextBlock) return
+		setReadingState(prev => ({
+			...prev,
+			completedQuizzes: [...prev.completedQuizzes, blockId],
+			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
+			quizAttempts: [...prev.quizAttempts, { blockId, answers }]
+		}))
+		setActiveQuiz(null)
+	}, [blocks, setActiveQuiz, setReadingState])
+
 	const handleNextQuestion = useCallback(() => {
 		if (!activeQuiz || !currentBlock?.action.quiz) return
 
 		const isLastQuestion = activeQuiz.questionIndex === currentBlock.action.quiz.questions.length - 1
 
 		if (isLastQuestion) {
-			onQuizComplete(activeQuiz.blockId, quizAnswers)
-			return
+			return handleQuizComplete(activeQuiz.blockId, quizAnswers)
 		}
 
 		const nextQuestionIndex = activeQuiz.questionIndex + 1
@@ -103,7 +118,7 @@ export default function QuizSection(props: Props) {
 				showExplanation: prev.isReview || false,
 			}
 		})
-	}, [activeQuiz, currentBlock?.action.quiz, onQuizComplete, quizAnswers, selectedAnswers, setActiveQuiz])
+	}, [activeQuiz, currentBlock?.action.quiz, handleQuizComplete, quizAnswers, selectedAnswers, setActiveQuiz])
 
 	if (!activeQuiz || !currentBlock?.action.quiz) return null
 
