@@ -88,10 +88,10 @@ function ReadingBlock(props: Props) {
 			{isRevealed && block.action.type === "continue" && !isContinued && (
 				<BlueTactileButton
 					onClick={() => handleContinue(block.id)}
-					className="px-6 !py-5 text-xl w-1/2 h-14"
+					className="px-6 !py-5 text-3xl w-full h-16"
 					shadowHeight={4}
 				>
-					<StepForward className="!w-6 !h-6" />
+					<StepForward className="!w-8 !h-8" />
 					CONTINUE
 				</BlueTactileButton>
 			)}
@@ -100,7 +100,7 @@ function ReadingBlock(props: Props) {
 				<TactileButton
 					onClick={() => handleQuizOpen(block.id)}
 					className={cn(
-						"px-6 !py-5 text-xl transition-none rounded-2xl border-2 w-1/2 h-14",
+						"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
 						quizButtonClasses
 					)}
 					shadowColor={getShadowColor}
@@ -108,12 +108,12 @@ function ReadingBlock(props: Props) {
 				>
 					{!isQuizCompleted ? (
 						<>
-							<CustomQuiz className="!w-6 !h-6" />
+							<CustomQuiz className="!w-8 !h-8" />
 							QUIZ
 						</>
 					) : (
 						<>
-							<CheckCircle className="!w-6 !h-6" />
+							<CheckCircle className="!w-8 !h-8" />
 							REVIEW QUIZ
 						</>
 					)}

@@ -1,6 +1,7 @@
 import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
 import { BlueTactileButton } from "../../tactile-buttons"
+import { Check } from "lucide-react"
 
 interface Props {
     activeQuiz: ActiveQuiz
@@ -28,6 +29,7 @@ export default function QuizExplanationSection(props: Props) {
 				disabled={isNull(selectedAnswer)}
 				shadowHeight={4}
 			>
+				<Check className="!w-6 !h-6" />
                 CHECK
 			</BlueTactileButton>
 		)

@@ -1,5 +1,6 @@
 import * as Blockly from "blockly"
 import isEmpty from "lodash-es/isEmpty"
+import { Check, Upload } from "lucide-react"
 import { lazy, Suspense, useState } from "react"
 import { BlueTactileButton } from "../../tactile-buttons"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
@@ -48,9 +49,11 @@ export default function LabCodeMainContent(props: Props) {
 
 				<div className="flex justify-between mt-4">
 					<BlueTactileButton disabled={isEmpty(cppCode)}>
+						<Check />
                         CHECK
 					</BlueTactileButton>
 					<BlueTactileButton disabled={isEmpty(cppCode)}>
+						<Upload />
                         SEND TO PIP
 					</BlueTactileButton>
 				</div>

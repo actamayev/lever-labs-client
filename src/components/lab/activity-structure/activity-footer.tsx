@@ -2,7 +2,6 @@ import toUpper from "lodash-es/toUpper"
 import { ArrowLeft, ArrowRight } from "lucide-react"
 import { BlueTactileButton } from "../../tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import GetActivityIconFromActivityName from "../lab-structure/get-activity-icon-from-name"
 
 interface Props {
     previousPageLink: LabPages | null
@@ -30,10 +29,6 @@ export default function ActivityFooter(props: Props) {
 						className="!text-xl h-12"
 					>
 						<ArrowLeft className="!h-6 !w-6" />
-						<GetActivityIconFromActivityName
-							activityType={previousPageActivity}
-							className="!h-6 !w-6"
-						/>
                         BACK TO {toUpper(previousPageActivity)}
 					</BlueTactileButton>
 				)}
@@ -44,10 +39,6 @@ export default function ActivityFooter(props: Props) {
 				className="!text-xl h-12"
 			>
 				UP NEXT: {toUpper(nextPageActivity)}
-				<GetActivityIconFromActivityName
-					activityType={nextPageActivity}
-					className="!h-6 !w-6"
-				/>
 				<ArrowRight className="!h-6 !w-6" />
 			</BlueTactileButton>
 		</footer>

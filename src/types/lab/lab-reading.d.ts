@@ -48,7 +48,7 @@ declare global {
 
 	interface ReadingStateWithAttempts {
 		revealedBlocks: string[]
-		completedQuizzes: string[]
+		completedQuizzes: ContentBlockID[]
 		quizAttempts: QuizAttempt[]
 	}
 }

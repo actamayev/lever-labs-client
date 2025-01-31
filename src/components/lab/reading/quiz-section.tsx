@@ -1,16 +1,16 @@
 import isNil from "lodash-es/isNil"
 import { CheckCircle, X } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
-import { Button } from "../../shadcn/ui/button"
-import { CustomQuiz } from "../../icons/custom-quiz"
-import AnswerChoiceButton from "./answer-choice-button"
-import QuizExplanationSection from "./quiz-explanation-section"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import { Button } from "../../shadcn/ui/button"
+import { CustomQuiz } from "../../icons/custom-quiz"
+import AnswerChoiceButton from "./answer-choice-button"
+import QuizExplanationSection from "./quiz-explanation-section"
 
 interface Props {
     blocks: ContentBlock[]
@@ -96,9 +96,8 @@ export default function QuizSection(props: Props) {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
 		if (!nextBlock) return
 		setReadingState(prev => ({
-			...prev,
-			completedQuizzes: [...prev.completedQuizzes, blockId],
 			revealedBlocks: [...prev.revealedBlocks, nextBlock.id],
+			completedQuizzes: [...prev.completedQuizzes, blockId],
 			quizAttempts: [...prev.quizAttempts, { blockId, answers }]
 		}))
 		setActiveQuiz(null)
