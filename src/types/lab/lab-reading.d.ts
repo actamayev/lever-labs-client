@@ -17,6 +17,7 @@ declare global {
 	interface Question {
 		question: string
 		choices: FourAnswers
+		activityQuestionIndex: number
 	}
 
 	interface AnswerChoice {

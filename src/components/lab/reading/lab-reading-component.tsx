@@ -43,7 +43,6 @@ export default function LabReadingComponent(props: Props) {
 			<main className="h-full overflow-hidden">
 				<ReadingContainer
 					blocks={ledReadingBlocks}
-					readingProgressPercentage={readingProgressPercentage}
 					setReadingProgressPercentage={setReadingProgressPercentage}
 				/>
 			</main>

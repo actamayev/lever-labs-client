@@ -1,16 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
 	blocks: ContentBlock[]
-	readingProgressPercentage: number
 	setReadingProgressPercentage: React.Dispatch<React.SetStateAction<number>>
 }
 
 export default function ReadingContainer(props: Props) {
-	const { blocks, readingProgressPercentage, setReadingProgressPercentage } = props
+	const { blocks, setReadingProgressPercentage } = props
 	const [readingState, setReadingState] = useState<ReadingStateWithAttempts>({
 		revealedBlocks: [blocks[0].id],
 		completedQuizzes: [],
@@ -18,6 +17,7 @@ export default function ReadingContainer(props: Props) {
 	})
 	const [activeQuiz, setActiveQuiz] = useState<ActiveQuiz | null>(null)
 	const contentRef = useRef<HTMLDivElement>(null)
+	const [quizStyle, setQuizStyle] = useState({ top: "5rem", bottom: "0rem" })
 
 	useEffect(() => {
 		// Count total required actions (continues + quizzes)
@@ -31,18 +31,18 @@ export default function ReadingContainer(props: Props) {
 		const percentage = Math.min((completedActions / totalActions) * 100, 100)
 
 		setReadingProgressPercentage(percentage)
-	}, [blocks.length, readingState.revealedBlocks, readingState.completedQuizzes, setReadingProgressPercentage])
-
-	const quizStyle = useMemo(() => {
-		if (readingProgressPercentage !== 100) {
-			return  { top: "5rem" }
+		if (percentage !== 100) {
+			return setQuizStyle({ top: "5rem", bottom: "0rem" })  // 5rem = 80px (h-20)
 		}
-		return { top: "5rem", bottom: "5rem" }
-	}, [readingProgressPercentage])
+		return setQuizStyle({ top: "5rem", bottom: "5rem" })
+	}, [blocks.length, readingState.revealedBlocks, readingState.completedQuizzes, setReadingProgressPercentage])
 
 	return (
 		<div className="h-full flex relative">
-			<div className={cn("h-full transition-all duration-300", activeQuiz ? "w-2/3" : "w-full")}>
+			<div className={cn(
+				"h-full transition-all duration-300",
+				activeQuiz ? "w-2/3" : "w-full"
+			)}>
 				<div ref={contentRef} className="px-24 py-6 h-full overflow-y-auto">
 					{blocks.map((block) => (
 						<ReadingBlock
@@ -63,7 +63,7 @@ export default function ReadingContainer(props: Props) {
 					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
 					activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}
-				style={quizStyle} // 5rem = 80px (h-20)
+				style={quizStyle}
 			>
 				<QuizSection
 					blocks={blocks}

@@ -5,6 +5,12 @@ import { Button } from "../../shadcn/ui/button"
 import { CustomQuiz } from "../../icons/custom-quiz"
 import AnswerChoiceButton from "./answer-choice-button"
 import QuizExplanationSection from "./quiz-explanation-section"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/shadcn/ui/dropdown-menu"
 
 interface Props {
     blocks: ContentBlock[]
@@ -21,7 +27,6 @@ export default function QuizSection(props: Props) {
 		setActiveQuiz,
 		setReadingState
 	} = props
-
 	// Store answers for each question separately
 	const [quizAnswers, setQuizAnswers] = useState<QuizAnswerAttempt[]>([])
 	// Store selected answers for each question index
@@ -124,14 +129,58 @@ export default function QuizSection(props: Props) {
 
 	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
 
+	function QuizDropdownMenuItem({ question } : { question: Question }) {
+		const setActiveQuizCallback = () => {
+			setActiveQuiz(prev => {
+				if (!prev) return null
+				return {
+					...prev,
+					questionIndex: question.activityQuestionIndex + 1,
+					selectedChoice: selectedAnswers[question.activityQuestionIndex + 1] ?? null,
+					showExplanation: prev.isReview || false,
+				}
+			})
+		}
+		return (
+			<DropdownMenuItem
+				className="cursor-pointer text-2xl"
+				onClick={setActiveQuizCallback}
+				disabled
+			>
+				Quiz {question.activityQuestionIndex}
+			</DropdownMenuItem>
+		)
+	}
+
 	return (
 		<div className="h-full flex flex-col">
 			<div className="py-3 px-6 border-b-2 border-zinc-300 dark:border-zinc-700">
 				<div className="flex items-center justify-between">
-					<h3 className="text-2xl font-semibold flex flex-row items-center gap-4">
-						{activeQuiz.isReview ? <CheckCircle /> : <CustomQuiz />}
-						{activeQuiz.isReview ? "Quiz Review" : "Quiz"}
-					</h3>
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<h3 className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
+							hover:bg-zinc-100 !px-2 py-1 rounded-lg">
+								{activeQuiz.isReview ? <CheckCircle /> : <CustomQuiz />}
+								{activeQuiz.isReview ? `Quiz Review ${activeQuiz.questionIndex + 1}`
+									: `Quiz ${activeQuiz.questionIndex + 1}`}
+							</h3>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="start" className="text-lg">
+							{blocks.map((block) => {
+								// Skip if there's no quiz action or no questions
+								if (!block.action.quiz?.questions.length) {
+									return null
+								}
+
+								return block.action.quiz.questions.map((question, questionIndex) => (
+									<QuizDropdownMenuItem
+										key={`${block.id}-question-${questionIndex}`}
+										question={question}
+									/>
+								))
+							})}
+						</DropdownMenuContent>
+					</DropdownMenu>
 					<Button
 						variant="ghost"
 						size="icon"

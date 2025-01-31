@@ -59,7 +59,8 @@ const ledReadingBlocks: ContentBlock[] = [
 								correct: false,
 								explanation: "Test explanation.",
 							}
-						]
+						],
+						activityQuestionIndex: 1
 					}
 				]
 			}
@@ -120,6 +121,7 @@ const ledReadingBlocks: ContentBlock[] = [
 								explanation: "Test explanation.",
 							},
 						],
+						activityQuestionIndex: 2
 					},
 					{
 						question: "What is the main product of the Calvin Cycle?",
@@ -145,6 +147,7 @@ const ledReadingBlocks: ContentBlock[] = [
 								explanation: "Test explanation.",
 							},
 						],
+						activityQuestionIndex: 3
 					},
 				],
 			},
