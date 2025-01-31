@@ -1,27 +1,42 @@
 import { observer } from "mobx-react"
-import { CheckCircle, StepForward } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
+import { CheckCircle, StepForward } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
+import { BlueTactileButton } from "../../tactile-buttons"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { BlueTactileButton } from "../../tactile-buttons"
 
 interface Props {
 	block: ContentBlock
 	blocks: ContentBlock[]
-	readingState: ReadingState
+	readingState: ReadingStateWithAttempts
+	setActiveQuiz: React.Dispatch<React.SetStateAction<ActiveQuiz | null>>
 	setReadingState: (value: React.SetStateAction<ReadingStateWithAttempts>) => void
-	onQuizOpen: (blockId: ContentBlockID) => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 function ReadingBlock(props: Props) {
-	const { block, blocks, readingState, setReadingState, onQuizOpen } = props
+	const { block, blocks, readingState, setReadingState, setActiveQuiz } = props
 	const [isContinued, setIsContinued] = useState(false)
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	const isRevealed = readingState.revealedBlocks.includes(block.id)
 	const isQuizCompleted = readingState.completedQuizzes.includes(block.id)
+
+	const handleQuizOpen = useCallback((blockId: ContentBlockID) => {
+		const isReview = readingState.completedQuizzes.includes(blockId)
+		const previousAttempt = readingState.quizAttempts.find(attempt => attempt.blockId === blockId)
+
+		setActiveQuiz({
+			blockId,
+			questionIndex: 0,
+			selectedChoice: previousAttempt?.answers[0]?.selectedChoice ?? null,
+			showExplanation: isReview,
+			isReview,
+			previousAnswers: previousAttempt?.answers ?? []
+		})
+	}, [readingState.completedQuizzes, readingState.quizAttempts, setActiveQuiz])
 
 	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
@@ -83,7 +98,7 @@ function ReadingBlock(props: Props) {
 
 			{isRevealed && block.action.type === "quiz" && (
 				<TactileButton
-					onClick={() => onQuizOpen(block.id)}
+					onClick={() => handleQuizOpen(block.id)}
 					className={cn(
 						"px-6 !py-5 text-xl transition-none rounded-2xl border-2 w-1/2 h-14",
 						quizButtonClasses

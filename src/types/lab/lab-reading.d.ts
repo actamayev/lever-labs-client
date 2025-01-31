@@ -25,11 +25,6 @@ declare global {
 		explanation?: string
 	}
 
-	interface ReadingState {
-		revealedBlocks: string[]
-		completedQuizzes: string[]
-	}
-
 	interface QuizAnswerAttempt {
 		questionIndex: number
 		selectedChoice: number
@@ -50,7 +45,9 @@ declare global {
 		answers: QuizAnswerAttempt[]
 	}
 
-	interface ReadingStateWithAttempts extends ReadingState {
+	interface ReadingStateWithAttempts {
+		revealedBlocks: string[]
+		completedQuizzes: string[]
 		quizAttempts: QuizAttempt[]
 	}
 }

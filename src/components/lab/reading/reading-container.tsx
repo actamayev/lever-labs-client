@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface Props {
+	blocks: ContentBlock[]
 	readingProgressPercentage: number
 	setReadingProgressPercentage: React.Dispatch<React.SetStateAction<number>>
-	blocks: ContentBlock[]
 }
 
 export default function ReadingContainer(props: Props) {
@@ -33,20 +33,6 @@ export default function ReadingContainer(props: Props) {
 		setReadingProgressPercentage(percentage)
 	}, [blocks.length, readingState.revealedBlocks, readingState.completedQuizzes, setReadingProgressPercentage])
 
-	const handleQuizOpen = useCallback((blockId: ContentBlockID) => {
-		const isReview = readingState.completedQuizzes.includes(blockId)
-		const previousAttempt = readingState.quizAttempts.find(attempt => attempt.blockId === blockId)
-
-		setActiveQuiz({
-			blockId,
-			questionIndex: 0,
-			selectedChoice: previousAttempt?.answers[0]?.selectedChoice ?? null,
-			showExplanation: isReview,
-			isReview,
-			previousAnswers: previousAttempt?.answers ?? []
-		})
-	}, [readingState.completedQuizzes, readingState.quizAttempts])
-
 	const quizStyle = useMemo(() => {
 		if (readingProgressPercentage !== 100) {
 			return  { top: "5rem" }
@@ -64,8 +50,8 @@ export default function ReadingContainer(props: Props) {
 							block={block}
 							blocks={blocks}
 							readingState={readingState}
+							setActiveQuiz={setActiveQuiz}
 							setReadingState={setReadingState}
-							onQuizOpen={handleQuizOpen}
 						/>
 					))}
 				</div>

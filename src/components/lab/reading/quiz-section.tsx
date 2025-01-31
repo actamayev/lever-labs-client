@@ -30,19 +30,19 @@ export default function QuizSection(props: Props) {
 
 	// Initialize answers from previous attempt if reviewing
 	useEffect(() => {
-		if (activeQuiz?.isReview) {
-			setQuizAnswers(activeQuiz.previousAnswers)
-			// Initialize selectedAnswers from previous answers
-			const maxIndex = Math.max(...activeQuiz.previousAnswers.map(a => a.questionIndex))
-			const initialSelected = Array(maxIndex + 1).fill(null)
-			activeQuiz.previousAnswers.forEach(answer => {
-				initialSelected[answer.questionIndex] = answer.selectedChoice
-			})
-			setSelectedAnswers(initialSelected)
-		} else {
+		if (!activeQuiz?.isReview) {
 			setQuizAnswers([])
 			setSelectedAnswers([])
+			return
 		}
+		setQuizAnswers(activeQuiz.previousAnswers)
+		// Initialize selectedAnswers from previous answers
+		const maxIndex = Math.max(...activeQuiz.previousAnswers.map(a => a.questionIndex))
+		const initialSelected = Array(maxIndex + 1).fill(null)
+		activeQuiz.previousAnswers.forEach(answer => {
+			initialSelected[answer.questionIndex] = answer.selectedChoice
+		})
+		setSelectedAnswers(initialSelected)
 	}, [activeQuiz?.isReview, activeQuiz?.previousAnswers])
 
 	const handleAnswerSelect = useCallback((choiceIndex: number) => {
