@@ -24,19 +24,19 @@ function ReadingBlock(props: Props) {
 	const isRevealed = readingState.revealedBlocks.includes(block.id)
 	const isQuizCompleted = readingState.completedQuizzes.includes(block.id)
 
-	const handleQuizOpen = useCallback((blockId: ContentBlockID) => {
-		const isReview = readingState.completedQuizzes.includes(blockId)
-		const previousAttempt = readingState.quizAttempts.find(attempt => attempt.blockId === blockId)
+	const handleQuizOpen = useCallback(() => {
+		const isReview = readingState.completedQuizzes.includes(block.id)
+		const previousAttempt = readingState.quizAttempts.find(attempt => attempt.blockId === block.id)
 
 		setActiveQuiz({
-			blockId,
-			questionIndex: 0,
+			blockId: block.id,
+			questionIndex: 0, // If there are multiple questions in the block, which one to open
 			selectedChoice: previousAttempt?.answers[0]?.selectedChoice ?? null,
 			showExplanation: isReview,
 			isReview,
 			previousAnswers: previousAttempt?.answers ?? []
 		})
-	}, [readingState.completedQuizzes, readingState.quizAttempts, setActiveQuiz])
+	}, [block.id, readingState.completedQuizzes, readingState.quizAttempts, setActiveQuiz])
 
 	const handleContinue = useCallback((blockId: ContentBlockID) => {
 		const nextBlock = blocks[blocks.findIndex(b => b.id === blockId) + 1] as ContentBlock | undefined
@@ -98,7 +98,7 @@ function ReadingBlock(props: Props) {
 
 			{isRevealed && block.action.type === "quiz" && (
 				<TactileButton
-					onClick={() => handleQuizOpen(block.id)}
+					onClick={handleQuizOpen}
 					className={cn(
 						"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
 						quizButtonClasses

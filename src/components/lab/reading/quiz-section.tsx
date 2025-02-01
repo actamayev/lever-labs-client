@@ -128,8 +128,11 @@ export default function QuizSection(props: Props) {
 
 	const currentQuestion = currentBlock.action.quiz.questions[activeQuiz.questionIndex]
 
-	function QuizDropdownMenuItem({ question } : { question: Question }) {
+	function QuizDropdownMenuItem({ question, blockId } : { question: Question, blockId: ContentBlockID }) {
 		const setActiveQuizCallback = () => {
+			if (!activeQuiz || blockId === activeQuiz.blockId) return
+			// const nextQuestionIndex = activeQuiz.questionIndex + 1
+
 			setActiveQuiz(prev => {
 				if (!prev) return null
 				return {
@@ -144,7 +147,6 @@ export default function QuizSection(props: Props) {
 			<DropdownMenuItem
 				className="cursor-pointer text-2xl"
 				onClick={setActiveQuizCallback}
-				disabled
 			>
 				Quiz {question.activityQuestionIndex}
 			</DropdownMenuItem>
@@ -157,24 +159,27 @@ export default function QuizSection(props: Props) {
 				<div className="flex items-center justify-between">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<h3 className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
-							hover:bg-zinc-100 !px-2 py-1 rounded-lg">
-								{activeQuiz.isReview ? <CheckCircle /> : <CustomQuiz />}
-								{activeQuiz.isReview ? `Quiz Review ${activeQuiz.questionIndex + 1}`
-									: `Quiz ${activeQuiz.questionIndex + 1}`}
+							<h3
+								className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
+								hover:bg-zinc-100 !px-2 py-1 rounded-lg"
+							>
+								{activeQuiz.isReview ? (
+									<><CheckCircle />Quiz Review {activeQuiz.questionIndex + 1}</>
+								) : (
+									<><CustomQuiz /> Quiz {activeQuiz.questionIndex + 1}</>
+								)}
 							</h3>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="start" className="text-lg">
 							{blocks.map((block) => {
 								// Skip if there's no quiz action or no questions
-								if (!block.action.quiz?.questions.length) {
-									return null
-								}
+								if (!block.action.quiz?.questions.length) return null
 
-								return block.action.quiz.questions.map((question, questionIndex) => (
+								return block.action.quiz.questions.map(question => (
 									<QuizDropdownMenuItem
-										key={`${block.id}-question-${questionIndex}`}
+										key={`${block.id}-question-${question.activityQuestionIndex}`}
 										question={question}
+										blockId={block.id}
 									/>
 								))
 							})}
