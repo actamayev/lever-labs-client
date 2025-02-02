@@ -22,7 +22,8 @@ function ReadingBlock(props: Props) {
 		if (!block.action.quiz) return
 		labReadingClass.setActiveQuiz({
 			blockId: block.id,
-			questionUUID: block.action.quiz.questions[0].questionUUID
+			questionUUID: block.action.quiz.questions[0].questionUUID,
+			isCorrect: null,
 		})
 	}, [block.action.quiz, block.id, labReadingClass])
 
@@ -37,7 +38,7 @@ function ReadingBlock(props: Props) {
 		setIsContinued(true)
 	}, [block.id, labReadingClass])
 
-	const isQuizCorrect = labReadingClass.quizAttempts.find(quizAttempt => quizAttempt.blockId === block.id)
+	const isQuizCorrect = labReadingClass.activeQuiz?.isCorrect
 
 	const getShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {

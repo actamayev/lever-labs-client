@@ -27,11 +27,7 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 			)}>
 				<div ref={contentRef} className="px-24 py-6 h-full overflow-y-auto">
 					{labReadingClass.activeBlocks.map((block) => (
-						<ReadingBlock
-							key={block.id}
-							block={block}
-							// nextBlock={blocks[blocks.findIndex(b => b.id === block.id) + 1] as ContentBlock | undefined}
-						/>
+						<ReadingBlock key={block.id} block={block} />
 					))}
 				</div>
 			</div>

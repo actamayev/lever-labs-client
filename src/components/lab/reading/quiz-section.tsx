@@ -1,4 +1,3 @@
-import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { CheckCircle, X } from "lucide-react"
 import {
@@ -13,20 +12,20 @@ import AnswerChoiceButton from "./answer-choice-button"
 import QuizExplanationSection from "./quiz-explanation-section"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
-// eslint-disable-next-line max-lines-per-function
 function QuizSection() {
 	const labReadingClass = useLabReadingContext()
 
-	if (!activeBlock?.action.quiz) return null
+	if (!labReadingClass.activeBlock?.action.quiz) return null
 
 	function QuizDropdownMenuItem({ question, blockId } : { question: Question, blockId: ContentBlockID }) {
 		const setActiveQuizCallback = () => {
-			setActiveQuiz({
+			labReadingClass.setActiveQuiz({
 				blockId,
-				questionUUID: question.questionUUID
+				questionUUID: question.questionUUID,
+				isCorrect: null
 			})
 		}
-		const disabled = activeQuiz.questionUUID === question.questionUUID
+		const disabled = labReadingClass.activeQuiz?.questionUUID === question.questionUUID
 		return (
 			<DropdownMenuItem
 				className="cursor-pointer text-2xl"
@@ -37,13 +36,6 @@ function QuizSection() {
 			</DropdownMenuItem>
 		)
 	}
-
-	const isQuestionCorrect = activeBlock.action.quiz.questions.find(question => {
-		const quizAttempt = quizAttempts.find(attempt => attempt.questionUUID === question.questionUUID)
-		if (!quizAttempt) return false
-
-		return quizAttempt.answerAttempts.find(answer => answer.isCorrect) || false
-	})
 
 	if (!labReadingClass.currentQuestion) return null
 
@@ -57,7 +49,7 @@ function QuizSection() {
 								className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
 								hover:bg-zinc-100 !px-2 py-1 rounded-lg"
 							>
-								{isQuestionCorrect ? (
+								{labReadingClass.activeQuiz?.isCorrect ? (
 									<><CheckCircle />Quiz Review #</>
 								) : (
 									<><CustomQuiz /> Quiz #</>
@@ -96,18 +88,16 @@ function QuizSection() {
 				</h3>
 
 				<div className="grid grid-cols-2 gap-4">
-					{[0, 1, 2, 3].map((index) => (
+					{[1, 2, 3, 4].map((index) => (
 						<AnswerChoiceButton
 							key={index}
-							index={index}
+							index={index as AnswerChoiceID}
 						/>
 					))}
 				</div>
 			</div>
 
-			<div className="p-4">
-				<QuizExplanationSection />
-			</div>
+			<QuizExplanationSection />
 		</div>
 	)
 }

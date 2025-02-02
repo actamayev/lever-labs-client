@@ -1,4 +1,4 @@
-import { isEmpty, isNil } from "lodash-es"
+import { isNull } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -37,6 +37,16 @@ class LabReadingClass {
 		this.draftAnswer = draftAnswer
 	})
 
+	public setDraftAnswerChoice = action((answerChoiceId: AnswerChoiceID): void => {
+		if (!this.activeQuiz) return
+
+		this.setDraftAnswer({
+			questionUUID: this.activeQuiz.questionUUID,
+			answerChoiceId,
+			isCorrect: null
+		})
+	})
+
 	public setQuizAttempts = action((questionUUID: QuestionUUID, attempt: QuizAnswerAttempt): void => {
 		this.quizAttempts.set(questionUUID, [...(this.quizAttempts.get(questionUUID) || []), attempt])
 	})
@@ -59,22 +69,16 @@ class LabReadingClass {
 		return !!this.quizAttempts.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
 	}
 
-	public get didUserAnswerActiveQuizCorrectly(): boolean {
-		const quizAttemptsForActiveQuestion = this.quizAttempts.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
-
-		if (isNil(quizAttemptsForActiveQuestion) || isEmpty(quizAttemptsForActiveQuestion)) return false
-		return !!quizAttemptsForActiveQuestion.find(attempt => attempt.isCorrect)
-	}
-
 	public get currentQuestion(): Question | undefined {
 		return this.activeBlock?.action.quiz?.questions.find(question => question.questionUUID === this.activeQuiz?.questionUUID)
 	}
 
-	public selectAnswer = action((answerChoiceId: AnswerChoiceID, questionUUID: QuestionUUID): void => {
+	public selectAnswer = action((answerChoiceId: AnswerChoiceID): void => {
 		if (
 			!this.activeBlock ||
 			// If this answer has been answered correctly, return
-			this.didUserAnswerActiveQuizCorrectly
+			!this.activeQuiz ||
+			this.activeQuiz.isCorrect
 		) return
 
 		// If the draft answer choice Id and question answer choice Id match, then the answer is correct
@@ -84,7 +88,7 @@ class LabReadingClass {
 		}
 
 		this.setDraftAnswer({
-			questionUUID,
+			questionUUID: this.activeQuiz.questionUUID,
 			answerChoiceId,
 			isCorrect
 		})
@@ -99,7 +103,7 @@ class LabReadingClass {
 	})
 
 	public checkAnswer = action(() => {
-		if (!this.activeBlock || !this.draftAnswer) return
+		if (!this.activeBlock || !this.draftAnswer || isNull(this.draftAnswer.isCorrect)) return
 
 		const attempt: QuizAnswerAttempt = {
 			questionUUID: this.draftAnswer.questionUUID,
@@ -136,9 +140,14 @@ class LabReadingClass {
 		const nextQuestionUUID = this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID
 		this.setActiveQuiz({
 			blockId: this.activeBlock.id,
-			questionUUID: nextQuestionUUID
+			questionUUID: nextQuestionUUID,
+			isCorrect: null
 		})
 	})
+
+	public isQuizCorrect(questionId: QuestionUUID): boolean {
+		return !!this.quizAttempts.get(questionId)?.find(attempt => attempt.isCorrect)
+	}
 
 	public logout() {
 	}

@@ -6,12 +6,11 @@ import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
-    index: number
-    selectedAnswer: AnswerChoiceID | undefined
+    index: AnswerChoiceID
 }
 
 function AnswerChoiceButton(props: Props) {
-	const { index, selectedAnswer } = props
+	const { index } = props
 	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
 
@@ -19,8 +18,8 @@ function AnswerChoiceButton(props: Props) {
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			const numKey = parseInt(event.key)
-			if (numKey >= 1 && numKey <= 4 && !labReadingClass.activeQuiz?.showExplanation) {
-				labReadingClass.selectAnswer(numKey - 1)
+			if (numKey >= 1 && numKey <= 4 && !(labReadingClass.activeQuiz?.isCorrect === null)) {
+				labReadingClass.setDraftAnswerChoice(numKey as AnswerChoiceID)
 			}
 		}
 
@@ -33,15 +32,15 @@ function AnswerChoiceButton(props: Props) {
         transition-colors bg-inherit text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 \
         whitespace-normal items-center duration-0 text-sm relative" // Added relative for number positioning
 		const isSelected = labReadingClass.draftAnswer?.answerChoiceId === index
-		const isShowingExplanation = labReadingClass.activeQuiz?.showExplanation
+		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
-		if (isSelected && !isShowingExplanation) {
+		if (isSelected && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles, "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme")
 		}
 
-		const isCorrect = labReadingClass.currentQuestion?.choices[index].correct
+		const isCorrect = labReadingClass.activeQuiz?.isCorrect
 
-		if (isShowingExplanation && isSelected) {
+		if (hasActiveQuizBeenAnswered && isSelected) {
 			return cn(
 				baseStyles,
 				isCorrect
@@ -51,21 +50,22 @@ function AnswerChoiceButton(props: Props) {
 		}
 
 		return cn(baseStyles, "hover:bg-zinc-100 border-zinc-200 dark:hover:bg-zinc-800 dark:border-zinc-700")
-	}, [activeQuiz, currentQuestion.choices, index, selectedAnswer])
+	}, [index, labReadingClass.activeQuiz?.isCorrect,
+		labReadingClass.draftAnswer?.answerChoiceId,labReadingClass.hasActiveQuizBeenAnswered])
 
 	const getNumberStyles = useMemo(() => {
-		const isSelected = selectedAnswer === index
-		const isShowingExplanation = activeQuiz.showExplanation
+		const isSelected = labReadingClass.draftAnswer?.answerChoiceId === index
+		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
 		const baseStyles = "absolute top-2 left-2 w-6 h-6 flex items-center justify-center \
         border-2 rounded-md text-xs font-medium"
 
-		if (isSelected && !isShowingExplanation) {
+		if (isSelected && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles, "border-pipTheme text-pipTheme")
 		}
 
-		if (isShowingExplanation && isSelected) {
-			const isCorrect = currentQuestion.choices[index].correct
+		if (hasActiveQuizBeenAnswered && isSelected) {
+			const isCorrect = labReadingClass.activeQuiz?.isCorrect
 			return cn(
 				baseStyles,
 				isCorrect
@@ -75,37 +75,43 @@ function AnswerChoiceButton(props: Props) {
 		}
 
 		return cn(baseStyles, "border-zinc-300 dark:border-zinc-600")
-	}, [activeQuiz.showExplanation, currentQuestion.choices, index, selectedAnswer])
+	}, [index, labReadingClass.activeQuiz?.isCorrect,
+		labReadingClass.draftAnswer?.answerChoiceId, labReadingClass.hasActiveQuizBeenAnswered])
 
+	// eslint-disable-next-line complexity
 	const shadowColor = useMemo(() => {
-		const isSelected = selectedAnswer === index
+		if (!labReadingClass.activeQuiz) return ""
+		const isSelected = labReadingClass.draftAnswer?.answerChoiceId === index
 		if (defaultSiteTheme === "light") {
-			if (!activeQuiz.showExplanation || !isSelected) {
+			if (!labReadingClass.hasActiveQuizBeenAnswered || !isSelected) {
 				if (isSelected) return "rgb(0, 61, 165)"
 				else return "rgb(228,228,231)"
 			}
-			const isCorrect = currentQuestion.choices[index].correct
+			const isCorrect = labReadingClass.activeQuiz.isCorrect
 			if (isCorrect) return "rgb(34,197,94)"
 			else return "rgb(0, 61, 165)"
 		}
-		if (!activeQuiz.showExplanation || !isSelected) {
+		if (!labReadingClass.hasActiveQuizBeenAnswered || !isSelected) {
 			if (isSelected) return "rgb(0, 61, 165)"
 			else return "rgb(63, 63, 70)"
 		}
-		const isCorrect = currentQuestion.choices[index].correct
+		const isCorrect = labReadingClass.activeQuiz.isCorrect
 		if (isCorrect) return "rgb(34,197,94)"
 		else return "rgb(0, 61, 165)"
-	}, [activeQuiz.showExplanation, currentQuestion.choices, defaultSiteTheme, index, selectedAnswer])
+	}, [defaultSiteTheme, index, labReadingClass.activeQuiz,
+		labReadingClass.draftAnswer?.answerChoiceId, labReadingClass.hasActiveQuizBeenAnswered])
+
+	if (!labReadingClass.activeQuiz) return null
 
 	return (
 		<TactileButton
-			onClick={() => handleAnswerSelect(index)}
-			disabled={activeQuiz.showExplanation}
+			onClick={() => labReadingClass.selectAnswer(index)}
+			// disabled={labReadingClass.activeQuiz.showExplanation}
 			className={getAnswerStyles}
 			shadowColor={shadowColor}
 		>
 			<span className={getNumberStyles}>{index + 1}</span>
-			<div className="ml-8">{currentQuestion.choices[index].text}</div>
+			<div className="ml-8">{labReadingClass.currentQuestion?.question}</div>
 		</TactileButton>
 	)
 }

@@ -35,6 +35,7 @@ declare global {
 	interface ActiveQuiz {
 		blockId: ContentBlockID
 		questionUUID: QuestionUUID
+		isCorrect: boolean | null // null if the user hasn't answered the question yet
 	}
 
 	interface QuizAnswerAttempt {
@@ -53,7 +54,7 @@ declare global {
 		// blockId: ContentBlockID
 		questionUUID: QuestionUUID
 		answerChoiceId: AnswerChoiceID
-		isCorrect: boolean
+		isCorrect: boolean | null
 	}
 }
 

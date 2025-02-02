@@ -27,11 +27,11 @@ function QuizExplanationSection() {
 		return (
 			<div className={cn(
 				"p-4 rounded-lg text-xl",
-				labReadingClass.didUserAnswerActiveQuizCorrectly
+				labReadingClass.activeQuiz?.isCorrect
 					? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
 					: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
 			)}>
-				{labReadingClass.didUserAnswerActiveQuizCorrectly
+				{labReadingClass.activeQuiz?.isCorrect
 					? "Correct!"
 					: "Incorrect. Try again."}
 			</div>
@@ -41,11 +41,11 @@ function QuizExplanationSection() {
 	function HandleNextQuestion() {
 		if (!labReadingClass.activeBlock?.action.quiz) return null
 
-		const isAnswerCorrect = hasSelectedAnswer && currentQuestion.choices[selectedAnswer]?.correct
-		const isLastQuestion = activeQuiz.questionIndex === activeBlock.action.quiz.questions.length - 1
+		const isAnswerCorrect = labReadingClass.draftAnswer?.isCorrect
+		const isLastQuestion = labReadingClass.activeBlock.action.quiz.questions[-1].questionUUID ===
+			labReadingClass.activeQuiz?.questionUUID
 
-		const shouldShowNextButton = isReviewMode || (labReadingClass.draftAnswer && isAnswerCorrect)
-		if (!shouldShowNextButton) return null
+		if (!isAnswerCorrect) return null
 
 		return (
 			<BlueTactileButton
@@ -60,10 +60,10 @@ function QuizExplanationSection() {
 	}
 
 	return (
-		<>
+		<div className="p-4">
 			<ShowExplanation />
 			<HandleNextQuestion />
-		</>
+		</div>
 	)
 }
 
