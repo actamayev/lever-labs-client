@@ -95,7 +95,9 @@ function QuizSection() {
 				</div>
 			</div>
 
-			<QuizExplanationSection />
+			<div className="p-4">
+				<QuizExplanationSection />
+			</div>
 		</div>
 	)
 }

@@ -115,7 +115,7 @@ function AnswerChoiceButton(props: Props) {
 			className={getAnswerStyles}
 			shadowColor={shadowColor}
 		>
-			<span className={getNumberStyles}>{index + 1}</span>
+			<span className={getNumberStyles}>{index}</span>
 			<div className="ml-8">{answerText}</div>
 		</TactileButton>
 	)

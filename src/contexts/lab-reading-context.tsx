@@ -7,7 +7,7 @@ class LabReadingClass {
 	public activeBlocks: ContentBlock[] = [] // All the blocks in the current activity
 	public shownBlocks: ContentBlock[] = [] // The blocks that have been shown
 	public activeQuiz: ActiveQuiz | null = null
-	public draftAnswer: SelectedAnswerDrafts | null = null
+	public draftAnswer: SelectedAnswerDrafts | null = null // consider making this a map (question uuid -> SelectedAnswerDrafts)
 	public quizAttempts: Map<QuestionUUID, QuizAnswerAttempt[]> = new Map()
 	public quizStyle = { top: "5rem", bottom: "0rem" }
 
@@ -55,8 +55,8 @@ class LabReadingClass {
 		this.quizAttempts.set(questionUUID, [...(this.quizAttempts.get(questionUUID) || []), attempt])
 	})
 
-	public get readingProgressPercentage(): number {
-		const percentage = Math.min((this.shownBlocks.length / this.activeBlocks.length) * 100, 100)
+	get readingProgressPercentage(): number {
+		const percentage = Math.min(((this.shownBlocks.length - 1) / this.activeBlocks.length) * 100, 100)
 		if (percentage !== 100) {
 			this.setQuizStyle("5rem", "0rem")
 		} else {
@@ -88,12 +88,15 @@ class LabReadingClass {
 			!this.activeQuiz ||
 			this.activeQuiz.isCorrect
 		) return
+		console.log(answerChoiceId)
 
 		// If the draft answer choice Id and question answer choice Id match, then the answer is correct
 		let isCorrect = false
 		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === this.draftAnswer?.answerChoiceId)) {
 			isCorrect = true
 		}
+		console.log("isCorrect", isCorrect)
+		console.log("this.activeQuiz.questionUUID", this.activeQuiz.questionUUID)
 
 		this.setDraftAnswer({
 			questionUUID: this.activeQuiz.questionUUID,

@@ -11,7 +11,7 @@ function QuizExplanationSection() {
 	if (!labReadingClass.hasActiveQuizBeenAnswered) {
 		return (
 			<BlueTactileButton
-				onClick={labReadingClass.checkAnswer}
+				onClick={() => labReadingClass.checkAnswer()}
 				className="w-full h-14 text-xl"
 				disabled={isNull(labReadingClass.draftAnswer)}
 				shadowHeight={4}
@@ -42,7 +42,7 @@ function QuizExplanationSection() {
 		if (!labReadingClass.activeBlock?.action.quiz) return null
 
 		const isAnswerCorrect = labReadingClass.draftAnswer?.isCorrect
-		const isLastQuestion = labReadingClass.activeBlock.action.quiz.questions[-1].questionUUID ===
+		const isLastQuestion = labReadingClass.activeBlock.action.quiz.questions.at(-1)?.questionUUID ===
 			labReadingClass.activeQuiz?.questionUUID
 
 		if (!isAnswerCorrect) return null
@@ -60,10 +60,10 @@ function QuizExplanationSection() {
 	}
 
 	return (
-		<div className="p-4">
+		<>
 			<ShowExplanation />
 			<HandleNextQuestion />
-		</div>
+		</>
 	)
 }
 
