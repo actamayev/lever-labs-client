@@ -1,5 +1,5 @@
 import { observer } from "mobx-react"
-import { useCallback, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { CheckCircle, StepForward } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
@@ -18,27 +18,7 @@ function ReadingBlock(props: Props) {
 	const [isContinued, setIsContinued] = useState(false)
 	const defaultSiteTheme = useDefaultSiteTheme()
 
-	const handleQuizOpen = useCallback(() => {
-		if (!block.action.quiz) return
-		labReadingClass.setActiveQuiz({
-			blockId: block.id,
-			questionUUID: block.action.quiz.questions[0].questionUUID,
-			isCorrect: null,
-		})
-	}, [block.action.quiz, block.id, labReadingClass])
-
-	const handleContinue = useCallback(() => {
-		const nextBlock = labReadingClass.getNextBlock(block.id)
-		if (!nextBlock) return
-		const nextElement = document.getElementById(`block-${nextBlock.id}`)
-		labReadingClass.setShownBlocks(nextBlock.id)
-		setIsContinued(true)
-		if (nextElement) {
-			nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
-		}
-	}, [block.id, labReadingClass])
-
-	const isQuizCorrect = labReadingClass.activeQuiz?.isCorrect
+	const isQuizCorrect = labReadingClass.areQuizesInBlockCorrect(block.id)
 
 	const getShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {
@@ -77,7 +57,7 @@ function ReadingBlock(props: Props) {
 
 			{isRevealed && block.action.type === "continue" && !isContinued && (
 				<BlueTactileButton
-					onClick={handleContinue}
+					onClick={() => labReadingClass.handleContinue(block.id, setIsContinued)}
 					className="px-6 !py-5 text-3xl w-full h-16"
 					shadowHeight={4}
 				>
@@ -88,7 +68,7 @@ function ReadingBlock(props: Props) {
 
 			{isRevealed && block.action.type === "quiz" && (
 				<TactileButton
-					onClick={handleQuizOpen}
+					onClick={() => labReadingClass.openQuiz(block)}
 					className={cn(
 						"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
 						quizButtonClasses

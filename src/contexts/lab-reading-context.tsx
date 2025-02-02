@@ -113,6 +113,7 @@ class LabReadingClass {
 
 		this.setShownBlocks(nextBlock.id)
 		this.setDraftAnswer(null)
+		this.setActiveQuiz(null)
 	})
 
 	public checkAnswer = action(() => {
@@ -161,6 +162,36 @@ class LabReadingClass {
 	public isQuizCorrect(questionId: QuestionUUID): boolean {
 		return !!this.quizAttempts.get(questionId)?.find(attempt => attempt.isCorrect)
 	}
+
+	public areQuizesInBlockCorrect(blockId: ContentBlockID): boolean {
+		const questions = this.activeBlocks.find(block => block.id === blockId)?.action.quiz?.questions
+		if (!questions) return false
+
+		return questions.every(question => this.isQuizCorrect(question.questionUUID))
+	}
+
+	public openQuiz = action((block: ContentBlock) => {
+		if (!block.action.quiz) return
+		this.setActiveQuiz({
+			blockId: block.id,
+			questionUUID: block.action.quiz.questions[0].questionUUID,
+			isCorrect: null,
+		})
+	})
+
+	public handleContinue = action((
+		blockId: ContentBlockID,
+		setIsContinued: React.Dispatch<React.SetStateAction<boolean>>
+	) => {
+		const nextBlock = this.getNextBlock(blockId)
+		if (!nextBlock) return
+		const nextElement = document.getElementById(`block-${nextBlock.id}`)
+		this.setShownBlocks(nextBlock.id)
+		setIsContinued(true)
+		if (nextElement) {
+			nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
+		}
+	})
 
 	public logout() {
 	}

@@ -1,10 +1,10 @@
+import { toJS } from "mobx"
 import { observer } from "mobx-react"
 import { useEffect, useRef } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
-import { toJS } from "mobx"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -41,9 +41,7 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 				)}
 				style={toJS(labReadingClass.quizStyle)}
 			>
-				{labReadingClass.activeQuiz && (
-					<QuizSection />
-				)}
+				{labReadingClass.activeQuiz && <QuizSection />}
 			</div>
 		</div>
 	)
