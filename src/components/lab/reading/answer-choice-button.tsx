@@ -1,3 +1,4 @@
+import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { useMemo, useEffect } from "react"
 import { cn } from "../../../lib/shadcn/utils"
@@ -33,7 +34,7 @@ function AnswerChoiceButton(props: Props) {
 		const activeQuizAttempt = labReadingClass.getActiveQuizAttempt(index)
 		return isSelected || activeQuizAttempt
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [index, labReadingClass.draftAnswer, labReadingClass.getActiveQuizAttempt])
+	}, [index, labReadingClass.draftAnswer, labReadingClass.quizAttempts])
 
 	const getAnswerStyles = useMemo(() => {
 		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
@@ -46,11 +47,13 @@ function AnswerChoiceButton(props: Props) {
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt) {
 			const isCorrect = labReadingClass.activeQuiz?.isCorrect
+			let isCorrectStyles = "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme dark:text-pipThemeOffWhite"
+			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
+			dark:bg-green-900 dark:hover:bg-green-800 text-black dark:text-white"
+			else if (isCorrect === false) isCorrectStyles = "border-red-500 bg-red-100 hover:bg-red-200 \
+			dark:bg-red-900 dark:hover:bg-red-800 text-black dark:text-white"
 			return cn(
-				baseStyles,
-				isCorrect
-					? "bg-green-100 dark:bg-green-900 border-green-500 text-black dark:text-white"
-					: "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme dark:text-pipThemeOffWhite"
+				baseStyles, isCorrectStyles
 			)
 		}
 
@@ -69,11 +72,12 @@ function AnswerChoiceButton(props: Props) {
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt) {
 			const isCorrect = labReadingClass.activeQuiz?.isCorrect
+			let isCorrectStyles = "border-pipTheme text-pipTheme dark:text-pipThemeOffWhite" // before answer is selected
+			if (isCorrect) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
+			else if (isCorrect === false) isCorrectStyles = "border-red-500 text-red-700 dark:text-red-300"
+
 			return cn(
-				baseStyles,
-				isCorrect
-					? "border-green-500 text-green-700 dark:text-green-300"
-					: "border-pipTheme text-pipTheme dark:text-pipThemeOffWhite"
+				baseStyles, isCorrectStyles
 			)
 		}
 
@@ -89,7 +93,8 @@ function AnswerChoiceButton(props: Props) {
 				else return "rgb(228,228,231)"
 			}
 			const isCorrect = labReadingClass.activeQuiz.isCorrect
-			if (isCorrect) return "rgb(34,197,94)"
+			if (isNull(isCorrect)) return "rgb(34,197,94)"
+			else if (isCorrect === false) return "rgb(239 68 68)"
 			else return "rgb(0, 61, 165)"
 		}
 		if (!labReadingClass.hasActiveQuizBeenAnswered || !isSelectedOrActiveQuizAttempt) {
@@ -97,11 +102,12 @@ function AnswerChoiceButton(props: Props) {
 			else return "rgb(63, 63, 70)"
 		}
 		const isCorrect = labReadingClass.activeQuiz.isCorrect
-		if (isCorrect) return "rgb(34,197,94)"
+		if (isNull(isCorrect)) return "rgb(34,197,94)"
+		else if (isCorrect === false) return "rgb(239 68 68)"
 		else return "rgb(0, 61, 165)"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [defaultSiteTheme, index, labReadingClass.activeQuiz, labReadingClass.quizAttempts,
-		labReadingClass.draftAnswer?.answerChoiceId, labReadingClass.hasActiveQuizBeenAnswered])
+	}, [labReadingClass.activeQuiz, labReadingClass.hasActiveQuizBeenAnswered,
+		labReadingClass.activeQuiz?.isCorrect, defaultSiteTheme, isSelectedOrActiveQuizAttempt])
 
 	const answerText = labReadingClass.currentQuestion?.choices[(index - 1) as 0 | 1 | 2 | 3].text
 	if (!labReadingClass.activeQuiz || !answerText) return null
