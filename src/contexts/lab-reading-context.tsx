@@ -156,6 +156,7 @@ class LabReadingClass {
 
 		if (isLastQuestion) return this.handleQuizComplete(this.activeQuiz.blockId)
 
+		// This is for when there is a next question
 		const currentQuestionIndex = this.activeBlock.action.quiz.questions.findIndex(
 			question => question.questionUUID === this.activeQuiz?.questionUUID
 		)
@@ -163,6 +164,7 @@ class LabReadingClass {
 		const nextQuestionIndex = currentQuestionIndex + 1
 		const nextQuestionUUID = this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID
 		const quizAttempts = this.quizAttempts.get(this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID)
+		this.setDraftAnswer(null)
 		if (isNil(quizAttempts)) {
 			return this.setActiveQuiz({
 				blockId: this.activeBlock.id,
