@@ -1,4 +1,4 @@
-import { isNull } from "lodash-es"
+import { isNil, isNull } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -172,10 +172,21 @@ class LabReadingClass {
 
 	public openQuiz = action((block: ContentBlock) => {
 		if (!block.action.quiz) return
+		// if the block's questions have been answered (from quizAttempts, need to relefct that when setting active quiz)
+		const quizAttempts = this.quizAttempts.get(block.action.quiz.questions[0].questionUUID)
+		console.log(quizAttempts)
+		if (isNil(quizAttempts)) {
+			return this.setActiveQuiz({
+				blockId: block.id,
+				questionUUID: block.action.quiz.questions[0].questionUUID,
+				isCorrect: null,
+			})
+		}
+		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
 		this.setActiveQuiz({
 			blockId: block.id,
 			questionUUID: block.action.quiz.questions[0].questionUUID,
-			isCorrect: null,
+			isCorrect: isCorrect?.isCorrect || null,
 		})
 	})
 
@@ -193,7 +204,13 @@ class LabReadingClass {
 		}
 	})
 
+	public getActiveQuizAttempt (answerIndex: AnswerChoiceID): QuizAnswerAttempt | undefined {
+		const attempts = this.quizAttempts.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
+		return attempts?.find(_attempt => _attempt.selectedChoice === answerIndex)
+	}
+
 	public logout() {
+		// TODO: Implement
 	}
 }
 
