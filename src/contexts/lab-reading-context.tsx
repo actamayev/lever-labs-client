@@ -222,9 +222,13 @@ class LabReadingClass {
 		}
 	})
 
+	get quizAttemptsForActiveQuiz (): QuizAnswerAttempt[] {
+		return this.quizAttempts.get(this.activeQuiz?.questionUUID || "" as QuestionUUID) || []
+	}
+
 	public getActiveQuizAttempt (answerIndex: AnswerChoiceID): QuizAnswerAttempt | undefined {
-		const attempts = this.quizAttempts.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
-		return attempts?.find(_attempt => _attempt.selectedChoice === answerIndex)
+		const attempts = this.quizAttemptsForActiveQuiz
+		return attempts.find(_attempt => _attempt.selectedChoice === answerIndex)
 	}
 
 	public logout() {
