@@ -93,18 +93,18 @@ function AnswerChoiceButton(props: Props) {
 				else return "rgb(228,228,231)"
 			}
 			const isCorrect = labReadingClass.activeQuiz.isCorrect
-			if (isNull(isCorrect)) return "rgb(34,197,94)"
+			if (isNull(isCorrect)) return "rgb(0, 61, 165)"
 			else if (isCorrect === false) return "rgb(239 68 68)"
-			else return "rgb(0, 61, 165)"
+			else return "rgb(34,197,94)"
 		}
 		if (!labReadingClass.hasActiveQuizBeenAnswered || !isSelectedOrActiveQuizAttempt) {
 			if (isSelectedOrActiveQuizAttempt) return "rgb(0, 61, 165)"
 			else return "rgb(63, 63, 70)"
 		}
 		const isCorrect = labReadingClass.activeQuiz.isCorrect
-		if (isNull(isCorrect)) return "rgb(34,197,94)"
+		if (isNull(isCorrect)) return "rgb(0, 61, 165)"
 		else if (isCorrect === false) return "rgb(239 68 68)"
-		else return "rgb(0, 61, 165)"
+		else return "rgb(34,197,94)"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [labReadingClass.activeQuiz, labReadingClass.hasActiveQuizBeenAnswered,
 		labReadingClass.activeQuiz?.isCorrect, defaultSiteTheme, isSelectedOrActiveQuizAttempt])
