@@ -54,12 +54,16 @@ class LabReadingClass {
 	public get readingProgressPercentage(): number {
 		const percentage = Math.min((this.shownBlocks.length / this.activeBlocks.length) * 100, 100)
 		if (percentage !== 100) {
-			this.quizStyle = { top: "5rem", bottom: "0rem" }
+			this.setQuizStyle("5rem", "0rem")
 		} else {
-			this.quizStyle = { top: "5rem", bottom: "5rem" }
+			this.setQuizStyle("5rem", "5rem")
 		}
 		return percentage
 	}
+
+	private setQuizStyle = action((top: string, bottom: string) => {
+		this.quizStyle = { top, bottom }
+	})
 
 	public get activeBlock(): ContentBlock | undefined {
 		return this.activeBlocks.find(block => block.id === this.activeQuiz?.blockId)

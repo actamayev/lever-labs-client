@@ -15,8 +15,6 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 function QuizSection() {
 	const labReadingClass = useLabReadingContext()
 
-	if (!labReadingClass.activeBlock?.action.quiz) return null
-
 	function QuizDropdownMenuItem({ question, blockId } : { question: Question, blockId: ContentBlockID }) {
 		const setActiveQuizCallback = () => {
 			labReadingClass.setActiveQuiz({

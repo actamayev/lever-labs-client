@@ -4,6 +4,7 @@ import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { toJS } from "mobx"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -38,7 +39,7 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
 					labReadingClass.activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}
-				style={labReadingClass.quizStyle}
+				style={toJS(labReadingClass.quizStyle)}
 			>
 				{labReadingClass.activeQuiz && (
 					<QuizSection />
