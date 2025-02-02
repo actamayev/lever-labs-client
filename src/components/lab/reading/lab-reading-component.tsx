@@ -1,4 +1,3 @@
-import { useState } from "react"
 import ReadingContainer from "./reading-container"
 import ledReadingBlocks from "../element-1/led/led-reading-blocks"
 import ActivityTemplate from "../activity-structure/activity-template"
@@ -25,8 +24,6 @@ export default function LabReadingComponent(props: Props) {
 		lessonTitle,
 		lessonProgressPercent
 	} = props
-	const [readingProgressPercentage, setReadingProgressPercentage] = useState(0)
-
 	return (
 		<ActivityTemplate
 			element={element}
@@ -38,13 +35,9 @@ export default function LabReadingComponent(props: Props) {
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
 			activityType="Reading"
-			readingProgressPercentage={readingProgressPercentage}
 		>
 			<main className="h-full overflow-hidden">
-				<ReadingContainer
-					blocks={ledReadingBlocks}
-					setReadingProgressPercentage={setReadingProgressPercentage}
-				/>
+				<ReadingContainer blocks={ledReadingBlocks} labLesson={lessonTitle}/>
 			</main>
 		</ActivityTemplate>
 	)

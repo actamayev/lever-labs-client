@@ -42,25 +42,29 @@ const ledReadingBlocks: ContentBlock[] = [
 								text: "Oxygen and water",
 								correct: false,
 								explanation: "While water is needed, oxygen is actually a product of photosynthesis, not an ingredient.",
+								answerChoiceId: 1
 							},
 							{
 								text: "Carbon dioxide and water",
 								correct: true,
 								explanation: "Correct! Plants use carbon dioxide from the air \
 								and water from the soil as the main ingredients.",
+								answerChoiceId: 2
 							},
 							{
 								text: "Glucose and oxygen",
 								correct: false,
 								explanation: "These are actually the products of photosynthesis, not the ingredients.",
+								answerChoiceId: 3
 							},
 							{
 								text: "Test text",
 								correct: false,
 								explanation: "Test explanation.",
+								answerChoiceId: 4
 							}
 						],
-						activityQuestionIndex: 1
+						questionUUID: "102929393" as QuestionUUID
 					}
 				]
 			}
@@ -103,25 +107,29 @@ const ledReadingBlocks: ContentBlock[] = [
 								text: "Because it can only happen at night",
 								correct: false,
 								explanation: "The Calvin Cycle can occur any time, not just at night.",
+								answerChoiceId: 1
 							},
 							{
 								text: "Because it happens in dark areas of the plant",
 								correct: false,
 								explanation: "The location of the reaction isn't related to its name.",
+								answerChoiceId: 2
 							},
 							{
 								text: "Because it doesn't directly require sunlight",
 								correct: true,
 								explanation: "Correct! While it uses products from the light-dependent reaction,\
 								the Calvin Cycle itself doesn't require direct sunlight.",
+								answerChoiceId: 3
 							},
 							{
 								text: "Test text",
 								correct: false,
 								explanation: "Test explanation.",
+								answerChoiceId: 4
 							},
 						],
-						activityQuestionIndex: 2
+						questionUUID: "u19230123910" as QuestionUUID
 					},
 					{
 						question: "What is the main product of the Calvin Cycle?",
@@ -130,28 +138,32 @@ const ledReadingBlocks: ContentBlock[] = [
 								text: "Glucose",
 								correct: true,
 								explanation: "Correct! The Calvin Cycle produces glucose as its main product.",
+								answerChoiceId: 1
 							},
 							{
 								text: "Oxygen",
 								correct: false,
 								explanation: "Oxygen is produced during the light-dependent reaction, not the Calvin Cycle.",
+								answerChoiceId: 2
 							},
 							{
 								text: "Carbon dioxide",
 								correct: false,
 								explanation: "Carbon dioxide is an ingredient used in the Calvin Cycle, not a product.",
+								answerChoiceId: 3
 							},
 							{
 								text: "Test text",
 								correct: false,
 								explanation: "Test explanation.",
+								answerChoiceId: 4
 							},
 						],
-						activityQuestionIndex: 3
-					},
-				],
-			},
-		},
+						questionUUID: "29031230123" as QuestionUUID
+					}
+				]
+			}
+		}
 	},
 	{
 		id: "led-conclusion",

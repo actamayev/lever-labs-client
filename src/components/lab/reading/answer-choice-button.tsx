@@ -3,44 +3,43 @@ import { useMemo, useEffect } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
-    activeQuiz: ActiveQuiz
-    currentQuestion: Question
     index: number
-    selectedAnswer: number | null
-    handleAnswerSelect: (choiceIndex: number) => void
+    selectedAnswer: AnswerChoiceID | undefined
 }
 
 function AnswerChoiceButton(props: Props) {
-	const { activeQuiz, currentQuestion, index, selectedAnswer, handleAnswerSelect } = props
+	const { index, selectedAnswer } = props
+	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	// Add keyboard event listener
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			const numKey = parseInt(event.key)
-			if (numKey >= 1 && numKey <= 4 && !activeQuiz.showExplanation) {
-				handleAnswerSelect(numKey - 1)
+			if (numKey >= 1 && numKey <= 4 && !labReadingClass.activeQuiz?.showExplanation) {
+				labReadingClass.selectAnswer(numKey - 1)
 			}
 		}
 
 		window.addEventListener("keydown", handleKeyPress)
 		return () => window.removeEventListener("keydown", handleKeyPress)
-	}, [activeQuiz.showExplanation, handleAnswerSelect])
+	}, [labReadingClass])
 
 	const getAnswerStyles = useMemo(() => {
 		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
         transition-colors bg-inherit text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 \
         whitespace-normal items-center duration-0 text-sm relative" // Added relative for number positioning
-		const isSelected = selectedAnswer === index
-		const isShowingExplanation = activeQuiz.showExplanation
+		const isSelected = labReadingClass.draftAnswer?.answerChoiceId === index
+		const isShowingExplanation = labReadingClass.activeQuiz?.showExplanation
 
 		if (isSelected && !isShowingExplanation) {
 			return cn(baseStyles, "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme")
 		}
 
-		const isCorrect = currentQuestion.choices[index].correct
+		const isCorrect = labReadingClass.currentQuestion?.choices[index].correct
 
 		if (isShowingExplanation && isSelected) {
 			return cn(

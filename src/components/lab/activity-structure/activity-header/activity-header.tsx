@@ -1,6 +1,5 @@
 import { X } from "lucide-react"
 import isNull from "lodash-es/isNull"
-import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
@@ -14,11 +13,10 @@ interface Props {
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number | null
 	activityType: ActivityType
-	readingProgressPercentage?: number
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, activityTitle, lessonProgressPercent, activityType, readingProgressPercentage } = props
+	const { element, lessonTitle, activityTitle, lessonProgressPercent, activityType } = props
 	const navigate = useTypedNavigate()
 
 	return (
@@ -41,10 +39,8 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-center">
-				{(activityType === "Reading") && (!isUndefined(readingProgressPercentage)) && (
-					<div className="w-full">
-						<ReadingProgressBar readingProgressPercentage={readingProgressPercentage}/>
-					</div>
+				{activityType === "Reading" && (
+					<ReadingProgressBar />
 				)}
 			</div>
 

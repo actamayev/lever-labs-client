@@ -1,6 +1,8 @@
-import ActivityHeader from "./activity-header/activity-header"
+import { observer } from "mobx-react"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
+import ActivityHeader from "./activity-header/activity-header"
+import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
 	activityTitle: string
@@ -14,10 +16,9 @@ interface Props {
 	lessonProgressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
-	readingProgressPercentage?: number
 }
 
-export default function ActivityTemplate(props: Props) {
+function ActivityTemplate(props: Props) {
 	const {
 		activityTitle,
 		previousPageLink,
@@ -30,8 +31,9 @@ export default function ActivityTemplate(props: Props) {
 		children,
 		extraClasses = "",
 		activityType,
-		readingProgressPercentage
 	} = props
+
+	const labReadingClass = useLabReadingContext()
 
 	return (
 		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
@@ -41,19 +43,18 @@ export default function ActivityTemplate(props: Props) {
 				lessonTitle={lessonTitle}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}
-				readingProgressPercentage={readingProgressPercentage}
 			/>
 
 			<div
 				className={cn(
 					"flex-1 min-h-0 pt-20",
-					((readingProgressPercentage === 100) || (activityType === "Code")) && "pb-20"
+					((labReadingClass.readingProgressPercentage === 100) || (activityType === "Code")) && "pb-20"
 				)}
 			>
 				{children}
 			</div>
 
-			{(activityType !== "Reading" || readingProgressPercentage === 100) && (
+			{(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) && (
 				<ActivityFooter
 					previousPageLink={previousPageLink}
 					previousPageActivity={previousPageActivity}
@@ -64,3 +65,5 @@ export default function ActivityTemplate(props: Props) {
 		</div>
 	)
 }
+
+export default observer(ActivityTemplate)

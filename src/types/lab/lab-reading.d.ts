@@ -8,6 +8,8 @@ declare global {
 		}
 	}
 
+	type QuestionUUID = string & { readonly __brand: unique symbol }
+
 	interface QuizQuestions {
 		questions: Question[]
 	}
@@ -17,39 +19,41 @@ declare global {
 	interface Question {
 		question: string
 		choices: FourAnswers
-		activityQuestionIndex: number
+		questionUUID: QuestionUUID
 	}
+
+	type AnswerChoiceID = 1 | 2 | 3 | 4
 
 	interface AnswerChoice {
 		text: string
 		correct: boolean
+		// TODO: Change to a UUID:
+		answerChoiceId: AnswerChoiceID
 		explanation?: string
-	}
-
-	interface QuizAnswerAttempt {
-		questionIndex: number
-		selectedChoice: number
-		isCorrect: boolean
 	}
 
 	interface ActiveQuiz {
 		blockId: ContentBlockID
-		questionIndex: number
-		selectedChoice: number | null
-		showExplanation: boolean
-		isReview?: boolean
-		previousAnswers: QuizAnswerAttempt[]
+		questionUUID: QuestionUUID
+	}
+
+	interface QuizAnswerAttempt {
+		questionUUID: QuestionUUID
+		selectedChoice: AnswerChoiceID
+		isCorrect: boolean
 	}
 
 	interface QuizAttempt {
-		blockId: ContentBlockID
-		answers: QuizAnswerAttempt[]
+		// blockId: ContentBlockID
+		questionUUID: QuestionUUID
+		answerAttempts: QuizAnswerAttempt[]
 	}
 
-	interface ReadingStateWithAttempts {
-		revealedBlocks: string[]
-		completedQuizzes: ContentBlockID[]
-		quizAttempts: QuizAttempt[]
+	interface SelectedAnswerDrafts {
+		// blockId: ContentBlockID
+		questionUUID: QuestionUUID
+		answerChoiceId: AnswerChoiceID
+		isCorrect: boolean
 	}
 }
 
