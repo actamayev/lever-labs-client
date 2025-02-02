@@ -31,9 +31,7 @@ function QuizExplanationSection() {
 					? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
 					: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
 			)}>
-				{labReadingClass.activeQuiz?.isCorrect
-					? "Correct!"
-					: "Incorrect. Try again."}
+				{labReadingClass.activeQuiz?.isCorrect ? "Correct!" : "Incorrect. Try again."}
 			</div>
 		)
 	}
@@ -50,7 +48,6 @@ function QuizExplanationSection() {
 		return (
 			<BlueTactileButton
 				onClick={labReadingClass.handleNextQuestion}
-				disabled={labReadingClass.hasActiveQuizBeenAnswered && isLastQuestion}
 				className="mt-4 w-full px-6 !py-5 text-xl transition-none border-2 h-14"
 				shadowHeight={4}
 			>

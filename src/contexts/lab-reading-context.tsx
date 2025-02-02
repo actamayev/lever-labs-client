@@ -44,10 +44,15 @@ class LabReadingClass {
 	public setDraftAnswerChoice = action((answerChoiceId: AnswerChoiceID): void => {
 		if (!this.activeQuiz) return
 
+		let isCorrect = false
+		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === answerChoiceId)?.correct) {
+			isCorrect = true
+		}
+
 		this.setDraftAnswer({
 			questionUUID: this.activeQuiz.questionUUID,
 			answerChoiceId,
-			isCorrect: null
+			isCorrect
 		})
 	})
 
@@ -88,15 +93,12 @@ class LabReadingClass {
 			!this.activeQuiz ||
 			this.activeQuiz.isCorrect
 		) return
-		console.log(answerChoiceId)
 
 		// If the draft answer choice Id and question answer choice Id match, then the answer is correct
 		let isCorrect = false
-		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === this.draftAnswer?.answerChoiceId)) {
+		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === answerChoiceId)?.correct) {
 			isCorrect = true
 		}
-		console.log("isCorrect", isCorrect)
-		console.log("this.activeQuiz.questionUUID", this.activeQuiz.questionUUID)
 
 		this.setDraftAnswer({
 			questionUUID: this.activeQuiz.questionUUID,
@@ -114,7 +116,12 @@ class LabReadingClass {
 	})
 
 	public checkAnswer = action(() => {
-		if (!this.activeBlock || !this.draftAnswer || isNull(this.draftAnswer.isCorrect)) return
+		if (
+			!this.activeBlock ||
+			!this.draftAnswer ||
+			isNull(this.draftAnswer.isCorrect) ||
+			isNull(this.activeQuiz)
+		) return
 
 		const attempt: QuizAnswerAttempt = {
 			questionUUID: this.draftAnswer.questionUUID,
@@ -124,6 +131,11 @@ class LabReadingClass {
 
 		// Add the answer attempt to the quiz attempts
 		this.setQuizAttempts(this.draftAnswer.questionUUID, attempt)
+		this.setActiveQuiz({
+			blockId: this.activeQuiz.blockId,
+			questionUUID: this.activeQuiz.questionUUID,
+			isCorrect: this.draftAnswer.isCorrect
+		})
 	})
 
 	public handleNextQuestion = action(() => {
@@ -143,17 +155,7 @@ class LabReadingClass {
 
 		if (isLastQuestion) return this.handleQuizComplete(this.activeQuiz.blockId)
 
-		const currentQuestionIndex = this.activeBlock.action.quiz.questions.findIndex(
-			question => question.questionUUID === this.activeQuiz?.questionUUID
-		)
-
-		const nextQuestionIndex = currentQuestionIndex + 1
-		const nextQuestionUUID = this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID
-		this.setActiveQuiz({
-			blockId: this.activeBlock.id,
-			questionUUID: nextQuestionUUID,
-			isCorrect: null
-		})
+		this.setActiveQuiz(null)
 	})
 
 	public isQuizCorrect(questionId: QuestionUUID): boolean {
