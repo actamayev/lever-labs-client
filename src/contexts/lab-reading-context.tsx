@@ -5,7 +5,7 @@ import { createContext, useContext, useMemo } from "react"
 class LabReadingClass {
 	public currentReadingName: Element1Lessons | null = null
 	public activeBlocks: ContentBlock[] = [] // All the blocks in the current activity
-	public shownBlocks: ContentBlockID[] = [] // The blocks that have been shown
+	public shownBlocks: ContentBlock[] = [] // The blocks that have been shown
 	public activeQuiz: ActiveQuiz | null = null
 	public draftAnswer: SelectedAnswerDrafts | null = null
 	public quizAttempts: Map<QuestionUUID, QuizAnswerAttempt[]> = new Map()
@@ -15,9 +15,13 @@ class LabReadingClass {
 		makeAutoObservable(this)
 	}
 
+	public checkIfBlockIsShown = (blockId: ContentBlockID): boolean => {
+		return this.shownBlocks.find(block => block.id === blockId) ? true : false
+	}
+
 	public setShownBlocks = action((blockId: ContentBlockID): void => {
-		if (this.shownBlocks.includes(blockId)) return
-		this.shownBlocks.push(blockId)
+		if (this.checkIfBlockIsShown(blockId)) return
+		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
 	})
 
 	public setBlocks = action((blocks: ContentBlock[], readingName: Element1Lessons): void => {

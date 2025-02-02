@@ -27,7 +27,7 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 				labReadingClass.activeQuiz ? "w-2/3" : "w-full"
 			)}>
 				<div ref={contentRef} className="px-24 py-6 h-full overflow-y-auto">
-					{labReadingClass.activeBlocks.map((block) => (
+					{labReadingClass.shownBlocks.map((block) => (
 						<ReadingBlock key={block.id} block={block} />
 					))}
 				</div>

@@ -9,6 +9,7 @@ interface Props {
     index: AnswerChoiceID
 }
 
+// eslint-disable-next-line max-lines-per-function
 function AnswerChoiceButton(props: Props) {
 	const { index } = props
 	const labReadingClass = useLabReadingContext()
@@ -101,7 +102,11 @@ function AnswerChoiceButton(props: Props) {
 	}, [defaultSiteTheme, index, labReadingClass.activeQuiz,
 		labReadingClass.draftAnswer?.answerChoiceId, labReadingClass.hasActiveQuizBeenAnswered])
 
-	if (!labReadingClass.activeQuiz) return null
+	const answerText = labReadingClass.currentQuestion?.choices[(index - 1) as 0 | 1 | 2 | 3].text
+	if (
+		!labReadingClass.activeQuiz ||
+		!answerText
+	) return null
 
 	return (
 		<TactileButton
@@ -111,7 +116,7 @@ function AnswerChoiceButton(props: Props) {
 			shadowColor={shadowColor}
 		>
 			<span className={getNumberStyles}>{index + 1}</span>
-			<div className="ml-8">{labReadingClass.currentQuestion?.question}</div>
+			<div className="ml-8">{answerText}</div>
 		</TactileButton>
 	)
 }

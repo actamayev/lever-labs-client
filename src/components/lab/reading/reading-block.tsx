@@ -31,11 +31,11 @@ function ReadingBlock(props: Props) {
 		const nextBlock = labReadingClass.getNextBlock(block.id)
 		if (!nextBlock) return
 		const nextElement = document.getElementById(`block-${nextBlock.id}`)
+		labReadingClass.setShownBlocks(nextBlock.id)
+		setIsContinued(true)
 		if (nextElement) {
 			nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
 		}
-		labReadingClass.setShownBlocks(block.id)
-		setIsContinued(true)
 	}, [block.id, labReadingClass])
 
 	const isQuizCorrect = labReadingClass.activeQuiz?.isCorrect
@@ -59,8 +59,8 @@ function ReadingBlock(props: Props) {
 	}, [isQuizCorrect])
 
 	const isRevealed = useMemo(() => {
-		return  labReadingClass.shownBlocks.includes(block.id)
-	}, [block.id, labReadingClass.shownBlocks])
+		return labReadingClass.checkIfBlockIsShown(block.id)
+	}, [block.id, labReadingClass])
 
 	return (
 		<div
