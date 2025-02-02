@@ -61,12 +61,12 @@ class LabReadingClass {
 	})
 
 	get readingProgressPercentage(): number {
-		const percentage = Math.min(((this.shownBlocks.length - 1) / this.activeBlocks.length) * 100, 100)
-		if (percentage !== 100) {
-			this.setQuizStyle("5rem", "0rem")
-		} else {
-			this.setQuizStyle("5rem", "5rem")
-		}
+		if (this.shownBlocks.length === 1) return 0
+
+		const percentage = ((this.shownBlocks.length - 1) / (this.activeBlocks.length - 1)) * 100
+
+		if (percentage < 100) this.setQuizStyle("5rem", "0rem")
+		else this.setQuizStyle("5rem", "5rem")
 		return percentage
 	}
 
@@ -156,7 +156,26 @@ class LabReadingClass {
 
 		if (isLastQuestion) return this.handleQuizComplete(this.activeQuiz.blockId)
 
-		this.setActiveQuiz(null)
+		const currentQuestionIndex = this.activeBlock.action.quiz.questions.findIndex(
+			question => question.questionUUID === this.activeQuiz?.questionUUID
+		)
+
+		const nextQuestionIndex = currentQuestionIndex + 1
+		const nextQuestionUUID = this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID
+		const quizAttempts = this.quizAttempts.get(this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID)
+		if (isNil(quizAttempts)) {
+			return this.setActiveQuiz({
+				blockId: this.activeBlock.id,
+				questionUUID: nextQuestionUUID,
+				isCorrect: null,
+			})
+		}
+		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
+		this.setActiveQuiz({
+			blockId: this.activeBlock.id,
+			questionUUID: nextQuestionUUID,
+			isCorrect: isCorrect?.isCorrect || null,
+		})
 	})
 
 	public isQuizCorrect(questionId: QuestionUUID): boolean {
@@ -174,7 +193,6 @@ class LabReadingClass {
 		if (!block.action.quiz) return
 		// if the block's questions have been answered (from quizAttempts, need to relefct that when setting active quiz)
 		const quizAttempts = this.quizAttempts.get(block.action.quiz.questions[0].questionUUID)
-		console.log(quizAttempts)
 		if (isNil(quizAttempts)) {
 			return this.setActiveQuiz({
 				blockId: block.id,
