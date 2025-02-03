@@ -24,16 +24,19 @@ function QuizExplanationSection() {
 	})
 
 	const ShowExplanation = observer(() => {
-		if (!labReadingClass.hasActiveQuizBeenAnswered) return null
+		if (
+			!labReadingClass.hasActiveQuizBeenAnswered ||
+			!labReadingClass.activeQuiz
+		) return null
 		// TODO: Show explanation
 		return (
 			<div className={cn(
 				"p-4 rounded-lg text-xl mb-4",
-				labReadingClass.activeQuiz?.isCorrect
+				labReadingClass.activeQuiz.isCorrect
 					? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100"
 					: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100"
 			)}>
-				{labReadingClass.activeQuiz?.isCorrect ? "Correct!" : "Hmm... not quite. Please try again."}
+				{labReadingClass.getExplanationForQuestion(labReadingClass.activeQuiz.questionUUID)}
 			</div>
 		)
 	})

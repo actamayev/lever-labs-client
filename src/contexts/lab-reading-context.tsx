@@ -317,6 +317,20 @@ class LabReadingClass {
 		})
 	}
 
+	public getExplanationForQuestion(questionUUID: QuestionUUID): string {
+		const question = this.activeBlocks
+			.flatMap(block => block.action.quiz?.questions || [])
+			.find(_question => _question.questionUUID === questionUUID)
+
+		if (!question) return ""
+
+		const answer = question.choices.find(choice => choice.answerChoiceId === this.draftAnswer?.answerChoiceId)
+
+		if (!answer || !answer.explanation) return ""
+
+		return answer.explanation
+	}
+
 	public logout() {
 		// TODO: Implement
 	}
