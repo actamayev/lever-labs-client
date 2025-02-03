@@ -26,7 +26,8 @@ function QuizExplanationSection() {
 	const ShowExplanation = observer(() => {
 		if (
 			!labReadingClass.hasActiveQuizBeenAnswered ||
-			!labReadingClass.activeQuiz
+			!labReadingClass.activeQuiz ||
+			!labReadingClass.isDraftAnswerChoiceInQuizAttempts
 		) return null
 		// TODO: Show explanation
 		return (

@@ -317,12 +317,20 @@ class LabReadingClass {
 		})
 	}
 
+	get isDraftAnswerChoiceInQuizAttempts(): boolean {
+		return this.quizAttemptsForActiveQuiz.some(
+			attempt => attempt.selectedChoice === this.draftAnswer?.answerChoiceId
+		)
+	}
+
 	public getExplanationForQuestion(questionUUID: QuestionUUID): string {
 		const question = this.activeBlocks
 			.flatMap(block => block.action.quiz?.questions || [])
 			.find(_question => _question.questionUUID === questionUUID)
 
 		if (!question) return ""
+
+		if (!this.isDraftAnswerChoiceInQuizAttempts) return ""
 
 		const answer = question.choices.find(choice => choice.answerChoiceId === this.draftAnswer?.answerChoiceId)
 
