@@ -10,6 +10,7 @@ interface Props {
     index: AnswerChoiceID
 }
 
+// eslint-disable-next-line max-lines-per-function
 function AnswerChoiceButton(props: Props) {
 	const { index } = props
 	const labReadingClass = useLabReadingContext()
@@ -19,9 +20,12 @@ function AnswerChoiceButton(props: Props) {
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			const numKey = parseInt(event.key)
-			if (numKey >= 1 && numKey <= 4 && !(labReadingClass.activeQuiz?.isCorrect === null)) {
+			if (numKey >= 1 && numKey <= 4) {
 				labReadingClass.setDraftAnswerChoice(numKey as AnswerChoiceID)
 			}
+
+			//if the user presses enter, submit the answer
+			if (event.key === "Enter") labReadingClass.checkAnswer()
 		}
 
 		window.addEventListener("keydown", handleKeyPress)
