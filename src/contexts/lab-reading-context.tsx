@@ -146,24 +146,44 @@ class LabReadingClass {
 			!this.activeQuiz
 		) return
 
+		// If there's only one question, handle as before
 		if (this.activeBlock.action.quiz.questions.length === 1) {
 			return this.handleQuizComplete(this.activeQuiz.blockId)
 		}
 
-		const lastQuestionUUID = this.activeBlock.action.quiz.questions[this.activeBlock.action.quiz.questions.length - 1].questionUUID
+		const questions = this.activeBlock.action.quiz.questions
 
-		const isLastQuestion = this.activeQuiz.questionUUID === lastQuestionUUID
+		// Check if there are any unanswered questions before the current one
+		const firstUnansweredIndex = questions.findIndex(question =>
+			!this.quizAttempts.get(question.questionUUID)?.some(attempt => attempt.isCorrect)
+		)
 
-		if (isLastQuestion) return this.handleQuizComplete(this.activeQuiz.blockId)
+		// If we're on the last question and there are earlier unanswered questions
+		if (this.activeQuiz.questionUUID === questions[questions.length - 1].questionUUID) {
+			if (firstUnansweredIndex !== -1 && firstUnansweredIndex < questions.length - 1) {
+				// Go back to the first unanswered question
+				const nextQuestionUUID = questions[firstUnansweredIndex].questionUUID
+				this.setDraftAnswer(null)
+				return this.setActiveQuiz({
+					blockId: this.activeBlock.id,
+					questionUUID: nextQuestionUUID,
+					isCorrect: null,
+				})
+			}
 
-		// This is for when there is a next question
-		const currentQuestionIndex = this.activeBlock.action.quiz.questions.findIndex(
+			// If no unanswered questions remain, complete the quiz
+			return this.handleQuizComplete(this.activeQuiz.blockId)
+		}
+
+		// Normal flow for moving to next question
+		const currentQuestionIndex = questions.findIndex(
 			question => question.questionUUID === this.activeQuiz?.questionUUID
 		)
 
 		const nextQuestionIndex = currentQuestionIndex + 1
-		const nextQuestionUUID = this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID
-		const quizAttempts = this.quizAttempts.get(this.activeBlock.action.quiz.questions[nextQuestionIndex].questionUUID)
+		const nextQuestionUUID = questions[nextQuestionIndex].questionUUID
+		const quizAttempts = this.quizAttempts.get(questions[nextQuestionIndex].questionUUID)
+
 		this.setDraftAnswer(null)
 		if (isNil(quizAttempts)) {
 			return this.setActiveQuiz({
@@ -172,6 +192,7 @@ class LabReadingClass {
 				isCorrect: null,
 			})
 		}
+
 		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
 		this.setActiveQuiz({
 			blockId: this.activeBlock.id,
