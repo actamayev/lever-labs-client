@@ -9,21 +9,29 @@ type TactileButtonProps = Omit<ButtonProps, 'variant'> & {
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
   ({ className, shadowColor = "rgb(30, 64, 175)", shadowHeight = 2, style, ...props }, ref) => {
+    // Shadow classes for different states
     const shadowClass = shadowHeight === 4 
       ? "shadow-[0_4px_0_0_var(--shadow-color)]"
       : "shadow-[0_2px_0_0_var(--shadow-color)]"
-      
+    
+    // Hover state - reduce shadow height and translate button down
+    const hoverClass = shadowHeight === 4
+      ? "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+      : "hover:shadow-[0_1px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+    
+    // Active state - remove shadow and complete translation
     const activeShadowClass = shadowHeight === 4
-      ? "active:translate-y-1 active:shadow-[0_0_0_0_var(--shadow-color)]"
-      : "active:translate-y-0.5 active:shadow-[0_0_0_0_var(--shadow-color)]"
+      ? "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-1"
+      : "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0.5"
 
     return (
       <Button 
         ref={ref}
         variant="tactile"
         className={cn(
-          "transform",
+          "transform transition-all duration-50",
           shadowClass,
+          hoverClass,
           "hover:bg-primary/90",
           activeShadowClass,
           className
