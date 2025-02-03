@@ -3,37 +3,17 @@ import { CheckCircle, X } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Button } from "../../shadcn/ui/button"
 import { CustomQuiz } from "../../icons/custom-quiz"
 import AnswerChoiceButton from "./answer-choice-button"
+import QuizListDropdownItem from "./quiz-list-dropdown-item"
 import QuizExplanationSection from "./quiz-explanation-section"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 function QuizSection() {
 	const labReadingClass = useLabReadingContext()
-
-	function QuizDropdownMenuItem({ question, blockId } : { question: Question, blockId: ContentBlockID }) {
-		const setActiveQuizCallback = () => {
-			labReadingClass.setActiveQuiz({
-				blockId,
-				questionUUID: question.questionUUID,
-				isCorrect: null
-			})
-		}
-		const disabled = labReadingClass.activeQuiz?.questionUUID === question.questionUUID
-		return (
-			<DropdownMenuItem
-				className="cursor-pointer text-2xl"
-				onClick={setActiveQuizCallback}
-				disabled={disabled}
-			>
-				Quiz #
-			</DropdownMenuItem>
-		)
-	}
 
 	if (!labReadingClass.currentQuestion) return null
 
@@ -48,9 +28,13 @@ function QuizSection() {
 								hover:bg-zinc-100 !px-2 py-1 rounded-lg"
 							>
 								{labReadingClass.activeQuiz?.isCorrect ? (
-									<><CheckCircle />Quiz Review #</>
+									<><CheckCircle />Quiz Review #{
+										labReadingClass.getQuestionIndexInAllBlocks(labReadingClass.currentQuestion.questionUUID) + 1
+									}</>
 								) : (
-									<><CustomQuiz /> Quiz #</>
+									<><CustomQuiz /> Quiz #{
+										labReadingClass.getQuestionIndexInAllBlocks(labReadingClass.currentQuestion.questionUUID) + 1
+									}</>
 								)}
 							</h3>
 						</DropdownMenuTrigger>
@@ -60,11 +44,15 @@ function QuizSection() {
 								if (!block.action.quiz?.questions.length) return null
 
 								return block.action.quiz.questions.map(question => (
-									<QuizDropdownMenuItem
+									<div
 										key={`${block.id}-question-${question.questionUUID}`}
-										question={question}
-										blockId={block.id}
-									/>
+										className="py-0.5"
+									>
+										<QuizListDropdownItem
+											question={question}
+											blockId={block.id}
+										/>
+									</div>
 								))
 							})}
 						</DropdownMenuContent>

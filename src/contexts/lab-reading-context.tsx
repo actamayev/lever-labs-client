@@ -233,6 +233,45 @@ class LabReadingClass {
 		return attempts.find(_attempt => _attempt.selectedChoice === answerIndex)
 	}
 
+	public getQuestionIndexInAllBlocks(questionUUID: QuestionUUID): number {
+		// Initialize index counter for all questions across blocks
+		let totalQuestionIndex = 0
+
+		// Iterate through all active blocks
+		for (const block of this.activeBlocks) {
+			// Skip if block has no quiz or no questions
+			if (!block.action.quiz?.questions) {
+				continue
+			}
+
+			// Check if the current block contains our target question
+			const questionIndex = block.action.quiz.questions.findIndex(
+				question => question.questionUUID === questionUUID
+			)
+
+			if (questionIndex !== -1) {
+				// Found the question - return current total plus position in current block
+				return totalQuestionIndex + questionIndex
+			}
+
+			// Add number of questions in this block to running total
+			totalQuestionIndex += block.action.quiz.questions.length
+		}
+
+		// Return -1 if question UUID not found
+		return -1
+	}
+
+	public isQuestionInShownBlocks(questionUUID: QuestionUUID): boolean {
+		return this.shownBlocks.some(block => {
+			if (!block.action.quiz?.questions) {
+				return false
+			}
+
+			return block.action.quiz.questions.some(question => question.questionUUID === questionUUID)
+		})
+	}
+
 	public logout() {
 		// TODO: Implement
 	}
