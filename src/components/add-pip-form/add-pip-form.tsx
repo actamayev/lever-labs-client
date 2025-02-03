@@ -27,7 +27,9 @@ function AddPipForm() {
 
 	return (
 		<div>
-			<BackButton />
+			<div className="absolute top-8 left-4">
+				<BackButton />
+			</div>
 
 			<Card className="mx-auto max-w-5xl border-0 mt-0 shadow-none">
 				<CardHeader>
