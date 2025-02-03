@@ -244,6 +244,7 @@ class LabReadingClass {
 		// if the block's questions have been answered (from quizAttempts, need to relefct that when setting active quiz)
 		const quizAttempts = this.quizAttempts.get(block.action.quiz.questions[0].questionUUID)
 		if (isNil(quizAttempts)) {
+			this.setExplanationBeingShown(null)
 			return this.setActiveQuiz({
 				blockId: block.id,
 				questionUUID: block.action.quiz.questions[0].questionUUID,
@@ -255,6 +256,11 @@ class LabReadingClass {
 			blockId: block.id,
 			questionUUID: block.action.quiz.questions[0].questionUUID,
 			isCorrect: isCorrect?.isCorrect || null,
+		})
+		this.setExplanationBeingShown({
+			questionUUID: block.action.quiz.questions[0].questionUUID,
+			isCorrect: isCorrect?.isCorrect || false,
+			explanation: this.getExplanationForQuestion(block.action.quiz.questions[0].questionUUID, isCorrect?.selectedChoice)
 		})
 	})
 
@@ -335,8 +341,6 @@ class LabReadingClass {
 			.find(_question => _question.questionUUID === questionUUID)
 
 		if (!question) return ""
-
-		if (!this.isDraftAnswerChoiceInQuizAttempts) return ""
 
 		const answer = question.choices.find(choice => choice.answerChoiceId === answerChoiceId)
 
