@@ -3,7 +3,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import useUsername from "../../hooks/memos/username"
 import { CustomBeaker } from "../icons/custom-beaker"
-import { BlueTactileButton } from "../tactile-buttons"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 function GoToLabButton() {
 	const username = useUsername()

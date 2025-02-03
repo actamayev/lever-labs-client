@@ -2,7 +2,7 @@ import { Check } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { BlueTactileButton } from "../../tactile-buttons"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 function QuizExplanationSection() {

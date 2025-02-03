@@ -1,6 +1,6 @@
 import toUpper from "lodash-es/toUpper"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import { BlueTactileButton } from "../../tactile-buttons"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 interface Props {

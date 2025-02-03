@@ -9,7 +9,7 @@ import {
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
-import { BlueTactileButton } from "../../tactile-buttons"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { CustomCompass } from "../../icons/custom-compass"
 import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { useState, useCallback, lazy, Suspense } from "react"
-import { BlueTactileButton } from "../tactile-buttons"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { usePipContext } from "../../contexts/pip-context"
 import useSendCppToPip from "../../hooks/pip/send-cpp-to-pip"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"

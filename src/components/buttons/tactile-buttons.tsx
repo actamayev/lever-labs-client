@@ -1,8 +1,8 @@
 import * as React from "react"
-import { cn } from "../lib/shadcn/utils"
-import { ButtonProps } from "./shadcn/ui/button"
-import { TactileButton } from "./shadcn/ui/tactile-button"
-import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
+import { cn } from "../../lib/shadcn/utils"
+import { ButtonProps } from "../shadcn/ui/button"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 
 type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 	shadowHeight?: 2 | 4

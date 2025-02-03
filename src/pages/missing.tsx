@@ -4,7 +4,7 @@ import { useAuthContext } from "../contexts/auth-context"
 import useTypedNavigate from "../hooks/navigate/typed-navigate"
 import { CustomBeaker } from "../components/icons/custom-beaker"
 import { CustomHouse } from "../components/icons/custom-house"
-import { BlackWhiteTactileButton } from "../components/tactile-buttons"
+import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing() {
 	const authClass = useAuthContext()

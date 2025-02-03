@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import { observer } from "mobx-react"
-import { BlueTactileButton } from "../tactile-buttons"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { useAuthContext } from "../../contexts/auth-context"
 
 interface LinkAuthHeaderProps {

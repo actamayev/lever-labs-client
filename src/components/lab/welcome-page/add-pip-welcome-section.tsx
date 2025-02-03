@@ -6,7 +6,7 @@ import {
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
-import { BlueTactileButton } from "../../tactile-buttons"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function AddPipWelcomeSection() {
