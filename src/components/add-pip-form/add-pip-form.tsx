@@ -4,6 +4,7 @@ import EnterPipID from "./enter-pip-id"
 import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
+import BackButton from "../buttons/back-button"
 import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../hooks/pip/add-pip"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
@@ -17,7 +18,6 @@ import {
 	CardTitle,
 } from "@/components/shadcn/ui/card"
 import { DottedTextTooltip } from "../dotted-underline-text"
-import BackButton from "../buttons/back-button"
 
 function AddPipForm() {
 	const addPip = useAddPip(true)
@@ -27,7 +27,7 @@ function AddPipForm() {
 
 	return (
 		<div>
-			<div className="absolute top-8 left-4">
+			<div className="absolute top-6 left-4">
 				<BackButton />
 			</div>
 

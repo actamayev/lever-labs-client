@@ -15,9 +15,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
       : "shadow-[0_2px_0_0_var(--shadow-color)]"
     
     // Hover state - reduce shadow height and translate button down
-    const hoverClass = shadowHeight === 4
-      ? "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
-      : "hover:shadow-[0_1px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+    const hoverClass = shadowHeight === 4 && "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
     
     // Active state - remove shadow and complete translation
     const activeShadowClass = shadowHeight === 4

@@ -12,7 +12,7 @@ export default function BackButton () {
 		<Button
 			variant="ghost"
 			onClick={handleBack}
-			className="flex items-center justify-center font-medium text-zinc-900 dark:text-zinc-100 !py-6 !px-2"
+			className="flex items-center justify-center font-medium text-zinc-900 dark:text-zinc-100 !py-8 !px-2"
 			size="lg"
 		>
 			<ArrowLeft className="!w-12 !h-12" />
