@@ -56,6 +56,12 @@ declare global {
 		answerChoiceId: AnswerChoiceID
 		isCorrect: boolean | null
 	}
+
+	interface ExplanationData {
+		questionUUID: QuestionUUID
+		explanation: string
+		isCorrect: boolean
+	}
 }
 
 export {}

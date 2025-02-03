@@ -110,8 +110,7 @@ function AnswerChoiceButton(props: Props) {
 
 	return (
 		<TactileButton
-			onClick={() => labReadingClass.selectAnswer(index)}
-			// disabled={labReadingClass.activeQuiz.showExplanation}
+			onClick={() => labReadingClass.setDraftAnswerChoice(index)}
 			className={getAnswerStyles()}
 			shadowColor={shadowColor()}
 		>

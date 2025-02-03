@@ -15,7 +15,6 @@ function QuizListDropdownItem(props: Props) {
 
 	const isCorrect = labReadingClass.quizAttempts.get(question.questionUUID)?.some(attempt => attempt.isCorrect)
 
-	console.log("quiz attempts", question.questionUUID, labReadingClass.quizAttempts.get(question.questionUUID))
 	const disabled = () => {
 		if (labReadingClass.activeQuiz?.questionUUID === question.questionUUID) return false
 		if (labReadingClass.quizAttempts.has(question.questionUUID)) return false

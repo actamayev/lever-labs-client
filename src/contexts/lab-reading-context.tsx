@@ -1,4 +1,4 @@
-import { isNil, isNull } from "lodash-es"
+import { isNil, isNull, isUndefined } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
@@ -10,6 +10,7 @@ class LabReadingClass {
 	public draftAnswer: SelectedAnswerDrafts | null = null // consider making this a map (question uuid -> SelectedAnswerDrafts)
 	public quizAttempts: Map<QuestionUUID, QuizAnswerAttempt[]> = new Map()
 	public quizStyle = { top: "5rem", bottom: "0rem" }
+	public explanationBeingShown: ExplanationData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -41,8 +42,24 @@ class LabReadingClass {
 		this.draftAnswer = draftAnswer
 	})
 
+	public setExplanationBeingShown = action((explanationData: ExplanationData | null): void => {
+		this.explanationBeingShown = explanationData
+	})
+
 	public setDraftAnswerChoice = action((answerChoiceId: AnswerChoiceID): void => {
 		if (!this.activeQuiz) return
+		//if the question has been answered correctly, don't allow the user to select an answer that's not in quiz attempts
+		if (this.activeQuiz.isCorrect) {
+			const isAnswerChoiceIDInQuizAttempts = this.quizAttemptsForActiveQuiz.find(
+				attempt => attempt.selectedChoice === answerChoiceId
+			)
+			if (isUndefined(isAnswerChoiceIDInQuizAttempts)) return
+			return this.setExplanationBeingShown({
+				questionUUID: this.activeQuiz.questionUUID,
+				isCorrect: isAnswerChoiceIDInQuizAttempts.isCorrect,
+				explanation: this.getExplanationForQuestion(this.activeQuiz.questionUUID, answerChoiceId)
+			})
+		}
 
 		let isCorrect = false
 		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === answerChoiceId)?.correct) {
@@ -86,27 +103,6 @@ class LabReadingClass {
 		return this.activeBlock?.action.quiz?.questions.find(question => question.questionUUID === this.activeQuiz?.questionUUID)
 	}
 
-	public selectAnswer = action((answerChoiceId: AnswerChoiceID): void => {
-		if (
-			!this.activeBlock ||
-			// If this answer has been answered correctly, return
-			!this.activeQuiz ||
-			this.activeQuiz.isCorrect
-		) return
-
-		// If the draft answer choice Id and question answer choice Id match, then the answer is correct
-		let isCorrect = false
-		if (this.currentQuestion?.choices.find(choice => choice.answerChoiceId === answerChoiceId)?.correct) {
-			isCorrect = true
-		}
-
-		this.setDraftAnswer({
-			questionUUID: this.activeQuiz.questionUUID,
-			answerChoiceId,
-			isCorrect
-		})
-	})
-
 	public checkAnswer = action(() => {
 		if (
 			!this.activeBlock ||
@@ -128,6 +124,11 @@ class LabReadingClass {
 			questionUUID: this.activeQuiz.questionUUID,
 			isCorrect: this.draftAnswer.isCorrect
 		})
+		this.setExplanationBeingShown({
+			questionUUID: this.draftAnswer.questionUUID,
+			isCorrect: this.draftAnswer.isCorrect,
+			explanation: this.getExplanationForQuestion(this.draftAnswer.questionUUID)
+		})
 	})
 
 	private handleQuizComplete = action((blockId: ContentBlockID) => {
@@ -137,6 +138,7 @@ class LabReadingClass {
 		this.setShownBlocks(nextBlock.id)
 		this.setDraftAnswer(null)
 		this.setActiveQuiz(null)
+		this.setExplanationBeingShown(null)
 	})
 
 	public handleNextQuestion = action(() => {
@@ -185,6 +187,7 @@ class LabReadingClass {
 		const quizAttempts = this.quizAttempts.get(questions[nextQuestionIndex].questionUUID)
 
 		this.setDraftAnswer(null)
+		this.setExplanationBeingShown(null)
 		if (isNil(quizAttempts)) {
 			return this.setActiveQuiz({
 				blockId: this.activeBlock.id,
@@ -323,7 +326,10 @@ class LabReadingClass {
 		)
 	}
 
-	public getExplanationForQuestion(questionUUID: QuestionUUID): string {
+	public getExplanationForQuestion(questionUUID: QuestionUUID, answerChoiceId?: AnswerChoiceID): string {
+		if (!answerChoiceId) {
+			answerChoiceId = this.draftAnswer?.answerChoiceId
+		}
 		const question = this.activeBlocks
 			.flatMap(block => block.action.quiz?.questions || [])
 			.find(_question => _question.questionUUID === questionUUID)
@@ -332,7 +338,7 @@ class LabReadingClass {
 
 		if (!this.isDraftAnswerChoiceInQuizAttempts) return ""
 
-		const answer = question.choices.find(choice => choice.answerChoiceId === this.draftAnswer?.answerChoiceId)
+		const answer = question.choices.find(choice => choice.answerChoiceId === answerChoiceId)
 
 		if (!answer || !answer.explanation) return ""
 
