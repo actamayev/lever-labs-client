@@ -180,6 +180,30 @@ class LabReadingClass {
 		})
 	})
 
+	public goToSpecificQuestion = action((questionUUID: QuestionUUID, blockId: ContentBlockID) => {
+		if (
+			!this.activeBlock ||
+			!this.activeBlock.action.quiz ||
+			!this.activeQuiz
+		) return
+		// eslint-disable-next-line max-len
+		const quizAttempts = this.quizAttempts.get(this.activeBlock.action.quiz.questions.find(question => question.questionUUID === questionUUID)?.questionUUID || "" as QuestionUUID)
+		this.setDraftAnswer(null)
+		if (isNil(quizAttempts)) {
+			return this.setActiveQuiz({
+				blockId: blockId,
+				questionUUID: questionUUID,
+				isCorrect: null,
+			})
+		}
+		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
+		this.setActiveQuiz({
+			blockId: blockId,
+			questionUUID: questionUUID,
+			isCorrect: isCorrect?.isCorrect || null,
+		})
+	})
+
 	public isQuizCorrect(questionId: QuestionUUID): boolean {
 		return !!this.quizAttempts.get(questionId)?.find(attempt => attempt.isCorrect)
 	}
