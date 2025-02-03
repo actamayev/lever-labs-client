@@ -107,15 +107,6 @@ class LabReadingClass {
 		})
 	})
 
-	private handleQuizComplete = action((blockId: ContentBlockID) => {
-		const nextBlock = this.getNextBlock(blockId)
-		if (!nextBlock) return
-
-		this.setShownBlocks(nextBlock.id)
-		this.setDraftAnswer(null)
-		this.setActiveQuiz(null)
-	})
-
 	public checkAnswer = action(() => {
 		if (
 			!this.activeBlock ||
@@ -137,6 +128,15 @@ class LabReadingClass {
 			questionUUID: this.activeQuiz.questionUUID,
 			isCorrect: this.draftAnswer.isCorrect
 		})
+	})
+
+	private handleQuizComplete = action((blockId: ContentBlockID) => {
+		const nextBlock = this.getNextBlock(blockId)
+		if (!nextBlock) return
+
+		this.setShownBlocks(nextBlock.id)
+		this.setDraftAnswer(null)
+		this.setActiveQuiz(null)
 	})
 
 	public handleNextQuestion = action(() => {
