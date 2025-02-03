@@ -7,7 +7,7 @@ class LabReadingClass {
 	public activeBlocks: ContentBlock[] = [] // All the blocks in the current activity
 	public shownBlocks: ContentBlock[] = [] // The blocks that have been shown
 	public activeQuiz: ActiveQuiz | null = null
-	public draftAnswer: SelectedAnswerDrafts | null = null // consider making this a map (question uuid -> SelectedAnswerDrafts)
+	public draftAnswer: Map<QuestionUUID, DraftAnswer> = new Map()
 	public quizAttempts: Map<QuestionUUID, QuizAnswerAttempt[]> = new Map()
 	public quizStyle = { top: "5rem", bottom: "0rem" }
 	public explanationBeingShown: ExplanationData | null = null
@@ -38,8 +38,12 @@ class LabReadingClass {
 		this.activeQuiz = activeQuiz
 	})
 
-	public setDraftAnswer = action((draftAnswer: SelectedAnswerDrafts | null): void => {
-		this.draftAnswer = draftAnswer
+	public setDraftAnswer = action((questionUUID: QuestionUUID, draftAnswer: DraftAnswer | null): void => {
+		if (!draftAnswer) {
+			this.draftAnswer.delete(questionUUID)
+			return
+		}
+		this.draftAnswer.set(questionUUID, draftAnswer)
 	})
 
 	public setExplanationBeingShown = action((explanationData: ExplanationData | null): void => {
@@ -66,7 +70,7 @@ class LabReadingClass {
 			isCorrect = true
 		}
 
-		this.setDraftAnswer({
+		this.setDraftAnswer(this.activeQuiz.questionUUID, {
 			questionUUID: this.activeQuiz.questionUUID,
 			answerChoiceId,
 			isCorrect
@@ -87,6 +91,10 @@ class LabReadingClass {
 		return percentage
 	}
 
+	get activeQuizDraftAnswer(): DraftAnswer | undefined {
+		return this.draftAnswer.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
+	}
+
 	private setQuizStyle = action((top: string, bottom: string) => {
 		this.quizStyle = { top, bottom }
 	})
@@ -103,31 +111,35 @@ class LabReadingClass {
 		return this.activeBlock?.action.quiz?.questions.find(question => question.questionUUID === this.activeQuiz?.questionUUID)
 	}
 
+	get currentQuestionDraftAnswer(): DraftAnswer | undefined {
+		return this.draftAnswer.get(this.activeQuiz?.questionUUID || "" as QuestionUUID)
+	}
+
 	public checkAnswer = action(() => {
 		if (
 			!this.activeBlock ||
-			!this.draftAnswer ||
-			isNull(this.draftAnswer.isCorrect) ||
 			isNull(this.activeQuiz)
 		) return
+		const currentQuestionDraftAnswer = this.currentQuestionDraftAnswer
+		if (!currentQuestionDraftAnswer || isNull(currentQuestionDraftAnswer.isCorrect)) return
 
 		const attempt: QuizAnswerAttempt = {
-			questionUUID: this.draftAnswer.questionUUID,
-			selectedChoice: this.draftAnswer.answerChoiceId,
-			isCorrect: this.draftAnswer.isCorrect
+			questionUUID: currentQuestionDraftAnswer.questionUUID,
+			selectedChoice: currentQuestionDraftAnswer.answerChoiceId,
+			isCorrect: currentQuestionDraftAnswer.isCorrect
 		}
 
 		// Add the answer attempt to the quiz attempts
-		this.setQuizAttempts(this.draftAnswer.questionUUID, attempt)
+		this.setQuizAttempts(this.currentQuestionDraftAnswer.questionUUID, attempt)
 		this.setActiveQuiz({
 			blockId: this.activeQuiz.blockId,
 			questionUUID: this.activeQuiz.questionUUID,
-			isCorrect: this.draftAnswer.isCorrect
+			isCorrect: currentQuestionDraftAnswer.isCorrect
 		})
 		this.setExplanationBeingShown({
-			questionUUID: this.draftAnswer.questionUUID,
-			isCorrect: this.draftAnswer.isCorrect,
-			explanation: this.getExplanationForQuestion(this.draftAnswer.questionUUID)
+			questionUUID: currentQuestionDraftAnswer.questionUUID,
+			isCorrect: currentQuestionDraftAnswer.isCorrect,
+			explanation: this.getExplanationForQuestion(currentQuestionDraftAnswer.questionUUID)
 		})
 	})
 
@@ -136,7 +148,7 @@ class LabReadingClass {
 		if (!nextBlock) return
 
 		this.setShownBlocks(nextBlock.id)
-		this.setDraftAnswer(null)
+		// this.setDraftAnswer(null)
 		this.setActiveQuiz(null)
 		this.setExplanationBeingShown(null)
 	})
@@ -165,7 +177,7 @@ class LabReadingClass {
 			if (firstUnansweredIndex !== -1 && firstUnansweredIndex < questions.length - 1) {
 				// Go back to the first unanswered question
 				const nextQuestionUUID = questions[firstUnansweredIndex].questionUUID
-				this.setDraftAnswer(null)
+				// this.setDraftAnswer(null)
 				return this.setActiveQuiz({
 					blockId: this.activeBlock.id,
 					questionUUID: nextQuestionUUID,
@@ -186,7 +198,7 @@ class LabReadingClass {
 		const nextQuestionUUID = questions[nextQuestionIndex].questionUUID
 		const quizAttempts = this.quizAttempts.get(questions[nextQuestionIndex].questionUUID)
 
-		this.setDraftAnswer(null)
+		// this.setDraftAnswer(null)
 		this.setExplanationBeingShown(null)
 		if (isNil(quizAttempts)) {
 			return this.setActiveQuiz({
@@ -210,21 +222,28 @@ class LabReadingClass {
 			!this.activeBlock.action.quiz ||
 			!this.activeQuiz
 		) return
-		// eslint-disable-next-line max-len
-		const quizAttempts = this.quizAttempts.get(this.activeBlock.action.quiz.questions.find(question => question.questionUUID === questionUUID)?.questionUUID || "" as QuestionUUID)
-		this.setDraftAnswer(null)
+		const quizAttempts = this.quizAttempts.get(questionUUID)
+		this.setDraftAnswer(questionUUID, null)
 		if (isNil(quizAttempts)) {
+			this.setExplanationBeingShown(null)
 			return this.setActiveQuiz({
 				blockId: blockId,
-				questionUUID: questionUUID,
+				questionUUID,
 				isCorrect: null,
 			})
 		}
-		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
+		const isQuizAlreadyOpen = this.activeQuiz.questionUUID === questionUUID
+		if (isQuizAlreadyOpen) return
+		const quizAttempt = quizAttempts.find(attempt => attempt.isCorrect)
 		this.setActiveQuiz({
 			blockId: blockId,
-			questionUUID: questionUUID,
-			isCorrect: isCorrect?.isCorrect || null,
+			questionUUID,
+			isCorrect: quizAttempt?.isCorrect || null,
+		})
+		this.setExplanationBeingShown({
+			questionUUID,
+			isCorrect: quizAttempt?.isCorrect || false,
+			explanation: this.getExplanationForQuestion(questionUUID, quizAttempt?.selectedChoice)
 		})
 	})
 
@@ -251,6 +270,8 @@ class LabReadingClass {
 				isCorrect: null,
 			})
 		}
+		const isQuizAlreadyOpen = this.activeQuiz?.questionUUID === block.action.quiz.questions[0].questionUUID
+		if (isQuizAlreadyOpen) return
 		const isCorrect = quizAttempts.find(attempt => attempt.isCorrect)
 		this.setActiveQuiz({
 			blockId: block.id,
@@ -326,15 +347,9 @@ class LabReadingClass {
 		})
 	}
 
-	get isDraftAnswerChoiceInQuizAttempts(): boolean {
-		return this.quizAttemptsForActiveQuiz.some(
-			attempt => attempt.selectedChoice === this.draftAnswer?.answerChoiceId
-		)
-	}
-
 	public getExplanationForQuestion(questionUUID: QuestionUUID, answerChoiceId?: AnswerChoiceID): string {
 		if (!answerChoiceId) {
-			answerChoiceId = this.draftAnswer?.answerChoiceId
+			answerChoiceId = this.draftAnswer.get(questionUUID)?.answerChoiceId
 		}
 		const question = this.activeBlocks
 			.flatMap(block => block.action.quiz?.questions || [])

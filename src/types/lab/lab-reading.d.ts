@@ -45,13 +45,11 @@ declare global {
 	}
 
 	interface QuizAttempt {
-		// blockId: ContentBlockID
 		questionUUID: QuestionUUID
 		answerAttempts: QuizAnswerAttempt[]
 	}
 
-	interface SelectedAnswerDrafts {
-		// blockId: ContentBlockID
+	interface DraftAnswer {
 		questionUUID: QuestionUUID
 		answerChoiceId: AnswerChoiceID
 		isCorrect: boolean | null
