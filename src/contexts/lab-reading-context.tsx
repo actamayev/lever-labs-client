@@ -151,6 +151,7 @@ class LabReadingClass {
 		// this.setDraftAnswer(null)
 		this.setActiveQuiz(null)
 		this.setExplanationBeingShown(null)
+		this.scrollToNextBlock(blockId)
 	})
 
 	public handleNextQuestion = action(() => {
@@ -285,18 +286,37 @@ class LabReadingClass {
 		})
 	})
 
+	private scrollToNextBlock = action((blockId: ContentBlockID) => {
+		const nextBlock = this.getNextBlock(blockId)
+		if (!nextBlock) return
+
+		this.setShownBlocks(nextBlock.id)
+
+		// Use requestAnimationFrame to ensure DOM has updated
+		requestAnimationFrame(() => {
+			const nextElement = document.getElementById(`block-${nextBlock.id}`)
+			if (nextElement) {
+				const container = nextElement.closest(".reading-content-container")
+				const containerRect = container?.getBoundingClientRect()
+				const elementRect = nextElement.getBoundingClientRect()
+
+				// Calculate the scroll position to place the element at the top
+				if (container && containerRect) {
+					container.scrollTo({
+						top: elementRect.top - containerRect.top + container.scrollTop,
+						behavior: "smooth"
+					})
+				}
+			}
+		})
+	})
+
 	public handleContinue = action((
 		blockId: ContentBlockID,
 		setIsContinued: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
-		const nextBlock = this.getNextBlock(blockId)
-		if (!nextBlock) return
-		const nextElement = document.getElementById(`block-${nextBlock.id}`)
-		this.setShownBlocks(nextBlock.id)
 		setIsContinued(true)
-		if (nextElement) {
-			nextElement.scrollIntoView({ behavior: "smooth", block: "start" })
-		}
+		this.scrollToNextBlock(blockId)
 	})
 
 	get quizAttemptsForActiveQuiz (): QuizAnswerAttempt[] {
@@ -362,6 +382,16 @@ class LabReadingClass {
 		if (!answer || !answer.explanation) return ""
 
 		return answer.explanation
+	}
+
+	public isBlockLastShown(blockId: ContentBlockID): boolean {
+		const lastBlock = this.shownBlocks[this.shownBlocks.length - 1]
+		return lastBlock.id === blockId
+	}
+
+	public isLastBlockOfActiveBlocks(blockId: ContentBlockID): boolean {
+		const lastBlock = this.activeBlocks[this.activeBlocks.length - 1]
+		return lastBlock.id === blockId
 	}
 
 	public logout() {

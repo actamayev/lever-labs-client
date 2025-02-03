@@ -3,8 +3,8 @@ import { useMemo, useState } from "react"
 import { CheckCircle, StepForward } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
@@ -42,47 +42,54 @@ function ReadingBlock(props: Props) {
 		return labReadingClass.checkIfBlockIsShown(block.id)
 	}, [block.id, labReadingClass])
 
+	const viewHeightClasses = () => {
+		if (labReadingClass.isLastBlockOfActiveBlocks(block.id)) return "min-h-0]"
+		if (labReadingClass.isBlockLastShown(block.id)) return "min-h-[calc(80vh)]"
+		return "min-h-[calc(40vh)]"
+	}
+
 	return (
 		<div
 			key={block.id}
 			id={`block-${block.id}`}
 			className={cn(
-				"mb-6 transition-opacity duration-300",
-				isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden"
+				"flex flex-col mb-6 transition-opacity duration-300",
+				isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden",
+				viewHeightClasses()
 			)}
 		>
-			<div className="max-w-none">
-				{block.text}
+			{block.text}
+
+			<div>
+				{isRevealed && block.action.type === "continue" && !isContinued && (
+					<BlueTactileButton
+						onClick={() => labReadingClass.handleContinue(block.id, setIsContinued)}
+						className="px-6 !py-5 text-3xl w-full h-16"
+						shadowHeight={4}
+					>
+						<StepForward className="!w-8 !h-8" />
+                        CONTINUE
+					</BlueTactileButton>
+				)}
+
+				{isRevealed && block.action.type === "quiz" && (
+					<TactileButton
+						onClick={() => labReadingClass.openQuiz(block)}
+						className={cn(
+							"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
+							quizButtonClasses
+						)}
+						shadowColor={getShadowColor}
+						shadowHeight={4}
+					>
+						{!isQuizCorrect ? (
+							<><CustomQuiz className="!w-8 !h-8" />QUIZ</>
+						) : (
+							<><CheckCircle className="!w-8 !h-8" />REVIEW QUIZ</>
+						)}
+					</TactileButton>
+				)}
 			</div>
-
-			{isRevealed && block.action.type === "continue" && !isContinued && (
-				<BlueTactileButton
-					onClick={() => labReadingClass.handleContinue(block.id, setIsContinued)}
-					className="px-6 !py-5 text-3xl w-full h-16"
-					shadowHeight={4}
-				>
-					<StepForward className="!w-8 !h-8" />
-					CONTINUE
-				</BlueTactileButton>
-			)}
-
-			{isRevealed && block.action.type === "quiz" && (
-				<TactileButton
-					onClick={() => labReadingClass.openQuiz(block)}
-					className={cn(
-						"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
-						quizButtonClasses
-					)}
-					shadowColor={getShadowColor}
-					shadowHeight={4}
-				>
-					{!isQuizCorrect ? (
-						<><CustomQuiz className="!w-8 !h-8" />QUIZ</>
-					) : (
-						<><CheckCircle className="!w-8 !h-8" />REVIEW QUIZ</>
-					)}
-				</TactileButton>
-			)}
 		</div>
 	)
 }

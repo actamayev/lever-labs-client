@@ -26,7 +26,10 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 				"h-full transition-all duration-300",
 				labReadingClass.activeQuiz ? "w-2/3" : "w-full"
 			)}>
-				<div ref={contentRef} className="px-24 py-6 h-full overflow-y-auto">
+				<div
+					ref={contentRef}
+					className="reading-content-container px-24 py-6 h-full overflow-y-auto"
+				>
 					{labReadingClass.shownBlocks.map((block) => (
 						<ReadingBlock key={block.id} block={block} />
 					))}
