@@ -45,7 +45,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-end">
-				{activityType === "Code" && (
+				{(activityType === "Code" || activityType === "Demo") && (
 					<div className="mr-6">
 						<LabCodePipStatus />
 					</div>
