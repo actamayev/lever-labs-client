@@ -1,13 +1,12 @@
-/* eslint-disable max-len */
 import {
 	Wifi,
 	Upload,
 	Tag
 } from "lucide-react"
-import { Button } from "@/components/shadcn/ui/button"
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function AddPipWelcomeSection() {
@@ -43,15 +42,13 @@ export default function AddPipWelcomeSection() {
 					title="Upload credentials"
 				/>
 			</div>
-
-			<Button
-				className="w-full bg-blue-600 hover:bg-blue-500 text-white dark:bg-blue-700 dark:hover:bg-blue-600
-				text-xl transition-none"
+			<BlueTactileButton
 				onClick={() => navigate("/add-pip")}
-				variant="tactile"
+				className="w-full text-xl h-12"
+				shadowHeight={4}
 			>
-				Add Your Pip
-			</Button>
+				ADD YOUR PIP
+			</BlueTactileButton>
 		</WelcomePageCard>
 	)
 }

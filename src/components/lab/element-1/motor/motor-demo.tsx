@@ -1,5 +1,4 @@
 import LabDemoComponent from "../../demo/lab-demo-component"
-import MotorSpinAnimation from "../../../icon-animations/motor-spin-animation"
 
 export default function MotorDemo() {
 	return (
@@ -10,8 +9,8 @@ export default function MotorDemo() {
 			nextPageLink="/lab/element-1/led/reading"
 			nextPageActivity="Reading"
 			element={1}
-			lessonIcon={<MotorSpinAnimation iconSize={30} />}
-			progressPercent={0 / 6}
+			lessonTitle="Motor"
+			lessonProgressPercent={0 / 6}
 		/>
 	)
 }

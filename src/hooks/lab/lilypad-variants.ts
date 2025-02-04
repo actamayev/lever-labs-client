@@ -8,7 +8,7 @@ export default function useLilypadVariants(): (progress: number | null) => strin
 		"w-24 h-24 rounded-full flex items-center justify-center transform transition-all duration-50 relative",
 		// Shadow and press effect
 		isNull(progress) && [
-			"bg-gray-300",
+			"bg-zinc-300",
 			"shadow-[0_7px_0_0_rgb(156,163,175)]", // gray shadow
 		],
 		progress === 100 && [

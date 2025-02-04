@@ -4,10 +4,13 @@ declare global {
 	| "Reading"
 	| "Video"
 	| "Code"
+	| "Summary"
+
+	type ActivityTypeRoutePath =
+	| ActivityType
 	| "Code-1"
 	| "Code-2"
 	| "Code-3"
-	| "Summary"
 
 	// Top: 1, bottom: 9
 	type VerticalPosition = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
@@ -27,7 +30,7 @@ declare global {
 
 	type ElementNumbers = 1 | 2 | 3
 
-	type Element1Sections =
+	type Element1Lessons =
 	| "LED"
 	| "Motor"
 }

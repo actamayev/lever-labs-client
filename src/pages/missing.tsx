@@ -1,10 +1,10 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Button } from "@/components/shadcn/ui/button"
 import { useAuthContext } from "../contexts/auth-context"
 import useTypedNavigate from "../hooks/navigate/typed-navigate"
 import { CustomBeaker } from "../components/icons/custom-beaker"
 import { CustomHouse } from "../components/icons/custom-house"
+import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing() {
 	const authClass = useAuthContext()
@@ -15,34 +15,28 @@ function Missing() {
 		return navigate("/")
 	}, [authClass.isLoggedIn, navigate])
 
-	const conditionalText = () => {
-		if (authClass.isLoggedIn) {
-			return (
-				<>
-					Return to the Lab
-					<CustomBeaker className="ml-2 !h-7 !w-7" />
-				</>
-			)
-		}
-		return (
-			<>
-				Return home
-				<CustomHouse className="ml-2 !h-7 !w-7" />
-			</>
-		)
-	}
 	return (
 		<div className="flex flex-col items-center gap-8 pt-16">
 			<h1 className="text-2xl font-semibold">
 				Page Not Found
 			</h1>
-			<Button
-				variant="tactile"
+			<BlackWhiteTactileButton
 				onClick={conditionalNavigation}
-				className="transition-none text-2xl p-5"
+				className="text-2xl p-5"
+				shadowHeight={4}
 			>
-				{conditionalText()}
-			</Button>
+				{authClass.isLoggedIn ? (
+					<>
+						RETURN TO THE LAB
+						<CustomBeaker className="ml-2 !h-7 !w-7" />
+					</>
+				) : (
+					<>
+						RETURN HOME
+						<CustomHouse className="ml-2 !h-7 !w-7" />
+					</>
+				)}
+			</BlackWhiteTactileButton>
 		</div>
 	)
 }

@@ -5,6 +5,7 @@ import { createContext, useContext, useMemo } from "react"
 class AuthClass {
 	private _accessToken: string | null = null
 	public showLoginOrRegister: LoginOrRegister = "Register"
+	public isAuthenticating = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -29,6 +30,10 @@ class AuthClass {
 		}
 	})
 
+	public setAuthenticating = action((authenticating: boolean): void => {
+		this.isAuthenticating = authenticating
+	})
+
 	public setShowLoginOrRegister = action((loginOrRegister: LoginOrRegister): void => {
 		this.showLoginOrRegister = loginOrRegister
 	})
@@ -36,6 +41,7 @@ class AuthClass {
 	public logout() {
 		this.setAccessToken(null, true)
 		this.setShowLoginOrRegister("Register")
+		this.setAuthenticating(false)
 	}
 }
 

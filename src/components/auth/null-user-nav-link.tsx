@@ -9,7 +9,7 @@ function NullUserNavLink() {
 
 	if (location.pathname === "/") {
 		return (
-			<div className="space-x-2">
+			<div className="space-x-2 flex flex-row">
 				<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
 				<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
 			</div>

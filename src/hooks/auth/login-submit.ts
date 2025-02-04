@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../navigate/typed-navigate"
+import { useAuthContext } from "../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
@@ -9,9 +10,9 @@ import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-re
 
 export default function useLoginSubmit (
 	whereToNavigate: PageNames,
-	setError: (error: string) => void,
-	setLoading: (loading: boolean) => void
+	setError: (error: string) => void
 ): (loginInformation: LoginFormValues) => Promise<void> {
+	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
@@ -22,18 +23,19 @@ export default function useLoginSubmit (
 			const areCredentialsValid = confirmLoginFields(loginInformation, setError)
 			if (areCredentialsValid === false) return
 
-			setLoading(true)
+			authClass.setAuthenticating(true)
 			const response = await blueDotApiClient.authDataService.login(loginInformation)
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to log in. Please reload the page and try again")
 				return
 			}
 			setDataAfterLogin(response.data)
+			console.log("Navigating to", whereToNavigate)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
-			setLoading(false)
+			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterLogin, setError, setLoading, whereToNavigate])
+	}, [authClass, blueDotApiClient.authDataService, navigate, setDataAfterLogin, setError, whereToNavigate])
 }

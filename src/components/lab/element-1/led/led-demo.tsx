@@ -1,5 +1,4 @@
 import LabDemoComponent from "../../demo/lab-demo-component"
-import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 
 export default function LedDemo() {
 	return (
@@ -10,8 +9,8 @@ export default function LedDemo() {
 			nextPageLink="/lab/element-1/led/video"
 			nextPageActivity="Video"
 			element={1}
-			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={200 / 6}
+			lessonTitle="LED"
+			lessonProgressPercent={200 / 6}
 		/>
 	)
 }

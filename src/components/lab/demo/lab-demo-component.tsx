@@ -1,4 +1,3 @@
-import { ReactElement } from "react"
 import { observer } from "mobx-react"
 import { usePipContext } from "../../../contexts/pip-context"
 import ActivityTemplate from "../activity-structure/activity-template"
@@ -10,8 +9,8 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
-	progressPercent: number
+	lessonTitle: Element1Lessons
+	lessonProgressPercent: number
 }
 
 function LabDemoComponent(props: Props) {
@@ -22,22 +21,22 @@ function LabDemoComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
-		progressPercent,
+		lessonTitle,
+		lessonProgressPercent,
 	} = props
 	const pipClass = usePipContext()
 
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={demoTitle}
-			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			activityTitle={demoTitle}
+			lessonTitle={lessonTitle}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
+			activityType="Demo"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				Demo:&nbsp;

@@ -10,10 +10,10 @@ const getStackPosition = (index: number, defaultPosition: VerticalPosition): Ver
 }
 
 interface LilyPadPositions {
-  x: number
-  y: number
-  skipConnection?: boolean
-  arcDirection?: ArcDirection
+	x: number
+	y: number
+	skipConnection?: boolean
+	arcDirection?: ArcDirection
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -81,7 +81,7 @@ export default function ShowLEDLessons() {
 				<div className="flex">
 					{groups.map((groupLessons) => {
 						const isCodeGroup = groupLessons.some(lesson =>
-							lesson.lessonName.includes("LED Code")
+							lesson.activityType === "Code"
 						)
 
 						return (
