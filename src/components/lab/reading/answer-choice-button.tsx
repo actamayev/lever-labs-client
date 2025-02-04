@@ -1,36 +1,15 @@
-import { useEffect } from "react"
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import useAnswerChoiceButtonListener from "../../../hooks/listeners/answer-choice-button-listener"
 
-interface Props {
-    index: AnswerChoiceID
-}
-
-// eslint-disable-next-line max-lines-per-function
-function AnswerChoiceButton(props: Props) {
-	const { index } = props
+function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
-
-	// Add keyboard event listener
-	useEffect(() => {
-		const handleKeyPress = (event: KeyboardEvent) => {
-			const numKey = parseInt(event.key)
-			if (numKey >= 1 && numKey <= 4) {
-				labReadingClass.setDraftAnswerChoice(numKey as AnswerChoiceID)
-			}
-
-			//if the user presses enter, submit the answer
-			if (event.key === "Enter") labReadingClass.checkAnswer()
-		}
-
-		window.addEventListener("keydown", handleKeyPress)
-		return () => window.removeEventListener("keydown", handleKeyPress)
-	}, [labReadingClass])
+	useAnswerChoiceButtonListener()
 
 	const isSelectedOrActiveQuizAttempt = () => {
 		if (!labReadingClass.activeQuiz) return false
