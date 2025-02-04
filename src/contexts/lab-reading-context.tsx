@@ -11,6 +11,7 @@ class LabReadingClass {
 	public quizAttempts: Map<QuestionUUID, QuizAnswerAttempt[]> = new Map()
 	public quizStyle = { top: "5rem", bottom: "0rem" }
 	public explanationBeingShown: ExplanationData | null = null
+	public blockHeightStates: Map<ContentBlockID, BlockHeightState> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -49,6 +50,20 @@ class LabReadingClass {
 	public setExplanationBeingShown = action((explanationData: ExplanationData | null): void => {
 		this.explanationBeingShown = explanationData
 	})
+
+	public setBlockHeightState = action((blockId: ContentBlockID, state: BlockHeightState) => {
+		this.blockHeightStates.set(blockId, state)
+	})
+
+	public getBlockHeightState(blockId: ContentBlockID): string {
+		const state = this.blockHeightStates.get(blockId)
+		switch (state) {
+		case "expanded": return "min-h-[calc(80vh)]"
+		case "normal": return "min-h-[calc(40vh)]"
+		case "minimal": return "min-h-0"
+		default: return "min-h-[calc(40vh)]"
+		}
+	}
 
 	public setDraftAnswerChoice = action((answerChoiceId: AnswerChoiceID): void => {
 		if (!this.activeQuiz) return
@@ -147,8 +162,6 @@ class LabReadingClass {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
-		this.setShownBlocks(nextBlock.id)
-		// this.setDraftAnswer(null)
 		this.setActiveQuiz(null)
 		this.setExplanationBeingShown(null)
 		this.scrollToNextBlock(blockId)
@@ -290,24 +303,26 @@ class LabReadingClass {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
+		// Update height states before showing next block
+		if (this.isLastBlockOfActiveBlocks(blockId)) {
+			this.setBlockHeightState(blockId, "minimal")
+		} else {
+			this.setBlockHeightState(blockId, "normal")
+		}
+		this.setBlockHeightState(nextBlock.id, "expanded")
+
 		this.setShownBlocks(nextBlock.id)
 
-		// Use requestAnimationFrame to ensure DOM has updated
 		requestAnimationFrame(() => {
 			const nextElement = document.getElementById(`block-${nextBlock.id}`)
-			if (nextElement) {
-				const container = nextElement.closest(".reading-content-container")
-				const containerRect = container?.getBoundingClientRect()
-				const elementRect = nextElement.getBoundingClientRect()
+			if (!nextElement) return
+			const container = nextElement.closest(".reading-content-container")
+			if (!container) return
 
-				// Calculate the scroll position to place the element at the top
-				if (container && containerRect) {
-					container.scrollTo({
-						top: elementRect.top - containerRect.top + container.scrollTop,
-						behavior: "smooth"
-					})
-				}
-			}
+			container.scrollTo({
+				top: nextElement.offsetTop,
+				behavior: "smooth"
+			})
 		})
 	})
 

@@ -40,13 +40,8 @@ function ReadingBlock(props: Props) {
 
 	const isRevealed = useMemo(() => {
 		return labReadingClass.checkIfBlockIsShown(block.id)
-	}, [block.id, labReadingClass])
-
-	const viewHeightClasses = () => {
-		if (labReadingClass.isLastBlockOfActiveBlocks(block.id)) return "min-h-0]"
-		if (labReadingClass.isBlockLastShown(block.id)) return "min-h-[calc(80vh)]"
-		return "min-h-[calc(40vh)]"
-	}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [block.id, labReadingClass.shownBlocks])
 
 	return (
 		<div
@@ -55,11 +50,10 @@ function ReadingBlock(props: Props) {
 			className={cn(
 				"flex flex-col mb-6 transition-opacity duration-300",
 				isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden",
-				viewHeightClasses()
+				labReadingClass.getBlockHeightState(block.id)
 			)}
 		>
 			{block.text}
-
 			<div>
 				{isRevealed && block.action.type === "continue" && !isContinued && (
 					<BlueTactileButton

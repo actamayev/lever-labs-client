@@ -60,6 +60,8 @@ declare global {
 		explanation: string
 		isCorrect: boolean
 	}
+
+	type BlockHeightState = "normal" | "expanded" | "minimal"
 }
 
 export {}
