@@ -15,22 +15,6 @@ function Missing() {
 		return navigate("/")
 	}, [authClass.isLoggedIn, navigate])
 
-	const conditionalText = () => {
-		if (authClass.isLoggedIn) {
-			return (
-				<>
-					RETURN TO THE LAB
-					<CustomBeaker className="ml-2 !h-7 !w-7" />
-				</>
-			)
-		}
-		return (
-			<>
-				RETURN HOME
-				<CustomHouse className="ml-2 !h-7 !w-7" />
-			</>
-		)
-	}
 	return (
 		<div className="flex flex-col items-center gap-8 pt-16">
 			<h1 className="text-2xl font-semibold">
@@ -41,7 +25,17 @@ function Missing() {
 				className="text-2xl p-5"
 				shadowHeight={4}
 			>
-				{conditionalText()}
+				{authClass.isLoggedIn ? (
+					<>
+						RETURN TO THE LAB
+						<CustomBeaker className="ml-2 !h-7 !w-7" />
+					</>
+				) : (
+					<>
+						RETURN HOME
+						<CustomHouse className="ml-2 !h-7 !w-7" />
+					</>
+				)}
 			</BlackWhiteTactileButton>
 		</div>
 	)
