@@ -412,7 +412,14 @@ class LabReadingClass {
 	}
 
 	public logout() {
-		// TODO: Implement
+		this.currentReadingName = null
+		this.activeBlocks = []
+		this.shownBlocks = []
+		this.activeQuiz = null
+		this.draftAnswer.clear()
+		this.quizAttempts.clear()
+		this.explanationBeingShown = null
+		this.blockHeightStates.clear()
 	}
 }
 

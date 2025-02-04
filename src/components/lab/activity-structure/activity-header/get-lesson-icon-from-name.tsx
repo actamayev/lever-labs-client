@@ -5,6 +5,5 @@ export default function GetLessonIconFromActivityName({ lessonTitle } : { lesson
 	if (lessonTitle === "LED") {
 		return <LEDColorChangeAnimation iconSize={30} />
 	}
-	// If Code-1, code-2, code-3
 	return <MotorSpinAnimation iconSize={30} />
 }

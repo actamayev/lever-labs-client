@@ -27,7 +27,6 @@ declare global {
 	interface AnswerChoice {
 		text: string
 		correct: boolean
-		// TODO: Change to a UUID:
 		answerChoiceId: AnswerChoiceID
 		explanation?: string
 	}

@@ -14,7 +14,6 @@ interface Section {
 	name: Element1Lessons
 }
 
-// 1/27/25 ASAP TODO: Clicking the led icon doesn't take me back to the start of the led track
 export default function Element1() {
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	const motorSectionRef = useRef<HTMLDivElement>(null)
