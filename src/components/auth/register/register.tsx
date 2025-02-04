@@ -7,9 +7,9 @@ import PasswordField from "../password-input"
 import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
+import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
@@ -52,14 +52,10 @@ export default function Register() {
 						placeholder="Confirm Password"
 					/>
 
-					<BlueTactileButton
-						type="submit"
-						disabled={loading}
-						shadowHeight={4}
-						className="w-full h-12 my-2"
-					>
-						CREATE ACCOUNT
-					</BlueTactileButton>
+					<AuthButton
+						loading={loading}
+						title="CREATE ACCOUNT"
+					/>
 
 					{error && <ErrorMessage error={error} />}
 

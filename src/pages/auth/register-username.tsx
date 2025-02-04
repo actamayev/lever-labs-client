@@ -4,9 +4,9 @@ import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../components/shadcn/ui/form"
 import PageHelmet from "../../components/helmet/page-helmet"
+import AuthButton from "../../components/buttons/generic-buttons"
 import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
-import { BlueTactileButton } from "../../components/buttons/tactile-buttons"
 import { registerUsernameSchema } from "../../utils/auth/auth-schemas"
 import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import UsernameInput from "../../components/auth/register/username-input"
@@ -40,14 +40,10 @@ function RegisterUsername() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 						<UsernameInput control={form.control} />
 
-						<BlueTactileButton
-							type="submit"
-							disabled={loading || isDisabled}
-							shadowHeight={4}
-							className="w-full h-12 my-2"
-						>
-							CONTINUE
-						</BlueTactileButton>
+						<AuthButton
+							loading={loading || isDisabled}
+							title="CONTINUE"
+						/>
 
 						{error && <ErrorMessage error={error} />}
 					</form>

@@ -6,9 +6,9 @@ import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
 import PasswordField from "../password-input"
 import GoogleSignIn from "../google/google-sign-in"
+import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
@@ -46,14 +46,10 @@ export default function Login(props: Props) {
 						name="password"
 						// showForgotPassword={true}
 					/>
-					<BlueTactileButton
-						type="submit"
-						disabled={loading}
-						shadowHeight={4}
-						className="w-full h-12 my-2"
-					>
-						LOG IN
-					</BlueTactileButton>
+					<AuthButton
+						loading={loading}
+						title="LOG IN"
+					/>
 
 					{error && <ErrorMessage error={error} />}
 
