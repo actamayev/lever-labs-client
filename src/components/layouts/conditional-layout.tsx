@@ -4,14 +4,7 @@ import { useLocation } from "react-router"
 import ClassicLayout from "./classic-layout"
 import useUsername from "../../hooks/memos/username"
 import InternalPagesLayout from "./internal-pages-layout"
-
-const PrivatePageNames = [
-	"/garage",
-	"/lab",
-	"/add-pip",
-	"/sandbox",
-	"/settings"
-]
+import { PrivatePageNames } from "../../utils/constants"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const location = useLocation()

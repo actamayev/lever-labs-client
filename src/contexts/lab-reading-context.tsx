@@ -30,6 +30,7 @@ class LabReadingClass {
 
 	public setBlocks = action((blocks: ContentBlock[], readingName: Element1Lessons): void => {
 		if (this.currentReadingName === readingName) return
+		this.currentReadingName = readingName
 		this.activeBlocks = blocks
 	})
 

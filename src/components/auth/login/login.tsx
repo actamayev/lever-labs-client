@@ -21,8 +21,7 @@ export default function Login(props: Props) {
 	const { whereToNavigate } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const loginSubmit = useLoginSubmit(whereToNavigate, setError, setLoading)
+	const loginSubmit = useLoginSubmit(whereToNavigate, setError)
 
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
@@ -46,10 +45,7 @@ export default function Login(props: Props) {
 						name="password"
 						// showForgotPassword={true}
 					/>
-					<AuthButton
-						loading={loading}
-						title="LOG IN"
-					/>
+					<AuthButton title="LOG IN" />
 
 					{error && <ErrorMessage error={error} />}
 

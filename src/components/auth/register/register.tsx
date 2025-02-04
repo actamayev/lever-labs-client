@@ -17,8 +17,7 @@ import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 export default function Register() {
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const registerSubmit = useRegisterSubmit(setError, setLoading)
+	const registerSubmit = useRegisterSubmit(setError)
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -52,10 +51,7 @@ export default function Register() {
 						placeholder="Confirm Password"
 					/>
 
-					<AuthButton
-						loading={loading}
-						title="CREATE ACCOUNT"
-					/>
+					<AuthButton	title="CREATE ACCOUNT" />
 
 					{error && <ErrorMessage error={error} />}
 

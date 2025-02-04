@@ -15,8 +15,7 @@ import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-wit
 function RegisterUsername() {
 	useRedirectUserWithUsername()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const usernameSubmit = useUsernameSubmit(setError, setLoading)
+	const usernameSubmit = useUsernameSubmit(setError)
 
 	const form = useForm<RegisterUsernameFormValues>({
 		resolver: zodResolver(registerUsernameSchema),
@@ -40,10 +39,7 @@ function RegisterUsername() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 						<UsernameInput control={form.control} />
 
-						<AuthButton
-							loading={loading || isDisabled}
-							title="CONTINUE"
-						/>
+						<AuthButton loading={isDisabled} title="CONTINUE" />
 
 						{error && <ErrorMessage error={error} />}
 					</form>
