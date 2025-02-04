@@ -1,4 +1,5 @@
 import LabDemoComponent from "../../demo/lab-demo-component"
+import { motorDemoDeliverables, motorDemos } from "./motor-demo-blocks"
 
 export default function MotorDemo() {
 	return (
@@ -11,6 +12,9 @@ export default function MotorDemo() {
 			element={1}
 			lessonTitle="Motor"
 			lessonProgressPercent={0 / 6}
+			lessonDemoTitle="Motor Demo"
+			demoDeliverables={motorDemoDeliverables}
+			demos={motorDemos}
 		/>
 	)
 }

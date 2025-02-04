@@ -1,5 +1,4 @@
-import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
+import DemoCard from "./demo-card"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -11,9 +10,12 @@ interface Props {
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
+	lessonDemoTitle: string
+    demoDeliverables: string[]
+    demos: Demo[]
 }
 
-function LabDemoComponent(props: Props) {
+export default function LabDemoComponent(props: Props) {
 	const {
 		demoTitle,
 		previousPageLink,
@@ -23,9 +25,10 @@ function LabDemoComponent(props: Props) {
 		element,
 		lessonTitle,
 		lessonProgressPercent,
+		lessonDemoTitle,
+		demoDeliverables,
+		demos
 	} = props
-	const pipClass = usePipContext()
-
 	return (
 		<ActivityTemplate
 			element={element}
@@ -39,15 +42,12 @@ function LabDemoComponent(props: Props) {
 			activityType="Demo"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
-				Demo:&nbsp;
-				{pipClass.doesUserHaveAPip ? (
-					<>You have a Pip</>
-				) : (
-					<>You do not have a Pip</>
-				)}
+				<DemoCard
+					lessonDemoTitle={lessonDemoTitle}
+					demoDeliverables={demoDeliverables}
+					demos={demos}
+				/>
 			</main>
 		</ActivityTemplate>
 	)
 }
-
-export default observer(LabDemoComponent)
