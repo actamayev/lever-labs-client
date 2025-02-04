@@ -43,7 +43,7 @@ class LabReadingClass {
 	})
 
 	public setDraftAnswer = action((questionUUID: QuestionUUID, draftAnswer: DraftAnswer | null): void => {
-		if (!draftAnswer) {
+		if (isNull(draftAnswer)) {
 			this.draftAnswer.delete(questionUUID)
 			return
 		}
@@ -73,7 +73,7 @@ class LabReadingClass {
 		//if the question has been answered correctly, don't allow the user to select an answer that's not in quiz attempts
 		if (this.activeQuiz.isCorrect) {
 			const isAnswerChoiceIDInQuizAttempts = this.quizAttemptsForActiveQuiz.find(
-				attempt => attempt.selectedChoice === answerChoiceId
+				attempt => attempt.answerChoiceId === answerChoiceId
 			)
 			if (isUndefined(isAnswerChoiceIDInQuizAttempts)) return
 			return this.setExplanationBeingShown({
@@ -135,20 +135,17 @@ class LabReadingClass {
 
 	public checkAnswer = action(() => {
 		if (
-			!this.activeBlock ||
+			isUndefined(this.activeBlock) ||
 			isNull(this.activeQuiz)
 		) return
 		const currentQuestionDraftAnswer = this.currentQuestionDraftAnswer
-		if (!currentQuestionDraftAnswer || isNull(currentQuestionDraftAnswer.isCorrect)) return
-
-		const attempt: QuizAnswerAttempt = {
-			questionUUID: currentQuestionDraftAnswer.questionUUID,
-			selectedChoice: currentQuestionDraftAnswer.answerChoiceId,
-			isCorrect: currentQuestionDraftAnswer.isCorrect
-		}
+		if (
+			isUndefined(currentQuestionDraftAnswer) ||
+			isNull(currentQuestionDraftAnswer.isCorrect)
+		) return
 
 		// Add the answer attempt to the quiz attempts
-		this.setQuizAttempts(this.currentQuestionDraftAnswer.questionUUID, attempt)
+		this.setQuizAttempts(currentQuestionDraftAnswer.questionUUID, currentQuestionDraftAnswer as QuizAnswerAttempt)
 		this.setActiveQuiz({
 			blockId: this.activeQuiz.blockId,
 			questionUUID: this.activeQuiz.questionUUID,
@@ -260,7 +257,7 @@ class LabReadingClass {
 		this.setExplanationBeingShown({
 			questionUUID,
 			isCorrect: quizAttempt?.isCorrect || false,
-			explanation: this.getExplanationForQuestion(questionUUID, quizAttempt?.selectedChoice)
+			explanation: this.getExplanationForQuestion(questionUUID, quizAttempt?.answerChoiceId)
 		})
 	})
 
@@ -298,7 +295,7 @@ class LabReadingClass {
 		this.setExplanationBeingShown({
 			questionUUID: block.action.quiz.questions[0].questionUUID,
 			isCorrect: isCorrect?.isCorrect || false,
-			explanation: this.getExplanationForQuestion(block.action.quiz.questions[0].questionUUID, isCorrect?.selectedChoice)
+			explanation: this.getExplanationForQuestion(block.action.quiz.questions[0].questionUUID, isCorrect?.answerChoiceId)
 		})
 	})
 
@@ -343,7 +340,7 @@ class LabReadingClass {
 
 	public getActiveQuizAttempt (answerIndex: AnswerChoiceID): QuizAnswerAttempt | undefined {
 		const attempts = this.quizAttemptsForActiveQuiz
-		return attempts.find(_attempt => _attempt.selectedChoice === answerIndex)
+		return attempts.find(_attempt => _attempt.answerChoiceId === answerIndex)
 	}
 
 	public getQuestionIndexInAllBlocks(questionUUID: QuestionUUID): number {

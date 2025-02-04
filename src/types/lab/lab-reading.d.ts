@@ -39,7 +39,7 @@ declare global {
 
 	interface QuizAnswerAttempt {
 		questionUUID: QuestionUUID
-		selectedChoice: AnswerChoiceID
+		answerChoiceId: AnswerChoiceID
 		isCorrect: boolean
 	}
 
