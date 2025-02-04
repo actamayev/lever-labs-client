@@ -8,12 +8,7 @@ import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
-interface Props {
-	block: ContentBlock
-}
-
-function ReadingBlock(props: Props) {
-	const { block  } = props
+function ReadingBlock({ block } : { block: ContentBlock }) {
 	const labReadingClass = useLabReadingContext()
 	const [isContinued, setIsContinued] = useState(false)
 	const defaultSiteTheme = useDefaultSiteTheme()
