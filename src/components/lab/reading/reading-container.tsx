@@ -44,7 +44,7 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 				)}
 				style={toJS(labReadingClass.quizStyle)}
 			>
-				{labReadingClass.activeQuiz && <QuizSection />}
+				<QuizSection />
 			</div>
 		</div>
 	)

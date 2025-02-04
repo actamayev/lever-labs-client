@@ -15,7 +15,7 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 function QuizSection() {
 	const labReadingClass = useLabReadingContext()
 
-	if (!labReadingClass.currentQuestion) return null
+	if (!labReadingClass.currentQuestion || !labReadingClass.activeQuiz) return null
 
 	return (
 		<div className="h-full flex flex-col">
@@ -27,7 +27,7 @@ function QuizSection() {
 								className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
 								hover:bg-zinc-100 !px-2 py-1 rounded-lg"
 							>
-								{labReadingClass.activeQuiz?.isCorrect ? (
+								{labReadingClass.activeQuiz.isCorrect ? (
 									<><CheckCircle />Quiz Review #{
 										labReadingClass.getQuestionIndexInAllBlocks(labReadingClass.currentQuestion.questionUUID) + 1
 									}</>
