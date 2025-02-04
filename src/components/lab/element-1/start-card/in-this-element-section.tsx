@@ -13,12 +13,10 @@ export default function InThisElementSection() {
 				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
 					<li>LEDs</li>
 					<li>Motors</li>
-
 				</ul>
 				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
 					<li>Buttons</li>
 					<li>Distance sensors</li>
-
 				</ul>
 				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
 					<li>IR sensors</li>

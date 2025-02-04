@@ -12,7 +12,7 @@ export default function DemoCard(props: Props) {
 	const { lessonDemoTitle, demoDeliverables, demos } = props
 
 	return (
-		<Card className="w-3/4 p-2 flex flex-col m-2 rounded-lg">
+		<Card className="w-2/3 flex flex-col rounded-lg">
 			<CardHeader>
 				<CardTitle>
 					<h1 className="text-4xl font-bold">{lessonDemoTitle}</h1>
@@ -25,11 +25,18 @@ export default function DemoCard(props: Props) {
 					<h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">
                         In This Demo, you&apos;ll:
 					</h2>
-					<div className="grid grid-cols-3 gap-4">
+					<div className="grid grid-cols-2 gap-4">
 						<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
-							{demoDeliverables.map((delverable, index) => (
+							{demoDeliverables.slice(0, 2).map((deliverable, index) => (
 								<li key={index}>
-									{delverable}
+									{deliverable}
+								</li>
+							))}
+						</ul>
+						<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
+							{demoDeliverables.slice(2, 4).map((deliverable, index) => (
+								<li key={`second-${index}`}>
+									{deliverable}
 								</li>
 							))}
 						</ul>

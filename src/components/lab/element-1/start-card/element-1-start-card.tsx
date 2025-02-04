@@ -16,7 +16,6 @@ export default function Element1StartCard() {
 			<CardContent className="space-y-6">
 				<GettingStartedStartCard />
 				<InThisElementSection />
-
 				<AfterCompletingSection />
 			</CardContent>
 		</Card>

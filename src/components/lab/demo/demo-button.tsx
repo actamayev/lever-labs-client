@@ -25,7 +25,7 @@ export default function DemoButton({ demo } : { demo: Demo }) {
 				<h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200 mb-2">
 					{demo.demoTitle}
 				</h3>
-				<p className="text-zinc-600 dark:text-zinc-400">
+				<p className="text-zinc-600 dark:text-zinc-400 text-sm">
 					{demo.demoDescription}
 				</p>
 			</div>
