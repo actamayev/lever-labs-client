@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { observer } from "mobx-react"
-import { isNil, isNull } from "lodash-es"
+import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
@@ -93,7 +93,7 @@ function AnswerChoiceButton(props: Props) {
 				else return "rgb(228, 228, 231)"
 			}
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			if (isNil(isCorrect)) return "rgb(0, 61, 165)"
+			if (isUndefined(isCorrect)) return "rgb(0, 61, 165)"
 			else if (isCorrect === false) return "rgb(239, 68, 68)"
 			else return "rgb(34,197,94)"
 		} else {
@@ -102,7 +102,7 @@ function AnswerChoiceButton(props: Props) {
 				else return "rgb(63, 63, 70)"
 			}
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			if (isNull(isCorrect)) return "rgb(0, 61, 165)"
+			if (isUndefined(isCorrect)) return "rgb(0, 61, 165)"
 			else if (isCorrect === false) return "rgb(239, 68, 68)"
 			else return "rgb(34,197,94)"
 		}
