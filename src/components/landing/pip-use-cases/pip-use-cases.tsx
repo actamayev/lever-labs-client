@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Cpu, LucideProps, Navigation, Scale, Shield, Users } from "lucide-react"
+import { Cpu, LucideIcon, Navigation, Scale, Shield, Users } from "lucide-react"
 import Sensors from "../sensors/sensors"
 import { cn } from "../../../lib/shadcn/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
@@ -8,9 +8,7 @@ import { BalancingDescription, CollaborativeRobotsDescription,
 
 interface Category {
 	title: CategoryTitle
-	icon: React.ForwardRefExoticComponent<
-		React.PropsWithoutRef<LucideProps> & React.RefAttributes<SVGSVGElement>
-	>
+	icon: LucideIcon
 	description: React.ReactNode
 }
 
