@@ -56,11 +56,6 @@ const features: Feature[] = [
 			</>
 		)
 	},
-	// {
-	// 	icon: FaWifi,
-	// 	title: "Minimal Setup",
-	// 	description: "Connect to Wi-Fi and start coding immediately. No complicated installations or downloads needed.",
-	// },
 	{
 		icon: CircuitBoard,
 		title: "See How It Works",
