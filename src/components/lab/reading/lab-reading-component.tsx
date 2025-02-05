@@ -1,4 +1,5 @@
-import { ReactElement } from "react"
+import ReadingContainer from "./reading-container"
+import ledReadingBlocks from "../element-1/led/led-reading-blocks"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -8,8 +9,8 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
-	progressPercent: number
+	lessonTitle: Element1Lessons
+	lessonProgressPercent: number
 }
 
 export default function LabReadingComponent(props: Props) {
@@ -20,23 +21,23 @@ export default function LabReadingComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
-		progressPercent,
+		lessonTitle,
+		lessonProgressPercent
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={readingTitle}
-			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			activityTitle={readingTitle}
+			lessonTitle={lessonTitle}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
+			activityType="Reading"
 		>
-			<main className="flex-1 flex items-center justify-center p-4">
-				Reading
+			<main className="h-full overflow-hidden">
+				<ReadingContainer blocks={ledReadingBlocks} labLesson={lessonTitle}/>
 			</main>
 		</ActivityTemplate>
 	)

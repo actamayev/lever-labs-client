@@ -1,4 +1,3 @@
-import MotorSpinAnimation from "../../../icon-animations/motor-spin-animation"
 import LabSummaryComponent from "../../summary/lab-summary-component"
 
 export default function MotorSummary() {
@@ -10,8 +9,8 @@ export default function MotorSummary() {
 			nextPageLink="/lab/element-1/led/reading"
 			nextPageActivity="Reading"
 			element={1}
-			lessonIcon={<MotorSpinAnimation iconSize={30} />}
-			progressPercent={100}
+			lessonTitle="Motor"
+			lessonProgressPercent={100}
 		/>
 	)
 }

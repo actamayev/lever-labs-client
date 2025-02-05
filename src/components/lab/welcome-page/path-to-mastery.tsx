@@ -9,9 +9,9 @@ import {
 import RightArrow from "./right-arrow"
 import { IconStep } from "./welcome-page-icons"
 import WelcomePageCard from "./welcome-page-card"
-import { CustomLightbulb } from "../../icons/custom-lightbulb"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { CustomCompass } from "../../icons/custom-compass"
-import { Button } from "../../shadcn/ui/button"
+import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function PathToMastery() {
@@ -74,14 +74,13 @@ export default function PathToMastery() {
 					subtitle="Take on complex challenges to test your limits."
 				/>
 			</div>
-			<Button
-				className="w-full bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-700 dark:hover:bg-blue-800
-				text-xl transition-none"
+			<BlueTactileButton
 				onClick={() => navigate("/lab/element-1")}
-				variant="tactile"
+				className="w-full text-xl h-12"
+				shadowHeight={4}
 			>
-				Start Learning
-			</Button>
+				START LEARNING
+			</BlueTactileButton>
 		</WelcomePageCard>
 	)
 }

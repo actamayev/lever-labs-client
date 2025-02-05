@@ -18,6 +18,5 @@ export default function GetActivityIconFromActivityName(props: Props) {
 	} else if (activityType === "Summary") {
 		return <ClipboardList className={className} />
 	}
-	// If Code-1, code-2, code-e
 	return <CodeXml className={className} />
 }

@@ -1,6 +1,4 @@
-import { ReactElement } from "react"
-import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
+import DemoCard from "./demo-card"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -10,11 +8,14 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
-	progressPercent: number
+	lessonTitle: Element1Lessons
+	lessonProgressPercent: number
+	lessonDemoTitle: string
+    demoDeliverables: string[]
+    demos: Demo[]
 }
 
-function LabDemoComponent(props: Props) {
+export default function LabDemoComponent(props: Props) {
 	const {
 		demoTitle,
 		previousPageLink,
@@ -22,33 +23,31 @@ function LabDemoComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
-		progressPercent,
+		lessonTitle,
+		lessonProgressPercent,
+		lessonDemoTitle,
+		demoDeliverables,
+		demos
 	} = props
-	const pipClass = usePipContext()
-
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={demoTitle}
-			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			activityTitle={demoTitle}
+			lessonTitle={lessonTitle}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
+			activityType="Demo"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
-				Demo:&nbsp;
-				{pipClass.doesUserHaveAPip ? (
-					<>You have a Pip</>
-				) : (
-					<>You do not have a Pip</>
-				)}
+				<DemoCard
+					lessonDemoTitle={lessonDemoTitle}
+					demoDeliverables={demoDeliverables}
+					demos={demos}
+				/>
 			</main>
 		</ActivityTemplate>
 	)
 }
-
-export default observer(LabDemoComponent)

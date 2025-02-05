@@ -19,6 +19,7 @@ export default function useSocketEventsUseEffect(): void {
 			pipClass.updatePipConnectionStatus(data)
 			const { newConnectionStatus } = data
 			if (newConnectionStatus === "online") {
+				// 1/29/25 TODO: Change this to be a <TactileButton />
 				const actionElement = (
 					<Button
 						onClick={() => requestToConnectToPip(data.pipUUID)}

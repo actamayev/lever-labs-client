@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import { observer } from "mobx-react"
-import { Button } from "@/components/shadcn/ui/button"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { useAuthContext } from "../../contexts/auth-context"
 
 interface LinkAuthHeaderProps {
@@ -13,13 +13,12 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 
 	return (
 		<Link to={linkTo}>
-			<Button
-				variant="tactile"
-				className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
-				dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+			<BlueTactileButton
+				shadowHeight={2}
+				className="text-xs sm:text-sm font-normal px-3 sm:px-4"
 			>
 				{title}
-			</Button>
+			</BlueTactileButton>
 		</Link>
 	)
 }
@@ -34,14 +33,13 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 	const authClass = useAuthContext()
 
 	return (
-		<Button
-			variant="tactile"
-			className="bg-blue-700 hover:bg-blue-600 text-primary-foreground text-sm rounded-xl transition-none
-			dark:bg-pipThemeOffWhite dark:text-black dark:hover:bg-pipThemeOffWhiteHover font-normal"
+		<BlueTactileButton
+			shadowHeight={2}
+			className="text-sm font-normal"
 			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}
-		</Button>
+		</BlueTactileButton>
 	)
 }
 

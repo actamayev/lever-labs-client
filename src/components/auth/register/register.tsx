@@ -4,10 +4,10 @@ import EmailInput from "./email-input"
 import OrComponent from "../or-component"
 import UsernameInput from "./username-input"
 import PasswordField from "../password-input"
-import { Button } from "../../shadcn/ui/button"
 import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
+import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
@@ -17,8 +17,7 @@ import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 export default function Register() {
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const registerSubmit = useRegisterSubmit(setError, setLoading)
+	const registerSubmit = useRegisterSubmit(setError)
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -52,14 +51,7 @@ export default function Register() {
 						placeholder="Confirm Password"
 					/>
 
-					<Button
-						type="submit"
-						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-						disabled={loading}
-						variant="tactile"
-					>
-						CREATE ACCOUNT
-					</Button>
+					<AuthButton	title="CREATE ACCOUNT" />
 
 					{error && <ErrorMessage error={error} />}
 
