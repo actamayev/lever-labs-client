@@ -56,7 +56,7 @@ export default function Footer() {
 							</div>
 
 							{/* Social Links and Theme Toggle combined */}
-							<div className="flex items-center justify-center space-x-6">
+							<div className="flex items-center justify-center space-x-6 mb-4 md:mb-0">
 								<FooterSocialSection />
 								<FooterThemeToggle />
 							</div>

@@ -15,7 +15,7 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 		<Link to={linkTo}>
 			<BlueTactileButton
 				shadowHeight={2}
-				className="text-sm font-normal"
+				className="text-xs sm:text-sm font-normal px-3 sm:px-4"
 			>
 				{title}
 			</BlueTactileButton>
