@@ -56,7 +56,7 @@ export default function Landing() {
 				</div>
 
 				<div className="flex relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32
-					bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme transition-all duration-300">
+				bg-gradient-to-b from-white to-pipTheme dark:from-black dark:to-pipTheme transition-all duration-300">
 					<FeaturesBento />
 				</div>
 
