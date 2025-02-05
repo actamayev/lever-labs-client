@@ -2,7 +2,7 @@ import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesComb
 import { cn } from "../../lib/shadcn/utils"
 import { BoldSpanText } from "./bold-span-text"
 import { bentoIconSize } from "../../utils/constants"
-import { BentoGrid } from "../shadcn/ui/custom-bento-grid"
+import { BentoGrid } from "../shadcn/ui/bento-grid"
 
 interface Feature {
 	icon: LucideIcon

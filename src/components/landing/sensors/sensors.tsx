@@ -5,7 +5,7 @@ import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
 import DistanceSensorsCard from "./distance-sensors-card"
-import { BentoGrid } from "../../shadcn/ui/custom-bento-grid"
+import { BentoGrid } from "../../shadcn/ui/bento-grid"
 
 const features: React.ReactNode[] = [
 	<LEDCard key="LED"/>,
