@@ -56,18 +56,16 @@ function RightSideContentSkeleton(props: Props) {
 	const { title, content } = props
 
 	return (
-		<div className="w-4/5 flex-shrink-0">
-			<Card className="h-full">
-				<CardHeader className="p-6">
-					<CardTitle className="text-2xl">{title}</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<div className="w-full">
-						{content}
-					</div>
-				</CardContent>
-			</Card>
-		</div>
+		<Card className="h-full flex flex-col">
+			<CardHeader className="p-4 lg:p-6 flex-shrink-0">
+				<CardTitle className="text-xl lg:text-2xl">{title}</CardTitle>
+			</CardHeader>
+			<CardContent className="flex-1">
+				<div className="w-full h-full">
+					{content}
+				</div>
+			</CardContent>
+		</Card>
 	)
 }
 
@@ -88,7 +86,7 @@ export default function PipUseCases() {
 			<RightSideContentSkeleton
 				title={selectedCategory}
 				content={
-					<div className="text-lg text-muted-foreground">
+					<div className="text-base lg:text-lg text-muted-foreground">
 						{categories.find(c => c.title === selectedCategory)?.description}
 					</div>
 				}
@@ -97,43 +95,46 @@ export default function PipUseCases() {
 	}
 
 	return (
-		<div>
-			<p
-				className="flex justify-center text-center whitespace-pre-wrap text-6xl
-				font-medium tracking-tight text-black dark:text-white py-6"
-			>
-				So what can Pip do?
+		<div className="px-4 md:px-6 lg:px-0">
+			<p className="text-center whitespace-pre-wrap text-3xl md:text-4xl lg:text-6xl
+                font-medium tracking-tight text-black dark:text-white py-6">
+                So what can Pip do?
 			</p>
 			<div className="w-full py-4 bg-transparent">
-				<div className="flex gap-6">
+				<div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
 					{/* Left side - Category cards */}
-					<div className="w-1/5 space-y-7">
+					<div className="w-full lg:w-1/5 grid grid-cols-2 lg:grid-cols-1 auto-rows-fr gap-2 lg:gap-4">
 						{categories.map((category) => (
 							<Card
 								key={category.title}
 								className={cn(
-									"cursor-pointer transition-colors hover:bg-accent",
+									"cursor-pointer transition-colors hover:bg-accent h-[60px] lg:h-[70px]",
 									selectedCategory === category.title ? "border-primary border" : ""
 								)}
 								onClick={() => setSelectedCategory(category.title)}
 							>
-								<CardHeader className="flex flex-row items-center space-y-0 p-4">
-									<div className="mr-4">
+								<CardHeader className="flex flex-row items-center h-full space-y-0 p-3 lg:p-4">
+									<div className="mr-2 lg:mr-4 shrink-0">
 										{React.createElement(category.icon, {
-											className: "w-6 h-6",
+											className: "w-4 h-4 lg:w-6 lg:h-6",
 											"aria-hidden": "true",
 										})}
 									</div>
-									<CardTitle className="text-lg">{category.title}</CardTitle>
+									<CardTitle className="text-sm lg:text-lg">{category.title}</CardTitle>
 								</CardHeader>
 							</Card>
 						))}
 					</div>
 
-					{/* Right side - Conditional rendering */}
-					{renderRightSideContent()}
+					{/* Right side content - Make it match the height of the buttons container */}
+					<div className="w-full lg:w-4/5 h-full flex">
+						<div className="w-full">
+							{renderRightSideContent()}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	)
+
 }
