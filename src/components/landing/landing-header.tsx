@@ -6,16 +6,15 @@ import BlurFade from "../shadcn/ui/blur-fade"
 function ScrollIndicator () {
 	const handleClick = useCallback(() => {
 		const element = document.getElementById("just-keep-building")
-		if (element) {
-			const headerHeight = 56 // Height of your fixed header
-			const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-			const offsetPosition = elementPosition - headerHeight
+		if (!element) return
+		const headerHeight = 56 // Height of your fixed header
+		const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+		const offsetPosition = elementPosition - headerHeight
 
-			window.scrollTo({
-				top: offsetPosition,
-				behavior: "smooth"
-			})
-		}
+		window.scrollTo({
+			top: offsetPosition,
+			behavior: "smooth"
+		})
 	}, [])
 
 	return (

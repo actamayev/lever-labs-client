@@ -5,7 +5,7 @@ import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
 	return (
-		<footer id="footer" className="bg-white dark:bg-black w-full md:py-3 z-20 transition-all duration-300">
+		<footer id="footer" className="bg-white dark:bg-black w-full pb-3 md:py-3 z-20 transition-all duration-300">
 			<div className="flex justify-center w-full px-4">
 				<div className="w-full max-w-screen-2xl">
 					{/* Mobile: Stack vertically, Desktop: 3 columns */}
@@ -39,16 +39,12 @@ export default function Footer() {
 
 						{/* Mobile-only stacked sections */}
 						<div className="flex flex-col items-center space-y-6 md:hidden w-full">
-							{/* Contact Us */}
-							<div>
+							{/* Contact Us and About Us on same line */}
+							<div className="flex items-center justify-center space-x-6">
 								<FooterLink
 									linkTo="/contact"
 									linkTitle="Contact Us"
 								/>
-							</div>
-
-							{/* About Us */}
-							<div>
 								<LinkToExternalSite
 									title="About Us"
 									link="https://help.bluedotrobots.com/bdr"
