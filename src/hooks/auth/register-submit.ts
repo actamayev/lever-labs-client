@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../navigate/typed-navigate"
+import { useAuthContext } from "../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
@@ -9,9 +10,8 @@ import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-re
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
-	setLoading: (loading: boolean) => void
 ): (registerCredentials: RegisterFormValues) => Promise<void> {
-
+	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterRegister = useSetDataAfterLoginOrRegister()
@@ -22,7 +22,7 @@ export default function useRegisterSubmit (
 			const areCredentialsValid = confirmRegisterFields(registerCredentials, setError)
 			if (areCredentialsValid === false) return
 
-			setLoading(true)
+			authClass.setAuthenticating(true)
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { passwordConfirmation, ...restOfCredentials } = registerCredentials
 
@@ -41,7 +41,7 @@ export default function useRegisterSubmit (
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
-			setLoading(false)
+			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError, setLoading])
+	}, [authClass, blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError])
 }

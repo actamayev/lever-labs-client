@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../components/shadcn/ui/form"
-import { Button } from "../../components/shadcn/ui/button"
 import PageHelmet from "../../components/helmet/page-helmet"
+import AuthButton from "../../components/buttons/generic-buttons"
 import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
 import { registerUsernameSchema } from "../../utils/auth/auth-schemas"
@@ -15,8 +15,7 @@ import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-wit
 function RegisterUsername() {
 	useRedirectUserWithUsername()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const usernameSubmit = useUsernameSubmit(setError, setLoading)
+	const usernameSubmit = useUsernameSubmit(setError)
 
 	const form = useForm<RegisterUsernameFormValues>({
 		resolver: zodResolver(registerUsernameSchema),
@@ -40,14 +39,7 @@ function RegisterUsername() {
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 						<UsernameInput control={form.control} />
 
-						<Button
-							type="submit"
-							className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-							disabled={loading || isDisabled}
-							variant="tactile"
-						>
-							CONTINUE
-						</Button>
+						<AuthButton loading={isDisabled} title="CONTINUE" />
 
 						{error && <ErrorMessage error={error} />}
 					</form>

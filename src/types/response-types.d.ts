@@ -41,6 +41,10 @@ declare global {
 		pipConnectionStatus: ESPConnectionStatus
 	}
 
+	type DemoResponse = {
+		demoStarted: boolean
+	}
+
 	// Socket Events:
 	type PipStatusUpdate = {
 		pipUUID: PipUUID

@@ -2,7 +2,6 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { usePipContext } from "../../../../contexts/pip-context"
 import LabVideoComponent from "../../video/lab-video-component"
-import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 
 function LedVideo() {
 	const pipClass = usePipContext()
@@ -27,8 +26,8 @@ function LedVideo() {
 			nextPageLink="/lab/element-1/led/code-1"
 			nextPageActivity="Code"
 			element={1}
-			lessonIcon={<LEDColorChangeAnimation iconSize={30} />}
-			progressPercent={300 / 6}
+			lessonTitle="LED"
+			lessonProgressPercent={300 / 6}
 		/>
 	)
 }

@@ -8,7 +8,7 @@ export default function LEDCard() {
 			title="5× RGB LEDs"
 			description="Create dazzling light displays and visual indicators"
 			icon={<LEDColorChangeAnimation iconSize={bentoIconSize} />}
-			outerDivStyles="row-start-1 col-start-1"
+			outerDivStyles="col-span-1 lg:col-start-1 lg:row-start-1"
 		/>
 	)
 }

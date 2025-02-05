@@ -1,4 +1,3 @@
-import { ReactElement } from "react"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -10,8 +9,8 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	element: ElementNumbers
-	lessonIcon: ReactElement
-	progressPercent: number
+	lessonTitle: Element1Lessons
+	lessonProgressPercent: number
 }
 
 export default function LabVideoComponent(props: Props) {
@@ -24,20 +23,20 @@ export default function LabVideoComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		element,
-		lessonIcon,
-		progressPercent,
+		lessonTitle,
+		lessonProgressPercent,
 	} = props
 	return (
 		<ActivityTemplate
 			element={element}
-			lessonTitle={videoTitle}
-			lessonIcon={lessonIcon}
-			progressPercent={progressPercent}
+			activityTitle={videoTitle}
+			lessonTitle={lessonTitle}
+			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
-			extraClasses="h-screen"
+			activityType="Video"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				<div className="w-full max-w-4xl">

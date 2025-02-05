@@ -2,11 +2,11 @@ import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import { Form } from "@/components/shadcn/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Button } from "@/components/shadcn/ui/button"
 import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
 import PasswordField from "../password-input"
 import GoogleSignIn from "../google/google-sign-in"
+import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
@@ -21,8 +21,7 @@ export default function Login(props: Props) {
 	const { whereToNavigate } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
-	const [loading, setLoading] = useState(false)
-	const loginSubmit = useLoginSubmit(whereToNavigate, setError, setLoading)
+	const loginSubmit = useLoginSubmit(whereToNavigate, setError)
 
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
@@ -46,15 +45,7 @@ export default function Login(props: Props) {
 						name="password"
 						// showForgotPassword={true}
 					/>
-
-					<Button
-						type="submit"
-						className="w-full h-12 rounded-2xl my-2 bg-pipTheme hover:bg-pipThemeHover dark:text-white transition-none"
-						disabled={loading}
-						variant="tactile"
-					>
-						LOG IN
-					</Button>
+					<AuthButton title="LOG IN" />
 
 					{error && <ErrorMessage error={error} />}
 

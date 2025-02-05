@@ -6,12 +6,12 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import { Button } from "../../shadcn/ui/button"
-import PipButtonTooltip from "../../pip-button-tooltip"
-import { usePipContext } from "../../../contexts/pip-context"
-import useClickPipSidebarButton from "../../../hooks/pip/click-pip-sidebar-button"
-import PipStatusTooltip from "../../shadcn/sidebar/primary/add-pip/pip-status-tooltip"
-import useSetSelectedPipToFirstPip from "../../../hooks/pip/set-default-pip-first-pip"
+import { Button } from "../../../shadcn/ui/button"
+import PipButtonTooltip from "../../../pip-button-tooltip"
+import { usePipContext } from "../../../../contexts/pip-context"
+import useClickPipSidebarButton from "../../../../hooks/pip/click-pip-sidebar-button"
+import PipStatusTooltip from "../../../shadcn/sidebar/primary/add-pip/pip-status-tooltip"
+import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
 
 function LabCodePipStatus() {
 	const pipClass = usePipContext()

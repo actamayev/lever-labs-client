@@ -1,6 +1,7 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../../navigate/typed-navigate"
+import { useAuthContext } from "../../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../../utils/type-checks"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
@@ -8,10 +9,10 @@ import setErrorAxiosResponse from "../../../utils/error-handling/set-error-axios
 
 export default function useUsernameSubmit (
 	setError: (error: string) => void,
-	setLoading: (loading: boolean) => void
 ): (
 	username: string
 ) => Promise<void> {
+	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()
@@ -19,7 +20,7 @@ export default function useUsernameSubmit (
 	return useCallback(async (username: string): Promise<void> => {
 		setError("")
 		try {
-			setLoading(true)
+			authClass.setAuthenticating(true)
 			const response = await blueDotApiClient.authDataService.registerUsername(username)
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to register username. Please reload the page and try again")
@@ -30,7 +31,7 @@ export default function useUsernameSubmit (
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
-			setLoading(false)
+			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, personalInfoClass, setError, setLoading])
+	}, [authClass, blueDotApiClient.authDataService, navigate, personalInfoClass, setError])
 }
