@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/shadcn/utils";
 
-const BentoGrid = ({ 
+export const BentoGrid = ({ 
   children, 
   className 
 }: { 
@@ -17,5 +17,3 @@ const BentoGrid = ({
       </div>
   );
 };
-
-export { BentoGrid };

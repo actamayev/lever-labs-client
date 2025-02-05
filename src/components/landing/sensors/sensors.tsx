@@ -13,12 +13,12 @@ const features: React.ReactNode[] = [
 	<DistanceSensorsCard key="Distance Sensor" />,
 	<MotorCard key="Motor" />,
 	<ButtonCard key="Button" />,
-	<ModuleCard key="Module" />,
+	<ModuleCard key="Module" />
 ]
 
 export default function Sensors() {
 	return (
-		<div className="flex">
+		<div className="w-full">
 			<BentoGrid>
 				{features.map((feature, index) => (
 					<React.Fragment key={index}>

@@ -7,7 +7,6 @@ interface Props {
 	outerDivStyles: string
 	paragraphStyles?: string
 }
-
 export default function SensorsSkeleton(props: Props) {
 	const { title, description, icon: Icon, outerDivStyles, paragraphStyles } = props
 
@@ -21,18 +20,18 @@ export default function SensorsSkeleton(props: Props) {
 				outerDivStyles
 			)}
 		>
-			<div className="z-10 flex transform-gpu gap-6 p-4 items-center">
-				{Icon}
+			<div className="z-10 flex transform-gpu gap-4 p-4 items-center">
+				<div className="shrink-0">
+					{Icon}
+				</div>
 				<div className="flex flex-col">
-					<h3 className="text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+					<h3 className="text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 						{title}
 					</h3>
-					<p
-						className={cn(
-							"max-w-lg text-neutral-400",
-							paragraphStyles
-						)}
-					>
+					<p className={cn(
+						"text-sm md:text-base text-neutral-400",
+						paragraphStyles
+					)}>
 						{description}
 					</p>
 				</div>
