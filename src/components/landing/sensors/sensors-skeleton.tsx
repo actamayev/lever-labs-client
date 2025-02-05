@@ -20,11 +20,14 @@ export default function SensorsSkeleton(props: Props) {
 				outerDivStyles
 			)}
 		>
-			<div className="z-10 flex transform-gpu gap-4 p-4 items-center">
-				<div className="shrink-0">
+			{/* Container changes from vertical on mobile to horizontal on md+ */}
+			<div className="z-10 flex flex-col md:flex-row transform-gpu gap-4 p-4 h-full">
+				{/* Icon container */}
+				<div className="shrink-0 flex justify-center md:justify-start">
 					{Icon}
 				</div>
-				<div className="flex flex-col">
+				{/* Text container */}
+				<div className="flex flex-col items-center md:items-start text-center md:text-left">
 					<h3 className="text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">
 						{title}
 					</h3>

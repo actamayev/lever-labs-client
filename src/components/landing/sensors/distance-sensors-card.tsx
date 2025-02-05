@@ -12,10 +12,12 @@ export default function DistanceSensorsCard() {
 			"col-span-1 md:col-span-2 lg:col-span-1",
 			"lg:col-start-3 lg:row-span-2"
 		)}>
-			<div className="z-10 flex transform-gpu h-full justify-end p-4 gap-6">
-				<div className="flex flex-col gap-1">
-					<RulerExpansionAnimation iconSize={bentoIconSize} />
-					<div className="flex flex-col">
+			<div className="z-10 flex transform-gpu h-full p-4 gap-6">
+				<div className="flex flex-col gap-1 w-full md:w-auto items-center md:items-start">
+					<div className="flex justify-center md:justify-start w-full">
+						<RulerExpansionAnimation iconSize={bentoIconSize} />
+					</div>
+					<div className="flex flex-col items-center md:items-start text-center md:text-left">
 						<h3 className="text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">
                             Distance Sensor
 						</h3>

@@ -95,7 +95,7 @@ export default function PipUseCases() {
 	}
 
 	return (
-		<div className="px-4 md:px-6 lg:px-0">
+		<div>
 			<p className="text-center whitespace-pre-wrap text-3xl md:text-4xl lg:text-6xl
                 font-medium tracking-tight text-black dark:text-white py-6">
                 So what can Pip do?
