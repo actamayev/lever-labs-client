@@ -7,6 +7,7 @@ interface Props {
 	outerDivStyles: string
 	paragraphStyles?: string
 }
+
 export default function SensorsSkeleton(props: Props) {
 	const { title, description, icon: Icon, outerDivStyles, paragraphStyles } = props
 
@@ -23,7 +24,7 @@ export default function SensorsSkeleton(props: Props) {
 			{/* Container changes from vertical on mobile to horizontal on md+ */}
 			<div className="z-10 flex flex-col md:flex-row transform-gpu gap-4 p-4 h-full">
 				{/* Icon container */}
-				<div className="shrink-0 flex justify-center md:justify-start">
+				<div className="shrink-0 flex justify-center md:justify-start md:items-center">
 					{Icon}
 				</div>
 				{/* Text container */}
