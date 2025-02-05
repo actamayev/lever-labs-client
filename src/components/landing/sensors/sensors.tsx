@@ -5,7 +5,7 @@ import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
 import DistanceSensorsCard from "./distance-sensors-card"
-import { BentoGrid } from "../../shadcn/ui/custom-bento-grid"
+import { BentoGrid } from "../../shadcn/ui/bento-grid"
 
 const features: React.ReactNode[] = [
 	<LEDCard key="LED"/>,
@@ -13,12 +13,12 @@ const features: React.ReactNode[] = [
 	<DistanceSensorsCard key="Distance Sensor" />,
 	<MotorCard key="Motor" />,
 	<ButtonCard key="Button" />,
-	<ModuleCard key="Module" />,
+	<ModuleCard key="Module" />
 ]
 
 export default function Sensors() {
 	return (
-		<div className="flex">
+		<div className="w-full">
 			<BentoGrid>
 				{features.map((feature, index) => (
 					<React.Fragment key={index}>

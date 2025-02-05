@@ -8,8 +8,8 @@ export default function MotorCard() {
 			title="2× Dual Hall Effect Encoders + Motors"
 			description="Motors with precise position tracking for controlled movement"
 			icon={<MotorSpinAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="row-start-2 col-start-1 col-span-2"
-			paragraphStyles="whitespace-nowrap"
+			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-1 lg:row-start-2"
+			paragraphStyles="whitespace-normal lg:whitespace-nowrap"
 		/>
 	)
 }
