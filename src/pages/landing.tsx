@@ -65,7 +65,7 @@ export default function Landing() {
 				</div>
 
 				<div className="flex flex-col relative items-center justify-center py-16 md:py-32 z-10 px-4 md:px-16
-					bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white transition-all duration-300">
+				bg-gradient-to-b from-pipTheme to-white dark:from-pipTheme dark:to-black text-white transition-all duration-300">
 					<SignUpForUpdates />
 				</div>
 			</div>

@@ -25,52 +25,50 @@ export default function SignUpForUpdates() {
 	})
 
 	const formValues = form.watch()
-
 	const isEmailValidMemo = useMemo(() => {
 		return isEmailValid(formValues.email) === "Email"
 	}, [formValues.email])
 
 	return (
-		<>
-			<div className="text-3xl">
-				Pip isn&apos;t available yet - but it will be soon.
+		<div className="w-full px-4 md:px-0">
+			<div className="text-xl md:text-3xl text-center">
+                Pip isn&apos;t available yet - but it will be soon.
 			</div>
-			<div className="text-3xl mt-6 mb-10">
-				Please enter your email below to sign up for updates.
+			<div className="text-xl md:text-3xl text-center mt-4 md:mt-6 mb-6 md:mb-10">
+                Please enter your email below to sign up for updates.
 			</div>
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-2 max-w-md">
+				<form onSubmit={form.handleSubmit(onSubmit)}
+					className="flex flex-col md:flex-row gap-4 md:gap-2 max-w-md mx-auto items-center">
 					<FormField
 						control={form.control}
 						name="email"
 						render={({ field }) => (
-							<FormItem>
+							<FormItem className="w-full md:w-auto">
 								<FormControl>
 									<Input
 										type="email"
 										placeholder="Email"
 										required
-										className="flex-1 h-12 w-56 border-black dark:border-white border-2
-										transition-all duration-300 !text-xl font-light"
+										className="flex-1 h-12 w-full md:w-56 border-black dark:border-white border-2
+                                        transition-all duration-300 !text-lg md:!text-xl font-light"
 										disabled={isSubscribed || isLoading}
 										{...field}
 									/>
 								</FormControl>
 							</FormItem>
 						)}
-					>
-
-					</FormField>
+					/>
 					<RainbowSubscribeButton
 						initialText="SUBSCRIBE"
 						changeText="SUBSCRIBED!"
 						isSubscribed={isSubscribed}
 						isDisabled={!isEmailValidMemo}
 						isLoading={isLoading}
-						className="transition-all duration-300 rounded-xl h-12"
+						className="transition-all duration-300 rounded-xl h-12 w-full md:w-auto"
 					/>
 				</form>
 			</Form>
-		</>
+		</div>
 	)
 }
