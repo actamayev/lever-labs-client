@@ -30,14 +30,12 @@ export default function Landing() {
 					</div>
 				</div>
 				<div className="relative z-10">
-					<div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white
-					dark:from-black dark:via-transparent dark:to-black transition-all duration-300" />
 					<div className="relative z-20 flex flex-col items-center justify-center px-16 py-8">
 						<JustKeepBuilding />
 					</div>
 				</div>
-				<div className="relative z-10 flex flex-col items-center justify-center px-16 h-[60vh]
-				bg-white dark:bg-black transition-all duration-300">
+				<div className="relative z-10 flex flex-col items-center justify-center px-6 md:px-8 lg:px-16 py-16 md:py-24
+                    bg-white dark:bg-black transition-all duration-300">
 					<DesignThatInspiresCard />
 				</div>
 				<div className="flex flex-col relative items-center justify-center z-10 px-12">
