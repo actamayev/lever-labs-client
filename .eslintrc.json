@@ -105,7 +105,8 @@
 		// Hook rules
 		"react-hooks/rules-of-hooks": "error",
 		"react-hooks/exhaustive-deps": "warn",
-		"react/jsx-no-constructed-context-values": "error"
+		"react/jsx-no-constructed-context-values": "error",
+		"react/no-unescaped-entities": "off"
     },
 
     "overrides": [

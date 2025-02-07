@@ -6,7 +6,6 @@ import LedCode1 from "../components/lab/element-1/led/led-code-1"
 import LedCode2 from "../components/lab/element-1/led/led-code-2"
 import LedCode3 from "../components/lab/element-1/led/led-code-3"
 import MotorDemo from "../components/lab/element-1/motor/motor-demo"
-import LedReading from "../components/lab/element-1/led/led-reading"
 import ImuReading from "../components/lab/element-1/imu/imu-reading"
 import MotorCode from "../components/lab/element-1/motor/motor-code"
 import TofCode from "../components/lab/element-1/tof-sensor/tof-code"
@@ -31,6 +30,7 @@ import IrCommunicationSensorVideo from "../components/lab/element-1/ir-communica
 import IrCommunicationSensorReading from "../components/lab/element-1/ir-communication-sensor/ir-communication-sensor-reading"
 import LedSummary from "../components/lab/element-1/led/led-summary"
 import MotorSummary from "../components/lab/element-1/motor/motor-summary"
+import LedReading from "../components/lab/element-1/led/reading/led-reading"
 
 const element1Routes: ElementRoutes[] = [
 	{

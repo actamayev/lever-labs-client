@@ -1,5 +1,5 @@
 import BlueDot from "./blue-dot"
-import { BoldedDescription } from "../bold-span-text"
+import { BoldedDescription } from "../../bold-span-text"
 
 export default function WhoWeAre() {
 	return (
@@ -10,8 +10,8 @@ export default function WhoWeAre() {
 			</div>
 
 			{/* Divider - Hidden on mobile */}
-			<div className="hidden md:block mx-16 h-full border-l border-dashed
-                border-zinc-200 dark:border-zinc-800 self-stretch" />
+			{/* <div className="hidden md:block mx-16 h-full border-l border-dashed
+                border-zinc-200 dark:border-zinc-800 self-stretch" /> */}
 
 			{/* Text Content Section */}
 			<div className="flex-1">
@@ -23,11 +23,11 @@ export default function WhoWeAre() {
 				</div>
 				<div className="text-xl md:text-3xl mt-6">
 					<div className="text-zinc-500 dark:text-zinc-400 text-center md:text-left">
-                        We know getting started with robotics can seem tough and feel daunting. We&apos;ve been there...
+                        We know getting started with robotics can seem tough and feel daunting. We've been there...
 					</div>
 					<br />
 					<div className="text-zinc-500 dark:text-zinc-400 text-center md:text-left">
-                        We designed Pip to make learning robotics&nbsp;
+                        We designed Pip to make learning robotics
 						<BoldedDescription extraClasses="text-xl md:text-3xl">
                             fun and seamless.
 						</BoldedDescription>

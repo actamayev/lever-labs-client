@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { LucideIcon } from "lucide-react"
 import BoxReveal from "../shadcn/ui/box-reveal"
-import { BoldedDescription } from "./bold-span-text"
+import { BoldedDescription } from "../bold-span-text"
 import TextRevealByWord from "../shadcn/ui/text-reveal"
 import { GrowingTree } from "./growing-tree"
 import { RocketLiftoff } from "./rocket-liftoff"
@@ -40,7 +40,7 @@ function FrictionlessDescription() {
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-lg lg:text-2xl mt-4 lg:mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400">
-                    Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.&nbsp;
+                    Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.
 				</span>
 				<BoldedDescription extraClasses="text-lg lg:text-2xl">
                     Just connect to Wi-Fi, and you're ready to go.
@@ -55,14 +55,14 @@ function GrowsWithYouDescription() {
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-lg lg:text-2xl mt-4 lg:mt-8">
 				<span className="text-zinc-500 dark:text-zinc-400">
-                    Whether you're exploring robotics for the first time or you're a seasoned veteran,&nbsp;
+                    Whether you're exploring robotics for the first time or you're a seasoned veteran,
 				</span>
 				<BoldedDescription extraClasses="text-lg lg:text-2xl">
-                    Pip evolves with you.&nbsp;
+                    Pip evolves with you.
 				</BoldedDescription>
 				<span className="text-zinc-500 dark:text-zinc-400">
                     Regularly updated lessons ensure you're always inspired with new horizons to explore.
-                    From elementary school to college and beyond:&nbsp;
+                    From elementary school to college and beyond:
 				</span>
 				<BoldedDescription extraClasses="text-lg lg:text-2xl">
                     Pip is one robot that does it all.
@@ -72,7 +72,7 @@ function GrowsWithYouDescription() {
 	)
 }
 
-export function JustKeepBuilding() {
+export default function JustKeepBuilding() {
 	return (
 		<div id="just-keep-building">
 			<div className="mb-12 lg:mb-20 text-center">

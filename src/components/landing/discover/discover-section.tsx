@@ -1,4 +1,4 @@
-import { BoldSpanText } from "../bold-span-text"
+import { BoldSpanText } from "../../bold-span-text"
 import DottedUnderlineText from "../../dotted-underline-text"
 
 export default function DiscoverSection() {
@@ -12,7 +12,7 @@ export default function DiscoverSection() {
 			<p className="text-zinc-600 dark:text-zinc-400 text-center text-xl md:text-3xl my-6 md:my-10">
                 Pip pairs with our web platform, purpose-built to make your robotics education journey fun and powerful.
                 Start with beginner-friendly coding blocks, then graduate to real-world programming.
-                Whether you&apos;re solving guided challenges in the&nbsp;
+                Whether you're solving guided challenges in the&nbsp;
 				<DottedUnderlineText linkTo="/lab">
                     Lab
 				</DottedUnderlineText>
