@@ -2,10 +2,10 @@ import { LucideIcon } from "lucide-react"
 
 declare global {
 	interface Demo {
-		demoTitle: string
+		demoTitle: DemoNames
 		demoDescription: string
 		demoIcon: LucideIcon
-		// demoOnclickEndpoint: () => Promise<AxiosResponse<DemoResponse | NonSuccessResponse>>
+		// demoOnclickEndpoint: () => Promise<AxiosResponse<AllCommonResponses>>
 	}
 }
 

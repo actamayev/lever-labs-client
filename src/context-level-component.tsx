@@ -6,6 +6,7 @@ import AddPipProvider from "./contexts/add-pip-context"
 import LabReadingProvider from "./contexts/lab-reading-context"
 import PersonalInfoProvider from "./contexts/personal-info-context"
 import BlueDotApiClientProvider from "./contexts/blue-dot-api-client-context"
+import LabDemoProvider from "./contexts/lab-demo-context"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
 	return (
@@ -17,7 +18,9 @@ export default function ContextLevelComponent ({ children } : { children: React.
 							<BlueDotApiClientProvider>
 								<SocketProvider>
 									<LabReadingProvider>
-										{children}
+										<LabDemoProvider>
+											{children}
+										</LabDemoProvider>
 									</LabReadingProvider>
 								</SocketProvider>
 							</BlueDotApiClientProvider>
