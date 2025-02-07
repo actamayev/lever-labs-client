@@ -22,9 +22,9 @@ export function ReadingBlockWithImage (props: ReadingBlockProps) {
 	return (
 		<div className="flex flex-col md:flex-row gap-6 mb-8">
 			<div className={`${imageSrc ? "md:w-2/3" : "w-full"}`}>
-				<p className="text-2xl mb-4">
+				<div className="text-2xl mb-4">
 					{children}
-				</p>
+				</div>
 			</div>
 
 			{imageSrc && (
