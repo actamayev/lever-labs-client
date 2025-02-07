@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../../contexts/pip-context"
-import LabReadingComponent from "../../reading/lab-reading-component"
+import { usePipContext } from "../../../../../contexts/pip-context"
+import LabReadingComponent from "../../../reading/lab-reading-component"
 
 function LedReading() {
 	const pipClass = usePipContext()
@@ -19,8 +19,8 @@ function LedReading() {
 	return (
 		<LabReadingComponent
 			readingTitle="What is an LED?"
-			previousPageLink={null}
-			previousPageActivity={null}
+			previousPageLink="/lab/element-1/led/demo"
+			previousPageActivity="Demo"
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
 			element={1}

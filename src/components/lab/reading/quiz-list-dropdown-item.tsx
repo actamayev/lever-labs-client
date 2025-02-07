@@ -22,9 +22,13 @@ function QuizListDropdownItem(props: Props) {
 	}
 
 	const extraClasses = () => {
-		if (isUndefined(isCorrect)) return "bg-zinc-200 hover:bg-zinc-300 focus:bg-zinc-300"
-		if (isCorrect === false) return "bg-red-200 hover:bg-red-300 focus:bg-red-300"
-		return "bg-green-200 hover:bg-green-300 focus:bg-green-300"
+		if (isUndefined(isCorrect)) {
+			return "bg-zinc-200 hover:bg-zinc-300 focus:bg-zinc-300 dark:bg-zinc-800 dark:hover-bg-zinc-700 dark:focus:bg-zinc-700"
+		}
+		if (isCorrect === false) {
+			return "bg-red-200 hover:bg-red-300 focus:bg-red-300 dark:bg-red-800 dark:hover-bg-red-700 dark:focus:bg-red-700"
+		}
+		return "bg-green-200 hover:bg-green-300 focus:bg-green-300 dark:bg-green-800 dark:hover-bg-green-700 dark:focus:bg-green-700"
 	}
 
 	return (

@@ -22,3 +22,4 @@ export const CustomLightbulb: LucideIcon = forwardRef<SVGSVGElement, LucideProps
 CustomLightbulb.displayName = "CustomLightbulb"
 
 // To make an SVG like this, paste it into https://www.svgviewer.dev/svg-to-react-jsx, copy the svg settings from above, and insert the website's generated path
+// In SVG viewer, change the dimensions to 24 HW. Optimize it. Copy the content inside the <svg, and copy the viewbox. Use the above as a template.

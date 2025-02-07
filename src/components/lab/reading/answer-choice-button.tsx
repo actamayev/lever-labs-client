@@ -53,8 +53,8 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			let isCorrectStyles = "border-pipTheme text-pipTheme dark:text-pipThemeOffWhite" // before answer is selected
-			if (isCorrect) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
+			let isCorrectStyles = "border-pipTheme text-pipTheme dark:text-white" // before answer is selected
+			if (isCorrect === true) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
 			else if (isCorrect === false) isCorrectStyles = "border-red-500 text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)

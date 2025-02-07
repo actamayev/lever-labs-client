@@ -1,6 +1,6 @@
 import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesCombined, CircuitBoard } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import { BoldSpanText } from "./bold-span-text"
+import { BoldSpanText } from "../bold-span-text"
 import { bentoIconSize } from "../../utils/constants"
 
 interface Feature {
@@ -18,11 +18,11 @@ const features: Feature[] = [
 				<BoldSpanText>
 					2 hours of continuous learning
 				</BoldSpanText>
-				&nbsp;on a single charge, with USB-C&nbsp;
+				on a single charge, with USB-C
 				<BoldSpanText>
 					fast charging
 				</BoldSpanText>
-				&nbsp;that gets you back to building&nbsp;
+				that gets you back to building
 				<BoldSpanText>
 					in just 30 minutes.
 				</BoldSpanText>
@@ -34,11 +34,11 @@ const features: Feature[] = [
 		title: "Stress Tested",
 		description: (
 			<>
-				Built and stress-tested to&nbsp;
+				Built and stress-tested to
 				<BoldSpanText>
 				handle the demands of hands-on learning,
 				</BoldSpanText>
-				&nbsp;from classroom drops to home experiments.
+				from classroom drops to home experiments.
 			</>
 		)
 	},
@@ -47,11 +47,11 @@ const features: Feature[] = [
 		title: "Progress Lives in the Cloud",
 		description: (
 			<>
-				Your progress saves automatically (just like Google Docs), so&nbsp;
+				Your progress saves automatically (just like Google Docs), so
 				<BoldSpanText>
 				you can pick up where you left off -
 				</BoldSpanText>
-				&nbsp;on any Pip, from any computer.
+				on any Pip, from any computer.
 			</>
 		)
 	},
@@ -60,11 +60,11 @@ const features: Feature[] = [
 		title: "See How It Works",
 		description: (
 			<>
-				Pip&apos;s clear shell design reveals&nbsp;
+				Pip's clear shell design reveals
 				<BoldSpanText>
 					real sensors and circuits in action,
 				</BoldSpanText>
-				&nbsp;turning abstract concepts into visible technology.
+				turning abstract concepts into visible technology.
 			</>
 		)
 	},
@@ -73,7 +73,7 @@ const features: Feature[] = [
 		title: "Code Your Way",
 		description: (
 			<>
-				Start with drag-and-drop blocks and advance to text-based coding when you&apos;re ready.&nbsp;
+				Start with drag-and-drop blocks and advance to text-based coding when you're ready.
 				<BoldSpanText>
 					Your pace, your journey.
 				</BoldSpanText>
@@ -85,11 +85,11 @@ const features: Feature[] = [
 		title: "Track Your Growth",
 		description: (
 			<>
-				Watch your skills evolve with&nbsp;
+				Watch your skills evolve with
 				<BoldSpanText>
 					progress tracking
 				</BoldSpanText>
-				&nbsp;that celebrates every milestone, from basic movements to advanced robotics.
+				that celebrates every milestone, from basic movements to advanced robotics.
 			</>
 		)
 	},
@@ -133,7 +133,7 @@ export default function FeaturesBento() {
 		<div className="flex flex-col gap-6 md:gap-8">
 			{/* Title */}
 			<p className="text-center text-3xl md:text-6xl font-medium tracking-tight text-black dark:text-white px-4 md:px-0">
-                It&apos;s the little things that count
+                It's the little things that count
 			</p>
 
 			{/* Features Grid */}

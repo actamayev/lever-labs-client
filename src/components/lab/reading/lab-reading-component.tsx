@@ -1,5 +1,5 @@
 import ReadingContainer from "./reading-container"
-import ledReadingBlocks from "../element-1/led/led-reading-blocks"
+import ledReadingBlocks from "../element-1/led/reading/led-reading-blocks"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
