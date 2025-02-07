@@ -23,16 +23,8 @@ const ledAdvantagesBlocks: ContentBlock[] = [
 						</ul>
 					</div>
 				</ReadingBlockWithImage>
-			</div>
-		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-advantages-2",
-		text: (
-			<div>
 				<DidYouKnow Icon={CustomLightbulb} tooltipMessage="Efficient Lightbulb">
-                    If Pip used traditional bulbs (which last 750 - 2,000 hours on average) instead of LEDs, they would need to be replaced about 25 times during the same lifespan as a single LED.
+					If Pip used traditional bulbs (which last 750 - 2,000 hours on average) instead of LEDs, they would need to be replaced about 25 times during the same lifespan as a single LED.
 				</DidYouKnow>
 			</div>
 		),
