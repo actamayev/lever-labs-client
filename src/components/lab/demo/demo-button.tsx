@@ -20,9 +20,9 @@ function DemoButton({ demo } : { demo: Demo }) {
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip to your account" })
 		}
-		if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
-			return toast.negative({ title: "Please connect your Pip to the internet"})
-		}
+		// if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
+		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
+		// }
 		labDemoClass.setActiveDemoName(demo.demoTitle)
 	}, [demo.demoTitle, labDemoClass, pipClass.selectedPip, toast])
 

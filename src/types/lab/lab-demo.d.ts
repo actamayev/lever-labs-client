@@ -6,6 +6,10 @@ declare global {
 		rightMotor: MotorDirection
 	}
 
+	interface MotorControlDataToSend extends MotorControl {
+		pipUUID: PipUUID
+	}
+
 	type LEDDemo =
 	| "LED Solid Color"
 	| "LED Rainbow"

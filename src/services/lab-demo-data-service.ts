@@ -7,8 +7,8 @@ export default class LabDemoDataService {
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
-	async motorControl(motorControlData: MotorControl): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
+	async motorControl(motorControlData: MotorControlDataToSend): Promise<AxiosResponse<ErrorResponses | SuccessResponse>> {
+		return await this.httpClient.http.post<ErrorResponses | SuccessResponse>(
 			`${this.pathHeader}/motor-control`, { motorControlData }
 		)
 	}
