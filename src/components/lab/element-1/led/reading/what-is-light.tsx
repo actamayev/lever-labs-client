@@ -83,11 +83,11 @@ const whatisLightBlocks: ContentBlock[] = [
 		text: (
 			<ReadingBlockWithImage>
                 When photons interact with something (like Pip's casing or your eyes), they can do three things:
-				<ul>
+				<ol className="list-decimal ml-4">
 					<li>Bounce off (reflection) - like a ball bouncing off a wall</li>
 					<li>Pass through (transmission) - like sunlight through a window</li>
 					<li>Get absorbed - like a sponge soaking up water</li>
-				</ul>
+				</ol>
 			</ReadingBlockWithImage>
 		),
 		action: { type: "continue" },

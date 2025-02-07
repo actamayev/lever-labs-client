@@ -25,7 +25,7 @@ function QuizSection() {
 						<DropdownMenuTrigger asChild>
 							<h3
 								className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
-								hover:bg-zinc-100 !px-2 py-1 rounded-lg"
+								hover:bg-zinc-100 !px-2 py-1 rounded-lg dark:hover:bg-zinc-800"
 							>
 								{labReadingClass.activeQuiz.isCorrect ? (
 									<><CheckCircle />Quiz Review #{
@@ -38,9 +38,12 @@ function QuizSection() {
 								)}
 							</h3>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent align="start" className="text-lg">
+						<DropdownMenuContent
+							align="start"
+							className="text-lg overflow-y-auto"
+							style={{ "maxHeight": "500px"}}
+						>
 							{labReadingClass.activeBlocks.map((block) => {
-								// Skip if there's no quiz action or no questions
 								if (!block.action.quiz?.questions.length) return null
 
 								return block.action.quiz.questions.map(question => (
