@@ -15,7 +15,6 @@ export default function useDemoButtonOnClick(): (
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				return
 			}
-			console.log("Starting demo")
 		} catch (error) {
 			console.error(error)
 		}

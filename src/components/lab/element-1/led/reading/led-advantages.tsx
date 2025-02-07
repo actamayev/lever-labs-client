@@ -13,26 +13,18 @@ const ledAdvantagesBlocks: ContentBlock[] = [
                     Advantages of using LEDs
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					<BoldSpanText>Energy Efficiency</BoldSpanText>
+					<BoldSpanText noSpaceBefore>Energy Efficiency</BoldSpanText>
 					<div className="mt-2">
                         LEDs convert most of their energy directly into light rather than heat. For Pip, this means:
-						<ul className="mt-2">
+						<ul className="list-inside list-disc mt-2">
 							<li>Longer battery life between charges</li>
 							<li>Less interference with sensitive sensors</li>
 							<li>More stable operation in different temperatures</li>
 						</ul>
 					</div>
 				</ReadingBlockWithImage>
-			</div>
-		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-advantages-2",
-		text: (
-			<div>
-				<DidYouKnow Icon={CustomLightbulb}>
-                    If Pip used traditional bulbs (which last 750 - 2,000 hours on average) instead of LEDs, they would need to be replaced about 25 times during the same lifespan as a single LED.
+				<DidYouKnow Icon={CustomLightbulb} tooltipMessage="Efficient Lightbulb">
+					If Pip used traditional bulbs (which last 750 - 2,000 hours on average) instead of LEDs, they would need to be replaced about 25 times during the same lifespan as a single LED.
 				</DidYouKnow>
 			</div>
 		),
@@ -42,10 +34,10 @@ const ledAdvantagesBlocks: ContentBlock[] = [
 		id: "led-advantages-3",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Durability & Size</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Durability & Size</BoldSpanText>
 				<div className="mt-2">
                     The solid-state design of LEDs makes them ideal for robotics:
-					<ul className="mt-2">
+					<ul className="list-inside list-disc mt-2">
 						<li>No moving parts or fragile components</li>
 						<li>Resistant to vibration and impact</li>
 						<li>Compact size allows for flexible placement</li>
@@ -59,10 +51,10 @@ const ledAdvantagesBlocks: ContentBlock[] = [
 		id: "led-advantages-4",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Smart Features</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Smart Features</BoldSpanText>
 				<div className="mt-2">
                     Modern LEDs offer capabilities that transform how Pip interacts:
-					<ul className="mt-2">
+					<ul className="list-inside list-disc mt-2">
 						<li>Instant on/off switching for precise timing</li>
 						<li>Digital color control</li>
 						<li>Adjustable brightness levels</li>
@@ -78,9 +70,9 @@ const ledAdvantagesBlocks: ContentBlock[] = [
 		id: "led-advantages-5",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Environmental Impact</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Environmental Impact</BoldSpanText>
 				<div className="mt-2">
-					<ul>
+					<ul className="list-inside list-disc mt-2">
 						<li>No hazardous materials like mercury</li>
 						<li>Lower energy consumption means reduced carbon footprint</li>
 						<li>Longer lifespan reduces electronic waste</li>
@@ -90,15 +82,15 @@ const ledAdvantagesBlocks: ContentBlock[] = [
 		),
 		action: { type: "continue" },
 	},
-	{
-		id: "led-advantages-6",
-		text: (
-			<ReadingBlockWithImage>
-				<BoldSpanText>Demo Connection</BoldSpanText>: Try Pip's "Pulse" demo to see how smoothly LEDs can transition between brightness levels - something traditional bulbs struggle with.
-			</ReadingBlockWithImage>
-		),
-		action: { type: "continue" },
-	}
+	// {
+	// 	id: "led-advantages-6",
+	// 	text: (
+	// 		<ReadingBlockWithImage>
+	// 			<BoldSpanText>Demo Connection</BoldSpanText>: Try Pip's "Pulse" demo to see how smoothly LEDs can transition between brightness levels - something traditional bulbs struggle with.
+	// 		</ReadingBlockWithImage>
+	// 	),
+	// 	action: { type: "continue" },
+	// }
 ]
 
 export default ledAdvantagesBlocks

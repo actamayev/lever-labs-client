@@ -13,7 +13,7 @@ const ledEfficiencyBlocks: ContentBlock[] = [
                     Power and Performance: Understanding LED Efficiency
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					<BoldSpanText>The Efficiency Equation</BoldSpanText>
+					<BoldSpanText noSpaceBefore>The Efficiency Equation</BoldSpanText>
 					<p className="mt-2">
                         When we power Pip's LEDs, not all electrical energy becomes light - some becomes heat. But LEDs are remarkably efficient at this conversion. To understand LED efficiency, we need to know how we measure both power input and light output.
 					</p>
@@ -26,7 +26,7 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 		id: "led-efficiency-2",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>What's a Watt?</BoldSpanText>
+				<BoldSpanText noSpaceBefore>What's a Watt?</BoldSpanText>
 				<p className="mt-2">
                     A watt (W) is a measure of power - how much energy is being used per second. Think of it like the rate water flows through a hose. Electronics with higher Watts use more power. When you see that Pip's LEDs use 0.2 watts, that tells us how much electrical power they're consuming.
 				</p>
@@ -38,7 +38,7 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 		id: "led-efficiency-3",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>What's a Lumen?</BoldSpanText>
+				<BoldSpanText noSpaceBefore>What's a Lumen?</BoldSpanText>
 				<p className="mt-2">
                     A lumen (lm) measures how much visible light a source produces, how bright it appears to human eyes. If wattage measures the flow of water through a hose, lumens are like the size of the puddle that forms. More lumens mean more visible light.
 				</p>
@@ -49,24 +49,24 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 	{
 		id: "led-efficiency-4",
 		text: (
-			<ReadingBlockWithImage>
-				<BoldSpanText>Measuring Efficiency</BoldSpanText>
-				<div className="mt-2">
-					<p>We measure LED efficiency in lumens per watt (lm/W) - how much light we get for each watt of power. Modern LEDs achieve up to 200 lm/W, meaning each watt of power produces 200 lumens of light. Compare this to:</p>
+			<>
+				<ReadingBlockWithImage>
+					<BoldSpanText noSpaceBefore>Measuring Efficiency</BoldSpanText>
+					<div className="mt-2">
+						<p>We measure LED efficiency in lumens per watt (lm/W) - how much light we get for each watt of power. Modern LEDs achieve up to 200 lm/W, meaning each watt of power produces 200 lumens of light. Compare this to:</p>
 
-					<ul className="mt-2 ml-4">
-						<li>Incandescent: ~15 lm/W</li>
-						<li>Fluorescent: ~60 lm/W</li>
-						<li>High-end LED: ~200 lm/W</li>
-					</ul>
-				</div>
-			</ReadingBlockWithImage>
+						<ul className="mt-2 list-disc list-inside">
+							<li>Incandescent: ~15 lm/W</li>
+							<li>Fluorescent: ~60 lm/W</li>
+							<li>High-end LED: ~200 lm/W</li>
+						</ul>
+					</div>
+				</ReadingBlockWithImage>
+				<DidYouKnow Icon={Cog} tooltipMessage="Efficient">
+						The theoretical maximum efficiency for white light production is about 250-300 lm/W. Modern LEDs are approaching this physical limit, making them one of the most optimized technologies in electronics.
+				</DidYouKnow>
+			</>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-efficiency-5",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -106,23 +106,14 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 		}
 	},
 	{
-		id: "led-efficiency-6",
-		text: (
-			<DidYouKnow Icon={Cog}>
-                The theoretical maximum efficiency for white light production is about 250-300 lm/W. Modern LEDs are approaching this physical limit, making them one of the most optimized technologies in electronics.
-			</DidYouKnow>
-		),
-		action: { type: "continue" },
-	},
-	{
 		id: "led-efficiency-7",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Managing Heat</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Managing Heat</BoldSpanText>
 				<div className="mt-2">
 					<p>Despite their high efficiency, LEDs still generate heat. Unlike incandescent bulbs that radiate heat away, LED heat stays concentrated in the semiconductor junction. This requires careful thermal management through:</p>
 
-					<ul className="mt-2 ml-4">
+					<ul className="mt-2 list-disc list-inside">
 						<li>Heat Sinks: Metallic structures (usually aluminum) that draw heat away from the LED</li>
 						<li>Thermal Interface Materials: Special materials that improve heat transfer (ie. thermal paste)</li>
 						<li>Temperature Monitoring: Systems that protect LEDs from overheating</li>
@@ -130,11 +121,6 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-efficiency-8",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
