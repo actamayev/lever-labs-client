@@ -1,7 +1,10 @@
+import useMotorDemoUseEffect from "../../../../hooks/lab/demos/motor-demo-use-effect"
 import LabDemoComponent from "../../demo/lab-demo-component"
 import { motorDemoDeliverables, motorDemos } from "./motor-demo-blocks"
 
 export default function MotorDemo() {
+	useMotorDemoUseEffect()
+
 	return (
 		<LabDemoComponent
 			demoTitle="Motor Demo"

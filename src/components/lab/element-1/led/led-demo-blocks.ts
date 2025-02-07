@@ -1,13 +1,13 @@
 import { Rainbow } from "lucide-react"
 
-export const ledDemoDeliverables: string[] = [
+export const ledDemoDeliverables: [string, string, string, string] = [
 	"Single Color",
 	"Multi color",
 	"test123",
 	"12321321"
 ]
 
-export const labDemos: Demo[] = [
+export const labDemos: [Demo, Demo, Demo, Demo] = [
 	{
 		demoTitle: "LED Solid Color",
 		demoDescription: "Description 1",

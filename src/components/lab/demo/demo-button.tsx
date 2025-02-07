@@ -1,18 +1,39 @@
-export default function DemoButton({ demo } : { demo: Demo }) {
-	// const demoButtonOnClick = useDemoButtonOnClick()
+import isNull from "lodash-es/isNull"
+import { observer } from "mobx-react"
+import { useCallback, useMemo } from "react"
+import { cn } from "../../../lib/shadcn/utils"
+import useToastOptions from "../../toast-options"
+import { usePipContext } from "../../../contexts/pip-context"
+import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 
-	// const handleDemoClick = useCallback((demoEndpoint: () => Promise<AxiosResponse<DemoResponse | NonSuccessResponse>>) => {
-	// 	return async (e: React.MouseEvent) => {
-	// 		e.preventDefault()
-	// 		await demoButtonOnClick(demoEndpoint)
-	// 	}
-	// }, [demoButtonOnClick])
+function DemoButton({ demo } : { demo: Demo }) {
+	const labDemoClass = useLabDemoContext()
+	const pipClass = usePipContext()
+	const toast = useToastOptions()
+
+	const isDemoActive = useMemo(() => {
+		return demo.demoTitle === labDemoClass.activeDemoName
+	}, [demo.demoTitle, labDemoClass.activeDemoName])
+
+	const setActiveDemo = useCallback(() => {
+		if (labDemoClass.activeDemoName === demo.demoTitle) return
+		if (isNull(pipClass.selectedPip)) {
+			return toast.negative({ title: "Please add a Pip to your account" })
+		}
+		// if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
+		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
+		// }
+		labDemoClass.setActiveDemoName(demo.demoTitle)
+	}, [demo.demoTitle, labDemoClass, pipClass.selectedPip, toast])
 
 	return (
 		<button
-			className="p-0 border border-zinc-200 dark:border-zinc-700 rounded-lg
-                bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100
-                dark:hover:bg-zinc-800 transition-colors text-left flex items-stretch"
+			className={cn(
+				"p-0 border border-zinc-200 dark:border-zinc-700 rounded-lg",
+				"transition-colors text-left flex items-stretch",
+				isDemoActive ? "bg-green-400 dark:bg-green-500" : "bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+			)}
+			onClick={setActiveDemo}
 		>
 			{/* Left Icon Section */}
 			<div className="flex items-center justify-center w-24 border-r
@@ -32,3 +53,5 @@ export default function DemoButton({ demo } : { demo: Demo }) {
 		</button>
 	)
 }
+
+export default observer(DemoButton)
