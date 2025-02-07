@@ -3,9 +3,9 @@ import { cn } from "@/lib/shadcn/utils"
 type Props = {
 	extraClasses?: string
 	children: React.ReactNode
-	noSpaceBefore?: boolean  // Optional prop to disable space before
-	noSpaceAfter?: boolean   // Optional prop to disable space after
-  }
+	noSpaceBefore?: boolean
+	noSpaceAfter?: boolean
+}
 
 export function BoldSpanText(props: Props) {
 	const {
