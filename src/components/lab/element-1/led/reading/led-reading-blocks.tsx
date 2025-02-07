@@ -8,14 +8,17 @@ import evolutionOfLightReadingBlocks from "./evolution-of-light"
 import ledEfficiencyBlocks from "./led-efficiency"
 import ledsRoboticsBlocks from "./led-robotics"
 
+// TODO:
+// Add the end-of-lesson questions
+// the final complete quiz button doesn't work
 const ledReadingBlocks: ContentBlock[] = [
-	...whatIsLightBlocks,
-	...evolutionOfLightReadingBlocks,
-	...ledAdvantagesBlocks,
-	...ledScienceBlocks,
-	...ledSemiconductorBlocks,
-	...ledColorsBlocks,
-	...ledEfficiencyBlocks,
+	// ...whatIsLightBlocks,
+	// ...evolutionOfLightReadingBlocks,
+	// ...ledAdvantagesBlocks,
+	// ...ledScienceBlocks,
+	// ...ledSemiconductorBlocks,
+	// ...ledColorsBlocks,
+	// ...ledEfficiencyBlocks,
 	...ledsRoboticsBlocks
 ]
 

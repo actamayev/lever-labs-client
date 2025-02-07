@@ -21,7 +21,7 @@ const ledScienceBlocks: ContentBlock[] = [
 		id: "led-science-2",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>The Building Blocks</BoldSpanText>
+				<BoldSpanText noSpaceBefore>The Building Blocks</BoldSpanText>
 				<div className="mt-2">
 					<p>An LED (Light Emitting Diode) is like a one-way street for electricity: a special street that converts electrical energy directly into light.</p>
 					<p className="mt-2">At its core is a semiconductor chip made from materials like gallium arsenide (GaAs) or gallium nitride (GaN). Semiconductors consist of two key layers: the N-layer (negative layer), and the P-layer (positive-layer).</p>
@@ -34,19 +34,19 @@ const ledScienceBlocks: ContentBlock[] = [
 		id: "led-science-3",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>A Helpful Analogy</BoldSpanText>
+				<BoldSpanText noSpaceBefore>A Helpful Analogy</BoldSpanText>
 				<div className="mt-2">
                     Think of a semiconductor as a cliff:
 					<ul className="mt-2">
 						<li className="mb-2">
 							<strong>At the top of the cliff</strong> is a reservoir full of water: that's the N-layer.
-							<ul className="mt-1 ml-4">
+							<ul className="mt-1 list-disc list-inside">
 								<li>The N-layer is filled with lots of electrons (tiny particles carrying negative charge).</li>
 							</ul>
 						</li>
 						<li className="mb-2">
 							<strong>The bottom of the cliff</strong> is a dry riverbed; that's the P-layer.
-							<ul className="mt-1 ml-4">
+							<ul className="mt-1 list-disc list-inside">
 								<li>The P-layer is full of empty spaces (called holes), ready to be filled.</li>
 							</ul>
 						</li>
@@ -99,17 +99,17 @@ const ledScienceBlocks: ContentBlock[] = [
 		id: "led-science-4",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>The Light-making Process</BoldSpanText>
+				<BoldSpanText noSpaceBefore>The Light-making Process</BoldSpanText>
 				<div className="mt-2">
 					<p>Before we dive in, let's understand voltage: Think of voltage as electrical pressure, like water pressure in a pipe. It's what pushes electrons to move through a circuit, measured in volts (V). Pip's LEDs typically use around 3V - just enough pressure to push electrons across the P-N junction.</p>
 
 					<p className="mt-2">When we apply voltage across an LED, it's like giving those electrons on the top of the cliff a push:</p>
-					<ul className="mt-2">
-						<li>Electrons from the N-layer (top of the cliff) begin falling toward the P-layer (bottom of the cliff)</li>
-						<li>When an electron finds a hole in the P-layer, the electron jumps into it: a process called recombination</li>
-						<li>During recombination, the electron releases extra energy as a tiny flash of light (a photon)</li>
-						<li>Millions of these tiny flashes happen every second, producing the steady light we see</li>
-						<li>Electrons fall from a higher energy level to a lower one, and instead of making a sound upon impact like in a real waterfall, they release light</li>
+					<ul className="mt-2 list-decimal list-inside space-y-1">
+						<li>Electrons from the N-layer (top of the cliff) begin falling toward the P-layer (bottom of the cliff).</li>
+						<li>When an electron finds a hole in the P-layer, the electron jumps into it: a process called recombination.</li>
+						<li>During recombination, the electron releases extra energy as a tiny flash of light (a photon).</li>
+						<li>Millions of these tiny flashes happen every second, producing the steady light we see.</li>
+						<li>Electrons fall from a higher energy level to a lower one, and instead of making a sound upon impact like in a real waterfall, they release light.</li>
 					</ul>
 				</div>
 			</ReadingBlockWithImage>
