@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import LandingCard from "../landing-card"
-import { BoldSpanText } from "../bold-span-text"
+import { BoldSpanText } from "../../bold-span-text"
 import { CoolMode } from "../../shadcn/ui/cool-mode"
 import TextRevealByWord from "../../shadcn/ui/text-reveal"
 export default function LearnByDoing() {
@@ -17,13 +17,13 @@ export default function LearnByDoing() {
 							<CoolMode>
 								<span className="inline-block cursor-pointer">Blue Dot,</span>
 							</CoolMode>
-							{" "}practice finally meets theory. We believe in&nbsp;
+							{" "}practice finally meets theory. We believe in
 							<BoldSpanText>
-                                learning by doing.&nbsp;
+                                learning by doing.
 							</BoldSpanText>
                             Theory comes alive through your hands, not through pages.
                             Because real learning doesn't start with reading about robots - it starts with building them.
-                            That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.&nbsp;
+                            That's why we place as much emphasis on the practical aspects of robotics as the theoretical ones.
 							<BoldSpanText>
                                 Textbooks have their place. You won't find them here.
 							</BoldSpanText>

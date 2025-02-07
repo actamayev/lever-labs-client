@@ -6,8 +6,8 @@ export default function InThisElementSection() {
 				In This Element:
 			</h2>
 			<p className="text-lg text-zinc-600 dark:text-zinc-400">
-				We&apos;ll investigate how Pip&apos;s sensors actually work under the surface, their applications,
-				and you&apos;ll learn how to control them.
+				We'll investigate how Pip's sensors actually work under the surface, their applications,
+				and you'll learn how to control them.
 			</p>
 			<div className="grid grid-cols-3 gap-4">
 				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">

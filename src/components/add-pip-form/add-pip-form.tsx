@@ -51,11 +51,11 @@ function AddPipForm() {
 								<div className="flex flex-row mb-6">
 									<p className="font-bold">Step 2:&nbsp;</p>
 									<p>
-									Enter your&nbsp;
+										Enter your
 										<DottedTextTooltip tooltipMessage="Look for a 5-character code in the package Pip came with">
-										Pip&apos;s ID
+										Pip's ID
 										</DottedTextTooltip>
-									&nbsp;and pick a name for your new friend
+										and pick a name for your new friend
 									</p>
 								</div>
 								<div className="flex flex-row gap-4">

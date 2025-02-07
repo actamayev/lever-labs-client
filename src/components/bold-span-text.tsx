@@ -1,22 +1,33 @@
 import { cn } from "@/lib/shadcn/utils"
 
-interface Props {
+type Props = {
 	extraClasses?: string
 	children: React.ReactNode
+	noSpaceBefore?: boolean
+	noSpaceAfter?: boolean
 }
 
 export function BoldSpanText(props: Props) {
-	const { extraClasses, children } = props
+	const {
+		extraClasses,
+		children,
+		noSpaceBefore = false,
+		noSpaceAfter = false
+	} = props
 
 	return (
-		<span
-			className={cn(
-				"text-black dark:text-white font-semibold",
-				extraClasses
-			)}
-		>
-			{children}
-		</span>
+		<>
+			{!noSpaceBefore && <>&nbsp;</>}
+			<span
+				className={cn(
+					"text-black dark:text-white font-semibold",
+					extraClasses
+				)}
+			>
+				{children}
+			</span>
+			{!noSpaceAfter && <>&nbsp;</>}
+		</>
 	)
 }
 

@@ -23,7 +23,7 @@ function ConnectToPipInstructions() {
 					Step 4
 				</div>
 				<div>
-					1. Open your computer&apos;s Wi-Fi settings
+					1. Open your computer's Wi-Fi settings
 				</div>
 				<div>
 					<div className="flex items-center space-x-2">
