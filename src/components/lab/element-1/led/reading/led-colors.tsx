@@ -9,11 +9,9 @@ const ledColorsBlocks: ContentBlock[] = [
 		id: "led-colors-1",
 		text: (
 			<div>
-				<ReadingBlockHeader>
-                    Engineering LED Colors
-				</ReadingBlockHeader>
+				<ReadingBlockHeader>Engineering LED Colors</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					<BoldSpanText>How Materials Shape Light</BoldSpanText>
+					<BoldSpanText noSpaceBefore>How Materials Shape Light</BoldSpanText>
 					<p className="mt-2">
                         The colors LEDs emit are rooted in the physics of their semiconductor material. Here's how different semiconductor compounds create various colors:
 					</p>
@@ -26,11 +24,11 @@ const ledColorsBlocks: ContentBlock[] = [
 		id: "led-colors-2",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Common LED Materials and Their Colors</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Common LED Materials and Their Colors</BoldSpanText>
 				<div className="mt-4">
 					<div className="mb-4">
 						<h3 className="font-semibold">Gallium Arsenide (GaAs)</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-inside list-disc">
 							<li>Produces infrared light (850-940nm)</li>
 							<li>Used in remote controls and short-range sensors</li>
 							<li>Essential for Pip's line following system</li>
@@ -39,56 +37,45 @@ const ledColorsBlocks: ContentBlock[] = [
 
 					<div className="mb-4">
 						<h3 className="font-semibold">Aluminum Gallium Indium Phosphide (AlGaInP)</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-inside list-disc">
 							<li>Creates red to yellow light (570-630nm)</li>
 							<li>Highly efficient for visible light</li>
-							<li>Used in Pip's status indicators</li>
 						</ul>
 					</div>
 
 					<div>
 						<h3 className="font-semibold">Gallium Nitride (GaN)</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-inside list-disc">
 							<li>Generates blue light (450-470nm)</li>
 							<li>Revolutionary material that enabled white LEDs</li>
-							<li>Powers Pip's main lighting system</li>
 						</ul>
 					</div>
 				</div>
 			</ReadingBlockWithImage>
-		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-colors-3",
-		text: (
-			<DidYouKnow Icon={CustomNobel}>
-                The 2014 Nobel Prize in Physics was awarded for the invention of efficient blue LEDs, which made white LED lighting possible. Before this breakthrough, creating white light with LEDs was impractical.
-			</DidYouKnow>
 		),
 		action: { type: "continue" },
 	},
 	{
 		id: "led-colors-4",
 		text: (
-			<ReadingBlockWithImage>
-				<BoldSpanText>Making White Light</BoldSpanText>
-				<div className="mt-2">
-					<p>White LEDs typically use a blue LED chip coated with a yellow phosphor. When combined, these colors appear white to our eyes. By adjusting the phosphor composition, we can create different "temperatures" of white light:</p>
+			<>
+				<ReadingBlockWithImage>
+					<BoldSpanText noSpaceBefore>Making White Light</BoldSpanText>
+					<div className="mt-2">
+						<p>White LEDs typically use a blue LED chip coated with a yellow phosphor. When combined, these colors appear white to our eyes. By adjusting the phosphor composition, we can create different "temperatures" of white light:</p>
 
-					<ul className="mt-2 ml-4">
-						<li>Warm white (3000K): More yellow, similar to sunset</li>
-						<li>Neutral white (4000K): Similar to midday sun</li>
-						<li>Cool white (6000K): Slightly bluish, like overcast sky</li>
-					</ul>
-				</div>
-			</ReadingBlockWithImage>
+						<ul className="mt-2 list-inside list-disc">
+							<li>Warm white (3000K): More yellow, similar to sunset</li>
+							<li>Neutral white (4000K): Similar to midday sun</li>
+							<li>Cool white (6000K): Slightly bluish, like overcast sky</li>
+						</ul>
+					</div>
+				</ReadingBlockWithImage>
+				<DidYouKnow Icon={CustomNobel} tooltipMessage="Nobel Prize">
+							The 2014 Nobel Prize in Physics was awarded for the invention of efficient blue LEDs, which made white LED lighting possible. Before this breakthrough, creating white light with LEDs was impractical.
+				</DidYouKnow>
+			</>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-colors-5",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {

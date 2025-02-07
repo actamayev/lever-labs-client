@@ -13,11 +13,11 @@ const ledsRoboticsBlocks: ContentBlock[] = [
                     LEDs in Modern Robotics: More Than Just Indicators
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					<BoldSpanText>Perception and Sensing</BoldSpanText>
+					<BoldSpanText noSpaceBefore>Perception and Sensing</BoldSpanText>
 					<div className="mt-2">
 						<div className="mb-4">
 							<h3 className="font-semibold">Vision Systems</h3>
-							<ul className="mt-2 ml-4">
+							<ul className="mt-2 list-disc list-inside">
 								<li>Structured Light Sensing: Infrared LED arrays project invisible patterns</li>
 								<li>Cameras detect pattern distortion to create 3D maps</li>
 								<li>Used in robot navigation and object manipulation, similar to how Pip uses infrared LEDs to detect obstacles</li>
@@ -26,7 +26,7 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 
 						<div>
 							<h3 className="font-semibold">Proximity Detection</h3>
-							<ul className="mt-2 ml-4">
+							<ul className="mt-2 list-disc list-inside">
 								<li>Time-of-Flight (ToF) Sensors</li>
 								<li>High-speed LED pulses measure distance via light reflection</li>
 								<li>Enable precise obstacle avoidance in varying light conditions</li>
@@ -34,16 +34,10 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 						</div>
 					</div>
 				</ReadingBlockWithImage>
+				<DidYouKnow Icon={CustomMarsRover} tooltipMessage="Mars Rover">
+			The Mars rovers use LED-based instruments to analyze Martian rocks by measuring how they fluoresce under specific wavelengths of light.
+				</DidYouKnow>
 			</div>
-		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-robotics-2",
-		text: (
-			<DidYouKnow Icon={CustomMarsRover}>
-                The Mars rovers use LED-based instruments to analyze Martian rocks by measuring how they fluoresce under specific wavelengths of light.
-			</DidYouKnow>
 		),
 		action: { type: "continue" },
 	},
@@ -51,12 +45,12 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 		id: "led-robotics-3",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Communication and Feedback</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Communication and Feedback</BoldSpanText>
 				<div className="mt-2">
 					<div className="mb-4">
 						<h3 className="font-semibold">Status Indication</h3>
 						<p className="mt-2">Modern robots use LED patterns to communicate:</p>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-disc list-inside">
 							<li>Solid Green: Normal operation</li>
 							<li>Pulsing Blue: Processing</li>
 							<li>Rotating Pattern: Movement planned</li>
@@ -66,7 +60,7 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 
 					<div className="mb-4">
 						<h3 className="font-semibold">Robot-to-Robot Communication</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-disc list-inside">
 							<li>High-speed data transfer using light pulses</li>
 							<li>Works in radio-restricted environments</li>
 						</ul>
@@ -74,7 +68,7 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 
 					<div>
 						<h3 className="font-semibold">Human-Robot Interaction</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-disc list-inside">
 							<li>Intuitive status display</li>
 							<li>Emotional expression through color patterns</li>
 							<li>Direction indication for movement</li>
@@ -89,11 +83,11 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 		id: "led-robotics-4",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Industrial Applications</BoldSpanText>
+				<BoldSpanText noSpaceBefore>Industrial Applications</BoldSpanText>
 				<div className="mt-2">
 					<div className="mb-4">
 						<h3 className="font-semibold">Machine Vision</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-disc list-inside">
 							<li>LED strobe synchronization with cameras</li>
 							<li>Consistent lighting for quality control</li>
 							<li>Different colors for enhanced contrast</li>
@@ -102,7 +96,7 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 
 					<div>
 						<h3 className="font-semibold">Collaborative Robots</h3>
-						<ul className="mt-2 ml-4">
+						<ul className="mt-2 list-disc list-inside">
 							<li>Safety zone indication</li>
 							<li>Work status communication</li>
 							<li>Emergency state signaling</li>
@@ -117,19 +111,14 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 		id: "led-robotics-5",
 		text: (
 			<ReadingBlockWithImage>
-				<BoldSpanText>Modern Displays</BoldSpanText>
-				<ul className="mt-2 ml-4">
+				<BoldSpanText noSpaceBefore>Modern Displays</BoldSpanText>
+				<ul className="mt-2 list-disc list-inside">
 					<li>Today's screens use millions of tiny LEDs</li>
 					<li>Each pixel consists of red, green, and blue LEDs</li>
 					<li>The screen you're reading this on likely uses LED technology</li>
 				</ul>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-robotics-6",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -163,18 +152,7 @@ const ledsRoboticsBlocks: ContentBlock[] = [
 							}
 						],
 						questionUUID: "4b7e2c9f8d3a" as QuestionUUID
-					}
-				]
-			}
-		}
-	},
-	{
-		id: "led-robotics-7",
-		text: null,
-		action: {
-			type: "quiz",
-			quiz: {
-				questions: [
+					},
 					{
 						question: "Why do manufacturing robots often use strobed LED lighting instead of constant illumination?",
 						choices: [

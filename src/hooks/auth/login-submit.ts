@@ -30,7 +30,6 @@ export default function useLoginSubmit (
 				return
 			}
 			setDataAfterLogin(response.data)
-			console.log("Navigating to", whereToNavigate)
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)

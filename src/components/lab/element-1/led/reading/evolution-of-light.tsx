@@ -64,7 +64,7 @@ const evolutionOfLightReadingBlocks: ContentBlock[] = [
                     Instead of heating materials or exciting gases, LEDs use semiconductors - the same materials that power the computer chips inside of Pip.
                     When electricity flows through semiconductors, they directly convert electrical energy into light through a process called electroluminescence.
 				</ReadingBlockWithImage>
-				<DidYouKnow Icon={CustomLightbulb}>
+				<DidYouKnow Icon={CustomLightbulb} tooltipMessage="Efficient Lightbulb">
                     The first practical incandescent bulb lasted 13.5 hours. Modern LEDs can last for 50,000 hours - that's nearly 6 years of continuous use.
 				</DidYouKnow>
 			</div>
@@ -104,7 +104,7 @@ const evolutionOfLightReadingBlocks: ContentBlock[] = [
 						questionUUID: "7h2k9l4m5n6p" as QuestionUUID
 					},
 					{
-						question: "What makes fluorescent lights particularly unsuitable for robotic applications like Pip?",
+						question: "What makes fluorescent lights particularly unsuitable for robots like Pip?",
 						choices: [
 							{
 								answerChoiceId: 1,
