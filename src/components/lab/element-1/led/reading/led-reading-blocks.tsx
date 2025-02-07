@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import ledColorsBlocks from "./led-colors"
 import ledScienceBlocks from "./led-science"
 import whatIsLightBlocks from "./what-is-light"

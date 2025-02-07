@@ -159,11 +159,11 @@ class LabReadingClass {
 	})
 
 	private handleQuizComplete = action((blockId: ContentBlockID) => {
+		this.setActiveQuiz(null)
+		this.setExplanationBeingShown(null)
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
-		this.setActiveQuiz(null)
-		this.setExplanationBeingShown(null)
 		this.scrollToNextBlock(blockId)
 	})
 
@@ -186,8 +186,10 @@ class LabReadingClass {
 			!this.quizAttempts.get(question.questionUUID)?.some(attempt => attempt.isCorrect)
 		)
 
+		const isLastQuestion = this.activeQuiz.questionUUID === questions[questions.length - 1].questionUUID
+
 		// If we're on the last question and there are earlier unanswered questions
-		if (this.activeQuiz.questionUUID === questions[questions.length - 1].questionUUID) {
+		if (isLastQuestion) {
 			if (firstUnansweredIndex !== -1 && firstUnansweredIndex < questions.length - 1) {
 				// Go back to the first unanswered question
 				const nextQuestionUUID = questions[firstUnansweredIndex].questionUUID
