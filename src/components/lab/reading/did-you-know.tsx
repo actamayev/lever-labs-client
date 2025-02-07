@@ -2,12 +2,12 @@ import { GraduationCap, LucideIcon } from "lucide-react"
 import { Card, CardContent } from "@/components/shadcn/ui/card"
 
 interface Props {
-	description: string
+	children: React.ReactNode
 	Icon: LucideIcon
 }
 
 export default function DidYouKnow(props: Props) {
-	const { description, Icon } = props
+	const { children, Icon } = props
 
 	return (
 		<Card className="bg-teal-100 border-teal-200 dark:bg-teal-950 dark:border-teal-800">
@@ -24,7 +24,7 @@ export default function DidYouKnow(props: Props) {
 							Did you know?
 						</h2>
 						<p className="text-teal-800 dark:text-teal-200 text-base">
-							{description}
+							{children}
 						</p>
 					</div>
 

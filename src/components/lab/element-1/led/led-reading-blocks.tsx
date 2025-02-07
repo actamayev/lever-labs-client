@@ -1,34 +1,43 @@
+/* eslint-disable max-len */
+import { CustomEinstein } from "../../../icons/custom-einstein"
+import { BoldSpanText } from "../../../bold-span-text"
+import DidYouKnow from "../../reading/did-you-know"
+import { ReadingBlockHeader, ReadingBlockWithImage } from "../../reading/reading-styles"
+
 const ledReadingBlocks: ContentBlock[] = [
 	{
-		id: "led-intro",
+		id: "what-is-light-1",
 		text: (
 			<div>
-				<h2 className="text-3xl font-bold mb-4">Introduction to Photosynthesis</h2>
-				<p className="mb-4 text-2xl">
-					Photosynthesis is one of nature&apos;s most remarkable processes. It&apos;s how plants convert sunlight
-					into energy, producing oxygen as a byproduct. This process is essential for all life on Earth.
-				</p>
-				<img
-					src="https://2.img-dpreview.com/files/p/E~C1000x0S4000x4000T1200x1200~articles/3925134721/0266554465.jpeg"
-					alt="Overview of photosynthesis"
-					className="w-1/4 rounded-lg mb-4 shadow-lg"
-				/>
-				<p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400 italic">
-					Figure 1: Overview diagram of the photosynthesis process
-				</p>
+				<ReadingBlockHeader>
+					What is Light?
+				</ReadingBlockHeader>
+				<ReadingBlockWithImage>
+					Think about watching a sunset or seeing Pip's LEDs glow in a dark room.
+					In both cases, you're observing light in action.
+					But what exactly is light? The answer might surprise you - light is more complex than it first appears.
+				</ReadingBlockWithImage>
 			</div>
 		),
 		action: { type: "continue" },
 	},
 	{
-		id: "led-process-overview",
+		id: "what-is-light-2",
 		text: (
 			<div>
-				<h3 className="text-3xl font-bold mb-3">The Process Overview</h3>
-				<p className="mb-4 text-2xl">
-					During photosynthesis, plants take in carbon dioxide from the air and water from the soil.
-					Using sunlight as energy, they convert these ingredients into glucose and oxygen.
-				</p>
+				<ReadingBlockWithImage>
+					Light is
+					<BoldSpanText>
+					a form of energy that travels through space as both a wave and a particle
+					</BoldSpanText>
+					- a concept called wave-particle duality.
+					These particles of light, called photons, are like tiny packets of energy racing through space at
+					an incredible speed of 300 million meters per second
+					(that's fast enough to circle Earth 7.5 times in just one second!).
+				</ReadingBlockWithImage>
+				<DidYouKnow Icon={CustomEinstein}>
+					The dual nature of light puzzled scientists for centuries. Albert Einstein's work on the photoelectric effect, which proved light behaves as both a wave and a particle, earned him the Nobel Prize in 1921.
+				</DidYouKnow>
 			</div>
 		),
 		action: {
@@ -36,147 +45,115 @@ const ledReadingBlocks: ContentBlock[] = [
 			quiz: {
 				questions: [
 					{
-						question: "What are the main ingredients needed for photosynthesis?",
+						question: "Which statement best describes the dual nature of light?",
 						choices: [
 							{
-								text: "Oxygen and water",
+								answerChoiceId: 1,
+								text: "Light only behaves as a wave in space",
 								correct: false,
-								explanation: "While water is needed, oxygen is actually a product of photosynthesis, not an ingredient.",
-								answerChoiceId: 1
+								explanation: "Test explanation"
 							},
 							{
-								text: "Carbon dioxide and water",
+								answerChoiceId: 2,
+								text: "Light is a form of energy that exhibits both wave and particle properties",
 								correct: true,
-								explanation: "Correct! Plants use carbon dioxide from the air \
-								and water from the soil as the main ingredients.",
-								answerChoiceId: 2
+								explanation: "Test explanation"
 							},
 							{
-								text: "Glucose and oxygen",
+								answerChoiceId: 3,
+								text: "Light consists only of particles called electrons",
 								correct: false,
-								explanation: "These are actually the products of photosynthesis, not the ingredients.",
-								answerChoiceId: 3
+								explanation: "Test explanation"
 							},
 							{
-								text: "Test text",
+								answerChoiceId: 4,
+								text: "Light travels as waves but transforms into particles when it hits objects",
 								correct: false,
-								explanation: "Test explanation.",
-								answerChoiceId: 4
+								explanation: "Test explanation"
 							}
 						],
-						questionUUID: "102929393" as QuestionUUID
+						questionUUID: "kdnbjkasdka" as QuestionUUID
 					}
 				]
 			}
 		}
 	},
 	{
-		id: "led-light-reaction",
+		id: "what-is-light-3",
 		text: (
-			<div>
-				<h3 className="text-xl font-bold mb-3">The Light-Dependent Reaction</h3>
-				<p className="mb-4 text-2xl">
-					The first stage of photosynthesis is the light-dependent reaction. This occurs in the
-					thylakoid membrane of the chloroplast, where chlorophyll molecules capture sunlight.
-				</p>
-			</div>
+			<ReadingBlockWithImage>
+				When photons interact with something (like Pip’s casing or your eyes), they can do three things:
+				<ul>
+					<li>Bounce off (reflection) - like a ball bouncing off a wall</li>
+					<li>Pass through (transmission) - like sunlight through a window</li>
+					<li>Get absorbed - like a sponge soaking up water</li>
+				</ul>
+			</ReadingBlockWithImage>
 		),
-		action: {
-			type: "continue"
-		},
+		action: { type: "continue" },
 	},
 	{
-		id: "led-dark-reaction",
+		id: "what-is-light-4",
 		text: (
-			<div>
-				<h3 className="text-xl font-bold mb-3">The Calvin Cycle (Dark Reaction)</h3>
-				<p className="mb-4 text-2xl">
-					The second stage is the Calvin Cycle, also known as the dark reaction. This process doesn&apos;t
-					require direct sunlight and uses the products from the light-dependent reaction to produce glucose.
-				</p>
-			</div>
+			<ReadingBlockWithImage>
+				Understanding these interactions helps us design Pip's sensors and indicators. For instance, Pip's clear casing needs to transmit light from its LEDs, while its light sensors need to absorb photons to detect obstacles
+			</ReadingBlockWithImage>
 		),
+		action: { type: "continue"}
+	},
+	{
+		id: "what-is-light-5",
+		text: (
+			<ReadingBlockWithImage>
+				When you see Pip's green status light, you're actually seeing photons that have:
+				1. Been generated by the LED
+				2. Transmitted through its clear casing
+				3. Reflected off various surfaces
+				4. Finally been absorbed by the light-sensitive cells in your eyes
+			</ReadingBlockWithImage>
+		),
+		action: { type: "continue"}
+	},
+	{
+		id: "what-is-light-6",
+		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
 				questions: [
 					{
-						question: "Why is the Calvin Cycle called the dark reaction?",
+						question: "A photon from Pip's LEDs hits a semi-transparent plastic surface. What is the MOST likely outcome?",
 						choices: [
 							{
-								text: "Because it can only happen at night",
+								answerChoiceId: 1,
+								text: "The photon will only be reflected",
 								correct: false,
-								explanation: "The Calvin Cycle can occur any time, not just at night.",
-								answerChoiceId: 1
+								explanation: "Test explanation"
 							},
 							{
-								text: "Because it happens in dark areas of the plant",
-								correct: false,
-								explanation: "The location of the reaction isn't related to its name.",
-								answerChoiceId: 2
-							},
-							{
-								text: "Because it doesn't directly require sunlight",
+								answerChoiceId: 2,
+								text: "The photon will only be absorbed",
 								correct: true,
-								explanation: "Correct! While it uses products from the light-dependent reaction,\
-								the Calvin Cycle itself doesn't require direct sunlight.",
-								answerChoiceId: 3
+								explanation: "Test explanation"
 							},
 							{
-								text: "Test text",
-								correct: false,
-								explanation: "Test explanation.",
-								answerChoiceId: 4
-							},
-						],
-						questionUUID: "u19230123910" as QuestionUUID
-					},
-					{
-						question: "What is the main product of the Calvin Cycle?",
-						choices: [
-							{
-								text: "Glucose",
+								answerChoiceId: 3,
+								text: "Some photons will be reflected, some transmitted, and some absorbed",
 								correct: true,
-								explanation: "Correct! The Calvin Cycle produces glucose as its main product.",
-								answerChoiceId: 1
+								explanation: "Test explanation"
 							},
 							{
-								text: "Oxygen",
+								answerChoiceId: 4,
+								text: "The photon will split into two smaller photons",
 								correct: false,
-								explanation: "Oxygen is produced during the light-dependent reaction, not the Calvin Cycle.",
-								answerChoiceId: 2
-							},
-							{
-								text: "Carbon dioxide",
-								correct: false,
-								explanation: "Carbon dioxide is an ingredient used in the Calvin Cycle, not a product.",
-								answerChoiceId: 3
-							},
-							{
-								text: "Test text",
-								correct: false,
-								explanation: "Test explanation.",
-								answerChoiceId: 4
-							},
+								explanation: "Test explanation"
+							}
 						],
-						questionUUID: "29031230123" as QuestionUUID
+						questionUUID: "kdnbjkasd222ka" as QuestionUUID
 					}
 				]
 			}
 		}
-	},
-	{
-		id: "led-conclusion",
-		text: (
-			<div>
-				<h3 className="text-xl font-bold mb-3">Conclusion</h3>
-				<p className="mb-4 text-2xl">
-					Understanding photosynthesis helps us appreciate how plants sustain life on Earth. This
-					process not only provides food for plants but also produces the oxygen we breathe.
-				</p>
-			</div>
-		),
-		action: { type: null }
 	}
 ]
 

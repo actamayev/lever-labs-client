@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react"
 import { Card } from "@/components/shadcn/ui/card"
 import Safari from "../../shadcn/ui/safari"
 import { cn } from "../../../lib/shadcn/utils"
-import { BoldSpanText } from "../bold-span-text"
+import { BoldSpanText } from "../../bold-span-text"
 import { CustomBeaker } from "../../icons/custom-beaker"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
@@ -30,7 +30,7 @@ function SectionCard(props: ProductProps) {
 				<h2 className="text-3xl md:text-4xl font-medium flex flex-row items-center">
 					<Icon className="size-8 md:size-9 origin-left transform-gpu transition-all
 					duration-300 ease-in-out group-hover:scale-75" />
-                    &nbsp;{sectionTitle}
+					{sectionTitle}
 				</h2>
 				<div className="my-2 text-lg md:text-xl">
 					{titleSubHeader}
@@ -63,7 +63,7 @@ function ProductShowcase() {
 					sectionSubtitle={
 						<>
                             Master robotics through interactive labs with Pip - from programming and mathematics, to sensors and control.
-                            Engineer clever solutions to&nbsp;
+                            Engineer clever solutions to
 							<BoldSpanText extraClasses="font-medium">
                                 carefully crafted labs that bridge theory and practice.
 							</BoldSpanText>
@@ -80,9 +80,9 @@ function ProductShowcase() {
 					titleSubHeader="Your Pip, your rules"
 					sectionSubtitle={
 						<div>
-                            Jump into an open playground where you control Pip your way. Use coding blocks to&nbsp;
+                            Jump into an open playground where you control Pip your way. Use coding blocks to
 							<BoldSpanText extraClasses="font-medium">
-                                bring your wildest ideas to life&nbsp;
+                                bring your wildest ideas to life
 							</BoldSpanText>
                             with no limits or restrictions.
 						</div>

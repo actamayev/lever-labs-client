@@ -32,7 +32,7 @@ export default function SignUpForUpdates() {
 	return (
 		<div className="w-full px-4 md:px-0">
 			<div className="text-xl md:text-3xl text-center">
-                Pip isn&apos;t available yet - but it will be soon.
+                Pip isn't available yet - but it will be soon.
 			</div>
 			<div className="text-xl md:text-3xl text-center mt-4 md:mt-6 mb-6 md:mb-10">
                 Please enter your email below to sign up for updates.
