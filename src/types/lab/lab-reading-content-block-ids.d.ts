@@ -1,7 +1,7 @@
 declare global {
 	type LEDReadingBlockID =
 	| `what-is-light-${number}`
-	| `the-evolution-of-light-${number}`
+	| `evolution-of-light-${number}`
 	| `led-advantages-${number}`
 	| `inside-led-${number}`
 	| `heart-of-led-semiconductors-${number}`

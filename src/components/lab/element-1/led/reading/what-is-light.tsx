@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
-import { CustomEinstein } from "../../../icons/custom-einstein"
-import { BoldSpanText } from "../../../bold-span-text"
-import DidYouKnow from "../../reading/did-you-know"
-import { ReadingBlockHeader, ReadingBlockWithImage } from "../../reading/reading-styles"
+import DidYouKnow from "../../../reading/did-you-know"
+import { BoldSpanText } from "../../../../bold-span-text"
+import { CustomEinstein } from "../../../../icons/custom-einstein"
+import { ReadingBlockHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
 
-const ledReadingBlocks: ContentBlock[] = [
+const whatIsLightBlocks: ContentBlock[] = [
 	{
 		id: "what-is-light-1",
 		text: (
@@ -157,4 +157,4 @@ const ledReadingBlocks: ContentBlock[] = [
 	}
 ]
 
-export default ledReadingBlocks
+export default whatIsLightBlocks

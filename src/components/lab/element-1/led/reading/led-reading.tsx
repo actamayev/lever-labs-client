@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../../contexts/pip-context"
-import LabReadingComponent from "../../reading/lab-reading-component"
+import { usePipContext } from "../../../../../contexts/pip-context"
+import LabReadingComponent from "../../../reading/lab-reading-component"
 
 function LedReading() {
 	const pipClass = usePipContext()

@@ -10,7 +10,7 @@ export default function DidYouKnow(props: Props) {
 	const { children, Icon } = props
 
 	return (
-		<Card className="bg-teal-100 border-teal-200 dark:bg-teal-950 dark:border-teal-800">
+		<Card className="bg-teal-100 border-teal-200 dark:bg-teal-950 dark:border-teal-800 mb-8">
 			<CardContent className="p-0">
 				<div className="flex items-stretch">
 					<div className="flex items-center justify-center w-24 border-r
