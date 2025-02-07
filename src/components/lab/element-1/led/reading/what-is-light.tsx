@@ -4,18 +4,18 @@ import { BoldSpanText } from "../../../../bold-span-text"
 import { CustomEinstein } from "../../../../icons/custom-einstein"
 import { ReadingBlockHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
 
-const whatIsLightBlocks: ContentBlock[] = [
+const whatisLightBlocks: ContentBlock[] = [
 	{
 		id: "what-is-light-1",
 		text: (
 			<div>
 				<ReadingBlockHeader>
-					What is Light?
+                    What is Light?
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					Think about watching a sunset or seeing Pip's LEDs glow in a dark room.
-					In both cases, you're observing light in action.
-					But what exactly is light? The answer might surprise you - light is more complex than it first appears.
+                    Think about watching a sunset or seeing Pip's LEDs glow in a dark room.
+                    In both cases, you're observing light in action.
+                    But what exactly is light? The answer might surprise you - light is more complex than it first appears.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -26,17 +26,17 @@ const whatIsLightBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockWithImage>
-					Light is
+                    Light is
 					<BoldSpanText>
-					a form of energy that travels through space as both a wave and a particle
+                    a form of energy that travels through space as both a wave and a particle
 					</BoldSpanText>
-					- a concept called wave-particle duality.
-					These particles of light, called photons, are like tiny packets of energy racing through space at
-					an incredible speed of 300 million meters per second
-					(that's fast enough to circle Earth 7.5 times in just one second!).
+                    - a concept called wave-particle duality.
+                    These particles of light, called photons, are like tiny packets of energy racing through space at
+                    an incredible speed of 300 million meters per second
+                    (that's fast enough to circle Earth 7.5 times in just one second!).
 				</ReadingBlockWithImage>
 				<DidYouKnow Icon={CustomEinstein}>
-					The dual nature of light puzzled scientists for centuries. Albert Einstein's work on the photoelectric effect, which proved light behaves as both a wave and a particle, earned him the Nobel Prize in 1921.
+                    The dual nature of light puzzled scientists for centuries. Albert Einstein's work on the photoelectric effect, which proved light behaves as both a wave and a particle, earned him the Nobel Prize in 1921.
 				</DidYouKnow>
 			</div>
 		),
@@ -51,28 +51,28 @@ const whatIsLightBlocks: ContentBlock[] = [
 								answerChoiceId: 1,
 								text: "Light only behaves as a wave in space",
 								correct: false,
-								explanation: "Test explanation"
+								explanation: "This is incorrect. Light exhibits both wave and particle properties at all times. The wave-like properties explain phenomena like diffraction and interference, while particle properties explain how light interacts with matter."
 							},
 							{
 								answerChoiceId: 2,
 								text: "Light is a form of energy that exhibits both wave and particle properties",
 								correct: true,
-								explanation: "Test explanation"
+								explanation: "Correct! This is known as wave-particle duality. Light behaves as both a wave (explaining phenomena like diffraction) and as particles called photons (explaining how light interacts with matter in discrete packets of energy)."
 							},
 							{
 								answerChoiceId: 3,
 								text: "Light consists only of particles called electrons",
 								correct: false,
-								explanation: "Test explanation"
+								explanation: "This is incorrect. Light consists of particles called photons, not electrons. Electrons are negatively charged particles found in atoms, while photons are the particles that make up light and have no electric charge."
 							},
 							{
 								answerChoiceId: 4,
 								text: "Light travels as waves but transforms into particles when it hits objects",
 								correct: false,
-								explanation: "Test explanation"
+								explanation: "This is incorrect. Light doesn't transform between waves and particles - it exhibits both properties simultaneously. This dual nature is fundamental to light's behavior and doesn't change based on interactions."
 							}
 						],
-						questionUUID: "kdnbjkasdka" as QuestionUUID
+						questionUUID: "7f3a9b2c5d1e" as QuestionUUID
 					}
 				]
 			}
@@ -82,7 +82,7 @@ const whatIsLightBlocks: ContentBlock[] = [
 		id: "what-is-light-3",
 		text: (
 			<ReadingBlockWithImage>
-				When photons interact with something (like Pip’s casing or your eyes), they can do three things:
+                When photons interact with something (like Pip's casing or your eyes), they can do three things:
 				<ul>
 					<li>Bounce off (reflection) - like a ball bouncing off a wall</li>
 					<li>Pass through (transmission) - like sunlight through a window</li>
@@ -96,7 +96,7 @@ const whatIsLightBlocks: ContentBlock[] = [
 		id: "what-is-light-4",
 		text: (
 			<ReadingBlockWithImage>
-				Understanding these interactions helps us design Pip's sensors and indicators. For instance, Pip's clear casing needs to transmit light from its LEDs, while its light sensors need to absorb photons to detect obstacles
+                Understanding these interactions helps us design Pip's sensors and indicators. For instance, Pip's clear casing needs to transmit light from its LEDs, while its light sensors need to absorb photons to detect obstacles
 			</ReadingBlockWithImage>
 		),
 		action: { type: "continue"}
@@ -105,11 +105,11 @@ const whatIsLightBlocks: ContentBlock[] = [
 		id: "what-is-light-5",
 		text: (
 			<ReadingBlockWithImage>
-				When you see Pip's green status light, you're actually seeing photons that have:
-				1. Been generated by the LED
-				2. Transmitted through its clear casing
-				3. Reflected off various surfaces
-				4. Finally been absorbed by the light-sensitive cells in your eyes
+                When you see Pip's green status light, you're actually seeing photons that have:
+                1. Been generated by the LED
+                2. Transmitted through its clear casing
+                3. Reflected off various surfaces
+                4. Finally been absorbed by the light-sensitive cells in your eyes
 			</ReadingBlockWithImage>
 		),
 		action: { type: "continue"}
@@ -128,28 +128,28 @@ const whatIsLightBlocks: ContentBlock[] = [
 								answerChoiceId: 1,
 								text: "The photon will only be reflected",
 								correct: false,
-								explanation: "Test explanation"
+								explanation: "This is incorrect. Semi-transparent materials, by definition, allow some light to pass through while reflecting and absorbing some as well. If the surface only reflected light, it would be completely opaque and mirror-like."
 							},
 							{
 								answerChoiceId: 2,
 								text: "The photon will only be absorbed",
-								correct: true,
-								explanation: "Test explanation"
+								correct: false,
+								explanation: "This is incorrect. While some photons are absorbed by semi-transparent materials, they also allow some light to pass through (transmission) and reflect some light. If all photons were absorbed, the material would appear completely black."
 							},
 							{
 								answerChoiceId: 3,
 								text: "Some photons will be reflected, some transmitted, and some absorbed",
 								correct: true,
-								explanation: "Test explanation"
+								explanation: "Correct! Semi-transparent materials interact with light in all three ways: some photons reflect off the surface, some pass through (transmission), and some are absorbed by the material. This is why you can partially see through semi-transparent materials while also seeing some reflection."
 							},
 							{
 								answerChoiceId: 4,
 								text: "The photon will split into two smaller photons",
 								correct: false,
-								explanation: "Test explanation"
+								explanation: "This is incorrect. Photons cannot split into smaller photons when interacting with materials. While light can be reflected, transmitted, or absorbed, individual photons maintain their integrity during these interactions."
 							}
 						],
-						questionUUID: "kdnbjkasd222ka" as QuestionUUID
+						questionUUID: "4e8d6f2a9c3b" as QuestionUUID
 					}
 				]
 			}
@@ -157,4 +157,5 @@ const whatIsLightBlocks: ContentBlock[] = [
 	}
 ]
 
-export default whatIsLightBlocks
+export default whatisLightBlocks
+

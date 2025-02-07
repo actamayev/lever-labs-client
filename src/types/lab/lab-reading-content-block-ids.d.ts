@@ -3,10 +3,10 @@ declare global {
 	| `what-is-light-${number}`
 	| `evolution-of-light-${number}`
 	| `led-advantages-${number}`
-	| `inside-led-${number}`
+	| `led-science-${number}`
 	| `heart-of-led-semiconductors-${number}`
 	| `led-colors-${number}`
-	| `understanding-led-efficiency-${number}`
+	| `led-efficiency-${number}`
 	| `led-robotics-${number}`
 
 	type ContentBlockID =
