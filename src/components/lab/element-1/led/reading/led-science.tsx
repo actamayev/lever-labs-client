@@ -57,11 +57,6 @@ const ledScienceBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-science-4",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -101,7 +96,7 @@ const ledScienceBlocks: ContentBlock[] = [
 		}
 	},
 	{
-		id: "led-science-5",
+		id: "led-science-4",
 		text: (
 			<ReadingBlockWithImage>
 				<BoldSpanText>The Light-making Process</BoldSpanText>
@@ -119,11 +114,6 @@ const ledScienceBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-science-6",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {

@@ -115,11 +115,6 @@ const whatisLightBlocks: ContentBlock[] = [
 				</ol>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue"}
-	},
-	{
-		id: "what-is-light-6",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {

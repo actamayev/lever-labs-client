@@ -1,33 +1,16 @@
-import { useMemo } from "react"
-import { observer } from "mobx-react"
-import { usePipContext } from "../../../../../contexts/pip-context"
 import LabReadingComponent from "../../../reading/lab-reading-component"
 
-function LedReading() {
-	const pipClass = usePipContext()
-
-	const nextPageLink = useMemo((): LabPages => {
-		if (pipClass.doesUserHaveAPip) return "/lab/element-1/led/demo"
-		return "/lab/element-1/led/video"
-	}, [pipClass.doesUserHaveAPip])
-
-	const nextPageActivity = useMemo((): ActivityType => {
-		if (pipClass.doesUserHaveAPip) return "Demo"
-		return "Video"
-	}, [pipClass.doesUserHaveAPip])
-
+export default function LedReading() {
 	return (
 		<LabReadingComponent
 			readingTitle="What is an LED?"
 			previousPageLink="/lab/element-1/led/demo"
 			previousPageActivity="Demo"
-			nextPageLink={nextPageLink}
-			nextPageActivity={nextPageActivity}
+			nextPageLink="/lab/element-1/led/video"
+			nextPageActivity="Video"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 		/>
 	)
 }
-
-export default observer(LedReading)

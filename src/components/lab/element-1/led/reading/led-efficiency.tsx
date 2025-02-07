@@ -62,11 +62,6 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-efficiency-5",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -130,11 +125,6 @@ const ledEfficiencyBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-efficiency-8",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {

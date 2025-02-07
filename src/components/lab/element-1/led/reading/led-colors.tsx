@@ -84,11 +84,6 @@ const ledColorsBlocks: ContentBlock[] = [
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "led-colors-5",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {

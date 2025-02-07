@@ -22,11 +22,6 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 			</div>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "heart-of-led-semiconductors-2",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -66,7 +61,7 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		}
 	},
 	{
-		id: "heart-of-led-semiconductors-3",
+		id: "heart-of-led-semiconductors-2",
 		text: (
 			<ReadingBlockWithImage>
 				<BoldSpanText>The P-N Junction: A Review</BoldSpanText>
@@ -84,25 +79,20 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		action: { type: "continue" },
 	},
 	{
-		id: "heart-of-led-semiconductors-4",
+		id: "heart-of-led-semiconductors-3",
 		text: (
 			<ReadingBlockWithImage>
 				<BoldSpanText>The Energy Band Gap</BoldSpanText>
 				<div className="mt-2">
 					<p>But what's actually happening as electrons flow from the N to the P layer (and why is this important)?</p>
 					<ul className="mt-2">
-						<li>When electrons are at the top of the cliff, they are in a 'high-energy state.' This high-energy state is called the <BoldSpanText>conduction band</BoldSpanText>.</li>
+						<li>When electrons are at the top of the cliff, they are in a 'high-energy state.' This high-energy state is called the <BoldSpanText noSpaceAfter>conduction band</BoldSpanText>.</li>
 						<li className="mt-2">When an electron is 'pushed' off the top of the waterfall (voltage applied), it falls to the P-layer. When it reaches the bottom and recombines with a hole, the electron moves into a low-energy state, known as the valence band.</li>
 						<li className="mt-2">This difference in energy states is super important. The band gap is the minimum energy needed to move an electron from the valence band to the conduction band, measured in electron-volts (eV). When an electron drops back down and recombines with a hole, it releases this energy as a single photon.</li>
 					</ul>
 				</div>
 			</ReadingBlockWithImage>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "heart-of-led-semiconductors-5",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
@@ -142,7 +132,7 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		}
 	},
 	{
-		id: "heart-of-led-semiconductors-6",
+		id: "heart-of-led-semiconductors-4",
 		text: (
 			<ReadingBlockWithImage>
 				<BoldSpanText>Emitting Color</BoldSpanText>
@@ -158,7 +148,7 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		action: { type: "continue" },
 	},
 	{
-		id: "heart-of-led-semiconductors-7",
+		id: "heart-of-led-semiconductors-5",
 		text: (
 			<ReadingBlockWithImage>
 				<p>Different semiconductor materials have different band gaps, which is why we need different materials to create different colored LEDs:</p>
@@ -172,7 +162,7 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		action: { type: "continue" },
 	},
 	{
-		id: "heart-of-led-semiconductors-8",
+		id: "heart-of-led-semiconductors-6",
 		text: (
 			<DidYouKnow Icon={CustomSolar}>
                 The same semiconductor technology that powers LEDs also makes solar panels work - just in reverse! While LEDs convert electricity into light, solar panels convert light into electricity.
@@ -181,17 +171,12 @@ const ledSemiconductorBlocks: ContentBlock[] = [
 		action: { type: "continue" },
 	},
 	{
-		id: "heart-of-led-semiconductors-9",
+		id: "heart-of-led-semiconductors-7",
 		text: (
 			<DidYouKnow Icon={Microchip}>
                 'Holes' in semiconductors are places where electrons should be but aren't - like empty seats in a movie theater. They're created during the manufacturing process when we add small amounts of specific materials (called dopants) to the semiconductor.
 			</DidYouKnow>
 		),
-		action: { type: "continue" },
-	},
-	{
-		id: "heart-of-led-semiconductors-10",
-		text: null,
 		action: {
 			type: "quiz",
 			quiz: {
