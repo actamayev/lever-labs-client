@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import LandingCard from "./landing-card"
 import { BoldSpanText } from "../bold-span-text"
 
