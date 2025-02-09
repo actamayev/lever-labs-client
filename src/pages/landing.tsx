@@ -1,5 +1,6 @@
 import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
+import LearnByDoing from "../components/landing/learn-by-doing"
 import LandingHeader from "../components/landing/landing-header"
 import FeaturesBento from "../components/landing/features-bento"
 import WhoWeAre from "../components/landing/who-we-are/who-we-are"
@@ -9,7 +10,6 @@ import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
-import LearnByDoing from "../components/landing/learn-by-doing/learn-by-doing-header"
 
 // TODO: Make the landing page px-4 for mobile
 // 1/1/25 TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)

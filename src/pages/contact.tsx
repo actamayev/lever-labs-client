@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import XLink from "../components/social-links/x-link"
 import PageHelmet from "../components/helmet/page-helmet"
 import LinkedinLink from "../components/social-links/linkedin-link"
