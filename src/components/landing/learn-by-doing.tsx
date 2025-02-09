@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import LandingCard from "../landing-card"
-import { BoldSpanText } from "../../bold-span-text"
-import { CoolMode } from "../../shadcn/ui/cool-mode"
-import TextRevealByWord from "../../shadcn/ui/text-reveal"
+import LandingCard from "./landing-card"
+import { BoldSpanText } from "../bold-span-text"
+import { CoolMode } from "../shadcn/ui/cool-mode"
+import TextRevealByWord from "../shadcn/ui/text-reveal"
+
 export default function LearnByDoing() {
 	return (
 		<div className="flex flex-col md:flex-row my-8 md:my-16 px-4 md:px-0 w-full">
