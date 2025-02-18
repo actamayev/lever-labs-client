@@ -51,6 +51,8 @@ declare global {
 	type BlocklyCategoryColours = 30 | 120 | 180 | 218
 
 	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
+
+	type PageTransitionDirections = null | "left" | "right"
 }
 
 export {}

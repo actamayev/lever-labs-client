@@ -1,14 +1,15 @@
 import LedReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
 import LEDLightShow from "../../components/lab/element-1/led/demos/led-light-show"
+import AnimatedTransitionWrapper from "../../components/animated-transition-wrapper"
 
 const ledRoutes: ElementChild[] = [
 	{
 		path: "Reading/intro-to-leds",
-		element: <LedReading />
+		element: <AnimatedTransitionWrapper><LedReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-light-show",
-		element: <LEDLightShow />
+		element: <AnimatedTransitionWrapper><LEDLightShow /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/voltage",

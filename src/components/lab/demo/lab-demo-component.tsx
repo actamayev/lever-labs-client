@@ -32,6 +32,7 @@ export default function LabDemoComponent(props: Props) {
 			previousPageActivity={null}
 			nextPageActivity={null}
 			activityType="Demo"
+			isDemo={true}
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				<DemoCard

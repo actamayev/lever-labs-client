@@ -8,8 +8,8 @@ export const showPrimarySidebarPages: PageNames[] = [
 	"/lab",
 	"/lab/welcome",
 	"/lab/element-1",
-	"/lab/element-2",
-	"/lab/element-3",
+	// "/lab/element-2",
+	// "/lab/element-3",
 ]
 
 export const logicCategoryColour: BlocklyCategoryColours = 30

@@ -7,6 +7,8 @@ import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
 import { useNavigate } from "react-router"
+import { useCallback } from "react"
+import { usePageTransitionContext } from "../../../../contexts/page-transition-context"
 
 interface Props {
 	element: ElementNumbers
@@ -28,6 +30,12 @@ export default function ActivityHeader(props: Props) {
 	} = props
 	const typedNavigate = useTypedNavigate()
 	const navigate = useNavigate()
+	const pageTransitionClass = usePageTransitionContext()
+
+	const goBack = useCallback(() => {
+		pageTransitionClass.setDirection("right")
+		navigate(-1)
+	}, [navigate, pageTransitionClass])
 
 	return (
 		<header
@@ -40,7 +48,7 @@ export default function ActivityHeader(props: Props) {
 						<Button
 							variant="ghost"
 							size="icon"
-							onClick={() => navigate(-1)}
+							onClick={() => goBack()}
 							className="!p-6 dark:hover:bg-zinc-800"
 						>
 							<ArrowLeft className="!h-6 !w-6" />
