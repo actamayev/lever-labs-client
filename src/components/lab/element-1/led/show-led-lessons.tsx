@@ -10,17 +10,13 @@ interface LilyPadPositions {
 	arcDirection: ArcDirection
 }
 
-// eslint-disable-next-line max-lines-per-function
 export default function ShowLEDLessons() {
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
 
 	const groups = useMemo(() => {
-		return ledLessons.reduce<Array<typeof ledLessons>>((acc, lesson) => {
-			acc.push([lesson])
-			return acc
-		}, [])
+		return ledLessons.map(lesson => [lesson])
 	}, [])
 
 	useEffect(() => {
@@ -45,12 +41,7 @@ export default function ShowLEDLessons() {
 		setLilypadPositions(positions)
 	}, [groups])
 
-	const renderablePositions = useMemo(() => {
-		return lilypadPositions.reduce<typeof lilypadPositions>((acc, pos) => {
-			acc.push(pos)
-			return acc
-		}, [])
-	}, [lilypadPositions])
+	const renderablePositions = useMemo(() => [...lilypadPositions], [lilypadPositions])
 
 	return (
 		<div ref={containerRef} className="flex">
@@ -65,52 +56,28 @@ export default function ShowLEDLessons() {
 				))}
 
 				<div className="flex">
-					{groups.map((groupLessons) => {
-						const isCodeGroup = groupLessons.some(lesson =>
-							lesson.activityType === "Code"
-						)
-
-						return (
-							<div
-								key={groupLessons[0].lessonUrl}
-								className="relative mr-56"
-								style={{
-									height: setLessonVerticalPosition(
-										groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
-									)
-								}}
-							>
-								{isCodeGroup && (
-									<div
-										className="absolute rounded-full border-2 border-zinc-300 dark:border-zinc-700
-										bg-zinc-50 dark:bg-zinc-900"
-										style={{
-											height: "530px",
-											width: "125px",
-											left: "-15px",
-											top: "40px"
-										}}
-									/>
-
-								)}
-								{groupLessons.map((lesson, index) => (
-									<div
-										key={lesson.lessonUrl}
-										className="absolute"
-										style={{
-											top: setLessonVerticalPosition(lesson.verticalPosition
-												// lesson.stackWithPrevious
-												// 	? getStackPosition(index, lesson.verticalPosition)
-												// 	: lesson.verticalPosition
-											)
-										}}
-									>
-										<Lilypad lesson={lesson} />
-									</div>
-								))}
-							</div>
-						)
-					})}
+					{groups.map((groupLessons) => (
+						<div
+							key={groupLessons[0].lessonUrl}
+							className="relative"
+							style={{
+								height: setLessonVerticalPosition(
+									groupLessons.length > 1 ? 9 : groupLessons[0].verticalPosition
+								),
+								marginRight: "200px"
+							}}
+						>
+							{groupLessons.map((lesson) => (
+								<div
+									key={lesson.lessonUrl}
+									className="absolute"
+									style={{ top: setLessonVerticalPosition(lesson.verticalPosition)} }
+								>
+									<Lilypad lesson={lesson} />
+								</div>
+							))}
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

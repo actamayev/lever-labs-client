@@ -5,15 +5,13 @@ const ledLessons: Lesson[] = [
 		lessonName: "Intro to LEDs",
 		activityType: "Reading",
 		verticalPosition: 5,
-		arcDirection: "down"
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading/voltage",
 		lessonName: "Voltage",
 		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
+		verticalPosition: 3,
 	},
 	{
 		progress: 0,
@@ -21,15 +19,13 @@ const ledLessons: Lesson[] = [
 		lessonName: "RGB LEDs",
 		activityType: "Reading",
 		verticalPosition: 5,
-		arcDirection: "down"
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading/intro-to-code",
-		lessonName: "RGB LEDs",
+		lessonName: "Intro to code",
 		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
+		verticalPosition: 7,
 	},
 	{
 		progress: 0,
@@ -37,23 +33,13 @@ const ledLessons: Lesson[] = [
 		lessonName: "LED Control",
 		activityType: "Code",
 		verticalPosition: 5,
-		arcDirection: "down"
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading/leds-and-loops",
 		lessonName: "LEDs and Loops",
 		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
-	},
-	{
-		progress: 0,
-		lessonUrl: "/lab/element-1/led/reading/leds-and-loops",
-		lessonName: "LEDs and Loops",
-		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
+		verticalPosition: 3,
 	},
 	{
 		progress: 0,
@@ -61,31 +47,20 @@ const ledLessons: Lesson[] = [
 		lessonName: "Breathing LEDs",
 		activityType: "Code",
 		verticalPosition: 5,
-		arcDirection: "down"
 	},
-	{
-		progress: 0,
-		lessonUrl: "/lab/element-1/led/reading/gpio",
-		lessonName: "GPIO",
-		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
-	},
-	{
-		progress: 0,
-		lessonUrl: "/lab/element-1/led/reading/led-advantages",
-		lessonName: "LED Advantages",
-		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
-	},
+	// {
+	// 	progress: 0,
+	// 	lessonUrl: "/lab/element-1/led/reading/gpio",
+	// 	lessonName: "GPIO",
+	// 	activityType: "Reading",
+	// 	verticalPosition: 5,
+	// },
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/reading/led-advantages",
 		lessonName: "LED Advantages",
 		activityType: "Reading",
-		verticalPosition: 5,
-		arcDirection: "down"
+		verticalPosition: 7,
 	},
 	{
 		progress: 0,
@@ -93,15 +68,13 @@ const ledLessons: Lesson[] = [
 		lessonName: "LEDs in Robotics",
 		activityType: "Reading",
 		verticalPosition: 5,
-		arcDirection: "down"
 	},
 	{
 		progress: 0,
 		lessonUrl: "/lab/element-1/led/code/warehouse-pip",
 		lessonName: "Warehouse Pip",
 		activityType: "Code",
-		verticalPosition: 5,
-		arcDirection: "down"
+		verticalPosition: 3,
 	},
 	{
 		progress: 0,
@@ -109,26 +82,7 @@ const ledLessons: Lesson[] = [
 		lessonName: "LED Summary",
 		activityType: "Summary",
 		verticalPosition: 5,
-		arcDirection: "down"
-	},
-	// {
-	// 	progress: null,
-	// 	lessonUrl: "/lab/element-1/led/code-2",
-	// 	lessonName: "LED Code 2",
-	// 	activityType: "Code",
-	// 	verticalPosition: 5,
-	// 	stackWithPrevious: true,
-	// 	skipConnection: true
-	// },
-	// {
-	// 	progress: null,
-	// 	lessonUrl: "/lab/element-1/led/code-3",
-	// 	lessonName: "LED Code 3",
-	// 	activityType: "Code",
-	// 	verticalPosition: 8,
-	// 	stackWithPrevious: true,
-	// 	skipConnection: true
-	// },
+	}
 ]
 
 export default ledLessons

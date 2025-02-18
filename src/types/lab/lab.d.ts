@@ -26,7 +26,7 @@ declare global {
 		verticalPosition: VerticalPosition
 		// stackWithPrevious?: boolean
 		// skipConnection?: boolean
-		arcDirection: ArcDirection
+		arcDirection?: ArcDirection
 	}
 
 	type ElementNumbers = 1 | 2 | 3
