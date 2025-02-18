@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import ShowLEDLessons from "./led/show-led-lessons"
-import Lilypad from "../lab-structure/lilypad/lilypad"
 import Element1StartCard from "./start-card/element-1-start-card"
-import motorLessons from "./motor/motor-lessons-object"
-import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
-import { LilypadContainer } from "../lab-structure/lilypad/lilypad-container"
+// import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
+import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
-import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
+// import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 
 interface Section {
@@ -23,7 +21,7 @@ export default function Element1() {
 		const observers: IntersectionObserver[] = []
 		const sections: Section[] = [
 			{ ref: ledSectionRef, name: "LED" },
-			{ ref: motorSectionRef, name: "Motor" }
+			// { ref: motorSectionRef, name: "Motor" }
 		]
 
 		sections.forEach(({ ref, name }) => {
@@ -68,7 +66,7 @@ export default function Element1() {
 				<div ref={ledSectionRef} className="flex pl-32">
 					<ShowLEDLessons />
 				</div>
-				<LabVerticalDivider />
+				{/* <LabVerticalDivider />
 				<div ref={motorSectionRef} className="flex">
 					{motorLessons.map((lesson, index) => (
 						<div className="mx-10" key={index}>
@@ -77,7 +75,7 @@ export default function Element1() {
 							</div>
 						</div>
 					))}
-				</div>
+				</div> */}
 			</LilypadContainer>
 		</div>
 	)

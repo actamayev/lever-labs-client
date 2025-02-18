@@ -37,7 +37,7 @@ declare global {
 	}
 
 	interface ElementChild {
-		path: ActivityTypeRoutePath
+		path: ActivityTypePath
 		element: JSX.Element
 	}
 

@@ -1,16 +1,17 @@
 declare global {
-	type ActivityType =
-	| "Demo"
-	| "Reading"
-	| "Video"
-	| "Code"
+	type ActivityTypePath =
+	| `Reading/${string}`
+	// | `Video/${string}
+	| `Demo/${string}`
+	| `Code/${string}`
 	| "Summary"
 
-	type ActivityTypeRoutePath =
-	| ActivityType
-	| "Code-1"
-	| "Code-2"
-	| "Code-3"
+	type ActivityType =
+	| "Reading"
+	// | "Video"
+	| "Code"
+	| "Demo"
+	| "Summary"
 
 	// Top: 1, bottom: 9
 	type VerticalPosition = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
@@ -23,16 +24,16 @@ declare global {
 		lessonName: string
 		activityType: ActivityType
 		verticalPosition: VerticalPosition
-		stackWithPrevious?: boolean
-		skipConnection?: boolean
-		arcDirection?: ArcDirection
+		// stackWithPrevious?: boolean
+		// skipConnection?: boolean
+		arcDirection: ArcDirection
 	}
 
 	type ElementNumbers = 1 | 2 | 3
 
 	type Element1Lessons =
 	| "LED"
-	| "Motor"
+	// | "Motor"
 }
 
 export {}

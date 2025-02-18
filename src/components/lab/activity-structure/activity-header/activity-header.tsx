@@ -1,4 +1,4 @@
-import { X } from "lucide-react"
+import { ArrowLeft, X } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import { Button } from "../../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
@@ -6,6 +6,7 @@ import ReadingProgressBar from "./reading-progress-bar"
 import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
+import { useNavigate } from "react-router"
 
 interface Props {
 	element: ElementNumbers
@@ -13,11 +14,20 @@ interface Props {
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number | null
 	activityType: ActivityType
+	isDemo?: boolean
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, activityTitle, lessonProgressPercent, activityType } = props
-	const navigate = useTypedNavigate()
+	const {
+		element,
+		lessonTitle,
+		activityTitle,
+		lessonProgressPercent,
+		activityType,
+		isDemo
+	} = props
+	const typedNavigate = useTypedNavigate()
+	const navigate = useNavigate()
 
 	return (
 		<header
@@ -26,14 +36,25 @@ export default function ActivityHeader(props: Props) {
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={() => navigate(`/lab/element-${element}`)}
-						className="!p-6 dark:hover:bg-zinc-800"
-					>
-						<X className="!h-6 !w-6" />
-					</Button>
+					{isDemo ? (
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => navigate(-1)}
+							className="!p-6 dark:hover:bg-zinc-800"
+						>
+							<ArrowLeft className="!h-6 !w-6" />
+						</Button>
+					) : (
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => typedNavigate(`/lab/element-${element}`)}
+							className="!p-6 dark:hover:bg-zinc-800"
+						>
+							<X className="!h-6 !w-6" />
+						</Button>
+					)}
 					<h2 className="text-4xl font-semibold ml-9">{activityTitle}</h2>
 				</div>
 			</div>

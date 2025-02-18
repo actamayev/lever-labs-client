@@ -1,5 +1,4 @@
 import ReadingContainer from "./reading-container"
-import ledReadingBlocks from "../element-1/led/reading/led-reading-blocks"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
@@ -11,6 +10,7 @@ interface Props {
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
+	readingBlocks: ContentBlock[]
 }
 
 export default function LabReadingComponent(props: Props) {
@@ -22,7 +22,8 @@ export default function LabReadingComponent(props: Props) {
 		nextPageActivity,
 		element,
 		lessonTitle,
-		lessonProgressPercent
+		lessonProgressPercent,
+		readingBlocks
 	} = props
 	return (
 		<ActivityTemplate
@@ -37,7 +38,7 @@ export default function LabReadingComponent(props: Props) {
 			activityType="Reading"
 		>
 			<main className="h-full overflow-hidden">
-				<ReadingContainer blocks={ledReadingBlocks} labLesson={lessonTitle}/>
+				<ReadingContainer blocks={readingBlocks} labLesson={lessonTitle}/>
 			</main>
 		</ActivityTemplate>
 	)

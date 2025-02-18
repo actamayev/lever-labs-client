@@ -1,5 +1,5 @@
 import element2Routes from "./element-two-routes"
-import element1Routes from "./element-one-routes"
+import element1Routes from "./element-one-routes/element-one-routes"
 // import LabIndex from "../components/lab/lab-index"
 import element3Routes from "./element-three-routes"
 import Element1 from "../components/lab/element-1/element-1"

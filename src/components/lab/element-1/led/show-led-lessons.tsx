@@ -4,16 +4,10 @@ import Lilypad from "../../lab-structure/lilypad/lilypad"
 import PathTickMark from "../../lab-structure/path-tick-mark"
 import setLessonVerticalPosition from "../../../../utils/lab/set-lesson-vertical-position"
 
-const getStackPosition = (index: number, defaultPosition: VerticalPosition): VerticalPosition => {
-	if (!index) return defaultPosition
-	return index === 1 ? 5 : 8
-}
-
 interface LilyPadPositions {
 	x: number
 	y: number
-	skipConnection?: boolean
-	arcDirection?: ArcDirection
+	arcDirection: ArcDirection
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -24,11 +18,7 @@ export default function ShowLEDLessons() {
 
 	const groups = useMemo(() => {
 		return ledLessons.reduce<Array<typeof ledLessons>>((acc, lesson) => {
-			if (lesson.stackWithPrevious) {
-				acc[acc.length - 1].push(lesson)
-			} else {
-				acc.push([lesson])
-			}
+			acc.push([lesson])
 			return acc
 		}, [])
 	}, [])
@@ -43,13 +33,11 @@ export default function ShowLEDLessons() {
 
 		lilypads.forEach((lilypad) => {
 			const rect = lilypad.getBoundingClientRect()
-			const skipConnection = lilypad.getAttribute("data-skip-connection") === "true"
 			const arcDirection = lilypad.getAttribute("data-arc-direction") as (ArcDirection | null)
 
 			positions.push({
 				x: rect.left - lilypadSectionRect.left + rect.width / 2,
 				y: rect.top - lilypadSectionRect.top + rect.height / 2,
-				skipConnection,
 				arcDirection: arcDirection || "straight"
 			})
 		})
@@ -59,9 +47,7 @@ export default function ShowLEDLessons() {
 
 	const renderablePositions = useMemo(() => {
 		return lilypadPositions.reduce<typeof lilypadPositions>((acc, pos) => {
-			if (!pos.skipConnection) {
-				acc.push(pos)
-			}
+			acc.push(pos)
 			return acc
 		}, [])
 	}, [lilypadPositions])
@@ -112,10 +98,10 @@ export default function ShowLEDLessons() {
 										key={lesson.lessonUrl}
 										className="absolute"
 										style={{
-											top: setLessonVerticalPosition(
-												lesson.stackWithPrevious
-													? getStackPosition(index, lesson.verticalPosition)
-													: lesson.verticalPosition
+											top: setLessonVerticalPosition(lesson.verticalPosition
+												// lesson.stackWithPrevious
+												// 	? getStackPosition(index, lesson.verticalPosition)
+												// 	: lesson.verticalPosition
 											)
 										}}
 									>
