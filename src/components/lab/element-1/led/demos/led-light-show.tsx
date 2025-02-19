@@ -34,7 +34,6 @@ export const labDemos: [Demo, Demo, Demo, Demo] = [
 export default function LEDLightShow() {
 	return (
 		<LabDemoComponent
-			demoTitle="LED Light show"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={200 / 6}

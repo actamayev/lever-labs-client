@@ -2,7 +2,6 @@ import ReadingContainer from "./reading-container"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	readingTitle: string
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages
@@ -15,7 +14,6 @@ interface Props {
 
 export default function LabReadingComponent(props: Props) {
 	const {
-		readingTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
@@ -28,7 +26,6 @@ export default function LabReadingComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
-			activityTitle={readingTitle}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}

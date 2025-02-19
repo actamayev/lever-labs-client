@@ -12,7 +12,6 @@ import { usePageTransitionContext } from "../../../../contexts/page-transition-c
 
 interface Props {
 	element: ElementNumbers
-	activityTitle: string
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number | null
 	activityType: ActivityType
@@ -23,7 +22,6 @@ export default function ActivityHeader(props: Props) {
 	const {
 		element,
 		lessonTitle,
-		activityTitle,
 		lessonProgressPercent,
 		activityType,
 		isDemo
@@ -39,8 +37,8 @@ export default function ActivityHeader(props: Props) {
 
 	return (
 		<header
-			className="h-20 flex items-center justify-between px-3 border-b-2
-			border-zinc-300 dark:border-zinc-700 fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
+			className="h-20 flex items-center justify-between px-4 shadow-md
+			fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
@@ -63,7 +61,6 @@ export default function ActivityHeader(props: Props) {
 							<X className="!h-6 !w-6" />
 						</Button>
 					)}
-					<h2 className="text-4xl font-semibold ml-5">{activityTitle}</h2>
 				</div>
 			</div>
 

@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { ReadingBlockHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
+import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const introToLedsReadingBlocks: ContentBlock[] = [
 	{
@@ -7,7 +7,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockHeader>
-                   Introduction
+                   Introduction to LEDs
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
 					We'll start our journey with one of the most common electronic components in the world - LEDs. They're not just in the screen you're reading this on, but they're also the "eyes" and indicators of modern robots, including Pip. Pip uses RGB and IR LEDs to communicate its status and interact with its environment. LEDs are revolutionizing everything from robot vision systems to space exploration.
@@ -20,9 +20,9 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		id: "intro-to-leds-2",
 		text: (
 			<div>
-				<ReadingBlockHeader>
+				<ReadingBlockSectionHeader>
 					What is an LED?
-				</ReadingBlockHeader>
+				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					LED stands for Light Emitting Diode - a device that converts electrical energy directly into light. Unlike traditional light sources, LEDs are precise, efficient, and perfect for robotics applications. But before we dive into how they work, let's see what these amazing components can do!
 				</ReadingBlockWithImage>
@@ -37,9 +37,9 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		id: "intro-to-leds-3",
 		text: (
 			<div>
-				<ReadingBlockHeader>
+				<ReadingBlockSectionHeader>
 				How do LEDs work?
-				</ReadingBlockHeader>
+				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					Now that we've seen what LEDs can do, let's understand the science that makes this possible.
 					To understand how LEDs work, we first need to briefly discuss how semiconductors work.
@@ -99,9 +99,9 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		id: "intro-to-leds-4",
 		text: (
 			<div>
-				<ReadingBlockHeader>
+				<ReadingBlockSectionHeader>
 					Summary
-				</ReadingBlockHeader>
+				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					LEDs (Light Emitting Diodes) are fundamental components in modern electronics, using semiconductors to convert electrical energy directly into light. They are essential in applications ranging from robot vision systems to device displays, where their precision and efficiency make them invaluable.
 				</ReadingBlockWithImage>

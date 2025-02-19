@@ -2,7 +2,6 @@ import DemoCard from "./demo-card"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	demoTitle: string
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
@@ -13,7 +12,6 @@ interface Props {
 
 export default function LabDemoComponent(props: Props) {
 	const {
-		demoTitle,
 		element,
 		lessonTitle,
 		lessonProgressPercent,
@@ -24,7 +22,6 @@ export default function LabDemoComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
-			activityTitle={demoTitle}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={null}

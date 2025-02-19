@@ -15,7 +15,6 @@
 
 // 	return (
 // 		<LabCodeComponent
-// 			activityTitle="LED Code 1"
 // 			previousPageLink="/lab/element-1/led/video"
 // 			previousPageActivity="Video"
 // 			nextPageLink="/lab/element-1/led/code-2"
