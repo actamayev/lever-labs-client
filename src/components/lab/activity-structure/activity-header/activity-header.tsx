@@ -63,7 +63,7 @@ export default function ActivityHeader(props: Props) {
 							<X className="!h-6 !w-6" />
 						</Button>
 					)}
-					<h2 className="text-4xl font-semibold ml-9">{activityTitle}</h2>
+					<h2 className="text-4xl font-semibold ml-5">{activityTitle}</h2>
 				</div>
 			</div>
 
