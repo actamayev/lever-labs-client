@@ -7,7 +7,6 @@ import ContinueButton from "./continue-button"
 import DemoReadingButton from "./demo-reading-button"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
-// eslint-disable-next-line complexity, max-lines-per-function
 function ReadingBlock({ block } : { block: ContentBlock }) {
 	const labReadingClass = useLabReadingContext()
 
