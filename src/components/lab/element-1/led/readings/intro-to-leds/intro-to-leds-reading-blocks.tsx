@@ -49,7 +49,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					Let's set the stage:
-					It's helpful to think of a semiconductor as a cliff. Imagine that the top of the cliff has a reservoir full of water, and the bottom of the cliff is a dry riverbed. Just like how water naturally wants to flow from high to low points, electrons in an LED want to flow from the N-layer to the P-layer - they just need the right push to get started.
+					It's helpful to think of a semiconductor as a cliff. Imagine that the top of the cliff has a reservoir full of water, and the bottom of the cliff is a dry riverbed.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					In a semiconductor, the reservoir is known as the high-energy N-layer (negative layer). The N-layer is filled with lots of electrons (tiny particles carrying negative charge). The dry riverbed is known as the low-energy P-layer (positive layer). It’s full of empty spaces (called holes), ready to be filled by the electrons from the N-layer.
@@ -109,12 +109,12 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 					At the heart of every LED is a P-N junction - think of it as a cliff with a reservoir of electrons (N-layer) at the top and empty spaces called holes (P-layer) at the bottom.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					In our next lesson, we'll explore how applying voltage creates the perfect conditions for electrons to flow across this junction, producing the light that makes LEDs work
+					In our next lesson, we'll explore how applying voltage creates the perfect conditions for electrons to flow across this junction, producing the light that makes LEDs work.
 				</ReadingBlockWithImage>
 			</div>
 		),
 		action: {
-			type: "continue"
+			type: "end"
 		}
 	},
 ]

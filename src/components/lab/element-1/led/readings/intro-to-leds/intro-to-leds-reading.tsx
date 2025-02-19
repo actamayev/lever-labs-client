@@ -1,5 +1,5 @@
-import LabReadingComponent from "../../../../reading/lab-reading-component"
 import introToLedsReadingBlocks from "./intro-to-leds-reading-blocks"
+import LabReadingComponent from "../../../../reading/lab-reading-component"
 
 export default function IntroToLEDsReading() {
 	return (

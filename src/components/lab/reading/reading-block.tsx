@@ -63,6 +63,11 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 		labReadingClass.handleDemoComplete(block.id)
 	}, [block.action.demoLink, block.id, labReadingClass, navigate, pageTransitionClass])
 
+	const clickContinue = useCallback(() => {
+		if (isContinued) return
+		labReadingClass.handleContinue(block.id, setIsContinued)
+	}, [block.id, isContinued, labReadingClass])
+
 	return (
 		<div
 			key={block.id}
@@ -75,11 +80,12 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 		>
 			{block.text}
 			<div>
-				{isRevealed && block.action.type === "continue" && !isContinued && (
+				{isRevealed && block.action.type === "continue" && (
 					<BlueTactileButton
-						onClick={() => labReadingClass.handleContinue(block.id, setIsContinued)}
+						onClick={clickContinue}
 						className="px-6 !py-5 text-3xl w-full h-16"
 						shadowHeight={4}
+						isPressed={isContinued}
 					>
 						<StepForward className="!w-8 !h-8" />
                         CONTINUE
