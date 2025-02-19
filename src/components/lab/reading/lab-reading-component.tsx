@@ -10,6 +10,7 @@ interface Props {
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	readingBlocks: ContentBlock[]
+	readingName: ReadingNames
 }
 
 export default function LabReadingComponent(props: Props) {
@@ -21,7 +22,8 @@ export default function LabReadingComponent(props: Props) {
 		element,
 		lessonTitle,
 		lessonProgressPercent,
-		readingBlocks
+		readingBlocks,
+		readingName
 	} = props
 	return (
 		<ActivityTemplate
@@ -35,7 +37,7 @@ export default function LabReadingComponent(props: Props) {
 			activityType="Reading"
 		>
 			<main className="h-full overflow-hidden">
-				<ReadingContainer blocks={readingBlocks} labLesson={lessonTitle}/>
+				<ReadingContainer blocks={readingBlocks} readingName={readingName}/>
 			</main>
 		</ActivityTemplate>
 	)

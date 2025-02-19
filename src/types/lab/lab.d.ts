@@ -34,6 +34,11 @@ declare global {
 	type Element1Lessons =
 	| "LED"
 	// | "Motor"
+
+	type ReadingNames =
+	| "Introduction to LEDs"
+	| "Voltage"
+	| "RGB LEDs"
 }
 
 export {}

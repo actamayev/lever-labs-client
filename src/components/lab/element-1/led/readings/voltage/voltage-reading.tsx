@@ -12,6 +12,7 @@ export default function VoltageReading() {
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={voltageReadingBlocks}
+			readingName="Voltage"
 		/>
 	)
 }

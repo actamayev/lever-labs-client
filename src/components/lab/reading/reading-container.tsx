@@ -8,17 +8,17 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
 	blocks: ContentBlock[]
-	labLesson: Element1Lessons
+	readingName: ReadingNames
 }
 
-function ReadingContainer({ blocks, labLesson } : Props) {
+function ReadingContainer({ blocks, readingName } : Props) {
 	const labReadingClass = useLabReadingContext()
 	const contentRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		labReadingClass.setBlocks(blocks, labLesson)
-		labReadingClass.setShownBlocks(blocks[0].id)
-	}, [blocks, labLesson, labReadingClass])
+		labReadingClass.setBlocks(blocks, readingName)
+		labReadingClass.setShownBlocks(blocks[0].id, readingName)
+	}, [blocks, readingName, labReadingClass])
 
 	return (
 		<div className="h-full flex relative">

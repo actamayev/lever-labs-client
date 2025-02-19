@@ -12,6 +12,7 @@ export default function IntroToLEDsReading() {
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={introToLedsReadingBlocks}
+			readingName="Introduction to LEDs"
 		/>
 	)
 }

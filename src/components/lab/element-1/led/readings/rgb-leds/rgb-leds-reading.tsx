@@ -12,6 +12,7 @@ export default function RGBLedsReading() {
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={rgbLedsReadingBlocks}
+			readingName="RGB LEDs"
 		/>
 	)
 }

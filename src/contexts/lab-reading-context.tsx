@@ -5,7 +5,7 @@ import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
 class LabReadingClass {
-	public currentReadingName: Element1Lessons | null = null
+	public currentReadingName: ReadingNames | null = null
 	public activeBlocks: ContentBlock[] = [] // All the blocks in the current activity
 	public shownBlocks: ContentBlock[] = [] // The blocks that have been shown
 	public activeQuiz: ActiveQuiz | null = null
@@ -19,16 +19,26 @@ class LabReadingClass {
 		makeAutoObservable(this)
 	}
 
+	// TODO: Fix when going back to reading from DEMO, the blocks are reset
 	public checkIfBlockIsShown = (blockId: ContentBlockID): boolean => {
 		return this.shownBlocks.find(block => block.id === blockId) ? true : false
 	}
 
-	public setShownBlocks = action((blockId: ContentBlockID): void => {
+	public clearShownBlocks = action((): void => {
+		this.shownBlocks = []
+	})
+
+	public setShownBlocks = action((blockId: ContentBlockID, readingName?: ReadingNames): void => {
+		if (
+			// This is here to clear blocks whenever we go from one reading to another
+			readingName &&
+			readingName !== this.currentReadingName
+		) this.clearShownBlocks()
 		if (this.checkIfBlockIsShown(blockId)) return
 		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
 	})
 
-	public setBlocks = action((blocks: ContentBlock[], readingName: Element1Lessons): void => {
+	public setBlocks = action((blocks: ContentBlock[], readingName: ReadingNames): void => {
 		if (this.currentReadingName === readingName) return
 		this.currentReadingName = readingName
 		this.activeBlocks = blocks
