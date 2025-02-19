@@ -33,9 +33,9 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 
 	const demoShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {
-			return "rgb(251 146 60)"
+			return "rgb(250 204 21)"
 		}
-		return "rgb(234 88 12)"
+		return "rgb(202 138 4)"
 	}, [defaultSiteTheme])
 
 	const quizButtonClasses = useMemo(() => {
@@ -48,8 +48,8 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 	}, [isQuizCorrect])
 
 	const demoClasses = useMemo(() => {
-		return "bg-orange-100 border-orange-400 text-orange-800 hover:bg-orange-50 \
-		dark:bg-orange-900 dark:border-orange-600 dark:text-orange-200 dark:hover:bg-orange-950"
+		return "bg-yellow-100 border-yellow-400 text-yellow-800 hover:bg-yellow-50 \
+		dark:bg-yellow-900 dark:border-yellow-600 dark:text-yellow-200 dark:hover:bg-yellow-950"
 	}, [])
 
 	const isRevealed = useMemo(() => {
