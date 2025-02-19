@@ -3,6 +3,8 @@ import { observer } from "mobx-react"
 import { motion } from "framer-motion"
 import { usePageTransitionContext } from "../contexts/page-transition-context"
 
+// 2/18/25 TODO:
+// Change this animation to be more like  https://tympanus.net/Development/PageTransitions/ differnet easing
 const variants = {
 	enter: (direction: PageTransitionDirections) => {
 		if (isNull(direction)) return { x: "0%", opacity: 1 } // No animation if direction is null
