@@ -5,6 +5,7 @@ import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
+import { usePageTransitionContext } from "../../contexts/page-transition-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
@@ -17,6 +18,7 @@ export default function useLogout(): () => void {
 	const socketClass = useSocketContext()
 	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
+	const pageTransitionClass = usePageTransitionContext()
 
 	return useCallback((): void => {
 		personalInfoClass.logout()
@@ -27,7 +29,8 @@ export default function useLogout(): () => void {
 		authClass.logout()
 		blueDotApiClient.logout()
 		labReadingClass.logout()
+		pageTransitionClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form,
+	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass,
 		socketClass, authClass, blueDotApiClient, labReadingClass, navigate])
 }

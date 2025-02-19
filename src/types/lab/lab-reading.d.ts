@@ -3,8 +3,9 @@ declare global {
 		id: ContentBlockID
 		text: React.ReactNode
 		action: {
-			type: "continue" | "quiz" | null
+			type: "continue" | "quiz" | "demo" | "end" | null
 			quiz?: QuizQuestions
+			demoLink?: LabPages
 		}
 	}
 

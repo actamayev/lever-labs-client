@@ -12,7 +12,7 @@ interface Props {
 
 export default function Lilypad(props: Props) {
 	const { lesson } = props
-	const { progress, lessonUrl, lessonName, activityType, skipConnection, arcDirection } = lesson
+	const { progress, lessonUrl, lessonName, activityType, arcDirection } = lesson
 	const navigate = useTypedNavigate()
 	const lilypadVariants = useLilypadVariants()
 
@@ -34,7 +34,6 @@ export default function Lilypad(props: Props) {
 					className={lilypadVariants(progress)}
 					disabled={isNull(progress)}
 					data-lilypad-icon
-					data-skip-connection={skipConnection}
 					data-arc-direction={arcDirection}
 				>
 					<LilypadIcon

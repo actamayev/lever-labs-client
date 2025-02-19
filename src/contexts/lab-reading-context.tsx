@@ -167,6 +167,13 @@ class LabReadingClass {
 		this.scrollToNextBlock(blockId)
 	})
 
+	public handleDemoComplete = action((blockId: ContentBlockID) => {
+		const nextBlock = this.getNextBlock(blockId)
+		if (!nextBlock) return
+
+		this.scrollToNextBlock(blockId)
+	})
+
 	public handleNextQuestion = action(() => {
 		if (
 			!this.activeBlock ||

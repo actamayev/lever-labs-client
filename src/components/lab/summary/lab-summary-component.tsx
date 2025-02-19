@@ -4,8 +4,8 @@ interface Props {
 	summaryTitle: string
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
-	nextPageLink: LabPages
-	nextPageActivity: ActivityType
+	nextPageLink: LabPages | null
+	nextPageActivity: ActivityType | null
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number

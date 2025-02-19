@@ -3,10 +3,6 @@ import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
 	demoTitle: string
-	previousPageLink: LabPages | null
-	previousPageActivity: ActivityType | null
-	nextPageLink: LabPages
-	nextPageActivity: ActivityType
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
@@ -18,16 +14,12 @@ interface Props {
 export default function LabDemoComponent(props: Props) {
 	const {
 		demoTitle,
-		previousPageLink,
-		previousPageActivity,
-		nextPageLink,
-		nextPageActivity,
 		element,
 		lessonTitle,
 		lessonProgressPercent,
 		lessonDemoTitle,
 		demoDeliverables,
-		demos
+		demos,
 	} = props
 	return (
 		<ActivityTemplate
@@ -35,11 +27,12 @@ export default function LabDemoComponent(props: Props) {
 			activityTitle={demoTitle}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={previousPageLink}
-			previousPageActivity={previousPageActivity}
-			nextPageLink={nextPageLink}
-			nextPageActivity={nextPageActivity}
+			previousPageLink={null}
+			nextPageLink={null}
+			previousPageActivity={null}
+			nextPageActivity={null}
 			activityType="Demo"
+			isDemo={true}
 		>
 			<main className="flex-1 flex items-center justify-center p-4">
 				<DemoCard

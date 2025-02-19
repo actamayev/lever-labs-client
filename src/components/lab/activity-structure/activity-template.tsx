@@ -9,13 +9,14 @@ interface Props {
 	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
-	nextPageLink: LabPages
-	nextPageActivity: ActivityType
+	nextPageLink: LabPages | null
+	nextPageActivity: ActivityType | null
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
+	isDemo?: boolean
 }
 
 function ActivityTemplate(props: Props) {
@@ -31,6 +32,7 @@ function ActivityTemplate(props: Props) {
 		children,
 		extraClasses = "",
 		activityType,
+		isDemo = false
 	} = props
 
 	const labReadingClass = useLabReadingContext()
@@ -43,6 +45,7 @@ function ActivityTemplate(props: Props) {
 				lessonTitle={lessonTitle}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}
+				isDemo={isDemo}
 			/>
 
 			<div
@@ -54,7 +57,10 @@ function ActivityTemplate(props: Props) {
 				{children}
 			</div>
 
-			{(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) && (
+			{
+				(nextPageActivity && nextPageLink) &&
+				(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) &&
+			(
 				<ActivityFooter
 					previousPageLink={previousPageLink}
 					previousPageActivity={previousPageActivity}

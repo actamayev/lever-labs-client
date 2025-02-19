@@ -1,5 +1,5 @@
 import { useCallback } from "react"
-import { CustomMotor } from "../../icons/custom-motor"
+// import { CustomMotor } from "../../icons/custom-motor"
 import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import LessonsIconListTooltip from "./lessons-icon-list-tooltip"
 
@@ -39,10 +39,10 @@ export default function SeeLessonIconsInElement({
 			tooltipMessage: "LED",
 			icon: <CustomLightbulb className="!w-8 !h-8" />
 		},
-		{
-			tooltipMessage: "Motor",
-			icon: <CustomMotor className="!w-8 !h-8" />
-		}
+		// {
+		// 	tooltipMessage: "Motor",
+		// 	icon: <CustomMotor className="!w-8 !h-8" />
+		// }
 	]
 
 	return (
