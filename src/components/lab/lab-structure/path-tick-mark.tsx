@@ -1,10 +1,10 @@
-interface PathMarkProps {
+interface PathTickMarkProps {
     startPosition: { x: number; y: number }
     endPosition: { x: number; y: number }
     arcDirection?: ArcDirection
 }
 
-export default function PathMark(props: PathMarkProps) {
+export default function PathTickMark(props: PathTickMarkProps) {
 	const { startPosition, endPosition, arcDirection = "straight" } = props
 	const dx = endPosition.x - startPosition.x
 	const dy = endPosition.y - startPosition.y

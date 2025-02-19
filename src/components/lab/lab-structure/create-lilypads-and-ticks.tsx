@@ -1,8 +1,7 @@
 import { useRef, useEffect, useState } from "react"
-import ledLessons from "./led-lessons-object"
-import Lilypad from "../../lab-structure/lilypad/lilypad"
-import PathTickMark from "../../lab-structure/path-tick-mark"
-import setLessonVerticalPosition from "../../../../utils/lab/set-lesson-vertical-position"
+import Lilypad from "./lilypad/lilypad"
+import PathTickMark from "./path-tick-mark"
+import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 
 interface LilyPadPositions {
     x: number
@@ -10,7 +9,7 @@ interface LilyPadPositions {
     arcDirection: ArcDirection
 }
 
-export default function ShowLEDLessons() {
+export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObject: Lesson[] }) {
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
@@ -49,7 +48,7 @@ export default function ShowLEDLessons() {
 				))}
 
 				<div className="flex">
-					{ledLessons.map((lesson) => (
+					{lessonsObject.map((lesson) => (
 						<div
 							key={lesson.lessonUrl}
 							className="relative mr-56"

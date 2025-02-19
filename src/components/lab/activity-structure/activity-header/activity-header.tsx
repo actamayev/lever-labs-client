@@ -1,13 +1,12 @@
-import { ArrowLeft, X } from "lucide-react"
+import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
+import { useNavigate } from "react-router"
+import { ArrowLeft, X } from "lucide-react"
 import { Button } from "../../../shadcn/ui/button"
 import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
-import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
-import { useNavigate } from "react-router"
-import { useCallback } from "react"
 import { usePageTransitionContext } from "../../../../contexts/page-transition-context"
 
 interface Props {
@@ -79,7 +78,6 @@ export default function ActivityHeader(props: Props) {
 				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer
-							icon={<GetLessonIconFromActivityName lessonTitle={lessonTitle} />}
 							lessonProgressPercent={lessonProgressPercent}
 							lessonTitle={lessonTitle}
 						/>

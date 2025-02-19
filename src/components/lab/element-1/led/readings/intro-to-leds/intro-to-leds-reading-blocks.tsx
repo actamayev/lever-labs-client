@@ -113,9 +113,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 			</div>
 		),
-		action: {
-			type: "end"
-		}
+		action: { type: "end" }
 	},
 ]
 

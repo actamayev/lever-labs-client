@@ -1,11 +1,15 @@
-import LedReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
 import LEDLightShow from "../../components/lab/element-1/led/demos/led-light-show"
 import AnimatedTransitionWrapper from "../../components/animated-transition-wrapper"
+import IntroToLEDsReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
+import VoltageReading from "../../components/lab/element-1/led/readings/voltage/voltage-reading"
+import RGBLedsReading from "../../components/lab/element-1/led/readings/rgb-leds/rgb-leds-reading"
+import ColorMixing from "../../components/lab/element-1/led/demos/color-mixing"
+import FirstLight from "../../components/lab/element-1/led/demos/first-light"
 
 const ledRoutes: ElementChild[] = [
 	{
 		path: "Reading/intro-to-leds",
-		element: <AnimatedTransitionWrapper><LedReading /></AnimatedTransitionWrapper>
+		element: <AnimatedTransitionWrapper><IntroToLEDsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-light-show",
@@ -13,79 +17,83 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Reading/voltage",
-		element: <LedReading />
+		element: <AnimatedTransitionWrapper><VoltageReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/first-light",
-		element: <LedReading />
+		element: <AnimatedTransitionWrapper><FirstLight /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/rgb-leds",
-		element: <LedReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+	},
+	{
+		path: "Demo/color-mixing",
+		element: <AnimatedTransitionWrapper><ColorMixing /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/intro-to-code",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/blue-leds",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/check-button-press",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/multi-button-led-control",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Code/led-control",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Reading/leds-and-loops",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/led-counting-loop",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/led-breathing",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Code/breathing-leds",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/check-button-press",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Reading/gpio",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Demo/led-in-circle",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Reading/led-advantages",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Reading/leds-in-robotics",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Code/warehouse-pip",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	},
 	{
 		path: "Summary",
-		element: <LedReading />
+		element: <RGBLedsReading />
 	}
 ]
 
