@@ -1,6 +1,6 @@
-import { Suspense, lazy } from "react"
 import { observer } from "mobx-react"
-import { Routes, Route, useLocation } from "react-router"
+import { Suspense, lazy } from "react"
+import { Routes, Route } from "react-router"
 // import Garage from "./pages/garage"
 
 import labRoutes from "./routing/lab-routes-structure"
@@ -30,7 +30,6 @@ const Sandbox = lazy(() => import("./pages/sandbox"))
 // /add-pip is not being lazy loaded. When it is, there's a strange indexOf error
 
 function App() {
-	const location = useLocation()
 	const getAuthDataFromStorage = useGetAuthDataFromStorage()
 	getAuthDataFromStorage()
 	useLogoutListenerUseEffect()
@@ -45,7 +44,7 @@ function App() {
 	return (
 		<AnimatePresence mode="wait">
 			<Suspense>
-				<Routes location={location}>
+				<Routes>
 					<Route path="/" element={<Landing />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/register" element={<RegisterPage />} />
