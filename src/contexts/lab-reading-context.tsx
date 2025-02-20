@@ -27,7 +27,6 @@ class LabReadingClass {
 	})
 
 	public setShownBlocks = action((blockId: ContentBlockID): void => {
-
 		if (this.checkIfBlockIsShown(blockId)) return
 		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
 	})
