@@ -44,7 +44,6 @@ class SocketClass extends EventEmitter {
 
 		this._socket.on("connect", () => {
 			this.isConnected = true
-			console.info("Connected to the backend")
 		})
 
 		this._socket.on("disconnect", (reason: Socket.DisconnectReason) => {
@@ -60,7 +59,6 @@ class SocketClass extends EventEmitter {
 
 	private setupPipEvents = action((): void => {
 		this._socket?.on("pip-connection-status-update", (data: PipStatusUpdate) => {
-			console.info("Received pip-connection-status-update:", data)
 			this.emit("pipStatusUpdate", data) // Emit event with processed data
 		})
 	})

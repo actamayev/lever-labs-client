@@ -5,7 +5,6 @@ import ActivityHeader from "./activity-header/activity-header"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
-	activityTitle: string
 	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
@@ -21,7 +20,6 @@ interface Props {
 
 function ActivityTemplate(props: Props) {
 	const {
-		activityTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
@@ -41,7 +39,6 @@ function ActivityTemplate(props: Props) {
 		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
 			<ActivityHeader
 				element={element}
-				activityTitle={activityTitle}
 				lessonTitle={lessonTitle}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}

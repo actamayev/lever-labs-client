@@ -1,18 +1,18 @@
-import introToLedsReadingBlocks from "./intro-to-leds-reading-blocks"
+import rgbLedsReadingBlocks from "./rgb-leds-reading-blocks"
 import LabReadingComponent from "../../../../reading/lab-reading-component"
 
-export default function IntroToLEDsReading() {
+export default function RGBLedsReading() {
 	return (
 		<LabReadingComponent
 			previousPageLink={null}
 			previousPageActivity={null}
-			nextPageLink="/lab/element-1/led/reading/voltage"
+			nextPageLink="/lab/element-1/led/reading/intro-to-code"
 			nextPageActivity="Reading"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
-			readingBlocks={introToLedsReadingBlocks}
-			readingName="Introduction to LEDs"
+			readingBlocks={rgbLedsReadingBlocks}
+			readingName="RGB LEDs"
 		/>
 	)
 }

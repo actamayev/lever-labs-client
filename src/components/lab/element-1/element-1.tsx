@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react"
-import ShowLEDLessons from "./led/show-led-lessons"
 import Element1StartCard from "./start-card/element-1-start-card"
+import ledLessons from "./led/led-lessons-object"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
+import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
-// import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 
 interface Section {
@@ -64,7 +64,7 @@ export default function Element1() {
 				<Element1StartCard />
 				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
 				<div ref={ledSectionRef} className="flex pl-32">
-					<ShowLEDLessons />
+					<CreateLilypadsAndTicks lessonsObject={ledLessons} />
 				</div>
 				{/* <LabVerticalDivider />
 				<div ref={motorSectionRef} className="flex">

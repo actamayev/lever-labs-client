@@ -1,11 +1,11 @@
 import { useMemo } from "react"
+import { observer } from "mobx-react"
 import { CheckCircle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { observer } from "mobx-react"
+import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 function QuizButton({ block } : { block: ContentBlock }) {
 	const labReadingClass = useLabReadingContext()

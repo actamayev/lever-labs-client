@@ -20,7 +20,7 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 			key={block.id}
 			id={`block-${block.id}`}
 			className={cn(
-				"flex flex-col mb-6 transition-opacity duration-300",
+				"flex flex-col mb-6 transition-opacity duration-300 leading-none",
 				isRevealed ? "opacity-100" : "opacity-0 h-0 overflow-hidden",
 				labReadingClass.getBlockHeightState(block.id)
 			)}

@@ -29,7 +29,6 @@
 // 	return (
 // 		<ActivityTemplate
 // 			element={element}
-// 			activityTitle={videoTitle}
 // 			lessonTitle={lessonTitle}
 // 			lessonProgressPercent={lessonProgressPercent}
 // 			previousPageLink={previousPageLink}

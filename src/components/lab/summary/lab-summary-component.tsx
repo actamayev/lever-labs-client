@@ -1,7 +1,6 @@
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	summaryTitle: string
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages | null
@@ -13,7 +12,6 @@ interface Props {
 
 export default function LabSummaryComponent(props: Props) {
 	const {
-		summaryTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
@@ -25,7 +23,6 @@ export default function LabSummaryComponent(props: Props) {
 	return (
 		<ActivityTemplate
 			element={element}
-			activityTitle={summaryTitle}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
