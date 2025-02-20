@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import DidYouKnow from "../../../../reading/did-you-know"
-import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
-import { CustomPalette } from "../../../../../icons/custom-palette"
 import { Eye } from "lucide-react"
+import DidYouKnow from "../../../../reading/did-you-know"
+import { CustomPalette } from "../../../../../icons/custom-palette"
+import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const rgbLedsReadingBlocks: ContentBlock[] = [
 	{
