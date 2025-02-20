@@ -17,7 +17,7 @@ function ReadingContainer({ blocks, readingName } : Props) {
 
 	useEffect(() => {
 		labReadingClass.setBlocks(blocks, readingName)
-		labReadingClass.setShownBlocks(blocks[0].id, readingName)
+		labReadingClass.setShownBlocks(blocks[0].id)
 	}, [blocks, readingName, labReadingClass])
 
 	return (
