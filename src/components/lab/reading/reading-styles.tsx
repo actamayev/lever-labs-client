@@ -1,5 +1,3 @@
-import { cn } from "../../../lib/shadcn/utils"
-
 interface ReadingHeaderProps {
 	children: React.ReactNode
 }
@@ -24,16 +22,15 @@ interface ReadingBlockProps extends ReadingHeaderProps {
 	imageSrc?: string,
 	imageAlt?: string
 	subtitle?: string
-	readingClasses?: string
 }
 
 export function ReadingBlockWithImage (props: ReadingBlockProps) {
-	const { imageSrc, imageAlt, subtitle, children, readingClasses = "" } = props
+	const { imageSrc, imageAlt, subtitle, children } = props
 
 	return (
 		<div className="flex flex-col md:flex-row gap-6 mb-8">
 			<div className={`${imageSrc ? "md:w-2/3" : "w-full"}`}>
-				<div className={cn("text-2xl leading-relaxed", readingClasses)}>
+				<div className="text-2xl leading-relaxed">
 					{children}
 				</div>
 			</div>

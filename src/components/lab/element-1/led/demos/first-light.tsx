@@ -1,4 +1,4 @@
-import { Rainbow } from "lucide-react"
+// import { Rainbow } from "lucide-react"
 import LabDemoComponent from "../../../demo/lab-demo-component"
 
 const ledDemoDeliverables: [string] = [
