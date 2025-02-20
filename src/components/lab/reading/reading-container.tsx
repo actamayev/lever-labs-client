@@ -41,8 +41,8 @@ function ReadingContainer({ blocks, readingName } : Props) {
 
 			<div
 				className={cn(
-					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-zinc-900 shadow-lg",
-					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
+					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-zinc-900",
+					"transition-transform shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.1)]",
 					labReadingClass.activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}
 				style={toJS(labReadingClass.quizStyle)}

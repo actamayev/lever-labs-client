@@ -1,4 +1,5 @@
 import * as React from "react"
+import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
 import { ButtonProps } from "../shadcn/ui/button"
 import { TactileButton } from "../shadcn/ui/tactile-button"
@@ -9,7 +10,7 @@ type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 	isPressed?: boolean
 }
 
-export const BlueTactileButton = React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
+export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
 	({ className, shadowHeight = 2, isPressed, ...props }, ref) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 
@@ -33,9 +34,9 @@ export const BlueTactileButton = React.forwardRef<HTMLButtonElement, ColoredTact
 			/>
 		)
 	}
-)
+))
 
-export const BlackWhiteTactileButton = React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
+export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
 	({ className, shadowHeight = 2, ...props }, ref) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 
@@ -54,4 +55,4 @@ export const BlackWhiteTactileButton = React.forwardRef<HTMLButtonElement, Color
 			/>
 		)
 	}
-)
+))
