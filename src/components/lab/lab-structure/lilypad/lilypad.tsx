@@ -7,19 +7,19 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LilypadStatusIndicatorTooltip from "./lilypad-status-indicator-tooltip"
 
 interface Props {
-	lesson: Lesson
+	lesson: Activity
 }
 
 export default function Lilypad(props: Props) {
 	const { lesson } = props
-	const { progress, lessonUrl, lessonName, activityType, arcDirection } = lesson
+	const { progress, activityUrl, lessonName, activityType, arcDirection } = lesson
 	const navigate = useTypedNavigate()
 	const lilypadVariants = useLilypadVariants()
 
 	const navigateToLesson = useCallback(() => {
 		if (isNull(progress)) return
-		navigate(lessonUrl)
-	}, [progress, lessonUrl, navigate])
+		navigate(activityUrl)
+	}, [progress, activityUrl, navigate])
 
 	return (
 		<LilypadStatusIndicatorTooltip progress={progress}>

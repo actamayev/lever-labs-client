@@ -9,7 +9,7 @@ interface LilyPadPositions {
     arcDirection: ArcDirection
 }
 
-export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObject: Lesson[] }) {
+export default function CreateLilypadsAndTicks({ activitiesObject } : { activitiesObject: Activity[] }) {
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
@@ -48,9 +48,9 @@ export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObje
 				))}
 
 				<div className="flex">
-					{lessonsObject.map((lesson) => (
+					{activitiesObject.map((lesson) => (
 						<div
-							key={lesson.lessonUrl}
+							key={lesson.activityUrl}
 							className="relative mr-56"
 							style={{
 								height: setLessonVerticalPosition(lesson.verticalPosition)

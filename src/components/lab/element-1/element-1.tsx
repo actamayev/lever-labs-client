@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import Element1StartCard from "./start-card/element-1-start-card"
-import ledLessons from "./led/led-lessons-object"
+import ledActivities from "./led/led-activities-object"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
@@ -64,7 +64,7 @@ export default function Element1() {
 				<Element1StartCard />
 				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
 				<div ref={ledSectionRef} className="flex pl-32">
-					<CreateLilypadsAndTicks lessonsObject={ledLessons} />
+					<CreateLilypadsAndTicks activitiesObject={ledActivities} />
 				</div>
 				{/* <LabVerticalDivider />
 				<div ref={motorSectionRef} className="flex">

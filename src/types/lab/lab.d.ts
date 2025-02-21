@@ -18,9 +18,9 @@ declare global {
 
 	type ArcDirection = "up" | "down" | "straight"
 
-	interface Lesson {
+	interface Activity {
 		progress: number | null
-		lessonUrl: LabPages
+		activityUrl: LabPages
 		lessonName: string
 		activityType: ActivityType
 		verticalPosition: VerticalPosition
