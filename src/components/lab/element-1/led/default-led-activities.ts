@@ -35,13 +35,6 @@ const defaultLedActivities: DefaultActivity[] = [
 		verticalPosition: 5,
 		activityUUID: "16a2f9d2-44e1-4c50-9243-2c975c152fab" as ActivityUUID
 	},
-	// {
-	// 	progress: 0,
-	// 	activityUrl: "/lab/element-1/led/reading/gpio",
-	// 	activityName: "GPIO",
-	// 	activityType: "Reading",
-	// 	verticalPosition: 5,
-	// },
 	{
 		activityUrl: "/lab/element-1/led/reading/led-advantages",
 		verticalPosition: 7,
