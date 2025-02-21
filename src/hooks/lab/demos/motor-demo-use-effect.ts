@@ -6,15 +6,17 @@ import { isErrorResponses } from "../../../utils/type-checks"
 import useToastOptions from "../../../components/toast-options"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
+import { useSocketContext } from "../../../contexts/socket-context"
 
 export default function useMotorDemoUseEffect(): void {
 	const labDemoClass = useLabDemoContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 	const pipClass = usePipContext()
+	const socketClass = useSocketContext()
 
 	// Handle motor control API call
-	const handleMotorControl = useCallback(async (leftMotor: MotorDirection, rightMotor: MotorDirection): Promise<void> => {
+	const handleMotorControl = useCallback((leftMotor: MotorDirection, rightMotor: MotorDirection): void => {
 		try {
 			if (isNull(blueDotApiClient.httpClient.accessToken)) return
 
@@ -34,13 +36,18 @@ export default function useMotorDemoUseEffect(): void {
 			// Only make API call if state has changed
 			if (isEqual(labDemoClass.motorState, newMotorState)) return
 			labDemoClass.setMotorState(newMotorState)
+			socketClass.emitMotorControl({
+				...newMotorState,
+				pipUUID: pipClass.selectedPip.pipUUID
+			})
 
-			const motorControlResponse = await blueDotApiClient.labDemoDataService.motorControl(
-				{...newMotorState, pipUUID: pipClass.selectedPip.pipUUID}
-			)
-			if (!isEqual(motorControlResponse.status, 200) || isErrorResponses(motorControlResponse.data)) {
-				throw Error("Unable to control motors")
-			}
+
+			// const motorControlResponse = await blueDotApiClient.labDemoDataService.motorControl(
+			// 	{...newMotorState, pipUUID: pipClass.selectedPip.pipUUID}
+			// )
+			// if (!isEqual(motorControlResponse.status, 200) || isErrorResponses(motorControlResponse.data)) {
+			// 	throw Error("Unable to control motors")
+			// }
 		} catch (error) {
 			console.error(error)
 			toast.negative({
@@ -48,7 +55,7 @@ export default function useMotorDemoUseEffect(): void {
 				description: "Failed to control motors"
 			})
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.labDemoDataService, labDemoClass, pipClass.selectedPip, toast])
+	}, [blueDotApiClient.httpClient.accessToken, labDemoClass, pipClass.selectedPip, socketClass, toast])
 
 	// Handle keydown events
 	useEffect(() => {

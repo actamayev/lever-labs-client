@@ -58,9 +58,21 @@ class SocketClass extends EventEmitter {
 	})
 
 	private setupPipEvents = action((): void => {
-		this._socket?.on("pip-connection-status-update", (data: PipStatusUpdate) => {
+		if (!this._socket) return
+		this._socket.on("pip-connection-status-update", (data: PipStatusUpdate) => {
 			this.emit("pipStatusUpdate", data) // Emit event with processed data
 		})
+		this._socket.on("motor-control-ack", (response: { success: boolean, error?: string }) => {
+			this.emit("motorControlAck", response)
+		})
+	})
+
+	public emitMotorControl = action((motorControlData: MotorControlDataToSend): void => {
+		if (!this._socket || !this.isConnected) {
+			console.error("Socket not connected")
+			return
+		}
+		this._socket.emit("motor-control", motorControlData)
 	})
 
 	// Disconnect socket (e.g., on logout)

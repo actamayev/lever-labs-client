@@ -59,6 +59,10 @@ declare global {
 		pipUUID: PipUUID
 		newConnectionStatus: PipConnectionStatus
 	}
+	type MotorControlAck = {
+		success: boolean
+		error?: string
+	}
 }
 
 export {}
