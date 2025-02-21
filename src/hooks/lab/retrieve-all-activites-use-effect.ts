@@ -9,6 +9,7 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 	const blueDotApiClient = useApiClientContext()
 	const activityProgressClass = useActivityProgressContext()
 
+	// 2/21/25 TODO: Fix this endpoint being hit twice in a row
 	useEffect(() => {
 		const retrieveAllActivities = async (): Promise<void> => {
 			try {
