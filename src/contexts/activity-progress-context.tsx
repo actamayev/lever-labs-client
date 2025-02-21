@@ -1,3 +1,4 @@
+import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 import defaultLedActivities from "../components/lab/element-1/led/default-led-activities"
@@ -19,7 +20,6 @@ class ActivityProgressClass {
 			activityName: "",
 			activityType: "Loading"
 		}))
-		console.log("here")
 	}
 
 	private setDidRetrieveAllActivityProgress = action((newState: boolean): void => {
@@ -31,6 +31,9 @@ class ActivityProgressClass {
 	})
 
 	public updateActivitiesFromServer = action((serverActivities: UserActivityProgress[]): void => {
+		if (isEmpty(this.activities)) {
+			this.assignDefaultActivities()
+		}
 		// First map server activities to local activities
 		this.activities = this.activities.map(activity => {
 			const serverActivity = serverActivities.find(

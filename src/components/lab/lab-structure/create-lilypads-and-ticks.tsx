@@ -1,9 +1,9 @@
+import { observer } from "mobx-react"
 import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"
 import PathTickMark from "./path-tick-mark"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
 import { useActivityProgressContext } from "../../../contexts/activity-progress-context"
-import { observer } from "mobx-react"
 
 interface LilyPadPositions {
     x: number
@@ -36,7 +36,8 @@ function CreateLilypadsAndTicks() {
 		})
 
 		setLilypadPositions(positions)
-	}, [])
+		// This dependency is needed so that the ticks are made when the activities are loaded in:
+	}, [activityProgressClass.activities])
 
 	return (
 		<div ref={containerRef} className="flex">

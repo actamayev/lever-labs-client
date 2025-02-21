@@ -67,16 +67,7 @@ export default function Element1() {
 				<div ref={ledSectionRef} className="flex pl-32">
 					<CreateLilypadsAndTicks />
 				</div>
-				{/* <LabVerticalDivider />
-				<div ref={motorSectionRef} className="flex">
-					{motorLessons.map((lesson, index) => (
-						<div className="mx-10" key={index}>
-							<div style={{ marginTop: setLessonVerticalPosition(lesson.verticalPosition)}}>
-								<Lilypad lesson={lesson} />
-							</div>
-						</div>
-					))}
-				</div> */}
+				{/* <LabVerticalDivider /> */}
 			</LilypadContainer>
 		</div>
 	)
