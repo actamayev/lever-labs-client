@@ -6,13 +6,8 @@ import useLilypadVariants from "../../../../hooks/lab/lilypad-variants"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LilypadStatusIndicatorTooltip from "./lilypad-status-indicator-tooltip"
 
-interface Props {
-	lesson: Activity
-}
-
-export default function Lilypad(props: Props) {
-	const { lesson } = props
-	const { progress, activityUrl, lessonName, activityType, arcDirection } = lesson
+export default function Lilypad({ activity } : { activity: Activity}) {
+	const { progress, activityUrl, activityName, activityType, arcDirection } = activity
 	const navigate = useTypedNavigate()
 	const lilypadVariants = useLilypadVariants()
 
@@ -47,7 +42,7 @@ export default function Lilypad(props: Props) {
 						isNull(progress) ? "cursor-default" : "cursor-pointer"
 					)}
 				>
-					{lessonName}
+					{activityName}
 				</span>
 			</div>
 		</LilypadStatusIndicatorTooltip>

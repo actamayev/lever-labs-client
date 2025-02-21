@@ -21,7 +21,7 @@ declare global {
 	interface Activity {
 		progress: number | null
 		activityUrl: LabPages
-		lessonName: string
+		activityName: string
 		activityType: ActivityType
 		verticalPosition: VerticalPosition
 		// stackWithPrevious?: boolean

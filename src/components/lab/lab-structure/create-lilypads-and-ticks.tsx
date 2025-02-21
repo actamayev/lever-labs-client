@@ -48,19 +48,19 @@ export default function CreateLilypadsAndTicks({ activitiesObject } : { activiti
 				))}
 
 				<div className="flex">
-					{activitiesObject.map((lesson) => (
+					{activitiesObject.map((activity) => (
 						<div
-							key={lesson.activityUrl}
+							key={activity.activityUrl}
 							className="relative mr-56"
 							style={{
-								height: setLessonVerticalPosition(lesson.verticalPosition)
+								height: setLessonVerticalPosition(activity.verticalPosition)
 							}}
 						>
 							<div
 								className="absolute"
-								style={{ top: setLessonVerticalPosition(lesson.verticalPosition)} }
+								style={{ top: setLessonVerticalPosition(activity.verticalPosition)} }
 							>
-								<Lilypad lesson={lesson} />
+								<Lilypad activity={activity} />
 							</div>
 						</div>
 					))}
