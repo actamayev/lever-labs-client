@@ -6,40 +6,40 @@ import useLilypadVariants from "../../../../hooks/lab/lilypad-variants"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LilypadStatusIndicatorTooltip from "./lilypad-status-indicator-tooltip"
 
-export default function Lilypad({ activity } : { activity: Activity}) {
-	const { progress, activityUrl, activityName, activityType, arcDirection } = activity
+export default function Lilypad({ activity } : { activity: FullActivity }) {
+	const { activityStatus, activityUrl, activityName, activityType, arcDirection } = activity
 	const navigate = useTypedNavigate()
 	const lilypadVariants = useLilypadVariants()
 
 	const navigateToLesson = useCallback(() => {
-		if (isNull(progress)) return
+		if (isNull(activityStatus)) return
 		navigate(activityUrl)
-	}, [progress, activityUrl, navigate])
+	}, [activityStatus, activityUrl, navigate])
 
 	return (
-		<LilypadStatusIndicatorTooltip progress={progress}>
+		<LilypadStatusIndicatorTooltip activityStatus={activityStatus}>
 			<div
 				className={cn(
 					"flex flex-col items-center gap-3 group",
-					!isNull(progress) ? "group cursor-pointer" : "cursor-default"
+					!isNull(activityStatus) ? "group cursor-pointer" : "cursor-default"
 				)}
 				onClick={navigateToLesson}
 			>
 				<button
-					className={lilypadVariants(progress)}
-					disabled={isNull(progress)}
+					className={lilypadVariants(activityStatus)}
+					disabled={isNull(activityStatus)}
 					data-lilypad-icon
 					data-arc-direction={arcDirection}
 				>
 					<LilypadIcon
 						activityType={activityType}
-						progress={progress}
+						progress={activityStatus}
 					/>
 				</button>
 				<span
 					className={cn(
 						"font-medium text-sm text-zinc-700 dark:text-zinc-300",
-						isNull(progress) ? "cursor-default" : "cursor-pointer"
+						isNull(activityStatus) ? "cursor-default" : "cursor-pointer"
 					)}
 				>
 					{activityName}

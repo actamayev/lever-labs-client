@@ -3,8 +3,8 @@ import { useCallback } from "react"
 import GetActivityIconFromActivityName from "../get-activity-icon-from-name"
 
 interface Props {
-	progress: number | null
-	activityType: ActivityType
+	progress: ProgressStatus
+	activityType: UncertainActivityType
 }
 
 export default function LilypadIcon(props: Props) {

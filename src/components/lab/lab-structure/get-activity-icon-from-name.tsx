@@ -1,7 +1,7 @@
 import { BookOpen, ClipboardList, CodeXml } from "lucide-react"
 
 interface Props {
-	activityType: ActivityType
+	activityType: UncertainActivityType
 	className?: string
 }
 

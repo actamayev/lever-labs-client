@@ -8,18 +8,18 @@ import {
 } from "@/components/shadcn/ui/tooltip"
 
 interface Props {
-	progress: number | null
+	activityStatus: ProgressStatus
 	children: React.ReactNode
 }
 
 export default function LilypadStatusIndicatorTooltip(props: Props) {
-	const { progress, children } = props
+	const { activityStatus, children } = props
 
 	const tooltipMessage = useMemo(() => {
-		if (isNull(progress)) return "Please complete previous lessons to unlock"
-		else if (progress === 100) return "Complete"
+		if (isNull(activityStatus)) return "Please complete previous lessons to unlock"
+		else if (activityStatus === "COMPLETED") return "Complete"
 		return "In progress"
-	}, [progress])
+	}, [activityStatus])
 
 	// TODO: Fix warning in console logs
 	return (

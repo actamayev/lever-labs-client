@@ -2,6 +2,8 @@ import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"
 import PathTickMark from "./path-tick-mark"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
+import { useActivityProgressContext } from "../../../contexts/activity-progress-context"
+import { observer } from "mobx-react"
 
 interface LilyPadPositions {
     x: number
@@ -9,7 +11,8 @@ interface LilyPadPositions {
     arcDirection: ArcDirection
 }
 
-export default function CreateLilypadsAndTicks({ activitiesObject } : { activitiesObject: Activity[] }) {
+function CreateLilypadsAndTicks() {
+	const activityProgressClass = useActivityProgressContext()
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
@@ -48,7 +51,7 @@ export default function CreateLilypadsAndTicks({ activitiesObject } : { activiti
 				))}
 
 				<div className="flex">
-					{activitiesObject.map((activity) => (
+					{activityProgressClass.activities.map((activity) => (
 						<div
 							key={activity.activityUrl}
 							className="relative mr-56"
@@ -69,3 +72,5 @@ export default function CreateLilypadsAndTicks({ activitiesObject } : { activiti
 		</div>
 	)
 }
+
+export default observer(CreateLilypadsAndTicks)
