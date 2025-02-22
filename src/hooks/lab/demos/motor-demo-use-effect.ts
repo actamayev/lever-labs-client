@@ -40,14 +40,6 @@ export default function useMotorDemoUseEffect(): void {
 				...newMotorState,
 				pipUUID: pipClass.selectedPip.pipUUID
 			})
-
-
-			// const motorControlResponse = await blueDotApiClient.labDemoDataService.motorControl(
-			// 	{...newMotorState, pipUUID: pipClass.selectedPip.pipUUID}
-			// )
-			// if (!isEqual(motorControlResponse.status, 200) || isErrorResponses(motorControlResponse.data)) {
-			// 	throw Error("Unable to control motors")
-			// }
 		} catch (error) {
 			console.error(error)
 			toast.negative({
