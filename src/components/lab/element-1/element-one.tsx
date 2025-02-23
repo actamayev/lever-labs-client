@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import Element1StartCard from "./start-card/element-1-start-card"
-import ledLessons from "./led/led-lessons-object"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
 import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
 
 interface Section {
 	ref: React.RefObject<HTMLDivElement>
@@ -13,12 +13,13 @@ interface Section {
 }
 
 export default function Element1() {
+	useRetrieveAllActivitiesUseEffect()
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	const motorSectionRef = useRef<HTMLDivElement>(null)
 	const [clickedSection, setClickedSection] = useState<Element1Lessons>("LED")
 
 	useEffect(() => {
-		const observers: IntersectionObserver[] = []
+		const intersectionObservers: IntersectionObserver[] = []
 		const sections: Section[] = [
 			{ ref: ledSectionRef, name: "LED" },
 			// { ref: motorSectionRef, name: "Motor" }
@@ -26,7 +27,7 @@ export default function Element1() {
 
 		sections.forEach(({ ref, name }) => {
 			if (ref.current) {
-				const observer = new IntersectionObserver(
+				const intersectionObserver = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
 							if (entry.isIntersecting) {
@@ -37,13 +38,13 @@ export default function Element1() {
 					{ threshold: 0.5 }
 				)
 
-				observer.observe(ref.current)
-				observers.push(observer)
+				intersectionObserver.observe(ref.current)
+				intersectionObservers.push(intersectionObserver)
 			}
 		})
 
 		return () => {
-			observers.forEach(observer => observer.disconnect())
+			intersectionObservers.forEach(intersectionObserver => intersectionObserver.disconnect())
 		}
 	}, [])
 
@@ -64,18 +65,9 @@ export default function Element1() {
 				<Element1StartCard />
 				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
 				<div ref={ledSectionRef} className="flex pl-32">
-					<CreateLilypadsAndTicks lessonsObject={ledLessons} />
+					<CreateLilypadsAndTicks />
 				</div>
-				{/* <LabVerticalDivider />
-				<div ref={motorSectionRef} className="flex">
-					{motorLessons.map((lesson, index) => (
-						<div className="mx-10" key={index}>
-							<div style={{ marginTop: setLessonVerticalPosition(lesson.verticalPosition)}}>
-								<Lilypad lesson={lesson} />
-							</div>
-						</div>
-					))}
-				</div> */}
+				{/* <LabVerticalDivider /> */}
 			</LilypadContainer>
 		</div>
 	)

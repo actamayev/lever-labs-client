@@ -1,7 +1,7 @@
 import { BookOpen, ClipboardList, CodeXml } from "lucide-react"
 
 interface Props {
-	activityType: ActivityType
+	activityType: UncertainActivityType
 	className?: string
 }
 
@@ -16,6 +16,8 @@ export default function GetActivityIconFromActivityName(props: Props) {
 	// }
 	else if (activityType === "Summary") {
 		return <ClipboardList className={className} />
+	} else if (activityType === "Code") {
+		return <CodeXml className={className} />
 	}
-	return <CodeXml className={className} />
+	return null
 }

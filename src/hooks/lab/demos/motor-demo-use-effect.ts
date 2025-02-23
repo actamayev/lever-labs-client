@@ -1,105 +1,92 @@
-import { useCallback, useEffect } from "react"
-import isNull from "lodash-es/isNull"
-import isEqual from "lodash-es/isEqual"
-import { usePipContext } from "../../../contexts/pip-context"
-import { isErrorResponses } from "../../../utils/type-checks"
-import useToastOptions from "../../../components/toast-options"
+import isEmpty from "lodash-es/isEmpty"
+import { useEffect, useState } from "react"
+import useHandleMotorControl from "./handle-motor-control"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
-import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
+
+const keyMappings: Record<string, KeyMapping> = {
+	"w": { direction: "up", axis: "vertical", value: 1 },
+	"arrowup": { direction: "up", axis: "vertical", value: 1 },
+	"s": { direction: "down", axis: "vertical", value: -1 },
+	"arrowdown": { direction: "down", axis: "vertical", value: -1 },
+	"a": { direction: "left", axis: "horizontal", value: -1 },
+	"arrowleft": { direction: "left", axis: "horizontal", value: -1 },
+	"d": { direction: "right", axis: "horizontal", value: 1 },
+	"arrowright": { direction: "right", axis: "horizontal", value: 1 }
+}
+
+const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
+	acc[mapping.direction] = mapping
+	return acc
+}, {} as Record<MotorDirection, KeyMapping>)
 
 export default function useMotorDemoUseEffect(): void {
 	const labDemoClass = useLabDemoContext()
-	const blueDotApiClient = useApiClientContext()
-	const toast = useToastOptions()
-	const pipClass = usePipContext()
+	const handleMotorControl = useHandleMotorControl()
+	const [pressedKeys, setPressedKeys] = useState<Map<MotorDirection, number>>(new Map())
 
-	// Handle motor control API call
-	const handleMotorControl = useCallback(async (leftMotor: MotorDirection, rightMotor: MotorDirection): Promise<void> => {
-		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) return
+	const computeMotorControl = (keys: Map<MotorDirection, number>): MotorControlInput => {
+		const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }
 
-			if (isNull(pipClass.selectedPip)) {
-				return toast.negative({ title: "Please add a Pip" })
-			}
+		const verticalKeys = Array.from(keys.entries())
+			.filter(([dir]) => directionToMapping[dir].axis === "vertical")
+			.sort(([, timeA], [, timeB]) => timeA - timeB)
 
-			// if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
-			// 	return toast.negative({ title:`Please connect ${pipClass.selectedPip.pipName} to the internet to begin` })
-			// }
+		const horizontalKeys = Array.from(keys.entries())
+			.filter(([dir]) => directionToMapping[dir].axis === "horizontal")
+			.sort(([, timeA], [, timeB]) => timeA - timeB)
 
-			const newMotorState: MotorControl = {
-				leftMotor,
-				rightMotor,
-			}
-
-			// Only make API call if state has changed
-			if (isEqual(labDemoClass.motorState, newMotorState)) return
-			labDemoClass.setMotorState(newMotorState)
-
-			const motorControlResponse = await blueDotApiClient.labDemoDataService.motorControl(
-				{...newMotorState, pipUUID: pipClass.selectedPip.pipUUID}
-			)
-			if (!isEqual(motorControlResponse.status, 200) || isErrorResponses(motorControlResponse.data)) {
-				throw Error("Unable to control motors")
-			}
-		} catch (error) {
-			console.error(error)
-			toast.negative({
-				title: "Error motor control",
-				description: "Failed to control motors"
-			})
+		if (verticalKeys.length > 0) {
+			const [latestVerticalDir] = verticalKeys[verticalKeys.length - 1]
+			motorControl.vertical = directionToMapping[latestVerticalDir].value
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.labDemoDataService, labDemoClass, pipClass.selectedPip, toast])
 
-	// Handle keydown events
+		if (horizontalKeys.length > 0) {
+			const [latestHorizontalDir] = horizontalKeys[horizontalKeys.length - 1]
+			motorControl.horizontal = directionToMapping[latestHorizontalDir].value
+		}
+
+		return motorControl
+	}
+
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
 			if (labDemoClass.activeDemoName !== "Motor RTC") return
-
-			switch (event.key.toLowerCase()) {
-			case "w":
-			case "arrowup":
-				void handleMotorControl(1, 1) // Forward
-				break
-			case "s":
-			case "arrowdown":
-				void handleMotorControl(-1, -1) // Backward
-				break
-			case "a":
-			case "arrowleft":
-				void handleMotorControl(-1, 1) // Left turn
-				break
-			case "d":
-			case "arrowright":
-				void handleMotorControl(1, -1) // Right turn
-				break
-			}
+			const key = event.key.toLowerCase()
+			const mapping = keyMappings[key]
+			if (!mapping) return
+			setPressedKeys((prev) => {
+				const newMap = new Map(prev)
+				newMap.set(mapping.direction, Date.now())
+				handleMotorControl(computeMotorControl(newMap)) // Immediate update
+				return newMap
+			})
 		}
 
-		// Handle keyup events - stop motors
 		const handleKeyUp = (event: KeyboardEvent): void => {
 			if (labDemoClass.activeDemoName !== "Motor RTC") return
-
 			const key = event.key.toLowerCase()
-			if (["w", "s", "a", "d", "arrowup", "arrowdown", "arrowleft", "arrowright"].includes(key)) {
-				void handleMotorControl(0, 0) // Stop both motors
-			}
+			const mapping = keyMappings[key]
+			if (!mapping) return
+			setPressedKeys((prev) => {
+				const newMap = new Map(prev)
+				newMap.delete(mapping.direction)
+				handleMotorControl(computeMotorControl(newMap)) // Immediate update
+				return newMap
+			})
 		}
 
-		// Add event listeners
 		window.addEventListener("keydown", handleKeyDown)
 		window.addEventListener("keyup", handleKeyUp)
 
-		// Cleanup
 		return (): void => {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-	}, [labDemoClass.activeDemoName, pipClass.selectedPip, blueDotApiClient.httpClient.accessToken, handleMotorControl])
+	}, [labDemoClass, labDemoClass.activeDemoName, handleMotorControl])
 
-	// Reset motors when demo is deactivated
 	useEffect(() => {
-		if (labDemoClass.activeDemoName !== "Motor RTC" && !isNull(labDemoClass.motorState)) {
-			void handleMotorControl(0, 0)
+		if (labDemoClass.activeDemoName !== "Motor RTC" && !isEmpty(labDemoClass.motorState)) {
+			handleMotorControl({ vertical: 0, horizontal: 0 })
 		}
-	}, [handleMotorControl, labDemoClass.activeDemoName, labDemoClass.motorState])
+	}, [labDemoClass.activeDemoName, labDemoClass.motorState, handleMotorControl])
 }

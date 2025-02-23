@@ -13,20 +13,30 @@ declare global {
 	| "Demo"
 	| "Summary"
 
+	type UncertainActivityType =
+	| ActivityType
+	| "Loading"
+
 	// Top: 1, bottom: 9
 	type VerticalPosition = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 	type ArcDirection = "up" | "down" | "straight"
 
-	interface Lesson {
-		progress: number | null
-		lessonUrl: LabPages
-		lessonName: string
-		activityType: ActivityType
+	interface DefaultActivity {
+		activityUrl: LabPages
 		verticalPosition: VerticalPosition
+		activityUUID: ActivityUUID
+		arcDirection?: ArcDirection
 		// stackWithPrevious?: boolean
 		// skipConnection?: boolean
-		arcDirection?: ArcDirection
+	}
+
+	type ProgressStatus = "IN_PROGRESS" | "COMPLETED" | null
+
+	interface FullActivity extends DefaultActivity {
+		activityStatus: ProgressStatus
+		activityName: string
+		activityType: UncertainActivityType
 	}
 
 	type ElementNumbers = 1 | 2 | 3

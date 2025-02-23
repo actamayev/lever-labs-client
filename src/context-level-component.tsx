@@ -7,6 +7,7 @@ import LabDemoProvider from "./contexts/lab-demo-context"
 import LabReadingProvider from "./contexts/lab-reading-context"
 import PersonalInfoProvider from "./contexts/personal-info-context"
 import PageTransitionProvider from "./contexts/page-transition-context"
+import ActivityProgressProvider from "./contexts/activity-progress-context"
 import BlueDotApiClientProvider from "./contexts/blue-dot-api-client-context"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
@@ -20,9 +21,11 @@ export default function ContextLevelComponent ({ children } : { children: React.
 								<BlueDotApiClientProvider>
 									<SocketProvider>
 										<LabReadingProvider>
-											<LabDemoProvider>
-												{children}
-											</LabDemoProvider>
+											<ActivityProgressProvider>
+												<LabDemoProvider>
+													{children}
+												</LabDemoProvider>
+											</ActivityProgressProvider>
 										</LabReadingProvider>
 									</SocketProvider>
 								</BlueDotApiClientProvider>

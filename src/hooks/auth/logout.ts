@@ -5,9 +5,10 @@ import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
-import { usePageTransitionContext } from "../../contexts/page-transition-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { usePageTransitionContext } from "../../contexts/page-transition-context"
+import { useActivityProgressContext } from "../../contexts/activity-progress-context"
 
 export default function useLogout(): () => void {
 	const authClass = useAuthContext()
@@ -19,6 +20,7 @@ export default function useLogout(): () => void {
 	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
 	const pageTransitionClass = usePageTransitionContext()
+	const activityProgressClass = useActivityProgressContext()
 
 	return useCallback((): void => {
 		personalInfoClass.logout()
@@ -30,7 +32,8 @@ export default function useLogout(): () => void {
 		blueDotApiClient.logout()
 		labReadingClass.logout()
 		pageTransitionClass.logout()
+		activityProgressClass.logout()
 		navigate("/")
 	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass,
-		socketClass, authClass, blueDotApiClient, labReadingClass, navigate])
+		socketClass, authClass, blueDotApiClient, labReadingClass, activityProgressClass, navigate])
 }

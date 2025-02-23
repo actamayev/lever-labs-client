@@ -1,7 +1,9 @@
+import { observer } from "mobx-react"
 import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"
 import PathTickMark from "./path-tick-mark"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
+import { useActivityProgressContext } from "../../../contexts/activity-progress-context"
 
 interface LilyPadPositions {
     x: number
@@ -9,7 +11,8 @@ interface LilyPadPositions {
     arcDirection: ArcDirection
 }
 
-export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObject: Lesson[] }) {
+function CreateLilypadsAndTicks() {
+	const activityProgressClass = useActivityProgressContext()
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
@@ -33,7 +36,8 @@ export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObje
 		})
 
 		setLilypadPositions(positions)
-	}, [])
+		// This dependency is needed so that the ticks are made when the activities are loaded in:
+	}, [activityProgressClass.activities])
 
 	return (
 		<div ref={containerRef} className="flex">
@@ -48,19 +52,19 @@ export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObje
 				))}
 
 				<div className="flex">
-					{lessonsObject.map((lesson) => (
+					{activityProgressClass.activities.map((activity) => (
 						<div
-							key={lesson.lessonUrl}
+							key={activity.activityUrl}
 							className="relative mr-56"
 							style={{
-								height: setLessonVerticalPosition(lesson.verticalPosition)
+								height: setLessonVerticalPosition(activity.verticalPosition)
 							}}
 						>
 							<div
 								className="absolute"
-								style={{ top: setLessonVerticalPosition(lesson.verticalPosition)} }
+								style={{ top: setLessonVerticalPosition(activity.verticalPosition)} }
 							>
-								<Lilypad lesson={lesson} />
+								<Lilypad activity={activity} />
 							</div>
 						</div>
 					))}
@@ -69,3 +73,5 @@ export default function CreateLilypadsAndTicks({ lessonsObject } : { lessonsObje
 		</div>
 	)
 }
+
+export default observer(CreateLilypadsAndTicks)

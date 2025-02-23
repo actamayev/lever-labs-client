@@ -12,6 +12,7 @@ export default function useRetrievePipInfoUseEffect(): void {
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
+	// 2/21/25 TODO: Fix this endpoint being hit twice in a row
 	const retrievePipInfo = useCallback(async () => {
 		try {
 			if (

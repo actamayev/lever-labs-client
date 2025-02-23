@@ -5,7 +5,7 @@ import { Routes, Route } from "react-router"
 
 import labRoutes from "./routing/lab-routes-structure"
 
-import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info"
+import useRetrievePipInfoUseEffect from "./hooks/pip/retrieve-pip-info-use-effect"
 import useGetAuthDataFromStorage from "./hooks/auth/get-auth-data-from-storage"
 import useLogoutListenerUseEffect from "./hooks/listeners/logout-listener-use-effect"
 import useSocketEventsUseEffect from "./hooks/socket-events/socket-events-use-effect"

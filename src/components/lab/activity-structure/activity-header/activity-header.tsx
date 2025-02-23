@@ -3,7 +3,6 @@ import isNull from "lodash-es/isNull"
 import { useNavigate } from "react-router"
 import { ArrowLeft, X } from "lucide-react"
 import { Button } from "../../../shadcn/ui/button"
-import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
@@ -70,11 +69,6 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-end">
-				{(activityType === "Code" || activityType === "Demo") && (
-					<div className="mr-6">
-						<LabCodePipStatus />
-					</div>
-				)}
 				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer
