@@ -58,6 +58,7 @@ class SocketClass extends EventEmitter {
 	})
 
 	private setupPipEvents = action((): void => {
+		// This is for receiving socket events from the backend.
 		if (!this._socket) return
 		this._socket.on("pip-connection-status-update", (data: PipStatusUpdate) => {
 			this.emit("pipStatusUpdate", data) // Emit event with processed data
@@ -68,6 +69,7 @@ class SocketClass extends EventEmitter {
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlDataToSend): void => {
+		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
 		}

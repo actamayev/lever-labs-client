@@ -1,12 +1,17 @@
-declare global {
-	type MotorDirection = -1 | 0 | 1
+import { LucideIcon } from "lucide-react"
 
-	interface MotorControl {
-		leftMotor: MotorDirection
-		rightMotor: MotorDirection
+declare global {
+	interface Demo {
+		demoTitle: DemoNames
+		demoDescription: string
+		demoIcon: LucideIcon
+		// demoOnclickEndpoint: () => Promise<AxiosResponse<AllCommonResponses>>
 	}
 
-	interface MotorControlDataToSend extends MotorControl {
+	type MotorDirection = "up" | "down" | "left" | "right"
+
+	interface MotorControlDataToSend {
+		motorControl: MotorControlInput
 		pipUUID: PipUUID
 	}
 
@@ -22,6 +27,17 @@ declare global {
 	type DemoNames =
 	| LEDDemo
 	| MotorDemo
+
+	interface MotorControlInput {
+		vertical?: -1 | 1
+		horizontal?: -1 | 1
+	}
+
+	interface KeyMapping {
+		direction: MotorDirection
+		axis: "vertical" | "horizontal"
+		value: -1 | 1
+	}
 }
 
 export {}
