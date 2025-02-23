@@ -69,8 +69,7 @@ class SocketClass extends EventEmitter {
 
 	public emitMotorControl = action((motorControlData: MotorControlDataToSend): void => {
 		if (!this._socket || !this.isConnected) {
-			console.error("Socket not connected")
-			return
+			return console.error("Socket not connected")
 		}
 		this._socket.emit("motor-control", motorControlData)
 	})
