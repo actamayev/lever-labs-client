@@ -3,7 +3,7 @@ import { createContext, useContext, useMemo } from "react"
 
 class LabDemoClass {
 	public activeDemoName: DemoNames | null = null
-	public motorState: MotorControlInput = { }
+	public motorState: MotorControlInput = { horizontal: 0, vertical: 0 }
 
 	constructor() {
 		makeAutoObservable(this)
@@ -19,7 +19,7 @@ class LabDemoClass {
 
 	public logout() {
 		this.setActiveDemoName(null)
-		this.setMotorState({})
+		this.setMotorState({ horizontal: 0, vertical: 0 })
 	}
 }
 

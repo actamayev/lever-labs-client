@@ -29,14 +29,14 @@ declare global {
 	| MotorDemo
 
 	interface MotorControlInput {
-		vertical?: -1 | 1
-		horizontal?: -1 | 1
+		vertical: -1 | 1 | 0
+		horizontal: -1 | 1 | 0
 	}
 
 	interface KeyMapping {
 		direction: MotorDirection
 		axis: "vertical" | "horizontal"
-		value: -1 | 1
+		value: -1 | 1 | 0
 	}
 }
 

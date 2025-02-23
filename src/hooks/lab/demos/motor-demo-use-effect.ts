@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import useHandleMotorControl from "./handle-motor-control"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 
-// Map of equivalent keys to their canonical representation and axis
 const keyMappings: Record<string, KeyMapping> = {
 	"w": { direction: "up", axis: "vertical", value: 1 },
 	"arrowup": { direction: "up", axis: "vertical", value: 1 },
@@ -23,8 +22,31 @@ const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
 export default function useMotorDemoUseEffect(): void {
 	const labDemoClass = useLabDemoContext()
 	const handleMotorControl = useHandleMotorControl()
-	// Store pressed keys with timestamps
 	const [pressedKeys, setPressedKeys] = useState<Map<MotorDirection, number>>(new Map())
+
+	const computeMotorControl = (keys: Map<MotorDirection, number>): MotorControlInput => {
+		const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }
+
+		const verticalKeys = Array.from(keys.entries())
+			.filter(([dir]) => directionToMapping[dir].axis === "vertical")
+			.sort(([, timeA], [, timeB]) => timeA - timeB)
+
+		const horizontalKeys = Array.from(keys.entries())
+			.filter(([dir]) => directionToMapping[dir].axis === "horizontal")
+			.sort(([, timeA], [, timeB]) => timeA - timeB)
+
+		if (verticalKeys.length > 0) {
+			const [latestVerticalDir] = verticalKeys[verticalKeys.length - 1]
+			motorControl.vertical = directionToMapping[latestVerticalDir].value
+		}
+
+		if (horizontalKeys.length > 0) {
+			const [latestHorizontalDir] = horizontalKeys[horizontalKeys.length - 1]
+			motorControl.horizontal = directionToMapping[latestHorizontalDir].value
+		}
+
+		return motorControl
+	}
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
@@ -34,7 +56,8 @@ export default function useMotorDemoUseEffect(): void {
 			if (!mapping) return
 			setPressedKeys((prev) => {
 				const newMap = new Map(prev)
-				newMap.set(mapping.direction, Date.now()) // Timestamp of keypress
+				newMap.set(mapping.direction, Date.now())
+				handleMotorControl(computeMotorControl(newMap)) // Immediate update
 				return newMap
 			})
 		}
@@ -47,6 +70,7 @@ export default function useMotorDemoUseEffect(): void {
 			setPressedKeys((prev) => {
 				const newMap = new Map(prev)
 				newMap.delete(mapping.direction)
+				handleMotorControl(computeMotorControl(newMap)) // Immediate update
 				return newMap
 			})
 		}
@@ -58,38 +82,11 @@ export default function useMotorDemoUseEffect(): void {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-	}, [labDemoClass, labDemoClass.activeDemoName])
-
-	useEffect(() => {
-		// Process pressed keys into vertical and horizontal values
-		const motorControl: MotorControlInput = {}
-
-		// Group keys by axis and sort by timestamp to prioritize latest
-		const verticalKeys = Array.from(pressedKeys.entries())
-			.filter(([dir]) => directionToMapping[dir].axis === "vertical")
-			.sort(([, timeA], [, timeB]) => timeA - timeB) // Earliest first
-
-		const horizontalKeys = Array.from(pressedKeys.entries())
-			.filter(([dir]) => directionToMapping[dir].axis === "horizontal")
-			.sort(([, timeA], [, timeB]) => timeA - timeB) // Earliest first
-
-		// Take the latest key for each axis
-		if (verticalKeys.length > 0) {
-			const [latestVerticalDir] = verticalKeys[verticalKeys.length - 1]
-			motorControl.vertical = directionToMapping[latestVerticalDir].value
-		}
-
-		if (horizontalKeys.length > 0) {
-			const [latestHorizontalDir] = horizontalKeys[horizontalKeys.length - 1]
-			motorControl.horizontal = directionToMapping[latestHorizontalDir].value
-		}
-
-		handleMotorControl(motorControl)
-	}, [pressedKeys, handleMotorControl])
+	}, [labDemoClass, labDemoClass.activeDemoName, handleMotorControl])
 
 	useEffect(() => {
 		if (labDemoClass.activeDemoName !== "Motor RTC" && !isEmpty(labDemoClass.motorState)) {
-			handleMotorControl({})
+			handleMotorControl({ vertical: 0, horizontal: 0 })
 		}
 	}, [labDemoClass.activeDemoName, labDemoClass.motorState, handleMotorControl])
 }
