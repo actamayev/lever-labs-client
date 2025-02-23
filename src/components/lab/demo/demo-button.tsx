@@ -16,9 +16,11 @@ function DemoButton({ demo } : { demo: Demo }) {
 	}, [demo.demoTitle, labDemoClass.activeDemoName])
 
 	const setActiveDemo = useCallback(() => {
-		if (labDemoClass.activeDemoName === demo.demoTitle) return
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip to your account" })
+		}
+		if (labDemoClass.activeDemoName === demo.demoTitle) {
+			return labDemoClass.setActiveDemoName(null)
 		}
 		// if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
 		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
