@@ -1,7 +1,6 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import isEmpty from "lodash-es/isEmpty"
 import { usePipContext } from "../../../contexts/pip-context"
 import useToastOptions from "../../../components/toast-options"
 import { useSocketContext } from "../../../contexts/socket-context"
@@ -18,8 +17,7 @@ export default function useHandleMotorControl(): (motorControl: MotorControlInpu
 	return useCallback((motorControl: MotorControlInput): void => {
 		if (isNull(blueDotApiClient.httpClient.accessToken)) return
 
-		const isUserAction = !isEmpty(motorControl)
-		if (!isUserAction) return
+		if (!labDemoClass.activeDemoName) return
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip" })
 		}
