@@ -22,7 +22,7 @@ declare global {
 	| "LED 4"
 
 	type MotorDemo =
-	| "Motor RTC"
+	| "Real-time motor control"
 
 	type DemoNames =
 	| LEDDemo

@@ -50,7 +50,7 @@ export default function useMotorDemoUseEffect(): void {
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
-			if (labDemoClass.activeDemoName !== "Motor RTC") return
+			if (labDemoClass.activeDemoName !== "Real-time motor control") return
 			const key = event.key.toLowerCase()
 			const mapping = keyMappings[key]
 			if (!mapping) return
@@ -63,7 +63,7 @@ export default function useMotorDemoUseEffect(): void {
 		}
 
 		const handleKeyUp = (event: KeyboardEvent): void => {
-			if (labDemoClass.activeDemoName !== "Motor RTC") return
+			if (labDemoClass.activeDemoName !== "Real-time motor control") return
 			const key = event.key.toLowerCase()
 			const mapping = keyMappings[key]
 			if (!mapping) return
@@ -85,7 +85,10 @@ export default function useMotorDemoUseEffect(): void {
 	}, [labDemoClass, labDemoClass.activeDemoName, handleMotorControl])
 
 	useEffect(() => {
-		if (labDemoClass.activeDemoName !== "Motor RTC" && !isEmpty(labDemoClass.motorState)) {
+		if (
+			labDemoClass.activeDemoName !== "Real-time motor control" &&
+			!isEmpty(labDemoClass.motorState)
+		) {
 			handleMotorControl({ vertical: 0, horizontal: 0 })
 		}
 	}, [labDemoClass.activeDemoName, labDemoClass.motorState, handleMotorControl])
