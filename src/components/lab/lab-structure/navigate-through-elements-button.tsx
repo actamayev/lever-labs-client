@@ -1,4 +1,4 @@
-import { ChevronDown, CircuitBoard, Cpu, Flag } from "lucide-react"
+import { ChevronDown, CircuitBoard } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,

@@ -38,6 +38,16 @@ declare global {
 		axis: "vertical" | "horizontal"
 		value: -1 | 1 | 0
 	}
+
+	type MotorDemoKeys =
+	| "w"
+	| "arrowup"
+	| "s"
+	| "arrowdown"
+	| "a"
+	| "arrowleft"
+	| "d"
+	| "arrowright"
 }
 
 export {}

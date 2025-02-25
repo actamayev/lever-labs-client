@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react"
 import useHandleMotorControl from "./handle-motor-control"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 
-const keyMappings: Record<string, KeyMapping> = {
+const keyMappings: Record<MotorDemoKeys, KeyMapping> = {
 	"w": { direction: "up", axis: "vertical", value: 1 },
 	"arrowup": { direction: "up", axis: "vertical", value: 1 },
 	"s": { direction: "down", axis: "vertical", value: -1 },
@@ -51,11 +51,11 @@ export default function useMotorDemoUseEffect(): void {
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
 			if (labDemoClass.activeDemoName !== "Real-time motor control") return
-			const key = event.key.toLowerCase()
-			const mapping = keyMappings[key]
-			if (!mapping) return
 
-			// Update ref directly
+			const key = event.key.toLowerCase() as string
+			if (!(key in keyMappings)) return
+
+			const mapping = keyMappings[key as MotorDemoKeys]
 			const newMap = new Map(pressedKeysRef.current)
 			newMap.set(mapping.direction, Date.now())
 			pressedKeysRef.current = newMap
@@ -66,11 +66,11 @@ export default function useMotorDemoUseEffect(): void {
 
 		const handleKeyUp = (event: KeyboardEvent): void => {
 			if (labDemoClass.activeDemoName !== "Real-time motor control") return
-			const key = event.key.toLowerCase()
-			const mapping = keyMappings[key]
-			if (!mapping) return
 
-			// Update ref directly
+			const key = event.key.toLowerCase() as string
+			if (!(key in keyMappings)) return
+
+			const mapping = keyMappings[key as MotorDemoKeys]
 			const newMap = new Map(pressedKeysRef.current)
 			newMap.delete(mapping.direction)
 			pressedKeysRef.current = newMap
