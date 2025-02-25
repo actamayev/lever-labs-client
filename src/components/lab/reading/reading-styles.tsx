@@ -4,6 +4,14 @@ interface ReadingHeaderProps {
 
 export function ReadingBlockHeader({ children } : ReadingHeaderProps) {
 	return (
+		<h2 className="text-4xl font-bold text-center mb-8">
+			{children}
+		</h2>
+	)
+}
+
+export function ReadingBlockSectionHeader({ children } : ReadingHeaderProps) {
+	return (
 		<h2 className="text-3xl font-bold mb-4">
 			{children}
 		</h2>
@@ -22,7 +30,7 @@ export function ReadingBlockWithImage (props: ReadingBlockProps) {
 	return (
 		<div className="flex flex-col md:flex-row gap-6 mb-8">
 			<div className={`${imageSrc ? "md:w-2/3" : "w-full"}`}>
-				<div className="text-2xl mb-4">
+				<div className="text-2xl leading-relaxed">
 					{children}
 				</div>
 			</div>

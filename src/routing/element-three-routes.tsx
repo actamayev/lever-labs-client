@@ -6,40 +6,40 @@ import InvertedPendulumVideo from "../components/lab/element-3/inverted-pendulum
 import InvertedPendulumReading from "../components/lab/element-3/inverted-pendulum/inverted-pendulum-reading"
 
 const element3Routes: ElementRoutes[] = [
-	{
-		path: "element-3/line-following",
-		children: [
-			{
-				path: "Reading",
-				element: <LineFollowingReading />
-			},
-			{
-				path: "Video",
-				element: <LineFollowingVideo />
-			},
-			{
-				path: "Code",
-				element: <LineFollowingCode />
-			}
-		]
-	},
-	{
-		path: "element-3/inverted-pendulum",
-		children: [
-			{
-				path: "Reading",
-				element: <InvertedPendulumReading />
-			},
-			{
-				path: "Video",
-				element: <InvertedPendulumVideo />
-			},
-			{
-				path: "Code",
-				element: <InvertedPendulumCode />
-			}
-		]
-	}
+	// {
+	// 	path: "element-3/line-following",
+	// 	children: [
+	// 		{
+	// 			path: "Reading",
+	// 			element: <LineFollowingReading />
+	// 		},
+	// 		{
+	// 			path: "Video",
+	// 			element: <LineFollowingVideo />
+	// 		},
+	// 		{
+	// 			path: "Code",
+	// 			element: <LineFollowingCode />
+	// 		}
+	// 	]
+	// },
+	// {
+	// 	path: "element-3/inverted-pendulum",
+	// 	children: [
+	// 		{
+	// 			path: "Reading",
+	// 			element: <InvertedPendulumReading />
+	// 		},
+	// 		{
+	// 			path: "Video",
+	// 			element: <InvertedPendulumVideo />
+	// 		},
+	// 		{
+	// 			path: "Code",
+	// 			element: <InvertedPendulumCode />
+	// 		}
+	// 	]
+	// }
 ]
 
 export default element3Routes

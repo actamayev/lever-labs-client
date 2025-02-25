@@ -19,7 +19,7 @@ function QuizSection() {
 
 	return (
 		<div className="h-full flex flex-col">
-			<div className="py-3 px-6 border-b-2 border-zinc-300 dark:border-zinc-700">
+			<div className="py-3 px-6 shadow-md">
 				<div className="flex items-center justify-between">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>

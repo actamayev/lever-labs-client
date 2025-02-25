@@ -5,22 +5,21 @@ import ActivityHeader from "./activity-header/activity-header"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
-	activityTitle: string
 	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
-	nextPageLink: LabPages
-	nextPageActivity: ActivityType
+	nextPageLink: LabPages | null
+	nextPageActivity: ActivityType | null
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	children: React.ReactNode
 	extraClasses?: string
+	isDemo?: boolean
 }
 
 function ActivityTemplate(props: Props) {
 	const {
-		activityTitle,
 		previousPageLink,
 		previousPageActivity,
 		nextPageLink,
@@ -31,6 +30,7 @@ function ActivityTemplate(props: Props) {
 		children,
 		extraClasses = "",
 		activityType,
+		isDemo = false
 	} = props
 
 	const labReadingClass = useLabReadingContext()
@@ -39,10 +39,10 @@ function ActivityTemplate(props: Props) {
 		<div className={cn("flex flex-col h-screen min-h-0", extraClasses)}>
 			<ActivityHeader
 				element={element}
-				activityTitle={activityTitle}
 				lessonTitle={lessonTitle}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}
+				isDemo={isDemo}
 			/>
 
 			<div
@@ -54,7 +54,10 @@ function ActivityTemplate(props: Props) {
 				{children}
 			</div>
 
-			{(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) && (
+			{
+				(nextPageActivity && nextPageLink) &&
+				(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) &&
+			(
 				<ActivityFooter
 					previousPageLink={previousPageLink}
 					previousPageActivity={previousPageActivity}

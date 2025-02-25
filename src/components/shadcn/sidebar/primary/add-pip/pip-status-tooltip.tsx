@@ -22,7 +22,8 @@ function PipStatusTooltip() {
 		case "connected": return "bg-green-500"
 		default: return "bg-zinc-500"
 		}
-	}, [pipClass.selectedPip])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.selectedPip?.pipConnectionStatus])
 
 	const getStatusMessage = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
@@ -33,7 +34,8 @@ function PipStatusTooltip() {
 		case "connected": return "Connected"
 		default: return "Unknown status"
 		}
-	}, [pipClass.selectedPip])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.selectedPip?.pipConnectionStatus])
 
 	return (
 		<TooltipProvider delayDuration={0}>

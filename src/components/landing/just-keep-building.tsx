@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import { LucideIcon } from "lucide-react"
 import BoxReveal from "../shadcn/ui/box-reveal"
 import { BoldedDescription } from "../bold-span-text"

@@ -1,0 +1,74 @@
+import { useEffect, useRef, useState } from "react"
+import Element1StartCard from "./start-card/element-1-start-card"
+// import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
+import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
+import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
+import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
+import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
+
+interface Section {
+	ref: React.RefObject<HTMLDivElement>
+	name: Element1Lessons
+}
+
+export default function Element1() {
+	useRetrieveAllActivitiesUseEffect()
+	const ledSectionRef = useRef<HTMLDivElement>(null)
+	const motorSectionRef = useRef<HTMLDivElement>(null)
+	const [clickedSection, setClickedSection] = useState<Element1Lessons>("LED")
+
+	useEffect(() => {
+		const intersectionObservers: IntersectionObserver[] = []
+		const sections: Section[] = [
+			{ ref: ledSectionRef, name: "LED" },
+			// { ref: motorSectionRef, name: "Motor" }
+		]
+
+		sections.forEach(({ ref, name }) => {
+			if (ref.current) {
+				const intersectionObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								setClickedSection(name)
+							}
+						})
+					},
+					{ threshold: 0.5 }
+				)
+
+				intersectionObserver.observe(ref.current)
+				intersectionObservers.push(intersectionObserver)
+			}
+		})
+
+		return () => {
+			intersectionObservers.forEach(intersectionObserver => intersectionObserver.disconnect())
+		}
+	}, [])
+
+	return (
+		<div className="h-screen overflow-y-auto relative">
+			<div className="fixed mt-6 ml-2 flex flex-row items-start gap-4 z-50">
+				<NavigateThroughElementsButton />
+				<SeeLessonIconsInElement
+					sectionRefs={{
+						LED: ledSectionRef,
+						Motor: motorSectionRef
+					}}
+					activeSection={clickedSection}
+					setClickedSection={setClickedSection}
+				/>
+			</div>
+			<LilypadContainer>
+				<Element1StartCard />
+				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
+				<div ref={ledSectionRef} className="flex pl-32">
+					<CreateLilypadsAndTicks />
+				</div>
+				{/* <LabVerticalDivider /> */}
+			</LilypadContainer>
+		</div>
+	)
+}

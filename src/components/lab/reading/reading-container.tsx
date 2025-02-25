@@ -8,17 +8,17 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
 	blocks: ContentBlock[]
-	labLesson: Element1Lessons
+	readingName: ReadingNames
 }
 
-function ReadingContainer({ blocks, labLesson } : Props) {
+function ReadingContainer({ blocks, readingName } : Props) {
 	const labReadingClass = useLabReadingContext()
 	const contentRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
-		labReadingClass.setBlocks(blocks, labLesson)
+		labReadingClass.setBlocks(blocks, readingName)
 		labReadingClass.setShownBlocks(blocks[0].id)
-	}, [blocks, labLesson, labReadingClass])
+	}, [blocks, readingName, labReadingClass])
 
 	return (
 		<div className="h-full flex relative">
@@ -28,7 +28,10 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 			)}>
 				<div
 					ref={contentRef}
-					className="reading-content-container px-24 py-6 h-full overflow-y-auto"
+					className={cn(
+						"reading-content-container py-6 h-full overflow-y-auto",
+						labReadingClass.activeQuiz ? "px-20" : "px-60"
+					)}
 				>
 					{labReadingClass.shownBlocks.map((block) => (
 						<ReadingBlock key={block.id} block={block} />
@@ -38,8 +41,8 @@ function ReadingContainer({ blocks, labLesson } : Props) {
 
 			<div
 				className={cn(
-					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-zinc-900 shadow-lg",
-					"transition-transform border-l-2 border-zinc-300 dark:border-zinc-700",
+					"fixed right-0 inset-y-0 w-1/3 bg-white dark:bg-zinc-900",
+					"transition-transform shadow-[-4px_0_6px_-1px_rgba(0,0,0,0.1)]",
 					labReadingClass.activeQuiz ? "translate-x-0" : "translate-x-full"
 				)}
 				style={toJS(labReadingClass.quizStyle)}

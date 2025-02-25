@@ -17,6 +17,15 @@ declare global {
 	}
 	type GoogleAuthSuccess = LoginSuccess & { isNewUser: boolean }
 
+	// Lab Activity Tracking Responses:
+	type RetrievedUserActivityProgressResponse = {
+		userActivityProgress: UserActivityProgress[]
+	}
+
+	type RetrievedQuestionsResponse = {
+		quizAttempts: RetrievedQuestions[]
+	}
+
 	// Personal Info Responses:
 	type PersonalInfoResponse = {
 		username: string
@@ -49,6 +58,10 @@ declare global {
 	type PipStatusUpdate = {
 		pipUUID: PipUUID
 		newConnectionStatus: PipConnectionStatus
+	}
+	type MotorControlAck = {
+		success: boolean
+		error?: string
 	}
 }
 

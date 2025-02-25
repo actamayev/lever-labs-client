@@ -5,7 +5,7 @@ import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 
 class LabReadingClass {
-	public currentReadingName: Element1Lessons | null = null
+	public currentReadingName: ReadingNames | null = null
 	public activeBlocks: ContentBlock[] = [] // All the blocks in the current activity
 	public shownBlocks: ContentBlock[] = [] // The blocks that have been shown
 	public activeQuiz: ActiveQuiz | null = null
@@ -18,20 +18,26 @@ class LabReadingClass {
 	constructor() {
 		makeAutoObservable(this)
 	}
-
 	public checkIfBlockIsShown = (blockId: ContentBlockID): boolean => {
 		return this.shownBlocks.find(block => block.id === blockId) ? true : false
 	}
+
+	public clearShownBlocks = action((): void => {
+		this.shownBlocks = []
+	})
 
 	public setShownBlocks = action((blockId: ContentBlockID): void => {
 		if (this.checkIfBlockIsShown(blockId)) return
 		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
 	})
 
-	public setBlocks = action((blocks: ContentBlock[], readingName: Element1Lessons): void => {
+	public setBlocks = action((blocks: ContentBlock[], readingName: ReadingNames): void => {
 		if (this.currentReadingName === readingName) return
-		this.currentReadingName = readingName
 		this.activeBlocks = blocks
+		// This is here to clear blocks whenever we go from one reading to another
+		const shouldResetShownBlocks = readingName !== this.currentReadingName
+		if (shouldResetShownBlocks) this.clearShownBlocks()
+		this.currentReadingName = readingName
 	})
 
 	public getNextBlock(blockId: ContentBlockID): ContentBlock | undefined {
@@ -161,6 +167,13 @@ class LabReadingClass {
 	private handleQuizComplete = action((blockId: ContentBlockID) => {
 		this.setActiveQuiz(null)
 		this.setExplanationBeingShown(null)
+		const nextBlock = this.getNextBlock(blockId)
+		if (!nextBlock) return
+
+		this.scrollToNextBlock(blockId)
+	})
+
+	public handleDemoComplete = action((blockId: ContentBlockID) => {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
