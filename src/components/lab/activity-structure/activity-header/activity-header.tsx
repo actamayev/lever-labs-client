@@ -1,40 +1,64 @@
-import { X } from "lucide-react"
+import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
+import { useNavigate } from "react-router"
+import { ArrowLeft, X } from "lucide-react"
 import { Button } from "../../../shadcn/ui/button"
-import LabCodePipStatus from "./lab-code-pip-status"
 import ReadingProgressBar from "./reading-progress-bar"
-import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
+import { usePageTransitionContext } from "../../../../contexts/page-transition-context"
 
 interface Props {
 	element: ElementNumbers
-	activityTitle: string
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number | null
 	activityType: ActivityType
+	isDemo?: boolean
 }
 
 export default function ActivityHeader(props: Props) {
-	const { element, lessonTitle, activityTitle, lessonProgressPercent, activityType } = props
-	const navigate = useTypedNavigate()
+	const {
+		element,
+		lessonTitle,
+		lessonProgressPercent,
+		activityType,
+		isDemo
+	} = props
+	const typedNavigate = useTypedNavigate()
+	const navigate = useNavigate()
+	const pageTransitionClass = usePageTransitionContext()
+
+	const goBack = useCallback(() => {
+		pageTransitionClass.setDirection("right")
+		navigate(-1)
+	}, [navigate, pageTransitionClass])
 
 	return (
 		<header
-			className="h-20 flex items-center justify-between px-3 border-b-2
-			border-zinc-300 dark:border-zinc-700 fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
+			className="h-20 flex items-center justify-between px-4 shadow-md
+			fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={() => navigate(`/lab/element-${element}`)}
-						className="!p-6 dark:hover:bg-zinc-800"
-					>
-						<X className="!h-6 !w-6" />
-					</Button>
-					<h2 className="text-4xl font-semibold ml-9">{activityTitle}</h2>
+					{isDemo ? (
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => goBack()}
+							className="!p-6 dark:hover:bg-zinc-800"
+						>
+							<ArrowLeft className="!h-6 !w-6" />
+						</Button>
+					) : (
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => typedNavigate(`/lab/element-${element}`)}
+							className="!p-6 dark:hover:bg-zinc-800"
+						>
+							<X className="!h-6 !w-6" />
+						</Button>
+					)}
 				</div>
 			</div>
 
@@ -45,15 +69,9 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-end">
-				{(activityType === "Code" || activityType === "Demo") && (
-					<div className="mr-6">
-						<LabCodePipStatus />
-					</div>
-				)}
 				<div className="flex justify-end mr-4">
 					{!isNull(lessonProgressPercent) && (
 						<LessonProgressIconContainer
-							icon={<GetLessonIconFromActivityName lessonTitle={lessonTitle} />}
 							lessonProgressPercent={lessonProgressPercent}
 							lessonTitle={lessonTitle}
 						/>

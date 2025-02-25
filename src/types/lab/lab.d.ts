@@ -1,38 +1,54 @@
 declare global {
-	type ActivityType =
-	| "Demo"
-	| "Reading"
-	| "Video"
-	| "Code"
+	type ActivityTypePath =
+	| `Reading/${string}`
+	// | `Video/${string}
+	| `Demo/${string}`
+	| `Code/${string}`
 	| "Summary"
 
-	type ActivityTypeRoutePath =
+	type ActivityType =
+	| "Reading"
+	// | "Video"
+	| "Code"
+	| "Demo"
+	| "Summary"
+
+	type UncertainActivityType =
 	| ActivityType
-	| "Code-1"
-	| "Code-2"
-	| "Code-3"
+	| "Loading"
 
 	// Top: 1, bottom: 9
 	type VerticalPosition = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
 	type ArcDirection = "up" | "down" | "straight"
 
-	interface Lesson {
-		progress: number | null
-		lessonUrl: LabPages
-		lessonName: string
-		activityType: ActivityType
+	interface DefaultActivity {
+		activityUrl: LabPages
 		verticalPosition: VerticalPosition
-		stackWithPrevious?: boolean
-		skipConnection?: boolean
+		activityUUID: ActivityUUID
 		arcDirection?: ArcDirection
+		// stackWithPrevious?: boolean
+		// skipConnection?: boolean
+	}
+
+	type ProgressStatus = "IN_PROGRESS" | "COMPLETED" | null
+
+	interface FullActivity extends DefaultActivity {
+		activityStatus: ProgressStatus
+		activityName: string
+		activityType: UncertainActivityType
 	}
 
 	type ElementNumbers = 1 | 2 | 3
 
 	type Element1Lessons =
 	| "LED"
-	| "Motor"
+	// | "Motor"
+
+	type ReadingNames =
+	| "Introduction to LEDs"
+	| "Voltage"
+	| "RGB LEDs"
 }
 
 export {}

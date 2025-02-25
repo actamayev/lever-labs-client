@@ -51,14 +51,14 @@ export default function NavigateThroughElementsButton () {
 					navigateToPage="/lab/element-1"
 					item={<><CircuitBoard className="!size-6"/>Element 1: Sensor Basics</>}
 				/>
-				<ElementDropdownMenuItem
+				{/* <ElementDropdownMenuItem
 					navigateToPage="/lab/element-2"
 					item={<><Cpu className="!size-6"/>Element 2: Combine & Create</>}
 				/>
 				<ElementDropdownMenuItem
 					navigateToPage="/lab/element-3"
 					item={<><Flag className="!size-6"/>Element 3: Missions</>}
-				/>
+				/> */}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

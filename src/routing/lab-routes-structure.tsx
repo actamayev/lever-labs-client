@@ -1,10 +1,10 @@
 import element2Routes from "./element-two-routes"
-import element1Routes from "./element-one-routes"
+import element1Routes from "./element-one-routes/element-one-routes"
 // import LabIndex from "../components/lab/lab-index"
 import element3Routes from "./element-three-routes"
-import Element1 from "../components/lab/element-1/element-1"
-import Element2 from "../components/lab/element-2/element-2"
-import Element3 from "../components/lab/element-3/element-3"
+import Element1 from "../components/lab/element-1/element-one"
+import Element2 from "../components/lab/element-2/element-two"
+import Element3 from "../components/lab/element-3/element-three"
 import LabWelcome from "../components/lab/welcome-page/lab-welcome"
 
 const labRoutes: RouteType[] = [

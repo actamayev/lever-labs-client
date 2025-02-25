@@ -1,33 +1,4 @@
-import { Link } from "react-router"
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from "./shadcn/ui/tooltip"
-
-interface Props {
-	linkTo: PageNames
-	children: React.ReactNode
-	noSpaceBefore?: boolean
-	noSpaceAfter?: boolean
-}
-
-export default function DottedUnderlineText(props: Props) {
-	const {
-		linkTo,
-		children,
-		noSpaceBefore = false,
-		noSpaceAfter = false
-	} = props
-
-	return (
-		<>
-			{!noSpaceBefore && <>&nbsp;</>}
-			<span className="hover:underline hover:decoration-dotted">
-				<Link to={linkTo}>
-					{children}
-				</Link>
-			</span>
-			{!noSpaceAfter && <>&nbsp;</>}
-		</>
-	)
-}
 
 interface TooltipProps {
 	children: React.ReactNode

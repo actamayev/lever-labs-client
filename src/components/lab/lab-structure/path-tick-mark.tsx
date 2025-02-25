@@ -1,16 +1,18 @@
-interface PathMarkProps {
+import { useCallback } from "react"
+
+interface PathTickMarkProps {
     startPosition: { x: number; y: number }
     endPosition: { x: number; y: number }
     arcDirection?: ArcDirection
 }
 
-export default function PathMark(props: PathMarkProps) {
+export default function PathTickMark(props: PathTickMarkProps) {
 	const { startPosition, endPosition, arcDirection = "straight" } = props
 	const dx = endPosition.x - startPosition.x
 	const dy = endPosition.y - startPosition.y
 	const length = Math.sqrt(dx * dx + dy * dy)
 
-	const getPathData = () => {
+	const getPathData = useCallback(() => {
 		if (arcDirection === "straight") {
 			return `
                 M ${startPosition.x} ${startPosition.y}
@@ -45,7 +47,7 @@ export default function PathMark(props: PathMarkProps) {
 			${control2X} ${control2Y}
 			${endPosition.x} ${endPosition.y}
 		`
-	}
+	}, [arcDirection, dx, dy, endPosition.x, endPosition.y, startPosition.x, startPosition.y])
 
 	const numberOfDashes = Math.floor(length / 20)
 

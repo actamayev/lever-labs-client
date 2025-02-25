@@ -1,18 +1,17 @@
-import { ReactElement } from "react"
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
+import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 
 interface Props {
-    icon: ReactElement
     lessonProgressPercent: number
 	lessonTitle: Element1Lessons
 }
 
-export default function LessonProgressIconContainer({ icon, lessonProgressPercent, lessonTitle }: Props) {
+export default function LessonProgressIconContainer({ lessonProgressPercent, lessonTitle }: Props) {
 	// Ensure progress is between 0 and 100
 	const progress = Math.min(100, Math.max(0, lessonProgressPercent))
 
@@ -71,7 +70,7 @@ export default function LessonProgressIconContainer({ icon, lessonProgressPercen
 
 						{/* Icon */}
 						<div className="relative z-10">
-							{icon}
+							<GetLessonIconFromActivityName lessonTitle={lessonTitle} />
 						</div>
 					</div>
 				</TooltipTrigger>

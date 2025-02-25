@@ -78,8 +78,8 @@ function NavUser() {
 						</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<ThemeTogglerDropdownItem />
-						<AddAnotherPipButton />
-						<NavigateToSettingsPage />
+						{/* <AddAnotherPipButton /> */}
+						{/* <NavigateToSettingsPage /> */}
 						<DropdownMenuSeparator />
 						<LogoutButton />
 					</DropdownMenuContent>

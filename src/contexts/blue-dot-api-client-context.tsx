@@ -4,10 +4,12 @@ import AuthDataService from "../services/auth-data-service"
 import MiscDataService from "../services/misc-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import PersonalInfoDataService from "../services/personal-info-data-service"
+import LabActivityTrackingDataService from "../services/lab-activity-tracking-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient)
+	public labActivityTrackingDataService: LabActivityTrackingDataService = new LabActivityTrackingDataService(this.httpClient)
 	public miscDataService: MiscDataService = new MiscDataService(this.httpClient)
 	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient)
 	public pipDataService: PipDataService = new PipDataService(this.httpClient)
@@ -18,6 +20,7 @@ class BlueDotApiClient {
 	private initializeServices() {
 		this.httpClient = new BlueDotHttpClient()
 		this.authDataService = new AuthDataService(this.httpClient)
+		this.labActivityTrackingDataService = new LabActivityTrackingDataService(this.httpClient)
 		this.miscDataService = new MiscDataService(this.httpClient)
 		this.personalInfoDataService = new PersonalInfoDataService(this.httpClient)
 		this.pipDataService = new PipDataService(this.httpClient)

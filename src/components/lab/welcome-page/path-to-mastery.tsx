@@ -47,7 +47,7 @@ export default function PathToMastery() {
 							<CustomCompass className="w-7 h-7 text-red-500 absolute left-0 top-1/2 -translate-y-1/2" />
 						</div>
 					}
-					elementLink="/lab/element-2"
+					elementLink="/lab/element-1"
 					iconSize="size-20"
 					backgroundSize="size-32"
 					subtitle="Write programs that make use of multiple sensors."
@@ -68,7 +68,7 @@ export default function PathToMastery() {
 							<Timer className="w-10 h-10 text-green-500/70 absolute -bottom-2 -left-2" />
 						</>
 					}
-					elementLink="/lab/element-3"
+					elementLink="/lab/element-1"
 					iconSize="size-20"
 					backgroundSize="size-32"
 					subtitle="Take on complex challenges to test your limits."
