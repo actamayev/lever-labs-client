@@ -1,9 +1,9 @@
-import ChameleonCode from "../components/lab/element-2/chameleon/chameleon-code"
-import ChameleonVideo from "../components/lab/element-2/chameleon/chameleon-video"
-import ChameleonReading from "../components/lab/element-2/chameleon/chameleon-reading"
-import ObstacleAvoidanceCode from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-code"
-import ObstacleAvoidanceVideo from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-video"
-import ObstacleAvoidanceReading from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-reading"
+// import ChameleonCode from "../components/lab/element-2/chameleon/chameleon-code"
+// import ChameleonVideo from "../components/lab/element-2/chameleon/chameleon-video"
+// import ChameleonReading from "../components/lab/element-2/chameleon/chameleon-reading"
+// import ObstacleAvoidanceCode from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-code"
+// import ObstacleAvoidanceVideo from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-video"
+// import ObstacleAvoidanceReading from "../components/lab/element-2/obstacle-avoidance/obstacle-avoidance-reading"
 
 const element2Routes: ElementRoutes[] = [
 	// {
