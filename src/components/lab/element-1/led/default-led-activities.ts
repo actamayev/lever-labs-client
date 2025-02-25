@@ -1,4 +1,3 @@
-// TODO: Remove the progress, lessonNAme, and activityType (retrieve from backend)
 const defaultLedActivities: DefaultActivity[] = [
 	{
 		activityUrl: "/lab/element-1/led/reading/intro-to-leds",

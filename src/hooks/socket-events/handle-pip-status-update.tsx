@@ -1,8 +1,8 @@
 import { useCallback } from "react"
-import { Button } from "../../components/shadcn/ui/button"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
+import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
 
 export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => void {
 	const pipClass = usePipContext()
@@ -14,16 +14,13 @@ export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => v
 		pipClass.updatePipConnectionStatus(data)
 		const { newConnectionStatus } = data
 		if (newConnectionStatus === "online") {
-			// 1/29/25 TODO: Change this to be a <TactileButton />
 			const actionElement = (
-				<Button
+				<BlackWhiteTactileButton
+					shadowHeight={2}
 					onClick={() => requestToConnectToPip(data.pipUUID)}
-					className="bg-white hover:bg-zinc-100 dark:bg-zinc-950 dark:hover:bg-zinc-800
-					text-black dark:text-white transition-none"
-					variant="tactile"
 				>
 					{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
-				</Button>
+				</BlackWhiteTactileButton>
 			)
 
 			let title

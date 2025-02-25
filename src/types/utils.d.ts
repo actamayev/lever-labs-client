@@ -10,7 +10,6 @@ declare global {
 	type EndpointHeaders =
 		| "/auth"
 		| "/lab-activity-tracking"
-		| "/lab-demo"
 		| "/misc"
 		| "/pip"
 		| "/personal-info"
