@@ -11,7 +11,7 @@ import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 
-// TODO: Make the landing page px-4 for mobile
+// 2/15/25 TODO: Make the landing page px-4 for mobile
 // 1/1/25 TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
 	return (

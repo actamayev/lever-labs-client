@@ -22,6 +22,9 @@ export default function useHandleMotorControl(): (motorControl: MotorControlInpu
 			return toast.negative({ title: "Please add a Pip" })
 		}
 
+		if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
+			return toast.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
+		}
 		// Only emit if state has changed
 		if (isEqual(labDemoClass.motorState, motorControl)) return
 		labDemoClass.setMotorState(motorControl) // Update to handle object instead of Set

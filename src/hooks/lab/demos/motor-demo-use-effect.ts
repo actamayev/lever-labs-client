@@ -1,5 +1,5 @@
 import isEmpty from "lodash-es/isEmpty"
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import useHandleMotorControl from "./handle-motor-control"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 
@@ -22,7 +22,7 @@ const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
 export default function useMotorDemoUseEffect(): void {
 	const labDemoClass = useLabDemoContext()
 	const handleMotorControl = useHandleMotorControl()
-	const [pressedKeys, setPressedKeys] = useState<Map<MotorDirection, number>>(new Map())
+	const pressedKeysRef = useRef<Map<MotorDirection, number>>(new Map())
 
 	const computeMotorControl = (keys: Map<MotorDirection, number>): MotorControlInput => {
 		const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }
@@ -50,29 +50,33 @@ export default function useMotorDemoUseEffect(): void {
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
-			if (labDemoClass.activeDemoName !== "Motor RTC") return
+			if (labDemoClass.activeDemoName !== "Real-time motor control") return
 			const key = event.key.toLowerCase()
 			const mapping = keyMappings[key]
 			if (!mapping) return
-			setPressedKeys((prev) => {
-				const newMap = new Map(prev)
-				newMap.set(mapping.direction, Date.now())
-				handleMotorControl(computeMotorControl(newMap)) // Immediate update
-				return newMap
-			})
+
+			// Update ref directly
+			const newMap = new Map(pressedKeysRef.current)
+			newMap.set(mapping.direction, Date.now())
+			pressedKeysRef.current = newMap
+
+			// Call motor control with updated map
+			handleMotorControl(computeMotorControl(newMap))
 		}
 
 		const handleKeyUp = (event: KeyboardEvent): void => {
-			if (labDemoClass.activeDemoName !== "Motor RTC") return
+			if (labDemoClass.activeDemoName !== "Real-time motor control") return
 			const key = event.key.toLowerCase()
 			const mapping = keyMappings[key]
 			if (!mapping) return
-			setPressedKeys((prev) => {
-				const newMap = new Map(prev)
-				newMap.delete(mapping.direction)
-				handleMotorControl(computeMotorControl(newMap)) // Immediate update
-				return newMap
-			})
+
+			// Update ref directly
+			const newMap = new Map(pressedKeysRef.current)
+			newMap.delete(mapping.direction)
+			pressedKeysRef.current = newMap
+
+			// Call motor control with updated map
+			handleMotorControl(computeMotorControl(newMap))
 		}
 
 		window.addEventListener("keydown", handleKeyDown)
@@ -85,7 +89,10 @@ export default function useMotorDemoUseEffect(): void {
 	}, [labDemoClass, labDemoClass.activeDemoName, handleMotorControl])
 
 	useEffect(() => {
-		if (labDemoClass.activeDemoName !== "Motor RTC" && !isEmpty(labDemoClass.motorState)) {
+		if (
+			labDemoClass.activeDemoName !== "Real-time motor control" &&
+			!isEmpty(labDemoClass.motorState)
+		) {
 			handleMotorControl({ vertical: 0, horizontal: 0 })
 		}
 	}, [labDemoClass.activeDemoName, labDemoClass.motorState, handleMotorControl])

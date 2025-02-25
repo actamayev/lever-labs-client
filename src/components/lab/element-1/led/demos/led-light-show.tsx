@@ -1,32 +1,17 @@
-import { Rainbow } from "lucide-react"
-import useMotorDemoUseEffect from "../../../../../hooks/lab/demos/motor-demo-use-effect"
+import { CustomWheel } from "../../../../icons/custom-wheel"
 import LabDemoComponent from "../../../demo/lab-demo-component"
+import useMotorDemoUseEffect from "../../../../../hooks/lab/demos/motor-demo-use-effect"
 
 const ledDemoDeliverables: [string] = [
 	"LED Light Show"
 ]
 
-const labDemos: [Demo] = [
+const ledDemos: [Demo] = [
 	{
-		demoTitle: "Motor RTC",
-		demoDescription: "Description 1",
-		demoIcon: Rainbow
-	},
-	// {
-	// 	demoTitle: "LED Rainbow",
-	// 	demoDescription: "Description 2",
-	// 	demoIcon: Rainbow
-	// },
-	// {
-	// 	demoTitle: "LED Pulse",
-	// 	demoDescription: "Description 2",
-	// 	demoIcon: Rainbow
-	// },
-	// {
-	// 	demoTitle: "LED 4",
-	// 	demoDescription: "Description 4",
-	// 	demoIcon: Rainbow
-	// }
+		demoTitle: "Real-time motor control",
+		demoDescription: "Drive Pip around using arrow keys",
+		demoIcon: CustomWheel
+	}
 ]
 
 export default function LEDLightShow() {
@@ -39,7 +24,7 @@ export default function LEDLightShow() {
 			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="LED Light Show"
 			demoDeliverables={ledDemoDeliverables}
-			demos={labDemos}
+			demos={ledDemos}
 		/>
 	)
 }

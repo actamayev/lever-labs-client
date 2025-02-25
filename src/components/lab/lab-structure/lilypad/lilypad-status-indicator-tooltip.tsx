@@ -21,7 +21,7 @@ export default function LilypadStatusIndicatorTooltip(props: Props) {
 		return "In progress"
 	}, [activityStatus])
 
-	// TODO: Fix warning in console logs
+	// 2/15/25 TODO: Fix warning in console logs
 	return (
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
