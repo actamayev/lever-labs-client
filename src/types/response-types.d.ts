@@ -63,6 +63,16 @@ declare global {
 		success: boolean
 		error?: string
 	}
+
+	interface SensorPayload {
+		leftWheelRPM: number
+		rightWheelRPM: number
+	}
+
+	type IncomingSensorData = {
+		pipUUID: PipUUID
+		sensorPayload: SensorPayload
+	}
 }
 
 export {}
