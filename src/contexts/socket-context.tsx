@@ -66,6 +66,9 @@ class SocketClass extends EventEmitter {
 		this._socket.on("motor-control-ack", (response: { success: boolean, error?: string }) => {
 			this.emit("motorControlAck", response)
 		})
+		this._socket.on("sensor-data", (data: IncomingSensorData) => {
+			this.emit("incomingSensorData", data) // Emit event with processed data
+		})
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlDataToSend): void => {
