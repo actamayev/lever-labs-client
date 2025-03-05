@@ -4,6 +4,7 @@ declare global {
 	| `voltage-${number}`
 	| `rgb-leds-${number}`
 	| `intro-to-code-${number}`
+	| `leds-and-loops-${number}`
 
 	type ContentBlockID =
 	| LEDReadingBlockID

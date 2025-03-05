@@ -11,6 +11,11 @@ import BlueLEDs from "../../components/lab/element-1/led/demos/blue-leds"
 import CheckButtonPress from "../../components/lab/element-1/led/demos/check-button-press"
 import LEDControl from "../../components/lab/element-1/led/code/led-control"
 import SimpleLEDControl from "../../components/lab/element-1/led/demos/simple-led-control"
+import LedSummary from "../../components/lab/element-1/led/led-summary"
+import LEDsAndLoopsReading from "../../components/lab/element-1/led/readings/leds-and-loops/leds-and-loops-reading"
+import LEDCountingLoop from "../../components/lab/element-1/led/demos/led-counting-loop"
+import LEDBreathing from "../../components/lab/element-1/led/demos/led-breathing"
+import BreathingLEDs from "../../components/lab/element-1/led/code/breathing-leds"
 
 const ledRoutes: ElementChild[] = [
 	{
@@ -63,28 +68,25 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Reading/leds-and-loops",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+		element: <AnimatedTransitionWrapper><LEDsAndLoopsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-counting-loop",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+		element: <AnimatedTransitionWrapper><LEDCountingLoop /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-breathing",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+		element: <AnimatedTransitionWrapper><LEDBreathing /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/breathing-leds",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+		element: <BreathingLEDs />
 	},
-	{
-		path: "Demo/check-button-press",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
-	},
-	{
-		path: "Reading/gpio",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
-	},
+	// {
+	// 	path: "Reading/gpio",
+	// 	element: <AnimatedTransitionWrapper><GPIO /></AnimatedTransitionWrapper>
+	// },
+	// TODO: Add a reading for individual LED control
 	{
 		path: "Demo/led-in-circle",
 		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
@@ -103,7 +105,7 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Summary",
-		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+		element: <LedSummary />
 	}
 ]
 
