@@ -16,8 +16,10 @@ export default function LEDControl() {
 		<LabCodeComponent
 			previousPageLink="/lab/element-1/led/reading/intro-to-code"
 			previousPageActivity="Reading"
+			previousPageTooltip="Intro to Code"
 			nextPageActivity="Reading"
 			nextPageLink="/lab/element-1/led/reading/leds-and-loops"
+			nextPageTooltip="LEDs and Loops"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={200 / 6}

@@ -6,8 +6,10 @@ export default function IntroToLEDsReading() {
 		<LabReadingComponent
 			previousPageLink={null}
 			previousPageActivity={null}
+			previousPageTooltip={null}
 			nextPageLink="/lab/element-1/led/reading/voltage"
 			nextPageActivity="Reading"
+			nextPageTooltip="Voltage"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}

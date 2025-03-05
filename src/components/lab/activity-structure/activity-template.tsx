@@ -8,8 +8,10 @@ interface Props {
 	activityType: ActivityType
 	previousPageLink: LabPages | null
 	previousPageActivity: ActivityType | null
+	previousPageTooltip: string | null
 	nextPageLink: LabPages | null
 	nextPageActivity: ActivityType | null
+	nextPageTooltip: string | null
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
@@ -22,8 +24,10 @@ function ActivityTemplate(props: Props) {
 	const {
 		previousPageLink,
 		previousPageActivity,
+		previousPageTooltip,
 		nextPageLink,
 		nextPageActivity,
+		nextPageTooltip,
 		element,
 		lessonTitle,
 		lessonProgressPercent,
@@ -63,6 +67,8 @@ function ActivityTemplate(props: Props) {
 					previousPageActivity={previousPageActivity}
 					nextPageLink={nextPageLink}
 					nextPageActivity={nextPageActivity}
+					previousPageTooltip={previousPageTooltip}
+					nextPageTooltip={nextPageTooltip}
 				/>
 			)}
 		</div>

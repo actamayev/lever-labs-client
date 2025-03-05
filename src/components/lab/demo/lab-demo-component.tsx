@@ -25,9 +25,11 @@ export default function LabDemoComponent(props: Props) {
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={null}
-			nextPageLink={null}
 			previousPageActivity={null}
+			previousPageTooltip={null}
+			nextPageLink={null}
 			nextPageActivity={null}
+			nextPageTooltip={null}
 			activityType="Demo"
 			isDemo={true}
 		>

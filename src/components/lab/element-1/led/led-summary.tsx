@@ -5,8 +5,10 @@ export default function LedSummary() {
 		<LabSummaryComponent
 			previousPageLink="/lab/element-1/led/code/warehouse-pip"
 			previousPageActivity="Code"
+			previousPageTooltip="Warehouse Pip"
 			nextPageLink={null}
 			nextPageActivity={null}
+			nextPageTooltip={null}
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100}

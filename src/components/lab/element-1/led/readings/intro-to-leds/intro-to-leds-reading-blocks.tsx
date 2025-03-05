@@ -47,6 +47,14 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 				<ReadingBlockWithImage>
 					A semiconductor is a material that can conduct electricity, but not as easily as a conductor like metal, and not as poorly as an insulator like rubber. It’s somewhere in between, making it really useful for controlling how electricity flows in devices.
 				</ReadingBlockWithImage>
+			</div>
+		),
+		action: { type: "continue" }
+	},
+	{
+		id: "intro-to-leds-4",
+		text: (
+			<div>
 				<ReadingBlockWithImage>
 					Let's set the stage:
 					It's helpful to think of a semiconductor as a cliff. Imagine that the top of the cliff has a reservoir full of water, and the bottom of the cliff is a dry riverbed.
@@ -96,7 +104,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		}
 	},
 	{
-		id: "intro-to-leds-4",
+		id: "intro-to-leds-5",
 		text: (
 			<div>
 				<ReadingBlockSectionHeader>

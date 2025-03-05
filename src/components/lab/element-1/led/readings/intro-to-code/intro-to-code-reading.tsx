@@ -4,10 +4,12 @@ import LabReadingComponent from "../../../../reading/lab-reading-component"
 export default function IntroToCodeReading() {
 	return (
 		<LabReadingComponent
-			previousPageLink={null}
-			previousPageActivity={null}
+			previousPageLink="/lab/element-1/led/reading/intro-to-leds"
+			previousPageActivity="Reading"
+			previousPageTooltip="Intro to LEDs"
 			nextPageLink="/lab/element-1/led/code/led-control"
 			nextPageActivity="Code"
+			nextPageTooltip="LED Control"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}

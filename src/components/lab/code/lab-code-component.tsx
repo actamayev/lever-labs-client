@@ -5,8 +5,10 @@ import ActivityTemplate from "../activity-structure/activity-template"
 interface Props {
 	previousPageLink: LabPages
 	previousPageActivity: ActivityType
+	previousPageTooltip: string | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
+	nextPageTooltip: string | null
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
@@ -19,8 +21,10 @@ export default function LabCodeComponent(props: Props) {
 	const {
 		previousPageLink,
 		previousPageActivity,
+		previousPageTooltip,
 		nextPageLink,
 		nextPageActivity,
+		nextPageTooltip,
 		element,
 		lessonTitle,
 		lessonProgressPercent,
@@ -35,8 +39,10 @@ export default function LabCodeComponent(props: Props) {
 			lessonProgressPercent={lessonProgressPercent}
 			previousPageLink={previousPageLink}
 			previousPageActivity={previousPageActivity}
+			previousPageTooltip={previousPageTooltip}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			nextPageTooltip={nextPageTooltip}
 			activityType="Code"
 		>
 			<LabCodeMainContent
