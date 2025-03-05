@@ -51,6 +51,8 @@ declare global {
 	| "RGB LEDs"
 	| "Introduction to Code"
 	| "LEDs and Loops"
+	| "LED Advantages"
+	| "LEDs in Robotics"
 }
 
 export {}

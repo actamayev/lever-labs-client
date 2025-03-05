@@ -10,7 +10,7 @@ import {
 interface Props {
     children: React.ReactNode
     Icon: LucideIcon
-    tooltipMessage: string  // New prop for tooltip message
+    tooltipMessage: string
 }
 
 export default function DidYouKnow(props: Props) {
