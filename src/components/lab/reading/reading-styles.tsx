@@ -33,14 +33,14 @@ export function ReadingBlockWithImage(props: ReadingBlockProps) {
 
 	return (
 		<div className="flex flex-col md:flex-row gap-6 mb-8 items-center">
-			<div className={`${hasVisual ? "md:w-2/3" : "w-full"}`}>
+			<div className={`${hasVisual ? "md:w-3/4" : "w-full"}`}>
 				<div className="text-2xl leading-relaxed">
 					{children}
 				</div>
 			</div>
 
 			{hasVisual && (
-				<div className="md:w-1/3 flex flex-col items-center justify-center">
+				<div className="md:w-1/4 flex flex-col items-center justify-center">
 					{imageSrc ? (
 					// Render image if imageSrc is provided
 						<img

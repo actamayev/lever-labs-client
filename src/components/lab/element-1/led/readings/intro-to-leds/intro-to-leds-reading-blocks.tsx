@@ -1,4 +1,7 @@
 /* eslint-disable max-len */
+import { Cpu } from "lucide-react"
+import DefinitionText from "../../../../reading/definition-text"
+import { BlueColoredText, OrangeColoredText } from "../../../../reading/colored-text"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const introToLedsReadingBlocks: ContentBlock[] = [
@@ -7,10 +10,10 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockHeader>
-                   Introduction to LEDs
+					Introduction to LEDs
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					We'll start our journey with one of the most common electronic components in the world - LEDs. They're not just in the screen you're reading this on, but they're also the "eyes" and indicators of modern robots, including Pip. Pip uses RGB and IR LEDs to communicate its status and interact with its environment. LEDs are revolutionizing everything from robot vision systems to space exploration.
+					We'll start our journey with one of the most common electronic components in the world - LEDs. They're not just in the screen you're reading this on, but they're also the "eyes" and indicators of modern robots, including Pip. Pip uses LEDs to communicate its status and interact with its environment. LEDs are revolutionizing everything from robot vision systems to space exploration.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -24,7 +27,10 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 					What is an LED?
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					LED stands for Light Emitting Diode - a device that converts electrical energy directly into light. Unlike traditional light sources, LEDs are precise, efficient, and perfect for robotics applications. But before we dive into how they work, let's see what these amazing components can do!
+					<DefinitionText noSpaceBefore={true}>LED</DefinitionText>
+					stands for
+					<DefinitionText>Light Emitting Diode</DefinitionText>
+					- a device that converts electrical energy directly into light. Unlike traditional light sources, LEDs are precise, efficient, and perfect for robotics applications. But before we dive into how they work, let's see what these amazing components can do!
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -42,11 +48,14 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					Now that we've seen what LEDs can do, let's understand the science that makes this possible.
-					To understand how LEDs work, we first need to briefly discuss how semiconductors work.
+					To understand how LEDs work, we should first discuss how semiconductors work.
 				</ReadingBlockWithImage>
-				<ReadingBlockWithImage>
-					A semiconductor is a material that can conduct electricity, but not as easily as a conductor like metal, and not as poorly as an insulator like rubber. It’s somewhere in between, making it really useful for controlling how electricity flows in devices.
-				</ReadingBlockWithImage>
+				<ReadingBlockWithImage svgComponent={<Cpu size={150}/>}>
+					A
+					<DefinitionText>semiconductor</DefinitionText>
+					is like
+					<DefinitionText>a door for electricity that can be opened or closed.</DefinitionText>
+					Unlike regular materials that are always open (conductors) or always closed (insulators), semiconductors can be switched between states.				</ReadingBlockWithImage>
 			</div>
 		),
 		action: { type: "continue" }
@@ -56,12 +65,34 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockWithImage>
-					Let's set the stage:
-					It's helpful to think of a semiconductor as a cliff. Imagine that the top of the cliff has a reservoir full of water, and the bottom of the cliff is a dry riverbed.
+					It's helpful to think of a semiconductor as a cliff. Imagine
+					<BlueColoredText>a lake</BlueColoredText>
+					at the top of the cliff, and a
+					<OrangeColoredText noSpaceAfter>dry riverbed</OrangeColoredText> the bottom.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					In a semiconductor, the reservoir is known as the high-energy N-layer (negative layer). The N-layer is filled with lots of electrons (tiny particles carrying negative charge). The dry riverbed is known as the low-energy P-layer (positive layer). It’s full of empty spaces (called holes), ready to be filled by the electrons from the N-layer.
-					This combination of the P and N layers is called P-N junction, the heart of every LED.
+					In a semiconductor, the
+					<BlueColoredText>lake</BlueColoredText>
+					is known as the
+					<BlueColoredText noSpaceAfter>high-energy N-layer (negative layer)</BlueColoredText>.
+					The N-layer is filled with many
+					<DefinitionText noSpaceAfter>electrons</DefinitionText>
+					, which are
+					<DefinitionText noSpaceAfter>tiny particles carrying negative charge</DefinitionText>.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					The
+					<OrangeColoredText>dry riverbed</OrangeColoredText>
+					is known as the
+					<OrangeColoredText noSpaceAfter>low-energy P-layer (positive layer)</OrangeColoredText>
+					. It’s full of empty spaces (called holes), ready to be filled by the electrons from the N-layer.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					This
+					<DefinitionText>combination of the P and N layers</DefinitionText>
+					is called a
+					<DefinitionText noSpaceAfter>P-N junction</DefinitionText>
+					, the heart of every LED.
 				</ReadingBlockWithImage>
 			</div>
 		),
