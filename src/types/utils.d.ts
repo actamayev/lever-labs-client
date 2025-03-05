@@ -52,7 +52,7 @@ declare global {
 
 	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
 
-	type PageTransitionDirections = null | "left" | "right"
+	type PageTransitionDirections = null | "left" | "right" | "up" | "down"
 }
 
 export {}

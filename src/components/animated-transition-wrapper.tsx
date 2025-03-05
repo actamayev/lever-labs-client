@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { motion } from "framer-motion"
@@ -7,17 +8,23 @@ import { usePageTransitionContext } from "../contexts/page-transition-context"
 // Change this animation to be more like  https://tympanus.net/Development/PageTransitions/ differnet easing
 const variants = {
 	enter: (direction: PageTransitionDirections) => {
-		if (isNull(direction)) return { x: "0%", opacity: 1 } // No animation if direction is null
+		if (isNull(direction)) return { y: "0%", x: "0%", opacity: 1 }
 		return {
-			x: direction === "left" ? "100%" : "-100%",
+			x: direction === "left" ? "100%" :
+				direction === "right" ? "-100%" : "0%",
+			y: direction === "up" ? "100%" :
+				direction === "down" ? "-100%" : "0%",
 			opacity: 0,
 		}
 	},
-	center: { x: "0%", opacity: 1 },
+	center: { x: "0%", y: "0%", opacity: 1 },
 	exit: (direction: PageTransitionDirections) => {
-		if (isNull(direction)) return { x: "0%", opacity: 1 } // No exit animation if direction is null
+		if (isNull(direction)) return { y: "0%", x: "0%", opacity: 1 }
 		return {
-			x: direction === "right" ? "-100%" : "100%",
+			x: direction === "right" ? "-100%" :
+				direction === "left" ? "100%" : "0%",
+			y: direction === "down" ? "-100%" :
+				direction === "up" ? "100%" : "0%",
 			opacity: 0,
 		}
 	},

@@ -12,7 +12,7 @@ export function ReadingBlockHeader({ children } : ReadingHeaderProps) {
 
 export function ReadingBlockSectionHeader({ children } : ReadingHeaderProps) {
 	return (
-		<h2 className="text-3xl font-bold mb-4">
+		<h2 className="text-3xl font-bold mb-4 text-emerald-700 dark:text-emerald-300 border-l-4 border-emerald-700 pl-3">
 			{children}
 		</h2>
 	)

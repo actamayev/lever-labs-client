@@ -16,13 +16,19 @@ function ReadingProgressBar() {
 				<TooltipTrigger asChild>
 					<div className="w-full h-4 bg-zinc-200 rounded-full dark:bg-zinc-700 overflow-hidden">
 						<div
-							className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full
-							transition-all duration-300 ease-out"
+							className="relative h-full rounded-full transition-all duration-300 ease-out bg-green-500"
 							style={{
 								width: `${labReadingClass.readingProgressPercentage}%`,
-								boxShadow: "0 0 10px rgba(34, 197, 94, 0.3)" // subtle glow
 							}}
-						/>
+						>
+							<div
+								className="absolute top-1 left-2 right-2 rounded-full"
+								style={{
+									background: "rgb(45, 205, 94)",
+									height: "3px"
+								}}
+							/>
+						</div>
 					</div>
 				</TooltipTrigger>
 				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">

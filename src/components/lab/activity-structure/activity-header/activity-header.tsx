@@ -1,12 +1,9 @@
-import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
-import { useNavigate } from "react-router"
-import { ArrowLeft, X } from "lucide-react"
+import { X } from "lucide-react"
 import { Button } from "../../../shadcn/ui/button"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
-import { usePageTransitionContext } from "../../../../contexts/page-transition-context"
 
 interface Props {
 	element: ElementNumbers
@@ -25,13 +22,6 @@ export default function ActivityHeader(props: Props) {
 		isDemo
 	} = props
 	const typedNavigate = useTypedNavigate()
-	const navigate = useNavigate()
-	const pageTransitionClass = usePageTransitionContext()
-
-	const goBack = useCallback(() => {
-		pageTransitionClass.setDirection("right")
-		navigate(-1)
-	}, [navigate, pageTransitionClass])
 
 	return (
 		<header
@@ -40,16 +30,7 @@ export default function ActivityHeader(props: Props) {
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					{isDemo ? (
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => goBack()}
-							className="!p-6 dark:hover:bg-zinc-800"
-						>
-							<ArrowLeft className="!h-6 !w-6" />
-						</Button>
-					) : (
+					{!isDemo && (
 						<Button
 							variant="ghost"
 							size="icon"

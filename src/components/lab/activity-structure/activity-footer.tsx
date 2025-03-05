@@ -8,6 +8,8 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
+import { useCallback } from "react"
+import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 
 interface Props {
 	previousPageLink: LabPages | null
@@ -28,6 +30,18 @@ export default function ActivityFooter(props: Props) {
 		nextPageTooltip
 	} = props
 	const navigate = useTypedNavigate()
+	const pageTransitionClass = usePageTransitionContext()
+
+	const goToPreviousPage = useCallback(() => {
+		if (!previousPageLink) return
+		pageTransitionClass.setDirection("right")
+		navigate(previousPageLink)
+	}, [navigate, previousPageLink, pageTransitionClass])
+
+	const goToNextPage = useCallback(() => {
+		pageTransitionClass.setDirection("left")
+		navigate(nextPageLink)
+	}, [navigate, nextPageLink, pageTransitionClass])
 
 	return (
 		<footer
@@ -41,7 +55,7 @@ export default function ActivityFooter(props: Props) {
 							<Tooltip>
 								<TooltipTrigger asChild>
 									<BlueTactileButton
-										onClick={() => navigate(previousPageLink)}
+										onClick={goToPreviousPage}
 										className="!text-xl h-12"
 									>
 										<ArrowLeft className="!h-6 !w-6" />
@@ -55,7 +69,7 @@ export default function ActivityFooter(props: Props) {
 						</TooltipProvider>
 					) : (
 						<BlueTactileButton
-							onClick={() => navigate(previousPageLink)}
+							onClick={goToPreviousPage}
 							className="!text-xl h-12"
 						>
 							<ArrowLeft className="!h-6 !w-6" />
@@ -65,12 +79,20 @@ export default function ActivityFooter(props: Props) {
 				)}
 			</div>
 
-			{nextPageTooltip ? (
+			{!nextPageTooltip ? (
+				<BlueTactileButton
+					onClick={goToNextPage}
+					className="!text-xl h-12"
+				>
+					UP NEXT: {toUpper(nextPageActivity)}
+					<ArrowRight className="!h-6 !w-6" />
+				</BlueTactileButton>
+			) : (
 				<TooltipProvider delayDuration={0}>
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<BlueTactileButton
-								onClick={() => navigate(nextPageLink)}
+								onClick={goToNextPage}
 								className="!text-xl h-12"
 							>
 								UP NEXT: {toUpper(nextPageActivity)}
@@ -82,14 +104,6 @@ export default function ActivityFooter(props: Props) {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
-			) : (
-				<BlueTactileButton
-					onClick={() => navigate(nextPageLink)}
-					className="!text-xl h-12"
-				>
-					UP NEXT: {toUpper(nextPageActivity)}
-					<ArrowRight className="!h-6 !w-6" />
-				</BlueTactileButton>
 			)}
 		</footer>
 	)
