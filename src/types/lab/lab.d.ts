@@ -49,6 +49,7 @@ declare global {
 	| "Introduction to LEDs"
 	| "Voltage"
 	| "RGB LEDs"
+	| "Introduction to Code"
 }
 
 export {}

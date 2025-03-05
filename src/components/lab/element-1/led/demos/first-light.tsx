@@ -5,29 +5,6 @@ const ledDemoDeliverables: [string] = [
 	"First Light"
 ]
 
-// const labDemos: [Demo, Demo, Demo, Demo] = [
-// 	{
-// 		demoTitle: "LED Solid Color",
-// 		demoDescription: "Description 1",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED Rainbow",
-// 		demoDescription: "Description 2",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED Pulse",
-// 		demoDescription: "Description 2",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED 4",
-// 		demoDescription: "Description 4",
-// 		demoIcon: Rainbow
-// 	}
-// ]
-
 export default function FirstLight() {
 	return (
 		<LabDemoComponent

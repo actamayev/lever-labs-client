@@ -1,10 +1,16 @@
+import FirstLight from "../../components/lab/element-1/led/demos/first-light"
+import ColorMixing from "../../components/lab/element-1/led/demos/color-mixing"
 import LEDLightShow from "../../components/lab/element-1/led/demos/led-light-show"
 import AnimatedTransitionWrapper from "../../components/animated-transition-wrapper"
-import IntroToLEDsReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
 import VoltageReading from "../../components/lab/element-1/led/readings/voltage/voltage-reading"
 import RGBLedsReading from "../../components/lab/element-1/led/readings/rgb-leds/rgb-leds-reading"
-import ColorMixing from "../../components/lab/element-1/led/demos/color-mixing"
-import FirstLight from "../../components/lab/element-1/led/demos/first-light"
+import IntroToLEDsReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
+import IntroToCodeReading from "../../components/lab/element-1/led/readings/intro-to-code/intro-to-code-reading"
+import MultiButtonLEDControl from "../../components/lab/element-1/led/demos/multi-button-led-control"
+import BlueLEDs from "../../components/lab/element-1/led/demos/blue-leds"
+import CheckButtonPress from "../../components/lab/element-1/led/demos/check-button-press"
+import LEDControl from "../../components/lab/element-1/led/code/led-control"
+import SimpleLEDControl from "../../components/lab/element-1/led/demos/simple-led-control"
 
 const ledRoutes: ElementChild[] = [
 	{
@@ -33,67 +39,71 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Reading/intro-to-code",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><IntroToCodeReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/blue-leds",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><BlueLEDs /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/check-button-press",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><CheckButtonPress /></AnimatedTransitionWrapper>
+	},
+	{
+		path: "Demo/simple-led-control",
+		element: <AnimatedTransitionWrapper><SimpleLEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/multi-button-led-control",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><MultiButtonLEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/led-control",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/leds-and-loops",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-counting-loop",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-breathing",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/breathing-leds",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/check-button-press",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/gpio",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-in-circle",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/led-advantages",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/leds-in-robotics",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/warehouse-pip",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Summary",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
 	}
 ]
 

@@ -15,6 +15,7 @@ declare global {
 		| "/lab/element-1/led/reading/intro-to-code"
 		| "/lab/element-1/led/demo/blue-leds"
 		| "/lab/element-1/led/demo/check-button-press"
+		| "/lab/element-1/led/demo/simple-led-control"
 		| "/lab/element-1/led/demo/multi-button-led-control"
 		| "/lab/element-1/led/code/led-control"
 		| "/lab/element-1/led/reading/leds-and-loops"
