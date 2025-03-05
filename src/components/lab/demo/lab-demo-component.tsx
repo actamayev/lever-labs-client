@@ -39,9 +39,6 @@ function LabDemoComponent(props: Props) {
 			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={null}
-			previousPageActivity={null}
-			previousPageTooltip={null}
 			nextPageLink={null}
 			nextPageActivity={null}
 			nextPageTooltip={null}

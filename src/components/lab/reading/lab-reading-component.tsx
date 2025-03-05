@@ -2,9 +2,6 @@ import ReadingContainer from "./reading-container"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	previousPageLink: LabPages | null
-	previousPageActivity: ActivityType | null
-	previousPageTooltip: string | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	nextPageTooltip: string | null
@@ -17,9 +14,6 @@ interface Props {
 
 export default function LabReadingComponent(props: Props) {
 	const {
-		previousPageLink,
-		previousPageActivity,
-		previousPageTooltip,
 		nextPageLink,
 		nextPageActivity,
 		nextPageTooltip,
@@ -34,9 +28,6 @@ export default function LabReadingComponent(props: Props) {
 			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={previousPageLink}
-			previousPageActivity={previousPageActivity}
-			previousPageTooltip={previousPageTooltip}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
 			nextPageTooltip={nextPageTooltip}

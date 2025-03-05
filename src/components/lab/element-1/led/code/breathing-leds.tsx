@@ -14,9 +14,6 @@ export default function BreathingLEDs() {
 	}
 	return (
 		<LabCodeComponent
-			previousPageLink="/lab/element-1/led/reading/leds-and-loops"
-			previousPageActivity="Reading"
-			previousPageTooltip="LEDs and Loops"
 			nextPageActivity="Reading"
 			nextPageLink="/lab/element-1/led/reading/gpio"
 			nextPageTooltip="GPIO"

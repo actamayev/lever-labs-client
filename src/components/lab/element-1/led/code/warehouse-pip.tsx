@@ -14,9 +14,6 @@ export default function WarhousePip() {
 	}
 	return (
 		<LabCodeComponent
-			previousPageLink="/lab/element-1/led/reading/leds-in-robotics"
-			previousPageActivity="Reading"
-			previousPageTooltip="LEDs in Robotics"
 			nextPageActivity="Summary"
 			nextPageLink="/lab/element-1/led/summary"
 			nextPageTooltip="LED Summary"

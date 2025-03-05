@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import { CustomEgg } from "../../../../../icons/custom-egg"
+import OrderedList from "../../../../reading/ordered-list"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const introToCodeReadingBlocks: ContentBlock[] = [
@@ -29,22 +30,26 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage svgComponent={<CustomEgg size={150}/>}>
 					For example, here's a simple recipe:
-					<ol className="list-decimal list-inside">
-						<li>Heat the pan</li>
-						<li>Add oil</li>
-						<li>Cook the egg</li>
-						<li>Flip when brown</li>
-						<li>Serve when done</li>
-					</ol>
+					<OrderedList
+						items={[
+							"Heat the pan",
+							"Add oil",
+							"Cook the egg",
+							"Flip when brown",
+							"Serve when done"
+						]}
+					/>
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					Similarly, we might tell Pip:
-					<ol className="list-decimal list-inside">
-						<li>Turn on the LED</li>
-						<li>Make it blue</li>
-						<li>Wait 1 second</li>
-						<li>Turn it off</li>
-					</ol>
+					<OrderedList
+						items={[
+							"Turn on the LED",
+							"Make it blue",
+							"Wait 1 second",
+							"Turn it off"
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),

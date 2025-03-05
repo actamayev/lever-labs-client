@@ -6,9 +6,6 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
 	activityType: ActivityType
-	previousPageLink: LabPages | null
-	previousPageActivity: ActivityType | null
-	previousPageTooltip: string | null
 	nextPageLink: LabPages | null
 	nextPageActivity: ActivityType | null
 	nextPageTooltip: string | null
@@ -22,9 +19,6 @@ interface Props {
 
 function ActivityTemplate(props: Props) {
 	const {
-		previousPageLink,
-		previousPageActivity,
-		previousPageTooltip,
 		nextPageLink,
 		nextPageActivity,
 		nextPageTooltip,
@@ -63,11 +57,8 @@ function ActivityTemplate(props: Props) {
 				(activityType !== "Reading" || labReadingClass.readingProgressPercentage === 100) &&
 			(
 				<ActivityFooter
-					previousPageLink={previousPageLink}
-					previousPageActivity={previousPageActivity}
 					nextPageLink={nextPageLink}
 					nextPageActivity={nextPageActivity}
-					previousPageTooltip={previousPageTooltip}
 					nextPageTooltip={nextPageTooltip}
 				/>
 			)}

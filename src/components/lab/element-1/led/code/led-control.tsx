@@ -14,9 +14,6 @@ export default function LEDControl() {
 	}
 	return (
 		<LabCodeComponent
-			previousPageLink="/lab/element-1/led/reading/intro-to-code"
-			previousPageActivity="Reading"
-			previousPageTooltip="Intro to Code"
 			nextPageActivity="Reading"
 			nextPageLink="/lab/element-1/led/reading/leds-and-loops"
 			nextPageTooltip="LEDs and Loops"

@@ -138,6 +138,18 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		id: "intro-to-leds-5",
 		text: (
 			<div>
+				<ReadingBlockWithImage>
+					When voltage is applied across this P-N junction, electrons from the N-layer 'fall' down the cliff into the holes in the P-layer.
+					This electron movement releases energy in the form of light - the key principle that makes LEDs work.
+				</ReadingBlockWithImage>
+			</div>
+		),
+		action: { type: "continue"}
+	},
+	{
+		id: "intro-to-leds-6",
+		text: (
+			<div>
 				<ReadingBlockSectionHeader>
 					Summary
 				</ReadingBlockSectionHeader>
@@ -145,7 +157,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 					LEDs (Light Emitting Diodes) are fundamental components in modern electronics, using semiconductors to convert electrical energy directly into light. They are essential in applications ranging from robot vision systems to device displays, where their precision and efficiency make them invaluable.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					At the heart of every LED is a P-N junction - think of it as a cliff with a reservoir of electrons (N-layer) at the top and empty spaces called holes (P-layer) at the bottom.
+					At the heart of every LED is a P-N junction - think of it as a cliff with a electrons (N-layer) at the top and empty spaces called holes (P-layer) at the bottom.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					In our next lesson, we'll explore how applying voltage creates the perfect conditions for electrons to flow across this junction, producing the light that makes LEDs work.
