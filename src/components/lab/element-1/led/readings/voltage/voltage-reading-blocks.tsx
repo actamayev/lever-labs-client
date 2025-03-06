@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import DidYouKnow from "../../../../reading/did-you-know"
-import OrderedList from "../../../../reading/ordered-list"
+import { NumberedList } from "../../../../reading/ordered-list"
 import { CustomSolar } from "../../../../../icons/custom-solar"
 import DefinitionText from "../../../../reading/definition-text"
 import { CustomBucket } from "../../../../../icons/custom-bucket"
@@ -46,8 +46,8 @@ const voltageReadingBlocks: ContentBlock[] = [
 					When we pour water into the lake, the lake overfills, and water begins to fall down the cliff, towards the dry riverbed at the bottom of the cliff.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					Here’s what happens:
-					<OrderedList
+					Here’s what happens in an LED:
+					<NumberedList
 						items={[
 							"A voltage is applied.",
 							"Electrons from the N-layer begin flowing toward the P-layer.",
@@ -56,7 +56,6 @@ const voltageReadingBlocks: ContentBlock[] = [
 							"Millions of these tiny flashes happen every second, producing the steady light we see."
 						]}
 					/>
-					We’ll dive into this process in further details in the next section, where we talk about colors
 				</ReadingBlockWithImage>
 			</div>
 		),

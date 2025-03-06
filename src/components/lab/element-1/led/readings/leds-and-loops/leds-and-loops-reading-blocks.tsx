@@ -2,6 +2,7 @@
 import { Clapperboard } from "lucide-react"
 import DidYouKnow from "../../../../reading/did-you-know"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
+import { BulletedList } from "../../../../reading/ordered-list"
 
 const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	{
@@ -9,7 +10,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockHeader>
-                   LEDs and Loops
+					LEDs and Loops
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
 					Have you ever noticed how your laptop's power button smoothly fades in and out when it's sleeping? Or how smart home devices have lights that gently pulse? Let's learn how to create these smooth "breathing" effects with Pip's LEDs using something called loops!
@@ -102,10 +103,14 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					Now we know how to:
-					- Use loops to repeat actions
-					- Create smooth animations using small changes
-					- Control LED brightness
-					- Make different types of breathing patterns
+					<BulletedList
+						items={[
+							"Use loops to repeat actions",
+							"Create smooth animations using small changes",
+							"Control LED brightness",
+							"Make different types of breathing patterns"
+						]}
+					/>
 					Next, we'll learn how to control each of Pip's LEDs individually to create even more exciting patterns!
 				</ReadingBlockWithImage>
 			</div>

@@ -6,7 +6,7 @@ export default function AdvantagesofLEDsReading() {
 		<LabReadingComponent
 			nextPageLink="/lab/element-1/led/reading/leds-in-robotics"
 			nextPageActivity="Reading"
-			nextPageTooltip="LEDs in robotics"
+			nextPageTooltip="LEDs in Robotics"
 			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}

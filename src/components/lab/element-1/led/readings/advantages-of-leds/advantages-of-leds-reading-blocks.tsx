@@ -2,6 +2,10 @@
 import { Wrench } from "lucide-react"
 import DidYouKnow from "../../../../reading/did-you-know"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
+import { CustomToaster } from "../../../../../icons/custom-toaster"
+import { CustomUV } from "../../../../../icons/custom-uv"
+import { BulletedList } from "../../../../reading/ordered-list"
+import DefinitionText from "../../../../reading/definition-text"
 
 const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	{
@@ -9,10 +13,14 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockHeader>
-                   Advantages of LEDs
+					Advantages of LEDs
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					Now that we've learned how to control LEDs with loops to create lighting effects, let's explore why LEDs are the preferred lighting technology in robotics and electronics. In our previous activities, we’ve seen how responsive and versatile LEDs can be. In this section, we'll dive into the specific advantages that make LEDs ideal for Pip and other robots, from their energy efficiency and durability to their smart features and environmental benefits. Understanding these advantages will help you appreciate why LEDs have revolutionized not just lighting, but the entire field of robotics.
+					Now that we've learned how to control LEDs with loops to create lighting effects, let's explore why LEDs are the preferred lighting technology in robotics and electronics.
+					In our previous activities, we’ve seen how responsive and versatile LEDs can be.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					In this section, we'll dive into the specific advantages that make LEDs ideal for Pip and other robots, from their energy efficiency and durability to their smart features and environmental benefits.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -25,14 +33,23 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 				<ReadingBlockSectionHeader>
 					Evolution of Lighting
 				</ReadingBlockSectionHeader>
-				<ReadingBlockWithImage>
-				Incandescent bulbs: These work by heating a metal filament until it glows - similar to how a toaster's elements glow red when hot. Only about 5% of the energy becomes light, with 95% wasted as heat, making them very inefficient.
+				<ReadingBlockWithImage svgComponent={<CustomToaster size={150}/>}>
+					<strong>Incandescent bulbs:</strong>
+					&nbsp;These work by heating a metal filament until it glows - similar to how a toaster's elements glow red when hot. Only about 5% of the energy becomes light, with 95% wasted as heat, making them very inefficient.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage svgComponent={<CustomUV size={150} />}>
+					<strong>Fluorescent lights:</strong>
+					&nbsp;These contain mercury vapor that produces ultraviolet light when electrified. This UV light hits a phosphor coating inside the tube, causing it to glow. While more efficient than incandescent bulbs, they still convert only about 20% of energy to light.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					Fluorescent lights: These contain mercury vapor that produces ultraviolet light when electrified. This UV light hits a phosphor coating inside the tube, causing it to glow. While more efficient than incandescent bulbs, they still convert only about 20% of energy to light.
-				</ReadingBlockWithImage>
-				<ReadingBlockWithImage>
-					Why they weren't suitable for robotics applications: Both technologies presented major problems for robots. Incandescent bulbs generate excessive heat that can damage electronics, waste precious battery power, and have fragile filaments that break easily when moved. Fluorescent lights require high voltage to start, contain hazardous mercury, can't switch on/off quickly, and are too bulky for compact robots like Pip.
+					<strong>Why they weren't suitable for robotics applications:</strong>
+					&nbsp;Both technologies presented major problems for robots.
+					<BulletedList
+						items={[
+							"Incandescent bulbs generate excessive heat that can damage electronics, waste precious battery power, and have fragile filaments that break easily when moved.",
+							"Fluorescent lights require high voltage to start, contain hazardous mercury, can't switch on/off quickly, and are too bulky for compact robots like Pip."
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -46,7 +63,10 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 					Direct energy conversion
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					Unlike traditional bulbs that waste energy as heat, LEDs directly convert electricity into light through a process called electroluminescence. When electricity flows through the semiconductor material, electrons release energy as light photons rather than heat.
+					Unlike traditional bulbs that waste energy as heat, LEDs directly convert electricity into light through a process called
+					<DefinitionText noSpaceAfter>electroluminescence</DefinitionText>.
+					When electricity flows through the semiconductor material,
+					<DefinitionText noSpaceAfter>electrons release energy as light photons rather than heat</DefinitionText>.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					Think of traditional bulbs as inefficient engines that produce light as a byproduct of heat generation, while LEDs are precision devices that produce light directly. This direct conversion is why LEDs stay cool while producing bright light, making them ideal for robots that need to conserve battery power and maintain stable temperatures during operation.
@@ -64,9 +84,13 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					LEDs convert most of their energy directly into light rather than heat. For Pip, this means:
-					Longer battery life between charges
-					Less interference with sensitive sensors
-					More stable operation in different temperature
+					<BulletedList
+						items={[
+							"Longer battery life between charges",
+							"Less interference with sensitive sensors",
+							"More stable operation in different temperature"
+						]}
+					/>
 				</ReadingBlockWithImage>
 				<DidYouKnow
 					Icon={Wrench}
@@ -123,9 +147,13 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					The solid-state (no moving parts) design of LEDs makes them ideal for robotics:
-					No moving parts or fragile components
-					Resistant to vibration and impact
-					Compact size allows for flexible placement
+					<BulletedList
+						items={[
+							"No moving parts or fragile components",
+							"Resistant to vibration and impact",
+							"Compact size allows for flexible placement"
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -140,30 +168,15 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					Modern LEDs offer capabilities that transform how Pip interacts:
-					Instant on/off switching for precise timing
-					Digital color control
-					Adjustable brightness levels
-					Programmable patterns and animations
-					Ability to emit wide varieties of light (IR, visible)
-				</ReadingBlockWithImage>
-			</div>
-		),
-		action: { type: "continue" }
-	},
-	{
-		id: "advantages-of-leds-6",
-		text: (
-			<div>
-				<ReadingBlockSectionHeader>
-					Smart Features
-				</ReadingBlockSectionHeader>
-				<ReadingBlockWithImage>
-					Modern LEDs offer capabilities that transform how Pip interacts:
-					Instant on/off switching for precise timing
-					Digital color control
-					Adjustable brightness levels
-					Programmable patterns and animations
-					Ability to emit wide varieties of light (IR, visible)
+					<BulletedList
+						items={[
+							"Instant on/off switching for precise timing",
+							"Digital color control",
+							"Adjustable brightness levels",
+							"Programmable patterns and animations",
+							"Ability to emit wide varieties of light (IR, visible)"
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -177,9 +190,13 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 					Environmental Impact
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					No hazardous materials like mercury
-					Lower energy consumption means reduced carbon footprint
-					Longer lifespan reduces electronic waste
+					<BulletedList
+						items={[
+							"No hazardous materials like mercury",
+							"Lower energy consumption means reduced carbon footprint",
+							"Longer lifespan reduces electronic waste",
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -193,14 +210,22 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 					Summary
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					We've now explored the key advantages that make LEDs essential for modern robotics: their exceptional energy efficiency that extends battery life, their durable design perfect for mobile robots like Pip, their smart features enabling precise control and communication, and their positive environmental impact. These benefits explain why LEDs have become fundamental components in robot design.
+					We've now explored the key advantages that make LEDs essential for modern robotics:
+					<BulletedList
+						items={[
+							"Their exceptional energy efficiency that extends battery life",
+							"Their durable design perfect for mobile robots like Pip",
+							"And their positive environmental impact"
+						]}
+					/>
+					These benefits explain why LEDs have become fundamental components in robot design.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					In our next section, we'll see how these advantages translate into real-world applications, examining the crucial roles LEDs play in various robotic systems from simple status indicators to sophisticated sensing technologies
+					In our next section, we'll see how these advantages translate into real-world applications, examining the crucial roles LEDs play in various robotic systems from simple status indicators to sophisticated sensing technologies.
 				</ReadingBlockWithImage>
 			</div>
 		),
-		action: { type: "continue" }
+		action: { type: "end" }
 	},
 ]
 

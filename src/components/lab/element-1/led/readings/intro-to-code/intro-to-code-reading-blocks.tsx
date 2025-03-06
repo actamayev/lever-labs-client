@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { CustomEgg } from "../../../../../icons/custom-egg"
-import OrderedList from "../../../../reading/ordered-list"
+import { BulletedList, NumberedList } from "../../../../reading/ordered-list"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const introToCodeReadingBlocks: ContentBlock[] = [
@@ -30,7 +30,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage svgComponent={<CustomEgg size={150}/>}>
 					For example, here's a simple recipe:
-					<OrderedList
+					<NumberedList
 						items={[
 							"Heat the pan",
 							"Add oil",
@@ -42,7 +42,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					Similarly, we might tell Pip:
-					<OrderedList
+					<NumberedList
 						items={[
 							"Turn on the LED",
 							"Make it blue",
@@ -63,17 +63,22 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 					Speaking Pip's language
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					Before we give Pip instructions, we need to understand two important things about how Pip thinks:
+					Before we give Pip instructions, we need to understand two important things about how computers 'think':
 					<ol className="list-inside list-decimal">
 						<li>Computers Need Exact Instructions</li>
 						<div className="pl-6">
 							While a chef knows to "heat the pan until it's hot," Pip needs precise instructions:
-							Instead of "make the LED bright," we say "set LED brightness to 100%"
-							Instead of "wait a while," we say "wait 2 seconds"
+							<BulletedList
+								items={[
+									"Instead of 'make the LED bright,' we say: 'set LED brightness to 100%'",
+									"Instead of 'wait a while,' we say: 'wait 2 seconds'"
+								]}
+							/>
 						</div>
 						<li>Computers Follow Strict Rules</li>
 						<div className="pl-6">
-							If you tell someone to "put on a rainjacket" or a "rain jacket," they understand both. But Pip needs instructions in a specific format, just like each language has its own grammar rules.
+							If you tell someone to "put on a rainjacket" or a "rain jacket," they understand both.
+							But Pip needs instructions in a very specific format, just like each language has its own grammar rules.
 						</div>
 					</ol>
 				</ReadingBlockWithImage>
@@ -103,14 +108,16 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 					1. Action Commands
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					These tell Pip to do something specific:
-					<ul className="list-disc pl-6">
-						<li>"Turn LED on"</li>
-						<li>"Set LED color to blue"</li>
-						<li>"Wait for 2 seconds"</li>
-					</ul>
+					These tell Pip to do something specific. For example:
+					<BulletedList
+						items={[
+							"Turn LED on",
+							"Set LED color to blue",
+							"Wait for 2 seconds"
+						]}
+					/>
 					{/* Show images of the coding blocks */}
-					DEMO: Try making Pip's LED turn blue!
+					Lets see some of these action commands in action!
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -127,14 +134,16 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 					2. Reading Commands
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					These tell Pip to check something:
-					<ul className="list-disc pl-6">
-						<li>"Check if button is pressed"</li>
-						<li>"Check LED color"</li>
-						<li>"Check if LED is on"</li>
-					</ul>
+					These tell Pip to check something. For example:
+					<BulletedList
+						items={[
+							"Check if the button is pressed",
+							"Check LED color",
+							"Check if the LED is on"
+						]}
+					/>
 					{/* Show images */}
-					DEMO: Watch Pip check if its button is pressed
+					Lets see Pip following these reading commands.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -220,20 +229,22 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 						<li>Give Pip precise instructions using code</li>
 						<li>
 							Use three types of commands:
-							<ul className="list-circle pl-6 mt-2 space-y-1">
-								<li>Action Commands to make things happen</li>
-								<li>Reading Commands to check conditions</li>
-								<li>Decision Commands to make choices</li>
-							</ul>
+							<BulletedList
+								items={[
+									"Action Commands to make things happen",
+									"Reading Commands to check conditions",
+									"Decision Commands to make choices"
+								]}
+							/>
 						</li>
 						<li>Create multiple-choice behaviors using else/if statements</li>
 					</ul>
 				</ReadingBlockWithImage>
-
 				<ReadingBlockWithImage>
 					<p className="mt-4 font-medium">In the next activity, you'll put these concepts into practice by creating your own LED patterns!</p>
 				</ReadingBlockWithImage>
-			</div>		),
+			</div>
+		),
 		action: { type: "end" }
 	},
 ]

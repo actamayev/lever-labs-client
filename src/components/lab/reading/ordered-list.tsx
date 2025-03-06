@@ -1,15 +1,29 @@
 import isEmpty from "lodash-es/isEmpty"
 
-export default function OrderedList ({ items } : { items: string[] }) {
+export function NumberedList ({ items } : { items: string[] }) {
 	if (isEmpty(items)) return null
 
 	return (
-		<ol className={"list-decimal list-inside"}>
+		<ol className="list-decimal list-inside">
 			{items.map((item, index) => (
 				<li key={index}>
 					{item}
 				</li>
 			))}
 		</ol>
+	)
+}
+
+export function BulletedList ({ items } : { items: string[] }) {
+	if (isEmpty(items)) return null
+
+	return (
+		<ul className="list-disc list-inside">
+			{items.map((item, index) => (
+				<li key={index}>
+					{item}
+				</li>
+			))}
+		</ul>
 	)
 }
