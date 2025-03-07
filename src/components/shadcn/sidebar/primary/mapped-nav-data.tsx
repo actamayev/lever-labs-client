@@ -11,6 +11,7 @@ import {
 import { CustomBeaker } from "../../../icons/custom-beaker"
 import { CustomSandbox } from "../../../icons/custom-sandbox"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
+import { cn } from "../../../../lib/shadcn/utils"
 
 const navData: SidebarNavData[] = [
 	{
@@ -40,7 +41,7 @@ export default function MappedNavData() {
 				<SidebarGroupContent className="px-1.5 md:px-0">
 					<SidebarMenu>
 						{navData.map((item) => (
-							<SidebarMenuItem key={item.title} className="flex justify-center">
+							<SidebarMenuItem key={item.title} className="flex justify-center mb-1">
 								<SidebarMenuButton
 									tooltip={{
 										children: item.title,
@@ -48,15 +49,18 @@ export default function MappedNavData() {
 									}}
 									onClick={() => navigate(item.url)}
 									isActive={isActive(item.url)}
-									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
-									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]
-									transition-all duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-800
-									active:bg-zinc-200 dark:active:bg-zinc-800"
+									className={cn("!flex !h-[60px] !w-[60px] !min-w-[60px] items-center justify-center !p-0 duration-none",
+										isActive(item.url)
+											? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
+											: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
+										"group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]")}
 								>
 									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
 										<item.icon
-											className="!h-[50px] !w-[50px] transition-all duration-300 ease-in-out text-sidebar-foreground
-											data-[active=true]:text-sidebar-accent-foreground"
+											className={`!h-[50px] !w-[50px] duration-none
+                                                ${item.title === "Lab" ?
+								"text-green-500 dark:text-green-600" :
+								"text-orange-500 dark:text-orange-600"}`}
 											data-active={isActive(item.url)}
 										/>
 									</div>

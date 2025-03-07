@@ -6,6 +6,7 @@ import PipButtonTooltip from "../../../../pip-button-tooltip"
 import { usePipContext } from "../../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar-button"
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
+import { cn } from "../../../../../lib/shadcn/utils"
 
 function AddPipSidebarButton() {
 	const pipClass = usePipContext()
@@ -21,9 +22,14 @@ function AddPipSidebarButton() {
 						hidden: false
 					}}
 					onClick={clickPipSidebarButton}
-					className="!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center
-					group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
-					data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
+					className={cn(
+						"!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center",
+						"group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]",
+						"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0",
+						location.pathname === "/add-pip"
+							? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
+							: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
+					)}
 					isActive={location.pathname === "/add-pip"}
 				>
 					<Bot className="!h-[35px] !w-[35px] !min-w-[35px]" />

@@ -14,7 +14,7 @@ export default function DemoTemplate(props: Props) {
 				isDemo={true}
 			/>
 
-			<div className="flex-1 min-h-0 pt-20">
+			<div className="flex-1 min-h-0 pt-24">
 				{children}
 			</div>
 		</div>

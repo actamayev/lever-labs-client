@@ -31,15 +31,15 @@ function DemoButton({ demo } : { demo: Demo }) {
 	return (
 		<button
 			className={cn(
-				"p-0 border border-zinc-200 dark:border-zinc-700 rounded-lg",
+				"p-0 border border-gray-200 dark:border-gray-700 rounded-lg",
 				"transition-colors text-left flex items-stretch",
-				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-zinc-50 dark:bg-zinc-800/50 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-gray-200 dark:hover:bg-gray-700"
 			)}
 			onClick={setActiveDemo}
 		>
 			{/* Left Icon Section */}
 			<div className="flex items-center justify-center w-24 border-r
-                border-zinc-200 dark:border-zinc-700">
+                border-gray-200 dark:border-gray-700">
 				<demo.demoIcon className="h-12 w-12 text-zinc-900 dark:text-zinc-100" />
 			</div>
 

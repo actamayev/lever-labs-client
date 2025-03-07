@@ -27,6 +27,10 @@ module.exports = {
 				lilypadIconDisabledLight: "rgb(175, 175, 175)",
 				darkBackgroundHover: "rgb(32, 47, 54)",
 				lightBackgroundHover: "rgb(220, 244, 255)",
+				selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
+				selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
+				sidebarButtonHoverLight: "rgb(247, 247, 247)",
+				sidebarButtonHoverDark: "rgb(32, 47, 54)",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
