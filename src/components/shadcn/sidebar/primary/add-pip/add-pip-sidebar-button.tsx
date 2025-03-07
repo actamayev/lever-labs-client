@@ -23,8 +23,8 @@ function AddPipSidebarButton() {
 					}}
 					onClick={clickPipSidebarButton}
 					className={cn(
-						"!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center",
-						"group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]",
+						"!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center",
+						"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]",
 						"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0",
 						location.pathname === "/add-pip"
 							? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"

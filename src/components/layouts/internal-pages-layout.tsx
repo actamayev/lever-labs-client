@@ -17,12 +17,16 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 				{location.pathname.startsWith("/sandbox") && (
 					<header
 						className={cn(
-							"fixed w-full top-0 flex shrink-0 items-center",
-							"gap-2 border-b px-4 py-3 z-40",
+							"fixed w-full top-0 flex shrink-0 items-center bg-inherit",
+							"gap-2 border-b-2 px-4 py-3 z-40",
 							"transition-all duration-300"
 						)}
 					>
-						<SidebarTrigger className="-ml-1 w-12 h-12 transition-all duration-300"/>
+						<SidebarTrigger
+							className={cn("-ml-1 w-12 h-12 transition-none rounded-xl",
+								"hover:bg-lightBackgroundHover hover:dark:bg-darkBackgroundHover"
+							)}
+						/>
 					</header>
 				)}
 				<div className="transition-all duration-300 dark:bg-darkThemeBackground">
