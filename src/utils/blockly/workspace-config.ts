@@ -5,7 +5,7 @@ export const darkTheme = Blockly.Theme.defineTheme("dark", {
 	"base": Blockly.Themes.Classic,
 	"componentStyles": {
 		"workspaceBackgroundColour": "#1f2937", // dark gray background
-		"toolboxBackgroundColour": "#111827",
+		"toolboxBackgroundColour": "#141F23",
 		"toolboxForegroundColour": "#ffffff",
 		"flyoutBackgroundColour": "#374151",
 		"flyoutForegroundColour": "#ffffff",
