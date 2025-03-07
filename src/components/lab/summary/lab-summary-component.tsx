@@ -1,9 +1,9 @@
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	nextPageLink: LabPages | null
-	nextPageActivity: ActivityType | null
-	nextPageTooltip: string | null
+	nextPageLink?: LabPages
+	nextPageActivity?: ActivityType
+	nextPageTooltip?: string
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number

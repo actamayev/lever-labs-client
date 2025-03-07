@@ -7,9 +7,6 @@ const ledDemoDeliverables: [string] = [
 export default function ColorMixing() {
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="Color Mixing"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}

@@ -1,14 +1,14 @@
-import isNull from "lodash-es/isNull"
 import { X } from "lucide-react"
+import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
 
 interface Props {
-	element: ElementNumbers
-	lessonTitle: Element1Lessons
-	lessonProgressPercent: number | null
+	element?: ElementNumbers
+	lessonTitle?: Element1Lessons
+	lessonProgressPercent?: number
 	activityType: ActivityType
 	isDemo?: boolean
 }
@@ -30,7 +30,7 @@ export default function ActivityHeader(props: Props) {
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					{!isDemo && (
+					{(!isDemo && element) && (
 						<Button
 							variant="ghost"
 							size="icon"
@@ -51,7 +51,7 @@ export default function ActivityHeader(props: Props) {
 
 			<div className="w-1/3 flex justify-end">
 				<div className="flex justify-end mr-4">
-					{!isNull(lessonProgressPercent) && (
+					{(!isUndefined(lessonProgressPercent) && !isUndefined(lessonTitle)) && (
 						<LessonProgressIconContainer
 							lessonProgressPercent={lessonProgressPercent}
 							lessonTitle={lessonTitle}

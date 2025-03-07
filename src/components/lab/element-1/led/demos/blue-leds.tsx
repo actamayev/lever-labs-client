@@ -7,9 +7,6 @@ const demoDeliverables: [string] = [
 export default function BlueLEDs() {
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="Blue LEDs"
 			demoDeliverables={demoDeliverables}
 			demos={[]}

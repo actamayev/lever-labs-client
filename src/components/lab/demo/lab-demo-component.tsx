@@ -3,13 +3,10 @@ import { useNavigate } from "react-router"
 import { useCallback, useState } from "react"
 import DemoCard from "./demo-card"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import ActivityTemplate from "../activity-structure/activity-template"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
+import DemoTemplate from "../activity-structure/demo-template"
 
 interface Props {
-	element: ElementNumbers
-	lessonTitle: Element1Lessons
-	lessonProgressPercent: number
 	lessonDemoTitle: string
     demoDeliverables: string[]
     demos: Demo[]
@@ -17,9 +14,6 @@ interface Props {
 
 function LabDemoComponent(props: Props) {
 	const {
-		element,
-		lessonTitle,
-		lessonProgressPercent,
 		lessonDemoTitle,
 		demoDeliverables,
 		demos,
@@ -35,16 +29,7 @@ function LabDemoComponent(props: Props) {
 	}, [navigate, pageTransitionClass])
 
 	return (
-		<ActivityTemplate
-			element={element}
-			lessonTitle={lessonTitle}
-			lessonProgressPercent={lessonProgressPercent}
-			nextPageLink={null}
-			nextPageActivity={null}
-			nextPageTooltip={null}
-			activityType="Demo"
-			isDemo={true}
-		>
+		<DemoTemplate>
 			<main className="flex-1 flex items-center flex-col justify-center p-4">
 				<DemoCard
 					lessonDemoTitle={lessonDemoTitle}
@@ -60,7 +45,7 @@ function LabDemoComponent(props: Props) {
 					CONTINUE
 				</BlueTactileButton>
 			</main>
-		</ActivityTemplate>
+		</DemoTemplate>
 	)
 }
 

@@ -5,7 +5,7 @@ import ActivityTemplate from "../activity-structure/activity-template"
 interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
-	nextPageTooltip: string | null
+	nextPageTooltip: string
 	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number

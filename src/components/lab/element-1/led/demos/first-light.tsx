@@ -10,9 +10,6 @@ const ledDemoDeliverables: [string] = [
 export default function FirstLight() {
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="First Light"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}

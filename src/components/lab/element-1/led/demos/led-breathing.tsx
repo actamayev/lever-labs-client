@@ -7,9 +7,6 @@ const demoDeliverables: [string] = [
 export default function LEDBreathing() {
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="LED Breathing"
 			demoDeliverables={demoDeliverables}
 			demos={[]}

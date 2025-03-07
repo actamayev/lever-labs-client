@@ -1,3 +1,4 @@
+import { useCallback } from "react"
 import toUpper from "lodash-es/toUpper"
 import { ArrowRight } from "lucide-react"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
@@ -8,13 +9,12 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
-import { useCallback } from "react"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 
 interface Props {
-	nextPageLink: LabPages
-	nextPageActivity: ActivityType
-	nextPageTooltip: string | null
+	nextPageLink?: LabPages
+	nextPageActivity?: ActivityType
+	nextPageTooltip?: string
 }
 
 export default function ActivityFooter(props: Props) {
@@ -27,6 +27,7 @@ export default function ActivityFooter(props: Props) {
 	const pageTransitionClass = usePageTransitionContext()
 
 	const goToNextPage = useCallback(() => {
+		if (!nextPageLink) return
 		pageTransitionClass.setDirection("left")
 		navigate(nextPageLink)
 	}, [navigate, nextPageLink, pageTransitionClass])
