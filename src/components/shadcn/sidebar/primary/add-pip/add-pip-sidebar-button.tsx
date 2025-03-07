@@ -13,6 +13,8 @@ function AddPipSidebarButton() {
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
 
+	const isActive = location.pathname === "/add-pip"
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-center">
@@ -26,18 +28,20 @@ function AddPipSidebarButton() {
 						"!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center",
 						"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]",
 						"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0",
-						location.pathname === "/add-pip"
+						// Add a transparent border by default to prevent layout shift when active
+						"border-2 border-transparent",
+						isActive
 							? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
 							: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
 					)}
-					isActive={location.pathname === "/add-pip"}
+					isActive={isActive}
 				>
 					<Bot className="!h-[35px] !w-[35px] !min-w-[35px] text-black dark:text-white" />
 					{pipClass.selectedPip ? (
 						<PipStatusTooltip />
 					) : (
 						<PlusCircle
-							className="absolute !h-[20px] !w-[20px] bg-background rounded-full"
+							className="absolute !h-[16px] !w-[16px] bg-background rounded-full"
 							style={{ right: "2px", top: "2px" }}
 						/>
 					)}
