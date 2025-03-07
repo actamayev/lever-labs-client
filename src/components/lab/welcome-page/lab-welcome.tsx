@@ -1,5 +1,4 @@
 import { Bot } from "lucide-react"
-import PathToMastery from "./path-to-mastery"
 import { cn } from "../../../lib/shadcn/utils"
 import AddPipWelcomeSection from "./add-pip-welcome-section"
 
@@ -9,7 +8,7 @@ export default function LabWelcome() {
 			className="h-screen overflow-y-auto bg-gradient-to-b from-slate-50
 			to-blue-50 dark:from-zinc-900 dark:to-pipTheme rounded-none"
 		>
-			<div className="p-6 pb-2">
+			<div className="p-6 pb-2 px-44">
 				<div className="space-y-12 h-full">
 					<div className="text-center">
 						<Bot className="w-16 h-16 text-emerald-600 dark:text-emerald-400 animate-bounce mx-auto" />
@@ -25,7 +24,6 @@ export default function LabWelcome() {
 					</div>
 					<div className="flex flex-col gap-12">
 						<AddPipWelcomeSection />
-						<PathToMastery />
 					</div>
 				</div>
 			</div>

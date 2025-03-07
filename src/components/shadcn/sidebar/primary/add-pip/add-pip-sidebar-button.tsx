@@ -2,11 +2,11 @@ import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import PipStatusTooltip from "./pip-status-tooltip"
+import { cn } from "../../../../../lib/shadcn/utils"
 import PipButtonTooltip from "../../../../pip-button-tooltip"
 import { usePipContext } from "../../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar-button"
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
-import { cn } from "../../../../../lib/shadcn/utils"
 
 function AddPipSidebarButton() {
 	const pipClass = usePipContext()

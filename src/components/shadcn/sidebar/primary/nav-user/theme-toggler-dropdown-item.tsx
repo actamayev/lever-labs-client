@@ -12,7 +12,7 @@ function ThemeTogglerDropdownItem() {
 				event.preventDefault()
 				setDefaultSiteTheme()
 			}}
-			className="hover:cursor-pointer my-1.5"
+			className="hover:cursor-pointer my-1.5 transition-none dark:hover:bg-sidebarButtonHoverDark hover:bg-sidebarButtonHoverLight"
 		>
 			<div className="mr-2 relative !h-[25px] !w-[25px] !min-w-[25px]">
 				<Sun className="absolute top-0 h-full w-full transition-all scale-100 dark:scale-0" />

@@ -42,7 +42,9 @@ function NavUser() {
 						<SidebarMenuButton
 							className="!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center
                             group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
-                            data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
+                            data-[state=open]:bg-sidebarButtonHoverLight dark:data-[state=open]:bg-sidebarButtonHoverDark
+							data-[state=open]:text-sidebar-accent-foreground !p-0
+							hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
 						>
 							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
@@ -57,7 +59,7 @@ function NavUser() {
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-white dark:bg-darkThemeBackground"
 						side={isMobile ? "bottom" : "right"}
 						align="end"
 						sideOffset={4}
