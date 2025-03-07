@@ -38,7 +38,7 @@ function AddPipSidebarButton() {
 					) : (
 						<PlusCircle
 							className="absolute !h-[20px] !w-[20px] bg-background rounded-full"
-							style={{ right: "1px", top: "1px" }}
+							style={{ right: "2px", top: "2px" }}
 						/>
 					)}
 				</SidebarMenuButton>
