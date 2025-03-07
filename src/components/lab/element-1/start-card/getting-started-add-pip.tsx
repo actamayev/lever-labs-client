@@ -27,7 +27,7 @@ function GettingStartedAddPip() {
 						onClick={clickPipSidebarButton}
 						className="!flex !h-24 !w-24 !min-w-24 relative items-center justify-center
                         bg-inherit hover:bg-lightBackgroundHover dark:hover:bg-darkBackgroundHover
-                        duration-100 border-zinc-200 dark:border-zinc-700 border-l rounded-none rounded-tr-md rounded-br-md shadow-none"
+                        duration-100 border-gray-200 dark:border-gray-700 border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
 					>
 						<Bot className="!h-12 !w-12 !min-w-12 text-black dark:text-white" />
 						{pipClass.selectedPip ? (

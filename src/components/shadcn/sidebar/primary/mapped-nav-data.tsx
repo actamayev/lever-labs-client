@@ -49,15 +49,15 @@ export default function MappedNavData() {
 									}}
 									onClick={() => navigate(item.url)}
 									isActive={isActive(item.url)}
-									className={cn("!flex !h-[60px] !w-[60px] !min-w-[60px] items-center justify-center !p-0 duration-none",
+									className={cn("!flex !h-[55px] !w-[55px] !min-w-[55px] items-center justify-center !p-0 duration-none",
 										isActive(item.url)
 											? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
 											: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
-										"group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]")}
+										"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]")}
 								>
-									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
+									<div className="flex h-[45px] w-[45px] !min-w-[45px] items-center justify-center">
 										<item.icon
-											className={`!h-[50px] !w-[50px] duration-none
+											className={`!h-[45px] !w-[45px] duration-none
                                                 ${item.title === "Lab" ?
 								"text-green-500 dark:text-green-600" :
 								"text-orange-500 dark:text-orange-600"}`}
