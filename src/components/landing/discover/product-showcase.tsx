@@ -70,7 +70,7 @@ function ProductShowcase() {
 						</>
 					}
 					Icon={CustomBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-darkThemeBackground"
 					linkToShow="www.bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
 				/>
@@ -88,7 +88,7 @@ function ProductShowcase() {
 						</div>
 					}
 					Icon={CustomSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-darkThemeBackground"
 					linkToShow="www.bluedotrobots.com/sandbox"
 					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>

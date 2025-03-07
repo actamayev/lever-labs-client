@@ -20,6 +20,7 @@ module.exports = {
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
 				foreground: "hsl(var(--foreground))",
+				lightThemeBackground: "rgb(255, 255, 255)",
 				darkThemeBackground: "rgb(20, 31, 35)",
 				lilypadDarkBackground: "rgb(55, 70, 79)",
 				lilypadLightBackground: "rgb(229, 229, 229)",

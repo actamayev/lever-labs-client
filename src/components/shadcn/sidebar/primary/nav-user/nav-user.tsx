@@ -45,6 +45,10 @@ function NavUser() {
                             data-[state=open]:bg-sidebarButtonHoverLight dark:data-[state=open]:bg-sidebarButtonHoverDark
 							data-[state=open]:text-sidebar-accent-foreground !p-0
 							hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
+							tooltip={{
+								children: "Profile",
+								hidden: false
+							}}
 						>
 							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
@@ -59,7 +63,7 @@ function NavUser() {
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-white dark:bg-darkThemeBackground"
+						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-lightThemeBackground dark:bg-darkThemeBackground"
 						side={isMobile ? "bottom" : "right"}
 						align="end"
 						sideOffset={4}

@@ -15,7 +15,7 @@ interface Section {
 export default function Element1() {
 	useRetrieveAllActivitiesUseEffect()
 	const ledSectionRef = useRef<HTMLDivElement>(null)
-	const motorSectionRef = useRef<HTMLDivElement>(null)
+	// const motorSectionRef = useRef<HTMLDivElement>(null)
 	const [clickedSection, setClickedSection] = useState<Element1Lessons>("LED")
 
 	useEffect(() => {
@@ -55,7 +55,7 @@ export default function Element1() {
 				<SeeLessonIconsInElement
 					sectionRefs={{
 						LED: ledSectionRef,
-						Motor: motorSectionRef
+						// Motor: motorSectionRef
 					}}
 					activeSection={clickedSection}
 					setClickedSection={setClickedSection}

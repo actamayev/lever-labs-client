@@ -36,7 +36,7 @@ export default function NavigateThroughElementsButton () {
 				<Button
 					variant="ghost"
 					className="flex items-center gap-2 text-3xl h-12 !px-2
-					hover:bg-zinc-100 dark:hover:bg-zinc-800 duration-100"
+					hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark duration-0"
 				>
 					<GetCurrentElement />
 					<ChevronDown className="!size-8" />

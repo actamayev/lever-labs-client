@@ -20,16 +20,16 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 	const getAnswerStyles = () => {
 		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-        transition-colors bg-inherit text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 \
+        transition-colors bg-inherit text-black dark:text-white hover:bg-zinc-200 dark:hover:bg-sidebarButtonHoverDark \
         whitespace-normal items-center duration-0 text-sm relative" // Added relative for number positioning
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 		if (!hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
-			return cn(baseStyles, "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme")
+			return cn(baseStyles, "border-pipTheme bg-sidebarButtonHoverLight dark:bg-zinc-900 text-pipTheme")
 		}
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			let isCorrectStyles = "border-pipTheme bg-zinc-100 dark:bg-zinc-900 text-pipTheme dark:text-pipThemeOffWhite"
+			let isCorrectStyles = "border-pipTheme bg-sidebarButtonHoverLight dark:bg-zinc-900 text-pipTheme dark:text-pipThemeOffWhite"
 			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
 			dark:bg-green-900 dark:hover:bg-green-800 text-black dark:text-white"
 			else if (isCorrect === false) isCorrectStyles = "border-red-500 bg-red-100 hover:bg-red-200 \
@@ -38,7 +38,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "hover:bg-zinc-100 border-zinc-200 dark:hover:bg-zinc-800 dark:border-zinc-700")
+		return cn(baseStyles, "hover:bg-sidebarButtonHoverLight border-zinc-200 dark:hover:bg-sidebarButtonHoverDark dark:border-zinc-700")
 	}
 
 	const getNumberStyles = () => {

@@ -2,6 +2,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import useToastOptions from "../toast-options"
+import { cn } from "../../lib/shadcn/utils"
 
 interface Props {
 	name: string
@@ -32,7 +33,10 @@ function ContactItemInCard(props: Props) {
 			<Button
 				variant="ghost"
 				onClick={copyToClipboard}
-				className="w-full flex justify-between items-center py-2 hover:bg-zinc-100 dark:hover:bg-zinc-700 rounded-lg"
+				className={cn(
+					"w-full flex justify-between items-center py-2 rounded-lg",
+					"hover:bg-sidebarButtonHoverLight dark:hover:bg-gray-700"
+				)}
 			>
 				<span className="text-left">{name}</span>
 				<span className="text-right font-semibold">{email}</span>

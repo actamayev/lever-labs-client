@@ -172,7 +172,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 
 					<div className="mb-4">
 						<p className="mb-1">For example:</p>
-						<div className="bg-zinc-100 dark:bg-zinc-900 p-3 rounded-md">
+						<div className="bg-sidebarButtonHoverLight dark:bg-zinc-900 p-3 rounded-md">
 							If (button is pressed) Then (turn LED blue)
 						</div>
 					</div>
@@ -198,7 +198,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 
 				<div className="mb-4">
 					<p className="mb-2">Example:</p>
-					<div className="bg-zinc-100 dark:bg-zinc-900 p-3 rounded-md space-y-1">
+					<div className="bg-sidebarButtonHoverLight dark:bg-zinc-900 p-3 rounded-md space-y-1">
 						<p>If (button 1 is pressed) Then (turn LED red)</p>
 						<p>Else If (button 2 is pressed) Then (turn LED green)</p>
 						<p>Else (turn LED off)</p>

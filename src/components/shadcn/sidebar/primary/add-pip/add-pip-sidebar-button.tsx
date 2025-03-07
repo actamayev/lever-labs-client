@@ -32,7 +32,7 @@ function AddPipSidebarButton() {
 					)}
 					isActive={location.pathname === "/add-pip"}
 				>
-					<Bot className="!h-[35px] !w-[35px] !min-w-[35px]" />
+					<Bot className="!h-[35px] !w-[35px] !min-w-[35px] text-black dark:text-white" />
 					{pipClass.selectedPip ? (
 						<PipStatusTooltip />
 					) : (

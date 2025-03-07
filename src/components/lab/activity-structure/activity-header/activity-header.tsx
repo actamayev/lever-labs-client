@@ -26,7 +26,7 @@ export default function ActivityHeader(props: Props) {
 	return (
 		<header
 			className="h-20 flex items-center justify-between px-4 shadow-md
-			fixed top-0 left-0 right-0 bg-white dark:bg-darkThemeBackground z-10"
+			fixed top-0 left-0 right-0 bg-lightThemeBackground dark:bg-darkThemeBackground z-10"
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
@@ -35,7 +35,7 @@ export default function ActivityHeader(props: Props) {
 							variant="ghost"
 							size="icon"
 							onClick={() => typedNavigate(`/lab/element-${element}`)}
-							className="!p-6 dark:hover:bg-zinc-800"
+							className="!p-6 dark:hover:bg-sidebarButtonHoverDark"
 						>
 							<X className="!h-6 !w-6" />
 						</Button>

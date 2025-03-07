@@ -10,7 +10,7 @@ export default function LandingCard(props: Props) {
 	const { title, subTitle, description } = props
 
 	return (
-		<Card className="flex flex-col overflow-hidden !bg-white dark:!bg-black shadow-lg relative z-10">
+		<Card className="flex flex-col overflow-hidden !bg-lightThemeBackground dark:!bg-darkThemeBackground shadow-lg relative z-10">
 			<div className="flex flex-col p-4 md:p-8 w-full space-y-4 md:space-y-6">
 				<div className="space-y-4 md:space-y-6">
 					<h2 className="text-3xl md:text-4xl font-semibold">

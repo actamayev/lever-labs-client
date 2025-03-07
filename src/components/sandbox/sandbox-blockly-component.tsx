@@ -27,7 +27,8 @@ function SandboxBlocklyComponent() {
 			</Suspense>
 			<div className="mt-4">
 				<h3 className="text-lg font-bold text-black dark:text-white">Generated C++</h3>
-				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded transition-all duration-300">
+				<pre className="bg-sidebarButtonHoverLight dark:bg-sidebarButtonHoverDark
+				dark:text-white p-4 rounded transition-all duration-300">
 					{cppCode}
 				</pre>
 			</div>
