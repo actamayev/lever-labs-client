@@ -19,8 +19,7 @@ function GettingStartedStartCard() {
 	}
 
 	return (
-		<div className="border border-zinc-200 dark:border-zinc-700 rounded-lg
-            bg-zinc-50 dark:bg-zinc-800/50">
+		<div className="border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
 			<div className="flex items-start justify-between gap-4">
 				<div className="space-y-2 flex-1 p-4">
 					<h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">

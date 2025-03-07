@@ -18,14 +18,14 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 					<header
 						className={cn(
 							"fixed w-full top-0 flex shrink-0 items-center",
-							"gap-2 border-b bg-background px-4 py-3 z-40",
+							"gap-2 border-b px-4 py-3 z-40",
 							"transition-all duration-300"
 						)}
 					>
 						<SidebarTrigger className="-ml-1 w-12 h-12 transition-all duration-300"/>
 					</header>
 				)}
-				<div className="transition-all duration-300">
+				<div className="transition-all duration-300 dark:bg-darkThemeBackground">
 					{children}
 				</div>
 			</SidebarInset>

@@ -20,6 +20,13 @@ module.exports = {
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
 				foreground: "hsl(var(--foreground))",
+				darkThemeBackground: "rgb(20, 31, 35)",
+				lilypadDarkBackground: "rgb(55, 70, 79)",
+				lilypadLightBackground: "rgb(229, 229, 229)",
+				lilypadIconDisabledDark: "rgb(82, 100, 109)",
+				lilypadIconDisabledLight: "rgb(175, 175, 175)",
+				darkBackgroundHover: "rgb(32, 47, 54)",
+				lightBackgroundHover: "rgb(220, 244, 255)",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
