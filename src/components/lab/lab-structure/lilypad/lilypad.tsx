@@ -30,6 +30,10 @@ export default function Lilypad({ activity } : { activity: FullActivity }) {
 					disabled={isNull(activityStatus)}
 					data-lilypad-icon
 					data-arc-direction={arcDirection}
+					style={{
+						width: "96px",
+						height: "89px"
+					}}
 				>
 					<LilypadIcon
 						activityType={activityType}
