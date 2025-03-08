@@ -10,10 +10,12 @@ import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
+import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 // 1/1/25 TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
+	useRedirectKnownUserToLab()
 	return (
 		<>
 			<PageHelmet pageTitle="/" />
