@@ -21,7 +21,7 @@ export default function Landing() {
 				<div className="fixed inset-0">
 					<GridPattern isDashed={true} dashSize={2} orientation="both" />
 				</div>
-				<div className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-standardBackground dark:to-zinc-700
+				<div className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-standardBackground dark:to-gray-700
 				text-black dark:text-white transition-all duration-300">
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
 					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center px-4 md:px-8 lg:px-16">
