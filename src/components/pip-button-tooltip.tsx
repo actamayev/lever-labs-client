@@ -6,7 +6,7 @@ function PipButtonTooltip() {
 	const pipClass = usePipContext()
 
 	if (isNull(pipClass.selectedPip)) {
-		return <>Add Pip</>
+		return <>Add a Pip</>
 	} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {
 		return <>Disconnect from {pipClass.selectedPip.pipName}</>
 	}
