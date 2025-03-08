@@ -48,7 +48,7 @@ export default function MappedNavData() {
 									className={cn(
 										"transition-none !flex !h-[55px] !w-[55px] !min-w-[55px] items-center justify-center !p-0",
 										isActive(item.url)
-											? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
+											? "!bg-standardBackgroundHover"
 											: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
 										"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]"
 									)}

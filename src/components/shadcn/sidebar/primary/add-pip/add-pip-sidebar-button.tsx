@@ -31,7 +31,7 @@ function AddPipSidebarButton() {
 						// Add a transparent border by default to prevent layout shift when active
 						"border-2 border-transparent",
 						isActive
-							? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
+							? "!bg-standardBackgroundHover"
 							: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
 					)}
 					isActive={isActive}

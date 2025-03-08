@@ -109,11 +109,9 @@ export default function PipUseCases() {
 								key={category.title}
 								className={cn(
 									"cursor-pointer transition-colors hover:bg-accent h-[60px] lg:h-[70px]",
-									"bg-standardBackground",
-									"light:hover:bg-lightBackgroundHover dark:hover:bg-darkBackgroundHover",
+									"bg-standardBackground hover:bg-standardBackgroundHover",
 									selectedCategory === category.title &&
-										"border-zinc-400 \
-										hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
+										"border-zinc-400 hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
 								)}
 								onClick={() => setSelectedCategory(category.title)}
 							>

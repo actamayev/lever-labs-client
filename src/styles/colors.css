@@ -5,12 +5,13 @@
 		--standard-background: 255 255 255;
 		--disabled-lilypad-background: 229 229 229;
 		--disabled-lilypad-icon: 175 175 175;
-
+		--standard-background-hover: 220 244 255;
 	}
   
 	.dark {
 		--standard-background: 20 31 35;
 		--disabled-lilypad-background: 55 70 79;
 		--disabled-lilypad-icon: 82 100 109;
+		--standard-background-hover: 32 47 54;
 	}
 }

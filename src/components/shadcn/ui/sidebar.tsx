@@ -568,16 +568,6 @@ const sidebarMenuButtonVariants = cva(
         lg: "h-12 text-sm group-data-[collapsible=icon]:!p-0",
       },
     },
-    compoundVariants: [
-      {
-        variant: "default",
-        class: "dark:active:bg-sidebar-accent", // Preserve dark mode active behavior
-      },
-      {
-        variant: "outline",
-        class: "dark:active:bg-sidebar-accent", // Preserve dark mode active behavior
-      },
-    ],
     defaultVariants: {
       variant: "default",
       size: "default",
