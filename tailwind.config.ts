@@ -32,6 +32,7 @@ module.exports = {
 				selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
 				sidebarButtonHoverLight: "rgb(247, 247, 247)",
 				sidebarButtonHoverDark: "rgb(32, 47, 54)",
+				answerText: "rgb(52, 153, 214)",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
