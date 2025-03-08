@@ -39,7 +39,6 @@ module.exports = {
 				// darkBackgroundHover: "rgb(32, 47, 54)",
 				// lightBackgroundHover: "rgb(220, 244, 255)",
 
-
 				selectedSidebarButtonBorder: "rgb(var(--selected-sidebar-button-border))",
 				// selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
 				// selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",

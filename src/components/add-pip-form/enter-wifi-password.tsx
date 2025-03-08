@@ -49,8 +49,7 @@ function EnterWifiPassword() {
 								type="button"
 								variant="ghost"
 								size="sm"
-								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1.5 mr-4
-								dark:hover:bg-zinc-600 hover:bg-slate-100"
+								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1.5 mr-4 hover:bg-sidebarButtonHover"
 								onClick={() => setShowPassword(prevState => !prevState)}
 							>
 								{showPassword ? (

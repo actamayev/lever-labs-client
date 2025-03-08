@@ -20,7 +20,7 @@ function PipStatusTooltip() {
 		case "online": return "bg-blue-500"
 		case "connected to other user": return "bg-purple-500"
 		case "connected": return "bg-green-500"
-		default: return "bg-zinc-500"
+		default: return "bg-gray-500"
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pipClass.selectedPip?.pipConnectionStatus])
@@ -49,7 +49,7 @@ function PipStatusTooltip() {
 						style={{ right: "2px", top: "3px" }}
 					/>
 				</TooltipTrigger>
-				<TooltipContent side="right" className="text-zinc-100 dark:text-zinc-900">
+				<TooltipContent side="right" className="text-standardBackground">
 					{getStatusMessage}
 				</TooltipContent>
 			</Tooltip>
