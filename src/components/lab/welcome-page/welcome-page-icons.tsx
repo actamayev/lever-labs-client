@@ -60,13 +60,13 @@ export function IconStep({
 			</div>
 			<div className="flex flex-col items-center space-y-1">
 				<div className="w-52 text-center">
-					<span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300 text-center block">
+					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
 						{title}
 					</span>
 				</div>
 				{subtitle && (
 					<div className="w-52 text-center mt-1">
-						<span className="text-xs text-zinc-500 dark:text-zinc-400 text-center block">
+						<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
 							{subtitle}
 						</span>
 					</div>

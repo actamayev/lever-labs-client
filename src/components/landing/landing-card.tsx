@@ -16,11 +16,11 @@ export default function LandingCard(props: Props) {
 					<h2 className="text-3xl md:text-4xl font-semibold">
 						{title}
 					</h2>
-					<h3 className="text-xl md:text-2xl text-zinc-700 dark:text-zinc-300">
+					<h3 className="text-xl md:text-2xl text-gray-700 dark:text-gray-300">
 						{subTitle}
 					</h3>
 				</div>
-				<p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl">
+				<p className="text-gray-600 dark:text-gray-400 text-lg md:text-xl">
 					{description}
 				</p>
 			</div>

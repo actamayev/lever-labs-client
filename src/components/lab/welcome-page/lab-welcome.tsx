@@ -6,7 +6,7 @@ export default function LabWelcome() {
 	return (
 		<div
 			className="h-screen overflow-y-auto bg-gradient-to-b from-slate-50
-			to-blue-50 dark:from-zinc-900 dark:to-pipTheme rounded-none"
+			to-blue-50 dark:from-gray-900 dark:to-pipTheme rounded-none"
 		>
 			<div className="p-6 pb-2 px-44">
 				<div className="space-y-12 h-full">

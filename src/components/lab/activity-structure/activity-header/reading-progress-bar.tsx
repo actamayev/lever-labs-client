@@ -31,7 +31,7 @@ function ReadingProgressBar() {
 						</div>
 					</div>
 				</TooltipTrigger>
-				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900 mt-2">
+				<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900 mt-2">
 					{Math.round(labReadingClass.readingProgressPercentage)}% complete
 				</TooltipContent>
 			</Tooltip>

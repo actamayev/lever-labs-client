@@ -116,7 +116,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 						size={bentoIconSize}
 					/>
 				</div>
-				<h3 className="text-lg md:text-xl font-semibold text-zinc-800 dark:text-zinc-200">
+				<h3 className="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200">
 					{title}
 				</h3>
 				<p className="max-w-lg text-sm md:text-base text-neutral-400">

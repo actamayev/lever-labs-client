@@ -42,7 +42,7 @@ function SectionCard(props: ProductProps) {
 						src={imgSrc}
 					/>
 				</div>
-				<div className="text-lg md:text-2xl mt-4 dark:text-zinc-400 text-zinc-500">
+				<div className="text-lg md:text-2xl mt-4 dark:text-gray-400 text-gray-500">
 					{sectionSubtitle}
 				</div>
 			</div>

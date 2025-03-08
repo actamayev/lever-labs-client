@@ -8,7 +8,7 @@ export default function DiscoverSection() {
 			>
                 Discover
 			</h1>
-			<p className="text-zinc-600 dark:text-zinc-400 text-center text-xl md:text-3xl my-6 md:my-10">
+			<p className="text-gray-600 dark:text-gray-400 text-center text-xl md:text-3xl my-6 md:my-10">
                 Pip pairs with our web platform, purpose-built to make your robotics education journey fun and powerful.
                 Start with beginner-friendly coding blocks, then graduate to real-world programming.
                 Whether you're solving guided challenges in the Lab, or exploring the Sandbox

@@ -45,7 +45,7 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 				ref={ref}
 				className={cn(
 					"flex items-center transition-none border-2 rounded-2xl",
-					"bg-sidebarButtonHover border-gray-400 text-zinc-800 hover:bg-gray-50",
+					"bg-sidebarButtonHover border-gray-400 text-gray-800 hover:bg-gray-50",
 					"dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-950",
 					className
 				)}

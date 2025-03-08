@@ -59,7 +59,7 @@ export default function ActivityFooter(props: Props) {
 								<ArrowRight className="!h-6 !w-6" />
 							</BlueTactileButton>
 						</TooltipTrigger>
-						<TooltipContent side="top" className="text-zinc-100 dark:text-zinc-900">
+						<TooltipContent side="top" className="text-gray-100 dark:text-gray-900">
 							{nextPageTooltip}
 						</TooltipContent>
 					</Tooltip>
