@@ -45,8 +45,8 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 		return cn(
 			baseStyles,
-			"hover:bg-sidebarButtonHoverLight border-lilypadLightBackgroundDisabled \
-			dark:hover:bg-sidebarButtonHoverDark dark:border-lilypadDarkBackground"
+			"hover:bg-sidebarButtonHoverLight border-disabledLilypadBackground \
+			dark:hover:bg-sidebarButtonHoverDark"
 		)
 	}
 
@@ -54,7 +54,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
 		const baseStyles = "absolute top-2 left-2 w-6 h-6 flex items-center justify-center \
-        border-2 rounded-md text-xs font-medium dark:text-lilypadIconDisabledDark text-lilypadIconDisabledLight"
+        border-2 rounded-md text-xs font-medium text-disabledLilypadIcon"
 
 		if (isSelectedOrActiveQuizAttempt() && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles,
@@ -72,7 +72,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "border-lilypadLightBackgroundDisabled dark:border-lilypadDarkBackground")
+		return cn(baseStyles, "border-disabledLilypadBackground")
 	}
 
 	// eslint-disable-next-line complexity

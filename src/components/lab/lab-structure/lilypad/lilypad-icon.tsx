@@ -11,7 +11,7 @@ export default function LilypadIcon(props: Props) {
 	const { progress, activityType } = props
 
 	const classes = useCallback(() =>{
-		if (isNull(progress)) return "w-11 h-11 dark:text-lilypadIconDisabledDark text-lilypadIconDisabledLight"
+		if (isNull(progress)) return "w-11 h-11 text-disabledLilypadIcon"
 		return "w-11 h-11 text-white"
 	}, [progress])
 

@@ -26,10 +26,13 @@ module.exports = {
 				// lightThemeBackground: "rgb(255, 255, 255)",
 				// darkThemeBackground: "rgb(20, 31, 35)",
 
-				lilypadDarkBackground: "rgb(55, 70, 79)",
-				lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
-				lilypadIconDisabledDark: "rgb(82, 100, 109)",
-				lilypadIconDisabledLight: "rgb(175, 175, 175)",
+				disabledLilypadBackground: "rgb(var(--disabled-lilypad-background))",
+				// lilypadDarkBackground: "rgb(55, 70, 79)",
+				// lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
+
+				disabledLilypadIcon: "rgb(var(--disabled-lilypad-icon))",
+				// lilypadIconDisabledDark: "rgb(82, 100, 109)",
+				// lilypadIconDisabledLight: "rgb(175, 175, 175)",
 
 				darkBackgroundHover: "rgb(32, 47, 54)",
 				lightBackgroundHover: "rgb(220, 244, 255)",
