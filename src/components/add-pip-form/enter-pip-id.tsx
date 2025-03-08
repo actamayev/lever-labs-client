@@ -67,7 +67,7 @@ function EnterPipID() {
 								<Input
 									{...field}
 									onChange={(e) => cleanPipUUIDInput(e, field.onChange)}
-									className="w-full h-14 !text-2xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
+									className="w-full h-14 !text-2xl dark:border-gray-600 pr-8 focus:ring-0 focus:ring-offset-0
 									focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 									placeholder="Pip ID"
 								/>

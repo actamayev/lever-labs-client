@@ -19,8 +19,8 @@ export default function Contact() {
 					</div>
 					<div className="flex flex-col items-center">
 						<div
-							className="border border-zinc-200 dark:border-zinc-700 rounded-lg py-1
-							px-0.5 mx-auto bg-lightThemeBackground dark:bg-sidebarButtonHoverDark w-80 mt-10"
+							className="border border-gray-200 dark:border-gray-700 rounded-lg py-1
+							px-0.5 mx-auto bg-lightThemeBackground dark:bg-darkThemeBackground w-80 mt-10"
 						>
 							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
 							{/* <ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" /> */}
