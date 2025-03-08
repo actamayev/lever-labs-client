@@ -45,7 +45,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 		return cn(
 			baseStyles,
-			"hover:bg-sidebarButtonHoverLight border-lilypadLightBackground \
+			"hover:bg-sidebarButtonHoverLight border-lilypadLightBackgroundDisabled \
 			dark:hover:bg-sidebarButtonHoverDark dark:border-lilypadDarkBackground"
 		)
 	}
@@ -72,7 +72,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "border-lilypadLightBackground dark:border-lilypadDarkBackground")
+		return cn(baseStyles, "border-lilypadLightBackgroundDisabled dark:border-lilypadDarkBackground")
 	}
 
 	// eslint-disable-next-line complexity

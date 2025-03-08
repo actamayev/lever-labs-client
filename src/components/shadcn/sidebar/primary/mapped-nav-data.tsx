@@ -25,7 +25,6 @@ const navData: SidebarNavData[] = [
 		icon: CustomSandbox
 	}
 ]
-
 export default function MappedNavData() {
 	const navigate = useTypedNavigate()
 	const location = useLocation()
@@ -43,14 +42,11 @@ export default function MappedNavData() {
 						{navData.map((item) => (
 							<SidebarMenuItem key={item.title} className="flex justify-center mb-1">
 								<SidebarMenuButton
-									tooltip={{
-										children: item.title,
-										hidden: false,
-									}}
+									tooltip={{ children: item.title, hidden: false }}
 									onClick={() => navigate(item.url)}
 									isActive={isActive(item.url)}
 									className={cn(
-										"!flex !h-[55px] !w-[55px] !min-w-[55px] items-center justify-center !p-0 duration-none",
+										"transition-none !flex !h-[55px] !w-[55px] !min-w-[55px] items-center justify-center !p-0",
 										isActive(item.url)
 											? "bg-lightBackgroundHover dark:bg-darkBackgroundHover"
 											: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
@@ -59,10 +55,12 @@ export default function MappedNavData() {
 								>
 									<div className="flex h-[45px] w-[45px] !min-w-[45px] items-center justify-center">
 										<item.icon
-											className={`!h-[45px] !w-[45px] duration-none
-                                                ${item.title === "Lab"
-								? "text-green-500 dark:text-green-600"
-								: "text-orange-500 dark:text-orange-600"}`}
+											className={cn(
+												"!h-[45px] !w-[45px] transition-none",
+												item.title === "Lab"
+													? "text-green-500 dark:text-green-600"
+													: "text-orange-500 dark:text-orange-600"
+											)}
 											data-active={isActive(item.url)}
 										/>
 									</div>

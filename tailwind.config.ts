@@ -23,7 +23,7 @@ module.exports = {
 				lightThemeBackground: "rgb(255, 255, 255)",
 				darkThemeBackground: "rgb(20, 31, 35)",
 				lilypadDarkBackground: "rgb(55, 70, 79)",
-				lilypadLightBackground: "rgb(229, 229, 229)",
+				lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
 				lilypadIconDisabledDark: "rgb(82, 100, 109)",
 				lilypadIconDisabledLight: "rgb(175, 175, 175)",
 				darkBackgroundHover: "rgb(32, 47, 54)",
@@ -33,6 +33,7 @@ module.exports = {
 				sidebarButtonHoverLight: "rgb(247, 247, 247)",
 				sidebarButtonHoverDark: "rgb(32, 47, 54)",
 				answerText: "rgb(52, 153, 214)",
+				lilypadBlueBackground: "rgb(61, 176, 246)",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
