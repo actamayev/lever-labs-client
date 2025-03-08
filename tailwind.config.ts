@@ -43,8 +43,8 @@ module.exports = {
 				// selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
 
 				sidebarButtonHover: "rgb(var(--sidebar-button-hover))",
-				sidebarButtonHoverLight: "rgb(247, 247, 247)",
-				sidebarButtonHoverDark: "rgb(32, 47, 54)",
+				// sidebarButtonHoverDark: "rgb(32, 47, 54)",
+				// sidebarButtonHoverLight: "rgb(247, 247, 247)",
 
 				answerText: "rgb(52, 153, 214)",
 

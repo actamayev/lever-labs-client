@@ -21,18 +21,18 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 	const getAnswerStyles = () => {
 		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-        transition-colors bg-inherit text-black dark:text-white hover:bg-standardBackgroundHover dark:hover:bg-sidebarButtonHoverDark \
+        transition-colors bg-inherit text-black dark:text-white hover:bg-sidebarButtonHover \
         whitespace-normal items-center duration-0 text-sm relative" // Added relative for number positioning
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 		if (!hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
-			return cn(baseStyles,
+			return cn(baseStyles, "hover:bg-standardBackgroundHover",
 				"bg-standardBackgroundHover text-answerText dark:text-answerText border-selectedSidebarButtonBorder"
 			)
 		}
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			let isCorrectStyles = "bg-standardBackgroundHover dark:bg-sidebarButtonHoverDark \
+			let isCorrectStyles = "bg-standardBackgroundHover hover:bg-standardBackgroundHover \
 			border-selectedSidebarButtonBorder text-answerText dark:text-answerText"
 			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
 			dark:bg-green-900 dark:hover:bg-green-800 text-green-700 dark:text-green-300"
