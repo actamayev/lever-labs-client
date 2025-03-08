@@ -47,7 +47,8 @@ module.exports = {
 				// sidebarButtonHoverLight: "rgb(247, 247, 247)",
 
 				answerText: "rgb(52, 153, 214)",
-
+				unselectedAnswerText: "rgb(var(--unselected-answer-text))",
+				questionText: "rgb(var(--question-text))",
 				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
 				// lilypadBlueBackground: "rgb(61, 176, 246)",
 

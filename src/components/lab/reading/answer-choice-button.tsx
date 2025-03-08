@@ -20,9 +20,10 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 	}
 
 	const getAnswerStyles = () => {
-		const baseStyles = "h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-        transition-colors bg-inherit text-black dark:text-white hover:bg-sidebarButtonHover \
-        whitespace-normal items-center duration-0 text-sm relative" // Added relative for number positioning
+		const baseStyles = "group h-auto min-h-16 p-4 text-left rounded-lg border-2 \
+		transition-colors bg-inherit text-unselectedAnswerText hover:bg-sidebarButtonHover \
+		whitespace-normal items-center duration-0 text-sm relative \
+		active:border-selectedSidebarButtonBorder active:bg-standardBackgroundHover active:text-answerText dark:active:text-answerText"
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 		if (!hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			return cn(baseStyles, "hover:bg-standardBackgroundHover",
@@ -49,8 +50,8 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
 		const baseStyles = "absolute top-2 left-2 w-6 h-6 flex items-center justify-center \
-        border-2 rounded-md text-xs font-medium text-disabledLilypadIcon"
-
+		border-2 rounded-md text-xs font-medium text-disabledLilypadIcon \
+		active:border-selectedSidebarButtonBorder active:text-answerText dark:active:text-answerText"
 		if (isSelectedOrActiveQuizAttempt() && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles,
 				"border-selectedSidebarButtonBorder dark:text-answerText text-answerText"
@@ -102,7 +103,12 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			className={getAnswerStyles()}
 			shadowColor={shadowColor()}
 		>
-			<span className={getNumberStyles()}>{index}</span>
+			<span className={cn(
+				getNumberStyles(),
+				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
+			)}>
+				{index}
+			</span>
 			<div className="ml-8">{answerText}</div>
 		</TactileButton>
 	)

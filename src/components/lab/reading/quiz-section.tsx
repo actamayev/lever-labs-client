@@ -72,7 +72,7 @@ function QuizSection() {
 			</div>
 
 			<div className="flex-1 overflow-y-auto p-6">
-				<h3 className="text-xl font-semibold mb-6">
+				<h3 className="text-xl font-semibold mb-6 text-questionText">
 					{labReadingClass.currentQuestion.question}
 				</h3>
 
