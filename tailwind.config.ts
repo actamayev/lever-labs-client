@@ -38,12 +38,17 @@ module.exports = {
 				// darkBackgroundHover: "rgb(32, 47, 54)",
 				// lightBackgroundHover: "rgb(220, 244, 255)",
 
-				selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
-				selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
+				selectedSidebarButtonBorder: "rgb(var(--selected-sidebar-button-border))",
+				// selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
+				// selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
+
 				sidebarButtonHoverLight: "rgb(247, 247, 247)",
 				sidebarButtonHoverDark: "rgb(32, 47, 54)",
+
 				answerText: "rgb(52, 153, 214)",
-				lilypadBlueBackground: "rgb(61, 176, 246)",
+
+				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
+				// lilypadBlueBackground: "rgb(61, 176, 246)",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",

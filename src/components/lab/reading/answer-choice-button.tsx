@@ -26,15 +26,14 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 		if (!hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			return cn(baseStyles,
-				"bg-standardBackgroundHover \
-				text-answerText dark:text-answerText dark:border-selectedSidebarButtonBorderDark border-selectedSidebarButtonBorderLight"
+				"bg-standardBackgroundHover text-answerText dark:text-answerText border-selectedSidebarButtonBorder"
 			)
 		}
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
 			let isCorrectStyles = "bg-standardBackgroundHover dark:bg-sidebarButtonHoverDark \
-			border-selectedSidebarButtonBorderLight dark:border-selectedSidebarButtonBorderDark text-answerText"
+			border-selectedSidebarButtonBorder text-answerText dark:text-answerText"
 			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
 			dark:bg-green-900 dark:hover:bg-green-800 text-green-700 dark:text-green-300"
 			else if (isCorrect === false) isCorrectStyles = "border-red-500 bg-red-100 hover:bg-red-200 \
@@ -58,14 +57,13 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 		if (isSelectedOrActiveQuizAttempt() && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles,
-				"dark:border-selectedSidebarButtonBorderDark border-selectedSidebarButtonBorderLight dark:text-answerText text-answerText"
+				"border-selectedSidebarButtonBorder dark:text-answerText text-answerText"
 			)
 		}
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			let isCorrectStyles = "dark:border-selectedSidebarButtonBorderDark border-selectedSidebarButtonBorderLight \
-			text-answerText dark:text-answerText" // before answer is selected
+			let isCorrectStyles = "border-selectedSidebarButtonBorder text-answerText dark:text-answerText" // before answer is selected
 			if (isCorrect === true) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
 			else if (isCorrect === false) isCorrectStyles = "border-red-500 text-red-700 dark:text-red-300"
 
