@@ -4,8 +4,8 @@ import { cn } from "../../lib/shadcn/utils"
 
 export default function useLilypadVariants(): (progress: ProgressStatus) => string {
 	return useCallback((progress) => cn(
-	// Base styles
-		"rounded-full flex items-center justify-center transform transition-all duration-50 relative",
+		// Base styles with explicit oval shape
+		"rounded-[50%] flex items-center justify-center transform transition-all duration-50 relative", // Changed to 50% for a smooth oval
 		// Shadow and press effect
 		isNull(progress) && [
 			"bg-lilypadLightBackgroundDisabled dark:bg-lilypadDarkBackground",
@@ -26,6 +26,6 @@ export default function useLilypadVariants(): (progress: ProgressStatus) => stri
 			"group-hover:transform group-hover:translate-y-0.5", // move down slightly to match shadow
 			"group-active:shadow-[0_0_0_0_rgb(49,145,203)]", // fully compressed on click
 			"group-active:transform group-active:translate-y-2.5 duration-0", // move down to match shadow
-		],
+		]
 	), [])
 }
