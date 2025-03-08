@@ -35,7 +35,7 @@ export default function ActivityHeader(props: Props) {
 							variant="ghost"
 							size="icon"
 							onClick={() => typedNavigate(`/lab/element-${element}`)}
-							className="!p-6 dark:hover:bg-sidebarButtonHoverDark"
+							className="!p-6 hover:bg-sidebarButtonHover"
 						>
 							<X className="!h-6 !w-6" />
 						</Button>
@@ -44,9 +44,7 @@ export default function ActivityHeader(props: Props) {
 			</div>
 
 			<div className="w-1/3 flex justify-center">
-				{activityType === "Reading" && (
-					<ReadingProgressBar />
-				)}
+				{activityType === "Reading" && <ReadingProgressBar />}
 			</div>
 
 			<div className="w-1/3 flex justify-end">

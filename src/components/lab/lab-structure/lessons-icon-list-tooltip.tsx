@@ -24,9 +24,8 @@ export default function LessonsIconListTooltip(props: Props) {
 					<Button
 						variant="ghost"
 						className={cn(
-							"flex size-12 items-center justify-center rounded-lg duration-100",
-							isActive ? "bg-sidebarButtonHoverLight dark:bg-sidebarButtonHoverDark" :
-								"hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
+							"flex size-12 items-center justify-center rounded-lg duration-100 hover:bg-sidebarButtonHover",
+							isActive && "bg-sidebarButtonHover"
 						)}
 					>
 						{children}

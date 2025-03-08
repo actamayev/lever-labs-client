@@ -42,9 +42,8 @@ function NavUser() {
 						<SidebarMenuButton
 							className="!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center
                             group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]
-                            data-[state=open]:bg-sidebarButtonHoverLight dark:data-[state=open]:bg-sidebarButtonHoverDark
-							data-[state=open]:text-sidebar-accent-foreground !p-0
-							hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark"
+                            data-[state=open]:bg-sidebarButtonHover data-[state=open]:text-sidebar-accent-foreground !p-0
+							hover:bg-sidebarButtonHover"
 							tooltip={{
 								children: "Profile",
 								hidden: false

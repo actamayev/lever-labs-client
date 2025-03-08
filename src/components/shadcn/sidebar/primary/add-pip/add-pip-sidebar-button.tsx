@@ -30,9 +30,7 @@ function AddPipSidebarButton() {
 						"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0",
 						// Add a transparent border by default to prevent layout shift when active
 						"border-2 border-transparent",
-						isActive
-							? "!bg-standardBackgroundHover"
-							: "hover:bg-sidebarButtonHoverLight dark:hover:bg-sidebarButtonHoverDark",
+						isActive ? "!bg-standardBackgroundHover" : "hover:!bg-sidebarButtonHover",
 					)}
 					isActive={isActive}
 				>

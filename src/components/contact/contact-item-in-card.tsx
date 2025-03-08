@@ -44,7 +44,7 @@ function ContactItemInCard(props: Props) {
 							onClick={copyToClipboard}
 							className={cn(
 								"w-full flex justify-between items-center py-2 rounded-lg",
-								"hover:bg-sidebarButtonHoverLight dark:hover:bg-gray-700"
+								"hover:bg-sidebarButtonHover"
 							)}
 						>
 							<span className="text-left">{name}</span>

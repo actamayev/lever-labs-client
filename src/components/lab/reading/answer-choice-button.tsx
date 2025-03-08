@@ -42,11 +42,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(
-			baseStyles,
-			"hover:bg-sidebarButtonHoverLight border-disabledLilypadBackground \
-			dark:hover:bg-sidebarButtonHoverDark"
-		)
+		return cn(baseStyles, "hover:bg-hover:bg-sidebarButtonHover border-disabledLilypadBackground")
 	}
 
 	const getNumberStyles = () => {

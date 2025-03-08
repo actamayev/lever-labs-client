@@ -23,9 +23,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 						)}
 					>
 						<SidebarTrigger
-							className={cn("-ml-1 w-12 h-12 transition-none rounded-xl",
-								"hover:bg-sidebarButtonHoverLight hover:dark:bg-sidebarButtonHoverDark"
-							)}
+							className={cn("-ml-1 w-12 h-12 transition-none rounded-xl hover:!bg-sidebarButtonHover")}
 						/>
 					</header>
 				)}
