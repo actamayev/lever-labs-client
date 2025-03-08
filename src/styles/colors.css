@@ -1,0 +1,11 @@
+@tailwind base;
+
+@layer base {
+	:root {
+		--standard-background: 255 255 255;
+	}
+  
+	.dark {
+		--standard-background: 20 31 35;
+	}
+}

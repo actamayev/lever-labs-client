@@ -26,7 +26,7 @@ export default function ActivityHeader(props: Props) {
 	return (
 		<header
 			className="h-20 flex items-center justify-between px-4 shadow-md
-			fixed top-0 left-0 right-0 bg-lightThemeBackground dark:bg-darkThemeBackground z-10"
+			fixed top-0 left-0 right-0 bg-standardBackground z-10"
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">

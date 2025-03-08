@@ -13,7 +13,7 @@ export default function WelcomePageCard(props: Props) {
 	return (
 		<Card
 			className={cn(
-				"bg-lightThemeBackground dark:bg-darkThemeBackground border-2 border-purple-100 dark:border-pipTheme",
+				"bg-standardBackground border-2 border-purple-100 dark:border-pipTheme",
 				extraClasses
 			)}
 		>

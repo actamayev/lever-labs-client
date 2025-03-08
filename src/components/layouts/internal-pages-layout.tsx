@@ -29,7 +29,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 						/>
 					</header>
 				)}
-				<div className="transition-all duration-300 dark:bg-darkThemeBackground">
+				<div className="transition-all duration-3s00 bg-standardBackground">
 					{children}
 				</div>
 			</SidebarInset>

@@ -35,7 +35,7 @@ export default function ActivityFooter(props: Props) {
 	return (
 		<footer
 			className="h-20 flex items-center justify-between px-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1),0_-2px_4px_-1px_rgba(0,0,0,0.06)]
-      fixed bottom-0 left-0 right-0 bg-lightThemeBackground dark:bg-darkThemeBackground z-10"
+      fixed bottom-0 left-0 right-0 bg-standardBackground z-10"
 		>
 			<div className="flex-1"></div>
 

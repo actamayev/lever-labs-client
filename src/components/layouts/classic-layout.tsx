@@ -11,7 +11,7 @@ export default function ClassicLayout(props: Props) {
 	const { extraClasses = "px-14", children } = props
 
 	return (
-		<div className="min-h-screen bg-lightThemeBackground dark:bg-darkThemeBackground flex flex-col transition-all duration-300">
+		<div className="min-h-screen bg-standardBackground flex flex-col transition-all duration-300">
 			<HeaderNav />
 			<main className={cn(
 				"flex-1 w-full overflow-y-auto pt-14",

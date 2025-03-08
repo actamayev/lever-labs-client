@@ -56,7 +56,7 @@ function RightSideContentSkeleton(props: Props) {
 	const { title, content } = props
 
 	return (
-		<Card className="h-full flex flex-col bg-lightThemeBackground dark:bg-darkThemeBackground">
+		<Card className="h-full flex flex-col bg-standardBackground">
 			<CardHeader className="p-4 lg:p-6 flex-shrink-0">
 				<CardTitle className="text-xl lg:text-2xl">{title}</CardTitle>
 			</CardHeader>
@@ -109,7 +109,7 @@ export default function PipUseCases() {
 								key={category.title}
 								className={cn(
 									"cursor-pointer transition-colors hover:bg-accent h-[60px] lg:h-[70px]",
-									"bg-lightThemeBackground dark:bg-darkThemeBackground",
+									"bg-standardBackground",
 									"light:hover:bg-lightBackgroundHover dark:hover:bg-darkBackgroundHover",
 									selectedCategory === category.title &&
 										"border-zinc-400 \

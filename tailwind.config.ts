@@ -6,7 +6,7 @@ const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenCo
 module.exports = {
 	darkMode: ["class"],
 	content: [
-		"./src/**/*.{js,ts,jsx,tsx}"
+		"./src/**/*.{js,ts,jsx,tsx}", "./src/styles/**.css"
 	],
 	theme: {
 		extend: {
@@ -19,13 +19,18 @@ module.exports = {
 				pipThemeHover: "rgb(0, 45, 130)",
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
+
 				foreground: "hsl(var(--foreground))",
-				lightThemeBackground: "rgb(255, 255, 255)",
-				darkThemeBackground: "rgb(20, 31, 35)",
+
+				standardBackground: "rgb(var(--standard-background))",
+				// lightThemeBackground: "rgb(255, 255, 255)",
+				// darkThemeBackground: "rgb(20, 31, 35)",
+
 				lilypadDarkBackground: "rgb(55, 70, 79)",
 				lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
 				lilypadIconDisabledDark: "rgb(82, 100, 109)",
 				lilypadIconDisabledLight: "rgb(175, 175, 175)",
+
 				darkBackgroundHover: "rgb(32, 47, 54)",
 				lightBackgroundHover: "rgb(220, 244, 255)",
 				selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
@@ -34,6 +39,7 @@ module.exports = {
 				sidebarButtonHoverDark: "rgb(32, 47, 54)",
 				answerText: "rgb(52, 153, 214)",
 				lilypadBlueBackground: "rgb(61, 176, 246)",
+
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"

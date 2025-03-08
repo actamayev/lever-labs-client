@@ -63,8 +63,7 @@ function NavUser() {
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-lightThemeBackground
-						dark:bg-darkThemeBackground"
+						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-standardBackground"
 						side={isMobile ? "bottom" : "right"}
 						align="end"
 						sideOffset={4}
