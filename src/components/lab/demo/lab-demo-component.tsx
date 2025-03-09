@@ -1,6 +1,6 @@
 import { observer } from "mobx-react"
 import { useNavigate } from "react-router"
-import { useCallback, useState } from "react"
+import { useCallback } from "react"
 import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
@@ -18,13 +18,11 @@ function LabDemoComponent(props: Props) {
 		demoDeliverables,
 		demos,
 	} = props
-	const [isContinued, setIsContinued] = useState(false)
 	const navigate = useNavigate()
 	const pageTransitionClass = usePageTransitionContext()
 
 	const goBack = useCallback(() => {
 		pageTransitionClass.setDirection("up")
-		setIsContinued(true)
 		navigate(-1)
 	}, [navigate, pageTransitionClass])
 
@@ -40,7 +38,6 @@ function LabDemoComponent(props: Props) {
 					onClick={goBack}
 					className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
 					shadowHeight={4}
-					isPressed={isContinued}
 				>
 					CONTINUE
 				</BlueTactileButton>
