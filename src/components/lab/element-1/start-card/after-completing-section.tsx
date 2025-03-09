@@ -8,7 +8,7 @@ export default function AfterCompletingSection() {
 					After Completing This Element:
 				</h2>
 				<p className="text-lg text-gray-600 dark:text-gray-400">
-					You'll master reading sensor data, controlling each component, and understanding the core robotics principles.
+					You'll master reading sensor data, controlling each component, and understanding core robotics principles
 				</p>
 			</div>
 			<div className="space-y-2 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">

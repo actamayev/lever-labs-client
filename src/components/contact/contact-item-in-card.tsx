@@ -42,10 +42,7 @@ function ContactItemInCard(props: Props) {
 						<Button
 							variant="ghost"
 							onClick={copyToClipboard}
-							className={cn(
-								"w-full flex justify-between items-center py-2 rounded-lg",
-								"hover:bg-sidebarButtonHover"
-							)}
+							className="w-full flex justify-between items-center py-2 rounded-lg hover:bg-sidebarButtonHover"
 						>
 							<span className="text-left">{name}</span>
 							<span className="text-right font-semibold">{email}</span>
