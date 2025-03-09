@@ -6,7 +6,7 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	nextPageTooltip: string
-	lessonTitle: Element1Lessons
+	lessonTitle: LessonNames
 	lessonProgressPercent: number
 	codingTitle: string
 	codingDescription: string
