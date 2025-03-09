@@ -55,6 +55,7 @@ const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
 	trashcan: true,
 	sounds: false,
 	theme: isDarkMode ? darkTheme : lightTheme,
+	// renderer: "thrasos",
 })
 
 export default getWorkspaceConfig

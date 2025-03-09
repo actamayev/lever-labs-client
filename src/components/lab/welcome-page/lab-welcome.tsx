@@ -1,5 +1,6 @@
 import { Bot } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
+import BackButton from "../../buttons/back-button"
 import AddPipWelcomeSection from "./add-pip-welcome-section"
 
 export default function LabWelcome() {
@@ -8,6 +9,9 @@ export default function LabWelcome() {
 			className="h-screen overflow-y-auto bg-gradient-to-b from-slate-50
 			to-blue-50 dark:from-gray-900 dark:to-pipTheme rounded-none"
 		>
+			<div className="absolute top-6 left-4">
+				<BackButton />
+			</div>
 			<div className="p-6 pb-2 px-44">
 				<div className="space-y-12 h-full">
 					<div className="text-center">
