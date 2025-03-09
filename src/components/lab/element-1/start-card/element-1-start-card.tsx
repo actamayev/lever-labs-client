@@ -10,7 +10,7 @@ export default function Element1StartCard() {
 		<Card className="w-[1100px] p-2 flex flex-col m-2 rounded-lg bg-inherit border-2 border-gray-200 dark:border-gray-700 shadow-none">
 			<CardHeader>
 				<CardTitle>
-					<h1 className="text-4xl font-bold">Element 1: Sensor Basics</h1>
+					<h1 className="text-4xl font-bold">Welcome to the Lab</h1>
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-6">

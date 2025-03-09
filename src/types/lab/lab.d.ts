@@ -43,7 +43,7 @@ declare global {
 
 	type Element1Lessons =
 	| "LED"
-	// | "Motor"
+	| "Motor"
 
 	type ReadingNames =
 	| "Introduction to LEDs"
