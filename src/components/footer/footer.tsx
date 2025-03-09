@@ -1,9 +1,17 @@
+import { useLocation } from "react-router"
 import FooterLink from "./footer-link"
 import FooterThemeToggle from "./footer-theme-toggle"
 import LinkToExternalSite from "./link-to-external-site"
 import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
+	const location = useLocation()
+	if (
+		location.pathname === "/login" ||
+		location.pathname === "/register" ||
+		location.pathname === "/register-username"
+	) return null
+
 	return (
 		<footer id="footer" className="bg-standardBackground w-full pb-3 md:py-3 z-20 transition-all duration-300">
 			<div className="flex justify-center w-full px-4">

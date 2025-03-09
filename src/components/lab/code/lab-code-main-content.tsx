@@ -23,7 +23,7 @@ export default function LabCodeMainContent(props: Props) {
 
 	return (
 		<main className="flex h-full min-h-0">
-			<Card className="w-2/5 m-4 overflow-auto">
+			<Card className="w-2/5 m-4 overflow-auto bg-inherit">
 				<CardHeader>
 					<CardTitle>
 						<h1 className="text-4xl font-bold mb-6">{codingTitle}</h1>
