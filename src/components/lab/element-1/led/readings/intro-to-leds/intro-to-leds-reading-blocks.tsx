@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { Cpu } from "lucide-react"
 import DefinitionText from "../../../../reading/definition-text"
-import { BlueColoredText, OrangeColoredText } from "../../../../reading/colored-text"
+import ColoredText from "../../../../reading/colored-text"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const introToLedsReadingBlocks: ContentBlock[] = [
@@ -66,15 +66,15 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 			<div>
 				<ReadingBlockWithImage>
 					It's helpful to think of a semiconductor as a cliff. Imagine
-					<BlueColoredText>a lake</BlueColoredText>
+					<ColoredText color = "blue">a lake</ColoredText>
 					at the top of the cliff, and a
-					<OrangeColoredText noSpaceAfter>dry riverbed</OrangeColoredText> the bottom.
+					<ColoredText color = "orange" noSpaceAfter>dry riverbed</ColoredText> the bottom.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					In a semiconductor, the
-					<BlueColoredText>lake</BlueColoredText>
+					<ColoredText color = "blue">lake</ColoredText>
 					is known as the
-					<BlueColoredText noSpaceAfter>high-energy N-layer (negative layer)</BlueColoredText>.
+					<ColoredText color = "blue" noSpaceAfter>high-energy N-layer (negative layer)</ColoredText>.
 					The N-layer is filled with many
 					<DefinitionText noSpaceAfter>electrons</DefinitionText>
 					, which are
@@ -82,9 +82,9 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
 					The
-					<OrangeColoredText>dry riverbed</OrangeColoredText>
+					<ColoredText color = "orange">dry riverbed</ColoredText>
 					is known as the
-					<OrangeColoredText noSpaceAfter>low-energy P-layer (positive layer)</OrangeColoredText>
+					<ColoredText color = "orange" noSpaceAfter>low-energy P-layer (positive layer)</ColoredText>
 					. It’s full of empty spaces (called holes), ready to be filled by the electrons from the N-layer.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>

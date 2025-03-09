@@ -18,7 +18,7 @@ import LEDBreathing from "../../components/lab/element-1/led/demos/led-breathing
 import BreathingLEDs from "../../components/lab/element-1/led/code/breathing-leds"
 import AdvantagesofLEDsReading from "../../components/lab/element-1/led/readings/advantages-of-leds/advantages-of-leds-reading"
 import LEDsInRoboticsReading from "../../components/lab/element-1/led/readings/leds-in-robotics/leds-in-robotics-reading"
-import WarhousePip from "../../components/lab/element-1/led/code/warehouse-pip"
+import WarehousePip from "../../components/lab/element-1/led/code/warehouse-pip"
 
 const ledRoutes: ElementChild[] = [
 	{
@@ -104,7 +104,7 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Code/warehouse-pip",
-		element: <WarhousePip />
+		element: <WarehousePip />
 	},
 	{
 		path: "Summary",

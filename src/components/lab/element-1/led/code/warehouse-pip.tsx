@@ -2,7 +2,7 @@ import * as Blockly from "blockly"
 import LabCodeComponent from "../../../code/lab-code-component"
 import { createCustomCategory } from "../../../../../utils/blockly/toolbox-config"
 
-export default function WarhousePip() {
+export default function WarehousePip() {
 	const ledBlocks = createCustomCategory(
 		"Pip",
 		218,

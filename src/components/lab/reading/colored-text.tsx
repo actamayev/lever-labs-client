@@ -1,47 +1,35 @@
 import { cn } from "../../../lib/shadcn/utils"
 
+type ColorType = "blue" | "orange"
+
 type Props = {
 	extraClasses?: string
 	children: React.ReactNode
 	noSpaceBefore?: boolean
 	noSpaceAfter?: boolean
+	color: ColorType
 }
 
-export function BlueColoredText (props: Props) {
+export default function ColoredText(props: Props) {
 	const {
 		extraClasses,
 		children,
 		noSpaceBefore = false,
-		noSpaceAfter = false
+		noSpaceAfter = false,
+		color
 	} = props
+
+	const colorClasses = {
+		blue: "text-blue-600 dark:text-blue-400",
+		orange: "text-orange-600 dark:text-orange-400"
+	}
 
 	return (
 		<>
 			{!noSpaceBefore && <>&nbsp;</>}
 			<span className={cn(
-				"font-bold text-blue-600 dark:text-blue-400",
-				extraClasses
-			)}>
-				{children}
-			</span>
-			{!noSpaceAfter && <>&nbsp;</>}
-		</>
-	)
-}
-
-export function OrangeColoredText (props: Props) {
-	const {
-		extraClasses,
-		children,
-		noSpaceBefore = false,
-		noSpaceAfter = false
-	} = props
-
-	return (
-		<>
-			{!noSpaceBefore && <>&nbsp;</>}
-			<span className={cn(
-				"font-bold text-orange-600 dark:text-orange-400",
+				"font-bold",
+				colorClasses[color],
 				extraClasses
 			)}>
 				{children}
