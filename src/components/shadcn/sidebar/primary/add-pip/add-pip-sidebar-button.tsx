@@ -34,7 +34,7 @@ function AddPipSidebarButton() {
 					)}
 					isActive={isActive}
 				>
-					<Bot className="!h-[35px] !w-[35px] !min-w-[35px] text-black dark:text-white" />
+					<Bot className="!h-[35px] !w-[35px] !min-w-[35px] text-blue-600 dark:text-blue-300" />
 					{pipClass.selectedPip ? (
 						<PipStatusTooltip />
 					) : (

@@ -29,7 +29,7 @@ function GettingStartedAddPip() {
                         bg-inherit hover:bg-sidebarButtonHover
                         duration-none border-gray-200 dark:border-gray-700 border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
 					>
-						<Bot className="!h-12 !w-12 !min-w-12 text-black dark:text-white" />
+						<Bot className="!h-12 !w-12 !min-w-12 text-blue-600 dark:text-blue-300" />
 						{pipClass.selectedPip ? (
 							<PipStatusTooltip />
 						) : (

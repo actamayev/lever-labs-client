@@ -43,7 +43,7 @@ function PipStatusTooltip() {
 				<TooltipTrigger asChild>
 					<div
 						className={cn(
-							"absolute !h-[16px] !w-[16px] rounded-full bg-background",
+							"absolute !h-[14px] !w-[14px] rounded-full bg-background",
 							getStatusColor
 						)}
 						style={{ right: "2px", top: "3px" }}

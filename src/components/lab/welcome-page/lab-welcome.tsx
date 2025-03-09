@@ -11,12 +11,12 @@ export default function LabWelcome() {
 			<div className="p-6 pb-2 px-44">
 				<div className="space-y-12 h-full">
 					<div className="text-center">
-						<Bot className="w-16 h-16 text-emerald-600 dark:text-emerald-400 animate-bounce mx-auto" />
+						<Bot className="w-16 h-16 text-blue-600 dark:text-blue-400 animate-bounce mx-auto" />
 						<h1
 							className={cn(
 								"bg-gradient-to-r from-blue-600 via-blue-600 to-blue-600",
 								"dark:from-blue-400 dark:via-blue-400 dark:to-blue-400",
-								"text-4xl font-bold bg-clip-text text-transparent"
+								"text-4xl font-bold bg-clip-text text-transparent text-blue-600 dark:text-blue-400"
 							)}
 						>
 							Welcome to The Lab
