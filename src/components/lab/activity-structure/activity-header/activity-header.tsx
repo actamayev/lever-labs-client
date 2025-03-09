@@ -6,11 +6,10 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
 
 interface Props {
-	element?: ElementNumbers
+	element: ElementNumbers
 	lessonTitle?: Element1Lessons
 	lessonProgressPercent?: number
 	activityType: ActivityType
-	isDemo?: boolean
 }
 
 export default function ActivityHeader(props: Props) {
@@ -19,7 +18,6 @@ export default function ActivityHeader(props: Props) {
 		lessonTitle,
 		lessonProgressPercent,
 		activityType,
-		isDemo
 	} = props
 	const typedNavigate = useTypedNavigate()
 
@@ -30,16 +28,14 @@ export default function ActivityHeader(props: Props) {
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					{(!isDemo && element) && (
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => typedNavigate(`/lab/element-${element}`)}
-							className="!p-6 hover:bg-sidebarButtonHover"
-						>
-							<X className="!h-6 !w-6" />
-						</Button>
-					)}
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => typedNavigate(`/lab/element-${element}`)}
+						className="!p-6 hover:bg-sidebarButtonHover"
+					>
+						<X className="!h-6 !w-6" />
+					</Button>
 				</div>
 			</div>
 

@@ -2,9 +2,9 @@ import { observer } from "mobx-react"
 import { useNavigate } from "react-router"
 import { useCallback, useState } from "react"
 import DemoCard from "./demo-card"
+import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
-import DemoTemplate from "../activity-structure/demo-template"
 
 interface Props {
 	lessonDemoTitle: string
