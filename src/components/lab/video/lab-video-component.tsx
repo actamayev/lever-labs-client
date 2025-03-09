@@ -6,7 +6,7 @@
 // 	ytVideoTitle: string
 // 	nextPageLink: LabPages
 // 	nextPageActivity: ActivityType
-// 	lessonTitle: Element1Lessons
+// 	lessonTitle: LessonNames
 // 	lessonProgressPercent: number
 // }
 
@@ -17,13 +17,11 @@
 // 		ytVideoTitle,
 // 		nextPageLink,
 // 		nextPageActivity,
-// 		element,
 // 		lessonTitle,
 // 		lessonProgressPercent,
 // 	} = props
 // 	return (
 // 		<ActivityTemplate
-// 			element={element}
 // 			lessonTitle={lessonTitle}
 // 			lessonProgressPercent={lessonProgressPercent}
 // 			nextPageLink={nextPageLink}

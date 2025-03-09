@@ -22,9 +22,9 @@ declare global {
 		icon: LucideIcon
 	}
 
-	// Define the element routes structure
-	interface ElementRoutes {
-		path: string
+	// Define the lesson routes structure
+	interface LessonRoutes {
+		path: "led"
 		children: ElementChild[]
 	}
 
@@ -42,7 +42,7 @@ declare global {
 	}
 
 	// Create a union type for all possible route types
-	type RouteType = ElementRoutes | BaseRoute
+	type RouteType = LessonRoutes | BaseRoute
 
 	interface HelmetData {
 		[key: string]: React.ReactNode

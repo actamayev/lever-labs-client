@@ -16,297 +16,146 @@ const labHelmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/lab/welcome"
 		/>
 	),
-	"/lab/motor/reading": (
+	"/lab/led/reading/intro-to-leds": (
 		<BasicHelmet
-			pageTitleData="Motors: How They Work"
-			description="Learn about DC motors, how they function, and their role in robotics. Understand the basics of motor control and movement."
-			url="https://www.bluedotrobots.com/lab/motor/reading"
+			pageTitleData="Introduction to LEDs"
+			description="Learn the basics of LEDs (Light Emitting Diodes) and how they work in robotics through this introductory reading."
+			url="https://www.bluedotrobots.com/lab/led/reading/intro-to-leds"
 		/>
 	),
-	"/lab/motor/video": (
+	"/lab/led/demo/led-light-show": (
 		<BasicHelmet
-			pageTitleData="Motors: Video Tutorial"
-			description="Watch a detailed video demonstration of motor control and implementation in robotics."
-			url="https://www.bluedotrobots.com/lab/motor/video"
+			pageTitleData="LED Light Show Demo"
+			description="Watch an interactive demonstration of LED patterns and sequences in this engaging light show."
+			url="https://www.bluedotrobots.com/lab/led/demo/led-light-show"
 		/>
 	),
-	"/lab/motor/code": (
+	"/lab/led/reading/voltage": (
 		<BasicHelmet
-			pageTitleData="Motors: Coding Exercise"
-			description="Practice controlling motors through hands-on coding exercises."
-			url="https://www.bluedotrobots.com/lab/motor/code"
+			pageTitleData="Understanding Voltage with LEDs"
+			description="Explore how voltage affects LED operation and basic electrical concepts in robotics."
+			url="https://www.bluedotrobots.com/lab/led/reading/voltage"
 		/>
 	),
-	"/lab/led/reading": (
+	"/lab/led/demo/first-light": (
 		<BasicHelmet
-			pageTitleData="LEDs: Understanding Light Control"
-			description="Learn about LED functionality, control methods, and applications in robotics."
-			url="https://www.bluedotrobots.com/lab/led/reading"
+			pageTitleData="First Light LED Demo"
+			description="See your first LED come to life with this simple yet exciting demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/first-light"
 		/>
 	),
-	"/lab/led/video": (
+	"/lab/led/reading/rgb-leds": (
 		<BasicHelmet
-			pageTitleData="LEDs: Video Tutorial"
-			description="Watch a comprehensive video guide on LED control and programming."
-			url="https://www.bluedotrobots.com/lab/led/video"
+			pageTitleData="RGB LEDs Explained"
+			description="Dive into the world of RGB LEDs and how they create different colors for robotics applications."
+			url="https://www.bluedotrobots.com/lab/led/reading/rgb-leds"
 		/>
 	),
-	"/lab/led/code": (
+	"/lab/led/demo/color-mixing": (
 		<BasicHelmet
-			pageTitleData="LEDs: Coding Exercise"
-			description="Practice LED control through interactive coding exercises and experiments."
-			url="https://www.bluedotrobots.com/lab/led/code"
+			pageTitleData="Color Mixing with LEDs Demo"
+			description="Experiment with RGB LED color mixing in this interactive demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/color-mixing"
 		/>
 	),
-	"/lab/encoder/reading": (
+	"/lab/led/reading/intro-to-code": (
 		<BasicHelmet
-			pageTitleData="Encoders: Understanding Position Feedback"
-			description="Learn about rotary encoders, how they measure position and speed, and their crucial role in precise robot control."
-			url="https://www.bluedotrobots.com/lab/encoder/reading"
+			pageTitleData="Introduction to LED Coding"
+			description="Learn the basics of programming LEDs in robotics with this introductory coding guide."
+			url="https://www.bluedotrobots.com/lab/led/reading/intro-to-code"
 		/>
 	),
-	"/lab/encoder/video": (
+	"/lab/led/demo/blue-leds": (
 		<BasicHelmet
-			pageTitleData="Encoders: Video Tutorial"
-			description="Watch a detailed video explanation of encoder functionality and implementation in robotics."
-			url="https://www.bluedotrobots.com/lab/encoder/video"
+			pageTitleData="Blue LEDs Demo"
+			description="Explore the properties of blue LEDs in this hands-on demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/blue-leds"
 		/>
 	),
-	"/lab/encoder/code": (
+	"/lab/led/demo/check-button-press": (
 		<BasicHelmet
-			pageTitleData="Encoders: Coding Exercise"
-			description="Practice working with encoder data through hands-on coding exercises and position control experiments."
-			url="https://www.bluedotrobots.com/lab/encoder/code"
+			pageTitleData="Button Press LED Demo"
+			description="Learn to control LEDs with button presses in this interactive demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/check-button-press"
 		/>
 	),
-	"/lab/button/reading": (
+	"/lab/led/demo/simple-led-control": (
 		<BasicHelmet
-			pageTitleData="Buttons: Digital Input Basics"
-			description="Learn about digital inputs, button interfaces, and their use in robot control and user interaction."
-			url="https://www.bluedotrobots.com/lab/button/reading"
+			pageTitleData="Simple LED Control Demo"
+			description="Master basic LED control techniques with this straightforward demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/simple-led-control"
 		/>
 	),
-	"/lab/button/video": (
+	"/lab/led/demo/multi-button-led-control": (
 		<BasicHelmet
-			pageTitleData="Buttons: Video Tutorial"
-			description="Watch a comprehensive guide on implementing button controls and input handling in robotics."
-			url="https://www.bluedotrobots.com/lab/button/video"
+			pageTitleData="Multi-Button LED Control Demo"
+			description="Control LEDs using multiple buttons in this advanced interactive demo."
+			url="https://www.bluedotrobots.com/lab/led/demo/multi-button-led-control"
 		/>
 	),
-	"/lab/button/code": (
+	"/lab/led/code/led-control": (
 		<BasicHelmet
-			pageTitleData="Buttons: Coding Exercise"
-			description="Practice button input handling and control flow through interactive coding exercises."
-			url="https://www.bluedotrobots.com/lab/button/code"
+			pageTitleData="LED Control Code"
+			description="Explore guided code examples for controlling LEDs in robotics applications."
+			url="https://www.bluedotrobots.com/lab/led/code/led-control"
 		/>
 	),
-	"/lab/color-sensor/reading": (
+	"/lab/led/reading/leds-and-loops": (
 		<BasicHelmet
-			pageTitleData="Color Sensors: Understanding Color Detection"
-			description="Learn about color sensing technology, RGB color space, and how robots can detect and respond to colors."
-			url="https://www.bluedotrobots.com/lab/color-sensor/reading"
+			pageTitleData="LEDs and Loops"
+			description="Understand how to use programming loops to control LEDs in robotics."
+			url="https://www.bluedotrobots.com/lab/led/reading/leds-and-loops"
 		/>
 	),
-	"/lab/color-sensor/video": (
+	"/lab/led/demo/led-counting-loop": (
 		<BasicHelmet
-			pageTitleData="Color Sensors: Video Tutorial"
-			description="Watch a detailed demonstration of color sensor functionality and implementation in robotics."
-			url="https://www.bluedotrobots.com/lab/color-sensor/video"
+			pageTitleData="LED Counting Loop Demo"
+			description="See LEDs in action with counting loops in this programming demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/led-counting-loop"
 		/>
 	),
-	"/lab/color-sensor/code": (
+	"/lab/led/demo/led-breathing": (
 		<BasicHelmet
-			pageTitleData="Color Sensors: Coding Exercise"
-			description="Practice color detection and response programming through hands-on coding exercises."
-			url="https://www.bluedotrobots.com/lab/color-sensor/code"
+			pageTitleData="LED Breathing Demo"
+			description="Create a breathing effect with LEDs in this visually appealing demonstration."
+			url="https://www.bluedotrobots.com/lab/led/demo/led-breathing"
 		/>
 	),
-	"/lab/ir-sensor-array/reading": (
+	"/lab/led/code/breathing-leds": (
 		<BasicHelmet
-			pageTitleData="IR Sensor Array: Advanced Color Detection"
-			description="Learn about infrared color sensing, its advantages, and applications in robotics and automation."
-			url="https://www.bluedotrobots.com/lab/ir-sensor-array/reading"
+			pageTitleData="Breathing LEDs Code"
+			description="Learn to code a breathing effect for LEDs with this practical example."
+			url="https://www.bluedotrobots.com/lab/led/code/breathing-leds"
 		/>
 	),
-	"/lab/ir-sensor-array/video": (
+	"/lab/led/reading/led-advantages": (
 		<BasicHelmet
-			pageTitleData="IR Sensor Array: Video Tutorial"
-			description="Watch a comprehensive guide on using IR color sensors for advanced color detection tasks."
-			url="https://www.bluedotrobots.com/lab/ir-sensor-array/video"
+			pageTitleData="Advantages of LEDs"
+			description="Discover the benefits of using LEDs in robotics applications through this reading."
+			url="https://www.bluedotrobots.com/lab/led/reading/led-advantages"
 		/>
 	),
-	"/lab/ir-sensor-array/code": (
+	"/lab/led/reading/leds-in-robotics": (
 		<BasicHelmet
-			pageTitleData="IR Sensor Array: Coding Exercise"
-			description="Practice IR color sensor programming and calibration through interactive coding exercises."
-			url="https://www.bluedotrobots.com/lab/ir-sensor-array/code"
+			pageTitleData="LEDs in Robotics"
+			description="Explore how LEDs are used in robotics for indicators, displays, and more."
+			url="https://www.bluedotrobots.com/lab/led/reading/leds-in-robotics"
 		/>
 	),
-	"/lab/ir-communication-sensor/reading": (
+	"/lab/led/code/warehouse-pip": (
 		<BasicHelmet
-			pageTitleData="IR Communication: Robot Interaction"
-			description="Learn about infrared communication between robots, protocols, and implementing robot-to-robot interaction."
-			url="https://www.bluedotrobots.com/lab/ir-communication-sensor/reading"
+			pageTitleData="Warehouse Pip LED Code"
+			description="Implement LED controls for a warehouse robot scenario with this coding exercise."
+			url="https://www.bluedotrobots.com/lab/led/code/warehouse-pip"
 		/>
 	),
-	"/lab/ir-communication-sensor/video": (
+	"/lab/led/summary": (
 		<BasicHelmet
-			pageTitleData="IR Communication: Video Tutorial"
-			description="Watch a detailed guide on implementing IR communication between robots and handling data transfer."
-			url="https://www.bluedotrobots.com/lab/ir-communication-sensor/video"
+			pageTitleData="LED Lessons Summary"
+			description="Review key concepts learned about LEDs in robotics through this comprehensive summary."
+			url="https://www.bluedotrobots.com/lab/led/summary"
 		/>
 	),
-	"/lab/ir-communication-sensor/code": (
-		<BasicHelmet
-			pageTitleData="IR Communication: Coding Exercise"
-			description="Practice implementing IR communication protocols and robot interaction through coding exercises."
-			url="https://www.bluedotrobots.com/lab/ir-communication-sensor/code"
-		/>
-	),
-	"/lab/tof/reading": (
-		<BasicHelmet
-			pageTitleData="Time-of-Flight Sensors: Distance Measurement"
-			description="Learn about ToF sensor technology, precise distance measurement, and its applications in robotics."
-			url="https://www.bluedotrobots.com/lab/tof/reading"
-		/>
-	),
-	"/lab/tof/video": (
-		<BasicHelmet
-			pageTitleData="Time-of-Flight Sensors: Video Tutorial"
-			description="Watch a comprehensive guide on implementing ToF sensors for precise distance measurement in robotics."
-			url="https://www.bluedotrobots.com/lab/tof/video"
-		/>
-	),
-	"/lab/tof/code": (
-		<BasicHelmet
-			pageTitleData="Time-of-Flight Sensors: Coding Exercise"
-			description="Practice working with ToF sensor data and distance-based control through coding exercises."
-			url="https://www.bluedotrobots.com/lab/tof/code"
-		/>
-	),
-	"/lab/imu/reading": (
-		<BasicHelmet
-			pageTitleData="IMU: Motion and Orientation"
-			description="Learn about Inertial Measurement Units, understanding acceleration, gyroscope data, and orientation tracking."
-			url="https://www.bluedotrobots.com/lab/imu/reading"
-		/>
-	),
-	"/lab/imu/video": (
-		<BasicHelmet
-			pageTitleData="IMU: Video Tutorial"
-			description="Watch a detailed guide on using IMU sensors for motion tracking and orientation control in robotics."
-			url="https://www.bluedotrobots.com/lab/imu/video"
-		/>
-	),
-	"/lab/imu/code": (
-		<BasicHelmet
-			pageTitleData="IMU: Coding Exercise"
-			description="Practice processing IMU data and implementing orientation-based control through coding exercises."
-			url="https://www.bluedotrobots.com/lab/imu/code"
-		/>
-	),
-
-	// Element 2
-	"/lab/element-2": (
-		<BasicHelmet
-			pageTitleData="Element 2: Combine & Create"
-			description="Explore more advanced robotics concepts and create interactive behaviors with your Pip."
-			url="https://www.bluedotrobots.com/lab/element-2"
-		/>
-	),
-	"/lab/element-2/chameleon/reading": (
-		<BasicHelmet
-			pageTitleData="Chameleon: Color Response Systems"
-			description="Learn to create sophisticated color detection and response systems, enabling your Pip to adapt to its environment like a chameleon."
-			url="https://www.bluedotrobots.com/lab/element-2/chameleon/reading"
-		/>
-	),
-	"/lab/element-2/chameleon/video": (
-		<BasicHelmet
-			pageTitleData="Chameleon: Video Tutorial"
-			description="Watch a comprehensive demonstration of implementing adaptive color response systems in your Pip."
-			url="https://www.bluedotrobots.com/lab/element-2/chameleon/video"
-		/>
-	),
-	"/lab/element-2/chameleon/code": (
-		<BasicHelmet
-			pageTitleData="Chameleon: Coding Exercise"
-			description="Build and test your own color response system through hands-on coding exercises and real-time feedback."
-			url="https://www.bluedotrobots.com/lab/element-2/chameleon/code"
-		/>
-	),
-	"/lab/element-2/avoid-obstacles/reading": (
-		<BasicHelmet
-			pageTitleData="Obstacle Avoidance: Navigation Systems"
-			description="Master the principles of autonomous navigation and obstacle detection, enabling your Pip to safely navigate complex environments."
-			url="https://www.bluedotrobots.com/lab/element-2/avoid-obstacles/reading"
-		/>
-	),
-	"/lab/element-2/avoid-obstacles/video": (
-		<BasicHelmet
-			pageTitleData="Obstacle Avoidance: Video Tutorial"
-			description="Watch a detailed guide on implementing effective obstacle avoidance algorithms and sensor fusion techniques."
-			url="https://www.bluedotrobots.com/lab/element-2/avoid-obstacles/video"
-		/>
-	),
-	"/lab/element-2/avoid-obstacles/code": (
-		<BasicHelmet
-			pageTitleData="Obstacle Avoidance: Coding Exercise"
-			description="Develop and test obstacle avoidance algorithms through interactive coding exercises and real-world scenarios."
-			url="https://www.bluedotrobots.com/lab/element-2/avoid-obstacles/code"
-		/>
-	),
-
-	// Element 3
-	"/lab/element-3": (
-		<BasicHelmet
-			pageTitleData="Element 3: Misions"
-			description="Master advanced robotics concepts including autonomous navigation and complex control systems."
-			url="https://www.bluedotrobots.com/lab/element-3"
-		/>
-	),
-	"/lab/element-3/line-following/reading": (
-		<BasicHelmet
-			pageTitleData="Line Following: Advanced Navigation"
-			description="Master the principles of line following algorithms, PID control, and sensor fusion for precise robot navigation."
-			url="https://www.bluedotrobots.com/lab/element-3/line-following/reading"
-		/>
-	),
-	"/lab/element-3/line-following/video": (
-		<BasicHelmet
-			pageTitleData="Line Following: Video Tutorial"
-			description="Watch an in-depth guide on implementing robust line following systems with advanced control techniques."
-			url="https://www.bluedotrobots.com/lab/element-3/line-following/video"
-		/>
-	),
-	"/lab/element-3/line-following/code": (
-		<BasicHelmet
-			pageTitleData="Line Following: Coding Exercise"
-			description="Implement and tune line following algorithms through challenging coding exercises and performance optimization tasks."
-			url="https://www.bluedotrobots.com/lab/element-3/line-following/code"
-		/>
-	),
-	"/lab/element-3/inverted-pendulum/reading": (
-		<BasicHelmet
-			pageTitleData="Inverted Pendulum: Balance Control"
-			description="Learn advanced control theory and implementation through the classic inverted pendulum problem in robotics."
-			url="https://www.bluedotrobots.com/lab/element-3/inverted-pendulum/reading"
-		/>
-	),
-	"/lab/element-3/inverted-pendulum/video": (
-		<BasicHelmet
-			pageTitleData="Inverted Pendulum: Video Tutorial"
-			description="Watch a detailed explanation of implementing balance control systems and stabilization algorithms."
-			url="https://www.bluedotrobots.com/lab/element-3/inverted-pendulum/video"
-		/>
-	),
-	"/lab/element-3/inverted-pendulum/code": (
-		<BasicHelmet
-			pageTitleData="Inverted Pendulum: Coding Exercise"
-			description="Develop and tune balance control algorithms through interactive coding exercises and real-time testing."
-			url="https://www.bluedotrobots.com/lab/element-3/inverted-pendulum/code"
-		/>
-	)
 }
 
 export default labHelmetData

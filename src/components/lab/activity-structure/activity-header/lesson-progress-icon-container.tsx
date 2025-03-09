@@ -8,7 +8,7 @@ import GetLessonIconFromActivityName from "./get-lesson-icon-from-name"
 
 interface Props {
     lessonProgressPercent: number
-	lessonTitle: Element1Lessons
+	lessonTitle: LessonNames
 }
 
 export default function LessonProgressIconContainer({ lessonProgressPercent, lessonTitle }: Props) {

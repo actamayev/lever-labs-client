@@ -1,7 +1,7 @@
 import DemoButton from "./demo-button"
 import InThisDemo from "./in-this-demo"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import GettingStartedStartCard from "../element-1/start-card/getting-started-start-card"
+import GettingStartedStartCard from "../lab-structure/start-card/getting-started-start-card"
 import ShowPipColorOnScreen from "../../show-pip-color-on-screen"
 
 interface Props {
