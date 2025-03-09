@@ -1,28 +1,30 @@
 export default function InThisElementSection() {
 	return (
-		<div className="space-y-2 p-4 border border-zinc-200 dark:border-zinc-700 rounded-lg
-					bg-zinc-50 dark:bg-zinc-800/50">
-			<h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">
-				In This Element:
+		<div className="space-y-2 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
+			<h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+				In the Lab:
 			</h2>
-			<p className="text-lg text-zinc-600 dark:text-zinc-400">
+			<p className="text-lg text-gray-600 dark:text-gray-400">
 				We'll investigate how Pip's sensors actually work under the surface, their applications,
 				and you'll learn how to control them.
 			</p>
 			<div className="grid grid-cols-3 gap-4">
-				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
+				<ul className="list-disc pl-6 text-lg text-gray-600 dark:text-gray-400">
 					<li>LEDs</li>
 					<li>Motors</li>
 				</ul>
-				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
+				<ul className="list-disc pl-6 text-lg text-gray-600 dark:text-gray-400">
 					<li>Buttons</li>
 					<li>Distance sensors</li>
 				</ul>
-				<ul className="list-disc pl-6 text-lg text-zinc-600 dark:text-zinc-400">
+				<ul className="list-disc pl-6 text-lg text-gray-600 dark:text-gray-400">
 					<li>IR sensors</li>
 					<li>And much more</li>
 				</ul>
 			</div>
+			<p className="text-lg text-gray-600 dark:text-gray-400">
+			You'll master reading sensor data, controlling each component, and understanding core robotics principles
+			</p>
 		</div>
 	)
 }

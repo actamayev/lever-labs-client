@@ -17,7 +17,7 @@ function AddAnotherPipButton() {
 			className="hover:cursor-pointer my-1.5"
 		>
 			<div className="relative mr-2 flex items-center justify-center">
-				<Bot className="!h-[25px] !w-[25px] !min-w-[25px]" />
+				<Bot className="!h-[25px] !w-[25px] !min-w-[25px] text-blue-600 dark:text-blue-400" />
 				<PlusCircle className="absolute -right-1 -top-1 !h-[15px] !w-[15px] bg-background rounded-full" />
 			</div>
 			<span className="text-base">Add another Pip</span>

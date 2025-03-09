@@ -39,8 +39,6 @@ declare global {
 		activityType: UncertainActivityType
 	}
 
-	type ElementNumbers = 1 | 2 | 3
-
 	type Element1Lessons =
 	| "LED"
 	// | "Motor"
@@ -49,6 +47,10 @@ declare global {
 	| "Introduction to LEDs"
 	| "Voltage"
 	| "RGB LEDs"
+	| "Introduction to Code"
+	| "LEDs and Loops"
+	| "LED Advantages"
+	| "LEDs in Robotics"
 }
 
 export {}

@@ -56,7 +56,7 @@ function RightSideContentSkeleton(props: Props) {
 	const { title, content } = props
 
 	return (
-		<Card className="h-full flex flex-col">
+		<Card className="h-full flex flex-col bg-standardBackground">
 			<CardHeader className="p-4 lg:p-6 flex-shrink-0">
 				<CardTitle className="text-xl lg:text-2xl">{title}</CardTitle>
 			</CardHeader>
@@ -109,7 +109,8 @@ export default function PipUseCases() {
 								key={category.title}
 								className={cn(
 									"cursor-pointer transition-colors hover:bg-accent h-[60px] lg:h-[70px]",
-									selectedCategory === category.title ? "border-primary border" : ""
+									"bg-standardBackground hover:bg-sidebarButtonHover",
+									selectedCategory === category.title && "border-gray-400 bg-sidebarButtonHover"
 								)}
 								onClick={() => setSelectedCategory(category.title)}
 							>

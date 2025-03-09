@@ -28,7 +28,7 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 	}, [])
 
 	const navigateToDemo = useCallback(() => {
-		pageTransitionClass.setDirection("left") // Set before navigating
+		pageTransitionClass.setDirection("down") // Set before navigating
 		setTimeout(() => navigate(block.action.demoLink as LabPages), 10) // Small delay ensures state update
 		labReadingClass.handleDemoComplete(block.id)
 	}, [block.action.demoLink, block.id, labReadingClass, navigate, pageTransitionClass])

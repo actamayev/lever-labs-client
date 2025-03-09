@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import DidYouKnow from "../../../../reading/did-you-know"
+import { NumberedList } from "../../../../reading/ordered-list"
 import { CustomSolar } from "../../../../../icons/custom-solar"
+import DefinitionText from "../../../../reading/definition-text"
+import { CustomBucket } from "../../../../../icons/custom-bucket"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const voltageReadingBlocks: ContentBlock[] = [
@@ -12,10 +15,11 @@ const voltageReadingBlocks: ContentBlock[] = [
 					Voltage
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
-					In our previous lesson, we learned about the fundamental structure of LEDs. A semiconductor's P-N junction forms the heart of every LED, where the N-layer contains abundant electrons while the P-layer holds empty spaces called holes. When electrons move from the N-layer to the P-layer and fill these holes, light is produced.
+					In the previous reading, we learned about what's inside an LED: a semiconductor's P-N junction.
+					The N-layer has electrons, while the P-layer holds empty spaces called holes. When electrons move from the N-layer to the P-layer and fill these holes, light is produced.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					In this reading, we'll explore how voltage serves as the driving force behind this process. Just as water needs pressure to flow downhill, electrons need voltage to move across the P-N junction. We'll discover how applying the right amount of voltage creates the perfect conditions for electrons to flow, transforming electrical energy into the light that makes LEDs work.
+					In this reading, we'll explore how voltage serves as the driving force behind this process. Just as water needs pressure to flow, electrons need voltage to move across the P-N junction. We'll discover how applying the right amount of voltage creates the perfect conditions for electrons to flow, transforming electrical energy into the light that makes LEDs work.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -29,19 +33,29 @@ const voltageReadingBlocks: ContentBlock[] = [
 					What is Voltage?
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					Think of voltage as electrical pressure, like water pressure in a pipe. It's what drives electrons to move, and is measured in volts (V). Pip's LEDs require 3.3V - just enough pressure to push electrons across the P-N junction.
-					When we apply voltage across an LED, it’s like giving those electrons on the top of the cliff a push.
-					All we’re doing when applying a voltage is adding electrons to the N-layer.
-					We’re adding more water to the reservoir of water, and that extra water causes water from the reservoir to fall towards the ground.
+					Think of
+					<DefinitionText>voltage</DefinitionText>
+					as
+					<DefinitionText noSpaceAfter>electrical pressure</DefinitionText>
+					, like water pressure in a pipe.
+					When we apply voltage across an LED, all we're doing is adding more electrons to the N-layer.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage svgComponent={<CustomBucket size={150}/>}>
+					Now, let's think back to the cliff analogy, where we had a lake at the top of a cliff.
+					Applying a voltage across an LED is like pouring a bucket of water into the lake.
+					When we pour water into the lake, the lake overfills, and water begins to fall down the cliff, towards the dry riverbed at the bottom of the cliff.
 				</ReadingBlockWithImage>
 				<ReadingBlockWithImage>
-					Here’s what happens:
-					A voltage is applied.
-					Electrons from the N-layer begin flowing toward the P-layer.
-					When an electron finds a hole in the P-layer, the electron jumps into it: a process called recombination.
-					During recombination, the electron releases extra energy as a tiny flash of light (a photon).
-					Millions of these tiny flashes happen every second, producing the steady light we see.
-					We’ll dive into this process in further details in the next section, where we talk about colors
+					Here’s what happens in an LED:
+					<NumberedList
+						items={[
+							"A voltage is applied.",
+							"Electrons from the N-layer begin flowing toward the P-layer.",
+							"When an electron finds a hole in the P-layer, the electron jumps into it: a process called recombination.",
+							"During recombination, the electron releases extra energy as a tiny flash of light (a photon).",
+							"Millions of these tiny flashes happen every second, producing the steady light we see."
+						]}
+					/>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -119,16 +133,14 @@ const voltageReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockWithImage>
-					Now that we understand how electrons flow through an LED, let's see this process in action.
-				</ReadingBlockWithImage>
-				<ReadingBlockWithImage>
-					In this demo, when you press the button, you're applying voltage to Pip's LEDs - just like adding water to our cliff reservoir. The 3V you're applying is giving electrons the 'push' they need to cross the P-N junction and create light. Notice how the light appears instantly when you press the button - this is because electron flow happens at incredibly high speeds, making LEDs perfect for precise robot control.
+					Voltage is measured in volts (V). Pip's LEDs require 3.3V - just enough pressure to push electrons across the P-N junction.
+					Let's see this process in action.
 				</ReadingBlockWithImage>
 			</div>
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/first-light"
+			demoLink: "/lab/led/demo/first-light"
 		}
 	},
 	{

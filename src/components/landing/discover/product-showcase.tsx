@@ -42,7 +42,7 @@ function SectionCard(props: ProductProps) {
 						src={imgSrc}
 					/>
 				</div>
-				<div className="text-lg md:text-2xl mt-4 dark:text-zinc-400 text-zinc-500">
+				<div className="text-lg md:text-2xl mt-4 dark:text-gray-400 text-gray-500">
 					{sectionSubtitle}
 				</div>
 			</div>
@@ -70,7 +70,7 @@ function ProductShowcase() {
 						</>
 					}
 					Icon={CustomBeaker}
-					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-emerald-400 to-emerald-100 dark:from-emerald-200 dark:to-standardBackground"
 					linkToShow="www.bluedotrobots.com/lab"
 					imgSrc={siteTheme === "dark" ? "lab_dark.png" : "lab_light.png"}
 				/>
@@ -88,7 +88,7 @@ function ProductShowcase() {
 						</div>
 					}
 					Icon={CustomSandbox}
-					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-black"
+					extraClasses="bg-gradient-to-b from-orange-400 to-orange-100 dark:from-orange-200 dark:to-standardBackground"
 					linkToShow="www.bluedotrobots.com/sandbox"
 					imgSrc={siteTheme === "dark" ? "sandbox_dark.png" : "sandbox_light.png"}
 				/>

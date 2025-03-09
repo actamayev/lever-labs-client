@@ -1,43 +1,49 @@
+import { observer } from "mobx-react"
+import { useNavigate } from "react-router"
+import { useCallback } from "react"
 import DemoCard from "./demo-card"
-import ActivityTemplate from "../activity-structure/activity-template"
+import DemoTemplate from "../activity-structure/demo-template"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
+import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 
 interface Props {
-	element: ElementNumbers
-	lessonTitle: Element1Lessons
-	lessonProgressPercent: number
 	lessonDemoTitle: string
     demoDeliverables: string[]
     demos: Demo[]
 }
 
-export default function LabDemoComponent(props: Props) {
+function LabDemoComponent(props: Props) {
 	const {
-		element,
-		lessonTitle,
-		lessonProgressPercent,
 		lessonDemoTitle,
 		demoDeliverables,
 		demos,
 	} = props
+	const navigate = useNavigate()
+	const pageTransitionClass = usePageTransitionContext()
+
+	const goBack = useCallback(() => {
+		pageTransitionClass.setDirection("up")
+		navigate(-1)
+	}, [navigate, pageTransitionClass])
+
 	return (
-		<ActivityTemplate
-			element={element}
-			lessonTitle={lessonTitle}
-			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={null}
-			nextPageLink={null}
-			previousPageActivity={null}
-			nextPageActivity={null}
-			activityType="Demo"
-			isDemo={true}
-		>
-			<main className="flex-1 flex items-center justify-center p-4">
+		<DemoTemplate>
+			<main className="flex-1 flex items-center flex-col justify-center p-4">
 				<DemoCard
 					lessonDemoTitle={lessonDemoTitle}
 					demoDeliverables={demoDeliverables}
 					demos={demos}
 				/>
+				<BlueTactileButton
+					onClick={goBack}
+					className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
+					shadowHeight={4}
+				>
+					CONTINUE
+				</BlueTactileButton>
 			</main>
-		</ActivityTemplate>
+		</DemoTemplate>
 	)
 }
+
+export default observer(LabDemoComponent)

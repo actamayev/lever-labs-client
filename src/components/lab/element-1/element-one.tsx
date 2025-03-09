@@ -4,7 +4,7 @@ import Element1StartCard from "./start-card/element-1-start-card"
 import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
-import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+// import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
 
 interface Section {
@@ -15,7 +15,7 @@ interface Section {
 export default function Element1() {
 	useRetrieveAllActivitiesUseEffect()
 	const ledSectionRef = useRef<HTMLDivElement>(null)
-	const motorSectionRef = useRef<HTMLDivElement>(null)
+	// const motorSectionRef = useRef<HTMLDivElement>(null)
 	const [clickedSection, setClickedSection] = useState<Element1Lessons>("LED")
 
 	useEffect(() => {
@@ -51,11 +51,11 @@ export default function Element1() {
 	return (
 		<div className="h-screen overflow-y-auto relative">
 			<div className="fixed mt-6 ml-2 flex flex-row items-start gap-4 z-50">
-				<NavigateThroughElementsButton />
+				{/* <NavigateThroughElementsButton /> */}
 				<SeeLessonIconsInElement
 					sectionRefs={{
 						LED: ledSectionRef,
-						Motor: motorSectionRef
+						// Motor: motorSectionRef
 					}}
 					activeSection={clickedSection}
 					setClickedSection={setClickedSection}
