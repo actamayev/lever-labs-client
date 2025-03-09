@@ -15,7 +15,7 @@ export default function FooterLink(props: Props) {
 			<Link
 				to={linkTo}
 				className={cn(
-					"text-zinc-950 dark:text-zinc-50 hover:underline transition-all duration-300",
+					"text-gray-950 dark:text-gray-50 hover:underline transition-all duration-300",
 					extraClasses
 				)}
 			>

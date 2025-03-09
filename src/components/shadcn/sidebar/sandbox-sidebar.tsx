@@ -7,8 +7,8 @@ import {
 
 export default function SandboxSidebar() {
 	return (
-		<Sidebar collapsible="none" className="hidden flex-1 md:flex transition-all duration-300">
-			<SidebarHeader className="gap-3.5 border-b p-4">
+		<Sidebar collapsible="none" className="hidden flex-1 md:flex transition-all duration-300 border-r">
+			<SidebarHeader className="gap-3.5 border-b-2 p-4">
 				<div className="flex w-full items-center justify-between">
 					<div className="text-4xl font-medium text-foreground">
 						Sandbox

@@ -4,11 +4,9 @@ import LabReadingComponent from "../../../../reading/lab-reading-component"
 export default function IntroToLEDsReading() {
 	return (
 		<LabReadingComponent
-			previousPageLink={null}
-			previousPageActivity={null}
-			nextPageLink="/lab/element-1/led/reading/voltage"
+			nextPageLink="/lab/led/reading/voltage"
 			nextPageActivity="Reading"
-			element={1}
+			nextPageTooltip="Voltage"
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={introToLedsReadingBlocks}

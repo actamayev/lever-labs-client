@@ -40,9 +40,14 @@ function NavUser() {
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
-							className="!flex !h-[54px] !w-[54px] !min-w-[54px] relative items-center justify-center
-                            group-data-[collapsible=icon]:!h-[54px] group-data-[collapsible=icon]:!w-[54px]
-                            data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0"
+							className="!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center
+                            group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]
+                            data-[state=open]:bg-sidebarButtonHover data-[state=open]:text-sidebar-accent-foreground !p-0
+							hover:bg-sidebarButtonHover"
+							tooltip={{
+								children: "Profile",
+								hidden: false
+							}}
 						>
 							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 								<ShowUserProfileImageOrDefaultImage
@@ -57,7 +62,7 @@ function NavUser() {
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+						className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-standardBackground"
 						side={isMobile ? "bottom" : "right"}
 						align="end"
 						sideOffset={4}

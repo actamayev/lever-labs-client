@@ -2,6 +2,7 @@
 import { Eye } from "lucide-react"
 import DidYouKnow from "../../../../reading/did-you-know"
 import { CustomPalette } from "../../../../../icons/custom-palette"
+import { BulletedList, NumberedList } from "../../../../reading/ordered-list"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../../reading/reading-styles"
 
 const rgbLedsReadingBlocks: ContentBlock[] = [
@@ -10,7 +11,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockHeader>
-                   RGB LEDs
+					RGB LEDs
 				</ReadingBlockHeader>
 				<ReadingBlockWithImage>
 					In our previous lesson, we explored how LEDs create light. An applied voltage causes electrons to move from the N-layer to the P-layer. As electrons recombine with holes in the P-layer, they go from a high-energy state to a low-energy state, and release photons (light particles).
@@ -30,11 +31,18 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 					How LEDs emit different colors
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					Let’s add some details to our cliff analogy:
-					If we observe two drops of water fall towards our dry riverbed - one from the top of the cliff, and one from a height that’s less than the height of the cliff, which one makes a larger splash?:
+					If we observe two drops of water fall - one from the top of the cliff, and one from a height that’s less than the height of the cliff, which one makes a larger splash?
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
 					The one that was dropped from the higher point has a larger splash.
 					Similarly, P-N junctions made from different materials lead to different ‘splash’ sizes.
-					For example, LEDs made from Gallium Phosphide (GaP) emit red, yellow, or green light, while LEDs made from Gallium Nitride (GaN) emit blue and white light.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					For example, LEDs made from Gallium Phosphide (GaP) emit&nbsp;
+					<span className="text-red-600">red</span>,&nbsp;
+					<span className="text-yellow-400">yellow</span>, or <span className="text-green-600">green</span>
+					&nbsp;light, while LEDs made from Gallium Nitride (GaN) emit&nbsp;
+					<span className="text-blue-600">blue</span> and white light.
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -48,9 +56,14 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 					Review
 				</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
-					Electron flows from the N-layer to P-layer.
-					Upon recombining with a hole in the P-layer, the electron goes down in energy level, and releases a photon in the process.
-					Depending on the material of the P-N junction, the released photon emits a particular color.
+					<NumberedList
+						items={[
+							"Electron flows from the N-layer to P-layer.",
+							"Upon recombining with a hole in the P-layer, the electron goes down in energy level, and releases a photon in the process.",
+							"Depending on the material of the P-N junction, the released photon emits a particular color."
+						]}
+					>
+					</NumberedList>
 				</ReadingBlockWithImage>
 			</div>
 		),
@@ -66,8 +79,12 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 				<ReadingBlockWithImage>
 					Now we understand how single-color LEDs work.
 					But what if we wanted to display any color?
-					The answer is: by using RGB LEDs.
-					An RGB LED consists of 3 single-color LEDs: A Red LED, a Green LED, and a Blue LED.
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					The answer is: by using RGB LEDs. An&nbsp;
+					<span className="text-red-600">R</span>
+					<span className="text-green-600">G</span>
+					<span className="text-blue-600">B</span> LED contains 3 single-color LEDs: A Red LED, a Green LED, and a Blue LED.
 					By varying the brightness of each of the red, green, and blue LEDs, we can create any color.
 					{/* Image of arrangement of LEDs in an RGB LED */}
 				</ReadingBlockWithImage>
@@ -131,36 +148,6 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 							}
 						],
 						questionUUID: "3c6e8d9f5b2a" as QuestionUUID
-					},
-					{
-						question: "To make a color darker, what should you do to its RGB values?",
-						choices: [
-							{
-								answerChoiceId: 1,
-								text: "Increase all values",
-								correct: false,
-								explanation: "Incorrect. Increasing RGB values makes colors brighter by adding more light intensity."
-							},
-							{
-								answerChoiceId: 2,
-								text: "Decrease all values",
-								correct: true,
-								explanation: "Correct. Reducing RGB values decreases light intensity, making the color darker while maintaining its hue."
-							},
-							{
-								answerChoiceId: 3,
-								text: "Set all values to 0%",
-								correct: false,
-								explanation: "Incorrect. Setting all values to 0 creates black, completely removing the original color."
-							},
-							{
-								answerChoiceId: 4,
-								text: "Set all values to 100%",
-								correct: false,
-								explanation: "Incorrect. Setting all values to maximum creates white, losing the original color entirely."
-							}
-						],
-						questionUUID: "4d7f9e0c6b3a" as QuestionUUID
 					}
 				]
 			}
@@ -222,13 +209,13 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 		text: (
 			<div>
 				<ReadingBlockWithImage>
-					Color Mixing Demo
+					Lets see color mixing in action.
 				</ReadingBlockWithImage>
 			</div>
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/color-mixing"
+			demoLink: "/lab/led/demo/color-mixing"
 		}
 	},
 	{
@@ -251,26 +238,68 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 				</DidYouKnow>
 			</div>
 		),
-		action: { type: "continue" }
+		action: {
+			type: "quiz",
+			quiz: {
+				questions: [
+					{
+						question: "To make a color darker, what should you do to its RGB values?",
+						choices: [
+							{
+								answerChoiceId: 1,
+								text: "Increase all values",
+								correct: false,
+								explanation: "Incorrect. Increasing RGB values makes colors brighter by adding more light intensity."
+							},
+							{
+								answerChoiceId: 2,
+								text: "Decrease all values",
+								correct: true,
+								explanation: "Correct. Reducing RGB values decreases light intensity, making the color darker while maintaining its hue."
+							},
+							{
+								answerChoiceId: 3,
+								text: "Set all values to 0%",
+								correct: false,
+								explanation: "Incorrect. Setting all values to 0 creates black, completely removing the original color."
+							},
+							{
+								answerChoiceId: 4,
+								text: "Set all values to 100%",
+								correct: false,
+								explanation: "Incorrect. Setting all values to maximum creates white, losing the original color entirely."
+							}
+						],
+						questionUUID: "4d7f9e0c6b3a" as QuestionUUID
+					}
+				]
+			}
+		}
 	},
 	{
 		id: "rgb-leds-9",
 		text: (
 			<div>
-				<ReadingBlockSectionHeader>
-					Summary
-				</ReadingBlockSectionHeader>
+				<ReadingBlockSectionHeader>Summary</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>
 					Now we understand how RGB LEDs work:
-					Each RGB LED combines three LEDs: red, green, and blue
-					We can create any single color by turning on just one LED (like red: 100%, 0%, 0%)
-					We can create mixed colors by combining different LED brightnesses
+					<BulletedList
+						items={[
+							"Each RGB LED combines three LEDs: red, green, and blue",
+							"We can create any single color by turning on just one LED (like red: 100%, 0%, 0%)",
+							"We can create mixed colors by combining different LED brightnesses"
+						]}
+					>
+					</BulletedList>
 					This is how Pip creates its status indicators and light shows!
+				</ReadingBlockWithImage>
+				<ReadingBlockWithImage>
+					In the next section, we'll discuss the basics of programming, and how we can 'talk' with Pip.
 				</ReadingBlockWithImage>
 			</div>
 		),
 		action: { type: "end" }
-	},
+	}
 ]
 
 export default rgbLedsReadingBlocks

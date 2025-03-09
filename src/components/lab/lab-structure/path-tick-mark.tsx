@@ -72,7 +72,7 @@ export default function PathTickMark(props: PathTickMarkProps) {
 					<circle
 						key={i}
 						r="2"
-						className="fill-zinc-400 dark:fill-zinc-500"
+						className="fill-gray-400 dark:fill-gray-500"
 					>
 						<animateMotion
 							dur="0.01s"

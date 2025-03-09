@@ -19,12 +19,8 @@ function ConnectToPipInstructions() {
 	return (
 		<div className="mt-6">
 			<div className="flex flex-col">
-				<div className="font-bold mb-2">
-					Step 4
-				</div>
-				<div>
-					1. Open your computer's Wi-Fi settings
-				</div>
+				<div className="font-bold mb-2">Step 4</div>
+				<div>1. Open your computer's Wi-Fi settings</div>
 				<div>
 					<div className="flex items-center space-x-2">
 						<div>

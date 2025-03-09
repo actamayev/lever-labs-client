@@ -1,34 +1,28 @@
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	previousPageLink: LabPages | null
-	previousPageActivity: ActivityType | null
-	nextPageLink: LabPages | null
-	nextPageActivity: ActivityType | null
-	element: ElementNumbers
+	nextPageLink?: LabPages
+	nextPageActivity?: ActivityType
+	nextPageTooltip?: string
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 }
 
 export default function LabSummaryComponent(props: Props) {
 	const {
-		previousPageLink,
-		previousPageActivity,
 		nextPageLink,
 		nextPageActivity,
-		element,
+		nextPageTooltip,
 		lessonTitle,
 		lessonProgressPercent,
 	} = props
 	return (
 		<ActivityTemplate
-			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={previousPageLink}
-			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			nextPageTooltip={nextPageTooltip}
 			activityType="Summary"
 		>
 			<main className="flex-1 flex items-center justify-center p-4">

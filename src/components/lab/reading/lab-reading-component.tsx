@@ -2,11 +2,9 @@ import ReadingContainer from "./reading-container"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	previousPageLink: LabPages | null
-	previousPageActivity: ActivityType | null
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
-	element: ElementNumbers
+	nextPageTooltip: string
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	readingBlocks: ContentBlock[]
@@ -15,11 +13,9 @@ interface Props {
 
 export default function LabReadingComponent(props: Props) {
 	const {
-		previousPageLink,
-		previousPageActivity,
 		nextPageLink,
 		nextPageActivity,
-		element,
+		nextPageTooltip,
 		lessonTitle,
 		lessonProgressPercent,
 		readingBlocks,
@@ -27,13 +23,11 @@ export default function LabReadingComponent(props: Props) {
 	} = props
 	return (
 		<ActivityTemplate
-			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={previousPageLink}
-			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			nextPageTooltip={nextPageTooltip}
 			activityType="Reading"
 		>
 			<main className="h-full overflow-hidden">

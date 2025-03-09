@@ -17,7 +17,7 @@ declare global {
 	type PipUUID = string & { readonly __brand: unique symbol }
 
 	interface SidebarNavData {
-		title: string
+		title: "Lab" | "Sandbox"
 		url: PageNames
 		icon: LucideIcon
 	}
@@ -52,7 +52,7 @@ declare global {
 
 	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
 
-	type PageTransitionDirections = null | "left" | "right"
+	type PageTransitionDirections = null | "left" | "right" | "up" | "down"
 }
 
 export {}

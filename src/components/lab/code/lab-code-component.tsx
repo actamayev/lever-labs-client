@@ -3,11 +3,9 @@ import LabCodeMainContent from "./lab-code-main-content"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {
-	previousPageLink: LabPages
-	previousPageActivity: ActivityType
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
-	element: ElementNumbers
+	nextPageTooltip: string
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	codingTitle: string
@@ -17,11 +15,9 @@ interface Props {
 
 export default function LabCodeComponent(props: Props) {
 	const {
-		previousPageLink,
-		previousPageActivity,
 		nextPageLink,
 		nextPageActivity,
-		element,
+		nextPageTooltip,
 		lessonTitle,
 		lessonProgressPercent,
 		codingTitle,
@@ -30,13 +26,11 @@ export default function LabCodeComponent(props: Props) {
 	} = props
 	return (
 		<ActivityTemplate
-			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
-			previousPageLink={previousPageLink}
-			previousPageActivity={previousPageActivity}
 			nextPageLink={nextPageLink}
 			nextPageActivity={nextPageActivity}
+			nextPageTooltip={nextPageTooltip}
 			activityType="Code"
 		>
 			<LabCodeMainContent

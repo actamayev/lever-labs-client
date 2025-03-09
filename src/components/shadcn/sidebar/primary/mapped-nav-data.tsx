@@ -11,11 +11,12 @@ import {
 import { CustomBeaker } from "../../../icons/custom-beaker"
 import { CustomSandbox } from "../../../icons/custom-sandbox"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
+import { cn } from "../../../../lib/shadcn/utils"
 
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
-		url: "/lab/element-1",
+		url: "/lab",
 		icon: CustomBeaker
 	},
 	{
@@ -24,13 +25,11 @@ const navData: SidebarNavData[] = [
 		icon: CustomSandbox
 	}
 ]
-
 export default function MappedNavData() {
 	const navigate = useTypedNavigate()
 	const location = useLocation()
 
-	const isActive = useCallback((itemUrl: string) => {
-		if (itemUrl === "/lab/element-1") return location.pathname.startsWith("/lab")
+	const isActive = useCallback((itemUrl: PageNames) => {
 		return location.pathname.startsWith(itemUrl)
 	}, [location.pathname])
 
@@ -40,23 +39,27 @@ export default function MappedNavData() {
 				<SidebarGroupContent className="px-1.5 md:px-0">
 					<SidebarMenu>
 						{navData.map((item) => (
-							<SidebarMenuItem key={item.title} className="flex justify-center">
+							<SidebarMenuItem key={item.title} className="flex justify-center mb-1">
 								<SidebarMenuButton
-									tooltip={{
-										children: item.title,
-										hidden: false,
-									}}
+									tooltip={{ children: item.title, hidden: false }}
 									onClick={() => navigate(item.url)}
 									isActive={isActive(item.url)}
-									className="!flex !h-[60px] !w-[60px] !min-w-[60px] items-center
-									justify-center !p-0 group-data-[collapsible=icon]:!h-[60px] group-data-[collapsible=icon]:!w-[60px]
-									transition-all duration-300 hover:bg-zinc-200 dark:hover:bg-zinc-800
-									active:bg-zinc-200 dark:active:bg-zinc-800"
+									className={cn(
+										"transition-none !flex !h-[55px] !w-[55px] !min-w-[55px] items-center justify-center !p-0",
+										isActive(item.url)
+											? "!bg-selectedSidebarButtonBackground"
+											: "hover:!bg-sidebarButtonHover",
+										"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]"
+									)}
 								>
-									<div className="flex h-[50px] w-[50px] !min-w-[50px] items-center justify-center">
+									<div className="flex h-[45px] w-[45px] !min-w-[45px] items-center justify-center">
 										<item.icon
-											className="!h-[50px] !w-[50px] transition-all duration-300 ease-in-out text-sidebar-foreground
-											data-[active=true]:text-sidebar-accent-foreground"
+											className={cn(
+												"!h-[45px] !w-[45px] transition-none",
+												item.title === "Lab"
+													? "text-green-500 dark:text-green-600"
+													: "text-orange-500 dark:text-orange-600"
+											)}
 											data-active={isActive(item.url)}
 										/>
 									</div>

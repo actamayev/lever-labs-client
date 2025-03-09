@@ -6,9 +6,7 @@ function ShowPipColorOnScreen() {
 	const labDemoClass = useLabDemoContext()
 
 	// Early return if no sensor data with better nullish checking
-	if (isNull(labDemoClass.sensorData)) {
-		return null
-	}
+	if (isNull(labDemoClass.sensorData)) return null
 
 	const { redValue, greenValue, blueValue } = labDemoClass.sensorData.sensorPayload
 

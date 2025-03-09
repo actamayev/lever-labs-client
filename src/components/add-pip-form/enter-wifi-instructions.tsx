@@ -33,7 +33,7 @@ function EnterWifiInstructions() {
 								type="button"
 								variant="ghost"
 								size="lg"
-								className="h-auto p-2 dark:hover:bg-zinc-700"
+								className="h-auto p-2 hover:bg-sidebarButtonHover"
 							>
 								<Info style={{ width: "25px", height: "25px" }}/>
 							</Button>

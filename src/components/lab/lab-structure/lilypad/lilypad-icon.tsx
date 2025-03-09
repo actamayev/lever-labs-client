@@ -1,6 +1,6 @@
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
-import GetActivityIconFromActivityName from "../get-activity-icon-from-name"
+import { BookOpen, ClipboardList, CodeXml } from "lucide-react"
 
 interface Props {
 	progress: ProgressStatus
@@ -11,14 +11,20 @@ export default function LilypadIcon(props: Props) {
 	const { progress, activityType } = props
 
 	const classes = useCallback(() =>{
-		if (isNull(progress)) return "w-11 h-11 text-zinc-500"
+		if (isNull(progress)) return "w-11 h-11 text-disabledLilypadIcon"
 		return "w-11 h-11 text-white"
 	}, [progress])
 
-	return (
-		<GetActivityIconFromActivityName
-			activityType={activityType}
-			className={classes()}
-		/>
-	)
+	if (activityType === "Reading") {
+		return <BookOpen className={classes()} strokeWidth={2.75}/>
+	}
+	// else if (activityType === "Video") {
+	// 	return <Play className={className} />
+	// }
+	else if (activityType === "Summary") {
+		return <ClipboardList className={classes()} />
+	} else if (activityType === "Code") {
+		return <CodeXml className={classes()} />
+	}
+	return null
 }

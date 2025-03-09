@@ -5,7 +5,7 @@ import LEDColorChangeAnimation from "../../icon-animations/led-color-change-anim
 export default function LEDCard() {
 	return (
 		<SensorsSkeleton
-			title="5× RGB LEDs"
+			title="8× RGB LEDs"
 			description="Create dazzling light displays and visual indicators"
 			icon={<LEDColorChangeAnimation iconSize={bentoIconSize} />}
 			outerDivStyles="col-span-1 lg:col-start-1 lg:row-start-1"

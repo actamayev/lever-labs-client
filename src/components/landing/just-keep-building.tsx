@@ -24,7 +24,7 @@ const features: Feature[] = [
 function FeatureSectionHeader({ feature }: { feature: Feature }) {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.25}>
-			<div className="flex items-center space-x-2 text-lg text-zinc-900 dark:text-zinc-100">
+			<div className="flex items-center space-x-2 text-lg text-gray-900 dark:text-gray-100">
 				<feature.Icon size={35} />
 				<span className="font-semibold tracking-wide text-2xl lg:text-4xl">
 					{feature.title}
@@ -38,7 +38,7 @@ function FrictionlessDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-lg lg:text-2xl mt-4 lg:mt-8">
-				<span className="text-zinc-500 dark:text-zinc-400">
+				<span className="text-gray-500 dark:text-gray-400">
                     Getting started with Pip is as easy as turning it on. No hours of setup. No complicated instructions.
 				</span>
 				<BoldedDescription extraClasses="text-lg lg:text-2xl">
@@ -53,13 +53,13 @@ function GrowsWithYouDescription() {
 	return (
 		<BoxReveal boxColor={"#003da5"} duration={0.65}>
 			<p className="text-lg lg:text-2xl mt-4 lg:mt-8">
-				<span className="text-zinc-500 dark:text-zinc-400">
+				<span className="text-gray-500 dark:text-gray-400">
                     Whether you're exploring robotics for the first time or you're a seasoned veteran,
 				</span>
 				<BoldedDescription extraClasses="text-lg lg:text-2xl">
                     Pip evolves with you.
 				</BoldedDescription>
-				<span className="text-zinc-500 dark:text-zinc-400">
+				<span className="text-gray-500 dark:text-gray-400">
                     Regularly updated lessons ensure you're always inspired with new horizons to explore.
                     From elementary school to college and beyond:
 				</span>
@@ -75,7 +75,7 @@ export default function JustKeepBuilding() {
 	return (
 		<div id="just-keep-building">
 			<div className="mb-12 lg:mb-20 text-center">
-				<p className="text-xl lg:text-4xl text-zinc-600 dark:text-zinc-300 mb-4 lg:mb-8">
+				<p className="text-xl lg:text-4xl text-gray-600 dark:text-gray-300 mb-4 lg:mb-8">
                     Every detail has been crafted for one purpose: to let you
 				</p>
 				<TextRevealByWord text="just keep building" wordClasses="text-5xl !md:text-2xl lg:text-8xl" />
@@ -90,7 +90,7 @@ export default function JustKeepBuilding() {
 				</div>
 
 				{/* Divider - Only show on desktop */}
-				<div className="hidden lg:block mx-16 h-full border-l border-dashed border-zinc-200 dark:border-zinc-800 self-stretch" />
+				<div className="hidden lg:block mx-16 h-full border-l border-dashed border-gray-200 dark:border-gray-800 self-stretch" />
 
 				{/* Second Column */}
 				<div className="flex-1">

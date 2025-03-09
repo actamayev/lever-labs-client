@@ -46,7 +46,7 @@ export default function SeeLessonIconsInElement({
 	]
 
 	return (
-		<div className="flex gap-2">
+		<div className="flex gap-2 px-8">
 			{lessons.map(lesson => (
 				<LessonsIconListTooltip
 					key={lesson.tooltipMessage}

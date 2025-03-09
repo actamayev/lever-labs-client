@@ -4,11 +4,9 @@ import LabReadingComponent from "../../../../reading/lab-reading-component"
 export default function VoltageReading() {
 	return (
 		<LabReadingComponent
-			previousPageLink={null}
-			previousPageActivity={null}
-			nextPageLink="/lab/element-1/led/reading/rgb-leds"
+			nextPageLink="/lab/led/reading/rgb-leds"
 			nextPageActivity="Reading"
-			element={1}
+			nextPageTooltip="RGB LEDs"
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={voltageReadingBlocks}

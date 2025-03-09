@@ -28,7 +28,7 @@ export default function LilypadStatusIndicatorTooltip(props: Props) {
 				<TooltipTrigger >
 					{children}
 				</TooltipTrigger>
-				<TooltipContent side="top" className="text-zinc-100 dark:text-zinc-900">
+				<TooltipContent side="top" className="text-gray-100 dark:text-gray-900">
 					{tooltipMessage}
 				</TooltipContent>
 			</Tooltip>

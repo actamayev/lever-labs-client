@@ -24,14 +24,14 @@ export default function LessonsIconListTooltip(props: Props) {
 					<Button
 						variant="ghost"
 						className={cn(
-							"flex size-12 items-center justify-center rounded-lg duration-100",
-							isActive ? "bg-zinc-100 dark:bg-zinc-800" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
+							"flex size-12 items-center justify-center rounded-lg duration-0 hover:bg-sidebarButtonHover",
+							isActive && "bg-sidebarButtonHover"
 						)}
 					>
 						{children}
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900">
+				<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900">
 					{tooltipMessage}
 				</TooltipContent>
 			</Tooltip>

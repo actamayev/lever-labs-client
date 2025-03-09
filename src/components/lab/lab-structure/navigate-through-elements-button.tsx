@@ -21,7 +21,7 @@ function ElementDropdownMenuItem(props: Props) {
 
 	return (
 		<DropdownMenuItem
-			className="cursor-pointer text-2xl"
+			className="cursor-pointer text-2xl hover:!bg-sidebarButtonHover duration-0"
 			onClick={() => navigate(navigateToPage)}
 		>
 			{item}
@@ -36,19 +36,19 @@ export default function NavigateThroughElementsButton () {
 				<Button
 					variant="ghost"
 					className="flex items-center gap-2 text-3xl h-12 !px-2
-					hover:bg-zinc-100 dark:hover:bg-zinc-800 duration-100"
+					hover:bg-sidebarButtonHover duration-0"
 				>
 					<GetCurrentElement />
 					<ChevronDown className="!size-8" />
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="text-lg">
+			<DropdownMenuContent align="end" className="text-lg bg-standardBackground">
 				<ElementDropdownMenuItem
 					navigateToPage="/lab/welcome"
 					item={<><CustomHouse className="!size-6"/>Welcome</>}
 				/>
 				<ElementDropdownMenuItem
-					navigateToPage="/lab/element-1"
+					navigateToPage="/lab"
 					item={<><CircuitBoard className="!size-6"/>Element 1: Sensor Basics</>}
 				/>
 				{/* <ElementDropdownMenuItem

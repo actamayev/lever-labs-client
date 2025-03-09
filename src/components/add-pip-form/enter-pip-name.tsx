@@ -60,7 +60,7 @@ function EnterPipName() {
 							<Input
 								{...field}
 								maxLength={20}
-								className="w-full h-14 !text-2xl dark:border-zinc-600 pr-8 focus:ring-0 focus:ring-offset-0
+								className="w-full h-14 !text-2xl dark:border-gray-600 pr-8 focus:ring-0 focus:ring-offset-0
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Name"
 								onChange={(e) => typePipName(e, field.onChange)}
@@ -79,7 +79,7 @@ function EnterPipName() {
 													type="button"
 													variant="ghost"
 													size="sm"
-													className="h-auto p-1.5 dark:hover:bg-zinc-700"
+													className="h-auto p-1.5 hover:bg-sidebarButtonHover"
 												>
 													{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
 														<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />

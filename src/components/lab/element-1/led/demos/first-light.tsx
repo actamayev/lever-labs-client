@@ -5,35 +5,11 @@ const ledDemoDeliverables: [string] = [
 	"First Light"
 ]
 
-// const labDemos: [Demo, Demo, Demo, Demo] = [
-// 	{
-// 		demoTitle: "LED Solid Color",
-// 		demoDescription: "Description 1",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED Rainbow",
-// 		demoDescription: "Description 2",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED Pulse",
-// 		demoDescription: "Description 2",
-// 		demoIcon: Rainbow
-// 	},
-// 	{
-// 		demoTitle: "LED 4",
-// 		demoDescription: "Description 4",
-// 		demoIcon: Rainbow
-// 	}
-// ]
-
+// eslint-disable-next-line max-len
+//In this demo, when you press the button, you're applying voltage to Pip's LEDs - just like adding water to the lake at the top of the cliff. The 3.3V you're applying is giving electrons the 'push' they need to cross the P-N junction and create light. Notice how the light appears instantly when you press the button - this is because electron flow happens at incredibly high speeds, making LEDs perfect for precise robot control.
 export default function FirstLight() {
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="First Light"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}

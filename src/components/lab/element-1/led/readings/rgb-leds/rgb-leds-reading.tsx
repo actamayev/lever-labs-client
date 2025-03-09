@@ -4,11 +4,9 @@ import LabReadingComponent from "../../../../reading/lab-reading-component"
 export default function RGBLedsReading() {
 	return (
 		<LabReadingComponent
-			previousPageLink={null}
-			previousPageActivity={null}
-			nextPageLink="/lab/element-1/led/reading/intro-to-code"
+			nextPageLink="/lab/led/reading/intro-to-code"
 			nextPageActivity="Reading"
-			element={1}
+			nextPageTooltip="Intro to Code"
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={rgbLedsReadingBlocks}
