@@ -24,7 +24,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 						<SidebarTrigger className="-ml-1 w-12 h-12 transition-none rounded-xl hover:!bg-sidebarButtonHover" />
 					</header>
 				)}
-				<div className="transition-all duration-3s00 bg-standardBackground">
+				<div className="transition-all duration-300 bg-standardBackground">
 					{children}
 				</div>
 			</SidebarInset>
