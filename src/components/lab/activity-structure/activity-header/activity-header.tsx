@@ -6,7 +6,7 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
 
 interface Props {
-	lessonTitle?: Element1Lessons
+	lessonTitle?: LessonNames
 	lessonProgressPercent?: number
 	activityType: ActivityType
 }

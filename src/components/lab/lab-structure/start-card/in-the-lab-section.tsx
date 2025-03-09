@@ -1,4 +1,4 @@
-export default function InThisElementSection() {
+export default function InTheLabSection() {
 	return (
 		<div className="space-y-2 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
 			<h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
@@ -23,7 +23,7 @@ export default function InThisElementSection() {
 				</ul>
 			</div>
 			<p className="text-lg text-gray-600 dark:text-gray-400">
-			You'll master reading sensor data, controlling each component, and understanding core robotics principles
+				You'll master reading sensor data, controlling each component, and understanding core robotics principles
 			</p>
 		</div>
 	)

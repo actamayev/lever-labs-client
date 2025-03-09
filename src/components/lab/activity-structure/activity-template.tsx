@@ -9,7 +9,7 @@ interface Props {
 	nextPageLink?: LabPages
 	nextPageActivity?: ActivityType
 	nextPageTooltip?: string
-	lessonTitle: Element1Lessons
+	lessonTitle: LessonNames
 	lessonProgressPercent: number
 	children: React.ReactNode
 }

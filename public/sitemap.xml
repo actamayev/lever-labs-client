@@ -60,279 +60,123 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/element-1</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- Motors -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/motor/reading</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/motor/video</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/motor/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
   <!-- LEDs -->
   <url>
-    <loc>https://www.bluedotrobots.com/lab/led/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/intro-to-leds</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/led/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/led-light-show</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/led/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Encoders -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/encoder/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/voltage</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/encoder/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/first-light</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/encoder/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Buttons -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/button/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/rgb-leds</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/button/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/color-mixing</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/button/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Color Sensors -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/color-sensor/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/intro-to-code</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/color-sensor/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/blue-leds</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/color-sensor/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- IR Sensor Array -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-sensor-array/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/check-button-press</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-sensor-array/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/simple-led-control</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-sensor-array/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- IR Communication Sensors -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-communication-sensor/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/multi-button-led-control</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-communication-sensor/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/code/led-control</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/ir-communication-sensor/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Time of Flight Sensors -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/tof/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/leds-and-loops</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/tof/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/led-counting-loop</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/tof/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- IMU -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/imu/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/demo/led-breathing</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/imu/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/code/breathing-leds</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/imu/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-<!-- Element 2 -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/element-2</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-
-  <!-- Chameleon -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/chameleon/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/led-advantages</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/chameleon/video</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/reading/leds-in-robotics</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/chameleon/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Obstacle Avoidance -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/avoid-obstacles/reading</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/code/warehouse-pip</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.bluedotrobots.com/lab/avoid-obstacles/video</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/avoid-obstacles/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Element 3 -->
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/element-3</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/line-following/reading</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/line-following/video</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/line-following/code</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/inverted-pendulum/reading</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/inverted-pendulum/video</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.bluedotrobots.com/lab/inverted-pendulum/code</loc>
+    <loc>https://www.bluedotrobots.com/lab/led/summary</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
