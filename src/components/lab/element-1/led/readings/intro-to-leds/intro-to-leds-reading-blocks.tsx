@@ -36,7 +36,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/led-light-show"
+			demoLink: "/lab/led/demo/led-light-show"
 		}
 	},
 	{

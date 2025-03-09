@@ -16,7 +16,7 @@ import { cn } from "../../../../lib/shadcn/utils"
 const navData: SidebarNavData[] = [
 	{
 		title: "Lab",
-		url: "/lab/element-1",
+		url: "/lab",
 		icon: CustomBeaker
 	},
 	{
@@ -30,7 +30,6 @@ export default function MappedNavData() {
 	const location = useLocation()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
-		if (itemUrl === "/lab/element-1") return location.pathname.startsWith("/lab")
 		return location.pathname.startsWith(itemUrl)
 	}, [location.pathname])
 

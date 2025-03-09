@@ -59,7 +59,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/led-counting-loop"
+			demoLink: "/lab/led/demo/led-counting-loop"
 		}
 	},
 	{
@@ -79,7 +79,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/led-breathing"
+			demoLink: "/lab/led/demo/led-breathing"
 		}
 	},
 	{

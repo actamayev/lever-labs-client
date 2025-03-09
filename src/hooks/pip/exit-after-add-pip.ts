@@ -11,6 +11,6 @@ export default function useExitAfterAddPip(): () => void {
 		if (isNull(addPipClass)) return
 		addPipClass.store.resetAddPipMethods()
 		addPipClass.form.reset()
-		navigate("/lab/element-1")
+		navigate("/lab")
 	}, [addPipClass, navigate])
 }

@@ -18,7 +18,7 @@ function SandboxBlocklyComponent() {
 	}, [cppCode, sendCppToPip])
 
 	return (
-		<div className="h-screen w-full p-4 mt-4">
+		<div className="h-screen w-full py-4 px-10 mt-2.5">
 			<Suspense>
 				<BlocklyComponent
 					toolboxConfig={toolboxConfig}

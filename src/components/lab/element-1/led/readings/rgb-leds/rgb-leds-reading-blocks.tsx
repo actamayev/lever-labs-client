@@ -215,7 +215,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/color-mixing"
+			demoLink: "/lab/led/demo/color-mixing"
 		}
 	},
 	{

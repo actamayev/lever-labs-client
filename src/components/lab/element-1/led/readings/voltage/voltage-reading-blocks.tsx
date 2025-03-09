@@ -140,7 +140,7 @@ const voltageReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/first-light"
+			demoLink: "/lab/led/demo/first-light"
 		}
 	},
 	{

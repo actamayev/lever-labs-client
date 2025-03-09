@@ -123,7 +123,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/blue-leds"
+			demoLink: "/lab/led/demo/blue-leds"
 		}
 	},
 	{
@@ -149,7 +149,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/check-button-press"
+			demoLink: "/lab/led/demo/check-button-press"
 		}
 	},
 	{
@@ -186,7 +186,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/simple-led-control"
+			demoLink: "/lab/led/demo/simple-led-control"
 		}
 	},
 	{
@@ -213,7 +213,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 		),
 		action: {
 			type: "demo",
-			demoLink: "/lab/element-1/led/demo/multi-button-led-control"
+			demoLink: "/lab/led/demo/multi-button-led-control"
 		}
 	},
 	{

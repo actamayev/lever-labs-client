@@ -48,7 +48,7 @@ export default function NavigateThroughElementsButton () {
 					item={<><CustomHouse className="!size-6"/>Welcome</>}
 				/>
 				<ElementDropdownMenuItem
-					navigateToPage="/lab/element-1"
+					navigateToPage="/lab"
 					item={<><CircuitBoard className="!size-6"/>Element 1: Sensor Basics</>}
 				/>
 				{/* <ElementDropdownMenuItem

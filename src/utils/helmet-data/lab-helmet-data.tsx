@@ -45,21 +45,21 @@ const labHelmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/lab/element-1/motor/code"
 		/>
 	),
-	"/lab/element-1/led/reading": (
+	"/lab/led/reading": (
 		<BasicHelmet
 			pageTitleData="LEDs: Understanding Light Control"
 			description="Learn about LED functionality, control methods, and applications in robotics."
 			url="https://www.bluedotrobots.com/lab/element-1/led/reading"
 		/>
 	),
-	"/lab/element-1/led/video": (
+	"/lab/led/video": (
 		<BasicHelmet
 			pageTitleData="LEDs: Video Tutorial"
 			description="Watch a comprehensive video guide on LED control and programming."
 			url="https://www.bluedotrobots.com/lab/element-1/led/video"
 		/>
 	),
-	"/lab/element-1/led/code": (
+	"/lab/led/code": (
 		<BasicHelmet
 			pageTitleData="LEDs: Coding Exercise"
 			description="Practice LED control through interactive coding exercises and experiments."

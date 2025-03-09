@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useCallback } from "react"
 import { LucideIcon } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 interface IconStepProps {
 	icon: LucideIcon
@@ -15,7 +13,6 @@ interface IconStepProps {
 	title: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
-	elementLink?: ElementLabPages
 }
 
 export function IconStep({
@@ -29,22 +26,13 @@ export function IconStep({
 	title,
 	subtitle,
 	orbitingIcons,
-	elementLink
 }: IconStepProps) {
-	const navigate = useTypedNavigate()
-
-	const navigateToElement = useCallback(() => {
-		if (!elementLink) return
-		navigate(elementLink)
-	}, [elementLink, navigate])
 
 	return (
 		<div
 			className={cn(
 				"flex flex-col items-center group",
-				elementLink ? "cursor-pointer" : ""
 			)}
-			onClick={navigateToElement}
 		>
 			<div className="relative mb-4">
 				<div

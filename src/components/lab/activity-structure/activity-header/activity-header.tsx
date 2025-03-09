@@ -6,7 +6,6 @@ import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
 
 interface Props {
-	element: ElementNumbers
 	lessonTitle?: Element1Lessons
 	lessonProgressPercent?: number
 	activityType: ActivityType
@@ -14,7 +13,6 @@ interface Props {
 
 export default function ActivityHeader(props: Props) {
 	const {
-		element,
 		lessonTitle,
 		lessonProgressPercent,
 		activityType,
@@ -31,7 +29,7 @@ export default function ActivityHeader(props: Props) {
 					<Button
 						variant="ghost"
 						size="icon"
-						onClick={() => typedNavigate(`/lab/element-${element}`)}
+						onClick={() => typedNavigate("/lab")}
 						className="!p-6 hover:bg-sidebarButtonHover"
 					>
 						<X className="!h-6 !w-6" />

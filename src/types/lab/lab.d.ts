@@ -39,7 +39,7 @@ declare global {
 		activityType: UncertainActivityType
 	}
 
-	type ElementNumbers = 1 | 2 | 3
+	type ElementNumbers = 1 //| 2 | 3
 
 	type Element1Lessons =
 	| "LED"

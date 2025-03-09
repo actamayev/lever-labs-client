@@ -6,7 +6,6 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	nextPageTooltip: string
-	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	codingTitle: string
@@ -19,7 +18,6 @@ export default function LabCodeComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		nextPageTooltip,
-		element,
 		lessonTitle,
 		lessonProgressPercent,
 		codingTitle,
@@ -28,7 +26,6 @@ export default function LabCodeComponent(props: Props) {
 	} = props
 	return (
 		<ActivityTemplate
-			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			nextPageLink={nextPageLink}

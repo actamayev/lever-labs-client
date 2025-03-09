@@ -15,9 +15,8 @@ export default function WarehousePip() {
 	return (
 		<LabCodeComponent
 			nextPageActivity="Summary"
-			nextPageLink="/lab/element-1/led/summary"
+			nextPageLink="/lab/led/summary"
 			nextPageTooltip="LED Summary"
-			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={200 / 6}
 			codingTitle="Warehouse Pip"

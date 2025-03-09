@@ -5,7 +5,6 @@ interface Props {
 	nextPageLink: LabPages
 	nextPageActivity: ActivityType
 	nextPageTooltip: string
-	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	readingBlocks: ContentBlock[]
@@ -17,7 +16,6 @@ export default function LabReadingComponent(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		nextPageTooltip,
-		element,
 		lessonTitle,
 		lessonProgressPercent,
 		readingBlocks,
@@ -25,7 +23,6 @@ export default function LabReadingComponent(props: Props) {
 	} = props
 	return (
 		<ActivityTemplate
-			element={element}
 			lessonTitle={lessonTitle}
 			lessonProgressPercent={lessonProgressPercent}
 			nextPageLink={nextPageLink}

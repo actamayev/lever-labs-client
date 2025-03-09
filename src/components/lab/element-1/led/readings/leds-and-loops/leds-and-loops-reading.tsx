@@ -4,10 +4,9 @@ import LabReadingComponent from "../../../../reading/lab-reading-component"
 export default function LEDsAndLoopsReading() {
 	return (
 		<LabReadingComponent
-			nextPageLink="/lab/element-1/led/code/breathing-leds"
+			nextPageLink="/lab/led/code/breathing-leds"
 			nextPageActivity="Code"
 			nextPageTooltip="Breathing LEDs"
-			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={100 / 6}
 			readingBlocks={ledsAndLoopsReadingBlocks}

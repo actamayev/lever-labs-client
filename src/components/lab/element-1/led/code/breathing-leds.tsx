@@ -15,9 +15,8 @@ export default function BreathingLEDs() {
 	return (
 		<LabCodeComponent
 			nextPageActivity="Reading"
-			nextPageLink="/lab/element-1/led/reading/gpio"
+			nextPageLink="/lab/led/reading/gpio"
 			nextPageTooltip="GPIO"
-			element={1}
 			lessonTitle="LED"
 			lessonProgressPercent={200 / 6}
 			codingTitle="Breathing LEDs"

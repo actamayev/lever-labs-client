@@ -9,7 +9,6 @@ interface Props {
 	nextPageLink?: LabPages
 	nextPageActivity?: ActivityType
 	nextPageTooltip?: string
-	element: ElementNumbers
 	lessonTitle: Element1Lessons
 	lessonProgressPercent: number
 	children: React.ReactNode
@@ -20,7 +19,6 @@ function ActivityTemplate(props: Props) {
 		nextPageLink,
 		nextPageActivity,
 		nextPageTooltip,
-		element,
 		lessonTitle,
 		lessonProgressPercent,
 		children,
@@ -31,7 +29,6 @@ function ActivityTemplate(props: Props) {
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			<ActivityHeader
-				element={element}
 				lessonTitle={lessonTitle}
 				lessonProgressPercent={lessonProgressPercent}
 				activityType={activityType}
