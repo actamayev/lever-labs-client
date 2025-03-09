@@ -18,7 +18,7 @@ interface SeeLessonIconsProps {
 	setClickedSection: (section: LessonNames) => void
 }
 
-export default function SeeLessonIconsInElement({
+export default function SeeAllLessonIcons({
 	sectionRefs,
 	activeSection,
 	setClickedSection

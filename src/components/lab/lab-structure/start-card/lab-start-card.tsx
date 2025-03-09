@@ -1,4 +1,4 @@
-import InThisElementSection from "./in-this-element-section"
+import InTheLabSection from "./in-the-lab-section"
 import AfterCompletingSection from "./after-completing-section"
 import GettingStartedStartCard from "./getting-started-start-card"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
@@ -15,7 +15,7 @@ export default function LabStartCard() {
 			</CardHeader>
 			<CardContent className="space-y-6">
 				<GettingStartedStartCard />
-				<InThisElementSection />
+				<InTheLabSection />
 				<AfterCompletingSection />
 			</CardContent>
 		</Card>

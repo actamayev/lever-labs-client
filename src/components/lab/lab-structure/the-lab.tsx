@@ -3,8 +3,7 @@ import LabStartCard from "./start-card/lab-start-card"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
 import LilypadContainer from "./lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "./create-lilypads-and-ticks"
-import SeeLessonIconsInElement from "./see-lesson-icons-in-element"
-// import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+import SeeAllLessonIcons from "./see-all-lesson-icons"
 import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
 
 interface Section {
@@ -52,7 +51,7 @@ export default function TheLab() {
 		<div className="h-screen overflow-y-auto relative">
 			<div className="fixed mt-6 ml-2 flex flex-row items-start gap-4 z-50">
 				{/* <NavigateThroughElementsButton /> */}
-				<SeeLessonIconsInElement
+				<SeeAllLessonIcons
 					sectionRefs={{
 						LED: ledSectionRef,
 						// Motor: motorSectionRef
