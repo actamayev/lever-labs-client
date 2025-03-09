@@ -53,6 +53,8 @@ module.exports = {
 				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
 				// lilypadBlueBackground: "rgb(61, 176, 246)",
 
+				sandboxIconColor: "rgb(255, 112, 0)",
+				labIconColor: "rgb(12, 175, 12)",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
