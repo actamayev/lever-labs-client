@@ -6,7 +6,6 @@
 // 	ytVideoTitle: string
 // 	nextPageLink: LabPages
 // 	nextPageActivity: ActivityType
-// 	element: ElementNumbers
 // 	lessonTitle: Element1Lessons
 // 	lessonProgressPercent: number
 // }

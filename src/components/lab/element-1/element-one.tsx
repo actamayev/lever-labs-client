@@ -4,7 +4,7 @@ import Element1StartCard from "./start-card/element-1-start-card"
 import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
 import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
-import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
+// import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
 
 interface Section {
