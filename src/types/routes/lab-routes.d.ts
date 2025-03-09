@@ -1,10 +1,5 @@
 declare global {
-	// type ElementLabPages =
-	// 	| "/lab/element-1"
-		// | "/lab/element-2"
-		// | "/lab/element-3"
-
-	// Element 1:
+	// Lesson Pages:
 	type LedLabPages =
 		| "/lab/led/reading/intro-to-leds"
 		| "/lab/led/demo/led-light-show"
@@ -30,43 +25,13 @@ declare global {
 		| "/lab/led/code/warehouse-pip"
 		| "/lab/led/summary"
 
-	// Element 2:
-	// type ChameleonLabPages =
-	// 	| "/lab/element-2/chameleon/reading"
-	// 	| "/lab/element-2/chameleon/video"
-	// 	| "/lab/element-2/chameleon/code"
-
-	// type ObstacleAvoidanceLabPages =
-	// 	| "/lab/element-2/avoid-obstacles/reading"
-	// 	| "/lab/element-2/avoid-obstacles/video"
-	// 	| "/lab/element-2/avoid-obstacles/code"
-
-	// type Element2LabPages =
-	// 	| ChameleonLabPages
-	// 	| ObstacleAvoidanceLabPages
-
-	// // Element 3:
-	// type LineFollowingLabPages =
-	// 	| "/lab/element-3/line-following/reading"
-	// 	| "/lab/element-3/line-following/video"
-	// 	| "/lab/element-3/line-following/code"
-
-	// type InvertedPendulumLabPages =
-	// 	| "/lab/element-3/inverted-pendulum/reading"
-	// 	| "/lab/element-3/inverted-pendulum/video"
-	// 	| "/lab/element-3/inverted-pendulum/code"
-
-	// type Element3LabPages =
-	// 	| LineFollowingLabPages
-	// 	| InvertedPendulumLabPages
+	type LessonPages =
+	| LedLabPages
 
 	type LabPages =
 		| "/lab"
 		| "/lab/welcome"
-		| LedLabPages
-		// | Element1LabPages
-		// | Element2LabPages
-		// | Element3LabPages
+		| LessonPages
 }
 
 export {}

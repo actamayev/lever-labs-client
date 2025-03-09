@@ -1,7 +1,7 @@
 import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
-import defaultLedActivities from "../components/lab/element-1/led/default-led-activities"
+import defaultLedActivities from "../components/lab/lessons/led/default-led-activities"
 
 class ActivityProgressClass {
 	public didRetrieveAllActivityProgress = false

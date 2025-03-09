@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from "react"
-import Element1StartCard from "./start-card/element-1-start-card"
+import LabStartCard from "./start-card/lab-start-card"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
-import LilypadContainer from "../lab-structure/lilypad/lilypad-container"
-import CreateLilypadsAndTicks from "../lab-structure/create-lilypads-and-ticks"
-import SeeLessonIconsInElement from "../lab-structure/see-lesson-icons-in-element"
+import LilypadContainer from "./lilypad/lilypad-container"
+import CreateLilypadsAndTicks from "./create-lilypads-and-ticks"
+import SeeLessonIconsInElement from "./see-lesson-icons-in-element"
 // import NavigateThroughElementsButton from "../lab-structure/navigate-through-elements-button"
 import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
 
 interface Section {
 	ref: React.RefObject<HTMLDivElement>
-	name: Element1Lessons
+	name: LessonNames
 }
 
-export default function Element1() {
+export default function TheLab() {
 	useRetrieveAllActivitiesUseEffect()
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	// const motorSectionRef = useRef<HTMLDivElement>(null)
-	const [clickedSection, setClickedSection] = useState<Element1Lessons>("LED")
+	const [clickedSection, setClickedSection] = useState<LessonNames>("LED")
 
 	useEffect(() => {
 		const intersectionObservers: IntersectionObserver[] = []
@@ -62,7 +62,7 @@ export default function Element1() {
 				/>
 			</div>
 			<LilypadContainer>
-				<Element1StartCard />
+				<LabStartCard />
 				{/* Alter this pl-32 for the auto-scroll to scroll to the correct place (need to adjust for the sidebar width) */}
 				<div ref={ledSectionRef} className="flex pl-32">
 					<CreateLilypadsAndTicks />
