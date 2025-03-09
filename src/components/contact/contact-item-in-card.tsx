@@ -2,7 +2,6 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import useToastOptions from "../toast-options"
-import { cn } from "../../lib/shadcn/utils"
 import {
 	Tooltip,
 	TooltipContent,
