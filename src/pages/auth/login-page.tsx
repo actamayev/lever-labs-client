@@ -5,7 +5,7 @@ export default function LoginPage() {
 	return (
 		<>
 			<PageHelmet pageTitle="/login" />
-			<Login whereToNavigate="/lab/element-1"/>
+			<Login whereToNavigate="/lab"/>
 		</>
 	)
 }

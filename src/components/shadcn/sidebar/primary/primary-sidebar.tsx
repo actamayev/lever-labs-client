@@ -8,7 +8,8 @@ export default function PrimarySidebar() {
 	return (
 		<Sidebar
 			collapsible="none"
-			className="!w-[calc(var(--sidebar-width-icon))] border-r transition-all duration-300"
+			className="!w-[calc(var(--sidebar-width-icon))] border-r-2
+			bg-standardBackground border-gray-200 dark:border-gray-700"
 		>
 			<SidebarLogo />
 			<MappedNavData />

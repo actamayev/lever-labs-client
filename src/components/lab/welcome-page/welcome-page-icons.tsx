@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useCallback } from "react"
 import { LucideIcon } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 interface IconStepProps {
 	icon: LucideIcon
@@ -15,7 +13,6 @@ interface IconStepProps {
 	title: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
-	elementLink?: ElementLabPages
 }
 
 export function IconStep({
@@ -29,22 +26,13 @@ export function IconStep({
 	title,
 	subtitle,
 	orbitingIcons,
-	elementLink
 }: IconStepProps) {
-	const navigate = useTypedNavigate()
-
-	const navigateToElement = useCallback(() => {
-		if (!elementLink) return
-		navigate(elementLink)
-	}, [elementLink, navigate])
 
 	return (
 		<div
 			className={cn(
 				"flex flex-col items-center group",
-				elementLink ? "cursor-pointer" : ""
 			)}
-			onClick={navigateToElement}
 		>
 			<div className="relative mb-4">
 				<div
@@ -60,13 +48,13 @@ export function IconStep({
 			</div>
 			<div className="flex flex-col items-center space-y-1">
 				<div className="w-52 text-center">
-					<span className="text-sm font-semibold text-zinc-600 dark:text-zinc-300 text-center block">
+					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
 						{title}
 					</span>
 				</div>
 				{subtitle && (
 					<div className="w-52 text-center mt-1">
-						<span className="text-xs text-zinc-500 dark:text-zinc-400 text-center block">
+						<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
 							{subtitle}
 						</span>
 					</div>

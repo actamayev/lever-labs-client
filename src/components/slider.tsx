@@ -35,10 +35,10 @@ export default function Slider(props: SliderProps) {
 			onCheckedChange={onChangeCheckedCondition}
 			disabled={disabledCondition}
 			className={cn(
-				"dark:bg-zinc-600",
+				"dark:bg-gray-600",
 				sizeClasses[size],
 				className,
-				colorChangeOnToggle && "data-[state=checked]:bg-zinc-900 dark:data-[state=checked]:bg-zinc-100",
+				colorChangeOnToggle && "data-[state=checked]:bg-gray-900 dark:data-[state=checked]:bg-gray-100",
 				// Add thumb size adjustments here
 				size === "lg" && "[&>span]:h-5 [&>span]:w-5 [&>span]:data-[state=checked]:translate-x-5",
 				size === "xl" && "[&>span]:h-6 [&>span]:w-6 [&>span]:data-[state=checked]:translate-x-7"

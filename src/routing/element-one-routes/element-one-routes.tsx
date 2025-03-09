@@ -2,7 +2,7 @@ import ledRoutes from "./led-routes"
 
 const element1Routes: ElementRoutes[] = [
 	{
-		path: "element-1/led",
+		path: "led",
 		children: ledRoutes
 	}
 ]

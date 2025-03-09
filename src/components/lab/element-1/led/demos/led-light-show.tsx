@@ -19,9 +19,6 @@ export default function LEDLightShow() {
 
 	return (
 		<LabDemoComponent
-			element={1}
-			lessonTitle="LED"
-			lessonProgressPercent={200 / 6}
 			lessonDemoTitle="LED Light Show"
 			demoDeliverables={ledDemoDeliverables}
 			demos={ledDemos}

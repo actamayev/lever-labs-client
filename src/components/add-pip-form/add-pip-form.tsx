@@ -1,5 +1,11 @@
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import {
+	Card,
+	CardContent,
+	CardHeader,
+	CardTitle,
+} from "@/components/shadcn/ui/card"
 import EnterPipID from "./enter-pip-id"
 import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
@@ -7,17 +13,11 @@ import AddPipButton from "./add-pip-button"
 import BackButton from "../buttons/back-button"
 import EnterWifiCreds from "./enter-wifi-creds"
 import useAddPip from "../../hooks/pip/add-pip"
+import { DottedTextTooltip } from "../dotted-underline-text"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 import ShowLoadingPipConnectionStatus from "./show-loading-pip-connection-status"
-import {
-	Card,
-	CardContent,
-	CardHeader,
-	CardTitle,
-} from "@/components/shadcn/ui/card"
-import { DottedTextTooltip } from "../dotted-underline-text"
 
 function AddPipForm() {
 	const addPip = useAddPip(true)
@@ -31,7 +31,7 @@ function AddPipForm() {
 				<BackButton />
 			</div>
 
-			<Card className="mx-auto max-w-5xl border-0 mt-0 shadow-none">
+			<Card className="mx-auto max-w-5xl border-0 mt-10 shadow-none bg-inherit">
 				<CardHeader>
 					<CardTitle className="text-6xl font-bold">Add Pip</CardTitle>
 				</CardHeader>

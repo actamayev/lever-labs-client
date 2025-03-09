@@ -10,7 +10,7 @@ import {
 interface Props {
     children: React.ReactNode
     Icon: LucideIcon
-    tooltipMessage: string  // New prop for tooltip message
+    tooltipMessage: string
 }
 
 export default function DidYouKnow(props: Props) {
@@ -28,7 +28,7 @@ export default function DidYouKnow(props: Props) {
 									<Icon className="h-12 w-12 text-teal-700 dark:text-teal-300" />
 								</div>
 							</TooltipTrigger>
-							<TooltipContent side="bottom" className="text-zinc-100 dark:text-zinc-900">
+							<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900">
 								{tooltipMessage}
 							</TooltipContent>
 						</Tooltip>

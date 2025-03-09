@@ -1,10 +1,24 @@
+import FirstLight from "../../components/lab/element-1/led/demos/first-light"
+import ColorMixing from "../../components/lab/element-1/led/demos/color-mixing"
 import LEDLightShow from "../../components/lab/element-1/led/demos/led-light-show"
 import AnimatedTransitionWrapper from "../../components/animated-transition-wrapper"
-import IntroToLEDsReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
 import VoltageReading from "../../components/lab/element-1/led/readings/voltage/voltage-reading"
 import RGBLedsReading from "../../components/lab/element-1/led/readings/rgb-leds/rgb-leds-reading"
-import ColorMixing from "../../components/lab/element-1/led/demos/color-mixing"
-import FirstLight from "../../components/lab/element-1/led/demos/first-light"
+import IntroToLEDsReading from "../../components/lab/element-1/led/readings/intro-to-leds/intro-to-leds-reading"
+import IntroToCodeReading from "../../components/lab/element-1/led/readings/intro-to-code/intro-to-code-reading"
+import MultiButtonLEDControl from "../../components/lab/element-1/led/demos/multi-button-led-control"
+import BlueLEDs from "../../components/lab/element-1/led/demos/blue-leds"
+import CheckButtonPress from "../../components/lab/element-1/led/demos/check-button-press"
+import LEDControl from "../../components/lab/element-1/led/code/led-control"
+import SimpleLEDControl from "../../components/lab/element-1/led/demos/simple-led-control"
+import LedSummary from "../../components/lab/element-1/led/led-summary"
+import LEDsAndLoopsReading from "../../components/lab/element-1/led/readings/leds-and-loops/leds-and-loops-reading"
+import LEDCountingLoop from "../../components/lab/element-1/led/demos/led-counting-loop"
+import LEDBreathing from "../../components/lab/element-1/led/demos/led-breathing"
+import BreathingLEDs from "../../components/lab/element-1/led/code/breathing-leds"
+import AdvantagesofLEDsReading from "../../components/lab/element-1/led/readings/advantages-of-leds/advantages-of-leds-reading"
+import LEDsInRoboticsReading from "../../components/lab/element-1/led/readings/leds-in-robotics/leds-in-robotics-reading"
+import WarehousePip from "../../components/lab/element-1/led/code/warehouse-pip"
 
 const ledRoutes: ElementChild[] = [
 	{
@@ -33,67 +47,68 @@ const ledRoutes: ElementChild[] = [
 	},
 	{
 		path: "Reading/intro-to-code",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><IntroToCodeReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/blue-leds",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><BlueLEDs /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/check-button-press",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><CheckButtonPress /></AnimatedTransitionWrapper>
+	},
+	{
+		path: "Demo/simple-led-control",
+		element: <AnimatedTransitionWrapper><SimpleLEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/multi-button-led-control",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><MultiButtonLEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/led-control",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDControl /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/leds-and-loops",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDsAndLoopsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-counting-loop",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDCountingLoop /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Demo/led-breathing",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDBreathing /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/breathing-leds",
-		element: <RGBLedsReading />
+		element: <BreathingLEDs />
 	},
-	{
-		path: "Demo/check-button-press",
-		element: <RGBLedsReading />
-	},
-	{
-		path: "Reading/gpio",
-		element: <RGBLedsReading />
-	},
-	{
-		path: "Demo/led-in-circle",
-		element: <RGBLedsReading />
-	},
+	// {
+	// 	path: "Reading/gpio",
+	// 	element: <AnimatedTransitionWrapper><GPIO /></AnimatedTransitionWrapper>
+	// },
+	// TODO: Add a reading for individual LED control
+	// {
+	// 	path: "Demo/led-in-circle",
+	// 	element: <AnimatedTransitionWrapper><RGBLedsReading /></AnimatedTransitionWrapper>
+	// },
 	{
 		path: "Reading/led-advantages",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><AdvantagesofLEDsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Reading/leds-in-robotics",
-		element: <RGBLedsReading />
+		element: <AnimatedTransitionWrapper><LEDsInRoboticsReading /></AnimatedTransitionWrapper>
 	},
 	{
 		path: "Code/warehouse-pip",
-		element: <RGBLedsReading />
+		element: <WarehousePip />
 	},
 	{
 		path: "Summary",
-		element: <RGBLedsReading />
+		element: <LedSummary />
 	}
 ]
 

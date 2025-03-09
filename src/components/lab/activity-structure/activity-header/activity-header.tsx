@@ -1,76 +1,49 @@
-import { useCallback } from "react"
-import isNull from "lodash-es/isNull"
-import { useNavigate } from "react-router"
-import { ArrowLeft, X } from "lucide-react"
+import { X } from "lucide-react"
+import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
-import { usePageTransitionContext } from "../../../../contexts/page-transition-context"
 
 interface Props {
-	element: ElementNumbers
-	lessonTitle: Element1Lessons
-	lessonProgressPercent: number | null
+	lessonTitle?: Element1Lessons
+	lessonProgressPercent?: number
 	activityType: ActivityType
-	isDemo?: boolean
 }
 
 export default function ActivityHeader(props: Props) {
 	const {
-		element,
 		lessonTitle,
 		lessonProgressPercent,
 		activityType,
-		isDemo
 	} = props
 	const typedNavigate = useTypedNavigate()
-	const navigate = useNavigate()
-	const pageTransitionClass = usePageTransitionContext()
-
-	const goBack = useCallback(() => {
-		pageTransitionClass.setDirection("right")
-		navigate(-1)
-	}, [navigate, pageTransitionClass])
 
 	return (
 		<header
 			className="h-20 flex items-center justify-between px-4 shadow-md
-			fixed top-0 left-0 right-0 bg-white dark:bg-zinc-900 z-10"
+			fixed top-0 left-0 right-0 bg-standardBackground z-10"
 		>
 			<div className="w-1/3">
 				<div className="flex items-center">
-					{isDemo ? (
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => goBack()}
-							className="!p-6 dark:hover:bg-zinc-800"
-						>
-							<ArrowLeft className="!h-6 !w-6" />
-						</Button>
-					) : (
-						<Button
-							variant="ghost"
-							size="icon"
-							onClick={() => typedNavigate(`/lab/element-${element}`)}
-							className="!p-6 dark:hover:bg-zinc-800"
-						>
-							<X className="!h-6 !w-6" />
-						</Button>
-					)}
+					<Button
+						variant="ghost"
+						size="icon"
+						onClick={() => typedNavigate("/lab")}
+						className="!p-6 hover:bg-sidebarButtonHover"
+					>
+						<X className="!h-6 !w-6" />
+					</Button>
 				</div>
 			</div>
 
 			<div className="w-1/3 flex justify-center">
-				{activityType === "Reading" && (
-					<ReadingProgressBar />
-				)}
+				{activityType === "Reading" && <ReadingProgressBar />}
 			</div>
 
 			<div className="w-1/3 flex justify-end">
 				<div className="flex justify-end mr-4">
-					{!isNull(lessonProgressPercent) && (
+					{(!isUndefined(lessonProgressPercent) && !isUndefined(lessonTitle)) && (
 						<LessonProgressIconContainer
 							lessonProgressPercent={lessonProgressPercent}
 							lessonTitle={lessonTitle}

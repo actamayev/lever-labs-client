@@ -4,11 +4,8 @@
 // 	videoTitle: string
 // 	ytVideoId: string
 // 	ytVideoTitle: string
-// 	previousPageLink: LabPages
-// 	previousPageActivity: ActivityType
 // 	nextPageLink: LabPages
 // 	nextPageActivity: ActivityType
-// 	element: ElementNumbers
 // 	lessonTitle: Element1Lessons
 // 	lessonProgressPercent: number
 // }
@@ -18,8 +15,6 @@
 // 		videoTitle,
 // 		ytVideoId,
 // 		ytVideoTitle,
-// 		previousPageLink,
-// 		previousPageActivity,
 // 		nextPageLink,
 // 		nextPageActivity,
 // 		element,
@@ -31,8 +26,6 @@
 // 			element={element}
 // 			lessonTitle={lessonTitle}
 // 			lessonProgressPercent={lessonProgressPercent}
-// 			previousPageLink={previousPageLink}
-// 			previousPageActivity={previousPageActivity}
 // 			nextPageLink={nextPageLink}
 // 			nextPageActivity={nextPageActivity}
 // 			activityType="Video"

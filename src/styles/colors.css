@@ -1,0 +1,28 @@
+@tailwind base;
+
+@layer base {
+	:root {
+		--standard-background: 255 255 255;
+		--disabled-lilypad-background: 229 229 229;
+		--disabled-lilypad-icon: 175 175 175;
+		--standard-background-hover: 220 244 255;
+		--selected-sidebar-button-background: 220 244 255;
+		--lilypad-blue-background: 61 176 246;
+		--selected-sidebar-button-border: 132 216 255;
+		--sidebar-button-hover: 247 247 247;
+		--unselected-answer-text: 75 75 75;
+		--question-text: 60 60 60;
+	}
+
+	.dark {
+		--standard-background: 20 31 35;
+		--disabled-lilypad-background: 55 70 79;
+		--disabled-lilypad-icon: 82 100 109;
+		--standard-background-hover: 32 47 54;
+		--selected-sidebar-button-background: 32 47 54;
+		--selected-sidebar-button-border: 63 132 167;
+		--sidebar-button-hover: 32 47 54;
+		--unselected-answer-text: 241 247 251;
+		--question-text: 241 247 251;
+	}
+}

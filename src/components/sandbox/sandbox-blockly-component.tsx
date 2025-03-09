@@ -18,7 +18,7 @@ function SandboxBlocklyComponent() {
 	}, [cppCode, sendCppToPip])
 
 	return (
-		<div className="h-screen w-full p-4 mt-4">
+		<div className="h-screen w-full py-4 px-10 mt-2.5">
 			<Suspense>
 				<BlocklyComponent
 					toolboxConfig={toolboxConfig}
@@ -27,7 +27,7 @@ function SandboxBlocklyComponent() {
 			</Suspense>
 			<div className="mt-4">
 				<h3 className="text-lg font-bold text-black dark:text-white">Generated C++</h3>
-				<pre className="bg-zinc-100 dark:bg-zinc-800 dark:text-white p-4 rounded transition-all duration-300">
+				<pre className="bg-sidebarButtonHover dark:text-white p-4 rounded transition-all duration-300">
 					{cppCode}
 				</pre>
 			</div>

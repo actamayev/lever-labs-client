@@ -50,7 +50,7 @@ function SelectAutoreconnectToPip() {
 											type="button"
 											variant="ghost"
 											size="sm"
-											className="h-auto p-1 dark:hover:bg-zinc-700 flex items-center"
+											className="h-auto p-1 hover:bg-sidebarButtonHover flex items-center"
 										>
 											<Info style={{ width: "25px", height: "25px" }}/>
 										</Button>

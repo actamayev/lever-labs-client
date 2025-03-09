@@ -16,7 +16,7 @@ export default function LockIconAndTooltip() {
 						type="button"
 						variant="ghost"
 						size="sm"
-						className="h-auto p-1.5 dark:hover:bg-zinc-700"
+						className="h-auto p-1.5 hover:bg-sidebarButtonHover"
 					>
 						<Lock className="!h-7 !w-7" />
 					</Button>

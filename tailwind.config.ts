@@ -6,7 +6,7 @@ const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenCo
 module.exports = {
 	darkMode: ["class"],
 	content: [
-		"./src/**/*.{js,ts,jsx,tsx}"
+		"./src/**/*.{js,ts,jsx,tsx}", "./src/styles/**.css"
 	],
 	theme: {
 		extend: {
@@ -19,7 +19,40 @@ module.exports = {
 				pipThemeHover: "rgb(0, 45, 130)",
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
+
 				foreground: "hsl(var(--foreground))",
+
+				standardBackground: "rgb(var(--standard-background))",
+				// lightThemeBackground: "rgb(255, 255, 255)",
+				// darkThemeBackground: "rgb(20, 31, 35)",
+
+				disabledLilypadBackground: "rgb(var(--disabled-lilypad-background))",
+				// lilypadDarkBackground: "rgb(55, 70, 79)",
+				// lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
+
+				disabledLilypadIcon: "rgb(var(--disabled-lilypad-icon))",
+				// lilypadIconDisabledDark: "rgb(82, 100, 109)",
+				// lilypadIconDisabledLight: "rgb(175, 175, 175)",
+
+				standardBackgroundHover: "rgb(var(--standard-background-hover))",
+				selectedSidebarButtonBackground: "rgb(var(--selected-sidebar-button-background))",
+				// darkBackgroundHover: "rgb(32, 47, 54)",
+				// lightBackgroundHover: "rgb(220, 244, 255)",
+
+				selectedSidebarButtonBorder: "rgb(var(--selected-sidebar-button-border))",
+				// selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
+				// selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
+
+				sidebarButtonHover: "rgb(var(--sidebar-button-hover))",
+				// sidebarButtonHoverDark: "rgb(32, 47, 54)",
+				// sidebarButtonHoverLight: "rgb(247, 247, 247)",
+
+				answerText: "rgb(52, 153, 214)",
+				unselectedAnswerText: "rgb(var(--unselected-answer-text))",
+				questionText: "rgb(var(--question-text))",
+				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
+				// lilypadBlueBackground: "rgb(61, 176, 246)",
+
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"

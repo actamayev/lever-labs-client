@@ -7,8 +7,8 @@ export default function Contact() {
 	return (
 		<div>
 			<PageHelmet pageTitle="/contact" />
-			<div className="text-zinc-950 dark:text-zinc-200 py-12 px-48">
-				<div className="text-3xl text-zinc-950 dark:text-zinc-200 mb-2">
+			<div className="text-gray-950 dark:text-gray-200 py-12 px-48">
+				<div className="text-3xl text-gray-950 dark:text-gray-200 mb-2">
 					Contact Us
 				</div>
 				<div className="grid grid-cols-2 gap-4">
@@ -19,8 +19,8 @@ export default function Contact() {
 					</div>
 					<div className="flex flex-col items-center">
 						<div
-							className="border border-zinc-200 dark:border-zinc-700 rounded-lg py-1
-							px-0.5 mx-auto bg-white dark:bg-zinc-800 w-80 mt-10"
+							className="border-2 border-gray-200 dark:border-gray-700 rounded-lg py-1
+							px-0.5 mx-auto bg-standardBackground w-80 mt-10"
 						>
 							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
 							{/* <ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" /> */}
