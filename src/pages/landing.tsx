@@ -13,6 +13,8 @@ import TheLabLanding from "../components/landing/the-lab-landing"
 import LearnByDoing from "../components/landing/learn-by-doing"
 import Sensors from "../components/landing/sensors/sensors"
 import LandingSensors from "../components/landing/sensors/landing-sensors"
+import AllAgesWelcome from "../components/landing/all-ages-welcome"
+import CodeThatComesAlive from "../components/landing/code-that-comes-alive"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 export default function Landing() {
@@ -60,6 +62,18 @@ export default function Landing() {
 				<div className="relative z-10">
 					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
 						<LandingSensors />
+					</div>
+				</div>
+
+				<div className="relative z-10">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+						<AllAgesWelcome />
+					</div>
+				</div>
+
+				<div className="relative z-10">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+						<CodeThatComesAlive />
 					</div>
 				</div>
 
