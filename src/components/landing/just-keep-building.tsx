@@ -1,9 +1,8 @@
 import { LucideIcon } from "lucide-react"
 import BoxReveal from "../shadcn/ui/box-reveal"
-import { BoldedDescription } from "../bold-span-text"
-import TextRevealByWord from "../shadcn/ui/text-reveal"
 import { GrowingTree } from "./growing-tree"
 import { RocketLiftoff } from "./rocket-liftoff"
+import { BoldedDescription } from "../bold-span-text"
 
 interface Feature {
 	Icon: LucideIcon
@@ -78,7 +77,7 @@ export default function JustKeepBuilding() {
 				<p className="text-xl lg:text-4xl text-gray-600 dark:text-gray-300 mb-4 lg:mb-8">
                     Every detail has been crafted for one purpose: to let you
 				</p>
-				<TextRevealByWord text="just keep building" wordClasses="text-5xl !md:text-2xl lg:text-8xl" />
+				just keep building
 			</div>
 
 			{/* Mobile: Stack vertically, Desktop: Side by side */}

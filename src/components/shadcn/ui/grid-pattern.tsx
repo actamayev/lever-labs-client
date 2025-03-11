@@ -11,7 +11,11 @@ interface GridPatternProps {
   className?: string;
   isDashed?: boolean;
   dashSize?: number;
-  orientation?: "both" | "vertical" | "horizontal"; // New prop for line orientation
+  orientation?: "both" | "vertical" | "horizontal";
+  borderOnly?: boolean; // New prop to control if we want only borders
+  columnCount?: number; // Number of internal columns
+  marginLeft?: number; // Left margin (px-60 equivalent)
+  marginRight?: number; // Right margin
   [key: string]: unknown;
 }
 
@@ -25,61 +29,126 @@ export function GridPattern({
   className,
   isDashed = false,
   dashSize = 4,
-  orientation = "both", // Default to showing both lines
+  orientation = "both",
+  borderOnly = false, // Default to normal grid
+  columnCount = 3, // Default to 3 columns between borders
+  marginLeft = 240, // px-60 (60 * 4px)
+  marginRight = 240, // Same as left by default
   ...props
 }: GridPatternProps) {
   const id = useId();
-
   const dashPattern = isDashed ? `${dashSize},${dashSize}` : strokeDasharray;
 
-  // Create path based on orientation
-  const getPath = () => {
-    switch (orientation) {
-      case "vertical":
-        return `M.5 ${height}V.5`;
-      case "horizontal":
-        return `M.5.5H${width}`;
-      default: // "both"
-        return `M.5 ${height}V.5H${width}`;
-    }
-  };
+  // Calculate total width of the content area (viewport width - margins)
+  const viewportWidth = "calc(100% - " + (marginLeft + marginRight) + "px)";
+  
+  // Calculate column width based on number of columns
+  const columnWidth = `calc((${viewportWidth}) / ${columnCount + 1})`;
 
   return (
     <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+        "pointer-events-none absolute inset-0 h-full w-full fill-gray-200 stroke-gray-200 dark:fill-gray-800 dark:stroke-gray-800",
         className,
       )}
       {...props}
     >
       <defs>
-        <pattern
-          id={id}
-          width={width}
-          height={height}
-          patternUnits="userSpaceOnUse"
-          x={x}
-          y={y}
-        >
-          <path
-            d={getPath()}
-            fill="none"
-            strokeDasharray={dashPattern}
-          />
-        </pattern>
+        {/* Pattern for middle columns */}
+        {!borderOnly && (
+          <pattern
+            id={`${id}-columns`}
+            width={columnWidth}
+            height={height}
+            patternUnits="userSpaceOnUse"
+            x={marginLeft}
+            y={y}
+            patternContentUnits="userSpaceOnUse"
+          >
+            {orientation !== "horizontal" && (
+              <line 
+                x1="0" 
+                y1="0" 
+                x2="0" 
+                y2="100%" 
+                strokeDasharray={dashPattern}
+                vectorEffect="non-scaling-stroke"
+              />
+            )}
+            {orientation !== "vertical" && (
+              <line 
+                x1="0" 
+                y1="0" 
+                x2={columnWidth} 
+                y2="0" 
+                strokeDasharray={dashPattern}
+                vectorEffect="non-scaling-stroke"
+              />
+            )}
+          </pattern>
+        )}
       </defs>
-      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
+
+      {/* Fill pattern for middle columns */}
+      {!borderOnly && (
+        <rect 
+          x={marginLeft} 
+          y="0" 
+          width={`calc(100% - ${marginLeft + marginRight}px)`} 
+          height="100%" 
+          fill={`url(#${id}-columns)`} 
+          strokeWidth="0"
+        />
+      )}
+
+      {/* Left border line */}
+      {orientation !== "horizontal" && (
+        <line 
+          x1={marginLeft} 
+          y1="0" 
+          x2={marginLeft} 
+          y2="100%" 
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+        />
+      )}
+
+      {/* Right border line */}
+      {orientation !== "horizontal" && (
+        <line 
+          x1={`calc(100% - ${marginRight}px)`} 
+          y1="0" 
+          x2={`calc(100% - ${marginRight}px)`} 
+          y2="100%" 
+          strokeWidth="1"
+          vectorEffect="non-scaling-stroke"
+        />
+      )}
+
+      {/* Column lines between borders */}
+      {!borderOnly && orientation !== "horizontal" && Array.from({ length: columnCount - 1 }).map((_, index) => (
+        <line 
+          key={`column-${index}`}
+          x1={`calc(${marginLeft}px + ${columnWidth} * ${index + 1})`}
+          y1="0" 
+          x2={`calc(${marginLeft}px + ${columnWidth} * ${index + 1})`}
+          y2="100%" 
+          strokeDasharray={dashPattern}
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
+
       {squares && (
-        <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([x, y]) => (
+        <svg x={marginLeft} y={y} className="overflow-visible">
+          {squares.map(([squareX, squareY]) => (
             <rect
               strokeWidth="0"
-              key={`${x}-${y}`}
+              key={`${squareX}-${squareY}`}
               width={width - 1}
               height={height - 1}
-              x={x * width + 1}
-              y={y * height + 1}
+              x={squareX * width + 1}
+              y={squareY * height + 1}
             />
           ))}
         </svg>

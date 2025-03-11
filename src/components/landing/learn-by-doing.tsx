@@ -1,7 +1,7 @@
 import LandingCard from "./landing-card"
 import { BoldSpanText } from "../bold-span-text"
 import { CoolMode } from "../shadcn/ui/cool-mode"
-import TextRevealByWord from "../shadcn/ui/text-reveal"
+
 export default function LearnByDoing() {
 	return (
 	// Changed to xl breakpoint (1280px) for earlier stacking
@@ -34,13 +34,7 @@ export default function LearnByDoing() {
 
 			{/* Quote Section - More granular text scaling */}
 			<div className="w-full xl:w-1/2 flex items-center justify-center text-center xl:text-left mt-8 xl:mt-0">
-				<TextRevealByWord
-					text='"The best way to predict the future is to create it."¤- Alan Kay'
-					className="block px-4 xl:px-0"
-					instantTransition
-					// Added more breakpoints for smoother text scaling
-					wordClasses="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold"
-				/>
+				The best way to predict the future is to create it."¤- Alan Kay
 			</div>
 		</div>
 	)

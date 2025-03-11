@@ -55,6 +55,7 @@ module.exports = {
 
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
+				lightLandingPageText: "rgb(var(--light-landing-page-text))",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"

@@ -10,10 +10,10 @@ import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
+import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
-// 1/1/25 TODO: Add Duolingo for robotics somewhere (ie. Pip paired with blue dot is like Duolingo for robotics)
 export default function Landing() {
 	useRedirectKnownUserToLab()
 	return (
@@ -21,13 +21,25 @@ export default function Landing() {
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
 				<div className="fixed inset-0">
-					<GridPattern isDashed={true} dashSize={2} orientation="both" />
+					<GridPattern
+						isDashed={true}
+						dashSize={4}
+						orientation="vertical"
+						marginLeft={230} // px-60 (60 * 4px)
+						marginRight={230}
+						columnCount={3} // 3 columns between borders
+					/>
 				</div>
-				<div className="relative z-10 bg-gradient-to-b from-white to-sky-200 dark:from-standardBackground dark:to-gray-700
-				text-black dark:text-white transition-all duration-300">
+				<div className="relative z-10">
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="min-h-[calc(100vh-56px)] flex items-center justify-center px-4 md:px-8 lg:px-16">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
 						<LandingHeader />
+					</div>
+				</div>
+
+				<div className="relative z-10 text-black dark:text-white transition-all duration-300">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
+						<SmallRobotBigPossibilities />
 					</div>
 				</div>
 

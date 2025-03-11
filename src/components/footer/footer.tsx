@@ -14,7 +14,7 @@ export default function Footer() {
 
 	return (
 		<footer id="footer" className="bg-standardBackground w-full pb-3 md:py-3 z-20 transition-all duration-300">
-			<div className="flex justify-center w-full px-4">
+			<div className="flex justify-center w-full px-4 sm:px-60">
 				<div className="w-full max-w-screen-2xl">
 					{/* Mobile: Stack vertically, Desktop: 3 columns */}
 					<div className="flex flex-col items-center space-y-6 md:space-y-0 md:grid md:grid-cols-3 w-full">
