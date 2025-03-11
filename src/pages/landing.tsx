@@ -1,19 +1,18 @@
 import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
-import LearnByDoing from "../components/landing/learn-by-doing"
 import LandingHeader from "../components/landing/landing-header"
 import FeaturesBento from "../components/landing/features-bento"
 import WhoWeAre from "../components/landing/who-we-are/who-we-are"
-import JustKeepBuilding from "../components/landing/just-keep-building"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
 import DiscoverSection from "../components/landing/discover/discover-section"
 import ProductShowcase from "../components/landing/discover/product-showcase"
-import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
 import TheLabLanding from "../components/landing/the-lab-landing"
-import LearnByDoingLanding from "../components/landing/learn-by-doing-landing"
+import LearnByDoing from "../components/landing/learn-by-doing"
+import Sensors from "../components/landing/sensors/sensors"
+import LandingSensors from "../components/landing/sensors/landing-sensors"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 export default function Landing() {
@@ -27,7 +26,7 @@ export default function Landing() {
 						isDashed={true}
 						dashSize={4}
 						orientation="vertical"
-						marginLeft={230} // px-60 (60 * 4px)
+						marginLeft={230}
 						marginRight={230}
 						columnCount={7} // 3 columns between borders
 					/>
@@ -40,21 +39,27 @@ export default function Landing() {
 				</div>
 
 				<div className="relative z-10 text-black dark:text-white transition-all duration-300">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
 						<SmallRobotBigPossibilities />
 					</div>
 				</div>
 
 				<div className="relative z-10">
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
 						<TheLabLanding />
 					</div>
 				</div>
 
 				<div className="relative z-10">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
-						<LearnByDoingLanding />
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+						<LearnByDoing />
+					</div>
+				</div>
+
+				<div className="relative z-10">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+						<LandingSensors />
 					</div>
 				</div>
 
@@ -85,12 +90,11 @@ export default function Landing() {
 					<LearnByDoing />
 				</div> */}
 
-				<div className="flex bg-pipTheme relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32
-				 duration-300">
+				<div className="flex bg-pipTheme relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32 duration-300 mt-36">
 					<FeaturesBento />
 				</div>
 
-				<div className="relative flex my-8 md:my-20 z-10 px-4 md:px-16">
+				<div className="relative flex my-8 md:my-20 z-10 px-4 md:px-16 mt-36">
 					<WhoWeAre />
 				</div>
 

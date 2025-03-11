@@ -2,23 +2,20 @@ import { observer } from "mobx-react"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 function SmallRobotBigPossibilities() {
 	const navigate = useTypedNavigate()
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return (
-		<div className="w-full mt-36">
+		<div className="w-full">
 			{/* Section title in Duolingo style */}
 			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
 				{/* Left side with text - Duolingo style */}
 				<div className="flex flex-col w-full md:w-1/2">
-					<h2 className="text-4xl md:text-5xl lg:text-5xl font-bold text-pipTheme">
-						small robot.
-					</h2>
-					<h2 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-5 text-pipTheme">
-						big possibilities.
-					</h2>
+					<LandingSectionHeaderText text="small robot."/>
+					<LandingSectionHeaderText text="big possibilities." extraClasses="mb-5"/>
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
 						With Pip by your side,&nbsp;
 						<span className="font-semibold">learning feels like play:</span> write code to solve fun challenges,

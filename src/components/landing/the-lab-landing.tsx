@@ -4,6 +4,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomWizardHat } from "../icons/custom-wizard-hat"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function ShowIcon({ icon: Icon} : { icon: LucideIcon }) {
@@ -22,7 +23,7 @@ function TheLab() {
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return (
-		<div className="w-full mt-36">
+		<div className="w-full">
 			{/* Section layout */}
 			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
 				{/* Left side with text */}
@@ -37,9 +38,7 @@ function TheLab() {
 					</div>
 				</div>
 				<div className="flex flex-col w-full md:w-1/2">
-					<h2 className="text-4xl md:text-5xl lg:text-5xl font-bold text-pipTheme">
-						the lab
-					</h2>
+					<LandingSectionHeaderText text="the lab" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-5">
 						The Lab is our free learning platform where your robotics journey begins.
 						As you move through bite-sized lessons, you'll go from
