@@ -13,6 +13,7 @@ import DesignThatInspiresCard from "../components/landing/design-that-inspires-c
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
 import TheLabLanding from "../components/landing/the-lab-landing"
+import LearnByDoingLanding from "../components/landing/learn-by-doing-landing"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 export default function Landing() {
@@ -46,12 +47,18 @@ export default function Landing() {
 
 				<div className="relative z-10">
 					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
 						<TheLabLanding />
 					</div>
 				</div>
 
 				<div className="relative z-10">
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
+						<LearnByDoingLanding />
+					</div>
+				</div>
+
+				{/* <div className="relative z-10">
 					<div className="relative z-20 flex flex-col items-center justify-center px-4 md:px-16 py-8">
 						<JustKeepBuilding />
 					</div>
@@ -76,11 +83,10 @@ export default function Landing() {
 
 				<div className="relative z-10 flex flex-col items-center justify-center px-4 md:px-16">
 					<LearnByDoing />
-				</div>
+				</div> */}
 
-				<div className="flex relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32
-				bg-gradient-to-b from-standardBackground to-pipTheme
-				dark:to-pipTheme transition-all duration-300">
+				<div className="flex bg-pipTheme relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32
+				 duration-300">
 					<FeaturesBento />
 				</div>
 
