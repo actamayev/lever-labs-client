@@ -12,6 +12,7 @@ import ProductShowcase from "../components/landing/discover/product-showcase"
 import DesignThatInspiresCard from "../components/landing/design-that-inspires-card"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
+import TheLabLanding from "../components/landing/the-lab-landing"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 export default function Landing() {
@@ -27,7 +28,7 @@ export default function Landing() {
 						orientation="vertical"
 						marginLeft={230} // px-60 (60 * 4px)
 						marginRight={230}
-						columnCount={3} // 3 columns between borders
+						columnCount={7} // 3 columns between borders
 					/>
 				</div>
 				<div className="relative z-10">
@@ -40,6 +41,13 @@ export default function Landing() {
 				<div className="relative z-10 text-black dark:text-white transition-all duration-300">
 					<div className="px-4 sm:px-8 md:px-16 lg:px-60">
 						<SmallRobotBigPossibilities />
+					</div>
+				</div>
+
+				<div className="relative z-10">
+					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
+					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
+						<TheLabLanding />
 					</div>
 				</div>
 

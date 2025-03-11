@@ -12,11 +12,11 @@ function SmallRobotBigPossibilities() {
 			{/* Section title in Duolingo style */}
 			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
 				{/* Left side with text - Duolingo style */}
-				<div className="flex flex-col w-full md:w-7/12">
-					<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-pipTheme">
+				<div className="flex flex-col w-full md:w-1/2">
+					<h2 className="text-4xl md:text-5xl lg:text-5xl font-bold text-pipTheme">
 						small robot.
 					</h2>
-					<h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-5 text-pipTheme">
+					<h2 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-5 text-pipTheme">
 						big possibilities.
 					</h2>
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
@@ -25,9 +25,8 @@ function SmallRobotBigPossibilities() {
 						and watch your ideas
 						spring to life right before your eyes.
 						Pip might fit in your pocket, but this tiny robot is full of big surprises!
-
 					</p>
-					<div className="pt-8 items-center">
+					<div className="pt-8 flex items-center justify-center">
 						<TactileButton
 							onClick={() => navigate("/login")}
 							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12 \
@@ -42,7 +41,7 @@ function SmallRobotBigPossibilities() {
 				</div>
 
 				{/* Right side with Pip image */}
-				<div className="w-full md:w-5/12 flex justify-center items-center mt-8 md:mt-0">
+				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
 					<div className="relative">
 						<img
 							src="pip_top_right.png"

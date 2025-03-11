@@ -38,6 +38,9 @@ export function GridPattern({
   // Calculate column width
   const columnWidth = `calc((100% - ${marginLeft + marginRight}px) / ${columnCount + 1})`;
 
+  // Generate array for dynamic column lines
+  const columnLines = Array.from({ length: columnCount }, (_, index) => index + 1);
+
   return (
     <svg
       aria-hidden="true"
@@ -49,62 +52,40 @@ export function GridPattern({
       {...props}
     >
       {/* Left border line - solid */}
-        <line 
-          x1={marginLeft} 
-          y1="0" 
-          x2={marginLeft} 
-          y2="100%" 
-          strokeWidth="1"
-          strokeDasharray="0"
-          vectorEffect="non-scaling-stroke"
-        />
+      <line 
+        x1={marginLeft} 
+        y1="0" 
+        x2={marginLeft} 
+        y2="100%" 
+        strokeWidth="2"
+        strokeDasharray="0"
+        vectorEffect="non-scaling-stroke"
+      />
 
       {/* Right border line - solid */}
+      <line 
+        x1={`calc(100% - ${marginRight}px)`} 
+        y1="0" 
+        x2={`calc(100% - ${marginRight}px)`} 
+        y2="100%" 
+        strokeWidth="2"
+        strokeDasharray="0"
+        vectorEffect="non-scaling-stroke"
+      />
+
+      {/* Dynamically generated column lines between borders - always dashed */}
+      {columnLines.map((columnIndex) => (
         <line 
-          x1={`calc(100% - ${marginRight}px)`} 
+          key={`column-${columnIndex}`}
+          x1={`calc(${marginLeft}px + ${columnWidth} * ${columnIndex})`}
           y1="0" 
-          x2={`calc(100% - ${marginRight}px)`} 
+          x2={`calc(${marginLeft}px + ${columnWidth} * ${columnIndex})`}
           y2="100%" 
+          strokeDasharray={dashPattern}
           strokeWidth="1"
-          strokeDasharray="0"
           vectorEffect="non-scaling-stroke"
         />
-
-      {/* Column lines between borders - always dashed */}
-        <>
-          {/* First column line */}
-          <line 
-            x1={`calc(${marginLeft}px + ${columnWidth})`}
-            y1="0" 
-            x2={`calc(${marginLeft}px + ${columnWidth})`}
-            y2="100%" 
-            strokeDasharray={dashPattern}
-            strokeWidth="1"
-            vectorEffect="non-scaling-stroke"
-          />
-
-          {/* Second column line */}
-          <line 
-            x1={`calc(${marginLeft}px + ${columnWidth} * 2)`}
-            y1="0" 
-            x2={`calc(${marginLeft}px + ${columnWidth} * 2)`}
-            y2="100%" 
-            strokeDasharray={dashPattern}
-            strokeWidth="1"
-            vectorEffect="non-scaling-stroke"
-          />
-
-          {/* Third column line */}
-          <line 
-            x1={`calc(${marginLeft}px + ${columnWidth} * 3)`}
-            y1="0" 
-            x2={`calc(${marginLeft}px + ${columnWidth} * 3)`}
-            y2="100%" 
-            strokeDasharray={dashPattern}
-            strokeWidth="1"
-            vectorEffect="non-scaling-stroke"
-          />
-        </>
+      ))}
 
       {squares && (
         <svg x={marginLeft} y={y} className="overflow-visible">
