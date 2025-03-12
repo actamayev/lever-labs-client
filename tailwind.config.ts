@@ -20,6 +20,7 @@ module.exports = {
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
 
+				pipThemeText: "rgb(var(--pip-theme-text))",
 				foreground: "hsl(var(--foreground))",
 
 				standardBackground: "rgb(var(--standard-background))",

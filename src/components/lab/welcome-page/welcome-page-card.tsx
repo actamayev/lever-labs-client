@@ -11,7 +11,7 @@ export default function WelcomePageCard(props: Props) {
 	return (
 		<Card className="bg-standardBackground border-2 border-purple-100 dark:border-pipTheme">
 			<CardContent className="pt-6">
-				<div className="text-xl font-semibold text-pipTheme dark:text-blue-400 mb-6 flex justify-center">
+				<div className="text-xl font-semibold text-pipThemeText dark:text-blue-400 mb-6 flex justify-center">
 					{headerText}
 				</div>
 				{children}

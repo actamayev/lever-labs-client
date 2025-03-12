@@ -13,12 +13,12 @@ export default function AllAgesWelcome() {
 						No matter where you're starting from, we've got the perfect path for you!
 					</p>
 
-					<h3 className="text-2xl font-bold text-pipTheme mt-8 mb-4">Choose how you code</h3>
+					<h3 className="text-2xl font-bold text-pipThemeText mt-8 mb-4">Choose how you code</h3>
 
 					<div className="space-y-6">
 						{/* Beginner friendly option */}
 						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipTheme mb-2">Beginner friendly</h4>
+							<h4 className="font-bold text-lg text-pipThemeText mb-2">Beginner friendly</h4>
 							<p className="text-base text-lightLandingPageText">
 								Drag colorful blocks into place to build your programs - no typing required!
 							</p>
@@ -26,7 +26,7 @@ export default function AllAgesWelcome() {
 
 						{/* Ready for more option */}
 						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipTheme mb-2">Ready for more</h4>
+							<h4 className="font-bold text-lg text-pipThemeText mb-2">Ready for more</h4>
 							<p className="text-base text-lightLandingPageText">
 								Switch to our simplified text code that makes controlling Pip's actuators and reading sensors super easy.
 							</p>
@@ -34,7 +34,7 @@ export default function AllAgesWelcome() {
 
 						{/* Explore freely option */}
 						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipTheme mb-2">Explore freely</h4>
+							<h4 className="font-bold text-lg text-pipThemeText mb-2">Explore freely</h4>
 							<p className="text-base text-lightLandingPageText">
 								Once you've mastered the challenges, head to the Sandbox where you can create anything you imagine -
 								the only limit is your imagination.

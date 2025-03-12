@@ -1,21 +1,12 @@
 import { observer } from "mobx-react"
-import { BookOpen, Code2, LucideIcon } from "lucide-react"
+import { BookOpen, Code2 } from "lucide-react"
+import ShowIcon from "./show-icon"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomWizardHat } from "../icons/custom-wizard-hat"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import LandingSectionHeaderText from "./landing-section-header-text"
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-function ShowIcon({ icon: Icon} : { icon: LucideIcon }) {
-	return (
-		<div className="flex-shrink-0">
-			<div className="bg-pipTheme w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-xl">
-				<Icon size={16}/>
-			</div>
-		</div>
-	)
-}
+import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 
 // eslint-disable-next-line max-lines-per-function
 function TheLab() {
@@ -52,7 +43,7 @@ function TheLab() {
 						<div className="flex">
 							<ShowIcon icon={CustomWizardHat} />
 							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipTheme">Demos</h3>
+								<h3 className="text-xl font-semibold text-pipThemeText">Demos</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
 									Watch Pip show off the very things you're learning about.
 								</p>
@@ -61,7 +52,7 @@ function TheLab() {
 						<div className="flex">
 							<ShowIcon icon={BookOpen}/>
 							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipTheme">Read</h3>
+								<h3 className="text-xl font-semibold text-pipThemeText">Read</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
 									Simple explanations that clarify tricky concepts.
 								</p>
@@ -73,7 +64,7 @@ function TheLab() {
 						<div className="flex">
 							<ShowIcon icon={Code2} />
 							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipTheme">Code</h3>
+								<h3 className="text-xl font-semibold text-pipThemeText">Code</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
 									Solve fun coding challenges that test your skills and bring Pip to life!
 								</p>
@@ -91,16 +82,10 @@ function TheLab() {
 					</p>
 
 					<div className="pt-8 flex items-center justify-center">
-						<TactileButton
-							onClick={() => navigate("/lab")}
-							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12 \
-							bg-green-500 border-none text-white hover:bg-green-400 \
-							dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
-							shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-							shadowHeight={2}
-						>
+						<LandingCTAButton navigateTo="/login">
 							Try the lab for free
-						</TactileButton>
+
+						</LandingCTAButton>
 					</div>
 				</div>
 			</div>

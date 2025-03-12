@@ -15,15 +15,15 @@ function SmallRobotBigPossibilities() {
 				{/* Left side with text - Duolingo style */}
 				<div className="flex flex-col w-full md:w-1/2">
 					<LandingSectionHeaderText text="small robot."/>
-					<LandingSectionHeaderText text="big possibilities." extraClasses="mb-5"/>
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
+					<LandingSectionHeaderText text="big possibilities."/>
+					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText my-8">
 						With Pip by your side,&nbsp;
 						<span className="font-semibold">learning feels like play:</span> write code to solve fun challenges,
 						and watch your ideas
 						spring to life right before your eyes.
 						Pip might fit in your pocket, but this tiny robot is full of big surprises!
 					</p>
-					<div className="pt-8 flex items-center justify-center">
+					<div className="flex items-center justify-center">
 						<TactileButton
 							onClick={() => navigate("/login")}
 							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12 \

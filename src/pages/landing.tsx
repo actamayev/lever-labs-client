@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
-import FeaturesBento from "../components/landing/features-bento"
-import WhoWeAre from "../components/landing/who-we-are/who-we-are"
+import TheLittleThings from "../components/landing/the-little-things"
+import WhoWeAre from "../components/landing/who-we-are"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
-import PipUseCases from "../components/landing/pip-use-cases/pip-use-cases"
-import DiscoverSection from "../components/landing/discover/discover-section"
-import ProductShowcase from "../components/landing/discover/product-showcase"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
 import TheLabLanding from "../components/landing/the-lab-landing"
 import LearnByDoing from "../components/landing/learn-by-doing"
-import Sensors from "../components/landing/sensors/sensors"
 import LandingSensors from "../components/landing/sensors/landing-sensors"
 import AllAgesWelcome from "../components/landing/all-ages-welcome"
 import CodeThatComesAlive from "../components/landing/code-that-comes-alive"
+import DesignedForClassroom from "../components/landing/designed-for-classroom"
+import SimpleSetup from "../components/landing/simple-setup"
+import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
+import LandingSectionContainer from "../components/landing/landing-section-container"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
 export default function Landing() {
@@ -33,49 +34,43 @@ export default function Landing() {
 						columnCount={7} // 3 columns between borders
 					/>
 				</div>
-				<div className="relative z-10">
-					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<LandingHeader />
-					</div>
-				</div>
 
-				<div className="relative z-10 text-black dark:text-white transition-all duration-300">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<SmallRobotBigPossibilities />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<LandingHeader />
+				</LandingSectionContainer>
 
-				<div className="relative z-10">
-					{/* the 56 px is the height of the header (used to make sure home page sizeing is aligned) */}
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<TheLabLanding />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<SmallRobotBigPossibilities />
+				</LandingSectionContainer>
 
-				<div className="relative z-10">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<LearnByDoing />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<TheLabLanding />
+				</LandingSectionContainer>
 
-				<div className="relative z-10">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<LandingSensors />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<LearnByDoing />
+				</LandingSectionContainer>
 
-				<div className="relative z-10">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<AllAgesWelcome />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<LandingSensors />
+				</LandingSectionContainer>
 
-				<div className="relative z-10">
-					<div className="px-4 sm:px-8 md:px-16 lg:px-60 mt-36">
-						<CodeThatComesAlive />
-					</div>
-				</div>
+				<LandingSectionContainer>
+					<AllAgesWelcome />
+				</LandingSectionContainer>
+
+				{/* <LandingSectionContainer>
+
+					<CodeThatComesAlive />
+				</LandingSectionContainer> */}
+
+				<LandingSectionContainer>
+					<DesignedForClassroom />
+				</LandingSectionContainer>
+
+				<LandingSectionContainer>
+					<SimpleSetup />
+				</LandingSectionContainer>
 
 				{/* <div className="relative z-10">
 					<div className="relative z-20 flex flex-col items-center justify-center px-4 md:px-16 py-8">
@@ -104,16 +99,20 @@ export default function Landing() {
 					<LearnByDoing />
 				</div> */}
 
-				<div className="flex bg-pipTheme relative items-center justify-center z-10 py-8 md:py-12 px-4 md:px-32 duration-300 mt-36">
-					<FeaturesBento />
-				</div>
+				<LandingSectionContainer extraClasses="bg-pipTheme py-32 mt-12">
+					<TheLittleThings />
+				</LandingSectionContainer>
 
-				<div className="relative flex my-8 md:my-20 z-10 px-4 md:px-16 mt-36">
+				<LandingSectionContainer>
+					<BridgingTwoWorlds />
+				</LandingSectionContainer>
+
+				<LandingSectionContainer>
 					<WhoWeAre />
-				</div>
+				</LandingSectionContainer>
 
 				<div className="flex flex-col relative items-center justify-center py-16 md:py-32 z-10 px-4 md:px-16
-				bg-gradient-to-b from-pipTheme to-standardBackground dark:from-pipTheme text-white transition-all duration-300">
+				bg-gradient-to-b from-pipTheme to-standardBackground dark:from-pipTheme text-questionText transition-all duration-300">
 					<SignUpForUpdates />
 				</div>
 			</div>
