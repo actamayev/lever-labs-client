@@ -45,7 +45,7 @@ export default function SimpleSetup() {
 							<div className="ml-4">
 								<h3 className="text-xl font-semibold text-pipThemeText">Just power on and go</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-									Pip works the moment you unbox it - no assembly required!
+									Pip works right out the box - no assembly required!
 								</p>
 							</div>
 						</div>
