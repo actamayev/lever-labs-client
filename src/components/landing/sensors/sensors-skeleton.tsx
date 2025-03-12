@@ -5,11 +5,10 @@ interface Props {
 	description: string
 	icon: React.ReactNode
 	outerDivStyles: string
-	paragraphStyles?: string
 }
 
 export default function SensorsSkeleton(props: Props) {
-	const { title, description, icon: Icon, outerDivStyles, paragraphStyles } = props
+	const { title, description, icon: Icon, outerDivStyles } = props
 
 	return (
 		<div
@@ -29,13 +28,10 @@ export default function SensorsSkeleton(props: Props) {
 				</div>
 				{/* Text container */}
 				<div className="flex flex-col items-center md:items-start text-center md:text-left">
-					<h3 className="text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+					<h3 className="text-lg md:text-xl font-semibold text-questionText">
 						{title}
 					</h3>
-					<p className={cn(
-						"text-sm md:text-base text-neutral-400",
-						paragraphStyles
-					)}>
+					<p className="text-sm md:text-base text-lightLandingPageText">
 						{description}
 					</p>
 				</div>

@@ -1,6 +1,6 @@
 import { School } from "lucide-react"
 import LandingSectionSplit from "./landing-section-split"
-import { LandingCTAButton } from "../buttons/tactile-buttons"
+// import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function DesignedForClassroom() {
