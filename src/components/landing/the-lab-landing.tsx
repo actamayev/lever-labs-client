@@ -1,26 +1,24 @@
 import { BookOpen, Code2 } from "lucide-react"
 import ShowIcon from "./show-icon"
+import LandingSectionSplit from "./landing-section-split"
 import { CustomWizardHat } from "../icons/custom-wizard-hat"
 import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function TheLab() {
 	return (
-		<div className="w-full">
-			{/* Section layout */}
-			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
-				{/* Left side with text */}
-				{/* Right side with lab screenshot */}
-				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
-					<div className="relative">
-						<img
-							src="pip_top_right.png"
-							alt="Pip Robot"
-							className="max-w-full h-auto"
-						/>
-					</div>
+		<LandingSectionSplit
+			leftContent={
+				<div className="relative">
+					<img
+						src="pip_top_right.png"
+						alt="Pip Robot"
+						className="max-w-full h-auto"
+					/>
 				</div>
-				<div className="flex flex-col w-full md:w-1/2">
+			}
+			rightContent={
+				<div className="flex flex-col w-full">
 					<LandingSectionHeaderText text="the lab" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-5">
 						The Lab is our free learning platform where your robotics journey begins.
@@ -79,7 +77,7 @@ export default function TheLab() {
 						</LandingCTAButton>
 					</div>
 				</div>
-			</div>
-		</div>
+			}
+		/>
 	)
 }
