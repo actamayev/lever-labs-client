@@ -14,11 +14,9 @@ function WhoWeAre() {
 		<LandingSectionSplit
 			imagePosition="left"
 			leftContent={
-				<>
-					<div className="relative mb-8 sm:mb-0">
-						<BlueDot />
-					</div>
-				</>
+				<div className="relative mb-8 sm:mb-0">
+					<BlueDot />
+				</div>
 			}
 			rightContent={
 				<div className="flex flex-col w-full">

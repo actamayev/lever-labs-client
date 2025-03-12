@@ -16,16 +16,18 @@ export default function LandingSectionSplit(props: Props) {
 		<div className="w-full">
 			<div className="flex flex-col md:flex-row justify-between w-full gap-8 md:gap-16">
 				{/* On mobile: Always show text first, image second */}
-				{/* On md+: Respect the original layout based on imagePosition */}
+				{/* On md+: Position based on imagePosition prop */}
 
-				{/* Text Content (always first on mobile) */}
-				<div className="flex flex-col w-full md:w-1/2 md:justify-center order-1 md:order-none">
+				{/* First column - text on mobile, varies on desktop */}
+				<div className={`flex flex-col w-full md:w-1/2 md:justify-center order-1 
+					${imagePosition === "left" ? "md:order-2" : "md:order-1"}`}>
 					{textContent}
 				</div>
 
-				{/* Image Content (always second on mobile) */}
-				<div className="w-full md:w-1/2 flex mt-8 md:mt-0 md:justify-center
-				md:items-center justify-center items-center order-2 md:order-none">
+				{/* Second column - image on mobile, varies on desktop */}
+				<div className={`w-full md:w-1/2 flex mt-8 md:mt-0 md:justify-center 
+					md:items-center justify-center items-center order-2 
+					${imagePosition === "left" ? "md:order-1" : "md:order-2"}`}>
 					{imageContent}
 				</div>
 			</div>
