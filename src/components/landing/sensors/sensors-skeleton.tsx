@@ -21,17 +21,17 @@ export default function SensorsSkeleton(props: Props) {
 			)}
 		>
 			{/* Container changes from vertical on mobile to horizontal on md+ */}
-			<div className="z-10 flex flex-col md:flex-row transform-gpu gap-4 p-3 h-full">
+			<div className="z-10 flex flex-col md:flex-row transform-gpu gap-2 sm:gap-3 md:gap-4 p-2 sm:p-3 md:p-4 h-full">
 				{/* Icon container */}
 				<div className="shrink-0 flex justify-center md:justify-start md:items-center">
 					{Icon}
 				</div>
 				{/* Text container */}
 				<div className="flex flex-col items-center md:items-start text-center md:text-left">
-					<h3 className="text-lg md:text-xl font-semibold text-questionText">
+					<h3 className="text-base sm:text-lg md:text-xl font-semibold text-questionText">
 						{title}
 					</h3>
-					<p className="text-sm md:text-base text-lightLandingPageText">
+					<p className="text-xs sm:text-sm md:text-base text-lightLandingPageText">
 						{description}
 					</p>
 				</div>

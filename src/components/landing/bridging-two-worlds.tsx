@@ -7,8 +7,8 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
 	return (
 		<div className="flex-shrink-0">
-			<div className="bg-green-500 dark:bg-green-700 w-6 h-6 rounded-full flex items-center justify-center text-white">
-				<Icon size={80}/>
+			<div className="bg-green-500 dark:bg-green-700 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-white">
+				<Icon size={12} className="w-3 h-3 sm:w-4 sm:h-4" />
 			</div>
 		</div>
 	)
@@ -17,10 +17,11 @@ function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
 export default function BridgingTwoWorlds() {
 	return (
 		<LandingSectionSplit
+			imagePosition="right"
 			leftContent={
 				<>
 					<LandingSectionHeaderText text="bridging two worlds" />
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
+					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-4 sm:mt-8">
 						Robotics is all about bringing the physical and digital worlds together, and we help you explore both!
 						With Pip and the Lab, your code jumps off the screen and into real life.
 					</p>
@@ -28,36 +29,36 @@ export default function BridgingTwoWorlds() {
 			}
 			rightContent={
 				<div>
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mb-6">
+					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mb-3 sm:mb-6">
 						As robots become a bigger part of our everyday world, Pip gives you hands-on experience with:
 					</p>
 
 					{/* Checkmark points */}
-					<div className="space-y-4">
+					<div className="space-y-2 sm:space-y-4">
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-3 text-xl md:text-base leading-relaxed text-lightLandingPageText">
+							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
 								Engineering mindset and critical thinking
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-3 text-xl md:text-base leading-relaxed text-lightLandingPageText">
+							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
 								Creative problem-solving through code
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-3 text-xl md:text-base leading-relaxed text-lightLandingPageText">
+							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
 								Data-driven decision making
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-3 text-xl md:text-base leading-relaxed text-lightLandingPageText">
+							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
 								STEM literacy for the digital age
 							</p>
 						</div>

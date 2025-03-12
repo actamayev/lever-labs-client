@@ -27,12 +27,12 @@ export default function LandingSensors() {
 		<div className="w-full">
 			<LandingSectionHeaderText text="Pip's sensor suite"/>
 
-			{/* Add padding-top to the Card */}
-			<Card className="h-full flex flex-col bg-standardBackground mt-8 pt-4 lg:pt-6">
-				<CardContent className="flex-1">
+			{/* Add responsive padding-top to the Card */}
+			<Card className="h-full flex flex-col bg-standardBackground mt-4 sm:mt-6 md:mt-8 pt-2 sm:pt-3 md:pt-4 lg:pt-6">
+				<CardContent className="flex-1 px-2 xs:px-3 sm:px-5 md:px-6">
 					<div className="w-full">
 						<div className="w-full h-full">
-							<BentoGrid>
+							<BentoGrid className="gap-2 sm:gap-3 md:gap-4">
 								{features.map((feature, index) => (
 									<React.Fragment key={index}>
 										{feature}

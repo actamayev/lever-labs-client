@@ -5,11 +5,12 @@ import LandingSectionSplit from "./landing-section-split"
 export default function SmallRobotBigPossibilities() {
 	return (
 		<LandingSectionSplit
+			imagePosition="right"
 			leftContent={
 				<>
 					<LandingSectionHeaderText text="small robot."/>
 					<LandingSectionHeaderText text="big possibilities."/>
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText my-8">
+					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText my-4 sm:my-8">
 						With Pip by your side,&nbsp;
 						<span className="font-semibold">learning feels like play:</span> write code to solve fun challenges,
 						and watch your ideas
@@ -28,7 +29,7 @@ export default function SmallRobotBigPossibilities() {
 					<img
 						src="pip_right.png"
 						alt="Pip"
-						className="max-w-full h-auto rounded-lg"
+						className="max-w-full h-auto rounded-lg w-4/5 sm:w-auto"
 					/>
 				</div>
 			}

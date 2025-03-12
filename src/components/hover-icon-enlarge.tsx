@@ -13,6 +13,7 @@ interface HoverIconEnlargeProps {
 	title?: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
+	className?: string // Added className prop for the outer container
 }
 
 export function HoverIconEnlarge({
@@ -26,12 +27,14 @@ export function HoverIconEnlarge({
 	title,
 	subtitle,
 	orbitingIcons,
+	className,
 }: HoverIconEnlargeProps) {
 
 	return (
 		<div
 			className={cn(
 				"flex flex-col items-center group",
+				className // Apply any additional classes passed as props
 			)}
 		>
 			<div className="relative mb-4">
