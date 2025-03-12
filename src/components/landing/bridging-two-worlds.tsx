@@ -22,7 +22,7 @@ export default function BridgingTwoWorlds() {
 				<div className="flex flex-col w-full md:w-1/2">
 					<LandingSectionHeaderText text="bridging two worlds" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
-						Robotics is all about bringing together the digital and physical worlds, and we help you explore both!
+						Robotics is all about bringing the physical and digital worlds, and we help you explore both!
 						With Pip and the Lab, your code jumps off the screen and into real life.
 					</p>
 				</div>

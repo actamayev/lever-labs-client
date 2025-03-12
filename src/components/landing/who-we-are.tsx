@@ -16,8 +16,8 @@ export default function WhoWeAre() {
 
 				{/* Right side with text */}
 				<div className="flex flex-col w-full md:w-1/2">
-					<LandingSectionHeaderText text="built by engineers," />
-					<LandingSectionHeaderText text="for future engineers" />
+					<LandingSectionHeaderText text="by builders," />
+					<LandingSectionHeaderText text="for builders" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
 						As engineers who grew up tinkering, we've experienced firsthand how traditional robotics
 						education can be frustrating and limiting.

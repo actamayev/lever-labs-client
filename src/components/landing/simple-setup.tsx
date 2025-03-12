@@ -57,7 +57,7 @@ export default function SimpleSetup() {
 						</div>
 
 						<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
-						We've made everything super simple so you can focus on the fun parts.
+							Everything is super simple, so you can focus on the fun parts.
 						</p>
 					</div>
 				</div>

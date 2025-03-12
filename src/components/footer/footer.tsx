@@ -13,7 +13,7 @@ export default function Footer() {
 	) return null
 
 	return (
-		<footer id="footer" className="bg-standardBackground w-full pb-3 md:py-3 z-20 transition-all duration-300">
+		<footer id="footer" className="bg-standardBackground/70 w-full pb-3 md:py-3 z-20 transition-all duration-300">
 			<div className="flex justify-center w-full px-4 sm:px-60">
 				<div className="w-full max-w-screen-2xl">
 					{/* Mobile: Stack vertically, Desktop: 3 columns */}
