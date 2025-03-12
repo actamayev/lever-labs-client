@@ -6,7 +6,7 @@ export default function LogoHeaderSection() {
 			<Link
 				to="/"
 				className="flex items-center font-semibold text-xl sm:text-3xl flex-shrink-0
-		text-gray-950 hover:text-pipThemeText dark:text-white dark:hover:text-gray-200 duration-0"
+		text-pipThemeText duration-0"
 			>
 				<img
 					src="/favicon.svg"

@@ -1,21 +1,20 @@
 import BlueDot from "./blue-dot"
 import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import LandingSectionSplit from "./landing-section-split"
 
 export default function WhoWeAre() {
 	return (
-		<div className="w-full">
-			{/* Section layout */}
-			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
-				{/* Left side with BlueDot */}
-				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
+		<LandingSectionSplit
+			leftContent={
+				<>
 					<div className="relative">
 						<BlueDot />
 					</div>
-				</div>
-
-				{/* Right side with text */}
-				<div className="flex flex-col w-full md:w-1/2">
+				</>
+			}
+			rightContent={
+				<div className="flex flex-col w-full">
 					<LandingSectionHeaderText text="by builders," />
 					<LandingSectionHeaderText text="for builders" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
@@ -39,7 +38,7 @@ export default function WhoWeAre() {
 						</LandingCTAButton>
 					</div>
 				</div>
-			</div>
-		</div>
+			}
+		/>
 	)
 }

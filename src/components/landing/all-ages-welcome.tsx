@@ -1,3 +1,6 @@
+import { Baby, Cog } from "lucide-react"
+import ShowIcon from "./show-icon"
+import { CustomSandbox } from "../icons/custom-sandbox"
 import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
@@ -15,30 +18,37 @@ export default function AllAgesWelcome() {
 					</>
 				}
 				rightContent={
-					<div className="space-y-6">
-						{/* Beginner friendly option */}
-						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipThemeText mb-2">Beginner friendly</h4>
-							<p className="text-base text-lightLandingPageText">
+					<div className="space-y-4">
+						<div className="flex">
+							<ShowIcon icon={Baby}/>
+							<div className="ml-4">
+								<h3 className="text-xl font-semibold text-pipThemeText">Beginner friendly</h3>
+								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
 								Drag colorful blocks into place to build your programs - no typing required!
-							</p>
+								</p>
+							</div>
 						</div>
 
-						{/* Ready for more option */}
-						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipThemeText mb-2">Ready for more</h4>
-							<p className="text-base text-lightLandingPageText">
-								Switch to our simplified text code that makes controlling Pip's actuators and reading sensors super easy.
-							</p>
+						<div className="flex">
+							<ShowIcon icon={Cog}/>
+							<div className="ml-4">
+								<h3 className="text-xl font-semibold text-pipThemeText">Ready for more</h3>
+								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
+									Switch to our simplified text code that makes controlling Pip's actuators
+									and reading sensors super easy.
+								</p>
+							</div>
 						</div>
 
-						{/* Explore freely option */}
-						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
-							<h4 className="font-bold text-lg text-pipThemeText mb-2">Explore freely</h4>
-							<p className="text-base text-lightLandingPageText">
-								Once you've mastered the challenges, head to the Sandbox where you can create anything you imagine -
-								the only limit is your imagination.
-							</p>
+						<div className="flex">
+							<ShowIcon icon={CustomSandbox}/>
+							<div className="ml-4">
+								<h3 className="text-xl font-semibold text-pipThemeText">Explore freely</h3>
+								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
+									Once you've mastered the challenges, head to the Sandbox where you can create anything you imagine -
+									the only limit is your imagination.
+								</p>
+							</div>
 						</div>
 					</div>
 				}

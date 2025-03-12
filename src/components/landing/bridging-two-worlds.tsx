@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react"
 import { CustomCheck } from "../icons/custom-check"
+import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

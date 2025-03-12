@@ -57,7 +57,7 @@ export function GridPattern({
         y1="0" 
         x2={marginLeft} 
         y2="100%" 
-        strokeWidth="2"
+        strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
       />
@@ -68,7 +68,7 @@ export function GridPattern({
         y1="0" 
         x2={`calc(100% - ${marginRight}px)`} 
         y2="100%" 
-        strokeWidth="2"
+        strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
       />

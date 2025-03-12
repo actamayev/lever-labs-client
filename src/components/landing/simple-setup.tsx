@@ -1,14 +1,13 @@
 import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import LandingSectionSplit from "./landing-section-split"
 
 export default function SimpleSetup() {
 	return (
-		<div className="w-full">
-			{/* Section in Duolingo style */}
-			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
-				{/* Right side with image - moved to first position like in TheLab */}
-				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
+		<LandingSectionSplit
+			leftContent={
+				<>
 					{/* <div className="relative">
 						<img
 							src="/simple_yet_powerful.png"
@@ -16,14 +15,13 @@ export default function SimpleSetup() {
 							className="max-w-full h-auto"
 						/>
 					</div> */}
-				</div>
-
-				{/* Left side with text */}
-				<div className="flex flex-col w-full md:w-1/2">
+				</>
+			}
+			rightContent={
+				<div className="flex flex-col">
 					<LandingSectionHeaderText text="simple setup"/>
 					{/* ShowIconed points */}
-					<div className="mt-8 mb-4 space-y-4">
-						{/* Point 1 */}
+					<div className="mt-8 space-y-4">
 						<div className="flex">
 							<ShowIcon icon={Power} />
 							<div className="ml-4">
@@ -34,7 +32,6 @@ export default function SimpleSetup() {
 							</div>
 						</div>
 
-						{/* Point 2 */}
 						<div className="flex">
 							<ShowIcon icon={Wifi} />
 							<div className="ml-4">
@@ -45,7 +42,6 @@ export default function SimpleSetup() {
 							</div>
 						</div>
 
-						{/* Point 3 */}
 						<div className="flex">
 							<ShowIcon icon={ThumbsUp} />
 							<div className="ml-4">
@@ -61,7 +57,7 @@ export default function SimpleSetup() {
 						</p>
 					</div>
 				</div>
-			</div>
-		</div>
+			}
+		/>
 	)
 }
