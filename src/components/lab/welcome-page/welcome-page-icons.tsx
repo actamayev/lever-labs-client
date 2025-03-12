@@ -10,7 +10,7 @@ interface IconStepProps {
 	darkIconColor?: string
 	iconSize?: string
 	backgroundSize?: string
-	title: string
+	title?: string
 	subtitle?: string
 	orbitingIcons?: React.ReactNode
 }
@@ -46,20 +46,23 @@ export function IconStep({
 				</div>
 				{orbitingIcons}
 			</div>
-			<div className="flex flex-col items-center space-y-1">
-				<div className="w-52 text-center">
-					<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
-						{title}
-					</span>
-				</div>
-				{subtitle && (
-					<div className="w-52 text-center mt-1">
-						<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
-							{subtitle}
+			{title && (
+
+				<div className="flex flex-col items-center space-y-1">
+					<div className="w-52 text-center">
+						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
+							{title}
 						</span>
 					</div>
-				)}
-			</div>
+					{subtitle && (
+						<div className="w-52 text-center mt-1">
+							<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
+								{subtitle}
+							</span>
+						</div>
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

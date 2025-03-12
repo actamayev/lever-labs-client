@@ -2,20 +2,38 @@ import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import LandingSectionSplit from "./landing-section-split"
+import { IconStep } from "../lab/welcome-page/welcome-page-icons"
+import RightArrow from "../lab/welcome-page/right-arrow"
 
 export default function SimpleSetup() {
 	return (
 		<LandingSectionSplit
 			leftContent={
-				<>
-					{/* <div className="relative">
-						<img
-							src="/simple_yet_powerful.png"
-							alt="Simple Yet Powerful Pip"
-							className="max-w-full h-auto"
-						/>
-					</div> */}
-				</>
+				<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative">
+					<IconStep
+						icon={Power}
+					/>
+
+					<RightArrow iconSize="size-10"/>
+
+					<IconStep
+						icon={Wifi}
+						bgColor="bg-purple-100"
+						iconColor="text-purple-600"
+						darkBgColor="dark:bg-purple-900/50"
+						darkIconColor="dark:text-purple-400"
+					/>
+
+					<RightArrow iconSize="size-10"/>
+
+					<IconStep
+						icon={ThumbsUp}
+						bgColor="bg-green-100"
+						iconColor="text-green-600"
+						darkBgColor="dark:bg-green-900/50"
+						darkIconColor="dark:text-green-400"
+					/>
+				</div>
 			}
 			rightContent={
 				<div className="flex flex-col">

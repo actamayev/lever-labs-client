@@ -72,33 +72,6 @@ export default function Landing() {
 					<SimpleSetup />
 				</LandingSectionContainer>
 
-				{/* <div className="relative z-10">
-					<div className="relative z-20 flex flex-col items-center justify-center px-4 md:px-16 py-8">
-						<JustKeepBuilding />
-					</div>
-				</div>
-
-				<div className="relative z-10 flex flex-col items-center justify-center px-4 md:px-16 h-auto md:h-[60vh]
-				bg-standardBackground transition-all duration-300">
-					<DesignThatInspiresCard />
-				</div>
-
-				<div className="flex flex-col relative items-center justify-center z-10 px-4 md:px-12">
-					<PipUseCases />
-				</div>
-
-				<div className="flex flex-col items-center justify-center z-10 bg-standardBackground
-				relative transition-all duration-300">
-					<div className="px-4 md:px-16">
-						<DiscoverSection />
-					</div>
-					<ProductShowcase />
-				</div>
-
-				<div className="relative z-10 flex flex-col items-center justify-center px-4 md:px-16">
-					<LearnByDoing />
-				</div> */}
-
 				<LandingSectionContainer extraClasses="bg-pipTheme py-32 mt-12">
 					<TheLittleThings />
 				</LandingSectionContainer>
