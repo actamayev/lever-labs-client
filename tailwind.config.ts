@@ -20,6 +20,7 @@ module.exports = {
 				pipThemeOffWhite: "rgb(226, 232, 240)",
 				pipThemeOffWhiteHover: "rgb(200, 210, 220)",
 
+				pipThemeText: "rgb(var(--pip-theme-text))",
 				foreground: "hsl(var(--foreground))",
 
 				standardBackground: "rgb(var(--standard-background))",
@@ -53,6 +54,9 @@ module.exports = {
 				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
 				// lilypadBlueBackground: "rgb(61, 176, 246)",
 
+				sandboxIconColor: "rgb(255, 112, 0)",
+				labIconColor: "rgb(12, 175, 12)",
+				lightLandingPageText: "rgb(var(--light-landing-page-text))",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"

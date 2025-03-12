@@ -6,15 +6,16 @@ export default function LogoHeaderSection() {
 			<Link
 				to="/"
 				className="flex items-center font-semibold text-xl sm:text-3xl flex-shrink-0
-		text-gray-950 hover:text-pipTheme dark:text-white dark:hover:text-gray-200 transition-all duration-300"
+				text-pipThemeText duration-0"
 			>
 				<img
 					src="/favicon.svg"
 					alt="Logo"
-					className="ml-1 h-8 sm:h-10"
+					className="h-8 sm:h-10"
 					style={{ verticalAlign: "middle" }}
 				/>
-				<span className="ml-2">Blue Dot Robots</span>
+				{/* Text only visible on non-mobile screens */}
+				<span className="hidden sm:inline ml-2">Blue Dot Robots</span>
 			</Link>
 		</div>
 	)
