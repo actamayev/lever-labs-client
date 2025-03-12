@@ -1,20 +1,20 @@
+import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function AllAgesWelcome() {
 	return (
-		<div className="w-full">
-			<LandingSectionHeaderText text="all ages welcome" />
-
-			<div className="flex flex-col md:flex-row justify-between w-full gap-16 mt-8">
-				{/* Left side with text content */}
-				<div className="flex flex-col w-full md:w-1/2">
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
-						We've made Pip and the Lab accessible to everyone - whether you're just curious or already a robotics expert.
-						No matter where you're starting from, we've got the perfect path for you!
-					</p>
-
-					<h3 className="text-2xl font-bold text-pipThemeText mt-8 mb-4">Choose how you code</h3>
-
+		<>
+			<LandingSectionSplit
+				leftContent={
+					<>
+						<LandingSectionHeaderText text="all ages welcome" />
+						<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
+							We've made Pip and the Lab accessible to everyone - whether you're just curious or already a robotics expert.
+							No matter where you're starting from, we've got the perfect path for you!
+						</p>
+					</>
+				}
+				rightContent={
 					<div className="space-y-6">
 						{/* Beginner friendly option */}
 						<div className="bg-white dark:bg-gray-800 rounded-lg p-5 shadow-md">
@@ -41,53 +41,8 @@ export default function AllAgesWelcome() {
 							</p>
 						</div>
 					</div>
-				</div>
-
-				{/* Right side with three images */}
-				<div className="w-full md:w-1/2 flex flex-col justify-center space-y-4 mt-8 md:mt-0">
-					{/* Drag-and-drop code image */}
-					<div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
-						<div className="bg-pipTheme bg-opacity-10 p-2 text-center font-medium">
-							Drag-and-drop Coding
-						</div>
-						<div className="p-2">
-							<img
-								src="/api/placeholder/480/200"
-								alt="Drag-and-drop code interface"
-								className="w-full h-auto rounded"
-							/>
-						</div>
-					</div>
-
-					{/* Guided text coding image */}
-					<div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
-						<div className="bg-pipTheme bg-opacity-10 p-2 text-center font-medium">
-							Guided Text Coding
-						</div>
-						<div className="p-2">
-							<img
-								src="/api/placeholder/480/200"
-								alt="Guided text coding interface"
-								className="w-full h-auto rounded"
-							/>
-						</div>
-					</div>
-
-					{/* Sandbox image */}
-					<div className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md">
-						<div className="bg-pipTheme bg-opacity-10 p-2 text-center font-medium">
-							Sandbox Environment
-						</div>
-						<div className="p-2">
-							<img
-								src="/api/placeholder/480/200"
-								alt="Sandbox interface"
-								className="w-full h-auto rounded"
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+				}
+			/>
+		</>
 	)
 }

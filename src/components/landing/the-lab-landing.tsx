@@ -12,7 +12,7 @@ export default function TheLab() {
 				<div className="relative">
 					<img
 						src="pip_top_right.png"
-						alt="Pip Robot"
+						alt="Pip"
 						className="max-w-full h-auto"
 					/>
 				</div>
@@ -20,7 +20,7 @@ export default function TheLab() {
 			rightContent={
 				<div className="flex flex-col w-full">
 					<LandingSectionHeaderText text="the lab" />
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-5">
+					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
 						The Lab is our free learning platform where your robotics journey begins.
 						As you move through bite-sized lessons, you'll go from
 						<span className="font-semibold"> curious beginner to robotics whiz:</span>
@@ -48,7 +48,6 @@ export default function TheLab() {
 								</p>
 							</div>
 						</div>
-
 
 						{/* Point 3 */}
 						<div className="flex">
