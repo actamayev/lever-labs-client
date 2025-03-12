@@ -7,6 +7,7 @@ import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
 import DistanceSensorsCard from "./distance-sensors-card"
 import { BentoGrid } from "../../shadcn/ui/bento-grid"
+import LandingSectionHeaderText from "../landing-section-header-text"
 
 const features: React.ReactNode[] = [
 	<LEDCard key="LED"/>,
@@ -16,25 +17,28 @@ const features: React.ReactNode[] = [
 	<ButtonCard key="Button" />,
 	<ModuleCard key="Module" />
 ]
+
 export default function LandingSensors() {
 	return (
-		<Card className="h-full flex flex-col bg-standardBackground">
-			<CardHeader className="p-4 lg:p-6 flex-shrink-0">
-				<CardTitle className="text-xl lg:text-2xl">Pip's full sensor suite</CardTitle>
-			</CardHeader>
-			<CardContent className="flex-1">
-				<div className="w-full h-full">
+		<div className="w-full">
+			<LandingSectionHeaderText text="Pip's sensor suite: add speaker, screen"/>
+
+			{/* Add padding-top to the Card */}
+			<Card className="h-full flex flex-col bg-standardBackground mt-8 pt-4 lg:pt-6">
+				<CardContent className="flex-1">
 					<div className="w-full">
-						<BentoGrid>
-							{features.map((feature, index) => (
-								<React.Fragment key={index}>
-									{feature}
-								</React.Fragment>
-							))}
-						</BentoGrid>
+						<div className="w-full h-full">
+							<BentoGrid>
+								{features.map((feature, index) => (
+									<React.Fragment key={index}>
+										{feature}
+									</React.Fragment>
+								))}
+							</BentoGrid>
+						</div>
 					</div>
-				</div>
-			</CardContent>
-		</Card>
+				</CardContent>
+			</Card>
+		</div>
 	)
 }

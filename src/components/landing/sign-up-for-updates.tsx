@@ -35,7 +35,7 @@ export default function SignUpForUpdates() {
                 Pip isn't available yet - but it will be soon.
 			</div>
 			<div className="text-xl md:text-3xl text-center mt-4 md:mt-6 mb-6 md:mb-10">
-                Please enter your email below to sign up for updates.
+                Please enter your email below to get notified.
 			</div>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)}
