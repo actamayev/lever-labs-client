@@ -41,7 +41,7 @@ function SmallRobotBigPossibilities() {
 				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
 					<div className="relative">
 						<img
-							src="pip_top_right.png"
+							src="pip_right.png"
 							alt="Pip Robot"
 							className="max-w-full h-auto rounded-lg"
 						/>
