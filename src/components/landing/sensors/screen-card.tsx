@@ -21,7 +21,7 @@ export default function ScreenCard() {
 						style={{
 							width: "15px",
 							height: "15px",
-							top: "41	%",
+							top: "41%",
 							left: "50%",
 							transform: "translate(-50%, -50%)",
 						}}
