@@ -8,16 +8,16 @@ export default function AllAgesWelcome() {
 	return (
 		<>
 			<LandingSectionSplit
-				leftContent={
-					<>
+				rightContent={
+					<div>
 						<LandingSectionHeaderText text="all ages welcome" />
 						<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
 							We've made Pip and the Lab accessible to everyone - whether you're just curious or already a robotics expert.
 							No matter where you're starting from, we've got the perfect path for you!
 						</p>
-					</>
+					</div>
 				}
-				rightContent={
+				leftContent={
 					<div className="space-y-4">
 						<div className="flex">
 							<ShowIcon icon={Baby}/>
