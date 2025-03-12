@@ -24,7 +24,7 @@ export default function AllAgesWelcome() {
 							<div className="ml-4">
 								<h3 className="text-xl font-semibold text-pipThemeText">Beginner friendly</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-								Drag colorful blocks into place to build your programs - no typing required!
+									Drag colorful blocks into place to build your programs - no typing required!
 								</p>
 							</div>
 						</div>
@@ -45,7 +45,7 @@ export default function AllAgesWelcome() {
 							<div className="ml-4">
 								<h3 className="text-xl font-semibold text-pipThemeText">Explore freely</h3>
 								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-									Once you've mastered the challenges, head to the Sandbox where you can create anything you imagine -
+									Once you've mastered the Lab, head to the Sandbox where you can create anything you imagine -
 									the only limit is your imagination.
 								</p>
 							</div>
