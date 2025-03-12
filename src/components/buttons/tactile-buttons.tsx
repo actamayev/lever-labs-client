@@ -63,19 +63,25 @@ type LandingCTAProps = ColoredTactileButtonProps & {
 }
 
 export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
-	({ ...props }) => {
+	({ children, ...props }) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 		const navigate = useTypedNavigate()
 		return (
 			<TactileButton
 				onClick={() => navigate(props.navigateTo)}
-				className={cn("px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12",
+				className={cn(
+					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl transition-none",
+					"rounded-xl sm:rounded-2xl border-2 w-full md:w-2/3",
+					"h-auto min-h-10 md:min-h-12 whitespace-normal",
 					"bg-green-500 border-none text-white hover:bg-green-400",
-					"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
+					"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
+				)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
 				shadowHeight={2}
 				{...props}
-			/>
+			>
+				{children}
+			</TactileButton>
 		)
 	}
 ))

@@ -6,14 +6,14 @@ import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function SimpleSetup() {
-	// Use a custom component instead of LandingSectionSplit
-	// to have more control over breakpoints
+	// Use a custom layout instead of LandingSectionSplit
 	return (
 		<div className="w-full">
-			<div className="flex flex-col lg:flex-row justify-between w-full gap-8 lg:gap-16">
+			{/* Switch to horizontal layout at xl (1280px) instead of lg (1024px) to prevent overlap */}
+			<div className="flex flex-col xl:flex-row justify-between w-full gap-8 xl:gap-16">
 				{/* Content ordering based on screen size */}
-				{/* Text Content - First on mobile/tablet, Second on large screens */}
-				<div className="flex flex-col w-full lg:w-1/2 lg:justify-center order-1 lg:order-2">
+				{/* Text Content - First on mobile/tablet/small desktop, Second on extra large screens */}
+				<div className="flex flex-col w-full xl:w-1/2 xl:justify-center order-1 xl:order-2">
 					<LandingSectionHeaderText text="simple setup"/>
 					{/* ShowIconed points */}
 					<div className="mt-4 sm:mt-8 space-y-3 sm:space-y-4">
@@ -53,19 +53,19 @@ export default function SimpleSetup() {
 					</div>
 				</div>
 
-				{/* Image Content - Second on mobile/tablet, First on large screens */}
-				<div className="w-full lg:w-1/2 flex mt-8 lg:mt-0 justify-center items-center order-2 lg:order-1">
+				{/* Image Content - Second on mobile/tablet/small desktop, First on extra large screens */}
+				<div className="w-full xl:w-1/2 flex mt-8 xl:mt-0 justify-center items-center order-2 xl:order-1">
 					<div className="flex flex-row items-center justify-between relative w-full max-w-md mx-auto">
 						<div className="flex flex-row items-center">
 							<HoverIconEnlarge
 								icon={Power}
-								backgroundSize="size-16 sm:size-20 md:size-24"
-								iconSize="size-6 sm:size-8 md:size-10"
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
 							/>
 						</div>
 
-						<div className="mx-2 sm:mx-3 md:mx-4">
-							<RightArrow iconSize="size-6 sm:size-8 md:size-10"/>
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
+							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
 						</div>
 
 						<div className="flex flex-row items-center">
@@ -75,13 +75,13 @@ export default function SimpleSetup() {
 								iconColor="text-purple-600"
 								darkBgColor="dark:bg-purple-900/50"
 								darkIconColor="dark:text-purple-400"
-								backgroundSize="size-16 sm:size-20 md:size-24"
-								iconSize="size-6 sm:size-8 md:size-10"
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
 							/>
 						</div>
 
-						<div className="mx-2 sm:mx-3 md:mx-4">
-							<RightArrow iconSize="size-6 sm:size-8 md:size-10"/>
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
+							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
 						</div>
 
 						<div className="flex flex-row items-center">
@@ -91,8 +91,8 @@ export default function SimpleSetup() {
 								iconColor="text-green-600"
 								darkBgColor="dark:bg-green-900/50"
 								darkIconColor="dark:text-green-400"
-								backgroundSize="size-16 sm:size-20 md:size-24"
-								iconSize="size-6 sm:size-8 md:size-10"
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
 							/>
 						</div>
 					</div>
