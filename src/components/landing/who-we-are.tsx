@@ -2,8 +2,14 @@ import BlueDot from "./blue-dot"
 import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import LandingSectionSplit from "./landing-section-split"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { cn } from "../../lib/shadcn/utils"
+import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import { observer } from "mobx-react"
 
-export default function WhoWeAre() {
+function WhoWeAre() {
+	const defaultSiteTheme = useDefaultSiteTheme()
+
 	return (
 		<LandingSectionSplit
 			leftContent={
@@ -33,12 +39,32 @@ export default function WhoWeAre() {
 					</p>
 
 					<div className="flex items-center justify-center my-8">
-						<LandingCTAButton navigateTo="/login">
+						<a
+							href="https://help.bluedotrobots.com/bdr"
+							aria-label="LinkedIn"
+							className="text-gray-800 hover:text-gray-950 dark:text-gray-200
+							dark:hover:text-white transition-all duration-300"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<TactileButton
+								className={cn("px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full h-12",
+									"bg-green-500 border-none text-white hover:bg-green-400",
+									"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
+								shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
+								shadowHeight={2}
+							>
+								About Blue Dot
+							</TactileButton>
+						</a>
+						{/* <LandingCTAButton navigateTo="/about">
 							About Blue Dot
-						</LandingCTAButton>
+						</LandingCTAButton> */}
 					</div>
 				</div>
 			}
 		/>
 	)
 }
+
+export default observer(WhoWeAre)
