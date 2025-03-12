@@ -1,14 +1,8 @@
 import { School } from "lucide-react"
-import { observer } from "mobx-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 
-function DesignedForClassroom() {
-	const navigate = useTypedNavigate()
-	const defaultSiteTheme = useDefaultSiteTheme()
-
+export default function DesignedForClassroom() {
 	return (
 		<div className="w-full">
 			<LandingSectionHeaderText text="designed for" />
@@ -23,16 +17,9 @@ function DesignedForClassroom() {
 					</p>
 
 					<div className="pt-8 flex items-center justify-center">
-						<TactileButton
-							onClick={() => navigate("/login")}
-							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-3/4 h-12 \
-							bg-green-500 border-none text-white hover:bg-green-400 \
-							dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
-							shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-							shadowHeight={2}
-						>
+						<LandingCTAButton navigateTo="/login">
 							Get your classroom started
-						</TactileButton>
+						</LandingCTAButton>
 					</div>
 				</div>
 
@@ -44,5 +31,3 @@ function DesignedForClassroom() {
 		</div>
 	)
 }
-
-export default observer(DesignedForClassroom)

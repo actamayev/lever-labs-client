@@ -1,14 +1,8 @@
-import { observer } from "mobx-react"
 import BlueDot from "./blue-dot"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
-function WhoWeAre() {
-	const navigate = useTypedNavigate()
-	const defaultSiteTheme = useDefaultSiteTheme()
-
+export default function WhoWeAre() {
 	return (
 		<div className="w-full">
 			{/* Section layout */}
@@ -40,21 +34,12 @@ function WhoWeAre() {
 					</p>
 
 					<div className="flex items-center justify-center my-8">
-						<TactileButton
-							onClick={() => navigate("/login")}
-							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12
-							bg-green-500 border-none text-white hover:bg-green-400
-							dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
-							shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-							shadowHeight={2}
-						>
+						<LandingCTAButton navigateTo="/login">
 							About Blue Dot
-						</TactileButton>
+						</LandingCTAButton>
 					</div>
 				</div>
 			</div>
 		</div>
 	)
 }
-
-export default observer(WhoWeAre)

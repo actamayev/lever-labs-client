@@ -1,13 +1,7 @@
-import { observer } from "mobx-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 
-function SmallRobotBigPossibilities() {
-	const navigate = useTypedNavigate()
-	const defaultSiteTheme = useDefaultSiteTheme()
-
+export default function SmallRobotBigPossibilities() {
 	return (
 		<div className="w-full">
 			{/* Section title in Duolingo style */}
@@ -24,16 +18,9 @@ function SmallRobotBigPossibilities() {
 						Pip might fit in your pocket, but this tiny robot is full of big surprises!
 					</p>
 					<div className="flex items-center justify-center">
-						<TactileButton
-							onClick={() => navigate("/login")}
-							className="px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12 \
-							bg-green-500 border-none text-white hover:bg-green-400 \
-							dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
-							shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-							shadowHeight={2}
-						>
+						<LandingCTAButton navigateTo="/login">
 							Get your Pip
-						</TactileButton>
+						</LandingCTAButton>
 					</div>
 				</div>
 
@@ -51,5 +38,3 @@ function SmallRobotBigPossibilities() {
 		</div>
 	)
 }
-
-export default observer(SmallRobotBigPossibilities)

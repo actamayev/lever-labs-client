@@ -1,18 +1,10 @@
-import { observer } from "mobx-react"
 import { BookOpen, Code2 } from "lucide-react"
 import ShowIcon from "./show-icon"
-import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomWizardHat } from "../icons/custom-wizard-hat"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import LandingSectionHeaderText from "./landing-section-header-text"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import { LandingCTAButton } from "../buttons/tactile-buttons"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
-// eslint-disable-next-line max-lines-per-function
-function TheLab() {
-	const navigate = useTypedNavigate()
-	const defaultSiteTheme = useDefaultSiteTheme()
-
+export default function TheLab() {
 	return (
 		<div className="w-full">
 			{/* Section layout */}
@@ -84,7 +76,6 @@ function TheLab() {
 					<div className="pt-8 flex items-center justify-center">
 						<LandingCTAButton navigateTo="/login">
 							Try the lab for free
-
 						</LandingCTAButton>
 					</div>
 				</div>
@@ -92,5 +83,3 @@ function TheLab() {
 		</div>
 	)
 }
-
-export default observer(TheLab)

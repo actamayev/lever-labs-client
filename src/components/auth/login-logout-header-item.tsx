@@ -11,7 +11,6 @@ function LoginLogoutHeaderItem() {
 	if (
 		!isNull(username) ||
 		location.pathname === "/register-username"
-		// location.pathname === "/"
 	) return null
 	return <NullUserNavLink />
 }
