@@ -16,20 +16,18 @@ function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
 
 export default function BridgingTwoWorlds() {
 	return (
-		<div className="w-full">
-			{/* Section layout */}
-			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
-				{/* Left side with text */}
-				<div className="flex flex-col w-full md:w-1/2">
+		<LandingSectionSplit
+			leftContent={
+				<>
 					<LandingSectionHeaderText text="bridging two worlds" />
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-8">
 						Robotics is all about bringing the physical and digital worlds, and we help you explore both!
 						With Pip and the Lab, your code jumps off the screen and into real life.
 					</p>
-				</div>
-
-				{/* Right side with checkmarks */}
-				<div className="w-full md:w-1/2 flex flex-col mt-6 md:mt-0">
+				</>
+			}
+			rightContent={
+				<div>
 					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mb-6">
 						As robots become a bigger part of our everyday world, Pip gives you hands-on experience with:
 					</p>
@@ -65,7 +63,7 @@ export default function BridgingTwoWorlds() {
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			}
+		/>
 	)
 }
