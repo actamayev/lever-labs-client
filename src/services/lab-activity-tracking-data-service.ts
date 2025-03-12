@@ -30,4 +30,16 @@ export default class LabActivityTrackingDataService {
 			`${this.pathHeader}/submit-quiz-answer/${readingQuestionAnswerChoiceId}`
 		)
 	}
+
+	async markReadingBlockComplete(readingBlockName: ContentBlockID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/mark-reading-block-complete/${readingBlockName}`
+		)
+	}
+
+	async retrieveCompletedReadingBlocks(readingUUID: ActivityUUID): Promise<AxiosResponse<ErrorResponses | ContentBlockID[]>> {
+		return await this.httpClient.http.get<ErrorResponses | ContentBlockID[]>(
+			`${this.pathHeader}/retrieve-completed-reading-blocks/${readingUUID}`
+		)
+	}
 }

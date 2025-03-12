@@ -1,91 +1,25 @@
-import { useCallback } from "react"
-import { motion } from "framer-motion"
-import { ChevronDown } from "lucide-react"
-import BlurFade from "../shadcn/ui/blur-fade"
-
-function ScrollIndicator () {
-	const handleClick = useCallback(() => {
-		const element = document.getElementById("just-keep-building")
-		if (!element) return
-		const headerHeight = 56 // Height of your fixed header
-		const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-		const offsetPosition = elementPosition - headerHeight
-
-		window.scrollTo({
-			top: offsetPosition,
-			behavior: "smooth"
-		})
-	}, [])
-
+export default function LandingHeader () {
 	return (
-		<div className="absolute -bottom-20 left-1/2 -translate-x-1/2">
-			<motion.div
-				animate={{
-					y: [0, 60, 0]
-				}}
-				transition={{
-					duration: 1,
-					repeat: Infinity,
-					ease: "easeInOut",
-					repeatType: "reverse"
-				}}
-				className="cursor-pointer hover:opacity-70 transition-all duration-300"
-				onClick={handleClick}
-			>
-				<ChevronDown size={45}/>
-			</motion.div>
-		</div>
-	)
-}
-
-export default function LandingHeader() {
-	return (
-		<div className="relative w-full">
-			<div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 w-full max-w-7xl mx-auto">
-				<section id="header" className="flex-1 px-4 lg:px-0">
-					<div className="flex flex-col">
-						<div>
-							<BlurFade delay={0.35} inView>
-								<span className="text-5xl lg:text-8xl font-semibold">
-                                    Hey there,
-								</span>
-							</BlurFade>
-						</div>
-						<div>
-							<BlurFade delay={0.35 * 2} inView>
-								<h2 className="text-5xl lg:text-8xl dark:text-white mt-6 lg:mt-8 font-semibold">
-                                    Meet Pip
-								</h2>
-							</BlurFade>
-						</div>
-						<div>
-							<BlurFade delay={0.35 * 3} inView>
-								<h1 className="text-xl lg:text-3xl text-gray-800 dark:text-white mt-8 lg:mt-14 font-medium">
-                                    Pip is a powerful educational robot that's easy to use.
-								</h1>
-								<h2 className="text-xl lg:text-3xl text-gray-800 dark:text-white mt-4 lg:mt-8 font-medium">
-                                    Get started on your robotics journey today.
-								</h2>
-							</BlurFade>
-						</div>
-					</div>
-				</section>
-
-				<div className="flex-1 w-full lg:w-auto px-4 lg:px-0">
-					<BlurFade delay={0.35 * 3} inView>
-						<div className="w-full">
-							<img
-								src="pip_top_right.png"
-								alt="Product visualization"
-								className="w-full h-auto"
-							/>
-						</div>
-					</BlurFade>
-				</div>
+		<div className="flex flex-col md:flex-row justify-between w-full gap-4 sm:gap-8">
+			{/* Right side with Pip image */}
+			<div className="w-full md:w-1/2 flex justify-center mt-4 md:mt-0 items-center">
+				<img
+					src="pip_top_right.png"
+					alt="Pip Robot"
+					className="max-w-full h-auto w-3/4 sm:w-auto"
+				/>
 			</div>
-			<BlurFade delay={1} inView>
-				<ScrollIndicator />
-			</BlurFade>
+			{/* Left side with text and buttons */}
+			<div className="flex flex-col space-y-4 sm:space-y-6 w-full md:w-1/2 mt-6 sm:mt-10 md:mt-20">
+				<h1 className="text-3xl sm:text-3xl md:text-3xl lg:text-4xl text-unselectedAnswerText text-center font-medium
+				leading-relaxed">
+					The best way to learn robotics is with a partner!
+				</h1>
+				<h2 className="text-2xl sm:text-3xl md:text-2xl lg:text-4xl text-unselectedAnswerText
+				text-center leading-relaxed font-bold">
+					Meet Pip
+				</h2>
+			</div>
 		</div>
 	)
 }

@@ -6,9 +6,9 @@ export default function IMUCard() {
 	return (
 		<SensorsSkeleton
 			title="9-Axis IMU"
-			description="Seamlessly track orientation, acceleration, and motion"
+			description="Track orientation, motion, and acceleration"
 			icon={<CompassRotationAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="col-span-1 lg:col-start-2 lg:row-start-1"
+			outerDivStyles="col-span-1 lg:col-start-1 lg:row-start-3"
 		/>
 	)
 }
