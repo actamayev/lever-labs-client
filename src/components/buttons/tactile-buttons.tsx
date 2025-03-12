@@ -63,7 +63,7 @@ type LandingCTAProps = ColoredTactileButtonProps & {
 }
 
 export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
-	({ className, shadowHeight = 2, ...props }, ref) => {
+	({ ...props }) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 		const navigate = useTypedNavigate()
 		return (

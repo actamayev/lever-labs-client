@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { LucideIcon } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../lib/shadcn/utils"
 
-interface IconStepProps {
+interface HoverIconEnlargeProps {
 	icon: LucideIcon
 	bgColor?: string
 	iconColor?: string
@@ -15,7 +15,7 @@ interface IconStepProps {
 	orbitingIcons?: React.ReactNode
 }
 
-export function IconStep({
+export function HoverIconEnlarge({
 	icon: Icon,
 	bgColor = "bg-blue-100",
 	iconColor = "text-blue-600",
@@ -26,7 +26,7 @@ export function IconStep({
 	title,
 	subtitle,
 	orbitingIcons,
-}: IconStepProps) {
+}: HoverIconEnlargeProps) {
 
 	return (
 		<div

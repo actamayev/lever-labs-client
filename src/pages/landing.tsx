@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
@@ -11,7 +10,7 @@ import TheLabLanding from "../components/landing/the-lab-landing"
 import LearnByDoing from "../components/landing/learn-by-doing"
 import LandingSensors from "../components/landing/sensors/landing-sensors"
 import AllAgesWelcome from "../components/landing/all-ages-welcome"
-import CodeThatComesAlive from "../components/landing/code-that-comes-alive"
+// import CodeThatComesAlive from "../components/landing/code-that-comes-alive"
 import DesignedForClassroom from "../components/landing/designed-for-classroom"
 import SimpleSetup from "../components/landing/simple-setup"
 import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
@@ -60,7 +59,6 @@ export default function Landing() {
 				</LandingSectionContainer>
 
 				{/* <LandingSectionContainer>
-
 					<CodeThatComesAlive />
 				</LandingSectionContainer> */}
 

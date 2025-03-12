@@ -1,22 +1,22 @@
 import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
-import LandingSectionHeaderText from "./landing-section-header-text"
-import LandingSectionSplit from "./landing-section-split"
-import { IconStep } from "../lab/welcome-page/welcome-page-icons"
 import RightArrow from "../lab/welcome-page/right-arrow"
+import { HoverIconEnlarge } from "../hover-icon-enlarge"
+import LandingSectionSplit from "./landing-section-split"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function SimpleSetup() {
 	return (
 		<LandingSectionSplit
 			leftContent={
 				<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative">
-					<IconStep
+					<HoverIconEnlarge
 						icon={Power}
 					/>
 
 					<RightArrow iconSize="size-10"/>
 
-					<IconStep
+					<HoverIconEnlarge
 						icon={Wifi}
 						bgColor="bg-purple-100"
 						iconColor="text-purple-600"
@@ -26,7 +26,7 @@ export default function SimpleSetup() {
 
 					<RightArrow iconSize="size-10"/>
 
-					<IconStep
+					<HoverIconEnlarge
 						icon={ThumbsUp}
 						bgColor="bg-green-100"
 						iconColor="text-green-600"
