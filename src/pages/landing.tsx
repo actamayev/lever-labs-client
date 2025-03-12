@@ -24,14 +24,7 @@ export default function Landing() {
 			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
 				<div className="fixed inset-0">
-					<GridPattern
-						isDashed={true}
-						dashSize={4}
-						orientation="vertical"
-						marginLeft={230}
-						marginRight={230}
-						columnCount={7} // 3 columns between borders
-					/>
+					<GridPattern />
 				</div>
 
 				<LandingSectionContainer>
