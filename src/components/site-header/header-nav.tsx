@@ -24,13 +24,16 @@ export default function HeaderNav() {
 					: "bg-standardBackground/50 border-transparent"
 			}`}
 		>
-			<div
-				className="flex flex-col sm:flex-row justify-between items-center w-full px-52 relative py-2 sm:py-0 sm:h-14"
-				style={{ paddingLeft: "256px", paddingRight: "256px" }}
-			>
+			<div className="flex flex-row justify-between items-center w-full px-4 sm:px-8 md:px-16 lg:px-60 relative py-2 sm:py-0 sm:h-14">
+				{/* Logo section - simplified for mobile */}
 				<LogoHeaderSection />
-				<div className="flex items-center z-10 mt-2 sm:mt-0">
-					<GoToLabButton />
+
+				{/* Right section with buttons */}
+				<div className="flex items-center z-10">
+					{/* Only show Go To Lab button on larger screens */}
+					<div className="hidden sm:block">
+						<GoToLabButton />
+					</div>
 					<LoginLogoutHeaderItem />
 				</div>
 			</div>
