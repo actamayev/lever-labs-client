@@ -111,7 +111,7 @@ export default function TheLittleThings() {
 	return (
 		<div className="flex flex-col gap-6 md:gap-8">
 			{/* Title */}
-			<p className="text-center text-3xl md:text-6xl font-medium tracking-tight text-unselectedAnswerText px-4 md:px-0">
+			<p className="text-center text-3xl md:text-6xl font-medium text-white dark:text-unselectedAnswerText px-4 md:px-0">
                 It's the little things that count
 			</p>
 

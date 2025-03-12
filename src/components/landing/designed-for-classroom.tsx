@@ -16,11 +16,11 @@ export default function DesignedForClassroom() {
 						Students can use any Pip, and their work saves automatically to their account!
 					</p>
 
-					<div className="pt-8 flex items-center justify-center">
+					{/* <div className="pt-8 flex items-center justify-center">
 						<LandingCTAButton navigateTo="/login">
 							Get your classroom started
 						</LandingCTAButton>
-					</div>
+					</div> */}
 				</div>
 
 				{/* Right side with school SVG */}

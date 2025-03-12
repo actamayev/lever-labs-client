@@ -9,13 +9,13 @@ export default function SimpleSetup() {
 			<div className="flex flex-col md:flex-row justify-between w-full gap-16">
 				{/* Right side with image - moved to first position like in TheLab */}
 				<div className="w-full md:w-1/2 flex justify-center items-center mt-8 md:mt-0">
-					<div className="relative">
+					{/* <div className="relative">
 						<img
 							src="/simple_yet_powerful.png"
 							alt="Simple Yet Powerful Pip"
 							className="max-w-full h-auto"
 						/>
-					</div>
+					</div> */}
 				</div>
 
 				{/* Left side with text */}

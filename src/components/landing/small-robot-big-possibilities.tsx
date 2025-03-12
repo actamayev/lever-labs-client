@@ -1,5 +1,5 @@
 import LandingSectionHeaderText from "./landing-section-header-text"
-import { LandingCTAButton } from "../buttons/tactile-buttons"
+// import { LandingCTAButton } from "../buttons/tactile-buttons"
 
 export default function SmallRobotBigPossibilities() {
 	return (
@@ -17,11 +17,11 @@ export default function SmallRobotBigPossibilities() {
 						spring to life right before your eyes.
 						Pip might fit in your pocket, but this tiny robot is full of big surprises!
 					</p>
-					<div className="flex items-center justify-center">
+					{/* <div className="flex items-center justify-center">
 						<LandingCTAButton navigateTo="/login">
 							Get your Pip
 						</LandingCTAButton>
-					</div>
+					</div> */}
 				</div>
 
 				{/* Right side with Pip image */}
