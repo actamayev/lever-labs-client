@@ -88,19 +88,20 @@ function FeatureItem({ feature }: FeatureItemProps) {
 			"transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)]",
 			"dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
 		)}>
-			<div className="z-10 flex transform-gpu flex-col gap-1 p-4 md:p-6">
-				<div className="flex items-center gap-3 mb-2">
+			<div className="z-10 flex transform-gpu flex-col gap-1 p-3 sm:p-4 md:p-6">
+				<div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
 					<div className="pointer-events-auto w-fit">
 						<Icon
 							className="text-pipThemeText duration-300 cursor-default"
 							size={bentoIconSize}
+							strokeWidth={2}
 						/>
 					</div>
-					<h3 className="text-lg md:text-xl font-semibold text-unselectedAnswerText">
+					<h3 className="text-base sm:text-lg md:text-xl font-semibold text-unselectedAnswerText">
 						{title}
 					</h3>
 				</div>
-				<p className="max-w-lg text-sm md:text-base text-lightLandingPageText">
+				<p className="max-w-lg text-xs sm:text-sm md:text-base text-lightLandingPageText">
 					{description}
 				</p>
 			</div>
@@ -110,14 +111,15 @@ function FeatureItem({ feature }: FeatureItemProps) {
 
 export default function TheLittleThings() {
 	return (
-		<div className="flex flex-col gap-6 md:gap-8">
+		<div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
 			{/* Title */}
-			<p className="text-center text-3xl md:text-6xl font-medium text-white dark:text-unselectedAnswerText px-4 md:px-0">
+			<p className="text-center text-2xl sm:text-3xl md:text-5xl lg:text-6xl
+			font-medium text-white dark:text-unselectedAnswerText px-4 md:px-0">
                 It's the little things that count
 			</p>
 
 			{/* Features Grid */}
-			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 px-4 md:px-0">
+			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 px-4 md:px-0">
 				{features.map((feature, index) => (
 					<FeatureItem key={index} feature={feature} />
 				))}

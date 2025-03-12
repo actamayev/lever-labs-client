@@ -6,76 +6,98 @@ import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function SimpleSetup() {
+	// Use a custom layout instead of LandingSectionSplit
 	return (
-		<LandingSectionSplit
-			leftContent={
-				<div className="flex flex-col md:flex-row items-center justify-between mb-6 relative">
-					<HoverIconEnlarge
-						icon={Power}
-					/>
-
-					<RightArrow iconSize="size-10"/>
-
-					<HoverIconEnlarge
-						icon={Wifi}
-						bgColor="bg-purple-100"
-						iconColor="text-purple-600"
-						darkBgColor="dark:bg-purple-900/50"
-						darkIconColor="dark:text-purple-400"
-					/>
-
-					<RightArrow iconSize="size-10"/>
-
-					<HoverIconEnlarge
-						icon={ThumbsUp}
-						bgColor="bg-green-100"
-						iconColor="text-green-600"
-						darkBgColor="dark:bg-green-900/50"
-						darkIconColor="dark:text-green-400"
-					/>
-				</div>
-			}
-			rightContent={
-				<div className="flex flex-col">
+		<div className="w-full">
+			{/* Switch to horizontal layout at xl (1280px) instead of lg (1024px) to prevent overlap */}
+			<div className="flex flex-col xl:flex-row justify-between w-full gap-8 xl:gap-16">
+				{/* Content ordering based on screen size */}
+				{/* Text Content - First on mobile/tablet/small desktop, Second on extra large screens */}
+				<div className="flex flex-col w-full xl:w-1/2 xl:justify-center order-1 xl:order-2">
 					<LandingSectionHeaderText text="simple setup"/>
 					{/* ShowIconed points */}
-					<div className="mt-8 space-y-4">
-						<div className="flex">
+					<div className="mt-4 sm:mt-8 space-y-3 sm:space-y-4">
+						<div className="flex items-start">
 							<ShowIcon icon={Power} />
-							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipThemeText">Just power on and go</h3>
-								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-									Pip works right out the box - no assembly required!
+							<div className="ml-3 sm:ml-4">
+								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Just power on and go</h3>
+								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
+                  Pip works right out the box - no assembly required!
 								</p>
 							</div>
 						</div>
 
-						<div className="flex">
+						<div className="flex items-start">
 							<ShowIcon icon={Wifi} />
-							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipThemeText">Quick connection</h3>
-								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-									Connect to Wi-Fi and Pip becomes your Lab partner, running demos and your coding solutions in real-time!
+							<div className="ml-3 sm:ml-4">
+								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Quick connection</h3>
+								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
+                  Connect to Wi-Fi and Pip becomes your Lab partner, running demos and your coding solutions in real-time!
 								</p>
 							</div>
 						</div>
 
-						<div className="flex">
+						<div className="flex items-start">
 							<ShowIcon icon={ThumbsUp} />
-							<div className="ml-4">
-								<h3 className="text-xl font-semibold text-pipThemeText">Easy commands</h3>
-								<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mt-1">
-									Control Pip with simple instructions that make sense
+							<div className="ml-3 sm:ml-4">
+								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Easy commands</h3>
+								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
+                  Control Pip with simple instructions that make sense
 								</p>
 							</div>
 						</div>
 
-						<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
-							Everything is super simple, so you can focus on the fun parts.
+						<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
+              Everything is super simple, so you can focus on the fun parts.
 						</p>
 					</div>
 				</div>
-			}
-		/>
+
+				{/* Image Content - Second on mobile/tablet/small desktop, First on extra large screens */}
+				<div className="w-full xl:w-1/2 flex mt-8 xl:mt-0 justify-center items-center order-2 xl:order-1">
+					<div className="flex flex-row items-center justify-between relative w-full max-w-md mx-auto">
+						<div className="flex flex-row items-center">
+							<HoverIconEnlarge
+								icon={Power}
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+							/>
+						</div>
+
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
+							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
+						</div>
+
+						<div className="flex flex-row items-center">
+							<HoverIconEnlarge
+								icon={Wifi}
+								bgColor="bg-purple-100"
+								iconColor="text-purple-600"
+								darkBgColor="dark:bg-purple-900/50"
+								darkIconColor="dark:text-purple-400"
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+							/>
+						</div>
+
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
+							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
+						</div>
+
+						<div className="flex flex-row items-center">
+							<HoverIconEnlarge
+								icon={ThumbsUp}
+								bgColor="bg-green-100"
+								iconColor="text-green-600"
+								darkBgColor="dark:bg-green-900/50"
+								darkIconColor="dark:text-green-400"
+								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }

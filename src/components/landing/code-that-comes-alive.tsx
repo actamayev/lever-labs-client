@@ -31,6 +31,7 @@ export default function CodeThatComesAlive() {
 					</p>
 				</div>
 			}
+			imagePosition="right"
 		/>
 	)
 }
