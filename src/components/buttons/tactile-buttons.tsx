@@ -4,6 +4,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { ButtonProps } from "../shadcn/ui/button"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
 type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 	shadowHeight?: 2 | 4
@@ -51,6 +52,28 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 				)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(161 161 170)" : "rgb(82 82 91)"}
 				shadowHeight={shadowHeight}
+				{...props}
+			/>
+		)
+	}
+))
+
+type LandingCTAProps = ColoredTactileButtonProps & {
+	navigateTo: PageNames
+}
+
+export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
+	({ ...props }) => {
+		const defaultSiteTheme = useDefaultSiteTheme()
+		const navigate = useTypedNavigate()
+		return (
+			<TactileButton
+				onClick={() => navigate(props.navigateTo)}
+				className={cn("px-8 !py-5 text-2xl transition-none rounded-2xl border-2 w-full md:w-2/3 h-12",
+					"bg-green-500 border-none text-white hover:bg-green-400",
+					"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
+				shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
+				shadowHeight={2}
 				{...props}
 			/>
 		)

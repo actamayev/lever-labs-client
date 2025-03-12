@@ -8,10 +8,10 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
+import { cn } from "../../../../lib/shadcn/utils"
 import { CustomBeaker } from "../../../icons/custom-beaker"
 import { CustomSandbox } from "../../../icons/custom-sandbox"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
-import { cn } from "../../../../lib/shadcn/utils"
 
 const navData: SidebarNavData[] = [
 	{
@@ -57,8 +57,8 @@ export default function MappedNavData() {
 											className={cn(
 												"!h-[45px] !w-[45px] transition-none",
 												item.title === "Lab"
-													? "text-green-500 dark:text-green-600"
-													: "text-orange-500 dark:text-orange-600"
+													? "text-labIconColor"
+													: "text-sandboxIconColor"
 											)}
 											data-active={isActive(item.url)}
 										/>

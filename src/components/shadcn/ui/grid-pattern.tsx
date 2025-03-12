@@ -1,91 +1,62 @@
-import { useId } from "react";
 import { cn } from "@/lib/shadcn/utils";
 
-interface GridPatternProps {
-  width?: number;
-  height?: number;
-  x?: number;
-  y?: number;
-  squares?: Array<[x: number, y: number]>;
-  strokeDasharray?: string;
-  className?: string;
-  isDashed?: boolean;
-  dashSize?: number;
-  orientation?: "both" | "vertical" | "horizontal"; // New prop for line orientation
-  [key: string]: unknown;
-}
+export default function GridPattern() {
+  // Hardcoded values from your usage example
+  const dashSize = 4;
+  const dashPattern = `${dashSize},${dashSize}`;
+  const marginLeft = 230;
+  const marginRight = 230;
+  const columnCount = 7;
 
-export function GridPattern({
-  width = 40,
-  height = 40,
-  x = -1,
-  y = -1,
-  strokeDasharray = "0",
-  squares,
-  className,
-  isDashed = false,
-  dashSize = 4,
-  orientation = "both", // Default to showing both lines
-  ...props
-}: GridPatternProps) {
-  const id = useId();
+  // Calculate column width
+  const columnWidth = `calc((100% - ${marginLeft + marginRight}px) / ${columnCount + 1})`;
 
-  const dashPattern = isDashed ? `${dashSize},${dashSize}` : strokeDasharray;
-
-  // Create path based on orientation
-  const getPath = () => {
-    switch (orientation) {
-      case "vertical":
-        return `M.5 ${height}V.5`;
-      case "horizontal":
-        return `M.5.5H${width}`;
-      default: // "both"
-        return `M.5 ${height}V.5H${width}`;
-    }
-  };
+  // Generate array for dynamic column lines
+  const columnLines = Array.from({ length: columnCount }, (_, index) => index + 1);
 
   return (
     <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
-        className,
+        "pointer-events-none absolute inset-0 h-full w-full fill-gray-200 stroke-gray-200 dark:fill-gray-800 dark:stroke-gray-800",
       )}
-      {...props}
+      preserveAspectRatio="none"
     >
-      <defs>
-        <pattern
-          id={id}
-          width={width}
-          height={height}
-          patternUnits="userSpaceOnUse"
-          x={x}
-          y={y}
-        >
-          <path
-            d={getPath()}
-            fill="none"
-            strokeDasharray={dashPattern}
-          />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
-      {squares && (
-        <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([x, y]) => (
-            <rect
-              strokeWidth="0"
-              key={`${x}-${y}`}
-              width={width - 1}
-              height={height - 1}
-              x={x * width + 1}
-              y={y * height + 1}
-            />
-          ))}
-        </svg>
-      )}
+      {/* Left border line - solid */}
+      <line 
+        x1={marginLeft} 
+        y1="0" 
+        x2={marginLeft} 
+        y2="100%" 
+        strokeWidth="1"
+        strokeDasharray="0"
+        vectorEffect="non-scaling-stroke"
+      />
+
+      {/* Right border line - solid */}
+      <line 
+        x1={`calc(100% - ${marginRight}px)`} 
+        y1="0" 
+        x2={`calc(100% - ${marginRight}px)`} 
+        y2="100%" 
+        strokeWidth="1"
+        strokeDasharray="0"
+        vectorEffect="non-scaling-stroke"
+      />
+
+      {/* Dynamically generated column lines between borders - always dashed */}
+      {columnLines.map((columnIndex) => (
+        <line 
+          key={`column-${columnIndex}`}
+          x1={`calc(${marginLeft}px + ${columnWidth} * ${columnIndex})`}
+          y1="0" 
+          x2={`calc(${marginLeft}px + ${columnWidth} * ${columnIndex})`}
+          y2="100%" 
+          strokeWidth="1"
+          strokeDasharray={dashPattern}
+          vectorEffect="non-scaling-stroke"
+        />
+      ))}
     </svg>
   );
 }
-
-export default GridPattern;
