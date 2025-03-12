@@ -71,8 +71,8 @@ export default function ModuleCard() {
 					)}
 				</div>
 			}
-			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-3"
-			paragraphStyles="whitespace-normal lg:whitespace-nowrap"
+			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-1 row-start-4"
+			// paragraphStyles="whitespace-normal lg:whitespace-nowrap"
 		/>
 	)
 }

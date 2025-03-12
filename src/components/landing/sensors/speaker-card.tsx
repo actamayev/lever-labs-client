@@ -8,7 +8,7 @@ export default function SpeakerCard() {
 			title="Built-in Speaker"
 			description="Play sounds, music, and voice feedback for interactive experiences"
 			icon={<Volume2 size={bentoIconSize}/>}
-			outerDivStyles="col-span-1 lg:col-span-1 lg:col-start-3 lg:row-start-4"
+			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-3"
 			paragraphStyles="whitespace-normal lg:whitespace-nowrap"
 		/>
 	)

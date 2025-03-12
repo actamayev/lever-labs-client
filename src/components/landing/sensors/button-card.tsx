@@ -6,9 +6,9 @@ export default function ButtonCard() {
 	return (
 		<SensorsSkeleton
 			title="2× Buttons"
-			description="Give your Pip custom controls"
+			description="Give Pip custom controls"
 			icon={<ButtonSpringAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="col-span-1 lg:col-start-1 lg:row-start-3"
+			outerDivStyles="col-span-1 lg:col-start-2 lg:row-start-1"
 		/>
 	)
 }
