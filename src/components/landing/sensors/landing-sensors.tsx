@@ -1,10 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
+import { Card, CardContent } from "../../shadcn/ui/card"
 import React from "react"
 import LEDCard from "./led-card"
 import IMUCard from "./imu-card"
 import MotorCard from "./motor-card"
 import ButtonCard from "./button-card"
 import ModuleCard from "./module-card"
+import ScreenCard from "./screen-card"
+import SpeakerCard from "./speaker-card"
 import DistanceSensorsCard from "./distance-sensors-card"
 import { BentoGrid } from "../../shadcn/ui/bento-grid"
 import LandingSectionHeaderText from "../landing-section-header-text"
@@ -15,13 +17,15 @@ const features: React.ReactNode[] = [
 	<DistanceSensorsCard key="Distance Sensor" />,
 	<MotorCard key="Motor" />,
 	<ButtonCard key="Button" />,
-	<ModuleCard key="Module" />
+	<ModuleCard key="Module" />,
+	<ScreenCard key="Screen"/>,
+	<SpeakerCard key="Speaker"/>
 ]
 
 export default function LandingSensors() {
 	return (
 		<div className="w-full">
-			<LandingSectionHeaderText text="Pip's sensor suite: add speaker, screen"/>
+			<LandingSectionHeaderText text="Pip's sensor suite"/>
 
 			{/* Add padding-top to the Card */}
 			<Card className="h-full flex flex-col bg-standardBackground mt-8 pt-4 lg:pt-6">
