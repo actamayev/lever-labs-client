@@ -30,45 +30,63 @@ export default function SignUpForUpdates() {
 	}, [formValues.email])
 
 	return (
-		<div className="w-full px-4 md:px-0">
-			<div className="text-xl md:text-3xl text-center">
-                Pip isn't available yet - but will be soon.
+		<div className="w-full">
+			<div className="flex flex-col md:flex-row justify-between w-full gap-8 md:gap-8 lg:gap-16">
+				{/* Left content - subscription form */}
+				<div className="flex flex-col w-full md:w-1/2 lg:w-1/2 justify-center order-1 md:order-1 px-4 md:px-0">
+					<div className="text-xl text-center">
+						Pip isn't available yet - but will be soon.
+					</div>
+					<div className="text-xl text-center mt-4 md:mt-6 mb-6 md:mb-10">
+						Please enter your email below to get notified.
+					</div>
+					<Form {...form}>
+						<form onSubmit={form.handleSubmit(onSubmit)}
+							className="flex flex-col sm:flex-row gap-4 md:gap-2 max-w-md mx-auto items-center">
+							<FormField
+								control={form.control}
+								name="email"
+								render={({ field }) => (
+									<FormItem className="w-full md:w-auto">
+										<FormControl>
+											<Input
+												type="email"
+												placeholder="Email"
+												required
+												className="flex-1 h-10 w-full md:w-56 border-black dark:border-white border-2
+										transition-all duration-300 !text-lg md:!text-xl font-light"
+												disabled={isSubscribed || isLoading}
+												{...field}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
+							<RainbowSubscribeButton
+								initialText="SUBSCRIBE"
+								changeText="SUBSCRIBED!"
+								isSubscribed={isSubscribed}
+								isDisabled={!isEmailValidMemo}
+								isLoading={isLoading}
+								className="transition-all duration-300 rounded-xl h-10 w-full md:w-auto"
+							/>
+						</form>
+					</Form>
+				</div>
+
+				{/* Right content - video */}
+				<div className="w-full md:w-1/2 lg:w-1/2 flex mt-8 md:mt-0 justify-center items-center order-2 md:order-2">
+					<div className="relative aspect-video w-full max-w-5xl">
+						<iframe
+							className="w-full h-full rounded-xl"
+							src="https://www.youtube.com/embed/anl3IRTi8gg"
+							title="Pip's Big Adventure"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowFullScreen
+						/>
+					</div>
+				</div>
 			</div>
-			<div className="text-xl md:text-3xl text-center mt-4 md:mt-6 mb-6 md:mb-10">
-                Please enter your email below to get notified.
-			</div>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)}
-					className="flex flex-col md:flex-row gap-4 md:gap-2 max-w-md mx-auto items-center">
-					<FormField
-						control={form.control}
-						name="email"
-						render={({ field }) => (
-							<FormItem className="w-full md:w-auto">
-								<FormControl>
-									<Input
-										type="email"
-										placeholder="Email"
-										required
-										className="flex-1 h-12 w-full md:w-56 border-black dark:border-white border-2
-                                        transition-all duration-300 !text-lg md:!text-xl font-light"
-										disabled={isSubscribed || isLoading}
-										{...field}
-									/>
-								</FormControl>
-							</FormItem>
-						)}
-					/>
-					<RainbowSubscribeButton
-						initialText="SUBSCRIBE"
-						changeText="SUBSCRIBED!"
-						isSubscribed={isSubscribed}
-						isDisabled={!isEmailValidMemo}
-						isLoading={isLoading}
-						className="transition-all duration-300 rounded-xl h-12 w-full md:w-auto"
-					/>
-				</form>
-			</Form>
 		</div>
 	)
 }

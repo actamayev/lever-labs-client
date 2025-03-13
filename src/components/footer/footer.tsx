@@ -1,7 +1,6 @@
 import { useLocation } from "react-router"
 import FooterLink from "./footer-link"
 import FooterThemeToggle from "./footer-theme-toggle"
-import LinkToExternalSite from "./link-to-external-site"
 import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
@@ -9,7 +8,9 @@ export default function Footer() {
 	if (
 		location.pathname === "/login" ||
 		location.pathname === "/register" ||
-		location.pathname === "/register-username"
+		location.pathname === "/register-username" ||
+		location.pathname === "/mission" ||
+		location.pathname === "/contact"
 	) return null
 
 	return (
@@ -34,9 +35,10 @@ export default function Footer() {
 
 						{/* Right section - About, Contact, Theme (desktop) */}
 						<div className="hidden md:flex md:items-center md:justify-end md:gap-6">
-							<LinkToExternalSite
-								title="About Us"
-								link="https://help.bluedotrobots.com/bdr"
+							<FooterLink
+								linkTo="/mission"
+								linkTitle="About Us"
+								extraClasses=""
 							/>
 							<FooterLink
 								linkTo="/contact"
@@ -50,12 +52,12 @@ export default function Footer() {
 							{/* Contact Us and About Us on same line */}
 							<div className="flex items-center justify-center space-x-6">
 								<FooterLink
+									linkTo="/mission"
+									linkTitle="About Us"
+								/>
+								<FooterLink
 									linkTo="/contact"
 									linkTitle="Contact Us"
-								/>
-								<LinkToExternalSite
-									title="About Us"
-									link="https://help.bluedotrobots.com/bdr"
 								/>
 							</div>
 

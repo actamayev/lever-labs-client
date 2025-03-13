@@ -20,7 +20,7 @@ export default function DistanceSensorsCard() {
 					</div>
 					<div className="flex flex-col items-center md:items-start text-center md:text-left">
 						<h3 className={landingSensorCardHeaderText()}>
-                            3× Distance Sensors
+                            3 Distance Sensors
 						</h3>
 						<p className={landingSensorCardText()}>
                             Measure distances with millimeter accuracy for smart navigation
