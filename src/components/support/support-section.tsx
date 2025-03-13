@@ -1,0 +1,22 @@
+import { cn } from "../../lib/shadcn/utils"
+
+interface Props {
+	sectionTitle: string
+	children: React.ReactNode
+	extraClasses?: string
+}
+
+export default function SupportSection(props: Props) {
+	const { sectionTitle, children, extraClasses = "" } = props
+
+	return (
+		<div className={cn("mb-10", extraClasses)}>
+			<div className="text-questionText font-medium text-xl">
+				{sectionTitle}
+			</div>
+			<div className="text-lightLandingPageText mt-6">
+				{children}
+			</div>
+		</div>
+	)
+}

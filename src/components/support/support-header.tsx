@@ -2,6 +2,13 @@ import toUpper from "lodash-es/toUpper"
 import { Link, useLocation } from "react-router"
 import { cn } from "../../lib/shadcn/utils"
 
+export function SupportBorder() {
+	return (
+		<div className="container mx-auto w-full">
+			<div className="border-b-2 border-gray-200 dark:border-gray-700 rounded-xl"></div>
+		</div>
+	)
+}
 function SupportLink({ page } : { page: "mission" | "contact" }) {
 	const location = useLocation()
 	const active = location.pathname === `/${page}`
@@ -36,9 +43,7 @@ export default function SupportHeader () {
 					<SupportLink page="contact" />
 				</ul>
 			</nav>
-			<div className="container mx-auto w-full">
-				<div className="border-b-2 border-gray-200 dark:border-gray-700 rounded-xl"></div>
-			</div>
+			<SupportBorder />
 		</header>
 	)
 }

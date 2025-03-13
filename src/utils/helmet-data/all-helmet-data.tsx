@@ -63,9 +63,16 @@ const allHelmetData: HelmetData = {
 	),
 	"/contact": (
 		<BasicHelmet
-			pageTitleData="Contact Us"
+			pageTitleData="Contact"
 			description="Get in touch with the Blue Dot team."
 			url="https://www.bluedotrobots.com/contact"
+		/>
+	),
+	"/mission": (
+		<BasicHelmet
+			pageTitleData="Mission"
+			description="Our mission it to provide an accessible world-class robotics education."
+			url="https://www.bluedotrobots.com/mission"
 		/>
 	),
 	...labHelmetData

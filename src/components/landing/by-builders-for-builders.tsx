@@ -34,25 +34,16 @@ export default function ByBuildersForBuilders() {
 					</p>
 
 					<div className="flex items-center justify-center my-6 sm:my-8">
-						<a
-							href="https://help.bluedotrobots.com/bdr"
-							aria-label="LinkedIn"
-							className="text-gray-800 hover:text-gray-950 dark:text-gray-200
-							dark:hover:text-white transition-all duration-300 w-full sm:w-auto"
-							target="_blank"
-							rel="noopener noreferrer"
+						<LandingCTAButton
+							className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl transition-none",
+								"rounded-xl sm:rounded-2xl border-2 w-full h-10 sm:h-12",
+								"bg-green-500 border-none text-white hover:bg-green-400",
+								"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
+							shadowHeight={2}
+							navigateTo="/mission"
 						>
-							<LandingCTAButton
-								className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl transition-none",
-									"rounded-xl sm:rounded-2xl border-2 w-full h-10 sm:h-12",
-									"bg-green-500 border-none text-white hover:bg-green-400",
-									"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
-								shadowHeight={2}
-								navigateTo="/mission"
-							>
-								About Blue Dot
-							</LandingCTAButton>
-						</a>
+							About Blue Dot
+						</LandingCTAButton>
 					</div>
 				</div>
 			}
