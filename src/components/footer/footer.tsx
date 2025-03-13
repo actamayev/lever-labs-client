@@ -5,13 +5,7 @@ import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
 	const location = useLocation()
-	if (
-		location.pathname === "/login" ||
-		location.pathname === "/register" ||
-		location.pathname === "/register-username" ||
-		location.pathname === "/mission" ||
-		location.pathname === "/contact"
-	) return null
+	if (location.pathname !== "/") return null
 
 	return (
 		<footer id="footer" className="bg-standardBackground/70 w-full pb-3 md:py-3 z-20 transition-all duration-300">
@@ -44,6 +38,10 @@ export default function Footer() {
 								linkTo="/contact"
 								linkTitle="Contact Us"
 							/>
+							<FooterLink
+								linkTo="/schools"
+								linkTitle="Schools"
+							/>
 							<FooterThemeToggle />
 						</div>
 
@@ -58,6 +56,10 @@ export default function Footer() {
 								<FooterLink
 									linkTo="/contact"
 									linkTitle="Contact Us"
+								/>
+								<FooterLink
+									linkTo="/schools"
+									linkTitle="Schools"
 								/>
 							</div>
 

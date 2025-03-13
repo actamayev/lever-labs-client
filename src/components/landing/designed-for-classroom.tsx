@@ -3,6 +3,7 @@ import LandingSectionSplit from "./landing-section-split"
 // import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingParagraph } from "../../utils/text-styles"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 
 export default function DesignedForClassroom() {
 	return (
@@ -18,11 +19,11 @@ export default function DesignedForClassroom() {
 						Students can use any Pip, and their work saves automatically to their account!
 					</p>
 
-					{/* <div className="pt-8 flex items-center justify-center">
-						<LandingCTAButton navigateTo="/login">
-							Get your classroom started
+					<div className="pt-8 flex items-center justify-center">
+						<LandingCTAButton navigateTo="/schools">
+							Pip for Schools
 						</LandingCTAButton>
-					</div> */}
+					</div>
 				</>
 			}
 			rightContent={

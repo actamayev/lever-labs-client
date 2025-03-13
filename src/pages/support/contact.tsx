@@ -1,10 +1,14 @@
-import PageHelmet from "../components/helmet/page-helmet"
-import ContactItemInCard from "../components/contact/contact-item-in-card"
-import SupportHeader from "../components/support/support-header"
-import SupportSectionContainer from "../components/support/support-section-container"
-import FooterSocialSection from "../components/footer/footer-social-section"
+import { useEffect } from "react"
+import PageHelmet from "../../components/helmet/page-helmet"
+import SupportHeader from "../../components/support/support-header"
+import ContactItemInCard from "../../components/contact/contact-item-in-card"
+import FooterSocialSection from "../../components/footer/footer-social-section"
+import SupportSectionContainer from "../../components/support/support-section-container"
 
 export default function Contact() {
+	useEffect(() => {
+		window.scrollTo(0, 0)
+	}, [])
 	return (
 		<div>
 			<PageHelmet pageTitle="/contact" />
