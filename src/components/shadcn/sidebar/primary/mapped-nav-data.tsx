@@ -52,7 +52,7 @@ export default function MappedNavData() {
 										"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]"
 									)}
 								>
-									<div className="flex h-[45px] w-[45px] !min-w-[45px] items-center justify-center">
+									<div className="flexitems-center justify-center">
 										<item.icon
 											className={cn(
 												"!h-[45px] !w-[45px] transition-none",
