@@ -75,6 +75,13 @@ const allHelmetData: HelmetData = {
 			url="https://www.bluedotrobots.com/mission"
 		/>
 	),
+	"/schools": (
+		<BasicHelmet
+			pageTitleData="Schools"
+			description="Bring fun, accessible robotics education to your classroom with Pip! A complete curriculum that adapts to each student's pace, with easy progress tracking for teachers."
+			url="https://www.bluedotrobots.com/schools"
+		/>
+	),
 	...labHelmetData
 }
 
