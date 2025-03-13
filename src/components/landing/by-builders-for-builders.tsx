@@ -15,7 +15,7 @@ function ByBuildersForBuilders() {
 		<LandingSectionSplit
 			imagePosition="left"
 			leftContent={
-				<div className="relative mb-8 sm:mb-0">
+				<div className="relative mb-12">
 					<BlueDot />
 				</div>
 			}
@@ -23,7 +23,7 @@ function ByBuildersForBuilders() {
 				<div className="flex flex-col w-full">
 					<LandingSectionHeaderText text="by builders," />
 					<LandingSectionHeaderText text="for builders" />
-					<p className={landingParagraph("mt-4 sm:mt-8")}>
+					<p className={landingParagraph("mt-4 sm:mt-5")}>
 						As engineers who grew up tinkering, we've experienced firsthand how traditional robotics
 						education can be frustrating and limiting.
 					</p>
