@@ -75,11 +75,9 @@ export default function Landing() {
 					<ByBuildersForBuilders />
 				</LandingSectionContainer>
 
-				<div className="flex flex-col relative items-center justify-center py-16 md:py-32 z-10 px-4 md:px-16
-				bg-gradient-to-b from-pipTheme to-standardBackground dark:from-pipTheme
-				text-white dark:text-questionText transition-all duration-300">
+				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
 					<SignUpForUpdates />
-				</div>
+				</LandingSectionContainer>
 			</div>
 		</>
 	)

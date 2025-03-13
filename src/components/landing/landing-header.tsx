@@ -2,7 +2,7 @@ export default function LandingHeader () {
 	return (
 		<div className="flex flex-col md:flex-row justify-between w-full gap-4 sm:gap-8">
 			{/* Right side with Pip image */}
-			<div className="w-full md:w-1/2 flex justify-center mt-20 md:mt-0 sm:mt-10 items-center"> {/* Increased top margin on mobile */}
+			<div className="w-full md:w-1/2 flex justify-center mt-5 md:mt-0 sm:mt-5 items-center"> {/* Increased top margin on mobile */}
 				<img
 					src="pip_top_right.png"
 					alt="Pip Robot"
