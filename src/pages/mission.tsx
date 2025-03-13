@@ -10,7 +10,7 @@ export default function Mission() {
 			<PageHelmet pageTitle="/mission" />
 			<SupportSectionContainer>
 				<SupportHeader />
-				<SupportSection sectionTitle="Provide an accessible world-class robotics education.">
+				<SupportSection sectionTitle="Provide an accessible world-class robotics education">
 					<div className="flex flex-col">
 						<div>
 							We believe that anyone can learn robotics with Pip.
@@ -36,7 +36,7 @@ export default function Mission() {
 				<SupportSection sectionTitle="The Blue Dot Difference" extraClasses="mt-10">
 					<div className="flex flex-col space-y-4">
 						<div>
-							Millions of people are interested in robotics, but most educational products either require hours of setup or offer limited learning paths. We're changing that with Pip and the Lab.
+							Millions of people are interested in robotics, but most educational products either require hours of setup or offer limited learning paths.
 						</div>
 						<div>
 							Pip and the Lab work together seamlessly to turn abstract concepts into hands-on experiences.
