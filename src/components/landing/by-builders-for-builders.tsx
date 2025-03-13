@@ -58,7 +58,7 @@ function ByBuildersForBuilders() {
 								About Blue Dot
 							</TactileButton>
 						</a>
-						{/* <LandingCTAButton navigateTo="/about">
+						{/* <LandingCTAButton navigateTo="/mission">
 							About Blue Dot
 						</LandingCTAButton> */}
 					</div>
