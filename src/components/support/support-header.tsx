@@ -29,14 +29,14 @@ function SupportLink({ page } : { page: "mission" | "contact" }) {
 
 export default function SupportHeader () {
 	return (
-		<header className="w-1/2 py-6">
+		<header className="py-6">
 			<nav className="container">
 				<ul className="flex justify-start items-center space-x-0 text-lg font-medium">
 					<SupportLink page="mission" />
 					<SupportLink page="contact" />
 				</ul>
 			</nav>
-			<div className="container mx-auto">
+			<div className="container mx-auto w-full">
 				<div className="border-b-2 border-gray-200 dark:border-gray-700 rounded-xl"></div>
 			</div>
 		</header>

@@ -1,16 +1,11 @@
 import BlueDot from "./blue-dot"
-import { observer } from "mobx-react"
-// import { LandingCTAButton } from "../buttons/tactile-buttons"
 import { cn } from "../../lib/shadcn/utils"
 import LandingSectionSplit from "./landing-section-split"
 import { landingParagraph } from "../../utils/text-styles"
-import { TactileButton } from "../shadcn/ui/tactile-button"
 import LandingSectionHeaderText from "./landing-section-header-text"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import { LandingCTAButton } from "../buttons/tactile-buttons"
 
-function ByBuildersForBuilders() {
-	const defaultSiteTheme = useDefaultSiteTheme()
-
+export default function ByBuildersForBuilders() {
 	return (
 		<LandingSectionSplit
 			imagePosition="left"
@@ -47,25 +42,20 @@ function ByBuildersForBuilders() {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							<TactileButton
+							<LandingCTAButton
 								className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl transition-none",
 									"rounded-xl sm:rounded-2xl border-2 w-full h-10 sm:h-12",
 									"bg-green-500 border-none text-white hover:bg-green-400",
 									"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
-								shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
 								shadowHeight={2}
+								navigateTo="/mission"
 							>
 								About Blue Dot
-							</TactileButton>
+							</LandingCTAButton>
 						</a>
-						{/* <LandingCTAButton navigateTo="/mission">
-							About Blue Dot
-						</LandingCTAButton> */}
 					</div>
 				</div>
 			}
 		/>
 	)
 }
-
-export default observer(ByBuildersForBuilders)

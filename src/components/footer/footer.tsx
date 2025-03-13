@@ -9,7 +9,9 @@ export default function Footer() {
 	if (
 		location.pathname === "/login" ||
 		location.pathname === "/register" ||
-		location.pathname === "/register-username"
+		location.pathname === "/register-username" ||
+		location.pathname === "/mission" ||
+		location.pathname === "/contact"
 	) return null
 
 	return (
@@ -34,10 +36,15 @@ export default function Footer() {
 
 						{/* Right section - About, Contact, Theme (desktop) */}
 						<div className="hidden md:flex md:items-center md:justify-end md:gap-6">
-							<LinkToExternalSite
+							<FooterLink
+								linkTo="/mission"
+								linkTitle="About Us"
+								extraClasses=""
+							/>
+							{/* <LinkToExternalSite
 								title="About Us"
 								link="https://help.bluedotrobots.com/bdr"
-							/>
+							/> */}
 							<FooterLink
 								linkTo="/contact"
 								linkTitle="Contact Us"
