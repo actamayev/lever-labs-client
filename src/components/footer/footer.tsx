@@ -38,6 +38,10 @@ export default function Footer() {
 								linkTo="/contact"
 								linkTitle="Contact Us"
 							/>
+							<FooterLink
+								linkTo="/schools"
+								linkTitle="Schools"
+							/>
 							<FooterThemeToggle />
 						</div>
 
@@ -52,6 +56,10 @@ export default function Footer() {
 								<FooterLink
 									linkTo="/contact"
 									linkTitle="Contact Us"
+								/>
+								<FooterLink
+									linkTo="/schools"
+									linkTitle="Schools"
 								/>
 							</div>
 
