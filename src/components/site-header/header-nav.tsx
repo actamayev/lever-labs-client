@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import GoToLabButton from "./go-to-lab-button"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 
@@ -24,16 +23,20 @@ export default function HeaderNav() {
 					: "bg-standardBackground/50 border-transparent"
 			}`}
 		>
-			<div className="flex flex-row justify-between items-center w-full px-4 sm:px-8 md:px-16 lg:px-60 relative py-2 sm:py-0 sm:h-14">
-				{/* Logo section - simplified for mobile */}
-				<LogoHeaderSection />
+			<div
+				className={`flex flex-row items-center w-full px-4 sm:px-8 md:px-16 lg:px-60 relative py-2 sm:py-0 sm:h-14 ${
+					!isScrolled ? "justify-center sm:justify-between" : "justify-between"
+				}`}
+			>
+				{/* Logo section */}
+				<LogoHeaderSection isScrolled={isScrolled} />
 
 				{/* Right section with buttons */}
-				<div className="flex items-center z-10">
-					{/* Only show Go To Lab button on larger screens */}
-					<div className="hidden sm:block">
-						<GoToLabButton />
-					</div>
+				<div
+					className={`flex items-center z-10 ${
+						!isScrolled ? "hidden sm:flex" : "flex"
+					}`}
+				>
 					<LoginLogoutHeaderItem />
 				</div>
 			</div>
