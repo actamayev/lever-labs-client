@@ -7,7 +7,7 @@ interface Props {
 
 export default function LandingSectionHeaderText({ text, extraClasses = "" } : Props) {
 	return (
-		<h2 className={cn("text-4xl md:text-5xl lg:text-5xl font-bold text-pipThemeText", extraClasses)}>
+		<h2 className={cn("text-5xl md:text-5xl lg:text-5xl font-bold text-pipThemeText", extraClasses)}>
 			{text}
 		</h2>
 	)

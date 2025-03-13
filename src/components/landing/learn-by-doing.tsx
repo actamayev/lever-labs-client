@@ -1,5 +1,6 @@
-import LandingSectionHeaderText from "./landing-section-header-text"
+import { landingParagraph, landingTableHeader, landingTableText } from "../../utils/text-styles"
 import LandingSectionSplit from "./landing-section-split"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 export default function LearnByDoing() {
 	return (
@@ -8,7 +9,7 @@ export default function LearnByDoing() {
 			leftContent={
 				<>
 					<LandingSectionHeaderText text="learn by doing" />
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-4 sm:mt-8">
+					<p className={landingParagraph("mt-4 sm:mt-8")}>
 						We bring Pip into the learning at every step to create an experience you won't
 						find anywhere else. The Lab teaches you cool concepts, and Pip shows you how they work in real life.
 					</p>
@@ -18,22 +19,22 @@ export default function LearnByDoing() {
 				<div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md w-full">
 					{/* Header row */}
 					<div className="grid grid-cols-2 text-questionText">
-						<div className="p-2 sm:p-4 font-semibold text-sm sm:text-lg md:text-xl text-center bg-pipTheme bg-opacity-10">
+						<div className={landingTableHeader()}>
 							In the lab
 						</div>
-						<div className="p-2 sm:p-4 font-semibold text-sm sm:text-lg md:text-xl text-center bg-pipTheme bg-opacity-10">
+						<div className={landingTableHeader()}>
 							With Pip
 						</div>
 					</div>
 
 					{/* LEDs & Lighting row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200
-					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700 text-lightLandingPageText">
+					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">Study how LEDs function</p>
+							<p className={landingTableText()}>Study how LEDs function</p>
 						</div>
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">
+							<p className={landingTableText()}>
 								Write a program for Pip to put on a thrilling light show
 							</p>
 						</div>
@@ -41,23 +42,23 @@ export default function LearnByDoing() {
 
 					{/* Motors & Movement row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200
-					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700 text-lightLandingPageText">
+					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">Read about how motors work</p>
+							<p className={landingTableText()}>Read about how motors work</p>
 						</div>
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">Take Pip on a joy-ride around your home</p>
+							<p className={landingTableText()}>Take Pip on a joy-ride around your home</p>
 						</div>
 					</div>
 
 					{/* Algorithms & Navigation row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200 dark:divide-gray-700
-					border-t border-gray-200 dark:border-gray-700 text-lightLandingPageText">
+					border-t border-gray-200 dark:border-gray-700">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">Learn about maze-solving algorithms</p>
+							<p className={landingTableText()}>Learn about maze-solving algorithms</p>
 						</div>
 						<div className="p-2 sm:p-4 flex items-center justify-center">
-							<p className="text-xs sm:text-sm md:text-base text-center">Watch Pip navigate a maze you created</p>
+							<p className={landingTableText()}>Watch Pip navigate a maze you created</p>
 						</div>
 					</div>
 				</div>

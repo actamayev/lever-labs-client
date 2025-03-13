@@ -2,7 +2,7 @@ import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import TheLittleThings from "../components/landing/the-little-things"
-import WhoWeAre from "../components/landing/who-we-are"
+import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
 import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
@@ -72,7 +72,7 @@ export default function Landing() {
 				</LandingSectionContainer>
 
 				<LandingSectionContainer>
-					<WhoWeAre />
+					<ByBuildersForBuilders />
 				</LandingSectionContainer>
 
 				<div className="flex flex-col relative items-center justify-center py-16 md:py-32 z-10 px-4 md:px-16

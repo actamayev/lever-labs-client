@@ -5,7 +5,7 @@ import BasicHelmet from "../../components/helmet/basic-helmet"
 const allHelmetData: HelmetData = {
 	"/": (
 		<BasicHelmet
-			pageTitleData="Blue Dot Robots | The best way to learn robotics"
+			pageTitleData="Blue Dot Robots | The best way to learn robotics is with Pip"
 			description="Explore Pip, the educational robot designed to make learning robotics fun and seamless.
 			From coding basics to advanced control algorithms, start your robotics journey today."
 			url="https://www.bluedotrobots.com"

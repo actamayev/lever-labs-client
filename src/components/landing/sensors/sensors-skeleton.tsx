@@ -1,4 +1,5 @@
 import { cn } from "../../../lib/shadcn/utils"
+import { landingSensorCardHeaderText, landingSensorCardText } from "../../../utils/text-styles"
 
 interface Props {
 	title: React.ReactNode
@@ -28,10 +29,10 @@ export default function SensorsSkeleton(props: Props) {
 				</div>
 				{/* Text container */}
 				<div className="flex flex-col items-center md:items-start text-center md:text-left">
-					<h3 className="text-base sm:text-lg md:text-xl font-semibold text-questionText">
+					<h3 className={landingSensorCardHeaderText()}>
 						{title}
 					</h3>
-					<p className="text-xs sm:text-sm md:text-base text-lightLandingPageText">
+					<p className={landingSensorCardText()}>
 						{description}
 					</p>
 				</div>
