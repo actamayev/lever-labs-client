@@ -9,7 +9,7 @@ export function landingParagraph (additionalClasses?: string): string {
 
 export function landingBulletTextParagraph (additionalClasses?: string): string {
 	return cn(
-		"text-base sm:text-base md:text-base leading-relaxed text-lightLandingPageText",
+		"text-base sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1",
 		additionalClasses
 	)
 }

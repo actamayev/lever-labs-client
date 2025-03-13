@@ -24,7 +24,7 @@ export default function AllAgesWelcome() {
 						<ShowIcon icon={Baby}/>
 						<div className="ml-3 sm:ml-4">
 							<h3 className={landingBulletTextTitle()}>Beginner friendly</h3>
-							<p className={landingBulletTextParagraph("mt-1")}>
+							<p className={landingBulletTextParagraph()}>
 								Drag colorful blocks into place to build your programs - no typing required!
 							</p>
 						</div>
@@ -34,7 +34,7 @@ export default function AllAgesWelcome() {
 						<ShowIcon icon={Cog}/>
 						<div className="ml-3 sm:ml-4">
 							<h3 className={landingBulletTextTitle()}>Ready for more</h3>
-							<p className={landingBulletTextParagraph("mt-1")}>
+							<p className={landingBulletTextParagraph()}>
 								Switch to our simplified text code that makes controlling Pip's actuators
 								and reading sensors super easy.
 							</p>
@@ -45,7 +45,7 @@ export default function AllAgesWelcome() {
 						<ShowIcon icon={CustomSandbox}/>
 						<div className="ml-3 sm:ml-4">
 							<h3 className={landingBulletTextTitle()}>Explore freely</h3>
-							<p className={landingBulletTextParagraph("mt-1")}>
+							<p className={landingBulletTextParagraph()}>
 								Once you've mastered the Lab, head to the Sandbox where you can create anything you imagine -
 								the only limit is your imagination.
 							</p>

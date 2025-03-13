@@ -36,28 +36,28 @@ export default function BridgingTwoWorlds() {
 
 					{/* Checkmark points */}
 					<div className="space-y-2 sm:space-y-4">
-						<div className="flex items-start">
+						<div className="flex items-center">
 							<ShowCheckIcon icon={CustomCheck} />
 							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Engineering mindset and critical thinking
 							</p>
 						</div>
 
-						<div className="flex items-start">
+						<div className="flex items-center">
 							<ShowCheckIcon icon={CustomCheck} />
 							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Creative problem-solving through code
 							</p>
 						</div>
 
-						<div className="flex items-start">
+						<div className="flex items-center">
 							<ShowCheckIcon icon={CustomCheck} />
 							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Data-driven decision making
 							</p>
 						</div>
 
-						<div className="flex items-start">
+						<div className="flex items-center">
 							<ShowCheckIcon icon={CustomCheck} />
 							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								STEM literacy for the digital age

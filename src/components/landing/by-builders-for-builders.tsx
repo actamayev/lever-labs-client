@@ -8,7 +8,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 
-function WhoWeAre() {
+function ByBuildersForBuilders() {
 	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return (
@@ -68,4 +68,4 @@ function WhoWeAre() {
 	)
 }
 
-export default observer(WhoWeAre)
+export default observer(ByBuildersForBuilders)
