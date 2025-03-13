@@ -1,3 +1,4 @@
+import { landingParagraph } from "../../utils/text-styles"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import LandingSectionSplit from "./landing-section-split"
 // import { LandingCTAButton } from "../buttons/tactile-buttons"
@@ -8,9 +9,9 @@ export default function SmallRobotBigPossibilities() {
 			imagePosition="right"
 			leftContent={
 				<>
-					<LandingSectionHeaderText text="small robot."/>
-					<LandingSectionHeaderText text="big possibilities."/>
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText my-4 sm:my-8">
+					<LandingSectionHeaderText text="small robot." extraClasses="text-4xl"/>
+					<LandingSectionHeaderText text="big possibilities." extraClasses="text-4xl"/>
+					<p className={landingParagraph("my-3 sm:my-6 md:my-8")}>
 						With Pip by your side,&nbsp;
 						<span className="font-semibold">learning feels like play:</span> write code to solve fun challenges,
 						and watch your ideas
@@ -29,7 +30,7 @@ export default function SmallRobotBigPossibilities() {
 					<img
 						src="pip_right.png"
 						alt="Pip"
-						className="max-w-full h-auto rounded-lg w-4/5 sm:w-auto"
+						className="max-w-full h-auto rounded-lg w-full sm:w-4/5 md:w-auto mx-auto"
 					/>
 				</div>
 			}

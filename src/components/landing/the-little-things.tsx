@@ -1,6 +1,7 @@
 import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesCombined, CircuitBoard } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { bentoIconSize } from "../../utils/constants"
+import { landingBulletTextParagraph } from "../../utils/text-styles"
 
 interface Feature {
 	icon: LucideIcon
@@ -14,7 +15,7 @@ const features: Feature[] = [
 		title: "Never Stop Building",
 		description: (
 			<>
-				2 hours of continuous learning on a single charge, with USB-Cfast charging
+				2 hours of continuous learning on a single charge, with USB-C fast charging
 				that gets you back to building in just 30 minutes.
 			</>
 		)
@@ -101,7 +102,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 						{title}
 					</h3>
 				</div>
-				<p className="max-w-lg text-xs sm:text-sm md:text-base text-lightLandingPageText">
+				<p className={landingBulletTextParagraph()}>
 					{description}
 				</p>
 			</div>
@@ -113,7 +114,7 @@ export default function TheLittleThings() {
 	return (
 		<div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
 			{/* Title */}
-			<p className="text-center text-2xl sm:text-3xl md:text-5xl lg:text-6xl
+			<p className="text-center text-3xl sm:text-3xl md:text-5xl lg:text-6xl
 			font-medium text-white dark:text-unselectedAnswerText px-4 md:px-0">
                 It's the little things that count
 			</p>

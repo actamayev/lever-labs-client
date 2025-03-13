@@ -1,6 +1,7 @@
 import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
 import RulerExpansionAnimation from "../../icon-animations/ruler-expansion-animation"
+import { landingSensorCardHeaderText, landingSensorCardText } from "../../../utils/text-styles"
 
 export default function DistanceSensorsCard() {
 	return (
@@ -18,10 +19,10 @@ export default function DistanceSensorsCard() {
 						<RulerExpansionAnimation iconSize={bentoIconSize} />
 					</div>
 					<div className="flex flex-col items-center md:items-start text-center md:text-left">
-						<h3 className="text-lg md:text-xl font-semibold text-neutral-700 dark:text-neutral-300">
+						<h3 className={landingSensorCardHeaderText()}>
                             3× Distance Sensors
 						</h3>
-						<p className="text-sm md:text-base text-neutral-400">
+						<p className={landingSensorCardText()}>
                             Measure distances with millimeter accuracy for smart navigation
 						</p>
 					</div>

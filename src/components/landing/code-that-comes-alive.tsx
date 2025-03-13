@@ -1,5 +1,6 @@
 import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import { landingParagraph } from "../../utils/text-styles"
 
 export default function CodeThatComesAlive() {
 	return (
@@ -8,7 +9,7 @@ export default function CodeThatComesAlive() {
 				<>
 					<LandingSectionHeaderText text="code that"/>
 					<LandingSectionHeaderText text="comes alive"/>
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText my-8">
+					<p className={landingParagraph("my-8")}>
 						With Pip by your side,&nbsp;
 						<span className="font-semibold">learning feels like play:</span> write code to solve fun challenges,
 						and watch your ideas
@@ -19,13 +20,13 @@ export default function CodeThatComesAlive() {
 			}
 			rightContent={
 				<div className="flex flex-col w-full">
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText mb-6">
+					<p className={landingParagraph("mb-6")}>
 						Type a line of code, and Pip responds right away! Program Pip to zoom through mazes,
 						follow lines, or dance to your favorite song. Each challenge puts your skills to the
 						test with immediate results you can actually see.
 					</p>
 
-					<p className="text-xl md:text-base leading-relaxed text-lightLandingPageText">
+					<p className={landingParagraph()}>
 						Stuck on a tricky problem? Our friendly AI assistant looks at your code, spots the issues,
 						and gives you hints – just like having a helpful friend by your side.
 					</p>
