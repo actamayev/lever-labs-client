@@ -58,29 +58,29 @@ export default function SimpleSetup() {
 						<div className="flex flex-row items-center">
 							<HoverIconEnlarge
 								icon={Power}
-								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
-								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+								backgroundSize="size-16 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-8 sm:size-8 lg:size-8 xl:size-10"
 							/>
 						</div>
 
-						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
-							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4 mb-4 sm:mb-0">
+							<RightArrow iconSize="size-10 sm:size-6 lg:size-8 xl:size-10"/>
 						</div>
 
 						<div className="flex flex-row items-center">
 							<HoverIconEnlarge
 								icon={Wifi}
-								bgColor="bg-purple-100"
-								iconColor="text-purple-600"
-								darkBgColor="dark:bg-purple-900/50"
-								darkIconColor="dark:text-purple-400"
-								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
-								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+								bgColor="bg-orange-100"
+								iconColor="text-orange-600"
+								darkBgColor="dark:bg-orange-900/50"
+								darkIconColor="dark:text-orange-400"
+								backgroundSize="size-16 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-8 sm:size-8 lg:size-8 xl:size-10"
 							/>
 						</div>
 
-						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4">
-							<RightArrow iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"/>
+						<div className="mx-1 sm:mx-2 lg:mx-3 xl:mx-4 mb-4 sm:mb-0">
+							<RightArrow iconSize="size-10 sm:size-6 lg:size-8 xl:size-10"/>
 						</div>
 
 						<div className="flex flex-row items-center">
@@ -90,8 +90,8 @@ export default function SimpleSetup() {
 								iconColor="text-green-600"
 								darkBgColor="dark:bg-green-900/50"
 								darkIconColor="dark:text-green-400"
-								backgroundSize="size-12 sm:size-16 lg:size-20 xl:size-24"
-								iconSize="size-5 sm:size-6 lg:size-8 xl:size-10"
+								backgroundSize="size-16 sm:size-16 lg:size-20 xl:size-24"
+								iconSize="size-8 sm:size-8 lg:size-8 xl:size-10"
 							/>
 						</div>
 					</div>

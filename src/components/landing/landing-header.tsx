@@ -6,7 +6,7 @@ export default function LandingHeader () {
 				<img
 					src="pip_top_right.png"
 					alt="Pip Robot"
-					className="max-w-full h-auto w-full sm:w-auto" /* Made image larger on mobile */
+					className="max-w-full h-auto rounded-lg w-full sm:w-4/5 md:w-auto mx-auto"
 				/>
 			</div>
 			{/* Left side with text and buttons */}

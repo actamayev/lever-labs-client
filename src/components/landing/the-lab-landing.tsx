@@ -15,7 +15,7 @@ export default function TheLab() {
 					<img
 						src="pip_top_right.png"
 						alt="Pip"
-						className="max-w-full h-auto w-4/5 sm:w-auto"
+						className="max-w-full h-auto rounded-lg w-full sm:w-4/5 md:w-auto mx-auto"
 					/>
 				</div>
 			}
