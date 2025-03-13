@@ -1,3 +1,5 @@
+import { allPages } from "./constants"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function isErrorResponse(data: any): data is ErrorResponse {
 	return data && typeof data.error === "string"
@@ -25,4 +27,8 @@ export function isValidSiteTheme(value: any): value is SiteThemes {
 
 export function isValidSidebarState(value: any): value is SidebarStates {
 	return ["expanded", "collapsed"].includes(value)
+}
+
+export function isValidRoute(route: string): route is PageNames {
+	return allPages.includes(route as PageNames)
 }
