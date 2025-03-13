@@ -2,11 +2,10 @@ import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
 import RightArrow from "../lab/welcome-page/right-arrow"
 import { HoverIconEnlarge } from "../hover-icon-enlarge"
-import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"
 
 export default function SimpleSetup() {
-	// Use a custom layout instead of LandingSectionSplit
 	return (
 		<div className="w-full">
 			{/* Switch to horizontal layout at xl (1280px) instead of lg (1024px) to prevent overlap */}
@@ -20,9 +19,9 @@ export default function SimpleSetup() {
 						<div className="flex items-start">
 							<ShowIcon icon={Power} />
 							<div className="ml-3 sm:ml-4">
-								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Just power on and go</h3>
-								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
-                  Pip works right out the box - no assembly required!
+								<h3 className={landingBulletTextTitle()}>Just power on and go</h3>
+								<p className={landingBulletTextParagraph()}>
+									Pip works right out the box - no assembly required!
 								</p>
 							</div>
 						</div>
@@ -30,9 +29,9 @@ export default function SimpleSetup() {
 						<div className="flex items-start">
 							<ShowIcon icon={Wifi} />
 							<div className="ml-3 sm:ml-4">
-								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Quick connection</h3>
-								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
-                  Connect to Wi-Fi and Pip becomes your Lab partner, running demos and your coding solutions in real-time!
+								<h3 className={landingBulletTextTitle()}>Quick connection</h3>
+								<p className={landingBulletTextParagraph()}>
+									Connect to Wi-Fi and Pip becomes your Lab partner, running demos and your coding solutions in real-time!
 								</p>
 							</div>
 						</div>
@@ -40,15 +39,15 @@ export default function SimpleSetup() {
 						<div className="flex items-start">
 							<ShowIcon icon={ThumbsUp} />
 							<div className="ml-3 sm:ml-4">
-								<h3 className="text-lg sm:text-xl font-semibold text-pipThemeText">Easy commands</h3>
-								<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText mt-1">
-                  Control Pip with simple instructions that make sense
+								<h3 className={landingBulletTextTitle()}>Easy commands</h3>
+								<p className={landingBulletTextParagraph()}>
+									Control Pip with simple instructions that make sense
 								</p>
 							</div>
 						</div>
 
-						<p className="text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
-              Everything is super simple, so you can focus on the fun parts.
+						<p className={landingParagraph()}>
+							Everything is super simple, so you can focus on the fun parts.
 						</p>
 					</div>
 				</div>

@@ -1,6 +1,7 @@
 import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesCombined, CircuitBoard } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { bentoIconSize } from "../../utils/constants"
+import { landingBulletTextParagraph } from "../../utils/text-styles"
 
 interface Feature {
 	icon: LucideIcon
@@ -14,7 +15,7 @@ const features: Feature[] = [
 		title: "Never Stop Building",
 		description: (
 			<>
-				2 hours of continuous learning on a single charge, with USB-Cfast charging
+				2 hours of continuous learning on a single charge, with USB-C fast charging
 				that gets you back to building in just 30 minutes.
 			</>
 		)
@@ -101,7 +102,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 						{title}
 					</h3>
 				</div>
-				<p className="max-w-lg text-xs sm:text-sm md:text-base text-lightLandingPageText">
+				<p className={landingBulletTextParagraph()}>
 					{description}
 				</p>
 			</div>

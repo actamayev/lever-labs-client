@@ -3,6 +3,7 @@ import { observer } from "mobx-react"
 // import { LandingCTAButton } from "../buttons/tactile-buttons"
 import { cn } from "../../lib/shadcn/utils"
 import LandingSectionSplit from "./landing-section-split"
+import { landingParagraph } from "../../utils/text-styles"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
@@ -22,17 +23,17 @@ function WhoWeAre() {
 				<div className="flex flex-col w-full">
 					<LandingSectionHeaderText text="by builders," />
 					<LandingSectionHeaderText text="for builders" />
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-4 sm:mt-8">
+					<p className={landingParagraph("mt-4 sm:mt-8")}>
 						As engineers who grew up tinkering, we've experienced firsthand how traditional robotics
 						education can be frustrating and limiting.
 					</p>
 
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-3 sm:mt-4">
+					<p className={landingParagraph("mt-4 sm:mt-5")}>
 						Pip is the product we wish we had—
 						<span className="font-semibold">no assembly required, no ceiling on what you can learn!</span>
 					</p>
 
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-3 sm:mt-4">
+					<p className={landingParagraph("mt-4 sm:mt-5")}>
 						Behind Pip is our small and passionate team, committed to revolutionizing how
 						robotics is taught and learned.
 					</p>

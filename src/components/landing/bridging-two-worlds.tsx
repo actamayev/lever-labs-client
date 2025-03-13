@@ -1,6 +1,7 @@
 import { LucideIcon } from "lucide-react"
 import { CustomCheck } from "../icons/custom-check"
 import LandingSectionSplit from "./landing-section-split"
+import { landingBulletTextParagraph, landingParagraph } from "../../utils/text-styles"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -21,7 +22,7 @@ export default function BridgingTwoWorlds() {
 			leftContent={
 				<>
 					<LandingSectionHeaderText text="bridging two worlds" />
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mt-4 sm:mt-8">
+					<p className={landingParagraph("mt-4 sm:mt-8")}>
 						Robotics is all about bringing the physical and digital worlds together, and we help you explore both!
 						With Pip and the Lab, your code jumps off the screen and into real life.
 					</p>
@@ -29,7 +30,7 @@ export default function BridgingTwoWorlds() {
 			}
 			rightContent={
 				<div>
-					<p className="text-base sm:text-lg md:text-base leading-relaxed text-lightLandingPageText mb-3 sm:mb-6">
+					<p className={landingParagraph("mb-3 sm:mb-6")}>
 						As robots become a bigger part of our everyday world, Pip gives you hands-on experience with:
 					</p>
 
@@ -37,28 +38,28 @@ export default function BridgingTwoWorlds() {
 					<div className="space-y-2 sm:space-y-4">
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
+							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Engineering mindset and critical thinking
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
+							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Creative problem-solving through code
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
+							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								Data-driven decision making
 							</p>
 						</div>
 
 						<div className="flex items-start">
 							<ShowCheckIcon icon={CustomCheck} />
-							<p className="ml-2 sm:ml-3 text-sm sm:text-base md:text-base leading-relaxed text-lightLandingPageText">
+							<p className={landingBulletTextParagraph("ml-2 sm:ml-3")}>
 								STEM literacy for the digital age
 							</p>
 						</div>
