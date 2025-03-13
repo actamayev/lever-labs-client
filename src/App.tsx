@@ -1,7 +1,6 @@
 import { observer } from "mobx-react"
 import { Suspense, lazy } from "react"
 import { Routes, Route } from "react-router"
-// import Garage from "./pages/garage"
 
 import labRoutes from "./routing/lab-routes-structure"
 
@@ -26,8 +25,9 @@ const Lab = lazy(() => import("./pages/lab"))
 const Settings = lazy(() => import("./pages/settings"))
 const Missing = lazy(() => import("./pages/missing"))
 const Sandbox = lazy(() => import("./pages/sandbox"))
-const Mission = lazy(() => import("./pages/mission"))
-const Contact = lazy(() => import("./pages/contact"))
+const Schools = lazy(() => import("./pages/schools"))
+const Mission = lazy(() => import("./pages/support/mission"))
+const Contact = lazy(() => import("./pages/support/contact"))
 // /add-pip is not being lazy loaded. When it is, there's a strange indexOf error
 
 function App() {
@@ -53,8 +53,8 @@ function App() {
 					<Route path="/lab" element={<Lab />}>
 						{generateLabRoutes(labRoutes)}
 					</Route>
-					{/* <Route path="/garage" element={<Garage />} /> */}
 					<Route path="/sandbox" element={<Sandbox />} />
+					<Route path="/schools" element={<Schools />} />
 					<Route path="/add-pip" element={<AddPip />} />
 					<Route path="/settings" element={<Settings />} />
 					<Route path="/mission" element={<Mission />} />

@@ -12,6 +12,7 @@ function NullUserNavLink() {
 		location.pathname === "/" ||
 		location.pathname === "/contact" ||
 		location.pathname === "/mission" ||
+		location.pathname === "/schools" ||
 		!isValidRoute(location.pathname)
 	) {
 		return (
