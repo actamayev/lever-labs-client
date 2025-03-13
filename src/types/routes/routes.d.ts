@@ -10,6 +10,8 @@ declare global {
 		| "/sandbox"
 		| "/settings"
 		| "/contact"
+		| "/about"
+		| "/mission"
 
 	type PageNames = StaticPageNames | LabPages
 }

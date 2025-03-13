@@ -1,16 +1,14 @@
-import XLink from "../components/social-links/x-link"
 import PageHelmet from "../components/helmet/page-helmet"
-import LinkedinLink from "../components/social-links/linkedin-link"
 import ContactItemInCard from "../components/contact/contact-item-in-card"
+import SupportHeader from "../components/support/support-header"
+import SupportSectionContainer from "../components/support/support-section-container"
 
 export default function Contact() {
 	return (
 		<div>
 			<PageHelmet pageTitle="/contact" />
-			<div className="text-gray-950 dark:text-gray-200 py-12 px-48">
-				<div className="text-3xl text-gray-950 dark:text-gray-200 mb-2">
-					Contact Us
-				</div>
+			<SupportSectionContainer>
+				<SupportHeader />
 				<div className="grid grid-cols-2 gap-4">
 					<div className="mt-10">
 						We love hearing your feedback and helping with whatever we can.
@@ -23,15 +21,10 @@ export default function Contact() {
 							px-0.5 mx-auto bg-standardBackground w-80 mt-10"
 						>
 							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
-							{/* <ContactItemInCard name="Ariel" email="ariel@bluedotrobots.com" /> */}
-						</div>
-						<div className="flex justify-center mt-4 space-x-4">
-							<XLink />
-							<LinkedinLink />
 						</div>
 					</div>
 				</div>
-			</div>
+			</SupportSectionContainer>
 		</div>
 	)
 }

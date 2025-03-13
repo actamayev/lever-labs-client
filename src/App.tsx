@@ -24,9 +24,11 @@ const RegisterPage = lazy(() => import("./pages/auth/register-page"))
 const RegisterUsername = lazy(() => import("./pages/auth/register-username"))
 const Lab = lazy(() => import("./pages/lab"))
 const Settings = lazy(() => import("./pages/settings"))
-const Contact = lazy(() => import("./pages/contact"))
 const Missing = lazy(() => import("./pages/missing"))
 const Sandbox = lazy(() => import("./pages/sandbox"))
+const About = lazy(() => import("./pages/about"))
+const Mission = lazy(() => import("./pages/mission"))
+const Contact = lazy(() => import("./pages/contact"))
 // /add-pip is not being lazy loaded. When it is, there's a strange indexOf error
 
 function App() {
@@ -56,6 +58,8 @@ function App() {
 					<Route path="/sandbox" element={<Sandbox />} />
 					<Route path="/add-pip" element={<AddPip />} />
 					<Route path="/settings" element={<Settings />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/mission" element={<Mission />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="*" element={<Missing />} />
 				</Routes>
