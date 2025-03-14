@@ -16,7 +16,6 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Avatar } from "@/components/shadcn/ui/avatar"
 import LogoutButton from "./logout-button"
-import { cn } from "../../../../../lib/shadcn/utils"
 // import AddAnotherPipButton from "./add-another-pip-button"
 import useUsername from "../../../../../hooks/memos/username"
 // import NavigateToSettingsPage from "./navigate-to-settings-page"
@@ -37,38 +36,28 @@ function NavUser() {
 
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem className="flex justify-start">
+			<SidebarMenuItem className="flex justify-center">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
-							className={cn(
-								// Base styles (matching CustomSidebarButton)
-								"transition-none !flex items-center justify-start !p-0",
-								"border-2 border-transparent",
-								"hover:!bg-sidebarButtonHover",
-								// Size and dimensions specific to this button
-								// "!h-[55px] !w-[55px] !min-w-[55px] relative",
-								"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
-								// Open state
-								// "data-[state=open]:bg-sidebarButtonHover data-[state=open]:text-sidebar-accent-foreground"
-							)}
-							// tooltip={{
-							// 	children: "Profile",
-							// 	hidden: false
-							// }}
+							className="!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center
+                            group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]
+                            data-[state=open]:bg-sidebarButtonHover data-[state=open]:text-sidebar-accent-foreground !p-0
+							hover:bg-sidebarButtonHover"
+							tooltip={{
+								children: "Profile",
+								hidden: false
+							}}
 						>
-							<div className="ml-2 flex items-center justify-center space-x-4">
-								<div>
-									<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
-										<ShowUserProfileImageOrDefaultImage
-											extraClasses="min-w-full min-h-full rounded-lg object-cover"
-											profileImageUrl={profilePictureUrl}
-										/>
-									</Avatar>
-								</div>
-								<div className="text-base text-lightLandingPageText">
-									PROFILE
-								</div>
+							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
+								<ShowUserProfileImageOrDefaultImage
+									extraClasses="min-w-full min-h-full rounded-lg object-cover"
+									profileImageUrl={profilePictureUrl}
+								/>
+							</Avatar>
+							<div className="absolute left-full ml-2 hidden grid-cols-1 text-left text-sm leading-tight lg:grid">
+								<span className="truncate font-semibold">{username}</span>
+								<span className="truncate text-xs">{personalInfoClass.email}</span>
 							</div>
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
