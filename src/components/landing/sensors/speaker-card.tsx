@@ -36,7 +36,7 @@ export default function SpeakerCard() {
 	const SpeakerIcon = () => {
 		return (
 			<div
-				className="relative"
+				className="relative text-questionText"
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 			>

@@ -23,7 +23,7 @@ function Settings() {
 	return (
 		<>
 			<PageHelmet pageTitle="/settings" />
-			<div className="text-black dark:text-white text-3xl p-4">
+			<div className="text-questionText text-3xl p-4">
 				Settings
 			</div>
 		</>

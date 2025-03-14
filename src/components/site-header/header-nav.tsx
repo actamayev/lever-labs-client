@@ -19,7 +19,7 @@ export default function HeaderNav() {
 			id="header"
 			className={`fixed top-0 left-0 w-full z-20 transition-all duration-300 border-b backdrop-blur-sm ${
 				isScrolled
-					? "bg-standardBackground/70 border-gray-200 dark:border-gray-800"
+					? "bg-standardBackground/70 border-disabledLilypadBackground"
 					: "bg-standardBackground/50 border-transparent"
 			}`}
 		>
