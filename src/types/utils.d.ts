@@ -20,7 +20,6 @@ declare global {
 		title: "Lab" | "Sandbox"
 		url: PageNames
 		icon: LucideIcon
-		iconColorClass: string
 	}
 
 	// Define the lesson routes structure
