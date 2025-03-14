@@ -1,49 +1,37 @@
+import { Bot } from "lucide-react"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Bot, PlusCircle } from "lucide-react"
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
+import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
+import { useLocation } from "react-router"
 import PipStatusTooltip from "./pip-status-tooltip"
-import { cn } from "../../../../../lib/shadcn/utils"
-import PipButtonTooltip from "../../../../pip-button-tooltip"
+import CustomSidebarButton from "../custom-sidebar-button"
 import { usePipContext } from "../../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar-button"
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
 
 function AddPipSidebarButton() {
+	const location = useLocation()
 	const pipClass = usePipContext()
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
 
-	const isActive = location.pathname === "/add-pip"
+	const sidebarPipText = useCallback(() => {
+		if (!pipClass.selectedPip) return "ADD PIP"
+		if (pipClass.selectedPip.pipConnectionStatus === "connected") return "CONNECTED"
+		return "CONNECT"
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.selectedPip, pipClass.selectedPip?.pipConnectionStatus])
 
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem className="flex justify-center">
-				<SidebarMenuButton
-					tooltip={{
-						children: <PipButtonTooltip />,
-						hidden: false
-					}}
+			<SidebarMenuItem className="flex justify-start">
+				<CustomSidebarButton
+					icon={<Bot />}
+					text={sidebarPipText()}
+					isActive={location.pathname === "/add-pip"}
 					onClick={clickPipSidebarButton}
-					className={cn(
-						"!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center",
-						"group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]",
-						"data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground !p-0",
-						// Add a transparent border by default to prevent layout shift when active
-						"border-2 border-transparent",
-						isActive ? "!bg-selectedSidebarButtonBackground" : "hover:!bg-sidebarButtonHover",
-					)}
-					isActive={isActive}
-				>
-					<Bot className="!h-[35px] !w-[35px] !min-w-[35px] text-blue-600 dark:text-blue-300" />
-					{pipClass.selectedPip ? (
-						<PipStatusTooltip />
-					) : (
-						<PlusCircle
-							className="absolute !h-[16px] !w-[16px] bg-background rounded-full"
-							style={{ right: "2px", top: "2px" }}
-						/>
-					)}
-				</SidebarMenuButton>
+					iconClassName="text-blue-600 dark:text-blue-300"
+				/>
 			</SidebarMenuItem>
 		</SidebarMenu>
 	)

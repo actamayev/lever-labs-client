@@ -1,5 +1,5 @@
+import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
-import { Bot, PlusCircle } from "lucide-react"
 import {
 	Tooltip,
 	TooltipContent,
@@ -30,13 +30,8 @@ function GettingStartedAddPip() {
                         duration-none border-disabledLilypadBackground border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
 					>
 						<Bot className="!h-12 !w-12 !min-w-12 text-blue-600 dark:text-blue-300" />
-						{pipClass.selectedPip ? (
+						{pipClass.selectedPip && (
 							<PipStatusTooltip />
-						) : (
-							<PlusCircle
-								className="absolute !h-7 !w-7 text-questionText rounded-full"
-								style={{ right: "2px", top: "2px" }}
-							/>
 						)}
 					</Button>
 				</TooltipTrigger>
