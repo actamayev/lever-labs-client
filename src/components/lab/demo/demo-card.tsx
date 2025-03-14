@@ -14,7 +14,7 @@ export default function DemoCard(props: Props) {
 	const { lessonDemoTitle, demoDeliverables, demos } = props
 
 	return (
-		<Card className="w-2/3 flex flex-col rounded-lg bg-inherit border-2 border-gray-200 dark:border-gray-700">
+		<Card className="w-2/3 flex flex-col rounded-lg bg-inherit border-2 border-disabledLilypadBackground">
 			<CardHeader>
 				<CardTitle>
 					<h1 className="text-4xl font-bold">{lessonDemoTitle}</h1>

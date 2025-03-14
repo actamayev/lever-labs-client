@@ -9,7 +9,7 @@ export default function PrimarySidebar() {
 		<Sidebar
 			collapsible="none"
 			className="!w-[calc(var(--sidebar-width-icon))] border-r
-			bg-standardBackground border-gray-200 dark:border-gray-700"
+			bg-standardBackground border-disabledLilypadBackground"
 		>
 			<SidebarLogo />
 			<MappedNavData />

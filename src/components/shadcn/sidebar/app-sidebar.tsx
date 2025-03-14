@@ -12,7 +12,7 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
 	return (
 		<Sidebar
 			collapsible="icon"
-			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row"
+			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row border-disabledLilypadBackground"
 			{...props}
 		>
 			<PrimarySidebar />
