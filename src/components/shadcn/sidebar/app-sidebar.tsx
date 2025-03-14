@@ -4,7 +4,7 @@ import SandboxSidebar from "./sandbox-sidebar"
 import PrimarySidebar from "./primary/primary-sidebar"
 import { showPrimarySidebarPages } from "../../../utils/constants"
 
-export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export default function AppSidebar() {
 	const location = useLocation()
 	const shouldShowSidebar = showPrimarySidebarPages.includes(location.pathname as PageNames)
 
@@ -14,7 +14,6 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
 		<Sidebar
 			collapsible="icon"
 			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row border-disabledLilypadBackground"
-			{...props}
 		>
 			<PrimarySidebar />
 			{location.pathname.startsWith("/sandbox") && <SandboxSidebar />}
