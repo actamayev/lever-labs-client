@@ -34,7 +34,7 @@ function GettingStartedAddPip() {
 							<PipStatusTooltip />
 						) : (
 							<PlusCircle
-								className="absolute !h-7 !w-7 text-black dark:text-white rounded-full"
+								className="absolute !h-7 !w-7 text-questionText rounded-full"
 								style={{ right: "2px", top: "2px" }}
 							/>
 						)}

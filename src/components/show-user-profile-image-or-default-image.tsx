@@ -23,7 +23,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 		return (
 			<CustomUserCircle
 				className={cn(
-					"text-black dark:text-white transition-all duration-300",
+					"text-questionText transition-all duration-300",
 					extraClasses
 				)}
 				onClick={(e) => handleClick(e as unknown as React.MouseEvent<HTMLElement, MouseEvent>)}

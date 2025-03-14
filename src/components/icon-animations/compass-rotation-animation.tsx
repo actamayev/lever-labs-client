@@ -65,7 +65,7 @@ export default function CompassRotationAnimation({ iconSize } : { iconSize: numb
 			>
 				<CustomCompass
 					className={cn(
-						"origin-center text-black dark:text-white transform",
+						"origin-center text-questionText transform",
 						currentAnimation
 					)}
 					size={iconSize}
