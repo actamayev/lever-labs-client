@@ -57,7 +57,7 @@ function NavUser() {
 							// 	hidden: false
 							// }}
 						>
-							<div className="flex items-center justify-center space-x-4">
+							<div className="ml-2 flex items-center justify-center space-x-4">
 								<div>
 									<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
 										<ShowUserProfileImageOrDefaultImage
