@@ -15,9 +15,6 @@ export default function useRedirectKnownUser(): void {
 	const pathName = usePathname()
 
 	useEffect(() => {
-		// Add early return if pathName is null
-		if (pathName === null) return
-
 		const isPrivatePage = PrivatePageNames.some(privatePath =>
 			pathName.startsWith(privatePath)
 		)

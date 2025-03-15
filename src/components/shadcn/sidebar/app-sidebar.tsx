@@ -18,7 +18,7 @@ export default function AppSidebar() {
 			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row border-disabledLilypadBackground"
 		>
 			<PrimarySidebar />
-			{pathName?.startsWith("/sandbox") && <SandboxSidebar />}
+			{pathName.startsWith("/sandbox") && <SandboxSidebar />}
 		</Sidebar>
 	)
 }

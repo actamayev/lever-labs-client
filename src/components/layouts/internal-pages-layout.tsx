@@ -16,7 +16,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				{pathName?.startsWith("/sandbox") && (
+				{pathName.startsWith("/sandbox") && (
 					<header
 						className={cn(
 							"fixed w-full top-0 flex shrink-0 items-center bg-inherit",

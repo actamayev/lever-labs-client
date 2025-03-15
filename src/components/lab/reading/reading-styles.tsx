@@ -1,5 +1,7 @@
 "use client"
 
+import Image from "next/image"
+
 interface ReadingHeaderProps {
 	children: React.ReactNode
 }
@@ -45,9 +47,9 @@ export function ReadingBlockWithImage(props: ReadingBlockProps) {
 				<div className="md:w-1/4 flex flex-col items-center justify-center">
 					{imageSrc ? (
 					// Render image if imageSrc is provided
-						<img
+						<Image
 							src={imageSrc}
-							alt={imageAlt}
+							alt={imageAlt || ""}
 							className="w-full rounded-lg shadow-lg mb-4"
 						/>
 					) : (

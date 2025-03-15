@@ -32,7 +32,7 @@ export default function MappedNavData() {
 	const pathName = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
-		return pathName?.startsWith(itemUrl)
+		return pathName.startsWith(itemUrl)
 	}, [pathName])
 
 	return (

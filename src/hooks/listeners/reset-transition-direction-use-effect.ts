@@ -14,9 +14,9 @@ export default function useResetTransitionDirectionUseEffect(): void {
 	// causing the scroll to reset to top
 	const isCurrentLocationLesson = useCallback(() => {
 		if (
-			pathName?.includes("/reading") ||
-			pathName?.includes("/demo") ||
-			pathName?.includes("/code")
+			pathName.includes("/reading") ||
+			pathName.includes("/demo") ||
+			pathName.includes("/code")
 		) {
 			return true
 		}
