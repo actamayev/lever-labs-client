@@ -14,7 +14,7 @@ import useUsernameSubmit from "../../hooks/auth/google/username-submit"
 import UsernameInput from "../../components/auth/register/username-input"
 import useRedirectUserWithUsername from "../../hooks/redirects/redirect-user-with-username"
 
-function RegisterUsername() {
+function RegisterUsernamePage() {
 	useRedirectUserWithUsername()
 	const [error, setError] = useState("")
 	const usernameSubmit = useUsernameSubmit(setError)
@@ -51,4 +51,4 @@ function RegisterUsername() {
 	)
 }
 
-export default observer(RegisterUsername)
+export default observer(RegisterUsernamePage)

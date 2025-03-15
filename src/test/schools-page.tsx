@@ -11,7 +11,7 @@ import { SupportBorder } from "../components/support/support-header"
 import { CustomWizardHat } from "../components/icons/custom-wizard-hat"
 import ContactItemInCard from "../components/contact/contact-item-in-card"
 
-export default function Schools() {
+export default function SchoolsPage() {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])

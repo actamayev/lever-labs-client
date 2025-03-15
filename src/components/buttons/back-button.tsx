@@ -8,7 +8,7 @@ import { Button } from "@/components/shadcn/ui/button"
 export default function BackButton () {
 	const router = useRouter()
 
-	const handleBack = useCallback(() => router.back, [router])
+	const handleBack = useCallback(() => router.back(), [router])
 
 	return (
 		<Button
