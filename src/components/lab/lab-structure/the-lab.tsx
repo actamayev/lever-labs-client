@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useRef, useState } from "react"
 import LabStartCard from "./start-card/lab-start-card"
 // import LabVerticalDivider from "../lab-structure/lab-vertical-divider"

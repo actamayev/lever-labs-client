@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import { useLabDemoContext } from "../../contexts/lab-demo-context"
 

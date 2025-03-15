@@ -1,3 +1,5 @@
+"use client"
+
 import { CodeXml, LucideIcon, BatteryCharging, Cloud, BrickWall, ChartNoAxesCombined, CircuitBoard } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { bentoIconSize } from "../../utils/constants"

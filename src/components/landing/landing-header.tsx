@@ -1,3 +1,5 @@
+"use client"
+
 export default function LandingHeader () {
 	return (
 		<div className="flex flex-col md:flex-row justify-between w-full gap-4 sm:gap-8">

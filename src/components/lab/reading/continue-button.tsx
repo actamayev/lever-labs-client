@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { StepForward } from "lucide-react"
 import { useCallback, useState } from "react"

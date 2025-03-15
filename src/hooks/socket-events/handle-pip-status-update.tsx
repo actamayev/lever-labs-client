@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"

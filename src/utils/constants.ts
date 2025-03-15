@@ -1,3 +1,5 @@
+"use client"
+
 export const bentoIconSize = 40
 
 export const showPrimarySidebarPages: PageNames[] = [

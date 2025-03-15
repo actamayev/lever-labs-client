@@ -1,3 +1,5 @@
+"use client"
+
 // import { Rainbow } from "lucide-react"
 import LabDemoComponent from "../../../demo/lab-demo-component"
 

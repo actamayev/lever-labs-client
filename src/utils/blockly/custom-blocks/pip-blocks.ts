@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import { pipCategory } from "../toolbox-config"
 import { generateStatementCode } from "./manual-traversal"

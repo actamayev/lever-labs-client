@@ -1,3 +1,5 @@
+"use client"
+
 import { CustomYoutube } from "../icons/custom-youtube"
 
 export default function YouTubeLink() {

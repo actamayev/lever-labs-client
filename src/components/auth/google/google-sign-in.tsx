@@ -1,3 +1,5 @@
+"use client"
+
 import { GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"

@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import { Order } from "../order"
 import {

@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
@@ -16,7 +18,11 @@ export default function useGoogleAuthCallback(
 
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
-			if (isUndefined(successResponse.credential) || isUndefined(successResponse.clientId)) return
+			if (
+				isUndefined(successResponse.credential) ||
+				isUndefined(successResponse.clientId) ||
+				typeof window === "undefined"
+			) return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
 			let siteTheme: SiteThemes = "dark"

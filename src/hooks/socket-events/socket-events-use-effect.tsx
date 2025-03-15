@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import { useSocketContext } from "../../contexts/socket-context"

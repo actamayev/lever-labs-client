@@ -1,3 +1,5 @@
+"use client"
+
 const defaultLedActivities: DefaultActivity[] = [
 	{
 		activityUrl: "/lab/led/reading/intro-to-leds",

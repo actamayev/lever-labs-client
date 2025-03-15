@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import {

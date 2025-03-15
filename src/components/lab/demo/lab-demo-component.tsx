@@ -1,6 +1,8 @@
-import { observer } from "mobx-react"
-import { useNavigate } from "react-router"
+"use client"
+
 import { useCallback } from "react"
+import { observer } from "mobx-react"
+import { useRouter } from "next/navigation"
 import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
@@ -18,13 +20,13 @@ function LabDemoComponent(props: Props) {
 		demoDeliverables,
 		demos,
 	} = props
-	const navigate = useNavigate()
+	const router = useRouter()
 	const pageTransitionClass = usePageTransitionContext()
 
 	const goBack = useCallback(() => {
 		pageTransitionClass.setDirection("up")
-		navigate(-1)
-	}, [navigate, pageTransitionClass])
+		router.back()
+	}, [router, pageTransitionClass])
 
 	return (
 		<DemoTemplate>

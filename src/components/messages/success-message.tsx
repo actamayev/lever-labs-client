@@ -1,3 +1,5 @@
+"use client"
+
 import { CheckCircle2 } from "lucide-react"
 import { Alert, AlertDescription } from "../shadcn/ui/alert"
 import { cn } from "../../lib/shadcn/utils"

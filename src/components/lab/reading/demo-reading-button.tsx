@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { useCallback, useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"

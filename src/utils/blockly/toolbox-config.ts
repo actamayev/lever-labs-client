@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 
 // Define the Logic category (doesn't use CustomCategoryInfo because these types are straight from blockly)

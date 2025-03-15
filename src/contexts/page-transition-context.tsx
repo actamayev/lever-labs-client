@@ -1,3 +1,5 @@
+"use client"
+
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 

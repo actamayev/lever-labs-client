@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import labHelmetData from "./lab-helmet-data"
 import BasicHelmet from "../../components/helmet/basic-helmet"

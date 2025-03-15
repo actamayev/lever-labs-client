@@ -1,3 +1,5 @@
+"use client"
+
 import voltageReadingBlocks from "./voltage-reading-blocks"
 import LabReadingComponent from "../../../../reading/lab-reading-component"
 

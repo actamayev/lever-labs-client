@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 // import { CustomMotor } from "../../icons/custom-motor"
 import { CustomLightbulb } from "../../icons/custom-lightbulb"

@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
 import { CustomInfinity } from "../icons/custom-infinity"

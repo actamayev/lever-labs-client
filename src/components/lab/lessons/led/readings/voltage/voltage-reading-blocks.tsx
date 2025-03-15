@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import DidYouKnow from "../../../../reading/did-you-know"
 import { NumberedList } from "../../../../reading/ordered-list"

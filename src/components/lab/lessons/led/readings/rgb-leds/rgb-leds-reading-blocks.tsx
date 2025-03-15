@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import { Eye } from "lucide-react"
 import DidYouKnow from "../../../../reading/did-you-know"

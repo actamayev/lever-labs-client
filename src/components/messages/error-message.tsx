@@ -1,3 +1,5 @@
+"use client"
+
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "../shadcn/ui/alert"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import EventEmitter from "events"
 import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
@@ -29,7 +31,7 @@ class SocketClass extends EventEmitter {
 			!isNull(this._socket)
 		) return
 
-		this._socket = io(process.env.REACT_APP_BASE_URL as string, {
+		this._socket = io(process.env.NEXT_PUBLIC_BASE_URL as string, {
 			path: "/socketio",
 			auth: { token: this.accessToken },
 			transports: ["websocket"]

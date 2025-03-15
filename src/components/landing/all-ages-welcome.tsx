@@ -1,3 +1,5 @@
+"use client"
+
 import { Baby, Cog } from "lucide-react"
 import ShowIcon from "./show-icon"
 import { CustomSandbox } from "../icons/custom-sandbox"

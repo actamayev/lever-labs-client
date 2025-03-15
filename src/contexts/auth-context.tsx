@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
@@ -16,6 +18,7 @@ class AuthClass {
 	}
 
 	public getAuthDataFromStorage(): string | null {
+		if (typeof window === "undefined") return null
 		const storedAccessToken = localStorage.getItem("Access Token")
 		if (!isNull(storedAccessToken)) this.setAccessToken(storedAccessToken)
 		return this._accessToken
@@ -23,6 +26,7 @@ class AuthClass {
 
 	public setAccessToken = action((accessToken: string | null, saveToStorage = false): void => {
 		this._accessToken = accessToken
+		if (typeof window === "undefined") return
 		if (!isNull(accessToken) && saveToStorage === true) {
 			localStorage.setItem("Access Token", accessToken as string)
 		} else if (isNull(accessToken) && saveToStorage === true) {

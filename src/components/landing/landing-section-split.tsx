@@ -1,3 +1,5 @@
+"use client"
+
 interface Props {
 	leftContent: React.ReactNode
 	rightContent: React.ReactNode

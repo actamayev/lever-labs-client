@@ -1,3 +1,5 @@
+"use client"
+
 import { allPages } from "./constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -29,6 +31,6 @@ export function isValidSidebarState(value: any): value is SidebarStates {
 	return ["expanded", "collapsed"].includes(value)
 }
 
-export function isValidRoute(route: string): route is PageNames {
+export function isValidRoute(route: string | null): route is PageNames {
 	return allPages.includes(route as PageNames)
 }

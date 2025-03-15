@@ -1,3 +1,5 @@
+"use client"
+
 import MotorSpinAnimation from "../../../icon-animations/motor-spin-animation"
 import LEDColorChangeAnimation from "../../../icon-animations/led-color-change-animation"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { CheckCircle, X } from "lucide-react"
 import {

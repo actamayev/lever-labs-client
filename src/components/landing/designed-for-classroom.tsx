@@ -1,3 +1,5 @@
+"use client"
+
 import { School } from "lucide-react"
 import LandingSectionSplit from "./landing-section-split"
 // import { LandingCTAButton } from "../buttons/tactile-buttons"

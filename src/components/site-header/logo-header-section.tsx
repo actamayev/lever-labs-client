@@ -1,4 +1,6 @@
-import { Link } from "react-router"
+"use client"
+
+import Link from "next/link"
 
 export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 	return (
@@ -8,7 +10,7 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 			}`}
 		>
 			<Link
-				to="/"
+				href="/"
 				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-pipThemeText duration-0"
 			>
 				<img

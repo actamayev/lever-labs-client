@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"

@@ -1,3 +1,5 @@
+"use client"
+
 import truncate from "lodash-es/truncate"
 import { Helmet } from "react-helmet-async"
 

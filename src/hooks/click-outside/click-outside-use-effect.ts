@@ -1,4 +1,6 @@
-import { useLocation } from "react-router"
+"use client"
+
+import { usePathname } from "next/navigation"
 import { useCallback, useEffect } from "react"
 import isUndefined from "lodash-es/isUndefined"
 
@@ -6,7 +8,7 @@ export default function useClickOutsideUseEffect(
 	dropdownRef: React.RefObject<HTMLDivElement>,
 	setIsOpen: (newState: boolean) => void
 ): void {
-	const location = useLocation()
+	const pathName = usePathname()
 
 	const handleClickOutside = useCallback((event: MouseEvent) => {
 		const themeToggler = document.getElementById("theme-toggler")
@@ -29,5 +31,5 @@ export default function useClickOutsideUseEffect(
 	useEffect(() => {
 		if (isUndefined(setIsOpen)) return
 		setIsOpen(false)
-	}, [location, setIsOpen])
+	}, [pathName, setIsOpen])
 }

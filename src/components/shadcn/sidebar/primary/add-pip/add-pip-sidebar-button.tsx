@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"

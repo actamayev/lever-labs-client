@@ -1,3 +1,5 @@
+"use client"
+
 import isNil from "lodash-es/isNil"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"

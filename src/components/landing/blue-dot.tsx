@@ -1,3 +1,5 @@
+"use client"
+
 export default function BlueDot() {
 	return (
 		<div className="flex justify-center">

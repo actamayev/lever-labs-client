@@ -1,3 +1,5 @@
+"use client"
+
 import { CustomWheel } from "../../../../icons/custom-wheel"
 import LabDemoComponent from "../../../demo/lab-demo-component"
 import useMotorDemoUseEffect from "../../../../../hooks/lab/demos/motor-demo-use-effect"

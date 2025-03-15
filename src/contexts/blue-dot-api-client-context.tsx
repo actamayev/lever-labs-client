@@ -1,3 +1,5 @@
+"use client"
+
 import { createContext, useContext, useMemo } from "react"
 import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"

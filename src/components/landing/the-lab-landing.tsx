@@ -1,3 +1,5 @@
+"use client"
+
 import { BookOpen, Code2 } from "lucide-react"
 import ShowIcon from "./show-icon"
 import LandingSectionSplit from "./landing-section-split"

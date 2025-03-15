@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "../lib/shadcn/utils"
 import isUndefined from "lodash-es/isUndefined"
 

@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import BasicHelmet from "../../components/helmet/basic-helmet"
 

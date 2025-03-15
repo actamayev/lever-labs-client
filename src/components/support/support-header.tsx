@@ -1,5 +1,8 @@
+"use client"
+
+import Link from "next/link"
 import toUpper from "lodash-es/toUpper"
-import { Link, useLocation } from "react-router"
+import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
 
 export function SupportBorder() {
@@ -10,13 +13,13 @@ export function SupportBorder() {
 	)
 }
 function SupportLink({ page } : { page: "mission" | "contact" }) {
-	const location = useLocation()
-	const active = location.pathname === `/${page}`
+	const pathName = usePathname()
+	const active = pathName === `/${page}`
 
 	return (
 		<li className="relative flex flex-col items-center group">
 			<Link
-				to={`/${page}`}
+				href={`/${page}`}
 				className={cn(
 					"text-disabledLilypadIcon hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
 					active ? "!text-pipThemeText" : ""

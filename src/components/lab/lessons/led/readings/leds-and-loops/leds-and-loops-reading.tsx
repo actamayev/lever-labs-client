@@ -1,3 +1,5 @@
+"use client"
+
 import ledsAndLoopsReadingBlocks from "./leds-and-loops-reading-blocks"
 import LabReadingComponent from "../../../../reading/lab-reading-component"
 

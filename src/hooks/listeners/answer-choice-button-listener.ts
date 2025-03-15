@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
 

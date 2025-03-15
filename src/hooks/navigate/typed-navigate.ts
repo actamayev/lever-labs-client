@@ -1,10 +1,12 @@
+"use client"
+
 import { useCallback } from "react"
-import { useNavigate } from "react-router"
+import { useRouter } from "next/navigation"
 
 export default function useTypedNavigate (): (route: PageNames) => void {
-	const navigate = useNavigate()
+	const router = useRouter()
 
 	return useCallback((route: PageNames): void => {
-		navigate(route)
-	}, [navigate])
+		router.push(route)
+	}, [router])
 }

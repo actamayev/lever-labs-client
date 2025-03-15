@@ -1,3 +1,5 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 
 export default function confirmLoginFields(credentials: LoginFormValues, setError: (error: string) => void): boolean {

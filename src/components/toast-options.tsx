@@ -1,3 +1,5 @@
+"use client"
+
 import { toast } from "react-toastify"
 import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
 

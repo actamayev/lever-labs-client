@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import usePipStatusPoll from "./pip-status-poll"

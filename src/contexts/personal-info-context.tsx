@@ -1,3 +1,5 @@
+"use client"
+
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext, useMemo } from "react"
 import { isValidSidebarState, isValidSiteTheme } from "../utils/type-checks"
@@ -18,6 +20,7 @@ class PersonalInfoClass {
 	}
 
 	private setDefaultsFromLocalStorage(): void {
+		if (typeof window === "undefined") return
 		const locallyStoredDefaultSiteTheme = localStorage.getItem("defaultSiteTheme")
 		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) {
 			return this.setDefaultSiteTheme("light")
@@ -48,6 +51,7 @@ class PersonalInfoClass {
 
 	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, addToLocalStorage: boolean = true): void => {
 		this.defaultSiteTheme = newSiteTheme
+		if (typeof window === "undefined") return
 		if (addToLocalStorage === true) localStorage.setItem("defaultSiteTheme", newSiteTheme)
 		if (newSiteTheme === "dark") document.documentElement.classList.add("dark")
 		else document.documentElement.classList.remove("dark")
@@ -55,6 +59,7 @@ class PersonalInfoClass {
 
 	public setDefaultSidebarState = action((newSidebarState: SidebarStates): void => {
 		this.defaultSidebarState = newSidebarState
+		if (typeof window === "undefined") return
 		localStorage.setItem("defaultSidebarState", newSidebarState)
 	})
 

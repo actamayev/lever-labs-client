@@ -1,5 +1,7 @@
+"use client"
+
 import { useCallback } from "react"
-import { useLocation } from "react-router"
+import { usePathname } from "next/navigation"
 import {
 	SidebarContent,
 	SidebarGroup,
@@ -27,11 +29,11 @@ const navData: SidebarNavData[] = [
 ]
 export default function MappedNavData() {
 	const navigate = useTypedNavigate()
-	const location = useLocation()
+	const pathName = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
-		return location.pathname.startsWith(itemUrl)
-	}, [location.pathname])
+		return pathName?.startsWith(itemUrl)
+	}, [pathName])
 
 	return (
 		<SidebarContent>

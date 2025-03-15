@@ -1,4 +1,6 @@
-import { useLocation } from "react-router"
+"use client"
+
+import { usePathname } from "next/navigation"
 import {
 	SidebarInset,
 	SidebarProvider,
@@ -8,13 +10,13 @@ import AppSidebar from "@/components/shadcn/sidebar/app-sidebar"
 import { cn } from "../../lib/shadcn/utils"
 
 export default function InternalPagesLayout({ children } : { children: React.ReactNode }) {
-	const location = useLocation()
+	const pathName = usePathname()
 
 	return (
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				{location.pathname.startsWith("/sandbox") && (
+				{pathName?.startsWith("/sandbox") && (
 					<header
 						className={cn(
 							"fixed w-full top-0 flex shrink-0 items-center bg-inherit",

@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import { Cpu } from "lucide-react"
 import DefinitionText from "../../../../reading/definition-text"

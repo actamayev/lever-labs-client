@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useState } from "react"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 

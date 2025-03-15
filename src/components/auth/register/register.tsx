@@ -1,3 +1,5 @@
+"use client"
+
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import EmailInput from "./email-input"

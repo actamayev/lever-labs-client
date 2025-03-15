@@ -1,19 +1,21 @@
+"use client"
+
 import { observer } from "mobx-react"
-import { useLocation } from "react-router"
+import { usePathname } from "next/navigation"
+import { isValidRoute } from "../../utils/type-checks"
 import { useAuthContext } from "../../contexts/auth-context"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
-import { isValidRoute } from "../../utils/type-checks"
 
 function NullUserNavLink() {
-	const location = useLocation()
+	const pathname = usePathname()
 	const authClass = useAuthContext()
 
 	if (
-		location.pathname === "/" ||
-		location.pathname === "/contact" ||
-		location.pathname === "/mission" ||
-		location.pathname === "/schools" ||
-		!isValidRoute(location.pathname)
+		pathname === "/" ||
+		pathname === "/contact" ||
+		pathname === "/mission" ||
+		pathname === "/schools" ||
+		!isValidRoute(pathname)
 	) {
 		return (
 			<div className="space-x-1 sm:space-x-2 flex flex-row">
@@ -21,11 +23,11 @@ function NullUserNavLink() {
 				<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
 			</div>
 		)
-	} else if (location.pathname === "/register") {
+	} else if (pathname === "/register") {
 		return (
 			<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
 		)
-	} else if (location.pathname === "/login") {
+	} else if (pathname === "/login") {
 		return (
 			<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
 		)

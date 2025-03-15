@@ -1,3 +1,5 @@
+"use client"
+
 import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
 import RightArrow from "../lab/welcome-page/right-arrow"

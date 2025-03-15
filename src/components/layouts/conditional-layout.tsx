@@ -1,22 +1,24 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useLocation } from "react-router"
+import { usePathname } from "next/navigation"
 import ClassicLayout from "./classic-layout"
 import useUsername from "../../hooks/memos/username"
 import InternalPagesLayout from "./internal-pages-layout"
 import { PrivatePageNames } from "../../utils/constants"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
-	const location = useLocation()
+	const pathName = usePathname()
 	const username = useUsername()
 
 	const isPrivatePage = PrivatePageNames.some(privatePath =>
-		location.pathname.startsWith(privatePath)
+		pathName?.startsWith(privatePath)
 	)
 
 	if (!isPrivatePage || isNull(username)) {
 		let extraClasses = undefined
-		if (location.pathname === "/") extraClasses = ""
+		if (pathName === "/") extraClasses = ""
 
 		return (
 			<ClassicLayout extraClasses={extraClasses}>

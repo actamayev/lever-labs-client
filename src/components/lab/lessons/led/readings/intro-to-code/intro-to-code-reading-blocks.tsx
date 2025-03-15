@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import { CustomEgg } from "../../../../../icons/custom-egg"
 import { BulletedList, NumberedList } from "../../../../reading/ordered-list"

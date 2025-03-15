@@ -1,3 +1,5 @@
+"use client"
+
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import {

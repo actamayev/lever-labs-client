@@ -1,3 +1,5 @@
+"use client"
+
 import introToCodeReadingBlocks from "./intro-to-code-reading-blocks"
 import LabReadingComponent from "../../../../reading/lab-reading-component"
 

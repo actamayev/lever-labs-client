@@ -1,3 +1,5 @@
+"use client"
+
 import { AxiosError } from "axios"
 import { isErrorResponse, isMessageResponse, isValidationErrorResponse } from "../type-checks"
 

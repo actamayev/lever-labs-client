@@ -1,3 +1,5 @@
+"use client"
+
 import LabReadingComponent from "../../../../reading/lab-reading-component"
 import advantagesOfLEDsReadingBlocks from "./advantages-of-leds-reading-blocks"
 

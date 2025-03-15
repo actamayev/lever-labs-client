@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable no-nested-ternary */
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"

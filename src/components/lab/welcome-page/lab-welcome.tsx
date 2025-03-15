@@ -1,3 +1,5 @@
+"use client"
+
 import { Bot } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackButton from "../../buttons/back-button"
