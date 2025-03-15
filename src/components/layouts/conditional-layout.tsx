@@ -13,7 +13,7 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const username = useUsername()
 
 	const isPrivatePage = PrivatePageNames.some(privatePath =>
-		pathName?.startsWith(privatePath)
+		pathName.startsWith(privatePath)
 	)
 
 	if (!isPrivatePage || isNull(username)) {

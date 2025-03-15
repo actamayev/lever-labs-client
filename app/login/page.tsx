@@ -1,16 +1,13 @@
-import { Suspense } from "react"
+"use client"
 import dynamic from "next/dynamic"
 
-// Dynamically import the LoginPage component
+// Dynamically import the RegisterPage component
 const LoginPage = dynamic(() => import("../../src/test/auth/login-page"), {
 	ssr: false, // Set to false if it uses browser-specific APIs
-	loading: () => <div>Loading...</div>
 })
 
 export default function Login() {
 	return (
-		<Suspense fallback={<div>Loading...</div>}>
-			<LoginPage />
-		</Suspense>
+		<LoginPage />
 	)
 }

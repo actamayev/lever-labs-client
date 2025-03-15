@@ -5,14 +5,23 @@ const path = require('path');
 const ROOT_DIR = './src'; // Change this to your project directory
 const EXTENSIONS = ['.tsx', '.jsx', '.ts']; // File extensions to process
 const EXCLUDED_DIRS = ['node_modules', '.next', 'dist', 'build']; // Directories to skip
+const EXCLUDED_FILES = ['.d.ts']; // File extensions to skip
 
 // Counter for reporting
 let stats = {
   processed: 0,
   modified: 0,
   skipped: 0,
+  skippedDts: 0,
   errors: 0
 };
+
+/**
+ * Checks if a file should be excluded based on extension
+ */
+function shouldExcludeFile(filePath) {
+  return EXCLUDED_FILES.some(ext => filePath.endsWith(ext));
+}
 
 /**
  * Checks if a file already has the "use client" directive
@@ -28,6 +37,13 @@ function hasUseClientDirective(content) {
 async function processFile(filePath) {
   try {
     stats.processed++;
+    
+    // Skip .d.ts files
+    if (shouldExcludeFile(filePath)) {
+      console.log(`⏩ Skipping .d.ts file: ${filePath}`);
+      stats.skippedDts++;
+      return;
+    }
     
     // Read file content
     const content = await fs.promises.readFile(filePath, 'utf8');
@@ -88,6 +104,7 @@ async function walkDir(dirPath) {
 async function main() {
   console.log(`🔍 Adding "use client" directive to React components in ${ROOT_DIR}...`);
   console.log(`📂 Looking for files with extensions: ${EXTENSIONS.join(', ')}`);
+  console.log(`⏩ Skipping files with extensions: ${EXCLUDED_FILES.join(', ')}`);
   
   const startTime = Date.now();
   
@@ -99,6 +116,7 @@ async function main() {
     console.log('\n📊 Summary:');
     console.log(`✅ Modified: ${stats.modified} files`);
     console.log(`✓ Skipped (already had directive): ${stats.skipped} files`);
+    console.log(`⏩ Skipped (.d.ts files): ${stats.skippedDts} files`);
     console.log(`❌ Errors: ${stats.errors}`);
     console.log(`⏱️ Time taken: ${duration} seconds`);
   } catch (error) {

@@ -1,11 +1,6 @@
 import "../src/styles/index.css"
 import Providers from "./providers"
 
-export const metadata = {
-	title: "Your App Name",
-	description: "Your app description",
-}
-
 export default function RootLayout({
 	children,
 }: {
@@ -15,7 +10,6 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<Providers>
-
 					{children}
 				</Providers>
 			</body>
