@@ -1,6 +1,6 @@
 export default function InThisDemo({ demoDeliverables } : { demoDeliverables: string[]}) {
 	return (
-		<div className="space-y-2 p-4 border-2 border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
+		<div className="space-y-2 p-4 border-2 border-disabledLilypadBackground rounded-lg bg-inherit">
 			<h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
 				In this demo, you'll:
 			</h2>

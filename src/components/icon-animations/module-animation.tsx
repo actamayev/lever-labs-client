@@ -21,7 +21,6 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 
 	const currentColor = colorIndex === -1 ? "currentColor" : COLORS[colorIndex]
 
-
 	return (
 		<div
 			className="pointer-events-auto w-fit relative cursor-pointer"
@@ -31,7 +30,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 		>
 			{/* Static infinity icon */}
 			<CustomInfinity
-				className="transition-all duration-300"
+				className="transition-all duration-300 text-questionText"
 				style={{ color: currentColor }}
 				size={iconSize}
 			/>
@@ -44,7 +43,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 					animate={{ opacity: 1 }}
 				>
 					<motion.div
-						className="absolute h-2 w-2 rounded-full"
+						className="absolute h-2 w-2 rounded-full text-questionText"
 						style={{ backgroundColor: currentColor }}
 						animate={{
 							x: [1, 16, 31, 16, 1],
@@ -58,7 +57,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 						}}
 					/>
 					<InfinityIcon
-						className="transition-all duration-300"
+						className="transition-all duration-300 text-questionText"
 						style={{ color: currentColor }}
 						size={iconSize}
 					/>

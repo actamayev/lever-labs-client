@@ -14,6 +14,7 @@
 		--question-text: 60 60 60;
 		--light-landing-page-text: 119 119 119;
 		--pip-theme-text: 0 61 165;
+		--selected-sidebar-text: 28 175 246
 	}
 
 	.dark {
@@ -28,5 +29,6 @@
 		--question-text: 241 247 251;
 		--light-landing-page-text: 220 230 235;
 		--pip-theme-text: 28 176 255;
+		--selected-sidebar-text: 72 191 248
 	}
 }

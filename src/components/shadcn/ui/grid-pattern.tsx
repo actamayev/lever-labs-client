@@ -66,7 +66,7 @@ export default function GridPattern() {
     <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-gray-200 stroke-gray-200 dark:fill-gray-800 dark:stroke-gray-800",
+        "pointer-events-none absolute inset-0 h-full w-full fill-disabledLilypadBackground stroke-disabledLilypadBackground",
       )}
       preserveAspectRatio="none"
     >

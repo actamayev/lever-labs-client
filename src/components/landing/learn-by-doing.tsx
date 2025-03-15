@@ -29,7 +29,7 @@ export default function LearnByDoing() {
 
 					{/* LEDs & Lighting row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200
-					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700">
+					dark:divide-gray-700 border-t border-disabledLilypadBackground">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
 							<p className={landingTableText()}>Study how LEDs function</p>
 						</div>
@@ -42,7 +42,7 @@ export default function LearnByDoing() {
 
 					{/* Motors & Movement row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200
-					dark:divide-gray-700 border-t border-gray-200 dark:border-gray-700">
+					dark:divide-gray-700 border-t border-disabledLilypadBackground">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
 							<p className={landingTableText()}>Read about how motors work</p>
 						</div>
@@ -53,7 +53,7 @@ export default function LearnByDoing() {
 
 					{/* Algorithms & Navigation row */}
 					<div className="grid grid-cols-2 divide-x divide-gray-200 dark:divide-gray-700
-					border-t border-gray-200 dark:border-gray-700">
+					border-t border-disabledLilypadBackground">
 						<div className="p-2 sm:p-4 flex items-center justify-center">
 							<p className={landingTableText()}>Learn about maze-solving algorithms</p>
 						</div>
