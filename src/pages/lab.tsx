@@ -20,7 +20,7 @@ function Lab() {
 	return (
 		<>
 			<PageHelmet pageTitle={location.pathname as LabPages} />
-			<div className="text-black dark:text-white text-3xl">
+			<div className="text-questionText text-3xl">
 				<Outlet />
 			</div>
 		</>

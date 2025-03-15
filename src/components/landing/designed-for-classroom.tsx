@@ -27,7 +27,7 @@ export default function DesignedForClassroom() {
 				</>
 			}
 			rightContent={
-				<div className="flex justify-center items-center">
+				<div className="flex justify-center items-center text-questionText">
 					<School className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40" />
 				</div>
 			}
