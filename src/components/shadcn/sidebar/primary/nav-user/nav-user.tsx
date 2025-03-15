@@ -55,10 +55,6 @@ function NavUser() {
 									profileImageUrl={profilePictureUrl}
 								/>
 							</Avatar>
-							<div className="absolute left-full ml-2 hidden grid-cols-1 text-left text-sm leading-tight lg:grid">
-								<span className="truncate font-semibold">{username}</span>
-								<span className="truncate text-xs">{personalInfoClass.email}</span>
-							</div>
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
