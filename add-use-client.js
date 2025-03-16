@@ -6,6 +6,7 @@ const ROOT_DIR = './src'; // Change this to your project directory
 const EXTENSIONS = ['.tsx', '.jsx', '.ts']; // File extensions to process
 const EXCLUDED_DIRS = ['node_modules', '.next', 'dist', 'build']; // Directories to skip
 const EXCLUDED_FILES = ['.d.ts']; // File extensions to skip
+const EXCLUDED_FILENAMES = ['create-metadata.ts']; // Specific files to skip
 
 // Counter for reporting
 let stats = {
@@ -13,14 +14,26 @@ let stats = {
   modified: 0,
   skipped: 0,
   skippedDts: 0,
+  skippedSpecific: 0,
   errors: 0
 };
 
 /**
- * Checks if a file should be excluded based on extension
+ * Checks if a file should be excluded based on extension or filename
  */
 function shouldExcludeFile(filePath) {
-  return EXCLUDED_FILES.some(ext => filePath.endsWith(ext));
+  // Check for excluded extensions
+  if (EXCLUDED_FILES.some(ext => filePath.endsWith(ext))) {
+    return 'extension';
+  }
+  
+  // Check for specific excluded filenames
+  const filename = path.basename(filePath);
+  if (EXCLUDED_FILENAMES.includes(filename)) {
+    return 'specific';
+  }
+  
+  return false;
 }
 
 /**
@@ -38,10 +51,16 @@ async function processFile(filePath) {
   try {
     stats.processed++;
     
-    // Skip .d.ts files
-    if (shouldExcludeFile(filePath)) {
+    // Check if file should be excluded
+    const exclusionReason = shouldExcludeFile(filePath);
+    
+    if (exclusionReason === 'extension') {
       console.log(`⏩ Skipping .d.ts file: ${filePath}`);
       stats.skippedDts++;
+      return;
+    } else if (exclusionReason === 'specific') {
+      console.log(`⏩ Skipping specified file: ${filePath}`);
+      stats.skippedSpecific++;
       return;
     }
     
@@ -105,6 +124,7 @@ async function main() {
   console.log(`🔍 Adding "use client" directive to React components in ${ROOT_DIR}...`);
   console.log(`📂 Looking for files with extensions: ${EXTENSIONS.join(', ')}`);
   console.log(`⏩ Skipping files with extensions: ${EXCLUDED_FILES.join(', ')}`);
+  console.log(`⏩ Skipping specific files: ${EXCLUDED_FILENAMES.join(', ')}`);
   
   const startTime = Date.now();
   
@@ -117,6 +137,7 @@ async function main() {
     console.log(`✅ Modified: ${stats.modified} files`);
     console.log(`✓ Skipped (already had directive): ${stats.skipped} files`);
     console.log(`⏩ Skipped (.d.ts files): ${stats.skippedDts} files`);
+    console.log(`⏩ Skipped (specified files): ${stats.skippedSpecific} files`);
     console.log(`❌ Errors: ${stats.errors}`);
     console.log(`⏱️ Time taken: ${duration} seconds`);
   } catch (error) {
