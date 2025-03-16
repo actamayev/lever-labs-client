@@ -2,6 +2,7 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import useRetrievePipInfo from "../pip/retrieve-pip-info"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
@@ -20,6 +21,7 @@ export default function useLoginSubmit (
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
 	const retrievedPeronsalInfo = useRetrievePersonalInfo()
+	const retrievePipInfo = useRetrievePipInfo()
 
 	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
 		setError("")
@@ -35,11 +37,13 @@ export default function useLoginSubmit (
 			}
 			setDataAfterLogin(response.data)
 			void retrievedPeronsalInfo()
+			void retrievePipInfo()
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, retrievedPeronsalInfo, setDataAfterLogin, setError, whereToNavigate])
+	}, [authClass, blueDotApiClient.authDataService, navigate,
+		retrievePipInfo, retrievedPeronsalInfo, setDataAfterLogin, setError, whereToNavigate])
 }

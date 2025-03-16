@@ -55,11 +55,11 @@ async function processFile(filePath) {
     const exclusionReason = shouldExcludeFile(filePath);
     
     if (exclusionReason === 'extension') {
-      console.log(`⏩ Skipping .d.ts file: ${filePath}`);
+      console.info(`⏩ Skipping .d.ts file: ${filePath}`);
       stats.skippedDts++;
       return;
     } else if (exclusionReason === 'specific') {
-      console.log(`⏩ Skipping specified file: ${filePath}`);
+      console.info(`⏩ Skipping specified file: ${filePath}`);
       stats.skippedSpecific++;
       return;
     }
@@ -69,7 +69,7 @@ async function processFile(filePath) {
     
     // Skip if already has directive
     if (hasUseClientDirective(content)) {
-      console.log(`✓ Already has directive: ${filePath}`);
+      console.info(`✓ Already has directive: ${filePath}`);
       stats.skipped++;
       return;
     }
@@ -80,7 +80,7 @@ async function processFile(filePath) {
     // Write updated content back to the file
     await fs.promises.writeFile(filePath, updatedContent, 'utf8');
     
-    console.log(`✅ Added "use client" to: ${filePath}`);
+    console.info(`✅ Added "use client" to: ${filePath}`);
     stats.modified++;
   } catch (error) {
     console.error(`❌ Error processing ${filePath}:`, error.message);
@@ -121,10 +121,10 @@ async function walkDir(dirPath) {
  * Main function
  */
 async function main() {
-  console.log(`🔍 Adding "use client" directive to React components in ${ROOT_DIR}...`);
-  console.log(`📂 Looking for files with extensions: ${EXTENSIONS.join(', ')}`);
-  console.log(`⏩ Skipping files with extensions: ${EXCLUDED_FILES.join(', ')}`);
-  console.log(`⏩ Skipping specific files: ${EXCLUDED_FILENAMES.join(', ')}`);
+  console.info(`🔍 Adding "use client" directive to React components in ${ROOT_DIR}...`);
+  console.info(`📂 Looking for files with extensions: ${EXTENSIONS.join(', ')}`);
+  console.info(`⏩ Skipping files with extensions: ${EXCLUDED_FILES.join(', ')}`);
+  console.info(`⏩ Skipping specific files: ${EXCLUDED_FILENAMES.join(', ')}`);
   
   const startTime = Date.now();
   
@@ -133,13 +133,13 @@ async function main() {
     
     // Print summary
     const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-    console.log('\n📊 Summary:');
-    console.log(`✅ Modified: ${stats.modified} files`);
-    console.log(`✓ Skipped (already had directive): ${stats.skipped} files`);
-    console.log(`⏩ Skipped (.d.ts files): ${stats.skippedDts} files`);
-    console.log(`⏩ Skipped (specified files): ${stats.skippedSpecific} files`);
-    console.log(`❌ Errors: ${stats.errors}`);
-    console.log(`⏱️ Time taken: ${duration} seconds`);
+    console.info('\n📊 Summary:');
+    console.info(`✅ Modified: ${stats.modified} files`);
+    console.info(`✓ Skipped (already had directive): ${stats.skipped} files`);
+    console.info(`⏩ Skipped (.d.ts files): ${stats.skippedDts} files`);
+    console.info(`⏩ Skipped (specified files): ${stats.skippedSpecific} files`);
+    console.info(`❌ Errors: ${stats.errors}`);
+    console.info(`⏱️ Time taken: ${duration} seconds`);
   } catch (error) {
     console.error('❌ Fatal error:', error.message);
     process.exit(1);
