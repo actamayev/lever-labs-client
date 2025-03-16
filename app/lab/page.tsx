@@ -1,16 +1,8 @@
 "use client"
-import { Suspense } from "react"
-import dynamic from "next/dynamic"
-
-// Dynamically import the LoginPage component
-const TheLabPage = dynamic(() => import("../../src/components/lab/lab-structure/the-lab"), {
-	ssr: false, // Set to false if it uses browser-specific APIs
-})
+import TheLabPage from "../../src/components/lab/lab-structure/the-lab-page"
 
 export default function TheLab() {
 	return (
-		<Suspense>
-			<TheLabPage />
-		</Suspense>
+		<TheLabPage />
 	)
 }

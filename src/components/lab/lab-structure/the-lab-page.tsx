@@ -13,7 +13,7 @@ interface Section {
 	name: LessonNames
 }
 
-export default function TheLab() {
+export default function TheLabPage() {
 	useRetrieveAllActivitiesUseEffect()
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	// const motorSectionRef = useRef<HTMLDivElement>(null)

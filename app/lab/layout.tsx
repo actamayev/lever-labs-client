@@ -13,15 +13,15 @@ function LabLayout({ children }: { children: React.ReactNode }) { // Replace Out
 	if (authClass.isLoggedIn === false) {
 		return (
 			<>
-				<PageHelmet pageTitle={pathname as LabPages} /> {/* Use pathname instead of location.pathname */}
-				<ShowAuthToNullUser whereToNavigate={pathname as LabPages} /> {/* Use pathname instead of location.pathname */}
+				<PageHelmet pageTitle={pathname as LabPages} />
+				<ShowAuthToNullUser whereToNavigate={pathname as LabPages} />
 			</>
 		)
 	}
 
 	return (
 		<>
-			<PageHelmet pageTitle={pathname as LabPages} /> {/* Use pathname instead of location.pathname */}
+			<PageHelmet pageTitle={pathname as LabPages} />
 			<div className="text-questionText text-3xl">
 				{children}
 			</div>
