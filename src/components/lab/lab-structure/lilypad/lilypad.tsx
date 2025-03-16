@@ -44,7 +44,7 @@ export default function Lilypad({ activity } : { activity: FullActivity }) {
 				</button>
 				<span
 					className={cn(
-						"font-medium text-sm text-gray-700 dark:text-gray-300",
+						"font-medium text-sm text-gray-700 dark:text-gray-300 text-center",
 						isNull(activityStatus) ? "cursor-default" : "cursor-pointer"
 					)}
 				>
