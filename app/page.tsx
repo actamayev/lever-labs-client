@@ -1,4 +1,4 @@
-import Landing from "../src/test/landing"
+import Landing from "../src/page-components/landing"
 import { createMetadata } from "../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

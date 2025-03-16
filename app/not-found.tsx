@@ -1,4 +1,4 @@
-import Missing from "@/test/missing"
+import Missing from "@/page-components/missing"
 import { createMetadata } from "@/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

@@ -15,7 +15,7 @@
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
-        "project": "tsconfig.json"
+        "project": "./tsconfig.json"
     },
     "settings": {
         "react": {
@@ -148,7 +148,7 @@
             }
         },
         {
-            "files": ["src/components/shadcn/ui/**/*", "src/lib/**/*", "src/hooks/shadcn/**/*", "src/components/aceternity/**"],
+            "files": ["src/components/shadcn/ui/**/*", "src/lib/**/*", "src/hooks/shadcn/**/*"],
             "rules": {
                 "indent": "off",
                 "linebreak-style": "off",

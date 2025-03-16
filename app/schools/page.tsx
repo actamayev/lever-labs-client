@@ -1,4 +1,4 @@
-import SchoolsPage from "../../src/test/schools-page"
+import SchoolsPage from "../../src/page-components/schools-page"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

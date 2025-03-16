@@ -1,4 +1,4 @@
-import Mission from "../../src/test/support/mission"
+import Mission from "../../src/page-components/support/mission"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

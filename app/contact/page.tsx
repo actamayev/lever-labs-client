@@ -1,4 +1,4 @@
-import Contact from "../../src/test/support/contact"
+import Contact from "../../src/page-components/support/contact"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

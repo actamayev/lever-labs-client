@@ -1,4 +1,4 @@
-import Sandbox from "../../src/test/sandbox"
+import Sandbox from "../../src/page-components/sandbox"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

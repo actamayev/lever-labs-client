@@ -1,4 +1,4 @@
-import AddPip from "../../src/test/add-pip"
+import AddPip from "../../src/page-components/add-pip"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
