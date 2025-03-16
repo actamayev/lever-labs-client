@@ -22,7 +22,7 @@ export default function LessonsIconListTooltip(props: Props) {
 	return (
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
-				<TooltipTrigger onClick={onClick}>
+				<TooltipTrigger onClick={onClick} asChild>
 					<Button
 						variant="ghost"
 						className={cn(
