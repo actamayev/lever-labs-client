@@ -102,17 +102,8 @@ export function createMetadata({
 
 		// SEO settings
 		robots: {
-			index: !noIndex,
-			follow: !noIndex,
-		},
-
-		// Viewport settings (common across all pages)
-		viewport: {
-			width: "device-width",
-			initialScale: 1,
-		},
-
-		// Brand color
-		themeColor: "#003da5",
+			index: noIndex,
+			follow: noIndex,
+		}
 	}
 }

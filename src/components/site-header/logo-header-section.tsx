@@ -18,14 +18,12 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 					src="/favicon.svg"
 					alt="Logo"
 					className="h-8 sm:h-10"
-					style={{ verticalAlign: "middle" }}
+					style={{ verticalAlign: "middle", width: "auto" }}
 					width={32}
 					height={32}
 				/>
 				{/* Text visibility: always show on mobile when not scrolled, hidden on mobile when scrolled */}
-				<span
-					className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}
-				>
+				<span className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}>
 					Blue Dot Robots
 				</span>
 			</Link>

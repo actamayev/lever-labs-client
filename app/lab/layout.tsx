@@ -7,7 +7,7 @@ import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
 
 function LabLayout({ children }: { children: React.ReactNode }) { // Replace Outlet with children
 	const authClass = useAuthContext()
-	const pathname = usePathname() // Replace location with pathname
+	const pathname = usePathname()
 
 	if (authClass.isLoggedIn === false) {
 		return (
