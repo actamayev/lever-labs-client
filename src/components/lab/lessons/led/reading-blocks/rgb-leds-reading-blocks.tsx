@@ -10,7 +10,7 @@ import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } 
 const rgbLedsReadingBlocks: ContentBlock[] = [
 	{
 		id: "rgb-leds-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					RGB LEDs
@@ -27,7 +27,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					How LEDs emit different colors
@@ -52,7 +52,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Review
@@ -73,7 +73,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					How RGB LEDs work
@@ -96,7 +96,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					RGB Codes
@@ -157,7 +157,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Color Mixing
@@ -208,7 +208,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-7",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockWithImage>
 					Lets see color mixing in action.
@@ -222,7 +222,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-8",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Special Cases
@@ -280,7 +280,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "rgb-leds-9",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>Summary</ReadingBlockSectionHeader>
 				<ReadingBlockWithImage>

@@ -11,7 +11,7 @@ import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } 
 const voltageReadingBlocks: ContentBlock[] = [
 	{
 		id: "voltage-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					Voltage
@@ -29,7 +29,7 @@ const voltageReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "voltage-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					What is Voltage?
@@ -132,7 +132,7 @@ const voltageReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "voltage-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockWithImage>
 					Voltage is measured in volts (V). Pip's LEDs require 3.3V - just enough pressure to push electrons across the P-N junction.
@@ -147,7 +147,7 @@ const voltageReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "voltage-4",
-		text: (
+		renderText: () => (
 			<DidYouKnow
 				Icon={CustomSolar}
 				tooltipMessage="Solar"
@@ -159,7 +159,7 @@ const voltageReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "voltage-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary

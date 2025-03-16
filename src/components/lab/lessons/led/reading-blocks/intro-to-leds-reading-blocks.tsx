@@ -9,7 +9,7 @@ import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } 
 const introToLedsReadingBlocks: ContentBlock[] = [
 	{
 		id: "intro-to-leds-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					Introduction to LEDs
@@ -23,7 +23,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-leds-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					What is an LED?
@@ -43,7 +43,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-leds-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 				How do LEDs work?
@@ -64,7 +64,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-leds-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockWithImage>
 					It's helpful to think of a semiconductor as a cliff. Imagine
@@ -138,7 +138,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-leds-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockWithImage>
 					When voltage is applied across this P-N junction, electrons from the N-layer 'fall' down the cliff into the holes in the P-layer.
@@ -150,7 +150,7 @@ const introToLedsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-leds-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary

@@ -9,7 +9,7 @@ import { BulletedList } from "../../../reading/ordered-list"
 const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	{
 		id: "leds-in-robotics-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>LEDs in Robotics</ReadingBlockHeader>
 				<ReadingBlockWithImage>
@@ -24,7 +24,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Why LEDs are important in Robotics
@@ -51,7 +51,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockWithImage>
 					This precision isn't just about speed - it's also about control. We can:
@@ -73,7 +73,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Perception and Sensing
@@ -111,7 +111,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Communication and Feedback
@@ -191,7 +191,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Industry Applications
@@ -222,7 +222,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-7",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Modern Displays
@@ -278,7 +278,7 @@ const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-in-robotics-8",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary

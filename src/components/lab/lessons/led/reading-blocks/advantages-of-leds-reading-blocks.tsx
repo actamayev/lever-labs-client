@@ -12,7 +12,7 @@ import DefinitionText from "../../../reading/definition-text"
 const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	{
 		id: "advantages-of-leds-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					Advantages of LEDs
@@ -30,7 +30,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Evolution of Lighting
@@ -59,7 +59,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Direct energy conversion
@@ -79,7 +79,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Energy Efficiency
@@ -142,7 +142,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Durability & Size
@@ -163,7 +163,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Smart Features
@@ -186,7 +186,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-7",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Environmental Impact
@@ -206,7 +206,7 @@ const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "advantages-of-leds-8",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary

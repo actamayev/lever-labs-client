@@ -30,7 +30,9 @@ class LabReadingClass {
 
 	public setShownBlocks = action((blockId: ContentBlockID): void => {
 		if (this.checkIfBlockIsShown(blockId)) return
-		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
+		const foundBlock = this.activeBlocks.find(block => block.id === blockId)
+		if (isUndefined(foundBlock)) return
+		this.shownBlocks.push(foundBlock)
 	})
 
 	public setBlocks = action((blocks: ContentBlock[], readingName: ReadingNames): void => {

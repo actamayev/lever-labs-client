@@ -27,7 +27,7 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 				labReadingClass.getBlockHeightState(block.id)
 			)}
 		>
-			{block.text}
+			{block.renderText()}
 			<div>
 				{isRevealed && block.action.type === "continue" && (
 					<ContinueButton blockId={block.id} />

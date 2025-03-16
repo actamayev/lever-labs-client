@@ -9,7 +9,7 @@ import { BulletedList } from "../../../reading/ordered-list"
 const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	{
 		id: "leds-and-loops-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					LEDs and Loops
@@ -23,7 +23,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-and-loops-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					What are Loops?
@@ -37,7 +37,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-and-loops-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Types of Loops
@@ -66,7 +66,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-and-loops-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Creating the Breathing Effect
@@ -86,7 +86,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-and-loops-5",
-		text: (
+		renderText: () => (
 			<DidYouKnow
 				Icon={Clapperboard}
 				tooltipMessage="RGB Alternate"
@@ -98,7 +98,7 @@ const ledsAndLoopsReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "leds-and-loops-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary

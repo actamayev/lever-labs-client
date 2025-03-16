@@ -1,7 +1,7 @@
 declare global {
 	interface ContentBlock {
 		id: ContentBlockID
-		text: React.ReactNode
+		renderText: () => React.ReactNode
 		action: {
 			type: "continue" | "quiz" | "demo" | "end" | null
 			quiz?: QuizQuestions

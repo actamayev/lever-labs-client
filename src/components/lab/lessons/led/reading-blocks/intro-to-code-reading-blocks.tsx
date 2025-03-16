@@ -8,7 +8,7 @@ import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } 
 const introToCodeReadingBlocks: ContentBlock[] = [
 	{
 		id: "intro-to-code-1",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockHeader>
 					Introduction to Code
@@ -22,7 +22,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-2",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					What is Code?
@@ -59,7 +59,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-3",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Speaking Pip's language
@@ -90,7 +90,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-4",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Basic Coding Commands
@@ -104,7 +104,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-5",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					1. Action Commands
@@ -130,7 +130,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-6",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					2. Reading Commands
@@ -156,7 +156,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-7",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					3. Decision Commands (If/Then)
@@ -193,7 +193,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-8",
-		text: (
+		renderText: () => (
 			<ReadingBlockWithImage>
 				<h4 className="font-medium mb-3">Making multiple decisions</h4>
 				<p className="mb-3">Sometimes one decision isn't enough. Let's see how Pip can handle multiple situations:</p>
@@ -220,7 +220,7 @@ const introToCodeReadingBlocks: ContentBlock[] = [
 	},
 	{
 		id: "intro-to-code-9",
-		text: (
+		renderText: () => (
 			<div>
 				<ReadingBlockSectionHeader>
 					Summary
