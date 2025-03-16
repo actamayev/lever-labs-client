@@ -9,6 +9,7 @@ import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
+import useRetrievePersonalInfo from "../personal-info/retrieve-personal-info"
 
 export default function useLoginSubmit (
 	whereToNavigate: PageNames,
@@ -18,6 +19,7 @@ export default function useLoginSubmit (
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
+	const retrievedPeronsalInfo = useRetrievePersonalInfo()
 
 	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
 		setError("")
@@ -32,11 +34,12 @@ export default function useLoginSubmit (
 				return
 			}
 			setDataAfterLogin(response.data)
+			void retrievedPeronsalInfo()
 			navigate(whereToNavigate)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, setDataAfterLogin, setError, whereToNavigate])
+	}, [authClass, blueDotApiClient.authDataService, navigate, retrievedPeronsalInfo, setDataAfterLogin, setError, whereToNavigate])
 }

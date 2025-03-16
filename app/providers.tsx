@@ -1,12 +1,13 @@
 "use client"
 
 import { ReactNode } from "react"
+import { AnimatePresence } from "framer-motion"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import ContextLevelComponent from "app/context-level-component"
-import { AnimatePresence } from "framer-motion"
 
 // Custom hooks from your application
 import { observer } from "mobx-react"
+import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import useGetAuthDataFromStorage from "@/hooks/auth/get-auth-data-from-storage"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
 import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
@@ -16,14 +17,13 @@ import useRetrievePersonalInfoUseEffect from "@/hooks/personal-info/retrieve-per
 import useSocketEventsUseEffect from "@/hooks/socket-events/socket-events-use-effect"
 import useRetrievePipInfoUseEffect from "@/hooks/pip/retrieve-pip-info-use-effect"
 import useResetTransitionDirectionUseEffect from "@/hooks/listeners/reset-transition-direction-use-effect"
-import ConditionalLayout from "../src/components/layouts/conditional-layout"
 
 function RedirectHandler() {
 	useRedirectBackToRegisterUsername()
 	return null
 }
 
-export const ObserverRedirectHandler = observer(RedirectHandler)
+const ObserverRedirectHandler = observer(RedirectHandler)
 
 export default function Providers({ children }: { children: ReactNode }) {
 	const getAuthDataFromStorage = useGetAuthDataFromStorage()
