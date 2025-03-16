@@ -181,7 +181,7 @@ class LabReadingClass {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
-		this.scrollToNextBlock(blockId)
+		this.scrollToNextBlock(blockId, false)
 	})
 
 	public handleNextQuestion = action(() => {
@@ -318,7 +318,7 @@ class LabReadingClass {
 		})
 	})
 
-	private scrollToNextBlock = action((blockId: ContentBlockID) => {
+	private scrollToNextBlock = action((blockId: ContentBlockID, schouldScroll: boolean = true) => {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
@@ -332,6 +332,7 @@ class LabReadingClass {
 
 		this.setShownBlocks(nextBlock.id)
 
+		if (!schouldScroll) return
 		requestAnimationFrame(() => {
 			const nextElement = document.getElementById(`block-${nextBlock.id}`)
 			if (!nextElement) return

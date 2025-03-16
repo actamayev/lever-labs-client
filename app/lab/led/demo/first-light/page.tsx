@@ -20,6 +20,7 @@ export default function FirstLightDemoPage() {
 			lessonDemoTitle="First Light"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="voltage-3"
 		/>
 	)
 }

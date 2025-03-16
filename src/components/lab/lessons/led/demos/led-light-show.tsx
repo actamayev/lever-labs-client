@@ -3,6 +3,7 @@
 import { CustomWheel } from "../../../../icons/custom-wheel"
 import LabDemoComponent from "../../../demo/lab-demo-component"
 import useMotorDemoUseEffect from "../../../../../hooks/lab/demos/motor-demo-use-effect"
+import AnimatedTransitionWrapper from "../../../../animated-transition-wrapper"
 
 const ledDemoDeliverables: [string] = [
 	"LED Light Show"
@@ -20,10 +21,13 @@ export default function LEDLightShow() {
 	useMotorDemoUseEffect()
 
 	return (
-		<LabDemoComponent
-			lessonDemoTitle="LED Light Show"
-			demoDeliverables={ledDemoDeliverables}
-			demos={ledDemos}
-		/>
+		<AnimatedTransitionWrapper>
+			<LabDemoComponent
+				lessonDemoTitle="LED Light Show"
+				demoDeliverables={ledDemoDeliverables}
+				demos={ledDemos}
+				blockId="intro-to-leds-2"
+			/>
+		</AnimatedTransitionWrapper>
 	)
 }

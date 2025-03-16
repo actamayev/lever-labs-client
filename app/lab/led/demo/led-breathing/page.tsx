@@ -19,6 +19,7 @@ export default function LEDBreathingDemoPage() {
 			lessonDemoTitle="LED Breathing Effect"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="leds-and-loops-4"
 		/>
 	)
 }

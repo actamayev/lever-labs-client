@@ -19,6 +19,7 @@ export default function MultiButtonLEDControlDemoPage() {
 			lessonDemoTitle="Multi-Button LED Control"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="intro-to-code-8"
 		/>
 	)
 }

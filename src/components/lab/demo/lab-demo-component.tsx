@@ -7,11 +7,13 @@ import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
+import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 
 interface Props {
 	lessonDemoTitle: string
     demoDeliverables: string[]
     demos: Demo[]
+	blockId: LEDReadingBlockID
 }
 
 function LabDemoComponent(props: Props) {
@@ -19,14 +21,17 @@ function LabDemoComponent(props: Props) {
 		lessonDemoTitle,
 		demoDeliverables,
 		demos,
+		blockId
 	} = props
 	const router = useRouter()
 	const pageTransitionClass = usePageTransitionContext()
+	const labReadingClass = useLabReadingContext()
 
 	const goBack = useCallback(() => {
 		pageTransitionClass.setDirection("up")
 		router.back()
-	}, [router, pageTransitionClass])
+		labReadingClass.handleDemoComplete(blockId)
+	}, [pageTransitionClass, router, labReadingClass, blockId])
 
 	return (
 		<DemoTemplate>

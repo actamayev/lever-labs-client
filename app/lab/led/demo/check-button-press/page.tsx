@@ -19,6 +19,7 @@ export default function ButtonPressLEDsDemoPage() {
 			lessonDemoTitle="Check button press"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="intro-to-code-6"
 		/>
 	)
 }

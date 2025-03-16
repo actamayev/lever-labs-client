@@ -19,6 +19,7 @@ export default function ColorMixingDemoPage() {
 			lessonDemoTitle="Color Mixing"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="rgb-leds-7"
 		/>
 	)
 }

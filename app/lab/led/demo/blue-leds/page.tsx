@@ -19,6 +19,7 @@ export default function BlueLEDsDemoPage() {
 			lessonDemoTitle="Blue LEDs"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="intro-to-code-5"
 		/>
 	)
 }

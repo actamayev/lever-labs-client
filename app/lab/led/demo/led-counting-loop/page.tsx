@@ -19,6 +19,7 @@ export default function LEDCountingLoopDemoPage() {
 			lessonDemoTitle="LED Counting Loop"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="leds-and-loops-3"
 		/>
 	)
 }

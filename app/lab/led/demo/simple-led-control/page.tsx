@@ -19,6 +19,7 @@ export default function SimpleLEDControlDemoPage() {
 			lessonDemoTitle="Simple LED Control"
 			demoDeliverables={ledDemoDeliverables}
 			demos={[]}
+			blockId="intro-to-code-7"
 		/>
 	)
 }
