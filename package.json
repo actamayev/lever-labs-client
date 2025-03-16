@@ -38,6 +38,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^15.2.2",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.7.9",
     "@types/react": "^18.3.12",
@@ -52,8 +53,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
-    "typescript": "^5.5.4",
-    "@next/bundle-analyzer": "^15.2.2"
+    "typescript": "^5.5.4"
   },
   "scripts": {
     "dev": "next dev --turbo",
