@@ -1,5 +1,6 @@
 "use client"
 
+import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import { Form } from "@/components/shadcn/ui/form"
@@ -19,7 +20,7 @@ interface Props {
 	whereToNavigate: PageNames
 }
 
-export default function LoginComponent(props: Props) {
+function LoginComponent(props: Props) {
 	const { whereToNavigate } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
@@ -61,3 +62,5 @@ export default function LoginComponent(props: Props) {
 		</AuthTemplate>
 	)
 }
+
+export default observer(LoginComponent)

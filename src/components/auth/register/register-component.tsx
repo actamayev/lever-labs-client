@@ -1,5 +1,6 @@
 "use client"
 
+import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import EmailInput from "./email-input"
@@ -16,7 +17,7 @@ import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
-export default function RegisterComponent() {
+function RegisterComponent() {
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const registerSubmit = useRegisterSubmit(setError)
@@ -67,3 +68,5 @@ export default function RegisterComponent() {
 		</AuthTemplate>
 	)
 }
+
+export default observer(RegisterComponent)

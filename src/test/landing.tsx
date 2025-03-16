@@ -1,5 +1,6 @@
 "use client"
 
+import { observer } from "mobx-react"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import TheLittleThings from "../components/landing/the-little-things"
@@ -18,7 +19,7 @@ import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
 
 // 2/15/25 TODO: Make the landing page px-4 for mobile
-export default function Landing() {
+function Landing() {
 	useRedirectKnownUserToLab()
 	return (
 		<>
@@ -82,3 +83,5 @@ export default function Landing() {
 		</>
 	)
 }
+
+export default observer(Landing)
