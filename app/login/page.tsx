@@ -1,8 +1,14 @@
-"use client"
-import LoginPage from "../../src/test/auth/login-page"
+import LoginComponent from "../../src/components/auth/login/login-component"
+import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+
+export const metadata = createMetadata({
+	title: "Login",
+	description: "Login to your Blue Dot Robots account to access the Lab, track your progress, \
+	and continue your robotics journey with Pip.",
+	path: "/login",
+	keywords: ["login", "educational robotics", "student dashboard"]
+})
 
 export default function Login() {
-	return (
-		<LoginPage />
-	)
+	return <LoginComponent whereToNavigate="/lab" />
 }

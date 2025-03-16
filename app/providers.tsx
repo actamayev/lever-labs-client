@@ -2,7 +2,6 @@
 
 import { ReactNode } from "react"
 import { GoogleOAuthProvider } from "@react-oauth/google"
-import { HelmetProvider } from "react-helmet-async"
 import ContextLevelComponent from "app/context-level-component"
 import { AnimatePresence } from "framer-motion"
 
@@ -33,13 +32,11 @@ export default function Providers({ children }: { children: ReactNode }) {
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
 			<ContextLevelComponent>
-				<HelmetProvider>
-					<ConditionalLayout>
-						<AnimatePresence mode="wait">
-							{children}
-						</AnimatePresence>
-					</ConditionalLayout>
-				</HelmetProvider>
+				<ConditionalLayout>
+					<AnimatePresence mode="wait">
+						{children}
+					</AnimatePresence>
+				</ConditionalLayout>
 			</ContextLevelComponent>
 		</GoogleOAuthProvider>
 	)

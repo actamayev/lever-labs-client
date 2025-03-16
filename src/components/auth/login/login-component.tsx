@@ -19,7 +19,7 @@ interface Props {
 	whereToNavigate: PageNames
 }
 
-export default function Login(props: Props) {
+export default function LoginComponent(props: Props) {
 	const { whereToNavigate } = props
 	useRedirectKnownUser()
 	const [error, setError] = useState("")

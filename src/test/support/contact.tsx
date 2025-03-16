@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect } from "react"
-import PageHelmet from "../../components/helmet/page-helmet"
 import SupportHeader from "../../components/support/support-header"
 import ContactItemInCard from "../../components/contact/contact-item-in-card"
 import FooterSocialSection from "../../components/footer/footer-social-section"
@@ -13,7 +12,6 @@ export default function Contact() {
 	}, [])
 	return (
 		<div>
-			<PageHelmet pageTitle="/contact" />
 			<SupportSectionContainer>
 				<SupportHeader />
 				<div className="flex items-center justify-center text-questionText text-xl font-medium">

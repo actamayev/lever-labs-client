@@ -2,7 +2,6 @@
 
 /* eslint-disable max-len */
 import { useEffect } from "react"
-import PageHelmet from "../../components/helmet/page-helmet"
 import SupportSection from "../../components/support/support-section"
 import SupportHeader, { SupportBorder } from "../../components/support/support-header"
 import SupportSectionContainer from "../../components/support/support-section-container"
@@ -13,7 +12,6 @@ export default function Mission() {
 	}, [])
 	return (
 		<div>
-			<PageHelmet pageTitle="/mission" />
 			<SupportSectionContainer>
 				<SupportHeader />
 				<SupportSection sectionTitle="Provide an accessible world-class robotics education">

@@ -2,7 +2,6 @@
 
 import { observer } from "mobx-react"
 import { useAuthContext } from "../contexts/auth-context"
-import PageHelmet from "../components/helmet/page-helmet"
 import ShowAuthToNullUser from "../components/auth/show-auth-to-null-user"
 import SandboxBlocklyComponent from "../components/sandbox/sandbox-blockly-component"
 
@@ -12,7 +11,6 @@ function Sandbox() {
 	if (authClass.isLoggedIn === false) {
 		return (
 			<div className="pt-16">
-				<PageHelmet pageTitle="/sandbox" />
 				<ShowAuthToNullUser whereToNavigate="/sandbox" />
 			</div>
 		)
@@ -20,7 +18,6 @@ function Sandbox() {
 
 	return (
 		<div className="pt-16">
-			<PageHelmet pageTitle="/sandbox" />
 			<SandboxBlocklyComponent />
 		</div>
 	)

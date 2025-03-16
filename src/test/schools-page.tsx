@@ -3,7 +3,6 @@
 /* eslint-disable max-len */
 import { useEffect } from "react"
 import { BookOpen, Code2 } from "lucide-react"
-import PageHelmet from "../components/helmet/page-helmet"
 import ShowIcon from "../components/landing/show-icon"
 import { landingBulletTextParagraph } from "../utils/text-styles"
 import SupportSection from "../components/support/support-section"
@@ -17,7 +16,6 @@ export default function SchoolsPage() {
 	}, [])
 	return (
 		<div>
-			<PageHelmet pageTitle="/schools" />
 			<div className="relative">
 				<div className="px-8 sm:px-8 md:px-16 lg:px-72 mt-12">
 					<div className="font-medium text-3xl text-questionText mb-10">

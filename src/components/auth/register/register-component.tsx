@@ -16,7 +16,7 @@ import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
-export default function Register() {
+export default function RegisterComponent() {
 	useRedirectKnownUser()
 	const [error, setError] = useState("")
 	const registerSubmit = useRegisterSubmit(setError)

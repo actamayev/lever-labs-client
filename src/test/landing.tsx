@@ -1,6 +1,5 @@
 "use client"
 
-import PageHelmet from "../components/helmet/page-helmet"
 import GridPattern from "../components/shadcn/ui/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import TheLittleThings from "../components/landing/the-little-things"
@@ -23,7 +22,6 @@ export default function Landing() {
 	useRedirectKnownUserToLab()
 	return (
 		<>
-			<PageHelmet pageTitle="/" />
 			<div className="min-h-screen w-full relative">
 				<div className="fixed inset-0">
 					<GridPattern />

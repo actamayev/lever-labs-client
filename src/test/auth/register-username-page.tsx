@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../components/shadcn/ui/form"
-import PageHelmet from "../../components/helmet/page-helmet"
 import AuthButton from "../../components/buttons/generic-buttons"
 import ErrorMessage from "../../components/messages/error-message"
 import AuthTemplate from "../../components/templates/auth-template"
@@ -35,7 +34,6 @@ function RegisterUsernamePage() {
 
 	return (
 		<>
-			<PageHelmet pageTitle="/register-username" />
 			<AuthTemplate title="Choose your username">
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
