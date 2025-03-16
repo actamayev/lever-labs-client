@@ -10,9 +10,7 @@ function LabLayout({ children }: { children: React.ReactNode }) { // Replace Out
 	const pathname = usePathname()
 
 	if (authClass.isLoggedIn === false) {
-		return (
-			<ShowAuthToNullUser whereToNavigate={pathname as LabPages} />
-		)
+		return <ShowAuthToNullUser whereToNavigate={pathname as LabPages} />
 	}
 
 	return (
