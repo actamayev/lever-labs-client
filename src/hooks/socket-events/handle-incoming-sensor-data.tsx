@@ -7,7 +7,6 @@ export default function useHandleIncomingSensorData(): (data: IncomingSensorData
 	const labDemoClass = useLabDemoContext()
 
 	return useCallback((data: IncomingSensorData) =>  {
-		console.log(data.sensorPayload)
 		labDemoClass.setSensorData(data)
 		// if (data.success) return
 

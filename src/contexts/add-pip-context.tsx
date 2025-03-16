@@ -122,6 +122,8 @@ interface AddPipContextValue {
 	form: UseFormReturn<IncompletePipData>
 }
 
+const addPipInstance = new AddPipClass()
+
 const AddPipContext = createContext<AddPipContextValue | null>(null)
 
 export default function AddPipProvider({ children }: { children: React.ReactNode }) {
@@ -137,7 +139,7 @@ export default function AddPipProvider({ children }: { children: React.ReactNode
 	})
 
 	const contextValue = useMemo(() => ({
-		store: new AddPipClass(),
+		store: addPipInstance,
 		form
 	}), [form])
 

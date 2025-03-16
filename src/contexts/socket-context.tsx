@@ -3,8 +3,8 @@
 import EventEmitter from "events"
 import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
+import { createContext, useContext } from "react"
 import { action, makeObservable, observable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
 
 class SocketClass extends EventEmitter {
 	private _socket: Socket | null = null
@@ -96,13 +96,13 @@ class SocketClass extends EventEmitter {
 	})
 }
 
-const SocketContext = createContext(new SocketClass())
+const socketInstance = new SocketClass()
+
+const SocketContext = createContext(socketInstance)
 
 export default function SocketProvider ({ children }: { children: React.ReactNode }) {
-	const socketClass = useMemo(() => new SocketClass(), [])
-
 	return (
-		<SocketContext.Provider value={socketClass}>
+		<SocketContext.Provider value={socketInstance}>
 			{children}
 		</SocketContext.Provider>
 	)

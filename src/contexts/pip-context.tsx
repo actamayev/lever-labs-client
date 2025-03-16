@@ -4,7 +4,7 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 
 class PipClass {
 	public pipData: PipData[] = []
@@ -91,13 +91,13 @@ class PipClass {
 	}
 }
 
-const PipContext = createContext(new PipClass())
+const pipInstance = new PipClass()
+
+const PipContext = createContext(pipInstance)
 
 export default function PipProvider ({ children }: { children: React.ReactNode }) {
-	const pipClass = useMemo(() => new PipClass(), [])
-
 	return (
-		<PipContext.Provider value={pipClass}>
+		<PipContext.Provider value={pipInstance}>
 			{children}
 		</PipContext.Provider>
 	)

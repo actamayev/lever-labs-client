@@ -4,7 +4,7 @@ import isNil from "lodash-es/isNil"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 
 class LabReadingClass {
 	public currentReadingName: ReadingNames | null = null
@@ -438,13 +438,13 @@ class LabReadingClass {
 	}
 }
 
-const LabReadingContext = createContext(new LabReadingClass())
+const labReadingInstance = new LabReadingClass()
+
+const LabReadingContext = createContext(labReadingInstance)
 
 export default function LabReadingProvider ({ children }: { children: React.ReactNode }) {
-	const labReadingClass = useMemo(() => new LabReadingClass(), [])
-
 	return (
-		<LabReadingContext.Provider value={labReadingClass}>
+		<LabReadingContext.Provider value={labReadingInstance}>
 			{children}
 		</LabReadingContext.Provider>
 	)

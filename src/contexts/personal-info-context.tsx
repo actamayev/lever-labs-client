@@ -1,7 +1,7 @@
 "use client"
 
+import { createContext, useContext } from "react"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
 import { isValidSidebarState, isValidSiteTheme } from "../utils/type-checks"
 
 class PersonalInfoClass {
@@ -82,13 +82,13 @@ class PersonalInfoClass {
 	}
 }
 
-const PersonalInfoContext = createContext(new PersonalInfoClass())
+const personalInfoInstance = new PersonalInfoClass()
+
+const PersonalInfoContext = createContext(personalInfoInstance)
 
 export default function PersonalInfoProvider ({ children }: { children: React.ReactNode }) {
-	const value = useMemo(() => new PersonalInfoClass(), [])
-
 	return (
-		<PersonalInfoContext.Provider value={value}>
+		<PersonalInfoContext.Provider value={personalInfoInstance}>
 			{children}
 		</PersonalInfoContext.Provider>
 	)
