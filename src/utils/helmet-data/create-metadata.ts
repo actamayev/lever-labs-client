@@ -18,14 +18,14 @@ const STATIC_KEYWORDS: [string, string, string] = [
 
 // Types for the custom metadata function
 type MetadataProps = {
-  title: string;
-  description: string;
-  path?: string;
-  needsBlueDotSuffix?: boolean;
+  title: string
+  description: string
+  path?: string
+  needsBlueDotSuffix?: boolean
 //   ogImage?: string;
 //   twitterImage?: string;
-  keywords: [string, string, string]; // Tuple type enforces exactly 3 strings
-  noIndex?: boolean;
+  keywords: [string, string, string] // Tuple type enforces exactly 3 strings
+  noIndex?: boolean
 };
 
 /**
@@ -101,9 +101,8 @@ export function createMetadata({
 		publisher: "Blue Dot Robots",
 
 		// SEO settings
-		robots: {
-			index: noIndex,
-			follow: noIndex,
-		}
+		robots: noIndex
+			? { index: false, follow: false }
+			: { index: true, follow: true }
 	}
 }
