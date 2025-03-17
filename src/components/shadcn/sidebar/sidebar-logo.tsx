@@ -10,7 +10,7 @@ import Link from "next/link"
 export default function SidebarLogo() {
 	return (
 		<SidebarMenu>
-			<SidebarMenuItem className="flex justify-center">
+			<SidebarMenuItem className="flex justify-start">
 				<Link
 					href="/lab"
 					className="flex !h-16 !w-16 !min-w-[64px] items-center
