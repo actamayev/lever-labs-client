@@ -25,6 +25,8 @@ export default function useUsernameSubmit (setError: (error: string) => void): (
 				return
 			}
 			personalInfoClass.setUsername(username)
+			// TODO 3/16/25: The user is navigated to /lab. I believe this is because as soon as the username is set,
+			// the useRedirectUserWithUsername moves the user to /lab
 			navigate("/lab/welcome")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)

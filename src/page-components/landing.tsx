@@ -18,7 +18,6 @@ import SimpleSetup from "../components/landing/simple-setup"
 import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
 
-// 2/15/25 TODO: Make the landing page px-4 for mobile
 function Landing() {
 	useRedirectKnownUserToLab()
 	return (
