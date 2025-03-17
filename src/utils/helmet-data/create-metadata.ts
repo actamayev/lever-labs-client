@@ -101,9 +101,8 @@ export function createMetadata({
 		publisher: "Blue Dot Robots",
 
 		// SEO settings
-		robots: {
-			index: noIndex,
-			follow: noIndex,
-		}
+		robots: noIndex
+			? { index: false, follow: false }
+			: { index: true, follow: true }
 	}
 }
