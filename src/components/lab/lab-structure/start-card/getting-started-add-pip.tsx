@@ -12,8 +12,8 @@ import { Button } from "@/components/shadcn/ui/button"
 import PipButtonTooltip from "../../../pip-button-tooltip"
 import { usePipContext } from "../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../hooks/pip/click-pip-sidebar-button"
-import PipStatusTooltip from "../../../shadcn/sidebar/primary/add-pip/pip-status-tooltip"
 import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
+import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip"
 
 // Simplified PipStatus component specifically for the card
 function GettingStartedAddPip() {

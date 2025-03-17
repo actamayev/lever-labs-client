@@ -9,8 +9,8 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
-import { cn } from "../../../../../lib/shadcn/utils"
-import { usePipContext } from "../../../../../contexts/pip-context"
+import { cn } from "../../../../lib/shadcn/utils"
+import { usePipContext } from "../../../../contexts/pip-context"
 
 function PipStatusTooltip() {
 	const pipClass = usePipContext()

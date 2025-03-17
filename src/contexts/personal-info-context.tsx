@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from "react"
 import { action, makeAutoObservable } from "mobx"
-import { isValidSidebarState, isValidSiteTheme } from "../utils/type-checks"
+import { isValidSiteTheme } from "../utils/type-checks"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -11,7 +11,6 @@ class PersonalInfoClass {
 	public isRetrievingPersonalInfo = false
 	public retrievedPeronsalInfo = false
 	public defaultSiteTheme: SiteThemes = "light"
-	public defaultSidebarState: SidebarStates = "expanded"
 	public profilePictureUrl: string | null = null
 
 	constructor() {
@@ -26,11 +25,6 @@ class PersonalInfoClass {
 			return this.setDefaultSiteTheme("light")
 		}
 		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
-		const locallyStoredDefaultSidebarState = localStorage.getItem("defaultSidebarState")
-		if (!isValidSidebarState(locallyStoredDefaultSidebarState)) {
-			return this.setDefaultSidebarState("expanded")
-		}
-		this.setDefaultSidebarState(locallyStoredDefaultSidebarState)
 	}
 
 	public setIsRetrievingPersonalDetails = action((newState: boolean): void => {
@@ -46,7 +40,6 @@ class PersonalInfoClass {
 		this.email = retrievedData.email
 		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
-		this.setDefaultSidebarState(retrievedData.defaultSidebarState)
 	})
 
 	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, addToLocalStorage: boolean = true): void => {
@@ -55,12 +48,6 @@ class PersonalInfoClass {
 		if (addToLocalStorage === true) localStorage.setItem("defaultSiteTheme", newSiteTheme)
 		if (newSiteTheme === "dark") document.documentElement.classList.add("dark")
 		else document.documentElement.classList.remove("dark")
-	})
-
-	public setDefaultSidebarState = action((newSidebarState: SidebarStates): void => {
-		this.defaultSidebarState = newSidebarState
-		if (typeof window === "undefined") return
-		localStorage.setItem("defaultSidebarState", newSidebarState)
 	})
 
 	public setProfilePictureUrl = action((newProfilePictureUrl: string | null): void => {
@@ -78,7 +65,7 @@ class PersonalInfoClass {
 		this.setRetrievedPersonalInfo(false)
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("light")
-		this.setDefaultSidebarState("expanded")
+		// this.setDefaultSidebarState("expanded")
 	}
 }
 

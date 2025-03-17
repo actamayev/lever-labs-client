@@ -1,8 +1,8 @@
 "use client"
 
 import { Settings } from "lucide-react"
-import { DropdownMenuItem } from "../../../ui/dropdown-menu"
-import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import { DropdownMenuItem } from "../../ui/dropdown-menu"
+import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 
 export default function NavigateToSettingsPage() {
 	const navigate = useTypedNavigate()
