@@ -8,6 +8,7 @@ import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import AnimatedTransitionWrapper from "../../animated-transition-wrapper"
 
 interface Props {
 	lessonDemoTitle: string
@@ -34,22 +35,24 @@ function LabDemoComponent(props: Props) {
 	}, [pageTransitionClass, router, labReadingClass, blockId])
 
 	return (
-		<DemoTemplate>
-			<main className="flex-1 flex items-center flex-col justify-center p-4">
-				<DemoCard
-					lessonDemoTitle={lessonDemoTitle}
-					demoDeliverables={demoDeliverables}
-					demos={demos}
-				/>
-				<BlueTactileButton
-					onClick={goBack}
-					className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
-					shadowHeight={4}
-				>
+		<AnimatedTransitionWrapper>
+			<DemoTemplate>
+				<main className="flex-1 flex items-center flex-col justify-center p-4">
+					<DemoCard
+						lessonDemoTitle={lessonDemoTitle}
+						demoDeliverables={demoDeliverables}
+						demos={demos}
+					/>
+					<BlueTactileButton
+						onClick={goBack}
+						className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
+						shadowHeight={4}
+					>
 					CONTINUE
-				</BlueTactileButton>
-			</main>
-		</DemoTemplate>
+					</BlueTactileButton>
+				</main>
+			</DemoTemplate>
+		</AnimatedTransitionWrapper>
 	)
 }
 
