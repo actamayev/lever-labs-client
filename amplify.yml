@@ -3,14 +3,17 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci  # Install dependencies cleanly
+        - nvm use 20  # or whatever version you're using
+        - npm ci --cache .npm --prefer-offline
     build:
       commands:
-        - npm run build  # Build the Next.js app
-    artifacts:
-      baseDirectory: .next  # Where the built files are located
-      files:
-        - '**/*'  # Include all files in .next
-    cache:
-      paths:
-        - node_modules/**/*  # Cache node_modules for faster builds
+        - npm run build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .npm/**/*
+      - node_modules/**/*
+      - .next/cache/**/*
