@@ -17,7 +17,6 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 	// 2/21/25 TODO: Fix this endpoint being hit twice in a row
 	return useCallback(async () => {
 		try {
-			console.log("here")
 			if (
 				pipClass.isRetrievingPipData === true ||
 				!isEmpty(pipClass.pipData) ||

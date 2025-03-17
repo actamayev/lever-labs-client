@@ -31,7 +31,7 @@ export default function useInitializeGoogleAnalytics(): void {
 			const ReactGA = (await import("react-ga4")).default
 			ReactGA.send({
 				hitType: "pageview",
-				page: pathname // Directly use pathname instead of location.pathname
+				page: pathname
 			})
 		}
 
