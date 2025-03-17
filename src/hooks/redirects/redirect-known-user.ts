@@ -12,11 +12,11 @@ export default function useRedirectKnownUser(): void {
 	const authClass = useAuthContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()
-	const pathName = usePathname()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		const isPrivatePage = PrivatePageNames.some(privatePath =>
-			pathName.startsWith(privatePath)
+			pathname.startsWith(privatePath)
 		)
 		// if the user is logged in and has a username, go to lab
 		if (
@@ -27,5 +27,5 @@ export default function useRedirectKnownUser(): void {
 		) return
 
 		navigate("/lab")
-	}, [authClass.isAuthenticating, authClass.isLoggedIn, pathName, navigate, personalInfoClass.username])
+	}, [authClass.isAuthenticating, authClass.isLoggedIn, pathname, navigate, personalInfoClass.username])
 }

@@ -7,8 +7,8 @@ import PrimarySidebar from "./primary/primary-sidebar"
 import { showPrimarySidebarPages } from "../../../utils/constants"
 
 export default function AppSidebar() {
-	const pathName = usePathname()
-	const shouldShowSidebar = showPrimarySidebarPages.includes(pathName as PageNames)
+	const pathname = usePathname()
+	const shouldShowSidebar = showPrimarySidebarPages.includes(pathname as PageNames)
 
 	if (!shouldShowSidebar) return null
 
@@ -18,7 +18,7 @@ export default function AppSidebar() {
 			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row border-disabledLilypadBackground"
 		>
 			<PrimarySidebar />
-			{pathName.startsWith("/sandbox") && <SandboxSidebar />}
+			{pathname.startsWith("/sandbox") && <SandboxSidebar />}
 		</Sidebar>
 	)
 }

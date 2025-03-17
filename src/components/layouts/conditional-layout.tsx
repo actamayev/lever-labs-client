@@ -9,16 +9,16 @@ import InternalPagesLayout from "./internal-pages-layout"
 import { PrivatePageNames } from "../../utils/constants"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
-	const pathName = usePathname()
+	const pathname = usePathname()
 	const username = useUsername()
 
 	const isPrivatePage = PrivatePageNames.some(privatePath =>
-		pathName.startsWith(privatePath)
+		pathname.startsWith(privatePath)
 	)
 
 	if (!isPrivatePage || isNull(username)) {
 		let extraClasses = undefined
-		if (pathName === "/") extraClasses = ""
+		if (pathname === "/") extraClasses = ""
 
 		return (
 			<ClassicLayout extraClasses={extraClasses}>

@@ -5,7 +5,7 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 
 export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
-	const pathName = usePathname()
+	const pathname = usePathname()
 	return (
 		<div
 			className={`inline-flex items-center flex-grow-0 flex-shrink-0 z-10 ${
@@ -13,7 +13,7 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 			}`}
 		>
 			<Link
-				href={pathName === "/register-username" ? "/register-username" : ""}
+				href={pathname === "/register-username" ? "/register-username" : ""}
 				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-pipThemeText duration-0"
 			>
 				<Image

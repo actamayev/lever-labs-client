@@ -16,7 +16,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 	const navigate = useTypedNavigate()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
-	const pathName = usePathname()
+	const pathname = usePathname()
 
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
@@ -41,9 +41,9 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				return navigate("/register-username")
 			}
 			void retrieveDataAfterLogin()
-			if (pathName === "/login") navigate("/lab")
+			if (pathname === "/login") navigate("/lab")
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.authDataService, navigate, pathName, retrieveDataAfterLogin, setDataAfterLogin])
+	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
 }

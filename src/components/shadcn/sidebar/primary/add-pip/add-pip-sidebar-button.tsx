@@ -12,12 +12,12 @@ import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
 
 function AddPipSidebarButton() {
-	const pathName = usePathname()
+	const pathname = usePathname()
 	const pipClass = usePipContext()
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
 
-	const isActive = pathName === "/add-pip"
+	const isActive = pathname === "/add-pip"
 
 	return (
 		<SidebarMenu>

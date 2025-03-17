@@ -12,7 +12,7 @@ import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 export default function useRedirectBackToRegisterUsername(): void {
 	const authClass = useAuthContext()
 	const personalInfoClass = usePersonalInfoContext()
-	const pathName = usePathname()
+	const pathname = usePathname()
 	const navigate = useTypedNavigate()
 
 	useEffect(() => {
@@ -22,13 +22,13 @@ export default function useRedirectBackToRegisterUsername(): void {
 		if (!isNull(personalInfoClass.username) || isNull(personalInfoClass.email)) return
 		// Check if the current path starts with any of the private page roots
 
-		if (isNull(pathName)) return
+		if (isNull(pathname)) return
 		const isPrivatePage = PrivatePageNames.some(root =>
-			pathName === root || pathName.startsWith(`${root}/`)
+			pathname === root || pathname.startsWith(`${root}/`)
 		)
 		// If the user isn't trying to access a private page, no need to re-direct (return)
 		if (!isPrivatePage) return
 
 		navigate("/register-username")
-	}, [authClass.isLoggedIn, pathName, navigate, personalInfoClass, personalInfoClass.username, personalInfoClass.email])
+	}, [authClass.isLoggedIn, pathname, navigate, personalInfoClass, personalInfoClass.username, personalInfoClass.email])
 }

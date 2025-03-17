@@ -18,7 +18,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
-	const pathName = usePathname()
+	const pathname = usePathname()
 
 	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
 		setError("")
@@ -34,11 +34,11 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 			}
 			setDataAfterLogin(response.data)
 			void retrieveDataAfterLogin()
-			if (pathName === "/login") navigate("/lab")
+			if (pathname === "/login") navigate("/lab")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, pathName, retrieveDataAfterLogin, setDataAfterLogin, setError])
+	}, [authClass, blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
 }

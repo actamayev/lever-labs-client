@@ -10,13 +10,13 @@ import AppSidebar from "@/components/shadcn/sidebar/app-sidebar"
 import { cn } from "../../lib/shadcn/utils"
 
 export default function InternalPagesLayout({ children } : { children: React.ReactNode }) {
-	const pathName = usePathname()
+	const pathname = usePathname()
 
 	return (
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				{pathName.startsWith("/sandbox") && (
+				{pathname.startsWith("/sandbox") && (
 					<header
 						className={cn(
 							"fixed w-full top-0 flex shrink-0 items-center bg-inherit",

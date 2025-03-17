@@ -13,8 +13,8 @@ export function SupportBorder() {
 	)
 }
 function SupportLink({ page } : { page: "mission" | "contact" }) {
-	const pathName = usePathname()
-	const active = pathName === `/${page}`
+	const pathname = usePathname()
+	const active = pathname === `/${page}`
 
 	return (
 		<li className="relative flex flex-col items-center group">

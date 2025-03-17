@@ -29,11 +29,11 @@ const navData: SidebarNavData[] = [
 ]
 export default function MappedNavData() {
 	const navigate = useTypedNavigate()
-	const pathName = usePathname()
+	const pathname = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
-		return pathName.startsWith(itemUrl)
-	}, [pathName])
+		return pathname.startsWith(itemUrl)
+	}, [pathname])
 
 	return (
 		<SidebarContent>
