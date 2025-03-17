@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import { cppGenerator } from "../../cpp/cpp-generator"
 

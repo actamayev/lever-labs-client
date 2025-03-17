@@ -1,6 +1,8 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 import defaultLedActivities from "../components/lab/lessons/led/default-led-activities"
 
 class ActivityProgressClass {
@@ -96,13 +98,13 @@ class ActivityProgressClass {
 	}
 }
 
-const ActivityProgressContext = createContext(new ActivityProgressClass())
+const activityProgressInstance = new ActivityProgressClass()
+
+const ActivityProgressContext = createContext(activityProgressInstance)
 
 export default function ActivityProgressProvider ({ children }: { children: React.ReactNode }) {
-	const activityProgressClass = useMemo(() => new ActivityProgressClass(), [])
-
 	return (
-		<ActivityProgressContext.Provider value={activityProgressClass}>
+		<ActivityProgressContext.Provider value={activityProgressInstance}>
 			{children}
 		</ActivityProgressContext.Provider>
 	)

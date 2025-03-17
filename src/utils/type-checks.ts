@@ -1,3 +1,5 @@
+"use client"
+
 import { allPages } from "./constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

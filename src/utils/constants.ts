@@ -1,3 +1,5 @@
+"use client"
+
 export const bentoIconSize = 40
 
 export const showPrimarySidebarPages: PageNames[] = [
@@ -55,7 +57,7 @@ export const ledLabPages = [
 	"/lab/led/demo/led-breathing",
 	"/lab/led/code/breathing-leds",
 	"/lab/led/demo/check-button-press",
-	"/lab/led/reading/gpio",
+	// "/lab/led/reading/gpio",
 	"/lab/led/demo/led-in-circle",
 	"/lab/led/reading/led-advantages",
 	"/lab/led/reading/leds-in-robotics",

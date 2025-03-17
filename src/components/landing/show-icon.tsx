@@ -1,3 +1,5 @@
+"use client"
+
 import { LucideIcon } from "lucide-react"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

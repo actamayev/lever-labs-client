@@ -1,7 +1,9 @@
-import { Link } from "react-router"
+"use client"
+
+import Link from "next/link"
 import { observer } from "mobx-react"
-import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { useAuthContext } from "../../contexts/auth-context"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 interface LinkAuthHeaderProps {
 	title: string
@@ -12,7 +14,7 @@ export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
 	const { title, linkTo } = props
 
 	return (
-		<Link to={linkTo}>
+		<Link href={linkTo}>
 			<BlueTactileButton
 				shadowHeight={2}
 				className="text-xs sm:text-sm font-normal px-3 sm:px-4"

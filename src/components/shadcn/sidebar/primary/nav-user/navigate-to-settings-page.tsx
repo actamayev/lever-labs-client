@@ -1,3 +1,5 @@
+"use client"
+
 import { Settings } from "lucide-react"
 import { DropdownMenuItem } from "../../../ui/dropdown-menu"
 import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"

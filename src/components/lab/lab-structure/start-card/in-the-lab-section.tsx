@@ -1,3 +1,5 @@
+"use client"
+
 export default function InTheLabSection() {
 	return (
 		<div className="space-y-2 p-4 border-2 border-disabledLilypadBackground rounded-lg bg-inherit">

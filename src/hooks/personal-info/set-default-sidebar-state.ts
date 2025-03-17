@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"

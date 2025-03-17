@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import { useCallback } from "react"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"

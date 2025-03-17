@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"

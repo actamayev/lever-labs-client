@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/shadcn/utils"
 import { bentoIconSize } from "../../../utils/constants"
 import RulerExpansionAnimation from "../../icon-animations/ruler-expansion-animation"

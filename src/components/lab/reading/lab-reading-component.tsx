@@ -1,3 +1,5 @@
+"use client"
+
 import ReadingContainer from "./reading-container"
 import ActivityTemplate from "../activity-structure/activity-template"
 

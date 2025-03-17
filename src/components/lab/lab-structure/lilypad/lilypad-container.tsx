@@ -1,3 +1,5 @@
+"use client"
+
 interface LilypadContainerProps {
 	children: React.ReactNode
 }

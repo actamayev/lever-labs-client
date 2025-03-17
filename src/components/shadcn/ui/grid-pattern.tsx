@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "@/lib/shadcn/utils";
 import { useState, useEffect } from "react";
 

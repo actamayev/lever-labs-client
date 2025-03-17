@@ -1,10 +1,12 @@
+"use client"
+
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { Control, FieldPath } from "react-hook-form"
 import { Input } from "@/components/shadcn/ui/input"
 import { Button } from "@/components/shadcn/ui/button"
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
-// import { Link } from "react-router"
+// import Link from "next/link"
 
 interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
 	control: Control<T>
@@ -29,7 +31,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 				<FormItem className="grid gap-2">
 					{/* <div className="flex items-center justify-between">
 						{showForgotPassword && (
-							<Link to="/forgot-password" className="text-sm text-foreground/60 hover:text-foreground underline">
+							<Link href="/forgot-password" className="text-sm text-foreground/60 hover:text-foreground underline">
 								Forgot your password?
 							</Link>
 						)}

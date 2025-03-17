@@ -1,3 +1,5 @@
+"use client"
+
 import { Info } from "lucide-react"
 import { useCallback } from "react"
 import { observer } from "mobx-react"

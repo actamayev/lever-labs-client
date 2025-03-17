@@ -1,4 +1,6 @@
-import { Link } from "react-router"
+"use client"
+
+import Link from "next/link"
 import { cn } from "../../lib/shadcn/utils"
 
 interface Props {
@@ -13,7 +15,7 @@ export default function FooterLink(props: Props) {
 	return (
 		<div className="text-sm">
 			<Link
-				to={linkTo}
+				href={linkTo}
 				className={cn(
 					"text-questionText hover:underline transition-all duration-300",
 					extraClasses

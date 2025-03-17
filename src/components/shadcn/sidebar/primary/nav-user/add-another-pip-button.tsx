@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Bot, PlusCircle } from "lucide-react"

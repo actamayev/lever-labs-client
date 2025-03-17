@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable @typescript-eslint/naming-convention */
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"

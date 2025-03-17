@@ -1,9 +1,12 @@
-import { Link } from "react-router"
+"use client"
+
 import {
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function SidebarLogo() {
 	return (
@@ -11,16 +14,18 @@ export default function SidebarLogo() {
 			<SidebarMenu>
 				<SidebarMenuItem className="flex justify-center">
 					<Link
-						to="/lab"
+						href="/lab"
 						className="flex !h-16 !w-16 !min-w-[64px] items-center
 						justify-center rounded-lg group-data-[collapsible=icon]:!h-16 group-data-[collapsible=icon]:!w-16"
 					>
 						<div className="flex aspect-square !h-16 !w-16 items-center justify-center">
-							<img
+							<Image
 								src="/favicon.svg"
 								alt="Logo"
 								className="!h-16 !w-16"
 								loading="lazy"
+								width={32}
+								height={32}
 							/>
 						</div>
 					</Link>

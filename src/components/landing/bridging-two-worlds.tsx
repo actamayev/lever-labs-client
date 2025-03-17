@@ -1,3 +1,5 @@
+"use client"
+
 import { LucideIcon } from "lucide-react"
 import { CustomCheck } from "../icons/custom-check"
 import LandingSectionSplit from "./landing-section-split"

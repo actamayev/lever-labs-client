@@ -1,3 +1,5 @@
+"use client"
+
 import InTheLabSection from "./in-the-lab-section"
 import AfterCompletingSection from "./after-completing-section"
 import GettingStartedStartCard from "./getting-started-start-card"

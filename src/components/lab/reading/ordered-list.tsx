@@ -1,3 +1,5 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 
 export function NumberedList ({ items } : { items: string[] }) {

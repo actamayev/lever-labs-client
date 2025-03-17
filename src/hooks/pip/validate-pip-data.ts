@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"

@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { AxiosError } from "axios"

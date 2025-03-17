@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { Moon, Sun } from "lucide-react"
 import { DropdownMenuItem } from "../../../ui/dropdown-menu"

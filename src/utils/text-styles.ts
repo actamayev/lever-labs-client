@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "../lib/shadcn/utils"
 
 export function landingParagraph (additionalClasses?: string): string {

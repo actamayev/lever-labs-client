@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
@@ -6,17 +8,23 @@ import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
+import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import { usePathname } from "next/navigation"
 
-export default function useGoogleAuthCallback(
-	whereToNavigate?: PageNames
-): (successResponse: CredentialResponse) => Promise<void> {
+export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
+	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
+	const pathname = usePathname()
 
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
-			if (isUndefined(successResponse.credential) || isUndefined(successResponse.clientId)) return
+			if (
+				isUndefined(successResponse.credential) ||
+				isUndefined(successResponse.clientId) ||
+				typeof window === "undefined"
+			) return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
 			let siteTheme: SiteThemes = "dark"
@@ -32,9 +40,10 @@ export default function useGoogleAuthCallback(
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
-			if (whereToNavigate) navigate(whereToNavigate)
+			void retrieveDataAfterLogin()
+			if (pathname === "/login") navigate("/lab")
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterLogin, whereToNavigate])
+	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
 }

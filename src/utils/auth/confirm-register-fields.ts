@@ -1,3 +1,5 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import isEmailValid from "./is-email-valid"

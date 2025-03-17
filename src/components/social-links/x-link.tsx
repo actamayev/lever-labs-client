@@ -1,3 +1,5 @@
+"use client"
+
 import { CustomX } from "../icons/custom-x"
 
 export default function XLink() {

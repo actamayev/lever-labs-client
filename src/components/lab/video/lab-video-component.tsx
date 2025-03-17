@@ -1,3 +1,5 @@
+"use client"
+
 // import ActivityTemplate from "../activity-structure/activity-template"
 
 // interface Props {

@@ -1,21 +1,24 @@
+"use client"
+
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import { usePathname } from "next/navigation"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
+import useRetrieveDataAfterLogin from "./retrieve-data-after-login"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 
-export default function useLoginSubmit (
-	whereToNavigate: PageNames,
-	setError: (error: string) => void
-): (loginInformation: LoginFormValues) => Promise<void> {
+export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginFormValues) => Promise<void> {
 	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
+	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
+	const pathname = usePathname()
 
 	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
 		setError("")
@@ -30,11 +33,12 @@ export default function useLoginSubmit (
 				return
 			}
 			setDataAfterLogin(response.data)
-			navigate(whereToNavigate)
+			void retrieveDataAfterLogin()
+			if (pathname === "/login") navigate("/lab")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, setDataAfterLogin, setError, whereToNavigate])
+	}, [authClass, blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
 }

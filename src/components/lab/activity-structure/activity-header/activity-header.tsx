@@ -1,3 +1,5 @@
+"use client"
+
 import { X } from "lucide-react"
 import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../../../shadcn/ui/button"

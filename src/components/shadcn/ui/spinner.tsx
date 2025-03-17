@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { cn } from '@/lib/shadcn/utils';
 import { VariantProps, cva } from 'class-variance-authority';

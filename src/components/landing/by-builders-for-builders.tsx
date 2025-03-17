@@ -1,3 +1,5 @@
+"use client"
+
 import BlueDot from "./blue-dot"
 import { cn } from "../../lib/shadcn/utils"
 import LandingSectionSplit from "./landing-section-split"

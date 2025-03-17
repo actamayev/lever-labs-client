@@ -1,3 +1,5 @@
+"use client"
+
 export default async function checkInternetConnectivity(): Promise<boolean> {
 	try {
 		const controller = new AbortController()

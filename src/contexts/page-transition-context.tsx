@@ -1,5 +1,7 @@
+"use client"
+
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 
 class PageTransitionClass {
 	public direction: PageTransitionDirections = null
@@ -17,13 +19,13 @@ class PageTransitionClass {
 	}
 }
 
-const PageTransitionContext = createContext(new PageTransitionClass())
+const pageTransitionInstance = new PageTransitionClass()
+
+const PageTransitionContext = createContext(pageTransitionInstance)
 
 export default function PageTransitionProvider ({ children }: { children: React.ReactNode }) {
-	const pageTransitionClass = useMemo(() => new PageTransitionClass(), [])
-
 	return (
-		<PageTransitionContext.Provider value={pageTransitionClass}>
+		<PageTransitionContext.Provider value={pageTransitionInstance}>
 			{children}
 		</PageTransitionContext.Provider>
 	)

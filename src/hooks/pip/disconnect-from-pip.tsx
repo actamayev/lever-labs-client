@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { usePipContext } from "../../contexts/pip-context"

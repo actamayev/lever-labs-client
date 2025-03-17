@@ -1,3 +1,5 @@
+"use client"
+
 import { landingParagraph, landingTableHeader, landingTableText } from "../../utils/text-styles"
 import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"

@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
@@ -25,7 +27,7 @@ function ReadingBlock({ block } : { block: ContentBlock }) {
 				labReadingClass.getBlockHeightState(block.id)
 			)}
 		>
-			{block.text}
+			{block.renderText()}
 			<div>
 				{isRevealed && block.action.type === "continue" && (
 					<ContinueButton blockId={block.id} />

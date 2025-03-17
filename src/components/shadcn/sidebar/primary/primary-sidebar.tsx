@@ -1,3 +1,5 @@
+"use client"
+
 import { Sidebar, SidebarFooter } from "@/components/shadcn/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
 import NavUser from "./nav-user/nav-user"

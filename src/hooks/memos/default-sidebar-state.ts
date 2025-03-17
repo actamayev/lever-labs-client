@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 

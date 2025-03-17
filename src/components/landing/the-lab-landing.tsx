@@ -1,3 +1,6 @@
+"use client"
+
+import Image from "next/image"
 import { BookOpen, Code2 } from "lucide-react"
 import ShowIcon from "./show-icon"
 import LandingSectionSplit from "./landing-section-split"
@@ -11,11 +14,15 @@ export default function TheLab() {
 		<LandingSectionSplit
 			imagePosition="left"
 			leftContent={
-				<div className="relative">
-					<img
-						src="pip_top_right.png"
+				<div className="relative w-full sm:w-4/5 md:w-[500px] h-[300px] sm:h-[350px] md:h-[400px]">
+					<Image
+						src="/pip_top_right.png"
 						alt="Pip"
-						className="max-w-full h-auto rounded-lg w-full sm:w-4/5 md:w-auto mx-auto"
+						className="rounded-lg"
+						fill
+						sizes="(max-width: 768px) 80vw, 500px"
+						style={{ objectFit: "contain" }}
+						priority
 					/>
 				</div>
 			}

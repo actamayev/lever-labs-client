@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent } from "../../shadcn/ui/card"
 
 interface Props {

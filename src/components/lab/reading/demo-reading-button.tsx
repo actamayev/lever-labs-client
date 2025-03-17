@@ -1,15 +1,15 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { useCallback, useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { CustomWizardHat } from "../../icons/custom-wizard-hat"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import { CustomWizardHat } from "../../icons/custom-wizard-hat"
 
 function DemoReadingButton({ block } : { block: ContentBlock }) {
-	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const pageTransitionClass = usePageTransitionContext()
 	const navigate = useTypedNavigate()
@@ -29,9 +29,8 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 
 	const navigateToDemo = useCallback(() => {
 		pageTransitionClass.setDirection("down") // Set before navigating
-		setTimeout(() => navigate(block.action.demoLink as LabPages), 10) // Small delay ensures state update
-		labReadingClass.handleDemoComplete(block.id)
-	}, [block.action.demoLink, block.id, labReadingClass, navigate, pageTransitionClass])
+		navigate(block.action.demoLink as LabPages)
+	}, [block.action.demoLink, navigate, pageTransitionClass])
 
 	return (
 		<TactileButton

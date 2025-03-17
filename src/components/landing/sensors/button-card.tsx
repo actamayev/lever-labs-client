@@ -1,3 +1,5 @@
+"use client"
+
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import ButtonSpringAnimation from "../../icon-animations/button-spring-animation"
