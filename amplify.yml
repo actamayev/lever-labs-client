@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm ci  # Install dependencies cleanly
+    build:
+      commands:
+        - npm run build  # Build the Next.js app
+    artifacts:
+      baseDirectory: .next  # Where the built files are located
+      files:
+        - '**/*'  # Include all files in .next
+    cache:
+      paths:
+        - node_modules/**/*  # Cache node_modules for faster builds
