@@ -18,12 +18,11 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { Avatar } from "@/components/shadcn/ui/avatar"
 import LogoutButton from "./logout-button"
-// import AddAnotherPipButton from "./add-another-pip-button"
-import useUsername from "../../../../../hooks/memos/username"
-// import NavigateToSettingsPage from "./navigate-to-settings-page"
+import useUsername from "../../../../hooks/memos/username"
 import ThemeTogglerDropdownItem from "./theme-toggler-dropdown-item"
-import { usePersonalInfoContext } from "../../../../../contexts/personal-info-context"
-import ShowUserProfileImageOrDefaultImage from "../../../../show-user-profile-image-or-default-image"
+import { usePersonalInfoContext } from "../../../../contexts/personal-info-context"
+import ShowUserProfileImageOrDefaultImage from "../../../show-user-profile-image-or-default-image"
+import { cn } from "../../../../lib/shadcn/utils"
 
 function NavUser() {
 	const { isMobile } = useSidebar()
@@ -42,21 +41,30 @@ function NavUser() {
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<SidebarMenuButton
-							className="!flex !h-[55px] !w-[55px] !min-w-[55px] relative items-center justify-center
-                            group-data-[collapsible=icon]:!h-[55px] group-data-[collapsible=icon]:!w-[55px]
-                            data-[state=open]:bg-sidebarButtonHover data-[state=open]:text-sidebar-accent-foreground !p-0
-							hover:bg-sidebarButtonHover"
+							className={cn(
+								"transition-none !flex items-center justify-start !p-0 !h-[50px]",
+								"border-2 border-transparent rounded-xl",
+								"hover:!bg-sidebarButtonHover",
+								"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
+							)}
 							tooltip={{
 								children: "Profile",
 								hidden: false
 							}}
 						>
-							<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
-								<ShowUserProfileImageOrDefaultImage
-									extraClasses="min-w-full min-h-full rounded-lg object-cover"
-									profileImageUrl={profilePictureUrl}
-								/>
-							</Avatar>
+							<div className="flex items-center justify-center space-x-4">
+								<div className="ml-2.5 flex-shrink-0 w-[35px] h-[35px]">
+									<Avatar className="!h-[35px] !w-[35px] !min-w-[35px] rounded-lg">
+										<ShowUserProfileImageOrDefaultImage
+											extraClasses="min-w-full min-h-full rounded-lg object-cover"
+											profileImageUrl={profilePictureUrl}
+										/>
+									</Avatar>
+								</div>
+								<div className="text-base text-lightLandingPageText">
+									PROFILE
+								</div>
+							</div>
 						</SidebarMenuButton>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent

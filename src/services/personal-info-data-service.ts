@@ -20,10 +20,4 @@ export default class PersonalInfoDataService {
 			`${this.pathHeader}/set-default-site-theme/${newSiteTheme}`
 		)
 	}
-
-	async setDefaultSidebarState(newSidebarState: SidebarStates): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
-		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			`${this.pathHeader}/set-default-sidebar-state/${newSidebarState}`
-		)
-	}
 }

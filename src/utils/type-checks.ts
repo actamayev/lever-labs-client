@@ -27,10 +27,6 @@ export function isValidSiteTheme(value: any): value is SiteThemes {
 	return ["light", "dark"].includes(value)
 }
 
-export function isValidSidebarState(value: any): value is SidebarStates {
-	return ["expanded", "collapsed"].includes(value)
-}
-
 export function isValidRoute(route: string): route is PageNames {
 	return allPages.includes(route as PageNames)
 }
