@@ -14,17 +14,10 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
-import useRedirectKnownUser from "../../../hooks/redirects/redirect-known-user"
 
-interface Props {
-	whereToNavigate: PageNames
-}
-
-function LoginComponent(props: Props) {
-	const { whereToNavigate } = props
-	useRedirectKnownUser()
+function LoginComponent() {
 	const [error, setError] = useState("")
-	const loginSubmit = useLoginSubmit(whereToNavigate, setError)
+	const loginSubmit = useLoginSubmit(setError)
 
 	const form = useForm<LoginFormValues>({
 		resolver: zodResolver(loginSchema),
@@ -55,7 +48,7 @@ function LoginComponent(props: Props) {
 					<OrComponent />
 
 					<div className="grid gap-2">
-						<GoogleSignIn whereToNavigate={whereToNavigate} />
+						<GoogleSignIn />
 					</div>
 				</form>
 			</Form>

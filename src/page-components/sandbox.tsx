@@ -11,7 +11,7 @@ function Sandbox() {
 	if (authClass.isLoggedIn === false) {
 		return (
 			<div className="pt-16">
-				<ShowAuthToNullUser whereToNavigate="/sandbox" />
+				<ShowAuthToNullUser />
 			</div>
 		)
 	}

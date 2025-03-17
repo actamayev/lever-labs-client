@@ -3,8 +3,8 @@
 import { GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
 
-export default function GoogleSignIn({ whereToNavigate }: { whereToNavigate?: PageNames }) {
-	const googleAuthCallback = useGoogleAuthCallback(whereToNavigate)
+export default function GoogleSignIn() {
+	const googleAuthCallback = useGoogleAuthCallback()
 
 	return (
 		<div className="flex justify-center">

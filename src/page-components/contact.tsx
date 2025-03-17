@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect } from "react"
-import SupportHeader from "../../components/support/support-header"
-import ContactItemInCard from "../../components/contact/contact-item-in-card"
-import FooterSocialSection from "../../components/footer/footer-social-section"
-import SupportSectionContainer from "../../components/support/support-section-container"
+import SupportHeader from "../components/support/support-header"
+import ContactItemInCard from "../components/contact/contact-item-in-card"
+import FooterSocialSection from "../components/footer/footer-social-section"
+import SupportSectionContainer from "../components/support/support-section-container"
 
 export default function Contact() {
 	useEffect(() => {

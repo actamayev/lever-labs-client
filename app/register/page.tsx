@@ -1,4 +1,4 @@
-import RegisterComponent from "../../src/components/auth/register/register-component"
+import RegisterWrapper from "./register-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -10,5 +10,5 @@ export const metadata = createMetadata({
 })
 
 export default function Register() {
-	return <RegisterComponent />
+	return <RegisterWrapper />
 }

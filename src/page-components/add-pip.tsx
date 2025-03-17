@@ -9,7 +9,7 @@ function AddPip() {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
-		return <ShowAuthToNullUser whereToNavigate="/add-pip" />
+		return <ShowAuthToNullUser />
 	}
 
 	return <AddPipForm />

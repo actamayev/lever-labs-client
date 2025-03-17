@@ -1,4 +1,4 @@
-import RegisterUsernamePage from "../../src/page-components/auth/register-username-page"
+import RegisterUsernamePage from "../../src/page-components/register-username-page"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

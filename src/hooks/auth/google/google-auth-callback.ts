@@ -8,13 +8,15 @@ import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
+import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import { usePathname } from "next/navigation"
 
-export default function useGoogleAuthCallback(
-	whereToNavigate?: PageNames
-): (successResponse: CredentialResponse) => Promise<void> {
+export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
+	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
+	const pathName = usePathname()
 
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
@@ -38,9 +40,10 @@ export default function useGoogleAuthCallback(
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
-			if (whereToNavigate) navigate(whereToNavigate)
+			void retrieveDataAfterLogin()
+			if (pathName === "/login") navigate("/lab")
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterLogin, whereToNavigate])
+	}, [blueDotApiClient.authDataService, navigate, pathName, retrieveDataAfterLogin, setDataAfterLogin])
 }

@@ -1,4 +1,4 @@
-import LoginComponent from "../../src/components/auth/login/login-component"
+import LoginWrapper from "./login-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -10,5 +10,5 @@ export const metadata = createMetadata({
 })
 
 export default function Login() {
-	return <LoginComponent whereToNavigate="/lab" />
+	return <LoginWrapper />
 }

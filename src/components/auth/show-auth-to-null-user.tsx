@@ -5,18 +5,13 @@ import Login from "./login/login-component"
 import Register from "./register/register-component"
 import { useAuthContext } from "../../contexts/auth-context"
 
-interface Props {
-	whereToNavigate: PageNames
-}
-
-function ShowAuthToNullUser(props: Props) {
-	const { whereToNavigate } = props
+function ShowAuthToNullUser() {
 	const authClass = useAuthContext()
 
 	if (authClass.showLoginOrRegister === "Register") {
 		return <Register />
 	}
-	return <Login whereToNavigate={whereToNavigate} />
+	return <Login />
 }
 
 export default observer(ShowAuthToNullUser)
