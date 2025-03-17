@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import EmailInput from "./email-input"
@@ -16,7 +15,7 @@ import AuthTemplate from "../../templates/auth-template"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
 
-function RegisterComponent() {
+export default function RegisterComponent() {
 	const [error, setError] = useState("")
 	const registerSubmit = useRegisterSubmit(setError)
 
@@ -66,5 +65,3 @@ function RegisterComponent() {
 		</AuthTemplate>
 	)
 }
-
-export default observer(RegisterComponent)

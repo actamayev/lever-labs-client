@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import { Form } from "@/components/shadcn/ui/form"
@@ -15,7 +14,7 @@ import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 
-function LoginComponent() {
+export default function LoginComponent() {
 	const [error, setError] = useState("")
 	const loginSubmit = useLoginSubmit(setError)
 
@@ -55,5 +54,3 @@ function LoginComponent() {
 		</AuthTemplate>
 	)
 }
-
-export default observer(LoginComponent)

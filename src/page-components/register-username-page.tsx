@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,10 +10,8 @@ import AuthTemplate from "../components/templates/auth-template"
 import { registerUsernameSchema } from "../utils/auth/auth-schemas"
 import useUsernameSubmit from "../hooks/auth/google/username-submit"
 import UsernameInput from "../components/auth/register/username-input"
-import useRedirectUserWithUsername from "../hooks/redirects/redirect-user-with-username"
 
-function RegisterUsernamePage() {
-	useRedirectUserWithUsername()
+export default function RegisterUsernamePage() {
 	const [error, setError] = useState("")
 	const usernameSubmit = useUsernameSubmit(setError)
 
@@ -48,5 +45,3 @@ function RegisterUsernamePage() {
 		</>
 	)
 }
-
-export default observer(RegisterUsernamePage)
