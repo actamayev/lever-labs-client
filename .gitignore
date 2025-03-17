@@ -22,3 +22,4 @@ yarn-error.log*
 
 .next/
 tsconfig.tsbuildinfo
+.vercel

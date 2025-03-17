@@ -1,12 +1,10 @@
-import { NextConfig } from "next"
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
 		domains: [], // Add any image domains you need
 	},
-	webpack: (config: NextConfig): NextConfig => {
+	webpack: (config) => {
 	// Carry over your fallbacks from craco.config.js
 		config.resolve.fallback = {
 			fs: false,
