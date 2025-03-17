@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { TvMinimal } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"

@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useEffect } from "react"

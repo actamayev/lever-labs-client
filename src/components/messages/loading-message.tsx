@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "../../lib/shadcn/utils"
 import { Spinner } from "../shadcn/ui/spinner"
 import { Alert, AlertDescription } from "../shadcn/ui/alert"

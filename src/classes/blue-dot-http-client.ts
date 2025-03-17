@@ -1,3 +1,5 @@
+"use client"
+
 import axios, { AxiosInstance } from "axios"
 import isNull from "lodash-es/isNull"
 
@@ -7,7 +9,7 @@ export default class BlueDotHttpClient {
 
 	constructor() {
 		this.http = axios.create({
-			baseURL: process.env.REACT_APP_BASE_URL as string,
+			baseURL: process.env.NEXT_PUBLIC_BASE_URL as string,
 			withCredentials: true,
 			headers: {
 				"Content-Type": "application/json"

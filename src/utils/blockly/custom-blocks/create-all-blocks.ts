@@ -1,3 +1,5 @@
+"use client"
+
 import { pipBlocks } from "./pip-blocks"
 import { logicBlocks } from "./logic-blocks"
 import { motorsBlocks } from "./motors-blocks"

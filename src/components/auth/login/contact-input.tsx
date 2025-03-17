@@ -1,3 +1,5 @@
+"use client"
+
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"

@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import toUpper from "lodash-es/toUpper"
 import { ArrowRight } from "lucide-react"

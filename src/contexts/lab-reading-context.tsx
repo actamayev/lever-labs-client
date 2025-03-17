@@ -1,8 +1,10 @@
+"use client"
+
 import isNil from "lodash-es/isNil"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 
 class LabReadingClass {
 	public currentReadingName: ReadingNames | null = null
@@ -28,7 +30,9 @@ class LabReadingClass {
 
 	public setShownBlocks = action((blockId: ContentBlockID): void => {
 		if (this.checkIfBlockIsShown(blockId)) return
-		this.shownBlocks.push(this.activeBlocks.find(block => block.id === blockId) as ContentBlock)
+		const foundBlock = this.activeBlocks.find(block => block.id === blockId)
+		if (isUndefined(foundBlock)) return
+		this.shownBlocks.push(foundBlock)
 	})
 
 	public setBlocks = action((blocks: ContentBlock[], readingName: ReadingNames): void => {
@@ -177,7 +181,7 @@ class LabReadingClass {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
-		this.scrollToNextBlock(blockId)
+		this.scrollToNextBlock(blockId, false)
 	})
 
 	public handleNextQuestion = action(() => {
@@ -314,7 +318,7 @@ class LabReadingClass {
 		})
 	})
 
-	private scrollToNextBlock = action((blockId: ContentBlockID) => {
+	private scrollToNextBlock = action((blockId: ContentBlockID, schouldScroll: boolean = true) => {
 		const nextBlock = this.getNextBlock(blockId)
 		if (!nextBlock) return
 
@@ -328,6 +332,7 @@ class LabReadingClass {
 
 		this.setShownBlocks(nextBlock.id)
 
+		if (!schouldScroll) return
 		requestAnimationFrame(() => {
 			const nextElement = document.getElementById(`block-${nextBlock.id}`)
 			if (!nextElement) return
@@ -436,13 +441,13 @@ class LabReadingClass {
 	}
 }
 
-const LabReadingContext = createContext(new LabReadingClass())
+const labReadingInstance = new LabReadingClass()
+
+const LabReadingContext = createContext(labReadingInstance)
 
 export default function LabReadingProvider ({ children }: { children: React.ReactNode }) {
-	const labReadingClass = useMemo(() => new LabReadingClass(), [])
-
 	return (
-		<LabReadingContext.Provider value={labReadingClass}>
+		<LabReadingContext.Provider value={labReadingInstance}>
 			{children}
 		</LabReadingContext.Provider>
 	)

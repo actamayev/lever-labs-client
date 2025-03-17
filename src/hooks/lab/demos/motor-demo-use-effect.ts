@@ -1,3 +1,5 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 import { useEffect, useRef } from "react"
 import useHandleMotorControl from "./handle-motor-control"

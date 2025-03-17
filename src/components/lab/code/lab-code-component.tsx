@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import LabCodeMainContent from "./lab-code-main-content"
 import ActivityTemplate from "../activity-structure/activity-template"

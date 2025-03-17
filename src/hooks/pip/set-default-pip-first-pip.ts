@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 

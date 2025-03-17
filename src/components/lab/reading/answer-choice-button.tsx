@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"

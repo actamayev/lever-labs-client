@@ -1,3 +1,5 @@
+"use client"
+
 import { Check } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"

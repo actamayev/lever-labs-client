@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 
 // Define dark and light themes

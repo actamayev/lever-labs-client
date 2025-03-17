@@ -1,3 +1,5 @@
+"use client"
+
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"

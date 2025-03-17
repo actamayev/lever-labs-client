@@ -1,3 +1,5 @@
+"use client"
+
 import { Switch } from "@/components/shadcn/ui/switch"
 import { cn } from "../lib/shadcn/utils"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { BlueTactileButton } from "./tactile-buttons"
 import { useAuthContext } from "../../contexts/auth-context"

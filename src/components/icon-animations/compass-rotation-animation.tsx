@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { CustomCompass } from "../icons/custom-compass"

@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export const PIP_BLOCK_TYPES = {

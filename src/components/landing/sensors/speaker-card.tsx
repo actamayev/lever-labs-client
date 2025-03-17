@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import { Volume1, Volume2, Volume } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"

@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { CheckCircle } from "lucide-react"

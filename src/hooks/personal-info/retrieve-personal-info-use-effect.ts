@@ -1,37 +1,10 @@
-import isNull from "lodash-es/isNull"
-import isEqual from "lodash-es/isEqual"
-import { useCallback, useEffect } from "react"
-import { isErrorResponse } from "../../utils/type-checks"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+"use client"
+
+import { useEffect } from "react"
+import useRetrievePersonalInfo from "./retrieve-personal-info"
 
 export default function useRetrievePersonalInfoUseEffect(): void {
-	const blueDotApiClient = useApiClientContext()
-	const personalInfoClass = usePersonalInfoContext()
-
-	const retrievePersonalInfo = useCallback(async () => {
-		try {
-			if (
-				personalInfoClass.isRetrievingPersonalInfo === true ||
-				isNull(blueDotApiClient.httpClient.accessToken) ||
-				personalInfoClass.retrievedPeronsalInfo === true
-			) return
-
-			personalInfoClass.setIsRetrievingPersonalDetails(true)
-
-			const personalInfoResponse = await blueDotApiClient.personalInfoDataService.retrievePersonalInfo()
-			if (!isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
-				throw Error ("Unable to retrieve personal info")
-			}
-			personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
-			personalInfoClass.setRetrievedPersonalInfo(true)
-		} catch (error) {
-			console.error(error)
-		} finally {
-			personalInfoClass.setIsRetrievingPersonalDetails(false)
-		}
-	}, [personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService])
-
+	const retrievePersonalInfo = useRetrievePersonalInfo()
 	useEffect(() => {
 		void retrievePersonalInfo()
 	}, [retrievePersonalInfo])

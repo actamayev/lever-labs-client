@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
@@ -63,12 +65,13 @@ type LandingCTAProps = ColoredTactileButtonProps & {
 }
 
 export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
-	({ children, ...props }) => {
+	({ children, navigateTo, ...props }, ref) => { // Add ref parameter here
 		const defaultSiteTheme = useDefaultSiteTheme()
 		const navigate = useTypedNavigate()
 		return (
 			<TactileButton
-				onClick={() => navigate(props.navigateTo)}
+				ref={ref} // Add this line to pass the ref to TactileButton
+				onClick={() => navigate(navigateTo)}
 				className={cn(
 					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl transition-none",
 					"rounded-xl sm:rounded-2xl border-2 w-full md:w-2/3",

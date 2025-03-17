@@ -1,11 +1,13 @@
-import { useLocation } from "react-router"
+"use client"
+
+import { usePathname } from "next/navigation"
 import FooterLink from "./footer-link"
 import FooterThemeToggle from "./footer-theme-toggle"
 import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
-	const location = useLocation()
-	if (location.pathname !== "/") return null
+	const pathname = usePathname() // This returns the current path as a string
+	if (pathname !== "/") return null
 
 	return (
 		<footer id="footer" className="bg-standardBackground/70 w-full pb-3 md:py-3 z-20 transition-all duration-300">

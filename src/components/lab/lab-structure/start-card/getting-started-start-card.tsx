@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import GettingStartedAddPip from "./getting-started-add-pip"

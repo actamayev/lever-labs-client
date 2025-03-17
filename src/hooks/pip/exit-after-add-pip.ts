@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"

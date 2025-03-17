@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "../../lib/shadcn/utils"
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"

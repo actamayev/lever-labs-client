@@ -1,6 +1,11 @@
-import { Link } from "react-router"
+"use client"
+
+import Link from "next/link"
+import Image from "next/image"
+import { usePathname } from "next/navigation"
 
 export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
+	const pathname = usePathname()
 	return (
 		<div
 			className={`inline-flex items-center flex-grow-0 flex-shrink-0 z-10 ${
@@ -8,19 +13,19 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 			}`}
 		>
 			<Link
-				to="/"
+				href={pathname === "/register-username" ? "/register-username" : "/"}
 				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-pipThemeText duration-0"
 			>
-				<img
+				<Image
 					src="/favicon.svg"
 					alt="Logo"
 					className="h-8 sm:h-10"
-					style={{ verticalAlign: "middle" }}
+					style={{ verticalAlign: "middle", width: "auto" }}
+					width={32}
+					height={32}
 				/>
 				{/* Text visibility: always show on mobile when not scrolled, hidden on mobile when scrolled */}
-				<span
-					className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}
-				>
+				<span className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}>
 					Blue Dot Robots
 				</span>
 			</Link>

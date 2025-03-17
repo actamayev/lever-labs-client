@@ -1,3 +1,5 @@
+"use client"
+
 export default function OrComponent() {
 	return (
 		<div className="relative">
