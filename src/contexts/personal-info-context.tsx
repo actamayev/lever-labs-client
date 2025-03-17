@@ -65,7 +65,6 @@ class PersonalInfoClass {
 		this.setRetrievedPersonalInfo(false)
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("light")
-		// this.setDefaultSidebarState("expanded")
 	}
 }
 
