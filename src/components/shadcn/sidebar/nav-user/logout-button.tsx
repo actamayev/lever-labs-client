@@ -3,9 +3,9 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { LogOut } from "lucide-react"
-import { cn } from "../../../../../lib/shadcn/utils"
-import { DropdownMenuItem } from "../../../ui/dropdown-menu"
-import useHandleLogout from "../../../../../hooks/auth/handle-logout"
+import { DropdownMenuItem } from "../../ui/dropdown-menu"
+import useHandleLogout from "../../../../hooks/auth/handle-logout"
+import { cn } from "../../../../lib/shadcn/utils"
 
 function LogoutButton() {
 	const [logoutDisabled, setLogoutDisabled] = useState(false)

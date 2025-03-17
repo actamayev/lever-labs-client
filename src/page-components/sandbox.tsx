@@ -9,15 +9,11 @@ function Sandbox() {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
-		return (
-			<div className="pt-16">
-				<ShowAuthToNullUser />
-			</div>
-		)
+		return <ShowAuthToNullUser />
 	}
 
 	return (
-		<div className="pt-16">
+		<div className="text-questionText text-3xl pt-16">
 			<SandboxBlocklyComponent />
 		</div>
 	)

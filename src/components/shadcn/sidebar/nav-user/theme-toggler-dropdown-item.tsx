@@ -2,8 +2,8 @@
 
 import { observer } from "mobx-react"
 import { Moon, Sun } from "lucide-react"
-import { DropdownMenuItem } from "../../../ui/dropdown-menu"
-import useSetDefaultSiteTheme from "../../../../../hooks/personal-info/set-default-site-theme"
+import { DropdownMenuItem } from "../../ui/dropdown-menu"
+import useSetDefaultSiteTheme from "../../../../hooks/personal-info/set-default-site-theme"
 
 function ThemeTogglerDropdownItem() {
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
