@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Bot, PlusCircle } from "lucide-react"
-import { DropdownMenuItem } from "../../../ui/dropdown-menu"
-import { usePipContext } from "../../../../../contexts/pip-context"
-import useTypedNavigate from "../../../../../hooks/navigate/typed-navigate"
+import { DropdownMenuItem } from "../../ui/dropdown-menu"
+import { usePipContext } from "../../../../contexts/pip-context"
+import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 
 function AddAnotherPipButton() {
 	const navigate = useTypedNavigate()
