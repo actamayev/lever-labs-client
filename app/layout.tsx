@@ -1,4 +1,5 @@
 import { Viewport } from "next"
+import { Analytics } from "@vercel/analytics/next"
 import "../src/styles/index.css"
 import Providers from "./providers"
 
@@ -11,7 +12,7 @@ export const viewport: Viewport = {
 export default function RootLayout({
 	children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
 	return (
 		<html lang="en">
@@ -19,6 +20,7 @@ export default function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
+				<Analytics />
 			</body>
 		</html>
 	)
