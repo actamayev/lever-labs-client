@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import isEmpty from "lodash-es/isEmpty"
 import { Check, Upload } from "lucide-react"

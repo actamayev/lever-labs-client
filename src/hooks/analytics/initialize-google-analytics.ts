@@ -1,8 +1,10 @@
-import { useLocation } from "react-router"
+"use client"
+
+import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function useInitializeGoogleAnalytics(): void {
-	const location = useLocation()
+	const pathname = usePathname() // This returns the current path as a string
 	const [analyticsInitialized, setAnalyticsInitialized] = useState(false)
 
 	// Initialize GA only once when component mounts
@@ -11,7 +13,7 @@ export default function useInitializeGoogleAnalytics(): void {
 			try {
 				// Dynamically import ReactGA only when needed
 				const ReactGA = (await import("react-ga4")).default
-				ReactGA.initialize(process.env.REACT_APP_MEASUREMENT_ID as string)
+				ReactGA.initialize(process.env.NEXT_PUBLIC_MEASUREMENT_ID as string)
 				setAnalyticsInitialized(true)
 			} catch (error) {
 				console.error("Failed to initialize Google Analytics:", error)
@@ -29,10 +31,10 @@ export default function useInitializeGoogleAnalytics(): void {
 			const ReactGA = (await import("react-ga4")).default
 			ReactGA.send({
 				hitType: "pageview",
-				page: location.pathname
+				page: pathname
 			})
 		}
 
 		sendPageView()
-	}, [location, analyticsInitialized])
+	}, [pathname, analyticsInitialized]) // Change dependency from location to pathname
 }

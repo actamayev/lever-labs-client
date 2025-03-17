@@ -1,12 +1,14 @@
-import { useLocation } from "react-router"
+"use client"
+
+import { usePathname } from "next/navigation"
 import { Sidebar } from "@/components/shadcn/ui/sidebar"
 import SandboxSidebar from "./sandbox-sidebar"
 import PrimarySidebar from "./primary/primary-sidebar"
 import { showPrimarySidebarPages } from "../../../utils/constants"
 
 export default function AppSidebar() {
-	const location = useLocation()
-	const shouldShowSidebar = showPrimarySidebarPages.includes(location.pathname as PageNames)
+	const pathname = usePathname()
+	const shouldShowSidebar = showPrimarySidebarPages.includes(pathname as PageNames)
 
 	if (!shouldShowSidebar) return null
 
@@ -16,7 +18,7 @@ export default function AppSidebar() {
 			className="overflow-hidden [&>[data-sidebar=sidebar]]:flex-row border-disabledLilypadBackground"
 		>
 			<PrimarySidebar />
-			{location.pathname.startsWith("/sandbox") && <SandboxSidebar />}
+			{pathname.startsWith("/sandbox") && <SandboxSidebar />}
 		</Sidebar>
 	)
 }

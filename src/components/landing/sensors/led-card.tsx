@@ -1,3 +1,5 @@
+"use client"
+
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants"
 import LEDColorChangeAnimation from "../../icon-animations/led-color-change-animation"

@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"

@@ -1,3 +1,5 @@
+"use client"
+
 import { CustomLinkedin } from "../icons/custom-linkedin"
 
 export default function LinkedinLink() {

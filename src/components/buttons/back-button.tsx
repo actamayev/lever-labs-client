@@ -1,12 +1,14 @@
+"use client"
+
 import { useCallback } from "react"
 import { ArrowLeft } from "lucide-react"
-import { useNavigate } from "react-router"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/shadcn/ui/button"
 
 export default function BackButton () {
-	const navigate = useNavigate()
+	const router = useRouter()
 
-	const handleBack = useCallback(() => navigate(-1), [navigate])
+	const handleBack = useCallback(() => router.back(), [router])
 
 	return (
 		<Button

@@ -1,5 +1,7 @@
+"use client"
+
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext, useMemo } from "react"
+import { createContext, useContext } from "react"
 
 class LabDemoClass {
 	public activeDemoName: DemoNames | null = null
@@ -29,13 +31,13 @@ class LabDemoClass {
 	}
 }
 
-const LabDemoContext = createContext(new LabDemoClass())
+const demoInstance = new LabDemoClass()
+
+const LabDemoContext = createContext(demoInstance)
 
 export default function LabDemoProvider ({ children }: { children: React.ReactNode }) {
-	const labDemoClass = useMemo(() => new LabDemoClass(), [])
-
 	return (
-		<LabDemoContext.Provider value={labDemoClass}>
+		<LabDemoContext.Provider value={demoInstance}>
 			{children}
 		</LabDemoContext.Provider>
 	)

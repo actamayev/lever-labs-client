@@ -1,25 +1,27 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
-import { useLocation } from "react-router"
+import { usePathname } from "next/navigation"
 import { useCallback, useEffect } from "react"
 import { usePageTransitionContext } from "../../contexts/page-transition-context"
 
 export default function useResetTransitionDirectionUseEffect(): void {
 	const pageTransitionClass = usePageTransitionContext()
-	const location = useLocation()
+	const pathname = usePathname()
 
 	// This is here to disable setting direction to null when the user in in the lesson.
 	// Without this, if the user goes back from the demo to the reading, the page re-renders when the direction is set to null,
 	// causing the scroll to reset to top
 	const isCurrentLocationLesson = useCallback(() => {
 		if (
-			location.pathname.includes("/reading") ||
-			location.pathname.includes("/demo") ||
-			location.pathname.includes("/code")
+			pathname.includes("/reading") ||
+			pathname.includes("/demo") ||
+			pathname.includes("/code")
 		) {
 			return true
 		}
 		return false
-	}, [location.pathname])
+	}, [pathname])
 
 	useEffect(() => {
 		if (

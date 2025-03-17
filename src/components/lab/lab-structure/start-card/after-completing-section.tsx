@@ -1,3 +1,5 @@
+"use client"
+
 import { CircuitBoard, Hourglass } from "lucide-react"
 
 export default function AfterCompletingSection() {

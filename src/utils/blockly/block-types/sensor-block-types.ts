@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable @typescript-eslint/naming-convention */
 
 export const SENSORS_BLOCK_TYPES = {

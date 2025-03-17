@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"

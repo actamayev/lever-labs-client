@@ -1,3 +1,5 @@
+"use client"
+
 import { Control, FieldPath } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import CharacterCounter from "../../character-counter"

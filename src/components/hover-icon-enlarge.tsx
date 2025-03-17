@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable @typescript-eslint/naming-convention */
 import { LucideIcon } from "lucide-react"
 import { cn } from "../lib/shadcn/utils"

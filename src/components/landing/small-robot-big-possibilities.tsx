@@ -1,3 +1,6 @@
+"use client"
+
+import Image from "next/image"
 import { landingParagraph } from "../../utils/text-styles"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import LandingSectionSplit from "./landing-section-split"
@@ -26,11 +29,15 @@ export default function SmallRobotBigPossibilities() {
 				</>
 			}
 			rightContent={
-				<div className="relative">
-					<img
-						src="pip_right.png"
+				<div className="relative w-full sm:w-4/5 md:w-[500px] h-[300px] sm:h-[350px] md:h-[400px]">
+					<Image
+						src="/pip_right.png"
 						alt="Pip"
 						className="max-w-full h-auto rounded-lg w-full sm:w-4/5 md:w-auto mx-auto"
+						fill
+						sizes="(max-width: 768px) 80vw, 500px"
+						style={{ objectFit: "contain" }}
+						priority
 					/>
 				</div>
 			}

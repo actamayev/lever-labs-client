@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import ErrorMessage from "../messages/error-message"

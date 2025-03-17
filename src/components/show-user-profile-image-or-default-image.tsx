@@ -1,9 +1,12 @@
+"use client"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { cn } from "../lib/shadcn/utils"
 import { CustomUserCircle } from "./icons/custom-user-circle"
 import isNull from "lodash-es/isNull"
+import Image from "next/image"
 
 interface Props {
 	profileImageUrl: string | null
@@ -32,7 +35,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 	}
 
 	return (
-		<img
+		<Image
 			src={profileImageUrl}
 			alt="Creator's Profile"
 			className={extraClasses}

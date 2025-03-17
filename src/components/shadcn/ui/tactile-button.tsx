@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { Button, ButtonProps } from "@/components/shadcn/ui/button"
 import { cn } from "@/lib/shadcn/utils"

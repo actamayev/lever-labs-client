@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../navigate/typed-navigate"
@@ -25,6 +27,7 @@ export default function useRegisterSubmit (
 			authClass.setAuthenticating(true)
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			const { passwordConfirmation, ...restOfCredentials } = registerCredentials
+			if (typeof window === "undefined") return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
 			let siteTheme: SiteThemes = "dark"

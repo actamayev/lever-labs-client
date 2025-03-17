@@ -1,4 +1,6 @@
-import { createContext, useContext, useMemo } from "react"
+"use client"
+
+import { createContext, useContext } from "react"
 import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"
 import MiscDataService from "../services/misc-data-service"
@@ -32,13 +34,13 @@ class BlueDotApiClient {
 	}
 }
 
-const BlueDotApiClientContext = createContext(new BlueDotApiClient())
+const apiClientInstance = new BlueDotApiClient()
+
+const BlueDotApiClientContext = createContext(apiClientInstance)
 
 export default function BlueDotApiClientProvider ({ children }: { children: React.ReactNode }) {
-	const apiClientClass = useMemo(() => new BlueDotApiClient(), [])
-
 	return (
-		<BlueDotApiClientContext.Provider value={apiClientClass}>
+		<BlueDotApiClientContext.Provider value={apiClientInstance}>
 			{children}
 		</BlueDotApiClientContext.Provider>
 	)

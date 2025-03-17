@@ -1,3 +1,5 @@
+"use client"
+
 import { Tooltip, TooltipTrigger, TooltipProvider, TooltipContent } from "./shadcn/ui/tooltip"
 
 interface TooltipProps {

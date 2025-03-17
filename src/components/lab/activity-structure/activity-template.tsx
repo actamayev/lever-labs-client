@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"

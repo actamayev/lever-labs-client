@@ -1,3 +1,5 @@
+"use client"
+
 import DemoButton from "./demo-button"
 import InThisDemo from "./in-this-demo"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"

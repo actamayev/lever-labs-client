@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import EnterWifiPassword from "./enter-wifi-password"

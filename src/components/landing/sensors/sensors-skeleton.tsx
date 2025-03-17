@@ -1,3 +1,5 @@
+"use client"
+
 import { cn } from "../../../lib/shadcn/utils"
 import { landingSensorCardHeaderText, landingSensorCardText } from "../../../utils/text-styles"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { toJS } from "mobx"
 import { observer } from "mobx-react"
 import { useEffect, useRef } from "react"
@@ -18,7 +20,7 @@ function ReadingContainer({ blocks, readingName } : Props) {
 	useEffect(() => {
 		labReadingClass.setBlocks(blocks, readingName)
 		labReadingClass.setShownBlocks(blocks[0].id)
-	}, [blocks, readingName, labReadingClass])
+	}, [blocks, labReadingClass, readingName])
 
 	return (
 		<div className="h-full flex relative">

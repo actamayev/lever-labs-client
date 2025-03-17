@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { AxiosError } from "axios"
 import { useCallback } from "react"

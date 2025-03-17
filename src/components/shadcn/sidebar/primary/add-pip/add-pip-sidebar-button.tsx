@@ -1,4 +1,7 @@
+"use client"
+
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import PipStatusTooltip from "./pip-status-tooltip"
@@ -9,11 +12,12 @@ import useClickPipSidebarButton from "../../../../../hooks/pip/click-pip-sidebar
 import useSetSelectedPipToFirstPip from "../../../../../hooks/pip/set-default-pip-first-pip"
 
 function AddPipSidebarButton() {
+	const pathname = usePathname()
 	const pipClass = usePipContext()
 	const clickPipSidebarButton = useClickPipSidebarButton()
 	useSetSelectedPipToFirstPip()
 
-	const isActive = location.pathname === "/add-pip"
+	const isActive = pathname === "/add-pip"
 
 	return (
 		<SidebarMenu>
