@@ -48,12 +48,12 @@ module.exports = {
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
 				lightLandingPageText: "rgb(var(--light-landing-page-text))",
-				selectedSidebarText: "rgb(var(--selected-sidebar-text))",
 
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",
 				swan: "rgb(var(--swan))",
 				hare: "rgb(var(--hare))",
+				macaw: "rgb(var(--macaw))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -201,7 +201,7 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan", "hare"]
+	const excludeKeys = ["eel", "swan", "hare", "macaw"]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))

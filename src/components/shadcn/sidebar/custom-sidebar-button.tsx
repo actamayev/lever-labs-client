@@ -44,7 +44,7 @@ export default function CustomSidebarButton({
 				</div>
 				<div className={cn(
 					"text-base font-medium",
-					isActive ? "text-selectedSidebarText" : "text-lightLandingPageText"
+					isActive ? "text-macaw" : "text-lightLandingPageText"
 				)}>
 					{text}
 				</div>
