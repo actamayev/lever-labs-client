@@ -42,7 +42,7 @@ const rgbLedsReadingBlocks: ContentBlock[] = [
 				<ReadingBlockWithImage>
 					For example, LEDs made from Gallium Phosphide (GaP) emit&nbsp;
 					<span className="text-red-600">red</span>,&nbsp;
-					<span className="text-yellow-400">yellow</span>, or <span className="text-green-600">green</span>
+					<span className="text-bee">yellow</span>, or <span className="text-green-600">green</span>
 					&nbsp;light, while LEDs made from Gallium Nitride (GaN) emit&nbsp;
 					<span className="text-blue-600">blue</span> and white light.
 				</ReadingBlockWithImage>

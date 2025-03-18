@@ -23,7 +23,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 	const getAnswerStyles = () => {
 		const baseStyles = "group h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-		transition-colors bg-inherit text-unselectedAnswerText hover:bg-sidebarButtonHover \
+		transition-colors bg-inherit text-eel hover:bg-sidebarButtonHover \
 		whitespace-normal items-center duration-0 text-sm relative \
 		active:border-selectedSidebarButtonBorder active:bg-standardBackgroundHover active:text-answerText dark:active:text-answerText"
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
@@ -39,20 +39,20 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			border-selectedSidebarButtonBorder text-answerText dark:text-answerText"
 			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
 			dark:bg-green-900 dark:hover:bg-green-800 text-green-700 dark:text-green-300"
-			else if (isCorrect === false) isCorrectStyles = "border-red-500 bg-red-100 hover:bg-red-200 \
+			else if (isCorrect === false) isCorrectStyles = "border-cardinal bg-red-100 hover:bg-red-200 \
 			dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "hover:bg-hover:bg-sidebarButtonHover border-disabledLilypadBackground")
+		return cn(baseStyles, "hover:bg-hover:bg-sidebarButtonHover border-swan")
 	}
 
 	const getNumberStyles = () => {
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
 		const baseStyles = "absolute top-2 left-2 w-6 h-6 flex items-center justify-center \
-		border-2 rounded-md text-xs font-medium text-disabledLilypadIcon \
+		border-2 rounded-md text-xs font-medium text-hare \
 		active:border-selectedSidebarButtonBorder active:text-answerText dark:active:text-answerText"
 		if (isSelectedOrActiveQuizAttempt() && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles,
@@ -64,12 +64,12 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
 			let isCorrectStyles = "border-selectedSidebarButtonBorder text-answerText dark:text-answerText" // before answer is selected
 			if (isCorrect === true) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
-			else if (isCorrect === false) isCorrectStyles = "border-red-500 text-red-700 dark:text-red-300"
+			else if (isCorrect === false) isCorrectStyles = "border-cardinal text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "border-disabledLilypadBackground")
+		return cn(baseStyles, "border-swan")
 	}
 
 	// eslint-disable-next-line complexity

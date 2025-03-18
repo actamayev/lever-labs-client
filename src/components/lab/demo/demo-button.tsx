@@ -33,24 +33,23 @@ function DemoButton({ demo } : { demo: Demo }) {
 	return (
 		<button
 			className={cn(
-				"p-0 border border-disabledLilypadBackground rounded-lg",
+				"p-0 border border-swan rounded-lg",
 				"transition-colors text-left flex items-stretch",
-				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-gray-200 dark:hover:bg-gray-700"
+				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-swan dark:hover:bg-gray-700"
 			)}
 			onClick={setActiveDemo}
 		>
 			{/* Left Icon Section */}
-			<div className="flex items-center justify-center w-24 border-r
-                border-disabledLilypadBackground">
-				<demo.demoIcon className="h-12 w-12 text-gray-900 dark:text-gray-100" />
+			<div className="flex items-center justify-center w-24 border-r border-swan">
+				<demo.demoIcon className="h-12 w-12 text-gray-900 dark:text-eel" />
 			</div>
 
 			{/* Content Section */}
 			<div className="flex-1 p-4">
-				<h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
+				<h3 className="text-lg font-semibold text-eel dark:text-eel mb-2">
 					{demo.demoTitle}
 				</h3>
-				<p className="text-gray-600 dark:text-gray-200 text-sm">
+				<p className="text-eel dark:text-wolf text-sm">
 					{demo.demoDescription}
 				</p>
 			</div>

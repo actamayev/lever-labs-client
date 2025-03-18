@@ -18,7 +18,7 @@ function LogoutButton() {
 			className={cn(
 				"hover:cursor-pointer",
 				logoutDisabled ? "cursor-not-allowed" : "cursor-pointer",
-				"transition-none hover:!bg-sidebarButtonHover"
+				"transition-none hover:!bg-polar"
 			)}
 		>
 			<LogOut className="mr-2 !h-[25px] !w-[25px] !min-w-[25px]" />

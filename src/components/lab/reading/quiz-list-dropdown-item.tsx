@@ -25,7 +25,7 @@ function QuizListDropdownItem(props: Props) {
 
 	const extraClasses = () => {
 		if (isUndefined(isCorrect)) {
-			return "bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 dark:bg-gray-800 dark:hover-bg-gray-700 dark:focus:bg-gray-700"
+			return "bg-swan hover:bg-gray-300 focus:bg-gray-300 dark:bg-gray-800 dark:hover-bg-gray-700 dark:focus:bg-gray-700"
 		}
 		if (isCorrect === false) {
 			return "bg-red-200 hover:bg-red-300 focus:bg-red-300 dark:bg-red-800 dark:hover-bg-red-700 dark:focus:bg-red-700"

@@ -28,7 +28,7 @@ function QuizButton({ block } : { block: ContentBlock }) {
 			return "bg-green-100 border-green-400 text-green-800 hover:bg-green-50 \
 				dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
 		}
-		return "bg-purple-100 border-purple-400 text-purple-800 hover:bg-purple-50 \
+		return "bg-purple-100 border-beetle text-purple-800 hover:bg-purple-50 \
 			dark:bg-purple-900 dark:border-purple-600 dark:text-purple-200 dark:hover:bg-purple-950"
 	}, [isQuizCorrect])
 

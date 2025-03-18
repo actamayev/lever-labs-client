@@ -60,7 +60,7 @@ export function ReadingBlockWithImage(props: ReadingBlockProps) {
 					)}
 
 					{subtitle && (
-						<p className="text-sm text-gray-600 dark:text-gray-400 italic text-center">
+						<p className="text-sm text-eel dark:text-gray-400 italic text-center">
 							{subtitle}
 						</p>
 					)}

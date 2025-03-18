@@ -21,11 +21,11 @@ export default function LandingHeader() {
 			</div>
 			{/* Left side text remains the same */}
 			<div className="flex flex-col space-y-4 sm:space-y-6 w-full md:w-1/2 mt-6 sm:mt-10 md:mt-20">
-				<h1 className="text-3xl sm:text-3xl md:text-3xl lg:text-4xl text-unselectedAnswerText text-center font-medium
+				<h1 className="text-3xl sm:text-3xl md:text-3xl lg:text-4xl text-eel text-center font-medium
 				leading-tight sm:leading-relaxed">
 					The best way to learn robotics is with a partner!
 				</h1>
-				<h2 className="text-3xl sm:text-3xl md:text-2xl lg:text-4xl text-unselectedAnswerText
+				<h2 className="text-3xl sm:text-3xl md:text-2xl lg:text-4xl text-eel
 				text-center leading-relaxed font-bold">
 					Meet Pip
 				</h2>
