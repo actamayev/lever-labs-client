@@ -23,7 +23,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 	const getAnswerStyles = () => {
 		const baseStyles = "group h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-		transition-colors bg-inherit text-unselectedAnswerText hover:bg-sidebarButtonHover \
+		transition-colors bg-inherit text-eel hover:bg-sidebarButtonHover \
 		whitespace-normal items-center duration-0 text-sm relative \
 		active:border-selectedSidebarButtonBorder active:bg-standardBackgroundHover active:text-answerText dark:active:text-answerText"
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
@@ -45,7 +45,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "hover:bg-hover:bg-sidebarButtonHover border-disabledLilypadBackground")
+		return cn(baseStyles, "hover:bg-hover:bg-sidebarButtonHover border-swan")
 	}
 
 	const getNumberStyles = () => {
@@ -69,7 +69,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "border-disabledLilypadBackground")
+		return cn(baseStyles, "border-swan")
 	}
 
 	// eslint-disable-next-line complexity

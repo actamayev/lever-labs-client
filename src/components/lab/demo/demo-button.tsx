@@ -33,7 +33,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 	return (
 		<button
 			className={cn(
-				"p-0 border border-disabledLilypadBackground rounded-lg",
+				"p-0 border border-swan rounded-lg",
 				"transition-colors text-left flex items-stretch",
 				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-gray-200 dark:hover:bg-gray-700"
 			)}
@@ -41,7 +41,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 		>
 			{/* Left Icon Section */}
 			<div className="flex items-center justify-center w-24 border-r
-                border-disabledLilypadBackground">
+                border-swan">
 				<demo.demoIcon className="h-12 w-12 text-gray-900 dark:text-gray-100" />
 			</div>
 

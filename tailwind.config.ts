@@ -27,10 +27,6 @@ module.exports = {
 				// lightThemeBackground: "rgb(255, 255, 255)",
 				// darkThemeBackground: "rgb(20, 31, 35)",
 
-				disabledLilypadBackground: "rgb(var(--disabled-lilypad-background))",
-				// lilypadDarkBackground: "rgb(55, 70, 79)",
-				// lilypadLightBackgroundDisabled: "rgb(229, 229, 229)",
-
 				disabledLilypadIcon: "rgb(var(--disabled-lilypad-icon))",
 				// lilypadIconDisabledDark: "rgb(82, 100, 109)",
 				// lilypadIconDisabledLight: "rgb(175, 175, 175)",
@@ -49,7 +45,6 @@ module.exports = {
 				// sidebarButtonHoverLight: "rgb(247, 247, 247)",
 
 				answerText: "rgb(52, 153, 214)",
-				unselectedAnswerText: "rgb(var(--unselected-answer-text))",
 				questionText: "rgb(var(--question-text))",
 				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
 				// lilypadBlueBackground: "rgb(61, 176, 246)",
@@ -59,6 +54,9 @@ module.exports = {
 				lightLandingPageText: "rgb(var(--light-landing-page-text))",
 				selectedSidebarText: "rgb(var(--selected-sidebar-text))",
 
+				/* Duolingo colors */
+				eel: "rgb(var(--eel))",
+				swan: "rgb(var(--swan))",
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
@@ -205,8 +203,11 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
+	const excludeKeys = ["eel", "swan"]
 	const newVars = Object.fromEntries(
-		Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+		Object.entries(allColors)
+			.filter(([key]) => !excludeKeys.includes(key))
+			.map(([key, val]) => [`--${key}`, val])
 	)
 
 	addBase({

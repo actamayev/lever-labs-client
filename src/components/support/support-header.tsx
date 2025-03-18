@@ -8,7 +8,7 @@ import { cn } from "../../lib/shadcn/utils"
 export function SupportBorder() {
 	return (
 		<div className="container mx-auto w-full">
-			<div className="border-b-2 border-disabledLilypadBackground rounded-xl"></div>
+			<div className="border-b-2 border-swan rounded-xl"></div>
 		</div>
 	)
 }
