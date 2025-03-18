@@ -48,7 +48,7 @@ export default function useToastOptions() {
 			createToastContent(title, description, action),
 			{
 				autoClose: duration,
-				className: "!bg-blue-500 !text-white !border-blue-600 font-bold",
+				className: "!bg-macaw !text-white !border-blue-600 font-bold",
 				closeButton: true,
 				pauseOnHover: true,
 				draggable: true,

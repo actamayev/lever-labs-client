@@ -18,10 +18,10 @@ export default function LoadingMessage({
 	return (
 		<Alert
 			variant="default"
-			className={cn("bg-blue-500 dark:bg-blue-950 border-0", className)}
+			className={cn("bg-macaw dark:bg-blue-950 border-0", className)}
 		>
 			<div className="flex items-center gap-2">
-				<Spinner size={size} className="text-blue-500 h-6 w-6" />
+				<Spinner size={size} className="text-macaw h-6 w-6" />
 				<AlertDescription className="flex-1 text-center justify-center text-lg">
 					{message}
 				</AlertDescription>

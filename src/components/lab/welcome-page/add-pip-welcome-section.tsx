@@ -29,7 +29,7 @@ export default function AddPipWelcomeSection() {
 					bgColor="bg-purple-100"
 					iconColor="text-purple-600"
 					darkBgColor="dark:bg-purple-900/50"
-					darkIconColor="dark:text-purple-400"
+					darkIconColor="dark:text-beetle"
 					title="Connect to Wi-Fi"
 				/>
 

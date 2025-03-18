@@ -16,7 +16,7 @@ export default function SupportSection(props: Props) {
 			<div className="text-questionText font-medium text-xl">
 				{sectionTitle}
 			</div>
-			<div className="text-lightLandingPageText mt-6" style={{ fontWeight: 350 }}>
+			<div className="text-wolf mt-6" style={{ fontWeight: 350 }}>
 				{children}
 			</div>
 		</div>

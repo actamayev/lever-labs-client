@@ -108,7 +108,7 @@ function BlocklyComponent(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-disabledLilypadBackground", extraClasses)}
+			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
 		>
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}

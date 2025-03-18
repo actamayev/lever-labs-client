@@ -16,14 +16,14 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 
 	const demoShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {
-			return "rgb(250 204 21)"
+			return "rgb(255 200 0)"
 		}
 		return "rgb(202 138 4)"
 	}, [defaultSiteTheme])
 
 
 	const demoClasses = useMemo(() => {
-		return "bg-yellow-100 border-yellow-400 text-yellow-800 hover:bg-yellow-50 \
+		return "bg-yellow-100 border-bee text-yellow-800 hover:bg-yellow-50 \
 		dark:bg-yellow-900 dark:border-yellow-600 dark:text-yellow-200 dark:hover:bg-yellow-950"
 	}, [])
 

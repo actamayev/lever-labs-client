@@ -44,7 +44,7 @@ function NavUser() {
 							className={cn(
 								"transition-none !flex items-center justify-start !p-0 !h-[50px]",
 								"border-2 border-transparent rounded-xl",
-								"hover:!bg-sidebarButtonHover",
+								"hover:!bg-polar",
 								"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 							)}
 							tooltip={{
@@ -61,7 +61,7 @@ function NavUser() {
 										/>
 									</Avatar>
 								</div>
-								<div className="text-base text-lightLandingPageText">
+								<div className="text-base text-wolf">
 									PROFILE
 								</div>
 							</div>

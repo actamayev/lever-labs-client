@@ -8,20 +8,22 @@ import { cn } from "../../lib/shadcn/utils"
 export function SupportBorder() {
 	return (
 		<div className="container mx-auto w-full">
-			<div className="border-b-2 border-disabledLilypadBackground rounded-xl"></div>
+			<div className="border-b-2 border-swan rounded-xl"></div>
 		</div>
 	)
 }
+
 function SupportLink({ page } : { page: "mission" | "contact" }) {
 	const pathname = usePathname()
-	const active = pathname === page
+	const active = pathname === `/${page}`
 
+	console.log(pathname, page)
 	return (
 		<li className="relative flex flex-col items-center group">
 			<Link
 				href={page}
 				className={cn(
-					"text-disabledLilypadIcon hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
+					"text-hare hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
 					active ? "!text-pipThemeText" : ""
 				)}
 			>

@@ -28,8 +28,8 @@ function GettingStartedAddPip() {
 					<Button
 						onClick={clickPipSidebarButton}
 						className="!flex !h-24 !w-24 !min-w-24 relative items-center justify-center
-                        bg-inherit hover:bg-sidebarButtonHover
-                        duration-none border-disabledLilypadBackground border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
+                        bg-inherit hover:bg-polar
+                        duration-none border-swan border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
 					>
 						<div className="relative">
 							<Bot className="!h-12 !w-12 !min-w-12 text-blue-600 dark:text-blue-300" />

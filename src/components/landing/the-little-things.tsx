@@ -100,7 +100,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 							strokeWidth={2}
 						/>
 					</div>
-					<h3 className="text-base sm:text-lg md:text-xl font-semibold text-unselectedAnswerText">
+					<h3 className="text-base sm:text-lg md:text-xl font-semibold text-eel">
 						{title}
 					</h3>
 				</div>
@@ -117,7 +117,7 @@ export default function TheLittleThings() {
 		<div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
 			{/* Title */}
 			<p className="text-center text-3xl sm:text-3xl md:text-5xl lg:text-6xl
-			font-medium text-white dark:text-unselectedAnswerText px-4 md:px-0">
+			font-medium text-white dark:text-eel px-4 md:px-0">
                 It's the little things that count
 			</p>
 

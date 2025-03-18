@@ -17,7 +17,7 @@ export default function PrimarySidebar() {
 	return (
 		<Sidebar
 			collapsible="icon"
-			className="hidden md:flex !border-r-2 border-disabledLilypadBackground"
+			className="hidden md:flex !border-r-2 border-swan"
 		>
 			<SidebarHeader>
 				<SidebarLogo />
