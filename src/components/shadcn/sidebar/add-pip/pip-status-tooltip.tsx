@@ -20,9 +20,9 @@ function PipStatusTooltip() {
 		switch (pipClass.selectedPip.pipConnectionStatus) {
 		case "inactive": return "bg-cardinal"
 		case "online": return "bg-macaw"
-		case "connected to other user": return "bg-purple-500"
+		case "connected to other user": return "bg-beetle"
 		case "connected": return "bg-green-500"
-		default: return "bg-gray-500"
+		default: return "bg-wolf"
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pipClass.selectedPip?.pipConnectionStatus])

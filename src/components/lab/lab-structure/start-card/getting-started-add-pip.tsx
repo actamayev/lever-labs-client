@@ -28,7 +28,7 @@ function GettingStartedAddPip() {
 					<Button
 						onClick={clickPipSidebarButton}
 						className="!flex !h-24 !w-24 !min-w-24 relative items-center justify-center
-                        bg-inherit hover:bg-sidebarButtonHover
+                        bg-inherit hover:bg-polar
                         duration-none border-swan border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"
 					>
 						<div className="relative">

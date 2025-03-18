@@ -46,10 +46,10 @@ function DemoButton({ demo } : { demo: Demo }) {
 
 			{/* Content Section */}
 			<div className="flex-1 p-4">
-				<h3 className="text-lg font-semibold text-gray-800 dark:text-eel mb-2">
+				<h3 className="text-lg font-semibold text-eel dark:text-eel mb-2">
 					{demo.demoTitle}
 				</h3>
-				<p className="text-gray-600 dark:text-gray-200 text-sm">
+				<p className="text-gray-600 dark:text-wolf text-sm">
 					{demo.demoDescription}
 				</p>
 			</div>

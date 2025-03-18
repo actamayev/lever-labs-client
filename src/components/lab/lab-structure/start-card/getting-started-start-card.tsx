@@ -24,7 +24,7 @@ function GettingStartedStartCard() {
 		<div className="border-2 border-swan rounded-lg bg-inherit">
 			<div className="flex items-start justify-between gap-4">
 				<div className="space-y-2 flex-1 p-4">
-					<h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+					<h2 className="text-lg font-semibold text-eel dark:text-wolf">
                         Getting Started
 					</h2>
 					<p className="text-lg text-gray-600 dark:text-gray-400">

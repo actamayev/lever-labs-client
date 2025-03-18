@@ -3,7 +3,7 @@
 export default function InTheLabSection() {
 	return (
 		<div className="space-y-2 p-4 border-2 border-swan rounded-lg bg-inherit">
-			<h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+			<h2 className="text-lg font-semibold text-eel dark:text-wolf">
 				In the Lab:
 			</h2>
 			<p className="text-lg text-gray-600 dark:text-gray-400">

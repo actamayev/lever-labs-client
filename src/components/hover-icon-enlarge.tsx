@@ -61,7 +61,7 @@ export function HoverIconEnlarge({
 					</div>
 					{subtitle && (
 						<div className="w-52 text-center mt-1">
-							<span className="text-xs text-gray-500 dark:text-gray-400 text-center block">
+							<span className="text-xs text-wolf dark:text-gray-400 text-center block">
 								{subtitle}
 							</span>
 						</div>
