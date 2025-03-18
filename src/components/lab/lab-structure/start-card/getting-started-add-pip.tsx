@@ -39,7 +39,7 @@ function GettingStartedAddPip() {
 								</div>
 							) : (
 								<div className="absolute" style={{ bottom: "35px", right: "-5px" }}>
-									<PlusCircle className="!h-5 !w-5 text-black bg-white rounded-full"/>
+									<PlusCircle className="!h-5 !w-5 text-eel rounded-full"/>
 								</div>
 							)}
 						</div>
