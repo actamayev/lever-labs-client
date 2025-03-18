@@ -27,10 +27,6 @@ module.exports = {
 				// lightThemeBackground: "rgb(255, 255, 255)",
 				// darkThemeBackground: "rgb(20, 31, 35)",
 
-				disabledLilypadIcon: "rgb(var(--disabled-lilypad-icon))",
-				// lilypadIconDisabledDark: "rgb(82, 100, 109)",
-				// lilypadIconDisabledLight: "rgb(175, 175, 175)",
-
 				standardBackgroundHover: "rgb(var(--standard-background-hover))",
 				selectedSidebarButtonBackground: "rgb(var(--selected-sidebar-button-background))",
 				// darkBackgroundHover: "rgb(32, 47, 54)",
@@ -57,6 +53,8 @@ module.exports = {
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",
 				swan: "rgb(var(--swan))",
+				hare: "rgb(var(--hare))",
+
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
@@ -203,7 +201,7 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan"]
+	const excludeKeys = ["eel", "swan", "hare"]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))

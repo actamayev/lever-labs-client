@@ -52,7 +52,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 
 		const baseStyles = "absolute top-2 left-2 w-6 h-6 flex items-center justify-center \
-		border-2 rounded-md text-xs font-medium text-disabledLilypadIcon \
+		border-2 rounded-md text-xs font-medium text-hare \
 		active:border-selectedSidebarButtonBorder active:text-answerText dark:active:text-answerText"
 		if (isSelectedOrActiveQuizAttempt() && !hasActiveQuizBeenAnswered) {
 			return cn(baseStyles,

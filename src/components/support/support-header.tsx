@@ -21,7 +21,7 @@ function SupportLink({ page } : { page: "mission" | "contact" }) {
 			<Link
 				href={page}
 				className={cn(
-					"text-disabledLilypadIcon hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
+					"text-hare hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
 					active ? "!text-pipThemeText" : ""
 				)}
 			>
