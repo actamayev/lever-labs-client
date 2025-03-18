@@ -57,6 +57,7 @@ module.exports = {
 				cardinal: "rgb(var(--cardinal))",
 				bee: "rgb(var(--bee))",
 				fox: "rgb(var(--fox))",
+				beetle: "rgb(var(--beetle))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -204,7 +205,7 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox"]
+	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle"]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))
