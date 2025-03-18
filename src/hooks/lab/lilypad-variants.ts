@@ -10,7 +10,7 @@ export default function useLilypadVariants(): (progress: ProgressStatus) => stri
 		"rounded-[50%] flex items-center justify-center transform transition-all duration-50 relative", // Changed to 50% for a smooth oval
 		// Shadow and press effect
 		isNull(progress) && [
-			"bg-disabledLilypadBackground",
+			"bg-swan",
 			"shadow-[0_10px_0_0_rgb(183,183,183)] dark:shadow-[0_10px_0_0_rgb(43,56,63)]", // gray shadow
 		],
 		progress === "COMPLETED" && [

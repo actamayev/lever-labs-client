@@ -43,7 +43,7 @@ const RainbowSubscribeButton: React.FC<RainbowSubscribeButtonProps> = ({
         >
           <motion.span
             key="subscribed"
-            className="relative block h-full w-full font-semibold text-gray-800"
+            className="relative block h-full w-full font-semibold text-eel"
             initial={{ y: -50 }}
             animate={{ y: 0 }}
           >

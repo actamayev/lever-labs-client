@@ -81,12 +81,12 @@ function EnterPipName() {
 													type="button"
 													variant="ghost"
 													size="sm"
-													className="h-auto p-1.5 hover:bg-sidebarButtonHover"
+													className="h-auto p-1.5 hover:bg-polar"
 												>
 													{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
 														<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
 													) : (
-														<X className="!h-7 !w-7 text-red-500 dark:text-red-500" />
+														<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
 													)}
 												</Button>
 											</TooltipTrigger>

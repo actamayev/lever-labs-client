@@ -40,7 +40,7 @@ export default function Slider(props: SliderProps) {
 				"dark:bg-gray-600",
 				sizeClasses[size],
 				className,
-				colorChangeOnToggle && "data-[state=checked]:bg-gray-900 dark:data-[state=checked]:bg-gray-100",
+				colorChangeOnToggle && "data-[state=checked]:bg-gray-900 dark:data-[state=checked]:bg-eel",
 				// Add thumb size adjustments here
 				size === "lg" && "[&>span]:h-5 [&>span]:w-5 [&>span]:data-[state=checked]:translate-x-5",
 				size === "xl" && "[&>span]:h-6 [&>span]:w-6 [&>span]:data-[state=checked]:translate-x-7"

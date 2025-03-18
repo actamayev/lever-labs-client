@@ -23,7 +23,7 @@ export default function ColoredText(props: Props) {
 
 	const colorClasses = {
 		blue: "text-blue-600 dark:text-blue-400",
-		orange: "text-orange-600 dark:text-orange-400"
+		orange: "text-orange-600 dark:text-fox"
 	}
 
 	return (

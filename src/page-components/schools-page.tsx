@@ -83,7 +83,7 @@ export default function SchoolsPage() {
 					<SupportSection sectionTitle="Coming soon to classrooms" extraClasses="mt-10">
 						We're working hard to perfect Pip for educational settings. If you're interested in bringing robot-powered learning to your school, please reach out – we'd love to hear from you.
 						<div
-							className="border-2 border-disabledLilypadBackground rounded-lg py-1
+							className="border-2 border-swan rounded-lg py-1
 							px-0.5 mx-auto bg-standardBackground w-80 my-5"
 						>
 							<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
