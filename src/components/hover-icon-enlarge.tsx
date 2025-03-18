@@ -55,7 +55,7 @@ export function HoverIconEnlarge({
 
 				<div className="flex flex-col items-center space-y-1">
 					<div className="w-52 text-center">
-						<span className="text-sm font-semibold text-gray-600 dark:text-gray-300 text-center block">
+						<span className="text-sm font-semibold text-eel dark:text-gray-300 text-center block">
 							{title}
 						</span>
 					</div>

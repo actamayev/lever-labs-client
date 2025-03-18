@@ -49,7 +49,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 				<h3 className="text-lg font-semibold text-eel dark:text-eel mb-2">
 					{demo.demoTitle}
 				</h3>
-				<p className="text-gray-600 dark:text-wolf text-sm">
+				<p className="text-eel dark:text-wolf text-sm">
 					{demo.demoDescription}
 				</p>
 			</div>

@@ -27,7 +27,7 @@ function GettingStartedStartCard() {
 					<h2 className="text-lg font-semibold text-eel dark:text-wolf">
                         Getting Started
 					</h2>
-					<p className="text-lg text-gray-600 dark:text-gray-400">
+					<p className="text-lg text-eel dark:text-gray-400">
 						{getCardContent()}
 					</p>
 				</div>

@@ -12,7 +12,7 @@ export default function LabStartCard() {
 		<Card className="w-[1100px] p-2 flex flex-col m-2 rounded-lg bg-inherit border-2 border-swan shadow-none">
 			<CardHeader>
 				<CardTitle>
-					<h1 className="text-4xl font-bold">Welcome to the Lab</h1>
+					<h1 className="text-4xl font-bold text-eel">Welcome to the Lab</h1>
 				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-6">
