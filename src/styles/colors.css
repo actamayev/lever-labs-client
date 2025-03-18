@@ -10,16 +10,19 @@
 		--question-text: 60 60 60;
 		--pip-theme-text: 0 61 165;
 
+		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
-		--eel: 75 75 75;
-		--swan: 229 229 229;
-		--hare: 175 175 175;
 		--macaw: 28 176 246;
 		--cardinal: 255 75 75;
 		--bee: 255 200 0;
 		--fox: 255 150 0;
 		--beetle: 206 130 255;
+	
+		/* Neutrals */
+		--eel: 75 75 75;
 		--wolf: 119 119 119;
+		--hare: 175 175 175;
+		--swan: 229 229 229;
 		--polar: 247 247 247;
 	}
 
@@ -31,16 +34,19 @@
 		--question-text: 241 247 251;
 		--pip-theme-text: 28 176 255;
 		
+		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
-		--eel: 241 247 251;
-		--swan: 55 70 79;
-		--hare: 82 100 109;
 		--macaw: 72 191 248;
 		--cardinal: 255 75 75;
 		--bee: 255 200 0;
 		--fox: 255 150 0;
 		--beetle: 206 130 255;
+	
+		/* Neutrals */
+		--eel: 241 247 251;
 		--wolf: 220 230 235;
+		--hare: 82 100 109;
+		--swan: 55 70 79;
 		--polar: 32 47 54;
 	}
 }
