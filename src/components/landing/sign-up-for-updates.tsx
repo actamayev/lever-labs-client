@@ -55,8 +55,8 @@ export default function SignUpForUpdates() {
 												type="email"
 												placeholder="Email"
 												required
-												className="flex-1 h-10 w-full md:w-56 border-black dark:border-white border-2
-										transition-all duration-300 !text-lg md:!text-xl font-light"
+												className="flex-1 h-10 w-full md:w-56 border-eel border-2
+												transition-all duration-300 !text-lg md:!text-xl font-light"
 												disabled={isSubscribed || isLoading}
 												{...field}
 											/>

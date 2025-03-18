@@ -23,7 +23,7 @@ const Checkbox = React.forwardRef<
   >
     {/* Add optional placeholder check */}
     {showPlaceholder && (
-      <span className="absolute inset-0 flex items-center justify-center opacity-100 pointer-events-none duration-0 group-hover:opacity-100 group-hover:text-white dark:group-hover:text-black">
+      <span className="absolute inset-0 flex items-center justify-center opacity-100 pointer-events-none duration-0 group-hover:opacity-100 group-hover:text-eel">
         <Check className="h-7 w-7" />
       </span>
     )}
