@@ -32,7 +32,7 @@ export default function ActivityHeader(props: Props) {
 						variant="ghost"
 						size="icon"
 						onClick={() => typedNavigate("/lab")}
-						className="!p-6 hover:bg-sidebarButtonHover"
+						className="!p-6 hover:bg-polar"
 					>
 						<X className="!h-6 !w-6" />
 					</Button>

@@ -49,7 +49,7 @@ export default function PasswordField<T extends LoginFormValues | RegisterFormVa
 								type="button"
 								variant="ghost"
 								size="sm"
-								className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-sidebarButtonHover"
+								className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-polar"
 								onClick={() => setShowPassword(prevState => !prevState)}
 							>
 								{showPassword ? (

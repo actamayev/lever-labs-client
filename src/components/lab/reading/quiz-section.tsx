@@ -27,7 +27,7 @@ function QuizSection() {
 						<DropdownMenuTrigger asChild>
 							<h3
 								className="text-2xl font-semibold flex flex-row items-center gap-4 cursor-pointer
-								hover:bg-sidebarButtonHover !px-2 py-1 rounded-lg"
+								hover:bg-polar !px-2 py-1 rounded-lg"
 							>
 								{labReadingClass.activeQuiz.isCorrect ? (
 									<><CheckCircle />Quiz Review #{
