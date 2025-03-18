@@ -87,7 +87,7 @@ function EnterPipID() {
 														{(pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
 															<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
 														) : (
-															<X className="!h-7 !w-7 text-red-500 dark:text-red-500" />
+															<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
 														)}
 													</Button>
 												</TooltipTrigger>

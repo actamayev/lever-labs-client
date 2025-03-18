@@ -18,7 +18,7 @@ function PipStatusTooltip() {
 	const getStatusColor = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "inactive": return "bg-red-500"
+		case "inactive": return "bg-cardinal"
 		case "online": return "bg-blue-500"
 		case "connected to other user": return "bg-purple-500"
 		case "connected": return "bg-green-500"

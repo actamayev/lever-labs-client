@@ -39,7 +39,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			border-selectedSidebarButtonBorder text-answerText dark:text-answerText"
 			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
 			dark:bg-green-900 dark:hover:bg-green-800 text-green-700 dark:text-green-300"
-			else if (isCorrect === false) isCorrectStyles = "border-red-500 bg-red-100 hover:bg-red-200 \
+			else if (isCorrect === false) isCorrectStyles = "border-cardinal bg-red-100 hover:bg-red-200 \
 			dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)
@@ -64,7 +64,7 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
 			let isCorrectStyles = "border-selectedSidebarButtonBorder text-answerText dark:text-answerText" // before answer is selected
 			if (isCorrect === true) isCorrectStyles = "border-green-500 text-green-700 dark:text-green-300"
-			else if (isCorrect === false) isCorrectStyles = "border-red-500 text-red-700 dark:text-red-300"
+			else if (isCorrect === false) isCorrectStyles = "border-cardinal text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)
 		}
