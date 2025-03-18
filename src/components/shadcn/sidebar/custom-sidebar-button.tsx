@@ -31,7 +31,7 @@ export default function CustomSidebarButton({
 				// Active/hover states
 				isActive
 					? "!bg-selectedSidebarButtonBackground"
-					: "hover:!bg-sidebarButtonHover",
+					: "hover:!bg-polar",
 				// Size and dimensions - apply consistent sizing regardless of collapsible state
 				"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 				// Custom styles passed from parent
@@ -44,7 +44,7 @@ export default function CustomSidebarButton({
 				</div>
 				<div className={cn(
 					"text-base font-medium",
-					isActive ? "text-macaw" : "text-lightLandingPageText"
+					isActive ? "text-macaw" : "text-wolf"
 				)}>
 					{text}
 				</div>

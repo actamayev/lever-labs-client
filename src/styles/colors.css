@@ -7,9 +7,7 @@
 		--selected-sidebar-button-background: 220 244 255;
 		--lilypad-blue-background: 61 176 246;
 		--selected-sidebar-button-border: 132 216 255;
-		--sidebar-button-hover: 247 247 247;
 		--question-text: 60 60 60;
-		--light-landing-page-text: 119 119 119;
 		--pip-theme-text: 0 61 165;
 
 		/* Duolingo colors */
@@ -21,6 +19,8 @@
 		--bee: 255 200 0;
 		--fox: 255 150 0;
 		--beetle: 206 130 255;
+		--wolf: 119 119 119;
+		--polar: 247 247 247;
 	}
 
 	.dark {
@@ -28,9 +28,7 @@
 		--standard-background-hover: 32 47 54;
 		--selected-sidebar-button-background: 32 47 54;
 		--selected-sidebar-button-border: 63 132 167;
-		--sidebar-button-hover: 32 47 54;
 		--question-text: 241 247 251;
-		--light-landing-page-text: 220 230 235;
 		--pip-theme-text: 28 176 255;
 		
 		/* Duolingo colors */
@@ -42,5 +40,7 @@
 		--bee: 255 200 0;
 		--fox: 255 150 0;
 		--beetle: 206 130 255;
+		--wolf: 220 230 235;
+		--polar: 32 47 54;
 	}
 }

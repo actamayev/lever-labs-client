@@ -36,10 +36,6 @@ module.exports = {
 				// selectedSidebarButtonBorderLight: "rgb(132, 216, 255)",
 				// selectedSidebarButtonBorderDark: "rgb(63, 132, 167)",
 
-				sidebarButtonHover: "rgb(var(--sidebar-button-hover))",
-				// sidebarButtonHoverDark: "rgb(32, 47, 54)",
-				// sidebarButtonHoverLight: "rgb(247, 247, 247)",
-
 				answerText: "rgb(52, 153, 214)",
 				questionText: "rgb(var(--question-text))",
 				lilypadBlueBackground: "rgb(var(--lilypad-blue-background))",
@@ -47,7 +43,6 @@ module.exports = {
 
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
-				lightLandingPageText: "rgb(var(--light-landing-page-text))",
 
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",
@@ -58,6 +53,8 @@ module.exports = {
 				bee: "rgb(var(--bee))",
 				fox: "rgb(var(--fox))",
 				beetle: "rgb(var(--beetle))",
+				wolf: "rgb(var(--wolf))",
+				polar: "rgb(var(--polar))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -205,7 +202,7 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle"]
+	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle", "wolf", "polar"]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))
