@@ -44,6 +44,9 @@ module.exports = {
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
 
+				landingOuterBorder: "rgb(var(--landing-outer-border))",
+				landingDottedLine: "rgb(var(--landing-dotted-line))",
+
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",
 				swan: "rgb(var(--swan))",
