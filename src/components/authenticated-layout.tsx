@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { useAuthContext } from "@/contexts/auth-context"
 import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
 
-function LabLayout({ children }: { children: React.ReactNode }) { // Replace Outlet with children
+function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
 	const authClass = useAuthContext()
 
 	if (authClass.isLoggedIn === false) {
@@ -18,4 +18,4 @@ function LabLayout({ children }: { children: React.ReactNode }) { // Replace Out
 	)
 }
 
-export default observer(LabLayout)
+export default observer(AuthenticatedLayout)

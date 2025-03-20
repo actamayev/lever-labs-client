@@ -2,15 +2,6 @@
 
 export const bentoIconSize = 40
 
-export const showPrimarySidebarPages: PageNames[] = [
-	// "/garage",
-	"/add-pip",
-	"/sandbox",
-	"/settings",
-	"/lab",
-	"/lab/welcome",
-]
-
 export const logicCategoryColour: BlocklyCategoryColours = 30
 export const sensorsCategoryColour: BlocklyCategoryColours = 180
 export const motorsCategoryColour: BlocklyCategoryColours = 120
@@ -21,7 +12,8 @@ export const PrivatePageNames: PageNames[] = [
 	"/lab",
 	"/add-pip",
 	"/sandbox",
-	"/settings"
+	// "/settings",
+	"/career-quest"
 ]
 
 export const staticPages = [
@@ -31,12 +23,14 @@ export const staticPages = [
 	"/register-username",
 	// "/garage",
 	"/lab",
+	"/career-quest",
 	"/add-pip",
 	"/sandbox",
-	"/settings",
+	// "/settings",
 	"/contact",
 	"/mission",
-	"/schools"
+	"/schools",
+	"/404"
 ] as const
 
 export const ledLabPages = [

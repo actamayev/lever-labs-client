@@ -1,3 +1,4 @@
+import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import TheLabPage from "../../src/components/lab/lab-structure/the-lab-page"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
@@ -10,5 +11,9 @@ export const metadata = createMetadata({
 })
 
 export default function TheLab() {
-	return <TheLabPage />
+	return (
+		<AuthenticatedLayout>
+			<TheLabPage />
+		</AuthenticatedLayout>
+	)
 }
