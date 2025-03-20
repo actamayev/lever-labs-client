@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 
 export default function GridPattern() {
   // State for responsive values
-  const [columnCount, setColumnCount] = useState(7);
   const [margins, setMargins] = useState({ left: 230, right: 230 });
   const [showGrid, setShowGrid] = useState(true);
 
@@ -14,24 +13,21 @@ export default function GridPattern() {
     const handleResize = () => {
       const width = window.innerWidth;
       
-      // Responsive grid visibility and column count
+      // Responsive grid visibility and margins
       if (width < 640) {
         // Mobile: hide grid completely
         setShowGrid(false);
       } else if (width < 768) {
-        // Small screens: show grid with fewer columns
+        // Small screens
         setShowGrid(true);
-        setColumnCount(3);
         setMargins({ left: 32, right: 32 });
       } else if (width < 1024) {
         // Medium screens
         setShowGrid(true);
-        setColumnCount(5);
         setMargins({ left: 64, right: 64 });
       } else {
         // Large screens: original settings
         setShowGrid(true);
-        setColumnCount(7);
         setMargins({ left: 230, right: 230 });
       }
     };
@@ -59,17 +55,11 @@ export default function GridPattern() {
 
   const dashSize = 4;
   const dashPattern = `${dashSize},${dashSize}`;
-  const columnWidth = `calc((100% - ${margins.left + margins.right}px) / ${columnCount + 1})`;
   
-  // Generate array for dynamic column lines
-  const columnLines = Array.from({ length: columnCount }, (_, index) => index + 1);
-
   return (
     <svg
       aria-hidden="true"
-      className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-swan stroke-swan",
-      )}
+      className="pointer-events-none absolute inset-0 h-full w-full"
       preserveAspectRatio="none"
     >
       {/* Left border line - solid */}
@@ -81,6 +71,7 @@ export default function GridPattern() {
         strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
+        className="stroke-landingOuterBorder"
       />
 
       {/* Right border line - solid */}
@@ -92,21 +83,20 @@ export default function GridPattern() {
         strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
+        className="stroke-landingOuterBorder"
       />
 
-      {/* Dynamically generated column lines between borders - always dashed */}
-      {columnLines.map((columnIndex) => (
-        <line 
-          key={`column-${columnIndex}`}
-          x1={`calc(${margins.left}px + ${columnWidth} * ${columnIndex})`}
-          y1="0" 
-          x2={`calc(${margins.left}px + ${columnWidth} * ${columnIndex})`}
-          y2="100%" 
-          strokeWidth="1"
-          strokeDasharray={dashPattern}
-          vectorEffect="non-scaling-stroke"
-        />
-      ))}
+      {/* Middle dashed line */}
+      <line 
+        x1="50%" 
+        y1="0" 
+        x2="50%" 
+        y2="100%" 
+        strokeWidth="1"
+        strokeDasharray={dashPattern}
+        vectorEffect="non-scaling-stroke"
+        className="stroke-landingDottedLine"
+      />
     </svg>
   );
 }

@@ -9,6 +9,8 @@
 		--selected-sidebar-button-border: 132 216 255;
 		--question-text: 60 60 60;
 		--pip-theme-text: 0 61 165;
+		--landing-outer-border: 244 244 246;
+		--landing-dotted-line: 238 238 242;
 
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
@@ -33,7 +35,9 @@
 		--selected-sidebar-button-border: 63 132 167;
 		--question-text: 241 247 251;
 		--pip-theme-text: 28 176 255;
-		
+		--landing-outer-border: 35 45 50;
+		--landing-dotted-line: 40 50 55;
+
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
 		--macaw: 72 191 248;
