@@ -71,14 +71,14 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 					{componentsUsed.slice(0, 4).map((component, index) => (
 						<div
 							key={`${component.componentName}-${index}`}
-							className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center"
+							className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center"
 							title={component.componentName}
 						>
 							{componentIcons[component.componentName]}
 						</div>
 					))}
 					{componentsUsed.length > 4 && (
-						<div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
+						<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
 							<span className="font-bold">+{componentsUsed.length - 4}</span>
 						</div>
 					)}

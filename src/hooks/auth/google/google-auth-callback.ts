@@ -41,7 +41,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				return navigate("/register-username")
 			}
 			void retrieveDataAfterLogin()
-			if (pathname === "/login") navigate("/lab")
+			if (pathname === "/login") navigate("/career-quest")
 		} catch (error) {
 			console.error(error)
 		}

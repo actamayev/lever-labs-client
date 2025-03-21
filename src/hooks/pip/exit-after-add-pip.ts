@@ -13,6 +13,6 @@ export default function useExitAfterAddPip(): () => void {
 		if (isNull(addPipClass)) return
 		addPipClass.store.resetAddPipMethods()
 		addPipClass.form.reset()
-		navigate("/lab")
+		navigate("/career-quest")
 	}, [addPipClass, navigate])
 }
