@@ -8,9 +8,9 @@ export default function IMUCard() {
 	return (
 		<SensorsSkeleton
 			title="Motion Tracker"
-			description="Track orientation, speed, and acceleration"
+			description="Tracks orientation, speed, and acceleration"
 			icon={<CompassRotationAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="col-span-1 lg:col-start-1 lg:row-start-3"
+			outerDivStyles="col-span-2 lg:col-start-2 lg:row-start-5"
 		/>
 	)
 }

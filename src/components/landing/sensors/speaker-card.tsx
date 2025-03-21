@@ -91,7 +91,7 @@ export default function SpeakerCard() {
 	return (
 		<SensorsSkeleton
 			title="Speaker"
-			description="Play sounds, music, and voice feedback for interactive experiences"
+			description="Plays sounds, music, and voice feedback for interactive experiences"
 			icon={<SpeakerIcon />}
 			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-3"
 		/>
