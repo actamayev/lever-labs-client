@@ -31,7 +31,7 @@ function PaletteAnimation({ iconSize } : { iconSize: number }) {
 			onClick={handleClick}
 		>
 			<CustomPalette
-				className={`transition-all duration-300 ${isDefaultColor ? "text-questionText" : ""}`}
+				className={`transition-colors duration-300 ${isDefaultColor ? "text-questionText" : ""}`}
 				style={colorStyle}
 				size={iconSize}
 			/>
