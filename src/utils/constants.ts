@@ -22,8 +22,6 @@ export const staticPages = [
 	"/register",
 	"/register-username",
 	// "/garage",
-	"/lab",
-	"/career-quest",
 	"/add-pip",
 	"/sandbox",
 	// "/settings",
@@ -65,4 +63,10 @@ export const labPages = [
 	...ledLabPages,
 ] as const
 
-export const allPages = [...staticPages, ...labPages] as const
+export const careerQuestPages = [
+	"/career-quest",
+	"/career-quest/line-following",
+	...ledLabPages,
+] as const
+
+export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const

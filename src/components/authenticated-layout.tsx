@@ -12,7 +12,7 @@ function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
 	}
 
 	return (
-		<div className="text-questionText text-3xl">
+		<div className="text-questionText text-3xl ">
 			{children}
 		</div>
 	)

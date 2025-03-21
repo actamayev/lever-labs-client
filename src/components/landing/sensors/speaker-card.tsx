@@ -22,6 +22,7 @@ export default function SpeakerCard() {
 			setVolumeLevel(2)
 
 			// Clear the interval when hover ends
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (interval) {
 				clearInterval(interval)
 			}
