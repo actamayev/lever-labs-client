@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 "use client"
 
 import { TvMinimal, Volume2 } from "lucide-react"
@@ -28,23 +27,38 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete } = careerData
 	const navigate = useTypedNavigate()
 
+	// Calculate progress percentage
+	const progressPercentage = Math.max(10, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
+
 	return (
-		<div className="relative overflow-hidden rounded-2xl bg-emerald-500 text-white w-[600px] h-[261px] flex">
+		<div className="relative overflow-hidden rounded-2xl bg-emerald-500 text-white w-[600px] h-[261px] flex cursor-default">
 			{/* Left Section */}
 			<div className="w-1/2 flex flex-col p-6 justify-between">
 				{/* Title */}
 				<h3 className="text-2xl font-bold">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className="flex items-center">
-					<div className="h-4 flex-grow rounded-full bg-emerald-600 relative">
+				{/* Progress Bar */}
+				<div className="w-full h-5 bg-emerald-600 rounded-full overflow-hidden relative">
+					<div
+						className="relative h-full rounded-full transition-all duration-300 ease-out bg-emerald-300"
+						style={{
+							width: `${progressPercentage}%`,
+						}}
+					>
+						{/* Highlight shadow effect - only on the completed part */}
 						<div
-							className="h-full rounded-full bg-emerald-300"
-							style={{ width: `${(lessonsComplete + 1 / totalLessons) * 100}%` }}
+							className="absolute top-1 left-2 right-2 rounded-full"
+							style={{
+								background: "rgb(167, 243, 208)",
+								height: "3px"
+							}}
 						/>
 					</div>
-					<div className="ml-3 flex items-center">
-						<span className="text-sm font-medium">{lessonsComplete} / {totalLessons}</span>
+
+					{/* Text inside progress bar */}
+					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium cursor-default">
+						{lessonsComplete} / {totalLessons}
 					</div>
 				</div>
 
@@ -61,7 +75,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 					))}
 					{componentsUsed.length > 4 && (
 						<div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
-							<span className="font-bold">+{componentsUsed.length - 3}</span>
+							<span className="font-bold">+{componentsUsed.length - 4}</span>
 						</div>
 					)}
 				</div>
@@ -73,13 +87,12 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 					shadowColor="rgb(178,214,201)"
 				>
 					{lessonsComplete === 0 ? "START" : "CONTINUE"}
-
 				</TactileButton>
 			</div>
 
 			{/* Right Section with Image */}
-			<div className="w-1/2 flex items-center justify-center !text-white">
-				<Icon size={200} />
+			<div className="w-1/2 flex items-center justify-center">
+				<Icon size={200} fill="white"/>
 			</div>
 		</div>
 	)
