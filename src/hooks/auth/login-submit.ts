@@ -34,7 +34,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 			}
 			setDataAfterLogin(response.data)
 			void retrieveDataAfterLogin()
-			if (pathname === "/login") navigate("/lab")
+			if (pathname === "/login") navigate("/career-quest")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

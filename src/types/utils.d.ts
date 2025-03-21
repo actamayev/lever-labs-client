@@ -15,9 +15,10 @@ declare global {
 	type PipUUID = string & { readonly __brand: unique symbol }
 
 	interface SidebarNavData {
-		title: "Lab" | "Sandbox"
+		title: "Sandbox" | "Career Quest" | "Lab"
 		url: PageNames
 		icon: LucideIcon
+		textColor: string
 	}
 
 	// Define the lesson routes structure

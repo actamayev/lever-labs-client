@@ -54,6 +54,7 @@ export default function SeeAllLessonIcons({
 					key={lesson.tooltipMessage}
 					tooltipMessage={lesson.tooltipMessage}
 					onClick={() => scrollToSection(lesson.tooltipMessage)}
+					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 					isActive={activeSection === lesson.tooltipMessage}
 				>
 					{lesson.icon}

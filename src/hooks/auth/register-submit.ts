@@ -40,7 +40,7 @@ export default function useRegisterSubmit (
 				return
 			}
 			setDataAfterRegister(response.data)
-			navigate("/lab/welcome")
+			navigate("/career-quest")
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

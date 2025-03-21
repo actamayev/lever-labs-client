@@ -8,9 +8,9 @@ export default function MotorCard() {
 	return (
 		<SensorsSkeleton
 			title="2 Motors + Encoders"
-			description="Motors with precise position tracking for controlled movement"
+			description="Drive with precise control and tracking"
 			icon={<MotorSpinAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-1 lg:row-start-2"
+			outerDivStyles="col-span-1 md:col-span-2 lg:col-span-2 lg:col-start-1 lg:row-start-1"
 		/>
 	)
 }

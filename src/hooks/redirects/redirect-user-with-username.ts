@@ -16,6 +16,6 @@ export default function useRedirectUserWithUsername (): void  {
 			return navigate("/")
 		}
 		if (isNull(personalInfoClass.username)) return
-		navigate("/lab")
+		navigate("/career-quest")
 	}, [authClass.isLoggedIn, navigate, personalInfoClass, personalInfoClass.username])
 }
