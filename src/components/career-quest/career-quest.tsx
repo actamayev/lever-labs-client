@@ -19,7 +19,7 @@ export default function CareerQuest() {
 			</div>
 
 			<div className="w-1/3">
-				{/* <WorkbenchLayout /> */}
+				<WorkbenchLayout />
 			</div>
 		</div>
 	)
