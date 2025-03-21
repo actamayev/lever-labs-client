@@ -24,6 +24,7 @@ declare global {
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
+		backgroundColor: string
 	}
 }
 

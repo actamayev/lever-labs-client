@@ -10,6 +10,7 @@ import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
+import { cn } from "../../lib/shadcn/utils"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Motors + Encoders": <CustomMotor />,
@@ -24,14 +25,17 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 }
 
 export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete } = careerData
+	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
 	const navigate = useTypedNavigate()
 
 	// Calculate progress percentage
 	const progressPercentage = Math.max(10, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
 
 	return (
-		<div className="relative overflow-hidden rounded-2xl bg-emerald-500 text-white w-[690px] h-[300px] flex cursor-default">
+		<div className={cn(
+			"relative overflow-hidden rounded-2xl text-white w-[690px] h-[300px] flex cursor-default",
+			backgroundColor
+		)}>
 			{/* Left Section */}
 			<div className="w-1/2 flex flex-col p-6 justify-between">
 				{/* Title */}

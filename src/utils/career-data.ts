@@ -24,6 +24,7 @@ export const careerData: CareerData[] = [
 				componentName: "LED",
 				componentDifficulty: 2,
 			}
-		]
+		],
+		backgroundColor: "bg-emerald-500"
 	}
 ]
