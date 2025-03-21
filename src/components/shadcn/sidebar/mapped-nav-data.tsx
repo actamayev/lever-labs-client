@@ -14,17 +14,26 @@ import { CustomBeaker } from "../../icons/custom-beaker"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import { cn } from "../../../lib/shadcn/utils"
+import { CustomBriefcase } from "../../icons/custom-briefcase"
 
 const navData: SidebarNavData[] = [
 	{
+		title: "Career Quest",
+		url: "/career-quest",
+		icon: CustomBriefcase,
+		textColor: "text-careerQuestIconColor"
+	},
+	{
 		title: "Lab",
 		url: "/lab",
-		icon: CustomBeaker
+		icon: CustomBeaker,
+		textColor: "text-labIconColor"
 	},
 	{
 		title: "Sandbox",
 		url: "/sandbox",
-		icon: CustomSandbox
+		icon: CustomSandbox,
+		textColor: "text-sandboxIconColor"
 	}
 ]
 
@@ -46,9 +55,7 @@ export default function MappedNavData() {
 						const iconElement = (
 							<div className={cn(
 								"w-full h-full flex items-center justify-center",
-								item.title === "Lab"
-									? "text-labIconColor"
-									: "text-sandboxIconColor"
+								item.textColor
 							)}>
 								<item.icon className="h-[35px] w-[35px]" />
 							</div>

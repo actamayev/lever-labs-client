@@ -1,4 +1,5 @@
-import AddPip from "../../src/page-components/add-pip"
+import AddPipForm from "../../src/components/add-pip-form/add-pip-form"
+import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -10,5 +11,9 @@ export const metadata = createMetadata({
 })
 
 export default function AddPipPage() {
-	return <AddPip />
+	return (
+		<AuthenticatedLayout>
+			<AddPipForm />
+		</AuthenticatedLayout>
+	)
 }

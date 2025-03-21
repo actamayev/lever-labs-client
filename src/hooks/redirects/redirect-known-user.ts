@@ -26,6 +26,6 @@ export default function useRedirectKnownUser(): void {
 			isPrivatePage
 		) return
 
-		navigate("/lab")
+		navigate("/career-quest")
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, pathname, navigate, personalInfoClass.username])
 }

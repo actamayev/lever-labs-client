@@ -12,6 +12,8 @@ import SpeakerCard from "./speaker-card"
 import DistanceSensorsCard from "./distance-sensors-card"
 import { BentoGrid } from "../../shadcn/ui/bento-grid"
 import LandingSectionHeaderText from "../landing-section-header-text"
+import ColorSensorCard from "./color-sensor-card"
+import IRSensorCard from "./ir-sensor-card"
 
 const features: React.ReactNode[] = [
 	<LEDCard key="LED" />,
@@ -22,6 +24,8 @@ const features: React.ReactNode[] = [
 	<ModuleCard key="Module" />,
 	<ScreenCard key="Screen" />,
 	<SpeakerCard key="Speaker" />,
+	<ColorSensorCard key="Color Sensor" />,
+	<IRSensorCard key="IR Sensors" />
 ]
 
 export default function LandingSensors() {

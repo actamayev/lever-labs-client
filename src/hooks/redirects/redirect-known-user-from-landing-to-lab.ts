@@ -13,6 +13,6 @@ export default function useRedirectKnownUserToLab (): void {
 	useEffect(() => {
 		if (!authClass.isLoggedIn) return
 		if (!personalInfoClass.username) return navigate("/register-username")
-		return navigate("/lab")
+		return navigate("/career-quest")
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, navigate, personalInfoClass.username])
 }

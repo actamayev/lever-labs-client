@@ -1,5 +1,6 @@
 import LabWelcome from "@/components/lab/welcome-page/lab-welcome"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
+import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 
 export const metadata = createMetadata({
 	title: "Lab Welcome",
@@ -10,5 +11,10 @@ export const metadata = createMetadata({
 })
 
 export default function WelcomePage() {
-	return <LabWelcome />
+	return (
+		<AuthenticatedLayout>
+
+			<LabWelcome />
+		</AuthenticatedLayout>
+	)
 }
