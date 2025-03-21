@@ -1,24 +1,25 @@
 "use client"
 
-import { TvMinimal, Volume2 } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
+import Image from "next/image"
+import { TvMinimal, Volume2 } from "lucide-react"
 import { CustomMotor } from "../icons/custom-motor"
-import { CustomWizardHat } from "../icons/custom-wizard-hat"
 import { CustomRuler } from "../icons/custom-ruler"
+import { CustomRemote } from "../icons/custom-remote"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
 
 // Map component names to their respective icons
 const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Motors + Encoders": <CustomMotor />,
 	"Side Distance Sensors": <CustomRuler />,
-	"Multizone Distance Sensor": <CustomWizardHat />,
+	"Multizone Distance Sensor": <CustomMultizoneDistanceSensor />,
 	"IMU": <CustomCompass />,
 	"LED": <CustomLightbulb />,
 	"Speaker": <Volume2 />,
-	"IR Sensors": <CustomWizardHat />,
+	"IR Sensors": <CustomRemote />,
 	"Color Sensor": <CustomPalette />,
 	"Screen": <TvMinimal />
 }
