@@ -1,21 +1,26 @@
 "use client"
 
+import { TvMinimal, Volume2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { CustomMotor } from "../icons/custom-motor"
+import { CustomWizardHat } from "../icons/custom-wizard-hat"
+import { CustomRuler } from "../icons/custom-ruler"
+import { CustomCompass } from "../icons/custom-compass"
+import { CustomPalette } from "../icons/custom-palette"
 
 // Map component names to their respective icons
-const componentIcons: Record<string, string> = {
-	// Replace these with your actual component icons
-	"LED": "💡",
-	"Motor": "⚙️",
-	"Sensor": "👁️",
-	"Speaker": "🔊",
-	"Display": "📺",
-	"Button": "🔘",
-	"Camera": "📷",
-	"Microphone": "🎤",
-	"WiFi": "📶",
-	// Add other components as needed
+const componentIcons: Record<ComponentName, React.ReactNode> = {
+	"Motors + Encoders": <CustomMotor />,
+	"Side Distance Sensors": <CustomRuler />,
+	"Multizone Distance Sensor": <CustomWizardHat />,
+	"IMU": <CustomCompass />,
+	"LED": <CustomLightbulb />,
+	"Speaker": <Volume2 />,
+	"IR Sensors": <CustomWizardHat />,
+	"Color Sensor": <CustomPalette />,
+	"Screen": <TvMinimal />
 }
 
 export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
@@ -50,9 +55,9 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 							<div
 								key={`${component.componentName}-${index}`}
 								className="w-8 h-8 bg-gray-800/70 rounded-full flex items-center justify-center"
-								title={component.componentName.toString()}
+								title={component.componentName}
 							>
-								{componentIcons[component.componentName.toString()] || "⚙️"}
+								{componentIcons[component.componentName]}
 							</div>
 						))}
 					</div>

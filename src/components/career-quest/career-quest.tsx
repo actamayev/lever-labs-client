@@ -6,19 +6,20 @@ import SingleCareerCard from "./single-career-card"
 
 export default function CareerQuest() {
 	return (
-		<div className="flex flex-row h-screen overflow-y-auto relative w-full">
+		<div className="flex flex-row h-screen overflow-y-auto relative w-full space-x-6 px-6 pt-12">
 			{/* Main content area - 2/3 width */}
-			<div className="w-3/5 p-4">
-				{careerData.map(singleCareerData => (
-					<SingleCareerCard
-						key={singleCareerData.careerName}
-						careerData={singleCareerData}
-					/>
-				))}
+			<div className="w-2/3 px-4">
+				<div className="mx-auto max-w-3xl">
+					{careerData.map(singleCareerData => (
+						<div className="mb-6" key={singleCareerData.careerName}>
+							<SingleCareerCard careerData={singleCareerData} />
+						</div>
+					))}
+				</div>
 			</div>
 
-			<div className="w-2/5 pr-28 pt-12">
-				{/* <WorkbenchLayout /> */}
+			<div className="w-1/3">
+				<WorkbenchLayout />
 			</div>
 		</div>
 	)

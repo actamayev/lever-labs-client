@@ -10,8 +10,9 @@ import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()
-	const shouldShowSidebar = PrivatePageNames.includes(pathname as PageNames)
-
+	const shouldShowSidebar = PrivatePageNames.some(privatePath =>
+		pathname.startsWith(privatePath)
+	)
 	if (!shouldShowSidebar) return null
 
 	return (
