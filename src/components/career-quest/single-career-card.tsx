@@ -1,35 +1,16 @@
 "use client"
 
-import { TvMinimal, Volume2 } from "lucide-react"
-import { CustomMotor } from "../icons/custom-motor"
-import { CustomRuler } from "../icons/custom-ruler"
-import { CustomRemote } from "../icons/custom-remote"
-import { CustomCompass } from "../icons/custom-compass"
-import { CustomPalette } from "../icons/custom-palette"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
 import { cn } from "../../lib/shadcn/utils"
-
-const componentIcons: Record<ComponentName, React.ReactNode> = {
-	"Motors + Encoders": <CustomMotor />,
-	"Side Distance Sensors": <CustomRuler />,
-	"Multizone Distance Sensor": <CustomMultizoneDistanceSensor />,
-	"IMU": <CustomCompass />,
-	"LED": <CustomLightbulb />,
-	"Speaker": <Volume2 />,
-	"IR Sensors": <CustomRemote />,
-	"Color Sensor": <CustomPalette />,
-	"Screen": <TvMinimal />
-}
+import SingleComponentUsed from "./single-component-used"
 
 export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
 	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
 	const navigate = useTypedNavigate()
 
 	// Calculate progress percentage
-	const progressPercentage = Math.max(10, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
+	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
 
 	return (
 		<div className={cn(
@@ -41,7 +22,6 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 				{/* Title */}
 				<h3 className="text-2xl font-bold">{careerName}</h3>
 
-				{/* Progress Bar */}
 				{/* Progress Bar */}
 				<div className="w-full h-5 bg-emerald-600 rounded-full overflow-hidden relative">
 					<div
@@ -68,14 +48,11 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 my-4">
-					{componentsUsed.slice(0, 4).map((component, index) => (
-						<div
-							key={`${component.componentName}-${index}`}
-							className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center"
-							title={component.componentName}
-						>
-							{componentIcons[component.componentName]}
-						</div>
+					{componentsUsed.slice(0, 4).map((component) => (
+						<SingleComponentUsed
+							key={component.componentName}
+							component={component}
+						/>
 					))}
 					{componentsUsed.length > 4 && (
 						<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
