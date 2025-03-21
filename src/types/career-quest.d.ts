@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react"
+
 declare global {
 	type ComponentName =
 	| "Motors + Encoders"
@@ -17,9 +19,10 @@ declare global {
 
 	interface CareerData {
 		careerName: string
-		percentComplete: number
+		totalLessons: number
+		lessonsComplete: number
 		careerUrl: CareerQuestPages
-		backgroundUrl: string
+		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
 	}
 }

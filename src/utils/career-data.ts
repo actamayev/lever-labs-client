@@ -1,9 +1,12 @@
+import { CustomTreasureMap } from "../components/icons/custom-treasure-map"
+
 export const careerData: CareerData[] = [
 	{
 		careerName: "Line following",
-		percentComplete: 0,
+		totalLessons: 10,
+		lessonsComplete: 0,
 		careerUrl: "/career-quest/line-following",
-		backgroundUrl: "/niagra.jpg",
+		careerIcon: CustomTreasureMap,
 		componentsUsed: [
 			{
 				componentName: "IR Sensors",
