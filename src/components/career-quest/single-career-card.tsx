@@ -31,7 +31,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	const progressPercentage = Math.max(10, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
 
 	return (
-		<div className="relative overflow-hidden rounded-2xl bg-emerald-500 text-white w-[600px] h-[261px] flex cursor-default">
+		<div className="relative overflow-hidden rounded-2xl bg-emerald-500 text-white w-[690px] h-[300px] flex cursor-default">
 			{/* Left Section */}
 			<div className="w-1/2 flex flex-col p-6 justify-between">
 				{/* Title */}
