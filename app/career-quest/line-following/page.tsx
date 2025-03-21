@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
+import CareerActivityTemplate from "../../../src/components/career-quest/career-activity-template"
 // import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 
 // export const metadata = createMetadata({
@@ -13,7 +14,9 @@ import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 export default function LineFollowingPage() {
 	return (
 		<AuthenticatedLayout>
-			<>Line following</>
+			<CareerActivityTemplate>
+				Line following
+			</CareerActivityTemplate>
 		</AuthenticatedLayout>
 	)
 }
