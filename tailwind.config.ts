@@ -43,6 +43,7 @@ module.exports = {
 
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
+				careerQuestIconColor: "rgb(155, 0, 100)",
 
 				landingOuterBorder: "rgb(var(--landing-outer-border))",
 				landingDottedLine: "rgb(var(--landing-dotted-line))",

@@ -10,7 +10,7 @@ export default function ButtonCard() {
 			title="2 Buttons"
 			description="Give Pip custom controls"
 			icon={<ButtonSpringAnimation iconSize={bentoIconSize}/>}
-			outerDivStyles="col-span-1 lg:col-start-2 lg:row-start-1"
+			outerDivStyles="col-span-1 lg:col-start-2 lg:row-start-2"
 		/>
 	)
 }

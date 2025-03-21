@@ -20,7 +20,7 @@ const STATIC_KEYWORDS: [string, string, string] = [
 type MetadataProps = {
   title: string
   description: string
-  path?: string
+  path: PageNames
   needsBlueDotSuffix?: boolean
 //   ogImage?: string;
 //   twitterImage?: string;
@@ -35,7 +35,7 @@ type MetadataProps = {
 export function createMetadata({
 	title,
 	description,
-	path = "",
+	path,
 	needsBlueDotSuffix = true,
 	// ogImage = DEFAULT_OG_IMAGE,
 	// twitterImage,
