@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
+import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
-import { useState, useMemo, useCallback } from "react"
+import { useState, useCallback } from "react"
+import VolumeIcon from "./volume-icon"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchCardTemplate from "../workbench-card-template"
 import {
@@ -12,37 +14,15 @@ import {
 } from "../../shadcn/ui/dropdown-menu"
 import { Button } from "../../shadcn/ui/button"
 import { Slider } from "../../shadcn/ui/slider"
-import VolumeIcon from "./volume-icon"
 
 // eslint-disable-next-line max-lines-per-function
 export default function VolumeWorkbench() {
 	const [volume, setVolume] = useState(70)
 	const [isMuted, setIsMuted] = useState(false)
 	const [selectedSound, setSelectedSound] = useState("Chime")
-	const [playingMessage, setPlayingMessage] = useState("")
-	const [isPlaying, setIsPlaying] = useState(false)
 
 	// Available test sounds
 	const testSounds = ["Chime", "Beep", "Notification", "Alert", "Welcome"]
-
-	// Play test sound
-	const playTestSound = useCallback(() => {
-		if (isPlaying) return // Prevent multiple plays
-
-		setIsPlaying(true)
-		setPlayingMessage(`Playing ${selectedSound}`)
-
-		// Reset message and playing state after 3 seconds
-		setTimeout(() => {
-			setPlayingMessage("")
-			setIsPlaying(false)
-		}, 3000)
-	}, [isPlaying, selectedSound])
-
-	// CSS classes for animation
-	const fadeAnimation = useMemo(() => {
-		return isPlaying ? "opacity-100 transition-opacity duration-300" : "opacity-0 transition-opacity duration-300"
-	}, [isPlaying])
 
 	// Handle volume change
 	const handleVolumeChange = useCallback((value: number[]) => {
@@ -60,7 +40,7 @@ export default function VolumeWorkbench() {
 					isMuted={isMuted}
 					setIsMuted={setIsMuted}
 				/>
-				<div className="ml-8 w-full max-w-sm">
+				<div className="ml-4 w-full max-w-sm">
 					<div className="mb-6 cursor-pointer">
 						<Slider
 							defaultValue={[volume]}
@@ -73,16 +53,15 @@ export default function VolumeWorkbench() {
 					</div>
 					<div className="flex items-center gap-2">
 						<Button
-							onClick={playTestSound}
 							disabled={isMuted}
 							className="rounded-xl bg-eel"
 						>
-							Try a Tune
+							TRY A TUNE
 						</Button>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
 								<Button variant="outline" className="flex items-center gap-1 rounded-xl" disabled={isMuted}>
-									{selectedSound}
+									{toUpper(selectedSound)}
 									<ChevronDown className="h-4 w-4" />
 								</Button>
 							</DropdownMenuTrigger>
@@ -93,16 +72,11 @@ export default function VolumeWorkbench() {
 										onClick={() => setSelectedSound(sound)}
 										className="cursor-pointer transition-none"
 									>
-										{sound}
+										{toUpper(sound)}
 									</DropdownMenuItem>
 								))}
 							</DropdownMenuContent>
 						</DropdownMenu>
-						{playingMessage && (
-							<span className={cn("text-macaw ml-2 text-sm", fadeAnimation)}>
-								{playingMessage}
-							</span>
-						)}
 					</div>
 				</div>
 			</div>

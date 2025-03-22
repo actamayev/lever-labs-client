@@ -25,19 +25,19 @@ export default function VolumeIcon(props: Props) {
 	}, [isMuted, setIsMuted])
 
 	// Determine which speaker icon to show based on volume level
-	function SpeakerIconToShow() {
-		const baseClasses = "!h-12 !w-12"
-
+	const SpeakerIconToShow = () => {
+		const baseClasses = "!h-10 !w-10" // Slightly smaller to accommodate text below
+		const strokeWidth = 2.5
 		if (isMuted) {
-			return <VolumeOff className={baseClasses} />
+			return <VolumeOff className={baseClasses} strokeWidth={strokeWidth}/>
 		}
 
 		if (volume <= 20) {
-			return <Volume className={baseClasses} />
+			return <Volume className={baseClasses} strokeWidth={strokeWidth}/>
 		} else if (volume <= 40) {
-			return <Volume1 className={baseClasses} />
+			return <Volume1 className={baseClasses} strokeWidth={strokeWidth}/>
 		} else {
-			return <Volume2 className={baseClasses} />
+			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
 		}
 	}
 
@@ -53,17 +53,20 @@ export default function VolumeIcon(props: Props) {
 							type="button"
 							variant="ghost"
 							size="lg"
-							className="!p-0 hover:bg-polar flex flex-col items-center justify-center"
+							className="!px-5 py-2 hover:bg-polar flex flex-col items-center
+  							justify-center h-auto hover:text-current rounded-2xl w-20"
 							onClick={toggleMute}
 						>
-							<SpeakerIconToShow />
-							<span className={cn("text-base font-medium -mt-1")}>
-								{isMuted ? "Muted" : `${volume}%`}
-							</span>
+							<div className="flex flex-col items-center">
+								<SpeakerIconToShow />
+								<span className="text-base font-medium mt-0 w-full text-center">
+									{volume}%
+								</span>
+							</div>
 						</Button>
 					</TooltipTrigger>
 					<TooltipContent side="top" className="text-standardBackground">
-						{isMuted ? "Unmute" : "Mute"}
+						{isMuted ? "UNMUTE" : "MUTE"}
 					</TooltipContent>
 				</Tooltip>
 			</TooltipProvider>
