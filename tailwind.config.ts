@@ -48,6 +48,8 @@ module.exports = {
 				landingOuterBorder: "rgb(var(--landing-outer-border))",
 				landingDottedLine: "rgb(var(--landing-dotted-line))",
 
+				chargingGreen: "rgb(var(--charging-green))",
+
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",
 				swan: "rgb(var(--swan))",

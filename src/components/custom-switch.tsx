@@ -13,7 +13,7 @@ interface SliderProps {
 	size?: "default" | "lg" | "xl"
   }
 
-export default function Slider(props: SliderProps) {
+export default function CustomSwitch(props: SliderProps) {
 	const {
 		checkedCondition,
 		onChangeCheckedCondition,

@@ -10,7 +10,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip"
-import Slider from "../slider"
+import CustomSwitch from "../custom-switch"
 import { Button } from "../shadcn/ui/button"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
@@ -64,7 +64,7 @@ function SelectAutoreconnectToPip() {
 							</TooltipProvider>
 						</div>
 						<FormControl className="flex items-center">
-							<Slider
+							<CustomSwitch
 								id="pip-auto-connect-slider"
 								checkedCondition={field.value}
 								onChangeCheckedCondition={() => chooseAutoConnect(field.onChange, field.value)}
