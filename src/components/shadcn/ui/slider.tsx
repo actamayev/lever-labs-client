@@ -59,7 +59,7 @@ const Slider = React.forwardRef<
           style={rangeStyle}
         />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full border border-eel bg-background shadow transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20"/>
+      <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20"/>
     </SliderPrimitive.Root>
   )
 })

@@ -13,6 +13,7 @@ import {
 } from "../../shadcn/ui/dropdown-menu"
 import { Button } from "../../shadcn/ui/button"
 import { Slider } from "../../shadcn/ui/slider"
+import { cn } from "../../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 export default function VolumeWorkbench() {
@@ -46,7 +47,7 @@ export default function VolumeWorkbench() {
 							max={100}
 							step={1}
 							onValueChange={handleVolumeChange}
-							className={isMuted ? "opacity-50" : ""}
+							className={cn("duration-0", isMuted ? "opacity-50" : "")}
 							value={[volume]}
 						/>
 					</div>
