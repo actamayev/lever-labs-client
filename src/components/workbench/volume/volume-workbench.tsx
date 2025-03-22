@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
+import { ChevronDown } from "lucide-react"
 import { useState, useMemo, useCallback } from "react"
-import { Volume, Volume1, Volume2, ChevronDown, VolumeOff } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
-import WorkbenchCardTemplate from "./workbench-card-template"
+import { cn } from "../../../lib/shadcn/utils"
+import WorkbenchCardTemplate from "../workbench-card-template"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "../shadcn/ui/dropdown-menu"
-import { Button } from "../shadcn/ui/button"
-import { Slider } from "../shadcn/ui/slider"
+} from "../../shadcn/ui/dropdown-menu"
+import { Button } from "../../shadcn/ui/button"
+import { Slider } from "../../shadcn/ui/slider"
+import VolumeIcon from "./volume-icon"
 
 // eslint-disable-next-line max-lines-per-function
 export default function VolumeWorkbench() {
@@ -23,11 +24,6 @@ export default function VolumeWorkbench() {
 
 	// Available test sounds
 	const testSounds = ["Chime", "Beep", "Notification", "Alert", "Welcome"]
-
-	// Toggle mute when speaker icon is clicked
-	const toggleMute = useCallback(() => {
-		setIsMuted(!isMuted)
-	}, [isMuted])
 
 	// Play test sound
 	const playTestSound = useCallback(() => {
@@ -56,33 +52,15 @@ export default function VolumeWorkbench() {
 		}
 	}, [isMuted])
 
-	// Determine which speaker icon to show based on volume level
-	function SpeakerIconToShow() {
-		const baseClasses = "h-12 w-12 cursor-pointer"
-
-		if (isMuted) {
-			return <VolumeOff className={baseClasses} onClick={toggleMute} />
-		}
-
-		if (volume <= 20) {
-			return <Volume className={baseClasses} onClick={toggleMute} />
-		} else if (volume <= 40) {
-			return <Volume1 className={baseClasses} onClick={toggleMute} />
-		} else {
-			return <Volume2 className={baseClasses} onClick={toggleMute} />
-		}
-	}
-
 	return (
 		<WorkbenchCardTemplate>
-			<div className="flex items-start">
-				<div className={cn("flex flex-col items-center justify-center ml-0.5", isMuted ? "text-eel/50" : "text-eel")}>
-					<SpeakerIconToShow />
-					<span className={cn("text-base font-medium")}>
-						{isMuted ? "Muted" : `${volume}%`}
-					</span>
-				</div>
-				<div className="ml-8 mt-2 w-full max-w-sm">
+			<div className="flex items-center">
+				<VolumeIcon
+					volume={volume}
+					isMuted={isMuted}
+					setIsMuted={setIsMuted}
+				/>
+				<div className="ml-8 w-full max-w-sm">
 					<div className="mb-6 cursor-pointer">
 						<Slider
 							defaultValue={[volume]}
@@ -99,7 +77,7 @@ export default function VolumeWorkbench() {
 							disabled={isMuted}
 							className="rounded-xl bg-eel"
 						>
-							Try a Sound
+							Try a Tune
 						</Button>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
