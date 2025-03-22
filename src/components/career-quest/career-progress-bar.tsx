@@ -13,7 +13,7 @@ function CareerProgressBar() {
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
 				<TooltipTrigger asChild>
-					<div className="w-full h-4 bg-swan rounded-full dark:bg-gray-700 overflow-hidden">
+					<div className="w-full h-4 bg-swan rounded-full overflow-hidden">
 						<div
 							className="relative h-full rounded-full transition-all duration-300 ease-out bg-green-500"
 							style={{
