@@ -40,7 +40,7 @@ export default function BatteryWorkbench() {
 	}, [isCharging])
 
 	return (
-		<WorkbenchCardTemplate title="Battery">
+		<WorkbenchCardTemplate>
 			<div className="flex items-start">
 				<div className="flex flex-col items-center justify-center">
 					<BatteryIconToShow />

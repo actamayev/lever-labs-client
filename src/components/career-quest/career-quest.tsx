@@ -18,7 +18,7 @@ export default function CareerQuest() {
 				</div>
 			</div>
 
-			<div className="w-2/5 pr-52">
+			<div className="w-full lg:w-2/5 mt-8 lg:mt-0 lg:pr-6 xl:pr-12 2xl:pr-52">
 				<WorkbenchLayout />
 			</div>
 		</div>
