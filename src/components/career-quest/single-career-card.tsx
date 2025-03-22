@@ -25,7 +25,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 				{/* Progress Bar */}
 				<div className="w-full h-5 bg-emerald-600 rounded-full overflow-hidden relative">
 					<div
-						className="relative h-full rounded-full transition-all duration-300 ease-out bg-emerald-300"
+						className="relative h-full rounded-full duration-0 ease-out bg-emerald-300"
 						style={{
 							width: `${progressPercentage}%`,
 						}}

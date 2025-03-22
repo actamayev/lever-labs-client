@@ -66,7 +66,7 @@ export default function LessonProgressIconContainer({ lessonProgressPercent, les
 								strokeLinecap="round"
 								strokeDasharray={circumference}
 								strokeDashoffset={strokeDashoffset}
-								className="transition-all duration-300"
+								className="duration-0"
 							/>
 						</svg>
 
