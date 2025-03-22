@@ -114,7 +114,7 @@ function BlocklyComponent(props: Props) {
 				toolboxConfiguration={toolboxConfig}
 				initialXml={blocklyXml}
 				workspaceConfiguration={workspaceConfiguration}
-				className="h-full transition-all duration-300"
+				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}
 			/>
 		</div>

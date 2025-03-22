@@ -87,7 +87,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 	return (
 		<div className={cn(
 			"group relative flex flex-col justify-between overflow-hidden rounded-xl",
-			"bg-standardBackground shadow-md hover:shadow-lg transition-shadow duration-300",
+			"bg-standardBackground shadow-md hover:shadow-lg transition-shadow duration-0",
 			"transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)]",
 			"dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
 		)}>
@@ -95,7 +95,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 				<div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
 					<div className="pointer-events-auto w-fit">
 						<Icon
-							className="text-pipThemeText duration-300 cursor-default"
+							className="text-pipThemeText duration-0 cursor-default"
 							size={bentoIconSize}
 							strokeWidth={2}
 						/>
