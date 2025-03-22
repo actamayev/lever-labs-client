@@ -12,6 +12,7 @@
 		--landing-outer-border: 244 244 246;
 		--landing-dotted-line: 238 238 242;
 
+		--charging-green: 35 200 100;
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
 		--macaw: 28 176 246;
@@ -37,6 +38,8 @@
 		--pip-theme-text: 28 176 255;
 		--landing-outer-border: 35 45 50;
 		--landing-dotted-line: 40 50 55;
+
+		--charging-green: 35 200 100;
 
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
