@@ -8,7 +8,7 @@ export default function InternalPagesLayout({ children } : { children: React.Rea
 		<SidebarProvider>
 			<PrimarySidebar />
 			<SidebarInset>
-				<div className="transition-all duration-300 bg-standardBackground">
+				<div className="duration-0 bg-standardBackground">
 					{children}
 				</div>
 			</SidebarInset>

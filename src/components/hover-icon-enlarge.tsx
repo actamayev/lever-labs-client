@@ -43,7 +43,7 @@ export function HoverIconEnlarge({
 				<div
 					className={cn(
 						"rounded-full flex items-center justify-center group-hover:scale-110",
-						"transition-transform duration-300",
+						"transition-transform duration-200",
 						bgColor, darkBgColor, backgroundSize
 					)}
 				>

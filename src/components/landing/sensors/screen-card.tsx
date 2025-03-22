@@ -19,7 +19,7 @@ export default function ScreenCard() {
 
 				{isHovered && (
 					<div
-						className="absolute bg-pipThemeText rounded-full transition-all duration-300"
+						className="absolute bg-pipThemeText rounded-full duration-0"
 						style={{
 							width: "15px",
 							height: "15px",

@@ -15,7 +15,7 @@ function CareerProgressBar() {
 				<TooltipTrigger asChild>
 					<div className="w-full h-4 bg-swan rounded-full overflow-hidden">
 						<div
-							className="relative h-full rounded-full transition-all duration-300 ease-out bg-green-500"
+							className="relative h-full rounded-full duration-0 ease-out bg-green-500"
 							style={{
 								width: "50%",
 							}}

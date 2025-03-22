@@ -16,14 +16,14 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 		>
 			{/* Static infinity icon */}
 			<CustomInfinity
-				className="transition-all duration-300 text-questionText"
+				className="duration-0 text-questionText"
 				size={iconSize}
 			/>
 
 			{/* Animated dot following infinity path */}
 			{isHovered && (
 				<motion.div
-					className="absolute inset-0 transition-all duration-300"
+					className="absolute inset-0 duration-0"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 				>
@@ -41,7 +41,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
 						}}
 					/>
 					<InfinityIcon
-						className="transition-all duration-300 text-questionText"
+						className="duration-0 text-questionText"
 						size={iconSize}
 					/>
 				</motion.div>

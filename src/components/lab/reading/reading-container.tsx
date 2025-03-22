@@ -25,7 +25,7 @@ function ReadingContainer({ blocks, readingName } : Props) {
 	return (
 		<div className="h-full flex relative">
 			<div className={cn(
-				"h-full transition-all duration-300",
+				"h-full duration-0",
 				labReadingClass.activeQuiz ? "w-2/3" : "w-full"
 			)}>
 				<div
