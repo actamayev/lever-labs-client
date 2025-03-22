@@ -54,7 +54,7 @@ export default function VolumeWorkbench() {
 							disabled={isMuted}
 							className="rounded-xl bg-eel"
 						>
-							TRY A TUNE
+							PLAY A TUNE
 						</Button>
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>

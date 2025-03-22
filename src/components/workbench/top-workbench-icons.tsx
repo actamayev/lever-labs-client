@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
-
 import { useMemo } from "react"
-import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+	TooltipProvider
+} from "@/components/shadcn/ui/tooltip"
 import { cn } from "../../lib/shadcn/utils"
-import WorkbenchCardTemplate from "./workbench-card-template"
+import { Button } from "../shadcn/ui/button"
+import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 
-export default function BatteryWorkbench() {
-	const batteryPercentage = 70
+export default function TopWorkbenchIcons() {
+	const batteryPercentage = 100
 	const isCharging = false
-
-	// Determine the text color class based on battery status
+	// Determine which speaker icon to show based on volume level
 	const getColorClass = useMemo(() => {
 		if (isCharging) return "text-chargingGreen"
 		if (batteryPercentage <= 20) return "text-cardinal"
@@ -20,7 +24,7 @@ export default function BatteryWorkbench() {
 	}, [isCharging, batteryPercentage])
 
 	function BatteryIconToShow() {
-		const baseClasses = "h-14 w-14"
+		const baseClasses = "!h-14 !w-14"
 		const strokeWidth = 2.5
 		if (isCharging) {
 			return <BatteryCharging className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
@@ -41,20 +45,30 @@ export default function BatteryWorkbench() {
 	}, [isCharging])
 
 	return (
-		<WorkbenchCardTemplate>
-			<div className="flex items-start">
-				<div className="flex flex-col items-center justify-center w-20 h-20">
-					<BatteryIconToShow />
-					<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
-						{batteryPercentage}%
-					</span>
-				</div>
-
-				<div className="ml-4 mt-2">
-					<p className="text-base text-wolf">{getTimeText}</p>
-					<p className="text-lg font-medium">2 hours</p>
-				</div>
-			</div>
-		</WorkbenchCardTemplate>
+		<div className="flex flex-col items-start justify-center ml-4">
+			<TooltipProvider delayDuration={0}>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							type="button"
+							variant="ghost"
+							size="lg"
+							className="hover:bg-polar flex flex-col items-center
+  							justify-center h-auto hover:text-current rounded-2xl p-0"
+						>
+							<div className="flex flex-col items-center justify-center w-20 h-20">
+								<BatteryIconToShow />
+								<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
+									{batteryPercentage}%
+								</span>
+							</div>
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent side="bottom" className="text-standardBackground">
+						{getTimeText} 2 hours
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+		</div>
 	)
 }
