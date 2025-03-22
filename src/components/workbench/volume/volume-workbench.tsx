@@ -21,7 +21,7 @@ export default function VolumeWorkbench() {
 	const [selectedSound, setSelectedSound] = useState("Chime")
 
 	// Available test sounds
-	const testSounds = ["Chime", "Beep", "Notification", "Alert", "Welcome"]
+	const testSounds = ["Chime", "Beep", "Alert", "Welcome"]
 
 	// Handle volume change
 	const handleVolumeChange = useCallback((value: number[]) => {

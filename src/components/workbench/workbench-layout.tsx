@@ -7,7 +7,7 @@ export default function WorkbenchLayout() {
 	return (
 		<>
 			<VolumeWorkbench />
-			<NetworkWorkbench />
+			{/* <NetworkWorkbench /> */}
 		</>
 	)
 }
