@@ -4,7 +4,6 @@ import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
 import { useState, useCallback } from "react"
 import VolumeIcon from "./volume-icon"
-import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchCardTemplate from "../workbench-card-template"
 import {
 	DropdownMenu,
@@ -46,9 +45,8 @@ export default function VolumeWorkbench() {
 							defaultValue={[volume]}
 							max={100}
 							step={1}
-							disabled={isMuted}
 							onValueChange={handleVolumeChange}
-							className={cn(isMuted ? "opacity-50" : "")}
+							className={isMuted ? "opacity-50" : ""}
 						/>
 					</div>
 					<div className="flex items-center gap-2">

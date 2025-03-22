@@ -21,17 +21,18 @@ export default function BatteryWorkbench() {
 
 	function BatteryIconToShow() {
 		const baseClasses = "h-14 w-14"
+		const strokeWidth = 2.5
 		if (isCharging) {
-			return <BatteryCharging className={cn(baseClasses, getColorClass)} />
+			return <BatteryCharging className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		}
 		if (batteryPercentage <= 20) {
-			return <BatteryWarning className={cn(baseClasses, getColorClass)} />
+			return <BatteryWarning className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		} else if (batteryPercentage <= 40) {
-			return <BatteryLow className={cn(baseClasses, getColorClass)} />
+			return <BatteryLow className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		} else if (batteryPercentage <= 70) {
-			return <BatteryMedium className={cn(baseClasses, getColorClass)} />
+			return <BatteryMedium className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		}
-		return <BatteryFull className={cn(baseClasses, getColorClass)} />
+		return <BatteryFull className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 	}
 
 	const getTimeText = useMemo(() => {
@@ -42,14 +43,14 @@ export default function BatteryWorkbench() {
 	return (
 		<WorkbenchCardTemplate>
 			<div className="flex items-start">
-				<div className="flex flex-col items-center justify-center">
+				<div className="flex flex-col items-center justify-center w-20 h-20">
 					<BatteryIconToShow />
-					<span className={cn("text-base font-medium -mt-2", getColorClass)}>
+					<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
 						{batteryPercentage}%
 					</span>
 				</div>
 
-				<div className="ml-8 mt-2">
+				<div className="ml-4 mt-2">
 					<p className="text-base text-wolf">{getTimeText}</p>
 					<p className="text-lg font-medium">2 hours</p>
 				</div>

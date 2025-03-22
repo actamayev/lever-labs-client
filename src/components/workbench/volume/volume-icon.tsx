@@ -26,7 +26,7 @@ export default function VolumeIcon(props: Props) {
 
 	// Determine which speaker icon to show based on volume level
 	const SpeakerIconToShow = () => {
-		const baseClasses = "!h-10 !w-10" // Slightly smaller to accommodate text below
+		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
 		const strokeWidth = 2.5
 		if (isMuted) {
 			return <VolumeOff className={baseClasses} strokeWidth={strokeWidth}/>
