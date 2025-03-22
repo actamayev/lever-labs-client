@@ -15,8 +15,24 @@ export default function ModuleCard() {
 			"col-span-1 md:col-span-2 lg:col-span-1",
 			"lg:col-start-1 lg:row-span-2 lg:row-start-4"
 		)}>
-			<div className="z-10 flex transform-gpu h-full p-4 gap-6">
-				<div className="flex flex-col gap-1 w-full md:w-auto items-center md:items-start">
+			{/* Mobile layout (horizontal) */}
+			<div className="md:hidden z-10 flex flex-row transform-gpu h-full p-3 gap-3">
+				<div className="shrink-0 flex justify-center items-center">
+					<ModuleAnimation iconSize={bentoIconSize} />
+				</div>
+				<div className="flex flex-col justify-center flex-1">
+					<h3 className={landingSensorCardHeaderText()}>
+						Modules
+					</h3>
+					<p className={landingSensorCardText()}>
+						Optional modules extend Pip's functionality
+					</p>
+				</div>
+			</div>
+
+			{/* Desktop layout (vertical) */}
+			<div className="hidden md:flex z-10 transform-gpu h-full p-4 gap-6">
+				<div className="flex flex-col gap-1 w-full items-center md:items-start">
 					<div className="flex justify-center md:justify-start w-full">
 						<ModuleAnimation iconSize={bentoIconSize} />
 					</div>
@@ -25,7 +41,7 @@ export default function ModuleCard() {
 							Modules
 						</h3>
 						<p className={landingSensorCardText()}>
-							Optional modules like a camera snap on to extend Pip's functionality!
+							Optional modules snap on to extend Pip's functionality!
 						</p>
 					</div>
 				</div>
