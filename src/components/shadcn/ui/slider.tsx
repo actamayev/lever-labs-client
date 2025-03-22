@@ -38,11 +38,11 @@ const Slider = React.forwardRef<
     if (width === 53) return width - 0.2
     return width
   }
+
   const rangeStyle = {
     width: `${widthToRender()}%`
   };
 
-  // console.log(props)
   return (
     <SliderPrimitive.Root
       ref={ref}
