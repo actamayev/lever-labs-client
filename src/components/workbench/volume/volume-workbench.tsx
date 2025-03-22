@@ -47,6 +47,7 @@ export default function VolumeWorkbench() {
 							step={1}
 							onValueChange={handleVolumeChange}
 							className={isMuted ? "opacity-50" : ""}
+							value={[volume]}
 						/>
 					</div>
 					<div className="flex items-center gap-2">

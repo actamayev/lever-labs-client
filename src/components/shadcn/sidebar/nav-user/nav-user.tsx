@@ -61,7 +61,7 @@ function NavUser() {
 										/>
 									</Avatar>
 								</div>
-								<div className="text-base text-wolf">
+								<div className="text-base text-wolf font-medium">
 									PROFILE
 								</div>
 							</div>
