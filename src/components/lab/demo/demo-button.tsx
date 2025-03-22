@@ -35,7 +35,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 			className={cn(
 				"p-0 border border-swan rounded-lg",
 				"transition-colors text-left flex items-stretch",
-				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-swan dark:hover:bg-gray-700"
+				isDemoActive ? "bg-green-400 dark:bg-green-700" : "bg-inherit hover:bg-swan"
 			)}
 			onClick={setActiveDemo}
 		>

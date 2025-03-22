@@ -57,25 +57,27 @@ export default function VolumeWorkbench() {
 						>
 							PLAY A TUNE
 						</Button>
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline" className="flex items-center gap-1 rounded-xl" disabled={isMuted}>
-									{toUpper(selectedSound)}
-									<ChevronDown className="h-4 w-4" />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent className="rounded-xl">
-								{testSounds.map((sound) => (
-									<DropdownMenuItem
-										key={sound}
-										onClick={() => setSelectedSound(sound)}
-										className="cursor-pointer transition-none"
-									>
-										{toUpper(sound)}
-									</DropdownMenuItem>
-								))}
-							</DropdownMenuContent>
-						</DropdownMenu>
+						<div className="!w-32">
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<Button variant="outline" className="flex items-center gap-1 rounded-xl" disabled={isMuted}>
+										{toUpper(selectedSound)}
+										<ChevronDown className="h-4 w-4" />
+									</Button>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className="rounded-xl bg-standardBackground">
+									{testSounds.map((sound) => (
+										<DropdownMenuItem
+											key={sound}
+											onClick={() => setSelectedSound(sound)}
+											className="cursor-pointer transition-none hover:!bg-polar"
+										>
+											{toUpper(sound)}
+										</DropdownMenuItem>
+									))}
+								</DropdownMenuContent>
+							</DropdownMenu>
+						</div>
 					</div>
 				</div>
 			</div>
