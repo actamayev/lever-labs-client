@@ -14,7 +14,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 
 	return (
 		<div className={cn(
-			"relative overflow-hidden rounded-2xl text-white w-[690px] h-[300px] flex cursor-default",
+			"relative overflow-hidden rounded-2xl text-white w-[750px] h-[321px] flex cursor-default",
 			backgroundColor
 		)}>
 			{/* Left Section */}
