@@ -11,7 +11,7 @@ const Popover = React.forwardRef<
     hoverDelay?: number;
     closeDelay?: number;
   }
->(({ children, openOnHover = false, hoverDelay = 0, closeDelay = 0, ...props }, ref) => {
+>(({ children, openOnHover = true, hoverDelay = 0, closeDelay = 0, ...props }, ref) => {
   const [isOpen, setIsOpen] = useState(false);
   const openTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);

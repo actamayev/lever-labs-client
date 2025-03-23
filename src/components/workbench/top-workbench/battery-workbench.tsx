@@ -1,12 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
 import { useMemo } from "react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
@@ -46,28 +40,26 @@ export default function BatteryWorkbench() {
 	}, [isCharging])
 
 	return (
-		<div className="flex flex-col items-start justify-center ml-4 cursor-default">
-			<Popover openOnHover>
-				<PopoverTrigger>
-					<Button
-						type="button"
-						variant="ghost"
-						size="lg"
-						className="hover:bg-polar flex flex-col items-center cursor-default
-  							justify-center h-auto hover:text-current rounded-2xl p-0"
-					>
-						<div className="flex flex-col items-center justify-center w-20 h-20">
-							<BatteryIconToShow />
-							<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
-								{batteryPercentage}%
-							</span>
-						</div>
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-80">
-					{getTimeText} 2 hours
-				</PopoverContent>
-			</Popover>
-		</div>
+		<Popover openOnHover>
+			<PopoverTrigger>
+				<Button
+					type="button"
+					variant="ghost"
+					size="lg"
+					className="hover:bg-polar flex flex-col items-center cursor-default
+					justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+				>
+					<div className="flex flex-col items-center justify-center w-20 h-20">
+						<BatteryIconToShow />
+						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
+							{batteryPercentage}%
+						</span>
+					</div>
+				</Button>
+			</PopoverTrigger>
+			<PopoverContent className="w-80">
+				{getTimeText} 2 hours
+			</PopoverContent>
+		</Popover>
 	)
 }

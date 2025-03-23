@@ -3,7 +3,7 @@ import { Popover, PopoverTrigger } from "@/components/shadcn/ui/popover"
 import VolumeIcon from "./volume-icon"
 import VolumePopover from "./volume-popover"
 
-export default function NewVolumeWorkbench() {
+export default function VolumeWorkbench() {
 	const [volume, setVolume] = useState(70)
 	const [isMuted, setIsMuted] = useState(false)
 
