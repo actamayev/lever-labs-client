@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 import { cn } from "../../../lib/shadcn/utils"
 
@@ -8,9 +8,50 @@ const Popover = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Root> & {
     openOnHover?: boolean;
+    hoverDelay?: number;
+    closeDelay?: number;
   }
->(({ children, openOnHover = false, ...props }, ref) => {
+>(({ children, openOnHover = false, hoverDelay = 0, closeDelay = 0, ...props }, ref) => {
   const [isOpen, setIsOpen] = useState(false);
+  const openTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Clear timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (openTimeoutRef.current) clearTimeout(openTimeoutRef.current);
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
+  
+  const handleMouseEnter = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    
+    if (!isOpen && !openTimeoutRef.current) {
+      openTimeoutRef.current = setTimeout(() => {
+        setIsOpen(true);
+        openTimeoutRef.current = null;
+      }, hoverDelay);
+    }
+  };
+  
+  const handleMouseLeave = () => {
+    if (openTimeoutRef.current) {
+      clearTimeout(openTimeoutRef.current);
+      openTimeoutRef.current = null;
+    }
+    
+    if (isOpen && !closeTimeoutRef.current) {
+      closeTimeoutRef.current = setTimeout(() => {
+        setIsOpen(false);
+        closeTimeoutRef.current = null;
+      }, closeDelay);
+    }
+  };
   
   if (!openOnHover) {
     return (
@@ -21,30 +62,16 @@ const Popover = React.forwardRef<
   }
   
   return (
-    <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props}>
-      {React.Children.map(children, child => {
-        if (React.isValidElement(child) && child.type === PopoverTrigger) {
-          return React.cloneElement(child as React.ReactElement, {
-            onMouseEnter: () => setIsOpen(true),
-            onMouseLeave: (e: React.MouseEvent) => {
-              // Don't close if moving to the content
-              const relatedTarget = e.relatedTarget as HTMLElement;
-              if (relatedTarget?.closest('[data-radix-popover-content]')) {
-                return;
-              }
-              setIsOpen(false);
-            }
-          });
-        }
-        if (React.isValidElement(child) && child.type === PopoverContent) {
-          return React.cloneElement(child as React.ReactElement, {
-            onMouseEnter: () => setIsOpen(true),
-            onMouseLeave: () => setIsOpen(false),
-          });
-        }
-        return child;
-      })}
-    </PopoverPrimitive.Root>
+    <div
+      ref={containerRef}
+      className="relative inline-block"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <PopoverPrimitive.Root open={isOpen} onOpenChange={setIsOpen} {...props}>
+        {children}
+      </PopoverPrimitive.Root>
+    </div>
   )
 });
 
@@ -61,7 +88,7 @@ const PopoverContent = React.forwardRef<
       align={align}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 origin-[--radix-popover-content-transform-origin]",
+        "z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none origin-[--radix-popover-content-transform-origin]",
         className
       )}
       {...props}
