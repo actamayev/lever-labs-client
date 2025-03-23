@@ -10,9 +10,9 @@ import {
 import { cn } from "../../../../lib/shadcn/utils"
 import { Button } from "../../../shadcn/ui/button"
 import { Slider } from "../../../shadcn/ui/slider"
-import { PopoverContent } from "@/components/shadcn/ui/popover"
-import { Separator } from "../../../shadcn/ui/separator"
 import { Checkbox } from "../../../shadcn/ui/checkbox"
+import { Separator } from "../../../shadcn/ui/separator"
+import { PopoverContent } from "@/components/shadcn/ui/popover"
 
 interface Props {
 	volume: number
@@ -24,7 +24,7 @@ interface Props {
 export default function VolumePopover(props: Props) {
 	const { volume, isMuted, setIsMuted, setVolume } = props
 	const [selectedSound, setSelectedSound] = useState("Chime")
-	const testSounds = ["Chime", "Beep", "Alert", "Welcome"]
+	const testSounds = ["Chime", "Beep", "Alert"]
 
 	const handleVolumeChange = useCallback((value: number[]) => {
 		setVolume(value[0])
@@ -43,12 +43,12 @@ export default function VolumePopover(props: Props) {
 			<div className="w-full max-w-sm">
 				<div className="flex justify-between mb-1">
 					<div>SOUND</div>
-					<div className="flex flex-row items-center justify-between space-x-2">
+					<div
+						className="flex flex-row items-center justify-between space-x-2 cursor-pointer"
+						onClick={toggleMute}
+					>
 						<div>MUTE</div>
-						<Checkbox
-							checked={isMuted}
-							onClick={toggleMute}
-						/>
+						<Checkbox checked={isMuted}/>
 					</div>
 				</div>
 
@@ -96,6 +96,7 @@ export default function VolumePopover(props: Props) {
 									<DropdownMenuItem
 										key={sound}
 										onClick={(e) => {
+											e.preventDefault()
 											e.stopPropagation()
 											setSelectedSound(sound)
 										}}
