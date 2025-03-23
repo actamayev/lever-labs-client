@@ -36,7 +36,7 @@ export default function VolumeIcon(props: Props) {
 			variant="ghost"
 			size="lg"
 			className={cn(
-				"!px-5 py-2 hover:bg-polar flex flex-col items-center",
+				"!px-5 py-2 hover:bg-polar flex flex-col items-center cursor-default",
 				"justify-center h-auto hover:text-current rounded-2xl w-20",
 				!isMuted ? "" : "opacity-50"
 			)}
