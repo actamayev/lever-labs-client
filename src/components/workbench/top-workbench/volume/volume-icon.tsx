@@ -1,6 +1,7 @@
 "use client"
 import { Dispatch, SetStateAction } from "react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
+import { cn } from "../../../../lib/shadcn/utils"
 import { Button } from "@/components/shadcn/ui/button"
 
 interface Props {
@@ -34,8 +35,11 @@ export default function VolumeIcon(props: Props) {
 			type="button"
 			variant="ghost"
 			size="lg"
-			className="!px-5 py-2 hover:bg-polar flex flex-col items-center
-			justify-center h-auto hover:text-current rounded-2xl w-20"
+			className={cn(
+				"!px-5 py-2 hover:bg-polar flex flex-col items-center",
+				"justify-center h-auto hover:text-current rounded-2xl w-20",
+				!isMuted ? "" : "opacity-50"
+			)}
 		>
 			<div className="flex flex-col items-center">
 				<SpeakerIconToShow />

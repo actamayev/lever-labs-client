@@ -11,6 +11,8 @@ import { cn } from "../../../../lib/shadcn/utils"
 import { Button } from "../../../shadcn/ui/button"
 import { Slider } from "../../../shadcn/ui/slider"
 import { PopoverContent } from "@/components/shadcn/ui/popover"
+import { Separator } from "../../../shadcn/ui/separator"
+import { Checkbox } from "../../../shadcn/ui/checkbox"
 
 interface Props {
 	volume: number
@@ -30,16 +32,27 @@ export default function VolumePopover(props: Props) {
 			setIsMuted(false)
 		}
 	}, [isMuted, setIsMuted, setVolume])
-	
+
 	// Toggle mute when speaker icon is clicked
 	const toggleMute = useCallback(() => {
 		setIsMuted(!isMuted)
 	}, [isMuted, setIsMuted])
 
 	return (
-		<PopoverContent className="w-80">
-			<div className="ml-4 w-full max-w-sm">
-				<div className="mb-6 cursor-pointer">
+		<PopoverContent className="w-96">
+			<div className="w-full max-w-sm">
+				<div className="flex justify-between mb-1">
+					<div>SOUND</div>
+					<div className="flex flex-row items-center justify-between space-x-2">
+						<div>MUTE</div>
+						<Checkbox
+							checked={isMuted}
+							onClick={toggleMute}
+						/>
+					</div>
+				</div>
+
+				<div className="cursor-pointer">
 					<Slider
 						defaultValue={[volume]}
 						max={100}
@@ -49,6 +62,8 @@ export default function VolumePopover(props: Props) {
 						value={[volume]}
 					/>
 				</div>
+				<Separator className="my-2" />
+
 				<div className="flex items-center gap-2">
 					<Button
 						disabled={isMuted}
@@ -59,16 +74,31 @@ export default function VolumePopover(props: Props) {
 					<div className="!w-32">
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>
-								<Button variant="outline" className="flex items-center gap-1 rounded-xl" disabled={isMuted}>
+								<Button
+									variant="outline"
+									className="flex items-center gap-1 rounded-xl"
+									disabled={isMuted}
+									onClick={(e) => {
+										e.preventDefault()
+										e.stopPropagation()
+									}}
+								>
 									{toUpper(selectedSound)}
 									<ChevronDown className="h-4 w-4" />
 								</Button>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="rounded-xl bg-standardBackground">
+							<DropdownMenuContent
+								className="rounded-xl bg-standardBackground"
+								onClick={(e) => e.stopPropagation()}
+								onInteractOutside={(e) => e.stopPropagation()}
+							>
 								{testSounds.map((sound) => (
 									<DropdownMenuItem
 										key={sound}
-										onClick={() => setSelectedSound(sound)}
+										onClick={(e) => {
+											e.stopPropagation()
+											setSelectedSound(sound)
+										}}
 										className="cursor-pointer transition-none hover:!bg-polar"
 									>
 										{toUpper(sound)}
