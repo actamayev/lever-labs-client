@@ -5,12 +5,13 @@ import { usePathname } from "next/navigation"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import PipStatusTooltip from "./pip-status-tooltip"
+import { cn } from "../../../../lib/shadcn/utils"
+import CustomSidebarButton from "../custom-sidebar-button"
 import { usePipContext } from "../../../../contexts/pip-context"
 import useClickPipSidebarButton from "../../../../hooks/pip/click-pip-sidebar-button"
 import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
-import CustomSidebarButton from "../custom-sidebar-button"
-import { cn } from "../../../../lib/shadcn/utils"
 
+// Delete the connect to pip section
 function AddPipSidebarButton() {
 	const pathname = usePathname()
 	const pipClass = usePipContext()

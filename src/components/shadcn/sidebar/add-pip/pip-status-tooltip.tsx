@@ -18,7 +18,7 @@ function PipStatusTooltip() {
 	const getStatusColor = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "inactive": return "bg-cardinal"
+		case "offline": return "bg-cardinal"
 		case "online": return "bg-macaw"
 		case "connected to other user": return "bg-beetle"
 		case "connected": return "bg-green-500"
@@ -30,7 +30,7 @@ function PipStatusTooltip() {
 	const getStatusMessage = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "inactive": return `Please turn ${pipClass.selectedPip.pipName} on and connect it to the internet`
+		case "offline": return `Please turn ${pipClass.selectedPip.pipName} on and connect it to the internet`
 		case "online": return `${pipClass.selectedPip.pipName} is online and ready to connect`
 		case "connected to other user": return `${pipClass.selectedPip.pipName} is connected to another user`
 		case "connected": return "Connected"

@@ -1,7 +1,7 @@
 "use client"
 
 import { careerData } from "../../utils/career-data"
-import TopWorkbenchIcons from "../workbench/top-workbench-icons"
+import TopWorkbenchIcons from "../workbench/top-workbench/top-workbench-icons"
 import WorkbenchLayout from "../workbench/workbench-layout"
 import SingleCareerCard from "./single-career-card"
 

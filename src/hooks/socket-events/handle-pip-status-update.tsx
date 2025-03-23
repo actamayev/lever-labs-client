@@ -36,7 +36,7 @@ export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => v
 				title,
 				action: actionElement
 			})
-		} else if (newConnectionStatus === "inactive") {
+		} else if (newConnectionStatus === "offline") {
 			return toast.neutral({
 				title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
 			})

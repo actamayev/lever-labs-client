@@ -24,7 +24,7 @@ export default function useHandleMotorControl(): (motorControl: MotorControlInpu
 			return toast.negative({ title: "Please add a Pip" })
 		}
 
-		if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
+		if (pipClass.selectedPip.pipConnectionStatus === "offline") {
 			return toast.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
 		}
 		// Only emit if state has changed

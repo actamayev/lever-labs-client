@@ -7,11 +7,11 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
-import { cn } from "../../lib/shadcn/utils"
-import { Button } from "../shadcn/ui/button"
+import { cn } from "../../../lib/shadcn/utils"
+import { Button } from "../../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 
-export default function TopWorkbenchIcons() {
+export default function BatteryWorkbench() {
 	const batteryPercentage = 100
 	const isCharging = false
 	// Determine which speaker icon to show based on volume level
@@ -45,7 +45,7 @@ export default function TopWorkbenchIcons() {
 	}, [isCharging])
 
 	return (
-		<div className="flex flex-col items-start justify-center ml-4">
+		<div className="flex flex-col items-start justify-center ml-4 cursor-default">
 			<TooltipProvider delayDuration={0}>
 				<Tooltip>
 					<TooltipTrigger asChild>
@@ -53,7 +53,7 @@ export default function TopWorkbenchIcons() {
 							type="button"
 							variant="ghost"
 							size="lg"
-							className="hover:bg-polar flex flex-col items-center
+							className="hover:bg-polar flex flex-col items-center cursor-default
   							justify-center h-auto hover:text-current rounded-2xl p-0"
 						>
 							<div className="flex flex-col items-center justify-center w-20 h-20">

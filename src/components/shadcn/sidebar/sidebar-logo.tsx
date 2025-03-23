@@ -12,7 +12,7 @@ export default function SidebarLogo() {
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">
 				<Link
-					href="/lab"
+					href="/career-quest"
 					className="flex !h-16 !w-16 !min-w-[64px] items-center
 						justify-center rounded-lg group-data-[collapsible=icon]:!h-16 group-data-[collapsible=icon]:!w-16"
 				>
