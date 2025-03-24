@@ -1,15 +1,19 @@
 /* eslint-disable max-len */
 "use client"
 
-import { useState } from "react"
 import { motion } from "framer-motion"
+import { useCallback, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import FrontCareerCard from "./front-career-card"
 import BackCareerCard from "./back-career-card"
+import FrontCareerCard from "./front-career-card"
 
 // eslint-disable-next-line max-lines-per-function
 export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
 	const [flipped, setFlipped] = useState(false)
+
+	const flipCard = useCallback(() => {
+		setFlipped(prev => !prev)
+	}, [])
 
 	return (
 		<div className={cn(
@@ -27,12 +31,12 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 			>
 				<FrontCareerCard
 					careerData={careerData}
-					setFlipped={setFlipped}
+					flipCard={flipCard}
 				/>
 
 				<BackCareerCard
 					careerData={careerData}
-					setFlipped={setFlipped}
+					flipCard={flipCard}
 				/>
 			</motion.div>
 		</div>
