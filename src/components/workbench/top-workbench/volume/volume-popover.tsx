@@ -50,7 +50,7 @@ export default function VolumePopover(props: Props) {
 				</div>
 			</div>
 
-			<div className="cursor-pointer">
+			<div className="cursor-pointer mt-3">
 				<Slider
 					defaultValue={[volume]}
 					max={100}
@@ -60,7 +60,7 @@ export default function VolumePopover(props: Props) {
 					value={[volume]}
 				/>
 			</div>
-			<Separator className="my-2" />
+			<Separator className="my-3" />
 
 			<div className="flex items-center gap-2">
 				<Button
