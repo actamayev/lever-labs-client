@@ -1,11 +1,11 @@
 "use client"
-
-import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
+import { observer } from "mobx-react"
+import { cn } from "../../../lib/shadcn/utils"
+import { Button, buttonVariants } from "../../shadcn/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 import NetworkIcon from "./network-icon"
-import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
-import WorkbenchCardTemplate from "../workbench-card-template"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 import useSetSelectedPipToFirstPip from "../../../hooks/pip/set-default-pip-first-pip"
@@ -51,16 +51,27 @@ function NetworkWorkbench() {
 	})
 
 	return (
-		<WorkbenchCardTemplate>
-			<div className="flex items-center">
-				<NetworkIcon />
-				<div className="ml-4 w-full max-w-sm">
-					<div className="flex items-center gap-2">
-						<SecondRow />
+		<Popover openOnHover>
+			<PopoverTrigger asChild>
+				<div
+					className={cn(
+						buttonVariants({
+							variant: "ghost",
+							size: "lg",
+							className: "hover:bg-polar flex flex-col items-center cursor-default justify-center \
+							h-auto hover:text-current rounded-2xl p-0 outline-none"
+						})
+					)}
+				>
+					<div className="flex flex-col items-center justify-center w-20 h-20">
+						<NetworkIcon />
 					</div>
 				</div>
-			</div>
-		</WorkbenchCardTemplate>
+			</PopoverTrigger>
+			<PopoverContent className="w-80">
+				<SecondRow />
+			</PopoverContent>
+		</Popover>
 	)
 }
 

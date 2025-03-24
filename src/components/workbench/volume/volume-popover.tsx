@@ -7,11 +7,11 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
-import { cn } from "../../../../lib/shadcn/utils"
-import { Button, buttonVariants } from "../../../shadcn/ui/button"
-import { Slider } from "../../../shadcn/ui/slider"
-import { Checkbox } from "../../../shadcn/ui/checkbox"
-import { Separator } from "../../../shadcn/ui/separator"
+import { cn } from "../../../lib/shadcn/utils"
+import { Button, buttonVariants } from "../../shadcn/ui/button"
+import { Slider } from "../../shadcn/ui/slider"
+import { Checkbox } from "../../shadcn/ui/checkbox"
+import { Separator } from "../../shadcn/ui/separator"
 
 interface Props {
 	volume: number

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
 import { useMemo } from "react"
-import { cn } from "../../../lib/shadcn/utils"
-import { buttonVariants } from "../../shadcn/ui/button"
+import { cn } from "../../lib/shadcn/utils"
+import { buttonVariants } from "../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 

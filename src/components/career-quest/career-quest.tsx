@@ -1,9 +1,8 @@
 "use client"
 
-import { careerData } from "../../utils/career-data"
-import TopWorkbenchIcons from "../workbench/top-workbench/top-workbench-icons"
-import WorkbenchLayout from "../workbench/workbench-layout"
 import SingleCareerCard from "./single-career-card"
+import { careerData } from "../../utils/career-data"
+import WorkbenchIcons from "../workbench/workbench-icons"
 
 export default function CareerQuest() {
 	return (
@@ -18,8 +17,7 @@ export default function CareerQuest() {
 			</div>
 
 			<div className="w-full lg:w-2/5 xl:w-[38.2%] mt-8 lg:mt-0 space-y-4">
-				<TopWorkbenchIcons />
-				<WorkbenchLayout />
+				<WorkbenchIcons />
 			</div>
 		</div>
 	)

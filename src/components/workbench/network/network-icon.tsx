@@ -53,29 +53,29 @@ function NetworkIcon() {
 			"flex flex-col items-center justify-center ml-0.5 cursor-default",
 			pipClass.selectedPip?.pipConnectionStatus === "offline" ? "text-eel/50" : "text-eel"
 		)}>
-			<TooltipProvider delayDuration={0}>
+			{/* <TooltipProvider delayDuration={0}>
 				<Tooltip>
-					<TooltipTrigger asChild>
-						<div
-							className={cn(
-								buttonVariants({
-									variant: "ghost",
-									size: "lg",
-									className: "hover:bg-polar flex flex-col items-center cursor-default \
+					<TooltipTrigger asChild> */}
+			<div
+				className={cn(
+					buttonVariants({
+						variant: "ghost",
+						size: "lg",
+						className: "hover:bg-polar flex flex-col items-center cursor-default \
 									justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
-								})
-							)}
-						>
-							<div className="flex flex-col items-center justify-center size-20">
-								<WifiIconToShow />
-							</div>
-						</div>
-					</TooltipTrigger>
+					})
+				)}
+			>
+				<div className="flex flex-col items-center justify-center size-20">
+					<WifiIconToShow />
+				</div>
+			</div>
+			{/* </TooltipTrigger>
 					<TooltipContent side="top" className="text-standardBackground">
 						{toUpper(pipClass.selectedPip?.pipConnectionStatus)}
 					</TooltipContent>
 				</Tooltip>
-			</TooltipProvider>
+			</TooltipProvider> */}
 		</div>
 	)
 }

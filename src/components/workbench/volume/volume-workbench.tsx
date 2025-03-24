@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/
 import VolumePopover from "./volume-popover"
 
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
-import { cn } from "../../../../lib/shadcn/utils"
+import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "@/components/shadcn/ui/button"
 
 
