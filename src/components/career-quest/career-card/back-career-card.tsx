@@ -11,12 +11,12 @@ interface Props {
 
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { backgroundColor } = careerData
+	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
 
 	return (
 		<motion.div
 			className={cn(
-				"absolute w-full h-full backface-hidden flex items-center justify-center",
+				"absolute w-full h-full backface-hidden flex",
 				backgroundColor
 			)}
 			style={{
@@ -24,9 +24,10 @@ export default function BackCareerCard(props: Props) {
 				transform: "rotateY(180deg)",
 			}}
 		>
-			{/* Simple back content */}
-			<div className="text-center">
-				{/* You can add back content here later */}
+			<div className="w-1/2 flex flex-col p-6 justify-between">
+				<h3 className="text-2xl font-bold">{careerName}</h3>
+			</div>
+			<div className="w-1/2 flex items-center justify-center">
 			</div>
 
 			<BackFlipButton onFlip={flipCard} />
