@@ -1,17 +1,13 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
 import { useMemo } from "react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
-import { cn } from "../../lib/shadcn/utils"
-import { Button } from "../shadcn/ui/button"
+import { cn } from "../../../lib/shadcn/utils"
+import { buttonVariants } from "../../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 
-export default function TopWorkbenchIcons() {
+export default function BatteryWorkbench() {
 	const batteryPercentage = 100
 	const isCharging = false
 	// Determine which speaker icon to show based on volume level
@@ -45,30 +41,28 @@ export default function TopWorkbenchIcons() {
 	}, [isCharging])
 
 	return (
-		<div className="flex flex-col items-start justify-center ml-4">
-			<TooltipProvider delayDuration={0}>
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							type="button"
-							variant="ghost"
-							size="lg"
-							className="hover:bg-polar flex flex-col items-center
-  							justify-center h-auto hover:text-current rounded-2xl p-0"
-						>
-							<div className="flex flex-col items-center justify-center w-20 h-20">
-								<BatteryIconToShow />
-								<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
-									{batteryPercentage}%
-								</span>
-							</div>
-						</Button>
-					</TooltipTrigger>
-					<TooltipContent side="bottom" className="text-standardBackground">
-						{getTimeText} 2 hours
-					</TooltipContent>
-				</Tooltip>
-			</TooltipProvider>
-		</div>
+		<Popover openOnHover>
+			<PopoverTrigger asChild>
+				<div
+					className={cn(
+						buttonVariants({
+							variant: "ghost",
+							size: "lg",
+							className: "hover:bg-polar flex flex-col items-center cursor-default justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+						})
+					)}
+				>
+					<div className="flex flex-col items-center justify-center w-20 h-20">
+						<BatteryIconToShow />
+						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
+							{batteryPercentage}%
+						</span>
+					</div>
+				</div>
+			</PopoverTrigger>
+			<PopoverContent className="w-80">
+				{getTimeText} 2 hours
+			</PopoverContent>
+		</Popover>
 	)
 }

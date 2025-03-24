@@ -40,7 +40,8 @@ function ConnectToPipInstructions() {
 									!addPipClass.store.addingNewPipRequirements.checkedConnectedToWifi
 								)
 							}
-							className="size-8"
+							className="size-8 group relative hover:bg-black dark:hover:bg-white hover:text-primary duration-0"
+							checkSize="size-7"
 							showPlaceholder={true}
 						/>
 					</div>

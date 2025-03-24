@@ -3,15 +3,15 @@
 import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "../components/shadcn/ui/form"
-import AuthButton from "../components/buttons/generic-buttons"
-import ErrorMessage from "../components/messages/error-message"
-import AuthTemplate from "../components/templates/auth-template"
-import { registerUsernameSchema } from "../utils/auth/auth-schemas"
-import useUsernameSubmit from "../hooks/auth/google/username-submit"
-import UsernameInput from "../components/auth/register/username-input"
+import { Form } from "../../shadcn/ui/form"
+import AuthButton from "../../buttons/generic-buttons"
+import ErrorMessage from "../../messages/error-message"
+import AuthTemplate from "../../templates/auth-template"
+import UsernameInput from "../register/username-input"
+import { registerUsernameSchema } from "../../../utils/auth/auth-schemas"
+import useUsernameSubmit from "../../../hooks/auth/google/username-submit"
 
-export default function RegisterUsernamePage() {
+export default function RegisterUsernameComponent() {
 	const [error, setError] = useState("")
 	const usernameSubmit = useUsernameSubmit(setError)
 

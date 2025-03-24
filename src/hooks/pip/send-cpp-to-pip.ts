@@ -28,7 +28,7 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 				})
 			}
 
-			if (pipClass.selectedPip.pipConnectionStatus === "inactive") {
+			if (pipClass.selectedPip.pipConnectionStatus === "offline") {
 				return toast.negative({
 					title: `${pipClass.selectedPip.pipName} is not online`,
 					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code`
