@@ -18,6 +18,10 @@ class WorkbenchClass {
 		this.workbenchItemToShow = newWorkBenchItemToShow
 	})
 
+	public handleMouseLeave = action((): void => {
+		this.workbenchItemToShow = null
+	})
+
 	public setVolume = action((newVolume: number): void => {
 		this.volume = newVolume
 	})

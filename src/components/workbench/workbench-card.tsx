@@ -11,7 +11,10 @@ function WorkbenchCard() {
 	if (isNull(workbenchClass.workbenchItemToShow)) return null
 
 	return (
-		<div className="shadow-sm p-4 mt-2 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base">
+		<div
+			className="shadow-sm p-4 mt-2 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base"
+			onMouseLeave={() => workbenchClass.handleMouseLeave()} // Start timeout when mouse leaves card
+		>
 			{workbenchClass.workbenchItemToShow === "battery" && (
 				<BatteryContent />
 			)}
