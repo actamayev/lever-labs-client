@@ -1,12 +1,12 @@
 "use client"
 
 import { observer } from "mobx-react-lite"
-import RegisterUsernamePage from "../../src/page-components/register-username-page"
+import RegisterUsernameComponent from "../../src/components/auth/register-username/register-username-component"
 import useRedirectUserWithUsername from "../../src/hooks/redirects/redirect-user-with-username"
 
 function RegisterUsernameWrapper() {
 	useRedirectUserWithUsername()
-	return <RegisterUsernamePage />
+	return <RegisterUsernameComponent />
 }
 
 export default observer(RegisterUsernameWrapper)
