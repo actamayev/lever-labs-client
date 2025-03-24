@@ -8,7 +8,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import { cn } from "../../../../lib/shadcn/utils"
-import { Button } from "../../../shadcn/ui/button"
+import { Button, buttonVariants } from "../../../shadcn/ui/button"
 import { Slider } from "../../../shadcn/ui/slider"
 import { Checkbox } from "../../../shadcn/ui/checkbox"
 import { Separator } from "../../../shadcn/ui/separator"
@@ -67,15 +67,19 @@ export default function VolumePopover(props: Props) {
 					disabled={isMuted}
 					className="rounded-xl bg-eel"
 				>
-						PLAY A TUNE
+					PLAY A TUNE
 				</Button>
-				<div className="!w-32">
+				<div className="!w-24">
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<Button
-								variant="outline"
-								className="flex items-center gap-1 rounded-xl"
-								disabled={isMuted}
+							<div
+								className={cn(
+									buttonVariants({
+										variant: "outline",
+										className: "flex items-center gap-1 rounded-xl justify-between"
+									}),
+									isMuted ? "opacity-50 pointer-events-none" : ""
+								)}
 								onClick={(e) => {
 									e.preventDefault()
 									e.stopPropagation()
@@ -83,7 +87,7 @@ export default function VolumePopover(props: Props) {
 							>
 								{toUpper(selectedSound)}
 								<ChevronDown className="h-4 w-4" />
-							</Button>
+							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							className="rounded-xl bg-standardBackground"
