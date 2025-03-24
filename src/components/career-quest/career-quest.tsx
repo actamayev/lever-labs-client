@@ -1,6 +1,6 @@
 "use client"
 
-import SingleCareerCard from "./single-career-card"
+import SingleCareerCard from "./career-card/single-career-card"
 import { careerData } from "../../utils/career-data"
 import WorkbenchIcons from "../workbench/workbench-icons"
 
