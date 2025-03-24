@@ -14,7 +14,8 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 
 	return (
 		<div className={cn(
-			"relative overflow-hidden rounded-2xl text-white w-[750px] h-[321px] flex cursor-default",
+			"relative overflow-hidden rounded-2xl text-white flex cursor-default",
+			"w-[90%] aspect-[750/321]",
 			backgroundColor
 		)}>
 			{/* Left Section */}
@@ -73,7 +74,11 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 
 			{/* Right Section with Image */}
 			<div className="w-1/2 flex items-center justify-center">
-				<Icon size={200} fill="white"/>
+				<Icon
+					size="200"
+					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
+					fill="white"
+				/>
 			</div>
 		</div>
 	)

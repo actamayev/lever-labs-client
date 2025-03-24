@@ -1,6 +1,9 @@
 "use client"
 
+import { useMemo } from "react"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import toUpper from "lodash-es/toUpper"
 import { usePathname } from "next/navigation"
 import { Bot, PlusCircle } from "lucide-react"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
@@ -36,12 +39,18 @@ function AddPipSidebarButton() {
 		</div>
 	)
 
+	const textToShow = useMemo(() => {
+		if (isNull(pipClass.selectedPip)) return ""
+		return toUpper(pipClass.selectedPip.pipConnectionStatus)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.selectedPip?.pipConnectionStatus])
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">
 				<CustomSidebarButton
 					icon={iconElement}
-					text={pipClass.selectedPip ? "CONNECT" : "ADD YOUR PIP"}
+					text={textToShow}
 					isActive={isActive}
 					onClick={clickPipSidebarButton}
 					customStyles={cn(
