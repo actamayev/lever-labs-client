@@ -3,15 +3,8 @@
 import { observer } from "mobx-react"
 import { usePipContext } from "../../../contexts/pip-context"
 import isNull from "lodash-es/isNull"
-import toUpper from "lodash-es/toUpper"
 import { Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 import { buttonVariants } from "../../shadcn/ui/button"
 
 function NetworkIcon() {
@@ -53,16 +46,13 @@ function NetworkIcon() {
 			"flex flex-col items-center justify-center ml-0.5 cursor-default",
 			pipClass.selectedPip?.pipConnectionStatus === "offline" ? "text-eel/50" : "text-eel"
 		)}>
-			{/* <TooltipProvider delayDuration={0}>
-				<Tooltip>
-					<TooltipTrigger asChild> */}
 			<div
 				className={cn(
 					buttonVariants({
 						variant: "ghost",
 						size: "lg",
 						className: "hover:bg-polar flex flex-col items-center cursor-default \
-									justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+						justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
 					})
 				)}
 			>
@@ -70,12 +60,6 @@ function NetworkIcon() {
 					<WifiIconToShow />
 				</div>
 			</div>
-			{/* </TooltipTrigger>
-					<TooltipContent side="top" className="text-standardBackground">
-						{toUpper(pipClass.selectedPip?.pipConnectionStatus)}
-					</TooltipContent>
-				</Tooltip>
-			</TooltipProvider> */}
 		</div>
 	)
 }
