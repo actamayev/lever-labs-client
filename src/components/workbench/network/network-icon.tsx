@@ -5,10 +5,12 @@ import { usePipContext } from "../../../contexts/pip-context"
 import isNull from "lodash-es/isNull"
 import { Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { buttonVariants } from "../../shadcn/ui/button"
+import WorkbenchIconTemplate from "../workbench-icon-template"
+import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
 function NetworkIcon() {
 	const pipClass = usePipContext()
+	const workbenchClass = useWorkbenchContext()
 
 	const WifiIconToShow = observer(() => {
 		const baseClasses = "!h-12 !w-12" // Slightly smaller to accommodate text below
@@ -46,20 +48,11 @@ function NetworkIcon() {
 			"flex flex-col items-center justify-center ml-0.5 cursor-default",
 			pipClass.selectedPip?.pipConnectionStatus === "offline" ? "text-eel/50" : "text-eel"
 		)}>
-			<div
-				className={cn(
-					buttonVariants({
-						variant: "ghost",
-						size: "lg",
-						className: "hover:bg-polar flex flex-col items-center cursor-default \
-						justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
-					})
-				)}
+			<WorkbenchIconTemplate
+				onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("network")}
 			>
-				<div className="flex flex-col items-center justify-center size-20">
-					<WifiIconToShow />
-				</div>
-			</div>
+				<WifiIconToShow />
+			</WorkbenchIconTemplate>
 		</div>
 	)
 }

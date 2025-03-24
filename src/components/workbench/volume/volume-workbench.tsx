@@ -1,15 +1,15 @@
 import { useState } from "react"
+import { observer } from "mobx-react"
+import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 import VolumePopover from "./volume-popover"
+import WorkbenchIconTemplate from "../workbench-icon-template"
+import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
-import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import { buttonVariants } from "@/components/shadcn/ui/button"
-
-
-export default function VolumeWorkbench() {
+function VolumeWorkbench() {
 	const [volume, setVolume] = useState(70)
 	const [isMuted, setIsMuted] = useState(false)
+	const workbenchClass = useWorkbenchContext()
 
 	const SpeakerIconToShow = () => {
 		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
@@ -30,26 +30,14 @@ export default function VolumeWorkbench() {
 	return (
 		<Popover openOnHover>
 			<PopoverTrigger asChild>
-				<div
-					className={cn(
-						buttonVariants({
-							variant: "ghost",
-							size: "lg",
-							className: cn(
-								"!px-5 py-2 hover:bg-polar flex flex-col items-center cursor-default",
-								"justify-center h-auto hover:text-current rounded-2xl w-20",
-								!isMuted ? "" : "opacity-50"
-							)
-						})
-					)}
-				>
-					<div className="flex flex-col items-center">
-						<SpeakerIconToShow />
-						<span className="text-base font-medium mt-0 w-full text-center">
-							{volume}%
-						</span>
-					</div>
-				</div>
+				<WorkbenchIconTemplate
+					onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
+					extraButtonClasses={!isMuted ? "" : "opacity-50"}>
+					<SpeakerIconToShow />
+					<span className="text-base font-medium mt-0 w-full text-center">
+						{volume}%
+					</span>
+				</WorkbenchIconTemplate>
 			</PopoverTrigger>
 			<PopoverContent className="w-96">
 				<VolumePopover
@@ -62,3 +50,5 @@ export default function VolumeWorkbench() {
 		</Popover>
 	)
 }
+
+export default observer(VolumeWorkbench)

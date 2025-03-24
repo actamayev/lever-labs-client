@@ -19,10 +19,10 @@ export default function CareerQuest() {
 			{/* Fixed workbench icons */}
 			<div className="hidden lg:block lg:w-2/5 xl:w-[38.2%]">
 				{/* This div takes up space in the layout */}
-				<div className="w-full" style={{ height: "1px" }}></div>
+				{/* <div className="w-full" style={{ height: "1px" }}></div> */}
 
 				{/* This is the fixed element */}
-				<div className="fixed top-9" style={{ width: "inherit", maxWidth: "inherit" }}>
+				<div className="fixed top-11" style={{ width: "inherit", maxWidth: "inherit" }}>
 					<WorkbenchIcons />
 				</div>
 			</div>
