@@ -80,10 +80,6 @@ export default function VolumePopover(props: Props) {
 									}),
 									isMuted ? "opacity-50 pointer-events-none" : ""
 								)}
-								onClick={(e) => {
-									e.preventDefault()
-									e.stopPropagation()
-								}}
 							>
 								{toUpper(selectedSound)}
 								<ChevronDown className="h-4 w-4" />
@@ -91,17 +87,11 @@ export default function VolumePopover(props: Props) {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							className="rounded-xl bg-standardBackground"
-							onClick={(e) => e.stopPropagation()}
-							onInteractOutside={(e) => e.stopPropagation()}
 						>
 							{testSounds.map((sound) => (
 								<DropdownMenuItem
 									key={sound}
-									onClick={(e) => {
-										e.preventDefault()
-										e.stopPropagation()
-										setSelectedSound(sound)
-									}}
+									onClick={() => setSelectedSound(sound)}
 									className="cursor-pointer transition-none hover:!bg-polar"
 								>
 									{toUpper(sound)}

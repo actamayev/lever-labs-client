@@ -12,7 +12,7 @@ import {
 	TooltipTrigger,
 	TooltipProvider
 } from "@/components/shadcn/ui/tooltip"
-import { Button } from "../../shadcn/ui/button"
+import { buttonVariants } from "../../shadcn/ui/button"
 
 function NetworkIcon() {
 	const pipClass = usePipContext()
@@ -22,9 +22,30 @@ function NetworkIcon() {
 		const strokeWidth = 2.5
 		if (isNull(pipClass.selectedPip)) return null
 		else if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-			return <WifiOff className={baseClasses} strokeWidth={strokeWidth}/>
+			return (
+				<WifiOff
+					className={cn(baseClasses, "text-cardinal")}
+					strokeWidth={strokeWidth}
+				/>
+			)
 		}
-		return <Wifi className={baseClasses} strokeWidth={strokeWidth}/>
+		let colorClasses = ""
+		switch (pipClass.selectedPip.pipConnectionStatus) {
+		case "online":
+			colorClasses = "text-macaw"
+			break
+		case "connected to other user":
+			colorClasses = "text-beetle"
+			break
+		case "connected":
+			colorClasses = "text-green-500"
+			break
+		default:
+			colorClasses = "text-wolf"
+		}
+		return (
+			<Wifi className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
+		)
 	})
 
 	return (
@@ -35,17 +56,20 @@ function NetworkIcon() {
 			<TooltipProvider delayDuration={0}>
 				<Tooltip>
 					<TooltipTrigger asChild>
-						<Button
-							type="button"
-							variant="ghost"
-							size="lg"
-							className="!px-5 py-2 hover:bg-polar flex flex-col items-center
-							justify-center h-auto hover:text-current rounded-2xl w-20 cursor-default"
+						<div
+							className={cn(
+								buttonVariants({
+									variant: "ghost",
+									size: "lg",
+									className: "hover:bg-polar flex flex-col items-center cursor-default \
+									justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+								})
+							)}
 						>
-							<div className="flex flex-col items-center">
+							<div className="flex flex-col items-center justify-center size-20">
 								<WifiIconToShow />
 							</div>
-						</Button>
+						</div>
 					</TooltipTrigger>
 					<TooltipContent side="top" className="text-standardBackground">
 						{toUpper(pipClass.selectedPip?.pipConnectionStatus)}

@@ -3,7 +3,7 @@
 "use client"
 import { useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button, buttonVariants } from "../../shadcn/ui/button"
+import { buttonVariants } from "../../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 
