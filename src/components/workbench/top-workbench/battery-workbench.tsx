@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 "use client"
 import { useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/shadcn/ui/popover"
 
@@ -41,13 +42,15 @@ export default function BatteryWorkbench() {
 
 	return (
 		<Popover openOnHover>
-			<PopoverTrigger>
-				<Button
-					type="button"
-					variant="ghost"
-					size="lg"
-					className="hover:bg-polar flex flex-col items-center cursor-default
-					justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+			<PopoverTrigger asChild>
+				<div
+					className={cn(
+						buttonVariants({
+							variant: "ghost",
+							size: "lg",
+							className: "hover:bg-polar flex flex-col items-center cursor-default justify-center h-auto hover:text-current rounded-2xl p-0 outline-none"
+						})
+					)}
 				>
 					<div className="flex flex-col items-center justify-center w-20 h-20">
 						<BatteryIconToShow />
@@ -55,7 +58,7 @@ export default function BatteryWorkbench() {
 							{batteryPercentage}%
 						</span>
 					</div>
-				</Button>
+				</div>
 			</PopoverTrigger>
 			<PopoverContent className="w-80">
 				{getTimeText} 2 hours
