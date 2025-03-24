@@ -10,7 +10,7 @@ interface Props {
 	setFlipped: Dispatch<SetStateAction<boolean>>
 }
 
-export default function SingleCareerCard(props: Props) {
+export default function BackCareerCard(props: Props) {
 	const { careerData, setFlipped } = props
 	const { backgroundColor } = careerData
 
