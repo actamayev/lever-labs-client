@@ -19,6 +19,8 @@ type RouteConfig = {
 const mainRoutes: RouteConfig[] = [
 	{ path: "", changeFreq: "weekly", priority: 1.0 },
 	{ path: "/lab", changeFreq: "weekly", priority: 1.0 },
+	{ path: "/sandbox", changeFreq: "monthly", priority: 1 },
+	{ path: "/career-quest", changeFreq: "monthly", priority: 1 },
 ]
 
 // Account and user pages
@@ -27,8 +29,6 @@ const userRoutes: RouteConfig[] = [
 	{ path: "/register", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/register-username", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/add-pip", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/sandbox", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/career-quest", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/settings", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
 ]

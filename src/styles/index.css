@@ -133,8 +133,3 @@ body {
 .blocklyMainBackground {
   stroke: none !important;
 }
-
-.hover-active [data-state="hover"] button,
-.hover-active [data-state="hover"] > div {
-  background-color: var(--polar) !important; /* Use your color variable */
-}
