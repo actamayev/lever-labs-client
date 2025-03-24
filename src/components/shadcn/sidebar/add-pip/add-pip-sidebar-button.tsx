@@ -8,12 +8,14 @@ import { cn } from "../../../../lib/shadcn/utils"
 import CustomSidebarButton from "../custom-sidebar-button"
 import { usePipContext } from "../../../../contexts/pip-context"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
+import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
 
 // Delete the connect to pip section
 function AddPipSidebarButton() {
 	const pathname = usePathname()
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
+	useSetSelectedPipToFirstPip()
 
 	const isActive = pathname === "/add-pip"
 

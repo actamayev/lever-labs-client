@@ -1,0 +1,37 @@
+import { observer } from "mobx-react"
+import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
+import WorkbenchIconTemplate from "../workbench-icon-template"
+import { useWorkbenchContext } from "../../../contexts/workbench-context"
+
+function VolumeWorkbench() {
+	const workbenchClass = useWorkbenchContext()
+
+	const SpeakerIconToShow = () => {
+		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
+		const strokeWidth = 2.5
+		if (workbenchClass.isMuted) {
+			return <VolumeOff className={baseClasses} strokeWidth={strokeWidth}/>
+		}
+
+		if (workbenchClass.volume <= 20) {
+			return <Volume className={baseClasses} strokeWidth={strokeWidth}/>
+		} else if (workbenchClass.volume <= 40) {
+			return <Volume1 className={baseClasses} strokeWidth={strokeWidth}/>
+		} else {
+			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
+		}
+	}
+
+	return (
+		<WorkbenchIconTemplate
+			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
+			extraButtonClasses={!workbenchClass.isMuted ? "" : "opacity-50"}>
+			<SpeakerIconToShow />
+			<span className="text-base font-medium mt-0 w-full text-center">
+				{workbenchClass.volume}%
+			</span>
+		</WorkbenchIconTemplate>
+	)
+}
+
+export default observer(VolumeWorkbench)

@@ -15,12 +15,10 @@ import PipButtonTooltip from "../../../pip-button-tooltip"
 import { usePipContext } from "../../../../contexts/pip-context"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip"
-import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
 
 // Simplified PipStatus component specifically for the card
 function GettingStartedAddPip() {
 	const pipClass = usePipContext()
-	useSetSelectedPipToFirstPip()
 	const navigate = useTypedNavigate()
 
 	const onClick = useCallback(() => {

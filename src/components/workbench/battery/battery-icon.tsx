@@ -6,7 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
-function BatteryWorkbench() {
+function BatteryIcon() {
 	const workbenchClass = useWorkbenchContext()
 	// Determine which speaker icon to show based on volume level
 	const getColorClass = useMemo(() => {
@@ -34,8 +34,6 @@ function BatteryWorkbench() {
 	}
 
 	return (
-		// <Popover openOnHover>
-		// 	<PopoverTrigger asChild>
 		<WorkbenchIconTemplate
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("battery")}
 		>
@@ -44,12 +42,7 @@ function BatteryWorkbench() {
 				{workbenchClass.batteryPercentage}%
 			</span>
 		</WorkbenchIconTemplate>
-		// 	</PopoverTrigger>
-		// 	<PopoverContent className="w-80">
-		// 		{getTimeText} 2 hours
-		// 	</PopoverContent>
-		// </Popover>
 	)
 }
 
-export default observer(BatteryWorkbench)
+export default observer(BatteryIcon)

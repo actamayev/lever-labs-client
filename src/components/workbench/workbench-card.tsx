@@ -1,35 +1,27 @@
-import { useMemo } from "react"
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import VolumeContent from "./volume/volume-content"
+import BatteryContent from "./battery/battery-content"
+import NetworkContent from "./network/network-content"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 
-function CardTemplate({ children } : { children: React.ReactNode }) {
-	return (
-		<div className="shadow-sm p-4 mb-4 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full">
-			{children}
-		</div>
-	)
-}
 function WorkbenchCard() {
 	const workbenchClass = useWorkbenchContext()
-
-	const getTimeText = useMemo(() => {
-		if (workbenchClass.isCharging) return "Estimated time to full charge:"
-		return "Estimated time remaining:"
-	}, [workbenchClass.isCharging])
 
 	if (isNull(workbenchClass.workbenchItemToShow)) return null
 
 	return (
-		<CardTemplate>
+		<div className="shadow-sm p-4 mt-2 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base">
 			{workbenchClass.workbenchItemToShow === "battery" && (
-				<>
-					{getTimeText} 2 hours
-				</>
+				<BatteryContent />
 			)}
-			{workbenchClass.workbenchItemToShow === "network" && "Network"}
-			{workbenchClass.workbenchItemToShow === "volume" && "Volume"}
-		</CardTemplate>
+			{workbenchClass.workbenchItemToShow === "network" && (
+				<NetworkContent />
+			)}
+			{workbenchClass.workbenchItemToShow === "volume" && (
+				<VolumeContent />
+			)}
+		</div>
 	)
 }
 

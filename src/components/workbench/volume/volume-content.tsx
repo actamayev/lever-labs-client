@@ -1,6 +1,7 @@
+import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
-import { useCallback, Dispatch, SetStateAction, useState } from "react"
+import { useCallback, useState } from "react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -12,30 +13,24 @@ import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
+import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
-interface Props {
-	volume: number
-	setVolume: Dispatch<SetStateAction<number>>
-	isMuted: boolean
-	setIsMuted: Dispatch<SetStateAction<boolean>>
-}
-
-export default function VolumePopover(props: Props) {
-	const { volume, isMuted, setIsMuted, setVolume } = props
+function VolumeContent() {
+	const workbenchClass = useWorkbenchContext()
 	const [selectedSound, setSelectedSound] = useState("Chime")
 	const testSounds = ["Chime", "Beep", "Alert"]
 
 	const handleVolumeChange = useCallback((value: number[]) => {
-		setVolume(value[0])
-		if (isMuted && value[0] > 0) {
-			setIsMuted(false)
+		workbenchClass.setVolume(value[0])
+		if (workbenchClass.isMuted && value[0] > 0) {
+			workbenchClass.setIsMuted(false)
 		}
-	}, [isMuted, setIsMuted, setVolume])
+	}, [workbenchClass])
 
 	// Toggle mute when speaker icon is clicked
 	const toggleMute = useCallback(() => {
-		setIsMuted(!isMuted)
-	}, [isMuted, setIsMuted])
+		workbenchClass.setIsMuted(!workbenchClass.isMuted)
+	}, [workbenchClass])
 
 	return (
 		<div className="w-full max-w-sm">
@@ -46,25 +41,25 @@ export default function VolumePopover(props: Props) {
 					onClick={toggleMute}
 				>
 					<div>MUTE</div>
-					<Checkbox checked={isMuted}/>
+					<Checkbox checked={workbenchClass.isMuted}/>
 				</div>
 			</div>
 
 			<div className="cursor-pointer mt-3">
 				<Slider
-					defaultValue={[volume]}
+					defaultValue={[workbenchClass.volume]}
 					max={100}
 					step={1}
 					onValueChange={handleVolumeChange}
-					className={cn("duration-0", isMuted ? "opacity-50" : "")}
-					value={[volume]}
+					className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
+					value={[workbenchClass.volume]}
 				/>
 			</div>
 			<Separator className="my-3" />
 
 			<div className="flex items-center gap-2">
 				<Button
-					disabled={isMuted}
+					disabled={workbenchClass.isMuted}
 					className="rounded-xl bg-eel"
 				>
 					PLAY A TUNE
@@ -78,7 +73,7 @@ export default function VolumePopover(props: Props) {
 										variant: "outline",
 										className: "flex items-center gap-1 rounded-xl justify-between"
 									}),
-									isMuted ? "opacity-50 pointer-events-none" : ""
+									workbenchClass.isMuted ? "opacity-50 pointer-events-none" : ""
 								)}
 							>
 								{toUpper(selectedSound)}
@@ -104,3 +99,5 @@ export default function VolumePopover(props: Props) {
 		</div>
 	)
 }
+
+export default observer(VolumeContent)

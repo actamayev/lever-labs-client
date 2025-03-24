@@ -7,6 +7,8 @@ class WorkbenchClass {
 	public workbenchItemToShow: WorkbenchItemsToShow = null
 	public batteryPercentage = 100
 	public isCharging = false
+	public volume = 70
+	public isMuted = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -16,8 +18,18 @@ class WorkbenchClass {
 		this.workbenchItemToShow = newWorkBenchItemToShow
 	})
 
+	public setVolume = action((newVolume: number): void => {
+		this.volume = newVolume
+	})
+
+	public setIsMuted = action((newIsMuted: boolean): void => {
+		this.isMuted = newIsMuted
+	})
+
 	public logout() {
 		this.setWorkbenchItemToShow(null)
+		this.setVolume(70)
+		this.setIsMuted(false)
 	}
 }
 
