@@ -7,6 +7,7 @@ export const careerData: CareerData[] = [
 		lessonsComplete: 0,
 		careerUrl: "/career-quest/line-following",
 		careerIcon: CustomTreasureMap,
+		backgroundColor: "bg-emerald-500",
 		componentsUsed: [
 			{
 				componentName: "IR Sensors",
@@ -25,6 +26,10 @@ export const careerData: CareerData[] = [
 				componentDifficulty: 2,
 			}
 		],
-		backgroundColor: "bg-emerald-500"
+		codingConcepts: [
+			"Boolean Logic",
+			"Conditional Statements",
+			"Loops",
+		]
 	}
 ]

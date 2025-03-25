@@ -25,9 +25,17 @@ declare global {
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
 		backgroundColor: string
+		codingConcepts: CodingConceptName[]
 	}
 
 	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null
+
+	type CodingConceptName =
+		| "Variables"
+		| "Loops"
+		| "Conditional Statements"
+		| "Functions"
+		| "Boolean Logic"
 }
 
 export {}
