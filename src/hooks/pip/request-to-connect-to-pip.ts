@@ -28,7 +28,7 @@ export default function useRequestToConnectToPip(): (
 					description: "Someone is already connected to this Pip"
 				})
 			}
-			case "inactive": {
+			case "offline": {
 				return toast.negative({
 					title: "Unable to connect",
 					description: `Please turn ${foundPip.pipName} on and connect it to the internet`

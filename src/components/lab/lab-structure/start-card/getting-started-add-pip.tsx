@@ -1,7 +1,9 @@
 "use client"
 
-import { Bot, PlusCircle } from "lucide-react"
+import { isNull } from "lodash-es"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
+import { Bot, PlusCircle } from "lucide-react"
 import {
 	Tooltip,
 	TooltipContent,
@@ -11,22 +13,25 @@ import {
 import { Button } from "@/components/shadcn/ui/button"
 import PipButtonTooltip from "../../../pip-button-tooltip"
 import { usePipContext } from "../../../../contexts/pip-context"
-import useClickPipSidebarButton from "../../../../hooks/pip/click-pip-sidebar-button"
-import useSetSelectedPipToFirstPip from "../../../../hooks/pip/set-default-pip-first-pip"
+import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip"
 
 // Simplified PipStatus component specifically for the card
 function GettingStartedAddPip() {
 	const pipClass = usePipContext()
-	const clickPipSidebarButton = useClickPipSidebarButton()
-	useSetSelectedPipToFirstPip()
+	const navigate = useTypedNavigate()
+
+	const onClick = useCallback(() => {
+		if (!isNull(pipClass.selectedPip)) return
+		navigate("/add-pip")
+	}, [navigate, pipClass.selectedPip])
 
 	return (
 		<TooltipProvider delayDuration={0}>
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
-						onClick={clickPipSidebarButton}
+						onClick={onClick}
 						className="!flex !h-24 !w-24 !min-w-24 relative items-center justify-center
                         bg-inherit hover:bg-polar
                         duration-none border-swan border-l-2 rounded-none rounded-tr-md rounded-br-md shadow-none"

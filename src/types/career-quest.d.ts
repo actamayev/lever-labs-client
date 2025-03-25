@@ -26,6 +26,8 @@ declare global {
 		componentsUsed: ComponentsUsedCareerData[]
 		backgroundColor: string
 	}
+
+	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null
 }
 
 export {}

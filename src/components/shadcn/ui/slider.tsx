@@ -52,14 +52,14 @@ const Slider = React.forwardRef<
       )}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-4 w-full grow overflow-hidden rounded-full bg-eel/15">
+      <SliderPrimitive.Track className="relative h-5 w-full grow overflow-hidden rounded-full bg-eel/15">
         {/* Use inline style to force the width */}
         <div 
           className="absolute h-full bg-eel rounded-none" 
           style={rangeStyle}
         />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20"/>
+      <SliderPrimitive.Thumb className="block size-5 rounded-full border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20"/>
     </SliderPrimitive.Root>
   )
 })

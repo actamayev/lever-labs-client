@@ -1,6 +1,6 @@
 "use client"
 
-import { observer } from "mobx-react-lite"
+import { observer } from "mobx-react"
 import LoginComponent from "../../src/components/auth/login/login-component"
 import useRedirectKnownUser from "../../src/hooks/redirects/redirect-known-user"
 

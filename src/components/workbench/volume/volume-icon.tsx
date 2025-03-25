@@ -1,40 +1,22 @@
-"use client"
-import { useCallback, Dispatch, SetStateAction } from "react"
+import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
-import { Button } from "../../shadcn/ui/button"
+import WorkbenchIconTemplate from "../workbench-icon-template"
+import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
-interface Props {
-	volume: number
-	isMuted: boolean
-	setIsMuted: Dispatch<SetStateAction<boolean>>
-}
+function VolumeWorkbench() {
+	const workbenchClass = useWorkbenchContext()
 
-export default function VolumeIcon(props: Props) {
-	const { volume, isMuted, setIsMuted } = props
-
-	// Toggle mute when speaker icon is clicked
-	const toggleMute = useCallback(() => {
-		setIsMuted(!isMuted)
-	}, [isMuted, setIsMuted])
-
-	// Determine which speaker icon to show based on volume level
 	const SpeakerIconToShow = () => {
 		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
 		const strokeWidth = 2.5
-		if (isMuted) {
+		if (workbenchClass.isMuted) {
 			return <VolumeOff className={baseClasses} strokeWidth={strokeWidth}/>
 		}
 
-		if (volume <= 20) {
+		if (workbenchClass.volume <= 20) {
 			return <Volume className={baseClasses} strokeWidth={strokeWidth}/>
-		} else if (volume <= 40) {
+		} else if (workbenchClass.volume <= 40) {
 			return <Volume1 className={baseClasses} strokeWidth={strokeWidth}/>
 		} else {
 			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
@@ -42,34 +24,21 @@ export default function VolumeIcon(props: Props) {
 	}
 
 	return (
-		<div className={cn(
-			"flex flex-col items-center justify-center ml-0.5",
-			isMuted ? "text-eel/50" : "text-eel"
-		)}>
-			<TooltipProvider delayDuration={0}>
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							type="button"
-							variant="ghost"
-							size="lg"
-							className="!px-5 py-2 hover:bg-polar flex flex-col items-center
-  							justify-center h-auto hover:text-current rounded-2xl w-20"
-							onClick={toggleMute}
-						>
-							<div className="flex flex-col items-center">
-								<SpeakerIconToShow />
-								<span className="text-base font-medium mt-0 w-full text-center">
-									{volume}%
-								</span>
-							</div>
-						</Button>
-					</TooltipTrigger>
-					<TooltipContent side="top" className="text-standardBackground">
-						{isMuted ? "UNMUTE" : "MUTE"}
-					</TooltipContent>
-				</Tooltip>
-			</TooltipProvider>
-		</div>
+		<WorkbenchIconTemplate
+			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
+			extraButtonClasses={cn(
+				!workbenchClass.isMuted ? "" : "opacity-50",
+				workbenchClass.workbenchItemToShow === "volume" && "border-swan relative"
+			)}>
+			{workbenchClass.workbenchItemToShow === "volume" && (
+				<div className="absolute bottom-[-2px] left-[0px] right-[0px] h-[2px] bg-standardBackground z-10"></div>
+			)}
+			<SpeakerIconToShow />
+			<span className="text-base font-medium mt-0 w-full text-center">
+				{workbenchClass.volume}%
+			</span>
+		</WorkbenchIconTemplate>
 	)
 }
+
+export default observer(VolumeWorkbench)

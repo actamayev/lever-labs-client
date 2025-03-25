@@ -41,7 +41,7 @@ export default function useRetrievePipUUIDStatusInForm(): () => Promise<void> {
 			}
 			addPipClass.store.updateAddingNewPipRequirements("doesPipUUIDExist", true)
 			addPipClass.store.updateAddingNewPipRequirements("hasPipNamePreviouslyBeenAdded", !isNull(pipUUIDStatusData.data.pipName))
-			addPipClass.store.updateAddingNewPipRequirements("isPipOnline", pipUUIDStatusData.data.pipConnectionStatus !== "inactive")
+			addPipClass.store.updateAddingNewPipRequirements("isPipOnline", pipUUIDStatusData.data.pipConnectionStatus !== "offline")
 			if (!isNull(pipUUIDStatusData.data.pipName)) {
 				addPipClass.form.setValue("pipName", pipUUIDStatusData.data.pipName)
 				addPipClass.store.updateMirroredFormValues("pipName", pipUUIDStatusData.data.pipName)
