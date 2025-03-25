@@ -15,7 +15,7 @@ function Workbench() {
 			onMouseLeave={() => {
 				// Only close the card if we're not hovering over it
 				if (!workbenchClass.hoveringOverWorkbenchCard) {
-					workbenchClass.handleMouseLeave()
+					workbenchClass.setWorkbenchItemToShow(null)
 				}
 			}}
 		>

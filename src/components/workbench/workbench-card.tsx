@@ -20,8 +20,9 @@ function WorkbenchCard() {
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
 			onMouseLeave={() => {
 				workbenchClass.setWorkbenchItemHoveringOver(false)
-				workbenchClass.handleMouseLeave()
-			}}>
+				workbenchClass.setWorkbenchItemToShow(null)
+			}}
+		>
 			{workbenchClass.workbenchItemToShow === "battery" && <BatteryContent />}
 			{workbenchClass.workbenchItemToShow === "network" && <NetworkContent />}
 			{workbenchClass.workbenchItemToShow === "volume" && <VolumeContent />}

@@ -23,10 +23,6 @@ class WorkbenchClass {
 		this.hoveringOverWorkbenchCard = newHoveringOverWorkbenchCard
 	})
 
-	public handleMouseLeave = action((): void => {
-		this.workbenchItemToShow = null
-	})
-
 	public setVolume = action((newVolume: number): void => {
 		this.volume = newVolume
 	})
