@@ -10,6 +10,7 @@ export const pipCategoryColour: BlocklyCategoryColours = 218
 export const PrivatePageNames: PageNames[] = [
 	// "/garage",
 	"/lab",
+	"/lab/welcome",
 	"/add-pip",
 	"/sandbox",
 	// "/settings",

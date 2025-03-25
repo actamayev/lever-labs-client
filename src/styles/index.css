@@ -133,3 +133,15 @@ body {
 .blocklyMainBackground {
   stroke: none !important;
 }
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  border-radius: 1rem; /* Equivalent to rounded-2xl */
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 1rem; /* Equivalent to rounded-2xl */
+}
