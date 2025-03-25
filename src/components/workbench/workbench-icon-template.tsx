@@ -2,8 +2,6 @@
 import { MouseEventHandler } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { buttonVariants } from "../shadcn/ui/button"
-import { observer } from "mobx-react"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
 
 interface Props {
 	children: React.ReactNode
@@ -11,9 +9,8 @@ interface Props {
 	onMouseEnter: MouseEventHandler<HTMLDivElement> | undefined
 }
 
-function WorkbenchIconTemplate(props: Props) {
+export default function WorkbenchIconTemplate(props: Props) {
 	const { children, extraButtonClasses = "", onMouseEnter } = props
-	const workbenchClass = useWorkbenchContext()
 
 	return (
 		<div
@@ -29,7 +26,6 @@ function WorkbenchIconTemplate(props: Props) {
 				})
 			)}
 			onMouseEnter={onMouseEnter}
-			// onMouseLeave={() => workbenchClass.handleMouseLeave()}
 		>
 			<div className="flex flex-col items-center justify-center size-20">
 				{children}
@@ -37,5 +33,3 @@ function WorkbenchIconTemplate(props: Props) {
 		</div>
 	)
 }
-
-export default observer(WorkbenchIconTemplate)
