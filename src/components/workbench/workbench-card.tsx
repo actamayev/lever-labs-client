@@ -22,15 +22,9 @@ function WorkbenchCard() {
 				workbenchClass.setWorkbenchItemHoveringOver(false)
 				workbenchClass.handleMouseLeave()
 			}}>
-			{workbenchClass.workbenchItemToShow === "battery" && (
-				<BatteryContent />
-			)}
-			{workbenchClass.workbenchItemToShow === "network" && (
-				<NetworkContent />
-			)}
-			{workbenchClass.workbenchItemToShow === "volume" && (
-				<VolumeContent />
-			)}
+			{workbenchClass.workbenchItemToShow === "battery" && <BatteryContent />}
+			{workbenchClass.workbenchItemToShow === "network" && <NetworkContent />}
+			{workbenchClass.workbenchItemToShow === "volume" && <VolumeContent />}
 		</div>
 	)
 }
