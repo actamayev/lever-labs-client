@@ -11,7 +11,7 @@ interface Props {
 
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
+	const { careerName, backgroundColor } = careerData
 
 	return (
 		<motion.div
