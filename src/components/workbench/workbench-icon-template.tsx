@@ -23,7 +23,7 @@ function WorkbenchIconTemplate(props: Props) {
 					size: "lg",
 					className: cn(
 						"hover:border-swan flex flex-col items-center cursor-default justify-center hover:bg-standardBackground",
-						"h-auto hover:text-current rounded-2xl p-0 outline-none border-2 border-transparent rounded-b-none",
+						"h-auto hover:text-current rounded-2xl p-0 outline-none border-2 border-transparent rounded-b-none border-b-0",
 						extraButtonClasses
 					)
 				})
