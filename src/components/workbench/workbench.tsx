@@ -24,7 +24,9 @@ function Workbench() {
 				<VolumeIcon />
 				<NetworkIcon />
 			</div>
+			<div className="-mt-0.5">
 			<WorkbenchCard />
+			</div>
 		</div>
 	)
 }

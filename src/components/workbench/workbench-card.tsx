@@ -1,5 +1,6 @@
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import { cn } from "../../lib/shadcn/utils"
 import VolumeContent from "./volume/volume-content"
 import BatteryContent from "./battery/battery-content"
 import NetworkContent from "./network/network-content"
@@ -12,7 +13,10 @@ function WorkbenchCard() {
 
 	return (
 		<div
-			className="p-4 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base"
+			className={cn(
+					"p-4 min-h-24 border-2 border-swan rounded-2xl text-eel w-full text-base",
+					workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : ""
+				)}
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
 			onMouseLeave={() => {
 				workbenchClass.setWorkbenchItemHoveringOver(false)
