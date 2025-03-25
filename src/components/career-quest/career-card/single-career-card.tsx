@@ -16,16 +16,14 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	return (
 		<div className={cn(
 			"relative overflow-hidden rounded-2xl text-white",
-			"w-[100%] aspect-[750/321]",
+			"w-full aspect-[750/321]",
 		)}>
 			{/* Card container */}
 			<motion.div
 				className="w-full h-full relative preserve-3d"
 				animate={{ rotateY: flipped ? 180 : 0 }}
 				transition={{ duration: 0.7 }}
-				style={{
-					transformStyle: "preserve-3d",
-				}}
+				style={{ transformStyle: "preserve-3d" }}
 			>
 				<FrontCareerCard
 					careerData={careerData}
