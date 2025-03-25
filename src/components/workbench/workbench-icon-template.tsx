@@ -14,12 +14,13 @@ export default function WorkbenchIconTemplate(props: Props) {
 
 	return (
 		<div
+			// In workbench-icon-template.tsx
 			className={cn(
 				buttonVariants({
 					variant: "ghost",
 					size: "lg",
 					className: cn(
-						"flex flex-col items-center cursor-default justify-center hover:bg-standardBackground",
+						"relative flex flex-col items-center cursor-default justify-center hover:bg-standardBackground",
 						"h-auto hover:text-current rounded-2xl p-0 outline-none",
 						"border-2 border-transparent rounded-b-none",
 						extraButtonClasses

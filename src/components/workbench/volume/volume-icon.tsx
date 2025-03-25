@@ -28,8 +28,11 @@ function VolumeWorkbench() {
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
 			extraButtonClasses={cn(
 				!workbenchClass.isMuted ? "" : "opacity-50",
-				workbenchClass.workbenchItemToShow === "volume" && "border-swan"
+				workbenchClass.workbenchItemToShow === "volume" && "border-swan relative"
 			)}>
+			{workbenchClass.workbenchItemToShow === "volume" && (
+				<div className="absolute bottom-[-2px] left-[0px] right-[0px] h-[2px] bg-standardBackground z-10"></div>
+			)}
 			<SpeakerIconToShow />
 			<span className="text-base font-medium mt-0 w-full text-center">
 				{workbenchClass.volume}%
