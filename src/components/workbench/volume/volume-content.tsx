@@ -65,7 +65,7 @@ function VolumeContent() {
 					PLAY A TUNE
 				</Button>
 				<div className="!w-24">
-					<DropdownMenu>
+					<DropdownMenu onOpenChange={(open: boolean) => workbenchClass.setIsDropdownOpen(open)}>
 						<DropdownMenuTrigger asChild>
 							<div
 								className={cn(

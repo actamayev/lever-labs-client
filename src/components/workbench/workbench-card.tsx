@@ -18,7 +18,10 @@ function WorkbenchCard() {
 				workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : ""
 			)}
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
-			onMouseLeave={() => {
+			onMouseLeave={(e) => {
+				// Don't hide if dropdown is open
+				if (workbenchClass.isDropdownOpen) return
+
 				workbenchClass.setWorkbenchItemHoveringOver(false)
 				workbenchClass.setWorkbenchItemToShow(null)
 			}}

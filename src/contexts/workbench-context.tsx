@@ -10,6 +10,7 @@ class WorkbenchClass {
 	public isCharging = false
 	public volume = 70
 	public isMuted = false
+	public isDropdownOpen = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -31,11 +32,16 @@ class WorkbenchClass {
 		this.isMuted = newIsMuted
 	})
 
+	public setIsDropdownOpen = action((newIsDropdownOpen: boolean): void => {
+		this.isDropdownOpen = newIsDropdownOpen
+	})
+
 	public logout() {
 		this.setWorkbenchItemToShow(null)
 		this.setWorkbenchItemHoveringOver(false)
 		this.setVolume(70)
 		this.setIsMuted(false)
+		this.setIsDropdownOpen(false)
 	}
 }
 
