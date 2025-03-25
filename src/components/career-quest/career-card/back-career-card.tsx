@@ -39,16 +39,16 @@ export default function BackCareerCard(props: Props) {
 						<div className="flex items-center mb-2">
 							Sensors you'll be using:
 						</div>
-						<div className="flex flex-wrap gap-2 mb-auto">
-							{componentsUsed.slice(0, 4).map((component) => (
+						<div className="grid grid-cols-3 gap-2 mb-auto">
+							{componentsUsed.slice(0, 5).map((component) => (
 								<SingleComponentUsed
 									key={component.componentName}
 									component={component}
 								/>
 							))}
-							{componentsUsed.length > 4 && (
+							{componentsUsed.length > 5 && (
 								<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
-									<span className="font-bold">+{componentsUsed.length - 4}</span>
+									<span className="font-bold">+{componentsUsed.length - 5}</span>
 								</div>
 							)}
 						</div>
@@ -59,16 +59,16 @@ export default function BackCareerCard(props: Props) {
 						<div className="flex items-center mb-2">
 							Coding Concepts
 						</div>
-						<div className="flex flex-wrap gap-2 mb-auto">
-							{codingConcepts.slice(0, 4).map((codingConcept) => (
+						<div className="grid grid-cols-3 gap-2 mb-auto">
+							{codingConcepts.slice(0, 5).map((codingConcept) => (
 								<SingleCodingConceptUsed
 									key={codingConcept}
 									codingConcept={codingConcept}
 								/>
 							))}
-							{codingConcepts.length > 4 && (
+							{codingConcepts.length > 5 && (
 								<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
-									<span className="font-bold">+{codingConcepts.length - 4}</span>
+									<span className="font-bold">+{codingConcepts.length - 5}</span>
 								</div>
 							)}
 						</div>
