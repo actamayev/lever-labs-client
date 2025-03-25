@@ -50,6 +50,7 @@ function NetworkIcon() {
 		)}>
 			<WorkbenchIconTemplate
 				onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("network")}
+				extraButtonClasses={workbenchClass.workbenchItemToShow === "network" ? "border-swan" : ""}
 			>
 				<WifiIconToShow />
 			</WorkbenchIconTemplate>

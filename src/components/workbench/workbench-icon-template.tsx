@@ -22,8 +22,8 @@ function WorkbenchIconTemplate(props: Props) {
 					variant: "ghost",
 					size: "lg",
 					className: cn(
-						"hover:bg-polar flex flex-col items-center cursor-default justify-center",
-						"h-auto hover:text-current rounded-2xl p-0 outline-none",
+						"hover:border-swan flex flex-col items-center cursor-default justify-center hover:bg-standardBackground",
+						"h-auto hover:text-current rounded-2xl p-0 outline-none border-[3px] border-transparent",
 						extraButtonClasses
 					)
 				})

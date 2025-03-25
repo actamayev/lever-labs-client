@@ -12,19 +12,19 @@ function WorkbenchCard() {
 
 	return (
 		<div
-			className="shadow-sm p-4 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base"
+			className="p-4 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base"
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
 			onMouseLeave={() => {
 				workbenchClass.setWorkbenchItemHoveringOver(false)
 				workbenchClass.handleMouseLeave()
 			}}>
-			{(workbenchClass.workbenchItemToShow === "battery" && workbenchClass.hoveringOverWorkbenchCard) && (
+			{workbenchClass.workbenchItemToShow === "battery" && (
 				<BatteryContent />
 			)}
-			{(workbenchClass.workbenchItemToShow === "network" && workbenchClass.hoveringOverWorkbenchCard) && (
+			{workbenchClass.workbenchItemToShow === "network" && (
 				<NetworkContent />
 			)}
-			{(workbenchClass.workbenchItemToShow === "volume" && workbenchClass.hoveringOverWorkbenchCard) && (
+			{workbenchClass.workbenchItemToShow === "volume" && (
 				<VolumeContent />
 			)}
 		</div>

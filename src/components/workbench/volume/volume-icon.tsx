@@ -1,5 +1,6 @@
 import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
+import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
@@ -25,7 +26,10 @@ function VolumeWorkbench() {
 	return (
 		<WorkbenchIconTemplate
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
-			extraButtonClasses={!workbenchClass.isMuted ? "" : "opacity-50"}>
+			extraButtonClasses={cn(
+				!workbenchClass.isMuted ? "" : "opacity-50",
+				workbenchClass.workbenchItemToShow === "volume" && "border-swan"
+			)}>
 			<SpeakerIconToShow />
 			<span className="text-base font-medium mt-0 w-full text-center">
 				{workbenchClass.volume}%

@@ -36,6 +36,7 @@ function BatteryIcon() {
 	return (
 		<WorkbenchIconTemplate
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("battery")}
+			extraButtonClasses={workbenchClass.workbenchItemToShow === "battery" ? "border-swan" : ""}
 		>
 			<BatteryIconToShow />
 			<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
