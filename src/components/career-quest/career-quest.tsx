@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { careerData } from "../../utils/career-data"
-import WorkbenchIcons from "../workbench/workbench-icons"
+import Workbench from "../workbench/workbench"
 import SingleCareerCard from "./career-card/single-career-card"
 
 export default function CareerQuest() {
@@ -36,7 +36,7 @@ export default function CareerQuest() {
 			<div className="hidden lg:block lg:w-2/5 xl:w-[38.2%]" ref={containerRef}>
 				{/* This is the fixed element */}
 				<div className="fixed top-11" style={{ width: fixedWidth + "px" }}>
-					<WorkbenchIcons />
+					<Workbench />
 				</div>
 			</div>
 		</div>

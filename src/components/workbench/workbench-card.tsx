@@ -13,15 +13,18 @@ function WorkbenchCard() {
 	return (
 		<div
 			className="shadow-sm p-4 min-h-24 border-[3px] border-swan rounded-2xl text-eel w-full text-base"
-			onMouseLeave={() => workbenchClass.handleMouseLeave()} // Start timeout when mouse leaves card
-		>
-			{workbenchClass.workbenchItemToShow === "battery" && (
+			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
+			onMouseLeave={() => {
+				workbenchClass.setWorkbenchItemHoveringOver(false)
+				workbenchClass.handleMouseLeave()
+			}}>
+			{(workbenchClass.workbenchItemToShow === "battery" && workbenchClass.hoveringOverWorkbenchCard) && (
 				<BatteryContent />
 			)}
-			{workbenchClass.workbenchItemToShow === "network" && (
+			{(workbenchClass.workbenchItemToShow === "network" && workbenchClass.hoveringOverWorkbenchCard) && (
 				<NetworkContent />
 			)}
-			{workbenchClass.workbenchItemToShow === "volume" && (
+			{(workbenchClass.workbenchItemToShow === "volume" && workbenchClass.hoveringOverWorkbenchCard) && (
 				<VolumeContent />
 			)}
 		</div>

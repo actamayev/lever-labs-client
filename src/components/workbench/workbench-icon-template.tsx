@@ -29,7 +29,7 @@ function WorkbenchIconTemplate(props: Props) {
 				})
 			)}
 			onMouseEnter={onMouseEnter}
-			onMouseLeave={() => workbenchClass.handleMouseLeave()}
+			// onMouseLeave={() => workbenchClass.handleMouseLeave()}
 		>
 			<div className="flex flex-col items-center justify-center size-20">
 				{children}

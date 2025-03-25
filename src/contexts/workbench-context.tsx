@@ -5,6 +5,7 @@ import { createContext, useContext } from "react"
 
 class WorkbenchClass {
 	public workbenchItemToShow: WorkbenchItemsToShow = null
+	public hoveringOverWorkbenchCard: boolean = false
 	public batteryPercentage = 100
 	public isCharging = false
 	public volume = 70
@@ -14,8 +15,12 @@ class WorkbenchClass {
 		makeAutoObservable(this)
 	}
 
-	public setWorkbenchItemToShow = action((newWorkBenchItemToShow:WorkbenchItemsToShow): void => {
+	public setWorkbenchItemToShow = action((newWorkBenchItemToShow: WorkbenchItemsToShow): void => {
 		this.workbenchItemToShow = newWorkBenchItemToShow
+	})
+
+	public setWorkbenchItemHoveringOver = action((newHoveringOverWorkbenchCard: boolean): void => {
+		this.hoveringOverWorkbenchCard = newHoveringOverWorkbenchCard
 	})
 
 	public handleMouseLeave = action((): void => {
@@ -32,6 +37,7 @@ class WorkbenchClass {
 
 	public logout() {
 		this.setWorkbenchItemToShow(null)
+		this.setWorkbenchItemHoveringOver(false)
 		this.setVolume(70)
 		this.setIsMuted(false)
 	}
