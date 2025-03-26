@@ -1,11 +1,11 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "./back-flip-button"
-import SingleComponentUsed from "../single-component-used"
 import { Separator } from "../../shadcn/ui/separator"
-import { Hourglass } from "lucide-react"
+import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
 
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, backgroundColor, componentsUsed, codingConcepts } = careerData
+	const { careerName, careerDescription, backgroundColor, componentsUsed, codingConcepts } = careerData
 
 	return (
 		<motion.div
@@ -29,17 +29,16 @@ export default function BackCareerCard(props: Props) {
 			}}
 		>
 			<div className="w-full flex flex-col p-6">
-				<h3 className="text-2xl font-bold mb-5">{careerName}</h3>
-				<div className="text-base">
-					In this role, you'll guide Pip along a drawn line using IR sensors to detect black or white surfaces.
-					By controlling the motors independently, you'll ensure Pip stays on track.
+				<h3 className="text-2xl font-bold">{careerName}</h3>
+				<div className="text-base my-4">
+					{careerDescription}
 				</div>
-				<div className="flex flex-row px-4 mt-4 text-base">
-					<div className="flex flex-col items-center w-1/3">
-						<div className="flex items-center mb-2">
+				<div className="flex flex-row justify-between">
+					<div className="flex flex-col items-center w-1/3 px-2">
+						<h3 className="text-base font-medium text-center mb-3">
 							Sensors you'll be using:
-						</div>
-						<div className="grid grid-cols-3 gap-2 mb-auto">
+						</h3>
+						<div className="grid grid-cols-3 gap-2 w-full">
 							{componentsUsed.slice(0, 5).map((component) => (
 								<SingleComponentUsed
 									key={component.componentName}
@@ -54,12 +53,13 @@ export default function BackCareerCard(props: Props) {
 						</div>
 					</div>
 
-					<Separator orientation="vertical" className="bg-white rounded-2xl"/>
-					<div className="flex flex-col items-center w-1/3">
-						<div className="flex items-center mb-2">
+					<Separator orientation="vertical" className="bg-white rounded-2xl h-auto w-[2px]"/>
+
+					<div className="flex flex-col items-center w-1/3 px-2">
+						<h3 className="text-base font-medium text-center mb-3">
 							Coding Concepts
-						</div>
-						<div className="grid grid-cols-3 gap-2 mb-auto">
+						</h3>
+						<div className="grid grid-cols-3 gap-2 w-full">
 							{codingConcepts.slice(0, 5).map((codingConcept) => (
 								<SingleCodingConceptUsed
 									key={codingConcept}
@@ -67,21 +67,22 @@ export default function BackCareerCard(props: Props) {
 								/>
 							))}
 							{codingConcepts.length > 5 && (
-								<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
+								<div className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center">
 									<span className="font-bold">+{codingConcepts.length - 5}</span>
 								</div>
 							)}
 						</div>
 					</div>
 
-					<Separator orientation="vertical" className="bg-white rounded-2xl"/>
-					<div className="flex flex-col items-center w-1/3">
-						<div className="flex items-center mb-2">
+					<Separator orientation="vertical" className="bg-white rounded-2xl h-auto w-[2px]"/>
+
+					<div className="flex flex-col items-center w-1/3 px-2">
+						<h3 className="text-base font-medium text-center mb-3">
 							Estimated time to complete:
-						</div>
-						<div className="flex flex-row gap-2">
-							<Hourglass />
-							<div>10 hours</div>
+						</h3>
+						<div className="flex flex-row items-center gap-2 mt-2">
+							<Hourglass className="w-6 h-6"/>
+							<div className="font-medium text-base">10 hours</div>
 						</div>
 					</div>
 				</div>

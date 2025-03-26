@@ -19,6 +19,7 @@ declare global {
 
 	interface CareerData {
 		careerName: string
+		careerDescription: string
 		totalLessons: number
 		lessonsComplete: number
 		careerUrl: CareerQuestPages
