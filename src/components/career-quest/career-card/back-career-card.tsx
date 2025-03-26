@@ -59,7 +59,7 @@ export default function BackCareerCard(props: Props) {
 						<h3 className="text-base font-medium text-center mb-3">
 							Coding Concepts
 						</h3>
-						<div className="grid grid-cols-3 gap-2 w-full">
+						<div className="grid grid-cols-3 gap-2 w-full justify-items-center">
 							{codingConcepts.slice(0, 5).map((codingConcept) => (
 								<SingleCodingConceptUsed
 									key={codingConcept}
