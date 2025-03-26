@@ -1,7 +1,7 @@
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
-import { useCallback, useState } from "react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -9,15 +9,14 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
+import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()
-	const [selectedSound, setSelectedSound] = useState("Chime")
 	const testSounds = ["Chime", "Beep", "Alert"]
 
 	const handleVolumeChange = useCallback((value: number[]) => {
@@ -76,7 +75,7 @@ function VolumeContent() {
 									workbenchClass.isMuted ? "opacity-50 pointer-events-none" : ""
 								)}
 							>
-								{toUpper(selectedSound)}
+								{toUpper(workbenchClass.selectedSound)}
 								<ChevronDown className="h-4 w-4" />
 							</div>
 						</DropdownMenuTrigger>
@@ -86,7 +85,7 @@ function VolumeContent() {
 							{testSounds.map((sound) => (
 								<DropdownMenuItem
 									key={sound}
-									onClick={() => setSelectedSound(sound)}
+									onClick={() => workbenchClass.setSelectedSound(sound)}
 									className="cursor-pointer transition-none hover:!bg-polar"
 								>
 									{toUpper(sound)}

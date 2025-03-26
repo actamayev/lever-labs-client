@@ -19,15 +19,24 @@ declare global {
 
 	interface CareerData {
 		careerName: string
+		careerDescription: string
 		totalLessons: number
 		lessonsComplete: number
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
 		backgroundColor: string
+		codingConcepts: CodingConceptName[]
 	}
 
 	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null
+
+	type CodingConceptName =
+		| "Variables"
+		| "Loops"
+		| "Conditional Statements"
+		| "Functions"
+		| "Boolean Logic"
 }
 
 export {}

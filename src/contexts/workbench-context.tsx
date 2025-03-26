@@ -11,6 +11,7 @@ class WorkbenchClass {
 	public volume = 70
 	public isMuted = false
 	public isDropdownOpen = false
+	public selectedSound = "Chime"
 
 	constructor() {
 		makeAutoObservable(this)
@@ -36,12 +37,17 @@ class WorkbenchClass {
 		this.isDropdownOpen = newIsDropdownOpen
 	})
 
+	public setSelectedSound = action((newSelectedSound: string): void => {
+		this.selectedSound = newSelectedSound
+	})
+
 	public logout() {
 		this.setWorkbenchItemToShow(null)
 		this.setWorkbenchItemHoveringOver(false)
 		this.setVolume(70)
 		this.setIsMuted(false)
 		this.setIsDropdownOpen(false)
+		this.setSelectedSound("Chime")
 	}
 }
 
