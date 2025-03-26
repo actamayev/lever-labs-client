@@ -47,10 +47,6 @@ function NavUser() {
 								"hover:!bg-polar",
 								"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 							)}
-							tooltip={{
-								children: "Profile",
-								hidden: false
-							}}
 						>
 							<div className="flex items-center justify-center space-x-4">
 								<div className="ml-2.5 flex-shrink-0 w-[35px] h-[35px]">

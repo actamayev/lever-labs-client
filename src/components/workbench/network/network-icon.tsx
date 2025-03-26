@@ -55,7 +55,7 @@ function NetworkIcon() {
 				}
 			>
 				{workbenchClass.workbenchItemToShow === "network" && (
-					<div className="absolute bottom-[-2px] left-[0px] right-[0px] h-[2px] bg-standardBackground z-10"></div>
+					<div className="absolute bottom-[-2px] left-[0px] right-[0px] h-[3px] bg-standardBackground z-10"></div>
 				)}
 				<WifiIconToShow />
 			</WorkbenchIconTemplate>
