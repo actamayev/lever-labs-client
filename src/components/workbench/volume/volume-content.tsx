@@ -12,12 +12,14 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
+import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()
-	const testSounds = ["Chime", "Beep", "Alert"]
+	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
+	const playTune = usePlayTune()
 
 	const handleVolumeChange = useCallback((value: number[]) => {
 		workbenchClass.setVolume(value[0])
@@ -60,6 +62,7 @@ function VolumeContent() {
 				<Button
 					disabled={workbenchClass.isMuted}
 					className="rounded-xl bg-eel"
+					onClick={playTune}
 				>
 					PLAY A TUNE
 				</Button>
