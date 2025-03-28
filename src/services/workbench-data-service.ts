@@ -14,4 +14,10 @@ export default class WorkbenchDataService {
 			`${this.pathHeader}/play-tune`, { tuneToPlay, pipUUID }
 		)
 	}
+
+	async changeAudibleStatus(audibleStatus: boolean, pipUUID: PipUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			`${this.pathHeader}/change-audible-status`, { audibleStatus, pipUUID }
+		)
+	}
 }
