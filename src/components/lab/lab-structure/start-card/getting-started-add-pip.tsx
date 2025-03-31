@@ -1,7 +1,7 @@
 "use client"
 
 import { isNull } from "lodash-es"
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { Bot, PlusCircle } from "lucide-react"
 import {
@@ -20,6 +20,11 @@ import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip
 function GettingStartedAddPip() {
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
+
+	useEffect(() => {
+		pipClass.setSelectedPipToFirstPip()
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pipClass.pipData.length])
 
 	const onClick = useCallback(() => {
 		if (!isNull(pipClass.selectedPip)) return
