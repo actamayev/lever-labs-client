@@ -15,7 +15,7 @@ const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
 	"Loops": <Repeat2 />,
 	"Conditional Statements": <CustomConditional />,
 	"Functions": <SquareFunction />,
-	"Boolean Logic": <Binary />,
+	"Boolean Logic": <Binary />
 }
 
 export default function SingleCodingConceptUsed({ codingConcept } : { codingConcept: CodingConceptName }) {

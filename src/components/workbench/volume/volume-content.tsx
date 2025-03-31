@@ -12,12 +12,16 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
+import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
 
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()
-	const testSounds = ["Chime", "Beep", "Alert"]
+	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
+	const playTune = usePlayTune()
+	const changeAudibleStatus = useChangeAudibleStatus()
 
 	const handleVolumeChange = useCallback((value: number[]) => {
 		workbenchClass.setVolume(value[0])
@@ -26,18 +30,13 @@ function VolumeContent() {
 		}
 	}, [workbenchClass])
 
-	// Toggle mute when speaker icon is clicked
-	const toggleMute = useCallback(() => {
-		workbenchClass.setIsMuted(!workbenchClass.isMuted)
-	}, [workbenchClass])
-
 	return (
 		<div className="w-full max-w-sm">
 			<div className="flex justify-between mb-1">
 				<div>SOUND</div>
 				<div
 					className="flex flex-row items-center justify-between space-x-2 cursor-pointer"
-					onClick={toggleMute}
+					onClick={changeAudibleStatus}
 				>
 					<div>MUTE</div>
 					<Checkbox checked={workbenchClass.isMuted}/>
@@ -60,6 +59,7 @@ function VolumeContent() {
 				<Button
 					disabled={workbenchClass.isMuted}
 					className="rounded-xl bg-eel"
+					onClick={playTune}
 				>
 					PLAY A TUNE
 				</Button>
