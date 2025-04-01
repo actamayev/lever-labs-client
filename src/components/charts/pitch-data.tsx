@@ -12,44 +12,88 @@ import {
 } from "recharts"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import React, { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/shadcn/ui/card"
+import React, { useEffect, useState, useRef } from "react"
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/shadcn/ui/card"
+import { Button } from "@/components/shadcn/ui/button"
+import { Slider } from "@/components/shadcn/ui/slider"
 import { useLabDemoContext } from "../../contexts/lab-demo-context"
 
+// Configuration
 const centerAngle = 94
 const angleDeviation = 30
-
-// Configuration
 const MAX_POINTS = 100 // Maximum number of points to display
-const Y_DOMAIN = [centerAngle - angleDeviation, centerAngle + angleDeviation]
-const SAMPLE_INTERVAL = 20 // milliseconds between samples
+const Y_DOMAIN = [centerAngle - angleDeviation, centerAngle + angleDeviation] // Set domain to 64-124
+const SAMPLE_INTERVAL = 10 // milliseconds between samples
 
 interface ChartData {
 	angle: number
-    time: number
+	time: number
 }
 
-function AngleVisualization () {
+// eslint-disable-next-line max-lines-per-function
+function AngleVisualization() {
 	const labDemoClass = useLabDemoContext()
 	const [formattedData, setFormattedData] = useState<ChartData[]>([])
+	const [isPaused, setIsPaused] = useState(false)
+	const [historyPosition, setHistoryPosition] = useState(100) // 0-100 percentage
+	const allDataRef = useRef<ChartData[]>([])
 
-	// Update formatted data whenever pitchData changes
+	// Update all data when new pitch data comes in
 	useEffect(() => {
 		if (isEmpty(labDemoClass.pitchData)) return
 
-		// Take the most recent MAX_POINTS from the array
-		const recentData = labDemoClass.pitchData.slice(-MAX_POINTS)
-
-		// Format for Recharts, adding relative time
-		const chartData = recentData.map((angle, index) => ({
+		// Format all data
+		const chartData = labDemoClass.pitchData.map((angle, index) => ({
 			angle,
-			// Use index * sample interval for time display
 			time: index * SAMPLE_INTERVAL / 1000 // Convert to seconds
 		}))
 
-		setFormattedData(chartData)
+		allDataRef.current = chartData
+
+		// Only update displayed data if not paused
+		if (!isPaused) {
+			updateDisplayedData(100) // Show most recent data
+		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [labDemoClass.pitchData.length])
+	}, [labDemoClass.pitchData.length, isPaused])
+
+	// Function to update displayed data based on history position
+	const updateDisplayedData = (position: number) => {
+		const allData = allDataRef.current
+		if (isEmpty(allData)) return
+
+		setHistoryPosition(position)
+
+		// Calculate which chunk of data to display based on position slider
+		let startIdx = 0
+		if (allData.length > MAX_POINTS) {
+			// Calculate start index based on position (0 = beginning, 100 = end)
+			const maxStartIdx = allData.length - MAX_POINTS
+			startIdx = Math.floor((position / 100) * maxStartIdx)
+		}
+
+		// Get the slice of data to display
+		const dataSlice = allData.slice(startIdx, startIdx + MAX_POINTS)
+
+		// Adjust time values to be relative to first point in the slice
+		const baseTime = dataSlice[0]?.time || 0
+		const adjustedData = dataSlice.map(point => ({
+			...point,
+			time: point.time - baseTime
+		}))
+
+		setFormattedData(adjustedData)
+	}
+
+	// Handle pause/resume
+	const togglePause = () => {
+		setIsPaused(prev => !prev)
+	}
+
+	// Handle slider change
+	const handleSliderChange = (value: number[]) => {
+		updateDisplayedData(value[0])
+	}
 
 	// Format time for x-axis
 	const formatXAxis = (time: number): string => {
@@ -70,7 +114,7 @@ function AngleVisualization () {
 					</span>
 				</CardTitle>
 			</CardHeader>
-			<CardContent className="h-80">
+			<CardContent className="h-64">
 				<ResponsiveContainer width="100%" height="100%">
 					<LineChart
 						data={formattedData}
@@ -83,8 +127,9 @@ function AngleVisualization () {
 							className="text-xs"
 						/>
 						<YAxis
-							domain={Y_DOMAIN}
-							label={{ value: "Angle (degrees)", angle: -centerAngle, position: "insideLeft" }}
+							domain={Y_DOMAIN} // Set fixed domain to 64-124 degrees
+							allowDataOverflow={true} // This allows points to be calculated but not shown outside the domain
+							label={{ value: "Angle (degrees)", angle: -90, position: "insideLeft" }}
 							className="text-xs"
 						/>
 						<Tooltip
@@ -100,10 +145,40 @@ function AngleVisualization () {
 							strokeWidth={2}
 							dot={false}
 							isAnimationActive={false}
+							connectNulls={false} // Prevents connecting across gaps (outside domain values)
 						/>
 					</LineChart>
 				</ResponsiveContainer>
 			</CardContent>
+			<CardFooter className="flex flex-col gap-2">
+				<div className="flex items-center justify-between w-full">
+					<Button
+						variant={isPaused ? "default" : "outline"}
+						size="sm"
+						onClick={togglePause}
+					>
+						{isPaused ? "Resume" : "Pause"}
+					</Button>
+					<span className="text-xs text-muted-foreground">
+						{isPaused ? "Viewing historical data" : "Live data"}
+					</span>
+				</div>
+				{isPaused && (
+					<div className="w-full pt-2">
+						<Slider
+							value={[historyPosition]}
+							min={0}
+							max={100}
+							step={1}
+							onValueChange={handleSliderChange}
+						/>
+						<div className="flex justify-between text-xs text-muted-foreground mt-1">
+							<span>Older</span>
+							<span>Newer</span>
+						</div>
+					</div>
+				)}
+			</CardFooter>
 		</Card>
 	)
 }

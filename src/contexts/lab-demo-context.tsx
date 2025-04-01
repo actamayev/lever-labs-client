@@ -24,7 +24,7 @@ class LabDemoClass {
 
 	public setSensorData = action((incomingSensorData: IncomingSensorData | null): void => {
 		this.sensorData = incomingSensorData
-		// console.log(incomingSensorData?.sensorPayload.pitch)
+		console.log(incomingSensorData?.sensorPayload.pitch)
 		if (isNull(incomingSensorData)) return
 		this.addPitchData(incomingSensorData)
 	})
