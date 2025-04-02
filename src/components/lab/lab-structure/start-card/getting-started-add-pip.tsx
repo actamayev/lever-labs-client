@@ -1,8 +1,8 @@
 "use client"
 
-import { isNull } from "lodash-es"
-import { useCallback, useEffect } from "react"
+import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import { useCallback, useEffect } from "react"
 import { Bot, PlusCircle } from "lucide-react"
 import {
 	Tooltip,
