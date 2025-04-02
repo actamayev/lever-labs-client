@@ -27,9 +27,9 @@ export default function useRetrievePersonalInfo(): () => Promise<void> {
 			}
 			personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
 			personalInfoClass.setRetrievedPersonalInfo(true)
+			personalInfoClass.setIsRetrievingPersonalDetails(false)
 		} catch (error) {
 			console.error(error)
-		} finally {
 			personalInfoClass.setIsRetrievingPersonalDetails(false)
 		}
 	}, [personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService])

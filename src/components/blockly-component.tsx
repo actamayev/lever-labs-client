@@ -19,7 +19,6 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
-	// 1/27/25 TODO: Consider addign a prop to make the sidebar be open by default
 }
 
 function BlocklyComponent(props: Props) {
@@ -54,6 +53,7 @@ function BlocklyComponent(props: Props) {
 		)
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
+		console.log(newXml)
 		setBlocklyXml(newXml)
 		setCppCode(cppCode)
 
