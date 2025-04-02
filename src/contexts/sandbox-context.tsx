@@ -5,8 +5,9 @@ import { createContext, useContext } from "react"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
-	public hasRetrievedAllSandboxProjects = false // Fixed typo here
+	public hasRetrievedAllSandboxProjects = false
 	public sandboxProjects: Map<ProjectUUID, SandboxProject> = new Map()
+	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map() // Track loading state per project
 
 	constructor() {
 		makeAutoObservable(this)
@@ -17,7 +18,7 @@ class SandboxClass {
 	})
 
 	public setHasRetrievedAllSandboxProjects = action((newHasRetrievedAllSandboxProjects: boolean): void => {
-		this.hasRetrievedAllSandboxProjects = newHasRetrievedAllSandboxProjects // Fixed typo here
+		this.hasRetrievedAllSandboxProjects = newHasRetrievedAllSandboxProjects
 	})
 
 	public setSandboxProjects = action((sandboxProjects: SandboxProject[]): void => {
@@ -28,10 +29,19 @@ class SandboxClass {
 		this.sandboxProjects.set(sandboxProject.projectUUID, sandboxProject)
 	})
 
+	public setIsRetrievingSingleProject = action((projectUUID: ProjectUUID, isRetrieving: boolean): void => {
+		this.retrievingSingleProjects.set(projectUUID, isRetrieving)
+	})
+
+	public isRetrievingSingleProject = (projectUUID: ProjectUUID): boolean => {
+		return this.retrievingSingleProjects.get(projectUUID) || false
+	}
+
 	public logout() {
 		this.setIsRetrievingAllSandboxProjects(false)
 		this.setHasRetrievedAllSandboxProjects(false)
 		this.sandboxProjects = new Map()
+		this.retrievingSingleProjects = new Map()
 	}
 }
 

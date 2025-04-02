@@ -15,17 +15,18 @@ export default class SandboxhDataService {
 		)
 	}
 
-	async editSandboxProject(projectUUID: ProjectUUID, newXml: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project/${projectUUID}`, { newXml }
-		)
-	}
+	// Unused:
+	// async editSandboxProject(projectUUID: ProjectUUID, newXml: string): Promise<AxiosResponse<AllCommonResponses>> {
+	// 	return await this.httpClient.http.post<AllCommonResponses>(
+	// 		`${this.pathHeader}/edit-sandbox-project/${projectUUID}`, { newXml }
+	// 	)
+	// }
 
-	async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project-name/${projectUUID}`, { projectName }
-		)
-	}
+	// async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
+	// 	return await this.httpClient.http.post<AllCommonResponses>(
+	// 		`${this.pathHeader}/edit-sandbox-project-name/${projectUUID}`, { projectName }
+	// 	)
+	// }
 
 	async retrieveAllSandboxProjects(): Promise<AxiosResponse<RetrieveSandboxProjectsResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectsResponse | ErrorResponse>(

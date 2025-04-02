@@ -16,7 +16,7 @@ export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 			if (
 				isNull(blueDotApiClient.httpClient.accessToken) ||
 				sandboxClass.isRetrievingAllSandboxProjects === true ||
-				sandboxClass.hasRetrievedAllSandxboProjects === true
+				sandboxClass.hasRetrievedAllSandboxProjects === true
 			) return
 
 			sandboxClass.setIsRetrievingAllSandboxProjects(true)
@@ -36,7 +36,7 @@ export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService,
-		sandboxClass.isRetrievingAllSandboxProjects, sandboxClass.hasRetrievedAllSandxboProjects])
+		sandboxClass.isRetrievingAllSandboxProjects, sandboxClass.hasRetrievedAllSandboxProjects])
 
 	useEffect(() => {
 		void retrieveAllSandboxProjects()

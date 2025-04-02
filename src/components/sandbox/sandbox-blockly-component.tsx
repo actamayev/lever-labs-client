@@ -9,7 +9,7 @@ import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 
 // TODO: Bring this component into `/sandbox/uuid`
-const BlocklyComponent = lazy(() => import("../blockly-component"))
+const BlocklyComponent = lazy(() => import("./blockly-component"))
 
 function SandboxBlocklyComponent() {
 	const [cppCode, setCppCode] = useState("")

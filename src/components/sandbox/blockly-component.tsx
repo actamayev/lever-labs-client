@@ -5,24 +5,30 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { cn } from "../lib/shadcn/utils"
-import { cppGenerator } from "../utils/cpp/cpp-generator"
-import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
-import useInitializeBlocks from "../hooks/blockly/initialize-blocks"
-import getWorkspaceConfig, { darkTheme, lightTheme } from "../utils/blockly/workspace-config"
+import { cn } from "../../lib/shadcn/utils"
+import { cppGenerator } from "../../utils/cpp/cpp-generator"
+import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
+import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
+import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
-const initialXml = `
-    <xml xmlns="https://developers.google.com/blockly/xml"/>
-`
+// const initialXml = `
+//     <xml xmlns="https://developers.google.com/blockly/xml"/>
+// `
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
+	initialXml?: string
 }
 
 function BlocklyComponent(props: Props) {
-	const { toolboxConfig, setCppCode, extraClasses = "h-1/2" } = props
+	const {
+		toolboxConfig,
+		setCppCode,
+		extraClasses = "h-1/2",
+		initialXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
+	} = props
 	const [blocklyXml, setBlocklyXml] = useState(initialXml)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const isDarkMode = defaultSiteTheme === "dark"
