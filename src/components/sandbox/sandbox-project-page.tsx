@@ -1,17 +1,20 @@
 "use client"
 
-import { lazy, Suspense, useCallback, useMemo, useState } from "react"
 import { observer } from "mobx-react"
 import { useParams } from "next/navigation"
-import { Code, ArrowLeft } from "lucide-react"
+import { ArrowLeft, Star, Code2 } from "lucide-react"
+import { cn } from "../../lib/shadcn/utils"
+import { lazy, Suspense, useCallback, useMemo, useState } from "react"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
 import useRetrieveSingleSandboxProjectUseEffect from "../../hooks/sandbox/retrieve-single-sandbox-projects"
+import EditableProjectTitle from "./editable-project-title"
 
 const BlocklyComponent = lazy(() => import("./blockly-component"))
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage() {
 	const params = useParams()
 	const navigate = useTypedNavigate()
@@ -19,6 +22,7 @@ function SandboxProjectPage() {
 	const sandboxClass = useSandboxContext()
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
 	const [cppCode, setCppCode] = useState("")
+	const starSandboxProject = useStarSandboxProject()
 
 	// Get project directly from context
 	const project = useMemo(() => {
@@ -71,30 +75,46 @@ function SandboxProjectPage() {
 					<span>Back</span>
 				</button>
 
-				<h1 className="text-xl font-medium truncate max-w-md">
-					{project.projectName || "Untitled Project"}
-				</h1>
+				<EditableProjectTitle
+					projectUUID={projectUUID}
+					initialName={project.projectName}
+				/>
+				<div className="space-x-2">
+					<button
+						onClick={() => starSandboxProject(projectUUID)}
+						className={cn(
+							"p-2 rounded-md transition-none",
+							project.isStarred ? "text-bee" : ""
+						)}
+					>
+						<Star
+							size={20}
+							className={project.isStarred ? "fill-bee" : ""}
+						/>
+					</button>
 
-				<button
-					onClick={toggleCodeVisibility}
-					className={`p-2 rounded-md transition-none ${
-						sandboxClass.showCode
-							? "bg-blue-100 text-blue-600"
-							: "text-gray-600 hover:bg-gray-100"
-					}`}
-					title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
-				>
-					<Code size={20} />
-				</button>
+					<button
+						onClick={toggleCodeVisibility}
+						className={`p-2 rounded-md transition-none ${
+							sandboxClass.showCode
+								? "bg-blue-100 text-blue-600"
+								: "text-gray-600 hover:bg-gray-100"
+						}`}
+						title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
+					>
+						<Code2 size={20} />
+					</button>
+				</div>
 			</div>
 
-			<div className="flex-1">
+			<div className="flex-1 overflow-hidden">
 				<main className="flex h-full min-h-0">
 					{/* Blockly component - width changes based on showCode state */}
 					<div
-						className={`flex flex-col m-4 min-h-0 ${
-							sandboxClass.showCode ? "w-3/5" : "w-full"
-						}`}
+						className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
+						style={{
+							width: sandboxClass.showCode ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
+						}}
 					>
 						<div className="flex-1 min-h-0">
 							<Suspense>
@@ -108,19 +128,27 @@ function SandboxProjectPage() {
 						</div>
 					</div>
 
-					{/* Code section - only visible when showCode is true */}
-					{sandboxClass.showCode && (
-						<div className="w-2/5 border-l-2 ml-0 p-4 flex flex-col min-h-0 border-swan">
-							<div className="flex justify-between items-center mb-3">
-								<h2 className="text-lg font-medium">C++ Code</h2>
-							</div>
-							<div className="flex-1 overflow-auto bg-polar p-4 rounded">
-								<pre className="text-sm font-mono whitespace-pre-wrap">
-									{cppCode || "// Your code will appear here"}
-								</pre>
-							</div>
+					{/* Code section - always in DOM but with 0 width when hidden */}
+					<div
+						className="flex flex-col min-h-0 overflow-hidden transition-all duration-300 ease-in-out border-swan"
+						style={{
+							width: sandboxClass.showCode ? "calc(40% - 1rem)" : "0",
+							borderLeftWidth: sandboxClass.showCode ? "2px" : "0",
+							opacity: sandboxClass.showCode ? 1 : 0,
+							padding: sandboxClass.showCode ? "1rem" : "0",
+							margin: sandboxClass.showCode ? "0 1rem 1rem 0" : "0",
+							visibility: sandboxClass.showCode ? "visible" : "hidden"
+						}}
+					>
+						<div className="flex justify-between items-center mb-3">
+							<h2 className="text-lg font-medium whitespace-nowrap">C++ Code</h2>
 						</div>
-					)}
+						<div className="flex-1 overflow-auto bg-polar p-4 rounded">
+							<pre className="text-sm font-mono whitespace-pre-wrap">
+								{cppCode || "// Your code will appear here"}
+							</pre>
+						</div>
+					</div>
 				</main>
 			</div>
 		</div>

@@ -22,11 +22,11 @@ export default class SandboxhDataService {
 	// 	)
 	// }
 
-	// async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
-	// 	return await this.httpClient.http.post<AllCommonResponses>(
-	// 		`${this.pathHeader}/edit-sandbox-project-name/${projectUUID}`, { projectName }
-	// 	)
-	// }
+	async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/edit-sandbox-project-name/${projectUUID}`, { projectName }
+		)
+	}
 
 	async retrieveAllSandboxProjects(): Promise<AxiosResponse<RetrieveSandboxProjectsResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectsResponse | ErrorResponse>(
@@ -37,6 +37,12 @@ export default class SandboxhDataService {
 	async retrieveSingleSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectResponse | ErrorResponse>(
 			`${this.pathHeader}/retrieve-single-sandbox-project/${projectUUID}`
+		)
+	}
+
+	async starSandboxProject(projectUUID: ProjectUUID, starStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/star-sandbox-project-name/${projectUUID}`, { starStatus }
 		)
 	}
 }

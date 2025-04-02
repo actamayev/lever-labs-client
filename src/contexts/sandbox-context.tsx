@@ -1,5 +1,6 @@
 "use client"
 
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
@@ -41,6 +42,18 @@ class SandboxClass {
 	// New method to toggle or set code visibility
 	public setShowCode = action((show: boolean): void => {
 		this.showCode = show
+	})
+
+	public updateStarStatus = action((projectUUID: ProjectUUID): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+		project.isStarred = !project.isStarred
+	})
+
+	public updateProjectName = action((projectUUID: ProjectUUID, newProjectName: string): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+		project.projectName = newProjectName
 	})
 
 	public logout() {
