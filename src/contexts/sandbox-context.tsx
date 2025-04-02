@@ -7,7 +7,8 @@ class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
 	public hasRetrievedAllSandboxProjects = false
 	public sandboxProjects: Map<ProjectUUID, SandboxProject> = new Map()
-	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map() // Track loading state per project
+	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map()
+	public showCode = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -37,11 +38,17 @@ class SandboxClass {
 		return this.retrievingSingleProjects.get(projectUUID) || false
 	}
 
+	// New method to toggle or set code visibility
+	public setShowCode = action((show: boolean): void => {
+		this.showCode = show
+	})
+
 	public logout() {
 		this.setIsRetrievingAllSandboxProjects(false)
 		this.setHasRetrievedAllSandboxProjects(false)
 		this.sandboxProjects = new Map()
 		this.retrievingSingleProjects = new Map()
+		this.setShowCode(false)
 	}
 }
 
