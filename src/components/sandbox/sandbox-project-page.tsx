@@ -3,13 +3,15 @@
 import { observer } from "mobx-react"
 import { useParams } from "next/navigation"
 import { ArrowLeft, Star, Code2 } from "lucide-react"
-import { lazy, Suspense, useCallback, useMemo, useState } from "react"
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import debounce from "lodash-es/debounce"
 import { cn } from "../../lib/shadcn/utils"
 import EditableProjectTitle from "./editable-project-title"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
+import useEditSandboxProject from "../../hooks/sandbox/edit-sandbox-project"
 import useRetrieveSingleSandboxProjectUseEffect from "../../hooks/sandbox/retrieve-single-sandbox-projects"
 
 const BlocklyComponent = lazy(() => import("./blockly-component"))
@@ -23,12 +25,37 @@ function SandboxProjectPage() {
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
 	const [cppCode, setCppCode] = useState("")
 	const starSandboxProject = useStarSandboxProject()
+	const editSandboxProject = useEditSandboxProject()
+
+	// Create debounced save function - 1 second delay
+	const debouncedSaveProject = useRef(
+		debounce((uuid: ProjectUUID, xml: string) => {
+			editSandboxProject(uuid, xml)
+		}, 1000)
+	).current
+
+	// Clean up debounce on unmount
+	useEffect(() => {
+		return () => {
+			debouncedSaveProject.cancel()
+		}
+	}, [debouncedSaveProject])
 
 	// Get project directly from context
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
+
+	// Current XML state - initialize from project
+	const [blocklyXml, setBlocklyXml] = useState(() => project?.sandboxXml || "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>")
+
+	// Update local XML state whenever project changes
+	useEffect(() => {
+		if (project?.sandboxXml) {
+			setBlocklyXml(project.sandboxXml)
+		}
+	}, [project])
 
 	// Handle navigation back to projects list
 	const handleBack = useCallback(() => {
@@ -39,6 +66,20 @@ function SandboxProjectPage() {
 	const toggleCodeVisibility = useCallback(() => {
 		sandboxClass.setShowCode(!sandboxClass.showCode)
 	}, [sandboxClass])
+
+	// Handle XML changes from the Blockly workspace
+	const handleXmlChange = useCallback((newXml: string) => {
+		// Update local state
+		setBlocklyXml(newXml)
+
+		// Update MobX store and trigger save only if XML has changed
+		if (project && project.sandboxXml !== newXml) {
+			sandboxClass.updateProjectXml(projectUUID, newXml)
+
+			// Trigger debounced save to backend
+			debouncedSaveProject(projectUUID, newXml)
+		}
+	}, [projectUUID, project, sandboxClass, debouncedSaveProject])
 
 	// Loading state - either we're actively retrieving or the project isn't found yet
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
@@ -69,7 +110,7 @@ function SandboxProjectPage() {
 			<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan">
 				<button
 					onClick={handleBack}
-					className="flex items-center text-questionText hover:bg-polar p-2 rounded-2xl"
+					className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg"
 				>
 					<ArrowLeft size={30} className="mr-1" />
 				</button>
@@ -121,7 +162,8 @@ function SandboxProjectPage() {
 									toolboxConfig={toolboxConfig}
 									setCppCode={setCppCode}
 									extraClasses="h-full"
-									initialXml={project.sandboxXml}
+									initialXml={blocklyXml}
+									onXmlChange={handleXmlChange}
 								/>
 							</Suspense>
 						</div>
@@ -135,7 +177,7 @@ function SandboxProjectPage() {
 							borderLeftWidth: sandboxClass.showCode ? "2px" : "0",
 							opacity: sandboxClass.showCode ? 1 : 0,
 							padding: sandboxClass.showCode ? "1rem" : "0",
-							margin: sandboxClass.showCode ? "0 1rem 1rem 0" : "0",
+							margin: sandboxClass.showCode ? "0 1rem 0" : "0",
 							visibility: sandboxClass.showCode ? "visible" : "hidden"
 						}}
 					>

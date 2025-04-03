@@ -16,7 +16,7 @@ interface Props {
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 	initialXml: string
-	onXmlChange: (xml: string) => void
+	onXmlChange?: (xml: string) => void
 }
 
 function BlocklyComponent(props: Props) {
@@ -24,7 +24,7 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		setCppCode,
 		extraClasses = "h-1/2",
-		initialXml,
+		initialXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>",
 		onXmlChange
 	} = props
 	const defaultSiteTheme = useDefaultSiteTheme()
@@ -56,8 +56,12 @@ function BlocklyComponent(props: Props) {
 		)
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
-		onXmlChange(newXml)
 		setCppCode(cppCode)
+
+		// Notify parent component if onXmlChange callback exists
+		if (onXmlChange) {
+			onXmlChange(newXml)
+		}
 
 		// Center workspace only on first render
 		if (isFirstRender.current) {
