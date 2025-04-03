@@ -82,7 +82,7 @@ function TheSandboxPage() {
 								<div className="font-medium truncate">
 									{project.projectName || "Untitled Project"}
 								</div>
-								<div className="text-sm text-gray-500 mt-2">
+								<div className="text-sm text-hare mt-2">
 									Last updated: {new Date(project.updatedAt).toLocaleDateString()}
 								</div>
 							</div>
@@ -112,7 +112,7 @@ function TheSandboxPage() {
 								<div className="font-medium truncate">
 									{project.projectName || "Untitled Project"}
 								</div>
-								<div className="text-sm text-gray-500 mt-2">
+								<div className="text-sm text-hare mt-2">
 									Last updated: {new Date(project.updatedAt).toLocaleDateString()}
 								</div>
 							</div>
@@ -122,7 +122,7 @@ function TheSandboxPage() {
 				/* Empty state when no projects exist and not loading */
 					!sandboxClass.isRetrievingAllSandboxProjects && (
 						<div className="text-center py-12">
-							<p className="text-gray-500 mb-4">You don't have any projects yet</p>
+							<p className="text-hare mb-4">You don't have any projects yet</p>
 							<button
 								className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
 								onClick={handleCreateProject}
@@ -138,7 +138,7 @@ function TheSandboxPage() {
 			{/* Loading state */}
 			{sandboxClass.isRetrievingAllSandboxProjects && (
 				<div className="text-center py-12">
-					<p className="text-gray-500">Loading projects...</p>
+					<p className="text-hare">Loading projects...</p>
 				</div>
 			)}
 		</div>
