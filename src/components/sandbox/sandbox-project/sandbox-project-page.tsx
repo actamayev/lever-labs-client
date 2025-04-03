@@ -5,6 +5,7 @@ import { useParams } from "next/navigation"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import ProjectTabs from "./project-tabs"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
@@ -133,7 +134,7 @@ function SandboxProjectPage() {
 						</div>
 					</div>
 
-					{/* Code section - always in DOM but with 0 width when hidden */}
+					{/* Tabbed interface with Code and Notes sections */}
 					<div
 						className="flex flex-col min-h-0 overflow-hidden transition-all duration-300 ease-in-out border-swan"
 						style={{
@@ -145,14 +146,12 @@ function SandboxProjectPage() {
 							visibility: sandboxClass.showCode ? "visible" : "hidden"
 						}}
 					>
-						<div className="flex justify-between items-center mb-3">
-							<h2 className="text-lg font-medium whitespace-nowrap">C++ Code</h2>
-						</div>
-						<div className="flex-1 overflow-auto bg-polar p-4 rounded">
-							<pre className="text-sm font-mono whitespace-pre-wrap">
-								{cppCode || "// Your code will appear here"}
-							</pre>
-						</div>
+						{sandboxClass.showCode && (
+							<ProjectTabs
+								project={project}
+								cppCode={cppCode}
+							/>
+						)}
 					</div>
 				</main>
 			</div>

@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { ArrowLeft, Star, Code2 } from "lucide-react"
+import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import EditableProjectTitle from "./editable-project-title"
@@ -71,7 +71,7 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 							}`}
 							title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
 						>
-							<Code2 size={30} />
+							<NotebookPen size={30} />
 						</button>
 					}
 					tooltipContent={sandboxClass.showCode ? "CLOSE CODE PANEL" : "OPEN CODE PANEL"}
