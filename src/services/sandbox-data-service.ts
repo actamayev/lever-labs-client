@@ -27,6 +27,12 @@ export default class SandboxhDataService {
 		)
 	}
 
+	async editSandboxProjectNotes(projectUUID: ProjectUUID, projectNotes: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/edit-sandbox-project-notes/${projectUUID}`, { projectNotes }
+		)
+	}
+
 	async retrieveAllSandboxProjects(): Promise<AxiosResponse<RetrieveSandboxProjectsResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectsResponse | ErrorResponse>(
 			`${this.pathHeader}/retrieve-all-sandbox-projects`

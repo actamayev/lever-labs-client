@@ -9,9 +9,9 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useEditSandboxProjectName(): (
+export default function useEditSandboxProjectNotes(): (
 	projectUUID: ProjectUUID,
-	newProjectName: string
+	newProjectNotes: string
 ) => Promise<void> {
 	const sandboxClass = useSandboxContext()
 	const blueDotApiClient = useApiClientContext()
@@ -19,29 +19,29 @@ export default function useEditSandboxProjectName(): (
 
 	return useCallback(async (
 		projectUUID: ProjectUUID,
-		newProjectName: string
+		newProjectNotes: string
 	) => {
 		try {
 			if (isNull(blueDotApiClient.httpClient.accessToken)) return
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
 			if (
 				isUndefined(project) ||
-				project.projectName === newProjectName
+				project.projectName === newProjectNotes
 			) return
 
-			const editSandboxProjectNameResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectName(
+			const editSandboxProjectNotesResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectNotes(
 				project.projectUUID,
-				newProjectName
+				newProjectNotes
 			)
-			if (!isEqual(editSandboxProjectNameResponse.status, 200) || isNonSuccessResponse(editSandboxProjectNameResponse.data)) {
-				throw Error ("Unable to edit sandbox project name")
+			if (!isEqual(editSandboxProjectNotesResponse.status, 200) || isNonSuccessResponse(editSandboxProjectNotesResponse.data)) {
+				throw Error ("Unable to edit sandbox project notes")
 			}
 
-			sandboxClass.updateProjectName(projectUUID, newProjectName)
+			sandboxClass.updateProjectNotes(projectUUID, newProjectNotes)
 		} catch (error) {
 			console.error(error)
 			toast.negative({
-				title: "Unable to edit project name",
+				title: "Unable to edit project notes",
 				description: "Please reload the page and try again"
 			})
 		}

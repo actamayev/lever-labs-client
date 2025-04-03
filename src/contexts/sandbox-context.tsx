@@ -56,6 +56,13 @@ class SandboxClass {
 		project.projectName = newName
 	})
 
+	public updateProjectNotes = action((projectUUID: ProjectUUID, newNotes: string): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		project.projectNotes = newNotes
+	})
+
 	// Method to update project XML in the store
 	public updateProjectXml = action((projectUUID: ProjectUUID, newXml: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)

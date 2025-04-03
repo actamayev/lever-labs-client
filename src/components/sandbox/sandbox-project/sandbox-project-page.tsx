@@ -38,9 +38,7 @@ function SandboxProjectPage() {
 
 	// Clean up debounce on unmount
 	useEffect(() => {
-		return () => {
-			debouncedSaveProject.cancel()
-		}
+		return () => debouncedSaveProject.cancel()
 	}, [debouncedSaveProject])
 
 	// Get project directly from context
