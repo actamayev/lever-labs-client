@@ -12,7 +12,6 @@ interface ProjectTabsProps {
 }
 
 export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
-	console.log(project)
 	const [notes, setNotes] = useState(project.projectNotes || "")
 	const editSandboxProjectNotes = useEditSandboxProjectNotes()
 

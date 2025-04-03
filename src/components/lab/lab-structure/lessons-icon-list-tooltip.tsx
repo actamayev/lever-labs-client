@@ -23,7 +23,7 @@ export default function LessonsIconListTooltip(props: Props) {
 						"flex size-12 items-center justify-center rounded-lg duration-0 hover:bg-polar",
 						isActive && "bg-polar"
 					)}
-					onClick={onClick} // Add the onClick handler directly to the Button
+					onClick={onClick}
 				>
 					{children}
 				</Button>
