@@ -50,8 +50,6 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 				</TooltipProvider>
 
 				<EditableProjectTitle project={project} />
-			</div>
-			<div className="space-x-2">
 				<TooltipProvider delayDuration={0}>
 					<Tooltip>
 						<TooltipTrigger asChild>
@@ -69,11 +67,12 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 							</button>
 						</TooltipTrigger>
 						<TooltipContent>
-							{project.isStarred ? "UN-STAR PROJECT" : "STAR PROJECT"}
+							STAR
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
-
+			</div>
+			<div>
 				<TooltipProvider delayDuration={0}>
 					<Tooltip>
 						<TooltipTrigger asChild>

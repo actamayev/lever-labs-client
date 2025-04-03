@@ -82,7 +82,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 
 	return (
 		<div
-			className="relative inline-flex items-center"
+			className="relative inline-flex items-center mr-2"
 			onMouseEnter={() => setIsHovering(true)}
 			onMouseLeave={() => setIsHovering(false)}
 		>
