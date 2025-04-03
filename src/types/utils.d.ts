@@ -11,6 +11,7 @@ declare global {
 		| "/misc"
 		| "/pip"
 		| "/personal-info"
+		| "/sandbox"
 		| "/workbench"
 
 	type PipUUID = string & { readonly __brand: unique symbol }

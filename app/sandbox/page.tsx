@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
-import SandboxBlocklyComponent from "../../src/components/sandbox/sandbox-blockly-component"
+import TheSandboxPage from "../../src/components/sandbox/the-sandbox-page"
 
 export const metadata = createMetadata({
 	title: "Sandbox",
@@ -13,7 +13,7 @@ export const metadata = createMetadata({
 export default function SandboxPage() {
 	return (
 		<AuthenticatedLayout>
-			<SandboxBlocklyComponent />
+			<TheSandboxPage />
 		</AuthenticatedLayout>
 	)
 }

@@ -5,6 +5,7 @@ import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"
 import MiscDataService from "../services/misc-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import SandboxDataService from "../services/sandbox-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import LabActivityTrackingDataService from "../services/lab-activity-tracking-data-service"
@@ -16,6 +17,7 @@ class BlueDotApiClient {
 	public miscDataService: MiscDataService = new MiscDataService(this.httpClient)
 	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient)
 	public pipDataService: PipDataService = new PipDataService(this.httpClient)
+	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient)
 	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient)
 
 	constructor() {
@@ -28,6 +30,7 @@ class BlueDotApiClient {
 		this.miscDataService = new MiscDataService(this.httpClient)
 		this.personalInfoDataService = new PersonalInfoDataService(this.httpClient)
 		this.pipDataService = new PipDataService(this.httpClient)
+		this.sandboxDataService = new SandboxDataService(this.httpClient)
 		this.workbenchDataService = new WorkbenchDataService(this.httpClient)
 	}
 

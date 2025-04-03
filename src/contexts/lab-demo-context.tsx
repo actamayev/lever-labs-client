@@ -1,5 +1,6 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
@@ -7,6 +8,7 @@ class LabDemoClass {
 	public activeDemoName: DemoNames | null = null
 	public motorState: MotorControlInput = { horizontal: 0, vertical: 0 }
 	public sensorData: IncomingSensorData | null = null
+	public pitchData: number[] = []
 
 	constructor() {
 		makeAutoObservable(this)
@@ -22,12 +24,24 @@ class LabDemoClass {
 
 	public setSensorData = action((incomingSensorData: IncomingSensorData | null): void => {
 		this.sensorData = incomingSensorData
+		// console.log(incomingSensorData?.sensorPayload)
+		if (isNull(incomingSensorData)) return
+		this.addPitchData(incomingSensorData)
+	})
+
+	public addPitchData = action((incomingSensorData: IncomingSensorData): void => {
+		this.pitchData.push(incomingSensorData.sensorPayload.pitch)
+	})
+
+	public resetPitchData = action((): void => {
+		this.pitchData = []
 	})
 
 	public logout() {
 		this.setActiveDemoName(null)
 		this.setMotorState({ horizontal: 0, vertical: 0 })
 		this.setSensorData(null)
+		this.resetPitchData()
 	}
 }
 

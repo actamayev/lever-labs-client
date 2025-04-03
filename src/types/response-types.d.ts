@@ -53,6 +53,15 @@ declare global {
 		demoStarted: boolean
 	}
 
+	// Sandbox Routes
+	type RetrieveSandboxProjectResponse = {
+		sandboxProject: SandboxProject
+	}
+
+	type RetrieveSandboxProjectsResponse = {
+		sandboxProjects: SandboxProject[]
+	}
+
 	// Socket Events:
 	type PipStatusUpdate = {
 		pipUUID: PipUUID

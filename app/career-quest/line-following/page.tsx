@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import CareerActivityTemplate from "../../../src/components/career-quest/career-activity-template"
+import PitchData from "../../../src/components/charts/pitch-data"
 
 export const metadata = createMetadata({
 	title: "Line Following",
@@ -18,7 +19,8 @@ export default function LineFollowingPage() {
 	return (
 		<AuthenticatedLayout>
 			<CareerActivityTemplate>
-				Line following
+				<PitchData />
+				{/* Line following */}
 			</CareerActivityTemplate>
 		</AuthenticatedLayout>
 	)

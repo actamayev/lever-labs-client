@@ -3,12 +3,13 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { useState, useCallback, lazy, Suspense } from "react"
-import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { usePipContext } from "../../contexts/pip-context"
 import useSendCppToPip from "../../hooks/pip/send-cpp-to-pip"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 
-const BlocklyComponent = lazy(() => import("../blockly-component"))
+// TODO: Bring this component into `/sandbox/uuid`
+const BlocklyComponent = lazy(() => import("./blockly-component"))
 
 function SandboxBlocklyComponent() {
 	const [cppCode, setCppCode] = useState("")
@@ -21,15 +22,15 @@ function SandboxBlocklyComponent() {
 
 	return (
 		<div className="h-screen overflow-y-auto relative w-full py-4 px-10 mt-2.5">
-			<Suspense>
+			{/* <Suspense>
 				<BlocklyComponent
 					toolboxConfig={toolboxConfig}
 					setCppCode={setCppCode}
 				/>
-			</Suspense>
+			</Suspense> */}
 			<div className="mt-4">
 				<h3 className="text-lg font-bold text-questionText">Generated C++</h3>
-				<pre className="bg-polar dark:text-white p-4 rounded duration-0">
+				<pre className="bg-polar text-questionText p-4 rounded duration-0 text-base">
 					{cppCode}
 				</pre>
 			</div>
