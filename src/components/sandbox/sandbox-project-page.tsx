@@ -3,14 +3,14 @@
 import { observer } from "mobx-react"
 import { useParams } from "next/navigation"
 import { ArrowLeft, Star, Code2 } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
 import { lazy, Suspense, useCallback, useMemo, useState } from "react"
+import { cn } from "../../lib/shadcn/utils"
+import EditableProjectTitle from "./editable-project-title"
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
 import useRetrieveSingleSandboxProjectUseEffect from "../../hooks/sandbox/retrieve-single-sandbox-projects"
-import EditableProjectTitle from "./editable-project-title"
 
 const BlocklyComponent = lazy(() => import("./blockly-component"))
 
@@ -66,13 +66,12 @@ function SandboxProjectPage() {
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			{/* Header with back button, project name, and code toggle */}
-			<div className="flex items-center justify-between px-4 py-3 border-b-2 border-swan">
+			<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan">
 				<button
 					onClick={handleBack}
-					className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+					className="flex items-center text-questionText hover:bg-polar p-2 rounded-2xl"
 				>
-					<ArrowLeft size={20} className="mr-1" />
-					<span>Back</span>
+					<ArrowLeft size={30} className="mr-1" />
 				</button>
 
 				<EditableProjectTitle
@@ -83,12 +82,12 @@ function SandboxProjectPage() {
 					<button
 						onClick={() => starSandboxProject(projectUUID)}
 						className={cn(
-							"p-2 rounded-md transition-none",
+							"p-2 rounded-md transition-none hover:bg-polar",
 							project.isStarred ? "text-bee" : ""
 						)}
 					>
 						<Star
-							size={20}
+							size={30}
 							className={project.isStarred ? "fill-bee" : ""}
 						/>
 					</button>
@@ -97,12 +96,12 @@ function SandboxProjectPage() {
 						onClick={toggleCodeVisibility}
 						className={`p-2 rounded-md transition-none ${
 							sandboxClass.showCode
-								? "bg-blue-100 text-blue-600"
-								: "text-gray-600 hover:bg-gray-100"
+								? "bg-standardBackgroundHover text-macaw"
+								: "text-questionText hover:bg-polar"
 						}`}
 						title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
 					>
-						<Code2 size={20} />
+						<Code2 size={30} />
 					</button>
 				</div>
 			</div>

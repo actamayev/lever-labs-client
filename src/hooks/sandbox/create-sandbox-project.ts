@@ -8,7 +8,7 @@ import useToastOptions from "../../components/toast-options"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useCreateSandboxProject(): () => Promise<void> {
+export default function useCreateSandboxProject(): () => Promise<ProjectUUID | undefined> {
 	const sandboxClass = useSandboxContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
@@ -23,6 +23,7 @@ export default function useCreateSandboxProject(): () => Promise<void> {
 			}
 
 			sandboxClass.addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
+			return createSandboxProjectResponse.data.sandboxProject.projectUUID
 		} catch (error) {
 			console.error(error)
 			toast.negative({

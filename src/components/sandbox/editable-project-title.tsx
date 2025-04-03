@@ -86,7 +86,7 @@ export default function EditableProjectTitle({ projectUUID, initialName }: Edita
 					onChange={handleNameChange}
 					onKeyDown={handleKeyDown}
 					onBlur={handleBlur}
-					className="text-xl font-medium w-full max-w-md outline-none border-2 border-blue-400 px-2 py-1 rounded"
+					className="text-xl font-medium w-full max-w-md outline-none border-2 border-blue-400 px-2 py-1 rounded bg-inherit"
 					autoFocus
 				/>
 			) : (

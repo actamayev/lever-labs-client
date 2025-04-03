@@ -11,10 +11,6 @@ import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
-// const initialXml = `
-//     <xml xmlns="https://developers.google.com/blockly/xml"/>
-// `
-
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>

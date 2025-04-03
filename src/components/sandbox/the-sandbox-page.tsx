@@ -1,7 +1,10 @@
 "use client"
 
-import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
+import { useCallback, useState } from "react"
+import isUndefined from "lodash-es/isUndefined"
+import { Folder, PlusCircle, Star } from "lucide-react"
+import { Button } from "../shadcn/ui/button"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../hooks/sandbox/create-sandbox-project"
@@ -19,21 +22,13 @@ function TheSandboxPage() {
 	const handleCreateProject = useCallback(async () => {
 		setIsCreating(true)
 		try {
-			await createSandboxProject()
-
-			// Get the most recently created project
-			const projects = Array.from(sandboxClass.sandboxProjects.values())
-			const latestProject = projects.sort((a, b) =>
-				new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-			)[0]
-
-			if (latestProject) {
-				navigate(`/sandbox/${latestProject.projectUUID}`)
-			}
+			const projectUUID = await createSandboxProject()
+			if (isUndefined(projectUUID)) return
+			navigate(`/sandbox/${projectUUID}`)
 		} finally {
 			setIsCreating(false)
 		}
-	}, [createSandboxProject, navigate, sandboxClass.sandboxProjects])
+	}, [createSandboxProject, navigate])
 
 	// Filter starred projects
 	const starredProjects = Array.from(sandboxClass.sandboxProjects.values())
@@ -51,21 +46,31 @@ function TheSandboxPage() {
 	return (
 		<div className="h-screen overflow-y-auto relative p-6">
 			{/* Header with New Project button */}
-			<div className="flex justify-between items-center mb-6">
+			<div className="flex flex-col justify-center mb-6 items-start">
 				<h1 className="text-2xl font-bold">Sandbox</h1>
-				<button
-					className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-					onClick={handleCreateProject}
-					disabled={isCreating}
-				>
-					{isCreating ? "Creating..." : "New Project"}
-				</button>
 			</div>
+			<Button
+				className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
+				onClick={handleCreateProject}
+				disabled={isCreating}
+				size="lg"
+			>
+				<div className="flex flex-row items-center justify-center space-x-2">
+					<PlusCircle className="!size-50"/>
+					New Project
+				</div>
+			</Button>
 
 			{/* Starred Projects Section */}
 			{starredProjects.length > 0 && (
 				<div className="mb-8">
-					<h2 className="text-xl font-semibold mb-4">Starred Projects</h2>
+					<div className="flex flex-row space-x-2 mb-4 items-center">
+						<Star
+							size={30}
+							className="fill-bee text-bee"
+						/>
+						<h2 className="text-3xl font-semibold">Starred Projects</h2>
+					</div>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 						{starredProjects.map(project => (
 							<div
@@ -86,9 +91,14 @@ function TheSandboxPage() {
 				</div>
 			)}
 
-			{/* All Projects Section */}
 			<div>
-				<h2 className="text-xl font-semibold mb-4">All Projects</h2>
+				<div className="flex flex-row space-x-2 mb-4 items-center">
+					<Folder
+						size={30}
+						className="fill-fox text-fox"
+					/>
+					<h2 className="text-3xl font-semibold">All Projects</h2>
+				</div>
 				{allProjects.length > 0 ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 						{allProjects.map(project => (
@@ -103,7 +113,7 @@ function TheSandboxPage() {
 									{project.projectName || "Untitled Project"}
 								</div>
 								<div className="text-sm text-gray-500 mt-2">
-                  Last updated: {new Date(project.updatedAt).toLocaleDateString()}
+									Last updated: {new Date(project.updatedAt).toLocaleDateString()}
 								</div>
 							</div>
 						))}
@@ -118,7 +128,7 @@ function TheSandboxPage() {
 								onClick={handleCreateProject}
 								disabled={isCreating}
 							>
-                Create your first project
+								Create your first project
 							</button>
 						</div>
 					)
