@@ -32,6 +32,7 @@ declare global {
 		email: string | null
 		defaultSiteTheme: SiteThemes
 		profilePictureUrl: string | null
+		sandboxNotesOpen: boolean
 	}
 
 	// Pip Responses
@@ -51,6 +52,15 @@ declare global {
 
 	type DemoResponse = {
 		demoStarted: boolean
+	}
+
+	// Sandbox Routes
+	type RetrieveSandboxProjectResponse = {
+		sandboxProject: SandboxProject
+	}
+
+	type RetrieveSandboxProjectsResponse = {
+		sandboxProjects: SandboxProject[]
 	}
 
 	// Socket Events:

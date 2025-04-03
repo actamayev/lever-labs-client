@@ -10,7 +10,9 @@ import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()
-	const shouldShowSidebar = PrivatePageNames.includes(pathname as PageNames)
+	const shouldShowSidebar =
+		PrivatePageNames.includes(pathname as PageNames) ||
+		pathname.startsWith("/sandbox/") // This will match all /sandbox/uuid paths
 
 	if (!shouldShowSidebar) return null
 

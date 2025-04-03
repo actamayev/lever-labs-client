@@ -1,40 +1,32 @@
 "use client"
 
 import { observer } from "mobx-react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
+import CustomTooltip from "../custom-tooltip"
 
 function CareerProgressBar() {
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<div className="w-full h-4 bg-swan rounded-full overflow-hidden">
+		<CustomTooltip
+			tooltipTrigger={
+				<div className="w-full h-4 bg-swan rounded-full overflow-hidden">
+					<div
+						className="relative h-full rounded-full duration-0 ease-out bg-green-500"
+						style={{
+							width: "50%",
+						}}
+					>
 						<div
-							className="relative h-full rounded-full duration-0 ease-out bg-green-500"
+							className="absolute top-1 left-2 right-2 rounded-full"
 							style={{
-								width: "50%",
+								background: "rgb(45, 205, 94)",
+								height: "3px"
 							}}
-						>
-							<div
-								className="absolute top-1 left-2 right-2 rounded-full"
-								style={{
-									background: "rgb(45, 205, 94)",
-									height: "3px"
-								}}
-							/>
-						</div>
+						/>
 					</div>
-				</TooltipTrigger>
-				<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900 mt-2">
-					50% complete
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+				</div>
+			}
+			tooltipContent="50% COMPLETE"
+			contentSide="bottom"
+		/>
 	)
 }
 

@@ -14,7 +14,6 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
-	// 2/21/25 TODO: Fix this endpoint being hit twice in a row
 	return useCallback(async () => {
 		try {
 			if (
@@ -32,14 +31,14 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 			}
 			pipClass.setPipData(pipDataResponse.data.userPipData)
 			pipClass.setRetrievedPipData(true)
+			pipClass.setIsRetrievingPipData(false)
 		} catch (error) {
 			console.error(error)
+			pipClass.setIsRetrievingPipData(false)
 			return toast.negative({
 				title: "Unable to retrieve Pip Info",
 				description: "Please reload the page and try again"
 			})
-		} finally {
-			pipClass.setIsRetrievingPipData(false)
 		}
 	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, toast])
 }

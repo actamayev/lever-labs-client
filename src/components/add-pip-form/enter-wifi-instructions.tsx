@@ -3,13 +3,8 @@
 import isNull from "lodash-es/isNull"
 import { Info } from "lucide-react"
 import { observer } from "mobx-react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
 import { Button } from "../shadcn/ui/button"
+import CustomTooltip from "../custom-tooltip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 
 function EnterWifiInstructions() {
@@ -28,25 +23,21 @@ function EnterWifiInstructions() {
 				</div>
 			</div>
 			<div className="ml-2">
-				<TooltipProvider delayDuration={0}>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Button
-								type="button"
-								variant="ghost"
-								size="lg"
-								className="h-auto p-2 hover:bg-polar"
-							>
-								<Info style={{ width: "25px", height: "25px" }}/>
-							</Button>
-						</TooltipTrigger>
-						<TooltipContent>
-							{addPipClass.store.mirroredFormValues.pipName
-								? `Help ${addPipClass.store.mirroredFormValues.pipName} connect to your Wi-Fi network`
-								: "Enter your Wi-Fi details to get connected"}
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
+				<CustomTooltip
+					tooltipTrigger={
+						<Button
+							type="button"
+							variant="ghost"
+							size="lg"
+							className="h-auto p-2 hover:bg-polar"
+						>
+							<Info style={{ width: "25px", height: "25px" }}/>
+						</Button>
+					}
+					tooltipContent={addPipClass.store.mirroredFormValues.pipName
+						? `Help ${addPipClass.store.mirroredFormValues.pipName} connect to your Wi-Fi network`
+						: "Enter your Wi-Fi details to get connected"}
+				/>
 			</div>
 		</div>
 	)

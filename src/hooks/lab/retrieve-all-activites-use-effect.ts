@@ -11,7 +11,6 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 	const blueDotApiClient = useApiClientContext()
 	const activityProgressClass = useActivityProgressContext()
 
-	// 2/21/25 TODO: Fix this endpoint being hit twice in a row
 	const retrieveAllActivities = useCallback(async () => {
 		try {
 			if (
@@ -27,9 +26,9 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 				throw Error ("Unable to retrieve lab activity tracking data")
 			}
 			activityProgressClass.updateActivitiesFromServer(userActivityProgressResponse.data.userActivityProgress)
+			activityProgressClass.setIsRetrievingAllActivityProgress(false)
 		} catch (error) {
 			console.error(error)
-		} finally {
 			activityProgressClass.setIsRetrievingAllActivityProgress(false)
 		}
 	}, [activityProgressClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.labActivityTrackingDataService])

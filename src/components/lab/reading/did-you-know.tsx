@@ -1,13 +1,8 @@
 "use client"
 
 import { LucideIcon } from "lucide-react"
+import CustomTooltip from "../../custom-tooltip"
 import { Card, CardContent } from "@/components/shadcn/ui/card"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 
 interface Props {
     children: React.ReactNode
@@ -22,19 +17,16 @@ export default function DidYouKnow(props: Props) {
 		<Card className="bg-teal-100 border-teal-200 dark:bg-teal-950 dark:border-teal-800 mb-8">
 			<CardContent className="p-0">
 				<div className="flex items-stretch">
-					<TooltipProvider delayDuration={0}>
-						<Tooltip>
-							<TooltipTrigger asChild>
-								<div className="flex items-center justify-center w-24 border-r
+					<CustomTooltip
+						tooltipTrigger={
+							<div className="flex items-center justify-center w-24 border-r
                                 border-teal-200 dark:border-teal-800 rounded-l-lg">
-									<Icon className="h-12 w-12 text-teal-700 dark:text-teal-300" />
-								</div>
-							</TooltipTrigger>
-							<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900">
-								{tooltipMessage}
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
+								<Icon className="h-12 w-12 text-teal-700 dark:text-teal-300" />
+							</div>
+						}
+						contentSide="bottom"
+						tooltipContent={tooltipMessage}
+					/>
 
 					{/* Content Section */}
 					<div className="flex-1 p-6">

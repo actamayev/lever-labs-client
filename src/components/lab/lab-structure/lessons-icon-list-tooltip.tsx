@@ -1,12 +1,7 @@
 "use client"
 
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 import { cn } from "../../../lib/shadcn/utils"
+import CustomTooltip from "../../custom-tooltip"
 import { Button } from "../../shadcn/ui/button"
 
 interface Props {
@@ -20,23 +15,21 @@ export default function LessonsIconListTooltip(props: Props) {
 	const { tooltipMessage, children, onClick, isActive } = props
 
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger onClick={onClick} asChild>
-					<Button
-						variant="ghost"
-						className={cn(
-							"flex size-12 items-center justify-center rounded-lg duration-0 hover:bg-polar",
-							isActive && "bg-polar"
-						)}
-					>
-						{children}
-					</Button>
-				</TooltipTrigger>
-				<TooltipContent side="bottom" className="text-gray-100 dark:text-gray-900">
-					{tooltipMessage}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+		<CustomTooltip
+			tooltipTrigger={
+				<Button
+					variant="ghost"
+					className={cn(
+						"flex size-12 items-center justify-center rounded-lg duration-0 hover:bg-polar",
+						isActive && "bg-polar"
+					)}
+					onClick={onClick}
+				>
+					{children}
+				</Button>
+			}
+			tooltipContent={tooltipMessage}
+			contentSide="bottom"
+		/>
 	)
 }

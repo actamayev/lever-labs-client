@@ -1,13 +1,8 @@
 "use client"
 
 import { TvMinimal, Volume2 } from "lucide-react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
 
+import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../icons/custom-motor"
 import { CustomRuler } from "../icons/custom-ruler"
 import { CustomRemote } from "../icons/custom-remote"
@@ -30,22 +25,18 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 
 export default function SingleComponentUsed({ component } : { component: ComponentsUsedCareerData }) {
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<div
-						key={component.componentName}
-						className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center \
+		<CustomTooltip
+			tooltipTrigger={
+				<div
+					key={component.componentName}
+					className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center \
 						hover:bg-emerald-700"
-						title={component.componentName}
-					>
-						{componentIcons[component.componentName]}
-					</div>
-				</TooltipTrigger>
-				<TooltipContent>
-					{component.componentName}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+					title={component.componentName}
+				>
+					{componentIcons[component.componentName]}
+				</div>
+			}
+			tooltipContent={component.componentName}
+		/>
 	)
 }

@@ -14,7 +14,7 @@ function WorkbenchCard() {
 	return (
 		<div
 			className={cn(
-				"p-4 min-h-24 border-2 border-swan rounded-2xl text-eel w-full text-base",
+				"p-4 min-h-40 border-2 border-swan rounded-2xl text-eel w-full text-base",
 				workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : ""
 			)}
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
