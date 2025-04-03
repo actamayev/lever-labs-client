@@ -1,15 +1,22 @@
-"use client"
-
+import { EllipsisVertical, Star, Trash2 } from "lucide-react"
 import { useCallback, useState } from "react"
-import { Trash2 } from "lucide-react"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useDeleteSandboxProject from "../../hooks/sandbox/delete-sandbox-project"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
+import useDeleteSandboxProject from "../../hooks/sandbox/delete-sandbox-project"
+import {
+	DropdownMenu,
+	DropdownMenuTrigger,
+	DropdownMenuItem,
+	DropdownMenuContent
+} from "../shadcn/ui/dropdown-menu"
 
+// eslint-disable-next-line max-lines-per-function
 export default function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const navigate = useTypedNavigate()
 	const deleteSandboxProject = useDeleteSandboxProject()
+	const starSandboxProject = useStarSandboxProject()
 	const [isDeleteMode, setIsDeleteMode] = useState(false)
 
 	const handleProjectClick = useCallback((projectUUID: ProjectUUID) => {
@@ -21,6 +28,11 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 		e.stopPropagation()
 		setIsDeleteMode(true)
 	}, [])
+
+	const handleStarClick = useCallback((e: React.MouseEvent) => {
+		e.stopPropagation()
+		starSandboxProject(project.projectUUID)
+	}, [starSandboxProject, project.projectUUID])
 
 	const handleCancelDelete = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation()
@@ -49,13 +61,29 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 						<div className="font-medium truncate text-2xl">
 							{project.projectName || "Untitled Project"}
 						</div>
-						<div className="p-1 transition-none rounded hover:bg-swan">
-							<Trash2
-								className="text-cardinal cursor-pointer"
-								size={20}
-								onClick={handleDeleteClick}
-							/>
-						</div>
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+								<div className="p-1 transition-none rounded hover:bg-swan">
+									<EllipsisVertical
+										className="text-wolf cursor-pointer"
+										size={20}
+									/>
+								</div>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer">
+									<Star
+										size={20}
+										className={cn("mr-2", project.isStarred ? "text-bee fill-bee" : "")}
+									/>
+									{project.isStarred ? "Unstar" : "Star"}
+								</DropdownMenuItem>
+								<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer">
+									<Trash2 size={20} className="mr-2 text-cardinal" />
+									Delete
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 					<div className="text-sm text-hare mt-2">
 						Last updated: {new Date(project.updatedAt).toLocaleDateString()}
