@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project-page"
+import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project/sandbox-project-page"
 
 // TODO: Change all of this.
 // The title should reflect the actual title, description needs changing

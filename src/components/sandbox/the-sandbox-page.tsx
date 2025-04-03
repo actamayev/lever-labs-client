@@ -5,10 +5,12 @@ import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
 import { Folder, PlusCircle, Star } from "lucide-react"
 import { Button } from "../shadcn/ui/button"
+import SingleProjectCard from "./single-project-card"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
+import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -38,28 +40,23 @@ function TheSandboxPage() {
 	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
 		.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
-	// Handle project click
-	const handleProjectClick = useCallback((projectUUID: ProjectUUID) => {
-		navigate(`/sandbox/${projectUUID}`)
-	}, [navigate])
-
 	return (
 		<div className="h-screen overflow-y-auto relative p-6">
 			{/* Header with New Project button */}
 			<div className="flex flex-col justify-center mb-6 items-start">
 				<h1 className="text-2xl font-bold">Sandbox</h1>
 			</div>
-			<Button
+			<BlueTactileButton
 				className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
 				onClick={handleCreateProject}
 				disabled={isCreating}
 				size="lg"
 			>
-				<div className="flex flex-row items-center justify-center space-x-2">
-					<PlusCircle className="!size-50"/>
-					New Project
+				<div className="flex flex-row items-center justify-center">
+					<PlusCircle className="!size-8 mr-2"/>
+					NEW PROJECT
 				</div>
-			</Button>
+			</BlueTactileButton>
 
 			{/* Starred Projects Section */}
 			{starredProjects.length > 0 && (
@@ -71,21 +68,9 @@ function TheSandboxPage() {
 						/>
 						<h2 className="text-3xl font-semibold">Starred Projects</h2>
 					</div>
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{starredProjects.map(project => (
-							<div
-								key={project.projectUUID}
-								className="border rounded-md p-4 hover:shadow-md cursor-pointer transition-shadow"
-								onClick={() => handleProjectClick(project.projectUUID)}
-								onDoubleClick={() => handleProjectClick(project.projectUUID)}
-							>
-								<div className="font-medium truncate">
-									{project.projectName || "Untitled Project"}
-								</div>
-								<div className="text-sm text-hare mt-2">
-									Last updated: {new Date(project.updatedAt).toLocaleDateString()}
-								</div>
-							</div>
+							<SingleProjectCard key={project.projectUUID} project={project} />
 						))}
 					</div>
 				</div>
@@ -100,26 +85,12 @@ function TheSandboxPage() {
 					<h2 className="text-3xl font-semibold">All Projects</h2>
 				</div>
 				{allProjects.length > 0 ? (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 						{allProjects.map(project => (
-							<div
-								key={project.projectUUID}
-								className="border rounded-md p-4 hover:shadow-md cursor-pointer transition-shadow"
-								onClick={() => handleProjectClick(project.projectUUID)}
-								onDoubleClick={() => handleProjectClick(project.projectUUID)}
-								style={{ height: "120px" }}
-							>
-								<div className="font-medium truncate">
-									{project.projectName || "Untitled Project"}
-								</div>
-								<div className="text-sm text-hare mt-2">
-									Last updated: {new Date(project.updatedAt).toLocaleDateString()}
-								</div>
-							</div>
+							<SingleProjectCard key={project.projectUUID} project={project} />
 						))}
 					</div>
 				) : (
-				/* Empty state when no projects exist and not loading */
 					!sandboxClass.isRetrievingAllSandboxProjects && (
 						<div className="text-center py-12">
 							<p className="text-hare mb-4">You don't have any projects yet</p>

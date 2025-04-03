@@ -2,19 +2,20 @@
 
 import { observer } from "mobx-react"
 import { useParams } from "next/navigation"
-import { ArrowLeft, Star, Code2 } from "lucide-react"
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
-import { cn } from "../../lib/shadcn/utils"
-import EditableProjectTitle from "./editable-project-title"
-import { toolboxConfig } from "../../utils/blockly/toolbox-config"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
-import useEditSandboxProject from "../../hooks/sandbox/edit-sandbox-project"
-import useRetrieveSingleSandboxProjectUseEffect from "../../hooks/sandbox/retrieve-single-sandbox-projects"
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import SandboxProjectHeader from "./sandbox-project-header"
+import { usePipContext } from "../../../contexts/pip-context"
+import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
+import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
+import { useSandboxContext } from "../../../contexts/sandbox-context"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
+import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 
-const BlocklyComponent = lazy(() => import("./blockly-component"))
+const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage() {
@@ -24,8 +25,9 @@ function SandboxProjectPage() {
 	const sandboxClass = useSandboxContext()
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
 	const [cppCode, setCppCode] = useState("")
-	const starSandboxProject = useStarSandboxProject()
 	const editSandboxProject = useEditSandboxProject()
+	const pipClass = usePipContext()
+	const sendCppToPip = useSendCppToPip()
 
 	// Create debounced save function - 1 second delay
 	const debouncedSaveProject = useRef(
@@ -61,11 +63,6 @@ function SandboxProjectPage() {
 	const handleBack = useCallback(() => {
 		navigate("/sandbox")
 	}, [navigate])
-
-	// Toggle code visibility
-	const toggleCodeVisibility = useCallback(() => {
-		sandboxClass.setShowCode(!sandboxClass.showCode)
-	}, [sandboxClass])
 
 	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
@@ -107,47 +104,9 @@ function SandboxProjectPage() {
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			{/* Header with back button, project name, and code toggle */}
-			<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan">
-				<button
-					onClick={handleBack}
-					className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg"
-				>
-					<ArrowLeft size={30} className="mr-1" />
-				</button>
+			<SandboxProjectHeader project={project} />
 
-				<EditableProjectTitle
-					projectUUID={projectUUID}
-					initialName={project.projectName}
-				/>
-				<div className="space-x-2">
-					<button
-						onClick={() => starSandboxProject(projectUUID)}
-						className={cn(
-							"p-2 rounded-md transition-none hover:bg-polar",
-							project.isStarred ? "text-bee" : ""
-						)}
-					>
-						<Star
-							size={30}
-							className={project.isStarred ? "fill-bee" : ""}
-						/>
-					</button>
-
-					<button
-						onClick={toggleCodeVisibility}
-						className={`p-2 rounded-md transition-none ${
-							sandboxClass.showCode
-								? "bg-standardBackgroundHover text-macaw"
-								: "text-questionText hover:bg-polar"
-						}`}
-						title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
-					>
-						<Code2 size={30} />
-					</button>
-				</div>
-			</div>
-
-			<div className="flex-1 overflow-hidden">
+			<div className="flex-1 overflow-y-auto">
 				<main className="flex h-full min-h-0">
 					{/* Blockly component - width changes based on showCode state */}
 					<div
@@ -161,11 +120,18 @@ function SandboxProjectPage() {
 								<BlocklyComponent
 									toolboxConfig={toolboxConfig}
 									setCppCode={setCppCode}
-									extraClasses="h-full"
+									extraClasses="h-[95%]"
 									initialXml={blocklyXml}
 									onXmlChange={handleXmlChange}
 								/>
 							</Suspense>
+							<BlueTactileButton
+								onClick={() => sendCppToPip(cppCode)}
+								disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+								className="mt-2"
+							>
+								SEND TO {pipClass.selectedPip?.pipName}
+							</BlueTactileButton>
 						</div>
 					</div>
 
