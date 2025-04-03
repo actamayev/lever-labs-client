@@ -17,7 +17,8 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogFooter
+	DialogFooter,
+	DialogClose
 } from "../shadcn/ui/dialog"
 import { Input } from "../shadcn/ui/input"
 import { truncate } from "lodash-es"
@@ -152,6 +153,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 				<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
 					<DialogHeader>
 						<DialogTitle className="text-2xl">Rename</DialogTitle>
+						<DialogClose />
 					</DialogHeader>
 					<div>
 						<Input
