@@ -1,13 +1,7 @@
 "use client"
 
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
-
 import { Binary, Repeat2, SquareFunction, Variable } from "lucide-react"
+import CustomTooltip from "../custom-tooltip"
 import { CustomConditional } from "../icons/custom-conditional"
 
 const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
@@ -20,22 +14,18 @@ const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
 
 export default function SingleCodingConceptUsed({ codingConcept } : { codingConcept: CodingConceptName }) {
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<div
-						key={codingConcept}
-						className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center \
+		<CustomTooltip
+			tooltipTrigger={
+				<div
+					key={codingConcept}
+					className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center \
 						hover:bg-teal-700"
-						title={codingConcept}
-					>
-						{codingConceptIcons[codingConcept]}
-					</div>
-				</TooltipTrigger>
-				<TooltipContent>
-					{codingConcept}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+					title={codingConcept}
+				>
+					{codingConceptIcons[codingConcept]}
+				</div>
+			}
+			tooltipContent={codingConcept}
+		/>
 	)
 }

@@ -2,10 +2,27 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { useMemo } from "react"
+import isNull from "lodash-es/isNull"
+import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
+import { useAuthContext } from "../../contexts/auth-context"
+import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 
-export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
+function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 	const pathname = usePathname()
+	const authClass = useAuthContext()
+	const personalInfoClass = usePersonalInfoContext()
+
+	const whereToNavigate = useMemo(() => {
+		if (
+			pathname === "/register-username" ||
+			(authClass.isLoggedIn && isNull(personalInfoClass.username))
+		) return "/register-username"
+		if (authClass.isLoggedIn) return "/career-quest"
+		return "/"
+	}, [authClass.isLoggedIn, pathname, personalInfoClass.username])
+
 	return (
 		<div
 			className={`inline-flex items-center flex-grow-0 flex-shrink-0 z-10 ${
@@ -13,7 +30,7 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 			}`}
 		>
 			<Link
-				href={pathname === "/register-username" ? "/register-username" : "/"}
+				href={whereToNavigate}
 				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-pipThemeText duration-0"
 			>
 				<Image
@@ -32,3 +49,5 @@ export default function LogoHeaderSection({ isScrolled } : { isScrolled: boolean
 		</div>
 	)
 }
+
+export default observer(LogoHeaderSection)
