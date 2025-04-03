@@ -98,20 +98,20 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 										/>
 									</div>
 								</DropdownMenuTrigger>
-								<DropdownMenuContent>
-									<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer">
-										<Edit size={20} className="mr-2" />
+								<DropdownMenuContent className="w-40 bg-standardBackground">
+									<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:!bg-polar">
+										<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
 										Rename
 									</DropdownMenuItem>
-									<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer">
+									<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer text-lg hover:!bg-polar">
 										<Star
-											size={20}
-											className={cn("mr-2", project.isStarred ? "text-bee fill-bee" : "")}
+											className={cn("mr-2 !size-5", project.isStarred ? "text-bee fill-bee" : "")}
+											strokeWidth={2.5}
 										/>
 										{project.isStarred ? "Unstar" : "Star"}
 									</DropdownMenuItem>
-									<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer">
-										<Trash2 size={20} className="mr-2 text-cardinal" />
+									<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer text-lg hover:!bg-polar">
+										<Trash2 className="mr-2 text-cardinal !size-5" strokeWidth={2.5}/>
 										Delete
 									</DropdownMenuItem>
 								</DropdownMenuContent>
@@ -131,13 +131,13 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 						</div>
 						<div className="flex gap-4">
 							<Button
-								className="bg-standardBackground hover:bg-polar text-cardinal px-4 py-2 rounded-md text-base"
+								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
 								onClick={handleCancelDelete}
 							>
 								CANCEL
 							</Button>
 							<Button
-								className="bg-standardBackground hover:bg-polar text-cardinal px-4 py-2 rounded-md text-base"
+								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
 								onClick={handleConfirmDelete}
 							>
 								DELETE
@@ -148,16 +148,16 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 			</div>
 
 			<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-				<DialogContent className="sm:max-w-md" onClick={(e) => e.stopPropagation()}>
+				<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
 					<DialogHeader>
-						<DialogTitle>Rename</DialogTitle>
+						<DialogTitle className="text-2xl">Rename</DialogTitle>
 					</DialogHeader>
-					<div className="py-4">
+					<div>
 						<Input
 							value={newProjectName}
 							onChange={(e) => setNewProjectName(e.target.value)}
 							placeholder="Project name"
-							className="w-full"
+							className="w-full !text-xl h-10"
 							onKeyDown={(e) => {
 								if (e.key === "Escape") {
 									handleCancelRename()

@@ -24,7 +24,10 @@ export default function useEditSandboxProjectName(): (
 		try {
 			if (isNull(blueDotApiClient.httpClient.accessToken)) return
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
-			if (isUndefined(project)) return
+			if (
+				isUndefined(project) ||
+				project.projectName === newProjectName
+			) return
 
 			const createSandboxProjectResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectName(
 				project.projectUUID,
