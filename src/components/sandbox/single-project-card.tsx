@@ -20,6 +20,7 @@ import {
 	DialogFooter
 } from "../shadcn/ui/dialog"
 import { Input } from "../shadcn/ui/input"
+import { truncate } from "lodash-es"
 
 // eslint-disable-next-line max-lines-per-function
 export default function SingleProjectCard({ project } : { project: SandboxProject }) {
@@ -77,7 +78,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 			<div
 				key={project.projectUUID}
 				className={cn(
-					"border-2 rounded-md p-4 cursor-pointer transition-none border-swan",
+					"border-2 rounded-md p-4 cursor-pointer transition-none border-swan min-h-32",
 					isDeleteMode ? "bg-cardinal border-cardinal" : "hover:bg-polar"
 				)}
 				onClick={() => handleProjectClick(project.projectUUID)}
@@ -85,7 +86,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 			>
 				{!isDeleteMode ? (
 					<>
-						<div className="flex justify-between items-start">
+						<div className="flex justify-between items-center">
 							<div className="font-medium truncate text-2xl">
 								{project.projectName || "Untitled Project"}
 							</div>
@@ -98,7 +99,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 										/>
 									</div>
 								</DropdownMenuTrigger>
-								<DropdownMenuContent className="w-40 bg-standardBackground">
+								<DropdownMenuContent className="w-40 bg-standardBackground shadow-none">
 									<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:!bg-polar">
 										<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
 										Rename
@@ -126,7 +127,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 						<div className="text-center mb-2 text-base">
 							Are you sure you want to delete&nbsp;
 							<span className="font-bold">
-								{project.projectName || "Untitled Project"}?
+								{truncate(project.projectName || "Untitled Project")}?
 							</span>
 						</div>
 						<div className="flex gap-4">
