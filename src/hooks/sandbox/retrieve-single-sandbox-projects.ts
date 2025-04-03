@@ -17,7 +17,6 @@ export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: Pr
 			const foundProject = sandboxClass.sandboxProjects.get(projectUUID)
 			if (foundProject) return
 
-			// Don't proceed if there's no access token
 			if (
 				isNull(blueDotApiClient.httpClient.accessToken) ||
 				sandboxClass.isRetrievingSingleProject(projectUUID)

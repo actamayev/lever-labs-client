@@ -1,10 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import Link from "next/link"
 
 export default function SidebarLogo() {
 	return (
