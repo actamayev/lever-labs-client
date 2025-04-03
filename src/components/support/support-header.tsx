@@ -17,7 +17,6 @@ function SupportLink({ page } : { page: "mission" | "contact" }) {
 	const pathname = usePathname()
 	const active = pathname === `/${page}`
 
-	console.log(pathname, page)
 	return (
 		<li className="relative flex flex-col items-center group">
 			<Link

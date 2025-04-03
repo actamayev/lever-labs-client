@@ -2,12 +2,7 @@
 
 import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
+import CustomTooltip from "../../../custom-tooltip"
 
 interface Props {
 	activityStatus: ProgressStatus
@@ -24,15 +19,10 @@ export default function LilypadStatusIndicatorTooltip(props: Props) {
 	}, [activityStatus])
 
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					{children}
-				</TooltipTrigger>
-				<TooltipContent side="top" className="text-gray-100 dark:text-gray-900">
-					{tooltipMessage}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+		<CustomTooltip
+			tooltipTrigger={children}
+			contentSide="top"
+			tooltipContent={tooltipMessage}
+		/>
 	)
 }

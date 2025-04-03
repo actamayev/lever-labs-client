@@ -5,13 +5,8 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Check, X } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
 import { Button } from "../shadcn/ui/button"
+import CustomTooltip from "../custom-tooltip"
 import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormField, FormItem, FormControl } from "../shadcn/ui/form"
@@ -75,27 +70,23 @@ function EnterPipID() {
 								/>
 								{showStatus && (
 									<div className="absolute inset-y-0 right-3 flex items-center">
-										<TooltipProvider delayDuration={0}>
-											<Tooltip>
-												<TooltipTrigger asChild>
-													<Button
-														type="button"
-														variant="ghost"
-														size="sm"
-														className="h-auto p-1.5 hover:bg-polar"
-													>
-														{(pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
-															<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
-														) : (
-															<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
-														)}
-													</Button>
-												</TooltipTrigger>
-												<TooltipContent>
-													{tooltipMessage(pipUUIDValid)}
-												</TooltipContent>
-											</Tooltip>
-										</TooltipProvider>
+										<CustomTooltip
+											tooltipTrigger={
+												<Button
+													type="button"
+													variant="ghost"
+													size="sm"
+													className="h-auto p-1.5 hover:bg-polar"
+												>
+													{(pipUUIDValid && addPipClass.store.addingNewPipRequirements.doesPipUUIDExist) ? (
+														<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
+													) : (
+														<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
+													)}
+												</Button>
+											}
+											tooltipContent={tooltipMessage(pipUUIDValid)}
+										/>
 									</div>
 								)}
 							</div>

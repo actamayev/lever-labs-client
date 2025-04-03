@@ -6,15 +6,10 @@ import { Check, X } from "lucide-react"
 import { useCallback, useMemo } from "react"
 import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
+import CustomTooltip from "../custom-tooltip"
+import CharacterCounter from "../character-counter"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
-import CharacterCounter from "../character-counter"
 
 function EnterPipName() {
 	const addPipClass = useAddPipContext()
@@ -74,27 +69,23 @@ function EnterPipName() {
 							/>
 							{!isDisabled && (
 								<div className="absolute inset-y-0 right-2 flex items-center">
-									<TooltipProvider delayDuration={0}>
-										<Tooltip>
-											<TooltipTrigger asChild>
-												<Button
-													type="button"
-													variant="ghost"
-													size="sm"
-													className="h-auto p-1.5 hover:bg-polar"
-												>
-													{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
-														<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
-													) : (
-														<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
-													)}
-												</Button>
-											</TooltipTrigger>
-											<TooltipContent>
-												{tooltipMessage()}
-											</TooltipContent>
-										</Tooltip>
-									</TooltipProvider>
+									<CustomTooltip
+										tooltipTrigger={
+											<Button
+												type="button"
+												variant="ghost"
+												size="sm"
+												className="h-auto p-1.5 hover:bg-polar"
+											>
+												{(field.value && field.value.length >= 3 && field.value.length <= 20) ? (
+													<Check className="!h-7 !w-7 text-green-700 dark:text-green-500" />
+												) : (
+													<X className="!h-7 !w-7 text-cardinal dark:text-cardinal" />
+												)}
+											</Button>
+										}
+										tooltipContent={tooltipMessage()}
+									/>
 								</div>
 							)}
 						</div>

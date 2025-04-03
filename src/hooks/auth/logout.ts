@@ -6,6 +6,7 @@ import { usePipContext } from "../../contexts/pip-context"
 import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
@@ -25,6 +26,7 @@ export default function useLogout(): () => void {
 	const pageTransitionClass = usePageTransitionContext()
 	const activityProgressClass = useActivityProgressContext()
 	const workbenchClass = useWorkbenchContext()
+	const sandboxClass = useSandboxContext()
 
 	return useCallback((): void => {
 		personalInfoClass.logout()
@@ -38,7 +40,8 @@ export default function useLogout(): () => void {
 		pageTransitionClass.logout()
 		activityProgressClass.logout()
 		workbenchClass.logout()
+		sandboxClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass,
+	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass, sandboxClass,
 		socketClass, authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, navigate])
 }

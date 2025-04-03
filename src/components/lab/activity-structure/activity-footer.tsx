@@ -3,14 +3,9 @@
 import { useCallback } from "react"
 import toUpper from "lodash-es/toUpper"
 import { ArrowRight } from "lucide-react"
+import CustomTooltip from "../../custom-tooltip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
 
 interface Props {
@@ -50,22 +45,19 @@ export default function ActivityFooter(props: Props) {
 					<ArrowRight className="!h-6 !w-6" />
 				</BlueTactileButton>
 			) : (
-				<TooltipProvider delayDuration={0}>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<BlueTactileButton
-								onClick={goToNextPage}
-								className="!text-xl h-12"
-							>
+				<CustomTooltip
+					tooltipTrigger={
+						<BlueTactileButton
+							onClick={goToNextPage}
+							className="!text-xl h-12"
+						>
 								UP NEXT: {toUpper(nextPageActivity)}
-								<ArrowRight className="!h-6 !w-6" />
-							</BlueTactileButton>
-						</TooltipTrigger>
-						<TooltipContent side="top" className="text-gray-100 dark:text-gray-900">
-							{nextPageTooltip}
-						</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
+							<ArrowRight className="!h-6 !w-6" />
+						</BlueTactileButton>
+					}
+					tooltipContent={nextPageTooltip}
+					contentSide="top"
+				/>
 			)}
 		</footer>
 	)

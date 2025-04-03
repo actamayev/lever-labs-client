@@ -8,7 +8,7 @@ export const motorsCategoryColour: BlocklyCategoryColours = 120
 export const pipCategoryColour: BlocklyCategoryColours = 218
 
 export const PrivatePageNames: PageNames[] = [
-	// "/garage",
+	"/garage",
 	"/lab",
 	"/lab/welcome",
 	"/add-pip",
@@ -22,7 +22,7 @@ export const staticPages = [
 	"/login",
 	"/register",
 	"/register-username",
-	// "/garage",
+	"/garage",
 	"/add-pip",
 	"/sandbox",
 	// "/settings",

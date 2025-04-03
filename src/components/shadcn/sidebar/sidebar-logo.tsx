@@ -1,11 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import Image from "next/image"
-import Link from "next/link"
 
 export default function SidebarLogo() {
 	return (
@@ -13,18 +12,15 @@ export default function SidebarLogo() {
 			<SidebarMenuItem className="flex justify-start">
 				<Link
 					href="/career-quest"
-					className="flex !h-16 !w-16 !min-w-[64px] items-center
-						justify-center rounded-lg group-data-[collapsible=icon]:!h-16 group-data-[collapsible=icon]:!w-16"
+					className="flex items-center justify-start rounded-lg mt-1"
 				>
-					<div className="flex aspect-square !h-16 !w-16 items-center justify-center">
-						<Image
-							src="/favicon.svg"
-							alt="Logo"
-							className="!h-16 !w-16"
-							loading="lazy"
-							width={32}
-							height={32}
-						/>
+					<div className="flex aspect-square items-start justify-start">
+						<div className="flex">
+							<div
+								className="size-14 rounded-full"
+								style={{ backgroundColor: "rgb(0,61,165)" }}
+							/>
+						</div>
 					</div>
 				</Link>
 			</SidebarMenuItem>

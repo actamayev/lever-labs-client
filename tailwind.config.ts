@@ -43,7 +43,6 @@ module.exports = {
 
 				sandboxIconColor: "rgb(255, 112, 0)",
 				labIconColor: "rgb(12, 175, 12)",
-				careerQuestIconColor: "rgb(155, 0, 100)",
 
 				landingOuterBorder: "rgb(var(--landing-outer-border))",
 				landingDottedLine: "rgb(var(--landing-dotted-line))",
@@ -61,6 +60,8 @@ module.exports = {
 				beetle: "rgb(var(--beetle))",
 				wolf: "rgb(var(--wolf))",
 				polar: "rgb(var(--polar))",
+				humpback: "rgb(var(--humpback))",
+				beakInner: "rgb(var(--beakInner))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -208,7 +209,7 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle", "wolf", "polar"]
+	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle", "wolf", "polar", "humpback", "beakInner"]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))

@@ -3,6 +3,7 @@ import PipProvider from "../src/contexts/pip-context"
 import AuthProvider from "../src/contexts/auth-context"
 import SocketProvider from "../src/contexts/socket-context"
 import AddPipProvider from "../src/contexts/add-pip-context"
+import SandboxProvider from "../src/contexts/sandbox-context"
 import LabDemoProvider from "../src/contexts/lab-demo-context"
 import WorkbenchProvider from "../src/contexts/workbench-context"
 import LabReadingProvider from "../src/contexts/lab-reading-context"
@@ -24,9 +25,11 @@ export default function ContextLevelComponent ({ children } : { children: React.
 										<LabReadingProvider>
 											<ActivityProgressProvider>
 												<LabDemoProvider>
-													<WorkbenchProvider>
-														{children}
-													</WorkbenchProvider>
+													<SandboxProvider>
+														<WorkbenchProvider>
+															{children}
+														</WorkbenchProvider>
+													</SandboxProvider>
 												</LabDemoProvider>
 											</ActivityProgressProvider>
 										</LabReadingProvider>

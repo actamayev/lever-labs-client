@@ -3,13 +3,8 @@
 import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-	TooltipProvider
-} from "@/components/shadcn/ui/tooltip"
 import { cn } from "../../../../lib/shadcn/utils"
+import CustomTooltip from "../../../custom-tooltip"
 import { usePipContext } from "../../../../contexts/pip-context"
 
 function PipStatusTooltip() {
@@ -40,22 +35,19 @@ function PipStatusTooltip() {
 	}, [pipClass.selectedPip?.pipConnectionStatus])
 
 	return (
-		<TooltipProvider delayDuration={0}>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<div
-						className={cn(
-							"absolute !h-[14px] !w-[14px] rounded-full bg-background",
-							getStatusColor
-						)}
-						style={{ right: "2px", top: "3px" }}
-					/>
-				</TooltipTrigger>
-				<TooltipContent side="right" className="text-standardBackground">
-					{getStatusMessage}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+		<CustomTooltip
+			tooltipTrigger={
+				<div
+					className={cn(
+						"absolute !h-[14px] !w-[14px] rounded-full bg-background",
+						getStatusColor
+					)}
+					style={{ right: "2px", top: "3px" }}
+				/>
+			}
+			contentSide="right"
+			tooltipContent={getStatusMessage}
+		/>
 	)
 }
 

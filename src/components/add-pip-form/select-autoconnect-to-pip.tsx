@@ -4,14 +4,9 @@ import { Info } from "lucide-react"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/shadcn/ui/tooltip"
 import CustomSwitch from "../custom-switch"
 import { Button } from "../shadcn/ui/button"
+import CustomTooltip from "../custom-tooltip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
@@ -45,23 +40,19 @@ function SelectAutoreconnectToPip() {
 							<div className="flex items-center font-semibold text-3xl">
 								<p>Auto-connect</p>
 							</div>
-							<TooltipProvider delayDuration={0}>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<Button
-											type="button"
-											variant="ghost"
-											size="sm"
-											className="h-auto p-1 hover:bg-polar flex items-center"
-										>
-											<Info style={{ width: "25px", height: "25px" }}/>
-										</Button>
-									</TooltipTrigger>
-									<TooltipContent>
-										This Pip is currently online. Auto-connect will connect you to this Pip
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
+							<CustomTooltip
+								tooltipTrigger={
+									<Button
+										type="button"
+										variant="ghost"
+										size="sm"
+										className="h-auto p-1 hover:bg-polar flex items-center"
+									>
+										<Info style={{ width: "25px", height: "25px" }}/>
+									</Button>
+								}
+								tooltipContent="This Pip is currently online. Auto-connect will connect you to this Pip"
+							/>
 						</div>
 						<FormControl className="flex items-center">
 							<CustomSwitch
