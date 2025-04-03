@@ -90,7 +90,7 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 							</button>
 						</TooltipTrigger>
 						<TooltipContent>
-							{sandboxClass.showCode ? "COLLAPSE CODE PANEL" : "OPEN CODE PANEL"}
+							{sandboxClass.showCode ? "CLOSE CODE PANEL" : "OPEN CODE PANEL"}
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
