@@ -11,7 +11,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 	return (
 		<div
 			key={project.projectUUID}
-			className="border-2 rounded-md p-4 hover:shadow-md cursor-pointer transition-shadow"
+			className="border-2 rounded-md p-4 hover:shadow-md cursor-pointer transition-shadow border-swan"
 			onClick={() => handleProjectClick(project.projectUUID)}
 			onDoubleClick={() => handleProjectClick(project.projectUUID)}
 		>
