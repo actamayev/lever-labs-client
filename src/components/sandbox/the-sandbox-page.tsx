@@ -3,13 +3,14 @@
 import { observer } from "mobx-react"
 import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
-import { Folder, PlusCircle, Star } from "lucide-react"
+import { Folder, PlusCircle, Star, Search, X as ClearIcon } from "lucide-react"
 import SingleProjectCard from "./single-project-card"
 import { BlueTactileButton } from "../buttons/tactile-buttons"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
+import { Input } from "../shadcn/ui/input"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -18,6 +19,7 @@ function TheSandboxPage() {
 	const sandboxClass = useSandboxContext()
 	const createSandboxProject = useCreateSandboxProject()
 	const [isCreating, setIsCreating] = useState(false)
+	const [searchQuery, setSearchQuery] = useState("")
 
 	// Handle create new project
 	const handleCreateProject = useCallback(async () => {
@@ -31,19 +33,59 @@ function TheSandboxPage() {
 		}
 	}, [createSandboxProject, navigate])
 
-	// Filter starred projects
-	const starredProjects = Array.from(sandboxClass.sandboxProjects.values())
-		.filter(project => project.isStarred)
+	// Filter projects based on search query
+	const filterProjects = useCallback((projects: SandboxProject[]) => {
+		if (!searchQuery.trim()) return projects
 
-	// Get all projects
+		return projects.filter(project =>
+			project.projectName?.toLowerCase().includes(searchQuery.toLowerCase()) || false
+		)
+	}, [searchQuery])
+
+	// Get all projects and sort by updated date
 	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
 		.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
+	// Filter all projects based on search query
+	const filteredAllProjects = filterProjects(allProjects)
+
+	// Filter starred projects
+	const starredProjects = allProjects.filter(project => project.isStarred)
+
+	// Filter starred projects based on search query
+	const filteredStarredProjects = filterProjects(starredProjects)
+
+	// Handle search clear
+	const handleClearSearch = useCallback(() => {
+		setSearchQuery("")
+	}, [])
+
 	return (
-		<div className="h-screen overflow-y-auto relative p-6">
-			{/* Header with New Project button */}
+		<div className="h-screen overflow-y-auto relative py-3 px-8">
+			{/* Search bar replacing the title */}
 			<div className="flex flex-col justify-center mb-6 items-start">
-				<h1 className="text-2xl font-bold">Sandbox</h1>
+				<div className="relative w-full">
+					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+						<Search className="h-5 w-5 text-gray-500" />
+					</div>
+					<Input
+						type="text"
+						className="block w-1/2 pl-10 pr-10 py-2 !text-2xl border border-wolf
+						h-12 rounded-2xl focus:ring-0"
+						placeholder="Search projects..."
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
+					/>
+					{searchQuery && (
+						<button
+							className="absolute inset-y-0 right-0 flex items-center pr-3"
+							onClick={handleClearSearch}
+							aria-label="Clear search"
+						>
+							<ClearIcon className="h-5 w-5 text-gray-500 hover:text-gray-700" />
+						</button>
+					)}
+				</div>
 			</div>
 			<BlueTactileButton
 				className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
@@ -58,7 +100,7 @@ function TheSandboxPage() {
 			</BlueTactileButton>
 
 			{/* Starred Projects Section */}
-			{starredProjects.length > 0 && (
+			{filteredStarredProjects.length > 0 && (
 				<div className="mb-8">
 					<div className="flex flex-row space-x-2 mb-4 items-center">
 						<Star
@@ -68,7 +110,7 @@ function TheSandboxPage() {
 						<h2 className="text-3xl font-semibold">Starred Projects</h2>
 					</div>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{starredProjects.map(project => (
+						{filteredStarredProjects.map(project => (
 							<SingleProjectCard key={project.projectUUID} project={project} />
 						))}
 					</div>
@@ -82,24 +124,33 @@ function TheSandboxPage() {
 						className="fill-fox text-fox"
 					/>
 					<h2 className="text-3xl font-semibold">All Projects</h2>
+					{searchQuery && <span className="ml-2 text-gray-500">
+						({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
+					</span>}
 				</div>
-				{allProjects.length > 0 ? (
+				{filteredAllProjects.length > 0 ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{allProjects.map(project => (
+						{filteredAllProjects.map(project => (
 							<SingleProjectCard key={project.projectUUID} project={project} />
 						))}
 					</div>
 				) : (
 					!sandboxClass.isRetrievingAllSandboxProjects && (
 						<div className="text-center py-12">
-							<p className="text-hare mb-4">You don't have any projects yet</p>
-							<button
-								className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-								onClick={handleCreateProject}
-								disabled={isCreating}
-							>
-								Create your first project
-							</button>
+							{searchQuery ? (
+								<p className="text-hare mb-4">No projects match your search</p>
+							) : (
+								<>
+									<p className="text-hare mb-4">You don't have any projects yet</p>
+									<button
+										className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+										onClick={handleCreateProject}
+										disabled={isCreating}
+									>
+										Create your first project
+									</button>
+								</>
+							)}
 						</div>
 					)
 				)}
