@@ -15,7 +15,7 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 			onClick={() => handleProjectClick(project.projectUUID)}
 			onDoubleClick={() => handleProjectClick(project.projectUUID)}
 		>
-			<div className="font-medium truncate">
+			<div className="font-medium truncate text-2xl">
 				{project.projectName || "Untitled Project"}
 			</div>
 			<div className="text-sm text-hare mt-2">
