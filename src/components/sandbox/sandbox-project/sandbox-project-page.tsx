@@ -22,15 +22,15 @@ const BlocklyComponent = lazy(() => import("../blockly-component"))
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage() {
 	const params = useParams()
-	const navigate = useTypedNavigate()
 	const projectUUID = params.projectUUID as ProjectUUID
-	const sandboxClass = useSandboxContext()
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
-	const [cppCode, setCppCode] = useState("")
-	const editSandboxProject = useEditSandboxProject()
+	const navigate = useTypedNavigate()
+	const sandboxClass = useSandboxContext()
 	const pipClass = usePipContext()
-	const sendCppToPip = useSendCppToPip()
 	const personalInfoClass = usePersonalInfoContext()
+	const [cppCode, setCppCode] = useState("")
+	const sendCppToPip = useSendCppToPip()
+	const editSandboxProject = useEditSandboxProject()
 
 	// Create debounced save function - 1 second delay
 	const debouncedSaveProject = useRef(

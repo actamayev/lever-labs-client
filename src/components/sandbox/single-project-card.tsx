@@ -1,11 +1,6 @@
-import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
+import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"
-import { cn } from "../../lib/shadcn/utils"
-import { Button } from "../shadcn/ui/button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
-import useDeleteSandboxProject from "../../hooks/sandbox/delete-sandbox-project"
-import useEditSandboxProjectName from "../../hooks/sandbox/edit-sandbox-project-name"
+import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -21,7 +16,12 @@ import {
 	DialogClose
 } from "../shadcn/ui/dialog"
 import { Input } from "../shadcn/ui/input"
-import { truncate } from "lodash-es"
+import { cn } from "../../lib/shadcn/utils"
+import { Button } from "../shadcn/ui/button"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
+import useDeleteSandboxProject from "../../hooks/sandbox/delete-sandbox-project"
+import useEditSandboxProjectName from "../../hooks/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function
 export default function SingleProjectCard({ project } : { project: SandboxProject }) {
