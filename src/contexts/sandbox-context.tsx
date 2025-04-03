@@ -39,7 +39,6 @@ class SandboxClass {
 		return this.retrievingSingleProjects.get(projectUUID) || false
 	}
 
-	// New method to toggle or set code visibility
 	public setShowCode = action((show: boolean): void => {
 		this.showCode = show
 	})
@@ -50,10 +49,19 @@ class SandboxClass {
 		project.isStarred = !project.isStarred
 	})
 
-	public updateProjectName = action((projectUUID: ProjectUUID, newProjectName: string): void => {
+	public updateProjectName = action((projectUUID: ProjectUUID, newName: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
-		project.projectName = newProjectName
+
+		project.projectName = newName
+	})
+
+	// Method to update project XML in the store
+	public updateProjectXml = action((projectUUID: ProjectUUID, newXml: string): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		project.sandboxXml = newXml
 	})
 
 	public logout() {

@@ -41,7 +41,7 @@ export default class SandboxhDataService {
 
 	async starSandboxProject(projectUUID: ProjectUUID, starStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/star-sandbox-project-name/${projectUUID}`, { starStatus }
+			`${this.pathHeader}/star-sandbox-project/${projectUUID}`, { starStatus }
 		)
 	}
 }

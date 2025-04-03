@@ -41,11 +41,11 @@ export default function LabCodeMainContent(props: Props) {
 			<div className="w-3/5 flex flex-col m-4 min-h-0">
 				<div className="flex-1 min-h-0">
 					<Suspense>
-						<BlocklyComponent
+						{/* <BlocklyComponent
 							toolboxConfig={toolboxConfig}
 							setCppCode={setCppCode}
 							extraClasses="h-full"
-						/>
+						/> */}
 					</Suspense>
 				</div>
 

@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
@@ -15,7 +15,8 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
-	initialXml?: string
+	initialXml: string
+	onXmlChange: (xml: string) => void
 }
 
 function BlocklyComponent(props: Props) {
@@ -23,9 +24,9 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		setCppCode,
 		extraClasses = "h-1/2",
-		initialXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
+		initialXml,
+		onXmlChange
 	} = props
-	const [blocklyXml, setBlocklyXml] = useState(initialXml)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const isDarkMode = defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -55,8 +56,7 @@ function BlocklyComponent(props: Props) {
 		)
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 
-		console.log(newXml)
-		setBlocklyXml(newXml)
+		onXmlChange(newXml)
 		setCppCode(cppCode)
 
 		// Center workspace only on first render
@@ -64,7 +64,7 @@ function BlocklyComponent(props: Props) {
 			centerWorkspace(workspace)
 			isFirstRender.current = false
 		}
-	}, [setCppCode, centerWorkspace])
+	}, [setCppCode, centerWorkspace, onXmlChange])
 
 	useEffect(() => {
 		if (!containerRef.current) return
@@ -114,7 +114,7 @@ function BlocklyComponent(props: Props) {
 		>
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}
-				initialXml={blocklyXml}
+				initialXml={initialXml}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}
