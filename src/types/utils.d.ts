@@ -17,7 +17,7 @@ declare global {
 	type PipUUID = string & { readonly __brand: unique symbol }
 
 	interface SidebarNavData {
-		title: "Sandbox" | "Career Quest" | "Lab"
+		title: "Sandbox" | "Career Quest" | "Lab" | "Garage"
 		url: PageNames
 		icon: LucideIcon
 		textColor: string

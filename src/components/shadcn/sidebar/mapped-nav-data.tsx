@@ -9,19 +9,20 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import CustomSidebarButton from "./custom-sidebar-button"
-import { CustomBeaker } from "../../icons/custom-beaker"
-import { CustomSandbox } from "../../icons/custom-sandbox"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import { cn } from "../../../lib/shadcn/utils"
+import { CustomBeaker } from "../../icons/custom-beaker"
+import { CustomGarage } from "../../icons/custom-garage"
+import CustomSidebarButton from "./custom-sidebar-button"
+import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 const navData: SidebarNavData[] = [
 	{
 		title: "Career Quest",
 		url: "/career-quest",
 		icon: CustomBriefcase,
-		textColor: "text-careerQuestIconColor"
+		textColor: "text-beakInner"
 	},
 	{
 		title: "Lab",
@@ -34,7 +35,13 @@ const navData: SidebarNavData[] = [
 		url: "/sandbox",
 		icon: CustomSandbox,
 		textColor: "text-sandboxIconColor"
-	}
+	},
+	{
+		title: "Garage",
+		url: "/garage",
+		icon: CustomGarage,
+		textColor: "text-humpback"
+	},
 ]
 
 export default function MappedNavData() {
