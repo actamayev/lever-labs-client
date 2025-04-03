@@ -1,3 +1,4 @@
+import { observer } from "mobx-react"
 import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"
 import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
@@ -15,7 +16,7 @@ import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import useDeleteSandboxProject from "../../../hooks/sandbox/delete-sandbox-project"
 
 // eslint-disable-next-line max-lines-per-function
-export default function SingleProjectCard({ project } : { project: SandboxProject }) {
+function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const navigate = useTypedNavigate()
 	const deleteSandboxProject = useDeleteSandboxProject()
 	const starSandboxProject = useStarSandboxProject()
@@ -140,3 +141,5 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 		</>
 	)
 }
+
+export default observer(SingleProjectCard)
