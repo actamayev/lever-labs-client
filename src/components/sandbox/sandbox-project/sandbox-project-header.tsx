@@ -71,7 +71,7 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 							<NotebookPen size={30} />
 						</button>
 					}
-					tooltipContent={personalInfoClass.sandboxNotesOpen ? "CLOSE CODE PANEL" : "OPEN CODE PANEL"}
+					tooltipContent={personalInfoClass.sandboxNotesOpen ? "CLOSE SIDE PANEL" : "OPEN SIDE PANEL"}
 				/>
 			</div>
 		</div>

@@ -3,15 +3,14 @@
 import { observer } from "mobx-react"
 import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
-import { Folder, PlusCircle, Star, Search, X as ClearIcon } from "lucide-react"
+import { Folder, PlusCircle, Star, Search } from "lucide-react"
+import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
-import { Input } from "../../shadcn/ui/input"
-import { Button } from "../../shadcn/ui/button"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -56,11 +55,6 @@ function TheSandboxPage() {
 	// Filter starred projects based on search query
 	const filteredStarredProjects = filterProjects(starredProjects)
 
-	// Handle search clear
-	const handleClearSearch = useCallback(() => {
-		setSearchQuery("")
-	}, [])
-
 	return (
 		<div className="h-screen overflow-y-auto relative">
 			{/* Fixed search bar */}
@@ -77,17 +71,6 @@ function TheSandboxPage() {
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
-					{searchQuery && (
-						<Button
-							className="absolute inset-y-0 right-1/2 transform -translate-x-6
-							flex items-center hover:bg-standardBackgroundHover"
-							onClick={handleClearSearch}
-							aria-label="Clear search"
-							variant="ghost"
-						>
-							<ClearIcon className="h-5 w-5 text-wolf" />
-						</Button>
-					)}
 				</div>
 			</div>
 
