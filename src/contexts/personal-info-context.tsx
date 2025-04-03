@@ -11,6 +11,7 @@ class PersonalInfoClass {
 	public isRetrievingPersonalInfo = false
 	public retrievedPeronsalInfo = false
 	public defaultSiteTheme: SiteThemes = "light"
+	public sandboxNotesOpen: boolean = false
 	public profilePictureUrl: string | null = null
 
 	constructor() {
@@ -38,6 +39,7 @@ class PersonalInfoClass {
 	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
 		this.username = retrievedData.username
 		this.email = retrievedData.email
+		this.setSandboxNotesOpen(retrievedData.sandboxNotesOpen)
 		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
 	})
@@ -54,6 +56,10 @@ class PersonalInfoClass {
 		this.profilePictureUrl = newProfilePictureUrl
 	})
 
+	public setSandboxNotesOpen = action((newSandboxNotesOpen: boolean): void => {
+		this.sandboxNotesOpen = newSandboxNotesOpen
+	})
+
 	public setUsername = action((newUsername: string): void => {
 		this.username = newUsername
 	})
@@ -65,6 +71,7 @@ class PersonalInfoClass {
 		this.setRetrievedPersonalInfo(false)
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("light")
+		this.setSandboxNotesOpen(false)
 	}
 }
 

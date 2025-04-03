@@ -6,24 +6,21 @@ import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import EditableProjectTitle from "./editable-project-title"
-import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
+import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
 
 function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 	const navigate = useTypedNavigate()
-	const sandboxClass = useSandboxContext()
 	const starSandboxProject = useStarSandboxProject()
+	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
+	const personalInfoClass = usePersonalInfoContext()
 
 	// Handle navigation back to projects list
 	const handleBack = useCallback(() => {
 		navigate("/sandbox")
 	}, [navigate])
-
-	// Toggle code visibility
-	const toggleCodeVisibility = useCallback(() => {
-		sandboxClass.setShowCode(!sandboxClass.showCode)
-	}, [sandboxClass])
 
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan">
@@ -63,18 +60,18 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 				<CustomTooltip
 					tooltipTrigger={
 						<button
-							onClick={toggleCodeVisibility}
+							onClick={setSandboxNotesOpenStatus}
 							className={`p-2 rounded-md transition-none ${
-								sandboxClass.showCode
+								personalInfoClass.sandboxNotesOpen
 									? "bg-standardBackgroundHover text-macaw"
 									: "text-questionText hover:bg-polar"
 							}`}
-							title={sandboxClass.showCode ? "Hide Code" : "Show Code"}
+							title={personalInfoClass.sandboxNotesOpen ? "Hide Code" : "Show Code"}
 						>
 							<NotebookPen size={30} />
 						</button>
 					}
-					tooltipContent={sandboxClass.showCode ? "CLOSE CODE PANEL" : "OPEN CODE PANEL"}
+					tooltipContent={personalInfoClass.sandboxNotesOpen ? "CLOSE CODE PANEL" : "OPEN CODE PANEL"}
 				/>
 			</div>
 		</div>

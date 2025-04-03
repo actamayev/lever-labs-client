@@ -9,7 +9,6 @@ class SandboxClass {
 	public hasRetrievedAllSandboxProjects = false
 	public sandboxProjects: Map<ProjectUUID, SandboxProject> = new Map()
 	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map()
-	public showCode = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -38,10 +37,6 @@ class SandboxClass {
 	public isRetrievingSingleProject = (projectUUID: ProjectUUID): boolean => {
 		return this.retrievingSingleProjects.get(projectUUID) || false
 	}
-
-	public setShowCode = action((show: boolean): void => {
-		this.showCode = show
-	})
 
 	public updateStarStatus = action((projectUUID: ProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
@@ -80,7 +75,6 @@ class SandboxClass {
 		this.setHasRetrievedAllSandboxProjects(false)
 		this.sandboxProjects = new Map()
 		this.retrievingSingleProjects = new Map()
-		this.setShowCode(false)
 	}
 }
 

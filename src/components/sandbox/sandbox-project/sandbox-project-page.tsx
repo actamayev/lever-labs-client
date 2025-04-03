@@ -15,6 +15,7 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -29,6 +30,7 @@ function SandboxProjectPage() {
 	const editSandboxProject = useEditSandboxProject()
 	const pipClass = usePipContext()
 	const sendCppToPip = useSendCppToPip()
+	const personalInfoClass = usePersonalInfoContext()
 
 	// Create debounced save function - 1 second delay
 	const debouncedSaveProject = useRef(
@@ -111,7 +113,7 @@ function SandboxProjectPage() {
 					<div
 						className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
 						style={{
-							width: sandboxClass.showCode ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
+							width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
 						}}
 					>
 						<div className="flex-1 min-h-0">
@@ -138,15 +140,15 @@ function SandboxProjectPage() {
 					<div
 						className="flex flex-col min-h-0 overflow-hidden transition-all duration-300 ease-in-out border-swan"
 						style={{
-							width: sandboxClass.showCode ? "calc(40% - 1rem)" : "0",
-							borderLeftWidth: sandboxClass.showCode ? "2px" : "0",
-							opacity: sandboxClass.showCode ? 1 : 0,
-							padding: sandboxClass.showCode ? "1rem" : "0",
-							margin: sandboxClass.showCode ? "0 1rem 0" : "0",
-							visibility: sandboxClass.showCode ? "visible" : "hidden"
+							width: personalInfoClass.sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
+							borderLeftWidth: personalInfoClass.sandboxNotesOpen ? "2px" : "0",
+							opacity: personalInfoClass.sandboxNotesOpen ? 1 : 0,
+							padding: personalInfoClass.sandboxNotesOpen ? "1rem" : "0",
+							margin: personalInfoClass.sandboxNotesOpen ? "0 1rem 0" : "0",
+							visibility: personalInfoClass.sandboxNotesOpen ? "visible" : "hidden"
 						}}
 					>
-						{sandboxClass.showCode && (
+						{personalInfoClass.sandboxNotesOpen && (
 							<ProjectTabs
 								project={project}
 								cppCode={cppCode}

@@ -32,6 +32,7 @@ declare global {
 		email: string | null
 		defaultSiteTheme: SiteThemes
 		profilePictureUrl: string | null
+		sandboxNotesOpen: boolean
 	}
 
 	// Pip Responses

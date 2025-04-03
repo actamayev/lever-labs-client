@@ -20,4 +20,10 @@ export default class PersonalInfoDataService {
 			`${this.pathHeader}/set-default-site-theme/${newSiteTheme}`
 		)
 	}
+
+	async setSandboxNotesOpenStatus(newSandboxNotesStatus: boolean): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			`${this.pathHeader}/set-sandbox-notes-open-status/${newSandboxNotesStatus}`
+		)
+	}
 }
