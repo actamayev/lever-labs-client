@@ -9,7 +9,7 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useStarSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
+export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
 	const sandboxClass = useSandboxContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
@@ -20,19 +20,16 @@ export default function useStarSandboxProject(): (projectUUID: ProjectUUID) => P
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
 			if (isUndefined(project)) return
 
-			const starSandboxProjectResponse = await blueDotApiClient.sandboxDataService.starSandboxProject(
-				project.projectUUID,
-				!project.isStarred
-			)
-			if (!isEqual(starSandboxProjectResponse.status, 200) || isNonSuccessResponse(starSandboxProjectResponse.data)) {
-				throw Error ("Unable to star sandbox project")
+			const deleteSandboxProjectResponse = await blueDotApiClient.sandboxDataService.deleteSandboxProject(project.projectUUID)
+			if (!isEqual(deleteSandboxProjectResponse.status, 200) || isNonSuccessResponse(deleteSandboxProjectResponse.data)) {
+				throw Error ("Unable to delete sandbox project")
 			}
 
-			sandboxClass.updateStarStatus(projectUUID)
+			sandboxClass.deleteSandboxProject(projectUUID)
 		} catch (error) {
 			console.error(error)
 			toast.negative({
-				title: "Unable to star sandbox project",
+				title: "Unable to delete sandbox project",
 				description: "Please reload the page and try again"
 			})
 		}

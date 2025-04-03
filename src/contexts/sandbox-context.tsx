@@ -64,6 +64,10 @@ class SandboxClass {
 		project.sandboxXml = newXml
 	})
 
+	public deleteSandboxProject = action((projectUUID: ProjectUUID): void => {
+		this.sandboxProjects.delete(projectUUID)
+	})
+
 	public logout() {
 		this.setIsRetrievingAllSandboxProjects(false)
 		this.setHasRetrievedAllSandboxProjects(false)

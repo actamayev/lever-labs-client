@@ -44,4 +44,10 @@ export default class SandboxhDataService {
 			`${this.pathHeader}/star-sandbox-project/${projectUUID}`, { starStatus }
 		)
 	}
+
+	async deleteSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/delete-sandbox-project/${projectUUID}`
+		)
+	}
 }
