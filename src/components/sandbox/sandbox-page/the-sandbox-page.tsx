@@ -5,13 +5,13 @@ import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
 import { Folder, PlusCircle, Star, Search, X as ClearIcon } from "lucide-react"
 import SingleProjectCard from "./single-project-card"
-import { BlueTactileButton } from "../buttons/tactile-buttons"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useCreateSandboxProject from "../../hooks/sandbox/create-sandbox-project"
-import useRetrieveAllSandboxProjectsUseEffect from "../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
+import { useSandboxContext } from "../../../contexts/sandbox-context"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
+import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
+import { Input } from "../../shadcn/ui/input"
+import { Button } from "../../shadcn/ui/button"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -39,7 +39,7 @@ function TheSandboxPage() {
 		if (!searchQuery.trim()) return projects
 
 		return projects.filter(project =>
-			project.projectName?.toLowerCase().includes(searchQuery.toLowerCase()) || false
+			project.projectName?.toLowerCase().includes(searchQuery.toLowerCase())
 		)
 	}, [searchQuery])
 

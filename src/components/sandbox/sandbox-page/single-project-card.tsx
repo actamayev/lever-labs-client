@@ -6,29 +6,19 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuItem,
 	DropdownMenuContent
-} from "../shadcn/ui/dropdown-menu"
-import {
-	Dialog,
-	DialogContent,
-	DialogHeader,
-	DialogTitle,
-	DialogFooter,
-	DialogClose
-} from "../shadcn/ui/dialog"
-import { Input } from "../shadcn/ui/input"
-import { cn } from "../../lib/shadcn/utils"
-import { Button } from "../shadcn/ui/button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
-import useStarSandboxProject from "../../hooks/sandbox/star-sandbox-project"
-import useDeleteSandboxProject from "../../hooks/sandbox/delete-sandbox-project"
-import useEditSandboxProjectName from "../../hooks/sandbox/edit-sandbox-project-name"
+} from "../../shadcn/ui/dropdown-menu"
+import { cn } from "../../../lib/shadcn/utils"
+import { Button } from "../../shadcn/ui/button"
+import RenameProjectDialog from "./rename-project-dialog"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
+import useDeleteSandboxProject from "../../../hooks/sandbox/delete-sandbox-project"
 
 // eslint-disable-next-line max-lines-per-function
 export default function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const navigate = useTypedNavigate()
 	const deleteSandboxProject = useDeleteSandboxProject()
 	const starSandboxProject = useStarSandboxProject()
-	const editSandboxProjectName = useEditSandboxProjectName()
 	const [isDeleteMode, setIsDeleteMode] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [newProjectName, setNewProjectName] = useState(project.projectName || "")
@@ -53,15 +43,6 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 		setNewProjectName(project.projectName || "")
 		setIsRenameDialogOpen(true)
 	}, [project.projectName])
-
-	const handleCancelRename = useCallback(() => {
-		setIsRenameDialogOpen(false)
-	}, [])
-
-	const handleSaveRename = useCallback(async () => {
-		await editSandboxProjectName(project.projectUUID, newProjectName)
-		setIsRenameDialogOpen(false)
-	}, [editSandboxProjectName, project.projectUUID, newProjectName])
 
 	const handleCancelDelete = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation()
@@ -149,34 +130,13 @@ export default function SingleProjectCard({ project } : { project: SandboxProjec
 				)}
 			</div>
 
-			<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-				<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
-					<DialogHeader>
-						<DialogTitle className="text-2xl">Rename</DialogTitle>
-						<DialogClose />
-					</DialogHeader>
-					<div>
-						<Input
-							value={newProjectName}
-							onChange={(e) => setNewProjectName(e.target.value)}
-							placeholder="Project name"
-							className="w-full !text-xl h-10"
-							onKeyDown={(e) => {
-								if (e.key === "Escape") {
-									handleCancelRename()
-								} else if (e.key === "Enter") {
-									handleSaveRename()
-								}
-							}}
-							autoFocus
-						/>
-					</div>
-					<DialogFooter className="flex justify-end gap-2">
-						<Button variant="outline" onClick={handleCancelRename}>Cancel</Button>
-						<Button onClick={handleSaveRename}>Save</Button>
-					</DialogFooter>
-				</DialogContent>
-			</Dialog>
+			<RenameProjectDialog
+				project={project}
+				isRenameDialogOpen={isRenameDialogOpen}
+				setIsRenameDialogOpen={setIsRenameDialogOpen}
+				newProjectName={newProjectName}
+				setNewProjectName={setNewProjectName}
+			/>
 		</>
 	)
 }

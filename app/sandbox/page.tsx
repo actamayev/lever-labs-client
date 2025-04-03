@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
-import TheSandboxPage from "../../src/components/sandbox/the-sandbox-page"
+import TheSandboxPage from "../../src/components/sandbox/sandbox-page/the-sandbox-page"
 
 export const metadata = createMetadata({
 	title: "Sandbox",
