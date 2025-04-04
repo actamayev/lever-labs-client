@@ -11,6 +11,7 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
+import { Separator } from "../../shadcn/ui/separator"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -103,11 +104,12 @@ function TheSandboxPage() {
 								<SingleProjectCard key={project.projectUUID} project={project} />
 							))}
 						</div>
+						<Separator className="h-0.5 mt-8 rounded-full"/>
 					</div>
 				)}
 
 				<div>
-					<div className="flex flex-row space-x-2 mb-4 items-center">
+					<div className="flex flex-row space-x-2 items-center">
 						<Folder
 							size={30}
 							className="fill-fox text-fox"

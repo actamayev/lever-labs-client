@@ -41,4 +41,22 @@ export default class PersonalInfoDataService {
 			`${this.pathHeader}/remove-current-profile-picture`
 		)
 	}
+
+	async updateName(name: string): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			`${this.pathHeader}/update-name/${name}`
+		)
+	}
+
+	async changePassword(oldPassword: string, newPassword: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/change-password`, { oldPassword, newPassword }
+		)
+	}
+
+	async updateUsername(username: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/update-username/${username}`
+		)
+	}
 }
