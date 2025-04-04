@@ -18,26 +18,36 @@ import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
 import LoadingOval from "../../loading-oval"
+import _ from "lodash"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
 	onClose: () => void
 }
 
-// eslint-disable-next-line max-lines-per-function
 function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps) {
 	const personalInfoClass = usePersonalInfoContext()
 	const fileInputRef = useRef<HTMLInputElement>(null)
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 	const [selectedImage, setSelectedImage] = useState<File | null>(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const [pendingDelete, setPendingDelete] = useState(false)
 
 	const uploadProfilePicture = useUploadProfilePicture()
 	const removeCurrentProfilePicture = useRemoveCurrentProfilePicture()
+	const [isHovered, setIsHovered] = useState(false)
+	const handleMouseEnter = useCallback(() => setIsHovered(true), [])
+	const handleMouseLeave = useCallback(() => setIsHovered(false), [])
+
+	const imageStyle = isHovered ? { opacity: 0.8 } : { opacity: 1 }
 
 	const handleOpenFileSelector = useCallback(() => {
+		// If pending delete, cancel it when selecting a new image
+		if (pendingDelete) {
+			setPendingDelete(false)
+		}
 		fileInputRef.current?.click()
-	}, [fileInputRef])
+	}, [pendingDelete, fileInputRef])
 
 	const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		const files = e.target.files
@@ -60,6 +70,8 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 		setSelectedImage(file)
 		const newPreviewUrl = URL.createObjectURL(file)
 		setPreviewUrl(newPreviewUrl)
+		// Cancel any pending delete when a new image is selected
+		setPendingDelete(false)
 
 		if (fileInputRef.current) {
 			fileInputRef.current.value = ""
@@ -69,38 +81,56 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const handleSave = useCallback(async () => {
 		if (isLoading) return
 
-		if (!selectedImage) return onClose()
-		await uploadProfilePicture(selectedImage, setIsLoading)
-
-		// Clean up the object URL to prevent memory leaks
-		if (previewUrl) {
-			URL.revokeObjectURL(previewUrl)
+		// Handle pending deletion
+		if (pendingDelete) {
+			setIsLoading(true)
+			await removeCurrentProfilePicture(setIsLoading)
+			setPendingDelete(false)
+			onClose()
+			return
 		}
 
-		setSelectedImage(null)
-		setPreviewUrl(null)
+		// Handle new image upload
+		if (selectedImage) {
+			await uploadProfilePicture(selectedImage, setIsLoading)
+
+			// Clean up the object URL to prevent memory leaks
+			if (previewUrl) {
+				URL.revokeObjectURL(previewUrl)
+			}
+
+			setSelectedImage(null)
+			setPreviewUrl(null)
+		}
+
 		onClose()
-	}, [isLoading, selectedImage, uploadProfilePicture, previewUrl, onClose])
+	}, [isLoading, pendingDelete, selectedImage, uploadProfilePicture, previewUrl, removeCurrentProfilePicture, onClose])
 
-	const handleDelete = useCallback(async () => {
-		if (isLoading) return
+	const handleDelete = useCallback(() => {
+		// If we have a preview but no saved profile picture, just clear the preview without marking for deletion
+		if (previewUrl && !personalInfoClass.profilePictureUrl) {
+			URL.revokeObjectURL(previewUrl)
+			setPreviewUrl(null)
+			setSelectedImage(null)
+			// Don't set pendingDelete since we've already cleared the preview
+			return
+		}
 
-		// If we have a preview, just clear it
+		// Otherwise mark for deletion but don't delete yet
+		setPendingDelete(true)
+
+		// If we have a preview, clear it
 		if (previewUrl) {
 			URL.revokeObjectURL(previewUrl)
 			setPreviewUrl(null)
 			setSelectedImage(null)
-			return
 		}
-
-		// Otherwise, remove the current profile picture
-		setIsLoading(true)
-		await removeCurrentProfilePicture(setIsLoading)
-		onClose()
-	}, [isLoading, previewUrl, removeCurrentProfilePicture, onClose])
+	}, [previewUrl, personalInfoClass.profilePictureUrl])
 
 	// Determine which image to show
-	const imageToShow = previewUrl || personalInfoClass.profilePictureUrl
+	const hasProfilePicture = !_.isNull(personalInfoClass.profilePictureUrl)
+	const imageToShow = previewUrl ||
+                  (pendingDelete ? null : personalInfoClass.profilePictureUrl)
 
 	return (
 		<Dialog open={isOpen} onOpenChange={(open) => {
@@ -108,9 +138,10 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 				// Clean up when dialog closes
 				if (previewUrl) {
 					URL.revokeObjectURL(previewUrl)
-					setPreviewUrl(null)
-					setSelectedImage(null)
 				}
+				setPreviewUrl(null)
+				setSelectedImage(null)
+				setPendingDelete(false)
 				onClose()
 			}
 		}}>
@@ -128,11 +159,19 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 								alt="Profile Image"
 								width={128}
 								height={128}
-								className="w-32 h-32 rounded-full object-cover"
+								className="w-32 h-32 rounded-full object-cover cursor-pointer"
+								style={imageStyle}
+								onClick={handleOpenFileSelector}
+								onMouseEnter={handleMouseEnter}
+								onMouseLeave={handleMouseLeave}
 							/>
 						) : (
 							<CustomUserCircle
-								className="w-32 h-32 rounded-full object-cover text-black dark:text-white"
+								className="w-32 h-32 rounded-full object-cover cursor-pointer text-black dark:text-white"
+								style={imageStyle}
+								onClick={handleOpenFileSelector}
+								onMouseEnter={handleMouseEnter}
+								onMouseLeave={handleMouseLeave}
 							/>
 						)}
 
@@ -156,14 +195,17 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 				</div>
 
 				<DialogFooter className="flex flex-row justify-center sm:justify-center gap-4">
-					<Button
-						variant="destructive"
-						disabled={isLoading}
-						onClick={handleDelete}
-					>
-						{isLoading ? <LoadingOval /> : <Trash2 className="mr-2 h-4 w-4" />}
-						Delete
-					</Button>
+					{/* Show delete button if there's a profile picture OR a preview image, and not already pending delete */}
+					{(hasProfilePicture || previewUrl) && !pendingDelete && (
+						<Button
+							variant="destructive"
+							disabled={isLoading}
+							onClick={handleDelete}
+						>
+							<Trash2 className="mr-2 h-4 w-4" />
+							Delete
+						</Button>
+					)}
 
 					<Button
 						variant="default"
@@ -171,7 +213,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						onClick={handleSave}
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
-						Save
+						{pendingDelete ? "Confirm Delete" : "Save"}
 					</Button>
 				</DialogFooter>
 			</DialogContent>
