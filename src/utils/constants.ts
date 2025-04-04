@@ -13,7 +13,7 @@ export const PrivatePageNames: PageNames[] = [
 	"/lab/welcome",
 	"/add-pip",
 	"/sandbox",
-	// "/settings",
+	"/profile",
 	"/career-quest"
 ]
 
@@ -25,7 +25,7 @@ export const staticPages = [
 	"/garage",
 	"/add-pip",
 	"/sandbox",
-	// "/settings",
+	"/profile",
 	"/contact",
 	"/mission",
 	"/schools",

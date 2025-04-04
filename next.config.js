@@ -2,7 +2,11 @@
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: [], // Add any image domains you need
+		domains: [
+			'blue-dot-robots-local-bucket.s3.us-east-1.amazonaws.com',
+			'blue-dot-robots-staging-bucket.s3.us-east-1.amazonaws.com',
+			'blue-dot-robots-production-bucket.s3.us-east-1.amazonaws.com'
+		]
 	},
 	webpack: (config) => {
 	// Carry over your fallbacks from craco.config.js

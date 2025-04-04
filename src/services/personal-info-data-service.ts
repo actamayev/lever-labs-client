@@ -26,4 +26,19 @@ export default class PersonalInfoDataService {
 			`${this.pathHeader}/set-sandbox-notes-open-status/${newSandboxNotesStatus}`
 		)
 	}
+
+	async uploadProfilePicture(file: File): Promise<AxiosResponse<ProfilePictureUrl | NonSuccessResponse>> {
+		const formData = new FormData()
+		formData.append("file", file, file.name)
+
+		return await this.httpClient.http.post<ProfilePictureUrl | NonSuccessResponse>(
+			`${this.pathHeader}/upload-profile-picture`, formData, { headers: { "Content-Type": file.type }}
+		)
+	}
+
+	async removeCurrentProfilePicture(): Promise<AxiosResponse<SuccessResponse | ErrorResponse>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponse>(
+			`${this.pathHeader}/remove-current-profile-picture`
+		)
+	}
 }

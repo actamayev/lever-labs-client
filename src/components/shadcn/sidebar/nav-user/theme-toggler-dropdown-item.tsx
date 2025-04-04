@@ -5,6 +5,7 @@ import { Moon, Sun } from "lucide-react"
 import { DropdownMenuItem } from "../../ui/dropdown-menu"
 import useSetDefaultSiteTheme from "../../../../hooks/personal-info/set-default-site-theme"
 
+// TODO: Remove this coponent
 function ThemeTogglerDropdownItem() {
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
 

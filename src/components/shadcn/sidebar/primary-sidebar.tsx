@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/shadcn/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
-import NavUser from "./nav-user/nav-user"
+import ProfileSidebarButton from "./profile-sidebar-button"
 import MappedNavData from "./mapped-nav-data"
 import { PrivatePageNames } from "../../../utils/constants"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
@@ -31,7 +31,7 @@ export default function PrimarySidebar() {
 
 			<SidebarFooter>
 				<AddPipSidebarButton />
-				<NavUser />
+				<ProfileSidebarButton />
 			</SidebarFooter>
 		</Sidebar>
 	)

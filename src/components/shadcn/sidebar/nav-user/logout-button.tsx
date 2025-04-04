@@ -7,6 +7,7 @@ import { DropdownMenuItem } from "../../ui/dropdown-menu"
 import useHandleLogout from "../../../../hooks/auth/handle-logout"
 import { cn } from "../../../../lib/shadcn/utils"
 
+// TODO: Delete this component
 function LogoutButton() {
 	const [logoutDisabled, setLogoutDisabled] = useState(false)
 	const handleLogout = useHandleLogout(setLogoutDisabled)
