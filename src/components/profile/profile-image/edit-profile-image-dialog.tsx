@@ -9,7 +9,8 @@ import {
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
-	DialogFooter
+	DialogFooter,
+	DialogClose
 } from "../../shadcn/ui/dialog"
 import { Button } from "../../shadcn/ui/button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
@@ -19,8 +20,8 @@ import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-
 import LoadingOval from "../../loading-oval"
 
 interface EditProfileImageDialogProps {
-  isOpen: boolean
-  onClose: () => void
+	isOpen: boolean
+	onClose: () => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -68,20 +69,17 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const handleSave = useCallback(async () => {
 		if (isLoading) return
 
-		if (selectedImage) {
-			await uploadProfilePicture(selectedImage, setIsLoading)
+		if (!selectedImage) return onClose()
+		await uploadProfilePicture(selectedImage, setIsLoading)
 
-			// Clean up the object URL to prevent memory leaks
-			if (previewUrl) {
-				URL.revokeObjectURL(previewUrl)
-			}
-
-			setSelectedImage(null)
-			setPreviewUrl(null)
-			onClose()
-		} else {
-			onClose()
+		// Clean up the object URL to prevent memory leaks
+		if (previewUrl) {
+			URL.revokeObjectURL(previewUrl)
 		}
+
+		setSelectedImage(null)
+		setPreviewUrl(null)
+		onClose()
 	}, [isLoading, selectedImage, uploadProfilePicture, previewUrl, onClose])
 
 	const handleDelete = useCallback(async () => {
@@ -119,6 +117,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle>Edit Profile Image</DialogTitle>
+					<DialogClose />
 				</DialogHeader>
 
 				<div className="flex flex-col items-center justify-center py-6">
@@ -163,7 +162,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						onClick={handleDelete}
 					>
 						{isLoading ? <LoadingOval /> : <Trash2 className="mr-2 h-4 w-4" />}
-            Delete
+						Delete
 					</Button>
 
 					<Button
@@ -172,7 +171,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						onClick={handleSave}
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
-            Save
+						Save
 					</Button>
 				</DialogFooter>
 			</DialogContent>

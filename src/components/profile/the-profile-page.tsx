@@ -85,10 +85,10 @@ function ProfilePage() {
 				<ProfileImage />
 
 				<div className="flex-1">
-					<Label htmlFor="email" className="text-sm font-medium text-eel">
-            Email
-					</Label>
-					<div id="email" className="text-lg font-medium">
+					<div className="text-2xl font-medium text-eel">
+						Email
+					</div>
+					<div className="text-lg font-medium text-wolf">
 						{personalInfoClass.email || "No email set"}
 					</div>
 				</div>
@@ -121,8 +121,8 @@ function ProfilePage() {
 
 			{/* Username Section */}
 			<div className="mb-8">
-				<Label htmlFor="username" className="text-sm font-medium text-eel mb-2 block">
-          Username
+				<Label htmlFor="username" className="text-lg font-medium text-eel mb-2 block">
+					Username
 				</Label>
 				<div className="flex items-center">
 					<Input
@@ -147,11 +147,13 @@ function ProfilePage() {
 			{/* Password Change Section */}
 			<Card className="mb-8 max-w-md">
 				<CardHeader>
-					<CardTitle>Change Password</CardTitle>
+					<CardTitle className="tex-2xl">Change Password</CardTitle>
 				</CardHeader>
 				<CardContent className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="current-password">Current Password</Label>
+						<Label htmlFor="current-password" className="text-lg font-medium text-eel mb-2 block">
+							Current Password
+						</Label>
 						<Input
 							id="current-password"
 							type="password"
@@ -160,7 +162,9 @@ function ProfilePage() {
 						/>
 					</div>
 					<div className="space-y-2">
-						<Label htmlFor="new-password">New Password</Label>
+						<Label htmlFor="new-password" className="text-lg font-medium text-eel mb-2 block">
+							New Password
+						</Label>
 						<Input
 							id="new-password"
 							type="password"
