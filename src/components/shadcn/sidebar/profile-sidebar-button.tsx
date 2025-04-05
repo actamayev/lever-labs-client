@@ -27,7 +27,7 @@ function ProfileSidebarButton() {
 					icon={(
 						<div className="relative flex items-center justify-center w-full h-full">
 							<ShowUserProfileImageOrDefaultImage
-								extraClasses="min-w-full min-h-full rounded-lg object-cover"
+								extraClasses="min-w-full min-h-full rounded-full object-cover"
 								profileImageUrl={profilePictureUrl}
 							/>
 						</div>

@@ -178,7 +178,8 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 
 						{/* Pencil icon for editing */}
 						<div
-							className="absolute top-0 right-0 bg-primary p-1 rounded-full cursor-pointer hover:bg-primary/80"
+							className="absolute top-0 right-0 bg-eel dark:bg-polar
+							p-1 rounded-full cursor-pointer hover:bg-eel/80 dark:hover:bg-polar/80"
 							onClick={handleOpenFileSelector}
 						>
 							<Pencil color="white" size={18} />

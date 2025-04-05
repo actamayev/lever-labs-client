@@ -109,7 +109,7 @@ function TheSandboxPage() {
 				)}
 
 				<div>
-					<div className="flex flex-row space-x-2 items-center">
+					<div className="flex flex-row space-x-2 items-center mb-4">
 						<Folder
 							size={30}
 							className="fill-fox text-fox"
