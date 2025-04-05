@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useRef, useCallback } from "react"
-import { observer } from "mobx-react"
 import Image from "next/image"
+import { isNull } from "lodash-es"
+import { observer } from "mobx-react"
+import { useState, useRef, useCallback } from "react"
 import { Pencil, Trash2, Save } from "lucide-react"
 import {
 	Dialog,
@@ -12,19 +13,19 @@ import {
 	DialogFooter,
 	DialogClose
 } from "../../shadcn/ui/dialog"
+import LoadingOval from "../../loading-oval"
 import { Button } from "../../shadcn/ui/button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
-import LoadingOval from "../../loading-oval"
-import _ from "lodash"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
 	onClose: () => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps) {
 	const personalInfoClass = usePersonalInfoContext()
 	const fileInputRef = useRef<HTMLInputElement>(null)
@@ -128,7 +129,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	}, [previewUrl, personalInfoClass.profilePictureUrl])
 
 	// Determine which image to show
-	const hasProfilePicture = !_.isNull(personalInfoClass.profilePictureUrl)
+	const hasProfilePicture = !isNull(personalInfoClass.profilePictureUrl)
 	const imageToShow = previewUrl ||
                   (pendingDelete ? null : personalInfoClass.profilePictureUrl)
 

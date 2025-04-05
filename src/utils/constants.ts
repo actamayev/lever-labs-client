@@ -1,5 +1,3 @@
-"use client"
-
 export const bentoIconSize = 40
 
 export const logicCategoryColour: BlocklyCategoryColours = 30
