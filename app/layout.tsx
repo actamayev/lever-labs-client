@@ -1,8 +1,9 @@
 import { Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../src/styles/index.css"
 import Providers from "./providers"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { lexend } from "../src/utils/fonts"
 
 export const viewport: Viewport = {
 	width: "device-width",
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
 	return (
-		<html lang="en">
+		<html lang="en" className={`${lexend.variable}`}>
 			<body>
 				<Providers>
 					{children}
