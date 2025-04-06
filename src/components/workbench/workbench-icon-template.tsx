@@ -14,7 +14,6 @@ export default function WorkbenchIconTemplate(props: Props) {
 
 	return (
 		<div
-			// In workbench-icon-template.tsx
 			className={cn(
 				buttonVariants({
 					variant: "ghost",
