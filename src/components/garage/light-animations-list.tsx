@@ -5,6 +5,7 @@ import { useGarageContext } from "../../contexts/garage-context"
 import { ScrollArea } from "@/components/shadcn/ui/scroll-area"
 import { Waves, Rainbow } from "lucide-react"
 import { CustomYoga } from "../icons/custom-yoga"
+import { cn } from "../../lib/shadcn/utils"
 
 // Define animation type with icon property
 type LightAnimation = "static" | "breathing" | "pulse" | "strobe" | "rainbow" | "wave"
@@ -22,7 +23,7 @@ const ANIMATIONS: Animation[] = [
 		id: "breathing",
 		name: "Breathing",
 		description: "Slowly fades in and out",
-		icon: <CustomYoga className="h-4 w-4" />
+		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 	{
 		id: "rainbow",
@@ -50,18 +51,19 @@ function LightAnimationsList() {
 						<div
 							key={animation.id}
 							onClick={() => garageClass.setSelectedAnimation(animation.id)}
-							className={`p-2 rounded-md cursor-pointer text-sm transition-colors flex items-center space-x-2 ${
+							className={cn(
+								"p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2",
 								garageClass.selectedAnimation === animation.id
-									? "bg-blue-100 border-l-4 border-blue-500"
-									: "hover:bg-polar"
-							}`}
+									? "bg-swan border-swan"
+									: "hover:bg-swan"
+							)}
 						>
-							<div className="flex-shrink-0 text-swan">
+							<div className="flex-shrink-0 !text-eel">
 								{animation.icon}
 							</div>
 							<div className="flex-grow">
-								<div className="font-medium">{animation.name}</div>
-								<div className="text-xs text-gray-500">{animation.description}</div>
+								<div className="font-medium text-questionText">{animation.name}</div>
+								<div className="text-xs text-wolf">{animation.description}</div>
 							</div>
 						</div>
 					))}

@@ -21,7 +21,7 @@ const navData: SidebarNavData[] = [
 		title: "Career Quest",
 		url: "/career-quest",
 		icon: CustomBriefcase,
-		textColor: "text-beakInner"
+		textColor: "text-bee"
 	},
 	{
 		title: "Lab",

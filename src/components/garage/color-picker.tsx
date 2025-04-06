@@ -36,7 +36,7 @@ function ColorPicker ()  {
 				<HexColorInput
 					color={color}
 					onChange={setColor}
-					className="p-1 border border-gray-300 rounded text-sm w-24 text-center"
+					className="p-1 border border-gray-300 rounded text-sm w-24 text-center bg-inherit"
 				/>
 			</div>
 
@@ -47,7 +47,7 @@ function ColorPicker ()  {
 					style={{ backgroundColor: color }}
 				/>
 				<span className="text-xs">
-          Current Color
+					Current Color
 				</span>
 			</div>
 		</div>
