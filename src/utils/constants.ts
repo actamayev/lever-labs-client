@@ -15,6 +15,12 @@ export const PrivatePageNames: PageNames[] = [
 	"/career-quest"
 ]
 
+// These are pages that you can view if you're logged in or not.
+export const OpenPages: PageNames[] = [
+	"/mission",
+	"/contact"
+]
+
 export const staticPages = [
 	"/",
 	"/login",

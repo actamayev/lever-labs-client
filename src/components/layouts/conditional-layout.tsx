@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import ClassicLayout from "./classic-layout"
 import useUsername from "../../hooks/memos/username"
 import InternalPagesLayout from "./internal-pages-layout"
-import { PrivatePageNames } from "../../utils/constants"
+import { PrivatePageNames, OpenPages } from "../../utils/constants"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const pathname = usePathname()
@@ -16,21 +16,27 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 		pathname.startsWith(privatePath)
 	)
 
-	if (!isPrivatePage || isNull(username)) {
-		let extraClasses = undefined
-		if (pathname === "/") extraClasses = ""
+	const isOpenPage = OpenPages.some(openPath =>
+		pathname.startsWith(openPath)
+	)
 
+	// If user is logged in (has username) AND the page is either private or open
+	if (!isNull(username) && (isPrivatePage || isOpenPage)) {
 		return (
-			<ClassicLayout extraClasses={extraClasses}>
+			<InternalPagesLayout>
 				{children}
-			</ClassicLayout>
+			</InternalPagesLayout>
 		)
 	}
 
+	// Otherwise use ClassicLayout (not logged in, or not a private/open page)
+	let extraClasses = undefined
+	if (pathname === "/") extraClasses = ""
+
 	return (
-		<InternalPagesLayout>
+		<ClassicLayout extraClasses={extraClasses}>
 			{children}
-		</InternalPagesLayout>
+		</ClassicLayout>
 	)
 }
 

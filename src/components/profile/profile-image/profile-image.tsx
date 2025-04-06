@@ -6,6 +6,7 @@ import Image from "next/image"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
+import { Pencil } from "lucide-react"
 
 function ProfileImage() {
 	const personalInfoClass = usePersonalInfoContext()
@@ -50,6 +51,13 @@ function ProfileImage() {
 					/>
 				</div>
 			)}
+			<div
+				className="absolute top-2 right-1 bg-eel dark:bg-polar
+				p-1 rounded-full cursor-pointer"
+				onClick={handleOpenDialog}
+			>
+				<Pencil color="white" size={18} />
+			</div>
 
 			<EditProfileImageDialog
 				isOpen={isDialogOpen}
