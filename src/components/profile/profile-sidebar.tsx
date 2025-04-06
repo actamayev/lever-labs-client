@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { LogOut } from "lucide-react"
-import useLogout from "../../hooks/auth/logout"
 import { Card, CardDescription, CardTitle } from "../shadcn/ui/card"
 import { BlackWhiteTactileButton } from "../buttons/tactile-buttons"
+import useHandleLogout from "../../hooks/auth/handle-logout"
 
 interface SidebarSectionProps {
   title: string
@@ -41,7 +41,7 @@ const SidebarLink = ({ href, children }: SidebarLinkProps) => {
 }
 
 export default function ProfileSidebar() {
-	const logout = useLogout()
+	const logout = useHandleLogout()
 
 	return (
 		<div className="fixed right-0 top-0 w-[350px] mr-36 mt-6 rounded-lg h-full flex flex-col">
@@ -62,7 +62,7 @@ export default function ProfileSidebar() {
 
 			<BlackWhiteTactileButton
 				onClick={logout}
-				className="w-full mt-4 py-3 flex justify-center items-center font-medium rounded-lg h-10"
+				className="w-full mt-4 py-3 flex justify-center items-center font-medium rounded-lg h-10 hover:!bg-swan"
 			>
 				<LogOut className="mr-2 h-4 w-4" />
 				LOG OUT

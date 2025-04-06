@@ -16,7 +16,7 @@ function ProfileLayout({ children }: SidebarLayoutProps) {
 
 	return (
 		<div className="relative">
-			<div className={isLoggedIn ? "" : ""}>
+			<div className={isLoggedIn ? "pr-[350px]" : ""}>
 				{children}
 			</div>
 

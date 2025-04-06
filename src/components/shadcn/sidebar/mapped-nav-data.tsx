@@ -15,7 +15,6 @@ import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 const navData: SidebarNavData[] = [
 	{
@@ -45,7 +44,6 @@ const navData: SidebarNavData[] = [
 ]
 
 export default function MappedNavData() {
-	const navigate = useTypedNavigate()
 	const pathname = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
@@ -74,7 +72,7 @@ export default function MappedNavData() {
 									icon={iconElement}
 									text={toUpper(item.title)}
 									isActive={active}
-									onClick={() => navigate(item.url)}
+									goTo={item.url}
 									customStyles={cn(
 										active && "!border-selectedSidebarButtonBorder"
 									)}

@@ -2,12 +2,11 @@
 
 import { observer } from "mobx-react"
 import { useState, useCallback } from "react"
-import { Save, Moon, Sun, LogOut } from "lucide-react"
+import { Save, Moon, Sun, EyeOff, Eye } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
 import ProfileLayout from "./profile-layout"
-import useLogout from "../../hooks/auth/logout"
 import CharacterCounter from "../character-counter"
 import ProfileImage from "./profile-image/profile-image"
 import useEditName from "../../hooks/personal-info/edit-name"
@@ -27,10 +26,11 @@ function ProfilePage() {
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false)
 	const [currentPassword, setCurrentPassword] = useState("")
 	const [newPassword, setNewPassword] = useState("")
+	const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+	const [showNewPassword, setShowNewPassword] = useState(false)
 	const updateName = useEditName()
 	const updateUsername = useEditUsername()
 	const updatePassword = useChangePassword()
-	const logout = useLogout()
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
 
@@ -104,12 +104,12 @@ function ProfilePage() {
 						Name
 					</Label>
 					<div className="flex items-center">
-						<div className="relative w-full max-w-md">
+						<div className="relative w-full max-w-xl">
 							<Input
 								id="name"
 								value={name}
 								onChange={handleNameChange}
-								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light"
+								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
 								maxLength={50}
 							/>
 							<CharacterCounter
@@ -121,11 +121,11 @@ function ProfilePage() {
 						{isNameChanged && (
 							<Button
 								onClick={saveName}
-								size="icon"
+								size="lg"
 								variant="ghost"
-								className="ml-2"
+								className="ml-2 hover:bg-standardBackgroundHover p-2"
 							>
-								<Save className="h-4 w-4" />
+								<Save className="!h-6 !w-6" />
 							</Button>
 						)}
 					</div>
@@ -134,15 +134,17 @@ function ProfilePage() {
 				{/* Username Section */}
 				<div className="mb-6">
 					<Label htmlFor="username" className="text-lg font-medium text-eel mb-2 block">
-							Username
+						Username
 					</Label>
 					<div className="flex items-center">
-						<div className="relative w-full max-w-md">
+						<div className="relative w-full max-w-xl">
 							<Input
 								id="username"
 								value={username}
 								onChange={handleUsernameChange}
-								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light"
+								className={`w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan ${
+									username.length > 0 && username.length < 3 ? "border-cardinal focus-visible:!border-cardinal" : ""
+								}`}
 								maxLength={50}
 							/>
 							<CharacterCounter
@@ -150,54 +152,89 @@ function ProfilePage() {
 								characterLimit={50}
 								extraClasses="right-3"
 							/>
+							{username.length > 0 && username.length < 3 && (
+								<p className="text-sm text-cardinal mt-1">
+									Username must be at least 3 characters.
+								</p>
+							)}
 						</div>
-						{isUsernameChanged && (
+						{isUsernameChanged && username.length >= 3 && (
 							<Button
 								onClick={saveUsername}
-								size="icon"
+								size="lg"
 								variant="ghost"
-								className="ml-2"
+								className="ml-2 hover:bg-standardBackgroundHover p-2"
 							>
-								<Save className="h-4 w-4" />
+								<Save className="!h-6 !w-6" />
 							</Button>
 						)}
 					</div>
 				</div>
 
 				{/* Password Change Section */}
-				<Card className="mb-8 max-w-md">
+				<Card className="mb-8 max-w-xl">
 					<CardHeader>
 						<CardTitle className="text-2xl">Change Password</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
 							<Label htmlFor="current-password" className="text-lg font-medium text-eel mb-2 block">
-									Current Password
+								Current Password
 							</Label>
-							<Input
-								id="current-password"
-								type="password"
-								value={currentPassword}
-								onChange={handleCurrentPasswordChange}
-								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light"
-							/>
+							<div className="relative w-full">
+								<Input
+									id="current-password"
+									type={showCurrentPassword ? "text" : "password"}
+									value={currentPassword}
+									onChange={handleCurrentPasswordChange}
+									className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
+								/>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-polar"
+									onClick={() => setShowCurrentPassword(prevState => !prevState)}
+								>
+									{showCurrentPassword ? (
+										<EyeOff className="!h-6 !w-6" />
+									) : (
+										<Eye className="!h-6 !w-6" />
+									)}
+								</Button>
+							</div>
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="new-password" className="text-lg font-medium text-eel mb-2 block">
-									New Password
+								New Password
 							</Label>
-							<Input
-								id="new-password"
-								type="password"
-								value={newPassword}
-								onChange={handleNewPasswordChange}
-								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light"
-							/>
-							{newPassword.length > 0 && newPassword.length < 6 && (
-								<p className="text-sm text-red-500">
-										Password must be at least 6 characters.
-								</p>
-							)}
+							<div className="relative w-full">
+								<Input
+									id="new-password"
+									type={showCurrentPassword ? "text" : "password"}
+									value={newPassword}
+									onChange={handleNewPasswordChange}
+									className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
+								/>
+								{newPassword.length > 0 && newPassword.length < 6 && (
+									<p className="text-sm text-red-500">
+									Password must be at least 6 characters.
+									</p>
+								)}
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-swan"
+									onClick={() => setShowNewPassword(prevState => !prevState)}
+								>
+									{showNewPassword ? (
+										<EyeOff className="!h-6 !w-6" />
+									) : (
+										<Eye className="!h-6 !w-6" />
+									)}
+								</Button>
+							</div>
 						</div>
 					</CardContent>
 					<CardFooter>
@@ -211,7 +248,7 @@ function ProfilePage() {
 				</Card>
 
 				{/* Theme Toggle */}
-				<div className="mb-8">
+				<div className="mb-8 flex items-center">
 					<Button
 						variant="outline"
 						size="icon"
@@ -219,26 +256,14 @@ function ProfilePage() {
 						className="rounded-full h-10 w-10"
 					>
 						{defaultSiteTheme === "light" ? (
-							<Moon className="h-5 w-5" />
+							<Moon className="!h-6 !w-6" />
 						) : (
-							<Sun className="h-5 w-5" />
+							<Sun className="!h-6 !w-6" />
 						)}
 					</Button>
-					<span className="ml-3 text-sm font-medium">
+					<span className="ml-3 text-lg font-medium">
 						{defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
-				</div>
-
-				{/* Logout Button - only shown on mobile */}
-				<div className="md:hidden">
-					<Button
-						variant="destructive"
-						onClick={logout}
-						className="flex items-center"
-					>
-						<LogOut className="mr-2 h-4 w-4" />
-							Logout
-					</Button>
 				</div>
 			</div>
 		</ProfileLayout>
