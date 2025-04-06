@@ -1,6 +1,7 @@
 import { Slide, ToastContainer } from "react-toastify"
 import PipProvider from "../src/contexts/pip-context"
 import AuthProvider from "../src/contexts/auth-context"
+import GarageProvider from "../src/contexts/garage-context"
 import SocketProvider from "../src/contexts/socket-context"
 import AddPipProvider from "../src/contexts/add-pip-context"
 import SandboxProvider from "../src/contexts/sandbox-context"
@@ -26,9 +27,11 @@ export default function ContextLevelComponent ({ children } : { children: React.
 											<ActivityProgressProvider>
 												<LabDemoProvider>
 													<SandboxProvider>
-														<WorkbenchProvider>
-															{children}
-														</WorkbenchProvider>
+														<GarageProvider>
+															<WorkbenchProvider>
+																{children}
+															</WorkbenchProvider>
+														</GarageProvider>
 													</SandboxProvider>
 												</LabDemoProvider>
 											</ActivityProgressProvider>

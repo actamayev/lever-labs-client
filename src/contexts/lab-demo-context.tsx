@@ -45,13 +45,13 @@ class LabDemoClass {
 	}
 }
 
-const demoInstance = new LabDemoClass()
+const labDemoInstance = new LabDemoClass()
 
-const LabDemoContext = createContext(demoInstance)
+const LabDemoContext = createContext(labDemoInstance)
 
 export default function LabDemoProvider ({ children }: { children: React.ReactNode }) {
 	return (
-		<LabDemoContext.Provider value={demoInstance}>
+		<LabDemoContext.Provider value={labDemoInstance}>
 			{children}
 		</LabDemoContext.Provider>
 	)
