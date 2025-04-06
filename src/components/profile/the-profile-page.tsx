@@ -33,6 +33,8 @@ function ProfilePage() {
 	const updatePassword = useChangePassword()
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
+	const [usernameError, setUsernameError] = useState("")
+	const [passwordError, setPasswordError] = useState("")
 
 	// Name handling
 	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,31 +47,54 @@ function ProfilePage() {
 		setIsNameChanged(false)
 	}, [name, updateName])
 
-	// Username handling
 	const handleUsernameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		setUsername(e.target.value)
-		setIsUsernameChanged(e.target.value !== personalInfoClass.username)
-	}, [personalInfoClass.username])
+		const newUsername = e.target.value
+		setUsername(newUsername)
+		setIsUsernameChanged(newUsername !== personalInfoClass.username)
+
+		// Clear error message when user starts typing
+		if (usernameError) {
+			setUsernameError("")
+		}
+	}, [personalInfoClass.username, usernameError])
 
 	const saveUsername = useCallback(async () => {
-		await updateUsername(username)
-		setIsUsernameChanged(false)
+		const errorMessage = await updateUsername(username)
+		console.log("errorMessage", errorMessage)
+		if (errorMessage) {
+			setUsernameError(errorMessage)
+			setIsUsernameChanged(true) // Keep the save button visible
+		} else {
+			setUsernameError("")
+			setIsUsernameChanged(false)
+		}
 	}, [updateUsername, username])
 
-	// Password handling
 	const handleCurrentPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setCurrentPassword(e.target.value)
-	}, [])
+		// Clear error message when user starts typing
+		if (passwordError) {
+			setPasswordError("")
+		}
+	}, [passwordError])
 
 	const handleNewPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setNewPassword(e.target.value)
-	}, [])
+		// Clear error message when user starts typing
+		if (passwordError) {
+			setPasswordError("")
+		}
+	}, [passwordError])
 
 	const savePassword = useCallback(async () => {
-		// Implement save functionality for password
-		await updatePassword(currentPassword, newPassword)
-		setCurrentPassword("")
-		setNewPassword("")
+		const errorMessage = await updatePassword(currentPassword, newPassword)
+		if (errorMessage) {
+			setPasswordError(errorMessage)
+		} else {
+			setPasswordError("")
+			setCurrentPassword("")
+			setNewPassword("")
+		}
 	}, [currentPassword, newPassword, updatePassword])
 
 	// Check if password change is valid
@@ -152,11 +177,6 @@ function ProfilePage() {
 								characterLimit={50}
 								extraClasses="right-3"
 							/>
-							{username.length > 0 && username.length < 3 && (
-								<p className="text-sm text-cardinal mt-1">
-									Username must be at least 3 characters.
-								</p>
-							)}
 						</div>
 						{isUsernameChanged && username.length >= 3 && (
 							<Button
@@ -169,6 +189,17 @@ function ProfilePage() {
 							</Button>
 						)}
 					</div>
+					{username.length > 0 && (
+						username.length < 3 ? (
+							<p className="text-sm text-cardinal mt-1">
+							Username must be at least 3 characters.
+							</p>
+						) : (
+							<p className="text-sm text-cardinal mt-1">
+								{usernameError}
+							</p>
+						)
+					)}
 				</div>
 
 				{/* Password Change Section */}
@@ -193,7 +224,7 @@ function ProfilePage() {
 									type="button"
 									variant="ghost"
 									size="sm"
-									className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-polar"
+									className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-swan"
 									onClick={() => setShowCurrentPassword(prevState => !prevState)}
 								>
 									{showCurrentPassword ? (
@@ -211,7 +242,7 @@ function ProfilePage() {
 							<div className="relative w-full">
 								<Input
 									id="new-password"
-									type={showCurrentPassword ? "text" : "password"}
+									type={showNewPassword ? "text" : "password"}
 									value={newPassword}
 									onChange={handleNewPasswordChange}
 									className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
@@ -236,6 +267,11 @@ function ProfilePage() {
 								</Button>
 							</div>
 						</div>
+						{passwordError && (
+							<p className="text-sm text-cardinal mt-1">
+								{passwordError}
+							</p>
+						)}
 					</CardContent>
 					<CardFooter>
 						<Button
