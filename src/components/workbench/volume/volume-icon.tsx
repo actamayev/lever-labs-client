@@ -11,7 +11,7 @@ function VolumeWorkbench() {
 		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
 		const strokeWidth = 2.5
 		if (workbenchClass.isMuted) {
-			return <VolumeOff className={baseClasses} strokeWidth={strokeWidth}/>
+			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
 		}
 
 		if (workbenchClass.volume <= 20) {
@@ -27,14 +27,13 @@ function VolumeWorkbench() {
 		<WorkbenchIconTemplate
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("volume")}
 			extraButtonClasses={cn(
-				!workbenchClass.isMuted ? "" : "opacity-50",
 				workbenchClass.workbenchItemToShow === "volume" && "border-swan relative"
 			)}>
 			{workbenchClass.workbenchItemToShow === "volume" && (
 				<div className="absolute bottom-[-2px] left-[0px] right-[0px] h-[3px] bg-standardBackground z-10"></div>
 			)}
 			<SpeakerIconToShow />
-			<span className="text-base font-medium mt-0 w-full text-center">
+			<span className={cn("text-base font-medium mt-0 w-full text-center", workbenchClass.isMuted && "opacity-50")}>
 				{workbenchClass.volume}%
 			</span>
 		</WorkbenchIconTemplate>
