@@ -1,5 +1,5 @@
-// lib/metadata.ts
 import { Metadata } from "next"
+import { PrivatePageNames } from "../constants"
 
 // Define the base domain for your site
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -18,14 +18,12 @@ const STATIC_KEYWORDS: [string, string, string] = [
 
 // Types for the custom metadata function
 type MetadataProps = {
-  title: string
-  description: string
-  path: PageNames
-  needsBlueDotSuffix?: boolean
-//   ogImage?: string;
-//   twitterImage?: string;
-  keywords: [string, string, string] // Tuple type enforces exactly 3 strings
-  noIndex?: boolean
+	title: string
+	description: string
+	path: PageNames
+	needsBlueDotSuffix?: boolean
+	keywords: [string, string, string] // Tuple type enforces exactly 3 strings
+	noIndex?: boolean
 };
 
 /**
@@ -37,10 +35,8 @@ export function createMetadata({
 	description,
 	path,
 	needsBlueDotSuffix = true,
-	// ogImage = DEFAULT_OG_IMAGE,
-	// twitterImage,
 	keywords,
-	noIndex = false,
+	noIndex,
 }: MetadataProps): Metadata {
 	// No need to validate count, TypeScript enforces exactly 3 keywords
 
@@ -55,6 +51,8 @@ export function createMetadata({
 
 	// Combine custom keywords with static keywords
 	const combinedKeywords = [...keywords, ...STATIC_KEYWORDS]
+
+	const shouldNoIndex = noIndex ?? isProtectedPage(path)
 
 	return {
 		// Basic metadata
@@ -101,8 +99,20 @@ export function createMetadata({
 		publisher: "Blue Dot Robots",
 
 		// SEO settings
-		robots: noIndex
+		robots: shouldNoIndex
 			? { index: false, follow: false }
 			: { index: true, follow: true }
 	}
+}
+
+function isProtectedPage(path: PageNames): boolean {
+	// Check if the path is in your PrivatePageNames array
+	// Or use a more flexible approach checking for prefixes
+	return PrivatePageNames.includes(path) ||
+		path.startsWith("/lab/") ||
+		path.startsWith("/career-quest/") ||
+		path.startsWith("/garage/") ||
+		path.startsWith("/add-pip/") ||
+		path.startsWith("/sandbox/") ||
+		path.startsWith("/profile/")
 }

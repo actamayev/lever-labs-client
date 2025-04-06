@@ -1,5 +1,3 @@
-"use client"
-
 export const bentoIconSize = 40
 
 export const logicCategoryColour: BlocklyCategoryColours = 30
@@ -13,8 +11,14 @@ export const PrivatePageNames: PageNames[] = [
 	"/lab/welcome",
 	"/add-pip",
 	"/sandbox",
-	// "/settings",
+	"/profile",
 	"/career-quest"
+]
+
+// These are pages that you can view if you're logged in or not.
+export const OpenPages: PageNames[] = [
+	"/mission",
+	"/contact"
 ]
 
 export const staticPages = [
@@ -25,7 +29,7 @@ export const staticPages = [
 	"/garage",
 	"/add-pip",
 	"/sandbox",
-	// "/settings",
+	"/profile",
 	"/contact",
 	"/mission",
 	"/schools",

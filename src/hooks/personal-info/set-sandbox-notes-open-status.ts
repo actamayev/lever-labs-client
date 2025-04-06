@@ -16,9 +16,7 @@ export default function useSetSandboxNotesOpenStatus(): () => Promise<void> {
 	return useCallback(async () => {
 		try {
 			const newStatus = !personalInfoClass.sandboxNotesOpen
-			if (isNull(blueDotApiClient.httpClient.accessToken)) {
-				return // No toast because we don't want a negative toast if someone isn't logged in
-			}
+			if (isNull(blueDotApiClient.httpClient.accessToken)) return
 			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setSandboxNotesOpenStatus(newStatus)
 			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
 				throw Error("Unable to save sandbox notes open status")

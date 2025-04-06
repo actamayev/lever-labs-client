@@ -33,7 +33,9 @@ declare global {
 		defaultSiteTheme: SiteThemes
 		profilePictureUrl: string | null
 		sandboxNotesOpen: boolean
+		name: string | null
 	}
+	type ProfilePictureUrl = { profilePictureUrl: string }
 
 	// Pip Responses
 	type AddNewPipResponse = {
