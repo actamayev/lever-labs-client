@@ -2,6 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useGarageContext } from "../../contexts/garage-context"
+import { cn } from "../../lib/shadcn/utils"
 
 // Define dot positions
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -26,16 +27,16 @@ function LightDotsSelector() {
 					<button
 						key={index}
 						onClick={() => garageClass.toggleDot(index)}
-						className={`absolute ${position} w-4 h-4 rounded-full transform -translate-x-1/2
-						-translate-y-1/2 transition-all duration-200 ${
-					garageClass.selectedDots.includes(index)
-						? "ring-2 ring-offset-1 ring-blue-500"
-						: ""
-					}`}
+						className={cn(
+							"absolute w-4 h-4 rounded-full transform -translate-x-1/2",
+							position,
+							"-translate-y-1/2 transition-all duration-1000",
+							garageClass.selectedDots.includes(index) && "animate-pulse"
+						)}
 						style={{
 							backgroundColor: garageClass.dotColors[index] || "#999",
 							boxShadow: garageClass.selectedDots.includes(index)
-								? "0 0 8px rgba(59, 130, 246, 0.6)"
+								? `0 0 10px 3px ${garageClass.dotColors[index] || "#999"}`
 								: "none"
 						}}
 					/>
