@@ -2,45 +2,71 @@
 
 import { observer } from "mobx-react"
 import { useGarageContext } from "../../contexts/garage-context"
+import { ScrollArea } from "@/components/shadcn/ui/scroll-area"
+import { Waves, Rainbow } from "lucide-react"
+import { CustomYoga } from "../icons/custom-yoga"
+
+// Define animation type with icon property
+type LightAnimation = "static" | "breathing" | "pulse" | "strobe" | "rainbow" | "wave"
 
 interface Animation {
 	id: LightAnimation
 	name: string
 	description: string
+	icon: React.ReactNode
 }
 
-// Animation types
+// Animation types with icons
 const ANIMATIONS: Animation[] = [
-	{ id: "static", name: "Static Light", description: "Solid color with no animation" },
-	{ id: "breathing", name: "Breathing", description: "Slowly fades in and out" },
-	{ id: "pulse", name: "Pulse", description: "Quick pulse effect" },
-	{ id: "strobe", name: "Strobe", description: "Rapid flashing effect" },
-	{ id: "rainbow", name: "Rainbow", description: "Cycles through colors" },
-	{ id: "wave", name: "Wave", description: "Color waves across selected lights" },
+	{
+		id: "breathing",
+		name: "Breathing",
+		description: "Slowly fades in and out",
+		icon: <CustomYoga className="h-4 w-4" />
+	},
+	{
+		id: "rainbow",
+		name: "Rainbow",
+		description: "Cycles through colors",
+		icon: <Rainbow className="h-4 w-4" />
+	},
+	{
+		id: "wave",
+		name: "Wave",
+		description: "Color waves across selected lights",
+		icon: <Waves className="h-4 w-4" />
+	},
 ]
 
 function LightAnimationsList() {
 	const garageClass = useGarageContext()
 
 	return (
-		<div className="w-full">
+		<div className="w-full h-full flex flex-col">
 			<h3 className="text-sm font-medium mb-2">Light Animations</h3>
-			<div className="max-h-24 overflow-y-auto pr-1 space-y-1">
-				{ANIMATIONS.map((animation) => (
-					<div
-						key={animation.id}
-						onClick={() => garageClass.setSelectedAnimation(animation.id)}
-						className={`p-2 rounded-md cursor-pointer text-sm transition-colors ${
-							garageClass.selectedAnimation === animation.id
-								? "bg-blue-100 border-l-4 border-blue-500"
-								: "hover:bg-gray-100"
-						}`}
-					>
-						<div className="font-medium">{animation.name}</div>
-						<div className="text-xs text-gray-500">{animation.description}</div>
-					</div>
-				))}
-			</div>
+			<ScrollArea className="h-full flex-grow rounded-md border border-hare">
+				<div className="p-2 space-y-2">
+					{ANIMATIONS.map((animation) => (
+						<div
+							key={animation.id}
+							onClick={() => garageClass.setSelectedAnimation(animation.id)}
+							className={`p-2 rounded-md cursor-pointer text-sm transition-colors flex items-center space-x-2 ${
+								garageClass.selectedAnimation === animation.id
+									? "bg-blue-100 border-l-4 border-blue-500"
+									: "hover:bg-polar"
+							}`}
+						>
+							<div className="flex-shrink-0 text-swan">
+								{animation.icon}
+							</div>
+							<div className="flex-grow">
+								<div className="font-medium">{animation.name}</div>
+								<div className="text-xs text-gray-500">{animation.description}</div>
+							</div>
+						</div>
+					))}
+				</div>
+			</ScrollArea>
 		</div>
 	)
 }

@@ -14,36 +14,19 @@ export default function TheGaragePage() {
 			<div className="w-full lg:w-3/5 xl:w-[61.8%] overflow-hidden">
 				{/* First row - half height */}
 				<div className="h-1/2 flex flex-row overflow-hidden">
-					{/* Lights section */}
+					{/* Driving section (now in top left) */}
 					<div className="w-1/2 flex flex-col items-center p-4">
 						<div className="flex flex-row space-x-2 items-center mb-4">
-							<CustomLightbulb />
-							<h2 className="text-xl font-bold text-center">Lights</h2>
+							<CustomWheel />
+							<h2 className="text-xl font-bold text-center">Driving</h2>
 						</div>
-
-						{/* Color selection grid - 2x2 layout */}
-						<div className="w-full grid grid-cols-2 gap-4 mb-4">
-							{/* Color Wheel */}
-							<div className="flex items-center justify-center">
-								<ColorPicker />
-							</div>
-
-							{/* Selectable Dots Square */}
-							<div className="flex items-center justify-center">
-								<LightDotsSelector />
-							</div>
-						</div>
-
-						{/* Light Animations List */}
-						<div className="w-full">
-							<LightAnimationsList />
-						</div>
+						{/* Driving content will go here */}
 					</div>
 
 					{/* Vertical separator */}
 					<div className="w-0.5 bg-swan rounded-full"></div>
 
-					{/* Speaker section */}
+					{/* Speaker section (stays in top right) */}
 					<div className="w-1/2 flex flex-col items-center p-4">
 						<div className="flex flex-row space-x-2 items-center">
 							<Speaker />
@@ -56,14 +39,31 @@ export default function TheGaragePage() {
 				{/* Horizontal separator */}
 				<div className="h-0.5 bg-swan"></div>
 
-				{/* Second row - half height */}
-				<div className="h-1/2 p-4 flex flex-col items-center overflow-hidden">
-					<div className="w-1/2 flex flex-col items-center p-4">
+				{/* Second row - half height (now contains Lights section) */}
+				<div className="h-1/2 overflow-hidden">
+					<div className="flex flex-col items-center mb-4 pt-4">
 						<div className="flex flex-row space-x-2 items-center">
-							<CustomWheel />
-							<h2 className="text-xl font-bold text-center">Driving</h2>
+							<CustomLightbulb />
+							<h2 className="text-xl font-bold text-center">Lights</h2>
 						</div>
-						{/* Driving content will go here */}
+					</div>
+
+					{/* Light section with three columns */}
+					<div className="w-full grid grid-cols-3 gap-2 px-4">
+						{/* Column 1: Color Wheel */}
+						<div className="flex items-center justify-center">
+							<ColorPicker />
+						</div>
+
+						{/* Column 2: Selectable Dots Square */}
+						<div className="flex items-center justify-center">
+							<LightDotsSelector />
+						</div>
+
+						{/* Column 3: Light Animations List */}
+						<div className="flex items-center justify-center">
+							<LightAnimationsList />
+						</div>
 					</div>
 				</div>
 			</div>
