@@ -1,6 +1,6 @@
 "use client"
 
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
 import useUsername from "../../hooks/memos/username"
 
 export default function SupportSectionContainer({ children } : { children: React.ReactNode }) {

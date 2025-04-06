@@ -1,10 +1,10 @@
 "use client"
 
 import Image from "next/image"
-import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
-import { useState, useRef, useCallback } from "react"
+import isNull from "lodash-es/isNull"
 import { Pencil, Trash2, Save } from "lucide-react"
+import { useState, useRef, useCallback } from "react"
 import {
 	Dialog,
 	DialogContent,

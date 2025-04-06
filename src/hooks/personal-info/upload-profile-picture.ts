@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import { isEqual, isNull } from "lodash-es"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
@@ -18,10 +18,10 @@ export default function useUploadProfilePicture(): (
 		setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
 		try {
-			if (_.isNull(selectedImage)) return
+			if (isNull(selectedImage)) return
 			setIsLoading(true)
 			const uploadProfilePictureResponse = await blueDotApiClient.personalInfoDataService.uploadProfilePicture(selectedImage)
-			if (!_.isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {
+			if (!isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {
 				return
 			}
 			personalInfoClass.setProfilePictureUrl(uploadProfilePictureResponse.data.profilePictureUrl)

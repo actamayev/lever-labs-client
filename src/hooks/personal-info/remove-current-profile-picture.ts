@@ -1,5 +1,5 @@
-import _ from "lodash"
 import { useCallback } from "react"
+import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
@@ -20,7 +20,7 @@ export default function useRemoveCurrentProfilePicture(): (
 			setIsDeletingCurrentPicture(false)
 			const response = await blueDotApiClient.personalInfoDataService.removeCurrentProfilePicture()
 
-			if (!_.isEqual(response.status, 200) || isErrorResponse(response.data)) {
+			if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
 				return
 			}
 			toast.positive({
