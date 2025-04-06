@@ -6,7 +6,7 @@ import { CustomLightbulb } from "../icons/custom-lightbulb"
 
 export default function TheGaragePage() {
 	return (
-		<div className="flex flex-row h-screen overflow-y-auto relative w-full space-x-12 px-10 pt-12">
+		<div className="flex flex-row h-screen overflow-hidden relative w-full space-x-12 px-10 pt-12">
 			{/* Left section - 2/3 width */}
 			<div className="w-full lg:w-3/5 xl:w-[61.8%]">
 				{/* First row - half height */}
@@ -33,7 +33,7 @@ export default function TheGaragePage() {
 				</div>
 
 				{/* Horizontal separator */}
-				<div className="h-0.5 bg-swan"></div>
+				<div className="h-0.5 bg-swan rounded-full"></div>
 
 				{/* Second row - half height */}
 				<div className="h-1/2 p-4 flex flex-col items-center">
@@ -48,7 +48,7 @@ export default function TheGaragePage() {
 			</div>
 
 			{/* Border separator between main sections */}
-			<div className="border-r-2 border-swan"></div>
+			<div className="absolute right-[39%] xl:right-[38.2%] lg:right-[40%] h-full top-0 border-r-2 border-swan rounded-full"/>
 
 			<Workbench />
 		</div>
