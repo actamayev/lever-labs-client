@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { observer } from "mobx-react"
 import { useParams } from "next/navigation"
 import isEmpty from "lodash-es/isEmpty"
@@ -12,10 +13,9 @@ import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
-import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -24,7 +24,6 @@ function SandboxProjectPage() {
 	const params = useParams()
 	const projectUUID = params.projectUUID as ProjectUUID
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
-	const navigate = useTypedNavigate()
 	const sandboxClass = useSandboxContext()
 	const pipClass = usePipContext()
 	const personalInfoClass = usePersonalInfoContext()
@@ -60,11 +59,6 @@ function SandboxProjectPage() {
 		}
 	}, [project])
 
-	// Handle navigation back to projects list
-	const handleBack = useCallback(() => {
-		navigate("/sandbox")
-	}, [navigate])
-
 	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
 		// Update local state
@@ -86,12 +80,13 @@ function SandboxProjectPage() {
 		return (
 			<div className="p-6">
 				<div className="flex items-center mb-6">
-					<button
-						onClick={handleBack}
-						className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-					>
-						Back
-					</button>
+					<Link href="/sandbox">
+						<button
+							className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+						>
+							Back
+						</button>
+					</Link>
 					<h1 className="text-2xl font-bold">
 						{isLoading
 							? "Loading project..."

@@ -1,12 +1,11 @@
-/* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "./back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 interface Props {
 	careerData: CareerData
@@ -17,7 +16,6 @@ interface Props {
 export default function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
-	const navigate = useTypedNavigate()
 
 	// Calculate progress percentage
 	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
@@ -77,13 +75,15 @@ export default function FrontCareerCard(props: Props) {
 				</div>
 
 				{/* Continue Button */}
-				<TactileButton
-					className="duration-0 text-emerald-600 bg-white hover:bg-[rgb(230,230,230)] h-12 rounded-2xl text-base"
-					onClick={() => navigate(careerUrl)}
-					shadowColor="rgb(178,214,201)"
-				>
-					{lessonsComplete === 0 ? "START" : "CONTINUE"}
-				</TactileButton>
+				<Link href={careerUrl}>
+					<TactileButton
+						className="duration-0 text-emerald-600 bg-white hover:bg-[rgb(230,230,230)] h-12 rounded-2xl text-base w-full"
+						shadowColor="rgb(178,214,201)"
+					>
+						{lessonsComplete === 0 ? "START" : "CONTINUE"}
+					</TactileButton>
+				</Link>
+
 			</div>
 
 			{/* Right Section with Image */}

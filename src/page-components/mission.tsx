@@ -5,13 +5,14 @@ import { useEffect } from "react"
 import SupportSection from "../components/support/support-section"
 import SupportHeader, { SupportBorder } from "../components/support/support-header"
 import SupportSectionContainer from "../components/support/support-section-container"
+import ProfileLayout from "../components/profile/profile-layout"
 
 export default function Mission() {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])
 	return (
-		<div>
+		<ProfileLayout>
 			<SupportSectionContainer>
 				<SupportHeader />
 				<SupportSection sectionTitle="Provide an accessible world-class robotics education">
@@ -53,6 +54,6 @@ export default function Mission() {
 				</SupportSection>
 
 			</SupportSectionContainer>
-		</div>
+		</ProfileLayout>
 	)
 }

@@ -41,6 +41,8 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 			className={extraClasses}
 			onClick={handleClick}
 			loading="lazy"
+			width={128}
+			height={128}
 		/>
 	)
 }

@@ -1,4 +1,3 @@
-// app/robots.ts
 import { MetadataRoute } from "next"
 
 export default function robots(): MetadataRoute.Robots {
@@ -10,9 +9,18 @@ export default function robots(): MetadataRoute.Robots {
 					"/",
 					"/schools",
 					"/mission",
-					"/contact"
+					"/contact",
+					"/login",
+					"/register"
 				],
-				disallow: "/*", // Disallow all other routes
+				disallow: [
+					"/garage/",
+					"/lab/",
+					"/add-pip/",
+					"/sandbox/",
+					"/profile/",
+					"/career-quest/"
+				]
 			}
 		],
 		sitemap: "https://www.bluedotrobots.com/sitemap.xml",

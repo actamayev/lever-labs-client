@@ -7,6 +7,7 @@ import { isValidSiteTheme } from "../utils/type-checks"
 class PersonalInfoClass {
 	public username: string | null = null
 	public email: string | null = null
+	public name: string | null = null
 
 	public isRetrievingPersonalInfo = false
 	public retrievedPeronsalInfo = false
@@ -39,6 +40,7 @@ class PersonalInfoClass {
 	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
 		this.username = retrievedData.username
 		this.email = retrievedData.email
+		this.setName(retrievedData.name)
 		this.setSandboxNotesOpen(retrievedData.sandboxNotesOpen)
 		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
@@ -54,6 +56,10 @@ class PersonalInfoClass {
 
 	public setProfilePictureUrl = action((newProfilePictureUrl: string | null): void => {
 		this.profilePictureUrl = newProfilePictureUrl
+	})
+
+	public setName = action((newName: string | null): void => {
+		this.name = newName
 	})
 
 	public setSandboxNotesOpen = action((newSandboxNotesOpen: boolean): void => {
@@ -72,6 +78,7 @@ class PersonalInfoClass {
 		this.setProfilePictureUrl(null)
 		this.setDefaultSiteTheme("light")
 		this.setSandboxNotesOpen(false)
+		this.setName(null)
 	}
 }
 

@@ -47,12 +47,11 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center transition-none border-2 rounded-2xl",
-					"bg-polar border-gray-400 text-eel hover:bg-gray-50",
-					"dark:border-gray-600 dark:text-wolf dark:hover:bg-gray-950",
+					"flex items-center transition-none border-2 rounded-2xl !bg-standardBackground",
+					"border-swan text-eel hover:bg-swan dark:text-wolf",
 					className
 				)}
-				shadowColor={defaultSiteTheme === "light" ? "rgb(161 161 170)" : "rgb(82 82 91)"}
+				shadowColor={defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
 				shadowHeight={shadowHeight}
 				{...props}
 			/>

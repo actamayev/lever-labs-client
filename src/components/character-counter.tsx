@@ -15,11 +15,10 @@ export default function CharacterCounter(props: Props) {
 	if (isUndefined(value)) return null
 
 	return (
-		<div className={cn("absolute inset-y-0 flex items-center transition-all", extraClasses)}>
+		<div className={cn("absolute top-1/2 -translate-y-1/2 flex items-center transition-all", extraClasses)}>
 			<span className="text-sm text-muted-foreground">
 				{value.length}/{characterLimit}
 			</span>
 		</div>
-
 	)
 }

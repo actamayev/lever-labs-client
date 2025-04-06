@@ -11,7 +11,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				sans: ["Lexend", "sans-serif"],
+				sans: ["var(--font-lexend)", "sans-serif"],
 			},
 			colors: {
 				background: "hsl(var(--background))",

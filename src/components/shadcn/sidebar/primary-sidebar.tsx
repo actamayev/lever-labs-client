@@ -3,16 +3,24 @@
 import { usePathname } from "next/navigation"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/shadcn/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
-import NavUser from "./nav-user/nav-user"
+import ProfileSidebarButton from "./profile-sidebar-button"
 import MappedNavData from "./mapped-nav-data"
-import { PrivatePageNames } from "../../../utils/constants"
+import { PrivatePageNames, OpenPages } from "../../../utils/constants"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()
-	const shouldShowSidebar =
-		PrivatePageNames.includes(pathname as PageNames) ||
-		pathname.startsWith("/sandbox/") // This will match all /sandbox/uuid paths
+
+	const isPrivatePage = PrivatePageNames.includes(pathname as PageNames)
+
+	const isOpenPage = OpenPages.some(openPath =>
+		pathname.startsWith(openPath)
+	)
+
+	// Show sidebar if:
+	// 1. It's a private page (always show regardless of login status)
+	// 2. It's an open page AND the user is logged in
+	const shouldShowSidebar = isPrivatePage || isOpenPage
 
 	if (!shouldShowSidebar) return null
 
@@ -31,7 +39,7 @@ export default function PrimarySidebar() {
 
 			<SidebarFooter>
 				<AddPipSidebarButton />
-				<NavUser />
+				<ProfileSidebarButton />
 			</SidebarFooter>
 		</Sidebar>
 	)

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import SupportHeader from "../components/support/support-header"
+import ProfileLayout from "../components/profile/profile-layout"
 import ContactItemInCard from "../components/contact/contact-item-in-card"
 import FooterSocialSection from "../components/footer/footer-social-section"
 import SupportSectionContainer from "../components/support/support-section-container"
@@ -11,7 +12,7 @@ export default function Contact() {
 		window.scrollTo(0, 0)
 	}, [])
 	return (
-		<div>
+		<ProfileLayout>
 			<SupportSectionContainer>
 				<SupportHeader />
 				<div className="flex items-center justify-center text-questionText text-xl font-medium">
@@ -34,6 +35,6 @@ export default function Contact() {
 					</div>
 				</div>
 			</SupportSectionContainer>
-		</div>
+		</ProfileLayout>
 	)
 }

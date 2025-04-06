@@ -5,6 +5,7 @@ import { useCallback, useEffect } from "react"
 import useLogout from "../auth/logout"
 
 export default function useLogoutListenerUseEffect(): void {
+	// not calling the api in handle logout here on purpose - just need to get the user out where they're connected to internet or not
 	const logout = useLogout()
 	const router = useRouter()
 

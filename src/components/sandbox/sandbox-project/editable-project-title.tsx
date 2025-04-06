@@ -105,6 +105,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 					className={`${commonStyles} border-blue-400 bg-inherit focus-visible:ring-0 focus-visible:ring-offset-0 py-0`}
 					style={{ lineHeight: "2.5rem" }}
 					autoFocus
+					maxLength={50}
 				/>
 			) : (
 				<div
