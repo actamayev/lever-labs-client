@@ -62,7 +62,7 @@ export default function ProfileSidebar() {
 
 			<BlackWhiteTactileButton
 				onClick={logout}
-				className="w-full mt-4 py-3 flex justify-center items-center font-medium rounded-lg h-10 hover:!bg-swan"
+				className="w-full py-3 flex justify-center items-center font-medium rounded-lg h-10 hover:!bg-swan"
 			>
 				<LogOut className="mr-2 h-4 w-4" />
 				LOG OUT

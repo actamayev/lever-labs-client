@@ -60,7 +60,6 @@ function ProfilePage() {
 
 	const saveUsername = useCallback(async () => {
 		const errorMessage = await updateUsername(username)
-		console.log("errorMessage", errorMessage)
 		if (errorMessage) {
 			setUsernameError(errorMessage)
 			setIsUsernameChanged(true) // Keep the save button visible
@@ -104,37 +103,37 @@ function ProfilePage() {
 
 	return (
 		<ProfileLayout>
-			<div className="px-8 sm:px-8 md:px-16 lg:px-32 mt-5">
-				<div className="font-medium text-3xl text-questionText mb-10">
+			<div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 mt-5 max-w-full">
+				<div className="font-medium text-2xl md:text-3xl text-questionText mb-6 md:mb-10">
 					Profile
 				</div>
 
 				{/* Profile Picture and Email Section */}
-				<div className="flex flex-col md:flex-row gap-8 mb-8">
+				<div className="flex flex-col gap-6 mb-8">
 					<ProfileImage />
 				</div>
 
 				<div className="mb-6">
-					<div className="text-lg font-medium text-eel mb-2 block">
+					<div className="text-base md:text-lg font-medium text-eel mb-2 block">
 						Email
 					</div>
-					<div className="text-lg font-medium text-wolf">
+					<div className="text-base md:text-lg font-medium text-wolf break-words">
 						{personalInfoClass.email || "No email set"}
 					</div>
 				</div>
 
 				{/* Name Section */}
 				<div className="mb-6">
-					<Label htmlFor="name" className="text-lg font-medium text-eel mb-2 block">
+					<Label htmlFor="name" className="text-base md:text-lg font-medium text-eel mb-2 block">
 						Name
 					</Label>
-					<div className="flex items-center">
+					<div className="flex flex-col sm:flex-row sm:items-center gap-2">
 						<div className="relative w-full max-w-xl">
 							<Input
 								id="name"
 								value={name}
 								onChange={handleNameChange}
-								className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
+								className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
 								maxLength={50}
 							/>
 							<CharacterCounter
@@ -146,11 +145,11 @@ function ProfilePage() {
 						{isNameChanged && (
 							<Button
 								onClick={saveName}
-								size="lg"
+								size="default"
 								variant="ghost"
-								className="ml-2 hover:bg-standardBackgroundHover p-2"
+								className="self-end sm:self-auto sm:ml-2 hover:bg-standardBackgroundHover p-2"
 							>
-								<Save className="!h-6 !w-6" />
+								<Save className="h-5 w-5 md:!h-6 md:!w-6" />
 							</Button>
 						)}
 					</div>
@@ -158,16 +157,16 @@ function ProfilePage() {
 
 				{/* Username Section */}
 				<div className="mb-6">
-					<Label htmlFor="username" className="text-lg font-medium text-eel mb-2 block">
+					<Label htmlFor="username" className="text-base md:text-lg font-medium text-eel mb-2 block">
 						Username
 					</Label>
-					<div className="flex items-center">
+					<div className="flex flex-col sm:flex-row sm:items-center gap-2">
 						<div className="relative w-full max-w-xl">
 							<Input
 								id="username"
 								value={username}
 								onChange={handleUsernameChange}
-								className={`w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan ${
+								className={`w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan ${
 									username.length > 0 && username.length < 3 ? "border-cardinal focus-visible:!border-cardinal" : ""
 								}`}
 								maxLength={50}
@@ -181,11 +180,11 @@ function ProfilePage() {
 						{isUsernameChanged && username.length >= 3 && (
 							<Button
 								onClick={saveUsername}
-								size="lg"
+								size="default"
 								variant="ghost"
-								className="ml-2 hover:bg-standardBackgroundHover p-2"
+								className="self-end sm:self-auto sm:ml-2 hover:bg-standardBackgroundHover p-2"
 							>
-								<Save className="!h-6 !w-6" />
+								<Save className="h-5 w-5 md:!h-6 md:!w-6" />
 							</Button>
 						)}
 					</div>
@@ -203,13 +202,13 @@ function ProfilePage() {
 				</div>
 
 				{/* Password Change Section */}
-				<Card className="mb-8 max-w-xl">
-					<CardHeader>
-						<CardTitle className="text-2xl">Change Password</CardTitle>
+				<Card className="mb-8 max-w-xl w-full">
+					<CardHeader className="px-4 md:px-6">
+						<CardTitle className="text-xl md:text-2xl">Change Password</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-4">
+					<CardContent className="space-y-4 px-4 md:px-6">
 						<div className="space-y-2">
-							<Label htmlFor="current-password" className="text-lg font-medium text-eel mb-2 block">
+							<Label htmlFor="current-password" className="text-base md:text-lg font-medium text-eel mb-2 block">
 								Current Password
 							</Label>
 							<div className="relative w-full">
@@ -218,7 +217,7 @@ function ProfilePage() {
 									type={showCurrentPassword ? "text" : "password"}
 									value={currentPassword}
 									onChange={handleCurrentPasswordChange}
-									className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
+									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
 								/>
 								<Button
 									type="button"
@@ -228,15 +227,15 @@ function ProfilePage() {
 									onClick={() => setShowCurrentPassword(prevState => !prevState)}
 								>
 									{showCurrentPassword ? (
-										<EyeOff className="!h-6 !w-6" />
+										<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
 									) : (
-										<Eye className="!h-6 !w-6" />
+										<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
 									)}
 								</Button>
 							</div>
 						</div>
 						<div className="space-y-2">
-							<Label htmlFor="new-password" className="text-lg font-medium text-eel mb-2 block">
+							<Label htmlFor="new-password" className="text-base md:text-lg font-medium text-eel mb-2 block">
 								New Password
 							</Label>
 							<div className="relative w-full">
@@ -245,7 +244,7 @@ function ProfilePage() {
 									type={showNewPassword ? "text" : "password"}
 									value={newPassword}
 									onChange={handleNewPasswordChange}
-									className="w-full pr-14 h-12 !text-xl bg-polar !text-eel font-light border-swan"
+									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
 								/>
 								{newPassword.length > 0 && newPassword.length < 6 && (
 									<p className="text-sm text-red-500">
@@ -260,9 +259,9 @@ function ProfilePage() {
 									onClick={() => setShowNewPassword(prevState => !prevState)}
 								>
 									{showNewPassword ? (
-										<EyeOff className="!h-6 !w-6" />
+										<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
 									) : (
-										<Eye className="!h-6 !w-6" />
+										<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
 									)}
 								</Button>
 							</div>
@@ -273,10 +272,11 @@ function ProfilePage() {
 							</p>
 						)}
 					</CardContent>
-					<CardFooter>
+					<CardFooter className="px-4 md:px-6">
 						<Button
 							onClick={savePassword}
 							disabled={!isPasswordChangeValid}
+							className="w-full sm:w-auto"
 						>
 							Save Changes
 						</Button>
@@ -289,15 +289,15 @@ function ProfilePage() {
 						variant="outline"
 						size="icon"
 						onClick={setDefaultSiteTheme}
-						className="rounded-full h-10 w-10"
+						className="rounded-full h-9 w-9 md:h-10 md:w-10"
 					>
 						{defaultSiteTheme === "light" ? (
-							<Moon className="!h-6 !w-6" />
+							<Moon className="h-5 w-5 md:!h-6 md:!w-6" />
 						) : (
-							<Sun className="!h-6 !w-6" />
+							<Sun className="h-5 w-5 md:!h-6 md:!w-6" />
 						)}
 					</Button>
-					<span className="ml-3 text-lg font-medium">
+					<span className="ml-3 text-base md:text-lg font-medium">
 						{defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
 				</div>
