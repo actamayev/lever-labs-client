@@ -45,11 +45,9 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 		} catch (error: unknown) {
 			console.error(error)
 			if (error instanceof AxiosError) {
-				console.log(error.response)
 				// Check for specific error types
 				if (error.response?.status === 400) {
 					if (isMessageResponse(error.response.data) && error.response.data.message === "This username is taken") {
-						console.log("Here")
 						return "This username is already taken"
 					}
 					if (isValidationErrorResponse(error.response.data) && error.response.data.validationError) {

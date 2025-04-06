@@ -11,9 +11,7 @@ import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 export default function PrimarySidebar() {
 	const pathname = usePathname()
 
-	const isPrivatePage = PrivatePageNames.some(privatePath =>
-		pathname.startsWith(privatePath)
-	)
+	const isPrivatePage = PrivatePageNames.includes(pathname as PageNames)
 
 	const isOpenPage = OpenPages.some(openPath =>
 		pathname.startsWith(openPath)
@@ -22,7 +20,7 @@ export default function PrimarySidebar() {
 	// Show sidebar if:
 	// 1. It's a private page (always show regardless of login status)
 	// 2. It's an open page AND the user is logged in
-	const shouldShowSidebar = isPrivatePage || (isOpenPage)
+	const shouldShowSidebar = isPrivatePage || isOpenPage
 
 	if (!shouldShowSidebar) return null
 
