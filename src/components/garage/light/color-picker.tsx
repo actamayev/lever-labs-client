@@ -3,6 +3,7 @@
 import { observer } from "mobx-react"
 import Wheel from "@uiw/react-color-wheel"
 import isNull from "lodash-es/isNull"
+import debounce from "lodash-es/debounce" // Import debounce from lodash
 import { useState, useEffect, useCallback } from "react"
 import { hsvaToHex, hsvaToRgba, rgbaToHsva } from "@uiw/color-convert"
 import { usePipContext } from "../../../contexts/pip-context"
@@ -31,7 +32,6 @@ function ColorPicker() {
 		const rgb = getRgbValues()
 		rgb[component] = Math.max(0, Math.min(255, value))
 
-		// Convert RGB to HSVA using the library function
 		const newHsva = rgbaToHsva({
 			r: rgb.r,
 			g: rgb.g,
@@ -42,48 +42,48 @@ function ColorPicker() {
 		setHsva(newHsva)
 	}, [getRgbValues, hsva.a])
 
-	// Create a debounced function to emit LED colors
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// Regular (non-debounced) function to emit LED colors
-	const emitLedColors = useCallback(() => {
-		if (isNull(pipClass.selectedPip)) return
-		const rgb = getRgbValues()
+	// Debounced function to emit LED colors
+	const emitLedColors = useCallback(
+		debounce(() => {
+			if (isNull(pipClass.selectedPip)) return
+			const rgb = getRgbValues()
 
-		// Set all colors to the same value
-		const ledControlData = {
-			topLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			topRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			middleLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			middleRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			backLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			backRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
-			pipUUID: pipClass.selectedPip.pipUUID
-		}
+			const ledControlData = {
+				topLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				topRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				middleLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				middleRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				backLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				backRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				pipUUID: pipClass.selectedPip.pipUUID
+			}
 
-		socketClass.emitLedColorControl(ledControlData)
-	}, [pipClass.selectedPip, getRgbValues, socketClass])
+			socketClass.emitLedColorControl(ledControlData)
+		}, 10), // 10ms debounce
+		[pipClass.selectedPip, getRgbValues, socketClass] // Dependencies
+	)
 
 	// When hsva changes, update the garage and emit socket message
 	useEffect(() => {
 		const hexColor = hsvaToHex(hsva)
 		garage.setSelectedColor(hexColor)
 
-		// Apply the color to all selected dots
 		if (garage.selectedDots && garage.selectedDots.length > 0) {
 			garage.updateDotColor(garage.selectedDots, hexColor)
 		}
 
-		// Call the function immediately without debouncing
 		emitLedColors()
 
-		// No cleanup needed since there's no debounce to cancel
+		// Cleanup: Cancel any pending debounced calls on unmount or when hsva changes
+		return () => {
+			emitLedColors.cancel()
+		}
 	}, [hsva, garage, emitLedColors])
 
 	const rgb = getRgbValues()
 
 	return (
 		<div className="flex flex-col items-center space-y-4">
-			{/* Color wheel picker */}
 			<div className="w-full max-w-[180px] h-[180px]">
 				<Wheel
 					color={hsva}
@@ -93,7 +93,6 @@ function ColorPicker() {
 				/>
 			</div>
 
-			{/* RGB input fields */}
 			<div className="flex items-center space-x-2">
 				<div className="flex items-center">
 					<span className="text-sm font-medium mr-1">R:</span>
