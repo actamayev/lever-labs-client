@@ -1,14 +1,14 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useEffect, useState } from "react"
-import { useGarageContext } from "../../../contexts/garage-context"
-import ArrowKeyButton from "./arrow-key-button" // Make sure the path is correct
+import { useState, useEffect } from "react"
+import ArrowKeyButton from "./arrow-key-button"
+import useHybridDrivingControls from "../../../hooks/garage/use-driving-controls"
 
-// eslint-disable-next-line max-lines-per-function
 function DrivingControls() {
-	const garage = useGarageContext()
-	// Track which buttons are currently pressed
+	const { handleButtonDown, handleButtonUp, isButtonPressed } = useHybridDrivingControls()
+
+	// State for visual button feedback
 	const [pressedButtons, setPressedButtons] = useState({
 		up: false,
 		down: false,
@@ -16,111 +16,37 @@ function DrivingControls() {
 		right: false
 	})
 
-	// Handle keyboard events
+	// Sync the visual state with the actual pressed keys
 	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			// Prevent default behavior for arrow keys to avoid page scrolling
-			if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "w", "a", "s", "d"].includes(e.key)) {
-				e.preventDefault()
-			}
-
-			// Set the appropriate button as pressed
-			switch (e.key) {
-			case "ArrowUp":
-			case "w":
-				setPressedButtons(prev => ({ ...prev, up: true }))
-				garage.drive("forward")
-				break
-			case "ArrowDown":
-			case "s":
-				setPressedButtons(prev => ({ ...prev, down: true }))
-				garage.drive("backward")
-				break
-			case "ArrowLeft":
-			case "a":
-				setPressedButtons(prev => ({ ...prev, left: true }))
-				garage.drive("left")
-				break
-			case "ArrowRight":
-			case "d":
-				setPressedButtons(prev => ({ ...prev, right: true }))
-				garage.drive("right")
-				break
-			}
+		const updatePressedButtons = () => {
+			setPressedButtons({
+				up: isButtonPressed("up"),
+				down: isButtonPressed("down"),
+				left: isButtonPressed("left"),
+				right: isButtonPressed("right")
+			})
 		}
 
-		const handleKeyUp = (e: KeyboardEvent) => {
-			// Release the appropriate button
-			switch (e.key) {
-			case "ArrowUp":
-			case "w":
-				setPressedButtons(prev => ({ ...prev, up: false }))
-				garage.stopDriving("forward")
-				break
-			case "ArrowDown":
-			case "s":
-				setPressedButtons(prev => ({ ...prev, down: false }))
-				garage.stopDriving("backward")
-				break
-			case "ArrowLeft":
-			case "a":
-				setPressedButtons(prev => ({ ...prev, left: false }))
-				garage.stopDriving("left")
-				break
-			case "ArrowRight":
-			case "d":
-				setPressedButtons(prev => ({ ...prev, right: false }))
-				garage.stopDriving("right")
-				break
-			}
-		}
+		// Update initially
+		updatePressedButtons()
 
-		// Add event listeners
-		window.addEventListener("keydown", handleKeyDown)
-		window.addEventListener("keyup", handleKeyUp)
+		// Set up an interval to keep the visual state synced
+		const intervalId = setInterval(updatePressedButtons, 100)
 
-		// Clean up event listeners
 		return () => {
-			window.removeEventListener("keydown", handleKeyDown)
-			window.removeEventListener("keyup", handleKeyUp)
+			clearInterval(intervalId)
 		}
-	}, [garage])
+	}, []) // Remove isButtonPressed from the dependency array
 
-	// Button press handlers
-	const handleButtonDown = (direction: MotorDirection) => {
-		setPressedButtons(prev => ({ ...prev, [direction]: true }))
-		switch (direction) {
-		case "up":
-			garage.drive("forward")
-			break
-		case "down":
-			garage.drive("backward")
-			break
-		case "left":
-			garage.drive("left")
-			break
-		case "right":
-			garage.drive("right")
-			break
-		}
+	// Wrapper functions to update visual state alongside actual state
+	const onButtonDown = (direction: "up" | "down" | "left" | "right") => {
+		handleButtonDown(direction)
+		setPressedButtons(prev => ({...prev, [direction]: true}))
 	}
 
-	const handleButtonUp = (direction: MotorDirection) => {
-		setPressedButtons(prev => ({ ...prev, [direction]: false }))
-		switch (direction) {
-		case "up":
-			garage.stopDriving("forward")
-			break
-		case "down":
-			garage.stopDriving("backward")
-			break
-		case "left":
-			garage.stopDriving("left")
-			break
-		case "right":
-			garage.stopDriving("right")
-			break
-		}
+	const onButtonUp = (direction: "up" | "down" | "left" | "right") => {
+		handleButtonUp(direction)
+		setPressedButtons(prev => ({...prev, [direction]: false}))
 	}
 
 	return (
@@ -131,8 +57,8 @@ function DrivingControls() {
 					<ArrowKeyButton
 						direction="up"
 						isPressed={pressedButtons.up}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
 					/>
 				</div>
 
@@ -141,8 +67,8 @@ function DrivingControls() {
 					<ArrowKeyButton
 						direction="left"
 						isPressed={pressedButtons.left}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
 					/>
 				</div>
 
@@ -150,8 +76,8 @@ function DrivingControls() {
 					<ArrowKeyButton
 						direction="down"
 						isPressed={pressedButtons.down}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
 					/>
 				</div>
 
@@ -159,8 +85,8 @@ function DrivingControls() {
 					<ArrowKeyButton
 						direction="right"
 						isPressed={pressedButtons.right}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
 					/>
 				</div>
 			</div>

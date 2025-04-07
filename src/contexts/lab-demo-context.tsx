@@ -4,6 +4,7 @@ import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
+// TODO: Remove this file. move to garage
 class LabDemoClass {
 	public activeDemoName: DemoNames | null = null
 	public motorState: MotorControlInput = { horizontal: 0, vertical: 0 }
