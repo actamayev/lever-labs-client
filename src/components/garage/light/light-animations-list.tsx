@@ -6,9 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
 import { ScrollArea } from "@/components/shadcn/ui/scroll-area"
 import { useGarageContext } from "../../../contexts/garage-context"
-
-// Define animation type with icon property
-type LightAnimation = "static" | "breathing" | "rainbow" | "strobe"
+import useLightsAnimation from "../../../hooks/garage/lights-animation"
 
 interface Animation {
 	id: LightAnimation
@@ -19,26 +17,26 @@ interface Animation {
 
 // Animation types with icons
 const ANIMATIONS: Animation[] = [
-	// {
-	// 	id: "static",
-	// 	name: "Static",
-	// 	description: "Slowly fades in and out",
-	// 	icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
-	// },
 	{
-		id: "breathing",
+		id: "No animation",
+		name: "No animation",
+		description: "Slowly fades in and out",
+		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+	},
+	{
+		id: "Breathing",
 		name: "Breathing",
 		description: "Slowly fades in and out",
 		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 	{
-		id: "rainbow",
+		id: "Rainbow",
 		name: "Rainbow",
 		description: "Cycles through colors",
 		icon: <Rainbow className="h-4 w-4" />
 	},
 	{
-		id: "strobe",
+		id: "Strobe",
 		name: "Strobe",
 		description: "Strobe light",
 		icon: <Siren className="h-4 w-4" />
@@ -47,6 +45,7 @@ const ANIMATIONS: Animation[] = [
 
 function LightAnimationsList() {
 	const garageClass = useGarageContext()
+	const lightsAnimation = useLightsAnimation()
 
 	return (
 		<div className="w-full h-full flex flex-col">
@@ -56,7 +55,7 @@ function LightAnimationsList() {
 					{ANIMATIONS.map((animation) => (
 						<div
 							key={animation.id}
-							onClick={() => garageClass.setSelectedAnimation(animation.id)}
+							onClick={() => lightsAnimation(animation.id)}
 							className={cn(
 								"p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2",
 								garageClass.selectedAnimation === animation.id
