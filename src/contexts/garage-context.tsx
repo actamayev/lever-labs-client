@@ -14,7 +14,7 @@ class GarageClass {
 		4: "#00bcd4",
 		5: "#00bcd4"
 	}
-	public selectedAnimation: LightAnimation = "static"
+	public selectedAnimation: LightAnimation | null = null
 
 	// Driving state
 	public isDriving: boolean = false
@@ -43,6 +43,10 @@ class GarageClass {
 	})
 
 	public setSelectedAnimation = action((animationId: LightAnimation): void => {
+		if (this.selectedAnimation === animationId) {
+			this.selectedAnimation = null
+			return
+		}
 		this.selectedAnimation = animationId
 	})
 

@@ -60,8 +60,8 @@ function LightAnimationsList() {
 							className={cn(
 								"p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2",
 								garageClass.selectedAnimation === animation.id
-									? "bg-swan border-swan"
-									: "hover:bg-swan"
+									? "bg-swan border-swan border-l-2 border-l-macaw"
+									: "hover:bg-swan border-l-transparent border-l-2"
 							)}
 						>
 							<div className="flex-shrink-0 !text-eel">
