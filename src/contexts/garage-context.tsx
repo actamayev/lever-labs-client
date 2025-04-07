@@ -16,6 +16,10 @@ class GarageClass {
 	}
 	public selectedAnimation: LightAnimation = "static"
 
+	// Driving state
+	public isDriving: boolean = false
+	public driveDirections: Set<DriveDirection> = new Set()
+
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -42,6 +46,26 @@ class GarageClass {
 		this.selectedAnimation = animationId
 	})
 
+	// Driving methods
+	public drive = action((direction: DriveDirection): void => {
+		this.isDriving = true
+		this.driveDirections.add(direction)
+
+		// In a real app, you would send commands to the robot here
+		console.log(`Driving ${direction}`)
+	})
+
+	public stopDriving = action((direction: DriveDirection): void => {
+		this.driveDirections.delete(direction)
+
+		if (this.driveDirections.size === 0) {
+			this.isDriving = false
+		}
+
+		// In a real app, you would send stop commands to the robot here
+		console.log(`Stopped driving ${direction}`)
+	})
+
 	public logout() {
 		this.setSelectedColor("#00bcd4")
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -54,6 +78,8 @@ class GarageClass {
 			5: "#00bcd4"
 		}
 		this.setSelectedAnimation("static")
+		this.isDriving = false
+		this.driveDirections.clear()
 	}
 }
 

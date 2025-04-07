@@ -1,16 +1,16 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useGarageContext } from "../../contexts/garage-context"
-import { cn } from "../../lib/shadcn/utils"
+import { useGarageContext } from "../../../contexts/garage-context"
+import { cn } from "../../../lib/shadcn/utils"
 
 // Define dot positions
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DOT_POSITIONS = [
-	"top-2 left-2",         // Top Left
-	"top-2 right-0",        // Top Right
-	"top-1/2 -translate-y-1/2 left-0", // Middle Left
-	"top-1/2 -translate-y-1/2 right-0", // Middle Right
+	"top-2 left-10",         // Top Left
+	"top-2 right-8",        // Top Right
+	"top-1/4 -translate-y-1/2 left-3", // Middle Left
+	"top-1/4 -translate-y-1/2 right-3", // Middle Right
 	"bottom-0 left-10",      // Bottom Left
 	"bottom-0 right-8",     // Bottom Right
 ]

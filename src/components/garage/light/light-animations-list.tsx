@@ -1,14 +1,14 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useGarageContext } from "../../contexts/garage-context"
+import { Rainbow, Siren } from "lucide-react"
+import { cn } from "../../../lib/shadcn/utils"
+import { CustomYoga } from "../../icons/custom-yoga"
 import { ScrollArea } from "@/components/shadcn/ui/scroll-area"
-import { Waves, Rainbow } from "lucide-react"
-import { CustomYoga } from "../icons/custom-yoga"
-import { cn } from "../../lib/shadcn/utils"
+import { useGarageContext } from "../../../contexts/garage-context"
 
 // Define animation type with icon property
-type LightAnimation = "static" | "breathing" | "pulse" | "strobe" | "rainbow" | "wave"
+type LightAnimation = "static" | "breathing" | "rainbow" | "strobe"
 
 interface Animation {
 	id: LightAnimation
@@ -19,6 +19,12 @@ interface Animation {
 
 // Animation types with icons
 const ANIMATIONS: Animation[] = [
+	// {
+	// 	id: "static",
+	// 	name: "Static",
+	// 	description: "Slowly fades in and out",
+	// 	icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+	// },
 	{
 		id: "breathing",
 		name: "Breathing",
@@ -32,10 +38,10 @@ const ANIMATIONS: Animation[] = [
 		icon: <Rainbow className="h-4 w-4" />
 	},
 	{
-		id: "wave",
-		name: "Wave",
-		description: "Color waves across selected lights",
-		icon: <Waves className="h-4 w-4" />
+		id: "strobe",
+		name: "Strobe",
+		description: "Strobe light",
+		icon: <Siren className="h-4 w-4" />
 	},
 ]
 
@@ -44,8 +50,8 @@ function LightAnimationsList() {
 
 	return (
 		<div className="w-full h-full flex flex-col">
-			<h3 className="text-sm font-medium mb-2">Light Animations</h3>
-			<ScrollArea className="h-full flex-grow rounded-md border border-hare">
+			<h3 className="text-sm font-medium mb-2">Animations</h3>
+			<ScrollArea className="h-full flex-grow rounded-md border-2 border-swan">
 				<div className="p-2 space-y-2">
 					{ANIMATIONS.map((animation) => (
 						<div

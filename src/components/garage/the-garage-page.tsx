@@ -3,9 +3,10 @@ import { Speaker } from "lucide-react"
 import Workbench from "../workbench/workbench"
 import { CustomWheel } from "../icons/custom-wheel"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
-import ColorPicker from "./color-picker"
-import LightDotsSelector from "./light-dots-selector"
-import LightAnimationsList from "./light-animations-list"
+import ColorPicker from "./light/color-picker"
+import LightDotsSelector from "./light/light-dots-selector"
+import LightAnimationsList from "./light/light-animations-list"
+import DrivingControls from "./driving/driving-controls"
 
 export default function TheGaragePage() {
 	return (
@@ -20,7 +21,10 @@ export default function TheGaragePage() {
 							<CustomWheel />
 							<h2 className="text-xl font-bold text-center">Driving</h2>
 						</div>
-						{/* Driving content will go here */}
+						{/* Added our DrivingControls component here */}
+						<div className="flex-grow flex items-center justify-center">
+							<DrivingControls />
+						</div>
 					</div>
 
 					{/* Vertical separator */}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { HexColorPicker, HexColorInput } from "react-colorful"
 import { observer } from "mobx-react"
-import { useGarageContext } from "../../contexts/garage-context"
+import { useGarageContext } from "../../../contexts/garage-context"
 
 function ColorPicker ()  {
 	const garage = useGarageContext()
