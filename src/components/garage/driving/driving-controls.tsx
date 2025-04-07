@@ -1,20 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { observer } from "mobx-react"
+import { useEffect, useState } from "react"
 import { useGarageContext } from "../../../contexts/garage-context"
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
-import { cn } from "../../../lib/shadcn/utils"
-import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import ArrowKeyButton from "./arrow-key-button" // Make sure the path is correct
 
 // eslint-disable-next-line max-lines-per-function
 function DrivingControls() {
 	const garage = useGarageContext()
-	const defaultSiteTheme = useDefaultSiteTheme()
-	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-
 	// Track which buttons are currently pressed
 	const [pressedButtons, setPressedButtons] = useState({
 		up: false,
@@ -94,7 +87,7 @@ function DrivingControls() {
 	}, [garage])
 
 	// Button press handlers
-	const handleButtonDown = (direction: "up" | "down" | "left" | "right") => {
+	const handleButtonDown = (direction: MotorDirection) => {
 		setPressedButtons(prev => ({ ...prev, [direction]: true }))
 		switch (direction) {
 		case "up":
@@ -112,7 +105,7 @@ function DrivingControls() {
 		}
 	}
 
-	const handleButtonUp = (direction: "up" | "down" | "left" | "right") => {
+	const handleButtonUp = (direction: MotorDirection) => {
 		setPressedButtons(prev => ({ ...prev, [direction]: false }))
 		switch (direction) {
 		case "up":
@@ -130,77 +123,45 @@ function DrivingControls() {
 		}
 	}
 
-	// Create direct button styles with proper tactile behavior
-	const getButtonClasses = (isPressed: boolean) => cn(
-		"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
-		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-		isPressed && "transform translate-y-1 shadow-none bg-blue-300 dark:bg-blue-950"
-	)
-
 	return (
 		<div className="flex flex-col items-center justify-center">
 			<div className="grid grid-cols-3 gap-2 w-48">
 				{/* Top row - Up button */}
 				<div className="col-start-2">
-					<TactileButton
-						className={getButtonClasses(pressedButtons.up)}
-						shadowColor={shadowColor}
-						shadowHeight={4}
-						onMouseDown={() => handleButtonDown("up")}
-						onMouseUp={() => handleButtonUp("up")}
-						onMouseLeave={() => pressedButtons.up && handleButtonUp("up")}
-						onTouchStart={() => handleButtonDown("up")}
-						onTouchEnd={() => handleButtonUp("up")}
-					>
-						<ArrowUp size={24} />
-					</TactileButton>
+					<ArrowKeyButton
+						direction="up"
+						isPressed={pressedButtons.up}
+						onButtonDown={handleButtonDown}
+						onButtonUp={handleButtonUp}
+					/>
 				</div>
 
 				{/* Middle row with explicit column positioning */}
 				<div className="col-start-1">
-					<TactileButton
-						className={getButtonClasses(pressedButtons.left)}
-						shadowColor={shadowColor}
-						shadowHeight={4}
-						onMouseDown={() => handleButtonDown("left")}
-						onMouseUp={() => handleButtonUp("left")}
-						onMouseLeave={() => pressedButtons.left && handleButtonUp("left")}
-						onTouchStart={() => handleButtonDown("left")}
-						onTouchEnd={() => handleButtonUp("left")}
-					>
-						<ArrowLeft size={24} />
-					</TactileButton>
+					<ArrowKeyButton
+						direction="left"
+						isPressed={pressedButtons.left}
+						onButtonDown={handleButtonDown}
+						onButtonUp={handleButtonUp}
+					/>
 				</div>
 
 				<div className="col-start-2">
-					<TactileButton
-						className={getButtonClasses(pressedButtons.down)}
-						shadowColor={shadowColor}
-						shadowHeight={4}
-						onMouseDown={() => handleButtonDown("down")}
-						onMouseUp={() => handleButtonUp("down")}
-						onMouseLeave={() => pressedButtons.down && handleButtonUp("down")}
-						onTouchStart={() => handleButtonDown("down")}
-						onTouchEnd={() => handleButtonUp("down")}
-					>
-						<ArrowDown size={24} />
-					</TactileButton>
+					<ArrowKeyButton
+						direction="down"
+						isPressed={pressedButtons.down}
+						onButtonDown={handleButtonDown}
+						onButtonUp={handleButtonUp}
+					/>
 				</div>
 
 				<div className="col-start-3">
-					<TactileButton
-						className={getButtonClasses(pressedButtons.right)}
-						shadowColor={shadowColor}
-						shadowHeight={4}
-						onMouseDown={() => handleButtonDown("right")}
-						onMouseUp={() => handleButtonUp("right")}
-						onMouseLeave={() => pressedButtons.right && handleButtonUp("right")}
-						onTouchStart={() => handleButtonDown("right")}
-						onTouchEnd={() => handleButtonUp("right")}
-					>
-						<ArrowRight size={24} />
-					</TactileButton>
+					<ArrowKeyButton
+						direction="right"
+						isPressed={pressedButtons.right}
+						onButtonDown={handleButtonDown}
+						onButtonUp={handleButtonUp}
+					/>
 				</div>
 			</div>
 
