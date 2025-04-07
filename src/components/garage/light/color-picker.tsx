@@ -62,7 +62,7 @@ function ColorPicker() {
 			}
 
 			socketClass.emitLedColorControl(ledControlData)
-		}, 10),
+		}, 50),
 		[pipClass.selectedPip, getRgbValues, socketClass]
 	)
 
