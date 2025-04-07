@@ -14,7 +14,7 @@ class GarageClass {
 		4: "#00bcd4",
 		5: "#00bcd4"
 	}
-	public selectedAnimation: LightAnimation | null = null
+	public selectedAnimation: LightAnimation = "No animation"
 
 	// Driving state
 	public isDriving: boolean = false
@@ -43,10 +43,7 @@ class GarageClass {
 	})
 
 	public setSelectedAnimation = action((animationId: LightAnimation): void => {
-		if (this.selectedAnimation === animationId) {
-			this.selectedAnimation = null
-			return
-		}
+		if (this.selectedAnimation === animationId) return
 		this.selectedAnimation = animationId
 	})
 
@@ -81,7 +78,7 @@ class GarageClass {
 			4: "#00bcd4",
 			5: "#00bcd4"
 		}
-		this.setSelectedAnimation("static")
+		this.setSelectedAnimation("No animation")
 		this.isDriving = false
 		this.driveDirections.clear()
 	}

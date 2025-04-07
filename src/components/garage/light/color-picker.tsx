@@ -43,6 +43,7 @@ function ColorPicker() {
 	}, [getRgbValues, hsva.a])
 
 	// Debounced function to emit LED colors
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const emitLedColors = useCallback(
 		debounce(() => {
 			if (isNull(pipClass.selectedPip)) return
@@ -68,6 +69,7 @@ function ColorPicker() {
 		const hexColor = hsvaToHex(hsva)
 		garage.setSelectedColor(hexColor)
 
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (garage.selectedDots && garage.selectedDots.length > 0) {
 			garage.updateDotColor(garage.selectedDots, hexColor)
 		}

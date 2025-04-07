@@ -36,6 +36,7 @@ function DrivingControls() {
 		return () => {
 			clearInterval(intervalId)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []) // Remove isButtonPressed from the dependency array
 
 	// Wrapper functions to update visual state alongside actual state

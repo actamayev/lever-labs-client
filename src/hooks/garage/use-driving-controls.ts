@@ -182,6 +182,7 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 			// Clear any active motor control when unmounting
 			applyMotorControl({ vertical: 0, horizontal: 0 })
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	// Return handlers for button presses (for the ArrowKeyButton component)
