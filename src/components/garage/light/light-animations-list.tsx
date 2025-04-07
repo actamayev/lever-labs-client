@@ -2,48 +2,49 @@
 
 import { observer } from "mobx-react"
 import { Rainbow, Siren, ChevronDown } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import { CustomYoga } from "../../icons/custom-yoga"
-import { useGarageContext } from "../../../contexts/garage-context"
-import useLightsAnimation from "../../../hooks/garage/lights-animation"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import { cn } from "../../../lib/shadcn/utils"
+import { CustomYoga } from "../../icons/custom-yoga"
+import { CustomSnake } from "../../icons/custom-snake"
+import { useGarageContext } from "../../../contexts/garage-context"
+import useLightsAnimation from "../../../hooks/garage/lights-animation"
 
 interface Animation {
-  id: LightAnimation
-  name: string
-  description: string
-  icon: React.ReactNode
+	name: LightAnimation
+	description: string
+	icon: React.ReactNode
 }
 
 const ANIMATIONS: Animation[] = [
 	{
-		id: "No animation",
 		name: "No animation",
 		description: "Slowly fades in and out",
 		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 	{
-		id: "Breathing",
 		name: "Breathing",
 		description: "Slowly fades in and out",
 		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 	{
-		id: "Rainbow",
 		name: "Rainbow",
 		description: "Cycles through colors",
 		icon: <Rainbow className="h-4 w-4" />
 	},
 	{
-		id: "Strobe",
 		name: "Strobe",
 		description: "Strobe light",
 		icon: <Siren className="h-4 w-4" />
+	},
+	{
+		name: "Snake",
+		description: "Snake description",
+		icon: <CustomSnake className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 ]
 
@@ -66,7 +67,7 @@ function LightAnimationsList() {
 					>
 						<span className="flex items-center gap-2">
 							{/* Display the icon of the selected animation */}
-							{ANIMATIONS.find(anim => anim.id === garageClass.selectedAnimation)?.icon}
+							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon}
 							{garageClass.selectedAnimation}
 						</span>
 						<ChevronDown className="h-4 w-4 text-gray-500" />
@@ -77,11 +78,11 @@ function LightAnimationsList() {
 				>
 					{ANIMATIONS.map((animation) => (
 						<DropdownMenuItem
-							key={animation.id}
-							onClick={() => lightsAnimation(animation.id)}
+							key={animation.name}
+							onClick={() => lightsAnimation(animation.name)}
 							className={cn(
 								"p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2",
-								garageClass.selectedAnimation === animation.id
+								garageClass.selectedAnimation === animation.name
 									? "bg-blue-50 border-l-4 border-l-blue-500 text-blue-700"
 									: "hover:bg-gray-50 border-l-4 border-l-transparent text-gray-700"
 							)}
