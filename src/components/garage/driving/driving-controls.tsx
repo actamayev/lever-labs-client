@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { observer } from "mobx-react"
 import { useGarageContext } from "../../../contexts/garage-context"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
@@ -12,6 +13,7 @@ import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 function DrivingControls() {
 	const garage = useGarageContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
+	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 
 	// Track which buttons are currently pressed
 	const [pressedButtons, setPressedButtons] = useState({
@@ -128,7 +130,13 @@ function DrivingControls() {
 		}
 	}
 
-	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
+	// Create direct button styles with proper tactile behavior
+	const getButtonClasses = (isPressed: boolean) => cn(
+		"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
+		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
+		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
+		isPressed && "transform translate-y-1 shadow-none bg-blue-300 dark:bg-blue-950"
+	)
 
 	return (
 		<div className="flex flex-col items-center justify-center">
@@ -136,15 +144,7 @@ function DrivingControls() {
 				{/* Top row - Up button */}
 				<div className="col-start-2">
 					<TactileButton
-						className={cn(
-							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
-							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-							pressedButtons.up && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
-						)}
+						className={getButtonClasses(pressedButtons.up)}
 						shadowColor={shadowColor}
 						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("up")}
@@ -160,15 +160,7 @@ function DrivingControls() {
 				{/* Middle row with explicit column positioning */}
 				<div className="col-start-1">
 					<TactileButton
-						className={cn(
-							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
-							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-							pressedButtons.left && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-							shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-							cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-							dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
-						)}
+						className={getButtonClasses(pressedButtons.left)}
 						shadowColor={shadowColor}
 						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("left")}
@@ -183,15 +175,7 @@ function DrivingControls() {
 
 				<div className="col-start-2">
 					<TactileButton
-						className={cn(
-							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
-							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-							pressedButtons.down && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
-						)}
+						className={getButtonClasses(pressedButtons.down)}
 						shadowColor={shadowColor}
 						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("down")}
@@ -206,15 +190,7 @@ function DrivingControls() {
 
 				<div className="col-start-3">
 					<TactileButton
-						className={cn(
-							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
-							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-							pressedButtons.right && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
-						)}
+						className={getButtonClasses(pressedButtons.right)}
 						shadowColor={shadowColor}
 						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("right")}
