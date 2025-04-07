@@ -141,12 +141,12 @@ function DrivingControls() {
 							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
 							pressedButtons.up && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-              shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-              cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-              dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
+        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
+        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
+        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
 						)}
 						shadowColor={shadowColor}
-						shadowHeight={2}
+						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("up")}
 						onMouseUp={() => handleButtonUp("up")}
 						onMouseLeave={() => pressedButtons.up && handleButtonUp("up")}
@@ -157,20 +157,20 @@ function DrivingControls() {
 					</TactileButton>
 				</div>
 
-				{/* Middle row - Left, Down, Right buttons */}
-				<div>
+				{/* Middle row with explicit column positioning */}
+				<div className="col-start-1">
 					<TactileButton
 						className={cn(
 							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
 							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
 							pressedButtons.left && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-              shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-              cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-              dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
+							shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
+							cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
+							dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
 						)}
 						shadowColor={shadowColor}
-						shadowHeight={2}
+						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("left")}
 						onMouseUp={() => handleButtonUp("left")}
 						onMouseLeave={() => pressedButtons.left && handleButtonUp("left")}
@@ -181,19 +181,19 @@ function DrivingControls() {
 					</TactileButton>
 				</div>
 
-				<div>
+				<div className="col-start-2">
 					<TactileButton
 						className={cn(
 							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
 							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
 							pressedButtons.down && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-              shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-              cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-              dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
+        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
+        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
+        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
 						)}
 						shadowColor={shadowColor}
-						shadowHeight={2}
+						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("down")}
 						onMouseUp={() => handleButtonUp("down")}
 						onMouseLeave={() => pressedButtons.down && handleButtonUp("down")}
@@ -204,19 +204,19 @@ function DrivingControls() {
 					</TactileButton>
 				</div>
 
-				<div>
+				<div className="col-start-3">
 					<TactileButton
 						className={cn(
 							"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
 							"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 							"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
 							pressedButtons.right && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
-              shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-              cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-              dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
+        shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
+        cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
+        dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
 						)}
 						shadowColor={shadowColor}
-						shadowHeight={2}
+						shadowHeight={4}
 						onMouseDown={() => handleButtonDown("right")}
 						onMouseUp={() => handleButtonUp("right")}
 						onMouseLeave={() => pressedButtons.right && handleButtonUp("right")}
