@@ -2,12 +2,19 @@
 
 import { observer } from "mobx-react"
 import Wheel from "@uiw/react-color-wheel"
+import isNull from "lodash-es/isNull"
+import debounce from "lodash-es/debounce"
 import { useState, useEffect, useCallback } from "react"
 import { hsvaToHex, hsvaToRgba, rgbaToHsva } from "@uiw/color-convert"
 import { useGarageContext } from "../../../contexts/garage-context"
+import { useSocketContext } from "../../../contexts/socket-context"
+import { usePipContext } from "../../../contexts/pip-context"
 
+// eslint-disable-next-line max-lines-per-function
 function ColorPicker() {
 	const garage = useGarageContext()
+	const pipClass = usePipContext()
+	const socketClass = useSocketContext()
 	const [hsva, setHsva] = useState({ h: 0, s: 100, v: 100, a: 1 })
 
 	// Get RGB values using the library conversion
@@ -36,7 +43,30 @@ function ColorPicker() {
 		setHsva(newHsva)
 	}, [getRgbValues, hsva.a])
 
-	// When hsva changes, update the garage
+	// Create a debounced function to emit LED colors
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	const debouncedEmitLedColors = useCallback(
+		debounce(() => {
+			if (isNull(pipClass.selectedPip)) return
+			const rgb = getRgbValues()
+
+			// Set all colors to the same value
+			const ledControlData = {
+				topLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				topRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				middleLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				middleRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				backLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				backRightColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
+				pipUUID: pipClass.selectedPip.pipUUID
+			}
+
+			socketClass.emitLedColorControl(ledControlData)
+		}, 10),
+		[pipClass.selectedPip, getRgbValues, socketClass]
+	)
+
+	// When hsva changes, update the garage and emit socket message
 	useEffect(() => {
 		const hexColor = hsvaToHex(hsva)
 		garage.setSelectedColor(hexColor)
@@ -45,7 +75,15 @@ function ColorPicker() {
 		if (garage.selectedDots && garage.selectedDots.length > 0) {
 			garage.updateDotColor(garage.selectedDots, hexColor)
 		}
-	}, [hsva, garage])
+
+		// Call the debounced function
+		debouncedEmitLedColors()
+
+		// Cleanup: cancel any pending debounced calls when component unmounts
+		return () => {
+			debouncedEmitLedColors.cancel()
+		}
+	}, [hsva, garage, debouncedEmitLedColors])
 
 	const rgb = getRgbValues()
 

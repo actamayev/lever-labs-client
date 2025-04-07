@@ -9,6 +9,7 @@ import { useSocketContext } from "../../../contexts/socket-context"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
 
+// TODO: Delete this hook and anywhere it's used
 export default function useHandleMotorControl(): (motorControl: MotorControlInput) => void {
 	const blueDotApiClient = useApiClientContext()
 	const labDemoClass = useLabDemoContext()

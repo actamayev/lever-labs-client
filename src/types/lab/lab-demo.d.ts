@@ -15,6 +15,16 @@ declare global {
 		pipUUID: PipUUID
 	}
 
+	interface LedControlDataToSend {
+		topLeftColor: RGB
+		topRightColor: RGB
+		middleLeftColor: RGB
+		middleRightColor: RGB
+		backLeftColor: RGB
+		backRightColor: RGB
+		pipUUID: PipUUID
+	}
+
 	type LEDDemo =
 	| "LED Solid Color"
 	| "LED Rainbow"
