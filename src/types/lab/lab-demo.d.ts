@@ -10,19 +10,25 @@ declare global {
 
 	type MotorDirection = "up" | "down" | "left" | "right"
 
-	interface MotorControlDataToSend {
-		motorControl: MotorControlInput
+	interface PipUUIDInterface {
 		pipUUID: PipUUID
 	}
 
-	interface LedControlDataToSend {
+	interface MotorControlDataToSend extends PipUUIDInterface {
+		motorControl: MotorControlInput
+	}
+
+	interface LedControlDataToSend extends PipUUIDInterface {
 		topLeftColor: RGB
 		topRightColor: RGB
 		middleLeftColor: RGB
 		middleRightColor: RGB
 		backLeftColor: RGB
 		backRightColor: RGB
-		pipUUID: PipUUID
+	}
+
+	interface MaxMotorSpeedDataToSend extends PipUUIDInterface {
+		newMaxSpeed: number
 	}
 
 	type LEDDemo =

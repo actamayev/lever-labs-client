@@ -9,7 +9,7 @@ declare global {
 		| "Breathing"
 		| "Rainbow"
 		| "Strobe"
-		| "Snake"
+		// | "Snake"
 		// | "Turn off"
 		// | "Fade out"
 		// | "Pause breathing"

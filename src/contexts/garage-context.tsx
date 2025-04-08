@@ -19,6 +19,7 @@ class GarageClass {
 	// Driving state
 	public isDriving: boolean = false
 	public driveDirections: Set<DriveDirection> = new Set()
+	public maxDrivingSpeed: number = 100
 
 	constructor() {
 		makeAutoObservable(this)
@@ -67,6 +68,10 @@ class GarageClass {
 		console.log(`Stopped driving ${direction}`)
 	})
 
+	public setMaxDrivingSpeed = action((newMaxDrivingSpeed: number): void => {
+		this.maxDrivingSpeed = newMaxDrivingSpeed
+	})
+
 	public logout() {
 		this.setSelectedColor("#00bcd4")
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -81,6 +86,7 @@ class GarageClass {
 		this.setSelectedAnimation("No animation")
 		this.isDriving = false
 		this.driveDirections.clear()
+		this.setMaxDrivingSpeed(100)
 	}
 }
 

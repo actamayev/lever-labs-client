@@ -10,7 +10,7 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
-import { CustomSnake } from "../../icons/custom-snake"
+// import { CustomSnake } from "../../icons/custom-snake"
 import { useGarageContext } from "../../../contexts/garage-context"
 import useLightsAnimation from "../../../hooks/garage/lights-animation"
 
@@ -41,11 +41,11 @@ const ANIMATIONS: Animation[] = [
 		description: "Strobe light",
 		icon: <Siren className="h-4 w-4" />
 	},
-	{
-		name: "Snake",
-		description: "Snake description",
-		icon: <CustomSnake className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
-	},
+	// {
+	// 	name: "Snake",
+	// 	description: "Snake description",
+	// 	icon: <CustomSnake className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+	// },
 ]
 
 function LightAnimationsList() {

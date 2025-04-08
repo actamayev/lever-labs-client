@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import Wheel from "@uiw/react-color-wheel"
 import isNull from "lodash-es/isNull"
-import debounce from "lodash-es/debounce" // Import debounce from lodash
-import { useState, useEffect, useCallback } from "react"
-import { hsvaToHex, hsvaToRgba, rgbaToHsva } from "@uiw/color-convert"
+import debounce from "lodash-es/debounce"
+import { useState, useCallback } from "react"
+import { ColorResult, hsvaToHex, hsvaToRgba, rgbaToHsva } from "@uiw/color-convert"
 import { usePipContext } from "../../../contexts/pip-context"
 import { useGarageContext } from "../../../contexts/garage-context"
 import { useSocketContext } from "../../../contexts/socket-context"
@@ -27,27 +27,14 @@ function ColorPicker() {
 		}
 	}, [hsva])
 
-	// Handle RGB input change using library conversion
-	const handleRgbChange = useCallback((component: "r" | "g" | "b", value: number) => {
-		const rgb = getRgbValues()
-		rgb[component] = Math.max(0, Math.min(255, value))
-
-		const newHsva = rgbaToHsva({
-			r: rgb.r,
-			g: rgb.g,
-			b: rgb.b,
-			a: hsva.a
-		})
-
-		setHsva(newHsva)
-	}, [getRgbValues, hsva.a])
-
-	// Debounced function to emit LED colors
+	// Create a debounced function for socket emission only
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const emitLedColors = useCallback(
-		debounce(() => {
-			if (isNull(pipClass.selectedPip)) return
-			const rgb = getRgbValues()
+	const debouncedEmitLedColors = useCallback(
+		debounce((rgb) => {
+			if (
+				isNull(pipClass.selectedPip) ||
+        pipClass.selectedPip.pipConnectionStatus === "offline"
+			) return
 
 			const ledControlData = {
 				topLeftColor: { red: rgb.r, green: rgb.g, blue: rgb.b },
@@ -61,26 +48,58 @@ function ColorPicker() {
 
 			socketClass.emitLedColorControl(ledControlData)
 		}, 10), // 10ms debounce
-		[pipClass.selectedPip, getRgbValues, socketClass] // Dependencies
+		[pipClass.selectedPip, socketClass] // Dependencies
 	)
 
-	// When hsva changes, update the garage and emit socket message
-	useEffect(() => {
-		const hexColor = hsvaToHex(hsva)
+	// Handle color change from color wheel
+	const handleColorChange = useCallback((color: ColorResult) => {
+		setHsva(color.hsva)
+
+		// Immediately update app state
+		const hexColor = hsvaToHex(color.hsva)
 		garage.setSelectedColor(hexColor)
 
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		// Update dot colors if dots are selected
 		if (garage.selectedDots && garage.selectedDots.length > 0) {
 			garage.updateDotColor(garage.selectedDots, hexColor)
 		}
 
-		emitLedColors()
-
-		// Cleanup: Cancel any pending debounced calls on unmount or when hsva changes
-		return () => {
-			emitLedColors.cancel()
+		// Debounce only the socket emission
+		const rgb = {
+			r: Math.round(color.rgba.r),
+			g: Math.round(color.rgba.g),
+			b: Math.round(color.rgba.b)
 		}
-	}, [hsva, garage, emitLedColors])
+		debouncedEmitLedColors(rgb)
+	}, [garage, debouncedEmitLedColors])
+
+	// Handle RGB input change
+	const handleRgbChange = useCallback((component: "r" | "g" | "b", value: number) => {
+		const rgb = getRgbValues()
+		rgb[component] = Math.max(0, Math.min(255, value))
+
+		const newHsva = rgbaToHsva({
+			r: rgb.r,
+			g: rgb.g,
+			b: rgb.b,
+			a: hsva.a
+		})
+
+		// Update HSVA state
+		setHsva(newHsva)
+
+		// Immediately update app state
+		const hexColor = hsvaToHex(newHsva)
+		garage.setSelectedColor(hexColor)
+
+		// Update dot colors if dots are selected
+		if (garage.selectedDots && garage.selectedDots.length > 0) {
+			garage.updateDotColor(garage.selectedDots, hexColor)
+		}
+
+		// Debounce only the socket emission
+		debouncedEmitLedColors(rgb)
+	}, [getRgbValues, hsva.a, garage, debouncedEmitLedColors])
 
 	const rgb = getRgbValues()
 
@@ -89,7 +108,7 @@ function ColorPicker() {
 			<div className="w-full max-w-[180px] h-[180px]">
 				<Wheel
 					color={hsva}
-					onChange={(color) => setHsva(color.hsva)}
+					onChange={handleColorChange}
 					width={180}
 					height={180}
 				/>
