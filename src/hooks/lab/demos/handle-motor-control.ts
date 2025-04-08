@@ -6,6 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import { usePipContext } from "../../../contexts/pip-context"
 import useToastOptions from "../../../components/toast-options"
 import { useSocketContext } from "../../../contexts/socket-context"
+import { useGarageContext } from "../../../contexts/garage-context"
 import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
 
@@ -16,6 +17,7 @@ export default function useHandleMotorControl(): (motorControl: MotorControlInpu
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
 	const socketClass = useSocketContext()
+	const garageClass = useGarageContext()
 
 	return useCallback((motorControl: MotorControlInput): void => {
 		if (isNull(blueDotApiClient.httpClient.accessToken)) return
@@ -33,7 +35,8 @@ export default function useHandleMotorControl(): (motorControl: MotorControlInpu
 		labDemoClass.setMotorState(motorControl) // Update to handle object instead of Set
 		socketClass.emitMotorControl({
 			motorControl,
-			pipUUID: pipClass.selectedPip.pipUUID
+			pipUUID: pipClass.selectedPip.pipUUID,
+			motorThrottlePercent: garageClass.motorThrottlePercent
 		})
-	}, [blueDotApiClient.httpClient.accessToken, labDemoClass, pipClass.selectedPip, socketClass, toast])
+	}, [blueDotApiClient.httpClient.accessToken, garageClass.motorThrottlePercent, labDemoClass, pipClass.selectedPip, socketClass, toast])
 }
