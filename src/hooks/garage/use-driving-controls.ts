@@ -39,7 +39,7 @@ interface ReturnFunctions {
 
 // eslint-disable-next-line max-lines-per-function
 export default function useHybridDrivingControls(): ReturnFunctions {
-	const garage = useGarageContext()
+	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
@@ -48,6 +48,7 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 	const pressedKeysRef = useRef<Map<MotorDirection, number>>(new Map())
 	const pressedDirectionsRef = useRef<Set<DriveDirection>>(new Set())
 	const motorStateRef = useRef<MotorControlInput>({ vertical: 0, horizontal: 0 })
+	const lastThrottlePercentRef = useRef<number>(garageClass.motorThrottlePercent)
 
 	// Compute motor control values based on pressed keys
 	const computeMotorControl = (keys: Map<MotorDirection, number>): MotorControlInput => {
@@ -88,17 +89,22 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 	}
 
 	// Apply motor control to both garage and socket
-	const applyMotorControl = (motorControl: MotorControlInput): void => {
-		// Skip if no change in motor control
+	const applyMotorControl = (motorControl: MotorControlInput, forceEmit: boolean = false): void => {
+		const throttleChanged = lastThrottlePercentRef.current !== garageClass.motorThrottlePercent
+
+		// Skip if no change in motor control and throttle hasn't changed, unless forced
 		if (
+			!forceEmit &&
+			!throttleChanged &&
 			motorControl.vertical === motorStateRef.current.vertical &&
 			motorControl.horizontal === motorStateRef.current.horizontal
 		) {
 			return
 		}
 
-		// Update reference
+		// Update references
 		motorStateRef.current = motorControl
+		lastThrottlePercentRef.current = garageClass.motorThrottlePercent
 
 		// 1. Update garage using drive directions
 		const newDirections = motorControlToDriveDirections(motorControl)
@@ -107,14 +113,14 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 		// Stop directions that are no longer active
 		currentDirections.forEach(dir => {
 			if (!newDirections.has(dir)) {
-				garage.stopDriving(dir)
+				garageClass.stopDriving(dir)
 			}
 		})
 
 		// Start directions that are newly active
 		newDirections.forEach(dir => {
 			if (!currentDirections.has(dir)) {
-				garage.drive(dir)
+				garageClass.drive(dir)
 			}
 		})
 
@@ -129,10 +135,13 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 		if (pipClass.selectedPip.pipConnectionStatus === "offline") {
 			return toast.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
 		}
+
+		console.log("garageClass.motorThrottlePercent", garageClass.motorThrottlePercent)
 		// Emit motor control via socket
 		socketClass.emitMotorControl({
 			motorControl,
-			pipUUID: pipClass.selectedPip.pipUUID
+			pipUUID: pipClass.selectedPip.pipUUID,
+			motorThrottlePercent: garageClass.motorThrottlePercent
 		})
 	}
 
@@ -184,6 +193,15 @@ export default function useHybridDrivingControls(): ReturnFunctions {
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
+	// Watch for changes in motorThrottlePercent and emit updates
+	useEffect(() => {
+		// If throttle changes, re-emit the current motor state
+		if (lastThrottlePercentRef.current !== garageClass.motorThrottlePercent) {
+			applyMotorControl(motorStateRef.current, true)
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [garageClass.motorThrottlePercent])
 
 	// Return handlers for button presses (for the ArrowKeyButton component)
 	return {

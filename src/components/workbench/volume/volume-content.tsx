@@ -17,6 +17,7 @@ import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
 
+// eslint-disable-next-line max-lines-per-function
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
@@ -29,6 +30,18 @@ function VolumeContent() {
 			workbenchClass.setIsMuted(false)
 		}
 	}, [workbenchClass])
+
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		// Prevent arrow keys from changing slider value
+		if (
+			event.key === "ArrowUp" ||
+			event.key === "ArrowDown" ||
+			event.key === "ArrowLeft" ||
+			event.key === "ArrowRight"
+		) {
+			event.preventDefault()
+		}
+	}
 
 	return (
 		<div className="w-full max-w-sm">
@@ -43,7 +56,11 @@ function VolumeContent() {
 				</div>
 			</div>
 
-			<div className="cursor-pointer mt-3">
+			<div
+				className="cursor-pointer mt-3"
+				onKeyDown={handleKeyDown}
+				tabIndex={0} // Make div focusable to capture key events
+			>
 				<Slider
 					defaultValue={[workbenchClass.volume]}
 					max={100}
@@ -51,6 +68,7 @@ function VolumeContent() {
 					onValueChange={handleVolumeChange}
 					className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
 					value={[workbenchClass.volume]}
+					onKeyDown={handleKeyDown} // Add key handler directly to Slider
 				/>
 			</div>
 			<Separator className="my-3" />

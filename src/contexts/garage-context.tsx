@@ -19,7 +19,7 @@ class GarageClass {
 	// Driving state
 	public isDriving: boolean = false
 	public driveDirections: Set<DriveDirection> = new Set()
-	public maxDrivingSpeed: number = 100
+	public motorThrottlePercent: number = 100
 
 	constructor() {
 		makeAutoObservable(this)
@@ -68,8 +68,8 @@ class GarageClass {
 		console.log(`Stopped driving ${direction}`)
 	})
 
-	public setMaxDrivingSpeed = action((newMaxDrivingSpeed: number): void => {
-		this.maxDrivingSpeed = newMaxDrivingSpeed
+	public setMotorThrottlePercent = action((newMotorThrottlePercent: number): void => {
+		this.motorThrottlePercent = newMotorThrottlePercent
 	})
 
 	public logout() {
@@ -86,7 +86,7 @@ class GarageClass {
 		this.setSelectedAnimation("No animation")
 		this.isDriving = false
 		this.driveDirections.clear()
-		this.setMaxDrivingSpeed(100)
+		this.setMotorThrottlePercent(100)
 	}
 }
 

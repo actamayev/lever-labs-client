@@ -16,6 +16,7 @@ declare global {
 
 	interface MotorControlDataToSend extends PipUUIDInterface {
 		motorControl: MotorControlInput
+		motorThrottlePercent: number
 	}
 
 	interface LedControlDataToSend extends PipUUIDInterface {
@@ -25,10 +26,6 @@ declare global {
 		middleRightColor: RGB
 		backLeftColor: RGB
 		backRightColor: RGB
-	}
-
-	interface MaxMotorSpeedDataToSend extends PipUUIDInterface {
-		newMaxSpeed: number
 	}
 
 	type LEDDemo =
