@@ -24,7 +24,7 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 
 			garageClass.setSelectedAnimation(newAnimation)
 
-			const newLightsAnimationResponse = await blueDotApiClient.workbenchDataService.lightsAnimation(
+			const newLightsAnimationResponse = await blueDotApiClient.garageDataService.lightsAnimation(
 				newAnimation, pipClass.selectedPip.pipUUID
 			)
 			if (!isEqual(newLightsAnimationResponse.status, 200) || isNonSuccessResponse(newLightsAnimationResponse.data)) {
@@ -33,6 +33,6 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.workbenchDataService, garageClass, pipClass.selectedPip])
+	}, [blueDotApiClient.garageDataService, blueDotApiClient.httpClient.accessToken, garageClass, pipClass.selectedPip])
 
 }

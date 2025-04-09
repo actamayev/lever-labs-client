@@ -20,10 +20,4 @@ export default class WorkbenchDataService {
 			`${this.pathHeader}/change-audible-status`, { audibleStatus, pipUUID }
 		)
 	}
-
-	async lightsAnimation(lightAnimation: LightAnimation, pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/lights-animation`, { lightAnimation, pipUUID }
-		)
-	}
 }

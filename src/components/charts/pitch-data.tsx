@@ -16,7 +16,7 @@ import React, { useEffect, useState, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/shadcn/ui/card"
 import { Button } from "@/components/shadcn/ui/button"
 import { Slider } from "@/components/shadcn/ui/slider"
-import { useLabDemoContext } from "../../contexts/lab-demo-context"
+import { useGarageContext } from "../../contexts/garage-context"
 
 // Configuration
 const centerAngle = 94
@@ -32,7 +32,7 @@ interface ChartData {
 
 // eslint-disable-next-line max-lines-per-function
 function AngleVisualization() {
-	const labDemoClass = useLabDemoContext()
+	const garageClass = useGarageContext()
 	const [formattedData, setFormattedData] = useState<ChartData[]>([])
 	const [isPaused, setIsPaused] = useState(false)
 	const [historyPosition, setHistoryPosition] = useState(100) // 0-100 percentage
@@ -40,10 +40,10 @@ function AngleVisualization() {
 
 	// Update all data when new pitch data comes in
 	useEffect(() => {
-		if (isEmpty(labDemoClass.pitchData)) return
+		if (isEmpty(garageClass.pitchData)) return
 
 		// Format all data
-		const chartData = labDemoClass.pitchData.map((angle, index) => ({
+		const chartData = garageClass.pitchData.map((angle, index) => ({
 			angle,
 			time: index * SAMPLE_INTERVAL / 1000 // Convert to seconds
 		}))
@@ -55,7 +55,7 @@ function AngleVisualization() {
 			updateDisplayedData(100) // Show most recent data
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [labDemoClass.pitchData.length, isPaused])
+	}, [garageClass.pitchData.length, isPaused])
 
 	// Function to update displayed data based on history position
 	const updateDisplayedData = (position: number) => {

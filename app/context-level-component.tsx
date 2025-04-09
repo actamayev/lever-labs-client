@@ -5,7 +5,6 @@ import GarageProvider from "../src/contexts/garage-context"
 import SocketProvider from "../src/contexts/socket-context"
 import AddPipProvider from "../src/contexts/add-pip-context"
 import SandboxProvider from "../src/contexts/sandbox-context"
-import LabDemoProvider from "../src/contexts/lab-demo-context"
 import WorkbenchProvider from "../src/contexts/workbench-context"
 import LabReadingProvider from "../src/contexts/lab-reading-context"
 import PersonalInfoProvider from "../src/contexts/personal-info-context"
@@ -25,15 +24,13 @@ export default function ContextLevelComponent ({ children } : { children: React.
 									<SocketProvider>
 										<LabReadingProvider>
 											<ActivityProgressProvider>
-												<LabDemoProvider>
-													<SandboxProvider>
-														<GarageProvider>
-															<WorkbenchProvider>
-																{children}
-															</WorkbenchProvider>
-														</GarageProvider>
-													</SandboxProvider>
-												</LabDemoProvider>
+												<SandboxProvider>
+													<GarageProvider>
+														<WorkbenchProvider>
+															{children}
+														</WorkbenchProvider>
+													</GarageProvider>
+												</SandboxProvider>
 											</ActivityProgressProvider>
 										</LabReadingProvider>
 									</SocketProvider>

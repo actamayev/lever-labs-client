@@ -1,18 +1,18 @@
 "use client"
 
 import { useCallback } from "react"
-import { useLabDemoContext } from "../../contexts/lab-demo-context"
+import { useGarageContext } from "../../contexts/garage-context"
 
 export default function useHandleIncomingSensorData(): (data: IncomingSensorData) => void {
-	const labDemoClass = useLabDemoContext()
+	const garageClass = useGarageContext()
 
 	return useCallback((data: IncomingSensorData) =>  {
-		labDemoClass.setSensorData(data)
+		garageClass.setSensorData(data)
 		// if (data.success) return
 
 		// return toast.negative({
 		// 	title: "Unable to control motor",
 		// 	description: data.error
 		// })
-	}, [labDemoClass])
+	}, [garageClass])
 }

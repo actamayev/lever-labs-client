@@ -1,5 +1,6 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
@@ -20,6 +21,10 @@ class GarageClass {
 	public isDriving: boolean = false
 	public driveDirections: Set<DriveDirection> = new Set()
 	public motorThrottlePercent: number = 100
+
+	// Sensor Data:
+	public sensorData: IncomingSensorData | null = null
+	public pitchData: number[] = []
 
 	constructor() {
 		makeAutoObservable(this)
@@ -72,6 +77,21 @@ class GarageClass {
 		this.motorThrottlePercent = newMotorThrottlePercent
 	})
 
+	public setSensorData = action((incomingSensorData: IncomingSensorData | null): void => {
+		this.sensorData = incomingSensorData
+		// console.log(incomingSensorData?.sensorPayload)
+		if (isNull(incomingSensorData)) return
+		this.addPitchData(incomingSensorData)
+	})
+
+	public addPitchData = action((incomingSensorData: IncomingSensorData): void => {
+		this.pitchData.push(incomingSensorData.sensorPayload.pitch)
+	})
+
+	public resetPitchData = action((): void => {
+		this.pitchData = []
+	})
+
 	public logout() {
 		this.setSelectedColor("#00bcd4")
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -87,6 +107,8 @@ class GarageClass {
 		this.isDriving = false
 		this.driveDirections.clear()
 		this.setMotorThrottlePercent(100)
+		this.setSensorData(null)
+		this.resetPitchData()
 	}
 }
 
