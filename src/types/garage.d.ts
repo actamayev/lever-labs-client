@@ -13,6 +13,19 @@ declare global {
 		// | "Turn off"
 		// | "Fade out"
 		// | "Pause breathing"
+
+	type MotorDirection = "up" | "down" | "left" | "right"
+
+	interface MotorControlInput {
+		vertical: -1 | 1 | 0
+		horizontal: -1 | 1 | 0
+	}
+
+	interface KeyMapping {
+		direction: MotorDirection
+		axis: "vertical" | "horizontal"
+		value: -1 | 1 | 0
+	}
 }
 
 export {}
