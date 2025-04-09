@@ -6,9 +6,8 @@ import { useGarageContext } from "../../contexts/garage-context"
 const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
 	acc[mapping.direction] = mapping
 	return acc
-}, {} as Record<MotorDirection, KeyMapping>)
+}, {} as Record<GarageControls, KeyMapping>)
 
-// eslint-disable-next-line max-lines-per-function
 export default function useComputeMotorControl(): () => MotorControlInput {
 	const garageClass = useGarageContext()
 

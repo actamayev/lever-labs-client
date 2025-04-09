@@ -30,7 +30,7 @@ class GarageClass {
 	public isHornPressed: boolean = false
 	public areHeadlightsOn: boolean = false
 
-	public pressedKeys: Map<MotorDirection, number> = new Map()
+	public pressedKeys: Map<GarageControls, number> = new Map()
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
 	public lastThrottlePercent: number = 100
@@ -109,11 +109,11 @@ class GarageClass {
 		this.areHeadlightsOn = newHeadlightsState
 	})
 
-	public setPressedKey = action((direction: MotorDirection, timestamp: number): void => {
+	public setPressedKey = action((direction: GarageControls, timestamp: number): void => {
 		this.pressedKeys.set(direction, timestamp)
 	})
 
-	public removePressedKey = action((direction: MotorDirection): void => {
+	public removePressedKey = action((direction: GarageControls): void => {
 		this.pressedKeys.delete(direction)
 	})
 

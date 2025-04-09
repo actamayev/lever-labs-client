@@ -5,9 +5,9 @@ import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
 import { useGarageContext } from "../../../../contexts/garage-context"
-import useHandleArrowButtonDown from "../../../../hooks/garage/handle-arrow-button-down"
 import useHandleArrowButtonUp from "../../../../hooks/garage/handle-arrow-button-up"
 import useMotorDriveUseEffect from "../../../../hooks/garage/motor-drive-use-effect"
+import useHandleArrowButtonDown from "../../../../hooks/garage/handle-arrow-button-down"
 
 function DrivingControls() {
 	useMotorDriveUseEffect()
@@ -18,13 +18,11 @@ function DrivingControls() {
 	return (
 		<div className="flex flex-col items-center justify-center">
 			<div className="grid grid-cols-3 gap-2 w-48">
-				{/* Top row - Up button */}
+				{/* Top row - Headlights button, Up button, Horn button */}
 				<div className="col-start-1">
 					<DrivingActionButton
 						action="headlights"
-						isPressed={garageClass.pressedKeys.has("up")}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						isPressed={garageClass.areHeadlightsOn || garageClass.pressedKeys.has("headlights")}
 					/>
 				</div>
 				<div className="col-start-2">
@@ -38,9 +36,7 @@ function DrivingControls() {
 				<div className="col-start-3">
 					<DrivingActionButton
 						action="horn"
-						isPressed={garageClass.pressedKeys.has("up")}
-						onButtonDown={handleButtonDown}
-						onButtonUp={handleButtonUp}
+						isPressed={garageClass.isHornPressed || garageClass.pressedKeys.has("horn")}
 					/>
 				</div>
 

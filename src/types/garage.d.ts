@@ -18,16 +18,17 @@ declare global {
 
 	type Actions = "horn" | "headlights"
 
+	type GarageControls = MotorDirection | Actions
+
 	interface MotorControlInput {
 		vertical: -1 | 1 | 0
 		horizontal: -1 | 1 | 0
 	}
 
 	interface KeyMapping {
-		direction: MotorDirection
-		axis: "vertical" | "horizontal"
+		direction: GarageControls
+		axis: "vertical" | "horizontal" | "action"
 		value: -1 | 0 | 1
-		driveDirection: DriveDirection
 	}
 }
 
