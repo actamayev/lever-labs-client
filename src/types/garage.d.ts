@@ -16,6 +16,8 @@ declare global {
 
 	type MotorDirection = "up" | "down" | "left" | "right"
 
+	type Actions = "horn" | "headlights"
+
 	interface MotorControlInput {
 		vertical: -1 | 1 | 0
 		horizontal: -1 | 1 | 0

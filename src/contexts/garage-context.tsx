@@ -30,7 +30,6 @@ class GarageClass {
 	public isHornPressed: boolean = false
 	public areHeadlightsOn: boolean = false
 
-	// Moved from useHybridDrivingControls refs
 	public pressedKeys: Map<MotorDirection, number> = new Map()
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
@@ -110,7 +109,6 @@ class GarageClass {
 		this.areHeadlightsOn = newHeadlightsState
 	})
 
-	// Methods moved from useHybridDrivingControls
 	public setPressedKey = action((direction: MotorDirection, timestamp: number): void => {
 		this.pressedKeys.set(direction, timestamp)
 	})
@@ -146,7 +144,6 @@ class GarageClass {
 		this.setSensorData(null)
 		this.resetPitchData()
 
-		// Reset driving controls state
 		this.pressedKeys.clear()
 		this.pressedDirections.clear()
 		this.motorState = { vertical: 0, horizontal: 0 }

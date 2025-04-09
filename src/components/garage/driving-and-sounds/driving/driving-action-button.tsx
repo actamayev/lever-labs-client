@@ -9,10 +9,10 @@ import { CustomHeadlights } from "../../../icons/custom-headlights"
 import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 
 interface ArrowKeyButtonProps {
-	action: "horn" | "headlights"
+	action: Actions
 	isPressed: boolean
-	onButtonDown: (direction: MotorDirection) => void
-	onButtonUp: (direction: MotorDirection) => void
+	onButtonDown: (action: Actions) => void
+	onButtonUp: (action: Actions) => void
 }
 
 function DrivingActionButton({
@@ -70,11 +70,11 @@ function DrivingActionButton({
 			className={getButtonClasses()}
 			shadowColor={shadowColor}
 			shadowHeight={4}
-			// onMouseDown={() => onButtonDown(direction)}
-			// onMouseUp={() => onButtonUp(direction)}
-			// onMouseLeave={() => isPressed && onButtonUp(direction)}
-			// onTouchStart={() => onButtonDown(direction)}
-			// onTouchEnd={() => onButtonUp(direction)}
+			onMouseDown={() => onButtonDown(action)}
+			onMouseUp={() => onButtonUp(action)}
+			onMouseLeave={() => isPressed && onButtonUp(action)}
+			onTouchStart={() => onButtonDown(action)}
+			onTouchEnd={() => onButtonUp(action)}
 		>
 			{getActionIcon()}
 		</TactileButton>
