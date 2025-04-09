@@ -1,12 +1,12 @@
 "use client"
 
-import { keyMappings } from "../../utils/constants"
+import { motorKeyMappings } from "../../utils/constants"
 import { useGarageContext } from "../../contexts/garage-context"
 
-const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
+const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping) => {
 	acc[mapping.direction] = mapping
 	return acc
-}, {} as Record<GarageControls, KeyMapping>)
+}, {} as Record<MotorDirection, MotorDriveKeyMapping>)
 
 export default function useComputeMotorControl(): () => MotorControlInput {
 	const garageClass = useGarageContext()
@@ -14,7 +14,7 @@ export default function useComputeMotorControl(): () => MotorControlInput {
 	// Compute motor control values based on pressed keys
 	return (): MotorControlInput => {
 		const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }
-		const keys = garageClass.pressedKeys
+		const keys = garageClass.pressedMotorKeys
 
 		const verticalKeys = Array.from(keys.entries())
 			.filter(([dir]) => directionToMapping[dir].axis === "vertical")

@@ -70,8 +70,6 @@ function DrivingActionButton({
 
 	// Handle button click for action buttons
 	const handleButtonDown = () => {
-		garageClass.setPressedKey(action, Date.now())
-
 		if (action === "headlights") {
 			garageClass.setAreHeadlightsOn(true)
 
@@ -95,8 +93,6 @@ function DrivingActionButton({
 
 	// Handle button release for action buttons
 	const handleButtonUp = () => {
-		garageClass.removePressedKey(action)
-
 		if (action === "headlights") {
 			garageClass.setAreHeadlightsOn(false)
 

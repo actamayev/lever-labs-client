@@ -1,100 +1,45 @@
 "use client"
 
 import { useEffect } from "react"
-import { keyMappings } from "../../utils/constants"
+import { motorKeyMappings } from "../../utils/constants"
 import useApplyMotorControl from "./apply-motor-control"
 import useComputeMotorControl from "./compute-motor-control"
 import { useGarageContext } from "../../contexts/garage-context"
-import { usePipContext } from "../../contexts/pip-context"
-import { useSocketContext } from "../../contexts/socket-context"
 
 export default function useMotorDriveUseEffect(): void {
 	const garageClass = useGarageContext()
 	const computeMotorControl = useComputeMotorControl()
 	const applyMotorControl = useApplyMotorControl()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
 
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
 		const key = event.key.toLowerCase()
-		if (!(key in keyMappings)) return
+		if (!(key in motorKeyMappings)) return
 
 		// Prevent default behavior for navigation keys
 		if (["arrowup", "arrowdown", "arrowleft", "arrowright", "w", "a", "s", "d"].includes(key)) {
 			event.preventDefault()
 		}
 
-		const mapping = keyMappings[key]
-
-		// Handle special action keys (headlights and horn)
-		if (mapping.axis === "action") {
-			if (mapping.direction === "headlights") {
-				garageClass.setAreHeadlightsOn(true)
-
-				if (pipClass.selectedPip) {
-					socketClass.emitHeadLightStatus({
-						pipUUID: pipClass.selectedPip.pipUUID,
-						headlightsStatus: true
-					})
-				}
-			} else if (mapping.direction === "horn") {
-				garageClass.setIsHornPressed(true)
-
-				if (pipClass.selectedPip) {
-					socketClass.emitHornSound({
-						pipUUID: pipClass.selectedPip.pipUUID,
-						hornStatus: true
-					})
-				}
-			}
-		}
+		const mapping = motorKeyMappings[key]
 
 		garageClass.setPressedKey(mapping.direction, Date.now())
 
-		// Compute and apply motor control for movement keys
-		if (mapping.axis !== "action") {
-			const motorControl = computeMotorControl()
-			applyMotorControl(motorControl)
-		}
+		const motorControl = computeMotorControl()
+		applyMotorControl(motorControl)
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
 		const key = event.key.toLowerCase()
-		if (!(key in keyMappings)) return
+		if (!(key in motorKeyMappings)) return
 
-		const mapping = keyMappings[key]
+		const mapping = motorKeyMappings[key]
 
-		// Handle special action keys (headlights and horn)
-		if (mapping.axis === "action") {
-			if (mapping.direction === "headlights") {
-				garageClass.setAreHeadlightsOn(false)
-
-				if (pipClass.selectedPip) {
-					socketClass.emitHeadLightStatus({
-						pipUUID: pipClass.selectedPip.pipUUID,
-						headlightsStatus: false
-					})
-				}
-			} else if (mapping.direction === "horn") {
-				garageClass.setIsHornPressed(false)
-
-				if (pipClass.selectedPip) {
-					socketClass.emitHornSound({
-						pipUUID: pipClass.selectedPip.pipUUID,
-						hornStatus: false
-					})
-				}
-			}
-		}
 
 		garageClass.removePressedKey(mapping.direction)
 
-		// Compute and apply motor control for movement keys
-		if (mapping.axis !== "action") {
-			const motorControl = computeMotorControl()
-			applyMotorControl(motorControl)
-		}
+		const motorControl = computeMotorControl()
+		applyMotorControl(motorControl)
 	}
 
 	// Set up key event listeners

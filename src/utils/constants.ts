@@ -76,7 +76,7 @@ export const careerQuestPages = [
 
 export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const
 
-export const keyMappings: Record<string, KeyMapping> = {
+export const motorKeyMappings: Record<string, MotorDriveKeyMapping> = {
 	"w": { direction: "up", axis: "vertical", value: 1 },
 	"arrowup": { direction: "up", axis: "vertical", value: 1 },
 	"s": { direction: "down", axis: "vertical", value: -1 },
@@ -85,6 +85,13 @@ export const keyMappings: Record<string, KeyMapping> = {
 	"arrowleft": { direction: "left", axis: "horizontal", value: -1 },
 	"d": { direction: "right", axis: "horizontal", value: 1 },
 	"arrowright": { direction: "right", axis: "horizontal", value: 1 },
-	"q": { direction: "headlights", axis: "action", value: 1 },
-	"e": { direction: "horn", axis: "action", value: 1 }
+}
+
+interface ActionMapping {
+	[key: string]: Actions
+}
+
+export const actionMappings: ActionMapping = {
+	"q": "headlights",
+	"e": "horn"
 }
