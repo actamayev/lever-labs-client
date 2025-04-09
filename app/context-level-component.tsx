@@ -53,6 +53,7 @@ export default function ContextLevelComponent ({ children } : { children: React.
 				transition={Slide}
 				style={{ width: "min(400px, 90vw)" }}
 				toastStyle={{ width: "min(400px, 90vw)" }}
+				limit={1}
 			/>
 		</>
 	)
