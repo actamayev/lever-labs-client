@@ -13,6 +13,7 @@ import { CustomYoga } from "../../icons/custom-yoga"
 // import { CustomSnake } from "../../icons/custom-snake"
 import { useGarageContext } from "../../../contexts/garage-context"
 import useLightsAnimation from "../../../hooks/garage/lights-animation"
+import { buttonVariants } from "../../shadcn/ui/button"
 
 interface Animation {
 	name: LightAnimation
@@ -54,15 +55,16 @@ function LightAnimationsList() {
 
 	return (
 		<div className="w-full h-full flex flex-col">
-			<h3 className="text-sm font-medium mb-2 text-gray-700">Animations</h3>
+			<h3 className="text-sm font-medium mb-2">Animations</h3>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
-					<button
+					<div
 						className={cn(
-							"flex items-center justify-between w-full px-4 py-2.5 text-sm font-medium text-gray-700",
-							"bg-white border border-gray-200 rounded-xl shadow-sm",
-							"hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
-							"transition-all duration-200 ease-in-out"
+							buttonVariants({
+								variant: "outline",
+								className: "flex items-center gap-1 rounded-xl justify-between \
+								px-4 !py-6 text-sm font-medium cursor-pointer"
+							})
 						)}
 					>
 						<span className="flex items-center gap-2">
@@ -70,29 +72,27 @@ function LightAnimationsList() {
 							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon}
 							{garageClass.selectedAnimation}
 						</span>
-						<ChevronDown className="h-4 w-4 text-gray-500" />
-					</button>
+						<ChevronDown className="h-4 w-4" />
+					</div>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent
-					className="rounded-xl bg-white shadow-lg border border-gray-100 mt-1 w-64"
-				>
+				<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-64">
 					{ANIMATIONS.map((animation) => (
 						<DropdownMenuItem
 							key={animation.name}
 							onClick={() => lightsAnimation(animation.name)}
 							className={cn(
-								"p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2",
+								"my-0.5 p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2 hover:!bg-polar",
 								garageClass.selectedAnimation === animation.name
-									? "bg-blue-50 border-l-4 border-l-blue-500 text-blue-700"
-									: "hover:bg-gray-50 border-l-4 border-l-transparent text-gray-700"
+									? "!bg-polar border-l-4 border-l-blue-500"
+									: "hover:!bg-polar border-l-4 border-l-transparent"
 							)}
 						>
-							<div className="flex-shrink-0 text-gray-500">
+							<div className="flex-shrink-0">
 								{animation.icon}
 							</div>
 							<div className="flex-grow">
 								<div className="font-medium">{animation.name}</div>
-								<div className="text-xs text-gray-500">{animation.description}</div>
+								<div className="text-xs text-hare">{animation.description}</div>
 							</div>
 						</DropdownMenuItem>
 					))}

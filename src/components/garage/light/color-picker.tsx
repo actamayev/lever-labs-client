@@ -33,7 +33,7 @@ function ColorPicker() {
 		debounce((rgb) => {
 			if (
 				isNull(pipClass.selectedPip) ||
-        pipClass.selectedPip.pipConnectionStatus === "offline"
+				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
 			const ledControlData = {
@@ -123,7 +123,7 @@ function ColorPicker() {
 						onChange={(e) => handleRgbChange("r", parseInt(e.target.value || "0"))}
 						min="0"
 						max="255"
-						className="p-1 border border-gray-300 rounded text-sm w-14 text-center bg-inherit"
+						className="p-1 border border-swan rounded text-sm w-14 text-center bg-inherit"
 					/>
 				</div>
 				<div className="flex items-center">
@@ -134,7 +134,7 @@ function ColorPicker() {
 						onChange={(e) => handleRgbChange("g", parseInt(e.target.value || "0"))}
 						min="0"
 						max="255"
-						className="p-1 border border-gray-300 rounded text-sm w-14 text-center bg-inherit"
+						className="p-1 border border-swan rounded text-sm w-14 text-center bg-inherit"
 					/>
 				</div>
 				<div className="flex items-center">
@@ -145,7 +145,7 @@ function ColorPicker() {
 						onChange={(e) => handleRgbChange("b", parseInt(e.target.value || "0"))}
 						min="0"
 						max="255"
-						className="p-1 border border-gray-300 rounded text-sm w-14 text-center bg-inherit"
+						className="p-1 border border-swan rounded text-sm w-14 text-center bg-inherit"
 					/>
 				</div>
 			</div>

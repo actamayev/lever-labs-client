@@ -90,16 +90,14 @@ function VolumeContent() {
 										variant: "outline",
 										className: "flex items-center gap-1 rounded-xl justify-between"
 									}),
-									workbenchClass.isMuted ? "opacity-50 pointer-events-none" : ""
+									workbenchClass.isMuted && "opacity-50 pointer-events-none"
 								)}
 							>
 								{toUpper(workbenchClass.selectedSound)}
 								<ChevronDown className="h-4 w-4" />
 							</div>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent
-							className="rounded-xl bg-standardBackground"
-						>
+						<DropdownMenuContent className="rounded-xl bg-standardBackground">
 							{testSounds.map((sound) => (
 								<DropdownMenuItem
 									key={sound}
