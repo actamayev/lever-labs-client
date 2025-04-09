@@ -64,47 +64,6 @@ declare global {
 	type RetrieveSandboxProjectsResponse = {
 		sandboxProjects: SandboxProject[]
 	}
-
-	// Socket Events:
-	type PipStatusUpdate = {
-		pipUUID: PipUUID
-		newConnectionStatus: PipConnectionStatus
-	}
-	type MotorControlAck = {
-		success: boolean
-		error?: string
-	}
-
-	interface SensorPayload {
-		leftWheelRPM: number
-		rightWheelRPM: number
-		irSensorData: number[] & { length: 5 }
-
-		redValue: number
-		greenValue: number
-		blueValue: number
-
-		pitch: number
-		yaw: number
-		roll: number
-
-		aX: number
-		aY: number
-		aZ: number
-
-		gX: number
-		gY: number
-		gZ: number
-
-		mX: number
-		mY: number
-		mZ: number
-	}
-
-	type IncomingSensorData = {
-		pipUUID: PipUUID
-		sensorPayload: SensorPayload
-	}
 }
 
 export {}

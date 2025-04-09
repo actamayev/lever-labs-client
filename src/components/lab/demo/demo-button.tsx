@@ -2,33 +2,32 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useCallback, useMemo } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import useToastOptions from "../../toast-options"
 import { usePipContext } from "../../../contexts/pip-context"
-import { useLabDemoContext } from "../../../contexts/lab-demo-context"
 
 function DemoButton({ demo } : { demo: Demo }) {
-	const labDemoClass = useLabDemoContext()
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
+	const [activeDemoName, setActiveDemoName] = useState<DemoNames | null>(null)
 
 	const isDemoActive = useMemo(() => {
-		return demo.demoTitle === labDemoClass.activeDemoName
-	}, [demo.demoTitle, labDemoClass.activeDemoName])
+		return demo.demoTitle === activeDemoName
+	}, [activeDemoName, demo.demoTitle])
 
 	const setActiveDemo = useCallback(() => {
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip to your account" })
 		}
-		if (labDemoClass.activeDemoName === demo.demoTitle) {
-			return labDemoClass.setActiveDemoName(null)
+		if (activeDemoName === demo.demoTitle) {
+			return setActiveDemoName(null)
 		}
 		// if (pipClass.selectedPip.pipConnectionStatus !== "connected") {
 		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
 		// }
-		labDemoClass.setActiveDemoName(demo.demoTitle)
-	}, [demo.demoTitle, labDemoClass, pipClass.selectedPip, toast])
+		setActiveDemoName(demo.demoTitle)
+	}, [activeDemoName, demo.demoTitle, pipClass.selectedPip, toast])
 
 	return (
 		<button

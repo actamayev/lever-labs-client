@@ -9,6 +9,7 @@ declare global {
 		| "/auth"
 		| "/lab-activity-tracking"
 		| "/misc"
+		| "/garage"
 		| "/pip"
 		| "/personal-info"
 		| "/sandbox"

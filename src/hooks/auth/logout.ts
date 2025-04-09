@@ -13,6 +13,7 @@ import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { usePageTransitionContext } from "../../contexts/page-transition-context"
 import { useActivityProgressContext } from "../../contexts/activity-progress-context"
+import { useGarageContext } from "../../contexts/garage-context"
 
 export default function useLogout(): () => void {
 	const authClass = useAuthContext()
@@ -27,6 +28,7 @@ export default function useLogout(): () => void {
 	const activityProgressClass = useActivityProgressContext()
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
+	const garageClass = useGarageContext()
 
 	return useCallback((): void => {
 		personalInfoClass.logout()
@@ -41,7 +43,8 @@ export default function useLogout(): () => void {
 		activityProgressClass.logout()
 		workbenchClass.logout()
 		sandboxClass.logout()
+		garageClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass, sandboxClass,
+	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass, sandboxClass, garageClass,
 		socketClass, authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, navigate])
 }

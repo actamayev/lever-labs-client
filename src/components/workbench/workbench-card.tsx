@@ -27,8 +27,8 @@ function WorkbenchCard() {
 			}}
 		>
 			{workbenchClass.workbenchItemToShow === "battery" && <BatteryContent />}
-			{workbenchClass.workbenchItemToShow === "network" && <NetworkContent />}
 			{workbenchClass.workbenchItemToShow === "volume" && <VolumeContent />}
+			{workbenchClass.workbenchItemToShow === "network" && <NetworkContent />}
 		</div>
 	)
 }

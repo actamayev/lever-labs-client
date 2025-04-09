@@ -1,9 +1,10 @@
 import { useCallback } from "react"
-import { isEqual, isNull } from "lodash-es"
-import { isNonSuccessResponse } from "../../utils/type-checks"
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { isNonSuccessResponse } from "../../utils/type-checks"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useUploadProfilePicture(): (
 	selectedImage: File | null,

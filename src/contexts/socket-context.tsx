@@ -81,6 +81,14 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("motor-control", motorControlData)
 	})
 
+	public emitLedColorControl = action((ledControlDataToSend: LedControlDataToSend): void => {
+		// This is for sending socket messages to the backend
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected")
+		}
+		this._socket.emit("new-led-colors", ledControlDataToSend)
+	})
+
 	// Disconnect socket (e.g., on logout)
 	public disconnect = action((): void => {
 		if (this._socket) {
