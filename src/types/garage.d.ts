@@ -24,7 +24,8 @@ declare global {
 	interface KeyMapping {
 		direction: MotorDirection
 		axis: "vertical" | "horizontal"
-		value: -1 | 1 | 0
+		value: -1 | 0 | 1
+		driveDirection: DriveDirection
 	}
 }
 

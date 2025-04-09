@@ -7,24 +7,7 @@ import useToastOptions from "../../components/toast-options"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-
-interface KeyMapping {
-	direction: MotorDirection;
-	axis: "vertical" | "horizontal";
-	value: -1 | 0 | 1;
-	driveDirection: DriveDirection;
-}
-
-const keyMappings: Record<string, KeyMapping> = {
-	"w": { direction: "up", axis: "vertical", value: 1, driveDirection: "forward" },
-	"arrowup": { direction: "up", axis: "vertical", value: 1, driveDirection: "forward" },
-	"s": { direction: "down", axis: "vertical", value: -1, driveDirection: "backward" },
-	"arrowdown": { direction: "down", axis: "vertical", value: -1, driveDirection: "backward" },
-	"a": { direction: "left", axis: "horizontal", value: -1, driveDirection: "left" },
-	"arrowleft": { direction: "left", axis: "horizontal", value: -1, driveDirection: "left" },
-	"d": { direction: "right", axis: "horizontal", value: 1, driveDirection: "right" },
-	"arrowright": { direction: "right", axis: "horizontal", value: 1, driveDirection: "right" }
-}
+import { keyMappings } from "../../utils/constants"
 
 const directionToMapping = Object.values(keyMappings).reduce((acc, mapping) => {
 	acc[mapping.direction] = mapping

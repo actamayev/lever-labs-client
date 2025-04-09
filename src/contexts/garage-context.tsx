@@ -30,6 +30,8 @@ class GarageClass {
 	public isHornPressed: boolean = false
 	public areHeadlightsOn: boolean = false
 
+	public pressedArrowKeys: Map<MotorDirection, number> = new Map()
+
 	constructor() {
 		makeAutoObservable(this)
 	}

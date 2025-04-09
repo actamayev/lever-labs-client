@@ -75,3 +75,14 @@ export const careerQuestPages = [
 ] as const
 
 export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const
+
+export const keyMappings: Record<string, KeyMapping> = {
+	"w": { direction: "up", axis: "vertical", value: 1, driveDirection: "forward" },
+	"arrowup": { direction: "up", axis: "vertical", value: 1, driveDirection: "forward" },
+	"s": { direction: "down", axis: "vertical", value: -1, driveDirection: "backward" },
+	"arrowdown": { direction: "down", axis: "vertical", value: -1, driveDirection: "backward" },
+	"a": { direction: "left", axis: "horizontal", value: -1, driveDirection: "left" },
+	"arrowleft": { direction: "left", axis: "horizontal", value: -1, driveDirection: "left" },
+	"d": { direction: "right", axis: "horizontal", value: 1, driveDirection: "right" },
+	"arrowright": { direction: "right", axis: "horizontal", value: 1, driveDirection: "right" }
+}
