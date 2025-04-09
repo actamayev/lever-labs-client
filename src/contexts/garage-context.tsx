@@ -30,7 +30,11 @@ class GarageClass {
 	public isHornPressed: boolean = false
 	public areHeadlightsOn: boolean = false
 
-	public pressedArrowKeys: Map<MotorDirection, number> = new Map()
+	// Moved from useHybridDrivingControls refs
+	public pressedKeys: Map<MotorDirection, number> = new Map()
+	public pressedDirections: Set<DriveDirection> = new Set()
+	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
+	public lastThrottlePercent: number = 100
 
 	constructor() {
 		makeAutoObservable(this)
@@ -106,6 +110,24 @@ class GarageClass {
 		this.areHeadlightsOn = newHeadlightsState
 	})
 
+	// Methods moved from useHybridDrivingControls
+	public setPressedKey = action((direction: MotorDirection, timestamp: number): void => {
+		this.pressedKeys.set(direction, timestamp)
+	})
+
+	public removePressedKey = action((direction: MotorDirection): void => {
+		this.pressedKeys.delete(direction)
+	})
+
+	public setMotorState = action((motorControl: MotorControlInput): void => {
+		this.motorState = motorControl
+		this.lastThrottlePercent = this.motorThrottlePercent
+	})
+
+	public updatePressedDirections = action((directions: Set<DriveDirection>): void => {
+		this.pressedDirections = directions
+	})
+
 	public logout() {
 		this.setSelectedColor("#00bcd4")
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -123,6 +145,12 @@ class GarageClass {
 		this.setMotorThrottlePercent(100)
 		this.setSensorData(null)
 		this.resetPitchData()
+
+		// Reset driving controls state
+		this.pressedKeys.clear()
+		this.pressedDirections.clear()
+		this.motorState = { vertical: 0, horizontal: 0 }
+		this.lastThrottlePercent = 100
 	}
 }
 
@@ -130,7 +158,7 @@ const garageInstance = new GarageClass()
 
 const GarageContext = createContext(garageInstance)
 
-export default function GarageProvider ({ children }: { children: React.ReactNode }) {
+export default function GarageProvider({ children }: { children: React.ReactNode }) {
 	return (
 		<GarageContext.Provider value={garageInstance}>
 			{children}

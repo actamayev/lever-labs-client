@@ -1,4 +1,3 @@
-import { Speaker } from "lucide-react"
 import DrivingControls from "./driving/driving-controls"
 import SoundsSection from "./sounds/sounds-section"
 
