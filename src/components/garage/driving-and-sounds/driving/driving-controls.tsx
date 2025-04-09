@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import ArrowKeyButton from "./arrow-key-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
 import useHybridDrivingControls from "../../../../hooks/garage/use-driving-controls"
+import DrivingActionButton from "./driving-action-button"
 
 function DrivingControls() {
 	const { handleButtonDown, handleButtonUp, isButtonPressed } = useHybridDrivingControls()
@@ -55,9 +56,25 @@ function DrivingControls() {
 		<div className="flex flex-col items-center justify-center">
 			<div className="grid grid-cols-3 gap-2 w-48">
 				{/* Top row - Up button */}
+				<div className="col-start-1">
+					<DrivingActionButton
+						action="headlights"
+						isPressed={pressedButtons.up}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
+					/>
+				</div>
 				<div className="col-start-2">
 					<ArrowKeyButton
 						direction="up"
+						isPressed={pressedButtons.up}
+						onButtonDown={onButtonDown}
+						onButtonUp={onButtonUp}
+					/>
+				</div>
+				<div className="col-start-3">
+					<DrivingActionButton
+						action="horn"
 						isPressed={pressedButtons.up}
 						onButtonDown={onButtonDown}
 						onButtonUp={onButtonUp}

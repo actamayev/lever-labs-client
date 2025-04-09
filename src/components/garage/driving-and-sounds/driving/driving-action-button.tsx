@@ -2,20 +2,21 @@
 
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../../lib/shadcn/utils"
+import { CustomHorn } from "../../../icons/custom-horn"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
+import { CustomHeadlights } from "../../../icons/custom-headlights"
 import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 
 interface ArrowKeyButtonProps {
-	direction: MotorDirection
+	action: "horn" | "headlights"
 	isPressed: boolean
 	onButtonDown: (direction: MotorDirection) => void
 	onButtonUp: (direction: MotorDirection) => void
 }
 
-function ArrowKeyButton({
-	direction,
+function DrivingActionButton({
+	action,
 	isPressed,
 	onButtonDown,
 	onButtonUp,
@@ -25,16 +26,12 @@ function ArrowKeyButton({
 	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 
 	// Map direction to the correct icon
-	const getMotorDirectionIcon = (): ReactNode => {
-		switch (direction) {
-		case "up":
-			return <ArrowUp size={24} strokeWidth={2.5}/>
-		case "down":
-			return <ArrowDown size={24} strokeWidth={2.5}/>
-		case "left":
-			return <ArrowLeft size={24} strokeWidth={2.5}/>
-		case "right":
-			return <ArrowRight size={24} strokeWidth={2.5}/>
+	const getActionIcon = (): ReactNode => {
+		switch (action) {
+		case "headlights":
+			return <CustomHeadlights size={24} />
+		case "horn":
+			return <CustomHorn size={24} />
 		}
 	}
 
@@ -64,7 +61,7 @@ function ArrowKeyButton({
 		"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
 		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
 	)
 
 	return (
@@ -73,15 +70,15 @@ function ArrowKeyButton({
 			className={getButtonClasses()}
 			shadowColor={shadowColor}
 			shadowHeight={4}
-			onMouseDown={() => onButtonDown(direction)}
-			onMouseUp={() => onButtonUp(direction)}
-			onMouseLeave={() => isPressed && onButtonUp(direction)}
-			onTouchStart={() => onButtonDown(direction)}
-			onTouchEnd={() => onButtonUp(direction)}
+			// onMouseDown={() => onButtonDown(direction)}
+			// onMouseUp={() => onButtonUp(direction)}
+			// onMouseLeave={() => isPressed && onButtonUp(direction)}
+			// onTouchStart={() => onButtonDown(direction)}
+			// onTouchEnd={() => onButtonUp(direction)}
 		>
-			{getMotorDirectionIcon()}
+			{getActionIcon()}
 		</TactileButton>
 	)
 }
 
-export default observer(ArrowKeyButton)
+export default observer(DrivingActionButton)

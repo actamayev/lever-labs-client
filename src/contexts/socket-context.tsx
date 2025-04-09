@@ -89,6 +89,22 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("new-led-colors", ledControlDataToSend)
 	})
 
+	public emitHornSound = action((hornControlDataToSend: HornDataToSend): void => {
+		// This is for sending socket messages to the backend
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected")
+		}
+		this._socket.emit("horn-sound-update", hornControlDataToSend)
+	})
+
+	public emitHeadLightStatus = action((headlightDataToSend: HeadlightDataToSend): void => {
+		// This is for sending socket messages to the backend
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected")
+		}
+		this._socket.emit("headlight-update", headlightDataToSend)
+	})
+
 	// Disconnect socket (e.g., on logout)
 	public disconnect = action((): void => {
 		if (this._socket) {

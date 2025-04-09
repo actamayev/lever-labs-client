@@ -17,6 +17,14 @@ declare global {
 		backRightColor: RGB
 	}
 
+	interface HornDataToSend extends PipUUID {
+		hornStatus: boolean
+	}
+
+	interface HeadlightDataToSend extends PipUUID {
+		headlightsStatus: boolean
+	}
+
 	// Incoming socket events:
 	type PipStatusUpdate = {
 		pipUUID: PipUUID

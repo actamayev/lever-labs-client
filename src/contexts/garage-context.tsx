@@ -26,6 +26,10 @@ class GarageClass {
 	public sensorData: IncomingSensorData | null = null
 	public pitchData: number[] = []
 
+	//Horn and headlights
+	public isHornPressed: boolean = false
+	public areHeadlightsOn: boolean = false
+
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -90,6 +94,14 @@ class GarageClass {
 
 	public resetPitchData = action((): void => {
 		this.pitchData = []
+	})
+
+	public setIsHornPressed = action((newHornState: boolean): void => {
+		this.isHornPressed = newHornState
+	})
+
+	public setAreHeadlightsOn = action((newHeadlightsState: boolean): void => {
+		this.areHeadlightsOn = newHeadlightsState
 	})
 
 	public logout() {

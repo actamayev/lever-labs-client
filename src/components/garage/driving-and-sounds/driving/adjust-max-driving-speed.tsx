@@ -29,11 +29,7 @@ function AdjustMaxDrivingSpeed() {
 	return (
 		<div className="w-full">
 			<div className="flex flex-col">
-				<div>
-					<div className="flex justify-between text-base">
-						<div>{garageClass.motorThrottlePercent}%</div>
-					</div>
-				</div>
+				<div className="text-base">{garageClass.motorThrottlePercent}%</div>
 				<div
 					className="cursor-pointer mt-3"
 					onKeyDown={handleKeyDown}
