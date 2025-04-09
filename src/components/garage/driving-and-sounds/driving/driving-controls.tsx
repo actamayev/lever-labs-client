@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import { useState, useEffect } from "react"
 import ArrowKeyButton from "./arrow-key-button"
+import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
 import useHybridDrivingControls from "../../../../hooks/garage/use-driving-controls"
-import DrivingActionButton from "./driving-action-button"
 
 function DrivingControls() {
 	const { handleButtonDown, handleButtonUp, isButtonPressed } = useHybridDrivingControls()
