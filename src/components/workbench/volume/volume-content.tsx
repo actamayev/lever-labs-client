@@ -30,6 +30,18 @@ function VolumeContent() {
 		}
 	}, [workbenchClass])
 
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		// Prevent arrow keys from changing slider value
+		if (
+			event.key === "ArrowUp" ||
+			event.key === "ArrowDown" ||
+			event.key === "ArrowLeft" ||
+			event.key === "ArrowRight"
+		) {
+			event.preventDefault()
+		}
+	}
+
 	return (
 		<div className="w-full max-w-sm">
 			<div className="flex justify-between mb-1">
@@ -43,7 +55,11 @@ function VolumeContent() {
 				</div>
 			</div>
 
-			<div className="cursor-pointer mt-3">
+			<div
+				className="cursor-pointer mt-3"
+				onKeyDown={handleKeyDown}
+				tabIndex={0} // Make div focusable to capture key events
+			>
 				<Slider
 					defaultValue={[workbenchClass.volume]}
 					max={100}
@@ -51,6 +67,7 @@ function VolumeContent() {
 					onValueChange={handleVolumeChange}
 					className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
 					value={[workbenchClass.volume]}
+					onKeyDown={handleKeyDown} // Add key handler directly to Slider
 				/>
 			</div>
 			<Separator className="my-3" />
@@ -72,16 +89,14 @@ function VolumeContent() {
 										variant: "outline",
 										className: "flex items-center gap-1 rounded-xl justify-between"
 									}),
-									workbenchClass.isMuted ? "opacity-50 pointer-events-none" : ""
+									workbenchClass.isMuted && "opacity-50 pointer-events-none"
 								)}
 							>
 								{toUpper(workbenchClass.selectedSound)}
 								<ChevronDown className="h-4 w-4" />
 							</div>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent
-							className="rounded-xl bg-standardBackground"
-						>
+						<DropdownMenuContent className="rounded-xl bg-standardBackground">
 							{testSounds.map((sound) => (
 								<DropdownMenuItem
 									key={sound}

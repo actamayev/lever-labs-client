@@ -48,6 +48,7 @@ module.exports = {
 				landingDottedLine: "rgb(var(--landing-dotted-line))",
 
 				chargingGreen: "rgb(var(--charging-green))",
+				careerQuestYellow: "rgb(var(--career-quest-yellow))",
 
 				/* Duolingo colors */
 				eel: "rgb(var(--eel))",

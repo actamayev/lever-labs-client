@@ -8,16 +8,9 @@ declare global {
 		// demoOnclickEndpoint: () => Promise<AxiosResponse<AllCommonResponses>>
 	}
 
-	type MotorDirection = "up" | "down" | "left" | "right"
-
-	interface MotorControlDataToSend {
-		motorControl: MotorControlInput
-		pipUUID: PipUUID
-	}
-
 	type LEDDemo =
 	| "LED Solid Color"
-	| "LED Rainbow"
+	| "LED Light Show"
 	| "LED Pulse"
 	| "LED 4"
 
@@ -27,27 +20,6 @@ declare global {
 	type DemoNames =
 	| LEDDemo
 	| MotorDemo
-
-	interface MotorControlInput {
-		vertical: -1 | 1 | 0
-		horizontal: -1 | 1 | 0
-	}
-
-	interface KeyMapping {
-		direction: MotorDirection
-		axis: "vertical" | "horizontal"
-		value: -1 | 1 | 0
-	}
-
-	type MotorDemoKeys =
-	| "w"
-	| "arrowup"
-	| "s"
-	| "arrowdown"
-	| "a"
-	| "arrowleft"
-	| "d"
-	| "arrowright"
 }
 
 export {}

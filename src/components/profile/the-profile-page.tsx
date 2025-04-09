@@ -147,7 +147,7 @@ function ProfilePage() {
 								onClick={saveName}
 								size="default"
 								variant="ghost"
-								className="self-end sm:self-auto sm:ml-2 hover:bg-standardBackgroundHover p-2"
+								className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
 							>
 								<Save className="h-5 w-5 md:!h-6 md:!w-6" />
 							</Button>
@@ -182,7 +182,7 @@ function ProfilePage() {
 								onClick={saveUsername}
 								size="default"
 								variant="ghost"
-								className="self-end sm:self-auto sm:ml-2 hover:bg-standardBackgroundHover p-2"
+								className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
 							>
 								<Save className="h-5 w-5 md:!h-6 md:!w-6" />
 							</Button>

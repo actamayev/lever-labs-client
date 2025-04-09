@@ -9,7 +9,7 @@ class WorkbenchClass {
 	public batteryPercentage = 100
 	public isCharging = false
 	public volume = 70
-	public isMuted = false
+	public isMuted = true
 	public isDropdownOpen = false
 	public selectedSound: TuneToPlay = "Chime"
 
@@ -45,7 +45,7 @@ class WorkbenchClass {
 		this.setWorkbenchItemToShow(null)
 		this.setWorkbenchItemHoveringOver(false)
 		this.setVolume(70)
-		this.setIsMuted(false)
+		this.setIsMuted(true)
 		this.setIsDropdownOpen(false)
 		this.setSelectedSound("Chime")
 	}

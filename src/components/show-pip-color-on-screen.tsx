@@ -2,15 +2,15 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useLabDemoContext } from "../contexts/lab-demo-context"
+import { useGarageContext } from "../contexts/garage-context"
 
 function ShowPipColorOnScreen() {
-	const labDemoClass = useLabDemoContext()
+	const garageClass = useGarageContext()
 
 	// Early return if no sensor data with better nullish checking
-	if (isNull(labDemoClass.sensorData)) return null
+	if (isNull(garageClass.sensorData)) return null
 
-	const { redValue, greenValue, blueValue } = labDemoClass.sensorData.sensorPayload
+	const { redValue, greenValue, blueValue } = garageClass.sensorData.sensorPayload
 
 	// Ensure RGB values are numbers and within 0-255 range
 	const safeRed = Math.min(255, Math.max(0, Number(redValue) || 0))

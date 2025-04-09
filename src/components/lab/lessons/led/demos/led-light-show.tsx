@@ -1,8 +1,7 @@
 "use client"
 
-import { CustomWheel } from "../../../../icons/custom-wheel"
 import LabDemoComponent from "../../../demo/lab-demo-component"
-import useMotorDemoUseEffect from "../../../../../hooks/lab/demos/motor-demo-use-effect"
+import { CustomLightbulb } from "../../../../icons/custom-lightbulb"
 
 const ledDemoDeliverables: [string] = [
 	"LED Light Show"
@@ -10,15 +9,13 @@ const ledDemoDeliverables: [string] = [
 
 const ledDemos: [Demo] = [
 	{
-		demoTitle: "Real-time motor control",
-		demoDescription: "Drive Pip around using arrow keys",
-		demoIcon: CustomWheel
+		demoTitle: "LED Light Show",
+		demoDescription: "See an LED light show",
+		demoIcon: CustomLightbulb
 	}
 ]
 
 export default function LEDLightShow() {
-	useMotorDemoUseEffect()
-
 	return (
 		<LabDemoComponent
 			lessonDemoTitle="LED Light Show"
