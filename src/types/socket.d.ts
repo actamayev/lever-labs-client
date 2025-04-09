@@ -17,11 +17,11 @@ declare global {
 		backRightColor: RGB
 	}
 
-	interface HornDataToSend extends PipUUID {
+	interface HornDataToSend extends PipUUIDInterface {
 		hornStatus: boolean
 	}
 
-	interface HeadlightDataToSend extends PipUUID {
+	interface HeadlightDataToSend extends PipUUIDInterface {
 		headlightsStatus: boolean
 	}
 
