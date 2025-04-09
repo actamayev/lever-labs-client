@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Rainbow, Siren, ChevronDown } from "lucide-react"
+import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -10,10 +10,9 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
-// import { CustomSnake } from "../../icons/custom-snake"
+import { buttonVariants } from "../../shadcn/ui/button"
 import { useGarageContext } from "../../../contexts/garage-context"
 import useLightsAnimation from "../../../hooks/garage/lights-animation"
-import { buttonVariants } from "../../shadcn/ui/button"
 
 interface Animation {
 	name: LightAnimation
@@ -25,7 +24,7 @@ const ANIMATIONS: Animation[] = [
 	{
 		name: "No animation",
 		description: "Slowly fades in and out",
-		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+		icon: <Circle className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
 	},
 	{
 		name: "Breathing",
