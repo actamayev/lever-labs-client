@@ -30,7 +30,7 @@ declare global {
 
 	type LEDDemo =
 	| "LED Solid Color"
-	| "LED Rainbow"
+	| "LED Light Show"
 	| "LED Pulse"
 	| "LED 4"
 
