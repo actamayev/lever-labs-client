@@ -17,7 +17,6 @@ import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
 
-// eslint-disable-next-line max-lines-per-function
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
