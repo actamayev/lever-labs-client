@@ -41,12 +41,12 @@ function DrivingControls() {
 	}, []) // Remove isButtonPressed from the dependency array
 
 	// Wrapper functions to update visual state alongside actual state
-	const onButtonDown = (direction: "up" | "down" | "left" | "right") => {
+	const onButtonDown = (direction: MotorDirection) => {
 		handleButtonDown(direction)
 		setPressedButtons(prev => ({...prev, [direction]: true}))
 	}
 
-	const onButtonUp = (direction: "up" | "down" | "left" | "right") => {
+	const onButtonUp = (direction: MotorDirection) => {
 		handleButtonUp(direction)
 		setPressedButtons(prev => ({...prev, [direction]: false}))
 	}
