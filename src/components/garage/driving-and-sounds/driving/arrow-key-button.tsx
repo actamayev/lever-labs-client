@@ -61,7 +61,7 @@ function ArrowKeyButton({
 
 	// Create button styles with proper tactile behavior
 	const getButtonClasses = () => cn(
-		"w-14 h-14 flex items-center justify-center transition-none border-2 rounded-xl",
+		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
 		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
 		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
