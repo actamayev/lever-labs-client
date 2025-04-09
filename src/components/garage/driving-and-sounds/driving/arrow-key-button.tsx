@@ -1,11 +1,11 @@
 "use client"
 
-import { ReactNode, useRef, useEffect } from "react"
-import { cn } from "../../../lib/shadcn/utils"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { observer } from "mobx-react"
-import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import { ReactNode, useRef, useEffect } from "react"
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
+import { cn } from "../../../../lib/shadcn/utils"
+import { TactileButton } from "../../../shadcn/ui/tactile-button"
+import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 
 interface ArrowKeyButtonProps {
 	direction: MotorDirection

@@ -3,8 +3,8 @@
 import { observer } from "mobx-react"
 import { useState, useEffect } from "react"
 import ArrowKeyButton from "./arrow-key-button"
-import useHybridDrivingControls from "../../../hooks/garage/use-driving-controls"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
+import useHybridDrivingControls from "../../../../hooks/garage/use-driving-controls"
 
 function DrivingControls() {
 	const { handleButtonDown, handleButtonUp, isButtonPressed } = useHybridDrivingControls()
@@ -93,10 +93,6 @@ function DrivingControls() {
 				</div>
 			</div>
 
-			{/* Instructions */}
-			<div className="mt-4 text-xs text-wolf text-center">
-				<p>Use arrow keys, WASD, or tap buttons to drive</p>
-			</div>
 			<AdjustMaxDrivingSpeed />
 		</div>
 	)

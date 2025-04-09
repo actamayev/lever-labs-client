@@ -54,7 +54,6 @@ function LightAnimationsList() {
 
 	return (
 		<div className="w-full h-full flex flex-col">
-			<h3 className="text-sm font-medium mb-2">Animations</h3>
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<div

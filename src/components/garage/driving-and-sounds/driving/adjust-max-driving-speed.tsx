@@ -1,6 +1,6 @@
 import { observer } from "mobx-react"
-import { Slider } from "../../shadcn/ui/slider"
-import { useGarageContext } from "../../../contexts/garage-context"
+import { Slider } from "../../../shadcn/ui/slider"
+import { useGarageContext } from "../../../../contexts/garage-context"
 
 function AdjustMaxDrivingSpeed() {
 	const garageClass = useGarageContext()
@@ -31,9 +31,6 @@ function AdjustMaxDrivingSpeed() {
 			<div className="flex flex-col">
 				<div>
 					<div className="flex justify-between text-base">
-						<div>
-							Adjust max speed
-						</div>
 						<div>{garageClass.motorThrottlePercent}%</div>
 					</div>
 				</div>
