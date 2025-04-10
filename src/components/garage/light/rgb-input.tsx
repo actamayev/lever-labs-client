@@ -12,19 +12,19 @@ function RGBInput() {
 
 	// Handle RGB input change
 	const handleRgbChange = useCallback((component: "r" | "g" | "b", value: number) => {
-		const currentRgbValue = garageClass.selectedColor
+		const currentRgbValue = garageClass.selectedColorRgba
 
 		currentRgbValue[component] = Math.max(0, Math.min(255, value))
 		handleColorChange(currentRgbValue)
-	}, [garageClass.selectedColor, handleColorChange])
+	}, [garageClass.selectedColorRgba, handleColorChange])
 
 	return (
-		<div className="flex items-center space-x-2 w-full mb-8">
+		<div className="flex items-center justify-center space-x-2 w-full mb-8">
 			<div className="flex items-center flex-col">
 				<span className="text-sm font-medium mr-1">R</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColor.r}
+					value={garageClass.selectedColorRgba.r}
 					onChange={(e) => handleRgbChange("r", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"
@@ -35,7 +35,7 @@ function RGBInput() {
 				<span className="text-sm font-medium mr-1">G</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColor.g}
+					value={garageClass.selectedColorRgba.g}
 					onChange={(e) => handleRgbChange("g", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"
@@ -46,7 +46,7 @@ function RGBInput() {
 				<span className="text-sm font-medium mr-1">B</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColor.b}
+					value={garageClass.selectedColorRgba.b}
 					onChange={(e) => handleRgbChange("b", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"

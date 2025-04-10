@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import debounce from "lodash-es/debounce"
@@ -20,23 +21,23 @@ export default function useColorChange(): (rgbaColor: RgbaColor) => void {
 			) return
 
 			const ledControlData = {
-				topLeftColor: { r: rgb.r, g: rgb.g, b: rgb.b },
-				topRightColor: { r: rgb.r, g: rgb.g, b: rgb.b },
-				middleLeftColor: { r: rgb.r, g: rgb.g, b: rgb.b },
-				middleRightColor: { r: rgb.r, g: rgb.g, b: rgb.b },
-				backLeftColor: { r: rgb.r, g: rgb.g, b: rgb.b },
-				backRightColor: { r: rgb.r, g: rgb.g, b: rgb.b },
+				topLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+				topRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+				middleLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+				middleRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+				backLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+				backRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
 				pipUUID: pipClass.selectedPip.pipUUID
 			}
 
 			socketClass.emitLedColorControl(ledControlData)
 		}, 10), // 10ms debounce
-		[pipClass.selectedPip, socketClass] // Dependencies
+		[pipClass.selectedPip, socketClass, garageClass.selectedColorShade] // Dependencies
 	)
 
 	// Handle color change from color wheel
 	return useCallback((rgbaColor: RgbaColor) => {
-		garageClass.setSelectedColor(rgbaColor)
+		garageClass.setSelectedColorRgba(rgbaColor)
 
 		// Update dot colors if dots are selected
 		if (garageClass.selectedDots && garageClass.selectedDots.length > 0) {

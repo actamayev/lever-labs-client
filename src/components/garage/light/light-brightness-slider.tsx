@@ -1,23 +1,17 @@
 import { observer } from "mobx-react"
-import { hsvaToRgba, rgbaToHsva } from "@uiw/color-convert"
+import { rgbaToHsva } from "@uiw/color-convert"
 import ShadeSlider from "@uiw/react-color-shade-slider"
 import { useGarageContext } from "../../../contexts/garage-context"
-import useColorChange from "../../../hooks/garage/color-change"
 
 function LightBrightnessSlider() {
 	const garageClass = useGarageContext()
-	const colorChange = useColorChange()
 
 	return (
-		<div className="w-64 rounded-full">
+		<div className="w-3/4 cursor-pointer">
 			<ShadeSlider
-				hsva={rgbaToHsva(garageClass.selectedColor)}
-				onChange={(newShade) => {
-					const currentHsva = rgbaToHsva(garageClass.selectedColor)
-					currentHsva.v = newShade.v
-					colorChange(hsvaToRgba(currentHsva))
-				}}
-				className="rounded-full"
+				hsva={rgbaToHsva(garageClass.realColor)}
+				onChange={(newShade) => garageClass.setColorShade(newShade.v / 100)}
+				radius="9999px" // or "50%" for fully rounded corners
 			/>
 		</div>
 	)

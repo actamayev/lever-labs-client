@@ -113,4 +113,8 @@ export const soundMappings: SoundMapping = {
 	"5": "mariachi",
 	"numpad6": "countdown",
 	"6": "countdown",
+	"numpad7": "engine",
+	"7": "engine",
+	"numpad8": "robot noise",
+	"8": "robot noise",
 }

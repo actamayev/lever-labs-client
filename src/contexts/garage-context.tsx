@@ -6,7 +6,8 @@ import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
 class GarageClass {
-	public selectedColor: RgbaColor = { r: 255, g: 0, b: 0, a: 1 }
+	public selectedColorRgba: RgbaColor = { r: 255, g: 0, b: 0, a: 1 }
+	public selectedColorShade: number = 1
 	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
 	public dotColors: { [key: number]: RgbaColor } = {
 		0: { r: 255, g: 0, b: 0, a: 1 },
@@ -41,8 +42,17 @@ class GarageClass {
 		makeAutoObservable(this)
 	}
 
-	public setSelectedColor = action((color: RgbaColor): void => {
-		this.selectedColor = color
+	get realColor(): RgbaColor {
+		return {
+			r: this.selectedColorRgba.r * this.selectedColorShade,
+			g: this.selectedColorRgba.g * this.selectedColorShade,
+			b: this.selectedColorRgba.b * this.selectedColorShade,
+			a: this.selectedColorRgba.a * this.selectedColorShade,
+		}
+	}
+
+	public setSelectedColorRgba = action((color: RgbaColor): void => {
+		this.selectedColorRgba = color
 	})
 
 	public toggleDot = action((dotIndex: number): void => {
@@ -124,8 +134,12 @@ class GarageClass {
 		this.soundPlaying = newSoundPlaying
 	})
 
+	public setColorShade = action((newShade: number): void => {
+		this.selectedColorShade = newShade
+	})
+
 	public logout() {
-		this.setSelectedColor({ r: 255, g: 0, b: 0, a: 1 })
+		this.setSelectedColorRgba({ r: 255, g: 0, b: 0, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
 		this.dotColors = {
 			0: { r: 255, g: 0, b: 0, a: 1 },
