@@ -27,15 +27,15 @@ export default function useGarageActionsUseEffect(): void {
 					headlightsStatus: true
 				})
 			}
-		} else if (mapping === "horn") {
-			garageClass.setIsHornPressed(true)
+			return
+		}
+		garageClass.setIsHornPressed(true)
 
-			if (pipClass.selectedPip) {
-				socketClass.emitHornSound({
-					pipUUID: pipClass.selectedPip.pipUUID,
-					hornStatus: true
-				})
-			}
+		if (pipClass.selectedPip) {
+			socketClass.emitHornSound({
+				pipUUID: pipClass.selectedPip.pipUUID,
+				hornStatus: true
+			})
 		}
 	}
 
@@ -54,15 +54,15 @@ export default function useGarageActionsUseEffect(): void {
 					headlightsStatus: false
 				})
 			}
-		} else if (mapping === "horn") {
-			garageClass.setIsHornPressed(false)
+			return
+		}
+		garageClass.setIsHornPressed(false)
 
-			if (pipClass.selectedPip) {
-				socketClass.emitHornSound({
-					pipUUID: pipClass.selectedPip.pipUUID,
-					hornStatus: false
-				})
-			}
+		if (pipClass.selectedPip) {
+			socketClass.emitHornSound({
+				pipUUID: pipClass.selectedPip.pipUUID,
+				hornStatus: false
+			})
 		}
 	}
 

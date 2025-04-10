@@ -69,15 +69,15 @@ function DrivingActionButton({
 				pipUUID: pipClass.selectedPip.pipUUID,
 				headlightsStatus: true
 			})
-		} else if (action === "horn") {
-			garageClass.setIsHornPressed(true)
-
-			if (!pipClass.selectedPip) return
-			socketClass.emitHornSound({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: true
-			})
+			return
 		}
+		garageClass.setIsHornPressed(true)
+
+		if (!pipClass.selectedPip) return
+		socketClass.emitHornSound({
+			pipUUID: pipClass.selectedPip.pipUUID,
+			hornStatus: true
+		})
 	}
 
 	// Handle button release for action buttons
@@ -90,15 +90,15 @@ function DrivingActionButton({
 				pipUUID: pipClass.selectedPip.pipUUID,
 				headlightsStatus: false
 			})
-		} else if (action === "horn") {
-			garageClass.setIsHornPressed(false)
-
-			if (!pipClass.selectedPip) return
-			socketClass.emitHornSound({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: false
-			})
+			return
 		}
+		garageClass.setIsHornPressed(false)
+
+		if (!pipClass.selectedPip) return
+		socketClass.emitHornSound({
+			pipUUID: pipClass.selectedPip.pipUUID,
+			hornStatus: false
+		})
 	}
 
 	// Create button styles with proper tactile behavior
