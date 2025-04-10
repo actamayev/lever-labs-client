@@ -25,7 +25,7 @@ function Workbench() {
 	}, [])
 
 	return (
-		<div className="hidden lg:block lg:w-2/5 xl:w-[25%]" ref={containerRef}>
+		<div className="hidden lg:block lg:w-2/5 xl:w-1/4" ref={containerRef}>
 			{/* This is the fixed element */}
 			<div className="fixed top-11" style={{ width: fixedWidth + "px" }}>
 				<div
