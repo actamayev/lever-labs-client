@@ -14,7 +14,7 @@ export default function SoundsSection() {
 	]
 
 	return (
-		<div className="flex flex-row items-center justify-between gap-8">
+		<div className="flex flex-row gap-8">
 			<AdjustVolume />
 			<div className="grid grid-cols-3 gap-[21px]">
 				{sounds.map((sound, index) => (

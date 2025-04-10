@@ -9,12 +9,17 @@ interface SliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimit
   roundLevel?: string
   thumbWidth?: number
   thumbHeight?: number
+  unFilledTrackColor?: string
+  filledTrackColor?: string // Fixed spelling from "filledTrackFolor" to "filledTrackColor"
+  thumbBorderColor?: string
 }
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
->(({ className, size = 20, roundLevel = "rounded-full", thumbWidth = 20, thumbHeight = 20, ...props }, ref) => {
+>(({ className, size = 20, roundLevel = "rounded-full", thumbWidth = 20, thumbHeight = 20,
+  unFilledTrackColor = "bg-eel/15", filledTrackColor = "bg-eel", thumbBorderColor = "border-eel", ...props }, ref) => {
+  // Fixed spelling from "filledTrackFolor" to "filledTrackColor" in destructuring
   const value = props.value![0]
   const max = props.max || 100 // Default to 100 if not specified
   const isVertical = props.orientation === "vertical"
@@ -54,8 +59,8 @@ const Slider = React.forwardRef<
   }
 
   const rangeStyle = isVertical 
-    ? { height: `${valueToRender()}%` } 
-    : { width: `${valueToRender()}%` };
+    ? { height: `${valueToRender()}%`, backgroundColor: "" } 
+    : { width: `${valueToRender()}%`, backgroundColor: "" };
 
   // Size-based styles
   const trackStyle = {
@@ -83,14 +88,17 @@ const Slider = React.forwardRef<
     >
       <SliderPrimitive.Track 
         className={cn(
-          "relative overflow-hidden bg-eel/15 grow", roundLevel
+          "relative overflow-hidden grow", 
+          roundLevel,
+          unFilledTrackColor // Moved the unFilledTrackColor to className instead of inline style
         )}
         style={trackStyle}
       >
         {/* Fill element */}
         <div 
           className={cn(
-            "absolute bg-eel rounded-none",
+            "absolute rounded-none",
+            filledTrackColor, // Fixed spelling from "filledTrackFolor" to "filledTrackColor"
             isVertical 
               ? "w-full bottom-0" 
               : "h-full"
@@ -100,7 +108,8 @@ const Slider = React.forwardRef<
       </SliderPrimitive.Track>
       <SliderPrimitive.Thumb 
         className={cn(
-          "block border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20",
+          "block border bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20",
+          thumbBorderColor,
           roundLevel
         )}
         style={thumbSize}

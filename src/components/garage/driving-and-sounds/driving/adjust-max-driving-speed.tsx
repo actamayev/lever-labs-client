@@ -40,6 +40,9 @@ function AdjustMaxDrivingSpeed() {
 				roundLevel="rounded-xl"
 				thumbHeight={80 / 3}
 				thumbWidth={80}
+				unFilledTrackColor="bg-blue-100 dark:bg-blue-900"
+				filledTrackColor="bg-blue-800"
+				thumbBorderColor="border-blue-800"
 			/>
 		</div>
 	)

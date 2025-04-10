@@ -41,6 +41,9 @@ function AdjustVolume() {
 				value={[workbenchClass.volume]}
 				onKeyDown={handleKeyDown} // Add key handler directly to Slider
 				orientation="vertical"
+				unFilledTrackColor="bg-sandboxOrange/20 dark:bg-sandboxOrange/80"
+				filledTrackColor="bg-sandboxOrange"
+				thumbBorderColor="border-sandboxOrange"
 			/>
 		</div>
 	)
