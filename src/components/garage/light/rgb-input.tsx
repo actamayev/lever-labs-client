@@ -21,36 +21,33 @@ function RGBInput() {
 	return (
 		<div className="flex items-center justify-center space-x-2 w-full mb-8">
 			<div className="flex items-center flex-col">
-				<span className="text-sm font-medium mr-1">R</span>
+				<span className="text-xl font-medium mr-1">R</span>
 				<Input
-					type="number"
 					value={garageClass.selectedColorRgba.r}
 					onChange={(e) => handleRgbChange("r", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"
-					className="p-1 border border-swan rounded text-sm text-center bg-inherit"
+					className="border-2 border-swan rounded !text-lg text-center bg-inherit h-12 w-20 shadow-none"
 				/>
 			</div>
 			<div className="flex items-center flex-col">
-				<span className="text-sm font-medium mr-1">G</span>
+				<span className="text-xl font-medium mr-1">G</span>
 				<Input
-					type="number"
 					value={garageClass.selectedColorRgba.g}
 					onChange={(e) => handleRgbChange("g", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"
-					className="p-1 border border-swan rounded text-sm text-center bg-inherit"
+					className="border-2 border-swan rounded !text-lg text-center bg-inherit h-12 w-20 shadow-none"
 				/>
 			</div>
 			<div className="flex items-center flex-col">
-				<span className="text-sm font-medium mr-1">B</span>
+				<span className="text-xl font-medium mr-1">B</span>
 				<Input
-					type="number"
 					value={garageClass.selectedColorRgba.b}
 					onChange={(e) => handleRgbChange("b", parseInt(e.target.value || "0"))}
 					min="0"
 					max="255"
-					className="p-1 border border-swan rounded text-sm text-center bg-inherit"
+					className="border-2 border-swan rounded !text-lg text-center bg-inherit h-12 w-20 shadow-none"
 				/>
 			</div>
 		</div>

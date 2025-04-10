@@ -6,7 +6,7 @@ import SingleCareerCard from "./career-card/single-career-card"
 
 export default function CareerQuest() {
 	return (
-		<div className="flex flex-row h-screen overflow-y-auto relative w-full space-x-[45px] px-[45px] pt-[45px]">
+		<div className="flex flex-row h-screen overflow-y-auto relative w-full space-x-[45px] pl-[20px] pr-[45px] pt-[25px]">
 			{/* Main content area */}
 			<div className="w-full lg:w-3/5 xl:w-[75%]">
 				{careerData.map(singleCareerData => (

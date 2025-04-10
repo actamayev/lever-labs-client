@@ -7,6 +7,8 @@ import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 
+// TODO: Center the icons horizontally, but have them fixed vertically.
+// TODO: Confirm consistent styling on career quest, garage.
 function Workbench() {
 	const workbenchClass = useWorkbenchContext()
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -37,7 +39,7 @@ function Workbench() {
 						}
 					}}
 				>
-					<div className="flex flex-row space-x-4">
+					<div className="flex flex-row space-x-5">
 						<BatteryIcon />
 						<VolumeIcon />
 						<NetworkIcon />

@@ -24,12 +24,12 @@ const ANIMATIONS: Animation[] = [
 	{
 		name: "No animation",
 		description: "Slowly fades in and out",
-		icon: <Circle className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+		icon: <Circle className="h-4 w-4"/>
 	},
 	{
 		name: "Breathing",
 		description: "Slowly fades in and out",
-		icon: <CustomYoga className="h-4 w-4 text-eel fill-eel" fill="text-eel"/>
+		icon: <CustomYoga className="h-4 w-4"/>
 	},
 	{
 		name: "Rainbow",
@@ -61,19 +61,21 @@ function LightAnimationsList() {
 							buttonVariants({
 								variant: "outline",
 								className: "flex items-center gap-1 rounded-xl justify-between \
-								px-4 !py-6 text-sm font-medium cursor-pointer w-64"
+								px-4 !py-6 text-sm font-medium cursor-pointer w-64 border-2 border-swan hover:bg-swan shadow-none"
 							})
 						)}
 					>
 						<span className="flex items-center gap-2">
 							{/* Display the icon of the selected animation */}
-							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon}
+							<div className={`text-[rgb(${garageClass.selectedColorRgba})]`}>
+								{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon}
+							</div>
 							{garageClass.selectedAnimation}
 						</span>
 						<ChevronDown className="h-4 w-4" />
 					</div>
 				</DropdownMenuTrigger>
-				<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-64">
+				<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-64 max-h-44 overflow-y-auto border-2 shadow-none">
 					{ANIMATIONS.map((animation) => (
 						<DropdownMenuItem
 							key={animation.name}
