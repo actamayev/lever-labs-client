@@ -63,13 +63,9 @@ class GarageClass {
 		this.selectedAnimation = animationId
 	})
 
-	// Driving methods
 	public drive = action((direction: DriveDirection): void => {
 		this.isDriving = true
 		this.driveDirections.add(direction)
-
-		// In a real app, you would send commands to the robot here
-		console.log(`Driving ${direction}`)
 	})
 
 	public stopDriving = action((direction: DriveDirection): void => {
@@ -78,9 +74,6 @@ class GarageClass {
 		if (this.driveDirections.size === 0) {
 			this.isDriving = false
 		}
-
-		// In a real app, you would send stop commands to the robot here
-		console.log(`Stopped driving ${direction}`)
 	})
 
 	public setMotorThrottlePercent = action((newMotorThrottlePercent: number): void => {
@@ -89,7 +82,6 @@ class GarageClass {
 
 	public setSensorData = action((incomingSensorData: IncomingSensorData | null): void => {
 		this.sensorData = incomingSensorData
-		// console.log(incomingSensorData?.sensorPayload)
 		if (isNull(incomingSensorData)) return
 		this.addPitchData(incomingSensorData)
 	})

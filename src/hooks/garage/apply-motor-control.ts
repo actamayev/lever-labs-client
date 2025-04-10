@@ -75,7 +75,6 @@ export default function useApplyMotorControl(): (motorControl: MotorControlInput
 			return toast.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
 		}
 
-		console.log("garageClass.motorThrottlePercent", garageClass.motorThrottlePercent)
 		// Emit motor control via socket
 		socketClass.emitMotorControl({
 			motorControl,
