@@ -32,9 +32,9 @@ function DrivingActionButton({
 	const getActionIcon = (): ReactNode => {
 		switch (action) {
 		case "headlights":
-			return <CustomHeadlights size={24} />
+			return <CustomHeadlights className="!size-12" />
 		case "horn":
-			return <CustomHorn size={24} />
+			return <CustomHorn className="!size-12" />
 		}
 	}
 

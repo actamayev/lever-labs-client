@@ -28,13 +28,13 @@ function ArrowKeyButton({
 	const getMotorDirectionIcon = (): ReactNode => {
 		switch (direction) {
 		case "up":
-			return <ArrowUp size={24} strokeWidth={2.5}/>
+			return <ArrowUp className="!size-12" strokeWidth={2.5}/>
 		case "down":
-			return <ArrowDown size={24} strokeWidth={2.5}/>
+			return <ArrowDown className="!size-12" strokeWidth={2.5}/>
 		case "left":
-			return <ArrowLeft size={24} strokeWidth={2.5}/>
+			return <ArrowLeft className="!size-12" strokeWidth={2.5}/>
 		case "right":
-			return <ArrowRight size={24} strokeWidth={2.5}/>
+			return <ArrowRight className="!size-12" strokeWidth={2.5}/>
 		}
 	}
 

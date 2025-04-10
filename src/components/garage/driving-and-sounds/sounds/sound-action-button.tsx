@@ -9,6 +9,9 @@ import { CustomHeadlights } from "../../../icons/custom-headlights"
 import { useSocketContext } from "../../../../contexts/socket-context"
 import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 import { useGarageContext } from "../../../../contexts/garage-context"
+import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
+import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
+import { CustomElephant } from "../../../icons/custom-elephant"
 
 function SoundActionButton({ sound } : { sound: Sounds }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
@@ -22,17 +25,20 @@ function SoundActionButton({ sound } : { sound: Sounds }) {
 	const getSoundIcon = (): ReactNode => {
 		switch (sound) {
 		case "fart":
-			return <CustomHeadlights size={24} />
+			return <CustomHeadlights className="!size-12" />
 		case "monkey":
-			return <CustomHeadlights size={24} />
+			if (garageClass.soundPlaying === "monkey") {
+				return <CustomHearNoEvilMonkey className="!size-12" />
+			}
+			return <CustomSpeakNoEvilMonkey className="!size-12" />
 		case "elephant":
-			return <CustomHeadlights size={24} />
+			return <CustomElephant className="!size-12" />
 		case "fanfare":
-			return <CustomHeadlights size={24} />
+			return <CustomHeadlights className="!size-12" />
 		case "mariachi":
-			return <CustomHeadlights size={24} />
+			return <CustomHeadlights className="!size-12" />
 		case "countdown":
-			return <CustomHeadlights size={24} />
+			return <CustomHeadlights className="!size-12" />
 		}
 	}
 

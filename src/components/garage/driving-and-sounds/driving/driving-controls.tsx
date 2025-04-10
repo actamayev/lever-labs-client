@@ -19,7 +19,7 @@ function DrivingControls() {
 
 	return (
 		<div className="flex flex-col items-center justify-center">
-			<div className="grid grid-cols-3 gap-2">
+			<div className="grid grid-cols-3 gap-4">
 				{/* Top row - Headlights button, Up button, Horn button */}
 				<div className="col-start-1">
 					<DrivingActionButton
