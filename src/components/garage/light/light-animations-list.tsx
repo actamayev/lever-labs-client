@@ -53,7 +53,7 @@ function LightAnimationsList() {
 	const lightsAnimation = useLightsAnimation()
 
 	return (
-		<div className="w-full h-full flex flex-col">
+		<div className="w-full mb-8">
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
 					<div

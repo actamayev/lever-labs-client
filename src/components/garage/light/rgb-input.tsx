@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import useColorChange from "../../../hooks/garage/color-change"
 import { useGarageContext } from "../../../contexts/garage-context"
+import { Input } from "../../shadcn/ui/input"
 
 function RGBInput() {
 	const garageClass = useGarageContext()
@@ -18,10 +19,10 @@ function RGBInput() {
 	}, [garageClass.selectedColor, handleColorChange])
 
 	return (
-		<div className="flex items-center space-x-2">
+		<div className="flex items-center space-x-2 w-full mb-8">
 			<div className="flex items-center flex-col">
 				<span className="text-sm font-medium mr-1">R</span>
-				<input
+				<Input
 					type="number"
 					value={garageClass.selectedColor.r}
 					onChange={(e) => handleRgbChange("r", parseInt(e.target.value || "0"))}
@@ -32,7 +33,7 @@ function RGBInput() {
 			</div>
 			<div className="flex items-center flex-col">
 				<span className="text-sm font-medium mr-1">G</span>
-				<input
+				<Input
 					type="number"
 					value={garageClass.selectedColor.g}
 					onChange={(e) => handleRgbChange("g", parseInt(e.target.value || "0"))}
@@ -43,7 +44,7 @@ function RGBInput() {
 			</div>
 			<div className="flex items-center flex-col">
 				<span className="text-sm font-medium mr-1">B</span>
-				<input
+				<Input
 					type="number"
 					value={garageClass.selectedColor.b}
 					onChange={(e) => handleRgbChange("b", parseInt(e.target.value || "0"))}

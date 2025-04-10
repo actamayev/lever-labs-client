@@ -12,8 +12,8 @@ const DOT_POSITIONS = [
 	{ top: "22px", right: "96px" },  // Top Right
 	{ top: "52px", left: "51px" }, // Middle Left
 	{ top: "52px", right: "66px" }, // Middle Right
-	{ bottom: "43px", left: "65px" },      // Bottom Left
-	{ bottom: "43px", right: "79px" }        // Bottom Right
+	{ bottom: "76px", left: "65px" },      // Bottom Left
+	{ bottom: "76px", right: "79px" }        // Bottom Right
 ]
 
 function LightDotsSelector() {
