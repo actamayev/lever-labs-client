@@ -8,7 +8,7 @@ export default function TheGaragePage() {
 	return (
 		<div className="flex flex-row h-screen overflow-hidden relative w-full space-x-12 px-10 pt-12">
 			{/* Left section - 2/3 width */}
-			<div className="w-full lg:w-3/5 xl:w-[61.8%] overflow-hidden">
+			<div className="w-full lg:w-3/5 xl:w-[75%] overflow-hidden">
 				<LightSection />
 				<div className="h-0.5 bg-swan"></div>
 				<DisplaySection />
@@ -17,7 +17,7 @@ export default function TheGaragePage() {
 			</div>
 
 			{/* Border separator as absolute element */}
-			<div className="absolute right-[39%] xl:right-[38.2%] lg:right-[40%] h-full top-0 border-r-2 border-swan"></div>
+			<div className="absolute right-[39%] xl:right-[28%] lg:right-[40%] h-full top-0 border-r-2 border-swan"></div>
 
 			<Workbench />
 		</div>
