@@ -1,19 +1,20 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
+import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 
 class GarageClass {
-	public selectedColor: string = "#00bcd4"
+	public selectedColor: RgbaColor = { r: 255, g: 0, b: 0, a: 1 }
 	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
-	public dotColors: { [key: number]: string } = {
-		0: "#00bcd4",
-		1: "#00bcd4",
-		2: "#00bcd4",
-		3: "#00bcd4",
-		4: "#00bcd4",
-		5: "#00bcd4"
+	public dotColors: { [key: number]: RgbaColor } = {
+		0: { r: 255, g: 0, b: 0, a: 1 },
+		1: { r: 255, g: 0, b: 0, a: 1 },
+		2: { r: 255, g: 0, b: 0, a: 1 },
+		3: { r: 255, g: 0, b: 0, a: 1 },
+		4: { r: 255, g: 0, b: 0, a: 1 },
+		5: { r: 255, g: 0, b: 0, a: 1 }
 	}
 	public selectedAnimation: LightAnimation = "No animation"
 
@@ -40,7 +41,7 @@ class GarageClass {
 		makeAutoObservable(this)
 	}
 
-	public setSelectedColor = action((color: string): void => {
+	public setSelectedColor = action((color: RgbaColor): void => {
 		this.selectedColor = color
 	})
 
@@ -52,7 +53,7 @@ class GarageClass {
 		}
 	})
 
-	public updateDotColor = action((dotIndices: number[], color: string): void => {
+	public updateDotColor = action((dotIndices: number[], color: RgbaColor): void => {
 		dotIndices.forEach((index) => {
 			this.dotColors[index] = color
 		})
@@ -124,15 +125,15 @@ class GarageClass {
 	})
 
 	public logout() {
-		this.setSelectedColor("#00bcd4")
+		this.setSelectedColor({ r: 255, g: 0, b: 0, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
 		this.dotColors = {
-			0: "#00bcd4",
-			1: "#00bcd4",
-			2: "#00bcd4",
-			3: "#00bcd4",
-			4: "#00bcd4",
-			5: "#00bcd4"
+			0: { r: 255, g: 0, b: 0, a: 1 },
+			1: { r: 255, g: 0, b: 0, a: 1 },
+			2: { r: 255, g: 0, b: 0, a: 1 },
+			3: { r: 255, g: 0, b: 0, a: 1 },
+			4: { r: 255, g: 0, b: 0, a: 1 },
+			5: { r: 255, g: 0, b: 0, a: 1 }
 		}
 		this.setSelectedAnimation("No animation")
 		this.isDriving = false
