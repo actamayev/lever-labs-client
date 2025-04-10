@@ -16,7 +16,7 @@ export default function TheGaragePage() {
 			</div>
 
 			{/* Border separator as absolute element */}
-			{/* <div className="absolute right-[39%] xl:right-1/4 lg:right-2/5 h-full top-0 border-r-2 border-swan"/> */}
+			<div className="absolute lg:right-[43%] xl:right-[28%] h-full top-0 border-r-2 border-swan"/>
 
 			<Workbench />
 		</div>

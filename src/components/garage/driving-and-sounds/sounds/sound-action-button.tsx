@@ -19,7 +19,7 @@ import { CustomCountdown } from "../../../icons/custom-countdown"
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
-	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
+	const shadowColor = defaultSiteTheme === "light" ? "rgb(255 189 153)" : "rgb(37 99 235)"
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const garageClass = useGarageContext()
@@ -87,11 +87,11 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	// Create a class string that prioritizes active state over hover
 	const buttonClasses = cn(
 		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
-		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
+		"bg-sandboxOrange/20 border-sandboxOrange/40 text-sandboxOrange hover:bg-sandboxOrange/10",
+		"dark:bg-sandboxOrange/80 dark:border-sandboxOrange/60 dark:text-sandboxOrange dark:hover:bg-sandboxOrange/900",
 		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
 		// Add active classes with !important to override hover
-		garageClass.soundPlaying === sound && "!bg-blue-300 dark:!bg-blue-950"
+		garageClass.soundPlaying === sound && "!bg-sandboxOrange/5 dark:!bg-sandboxOrange/95"
 	)
 
 	return (
@@ -108,7 +108,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 		>
 			<span className={cn(
 				"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
-				"border-2 rounded-md text-xs font-medium border-blue-400 dark:border-blue-600",
+				"border-2 rounded-md text-xs font-medium border-sandboxOrange/40 dark:border-sandboxOrange/60",
 				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
 			)}>
 				{index}

@@ -7,15 +7,10 @@ function AdjustMaxDrivingSpeed() {
 
 	const handleValueChange = (value: number[]) => {
 		const newMaxSpeed = value[0]
-
-		// Update state immediately for responsive UI
 		garageClass.setMotorThrottlePercent(newMaxSpeed)
-		// No need for separate socket emission - the hook will handle it
 	}
 
-	// Handle key down event to prevent arrow keys from changing slider value
 	const handleKeyDown = (event: React.KeyboardEvent) => {
-		// Prevent arrow keys from changing slider value
 		if (
 			event.key === "ArrowUp" ||
 			event.key === "ArrowDown" ||
@@ -28,19 +23,23 @@ function AdjustMaxDrivingSpeed() {
 
 	return (
 		<div
-			className="cursor-pointer mt-3"
+			className="cursor-pointer h-full flex flex-col justify-center"
 			onKeyDown={handleKeyDown}
-			tabIndex={0} // Make div focusable to capture key events
+			tabIndex={0}
 		>
 			<Slider
 				defaultValue={[garageClass.motorThrottlePercent]}
 				max={100}
 				step={1}
 				onValueChange={handleValueChange}
-				className="duration-0"
+				className="h-full duration-0"
 				value={[garageClass.motorThrottlePercent]}
-				onKeyDown={handleKeyDown} // Add key handler directly to Slider
+				onKeyDown={handleKeyDown}
 				orientation="vertical"
+				size={80}
+				roundLevel="rounded-xl"
+				thumbHeight={80 / 3}
+				thumbWidth={80}
 			/>
 		</div>
 	)

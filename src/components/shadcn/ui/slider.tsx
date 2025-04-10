@@ -4,18 +4,26 @@ import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
 import { cn } from "../../../lib/shadcn/utils"
 
+interface SliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> {
+  size?: number;
+  roundLevel?: string
+  thumbWidth?: number
+  thumbHeight?: number
+}
+
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, ...props }, ref) => {
-  const width = props.value![0]
+  SliderProps
+>(({ className, size = 20, roundLevel = "rounded-full", thumbWidth = 20, thumbHeight = 20, ...props }, ref) => {
+  const value = props.value![0]
   const max = props.max || 100 // Default to 100 if not specified
+  const isVertical = props.orientation === "vertical"
   
-  const widthToRender = (): number => {
+  const valueToRender = (): number => {
     // Convert current value to percentage (0-100 scale)
-    const percentValue = (width / max) * 100
+    const percentValue = (value / max) * 100
     
-    // Apply the same adjustments but to the percentage value
+    // Apply the same adjustments to the percentage value
     if (percentValue < 6) return percentValue + 2.5
     if (percentValue < 10) return percentValue + 2.3
     if (percentValue < 14) return percentValue + 2.1
@@ -45,31 +53,61 @@ const Slider = React.forwardRef<
     return percentValue
   }
 
-  const rangeStyle = {
-    width: `${widthToRender()}%`
+  const rangeStyle = isVertical 
+    ? { height: `${valueToRender()}%` } 
+    : { width: `${valueToRender()}%` };
+
+  // Size-based styles
+  const trackStyle = {
+    width: isVertical ? `${size}px` : '100%',
+    height: isVertical ? '100%' : `${size}px`,
+  };
+
+  const thumbSize = {
+    width: `${thumbWidth}px`,
+    height: `${thumbHeight}px`,
   };
 
   return (
     <SliderPrimitive.Root
       ref={ref}
       className={cn(
-        "relative flex w-full touch-none select-none items-center",
+        "relative flex touch-none select-none",
+        isVertical 
+          ? "h-full flex-col items-center" 
+          : "w-full items-center",
         className
       )}
+      style={{ width: isVertical ? `${size}px` : '100%' }}
       {...props}
     >
-      <SliderPrimitive.Track className="relative h-5 w-full grow overflow-hidden rounded-full bg-eel/15">
-        {/* Use inline style to force the width */}
+      <SliderPrimitive.Track 
+        className={cn(
+          "relative overflow-hidden bg-eel/15 grow", roundLevel
+        )}
+        style={trackStyle}
+      >
+        {/* Fill element */}
         <div 
-          className="absolute h-full bg-eel rounded-none" 
+          className={cn(
+            "absolute bg-eel rounded-none",
+            isVertical 
+              ? "w-full bottom-0" 
+              : "h-full"
+          )}
           style={rangeStyle}
         />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block size-5 rounded-full border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20"/>
+      <SliderPrimitive.Thumb 
+        className={cn(
+          "block border border-eel bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20",
+          roundLevel
+        )}
+        style={thumbSize}
+      />
     </SliderPrimitive.Root>
   )
-}
-)
+})
 Slider.displayName = SliderPrimitive.Root.displayName
 
 export { Slider }

@@ -33,7 +33,7 @@ const navData: SidebarNavData[] = [
 		title: "Sandbox",
 		url: "/sandbox",
 		icon: CustomSandbox,
-		textColor: "text-sandboxIconColor"
+		textColor: "text-sandboxOrange"
 	},
 	{
 		title: "Garage",
