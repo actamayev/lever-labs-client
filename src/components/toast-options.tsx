@@ -42,14 +42,14 @@ export default function useToastOptions() {
 	) => {
 		if (isToastActiveRef.current) {
 			// If a toast is already active, don't create a new one
-			return null
+			return
 		}
 
 		// Set active flag to true
 		isToastActiveRef.current = true
 
 		// Create the toast with the provided function and options
-		const toastId = toastFn(content, {
+		toastFn(content, {
 			...options,
 			onClose: () => {
 				// When toast closes, reset the active flag
@@ -59,7 +59,7 @@ export default function useToastOptions() {
 			}
 		})
 
-		return toastId
+		return
 	}
 
 	const superPositive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {

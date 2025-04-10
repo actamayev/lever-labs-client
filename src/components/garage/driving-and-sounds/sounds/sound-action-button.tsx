@@ -14,6 +14,8 @@ import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monke
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { CustomMariachi } from "../../../icons/custom-mariachi"
+import { CustomFart } from "../../../icons/custom-fart"
+import { CustomCountdown } from "../../../icons/custom-countdown"
 
 // eslint-disable-next-line max-lines-per-function
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
@@ -28,7 +30,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	const getSoundIcon = (): ReactNode => {
 		switch (sound) {
 		case "fart":
-			return <CustomHeadlights className="!size-10" />
+			return <CustomFart className="!size-10" />
 		case "monkey":
 			if (garageClass.soundPlaying === "monkey") {
 				return <CustomHearNoEvilMonkey className="!size-10" />
@@ -41,7 +43,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 		case "mariachi":
 			return <CustomMariachi className="!size-10" />
 		case "countdown":
-			return <CustomHeadlights className="!size-10" />
+			return <CustomCountdown className="!size-10" />
 		}
 	}
 
