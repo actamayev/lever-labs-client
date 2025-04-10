@@ -32,9 +32,9 @@ function DrivingActionButton({
 	const getActionIcon = (): ReactNode => {
 		switch (action) {
 		case "headlights":
-			return <CustomHeadlights className="!size-12" />
+			return <CustomHeadlights className="!size-10" />
 		case "horn":
-			return <CustomHorn className="!size-12" />
+			return <CustomHorn className="!size-10" />
 		}
 	}
 
@@ -134,6 +134,13 @@ function DrivingActionButton({
 			onTouchStart={handleButtonDown}
 			onTouchEnd={handleButtonUp}
 		>
+			<span className={cn(
+				"absolute top-1 left-1 w-6 h-6 flex items-center justify-center",
+				"border-2 rounded-md text-xs font-medium border-blue-400 dark:border-blue-600",
+				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
+			)}>
+				{action === "headlights" ? "Q" : "E" }
+			</span>
 			{getActionIcon()}
 		</TactileButton>
 	)

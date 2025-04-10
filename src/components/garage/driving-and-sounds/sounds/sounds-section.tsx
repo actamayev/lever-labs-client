@@ -15,9 +15,9 @@ export default function SoundsSection() {
 	return (
 		<div className="flex flex-col items-center justify-center">
 			<div className="grid grid-cols-3 gap-4">
-				{sounds.map((sound) => (
+				{sounds.map((sound, index) => (
 					<div key={sound}>
-						<SoundActionButton sound={sound} />
+						<SoundActionButton sound={sound} index={index + 1} />
 					</div>
 				))}
 			</div>

@@ -3,6 +3,7 @@
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
+import { CustomElephant } from "../../../icons/custom-elephant"
 import { usePipContext } from "../../../../contexts/pip-context"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import { CustomHeadlights } from "../../../icons/custom-headlights"
@@ -11,9 +12,11 @@ import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 import { useGarageContext } from "../../../../contexts/garage-context"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
-import { CustomElephant } from "../../../icons/custom-elephant"
+import { CustomPartyPopper } from "../../../icons/custom-party-popper"
+import { CustomMariachi } from "../../../icons/custom-mariachi"
 
-function SoundActionButton({ sound } : { sound: Sounds }) {
+// eslint-disable-next-line max-lines-per-function
+function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
@@ -25,20 +28,20 @@ function SoundActionButton({ sound } : { sound: Sounds }) {
 	const getSoundIcon = (): ReactNode => {
 		switch (sound) {
 		case "fart":
-			return <CustomHeadlights className="!size-12" />
+			return <CustomHeadlights className="!size-10" />
 		case "monkey":
 			if (garageClass.soundPlaying === "monkey") {
-				return <CustomHearNoEvilMonkey className="!size-12" />
+				return <CustomHearNoEvilMonkey className="!size-10" />
 			}
-			return <CustomSpeakNoEvilMonkey className="!size-12" />
+			return <CustomSpeakNoEvilMonkey className="!size-10" />
 		case "elephant":
-			return <CustomElephant className="!size-12" />
+			return <CustomElephant className="!size-10" />
 		case "fanfare":
-			return <CustomHeadlights className="!size-12" />
+			return <CustomPartyPopper className="!size-10" />
 		case "mariachi":
-			return <CustomHeadlights className="!size-12" />
+			return <CustomMariachi className="!size-10" />
 		case "countdown":
-			return <CustomHeadlights className="!size-12" />
+			return <CustomHeadlights className="!size-10" />
 		}
 	}
 
@@ -72,23 +75,27 @@ function SoundActionButton({ sound } : { sound: Sounds }) {
 		})
 	}
 
-	// Create button styles with proper tactile behavior
-	const getButtonClasses = () => cn(
-		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
-		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-	)
-
 	return (
 		<TactileButton
 			ref={buttonRef}
-			className={getButtonClasses()}
+			className={cn(
+				"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
+				"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
+				"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
+				"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
+			)}
 			shadowColor={shadowColor}
 			shadowHeight={4}
 			onMouseDown={handleButtonDown}
 			onTouchStart={handleButtonDown}
 		>
+			<span className={cn(
+				"absolute top-1 left-1 w-6 h-6 flex items-center justify-center",
+				"border-2 rounded-md text-xs font-medium border-blue-400 dark:border-blue-600",
+				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
+			)}>
+				{index}
+			</span>
 			{getSoundIcon()}
 		</TactileButton>
 	)
