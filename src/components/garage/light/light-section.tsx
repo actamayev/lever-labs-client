@@ -1,7 +1,7 @@
-import ColorPicker from "./color-picker"
-import LightAnimationsList from "./light-animations-list"
-import LightDotsSelector from "./light-dots-selector"
 import RgbInput from "./rgb-input"
+import ColorPicker from "./color-picker"
+import LightDotsSelector from "./light-dots-selector"
+import LightAnimationsList from "./light-animations-list"
 
 export default function LightSection() {
 	return (

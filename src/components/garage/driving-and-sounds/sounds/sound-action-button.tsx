@@ -15,6 +15,8 @@ import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { CustomMariachi } from "../../../icons/custom-mariachi"
 import { CustomFart } from "../../../icons/custom-fart"
 import { CustomCountdown } from "../../../icons/custom-countdown"
+import { Bot } from "lucide-react"
+import { CustomEngine } from "../../../icons/custom-engine"
 
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
@@ -42,6 +44,10 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			return <CustomMariachi className="!size-10" />
 		case "countdown":
 			return <CustomCountdown className="!size-10" />
+		case "robot noise":
+			return <Bot className="!size-10" />
+		case "engine":
+			return <CustomEngine className="!size-10" />
 		}
 	}
 

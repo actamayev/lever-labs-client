@@ -61,7 +61,7 @@ function LightAnimationsList() {
 							buttonVariants({
 								variant: "outline",
 								className: "flex items-center gap-1 rounded-xl justify-between \
-								px-4 !py-6 text-sm font-medium cursor-pointer"
+								px-4 !py-6 text-sm font-medium cursor-pointer w-64"
 							})
 						)}
 					>
