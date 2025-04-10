@@ -34,6 +34,7 @@ class GarageClass {
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
 	public lastThrottlePercent: number = 100
+	public soundPlaying: Sounds | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -126,6 +127,10 @@ class GarageClass {
 		this.pressedDirections = directions
 	})
 
+	public setSoundPlaying = action((newSoundPlaying: Sounds | null): void => {
+		this.soundPlaying = newSoundPlaying
+	})
+
 	public logout() {
 		this.setSelectedColor("#00bcd4")
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -148,6 +153,9 @@ class GarageClass {
 		this.pressedDirections.clear()
 		this.motorState = { vertical: 0, horizontal: 0 }
 		this.lastThrottlePercent = 100
+		this.setIsHornPressed(false)
+		this.setAreHeadlightsOn(false)
+		this.setSoundPlaying(null)
 	}
 }
 

@@ -18,6 +18,8 @@ declare global {
 
 	type Actions = "horn" | "headlights"
 
+	type Sounds = "fart" | "monkey" | "elephant" | "fanfare" | "mariachi" | "countdown"
+
 	interface MotorControlInput {
 		vertical: -1 | 1 | 0
 		horizontal: -1 | 1 | 0

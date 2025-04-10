@@ -1,13 +1,28 @@
-import { Speaker } from "lucide-react"
+import useGarageSoundsUseEffect from "../../../../hooks/garage/garage-sounds-use-effect"
+import SoundActionButton from "./sound-action-button"
 
 export default function SoundsSection() {
+	useGarageSoundsUseEffect()
+	const sounds: Sounds[] = [
+		"fart",
+		"monkey",
+		"elephant",
+		"fanfare",
+		"mariachi",
+		"countdown"
+	]
+
 	return (
-		<div>
-			<div className="flex flex-row space-x-2 items-center">
-				<Speaker />
-				<h2 className="text-xl font-bold text-center">Speaker</h2>
+		<div className="flex flex-col items-center justify-center">
+			<div className="grid grid-cols-3 gap-2">
+				{sounds.map((sound) => (
+					<div key={sound}>
+						<SoundActionButton sound={sound} />
+					</div>
+				))}
 			</div>
-			{/* Speaker content will go here */}
+
+			{/* <AdjustMaxDrivingSpeed /> */}
 		</div>
 	)
 }

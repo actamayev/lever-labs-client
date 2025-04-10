@@ -25,6 +25,10 @@ declare global {
 		headlightsStatus: boolean
 	}
 
+	interface SoundDataToSend extends PipUUIDInterface {
+		sound: Sounds
+	}
+
 	// Incoming socket events:
 	type PipStatusUpdate = {
 		pipUUID: PipUUID

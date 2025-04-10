@@ -1,0 +1,45 @@
+"use client"
+
+import { useEffect } from "react"
+import { soundMappings } from "../../utils/constants"
+import { usePipContext } from "../../contexts/pip-context"
+import { useGarageContext } from "../../contexts/garage-context"
+import { useSocketContext } from "../../contexts/socket-context"
+
+export default function useGarageSoundsUseEffect(): void {
+	const garageClass = useGarageContext()
+	const socketClass = useSocketContext()
+	const pipClass = usePipContext()
+
+	// Key event handlers
+	const handleKeyDown = (event: KeyboardEvent): void => {
+		const key = event.key.toLowerCase()
+		if (!(key in soundMappings)) return
+
+		const sound = soundMappings[key]
+		garageClass.setSoundPlaying(sound)
+		if (!pipClass.selectedPip) return
+		socketClass.emitSound({
+			pipUUID: pipClass.selectedPip.pipUUID,
+			sound
+		})
+	}
+
+	const handleKeyUp = (event: KeyboardEvent): void => {
+		const key = event.key.toLowerCase()
+		if (!(key in soundMappings)) return
+		garageClass.setSoundPlaying(null)
+	}
+
+	// Set up key event listeners
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyDown)
+		window.addEventListener("keyup", handleKeyUp)
+
+		return (): void => {
+			window.removeEventListener("keydown", handleKeyDown)
+			window.removeEventListener("keyup", handleKeyUp)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+}

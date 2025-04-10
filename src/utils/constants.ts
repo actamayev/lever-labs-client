@@ -95,3 +95,22 @@ export const actionMappings: ActionMapping = {
 	"q": "headlights",
 	"e": "horn"
 }
+
+interface SoundMapping {
+	[key: string]: Sounds
+}
+
+export const soundMappings: SoundMapping = {
+	"numpad1": "fart",
+	"1": "fart",
+	"numpad2": "monkey",
+	"2": "monkey",
+	"numpad3": "elephant",
+	"3": "elephant",
+	"numpad4": "fanfare",
+	"4": "fanfare",
+	"numpad5": "mariachi",
+	"5": "mariachi",
+	"numpad6": "countdown",
+	"6": "countdown",
+}
