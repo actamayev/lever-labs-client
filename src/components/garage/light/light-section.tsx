@@ -2,6 +2,7 @@ import RgbInput from "./rgb-input"
 import ColorPicker from "./color-picker"
 import LightDotsSelector from "./light-dots-selector"
 import LightAnimationsList from "./light-animations-list"
+import LightBrightnessSlider from "./light-brightness-slider"
 
 export default function LightSection() {
 	return (
@@ -11,9 +12,10 @@ export default function LightSection() {
 					<ColorPicker />
 				</div>
 
-				<div className="flex items-center justify-center flex-col">
+				<div className="flex flex-col items-center">
 					<LightAnimationsList />
 					<RgbInput />
+					<LightBrightnessSlider />
 				</div>
 
 				<div className="flex items-center justify-center">
