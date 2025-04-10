@@ -8,7 +8,7 @@ export default function DrivingAndSoundsSection() {
 				<SoundsSection />
 			</div>
 
-			<div className="w-1/2 flex flex-col items-center justify-center pr-[45px]">
+			<div className="w-1/2 flex flex-col items-center justify-center">
 				<DrivingControls />
 			</div>
 		</div>

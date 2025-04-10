@@ -27,25 +27,21 @@ function AdjustMaxDrivingSpeed() {
 	}
 
 	return (
-		<div className="w-full">
-			<div className="flex flex-col">
-				<div className="text-base">{garageClass.motorThrottlePercent}%</div>
-				<div
-					className="cursor-pointer mt-3"
-					onKeyDown={handleKeyDown}
-					tabIndex={0} // Make div focusable to capture key events
-				>
-					<Slider
-						defaultValue={[garageClass.motorThrottlePercent]}
-						max={100}
-						step={1}
-						onValueChange={handleValueChange}
-						className="duration-0"
-						value={[garageClass.motorThrottlePercent]}
-						onKeyDown={handleKeyDown} // Add key handler directly to Slider
-					/>
-				</div>
-			</div>
+		<div
+			className="cursor-pointer mt-3"
+			onKeyDown={handleKeyDown}
+			tabIndex={0} // Make div focusable to capture key events
+		>
+			<Slider
+				defaultValue={[garageClass.motorThrottlePercent]}
+				max={100}
+				step={1}
+				onValueChange={handleValueChange}
+				className="duration-0"
+				value={[garageClass.motorThrottlePercent]}
+				onKeyDown={handleKeyDown} // Add key handler directly to Slider
+				orientation="vertical"
+			/>
 		</div>
 	)
 }

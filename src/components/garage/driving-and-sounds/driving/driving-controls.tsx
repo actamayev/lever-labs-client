@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
-// import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
+import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
 import { useGarageContext } from "../../../../contexts/garage-context"
 import useMotorDriveUseEffect from "../../../../hooks/garage/motor-drive-use-effect"
 import useGarageActionsUseEffect from "../../../../hooks/garage/garage-actions-use-effect"
@@ -14,7 +14,7 @@ function DrivingControls() {
 	const garageClass = useGarageContext()
 
 	return (
-		<div className="flex flex-col items-center justify-center">
+		<div className="flex flex-row items-center justify-between">
 			<div className="grid grid-cols-3 gap-4">
 				{/* Top row - Headlights button, Up button, Horn button */}
 				<div className="col-start-1">
@@ -47,7 +47,7 @@ function DrivingControls() {
 				</div>
 			</div>
 
-			{/* <AdjustMaxDrivingSpeed /> */}
+			<AdjustMaxDrivingSpeed />
 		</div>
 	)
 }
