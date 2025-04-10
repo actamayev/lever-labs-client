@@ -16,7 +16,6 @@ import { CustomMariachi } from "../../../icons/custom-mariachi"
 import { CustomFart } from "../../../icons/custom-fart"
 import { CustomCountdown } from "../../../icons/custom-countdown"
 
-// eslint-disable-next-line max-lines-per-function
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
@@ -70,26 +69,42 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	// Handle button click for action buttons
 	const handleButtonDown = () => {
 		if (!pipClass.selectedPip) return
-		garageClass.setSelectedColor(sound)
+		garageClass.setSoundPlaying(sound)
 		socketClass.emitSound({
 			pipUUID: pipClass.selectedPip.pipUUID,
 			sound
 		})
 	}
 
+	// Handle button release for action buttons
+	const handleButtonUp = () => {
+		// Reset the sound playing state when button is released
+		if (garageClass.soundPlaying === sound) {
+			garageClass.setSoundPlaying(null)
+		}
+	}
+
+	// Create a class string that prioritizes active state over hover
+	const buttonClasses = cn(
+		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
+		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
+		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
+		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
+		// Add active classes with !important to override hover
+		garageClass.soundPlaying === sound && "!bg-blue-300 dark:!bg-blue-950"
+	)
+
 	return (
 		<TactileButton
 			ref={buttonRef}
-			className={cn(
-				"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
-				"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-				"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-				"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-			)}
+			className={buttonClasses}
 			shadowColor={shadowColor}
 			shadowHeight={4}
 			onMouseDown={handleButtonDown}
+			onMouseUp={handleButtonUp}
+			onMouseLeave={handleButtonUp}
 			onTouchStart={handleButtonDown}
+			onTouchEnd={handleButtonUp}
 		>
 			<span className={cn(
 				"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",

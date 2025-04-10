@@ -6,23 +6,17 @@ import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../../lib/shadcn/utils"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
+import { useGarageContext } from "../../../../contexts/garage-context"
+import useComputeMotorControl from "../../../../hooks/garage/compute-motor-control"
+import useApplyMotorControl from "../../../../hooks/garage/apply-motor-control"
 
-interface ArrowKeyButtonProps {
-	direction: MotorDirection
-	isPressed: boolean
-	onButtonDown: (direction: MotorDirection) => void
-	onButtonUp: (direction: MotorDirection) => void
-}
-
-function ArrowKeyButton({
-	direction,
-	isPressed,
-	onButtonDown,
-	onButtonUp,
-}: ArrowKeyButtonProps) {
+function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
+	const garageClass = useGarageContext()
+	const computeMotorControl = useComputeMotorControl()
+	const applyMotorControl = useApplyMotorControl()
 
 	// Map direction to the correct icon
 	const getMotorDirectionIcon = (): ReactNode => {
@@ -44,7 +38,7 @@ function ArrowKeyButton({
 
 		const buttonElement = buttonRef.current
 
-		if (isPressed) {
+		if (garageClass.pressedMotorKeys.has(direction)) {
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
@@ -57,10 +51,24 @@ function ArrowKeyButton({
 			buttonElement.classList.remove("bg-blue-300")
 			buttonElement.classList.remove("dark:bg-blue-950")
 		}
-	}, [isPressed])
+	}, [direction, garageClass.pressedMotorKeys])
+
+	const handleButtonDown = () => {
+		garageClass.setPressedKey(direction, Date.now())
+
+		const motorControl = computeMotorControl()
+		applyMotorControl(motorControl)
+	}
+
+	const handleButtonUp = () => {
+		garageClass.removePressedKey(direction)
+
+		const motorControl = computeMotorControl()
+		applyMotorControl(motorControl)
+	}
 
 	// Create button styles with proper tactile behavior
-	const getButtonClasses = () => cn(
+	const getButtonClasses = cn(
 		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
 		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
 		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
@@ -70,14 +78,14 @@ function ArrowKeyButton({
 	return (
 		<TactileButton
 			ref={buttonRef}
-			className={getButtonClasses()}
+			className={getButtonClasses}
 			shadowColor={shadowColor}
 			shadowHeight={4}
-			onMouseDown={() => onButtonDown(direction)}
-			onMouseUp={() => onButtonUp(direction)}
-			onMouseLeave={() => isPressed && onButtonUp(direction)}
-			onTouchStart={() => onButtonDown(direction)}
-			onTouchEnd={() => onButtonUp(direction)}
+			onMouseDown={handleButtonDown}
+			onMouseUp={handleButtonUp}
+			onMouseLeave={handleButtonUp}
+			onTouchStart={handleButtonDown}
+			onTouchEnd={handleButtonUp}
 		>
 			{getMotorDirectionIcon()}
 		</TactileButton>
