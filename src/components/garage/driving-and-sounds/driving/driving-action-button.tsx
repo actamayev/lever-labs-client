@@ -135,7 +135,7 @@ function DrivingActionButton({
 			onTouchEnd={handleButtonUp}
 		>
 			<span className={cn(
-				"absolute top-1 left-1 w-6 h-6 flex items-center justify-center",
+				"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
 				"border-2 rounded-md text-xs font-medium border-blue-400 dark:border-blue-600",
 				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
 			)}>

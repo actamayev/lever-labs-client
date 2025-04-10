@@ -6,7 +6,6 @@ import { cn } from "../../../../lib/shadcn/utils"
 import { CustomElephant } from "../../../icons/custom-elephant"
 import { usePipContext } from "../../../../contexts/pip-context"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
-import { CustomHeadlights } from "../../../icons/custom-headlights"
 import { useSocketContext } from "../../../../contexts/socket-context"
 import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 import { useGarageContext } from "../../../../contexts/garage-context"
@@ -71,6 +70,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	// Handle button click for action buttons
 	const handleButtonDown = () => {
 		if (!pipClass.selectedPip) return
+		garageClass.setSelectedColor(sound)
 		socketClass.emitSound({
 			pipUUID: pipClass.selectedPip.pipUUID,
 			sound
@@ -92,7 +92,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			onTouchStart={handleButtonDown}
 		>
 			<span className={cn(
-				"absolute top-1 left-1 w-6 h-6 flex items-center justify-center",
+				"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
 				"border-2 rounded-md text-xs font-medium border-blue-400 dark:border-blue-600",
 				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
 			)}>
