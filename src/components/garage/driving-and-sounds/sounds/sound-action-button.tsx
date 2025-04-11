@@ -1,27 +1,25 @@
 "use client"
 
+import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
+import { CustomFart } from "../../../icons/custom-fart"
+import { CustomEngine } from "../../../icons/custom-engine"
+import { CustomMariachi } from "../../../icons/custom-mariachi"
 import { CustomElephant } from "../../../icons/custom-elephant"
 import { usePipContext } from "../../../../contexts/pip-context"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
+import { CustomCountdown } from "../../../icons/custom-countdown"
 import { useSocketContext } from "../../../../contexts/socket-context"
-import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
+import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { useGarageContext } from "../../../../contexts/garage-context"
+import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
-import { CustomPartyPopper } from "../../../icons/custom-party-popper"
-import { CustomMariachi } from "../../../icons/custom-mariachi"
-import { CustomFart } from "../../../icons/custom-fart"
-import { CustomCountdown } from "../../../icons/custom-countdown"
-import { Bot } from "lucide-react"
-import { CustomEngine } from "../../../icons/custom-engine"
 
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const defaultSiteTheme = useDefaultSiteTheme()
-	const shadowColor = defaultSiteTheme === "light" ? "rgb(255 189 153)" : "rgb(37 99 235)"
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const garageClass = useGarageContext()
@@ -61,14 +59,14 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
-			buttonElement.classList.add("bg-blue-300")
-			buttonElement.classList.add("dark:bg-blue-950")
+			buttonElement.classList.add("bg-orange-300")
+			buttonElement.classList.add("dark:bg-orange-950")
 		} else {
 			// Reset to normal state
 			buttonElement.style.transform = ""
 			buttonElement.style.boxShadow = ""
-			buttonElement.classList.remove("bg-blue-300")
-			buttonElement.classList.remove("dark:bg-blue-950")
+			buttonElement.classList.remove("bg-orange-300")
+			buttonElement.classList.remove("dark:bg-orange-950")
 		}
 	}, [garageClass.soundPlaying, sound])
 
@@ -94,7 +92,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	const buttonClasses = cn(
 		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
 		"bg-sandboxOrange/20 border-sandboxOrange/40 text-sandboxOrange hover:bg-sandboxOrange/10",
-		"dark:bg-sandboxOrange/80 dark:border-sandboxOrange/60 dark:text-sandboxOrange dark:hover:bg-sandboxOrange/900",
+		"dark:border-[rgb(255,189,153)] dark:bg-sandboxOrange/80 dark:text-orange-950 dark:hover:bg-sandboxOrange/90",
 		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
 		// Add active classes with !important to override hover
 		garageClass.soundPlaying === sound && "!bg-sandboxOrange/5 dark:!bg-sandboxOrange/95"
@@ -104,7 +102,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 		<TactileButton
 			ref={buttonRef}
 			className={buttonClasses}
-			shadowColor={shadowColor}
+			shadowColor={"rgb(255 189 153)"}
 			shadowHeight={4}
 			onMouseDown={handleButtonDown}
 			onMouseUp={handleButtonUp}
@@ -112,11 +110,13 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			onTouchStart={handleButtonDown}
 			onTouchEnd={handleButtonUp}
 		>
-			<span className={cn(
-				"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
-				"border-2 rounded-md text-xs font-medium border-sandboxOrange/40 dark:border-sandboxOrange/60",
-				"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
-			)}>
+			<span
+				className={cn(
+					"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
+					"border-2 rounded-md text-xs font-medium border-sandboxOrange/40 dark:border-[rgb(255,189,153)]",
+					"group-active:border-selectedSidebarButtonBorder group-active:text-answerText",
+				)}
+			>
 				{index}
 			</span>
 			{getSoundIcon()}
