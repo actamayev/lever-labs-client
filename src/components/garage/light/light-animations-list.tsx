@@ -35,7 +35,7 @@ const ANIMATIONS: Animation[] = [
 	{
 		name: "Rainbow",
 		description: "Cycles through colors",
-		icon: (color: string) => <Rainbow className="h-4 w-4" />
+		icon: () => <Rainbow className="h-4 w-4" />
 	},
 	{
 		name: "Strobe",
@@ -70,7 +70,7 @@ function LightAnimationsList() {
 				>
 					<span className="flex items-center gap-2">
 						<div style={{ color: rgbColor, fill: rgbColor }}>
-						{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
+							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
 						</div>
 						{garageClass.selectedAnimation}
 					</span>
