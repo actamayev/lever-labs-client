@@ -8,7 +8,7 @@ export default function CareerQuest() {
 	return (
 		<div className="flex flex-row h-screen overflow-y-auto relative w-full space-x-[45px] pl-[20px] pr-[45px] pt-[25px]">
 			{/* Main content area */}
-			<div className="w-full lg:w-3/5 xl:w-[75%]">
+			<div className="w-full lg:w-3/5 xl:w-3/4">
 				{careerData.map(singleCareerData => (
 					<div className="mb-12 flex flex-col items-center" key={singleCareerData.careerName}>
 						<SingleCareerCard careerData={singleCareerData} />

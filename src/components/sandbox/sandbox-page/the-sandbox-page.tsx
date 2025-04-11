@@ -67,7 +67,7 @@ function TheSandboxPage() {
 					<Input
 						type="text"
 						className="block w-1/3 pl-10 pr-10 py-2 !text-2xl border-swan border-2
-						h-12 rounded-2xl focus:ring-0"
+						h-12 rounded-2xl focus:ring-0 shadow-none"
 						placeholder="Search projects..."
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
@@ -158,5 +158,4 @@ function TheSandboxPage() {
 	)
 }
 
-// Use MobX observer to react to state changes
 export default observer(TheSandboxPage)
