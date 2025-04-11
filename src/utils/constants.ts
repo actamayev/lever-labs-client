@@ -75,3 +75,46 @@ export const careerQuestPages = [
 ] as const
 
 export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const
+
+export const motorKeyMappings: Record<string, MotorDriveKeyMapping> = {
+	"w": { direction: "up", axis: "vertical", value: 1 },
+	"arrowup": { direction: "up", axis: "vertical", value: 1 },
+	"s": { direction: "down", axis: "vertical", value: -1 },
+	"arrowdown": { direction: "down", axis: "vertical", value: -1 },
+	"a": { direction: "left", axis: "horizontal", value: -1 },
+	"arrowleft": { direction: "left", axis: "horizontal", value: -1 },
+	"d": { direction: "right", axis: "horizontal", value: 1 },
+	"arrowright": { direction: "right", axis: "horizontal", value: 1 },
+}
+
+interface ActionMapping {
+	[key: string]: Actions
+}
+
+export const actionMappings: ActionMapping = {
+	"q": "headlights",
+	"e": "horn"
+}
+
+interface SoundMapping {
+	[key: string]: Sounds
+}
+
+export const soundMappings: SoundMapping = {
+	"numpad1": "fart",
+	"1": "fart",
+	"numpad2": "monkey",
+	"2": "monkey",
+	"numpad3": "elephant",
+	"3": "elephant",
+	"numpad4": "fanfare",
+	"4": "fanfare",
+	"numpad5": "mariachi",
+	"5": "mariachi",
+	"numpad6": "countdown",
+	"6": "countdown",
+	"numpad7": "engine",
+	"7": "engine",
+	"numpad8": "robot noise",
+	"8": "robot noise",
+}

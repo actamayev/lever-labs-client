@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"

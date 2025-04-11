@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { Oval } from "react-loader-spinner"
 import useDefaultSiteTheme from "../hooks/memos/default-site-theme"

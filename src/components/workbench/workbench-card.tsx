@@ -1,3 +1,5 @@
+"use client"
+
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
@@ -15,7 +17,8 @@ function WorkbenchCard() {
 		<div
 			className={cn(
 				"p-4 min-h-40 border-2 border-swan rounded-2xl text-eel w-full text-base",
-				workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : ""
+				workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : "",
+				workbenchClass.workbenchItemToShow === "network" ? "rounded-tr-none" : ""
 			)}
 			onMouseEnter={() => workbenchClass.setWorkbenchItemHoveringOver(true)}
 			onMouseLeave={() => {

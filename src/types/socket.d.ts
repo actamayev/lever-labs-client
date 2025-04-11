@@ -1,3 +1,5 @@
+import { RgbColor } from "@uiw/color-convert"
+
 declare global {
 	interface PipUUIDInterface {
 		pipUUID: PipUUID
@@ -9,12 +11,24 @@ declare global {
 	}
 
 	interface LedControlDataToSend extends PipUUIDInterface {
-		topLeftColor: RGB
-		topRightColor: RGB
-		middleLeftColor: RGB
-		middleRightColor: RGB
-		backLeftColor: RGB
-		backRightColor: RGB
+		topLeftColor: RgbColor
+		topRightColor: RgbColor
+		middleLeftColor: RgbColor
+		middleRightColor: RgbColor
+		backLeftColor: RgbColor
+		backRightColor: RgbColor
+	}
+
+	interface HornDataToSend extends PipUUIDInterface {
+		hornStatus: boolean
+	}
+
+	interface HeadlightDataToSend extends PipUUIDInterface {
+		headlightsStatus: boolean
+	}
+
+	interface SoundDataToSend extends PipUUIDInterface {
+		sound: Sounds
 	}
 
 	// Incoming socket events:
