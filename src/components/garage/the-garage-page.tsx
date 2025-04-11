@@ -2,6 +2,7 @@
 import Workbench from "../workbench/workbench"
 import LightSection from "./light/light-section"
 import DisplaySection from "./display/display-section"
+import WorkbenchSeparator from "../workbench/workbench-separator"
 import DrivingAndSoundsSection from "./driving-and-sounds/driving-and-sounds-section"
 
 export default function TheGaragePage() {
@@ -15,8 +16,7 @@ export default function TheGaragePage() {
 				<DrivingAndSoundsSection />
 			</div>
 
-			{/* Border separator as absolute element */}
-			<div className="absolute lg:right-[43%] xl:right-[28%] h-full top-0 border-r-2 border-swan"/>
+			<WorkbenchSeparator />
 
 			<Workbench />
 		</div>
