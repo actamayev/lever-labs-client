@@ -11,7 +11,7 @@ function LightBrightnessSlider() {
 			<ShadeSlider
 				hsva={rgbaToHsva(garageClass.realColor)}
 				onChange={(newShade) => garageClass.setColorShade(newShade.v / 100)}
-				radius="9999px" // or "50%" for fully rounded corners
+				radius="9999px"
 			/>
 		</div>
 	)

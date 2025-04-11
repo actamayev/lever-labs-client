@@ -51,6 +51,13 @@ class GarageClass {
 		}
 	}
 
+	public updateSelectedColorByField<K extends keyof RgbaColor>(
+		field: K,
+		value: number
+	): void {
+		this.selectedColorRgba[field] = value
+	}
+
 	public setSelectedColorRgba = action((color: RgbaColor): void => {
 		this.selectedColorRgba = color
 	})
