@@ -17,7 +17,7 @@ import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-t
 import { cn } from "../../lib/shadcn/utils"
 import ChangePasswordSetion from "./change-password-setion"
 
-// eslint-disable-next-line complexity, max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function ProfilePage() {
 	const personalInfoClass = usePersonalInfoContext()
 	const [name, setName] = useState(personalInfoClass.name || "")

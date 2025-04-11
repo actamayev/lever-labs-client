@@ -9,8 +9,8 @@ import { Button } from "../shadcn/ui/button"
 import useChangePassword from "../../hooks/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
-// eslint-disable-next-line complexity, max-lines-per-function
-function ProfilePage() {
+// eslint-disable-next-line max-lines-per-function
+function ChangePasswordSection() {
 	const [currentPassword, setCurrentPassword] = useState("")
 	const [newPassword, setNewPassword] = useState("")
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -139,4 +139,4 @@ function ProfilePage() {
 	)
 }
 
-export default observer(ProfilePage)
+export default observer(ChangePasswordSection)

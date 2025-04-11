@@ -22,7 +22,6 @@ function LightDotsSelector() {
 	return (
 		<div className="flex items-start justify-end">
 			<div className="relative w-full h-full px-5">
-				{/* The square container */}
 				<CustomPip size={200}/>
 				{DOT_POSITIONS.map((position, index) => (
 					<button
