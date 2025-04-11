@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 "use client"
 
 import { observer } from "mobx-react"
@@ -17,29 +18,29 @@ import useLightsAnimation from "../../../hooks/garage/lights-animation"
 interface Animation {
 	name: LightAnimation
 	description: string
-	icon: React.ReactNode
+	icon: (color: string) => React.ReactNode
 }
 
 const ANIMATIONS: Animation[] = [
 	{
 		name: "No animation",
 		description: "Slowly fades in and out",
-		icon: <Circle className="h-4 w-4"/>
+		icon: (color: string) => <Circle className="h-4 w-4" color={color} fill={color} />
 	},
 	{
 		name: "Breathing",
 		description: "Slowly fades in and out",
-		icon: <CustomYoga className="h-4 w-4"/>
+		icon: (color: string) => <CustomYoga className="h-4 w-4" color={color} fill={color} />
 	},
 	{
 		name: "Rainbow",
 		description: "Cycles through colors",
-		icon: <Rainbow className="h-4 w-4" />
+		icon: (color: string) => <Rainbow className="h-4 w-4" />
 	},
 	{
 		name: "Strobe",
 		description: "Strobe light",
-		icon: <Siren className="h-4 w-4" />
+		icon: (color: string) => <Siren className="h-4 w-4" color={color} fill={color} />
 	},
 	// {
 	// 	name: "Snake",
@@ -51,6 +52,8 @@ const ANIMATIONS: Animation[] = [
 function LightAnimationsList() {
 	const garageClass = useGarageContext()
 	const lightsAnimation = useLightsAnimation()
+
+	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`
 
 	return (
 		<DropdownMenu>
@@ -66,9 +69,8 @@ function LightAnimationsList() {
 					style={{ height: "52px" }}
 				>
 					<span className="flex items-center gap-2">
-						{/* Display the icon of the selected animation */}
-						<div className={`text-[rgb(${garageClass.selectedColorRgba})]`}>
-							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon}
+						<div style={{ color: rgbColor, fill: rgbColor }}>
+						{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
 						</div>
 						{garageClass.selectedAnimation}
 					</span>
@@ -88,7 +90,7 @@ function LightAnimationsList() {
 						)}
 					>
 						<div className="flex-shrink-0">
-							{animation.icon}
+							{animation.icon(rgbColor)}
 						</div>
 						<div className="flex-grow">
 							<div className="font-medium text-base">{animation.name}</div>

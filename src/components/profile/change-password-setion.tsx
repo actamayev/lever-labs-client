@@ -57,8 +57,11 @@ function ProfilePage() {
 			</CardHeader>
 			<CardContent className="space-y-4 px-4 md:px-6">
 				<div className="space-y-2">
-					<Label htmlFor="current-password" className="text-base md:text-lg font-medium text-eel mb-2 block">
-								Current Password
+					<Label
+						htmlFor="current-password"
+						className="text-base md:text-lg font-medium text-eel mb-2 block"
+					>
+							Current Password
 					</Label>
 					<div className="relative w-full">
 						<Input
@@ -67,7 +70,7 @@ function ProfilePage() {
 							value={currentPassword}
 							onChange={handleCurrentPasswordChange}
 							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-									bg-polar !text-eel font-light border-swan"
+							bg-polar !text-eel font-light border-swan"
 						/>
 						<Button
 							type="button"
@@ -95,11 +98,11 @@ function ProfilePage() {
 							value={newPassword}
 							onChange={handleNewPasswordChange}
 							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-									bg-polar !text-eel font-light border-swan"
+							bg-polar !text-eel font-light border-swan"
 						/>
 						{newPassword.length > 0 && newPassword.length < 6 && (
 							<p className="text-sm text-red-500">
-									Password must be at least 6 characters.
+								Password must be at least 6 characters.
 							</p>
 						)}
 						<Button
