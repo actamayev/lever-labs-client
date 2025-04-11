@@ -16,15 +16,19 @@ declare global {
 
 	type MotorDirection = "up" | "down" | "left" | "right"
 
+	type Actions = "horn" | "headlights"
+
+	type Sounds = "fart" | "monkey" | "elephant" | "fanfare" | "mariachi" | "countdown" | "engine" | "robot noise"
+
 	interface MotorControlInput {
 		vertical: -1 | 1 | 0
 		horizontal: -1 | 1 | 0
 	}
 
-	interface KeyMapping {
+	interface MotorDriveKeyMapping {
 		direction: MotorDirection
 		axis: "vertical" | "horizontal"
-		value: -1 | 1 | 0
+		value: -1 | 0 | 1
 	}
 }
 

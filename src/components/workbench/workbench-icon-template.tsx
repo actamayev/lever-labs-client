@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function WorkbenchIconTemplate(props: Props) {
-	const { children, extraButtonClasses = "", onMouseEnter } = props
+	const { children, onMouseEnter, extraButtonClasses = "" } = props
 
 	return (
 		<div

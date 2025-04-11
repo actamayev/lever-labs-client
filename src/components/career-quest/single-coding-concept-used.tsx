@@ -18,8 +18,7 @@ export default function SingleCodingConceptUsed({ codingConcept } : { codingConc
 			tooltipTrigger={
 				<div
 					key={codingConcept}
-					className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center \
-						hover:bg-teal-700"
+					className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center hover:bg-teal-700"
 					title={codingConcept}
 				>
 					{codingConceptIcons[codingConcept]}

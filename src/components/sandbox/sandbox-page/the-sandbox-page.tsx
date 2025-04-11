@@ -11,7 +11,8 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
-import { Separator } from "../../shadcn/ui/separator"
+import Workbench from "../../workbench/workbench"
+import WorkbenchSeparator from "../../workbench/workbench-separator"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -58,105 +59,113 @@ function TheSandboxPage() {
 
 	return (
 		<div className="h-screen overflow-y-auto relative">
-			{/* Fixed search bar */}
-			<div className="sticky top-0 z-10 bg-standardBackground py-3 px-8 border-b-2 border-swan">
-				<div className="relative w-full">
-					<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-						<Search className="h-5 w-5 text-wolf" />
+			{/* Fixed search bar - width limited to match main content */}
+			<div className="sticky top-0 z-10 bg-standardBackground py-3 pl-[20px]">
+				<div className="w-full lg:w-[57%] xl:w-[71%] border-b-2 border-swan pb-3">
+					<div className="relative">
+						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+							<Search className="h-5 w-5 text-wolf" />
+						</div>
+						<Input
+							type="text"
+							className="block w-1/3 pl-10 pr-10 py-2 !text-2xl border-swan border-2
+							h-12 rounded-2xl focus:ring-0 shadow-none"
+							placeholder="Search projects..."
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+						/>
 					</div>
-					<Input
-						type="text"
-						className="block w-1/3 pl-10 pr-10 py-2 !text-2xl border-swan border-2
-						h-12 rounded-2xl focus:ring-0"
-						placeholder="Search projects..."
-						value={searchQuery}
-						onChange={(e) => setSearchQuery(e.target.value)}
-					/>
 				</div>
 			</div>
 
-			{/* Main content */}
-			<div className="py-3 px-8">
-				<BlueTactileButton
-					className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
-					onClick={handleCreateProject}
-					disabled={isCreating}
-					size="lg"
-				>
-					<div className="flex flex-row items-center justify-center">
-						<PlusCircle className="!size-8 mr-2"/>
-						NEW PROJECT
-					</div>
-				</BlueTactileButton>
+			{/* Two-column layout container with space between */}
+			<div className="flex flex-row h-screen overflow-hidden relative w-full space-x-[45px] pl-[20px] pr-[45px] pt-[25px]">
+				{/* Main content column */}
+				<div className="w-full lg:w-3/5 xl:w-3/4 overflow-y-auto pr-6">
+					<BlueTactileButton
+						className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
+						onClick={handleCreateProject}
+						disabled={isCreating}
+						size="lg"
+					>
+						<div className="flex flex-row items-center justify-center">
+							<PlusCircle className="!size-8 mr-2"/>
+							NEW PROJECT
+						</div>
+					</BlueTactileButton>
 
-				{/* Starred Projects Section */}
-				{filteredStarredProjects.length > 0 && (
-					<div className="mb-8">
-						<div className="flex flex-row space-x-2 mb-4 items-center">
-							<Star
-								size={30}
-								className="fill-bee text-bee"
-							/>
-							<h2 className="text-3xl font-semibold">Starred Projects</h2>
-						</div>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							{filteredStarredProjects.map(project => (
-								<SingleProjectCard key={project.projectUUID} project={project} />
-							))}
-						</div>
-						<Separator className="h-0.5 mt-8 rounded-full"/>
-					</div>
-				)}
-
-				<div>
-					<div className="flex flex-row space-x-2 items-center mb-4">
-						<Folder
-							size={30}
-							className="fill-fox text-fox"
-						/>
-						<h2 className="text-3xl font-semibold">All Projects</h2>
-						{searchQuery && <span className="ml-2 text-gray-500">
-							({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
-						</span>}
-					</div>
-					{filteredAllProjects.length > 0 ? (
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							{filteredAllProjects.map(project => (
-								<SingleProjectCard key={project.projectUUID} project={project} />
-							))}
-						</div>
-					) : (
-						!sandboxClass.isRetrievingAllSandboxProjects && (
-							<div className="text-center py-12">
-								{searchQuery ? (
-									<p className="text-hare mb-4">No projects match your search</p>
-								) : (
-									<>
-										<p className="text-hare mb-4">You don't have any projects yet</p>
-										<button
-											className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-											onClick={handleCreateProject}
-											disabled={isCreating}
-										>
-											Create your first project
-										</button>
-									</>
-								)}
+					{/* Starred Projects Section */}
+					{filteredStarredProjects.length > 0 && (
+						<div className="mb-8">
+							<div className="flex flex-row space-x-2 mb-4 items-center">
+								<Star
+									size={30}
+									className="fill-bee text-bee"
+								/>
+								<h2 className="text-3xl font-semibold">Starred Projects</h2>
 							</div>
-						)
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								{filteredStarredProjects.map(project => (
+									<SingleProjectCard key={project.projectUUID} project={project} />
+								))}
+							</div>
+							<div className="h-0.5 bg-swan rounded-full mt-8"/>
+						</div>
+					)}
+
+					<div>
+						<div className="flex flex-row space-x-2 items-center mb-4">
+							<Folder
+								size={30}
+								className="fill-fox text-fox"
+							/>
+							<h2 className="text-3xl font-semibold">All Projects</h2>
+							{searchQuery && <span className="ml-2 text-gray-500">
+								({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
+							</span>}
+						</div>
+						{filteredAllProjects.length > 0 ? (
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								{filteredAllProjects.map(project => (
+									<SingleProjectCard key={project.projectUUID} project={project} />
+								))}
+							</div>
+						) : (
+							!sandboxClass.isRetrievingAllSandboxProjects && (
+								<div className="text-center py-12">
+									{searchQuery ? (
+										<p className="text-hare mb-4">No projects match your search</p>
+									) : (
+										<>
+											<p className="text-hare mb-4">You don't have any projects yet</p>
+											<button
+												className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+												onClick={handleCreateProject}
+												disabled={isCreating}
+											>
+												Create your first project
+											</button>
+										</>
+									)}
+								</div>
+							)
+						)}
+					</div>
+
+					{/* Loading state */}
+					{sandboxClass.isRetrievingAllSandboxProjects && (
+						<div className="text-center py-12">
+							<p className="text-hare">Loading projects...</p>
+						</div>
 					)}
 				</div>
 
-				{/* Loading state */}
-				{sandboxClass.isRetrievingAllSandboxProjects && (
-					<div className="text-center py-12">
-						<p className="text-hare">Loading projects...</p>
-					</div>
-				)}
+				<WorkbenchSeparator />
+				{/* Workbench column */}
+				<Workbench />
 			</div>
 		</div>
 	)
 }
 
-// Use MobX observer to react to state changes
 export default observer(TheSandboxPage)

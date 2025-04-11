@@ -15,7 +15,7 @@ function Workbench() {
 	useEffect(() => {
 		const updateWidth = () => {
 			if (containerRef.current) {
-				setFixedWidth(containerRef.current.offsetWidth)
+				setFixedWidth((containerRef.current.offsetWidth + 20))
 			}
 		}
 
@@ -25,7 +25,7 @@ function Workbench() {
 	}, [])
 
 	return (
-		<div className="hidden lg:block lg:w-2/5 xl:w-[38.2%]" ref={containerRef}>
+		<div className="hidden lg:block lg:w-2/5 xl:w-1/4 z-20" ref={containerRef}>
 			{/* This is the fixed element */}
 			<div className="fixed top-11" style={{ width: fixedWidth + "px" }}>
 				<div
@@ -37,7 +37,7 @@ function Workbench() {
 						}
 					}}
 				>
-					<div className="flex flex-row space-x-4">
+					<div className="flex flex-row justify-between">
 						<BatteryIcon />
 						<VolumeIcon />
 						<NetworkIcon />
