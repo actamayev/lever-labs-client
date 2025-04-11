@@ -10,12 +10,12 @@ class GarageClass {
 	public selectedColorShade: number = 1
 	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
 	public dotColors: { [key: number]: RgbaColor } = {
-		0: { r: 255, g: 0, b: 0, a: 1 },
-		1: { r: 255, g: 0, b: 0, a: 1 },
-		2: { r: 255, g: 0, b: 0, a: 1 },
-		3: { r: 255, g: 0, b: 0, a: 1 },
-		4: { r: 255, g: 0, b: 0, a: 1 },
-		5: { r: 255, g: 0, b: 0, a: 1 }
+		0: this.selectedColorRgba,
+		1: this.selectedColorRgba,
+		2: this.selectedColorRgba,
+		3: this.selectedColorRgba,
+		4: this.selectedColorRgba,
+		5: this.selectedColorRgba
 	}
 	public selectedAnimation: LightAnimation = "No animation"
 

@@ -13,6 +13,13 @@ export default function useGarageSoundsUseEffect(): void {
 
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
+	// Check if the event target is an input field or any element where typing is expected
+		const target = event.target as HTMLElement
+		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
+		target.isContentEditable) {
+			return // Skip processing keyboard shortcuts when typing in fields
+		}
+
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
 
@@ -26,6 +33,13 @@ export default function useGarageSoundsUseEffect(): void {
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
+	// Same check as handleKeyDown
+		const target = event.target as HTMLElement
+		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
+		target.isContentEditable) {
+			return
+		}
+
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
 		garageClass.setSoundPlaying(null)
@@ -40,6 +54,6 @@ export default function useGarageSoundsUseEffect(): void {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 }
