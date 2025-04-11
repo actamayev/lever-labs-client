@@ -1,8 +1,10 @@
 "use client"
 
 /* eslint-disable max-len */
+import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
+import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
-import { debounce, isEmpty, isNull } from "lodash-es"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
