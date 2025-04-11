@@ -67,17 +67,25 @@ function LightBrightnessControl() {
 				<Minus className="!size-6 text-questionText" />
 			</Button>
 
-			<div className="flex items-center flex-col">
-				<Input
-					type="number"
-					value={brightnessPercent}
-					onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
-					min="0"
-					max="100"
-					// eslint-disable-next-line max-len
-					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-					style={{ width: "120px", height: "52px" }}
-				/>
+			<div className="flex items-center flex-col relative">
+				<div className="relative w-full">
+					<Input
+						type="number"
+						value={brightnessPercent}
+						onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
+						min="0"
+						max="100"
+						// eslint-disable-next-line max-len
+						className="border-2 pr-6 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+						style={{ width: "120px", height: "52px" }}
+					/>
+					<span
+						className="absolute top-1/2 transform -translate-y-1/2 text-xl pointer-events-none"
+						style={{ left: `calc(50% + ${String(brightnessPercent).length * 4}px)` }}
+					>
+						%
+					</span>
+				</div>
 			</div>
 
 			<Button
