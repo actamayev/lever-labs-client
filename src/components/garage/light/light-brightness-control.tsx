@@ -1,3 +1,4 @@
+import clamp from "lodash-es/clamp"
 import { observer } from "mobx-react"
 import { Minus, PlusIcon } from "lucide-react"
 import { rgbaToHsva } from "@uiw/color-convert"
@@ -24,6 +25,11 @@ function LightBrightnessControl() {
 		garageClass.setColorShade(newValue / 100)
 	}, [brightnessPercent, garageClass])
 
+	const enforceRGBRange = useCallback((value: string) => {
+		const numValue = parseInt(value || "0")
+		return clamp(numValue, 0, 100)
+	}, [])
+
 	useEffect(() => {
 		if (isDecreasing && brightnessPercent > 0) {
 			intervalRef.current = setInterval(decreaseBrightness, 200)
@@ -43,7 +49,7 @@ function LightBrightnessControl() {
 	}, [isDecreasing, isIncreasing, brightnessPercent, decreaseBrightness, increaseBrightness])
 
 	return (
-		<>
+		<div className="flex items-center justify-between w-full">
 			<Button
 				variant="outline"
 				size="icon"
@@ -54,14 +60,20 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsDecreasing(false)}
 				onTouchStart={() => setIsDecreasing(true)}
 				onTouchEnd={() => setIsDecreasing(false)}
-				className="border-2 border-swan shadow-none rounded-xl !size-11"
+				className="border-2 border-swan shadow-none rounded-xl !size-12"
 			>
 				<Minus className="h-4 w-4 text-questionText" />
 			</Button>
 
-			<span className="text-2xl font-medium mx-4">
-				{brightnessPercent}%
-			</span>
+			<input
+				type="number"
+				value={brightnessPercent}
+				onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
+				min="0"
+				max="255"
+				// eslint-disable-next-line max-len
+				className="border-2 border-swan rounded-xl !text-2xl font-medium text-center bg-inherit h-12 w-20 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+			/>
 
 			<Button
 				variant="outline"
@@ -73,11 +85,11 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsIncreasing(false)}
 				onTouchStart={() => setIsIncreasing(true)}
 				onTouchEnd={() => setIsIncreasing(false)}
-				className="border-2 border-swan shadow-none rounded-xl !size-11"
+				className="border-2 border-swan shadow-none rounded-xl !size-12"
 			>
 				<PlusIcon className="h-4 w-4" />
 			</Button>
-		</>
+		</div>
 	)
 }
 
