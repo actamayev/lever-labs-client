@@ -22,7 +22,7 @@ function LightSection() {
 					<div className="flex w-full h-1/3 items-start justify-center">
 						<LightAnimationsList />
 					</div>
-					<div className="flex w-full h-1/3 items-center justify-between mb-4">
+					<div className="flex w-full h-1/3 items-center justify-between mb-2.5">
 						<RgbInput />
 					</div>
 					<div className="flex w-full h-1/3 items-end justify-between">
