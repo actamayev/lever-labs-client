@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import { useEffect, useCallback } from "react"
 import { debounce, isEmpty, isNull } from "lodash-es"

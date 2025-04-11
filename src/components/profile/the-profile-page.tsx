@@ -297,7 +297,10 @@ function ProfilePage() {
 							<Sun className="h-5 w-5 md:!h-6 md:!w-6" />
 						)}
 					</Button>
-					<span className="ml-3 text-base md:text-lg font-medium">
+					<span
+						className="ml-3 text-base md:text-lg font-medium cursor-pointer"
+						onClick={setDefaultSiteTheme}
+						>
 						{defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
 				</div>

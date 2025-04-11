@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"

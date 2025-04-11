@@ -1,3 +1,5 @@
+"use client"
+
 import DrivingControls from "./driving/driving-controls"
 import SoundsSection from "./sounds/sounds-section"
 

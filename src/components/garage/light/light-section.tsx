@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import RgbInput from "./rgb-input"
 import ColorPicker from "./color-picker"

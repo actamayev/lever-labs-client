@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { rgbaToHsva } from "@uiw/color-convert"
 import ShadeSlider from "@uiw/react-color-shade-slider"
