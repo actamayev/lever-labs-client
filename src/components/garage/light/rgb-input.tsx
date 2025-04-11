@@ -21,7 +21,7 @@ function RGBInput() {
 				<span className="text-xl font-medium mr-1">R</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColorRgba.r}
+					value={Math.round(garageClass.selectedColorRgba.r * garageClass.selectedColorShade)}
 					onChange={(e) => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
@@ -32,7 +32,7 @@ function RGBInput() {
 				<span className="text-xl font-medium mr-1">G</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColorRgba.g}
+					value={Math.round(garageClass.selectedColorRgba.g * garageClass.selectedColorShade)}
 					onChange={(e) => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
@@ -43,7 +43,7 @@ function RGBInput() {
 				<span className="text-xl font-medium mr-1">B</span>
 				<Input
 					type="number"
-					value={garageClass.selectedColorRgba.b}
+					value={Math.round(garageClass.selectedColorRgba.b * garageClass.selectedColorShade)}
 					onChange={(e) => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
