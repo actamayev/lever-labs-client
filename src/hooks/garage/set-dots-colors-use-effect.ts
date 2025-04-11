@@ -57,8 +57,8 @@ export default function useSetDefaultColorsUseEffect(): void {
 		)
 		if (
 			isEmpty(garageClass.selectedDots) ||
-			isNull(pipClass.selectedPip)// ||
-			// pipClass.selectedPip.pipConnectionStatus === "offline"
+			isNull(pipClass.selectedPip) ||
+			pipClass.selectedPip.pipConnectionStatus === "offline"
 		) return
 
 		// Create control data with dot-specific colors

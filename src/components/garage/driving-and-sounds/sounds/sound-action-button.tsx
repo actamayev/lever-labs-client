@@ -92,7 +92,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	const buttonClasses = cn(
 		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
 		"bg-sandboxOrange/20 border-sandboxOrange/40 text-sandboxOrange hover:bg-sandboxOrange/10",
-		"dark:border-[rgb(255,189,153)] dark:bg-sandboxOrange/80 dark:text-orange-950 dark:hover:bg-sandboxOrange/90",
+		"dark:border-[rgb(255,189,153)] dark:bg-sandboxOrange/80 dark:text-orange-200 dark:hover:bg-sandboxOrange/90",
 		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
 		// Add active classes with !important to override hover
 		garageClass.soundPlaying === sound && "!bg-sandboxOrange/5 dark:!bg-sandboxOrange/95"
