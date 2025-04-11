@@ -1,9 +1,9 @@
 import { observer } from "mobx-react"
-import { rgbaToHsva } from "@uiw/color-convert"
-import { useGarageContext } from "../../../contexts/garage-context"
 import { Minus, PlusIcon } from "lucide-react"
-import { Button } from "../../shadcn/ui/button"
+import { rgbaToHsva } from "@uiw/color-convert"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Button } from "../../shadcn/ui/button"
+import { useGarageContext } from "../../../contexts/garage-context"
 
 function LightBrightnessControl() {
 	const garageClass = useGarageContext()

@@ -5,7 +5,7 @@ import RgbInput from "./rgb-input"
 import ColorPicker from "./color-picker"
 import LightDotsSelector from "./light-dots-selector"
 import LightAnimationsList from "./light-animations-list"
-import LightBrightnessSlider from "./light-brightness-slider"
+import LightBrightnessControl from "./light-brightness-control"
 import useSetDefaultColorsUseEffect from "../../../hooks/garage/set-dots-colors-use-effect"
 
 function LightSection() {
@@ -24,7 +24,7 @@ function LightSection() {
 						<RgbInput />
 					</div>
 					<div className="flex w-3/4 h-1/3 items-end justify-between">
-						<LightBrightnessSlider />
+						<LightBrightnessControl />
 					</div>
 				</div>
 
