@@ -17,7 +17,7 @@ function Workbench() {
 	useEffect(() => {
 		const updateWidth = () => {
 			if (containerRef.current) {
-				setFixedWidth(containerRef.current.offsetWidth)
+				setFixedWidth((containerRef.current.offsetWidth + 20))
 			}
 		}
 
