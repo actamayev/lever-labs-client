@@ -39,7 +39,7 @@ function Workbench() {
 						}
 					}}
 				>
-					<div className="flex flex-row space-x-5">
+					<div className="flex flex-row justify-between">
 						<BatteryIcon />
 						<VolumeIcon />
 						<NetworkIcon />
