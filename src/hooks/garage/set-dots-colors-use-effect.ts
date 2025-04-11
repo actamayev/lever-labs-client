@@ -19,19 +19,43 @@ export default function useSetDefaultColorsUseEffect(): void {
 	const debouncedEmitLedColors = useCallback(
 		debounce(() => {
 			if (
-				isNull(pipClass.selectedPip) ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+				isNull(pipClass.selectedPip)
+				|| pipClass.selectedPip.pipConnectionStatus === "offline"
+				|| isEmpty(garageClass.selectedDots)
 			) return
 
-			const rgb = garageClass.selectedColorRgba
-
-			const ledControlData = {
-				topLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
-				topRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
-				middleLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
-				middleRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
-				backLeftColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
-				backRightColor: { r: rgb.r * garageClass.selectedColorShade, g: rgb.g * garageClass.selectedColorShade, b: rgb.b * garageClass.selectedColorShade},
+			const selectedColorShade = garageClass.selectedColorShade
+			const ledControlData: LedControlDataToSend = {
+				topLeftColor: {
+					r: Math.round(garageClass.dotColors[0].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[0].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[0].b * selectedColorShade)
+				},
+				topRightColor: {
+					r: Math.round(garageClass.dotColors[1].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[1].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[1].b * selectedColorShade)
+				},
+				middleLeftColor: {
+					r: Math.round(garageClass.dotColors[2].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[2].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[2].b * selectedColorShade)
+				},
+				middleRightColor: {
+					r: Math.round(garageClass.dotColors[3].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[3].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[3].b * selectedColorShade)
+				},
+				backLeftColor: {
+					r: Math.round(garageClass.dotColors[4].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[4].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[4].b * selectedColorShade)
+				},
+				backRightColor: {
+					r: Math.round(garageClass.dotColors[5].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
+				},
 				pipUUID: pipClass.selectedPip.pipUUID
 			}
 
@@ -40,7 +64,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 		[garageClass.selectedColorRgba, garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
 	)
 
-	// 1. Fixed useEffect with proper debounce for shade/color changes
+	// This use
 	useEffect(() => {
 		debouncedEmitLedColors()
 
@@ -49,7 +73,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 		}
 	}, [debouncedEmitLedColors])
 
-	// 2. New useEffect for immediate updates when dots are selected
+	// This use effect updates the dot color with no delay, when the selected dots change, or color shdae, or selected color change
 	useEffect(() => {
 		garageClass.updateDotColor(garageClass.selectedDots,
 			{
@@ -59,48 +83,5 @@ export default function useSetDefaultColorsUseEffect(): void {
 				a: 1
 			}
 		)
-		if (
-			isEmpty(garageClass.selectedDots) ||
-			isNull(pipClass.selectedPip) ||
-			pipClass.selectedPip.pipConnectionStatus === "offline"
-		) return
-
-		// Create control data with dot-specific colors
-		const ledControlData: LedControlDataToSend = {
-			topLeftColor: {
-				r: Math.round(garageClass.dotColors[0].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[0].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[0].b * garageClass.selectedColorShade)
-			},
-			topRightColor: {
-				r: Math.round(garageClass.dotColors[1].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[1].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[1].b * garageClass.selectedColorShade)
-			},
-			middleLeftColor: {
-				r: Math.round(garageClass.dotColors[2].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[2].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[2].b * garageClass.selectedColorShade)
-			},
-			middleRightColor: {
-				r: Math.round(garageClass.dotColors[3].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[3].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[3].b * garageClass.selectedColorShade)
-			},
-			backLeftColor: {
-				r: Math.round(garageClass.dotColors[4].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[4].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[4].b * garageClass.selectedColorShade)
-			},
-			backRightColor: {
-				r: Math.round(garageClass.dotColors[5].r * garageClass.selectedColorShade),
-				g: Math.round(garageClass.dotColors[5].g * garageClass.selectedColorShade),
-				b: Math.round(garageClass.dotColors[5].b * garageClass.selectedColorShade)
-			},
-			pipUUID: pipClass.selectedPip.pipUUID
-		}
-
-		// Emit immediately without debounce
-		socketClass.emitLedColorControl(ledControlData)
-	}, [garageClass.selectedDots, garageClass.selectedColorRgba, garageClass.selectedColorShade, pipClass.selectedPip, socketClass, garageClass])
+	}, [garageClass.selectedDots, garageClass.selectedColorRgba, garageClass.selectedColorShade, garageClass])
 }
