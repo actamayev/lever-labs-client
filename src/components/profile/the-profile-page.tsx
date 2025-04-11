@@ -300,7 +300,7 @@ function ProfilePage() {
 					<span
 						className="ml-3 text-base md:text-lg font-medium cursor-pointer"
 						onClick={setDefaultSiteTheme}
-						>
+					>
 						{defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
 				</div>
