@@ -25,8 +25,8 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit h-12 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-					style={{ width: "72px" }}
+					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>
 			<div className="flex items-center flex-col">
@@ -37,8 +37,8 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit h-12 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-					style={{ width: "72px" }}
+					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>
 			<div className="flex items-center flex-col">
@@ -49,8 +49,8 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit h-12 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-					style={{ width: "72px" }}
+					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>
 		</>

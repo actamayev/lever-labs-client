@@ -63,6 +63,7 @@ function LightAnimationsList() {
 								px-4 !py-6 font-medium cursor-pointer w-full border-2 border-swan hover:bg-swan shadow-none !text-xl"
 						})
 					)}
+					style={{ height: "52px" }}
 				>
 					<span className="flex items-center gap-2">
 						{/* Display the icon of the selected animation */}
@@ -71,10 +72,10 @@ function LightAnimationsList() {
 						</div>
 						{garageClass.selectedAnimation}
 					</span>
-					<ChevronDown className="h-4 w-4" />
+					<ChevronDown className="!size-6" />
 				</div>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-64 max-h-44 overflow-y-auto border-2 shadow-none">
+			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-80 max-h-44 overflow-y-auto border-2 shadow-none">
 				{ANIMATIONS.map((animation) => (
 					<DropdownMenuItem
 						key={animation.name}

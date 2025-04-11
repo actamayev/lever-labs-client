@@ -1,8 +1,9 @@
 import clamp from "lodash-es/clamp"
 import { observer } from "mobx-react"
-import { Minus, PlusIcon } from "lucide-react"
 import { rgbaToHsva } from "@uiw/color-convert"
+import { Minus, PlusIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import { useGarageContext } from "../../../contexts/garage-context"
 
@@ -49,7 +50,7 @@ function LightBrightnessControl() {
 	}, [isDecreasing, isIncreasing, brightnessPercent, decreaseBrightness, increaseBrightness])
 
 	return (
-		<div className="flex items-center justify-between w-full">
+		<>
 			<Button
 				variant="outline"
 				size="icon"
@@ -60,20 +61,24 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsDecreasing(false)}
 				onTouchStart={() => setIsDecreasing(true)}
 				onTouchEnd={() => setIsDecreasing(false)}
-				className="border-2 border-swan shadow-none rounded-xl !size-12"
+				className="border-2 border-swan shadow-none rounded-xl"
+				style={{ height: "52px", width: "52px" }}
 			>
-				<Minus className="h-4 w-4 text-questionText" />
+				<Minus className="!size-6 text-questionText" />
 			</Button>
 
-			<input
-				type="number"
-				value={brightnessPercent}
-				onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
-				min="0"
-				max="255"
-				// eslint-disable-next-line max-len
-				className="border-2 border-swan rounded-xl !text-2xl font-medium text-center bg-inherit h-12 w-20 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
-			/>
+			<div className="flex items-center flex-col">
+				<Input
+					type="number"
+					value={brightnessPercent}
+					onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
+					min="0"
+					max="100"
+					// eslint-disable-next-line max-len
+					className="border-2 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					style={{ width: "120px", height: "52px" }}
+				/>
+			</div>
 
 			<Button
 				variant="outline"
@@ -85,11 +90,12 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsIncreasing(false)}
 				onTouchStart={() => setIsIncreasing(true)}
 				onTouchEnd={() => setIsIncreasing(false)}
-				className="border-2 border-swan shadow-none rounded-xl !size-12"
+				className="border-2 border-swan shadow-none rounded-xl"
+				style={{ height: "52px", width: "52px" }}
 			>
-				<PlusIcon className="h-4 w-4" />
+				<PlusIcon className="!size-6 text-questionText" />
 			</Button>
-		</div>
+		</>
 	)
 }
 

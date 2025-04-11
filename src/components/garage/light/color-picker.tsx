@@ -18,7 +18,7 @@ function ColorPicker() {
 	}, [garageClass.selectedColorRgba.r, garageClass.selectedColorRgba.g, garageClass.selectedColorRgba.b])
 
 	return (
-		<div className="flex flex-col items-center justify-center">
+		<div className="flex flex-col items-start justify-center">
 			<div className="w-full max-w-[225px] h-[225px]">
 				<Wheel
 					color={colorToShow}

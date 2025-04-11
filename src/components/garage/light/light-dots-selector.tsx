@@ -20,28 +20,30 @@ function LightDotsSelector() {
 	const garageClass = useGarageContext()
 
 	return (
-		<div className="relative w-full h-full px-5">
-			{/* The square container */}
-			<CustomPip size={200}/>
-			{DOT_POSITIONS.map((position, index) => (
-				<button
-					key={index}
-					onClick={() => garageClass.toggleDot(index)}
-					className={cn(
-						"absolute w-5 h-5 rounded-sm",
-						"transition-all duration-1000",
-						garageClass.selectedDots.includes(index) && "animate-pulse"
-					)}
-					style={{
-						backgroundColor: rgbaToHex(garageClass.dotColors[index]) || "#999",
-						boxShadow: garageClass.selectedDots.includes(index)
-							? `0 0 10px 3px ${rgbaToHex(garageClass.dotColors[index]) || "#999"}`
-							: "none",
-						transform: "translate(-50%, -50%)",
-						...position // Spread the position styles
-					}}
-				/>
-			))}
+		<div className="flex items-start justify-end">
+			<div className="relative w-full h-full px-5">
+				{/* The square container */}
+				<CustomPip size={200}/>
+				{DOT_POSITIONS.map((position, index) => (
+					<button
+						key={index}
+						onClick={() => garageClass.toggleDot(index)}
+						className={cn(
+							"absolute w-5 h-5 rounded-sm",
+							"transition-all duration-1000",
+							garageClass.selectedDots.includes(index) && "animate-pulse"
+						)}
+						style={{
+							backgroundColor: rgbaToHex(garageClass.dotColors[index]) || "#999",
+							boxShadow: garageClass.selectedDots.includes(index)
+								? `0 0 10px 3px ${rgbaToHex(garageClass.dotColors[index]) || "#999"}`
+								: "none",
+							transform: "translate(-50%, -50%)",
+							...position // Spread the position styles
+						}}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }
