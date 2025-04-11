@@ -75,7 +75,7 @@ function LightAnimationsList() {
 					<ChevronDown className="!size-6" />
 				</div>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-80 max-h-44 overflow-y-auto border-2 shadow-none">
+			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">
 				{ANIMATIONS.map((animation) => (
 					<DropdownMenuItem
 						key={animation.name}
