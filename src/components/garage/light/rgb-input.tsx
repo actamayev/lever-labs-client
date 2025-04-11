@@ -27,7 +27,7 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-red-300 rounded-xl !text-xl text-center bg-red-300 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					className="border-2 border-red-300 dark:border-red-700 rounded-xl !text-xl text-center bg-red-300 dark:bg-red-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
 					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>
@@ -40,7 +40,7 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-green-300 rounded-xl !text-xl text-center bg-green-300 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					className="border-2 border-green-300 dark:border-green-700 rounded-xl !text-xl text-center bg-green-300 dark:bg-green-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
 					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>
@@ -53,7 +53,7 @@ function RGBInput() {
 					onChange={(e) => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
-					className="border-2 border-blue-200 rounded-xl !text-xl text-center bg-blue-200 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+					className="border-2 border-blue-200 dark:border-blue-800 rounded-xl !text-xl text-center bg-blue-200 dark:bg-blue-800 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
 					style={{ width: "72px", height: "52px" }}
 				/>
 			</div>

@@ -63,7 +63,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 			<div
 				key={project.projectUUID}
 				className={cn(
-					"border-2 rounded-md p-4 cursor-pointer transition-none border-swan min-h-32",
+					"border-2 rounded-xl p-4 cursor-pointer transition-none border-swan min-h-32",
 					isDeleteMode ? "bg-cardinal border-cardinal" : "hover:bg-polar"
 				)}
 				onClick={() => handleProjectClick(project.projectUUID)}
