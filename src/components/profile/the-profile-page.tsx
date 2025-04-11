@@ -16,6 +16,7 @@ import useChangePassword from "../../hooks/personal-info/change-password"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-theme"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line complexity, max-lines-per-function
 function ProfilePage() {
@@ -133,7 +134,8 @@ function ProfilePage() {
 								id="name"
 								value={name}
 								onChange={handleNameChange}
-								className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
+								className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl
+								bg-polar !text-eel font-light border-swan shadow-none"
 								maxLength={50}
 							/>
 							<CharacterCounter
@@ -166,9 +168,10 @@ function ProfilePage() {
 								id="username"
 								value={username}
 								onChange={handleUsernameChange}
-								className={`w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan ${
-									username.length > 0 && username.length < 3 ? "border-cardinal focus-visible:!border-cardinal" : ""
-								}`}
+								className={cn(
+									"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none border-swan",
+									(username.length > 0 && username.length < 3) && "border-cardinal focus-visible:!border-cardinal"
+								)}
 								maxLength={50}
 							/>
 							<CharacterCounter
@@ -217,7 +220,8 @@ function ProfilePage() {
 									type={showCurrentPassword ? "text" : "password"}
 									value={currentPassword}
 									onChange={handleCurrentPasswordChange}
-									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
+									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
+									bg-polar !text-eel font-light border-swan"
 								/>
 								<Button
 									type="button"
@@ -244,7 +248,8 @@ function ProfilePage() {
 									type={showNewPassword ? "text" : "password"}
 									value={newPassword}
 									onChange={handleNewPasswordChange}
-									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light border-swan"
+									className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
+									bg-polar !text-eel font-light border-swan"
 								/>
 								{newPassword.length > 0 && newPassword.length < 6 && (
 									<p className="text-sm text-red-500">
