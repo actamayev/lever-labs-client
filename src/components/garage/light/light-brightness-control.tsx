@@ -54,9 +54,9 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsDecreasing(false)}
 				onTouchStart={() => setIsDecreasing(true)}
 				onTouchEnd={() => setIsDecreasing(false)}
-				className="border-2 border-swan shadow-none"
+				className="border-2 border-swan shadow-none rounded-xl !size-11"
 			>
-				<Minus className="h-4 w-4" />
+				<Minus className="h-4 w-4 text-questionText" />
 			</Button>
 
 			<span className="text-2xl font-medium mx-4">
@@ -73,7 +73,7 @@ function LightBrightnessControl() {
 				onMouseLeave={() => setIsIncreasing(false)}
 				onTouchStart={() => setIsIncreasing(true)}
 				onTouchEnd={() => setIsIncreasing(false)}
-				className="border-2 border-swan shadow-none"
+				className="border-2 border-swan shadow-none rounded-xl !size-11"
 			>
 				<PlusIcon className="h-4 w-4" />
 			</Button>

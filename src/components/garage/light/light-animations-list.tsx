@@ -60,7 +60,7 @@ function LightAnimationsList() {
 						buttonVariants({
 							variant: "outline",
 							className: "flex items-center gap-1 rounded-xl justify-between \
-								px-4 !py-6 font-medium cursor-pointer w-64 border-2 border-swan hover:bg-swan shadow-none !text-lg"
+								px-4 !py-6 font-medium cursor-pointer w-64 border-2 border-swan hover:bg-swan shadow-none !text-xl"
 						})
 					)}
 				>
@@ -80,7 +80,7 @@ function LightAnimationsList() {
 						key={animation.name}
 						onClick={() => lightsAnimation(animation.name)}
 						className={cn(
-							"my-0.5 p-2 rounded-md cursor-pointer text-sm transition-none flex items-center space-x-2 hover:!bg-polar",
+							"my-0.5 p-2 rounded-xl cursor-pointer text-sm transition-none flex items-center space-x-2 hover:!bg-polar",
 							garageClass.selectedAnimation === animation.name
 								? "!bg-polar border-l-4 border-l-blue-500"
 								: "hover:!bg-polar border-l-4 border-l-transparent"
@@ -90,7 +90,7 @@ function LightAnimationsList() {
 							{animation.icon}
 						</div>
 						<div className="flex-grow">
-							<div className="font-medium">{animation.name}</div>
+							<div className="font-medium text-base">{animation.name}</div>
 							<div className="text-xs text-hare">{animation.description}</div>
 						</div>
 					</DropdownMenuItem>

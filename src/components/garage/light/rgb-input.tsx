@@ -18,7 +18,7 @@ function RGBInput() {
 	return (
 		<>
 			<div className="flex items-center flex-col">
-				<span className="text-2xl font-medium mr-1">R</span>
+				<span className="text-2xl font-medium mr-1 mb-1">R</span>
 				<Input
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.r * garageClass.selectedColorShade)}
@@ -29,7 +29,7 @@ function RGBInput() {
 				/>
 			</div>
 			<div className="flex items-center flex-col">
-				<span className="text-2xl font-medium mr-1">G</span>
+				<span className="text-2xl font-medium mr-1 mb-1">G</span>
 				<Input
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.g * garageClass.selectedColorShade)}
@@ -40,7 +40,7 @@ function RGBInput() {
 				/>
 			</div>
 			<div className="flex items-center flex-col">
-				<span className="text-2xl font-medium mr-1">B</span>
+				<span className="text-2xl font-medium mr- mb-1">B</span>
 				<Input
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.b * garageClass.selectedColorShade)}

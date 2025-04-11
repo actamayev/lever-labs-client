@@ -14,7 +14,6 @@ import { CustomCountdown } from "../../../icons/custom-countdown"
 import { useSocketContext } from "../../../../contexts/socket-context"
 import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { useGarageContext } from "../../../../contexts/garage-context"
-import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 

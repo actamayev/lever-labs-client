@@ -17,7 +17,7 @@ function LightSection() {
 				<ColorPicker />
 
 				<div className="flex flex-col items-center justify-center h-full">
-					<div className="flex w-full h-1/3 items-start justify-center ">
+					<div className="flex w-full h-1/3 items-start justify-center">
 						<LightAnimationsList />
 					</div>
 					<div className="flex w-full h-1/3 items-center justify-center space-x-2">
