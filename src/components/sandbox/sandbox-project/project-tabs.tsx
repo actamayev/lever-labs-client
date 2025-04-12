@@ -54,7 +54,7 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 			<TabsContent value="notes" className="flex-1">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none"
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none"
 					value={notes}
 					onChange={handleNotesChange}
 				/>
