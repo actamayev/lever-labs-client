@@ -7,6 +7,7 @@ import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
+import { Button } from "../../shadcn/ui/button"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
@@ -81,11 +82,9 @@ function SandboxProjectPage() {
 			<div className="p-6">
 				<div className="flex items-center mb-6">
 					<Link href="/sandbox">
-						<button
-							className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-						>
+						<Button className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors">
 							Back
-						</button>
+						</Button>
 					</Link>
 					<h1 className="text-2xl font-bold">
 						{isLoading
