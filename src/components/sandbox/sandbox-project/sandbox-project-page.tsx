@@ -17,6 +17,7 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -25,6 +26,7 @@ function SandboxProjectPage() {
 	const params = useParams()
 	const projectUUID = params.projectUUID as ProjectUUID
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
+	useSetSelectedPipFirstPipUseEffect()
 	const sandboxClass = useSandboxContext()
 	const pipClass = usePipContext()
 	const personalInfoClass = usePersonalInfoContext()
@@ -123,7 +125,7 @@ function SandboxProjectPage() {
 							disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							className="mt-2"
 						>
-								SEND TO {pipClass.selectedPip?.pipName}
+							SEND TO {pipClass.selectedPip?.pipName}
 						</BlueTactileButton>
 					</div>
 				</div>

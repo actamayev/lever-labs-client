@@ -28,8 +28,8 @@ export const pipBlocks: Record<PipBlockNames, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const state = block.getFieldValue(PIP_FIELD_VALUES.ESP32_LED_CONTROL) as LEDSensorType
-			if (state === "OFF") return "rgbLed.turn_led_off();\n"
-			else return `rgbLed.set_led_${state.toLowerCase()}();\n`
+			if (state === "OFF") return "RgbLed::turn_led_off();\n"
+			else return `RgbLed::set_led_${state.toLowerCase()}();\n`
 		}
 	},
 	[PIP_BLOCK_TYPES.ESP32_DELAY]: {
