@@ -50,9 +50,9 @@ declare global {
 		[key: string]: React.ReactNode
 	}
 
-	type BlocklyCategoryColours = 30 | 120 | 180 | 218
+	type BlocklyCategoryColours = 30 | 120 | 180 | 218 | 330
 
-	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip"
+	type BlocklyCategoryName = "Logic" | "Sensors" | "Motors" | "Pip" | "Variables"
 
 	type PageTransitionDirections = null | "left" | "right" | "up" | "down"
 }

@@ -4,6 +4,7 @@ import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
 import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
 import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
 import { SensorsBlockNames } from "../utils/blockly/block-types/sensor-block-types"
+import { VariableBlockNames } from "../utils/blockly/block-types/variable-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -39,7 +40,7 @@ declare global {
 		}>
 	}
 
-	type BlockNames = SensorsBlockNames | PipBlockNames | MotorBlockNames | LogicBlockNames
+	type BlockNames = SensorsBlockNames | PipBlockNames | MotorBlockNames | LogicBlockNames | VariableBlockNames
 }
 
 export {}

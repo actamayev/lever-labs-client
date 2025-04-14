@@ -4,6 +4,7 @@ import { pipBlocks } from "./pip-blocks"
 import { logicBlocks } from "./logic-blocks"
 import { motorsBlocks } from "./motors-blocks"
 import { sensorsBlocks } from "./sensor-blocks"
+import { variableBlocks } from "./variable-blocks"  // Import variable blocks
 
 export default function createAllBlocks (): CustomBlocks {
 	const customBlocks: CustomBlocks = {
@@ -11,7 +12,8 @@ export default function createAllBlocks (): CustomBlocks {
 			...motorsBlocks,
 			...sensorsBlocks,
 			...pipBlocks,
-			...logicBlocks
+			...logicBlocks,
+			...variableBlocks  // Add variable blocks
 		}
 	}
 

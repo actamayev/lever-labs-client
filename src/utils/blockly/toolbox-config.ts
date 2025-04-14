@@ -75,11 +75,30 @@ export const pipCategory: CustomCategoryInfo = {
 	]
 }
 
-// Combine all categories into the toolbox configuration
+// Add this to toolbox-config.ts after the other category definitions
+
+// Define the Variables category
+export const variableCategory: CustomCategoryInfo = {
+	kind: "category",
+	name: "Variables",
+	colour: 330, // Purple
+	id: undefined,
+	categorystyle: undefined,
+	cssconfig: undefined,
+	hidden: undefined,
+	contents: [
+		{ kind: "block", type: "variable_declare" },
+		{ kind: "block", type: "variable_assign" },
+		{ kind: "block", type: "variable_get" }
+	]
+}
+
+// Then update the toolboxConfig object to include the variables category:
 export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
 		logicCategory,
+		variableCategory,  // Add the variables category
 		sensorsCategory,
 		motorsCategory,
 		pipCategory
