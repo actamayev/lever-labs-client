@@ -11,7 +11,7 @@ import {
 	LeftRightSensorType,
 	IRSensorType
 } from "../block-types/sensor-block-types"
-import { sensorsCategory } from "../toolbox-config"
+import { sensorsCategoryColour } from "../../constants"
 
 export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
@@ -28,7 +28,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 						SENSORS_FIELD_VALUES.IMU_READ
 					)
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from 9-axis IMU sensor")
 			}
 		},
@@ -52,7 +52,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 					)
 					.appendField("ToF sensor")
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read distance in mm from Time of Flight sensor")
 			}
 		},
@@ -75,7 +75,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 						SENSORS_FIELD_VALUES.IR_READ
 					)
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from infrared sensor")
 			}
 		},

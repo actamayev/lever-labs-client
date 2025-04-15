@@ -3,11 +3,12 @@
 import * as Blockly from "blockly"
 import { createCustomCategory } from "../../../../../../utils/blockly/toolbox-config"
 import LabCodeComponent from "../../../../code/lab-code-component"
+import { pipCategoryColour } from "../../../../../../utils/constants"
 
 export default function WarehousePipClient() {
 	const ledBlocks = createCustomCategory(
-		"Pip",
-		218,
+		"LED",
+		pipCategoryColour,
 		["esp32_led_control"]
 	)
 	const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {

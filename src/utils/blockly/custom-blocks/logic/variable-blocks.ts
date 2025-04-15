@@ -1,10 +1,10 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { Order } from "../order"
-import { variableCategory } from "../toolbox-config"
-import { cppGenerator } from "../../cpp/cpp-generator"
-import { VariableBlockNames, VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "../block-types/variable-block-types"
+import { Order } from "../../order"
+import { cppGenerator } from "../../../cpp/cpp-generator"
+import { logicCategoryColour } from "../../../constants"
+import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES, VariableBlockNames } from "../../block-types/logic-block-types"
 
 export const variableBlocks: Record<VariableBlockNames, CustomBlock> = {
 	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE]: {
@@ -20,7 +20,7 @@ export const variableBlocks: Record<VariableBlockNames, CustomBlock> = {
 
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
-				this.setColour(variableCategory.colour)
+				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new float variable and assign an initial value")
 			}
 		},
@@ -44,7 +44,7 @@ export const variableBlocks: Record<VariableBlockNames, CustomBlock> = {
 
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
-				this.setColour(variableCategory.colour)
+				this.setColour(logicCategoryColour)
 				this.setTooltip("Assign a new value to an existing variable")
 			}
 		},
@@ -63,7 +63,7 @@ export const variableBlocks: Record<VariableBlockNames, CustomBlock> = {
 					.appendField(new Blockly.FieldTextInput("myVar"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
 
 				this.setOutput(true, "Number")
-				this.setColour(variableCategory.colour)
+				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of a variable")
 			}
 		},
