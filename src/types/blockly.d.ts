@@ -31,11 +31,11 @@ declare global {
 		cssconfig: CssConfig | undefined,
 		hidden: undefined
 		expanded?: string | boolean
+		colour: string
 	}
 
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
 		name: BlocklyCategoryName
-		colour: BlocklyCategoryColours
 		contents: Array<{
 			kind: "block"
 			type: BlockNames
@@ -44,7 +44,6 @@ declare global {
 
 	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
 		name: ParentCategoryName
-		colour: BlocklyCategoryColours
 		contents: Array<CustomCategoryInfo>
 	}
 
@@ -53,8 +52,6 @@ declare global {
 	| SensorsBlockNames
 	| PipBlockNames
 	| MotorBlockNames
-
-	type BlocklyCategoryColours = 30 | 120 | 180 | 218 | 330
 
 	type BlocklyCategoryName =
 	| "Screen"

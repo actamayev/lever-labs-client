@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { motorsCategoryColour } from "../constants"
+import { buttonsCategoryColour, ledCategoryColour, motorsCategoryColour, screenCategoryColour, speakerCategoryColour } from "../constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
@@ -21,10 +21,32 @@ const motorsCategory: CustomCategoryInfo = {
 const ledCategory: CustomCategoryInfo = {
 	...baseCategory,
 	name: "LED",
-	colour: motorsCategoryColour,
+	colour: ledCategoryColour,
 	contents: [
 		{ kind: "block", type: "esp32_led_control" }
 	]
+}
+
+const screenCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Screen",
+	colour: screenCategoryColour,
+	contents: [
+	]
+}
+
+const speakerCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Speaker",
+	colour: speakerCategoryColour,
+	contents: []
+}
+
+const buttonsCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Buttons",
+	colour: buttonsCategoryColour,
+	contents: []
 }
 
 // Then update the toolboxConfig object to include the variables category:
@@ -34,13 +56,16 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		logicCategory,
 		sensorsCategory,
 		motorsCategory,
-		ledCategory
+		ledCategory,
+		screenCategory,
+		speakerCategory,
+		buttonsCategory
 	]
 }
 
 export function createCustomCategory(
 	name: BlocklyCategoryName,
-	colour: BlocklyCategoryColours,
+	colour: string,
 	blocks: BlockNames[]
 ): CustomCategoryInfo {
 	return {

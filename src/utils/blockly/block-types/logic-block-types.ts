@@ -71,7 +71,6 @@ export type MathBlockNames = typeof MATH_BLOCK_TYPES[keyof typeof MATH_BLOCK_TYP
 export const LOOP_BLOCK_TYPES = {
 	WHILE_UNTIL: "controls_whileUntil",
 	REPEAT: "controls_repeat_ext",
-	ESP32_LED_CONTROL: "esp32_led_control",
 
 	ESP32_DELAY: "esp32_delay",
 	ESP32_LOOP: "esp32_loop"
@@ -84,7 +83,6 @@ export const LOOP_FIELD_VALUES = {
 	REPEAT_TIMES: "TIMES",
 	REPEAT_DO: "DO",
 
-	ESP32_LED_CONTROL: "led_state",
 	ESP32_DELAY: "delay"
 } as const
 

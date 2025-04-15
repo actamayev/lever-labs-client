@@ -5,9 +5,7 @@ import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants"
 import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
-import { LOGIC_BLOCK_TYPES, LOGIC_FIELD_VALUES, LOOP_BLOCK_TYPES,
-	LOOP_FIELD_VALUES, LoopBlockNames } from "../../block-types/logic-block-types"
-import { LEDSensorType, SENSOR_TYPES } from "../../block-types/sensor-block-types"
+import { LOGIC_BLOCK_TYPES, LOGIC_FIELD_VALUES, LOOP_BLOCK_TYPES, LoopBlockNames } from "../../block-types/logic-block-types"
 
 export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 	[LOGIC_BLOCK_TYPES.WHILE_UNTIL]: {
@@ -63,31 +61,6 @@ export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
 			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.REPEAT_DO)
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
-		}
-	},
-	[LOOP_BLOCK_TYPES.ESP32_LED_CONTROL]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendDummyInput()
-					.appendField("Turn LED")
-					.appendField(
-						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]) =>
-								[key.toLowerCase(), value]
-							)
-						),
-						LOOP_BLOCK_TYPES.ESP32_LED_CONTROL
-					)
-				this.setPreviousStatement(true, null)
-				this.setNextStatement(true, null)
-				this.setColour(logicCategoryColour)
-				this.setTooltip("Change LED Status")
-			}
-		},
-		generator: (block: Blockly.Block): string => {
-			const state = block.getFieldValue(LOOP_FIELD_VALUES.ESP32_LED_CONTROL) as LEDSensorType
-			if (state === "OFF") return "rgbLed.turn_led_off();\n"
-			else return `rgbLed.set_led_${state.toLowerCase()}();\n`
 		}
 	},
 	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
