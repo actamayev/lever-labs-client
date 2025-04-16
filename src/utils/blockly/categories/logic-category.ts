@@ -7,8 +7,12 @@ const variableCategory: CustomCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		{ kind: "block", type: "variable_declare" },
+		{ kind: "block", type: "variable_declare_int" },
+		{ kind: "block", type: "variable_declare_bool" },
 		{ kind: "block", type: "variable_assign" },
-		{ kind: "block", type: "variable_get" }
+		{ kind: "block", type: "variable_get" },
+		{ kind: "block", type: "variable_get_int" },
+		{ kind: "block", type: "variable_get_bool" }
 	]
 }
 

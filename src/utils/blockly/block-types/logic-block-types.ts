@@ -6,7 +6,11 @@
 export const VARIABLE_BLOCK_TYPES = {
 	VARIABLE_DECLARE: "variable_declare",
 	VARIABLE_ASSIGN: "variable_assign",
-	VARIABLE_GET: "variable_get"
+	VARIABLE_GET: "variable_get",
+	VARIABLE_DECLARE_INT: "variable_declare_int",
+	VARIABLE_DECLARE_BOOL: "variable_declare_bool",
+	VARIABLE_GET_INT: "variable_get_int",
+	VARIABLE_GET_BOOL: "variable_get_bool",
 } as const
 
 export const VARIABLE_FIELD_VALUES = {

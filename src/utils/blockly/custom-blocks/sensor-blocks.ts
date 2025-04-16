@@ -89,14 +89,6 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
 					.appendField("Read Color Sensor")
-					.appendField(
-						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.IMU).map(([key, value]) =>
-                                [key.toLowerCase(), value] as [string, string]
-							)
-						),
-						SENSORS_FIELD_VALUES.IMU_READ
-					)
 				this.setOutput(true, "String")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from color sensor")
