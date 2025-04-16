@@ -1,3 +1,5 @@
+"use client"
+
 // Define the Sensors category
 
 import { baseCategory } from "./base-category"

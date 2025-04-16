@@ -1,3 +1,5 @@
+"use client"
+
 export const baseCategory: PartialCategoryInfo = {
 	kind: "category",
 	id: undefined,
