@@ -1,19 +1,15 @@
 "use client"
 
-import { useEffect } from "react"
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "../custom-sidebar-button"
 import { usePipContext } from "../../../../contexts/pip-context"
+import useSetSelectedPipFirstPipUseEffect from "../../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 function AddPipSidebarButton() {
 	const pipClass = usePipContext()
-
-	useEffect(() => {
-		pipClass.setSelectedPipToFirstPip()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pipClass.pipData.length])
+	useSetSelectedPipFirstPipUseEffect()
 
 	if (pipClass.selectedPip) return null
 

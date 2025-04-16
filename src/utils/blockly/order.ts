@@ -1,27 +1,54 @@
 "use client"
 
-export const Order = {
-	ATOMIC: 0,            // 0 "" ...
-	MEMBER: 1,           // . []
-	FUNCTION_CALL: 2,    // ()
-	INCREMENT: 3,        // ++
-	DECREMENT: 4,        // --
-	LOGICAL_NOT: 5,      // !
-	BITWISE_NOT: 6,      // ~
-	UNARY_PLUS: 7,       // +
-	UNARY_MINUS: 8,      // -
-	MULTIPLICATION: 9,   // * / %
-	ADDITION: 10,        // + -
-	BITWISE_SHIFT: 11,   // << >>
-	RELATIONAL: 12,      // < <= > >=
-	EQUALITY: 13,        // == !=
-	BITWISE_AND: 14,     // &
-	BITWISE_XOR: 15,     // ^
-	BITWISE_OR: 16,      // |
-	LOGICAL_AND: 17,     // &&
-	LOGICAL_OR: 18,      // ||
-	CONDITIONAL: 19,     // ?:
-	ASSIGNMENT: 20,      // = += -= *= /= %= <<= >>= ...
-	COMMA: 21,           // ,
-	NONE: 99            // (...)
-} as const
+/**
+ * Enum representing operator precedence in code generation.
+ * Higher values indicate lower precedence.
+ */
+export enum Order {
+    /** Literals, identifiers, array literals [1, 2, 3] and other atomic expressions */
+    ATOMIC = 0,
+    /** Member expressions: obj.prop, array[index] */
+    MEMBER = 1,
+    /** Function calls: func() */
+    FUNCTION_CALL = 2,
+    /** Increment operator: x++ */
+    INCREMENT = 3,
+    /** Decrement operator: x-- */
+    DECREMENT = 4,
+    /** Logical NOT: !x */
+    LOGICAL_NOT = 5,
+    /** Bitwise NOT: ~x */
+    BITWISE_NOT = 6,
+    /** Unary plus: +x */
+    UNARY_PLUS = 7,
+    /** Unary minus: -x */
+    UNARY_MINUS = 8,
+    /** Multiplication, division, remainder: *, /, % */
+    MULTIPLICATION = 9,
+    /** Addition, subtraction: +, - */
+    ADDITION = 10,
+    /** Bitwise shift operators: <<, >> */
+    BITWISE_SHIFT = 11,
+    /** Relational operators: <, <=, >, >= */
+    RELATIONAL = 12,
+    /** Equality operators: ==, != */
+    EQUALITY = 13,
+    /** Bitwise AND: & */
+    BITWISE_AND = 14,
+    /** Bitwise XOR: ^ */
+    BITWISE_XOR = 15,
+    /** Bitwise OR: | */
+    BITWISE_OR = 16,
+    /** Logical AND: && */
+    LOGICAL_AND = 17,
+    /** Logical OR: || */
+    LOGICAL_OR = 18,
+    /** Conditional (ternary) operator: ?: */
+    CONDITIONAL = 19,
+    /** Assignment operators: =, +=, -=, *=, /=, %=, <<=, >>= ... */
+    ASSIGNMENT = 20,
+    /** Comma operator: , */
+    COMMA = 21,
+    /** Parenthesized expressions: (...) */
+    NONE = 99
+}
