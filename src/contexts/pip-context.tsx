@@ -48,7 +48,7 @@ class PipClass {
 	}
 
 	public findPipFromUUID(pipUUID: PipUUID): PipData | undefined {
-		return this.pipData.find(pipinfo => pipinfo.pipUUID === pipUUID)
+		return this.pipData.find(pipInfo => pipInfo.pipUUID === pipUUID)
 	}
 
 	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {

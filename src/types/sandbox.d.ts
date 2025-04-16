@@ -10,6 +10,8 @@ declare global {
 		updatedAt: Date
 		projectNotes: string | null
 	}
+
+	type HexColor = string & { readonly __brand: unique symbol }
 }
 
 export {}

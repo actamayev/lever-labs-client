@@ -16,7 +16,7 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 	const personalInfoClass = usePersonalInfoContext()
 
 	return (
-		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan">
+		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
 			<div className="flex flex-row items-center justify-center">
 				<CustomTooltip
 					tooltipTrigger={

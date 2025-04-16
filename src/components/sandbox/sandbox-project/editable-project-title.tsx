@@ -9,6 +9,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	const [isEditing, setIsEditing] = useState(false)
 	const [isHovering, setIsHovering] = useState(false)
 	const [projectName, setProjectName] = useState(project.projectName || "Untitled Project")
+	const [editingName, setEditingName] = useState("") // Temporary state for editing
 	const inputRef = useRef<HTMLInputElement>(null)
 	const measureRef = useRef<HTMLSpanElement>(null)
 	const editProjectName = useEditSandboxProjectName()
@@ -24,23 +25,27 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	const adjustInputWidth = () => {
 		if (inputRef.current && measureRef.current) {
 			const width = measureRef.current.getBoundingClientRect().width
-			inputRef.current.style.width = `${Math.max(width + 20)}px` // Add padding, minimum 120px
+			inputRef.current.style.width = `${Math.max(width + 20)}px` // Add padding
 		}
 	}
 
 	// Focus and adjust width when editing starts
 	useEffect(() => {
 		if (!isEditing || !inputRef.current) return
+
+		// When entering edit mode, set the temporary editing state
+		setEditingName(projectName)
+
 		inputRef.current.focus()
 		inputRef.current.select()
 		adjustInputWidth()
-	}, [isEditing])
+	}, [isEditing, projectName])
 
-	// Adjust width when project name changes
+	// Adjust width when editing value changes
 	useEffect(() => {
 		if (!isEditing) return
 		adjustInputWidth()
-	}, [projectName, isEditing])
+	}, [editingName, isEditing])
 
 	// Clean up the debounce on unmount
 	useEffect(() => {
@@ -49,32 +54,49 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		}
 	}, [debouncedUpdateName])
 
+	// Update document title whenever projectName changes (not during editing)
+	useEffect(() => {
+		document.title = `${projectName} | Blue Dot Robots`
+	}, [projectName])
+
+	// Update local state when project prop changes
+	useEffect(() => {
+		if (project.projectName) {
+			setProjectName(project.projectName)
+		}
+	}, [project.projectName])
+
 	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const newName = e.target.value
-		setProjectName(newName)
-		// Trigger the debounced update
-		if (newName.trim()) {
-			debouncedUpdateName(project.projectUUID, newName)
+		// Only update the temporary editing state
+		setEditingName(e.target.value)
+	}
+
+	const saveChanges = (newName: string) => {
+		// Only save if the name is not empty and has changed
+		if (newName.trim() && newName !== projectName) {
+			setProjectName(newName) // Update the displayed name
+			debouncedUpdateName(project.projectUUID, newName) // Save to DB
+		} else {
+			// Revert to previous name if empty
+			setEditingName(projectName)
 		}
 	}
 
 	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter" || e.key === "Escape") {
+		if (e.key === "Enter") {
 			setIsEditing(false)
-			// If escape was pressed, revert to the previous value
-			if (e.key === "Escape") {
-				setProjectName(project.projectName || "Untitled Project")
-			}
+			saveChanges(editingName)
+			e.preventDefault()
+		} else if (e.key === "Escape") {
+			setIsEditing(false)
+			setEditingName(projectName) // Discard changes
 			e.preventDefault()
 		}
 	}
 
 	const handleBlur = () => {
 		setIsEditing(false)
-		// If the name is empty, revert to the default
-		if (!projectName.trim()) {
-			setProjectName(project.projectName || "Untitled Project")
-		}
+		saveChanges(editingName)
 	}
 
 	// Common styles for both viewing and editing states
@@ -91,14 +113,14 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 				ref={measureRef}
 				className="absolute left-0 top-0 invisible whitespace-pre !text-xl font-medium"
 			>
-				{projectName}
+				{isEditing ? editingName : projectName}
 			</span>
 
 			{isEditing ? (
 				<Input
 					ref={inputRef}
 					type="text"
-					value={projectName}
+					value={editingName}
 					onChange={handleNameChange}
 					onKeyDown={handleKeyDown}
 					onBlur={handleBlur}
