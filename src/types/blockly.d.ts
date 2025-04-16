@@ -1,9 +1,9 @@
 import * as Blockly from "blockly"
 import { CssConfig } from "blockly/core/toolbox/category"
-import { PipBlockNames } from "../utils/blockly/block-types/pip-block-types"
 import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
 import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
 import { SensorsBlockNames } from "../utils/blockly/block-types/sensor-block-types"
+import { LEDBlockNames } from "../utils/blockly/block-types/led-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -31,11 +31,11 @@ declare global {
 		cssconfig: CssConfig | undefined,
 		hidden: undefined
 		expanded?: string | boolean
-		colour: string
 	}
 
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
 		name: BlocklyCategoryName
+		colour: HexColor
 		contents: Array<{
 			kind: "block"
 			type: BlockNames
@@ -44,14 +44,15 @@ declare global {
 
 	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
 		name: ParentCategoryName
+		colour: HexColor
 		contents: Array<CustomCategoryInfo>
 	}
 
 	type BlockNames =
 	| LogicBlockNames
 	| SensorsBlockNames
-	| PipBlockNames
 	| MotorBlockNames
+	| LEDBlockNames
 
 	type BlocklyCategoryName =
 	| "Screen"
@@ -70,6 +71,7 @@ declare global {
 	| "IR Sensors"
 	| "Distance Sensors"
 	| "IMU"
+	| "Color Sensor"
 
 	type LogicCategoryName =
 	| "Variables"

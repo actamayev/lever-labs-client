@@ -2,12 +2,12 @@
 import * as Blockly from "blockly"
 import { createCustomCategory } from "../../../../../../utils/blockly/toolbox-config"
 import LabCodeComponent from "../../../../code/lab-code-component"
-import { pipCategoryColour } from "../../../../../../utils/constants"
+import { ledCategoryColour } from "../../../../../../utils/constants"
 
 export default function BreathingLEDsCodeClient() {
 	const ledBlocks = createCustomCategory(
 		"LED",
-		pipCategoryColour,
+		ledCategoryColour,
 		["esp32_led_control"]
 	)
 	const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {

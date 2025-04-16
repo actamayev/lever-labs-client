@@ -31,6 +31,15 @@ const irSensorsCategory: CustomCategoryInfo = {
 	]
 }
 
+const colorSensorCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Color Sensor",
+	colour: sensorsCategoryColour,
+	contents: [
+		{ kind: "block", type: "color_sensor_read" }
+	]
+}
+
 // Then include them in the parent category
 export const sensorsCategory: ParentCategoryInfo = {
 	...baseCategory,
@@ -39,6 +48,7 @@ export const sensorsCategory: ParentCategoryInfo = {
 	contents: [
 		imuSensorsCategory,
 		distanceSensorsCategory,
-		irSensorsCategory
+		irSensorsCategory,
+		colorSensorCategory
 	]
 }

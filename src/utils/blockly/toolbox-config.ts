@@ -65,7 +65,7 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 
 export function createCustomCategory(
 	name: BlocklyCategoryName,
-	colour: string,
+	colour: HexColor,
 	blocks: BlockNames[]
 ): CustomCategoryInfo {
 	return {

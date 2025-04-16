@@ -83,5 +83,28 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.IR_READ) as IRSensorType
 			return [`readIR(IR_${sensor})`, Order.FUNCTION_CALL]
 		}
-	}
+	},
+	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Read Color Sensor")
+					.appendField(
+						new Blockly.FieldDropdown(
+							Object.entries(SENSOR_TYPES.IMU).map(([key, value]) =>
+                                [key.toLowerCase(), value] as [string, string]
+							)
+						),
+						SENSORS_FIELD_VALUES.IMU_READ
+					)
+				this.setOutput(true, "String")
+				this.setColour(sensorsCategoryColour)
+				this.setTooltip("Read value from color sensor")
+			}
+		},
+		generator: (block: Blockly.Block): [string, number] => {
+			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
+			return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
+		}
+	},
 }

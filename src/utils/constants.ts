@@ -4,7 +4,7 @@ export const bentoIconSize = 40
 
 export const logicCategoryColour = rgbToBlocklyColor(28, 176, 246) // macaw
 export const sensorsCategoryColour = rgbToBlocklyColor(255, 75, 75) //cardinal
-export const motorsCategoryColour = rgbToBlocklyColor(255, 200, 0) //bee
+export const motorsCategoryColour = rgbToBlocklyColor(35, 200, 100) //charging-green
 export const ledCategoryColour = rgbToBlocklyColor(255, 150, 0) //fox
 export const screenCategoryColour = rgbToBlocklyColor(206, 130, 255) //beetle
 export const speakerCategoryColour = rgbToBlocklyColor(43, 112, 201) // humpback
