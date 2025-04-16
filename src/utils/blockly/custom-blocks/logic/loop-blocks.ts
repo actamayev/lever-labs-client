@@ -43,9 +43,14 @@ export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 	[LOGIC_BLOCK_TYPES.REPEAT]: {
 		definition: {
 			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("repeat")
+
 				this.appendValueInput(LOGIC_FIELD_VALUES.REPEAT_TIMES)
 					.setCheck("Number")
-					.appendField("repeat")
+
+				this.appendDummyInput()
+					.appendField("times")
 
 				this.appendStatementInput(LOGIC_FIELD_VALUES.REPEAT_DO)
 					.appendField("do")
@@ -53,7 +58,7 @@ export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
-				this.setTooltip("Repeat some statements")
+				this.setTooltip("Repeat statements a specified number of times")
 			}
 		},
 		generator: (block: Blockly.Block): string => {
