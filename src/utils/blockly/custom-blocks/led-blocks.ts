@@ -1,11 +1,11 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { LED_BLOCK_TYPES, LEDBlockNames } from "../block-types/led-block-types"
 import { ledCategoryColour } from "../../constants"
 import { LEDSensorType, SENSOR_TYPES } from "../block-types/sensor-block-types"
+import { LED_BLOCK_TYPES } from "../block-types/led-block-types"
 
-export const ledBlocks: Record<LEDBlockNames, CustomBlock> = {
+export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 	[LED_BLOCK_TYPES.ESP32_LED_CONTROL]: {
 		definition: {
 			init: function(this: Blockly.Block) {

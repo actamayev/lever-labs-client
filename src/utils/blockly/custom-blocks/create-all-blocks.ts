@@ -11,7 +11,6 @@ export default function createAllBlocks (): CustomBlocks {
 			...logicBlocks,
 			...sensorsBlocks,
 			...motorsBlocks,
-			...motorsBlocks,
 			...ledBlocks,
 		}
 	}

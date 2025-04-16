@@ -1,9 +1,9 @@
 import * as Blockly from "blockly"
 import { CssConfig } from "blockly/core/toolbox/category"
-import { LogicBlockNames } from "../utils/blockly/block-types/logic-block-types"
-import { MotorBlockNames } from "../utils/blockly/block-types/motor-block-types"
-import { SensorsBlockNames } from "../utils/blockly/block-types/sensor-block-types"
-import { LEDBlockNames } from "../utils/blockly/block-types/led-block-types"
+import { MOTOR_BLOCK_TYPES } from "../utils/blockly/block-types/motor-block-types"
+import { LED_BLOCK_TYPES } from "../utils/blockly/block-types/led-block-types"
+import { LOGIC_BLOCK_TYPES } from "../utils/blockly/block-types/logic-block-types"
+import { SENSORS_BLOCK_TYPES } from "../utils/blockly/block-types/sensor-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -49,10 +49,10 @@ declare global {
 	}
 
 	type BlockNames =
-	| LogicBlockNames
-	| SensorsBlockNames
-	| MotorBlockNames
-	| LEDBlockNames
+	| MOTOR_BLOCK_TYPES
+	| LED_BLOCK_TYPES
+	| LOGIC_BLOCK_TYPES
+	| SENSORS_BLOCK_TYPES
 
 	type BlocklyCategoryName =
 	| "Screen"

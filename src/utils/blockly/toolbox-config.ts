@@ -5,6 +5,8 @@ import { buttonsCategoryColour, ledCategoryColour, motorsCategoryColour, screenC
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
+import { MOTOR_BLOCK_TYPES } from "./block-types/motor-block-types"
+import { LED_BLOCK_TYPES } from "./block-types/led-block-types"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {
@@ -12,9 +14,9 @@ const motorsCategory: CustomCategoryInfo = {
 	name: "Motors",
 	colour: motorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "motor_set_speed" },
-		{ kind: "block", type: "motors_stop" },
-		{ kind: "block", type: "motors_tank_drive" },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_STOP },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE },
 	]
 }
 
@@ -23,7 +25,7 @@ const ledCategory: CustomCategoryInfo = {
 	name: "LED",
 	colour: ledCategoryColour,
 	contents: [
-		{ kind: "block", type: "esp32_led_control" }
+		{ kind: "block", type: LED_BLOCK_TYPES.ESP32_LED_CONTROL }
 	]
 }
 

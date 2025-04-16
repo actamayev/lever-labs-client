@@ -3,7 +3,6 @@
 import * as Blockly from "blockly"
 import { Order } from "../order"
 import {
-	SensorsBlockNames,
 	SENSORS_BLOCK_TYPES,
 	SENSORS_FIELD_VALUES,
 	SENSOR_TYPES,
@@ -13,7 +12,7 @@ import {
 } from "../block-types/sensor-block-types"
 import { sensorsCategoryColour } from "../../constants"
 
-export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
+export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {

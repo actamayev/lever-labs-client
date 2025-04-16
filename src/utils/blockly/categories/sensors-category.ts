@@ -2,6 +2,7 @@
 
 import { baseCategory } from "./base-category"
 import { sensorsCategoryColour } from "../../constants"
+import { SENSORS_BLOCK_TYPES } from "../block-types/sensor-block-types"
 
 // First define the sub-categories
 const imuSensorsCategory: CustomCategoryInfo = {
@@ -9,7 +10,7 @@ const imuSensorsCategory: CustomCategoryInfo = {
 	name: "IMU",
 	colour: sensorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "imu_read" }
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.IMU_READ }
 	]
 }
 
@@ -18,7 +19,7 @@ const distanceSensorsCategory: CustomCategoryInfo = {
 	name: "Distance Sensors",
 	colour: sensorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "tof_read" }
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.TOF_READ}
 	]
 }
 
@@ -27,7 +28,7 @@ const irSensorsCategory: CustomCategoryInfo = {
 	name: "IR Sensors",
 	colour: sensorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "ir_read" }
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.IR_READ }
 	]
 }
 
@@ -36,7 +37,7 @@ const colorSensorCategory: CustomCategoryInfo = {
 	name: "Color Sensor",
 	colour: sensorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "color_sensor_read" }
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ }
 	]
 }
 

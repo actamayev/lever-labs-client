@@ -5,22 +5,22 @@ import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants"
 import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
-import { LOGIC_BLOCK_TYPES, LOGIC_FIELD_VALUES, LOOP_BLOCK_TYPES, LoopBlockNames } from "../../block-types/logic-block-types"
+import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "../../block-types/logic-block-types"
 
-export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
-	[LOGIC_BLOCK_TYPES.WHILE_UNTIL]: {
+export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
+	[LOOP_BLOCK_TYPES.WHILE_UNTIL]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
 					.appendField(new Blockly.FieldDropdown([
 						["while", "WHILE"],
 						["until", "UNTIL"]
-					]), LOGIC_FIELD_VALUES.WHILE_MODE)
+					]), LOOP_FIELD_VALUES.WHILE_MODE)
 
-				this.appendValueInput(LOGIC_FIELD_VALUES.WHILE_BOOL)
+				this.appendValueInput(LOOP_FIELD_VALUES.WHILE_BOOL)
 					.setCheck("Boolean")
 
-				this.appendStatementInput(LOGIC_FIELD_VALUES.WHILE_DO)
+				this.appendStatementInput(LOOP_FIELD_VALUES.WHILE_DO)
 					.appendField("do")
 
 				this.setPreviousStatement(true, null)
@@ -30,29 +30,29 @@ export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const until = block.getFieldValue(LOGIC_FIELD_VALUES.WHILE_MODE) === "UNTIL"
-			let condition = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
+			const until = block.getFieldValue(LOOP_FIELD_VALUES.WHILE_MODE) === "UNTIL"
+			let condition = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
 			if (until) {
 				condition = `!(${condition})`
 			}
-			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.WHILE_DO)
+			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.WHILE_DO)
 			return `while (${condition}) {\n${bodyCode}}\n`
 		}
 	},
 
-	[LOGIC_BLOCK_TYPES.REPEAT]: {
+	[LOOP_BLOCK_TYPES.REPEAT]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
 					.appendField("repeat")
 
-				this.appendValueInput(LOGIC_FIELD_VALUES.REPEAT_TIMES)
+				this.appendValueInput(LOOP_FIELD_VALUES.REPEAT_TIMES)
 					.setCheck("Number")
 
 				this.appendDummyInput()
 					.appendField("times")
 
-				this.appendStatementInput(LOGIC_FIELD_VALUES.REPEAT_DO)
+				this.appendStatementInput(LOOP_FIELD_VALUES.REPEAT_DO)
 					.appendField("do")
 
 				this.setPreviousStatement(true, null)
@@ -62,9 +62,9 @@ export const loopBlocks: Record<LoopBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const repeats = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
+			const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
 			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
-			const bodyCode = generateStatementCode(block, LOGIC_FIELD_VALUES.REPEAT_DO)
+			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 		}
 	},

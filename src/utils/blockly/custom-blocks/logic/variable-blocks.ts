@@ -4,9 +4,9 @@ import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { cppGenerator } from "../../../cpp/cpp-generator"
 import { logicCategoryColour } from "../../../constants"
-import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES, VariableBlockNames } from "../../block-types/logic-block-types"
+import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "../../block-types/logic-block-types"
 
-export const variableBlocks: Record<VariableBlockNames, CustomBlock> = {
+export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// Float variables (original implementation)
 	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE]: {
 		definition: {

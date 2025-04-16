@@ -2,112 +2,94 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-// 4/15/25 TODO: Consider changing to enums
-export const VARIABLE_BLOCK_TYPES = {
-	VARIABLE_DECLARE: "variable_declare",
-	VARIABLE_ASSIGN: "variable_assign",
-	VARIABLE_GET: "variable_get",
-	VARIABLE_DECLARE_INT: "variable_declare_int",
-	VARIABLE_DECLARE_BOOL: "variable_declare_bool",
-	VARIABLE_GET_INT: "variable_get_int",
-	VARIABLE_GET_BOOL: "variable_get_bool",
-} as const
+export enum VARIABLE_BLOCK_TYPES {
+    VARIABLE_DECLARE = "variable_declare",
+    VARIABLE_ASSIGN = "variable_assign",
+    VARIABLE_GET = "variable_get",
+    VARIABLE_DECLARE_INT = "variable_declare_int",
+    VARIABLE_DECLARE_BOOL = "variable_declare_bool",
+    VARIABLE_GET_INT = "variable_get_int",
+    VARIABLE_GET_BOOL = "variable_get_bool"
+}
 
-export const VARIABLE_FIELD_VALUES = {
-	VARIABLE_NAME: "VAR_NAME",
-	VARIABLE_VALUE: "VAR_VALUE"
-} as const
+export enum VARIABLE_FIELD_VALUES {
+    VARIABLE_NAME = "VAR_NAME",
+    VARIABLE_VALUE = "VAR_VALUE"
+}
 
-export type VariableBlockNames = typeof VARIABLE_BLOCK_TYPES[keyof typeof VARIABLE_BLOCK_TYPES]
+export enum CONDITIONAL_BLOCK_TYPES {
+    IF = "controls_if",
+    IF_ELSE = "controls_if_else",
+    IF_ELSEIF_ELSE = "controls_if_elseif",
+    IF_2ELSEIF_ELSE = "controls_if_2elseif"
+}
 
-export const CONDITIONAL_BLOCK_TYPES = {
-	IF: "controls_if",
-	IF_ELSE: "controls_if_else",           // if/else
-	IF_ELSEIF_ELSE: "controls_if_elseif",  // if/elseif/else
-	IF_2ELSEIF_ELSE: "controls_if_2elseif", // if/elseif/elseif/else
-} as const
+export enum CONDITIONAL_FIELD_VALUES {
+    IF_CONDITION = "IF0",
+    IF_DO = "DO0",
+    IF1_CONDITION = "IF1",
+    IF1_DO = "DO1",
+    IF2_CONDITION = "IF2",
+    IF2_DO = "DO2",
+    IF3_CONDITION = "IF3",
+    IF3_DO = "DO3",
+    ELSE_DO = "ELSE",
+    IF_ELSE_BLOCK = "ELSE_BLOCK" // Renamed from IF_ELSE to avoid duplicate
+}
 
-export const CONDITIONAL_FIELD_VALUES = {
-	IF_CONDITION: "IF0",
-	IF_DO: "DO0",
-	IF1_CONDITION: "IF1",
-	IF1_DO: "DO1",
-	IF2_CONDITION: "IF2",
-	IF2_DO: "DO2",
-	IF3_CONDITION: "IF3",
-	IF3_DO: "DO3",
-	ELSE_DO: "ELSE",
-	IF_ELSE: "ELSE",
-} as const
+export enum MATH_BLOCK_TYPES {
+    COMPARE = "logic_compare",
+    OPERATION = "logic_operation",
+    NEGATE = "logic_negate",
+    NUMBER = "math_number",
+    ARITHMETIC = "math_arithmetic",
+    MATH_SINGLE = "math_single"
+}
 
-export type ConditionalBlockNames = typeof CONDITIONAL_BLOCK_TYPES[keyof typeof CONDITIONAL_BLOCK_TYPES]
+export enum MATH_FIELD_VALUES {
+    COMPARE_A = "COMPARE_A",       // Renamed
+    COMPARE_B = "COMPARE_B",       // Renamed
+    COMPARE_OP = "COMPARE_OP",     // Renamed
+    OPERATION_A = "OPERATION_A",   // Renamed
+    OPERATION_B = "OPERATION_B",   // Renamed
+    OPERATION_OP = "OPERATION_OP", // Renamed
+    NEGATE_BOOL = "BOOL",
+    NUMBER_NUM = "NUMBER_NUM",     // Renamed
+    ARITHMETIC_A = "ARITHMETIC_A", // Renamed
+    ARITHMETIC_B = "ARITHMETIC_B", // Renamed
+    ARITHMETIC_OP = "ARITHMETIC_OP", // Renamed
+    MATH_SINGLE_NUM = "MATH_SINGLE_NUM", // Renamed
+    MATH_SINGLE_OP = "MATH_SINGLE_OP",   // Renamed
+    MATH_CONSTRAIN_VALUE = "VALUE",
+    MATH_CONSTRAIN_LOW = "LOW",
+    MATH_CONSTRAIN_HIGH = "HIGH"
+}
 
-export const MATH_BLOCK_TYPES = {
-	COMPARE: "logic_compare",
-	OPERATION: "logic_operation",
-	NEGATE: "logic_negate",
-	NUMBER: "math_number",
-	ARITHMETIC: "math_arithmetic",
-	MATH_SINGLE: "math_single",        // Changed from SINGLE to MATH_SINGLE
-} as const
+export enum LOOP_BLOCK_TYPES {
+    WHILE_UNTIL = "controls_whileUntil",
+    REPEAT = "controls_repeat_ext",
+    ESP32_DELAY = "esp32_delay",
+    ESP32_LOOP = "esp32_loop"
+}
 
-export const MATH_FIELD_VALUES = {
-	COMPARE_A: "A",
-	COMPARE_B: "B",
-	COMPARE_OP: "OP",
-	OPERATION_A: "A",
-	OPERATION_B: "B",
-	OPERATION_OP: "OP",
-	NEGATE_BOOL: "BOOL",
-	NUMBER_NUM: "NUM",
-	ARITHMETIC_A: "A",
-	ARITHMETIC_B: "B",
-	ARITHMETIC_OP: "OP",
-	MATH_SINGLE_NUM: "NUM",
-	MATH_SINGLE_OP: "OP",
-	MATH_CONSTRAIN_VALUE: "VALUE",
-	MATH_CONSTRAIN_LOW: "LOW",
-	MATH_CONSTRAIN_HIGH: "HIGH",
-} as const
+export enum LOOP_FIELD_VALUES {
+    WHILE_MODE = "MODE",
+    WHILE_BOOL = "BOOL",
+    WHILE_DO = "WHILE_DO",       // Renamed
+    REPEAT_TIMES = "TIMES",
+    REPEAT_DO = "REPEAT_DO",     // Renamed
+    ESP32_DELAY = "delay"
+}
 
-export type MathBlockNames = typeof MATH_BLOCK_TYPES[keyof typeof MATH_BLOCK_TYPES]
+// For ease of use, we'll create a namespace object that combines all block types
+export type LOGIC_BLOCK_TYPES =
+	| VARIABLE_BLOCK_TYPES
+	| CONDITIONAL_BLOCK_TYPES
+	| MATH_BLOCK_TYPES
+	| LOOP_BLOCK_TYPES
 
-export const LOOP_BLOCK_TYPES = {
-	WHILE_UNTIL: "controls_whileUntil",
-	REPEAT: "controls_repeat_ext",
-
-	ESP32_DELAY: "esp32_delay",
-	ESP32_LOOP: "esp32_loop"
-} as const
-
-export const LOOP_FIELD_VALUES = {
-	WHILE_MODE: "MODE",
-	WHILE_BOOL: "BOOL",
-	WHILE_DO: "DO",
-	REPEAT_TIMES: "TIMES",
-	REPEAT_DO: "DO",
-
-	ESP32_DELAY: "delay"
-} as const
-
-export type LoopBlockNames = typeof LOOP_BLOCK_TYPES[keyof typeof LOOP_BLOCK_TYPES]
-
-export const LOGIC_BLOCK_TYPES = {
-	...VARIABLE_BLOCK_TYPES,
-	...CONDITIONAL_BLOCK_TYPES,
-	...MATH_BLOCK_TYPES,
-	...LOOP_BLOCK_TYPES
-} as const
-
-export const LOGIC_FIELD_VALUES = {
-	...VARIABLE_FIELD_VALUES,
-	...CONDITIONAL_FIELD_VALUES,
-	...MATH_FIELD_VALUES,
-	...LOOP_FIELD_VALUES,
-} as const
-
-export type LogicBlockNames =
-	| VariableBlockNames
-	| ConditionalBlockNames
-	| MathBlockNames
-	| LoopBlockNames
+export type LOGIC_FIELD_VALUES =
+	| VARIABLE_FIELD_VALUES
+	| CONDITIONAL_FIELD_VALUES
+	| MATH_FIELD_VALUES
+	| LOOP_FIELD_VALUES

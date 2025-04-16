@@ -4,13 +4,13 @@ import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants"
 import { cppGenerator } from "../../../cpp/cpp-generator"
-import {  LOGIC_BLOCK_TYPES, LOGIC_FIELD_VALUES, MathBlockNames } from "../../block-types/logic-block-types"
+import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "../../block-types/logic-block-types"
 
-export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
-	[LOGIC_BLOCK_TYPES.COMPARE]: {
+export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
+	[MATH_BLOCK_TYPES.COMPARE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
-				this.appendValueInput(LOGIC_FIELD_VALUES.COMPARE_A)
+				this.appendValueInput(MATH_FIELD_VALUES.COMPARE_A)
 					.setCheck(["Number", "String"])
 
 				this.appendDummyInput()
@@ -21,9 +21,9 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 						["≤", "LTE"],
 						[">", "GT"],
 						["≥", "GTE"]
-					]), LOGIC_FIELD_VALUES.COMPARE_OP)
+					]), MATH_FIELD_VALUES.COMPARE_OP)
 
-				this.appendValueInput(LOGIC_FIELD_VALUES.COMPARE_B)
+				this.appendValueInput(MATH_FIELD_VALUES.COMPARE_B)
 					.setCheck(["Number", "String"])
 
 				this.setOutput(true, "Boolean")
@@ -40,27 +40,27 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 				"GT": ">",
 				"GTE": ">="
 			}
-			const operator = OPERATORS[block.getFieldValue(LOGIC_FIELD_VALUES.COMPARE_OP)]
+			const operator = OPERATORS[block.getFieldValue(MATH_FIELD_VALUES.COMPARE_OP)]
 			const order = Order.RELATIONAL
-			const argument0 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.COMPARE_A, order) || "0"
-			const argument1 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.COMPARE_B, order) || "0"
+			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.COMPARE_A, order) || "0"
+			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.COMPARE_B, order) || "0"
 			return [`${argument0} ${operator} ${argument1}`, order]
 		}
 	},
 
-	[LOGIC_BLOCK_TYPES.OPERATION]: {
+	[MATH_BLOCK_TYPES.OPERATION]: {
 		definition: {
 			init: function(this: Blockly.Block) {
-				this.appendValueInput(LOGIC_FIELD_VALUES.OPERATION_A)
+				this.appendValueInput(MATH_FIELD_VALUES.OPERATION_A)
 					.setCheck("Boolean")
 
 				this.appendDummyInput()
 					.appendField(new Blockly.FieldDropdown([
 						["and", "AND"],
 						["or", "OR"]
-					]), LOGIC_FIELD_VALUES.OPERATION_OP)
+					]), MATH_FIELD_VALUES.OPERATION_OP)
 
-				this.appendValueInput(LOGIC_FIELD_VALUES.OPERATION_B)
+				this.appendValueInput(MATH_FIELD_VALUES.OPERATION_B)
 					.setCheck("Boolean")
 
 				this.setOutput(true, "Boolean")
@@ -69,18 +69,18 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const operator = block.getFieldValue(LOGIC_FIELD_VALUES.OPERATION_OP) === "AND" ? "&&" : "||"
+			const operator = block.getFieldValue(MATH_FIELD_VALUES.OPERATION_OP) === "AND" ? "&&" : "||"
 			const order = operator === "&&" ? Order.LOGICAL_AND : Order.LOGICAL_OR
-			const argument0 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.OPERATION_A, order) || "false"
-			const argument1 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.OPERATION_B, order) || "false"
+			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_A, order) || "false"
+			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_B, order) || "false"
 			return [`${argument0} ${operator} ${argument1}`, order]
 		}
 	},
 
-	[LOGIC_BLOCK_TYPES.NEGATE]: {
+	[MATH_BLOCK_TYPES.NEGATE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
-				this.appendValueInput(LOGIC_FIELD_VALUES.NEGATE_BOOL)
+				this.appendValueInput(MATH_FIELD_VALUES.NEGATE_BOOL)
 					.setCheck("Boolean")
 					.appendField("not")
 
@@ -90,31 +90,31 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const argument0 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.NEGATE_BOOL, Order.LOGICAL_NOT) || "false"
+			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.NEGATE_BOOL, Order.LOGICAL_NOT) || "false"
 			return [`!${argument0}`, Order.LOGICAL_NOT]
 		}
 	},
 
-	[LOGIC_BLOCK_TYPES.NUMBER]: {
+	[MATH_BLOCK_TYPES.NUMBER]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
-					.appendField(new Blockly.FieldNumber(0), LOGIC_FIELD_VALUES.NUMBER_NUM)
+					.appendField(new Blockly.FieldNumber(0), MATH_FIELD_VALUES.NUMBER_NUM)
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("A number value")
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const code = String(Number(block.getFieldValue(LOGIC_FIELD_VALUES.NUMBER_NUM)))
+			const code = String(Number(block.getFieldValue(MATH_FIELD_VALUES.NUMBER_NUM)))
 			return [code, Order.ATOMIC]
 		}
 	},
 
-	[LOGIC_BLOCK_TYPES.ARITHMETIC]: {
+	[MATH_BLOCK_TYPES.ARITHMETIC]: {
 		definition: {
 			init: function(this: Blockly.Block) {
-				this.appendValueInput(LOGIC_FIELD_VALUES.ARITHMETIC_A)
+				this.appendValueInput(MATH_FIELD_VALUES.ARITHMETIC_A)
 					.setCheck("Number")
 
 				this.appendDummyInput()
@@ -124,9 +124,9 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 						["×", "MULTIPLY"],
 						["÷", "DIVIDE"],
 						["^", "POWER"]
-					]), LOGIC_FIELD_VALUES.ARITHMETIC_OP)
+					]), MATH_FIELD_VALUES.ARITHMETIC_OP)
 
-				this.appendValueInput(LOGIC_FIELD_VALUES.ARITHMETIC_B)
+				this.appendValueInput(MATH_FIELD_VALUES.ARITHMETIC_B)
 					.setCheck("Number")
 
 				this.setOutput(true, "Number")
@@ -142,11 +142,11 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 				"DIVIDE": ["/", Order.MULTIPLICATION],
 				"POWER": ["pow", Order.FUNCTION_CALL]
 			}
-			const tuple = OPERATORS[block.getFieldValue(LOGIC_FIELD_VALUES.ARITHMETIC_OP)]
+			const tuple = OPERATORS[block.getFieldValue(MATH_FIELD_VALUES.ARITHMETIC_OP)]
 			const operator = tuple[0]
 			const order = tuple[1]
-			const argument0 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.ARITHMETIC_A, order) || "0"
-			const argument1 = cppGenerator.valueToCode(block, LOGIC_FIELD_VALUES.ARITHMETIC_B, order) || "0"
+			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_A, order) || "0"
+			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_B, order) || "0"
 
 			if (operator === "pow") {
 				return [`pow(${argument0}, ${argument1})`, Order.FUNCTION_CALL]
@@ -154,7 +154,7 @@ export const mathBlocks: Record<MathBlockNames, CustomBlock> = {
 			return [`${argument0} ${operator} ${argument1}`, order]
 		}
 	},
-	[LOGIC_BLOCK_TYPES.MATH_SINGLE]: {
+	[MATH_BLOCK_TYPES.MATH_SINGLE]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				const OPERATORS: [string, string][] = [

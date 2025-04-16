@@ -5,9 +5,9 @@ import { Order } from "../order"
 import { cppGenerator } from "../../cpp/cpp-generator"
 import { motorsCategoryColour } from "../../constants"
 import { SENSOR_TYPES, LeftRightSensorType } from "../block-types/sensor-block-types"
-import { MotorBlockNames, MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES } from "../block-types/motor-block-types"
+import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES } from "../block-types/motor-block-types"
 
-export const motorsBlocks: Record<MotorBlockNames, CustomBlock> = {
+export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED]: {
 		definition: {
 			init: function(this: Blockly.Block) {

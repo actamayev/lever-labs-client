@@ -1,18 +1,19 @@
 import { baseCategory } from "./base-category"
 import { logicCategoryColour } from "../../constants"
+import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../block-types/logic-block-types"
 
 const variableCategory: CustomCategoryInfo = {
 	...baseCategory,
 	name: "Variables",
 	colour: logicCategoryColour,
 	contents: [
-		{ kind: "block", type: "variable_declare" },
-		{ kind: "block", type: "variable_declare_int" },
-		{ kind: "block", type: "variable_declare_bool" },
-		{ kind: "block", type: "variable_assign" },
-		{ kind: "block", type: "variable_get" },
-		{ kind: "block", type: "variable_get_int" },
-		{ kind: "block", type: "variable_get_bool" }
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_INT },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_BOOL },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_ASSIGN },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_INT },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_BOOL }
 	]
 }
 
@@ -21,10 +22,10 @@ const conditionalsCategory: CustomCategoryInfo = {
 	name: "Conditionals",
 	colour: logicCategoryColour,
 	contents: [
-		{ kind: "block", type: "controls_if" },
-		{ kind: "block", type: "controls_if_else" },
-		{ kind: "block", type: "controls_if_elseif" },
-		{ kind: "block", type: "controls_if_2elseif" },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSE },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE },
 	]
 }
 
@@ -33,12 +34,12 @@ const mathCategory: CustomCategoryInfo = {
 	name: "Math",
 	colour: logicCategoryColour,
 	contents: [
-		{ kind: "block", type: "logic_compare" },
-		{ kind: "block", type: "logic_operation" },
-		{ kind: "block", type: "logic_negate" },
-		{ kind: "block", type: "math_number" },
-		{ kind: "block", type: "math_arithmetic" },
-		{ kind: "block", type: "math_single" },
+		{ kind: "block", type: MATH_BLOCK_TYPES.COMPARE },
+		{ kind: "block", type: MATH_BLOCK_TYPES.OPERATION },
+		{ kind: "block", type: MATH_BLOCK_TYPES.NEGATE },
+		{ kind: "block", type: MATH_BLOCK_TYPES.NUMBER },
+		{ kind: "block", type: MATH_BLOCK_TYPES.ARITHMETIC },
+		{ kind: "block", type: MATH_BLOCK_TYPES.MATH_SINGLE },
 	]
 }
 
@@ -47,10 +48,10 @@ const loopsCategory: CustomCategoryInfo = {
 	name: "Loops",
 	colour: logicCategoryColour,
 	contents: [
-		{ kind: "block", type: "controls_whileUntil" },
-		{ kind: "block", type: "controls_repeat_ext" },
-		{ kind: "block", type: "esp32_loop" },
-		{ kind: "block", type: "esp32_delay" },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.WHILE_UNTIL },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.REPEAT },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.ESP32_LOOP },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.ESP32_DELAY },
 	]
 }
 

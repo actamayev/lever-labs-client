@@ -2,23 +2,22 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export const SENSORS_BLOCK_TYPES = {
-	IMU_READ: "imu_read",
-	TOF_READ: "tof_read",
-	IR_READ: "ir_read",
-	COLOR_SENSOR_READ: "color_sensor_read"
-} as const
+export enum SENSORS_BLOCK_TYPES {
+    IMU_READ = "imu_read",
+    TOF_READ = "tof_read",
+    IR_READ = "ir_read",
+    COLOR_SENSOR_READ = "color_sensor_read"
+}
 
-export const SENSORS_FIELD_VALUES = {
-	IMU_READ: "imu_value",
-	TOF_READ: "tof_sensor",
-	IR_READ: "ir_sensor",
-	COLOR_SENSOR_READ: "color_sensor"
-} as const
+export enum SENSORS_FIELD_VALUES {
+    IMU_READ = "imu_value",
+    TOF_READ = "tof_sensor",
+    IR_READ = "ir_sensor",
+    COLOR_SENSOR_READ = "color_sensor"
+}
 
-export type SensorsBlockNames = typeof SENSORS_BLOCK_TYPES[keyof typeof SENSORS_BLOCK_TYPES]
-
-// Custom type for sensor types
+// For these complex nested structures, we'll keep them as objects
+// with const assertions for better compatibility with the existing code
 export const SENSOR_TYPES = {
 	IMU: {
 		Yaw: "getYaw()",
