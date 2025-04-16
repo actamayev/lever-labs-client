@@ -7,6 +7,7 @@ import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
+import { Button } from "../../shadcn/ui/button"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
@@ -16,6 +17,7 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -24,6 +26,7 @@ function SandboxProjectPage() {
 	const params = useParams()
 	const projectUUID = params.projectUUID as ProjectUUID
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
+	useSetSelectedPipFirstPipUseEffect()
 	const sandboxClass = useSandboxContext()
 	const pipClass = usePipContext()
 	const personalInfoClass = usePersonalInfoContext()
@@ -81,11 +84,9 @@ function SandboxProjectPage() {
 			<div className="p-6">
 				<div className="flex items-center mb-6">
 					<Link href="/sandbox">
-						<button
-							className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
-						>
+						<Button className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors">
 							Back
-						</button>
+						</Button>
 					</Link>
 					<h1 className="text-2xl font-bold">
 						{isLoading
@@ -102,55 +103,51 @@ function SandboxProjectPage() {
 			{/* Header with back button, project name, and code toggle */}
 			<SandboxProjectHeader project={project} />
 
-			<div className="flex-1 overflow-y-auto">
-				<main className="flex h-full min-h-0">
-					{/* Blockly component - width changes based on showCode state */}
-					<div
-						className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
-						style={{
-							width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
-						}}
-					>
-						<div className="flex-1 min-h-0">
-							<Suspense>
-								<BlocklyComponent
-									toolboxConfig={toolboxConfig}
-									setCppCode={setCppCode}
-									extraClasses="h-[95%]"
-									initialXml={blocklyXml}
-									onXmlChange={handleXmlChange}
-								/>
-							</Suspense>
-							<BlueTactileButton
-								onClick={() => sendCppToPip(cppCode)}
-								disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-								className="mt-2"
-							>
-								SEND TO {pipClass.selectedPip?.pipName}
-							</BlueTactileButton>
-						</div>
-					</div>
-
-					{/* Tabbed interface with Code and Notes sections */}
-					<div
-						className="flex flex-col min-h-0 overflow-hidden transition-all duration-300 ease-in-out border-swan"
-						style={{
-							width: personalInfoClass.sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
-							borderLeftWidth: personalInfoClass.sandboxNotesOpen ? "2px" : "0",
-							opacity: personalInfoClass.sandboxNotesOpen ? 1 : 0,
-							padding: personalInfoClass.sandboxNotesOpen ? "1rem" : "0",
-							margin: personalInfoClass.sandboxNotesOpen ? "0 1rem 0" : "0",
-							visibility: personalInfoClass.sandboxNotesOpen ? "visible" : "hidden"
-						}}
-					>
-						{personalInfoClass.sandboxNotesOpen && (
-							<ProjectTabs
-								project={project}
-								cppCode={cppCode}
+			<div className="flex flex-1 overflow-hidden">
+				<div
+					className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
+					style={{
+						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
+					}}
+				>
+					<div className="flex-1 min-h-0">
+						<Suspense>
+							<BlocklyComponent
+								toolboxConfig={toolboxConfig}
+								setCppCode={setCppCode}
+								extraClasses="h-[95%]"
+								initialXml={blocklyXml}
+								onXmlChange={handleXmlChange}
 							/>
-						)}
+						</Suspense>
+						<BlueTactileButton
+							onClick={() => sendCppToPip(cppCode)}
+							disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+							className="mt-2"
+						>
+							SEND TO {pipClass.selectedPip?.pipName}
+						</BlueTactileButton>
 					</div>
-				</main>
+				</div>
+
+				{/* Tabbed interface with Code and Notes sections */}
+				<div
+					className="flex flex-col h-full transition-all duration-300 ease-in-out border-swan"
+					style={{
+						width: personalInfoClass.sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
+						borderLeftWidth: personalInfoClass.sandboxNotesOpen ? "2px" : "0",
+						opacity: personalInfoClass.sandboxNotesOpen ? 1 : 0,
+						padding: personalInfoClass.sandboxNotesOpen ? "1rem" : "0",
+						visibility: personalInfoClass.sandboxNotesOpen ? "visible" : "hidden"
+					}}
+				>
+					{personalInfoClass.sandboxNotesOpen && (
+						<ProjectTabs
+							project={project}
+							cppCode={cppCode}
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 	)

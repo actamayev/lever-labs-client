@@ -41,7 +41,9 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 			}
 			pipClass.setIsSendingCppToPip(true)
 
-			const connectToPipResponse = await blueDotApiClient.pipDataService.sendCppToPip(pipClass.selectedPip.pipUUID, cppCode)
+			const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
+				pipClass.selectedPip.pipUUID, cppCode
+			)
 
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")

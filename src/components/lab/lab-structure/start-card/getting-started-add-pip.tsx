@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import { Bot, PlusCircle } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import CustomTooltip from "../../../custom-tooltip"
@@ -10,16 +10,13 @@ import PipButtonTooltip from "../../../pip-button-tooltip"
 import { usePipContext } from "../../../../contexts/pip-context"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip"
+import useSetSelectedPipFirstPipUseEffect from "../../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 // Simplified PipStatus component specifically for the card
 function GettingStartedAddPip() {
 	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
-
-	useEffect(() => {
-		pipClass.setSelectedPipToFirstPip()
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pipClass.pipData.length])
+	useSetSelectedPipFirstPipUseEffect()
 
 	const onClick = useCallback(() => {
 		if (!isNull(pipClass.selectedPip)) return

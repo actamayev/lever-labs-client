@@ -3,7 +3,6 @@
 import * as Blockly from "blockly"
 import { Order } from "../order"
 import {
-	SensorsBlockNames,
 	SENSORS_BLOCK_TYPES,
 	SENSORS_FIELD_VALUES,
 	SENSOR_TYPES,
@@ -11,9 +10,9 @@ import {
 	LeftRightSensorType,
 	IRSensorType
 } from "../block-types/sensor-block-types"
-import { sensorsCategory } from "../toolbox-config"
+import { sensorsCategoryColour } from "../../constants"
 
-export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
+export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {
@@ -28,7 +27,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 						SENSORS_FIELD_VALUES.IMU_READ
 					)
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from 9-axis IMU sensor")
 			}
 		},
@@ -52,7 +51,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 					)
 					.appendField("ToF sensor")
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read distance in mm from Time of Flight sensor")
 			}
 		},
@@ -75,7 +74,7 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 						SENSORS_FIELD_VALUES.IR_READ
 					)
 				this.setOutput(true, "Number")
-				this.setColour(sensorsCategory.colour)
+				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from infrared sensor")
 			}
 		},
@@ -83,5 +82,20 @@ export const sensorsBlocks: Record<SensorsBlockNames, CustomBlock> = {
 			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.IR_READ) as IRSensorType
 			return [`readIR(IR_${sensor})`, Order.FUNCTION_CALL]
 		}
-	}
+	},
+	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Read Color Sensor")
+				this.setOutput(true, "String")
+				this.setColour(sensorsCategoryColour)
+				this.setTooltip("Read value from color sensor")
+			}
+		},
+		generator: (block: Blockly.Block): [string, number] => {
+			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
+			return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
+		}
+	},
 }

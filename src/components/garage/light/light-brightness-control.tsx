@@ -1,3 +1,5 @@
+"use client"
+
 import clamp from "lodash-es/clamp"
 import { observer } from "mobx-react"
 import { rgbaToHsva } from "@uiw/color-convert"

@@ -1,104 +1,79 @@
 "use client"
 
 import * as Blockly from "blockly"
-
-// Define the Logic category (doesn't use CustomCategoryInfo because these types are straight from blockly)
-export const logicCategory: CustomCategoryInfo = {
-	kind: "category",
-	name: "Logic",
-	colour: 30,
-	id: undefined,
-	categorystyle: undefined,
-	cssconfig: undefined,
-	hidden: undefined,
-	contents: [
-		{ kind: "block", type: "controls_if" },
-		{ kind: "block", type: "controls_if_else" },
-		{ kind: "block", type: "controls_if_elseif" },
-		{ kind: "block", type: "controls_if_2elseif" },
-		{ kind: "block", type: "logic_compare" },
-		{ kind: "block", type: "logic_operation" },
-		{ kind: "block", type: "logic_negate" },
-		{ kind: "block", type: "math_number" },
-		{ kind: "block", type: "math_arithmetic" },
-		{ kind: "block", type: "math_single" },
-		{ kind: "block", type: "controls_whileUntil" },
-		{ kind: "block", type: "controls_repeat_ext" },
-	]
-}
-
-// Define the Sensors category
-export const sensorsCategory: CustomCategoryInfo = {
-	kind: "category",
-	name: "Sensors",
-	colour: 180,
-	id: undefined,
-	categorystyle: undefined,
-	cssconfig: undefined,
-	hidden: undefined,
-	contents: [
-		{ kind: "block", type: "imu_read" },
-		{ kind: "block", type: "tof_read" },
-		{ kind: "block", type: "ir_read" }
-	]
-}
+import { buttonsCategoryColour, ledCategoryColour, motorsCategoryColour, screenCategoryColour, speakerCategoryColour } from "../constants"
+import { baseCategory } from "./categories/base-category"
+import { logicCategory } from "./categories/logic-category"
+import { sensorsCategory } from "./categories/sensors-category"
+import { MOTOR_BLOCK_TYPES } from "./block-types/motor-block-types"
+import { LED_BLOCK_TYPES } from "./block-types/led-block-types"
 
 // Define the Motors category
-export const motorsCategory: CustomCategoryInfo = {
-	kind: "category",
+const motorsCategory: CustomCategoryInfo = {
+	...baseCategory,
 	name: "Motors",
-	colour: 120,
-	id: undefined,
-	categorystyle: undefined,
-	cssconfig: undefined,
-	hidden: undefined,
+	colour: motorsCategoryColour,
 	contents: [
-		{ kind: "block", type: "motor_set_speed" },
-		{ kind: "block", type: "motors_stop" },
-		{ kind: "block", type: "motors_tank_drive" },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_STOP },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE },
 	]
 }
 
-// Define the Pip categorye
-export const pipCategory: CustomCategoryInfo = {
-	kind: "category",
-	name: "Pip",
-	colour: 218,
-	id: undefined,
-	categorystyle: undefined,
-	cssconfig: undefined,
-	hidden: undefined,
+const ledCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "LED",
+	colour: ledCategoryColour,
 	contents: [
-		{ kind: "block", type: "esp32_led_control" },
-		{ kind: "block", type: "esp32_delay" },
-		{ kind: "block", type: "esp32_loop" }
+		{ kind: "block", type: LED_BLOCK_TYPES.ESP32_LED_CONTROL }
 	]
 }
 
-// Combine all categories into the toolbox configuration
+const screenCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Screen",
+	colour: screenCategoryColour,
+	contents: [
+	]
+}
+
+const speakerCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Speaker",
+	colour: speakerCategoryColour,
+	contents: []
+}
+
+const buttonsCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Buttons",
+	colour: buttonsCategoryColour,
+	contents: []
+}
+
+// Then update the toolboxConfig object to include the variables category:
 export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
 		logicCategory,
 		sensorsCategory,
 		motorsCategory,
-		pipCategory
+		ledCategory,
+		screenCategory,
+		speakerCategory,
+		buttonsCategory
 	]
 }
 
 export function createCustomCategory(
 	name: BlocklyCategoryName,
-	colour: BlocklyCategoryColours,
+	colour: HexColor,
 	blocks: BlockNames[]
 ): CustomCategoryInfo {
 	return {
-		kind: "category",
+		...baseCategory,
 		name,
 		colour,
-		id: undefined,
-		categorystyle: undefined,
-		cssconfig: undefined,
-		hidden: undefined,
 		contents: blocks.map(blockType => ({
 			kind: "block",
 			type: blockType

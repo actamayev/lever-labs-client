@@ -1,19 +1,17 @@
 "use client"
 
-import { pipBlocks } from "./pip-blocks"
-import { logicBlocks } from "./logic-blocks"
+import { ledBlocks } from "./led-blocks"
+import { logicBlocks } from "./logic/logic-blocks"
 import { motorsBlocks } from "./motors-blocks"
 import { sensorsBlocks } from "./sensor-blocks"
 
 export default function createAllBlocks (): CustomBlocks {
-	const customBlocks: CustomBlocks = {
+	return {
 		kinds: {
-			...motorsBlocks,
+			...logicBlocks,
 			...sensorsBlocks,
-			...pipBlocks,
-			...logicBlocks
+			...motorsBlocks,
+			...ledBlocks,
 		}
 	}
-
-	return customBlocks
 }

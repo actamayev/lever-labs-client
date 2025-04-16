@@ -3,7 +3,7 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
-export default class SandboxhDataService {
+export default class SandboxDataService {
 	private readonly pathHeader: EndpointHeaders = "/sandbox"
 
 	constructor(private readonly httpClient: BlueDotHttpClient) {
@@ -54,6 +54,12 @@ export default class SandboxhDataService {
 	async deleteSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			`${this.pathHeader}/delete-sandbox-project/${projectUUID}`
+		)
+	}
+
+	async sendSandboxCodeToPip(pipUUID: PipUUID, cppCode: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/send-sandbox-code-to-pip/`, { pipUUID, cppCode }
 		)
 	}
 }
