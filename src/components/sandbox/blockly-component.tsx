@@ -32,7 +32,7 @@ function BlocklyComponent(props: Props) {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const initializeBlocks = useInitializeBlocks()
-	const [isFirstRender, setIsFirstRender] = useState(true)
+	const [isWorkspaceCentered, setIsWorkspaceCentered] = useState(false)
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
@@ -41,13 +41,14 @@ function BlocklyComponent(props: Props) {
 	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		const metrics = workspace.getMetrics()
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (!metrics) return
+		if (isWorkspaceCentered) return
 
 		const x = (metrics.viewWidth / 2) - (metrics.contentWidth / 2)
 		const y = (metrics.viewHeight / 2) - (metrics.contentHeight / 2)
 
 		workspace.scroll(x, y)
-	}, [])
+		setIsWorkspaceCentered(true)
+	}, [isWorkspaceCentered])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
@@ -63,12 +64,8 @@ function BlocklyComponent(props: Props) {
 			onXmlChange(newXml)
 		}
 
-		// Center workspace only on first render
-		if (isFirstRender) {
-			centerWorkspace(workspace)
-			setIsFirstRender(false)
-		}
-	}, [setCppCode, onXmlChange, isFirstRender, centerWorkspace])
+		centerWorkspace(workspace)
+	}, [setCppCode, onXmlChange, centerWorkspace])
 
 	useEffect(() => {
 		if (!containerRef.current) return
