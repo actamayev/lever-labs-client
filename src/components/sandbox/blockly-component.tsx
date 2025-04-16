@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
@@ -31,8 +31,8 @@ function BlocklyComponent(props: Props) {
 	const isDarkMode = defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	const isFirstRender = useRef(true)
 	const initializeBlocks = useInitializeBlocks()
+	const [isFirstRender, setIsFirstRender] = useState(true)
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
@@ -64,11 +64,11 @@ function BlocklyComponent(props: Props) {
 		}
 
 		// Center workspace only on first render
-		if (isFirstRender.current) {
+		if (isFirstRender) {
 			centerWorkspace(workspace)
-			isFirstRender.current = false
+			setIsFirstRender(false)
 		}
-	}, [setCppCode, centerWorkspace, onXmlChange])
+	}, [setCppCode, onXmlChange, isFirstRender, centerWorkspace])
 
 	useEffect(() => {
 		if (!containerRef.current) return
