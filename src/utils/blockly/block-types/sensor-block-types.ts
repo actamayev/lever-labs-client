@@ -29,6 +29,7 @@ export const SENSOR_TYPES = {
 		"Acceleration Magnitude": "getAccelMagnitude()",
 		"X Rotation Rate": "getXRotationRate()",
 		"Y Rotation Rate": "getYRotationRate()",
+		"Z Rotation Rate": "getZRotationRate()",
 		"Magnetic Field X": "getMagneticFieldX()",
 		"Magnetic Field Y": "getMagneticFieldY()",
 		"Magnetic Field Z": "getMagneticFieldZ()",
