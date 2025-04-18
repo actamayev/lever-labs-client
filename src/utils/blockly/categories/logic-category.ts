@@ -26,8 +26,8 @@ const conditionalsCategory: CustomCategoryInfo = {
 	contents: [
 		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF },
 		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSE },
-		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE },
-		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE },
+		// { kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE },
+		// { kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE },
 	]
 }
 
