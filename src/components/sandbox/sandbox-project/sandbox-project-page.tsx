@@ -11,13 +11,13 @@ import { Button } from "../../shadcn/ui/button"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
+import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
-import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
+import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -115,18 +115,21 @@ function SandboxProjectPage() {
 							<BlocklyComponent
 								toolboxConfig={toolboxConfig}
 								setCppCode={setCppCode}
-								extraClasses="h-[95%]"
+								extraClasses="h-[90%]"
 								initialXml={blocklyXml}
 								onXmlChange={handleXmlChange}
 							/>
 						</Suspense>
-						<BlueTactileButton
+						<AnimatedStateButton
+							initialText="SEND CODE"
+							changeText="CODE SENT!"
+							isActive={pipClass.isSendingCppToPip}
+							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+							isLoading={pipClass.isSendingCppToPip}
 							onClick={() => sendCppToPip(cppCode)}
-							disabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-							className="mt-2"
-						>
-							SEND TO {pipClass.selectedPip?.pipName}
-						</BlueTactileButton>
+							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
+							loadingText="SENDING CODE..."
+						/>
 					</div>
 				</div>
 

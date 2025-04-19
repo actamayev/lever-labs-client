@@ -6,9 +6,9 @@ import { useCallback, useMemo, useState } from "react"
 import { Input } from "../shadcn/ui/input"
 import isEmailValid from "../../utils/auth/is-email-valid"
 import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"
-import RainbowSubscribeButton from "../shadcn/ui/rainbox-subscribe"
 import useSubscribeForUpdates from "../../hooks/subscribe-for-updates"
 import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
+import AnimatedStateButton from "../magicui/animated-rainbow-button"
 
 export default function SignUpForUpdates() {
 	const [isLoading, setIsLoading] = useState(false)
@@ -64,13 +64,14 @@ export default function SignUpForUpdates() {
 									</FormItem>
 								)}
 							/>
-							<RainbowSubscribeButton
+							<AnimatedStateButton
 								initialText="SUBSCRIBE"
 								changeText="SUBSCRIBED!"
-								isSubscribed={isSubscribed}
+								isActive={isSubscribed}
 								isDisabled={!isEmailValidMemo}
 								isLoading={isLoading}
-								className="duration-0 rounded-xl h-10 w-full md:w-auto"
+								type="submit"
+								className="duration-0"
 							/>
 						</form>
 					</Form>

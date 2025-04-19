@@ -92,6 +92,9 @@ body {
     --color-4: 195 100% 63%;
     --color-5: 90 100% 63%;
   }
+  .theme {
+    --rainbow: rainbow var(--speed, 2s) infinite linear;
+  }
 }
 
 @layer base {
@@ -143,4 +146,15 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   border-radius: 1rem; /* Equivalent to rounded-2xl */
+}
+
+@theme inline {
+  @keyframes rainbow {
+  0% {
+    background-position: 0%;
+    }
+  100% {
+    background-position: 200%;
+    }
+  }
 }
