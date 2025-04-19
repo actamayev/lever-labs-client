@@ -9,13 +9,13 @@ const variableCategory: CustomCategoryInfo = {
 	name: "Variables",
 	colour: logicCategoryColour,
 	contents: [
-		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_FLOAT },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_FLOAT },
 		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_INT },
-		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_BOOL },
-		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_ASSIGN },
-		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET },
 		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_INT },
-		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_BOOL }
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_BOOL },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_GET_BOOL },
+		{ kind: "block", type: VARIABLE_BLOCK_TYPES.VARIABLE_ASSIGN },
 	]
 }
 
@@ -37,11 +37,11 @@ const mathCategory: CustomCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		{ kind: "block", type: MATH_BLOCK_TYPES.COMPARE },
-		{ kind: "block", type: MATH_BLOCK_TYPES.OPERATION },
-		{ kind: "block", type: MATH_BLOCK_TYPES.NEGATE },
+		// { kind: "block", type: MATH_BLOCK_TYPES.OPERATION },
+		// { kind: "block", type: MATH_BLOCK_TYPES.NEGATE },
 		{ kind: "block", type: MATH_BLOCK_TYPES.NUMBER },
-		{ kind: "block", type: MATH_BLOCK_TYPES.ARITHMETIC },
-		{ kind: "block", type: MATH_BLOCK_TYPES.MATH_SINGLE },
+		// { kind: "block", type: MATH_BLOCK_TYPES.ARITHMETIC },
+		// { kind: "block", type: MATH_BLOCK_TYPES.MATH_SINGLE },
 	]
 }
 
