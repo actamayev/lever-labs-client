@@ -11,6 +11,7 @@ import { Button } from "../../shadcn/ui/button"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
+import BlocklyLoadingComponent from "../blockly-loading-component"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
@@ -111,7 +112,7 @@ function SandboxProjectPage() {
 					}}
 				>
 					<div className="flex-1 min-h-0">
-						<Suspense>
+						<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
 							<BlocklyComponent
 								toolboxConfig={toolboxConfig}
 								setCppCode={setCppCode}
