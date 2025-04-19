@@ -42,7 +42,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	const handleClick = () => {
 		if (isDisabled) return
 		setIsClicked(true)
-		setTimeout(() => setIsClicked(false), 300)
+		setTimeout(() => setIsClicked(false), 100)
 		if (onClick) onClick()
 	}
 
