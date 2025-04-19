@@ -12,8 +12,7 @@ import AnimatedStateButton from "../magicui/animated-rainbow-button"
 
 export default function SignUpForUpdates() {
 	const [isLoading, setIsLoading] = useState(false)
-	const [isSubscribed, setIsSubscribed] = useState(false)
-	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading, setIsSubscribed)
+	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading)
 
 	const onSubmit = useCallback(async (values: EmailUpdatesFormValues) => {
 		await subscribeForUpdates(values)
@@ -57,7 +56,6 @@ export default function SignUpForUpdates() {
 												required
 												className="flex-1 h-10 w-full md:w-56 border-eel border-2
 												duration-0 !text-lg md:!text-xl font-light"
-												disabled={isSubscribed || isLoading}
 												{...field}
 											/>
 										</FormControl>
@@ -65,11 +63,8 @@ export default function SignUpForUpdates() {
 								)}
 							/>
 							<AnimatedStateButton
-								initialText="SUBSCRIBE"
-								changeText="SUBSCRIBED!"
-								isActive={isSubscribed}
+								buttonText="SUBSCRIBE"
 								isDisabled={!isEmailValidMemo}
-								isLoading={isLoading}
 								type="submit"
 								className="duration-0"
 							/>

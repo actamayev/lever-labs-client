@@ -37,7 +37,7 @@ const mathCategory: CustomCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		{ kind: "block", type: MATH_BLOCK_TYPES.COMPARE },
-		// { kind: "block", type: MATH_BLOCK_TYPES.OPERATION },
+		{ kind: "block", type: MATH_BLOCK_TYPES.OPERATION },
 		// { kind: "block", type: MATH_BLOCK_TYPES.NEGATE },
 		{ kind: "block", type: MATH_BLOCK_TYPES.NUMBER },
 		// { kind: "block", type: MATH_BLOCK_TYPES.ARITHMETIC },

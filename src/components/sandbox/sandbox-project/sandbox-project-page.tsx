@@ -122,14 +122,10 @@ function SandboxProjectPage() {
 							/>
 						</Suspense>
 						<AnimatedStateButton
-							initialText="SEND CODE"
-							changeText="CODE SENT!"
-							isActive={pipClass.isSendingCppToPip}
+							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-							isLoading={pipClass.isSendingCppToPip}
 							onClick={() => sendCppToPip(cppCode)}
 							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
-							loadingText="SENDING CODE..."
 						/>
 					</div>
 				</div>

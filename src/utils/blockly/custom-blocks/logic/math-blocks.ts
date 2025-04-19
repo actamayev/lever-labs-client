@@ -73,7 +73,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 			const order = operator === "&&" ? Order.LOGICAL_AND : Order.LOGICAL_OR
 			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_A, order) || "false"
 			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_B, order) || "false"
-			return [`${argument0} ${operator} ${argument1}`, order]
+			return [`(${argument0}) ${operator} (${argument1})`, order]
 		}
 	},
 
