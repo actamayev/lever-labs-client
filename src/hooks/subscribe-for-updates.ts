@@ -10,7 +10,6 @@ import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
 export default function useSubscribeForUpdates(
 	isLoading: boolean,
 	setIsLoading: (value: React.SetStateAction<boolean>) => void,
-	setIsSubscribed: (value: React.SetStateAction<boolean>) => void
 ): (
 	values: EmailUpdatesFormValues
 ) => Promise<void> {
@@ -25,7 +24,6 @@ export default function useSubscribeForUpdates(
 			if (!isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
 				throw new Error("Email subscription failed")
 			}
-			setIsSubscribed(true)
 			return toast.superPositive({
 				title: "You're subscribed!",
 				description: "We'll notify you as soon as we have updates. Stay tuned!"
@@ -33,7 +31,6 @@ export default function useSubscribeForUpdates(
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError && isMessageResponse(error.response?.data)) {
-				setIsSubscribed(true)
 				return toast.positive({
 					title: "You're already subscribed",
 					description: "We'll notify you as soon as we have updates. Stay tuned!"
@@ -46,5 +43,5 @@ export default function useSubscribeForUpdates(
 		} finally {
 			setIsLoading(false)
 		}
-	}, [blueDotApiClient.miscDataService, isLoading, setIsLoading, setIsSubscribed, toast])
+	}, [blueDotApiClient.miscDataService, isLoading, setIsLoading, toast])
 }

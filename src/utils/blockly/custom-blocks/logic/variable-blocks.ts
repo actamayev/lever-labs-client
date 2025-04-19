@@ -8,7 +8,7 @@ import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "../../block-types/l
 
 export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// Float variables (original implementation)
-	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE]: {
+	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_FLOAT]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
@@ -56,7 +56,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 			return `${varName} = ${value};\n`
 		}
 	},
-	[VARIABLE_BLOCK_TYPES.VARIABLE_GET]: {
+	[VARIABLE_BLOCK_TYPES.VARIABLE_GET_FLOAT]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
