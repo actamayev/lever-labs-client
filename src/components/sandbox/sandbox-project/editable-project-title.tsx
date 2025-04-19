@@ -36,9 +36,15 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		// When entering edit mode, set the temporary editing state
 		setEditingName(projectName)
 
-		inputRef.current.focus()
-		inputRef.current.select()
-		adjustInputWidth()
+		// Use a small timeout to ensure the input is ready before focusing and selecting
+		// This helps ensure consistent selection behavior, especially with the default name
+		setTimeout(() => {
+			if (inputRef.current) {
+				inputRef.current.focus()
+				inputRef.current.select()
+				adjustInputWidth()
+			}
+		}, 10)
 	}, [isEditing, projectName])
 
 	// Adjust width when editing value changes
