@@ -19,6 +19,7 @@ import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import { EmptySandboxXml } from "../../../utils/constants"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -54,7 +55,7 @@ function SandboxProjectPage() {
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
 	// Current XML state - initialize from project
-	const [blocklyXml, setBlocklyXml] = useState(() => project?.sandboxXml || "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>")
+	const [blocklyXml, setBlocklyXml] = useState(() => project?.sandboxXml || EmptySandboxXml)
 
 	// Update local XML state whenever project changes
 	useEffect(() => {
