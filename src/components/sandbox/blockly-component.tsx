@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
@@ -32,23 +32,24 @@ function BlocklyComponent(props: Props) {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const initializeBlocks = useInitializeBlocks()
-	const [isWorkspaceCentered, setIsWorkspaceCentered] = useState(false)
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		const metrics = workspace.getMetrics()
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (isWorkspaceCentered) return
+		// This follows the native Blockly reset zoom functionality
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1.0)
 
-		const x = (metrics.viewWidth / 2) - (metrics.contentWidth / 2)
-		const y = (metrics.viewHeight / 2) - (metrics.contentHeight / 2)
-
-		workspace.scroll(x, y)
-		setIsWorkspaceCentered(true)
-	}, [isWorkspaceCentered])
+		// After setting the scale, center the workspace
+		if (workspace.getTopBlocks(false).length > 0) {
+			// If there are blocks, zoom to fit them
+			workspace.zoomToFit()
+		} else {
+			// If there are no blocks, center the view
+			workspace.scrollCenter()
+		}
+	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
@@ -63,9 +64,13 @@ function BlocklyComponent(props: Props) {
 		if (onXmlChange) {
 			onXmlChange(newXml)
 		}
+	}, [setCppCode, onXmlChange])
 
-		centerWorkspace(workspace)
-	}, [setCppCode, onXmlChange, centerWorkspace])
+	// Add effect to center workspace after it's initialized and when blocks change
+	useEffect(() => {
+		if (!workspaceRef.current) return
+		centerWorkspace(workspaceRef.current)
+	}, [centerWorkspace, initialXml])
 
 	useEffect(() => {
 		if (!containerRef.current) return
