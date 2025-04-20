@@ -38,17 +38,9 @@ function BlocklyComponent(props: Props) {
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		// This follows the native Blockly reset zoom functionality
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1.0)
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 
-		// After setting the scale, center the workspace
-		if (workspace.getTopBlocks(false).length > 0) {
-			// If there are blocks, zoom to fit them
-			workspace.zoomToFit()
-		} else {
-			// If there are no blocks, center the view
-			workspace.scrollCenter()
-		}
+		workspace.scrollCenter()
 	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
