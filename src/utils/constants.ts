@@ -123,3 +123,5 @@ export const soundMappings: SoundMapping = {
 	"numpad8": "robot noise",
 	"8": "robot noise",
 }
+
+export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"

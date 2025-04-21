@@ -10,6 +10,7 @@ import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+import { EmptySandboxXml } from "../../utils/constants"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -24,7 +25,7 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		setCppCode,
 		extraClasses = "h-1/2",
-		initialXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>",
+		initialXml = EmptySandboxXml,
 		onXmlChange
 	} = props
 	const defaultSiteTheme = useDefaultSiteTheme()
@@ -32,23 +33,18 @@ function BlocklyComponent(props: Props) {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const initializeBlocks = useInitializeBlocks()
-	const [isWorkspaceCentered, setIsWorkspaceCentered] = useState(false)
+	const [isCentered, setIsCentered] = useState(false)
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		const metrics = workspace.getMetrics()
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (isWorkspaceCentered) return
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 
-		const x = (metrics.viewWidth / 2) - (metrics.contentWidth / 2)
-		const y = (metrics.viewHeight / 2) - (metrics.contentHeight / 2)
-
-		workspace.scroll(x, y)
-		setIsWorkspaceCentered(true)
-	}, [isWorkspaceCentered])
+		workspace.scrollCenter()
+		setIsCentered(true)
+	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
@@ -63,9 +59,13 @@ function BlocklyComponent(props: Props) {
 		if (onXmlChange) {
 			onXmlChange(newXml)
 		}
+	}, [setCppCode, onXmlChange])
 
-		centerWorkspace(workspace)
-	}, [setCppCode, onXmlChange, centerWorkspace])
+	// Add effect to center workspace after it's initialized and when blocks change
+	useEffect(() => {
+		if (!workspaceRef.current || isCentered) return
+		centerWorkspace(workspaceRef.current)
+	}, [centerWorkspace, initialXml, isCentered])
 
 	useEffect(() => {
 		if (!containerRef.current) return
