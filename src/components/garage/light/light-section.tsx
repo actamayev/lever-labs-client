@@ -12,8 +12,8 @@ function LightSection() {
 	useSetDefaultColorsUseEffect()
 
 	return (
-		<div className="h-1/3 overflow-hidden">
-			<div className="w-full grid grid-cols-3 gap-2">
+		<div className="h-1/3 overflow-hidden border-b border-r-2 rounded-br-3xl">
+			<div className="w-full grid grid-cols-3 gap-2 py-5">
 				<div className="ml-[18px]">
 					<ColorPicker />
 				</div>

@@ -14,7 +14,7 @@ function DrivingControls() {
 	const garageClass = useGarageContext()
 
 	return (
-		<div className="flex flex-row items-center justify-between gap-8 border-t-2 border-l-2 p-4 rounded-tl-xl border-hare">
+		<div className="flex flex-row items-center justify-between gap-8">
 			<div className="grid grid-cols-3 gap-[21px]">
 				{/* Top row - Headlights button, Up button, Horn button */}
 				<div className="col-start-1">
