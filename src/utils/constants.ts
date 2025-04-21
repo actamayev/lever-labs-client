@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import rgbToBlocklyColor from "./blockly/rgb-to-blocky"
 
 export const bentoIconSize = 40
@@ -125,3 +126,4 @@ export const soundMappings: SoundMapping = {
 }
 
 export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
+export const WORKBENCH_ROUNDING_RADIUS = "35px"

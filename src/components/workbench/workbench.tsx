@@ -1,5 +1,6 @@
 "use client"
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import WorkbenchCard from "./workbench-card"
 import VolumeIcon from "./volume/volume-icon"
@@ -7,7 +8,7 @@ import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import DrivingControls from "../garage/driving-and-sounds/driving/driving-controls"
-import { usePathname } from "next/navigation"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
 
 // eslint-disable-next-line max-lines-per-function
 function Workbench() {
@@ -46,13 +47,14 @@ function Workbench() {
 		<div className="w-[37.5%] z-20" ref={containerRef}>
 			{/* Top section with icons and workbench card - 1/4 height */}
 			<div
-				className="fixed border-l border-b rounded-bl-3xl"
+				className="fixed border-l border-b"
 				style={{
 					width: fixedWidth + "px",
 					top: "0",
 					height: `${topSectionHeight}px`,
 					maxHeight: `${topSectionHeight}px`,
-					overflowY: "auto"
+					overflowY: "auto",
+					borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 				}}
 			>
 				<div
@@ -77,13 +79,15 @@ function Workbench() {
 
 			{/* Middle section - remaining space */}
 			<div
-				className="fixed border-t border-l border-b rounded-tl-3xl rounded-bl-3xl"
+				className="fixed border-t border-l border-b"
 				style={{
 					width: fixedWidth + "px",
 					top: `${middleSectionTop}px`,
 					height: `${middleSectionHeight}px`,
 					maxHeight: `${middleSectionHeight}px`,
-					overflowY: "auto"
+					overflowY: "auto",
+					borderTopLeftRadius: WORKBENCH_ROUNDING_RADIUS,
+					borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 				}}
 			>
 				<div className="flex items-center justify-center h-full">
@@ -97,13 +101,14 @@ function Workbench() {
 			{/* Bottom section with driving controls - only show on garage page - 1/3 height */}
 			{isGaragePage && (
 				<div
-					className="fixed rounded-tl-3xl border-l border-t"
+					className="fixed border-l border-t p-5"
 					style={{
 						width: fixedWidth + "px",
 						top: `${bottomSectionTop}px`,
 						height: `${bottomSectionHeight}px`,
 						maxHeight: `${bottomSectionHeight}px`,
-						overflowY: "auto"
+						overflowY: "auto",
+						borderTopLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 					}}
 				>
 					<div className="flex items-center justify-center h-full">
