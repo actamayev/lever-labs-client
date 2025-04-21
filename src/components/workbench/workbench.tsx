@@ -9,6 +9,7 @@ import { useWorkbenchContext } from "../../contexts/workbench-context"
 import DrivingControls from "../garage/driving-and-sounds/driving/driving-controls"
 import { usePathname } from "next/navigation"
 
+// eslint-disable-next-line max-lines-per-function
 function Workbench() {
 	const workbenchClass = useWorkbenchContext()
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -32,12 +33,30 @@ function Workbench() {
 		return () => window.removeEventListener("resize", updateDimensions)
 	}, [])
 
+	// Calculate section heights
+	const topSectionHeight = windowHeight * 0.25  // 1/4 of screen height
+	const bottomSectionHeight = windowHeight * 0.33  // 1/3 of screen height
+	const middleSectionHeight = windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
+
+	// Calculate positions
+	const middleSectionTop = topSectionHeight
+	const bottomSectionTop = topSectionHeight + middleSectionHeight
+
 	return (
 		<div className="w-[37.5%] z-20" ref={containerRef}>
-			{/* Top section with icons and workbench card */}
-			<div className="fixed top-11 rounded-xl" style={{ width: fixedWidth + "px" }}>
+			{/* Top section with icons and workbench card - 1/4 height */}
+			<div
+				className="fixed rounded-xl"
+				style={{
+					width: fixedWidth + "px",
+					top: "0",
+					height: `${topSectionHeight}px`,
+					maxHeight: `${topSectionHeight}px`,
+					overflowY: "auto"
+				}}
+			>
 				<div
-					className="relative"
+					className="relative p-3"
 					onMouseLeave={() => {
 						// Only close the card if we're not hovering over it
 						if (!workbenchClass.hoveringOverWorkbenchCard) {
@@ -56,27 +75,39 @@ function Workbench() {
 				</div>
 			</div>
 
-			{/* Bottom section with driving controls - only show on garage page */}
-			{isGaragePage && (
-				<div>
-					<div className="border-t border-l border-b rounded-bl-3xl rounded-tl-3xl">
-						<div className="flex items-center justify-center h-full">
-							Test
-						</div>
+			{/* Middle section - remaining space */}
+			<div
+				className="fixed border-t border-l border-b rounded-tl-3xl rounded-bl-3xl"
+				style={{
+					width: fixedWidth + "px",
+					top: `${middleSectionTop}px`,
+					height: `${middleSectionHeight}px`,
+					maxHeight: `${middleSectionHeight}px`,
+					overflowY: "auto"
+				}}
+			>
+				<div className="flex items-center justify-center h-full">
+					{/* Middle section content goes here */}
+					<div className="text-center p-4">
+						<h3 className="text-xl text-gray-500">Workbench Middle Section</h3>
 					</div>
-					<div
-						className="fixed rounded-tl-3xl border-l border-t"
-						style={{
-							width: fixedWidth + "px",
-							bottom: "0rem",
-							height: `${windowHeight / 3}px`,
-							maxHeight: `${windowHeight / 3}px`,
-							overflowY: "auto"
-						}}
-					>
-						<div className="flex items-center justify-center h-full">
-							<DrivingControls />
-						</div>
+				</div>
+			</div>
+
+			{/* Bottom section with driving controls - only show on garage page - 1/3 height */}
+			{isGaragePage && (
+				<div
+					className="fixed rounded-tl-3xl border-l border-t"
+					style={{
+						width: fixedWidth + "px",
+						top: `${bottomSectionTop}px`,
+						height: `${bottomSectionHeight}px`,
+						maxHeight: `${bottomSectionHeight}px`,
+						overflowY: "auto"
+					}}
+				>
+					<div className="flex items-center justify-center h-full">
+						<DrivingControls />
 					</div>
 				</div>
 			)}
