@@ -58,10 +58,10 @@ function TheSandboxPage() {
 	const filteredStarredProjects = filterProjects(starredProjects)
 
 	return (
-		<div className="h-screen overflow-y-auto relative">
+		<div className="h-screen relative">
 			{/* Fixed search bar - width limited to match main content */}
 			<div className="sticky top-0 z-10 bg-standardBackground py-3 pl-[20px]">
-				<div className="w-full lg:w-[57%] xl:w-[71%] border-b-2 border-swan pb-3">
+				<div className="w-[67.5%] border-b-2 border-swan pb-3">
 					<div className="relative">
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<Search className="h-5 w-5 text-wolf" />
@@ -79,9 +79,9 @@ function TheSandboxPage() {
 			</div>
 
 			{/* Two-column layout container with space between */}
-			<div className="flex flex-row h-screen overflow-hidden relative w-full space-x-[45px] pl-[20px] pr-[45px] pt-[25px]">
+			<div className="flex flex-row overflow-hidden relative w-full">
 				{/* Main content column */}
-				<div className="w-full lg:w-3/5 xl:w-3/4 overflow-y-auto pr-6">
+				<div className="w-full lg:w-3/5 xl:w-3/4 overflow-y-auto pr-6" style={{ maxHeight: "calc(100vh - 80px)" }}>
 					<BlueTactileButton
 						className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
 						onClick={handleCreateProject}
@@ -90,7 +90,7 @@ function TheSandboxPage() {
 					>
 						<div className="flex flex-row items-center justify-center">
 							<PlusCircle className="!size-8 mr-2"/>
-							NEW PROJECT
+              NEW PROJECT
 						</div>
 					</BlueTactileButton>
 
@@ -121,7 +121,7 @@ function TheSandboxPage() {
 							/>
 							<h2 className="text-3xl font-semibold">All Projects</h2>
 							{searchQuery && <span className="ml-2 text-gray-500">
-								({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
+                ({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
 							</span>}
 						</div>
 						{filteredAllProjects.length > 0 ? (
@@ -143,7 +143,7 @@ function TheSandboxPage() {
 												onClick={handleCreateProject}
 												disabled={isCreating}
 											>
-												Create your first project
+                        Create your first project
 											</button>
 										</>
 									)}
@@ -160,8 +160,9 @@ function TheSandboxPage() {
 					)}
 				</div>
 
-				<WorkbenchSeparator />
-				{/* Workbench column */}
+				{/* <WorkbenchSeparator /> */}
+
+				{/* Updated Workbench with three sections */}
 				<Workbench />
 			</div>
 		</div>

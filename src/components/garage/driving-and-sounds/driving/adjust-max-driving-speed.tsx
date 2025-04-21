@@ -29,23 +29,32 @@ function AdjustMaxDrivingSpeed() {
 			onKeyDown={handleKeyDown}
 			tabIndex={0}
 		>
-			<Slider
-				defaultValue={[garageClass.motorThrottlePercent]}
-				max={100}
-				step={1}
-				onValueChange={handleValueChange}
-				className="h-full duration-0"
-				value={[garageClass.motorThrottlePercent]}
-				onKeyDown={handleKeyDown}
-				orientation="vertical"
-				size={80}
-				roundLevel="rounded-xl"
-				thumbHeight={80 / 3}
-				thumbWidth={80}
-				unFilledTrackColor="bg-blue-100"
-				filledTrackColor="bg-blue-800"
-				thumbBorderColor="border-blue-800"
-			/>
+			<div className="h-full relative">
+				<Slider
+					defaultValue={[garageClass.motorThrottlePercent]}
+					max={100}
+					step={1}
+					onValueChange={handleValueChange}
+					className="h-full duration-0"
+					value={[garageClass.motorThrottlePercent]}
+					onKeyDown={handleKeyDown}
+					orientation="vertical"
+					size={80}
+					roundLevel="rounded-xl"
+					thumbHeight={80 / 3}
+					thumbWidth={80}
+					unFilledTrackColor="bg-blue-100"
+					filledTrackColor="bg-blue-800"
+					thumbBorderColor="border-blue-800"
+					thumbDetails={
+						<>
+							<div className="w-2/3 h-0.5 bg-blue-900 rounded-full mb-1"></div>
+							<div className="w-3/4 h-0.5 bg-blue-900 rounded-full mb-1"></div>
+							<div className="w-2/3 h-0.5 bg-blue-900 rounded-full"></div>
+						</>
+					}
+				/>
+			</div>
 		</div>
 	)
 }

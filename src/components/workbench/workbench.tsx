@@ -46,7 +46,7 @@ function Workbench() {
 		<div className="w-[37.5%] z-20" ref={containerRef}>
 			{/* Top section with icons and workbench card - 1/4 height */}
 			<div
-				className="fixed rounded-xl"
+				className="fixed border-l border-b rounded-bl-3xl"
 				style={{
 					width: fixedWidth + "px",
 					top: "0",
