@@ -7,6 +7,7 @@ import { cn } from "@/lib/shadcn/utils"
 
 interface AnimatedStateButtonProps {
 	buttonText: React.ReactNode;
+	icon?: React.ReactNode; // Changed from LucideIcon to ReactNode
 	isDisabled?: boolean;
 	className?: string;
 	onClick?: () => void;
@@ -15,6 +16,7 @@ interface AnimatedStateButtonProps {
 
 const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	buttonText,
+	icon,
 	isDisabled = false,
 	className = "",
 	onClick,
@@ -42,9 +44,9 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 
 	// Inner content that sits on top of the rainbow border
 	const buttonContentClasses = cn(
-		"absolute inset-[2px] rounded-lg flex items-center justify-center",
+		"absolute inset-[2px] rounded-lg flex items-center justify-center flex-row",
 		// light mode colors
-		"bg-[#121213]",
+		"bg-white",
 		// dark mode colors
 		"dark:bg-white",
 	)
@@ -71,11 +73,11 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 				}
 				
 				.rainbow-animate {
-					animation: rainbowMove 2s infinite linear;
+					animation: rainbowMove 8s infinite linear;
 				}
 				
 				.rainbow-border {
-					animation: rainbowMove 2s infinite linear;
+					animation: rainbowMove 8s infinite linear;
 				}
 			`}</style>
 
@@ -104,13 +106,14 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 					<div className={buttonContentClasses}>
 						<motion.span
 							key="button-text"
-							className="relative block font-semibold"
+							className="relative flex items-center gap-2 font-semibold text-black" // Added flex, items-center, and gap-2
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.1 }}
 						>
 							{buttonText}
+							{icon}
 						</motion.span>
 					</div>
 				</motion.button>

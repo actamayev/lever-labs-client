@@ -10,7 +10,7 @@ export default function SoundsSection() {
 		"monkey",
 		"elephant",
 		"fanfare",
-		"mariachi",
+		"ufo",
 		"countdown",
 		"engine",
 		"robot noise"

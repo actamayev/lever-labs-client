@@ -20,6 +20,7 @@ import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 import { EmptySandboxXml } from "../../../utils/constants"
+import { ArrowUpFromLine } from "lucide-react"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -126,7 +127,8 @@ function SandboxProjectPage() {
 							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							onClick={() => sendCppToPip(cppCode)}
-							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
+							className="ml-auto duration-0 rounded-xl w-1/2 mt-2 h-[10%] text-4xl"
+							icon={<ArrowUpFromLine className="!size-8" strokeWidth={2.5}/>}
 						/>
 					</div>
 				</div>

@@ -6,7 +6,7 @@ import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
 import { CustomFart } from "../../../icons/custom-fart"
 import { CustomEngine } from "../../../icons/custom-engine"
-import { CustomMariachi } from "../../../icons/custom-mariachi"
+import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomElephant } from "../../../icons/custom-elephant"
 import { usePipContext } from "../../../../contexts/pip-context"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
@@ -37,8 +37,8 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			return <CustomElephant className="!size-10" />
 		case "fanfare":
 			return <CustomPartyPopper className="!size-10" />
-		case "mariachi":
-			return <CustomMariachi className="!size-10" />
+		case "ufo":
+			return <CustomUfo className="!size-10" />
 		case "countdown":
 			return <CustomCountdown className="!size-10" />
 		case "robot noise":

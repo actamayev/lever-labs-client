@@ -35,7 +35,7 @@ function Workbench() {
 	}, [])
 
 	// Calculate section heights
-	const topSectionHeight = windowHeight * 0.25  // 1/4 of screen height
+	const topSectionHeight = windowHeight * 0.20  // 1/4 of screen height
 	const bottomSectionHeight = windowHeight * 0.33  // 1/3 of screen height
 	const middleSectionHeight = windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
 

@@ -126,4 +126,4 @@ export const soundMappings: SoundMapping = {
 }
 
 export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
-export const WORKBENCH_ROUNDING_RADIUS = "35px"
+export const WORKBENCH_ROUNDING_RADIUS = "48px"
