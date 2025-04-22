@@ -17,9 +17,9 @@ function SoundsSection() {
 		"robot noise"
 	]
 
+	// 4/22/25 TODO: Make the top button hug the top border and the bottom border hug the bottom border
 	return (
 		<div className="flex flex-row gap-8">
-			{/* <AdjustVolume /> */}
 			<div className="grid grid-cols-4 gap-[21px]">
 				{sounds.map((sound, index) => (
 					<div key={sound}>

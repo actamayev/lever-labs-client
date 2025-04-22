@@ -59,8 +59,8 @@ function TheSandboxPage() {
 	return (
 		<div className="h-screen relative">
 			{/* Fixed search bar - width limited to match main content */}
-			<div className="sticky top-0 z-10 bg-standardBackground py-3 pl-[20px]">
-				<div className="w-[67.5%] border-b-2 border-swan pb-3">
+			<div className="sticky top-0 z-10 bg-standardBackground py-3">
+				<div className="w-[62.5%] border-b-2 border-swan pb-3">
 					<div className="relative">
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<Search className="h-5 w-5 text-wolf" />
