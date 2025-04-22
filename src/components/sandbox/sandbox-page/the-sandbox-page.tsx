@@ -5,14 +5,13 @@ import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
+import Workbench from "../../workbench/workbench"
 import SingleProjectCard from "./single-project-card"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
-import Workbench from "../../workbench/workbench"
-import WorkbenchSeparator from "../../workbench/workbench-separator"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {

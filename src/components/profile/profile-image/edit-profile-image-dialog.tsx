@@ -14,7 +14,6 @@ import {
 	DialogClose
 } from "../../shadcn/ui/dialog"
 import LoadingOval from "../../loading-oval"
-import { Button } from "../../shadcn/ui/button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"

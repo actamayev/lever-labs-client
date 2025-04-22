@@ -20,7 +20,6 @@ import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
 import { EmptySandboxXml } from "../../../utils/constants"
-import { ArrowUpFromLine } from "lucide-react"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
