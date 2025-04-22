@@ -111,7 +111,7 @@ function Workbench() {
 						borderTopLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 					}}
 				>
-					<div className="flex items-center justify-center h-full">
+					<div className="flex flex-col items-center justify-center h-full">
 						<DrivingControls />
 					</div>
 				</div>
