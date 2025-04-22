@@ -8,6 +8,7 @@ import debounce from "lodash-es/debounce"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
+import { EmptySandboxXml } from "../../../utils/constants"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import useSendCppToPip from "../../../hooks/pip/send-cpp-to-pip"
@@ -19,7 +20,6 @@ import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
-import { EmptySandboxXml } from "../../../utils/constants"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -125,9 +125,8 @@ function SandboxProjectPage() {
 						<AnimatedStateButton
 							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-							onClick={() => sendCppToPip(cppCode)}
+							onClick={(event) => sendCppToPip(cppCode, event)}
 							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
-							showConfetti
 						/>
 					</div>
 				</div>
