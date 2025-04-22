@@ -66,7 +66,7 @@ export default function SignUpForUpdates() {
 								buttonText="SUBSCRIBE"
 								isDisabled={!isEmailValidMemo}
 								type="submit"
-								className="duration-0"
+								className="duration-0 w-40"
 							/>
 						</form>
 					</Form>
