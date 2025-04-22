@@ -127,6 +127,7 @@ function SandboxProjectPage() {
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							onClick={() => sendCppToPip(cppCode)}
 							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
+							showConfetti
 						/>
 					</div>
 				</div>

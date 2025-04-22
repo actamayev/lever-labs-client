@@ -1,9 +1,10 @@
 "use client"
 
+import { observer } from "mobx-react"
 import SoundActionButton from "./sound-action-button"
 import useGarageSoundsUseEffect from "../../../../hooks/garage/garage-sounds-use-effect"
 
-export default function SoundsSection() {
+function SoundsSection() {
 	useGarageSoundsUseEffect()
 	const sounds: Sounds[] = [
 		"fart",
@@ -29,3 +30,5 @@ export default function SoundsSection() {
 		</div>
 	)
 }
+
+export default observer(SoundsSection)

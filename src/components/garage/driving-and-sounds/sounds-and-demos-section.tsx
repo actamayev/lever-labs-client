@@ -8,7 +8,7 @@ export default function SoundsAndDemosSection() {
 	return (
 		<div className="h-1/3 flex flex-row overflow-hidden">
 			<div
-				className="w-3/5 flex flex-col items-center justify-center border-t border-r"
+				className="w-3/5 flex flex-col items-center justify-center border-t border-r p-10"
 				style={{ borderTopRightRadius: WORKBENCH_ROUNDING_RADIUS }}
 			>
 				<SoundsSection />

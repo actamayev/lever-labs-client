@@ -2,18 +2,35 @@
 "use client"
 
 import React from "react"
+import confetti, { Shape } from "canvas-confetti"
 import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/shadcn/utils"
 
 interface AnimatedStateButtonProps {
 	buttonText: React.ReactNode;
-	icon?: React.ReactNode; // Changed from LucideIcon to ReactNode
+	icon?: React.ReactNode;
 	isDisabled?: boolean;
 	className?: string;
 	onClick?: () => void;
 	type?: "button" | "submit" | "reset";
+	showConfetti?: boolean; // New prop to control confetti animation
+	confettiOptions?: {
+		origin?: {
+			x?: number;
+			y?: number;
+		};
+		particleCount?: number;
+		spread?: number;
+		colors?: string[];
+		startVelocity?: number;
+		scalar?: number;
+		ticks?: number;
+		shapes?: Shape[];
+		zIndex?: number;
+	};
 }
 
+// eslint-disable-next-line max-lines-per-function
 const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	buttonText,
 	icon,
@@ -21,6 +38,8 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	className = "",
 	onClick,
 	type = "button",
+	showConfetti = false, // Default to false
+	confettiOptions = {}, // Default empty options
 }) => {
 	const rainbowButtonClasses = cn(
 		"group relative inline-flex w-full h-full items-center justify-center rounded-xl border-0 px-8 py-2 font-medium text-primary-foreground transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -53,10 +72,39 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 
 	const [isClicked, setIsClicked] = React.useState(false)
 
-	const handleClick = () => {
+	const fireConfetti = (event: React.MouseEvent<HTMLButtonElement>) => {
+		if (!showConfetti) return
+
+		try {
+			const rect = event.currentTarget.getBoundingClientRect()
+			const x = rect.left + rect.width / 2
+			const y = rect.top + rect.height / 2
+
+			confetti({
+				// Default options
+				particleCount: 100,
+				spread: 70,
+				origin: {
+					x: x / window.innerWidth,
+					y: y / window.innerHeight,
+				},
+				// Override with custom options if provided
+				...confettiOptions
+			})
+		} catch (error) {
+			console.error("Confetti error:", error)
+		}
+	}
+
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (isDisabled) return
 		setIsClicked(true)
 		setTimeout(() => setIsClicked(false), 100)
+
+		// Fire confetti if enabled
+		fireConfetti(event)
+
+		// Call the original onClick handler if provided
 		if (onClick) onClick()
 	}
 
@@ -106,7 +154,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 					<div className={buttonContentClasses}>
 						<motion.span
 							key="button-text"
-							className="relative flex items-center gap-2 font-semibold text-black" // Added flex, items-center, and gap-2
+							className="relative flex items-center gap-2 font-semibold text-black"
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}

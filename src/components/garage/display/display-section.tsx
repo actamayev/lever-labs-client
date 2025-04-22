@@ -8,7 +8,7 @@ export default function DisplaySection() {
 			className="h-1/3 overflow-hidden border-t border-r border-b"
 			style={{
 				borderTopRightRadius: WORKBENCH_ROUNDING_RADIUS,
-				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS,
+				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS
 			}}
 		>
 		</div>
