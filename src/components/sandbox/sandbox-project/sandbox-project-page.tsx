@@ -127,8 +127,7 @@ function SandboxProjectPage() {
 							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							onClick={() => sendCppToPip(cppCode)}
-							className="ml-auto duration-0 rounded-xl w-1/2 mt-2 h-[10%] text-4xl"
-							icon={<ArrowUpFromLine className="!size-8" strokeWidth={2.5}/>}
+							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
 						/>
 					</div>
 				</div>
