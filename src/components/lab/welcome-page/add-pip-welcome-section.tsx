@@ -47,7 +47,6 @@ export default function AddPipWelcomeSection() {
 			<BlueTactileButton
 				onClick={() => navigate("/add-pip")}
 				className="w-full text-xl h-12"
-				shadowHeight={4}
 			>
 				ADD YOUR PIP
 			</BlueTactileButton>

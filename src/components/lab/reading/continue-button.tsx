@@ -24,7 +24,6 @@ function ContinueButton(props: Props) {
 		<BlueTactileButton
 			onClick={clickContinue}
 			className="px-6 !py-5 text-3xl w-full h-16"
-			shadowHeight={4}
 			isPressed={isContinued}
 		>
 			<StepForward className="!w-8 !h-8" />

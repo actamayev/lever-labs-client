@@ -83,14 +83,14 @@ function TheSandboxPage() {
 				{/* Main content column */}
 				<div className="w-full lg:w-3/5 xl:w-3/4 overflow-y-auto pr-6" style={{ maxHeight: "calc(100vh - 80px)" }}>
 					<BlueTactileButton
-						className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
+						className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 mb-10 text-2xl rounded-2xl"
 						onClick={handleCreateProject}
 						disabled={isCreating}
 						size="lg"
 					>
 						<div className="flex flex-row items-center justify-center">
 							<PlusCircle className="!size-8 mr-2"/>
-              NEW PROJECT
+								NEW PROJECT
 						</div>
 					</BlueTactileButton>
 

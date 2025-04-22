@@ -48,14 +48,10 @@ function DrivingActionButton({
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
-			buttonElement.classList.add("bg-blue-300")
-			buttonElement.classList.add("dark:bg-blue-950")
 		} else {
 			// Reset to normal state
 			buttonElement.style.transform = ""
 			buttonElement.style.boxShadow = ""
-			buttonElement.classList.remove("bg-blue-300")
-			buttonElement.classList.remove("dark:bg-blue-950")
 		}
 	}, [isPressed])
 
@@ -101,21 +97,16 @@ function DrivingActionButton({
 		})
 	}
 
-	// Create button styles with proper tactile behavior
-	const getButtonClasses = cn(
-		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
-		"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-		"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
-		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-		isPressed && "!bg-blue-300 dark:!bg-blue-950"
-	)
-
 	return (
 		<TactileButton
 			ref={buttonRef}
-			className={getButtonClasses}
+			className={cn(
+				"duration-150 w-20 h-20 flex items-center justify-center rounded-xl",
+				"bg-blue-100 text-blue-800",
+				"dark:bg-blue-900 dark:text-blue-200",
+				"outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
+			)}
 			shadowColor={shadowColor}
-			shadowHeight={4}
 			onMouseDown={handleButtonDown}
 			onMouseUp={handleButtonUp}
 			onMouseLeave={handleButtonUp}

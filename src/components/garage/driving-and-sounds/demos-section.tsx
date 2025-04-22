@@ -7,7 +7,7 @@ export default function DemosSection() {
 		<div className="h-full flex flex-col items-center justify-center w-full space-y-4">
 			{/* Add your demo content here */}
 			<BlueTactileButton
-				className="w-[80%] h-10 text-2xl"
+				className="w-[80%] h-10 text-2xl duration-150"
 				onClick={() => {
 					alert("Demo button clicked!")
 				}}
@@ -15,7 +15,7 @@ export default function DemosSection() {
 				DEMO LIBRARY
 			</BlueTactileButton>
 			<BlueTactileButton
-				className="w-[80%] h-10 text-2xl"
+				className="w-[80%] h-10 text-2xl duration-150"
 				onClick={() => {
 					alert("Another demo button clicked!")
 				}}
@@ -23,7 +23,7 @@ export default function DemosSection() {
 				SENSOR DATA
 			</BlueTactileButton>
 			<BlueTactileButton
-				className="w-[80%] h-10 text-2xl"
+				className="w-[80%] h-10 text-2xl duration-150"
 				onClick={() => {
 					alert("Yet another demo button clicked!")
 				}}

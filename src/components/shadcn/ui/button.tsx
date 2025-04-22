@@ -23,9 +23,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         tactile: cn(
           "bg-primary text-primary-foreground",
-          "transform transition-all duration-50", // Add a specific duration
+          "transform transition-all duration-500",
           "shadow-[0_2px_0_0_rgb(30,64,175)]",
-          "hover:bg-primary/90",
           "active:translate-y-0.5",
           "active:shadow-[0_0_0_0_rgb(30,64,175)]",
         ),

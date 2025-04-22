@@ -37,11 +37,10 @@ export default function ByBuildersForBuilders() {
 
 					<div className="flex items-center justify-center my-6 sm:my-8">
 						<LandingCTAButton
-							className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl transition-none",
+							className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl",
 								"rounded-xl sm:rounded-2xl border-2 w-full h-10 sm:h-12",
-								"bg-green-500 border-none text-white hover:bg-green-400",
-								"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950")}
-							shadowHeight={2}
+								"bg-green-500 border-none text-white",
+								"dark:bg-green-900 dark:border-green-600 dark:text-green-200")}
 							navigateTo="/mission"
 						>
 							About Blue Dot

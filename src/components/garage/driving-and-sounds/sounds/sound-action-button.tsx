@@ -58,14 +58,14 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
-			buttonElement.classList.add("bg-orange-300")
-			buttonElement.classList.add("dark:bg-orange-950")
+			// buttonElement.classList.add("bg-orange-300")
+			// buttonElement.classList.add("dark:bg-orange-950")
 		} else {
 			// Reset to normal state
 			buttonElement.style.transform = ""
 			buttonElement.style.boxShadow = ""
-			buttonElement.classList.remove("bg-orange-300")
-			buttonElement.classList.remove("dark:bg-orange-950")
+			// buttonElement.classList.remove("bg-orange-300")
+			// buttonElement.classList.remove("dark:bg-orange-950")
 		}
 	}, [garageClass.soundPlaying, sound])
 
@@ -87,22 +87,16 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 		}
 	}
 
-	// Create a class string that prioritizes active state over hover
-	const buttonClasses = cn(
-		"w-20 h-20 flex items-center justify-center transition-none border-2 rounded-xl",
-		"bg-sandboxOrange/20 border-sandboxOrange/40 text-sandboxOrange hover:bg-sandboxOrange/10",
-		"dark:border-[rgb(255,189,153)] dark:bg-sandboxOrange/80 dark:text-orange-200 dark:hover:bg-sandboxOrange/90",
-		"focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-		// Add active classes with !important to override hover
-		garageClass.soundPlaying === sound && "!bg-sandboxOrange/5 dark:!bg-sandboxOrange/95"
-	)
-
 	return (
 		<TactileButton
 			ref={buttonRef}
-			className={buttonClasses}
+			className={cn(
+				"duration-150 w-20 h-20 flex items-center justify-center rounded-xl",
+				"bg-sandboxOrange/20 text-sandboxOrange",
+				"dark:bg-sandboxOrange/80 dark:text-orange-200",
+				"outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
+			)}
 			shadowColor={"rgb(255 189 153)"}
-			shadowHeight={4}
 			onMouseDown={handleButtonDown}
 			onMouseUp={handleButtonUp}
 			onMouseLeave={handleButtonUp}
