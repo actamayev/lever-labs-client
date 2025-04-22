@@ -22,6 +22,10 @@ export default function useSendCppToPip(): (
 		event: React.MouseEvent<HTMLButtonElement>
 	) => {
 		try {
+			fireConfetti(
+				event,
+				({ particleCount: 300, startVelocity: 30 })
+			)
 			if (isNull(pipClass.selectedPip)) {
 				return toast.neutral({
 					title: "You have not connected to a Pip",
@@ -55,7 +59,6 @@ export default function useSendCppToPip(): (
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
-			fireConfetti(event)
 			return toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
 		} catch (error) {
 			console.error(error)
