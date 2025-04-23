@@ -6,7 +6,7 @@ import LabStartCard from "./start-card/lab-start-card"
 import LilypadContainer from "./lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "./create-lilypads-and-ticks"
 import SeeAllLessonIcons from "./see-all-lesson-icons"
-import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activites-use-effect"
+import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activities-use-effect"
 
 interface Section {
 	ref: React.RefObject<HTMLDivElement>

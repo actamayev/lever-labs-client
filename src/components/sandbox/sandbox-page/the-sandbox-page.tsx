@@ -67,9 +67,9 @@ function TheSandboxPage() {
 						</div>
 						<Input
 							type="text"
-							className="block w-1/3 pl-10 pr-10 py-2 !text-2xl border-swan border-2
+							className="block w-1/2 pl-10 pr-10 py-2 !text-2xl border-swan border-2
 							h-12 rounded-2xl focus:ring-0 shadow-none"
-							placeholder="Search projects..."
+							placeholder="Search in Sandbox"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 						/>

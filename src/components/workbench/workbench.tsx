@@ -3,13 +3,13 @@ import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import WorkbenchCard from "./workbench-card"
+import { cn } from "../../lib/shadcn/utils"
 import VolumeIcon from "./volume/volume-icon"
 import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import DrivingControls from "../garage/driving-and-sounds/driving/driving-controls"
-import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
-import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function Workbench() {
