@@ -204,10 +204,7 @@ module.exports = {
 		// eslint-disable-next-line @typescript-eslint/no-require-imports
 		require("tailwindcss-animate"),
 		addVariablesForColors
-	],
-	corePlugins: {
-		overscrollBehavior: true,
-	}
+	]
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
