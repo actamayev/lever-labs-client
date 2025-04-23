@@ -7,13 +7,15 @@ interface Props {
 	children: React.ReactNode
 	extraButtonClasses?: string
 	onMouseEnter: MouseEventHandler<HTMLDivElement> | undefined
-}
+	id?: string // Add this prop
+  }
 
 export default function WorkbenchIconTemplate(props: Props) {
-	const { children, onMouseEnter, extraButtonClasses = "" } = props
+	const { children, onMouseEnter, extraButtonClasses = "", id } = props
 
 	return (
 		<div
+			id={id} // Pass the ID here
 			className={cn(
 				buttonVariants({
 					variant: "ghost",

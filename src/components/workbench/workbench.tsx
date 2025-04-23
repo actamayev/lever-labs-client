@@ -1,7 +1,7 @@
 "use client"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import WorkbenchCard from "./workbench-card"
 import { cn } from "../../lib/shadcn/utils"
 import VolumeIcon from "./volume/volume-icon"
@@ -15,8 +15,6 @@ import DrivingControls from "../garage/driving-and-sounds/driving/driving-contro
 function Workbench() {
 	const workbenchClass = useWorkbenchContext()
 	const containerRef = useRef<HTMLDivElement | null>(null)
-	const [fixedWidth, setFixedWidth] = useState(0)
-	const [windowHeight, setWindowHeight] = useState(0)
 	const pathname = usePathname()
 
 	// Check if we're on the garage page
@@ -25,20 +23,21 @@ function Workbench() {
 	useEffect(() => {
 		const updateDimensions = () => {
 			if (containerRef.current) {
-				setFixedWidth((containerRef.current.offsetWidth))
+				workbenchClass.setFixedWidth((containerRef.current.offsetWidth))
 			}
-			setWindowHeight(window.innerHeight)
+			// console.log(workbenchClass.fixedWidth)
+			workbenchClass.setWindowHeight(window.innerHeight)
 		}
 
 		updateDimensions()
 		window.addEventListener("resize", updateDimensions)
 		return () => window.removeEventListener("resize", updateDimensions)
-	}, [])
+	}, [workbenchClass])
 
 	// Calculate section heights
-	const topSectionHeight = windowHeight / 5  // 1/4 of screen height
-	const bottomSectionHeight = windowHeight / 3  // 1/3 of screen height
-	const middleSectionHeight = windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
+	const topSectionHeight = workbenchClass.windowHeight / 5  // 1/4 of screen height
+	const bottomSectionHeight = workbenchClass.windowHeight / 3  // 1/3 of screen height
+	const middleSectionHeight = workbenchClass.windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
 
 	// Calculate positions
 	const middleSectionTop = topSectionHeight
@@ -50,7 +49,7 @@ function Workbench() {
 			<div
 				className={cn("fixed border-b", isGaragePage ? "border-l" : "border-l-2")}
 				style={{
-					width: fixedWidth + "px",
+					width: workbenchClass.fixedWidth + "px",
 					top: "0",
 					height: `${topSectionHeight}px`,
 					maxHeight: `${topSectionHeight}px`,
@@ -59,7 +58,7 @@ function Workbench() {
 				}}
 			>
 				<div
-					className="relative p-3"
+					className="relative p-3 z-50"
 					onMouseLeave={() => {
 						// Only close the card if we're not hovering over it
 						if (!workbenchClass.hoveringOverWorkbenchCard) {
@@ -72,17 +71,12 @@ function Workbench() {
 						<VolumeIcon />
 						<NetworkIcon />
 					</div>
-					<div className="-mt-0.5">
-						<WorkbenchCard />
-					</div>
 				</div>
 			</div>
-
-			{/* Middle section - remaining space */}
 			<div
 				className={cn("fixed border-t border-b", isGaragePage ? "border-l" : "border-l-2")}
 				style={{
-					width: fixedWidth + "px",
+					width: workbenchClass.fixedWidth + "px",
 					top: `${middleSectionTop}px`,
 					height: `${middleSectionHeight}px`,
 					maxHeight: `${middleSectionHeight}px`,
@@ -102,9 +96,9 @@ function Workbench() {
 			{/* Bottom section with driving controls - only show on garage page - 1/3 height */}
 			{isGaragePage && (
 				<div
-					className="fixed border-l border-t p-5"
+					className="fixed border-l border-t"
 					style={{
-						width: fixedWidth + "px",
+						width: workbenchClass.fixedWidth + "px",
 						top: `${bottomSectionTop}px`,
 						height: `${bottomSectionHeight}px`,
 						maxHeight: `${bottomSectionHeight}px`,
@@ -117,6 +111,7 @@ function Workbench() {
 					</div>
 				</div>
 			)}
+			<WorkbenchCard />
 		</div>
 	)
 }
