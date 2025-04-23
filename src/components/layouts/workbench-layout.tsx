@@ -2,11 +2,9 @@
 
 import { cn } from "../../lib/shadcn/utils"
 import Workbench from "../workbench/workbench"
-import WorkbenchSeparator from "../workbench/workbench-separator"
 
 interface WorkbenchLayoutProps {
 	children: React.ReactNode
-	needsSeparator?: boolean
 	extraChildrenClasses?: string
 	extraParentClasses?: string
 }
@@ -14,7 +12,6 @@ interface WorkbenchLayoutProps {
 export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
 	const {
 		children,
-		needsSeparator = false,
 		extraChildrenClasses = "",
 		extraParentClasses = "flex flex-row overflow-y-auto w-full"
 	} = props
@@ -25,10 +22,6 @@ export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
 			<div className={cn("w-[62.5%]", extraChildrenClasses)}>
 				{children}
 			</div>
-
-			{needsSeparator && (
-				<WorkbenchSeparator />
-			)}
 
 			<Workbench />
 		</div>
