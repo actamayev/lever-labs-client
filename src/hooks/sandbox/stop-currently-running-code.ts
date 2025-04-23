@@ -33,7 +33,6 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 			if (!isEqual(stopScriptResponse.status, 200) || isNonSuccessResponse(stopScriptResponse.data)) {
 				throw new Error("Stop currently running code failed")
 			}
-			return toast.positive({ title: `Stopped currently running code on ${pipClass.selectedPip.pipName || "Pip"}` })
 		} catch (error) {
 			console.error(error)
 			return toast.negative({

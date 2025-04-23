@@ -67,22 +67,22 @@ function SandboxProjectPage() {
 		return () => debouncedSaveProject.cancel()
 	}, [debouncedSaveProject])
 
+	// Loading state - either we're actively retrieving or the project isn't found yet
+	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
+
 	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
 		// Update local state
 		setBlocklyXml(newXml)
 
 		// Update MobX store and trigger save only if XML has changed
-		if (project && project.sandboxXml !== newXml) {
+		if (project && project.sandboxXml !== newXml && !isLoading) {
 			sandboxClass.updateProjectXml(projectUUID, newXml)
 
 			// Trigger debounced save to backend
 			debouncedSaveProject(projectUUID, newXml)
 		}
-	}, [projectUUID, project, sandboxClass, debouncedSaveProject])
-
-	// Loading state - either we're actively retrieving or the project isn't found yet
-	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
+	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject])
 
 	if (!project || isLoading) {
 		return (
