@@ -28,13 +28,20 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 		// Animation and background classes
 		"bg-[length:200%] brightness-110",
 		// hover effect
-		"hover:opacity-90 hover:scale-[1.02] hover:shadow-lg",
+		// "hover:opacity-90 hover:scale-[1.02] hover:shadow-lg",
 		// Primary button has both the content background and the rainbow border
 		"relative",
 		// Add cursor-pointer since it's a button
 		"cursor-pointer",
 		className
 	)
+	const shadowClass = "shadow-[0_4px_0_0_var(--shadow-color)]"
+
+	// Hover state - reduce shadow height and translate button down
+	const hoverClass = "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+
+	// Active state - remove shadow and complete translation
+	const activeShadowClass = "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-1"
 
 	// Create a separate class for the rainbow border element
 	const rainbowBorderClasses = cn(
@@ -52,12 +59,12 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 		"dark:bg-white",
 	)
 
-	const [isClicked, setIsClicked] = React.useState(false)
+	// const [isClicked, setIsClicked] = React.useState(false)
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (isDisabled) return
-		setIsClicked(true)
-		setTimeout(() => setIsClicked(false), 100)
+		// setIsClicked(true)
+		// setTimeout(() => setIsClicked(false), 100)
 
 		// Call the original onClick handler if provided
 		if (onClick) onClick(event)
@@ -89,18 +96,16 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 					key="rainbow-button"
 					type={type}
 					disabled={isDisabled}
-					className={rainbowButtonClasses}
+					className={cn(
+						rainbowButtonClasses,
+						shadowClass,
+						hoverClass,
+						activeShadowClass,
+					)}
 					onClick={handleClick}
-					initial={{ opacity: 0 }}
-					animate={{
-						opacity: 1,
-						scale: isClicked ? 0.95 : 1
-					}}
-					exit={{ opacity: 0 }}
-					whileTap={{
-						scale: 0.95,
-						transition: { duration: 0.1 }
-					}}
+					style={{
+						"--shadow-color": "rgb(119, 119, 119)",
+					} as React.CSSProperties}
 				>
 					{/* Rainbow border/glow element */}
 					<div className={`${rainbowBorderClasses} rainbow-border`}></div>
@@ -110,10 +115,6 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 						<motion.span
 							key="button-text"
 							className="relative flex items-center gap-2 font-semibold text-black"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.1 }}
 						>
 							{buttonText}
 							{icon}

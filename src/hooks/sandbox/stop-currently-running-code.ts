@@ -12,19 +12,10 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 
 	return useCallback(async () => {
 		try {
-			if (isNull(pipClass.selectedPip)) {
-				return toast.neutral({
-					title: "You have not connected to a Pip",
-					description: "Please connect to a Pip to stop the currently running code"
-				})
-			}
-
-			if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-				return toast.negative({
-					title: `${pipClass.selectedPip.pipName} is not online`,
-					description: `Please connect ${pipClass.selectedPip.pipName} to the internet to stop the currently running code`
-				})
-			}
+			if (
+				isNull(pipClass.selectedPip) ||
+				pipClass.selectedPip.pipConnectionStatus === "offline"
+			) return
 
 			const stopScriptResponse = await blueDotApiClient.sandboxDataService.stopCurrentlyRunningCode(
 				pipClass.selectedPip.pipUUID

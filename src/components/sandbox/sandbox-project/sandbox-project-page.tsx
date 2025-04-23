@@ -131,14 +131,14 @@ function SandboxProjectPage() {
 								buttonText="SEND CODE"
 								isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 								onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-								className="duration-0 rounded-xl text-4xl"
+								className="duration-150 rounded-xl text-4xl"
 							/>
 							<TactileButton
-								className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl"
+								className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
 								shadowColor="rgb(150, 50, 75)"
 								onClick={stopCurrentlyRunningCode}
 							>
-								<CircleStop className="!size-10 items-center justify-center"/>
+								STOP
 							</TactileButton>
 						</div>
 					</div>
