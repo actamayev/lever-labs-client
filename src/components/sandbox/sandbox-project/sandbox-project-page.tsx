@@ -2,9 +2,10 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import { useParams } from "next/navigation"
 import isEmpty from "lodash-es/isEmpty"
+import { CircleStop } from "lucide-react"
 import debounce from "lodash-es/debounce"
+import { useParams } from "next/navigation"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
@@ -20,6 +21,8 @@ import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -35,20 +38,8 @@ function SandboxProjectPage() {
 	const [cppCode, setCppCode] = useState("")
 	const sendCppToPip = useSendCppToPip()
 	const editSandboxProject = useEditSandboxProject()
+	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
 
-	// Create debounced save function - 1 second delay
-	const debouncedSaveProject = useRef(
-		debounce((uuid: ProjectUUID, xml: string) => {
-			editSandboxProject(uuid, xml)
-		}, 1000)
-	).current
-
-	// Clean up debounce on unmount
-	useEffect(() => {
-		return () => debouncedSaveProject.cancel()
-	}, [debouncedSaveProject])
-
-	// Get project directly from context
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,6 +54,18 @@ function SandboxProjectPage() {
 			setBlocklyXml(project.sandboxXml)
 		}
 	}, [project])
+
+	// Create debounced save function - 1 second delay
+	const debouncedSaveProject = useRef(
+		debounce((uuid: ProjectUUID, xml: string) => {
+			editSandboxProject(uuid, xml)
+		}, 1000)
+	).current
+
+	// Clean up debounce on unmount
+	useEffect(() => {
+		return () => debouncedSaveProject.cancel()
+	}, [debouncedSaveProject])
 
 	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
@@ -100,6 +103,7 @@ function SandboxProjectPage() {
 		)
 	}
 
+	// 4/23/25: TODO Fix the stop button icon from jittering on hover
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			{/* Header with back button, project name, and code toggle */}
@@ -122,12 +126,21 @@ function SandboxProjectPage() {
 								onXmlChange={handleXmlChange}
 							/>
 						</Suspense>
-						<AnimatedStateButton
-							buttonText="SEND CODE"
-							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-							onClick={(event) => sendCppToPip(cppCode, event)}
-							className="duration-0 rounded-xl w-full mt-2 h-[10%] text-4xl"
-						/>
+						<div className="flex flex-row mt-2 h-[10%] w-full space-x-2 items-center justify-center">
+							<AnimatedStateButton
+								buttonText="SEND CODE"
+								isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+								onClick={(event) => sendCppToPip(cppCode, event)}
+								className="duration-0 rounded-xl text-4xl"
+							/>
+							<TactileButton
+								className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl"
+								shadowColor="rgb(150, 50, 75)"
+								onClick={stopCurrentlyRunningCode}
+							>
+								<CircleStop className="!size-10 items-center justify-center"/>
+							</TactileButton>
+						</div>
 					</div>
 				</div>
 
