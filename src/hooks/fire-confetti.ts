@@ -1,12 +1,13 @@
+"use client"
+
 import confetti from "canvas-confetti"
 
 // eslint-disable-next-line complexity
 export default function fireConfetti(
-	event: React.MouseEvent<HTMLButtonElement>,
+	rect: DOMRect,
 	confettiOptions?: confetti.Options
 ): void {
 	try {
-		const rect = event.currentTarget.getBoundingClientRect()
 		const x = rect.left + rect.width / 2
 		const y = rect.top + rect.height / 2
 

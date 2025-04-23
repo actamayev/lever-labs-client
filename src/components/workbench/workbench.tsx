@@ -25,7 +25,6 @@ function Workbench() {
 			if (containerRef.current) {
 				workbenchClass.setFixedWidth((containerRef.current.offsetWidth))
 			}
-			// console.log(workbenchClass.fixedWidth)
 			workbenchClass.setWindowHeight(window.innerHeight)
 		}
 

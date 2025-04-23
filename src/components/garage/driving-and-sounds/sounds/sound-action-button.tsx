@@ -58,14 +58,10 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
-			// buttonElement.classList.add("bg-orange-300")
-			// buttonElement.classList.add("dark:bg-orange-950")
 		} else {
 			// Reset to normal state
 			buttonElement.style.transform = ""
 			buttonElement.style.boxShadow = ""
-			// buttonElement.classList.remove("bg-orange-300")
-			// buttonElement.classList.remove("dark:bg-orange-950")
 		}
 	}, [garageClass.soundPlaying, sound])
 

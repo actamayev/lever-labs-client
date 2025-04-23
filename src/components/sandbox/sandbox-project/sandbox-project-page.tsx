@@ -130,7 +130,7 @@ function SandboxProjectPage() {
 							<AnimatedStateButton
 								buttonText="SEND CODE"
 								isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-								onClick={(event) => sendCppToPip(cppCode, event)}
+								onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
 								className="duration-0 rounded-xl text-4xl"
 							/>
 							<TactileButton

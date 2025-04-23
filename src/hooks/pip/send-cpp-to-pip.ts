@@ -11,7 +11,7 @@ import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useSendCppToPip(): (
 	cppCode: string,
-	event: React.MouseEvent<HTMLButtonElement>
+	rect: DOMRect
 ) => Promise<void> {
 	const pipClass = usePipContext()
 	const blueDotApiClient = useApiClientContext()
@@ -19,7 +19,7 @@ export default function useSendCppToPip(): (
 
 	return useCallback(async (
 		cppCode: string,
-		event: React.MouseEvent<HTMLButtonElement>
+		rect: DOMRect
 	) => {
 		try {
 			if (isNull(pipClass.selectedPip)) {
@@ -55,11 +55,10 @@ export default function useSendCppToPip(): (
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
-			fireConfetti(
-				event,
+			return fireConfetti(
+				rect,
 				({ particleCount: 300, startVelocity: 30 })
 			)
-			return toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
 		} catch (error) {
 			console.error(error)
 			return toast.negative({
@@ -69,6 +68,5 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blueDotApiClient.pipDataService, pipClass.isSendingCppToPip, pipClass.selectedPip?.pipConnectionStatus, toast])
+	}, [blueDotApiClient.sandboxDataService, pipClass, toast])
 }
