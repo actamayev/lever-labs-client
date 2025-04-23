@@ -9,6 +9,7 @@ import NetworkIcon from "./network/network-icon"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import DrivingControls from "../garage/driving-and-sounds/driving/driving-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
+import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function Workbench() {
@@ -47,7 +48,7 @@ function Workbench() {
 		<div className="w-[37.5%] z-20" ref={containerRef}>
 			{/* Top section with icons and workbench card - 1/4 height */}
 			<div
-				className="fixed border-l border-b"
+				className={cn("fixed border-b", isGaragePage ? "border-l" : "border-l-2")}
 				style={{
 					width: fixedWidth + "px",
 					top: "0",
@@ -79,7 +80,7 @@ function Workbench() {
 
 			{/* Middle section - remaining space */}
 			<div
-				className="fixed border-t border-l border-b"
+				className={cn("fixed border-t border-b", isGaragePage ? "border-l" : "border-l-2")}
 				style={{
 					width: fixedWidth + "px",
 					top: `${middleSectionTop}px`,
@@ -93,7 +94,7 @@ function Workbench() {
 				<div className="flex items-center justify-center h-full">
 					{/* Middle section content goes here */}
 					<div className="text-center p-4">
-						<h3 className="text-xl text-gray-500">Workbench Middle Section</h3>
+						<h3 className="text-xl text-eel">Workbench Middle Section</h3>
 					</div>
 				</div>
 			</div>
