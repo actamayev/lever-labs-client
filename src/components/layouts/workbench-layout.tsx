@@ -7,15 +7,22 @@ import WorkbenchSeparator from "../workbench/workbench-separator"
 interface WorkbenchLayoutProps {
 	children: React.ReactNode
 	needsSeparator?: boolean
-	extraClasses?: string
+	extraChildrenClasses?: string
+	extraParentClasses?: string
 }
 
 export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
-	const { children, needsSeparator = false, extraClasses = ""} = props
+	const {
+		children,
+		needsSeparator = false,
+		extraChildrenClasses = "",
+		extraParentClasses = "flex flex-row overflow-y-auto w-full"
+	} = props
 	return (
-		<div className="flex flex-row h-screen overflow-y-auto relative w-full">
+		<div className={cn("h-screen relative", extraParentClasses)}>
+			{/* Left sidebar */}
 			{/* Main content area */}
-			<div className={cn("w-[62.5%]", extraClasses)}>
+			<div className={cn("w-[62.5%]", extraChildrenClasses)}>
 				{children}
 			</div>
 
