@@ -6,12 +6,12 @@ import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/shadcn/utils"
 
 interface AnimatedStateButtonProps {
-	buttonText: React.ReactNode;
-	icon?: React.ReactNode;
-	isDisabled?: boolean;
-	className?: string;
-	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-	type?: "button" | "submit" | "reset";
+	buttonText: React.ReactNode
+	icon?: React.ReactNode
+	isDisabled?: boolean
+	className?: string
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
+	type?: "button" | "submit" | "reset"
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -104,7 +104,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 					)}
 					onClick={handleClick}
 					style={{
-						"--shadow-color": "rgb(119, 119, 119)",
+						"--shadow-color": "rgb(175, 175, 175)",
 					} as React.CSSProperties}
 				>
 					{/* Rainbow border/glow element */}
