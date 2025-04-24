@@ -40,13 +40,26 @@ function SandboxProjectPage() {
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
+	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
+	const [isMountedLongEnough, setIsMountedLongEnough] = useState(false)
+
+	// Add a timer to track when component has been mounted for 1 second
+	useEffect(() => {
+		// This is here to prevent the edit from being triggered too early
+		const timer = setTimeout(() => {
+			setIsMountedLongEnough(true)
+		}, 500)
+
+		return () => clearTimeout(timer)
+	}, [])
+
 	const debouncedSaveProject = useRef(
-		debounce((uuid: ProjectUUID, xml: string) => {
-			editSandboxProject(uuid, xml)
-		}, 1000)
+		debounce((newXml: string) => {
+			editSandboxProject(projectUUID, newXml)
+		}, 250)
 	).current
 
 	// Clean up debounce on unmount
@@ -54,18 +67,19 @@ function SandboxProjectPage() {
 		return () => debouncedSaveProject.cancel()
 	}, [debouncedSaveProject])
 
-	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
-
-	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
-		// Update MobX store and trigger save only if XML has changed
-		if (project && project.sandboxXml !== newXml && !isLoading) {
-			sandboxClass.updateProjectXml(projectUUID, newXml)
+		if (!project || project.sandboxXml === newXml || isLoading) return
 
-			// Trigger debounced save to backend
-			debouncedSaveProject(projectUUID, newXml)
+		// Update local state
+		sandboxClass.updateProjectXml(projectUUID, newXml)
+
+		// Only trigger the save if we're past the initial mounting period
+		if (isMountedLongEnough) {
+			debouncedSaveProject(newXml)
+		} else {
+			console.log("Ignoring save during initial mount period")
 		}
-	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject])
+	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject, isMountedLongEnough])
 
 	if (!project || isLoading) {
 		return (
