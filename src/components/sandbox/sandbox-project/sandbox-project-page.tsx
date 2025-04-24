@@ -8,7 +8,6 @@ import { useParams } from "next/navigation"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
-import { EmptySandboxXml } from "../../../utils/constants"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { usePipContext } from "../../../contexts/pip-context"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
@@ -19,9 +18,9 @@ import { useSandboxContext } from "../../../contexts/sandbox-context"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
-import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -44,17 +43,6 @@ function SandboxProjectPage() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
-	// Current XML state - initialize from project
-	const [blocklyXml, setBlocklyXml] = useState(() => project?.sandboxXml || EmptySandboxXml)
-
-	// Update local XML state whenever project changes
-	useEffect(() => {
-		if (project?.sandboxXml) {
-			setBlocklyXml(project.sandboxXml)
-		}
-	}, [project])
-
-	// Create debounced save function - 1 second delay
 	const debouncedSaveProject = useRef(
 		debounce((uuid: ProjectUUID, xml: string) => {
 			editSandboxProject(uuid, xml)
@@ -66,14 +54,10 @@ function SandboxProjectPage() {
 		return () => debouncedSaveProject.cancel()
 	}, [debouncedSaveProject])
 
-	// Loading state - either we're actively retrieving or the project isn't found yet
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	// Handle XML changes from the Blockly workspace
 	const handleXmlChange = useCallback((newXml: string) => {
-		// Update local state
-		setBlocklyXml(newXml)
-
 		// Update MobX store and trigger save only if XML has changed
 		if (project && project.sandboxXml !== newXml && !isLoading) {
 			sandboxClass.updateProjectXml(projectUUID, newXml)
@@ -121,7 +105,7 @@ function SandboxProjectPage() {
 								toolboxConfig={toolboxConfig}
 								setCppCode={setCppCode}
 								extraClasses="h-[90%]"
-								initialXml={blocklyXml}
+								initialXml={project.sandboxXml}
 								onXmlChange={handleXmlChange}
 							/>
 						</Suspense>
