@@ -35,7 +35,6 @@ function WorkbenchCard() {
 			className={cn(
 				"fixed p-4 min-h-40 border-2 border-swan rounded-2xl text-eel text-base",
 				"bg-standardBackground z-50",
-				// `w-[${widthToSet}px]`,
 				workbenchClass.workbenchItemToShow === "battery" ? "rounded-tl-none" : "",
 				workbenchClass.workbenchItemToShow === "network" ? "rounded-tr-none" : "",
 			)}

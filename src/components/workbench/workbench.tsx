@@ -4,14 +4,11 @@ import { usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
 import WorkbenchCard from "./workbench-card"
 import { cn } from "../../lib/shadcn/utils"
-import VolumeIcon from "./volume/volume-icon"
-import BatteryIcon from "./battery/battery-icon"
-import NetworkIcon from "./network/network-icon"
+import WorkbenchTopSection from "./workbench-top-section"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
 import DrivingControls from "../garage/driving/driving-controls"
+import { useWorkbenchContext } from "../../contexts/workbench-context"
 
-// eslint-disable-next-line max-lines-per-function
 function Workbench() {
 	const workbenchClass = useWorkbenchContext()
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -45,33 +42,7 @@ function Workbench() {
 	return (
 		<div className="w-[37.5%] z-20" ref={containerRef}>
 			{/* Top section with icons and workbench card - 1/4 height */}
-			<div
-				className={cn("fixed border-b", isGaragePage ? "border-l" : "border-l-2")}
-				style={{
-					width: workbenchClass.fixedWidth + "px",
-					top: "0",
-					height: `${topSectionHeight}px`,
-					maxHeight: `${topSectionHeight}px`,
-					overflowY: "auto",
-					borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
-				}}
-			>
-				<div
-					className="relative p-3 z-50"
-					onMouseLeave={() => {
-						// Only close the card if we're not hovering over it
-						if (!workbenchClass.hoveringOverWorkbenchCard) {
-							workbenchClass.setWorkbenchItemToShow(null)
-						}
-					}}
-				>
-					<div className="flex flex-row justify-between">
-						<BatteryIcon />
-						<VolumeIcon />
-						<NetworkIcon />
-					</div>
-				</div>
-			</div>
+			<WorkbenchTopSection topSectionHeight={topSectionHeight}/>
 			<div
 				className={cn("fixed border-t border-b", isGaragePage ? "border-l" : "border-l-2")}
 				style={{
