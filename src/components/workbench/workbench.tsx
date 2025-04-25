@@ -9,7 +9,7 @@ import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
-import DrivingControls from "../garage/driving-and-sounds/driving/driving-controls"
+import DrivingControls from "../garage/driving/driving-controls"
 
 // eslint-disable-next-line max-lines-per-function
 function Workbench() {

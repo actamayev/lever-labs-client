@@ -2,14 +2,14 @@
 
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
-import { cn } from "../../../../lib/shadcn/utils"
-import { CustomHorn } from "../../../icons/custom-horn"
-import { usePipContext } from "../../../../contexts/pip-context"
-import { TactileButton } from "../../../shadcn/ui/tactile-button"
-import { CustomHeadlights } from "../../../icons/custom-headlights"
-import { useGarageContext } from "../../../../contexts/garage-context"
-import { useSocketContext } from "../../../../contexts/socket-context"
-import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
+import { cn } from "../../../lib/shadcn/utils"
+import { CustomHorn } from "../../icons/custom-horn"
+import { usePipContext } from "../../../contexts/pip-context"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { CustomHeadlights } from "../../icons/custom-headlights"
+import { useGarageContext } from "../../../contexts/garage-context"
+import { useSocketContext } from "../../../contexts/socket-context"
+import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ArrowKeyButtonProps {
 	action: Actions

@@ -4,9 +4,9 @@ import { observer } from "mobx-react"
 import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
-import { useGarageContext } from "../../../../contexts/garage-context"
-import useMotorDriveUseEffect from "../../../../hooks/garage/motor-drive-use-effect"
-import useGarageActionsUseEffect from "../../../../hooks/garage/garage-actions-use-effect"
+import { useGarageContext } from "../../../contexts/garage-context"
+import useMotorDriveUseEffect from "../../../hooks/garage/motor-drive-use-effect"
+import useGarageActionsUseEffect from "../../../hooks/garage/garage-actions-use-effect"
 
 function DrivingControls() {
 	useMotorDriveUseEffect()

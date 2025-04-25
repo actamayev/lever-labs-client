@@ -1,8 +1,8 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Slider } from "../../../shadcn/ui/slider"
-import { useGarageContext } from "../../../../contexts/garage-context"
+import { Slider } from "../../shadcn/ui/slider"
+import { useGarageContext } from "../../../contexts/garage-context"
 
 function AdjustMaxDrivingSpeed() {
 	const garageClass = useGarageContext()

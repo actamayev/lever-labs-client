@@ -3,12 +3,12 @@
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
-import { cn } from "../../../../lib/shadcn/utils"
-import { TactileButton } from "../../../shadcn/ui/tactile-button"
-import useDefaultSiteTheme from "../../../../hooks/memos/default-site-theme"
-import { useGarageContext } from "../../../../contexts/garage-context"
-import useComputeMotorControl from "../../../../hooks/garage/compute-motor-control"
-import useApplyMotorControl from "../../../../hooks/garage/apply-motor-control"
+import { cn } from "../../../lib/shadcn/utils"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import { useGarageContext } from "../../../contexts/garage-context"
+import useComputeMotorControl from "../../../hooks/garage/compute-motor-control"
+import useApplyMotorControl from "../../../hooks/garage/apply-motor-control"
 
 function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
