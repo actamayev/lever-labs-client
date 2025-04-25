@@ -23,29 +23,29 @@ function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
 
 	const getAnswerStyles = () => {
 		const baseStyles = "group h-auto min-h-16 p-4 text-left rounded-lg border-2 \
-		transition-colors bg-inherit text-eel hover:bg-polar \
-		whitespace-normal items-center duration-0 text-sm relative \
+		transition-colors bg-inherit text-eel \
+		whitespace-normal items-center text-sm relative \
 		active:border-selectedSidebarButtonBorder active:bg-standardBackgroundHover active:text-answerText dark:active:text-answerText"
 		const hasActiveQuizBeenAnswered = labReadingClass.hasActiveQuizBeenAnswered
 		if (!hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
-			return cn(baseStyles, "hover:bg-standardBackgroundHover",
+			return cn(baseStyles,
 				"bg-standardBackgroundHover text-answerText dark:text-answerText border-selectedSidebarButtonBorder"
 			)
 		}
 
 		if (hasActiveQuizBeenAnswered && isSelectedOrActiveQuizAttempt()) {
 			const isCorrect = labReadingClass.getActiveQuizAttempt(index)?.isCorrect
-			let isCorrectStyles = "bg-standardBackgroundHover hover:bg-standardBackgroundHover \
+			let isCorrectStyles = "bg-standardBackgroundHover \
 			border-selectedSidebarButtonBorder text-answerText dark:text-answerText"
-			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 hover:bg-green-200 \
-			dark:bg-green-900 dark:hover:bg-green-800 text-green-700 dark:text-green-300"
-			else if (isCorrect === false) isCorrectStyles = "border-cardinal bg-red-100 hover:bg-red-200 \
-			dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300"
+			if (isCorrect) isCorrectStyles = "border-green-500 bg-green-100 \
+			dark:bg-green-900 text-green-700 dark:text-green-300"
+			else if (isCorrect === false) isCorrectStyles = "border-cardinal bg-red-100 \
+			dark:bg-red-900 text-red-700 dark:text-red-300"
 
 			return cn(baseStyles, isCorrectStyles)
 		}
 
-		return cn(baseStyles, "hover:bg-hover:bg-polar border-swan")
+		return cn(baseStyles, "border-swan")
 	}
 
 	const getNumberStyles = () => {

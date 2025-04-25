@@ -17,10 +17,7 @@ function Missing() {
 				Page Not Found
 			</h1>
 			<Link href={destination}>
-				<BlackWhiteTactileButton
-					className="text-2xl p-5"
-					shadowHeight={4}
-				>
+				<BlackWhiteTactileButton className="text-2xl p-5">
 					{authClass.isLoggedIn ? (
 						<>
 							RETURN TO CAREER QUEST

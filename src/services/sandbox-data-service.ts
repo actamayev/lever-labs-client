@@ -62,4 +62,10 @@ export default class SandboxDataService {
 			`${this.pathHeader}/send-sandbox-code-to-pip/`, { pipUUID, cppCode }
 		)
 	}
+
+	async stopCurrentlyRunningCode(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/stop-currently-running-code`, { pipUUID }
+		)
+	}
 }

@@ -9,11 +9,13 @@ import EditableProjectTitle from "./editable-project-title"
 import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
+import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 
 function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 	const starSandboxProject = useStarSandboxProject()
 	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
 	const personalInfoClass = usePersonalInfoContext()
+	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
 
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
@@ -23,6 +25,7 @@ function SandboxProjectHeader({ project } : {project: SandboxProject}) {
 						<Link href="/sandbox">
 							<button
 								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
+								onClick={() => void stopCurrentlyRunningCode()}
 							>
 								<ArrowLeft size={30} className="mr-1" />
 							</button>

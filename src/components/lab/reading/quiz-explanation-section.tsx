@@ -17,7 +17,6 @@ function QuizExplanationSection() {
 				onClick={() => labReadingClass.checkAnswer()}
 				className="w-full h-14 text-xl"
 				disabled={isNull(labReadingClass.draftAnswer)}
-				shadowHeight={4}
 			>
 				<Check className="!w-6 !h-6" />
 				CHECK
@@ -55,7 +54,6 @@ function QuizExplanationSection() {
 			<BlueTactileButton
 				onClick={labReadingClass.handleNextQuestion}
 				className="mt-4 w-full px-6 !py-5 text-xl transition-none border-2 h-14"
-				shadowHeight={4}
 			>
 				{isLastQuestion ? "Complete Quiz" : "Next Question"}
 			</BlueTactileButton>

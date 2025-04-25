@@ -17,10 +17,7 @@ export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => v
 		const { newConnectionStatus } = data
 		if (newConnectionStatus === "online") {
 			const actionElement = (
-				<BlackWhiteTactileButton
-					shadowHeight={2}
-					onClick={() => requestToConnectToPip(data.pipUUID)}
-				>
+				<BlackWhiteTactileButton onClick={() => requestToConnectToPip(data.pipUUID)}>
 					{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
 				</BlackWhiteTactileButton>
 			)

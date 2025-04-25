@@ -35,6 +35,7 @@ function BatteryIcon() {
 
 	return (
 		<WorkbenchIconTemplate
+			id="battery-icon"
 			onMouseEnter={() => workbenchClass.setWorkbenchItemToShow("battery")}
 			extraButtonClasses={
 				workbenchClass.workbenchItemToShow === "battery" ? "border-swan relative" : ""
