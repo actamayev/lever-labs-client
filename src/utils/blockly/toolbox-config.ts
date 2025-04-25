@@ -14,9 +14,10 @@ const motorsCategory: CustomCategoryInfo = {
 	name: "Motors",
 	colour: motorsCategoryColour,
 	contents: [
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_STOP },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.TURN },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.STOP },
 	]
 }
 

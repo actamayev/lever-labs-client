@@ -1,83 +1,108 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { Order } from "../order"
-import { cppGenerator } from "../../cpp/cpp-generator"
 import { motorsCategoryColour } from "../../constants"
-import { SENSOR_TYPES, LeftRightSensorType } from "../block-types/sensor-block-types"
-import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES } from "../block-types/motor-block-types"
+import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "../block-types/motor-block-types"
 
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
-	[MOTOR_BLOCK_TYPES.MOTOR_SET_SPEED]: {
+	[MOTOR_BLOCK_TYPES.GO_FORWARD]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
-					.appendField("Set")
-					.appendField(
-						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
-                                [key.toLowerCase(), value] as [string, string]
-							)
-						),
-						MOTOR_FIELD_VALUES.MOTOR_SET_SPEED
-					)
-					.appendField("motor to speed")
+					.appendField("Go forward at")
 
-				this.appendValueInput("SPEED")
-					.setCheck("Number")
+				// Use a number field with min and max constraints
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
 
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Set motor speed (-255 to 255)")
+				this.setTooltip("Move Pip forward at specified percentage (0-100%)")
 			}
 		},
 		generator: (block: Blockly.Block): string => {
-			const motor = block.getFieldValue(MOTOR_FIELD_VALUES.MOTOR_SET_SPEED) as LeftRightSensorType
-			const speed = cppGenerator.valueToCode(block, "SPEED", Order.ATOMIC) || "0"
-			return `setMotorSpeed(MOTOR_${motor}, ${speed});\n`
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			// Convert percentage (0-100) to motor speed (-255 to 255)
+			// We're using only positive values since we're going forward
+			return `goForward(${percentage});\n`
 		}
 	},
-	[MOTOR_BLOCK_TYPES.MOTORS_STOP]: {
+	[MOTOR_BLOCK_TYPES.GO_BACKWARD]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
-					.appendField("Stop both motors")
+					.appendField("Go backward at")
+
+				// Use a number field with min and max constraints
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Stop both motors")
+				this.setTooltip("Move Pip backward at specified percentage (0-100%)")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			// Convert percentage (0-100) to motor speed (-255 to 255)
+			// We're using only positive values since we're going backward
+			return `goBackward(${percentage});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.TURN]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Turn")
+					.appendField(
+						new Blockly.FieldDropdown([
+							["clockwise", TURN_DIRECTIONS.CLOCKWISE],
+							["counterclockwise", TURN_DIRECTIONS.COUNTERCLOCKWISE]
+						]),
+						MOTOR_FIELD_VALUES.TURN_DIRECTION
+					)
+
+				this.appendDummyInput()
+					.appendField("by")
+
+				// Use a number field for angle with min and max constraints
+				const angleField = new Blockly.FieldNumber(90, 0, 360, 1)
+				this.appendDummyInput()
+					.appendField(angleField, MOTOR_FIELD_VALUES.TURN_DEGREES)
+					.appendField("degrees")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Turn the robot by specified angle")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DIRECTION)
+			const angle = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DEGREES) || "0"
+
+			return `turn(${direction}, ${angle});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.STOP]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Stop")
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Stop all motors")
 			}
 		},
 		generator: (_block: Blockly.Block): string => {
 			return "stopMotors();\n"
-		}
-	},
-	[MOTOR_BLOCK_TYPES.MOTORS_TANK_DRIVE]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendDummyInput()
-					.appendField("Drive left motor")
-
-				this.appendValueInput(MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE)
-					.setCheck("Number")
-
-				this.appendDummyInput()
-					.appendField("and right motor")
-
-				this.appendValueInput(MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE)
-					.setCheck("Number")
-
-				this.setPreviousStatement(true, null)
-				this.setNextStatement(true, null)
-				this.setColour(motorsCategoryColour)
-				this.setTooltip("Set motor speeds independently")
-			}
-		},
-		generator: (block: Blockly.Block): string => {
-			const leftSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_LEFT_TANK_DRIVE, Order.ATOMIC) || "0"
-			const rightSpeed = cppGenerator.valueToCode(block, MOTOR_FIELD_VALUES.MOTORS_RIGHT_TANK_DRIVE, Order.ATOMIC) || "0"
-			return `tankDrive(${leftSpeed}, ${rightSpeed});\n`
 		}
 	}
 }
