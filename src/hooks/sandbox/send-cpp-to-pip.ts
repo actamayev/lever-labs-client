@@ -1,19 +1,26 @@
 "use client"
 
+import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { useCallback } from "react"
+import fireConfetti from "../fire-confetti"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
-export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
+export default function useSendCppToPip(): (
+	cppCode: string,
+	rect: DOMRect
+) => Promise<void> {
 	const pipClass = usePipContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
-	return useCallback(async (cppCode: string) => {
+	return useCallback(async (
+		cppCode: string,
+		rect: DOMRect
+	) => {
 		try {
 			if (isNull(pipClass.selectedPip)) {
 				return toast.neutral({
@@ -48,7 +55,10 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
 			}
-			return toast.positive({ title: `Code sent to ${pipClass.selectedPip.pipName || "Pip"}` })
+			return fireConfetti(
+				rect,
+				({ particleCount: 300, startVelocity: 30 })
+			)
 		} catch (error) {
 			console.error(error)
 			return toast.negative({
@@ -58,6 +68,5 @@ export default function useSendCppToPip(): (cppCode: string) => Promise<void> {
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blueDotApiClient.pipDataService, pipClass.isSendingCppToPip, pipClass.selectedPip?.pipConnectionStatus, toast])
+	}, [blueDotApiClient.sandboxDataService, pipClass, toast])
 }

@@ -6,14 +6,15 @@ import ColorPicker from "./color-picker"
 import LightDotsSelector from "./light-dots-selector"
 import LightAnimationsList from "./light-animations-list"
 import LightBrightnessControl from "./light-brightness-control"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants"
 import useSetDefaultColorsUseEffect from "../../../hooks/garage/set-dots-colors-use-effect"
 
 function LightSection() {
 	useSetDefaultColorsUseEffect()
 
 	return (
-		<div className="h-1/3 overflow-hidden">
-			<div className="w-full grid grid-cols-3 gap-2">
+		<div className="h-1/3 overflow-hidden border-b border-r" style={{ borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS}}>
+			<div className="w-full grid grid-cols-3 gap-2 py-5">
 				<div className="ml-[18px]">
 					<ColorPicker />
 				</div>

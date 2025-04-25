@@ -25,11 +25,11 @@ function QuizButton({ block } : { block: ContentBlock }) {
 
 	const quizButtonClasses = useMemo(() => {
 		if (isQuizCorrect) {
-			return "bg-green-100 border-green-400 text-green-800 hover:bg-green-50 \
-				dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
+			return "bg-green-100 border-green-400 text-green-800 \
+				dark:bg-green-900 dark:border-green-600 dark:text-green-200"
 		}
-		return "bg-purple-100 border-beetle text-purple-800 hover:bg-purple-50 \
-			dark:bg-purple-900 dark:border-purple-600 dark:text-purple-200 dark:hover:bg-purple-950"
+		return "bg-purple-100 border-beetle text-purple-800 \
+			dark:bg-purple-900 dark:border-purple-600 dark:text-purple-200"
 	}, [isQuizCorrect])
 
 	return (
@@ -40,7 +40,6 @@ function QuizButton({ block } : { block: ContentBlock }) {
 				quizButtonClasses
 			)}
 			shadowColor={quizShadowColor}
-			shadowHeight={4}
 		>
 			{!isQuizCorrect ? (
 				<><CustomQuiz className="!w-8 !h-8" />QUIZ</>

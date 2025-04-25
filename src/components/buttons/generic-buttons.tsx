@@ -17,7 +17,6 @@ function AuthButton(props: Props) {
 		<BlueTactileButton
 			type="submit"
 			disabled={loading || authClass.isAuthenticating}
-			shadowHeight={4}
 			className="w-full h-12 my-2"
 		>
 			{title}

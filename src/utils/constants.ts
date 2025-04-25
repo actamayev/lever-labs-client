@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import rgbToBlocklyColor from "./blockly/rgb-to-blocky"
 
 export const bentoIconSize = 40
@@ -114,8 +115,8 @@ export const soundMappings: SoundMapping = {
 	"3": "elephant",
 	"numpad4": "fanfare",
 	"4": "fanfare",
-	"numpad5": "mariachi",
-	"5": "mariachi",
+	"numpad5": "ufo",
+	"5": "ufo",
 	"numpad6": "countdown",
 	"6": "countdown",
 	"numpad7": "engine",
@@ -125,3 +126,4 @@ export const soundMappings: SoundMapping = {
 }
 
 export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
+export const WORKBENCH_ROUNDING_RADIUS = "48px"

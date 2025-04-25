@@ -77,7 +77,7 @@ export default function FrontCareerCard(props: Props) {
 				{/* Continue Button */}
 				<Link href={careerUrl}>
 					<TactileButton
-						className="duration-0 text-emerald-600 bg-white hover:bg-[rgb(230,230,230)] h-12 rounded-2xl text-base w-full"
+						className="duration-150 text-emerald-600 bg-white hover:bg-[rgb(230,230,230)] h-12 rounded-2xl text-base w-full"
 						shadowColor="rgb(178,214,201)"
 					>
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}

@@ -14,11 +14,11 @@ import {
 	DialogClose
 } from "../../shadcn/ui/dialog"
 import LoadingOval from "../../loading-oval"
-import { Button } from "../../shadcn/ui/button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
@@ -199,24 +199,24 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 				<DialogFooter className="flex flex-row justify-center sm:justify-center gap-4">
 					{/* Show delete button if there's a profile picture OR a preview image, and not already pending delete */}
 					{(hasProfilePicture || previewUrl) && !pendingDelete && (
-						<Button
-							variant="destructive"
+						<TactileButton
 							disabled={isLoading}
 							onClick={handleDelete}
+							className="bg-red-500"
+							shadowColor="rgb(176 36 56)"
 						>
 							<Trash2 className="mr-2 h-4 w-4" />
 							Delete
-						</Button>
+						</TactileButton>
 					)}
 
-					<Button
-						variant="default"
+					<TactileButton
 						disabled={isLoading}
 						onClick={handleSave}
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
 						{pendingDelete ? "Confirm Delete" : "Save"}
-					</Button>
+					</TactileButton>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

@@ -10,16 +10,16 @@ interface SliderProps extends React.ComponentPropsWithoutRef<typeof SliderPrimit
   thumbWidth?: number
   thumbHeight?: number
   unFilledTrackColor?: string
-  filledTrackColor?: string // Fixed spelling from "filledTrackFolor" to "filledTrackColor"
+  filledTrackColor?: string
   thumbBorderColor?: string
+  thumbDetails?: React.ReactNode
 }
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   SliderProps
 >(({ className, size = 20, roundLevel = "rounded-full", thumbWidth = 20, thumbHeight = 20,
-  unFilledTrackColor = "bg-eel/15", filledTrackColor = "bg-eel", thumbBorderColor = "border-eel", ...props }, ref) => {
-  // Fixed spelling from "filledTrackFolor" to "filledTrackColor" in destructuring
+  unFilledTrackColor = "bg-eel/15", filledTrackColor = "bg-eel", thumbBorderColor = "border-eel", thumbDetails, ...props }, ref) => {
   const value = props.value![0]
   const max = props.max || 100 // Default to 100 if not specified
   const isVertical = props.orientation === "vertical"
@@ -90,7 +90,7 @@ const Slider = React.forwardRef<
         className={cn(
           "relative overflow-hidden grow", 
           roundLevel,
-          unFilledTrackColor // Moved the unFilledTrackColor to className instead of inline style
+          unFilledTrackColor
         )}
         style={trackStyle}
       >
@@ -98,7 +98,7 @@ const Slider = React.forwardRef<
         <div 
           className={cn(
             "absolute rounded-none",
-            filledTrackColor, // Fixed spelling from "filledTrackFolor" to "filledTrackColor"
+            filledTrackColor,
             isVertical 
               ? "w-full bottom-0" 
               : "h-full"
@@ -106,14 +106,19 @@ const Slider = React.forwardRef<
           style={rangeStyle}
         />
       </SliderPrimitive.Track>
+      
+      {/* Modified thumb with the three lines */}
       <SliderPrimitive.Thumb 
         className={cn(
           "block border bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20",
           thumbBorderColor,
-          roundLevel
+          roundLevel,
+          "flex flex-col items-center justify-center"
         )}
         style={thumbSize}
-      />
+      >
+        {thumbDetails}
+      </SliderPrimitive.Thumb>
     </SliderPrimitive.Root>
   )
 })

@@ -12,6 +12,8 @@ class WorkbenchClass {
 	public isMuted = true
 	public isDropdownOpen = false
 	public selectedSound: TuneToPlay = "Chime"
+	public fixedWidth = 0
+	public windowHeight = 0
 
 	constructor() {
 		makeAutoObservable(this)
@@ -41,6 +43,14 @@ class WorkbenchClass {
 		this.selectedSound = newSelectedSound
 	})
 
+	public setFixedWidth = action((newFixedWidth: number): void => {
+		this.fixedWidth = newFixedWidth
+	})
+
+	public setWindowHeight = action((newWindowHeight: number): void => {
+		this.windowHeight = newWindowHeight
+	})
+
 	public logout() {
 		this.setWorkbenchItemToShow(null)
 		this.setWorkbenchItemHoveringOver(false)
@@ -48,6 +58,8 @@ class WorkbenchClass {
 		this.setIsMuted(true)
 		this.setIsDropdownOpen(false)
 		this.setSelectedSound("Chime")
+		this.setFixedWidth(0)
+		this.setWindowHeight(0)
 	}
 }
 

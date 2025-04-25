@@ -7,7 +7,7 @@ import { cn } from "../../lib/shadcn/utils"
 export default function useLilypadVariants(): (progress: ProgressStatus) => string {
 	return useCallback((progress) => cn(
 		// Base styles with explicit oval shape
-		"rounded-[50%] flex items-center justify-center transform transition-all duration-50 relative", // Changed to 50% for a smooth oval
+		"rounded-[50%] flex items-center justify-center relative", // Changed to 50% for a smooth oval
 		// Shadow and press effect
 		isNull(progress) && [
 			"bg-swan",
@@ -27,7 +27,7 @@ export default function useLilypadVariants(): (progress: ProgressStatus) => stri
 			"group-hover:shadow-[0_8px_0_0_rgb(49,145,203)]", // slightly compressed on hover
 			"group-hover:transform group-hover:translate-y-0.5", // move down slightly to match shadow
 			"group-active:shadow-[0_0_0_0_rgb(49,145,203)]", // fully compressed on click
-			"group-active:transform group-active:translate-y-2.5 duration-0", // move down to match shadow
+			"group-active:transform group-active:translate-y-2.5 duration-150", // move down to match shadow
 		]
 	), [])
 }

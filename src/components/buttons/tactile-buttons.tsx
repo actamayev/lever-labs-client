@@ -14,22 +14,22 @@ type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 }
 
 export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
-	({ className, shadowHeight = 2, isPressed, ...props }, ref) => {
+	({ className, shadowHeight = 4, isPressed, ...props }, ref) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 
 		return (
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center transition-none border-2 rounded-2xl",
-					"bg-blue-100 border-blue-400 text-blue-800 hover:bg-blue-50",
-					"dark:bg-blue-900 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950",
+					"flex items-center duration-150 rounded-2xl",
+					"bg-blue-100 text-blue-800",
+					"dark:bg-blue-900 dark:text-blue-200",
 					className,
 					!isPressed ? "" :
 						"active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
 						shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
-						cursor-default bg-blue-300 hover:bg-blue-300 border-blue-400 text-blue-950 \
-						dark:bg-blue-950 dark:border-blue-600 dark:text-blue-200 dark:hover:bg-blue-950"
+						cursor-default bg-blue-300  text-blue-950 \
+						dark:bg-blue-950 dark:text-blue-200 "
 				)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={shadowHeight}
@@ -40,15 +40,15 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 ))
 
 export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
-	({ className, shadowHeight = 2, ...props }, ref) => {
+	({ className, shadowHeight = 4, ...props }, ref) => {
 		const defaultSiteTheme = useDefaultSiteTheme()
 
 		return (
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center transition-none border-2 rounded-2xl !bg-standardBackground",
-					"border-swan text-eel hover:bg-swan dark:text-wolf",
+					"flex items-center duration-150 rounded-2xl !bg-standardBackground",
+					"text-eel dark:text-wolf",
 					className
 				)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
@@ -72,14 +72,13 @@ export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, Lan
 				ref={ref} // Add this line to pass the ref to TactileButton
 				onClick={() => navigate(navigateTo)}
 				className={cn(
-					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl transition-none",
+					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl duration-150",
 					"rounded-xl sm:rounded-2xl border-2 w-full md:w-2/3",
 					"h-auto min-h-10 md:min-h-12 whitespace-normal",
-					"bg-green-500 border-none text-white hover:bg-green-400",
-					"dark:bg-green-900 dark:border-green-600 dark:text-green-200 dark:hover:bg-green-950"
+					"bg-green-500 border-none text-white",
+					"dark:bg-green-900 dark:border-green-600 dark:text-green-200"
 				)}
 				shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-				shadowHeight={2}
 				{...props}
 			>
 				{children}

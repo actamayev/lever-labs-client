@@ -16,6 +16,17 @@ function RGBInput() {
 		return Math.min(Math.max(numValue, 0), 255)
 	}, [])
 
+	// Handle input event to prevent leading zeros
+	const handleInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+		const input = e.currentTarget // use currentTarget which is properly typed
+		const value = input.value
+
+		// If value has leading zeros (except for a single 0), remove them
+		if (value.length > 1 && value.startsWith("0")) {
+			input.value = value.replace(/^0+/, "")
+		}
+	}, [])
+
 	return (
 		<>
 			<div className="flex items-center flex-col">
@@ -24,6 +35,7 @@ function RGBInput() {
 					id="rgb-r"
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.r * garageClass.selectedColorShade)}
+					onInput={handleInput}
 					onChange={(e) => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
@@ -37,6 +49,7 @@ function RGBInput() {
 					id="rgb-g"
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.g * garageClass.selectedColorShade)}
+					onInput={handleInput}
 					onChange={(e) => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
@@ -50,6 +63,7 @@ function RGBInput() {
 					id="rgb-b"
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.b * garageClass.selectedColorShade)}
+					onInput={handleInput}
 					onChange={(e) => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"

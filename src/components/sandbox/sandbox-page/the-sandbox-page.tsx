@@ -6,13 +6,12 @@ import isUndefined from "lodash-es/isUndefined"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
+import WorkbenchLayout from "../../layouts/workbench-layout"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { useSandboxContext } from "../../../contexts/sandbox-context"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
-import Workbench from "../../workbench/workbench"
-import WorkbenchSeparator from "../../workbench/workbench-separator"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -58,19 +57,18 @@ function TheSandboxPage() {
 	const filteredStarredProjects = filterProjects(starredProjects)
 
 	return (
-		<div className="h-screen overflow-y-auto relative">
-			{/* Fixed search bar - width limited to match main content */}
-			<div className="sticky top-0 z-10 bg-standardBackground py-3 pl-[20px]">
-				<div className="w-full lg:w-[57%] xl:w-[71%] border-b-2 border-swan pb-3">
+		<WorkbenchLayout preventElasticScroll={true}>
+			<div className="sticky top-0 z-10 bg-standardBackground pt-3 pl-5">
+				<div className="w-full border-b-2 border-swan pb-3">
 					<div className="relative">
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
 							<Search className="h-5 w-5 text-wolf" />
 						</div>
 						<Input
 							type="text"
-							className="block w-1/3 pl-10 pr-10 py-2 !text-2xl border-swan border-2
+							className="block w-1/2 pl-10 pr-10 py-2 !text-2xl border-swan border-2
 							h-12 rounded-2xl focus:ring-0 shadow-none"
-							placeholder="Search projects..."
+							placeholder="Search in Sandbox"
 							value={searchQuery}
 							onChange={(e) => setSearchQuery(e.target.value)}
 						/>
@@ -79,11 +77,11 @@ function TheSandboxPage() {
 			</div>
 
 			{/* Two-column layout container with space between */}
-			<div className="flex flex-row h-screen overflow-hidden relative w-full space-x-[45px] pl-[20px] pr-[45px] pt-[25px]">
+			<div className="flex flex-row relative w-full">
 				{/* Main content column */}
-				<div className="w-full lg:w-3/5 xl:w-3/4 overflow-y-auto pr-6">
+				<div className="w-full p-5">
 					<BlueTactileButton
-						className="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition-none mb-10 text-2xl rounded-2xl"
+						className="px-4 py-2 bg-blue-600 text-white mb-10 text-2xl rounded-2xl"
 						onClick={handleCreateProject}
 						disabled={isCreating}
 						size="lg"
@@ -121,7 +119,7 @@ function TheSandboxPage() {
 							/>
 							<h2 className="text-3xl font-semibold">All Projects</h2>
 							{searchQuery && <span className="ml-2 text-gray-500">
-								({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
+                ({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
 							</span>}
 						</div>
 						{filteredAllProjects.length > 0 ? (
@@ -143,7 +141,7 @@ function TheSandboxPage() {
 												onClick={handleCreateProject}
 												disabled={isCreating}
 											>
-												Create your first project
+                        Create your first project
 											</button>
 										</>
 									)}
@@ -159,12 +157,9 @@ function TheSandboxPage() {
 						</div>
 					)}
 				</div>
-
-				<WorkbenchSeparator />
-				{/* Workbench column */}
-				<Workbench />
 			</div>
-		</div>
+
+		</WorkbenchLayout>
 	)
 }
 

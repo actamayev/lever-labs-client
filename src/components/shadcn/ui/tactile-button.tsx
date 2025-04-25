@@ -10,7 +10,7 @@ type TactileButtonProps = Omit<ButtonProps, 'variant'> & {
 }
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
-  ({ className, shadowColor = "rgb(30, 64, 175)", shadowHeight = 2, style, ...props }, ref) => {
+  ({ className, shadowColor = "rgb(30, 64, 175)", shadowHeight = 4, style, ...props }, ref) => {
     // Shadow classes for different states
     const shadowClass = shadowHeight === 4 
       ? "shadow-[0_4px_0_0_var(--shadow-color)]"
@@ -29,10 +29,9 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
         ref={ref}
         variant="tactile"
         className={cn(
-          "transform transition-all duration-50",
+          "duration-150",
           shadowClass,
           hoverClass,
-          "hover:bg-primary/90",
           activeShadowClass,
           className
         )}

@@ -144,3 +144,12 @@ body {
   -webkit-backface-visibility: hidden;
   border-radius: 1rem; /* Equivalent to rounded-2xl */
 }
+
+html, body {
+  overscroll-behavior: none !important;
+  /* overflow-x: hidden; */
+}
+
+* {
+  -webkit-overflow-scrolling: auto !important;
+}
