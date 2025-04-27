@@ -20,13 +20,11 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Move Pip forward at specified percentage (0-100%)")
+				this.setTooltip("Move Pip  forward at specified percentage (0-100%)")
 			}
 		},
 		generator: (block: Blockly.Block): string => {
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
-			// Convert percentage (0-100) to motor speed (-255 to 255)
-			// We're using only positive values since we're going forward
 			return `goForward(${percentage});\n`
 		}
 	},
@@ -45,14 +43,132 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Move Pip backward at specified percentage (0-100%)")
+				this.setTooltip("Move Pip  backward at specified percentage (0-100%)")
 			}
 		},
 		generator: (block: Blockly.Block): string => {
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
-			// Convert percentage (0-100) to motor speed (-255 to 255)
-			// We're using only positive values since we're going backward
 			return `goBackward(${percentage});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.GO_FORWARD_TIME]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Go forward for")
+
+				// Add time input
+				const secondsField = new Blockly.FieldNumber(2, 0.1, 60, 0.1)
+				this.appendDummyInput()
+					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
+					.appendField("seconds at")
+
+				// Add speed input
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Move Pip  forward for specified time and speed")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const seconds = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_SECONDS) || "0"
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			return `goForwardTime(${seconds}, ${percentage});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Go backward for")
+
+				// Add time input
+				const secondsField = new Blockly.FieldNumber(2, 0.1, 60, 0.1)
+				this.appendDummyInput()
+					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
+					.appendField("seconds at")
+
+				// Add speed input
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Move Pip  backward for specified time and speed")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const seconds = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_SECONDS) || "0"
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			return `goBackwardTime(${seconds}, ${percentage});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Go forward")
+
+				// Add distance input
+				const distanceField = new Blockly.FieldNumber(10, 1, 500, 1)
+				this.appendDummyInput()
+					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
+					.appendField("cm at")
+
+				// Add speed input
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Move Pip  forward for specified distance at given speed")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const distance = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_DISTANCE) || "0"
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			return `goForwardDistance(${distance}, ${percentage});\n`
+		}
+	},
+	[MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Go backward")
+
+				// Add distance input
+				const distanceField = new Blockly.FieldNumber(10, 1, 500, 1)
+				this.appendDummyInput()
+					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
+					.appendField("cm at")
+
+				// Add speed input
+				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Move Pip  backward for specified distance at given speed")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const distance = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_DISTANCE) || "0"
+			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+			return `goBackwardDistance(${distance}, ${percentage});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.TURN]: {
@@ -80,7 +196,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Turn the robot by specified angle")
+				this.setTooltip("Turn Pip by specified angle")
 			}
 		},
 		generator: (block: Blockly.Block): string => {

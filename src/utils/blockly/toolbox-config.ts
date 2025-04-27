@@ -15,7 +15,11 @@ const motorsCategory: CustomCategoryInfo = {
 	colour: motorsCategoryColour,
 	contents: [
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD_TIME },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.TURN },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.STOP },
 	]
