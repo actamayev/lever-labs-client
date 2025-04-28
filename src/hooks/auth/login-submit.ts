@@ -11,6 +11,7 @@ import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginFormValues) => Promise<void> {
 	const authClass = useAuthContext()
@@ -34,7 +35,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 			}
 			setDataAfterLogin(response.data)
 			void retrieveDataAfterLogin()
-			if (pathname === "/login") navigate("/career-quest")
+			if (pathname === "/login") navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

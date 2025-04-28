@@ -9,6 +9,7 @@ import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
@@ -40,7 +41,7 @@ export default function useRegisterSubmit (
 				return
 			}
 			setDataAfterRegister(response.data)
-			navigate("/career-quest")
+			navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

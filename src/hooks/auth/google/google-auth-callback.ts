@@ -10,6 +10,7 @@ import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
 import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
 import { usePathname } from "next/navigation"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
@@ -41,7 +42,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				return navigate("/register-username")
 			}
 			void retrieveDataAfterLogin()
-			if (pathname === "/login") navigate("/career-quest")
+			if (pathname === "/login") navigate(PageToNavigateAfterLogin)
 		} catch (error) {
 			console.error(error)
 		}

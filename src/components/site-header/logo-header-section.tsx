@@ -7,6 +7,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { useAuthContext } from "../../contexts/auth-context"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
@@ -19,7 +20,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 			pathname === "/register-username" ||
 			(authClass.isLoggedIn && isNull(personalInfoClass.username))
 		) return "/register-username"
-		if (authClass.isLoggedIn) return "/career-quest"
+		if (authClass.isLoggedIn) return PageToNavigateAfterLogin
 		return "/"
 	}, [authClass.isLoggedIn, pathname, personalInfoClass.username])
 
