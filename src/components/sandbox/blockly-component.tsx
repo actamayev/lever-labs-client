@@ -3,6 +3,7 @@
 import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
@@ -11,7 +12,6 @@ import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import { EmptySandboxXml } from "../../utils/constants"
-import { usePathname } from "next/navigation"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -21,6 +21,7 @@ interface Props {
 	onXmlChange?: (xml: string) => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 function BlocklyComponent(props: Props) {
 	const {
 		toolboxConfig,
@@ -48,7 +49,7 @@ function BlocklyComponent(props: Props) {
 
 		workspace.scrollCenter()
 		setIsCentered(true)
-	}, [isCentered, workspaceConfiguration.zoom?.startScale])
+	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
