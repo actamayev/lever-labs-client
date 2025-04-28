@@ -16,6 +16,7 @@ import RenameProjectDialog from "./rename-project-dialog"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import useDeleteSandboxProject from "../../../hooks/sandbox/delete-sandbox-project"
+import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
 function SingleProjectCard({ project } : { project: SandboxProject }) {

@@ -3,6 +3,7 @@ import debounce from "lodash-es/debounce"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
 import { Input } from "../../shadcn/ui/input"
 import useEditSandboxProjectName from "../../../hooks/sandbox/edit-sandbox-project-name"
+import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
 export default function EditableProjectTitle({ project }: { project: SandboxProject }) {

@@ -2,6 +2,8 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { AddNewPipResponse, AddPipData, AllCommonResponses, ErrorResponse,
+	NonSuccessResponse, PipUUID, PreviouslyAddedPipsResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts"
 
 export default class PipDataService {
 	private readonly pathHeader: EndpointHeaders = "/pip"

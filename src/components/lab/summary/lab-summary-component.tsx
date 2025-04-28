@@ -1,5 +1,6 @@
 "use client"
 
+import { ActivityType } from "@bluedotrobots/common-ts"
 import ActivityTemplate from "../activity-structure/activity-template"
 
 interface Props {

@@ -3,6 +3,7 @@
 import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import CustomTooltip from "../../../custom-tooltip"
+import { ProgressStatus } from "@bluedotrobots/common-ts"
 
 interface Props {
 	activityStatus: ProgressStatus

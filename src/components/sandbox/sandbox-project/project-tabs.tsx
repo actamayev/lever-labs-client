@@ -5,6 +5,7 @@ import { useState, useRef, useEffect } from "react"
 import { Textarea } from "../../shadcn/ui/textarea"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import useEditSandboxProjectNotes from "../../../hooks/sandbox/edit-sandbox-project-notes"
+import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 
 interface ProjectTabsProps {
 	project: SandboxProject

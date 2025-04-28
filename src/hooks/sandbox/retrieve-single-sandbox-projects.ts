@@ -6,6 +6,7 @@ import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: ProjectUUID): void {
 	const sandboxClass = useSandboxContext()

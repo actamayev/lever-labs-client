@@ -7,6 +7,7 @@ import CustomTooltip from "../../custom-tooltip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import { usePageTransitionContext } from "../../../contexts/page-transition-context"
+import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
 	nextPageLink?: LabPages

@@ -21,6 +21,7 @@ import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 

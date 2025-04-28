@@ -5,6 +5,8 @@ import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { createContext, useContext } from "react"
 import { action, makeObservable, observable } from "mobx"
+import { HeadlightData, HornData, IncomingSensorData,
+	LedControlData, MotorControlData, PipStatusUpdate, SoundData } from "@bluedotrobots/common-ts"
 
 class SocketClass extends EventEmitter {
 	private _socket: Socket | null = null
@@ -73,7 +75,7 @@ class SocketClass extends EventEmitter {
 		})
 	})
 
-	public emitMotorControl = action((motorControlData: MotorControlDataToSend): void => {
+	public emitMotorControl = action((motorControlData: MotorControlData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
@@ -81,7 +83,7 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("motor-control", motorControlData)
 	})
 
-	public emitLedColorControl = action((ledControlDataToSend: LedControlDataToSend): void => {
+	public emitLedColorControl = action((ledControlDataToSend: LedControlData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
@@ -89,7 +91,7 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("new-led-colors", ledControlDataToSend)
 	})
 
-	public emitHornSound = action((hornControlDataToSend: HornDataToSend): void => {
+	public emitHornSound = action((hornControlDataToSend: HornData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
@@ -97,7 +99,7 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("horn-sound-update", hornControlDataToSend)
 	})
 
-	public emitHeadLightStatus = action((headlightDataToSend: HeadlightDataToSend): void => {
+	public emitHeadLightStatus = action((headlightDataToSend: HeadlightData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
@@ -105,7 +107,7 @@ class SocketClass extends EventEmitter {
 		this._socket.emit("headlight-update", headlightDataToSend)
 	})
 
-	public emitSound = action((soundDataToSend: SoundDataToSend): void => {
+	public emitSound = action((soundDataToSend: SoundData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")

@@ -5,13 +5,14 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function SidebarLogo() {
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">
 				<Link
-					href="/career-quest"
+					href={PageToNavigateAfterLogin}
 					className="flex items-center justify-start rounded-lg mt-1"
 				>
 					<div className="flex aspect-square items-start justify-start">

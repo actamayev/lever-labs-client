@@ -5,6 +5,7 @@ import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
+import { PipStatusUpdate } from "@bluedotrobots/common-ts"
 
 export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => void {
 	const pipClass = usePipContext()

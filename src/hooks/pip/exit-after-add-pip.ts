@@ -4,6 +4,7 @@ import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAddPipContext } from "../../contexts/add-pip-context"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 
 export default function useExitAfterAddPip(): () => void {
 	const addPipClass = useAddPipContext()
@@ -13,6 +14,6 @@ export default function useExitAfterAddPip(): () => void {
 		if (isNull(addPipClass)) return
 		addPipClass.store.resetAddPipMethods()
 		addPipClass.form.reset()
-		navigate("/career-quest")
+		navigate(PageToNavigateAfterLogin)
 	}, [addPipClass, navigate])
 }

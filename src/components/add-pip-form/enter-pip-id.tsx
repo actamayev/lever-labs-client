@@ -11,6 +11,7 @@ import isPipUUIDValid from "../../utils/is-pip-uuid-valid"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormField, FormItem, FormControl } from "../shadcn/ui/form"
 import useRetrievePipUUIDStatusInForm from "../../hooks/pip/retrieve-pip-uuid-status-in-form"
+import { PipUUID } from "@bluedotrobots/common-ts"
 
 // 12/20/25 TODO: Make Pip ID OTP: https://ui.shadcn.com/docs/components/input-otp
 function EnterPipID() {

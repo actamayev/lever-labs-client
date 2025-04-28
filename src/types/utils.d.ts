@@ -3,8 +3,6 @@ import { LucideIcon } from "lucide-react"
 declare global {
 	type EmailOrUnknown = "Email" | "Unknown"
 
-	type SiteThemes = "light" | "dark"
-
 	type EndpointHeaders =
 		| "/auth"
 		| "/lab-activity-tracking"
@@ -14,8 +12,6 @@ declare global {
 		| "/personal-info"
 		| "/sandbox"
 		| "/workbench"
-
-	type PipUUID = string & { readonly __brand: unique symbol }
 
 	interface SidebarNavData {
 		title: "Sandbox" | "Career Quest" | "Lab" | "Garage"
@@ -51,6 +47,18 @@ declare global {
 	}
 
 	type PageTransitionDirections = null | "left" | "right" | "up" | "down"
+
+	//Auth
+	type LoginOrRegister = "Login" | "Register"
+	interface RegisterFormValues {
+		email: string
+		username: string
+		password: string
+		passwordConfirmation: string
+	}
+
+	//Sandbox
+	type HexColor = string & { readonly __brand: unique symbol }
 }
 
 export {}

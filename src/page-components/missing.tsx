@@ -6,10 +6,11 @@ import { useAuthContext } from "../contexts/auth-context"
 import { CustomHouse } from "../components/icons/custom-house"
 import { CustomBriefcase } from "../components/icons/custom-briefcase"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
+import { PageToNavigateAfterLogin } from "../utils/constants"
 
 function Missing() {
 	const authClass = useAuthContext()
-	const destination = authClass.isLoggedIn ? "/career-quest" : "/"
+	const destination = authClass.isLoggedIn ? PageToNavigateAfterLogin : "/"
 
 	return (
 		<div className="flex flex-col items-center gap-8 pt-16">

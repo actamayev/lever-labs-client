@@ -4,6 +4,7 @@ import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
 import defaultLedActivities from "../components/lab/lessons/led/default-led-activities"
+import { UserActivityProgress } from "@bluedotrobots/common-ts"
 
 class ActivityProgressClass {
 	public didRetrieveAllActivityProgress = false

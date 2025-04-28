@@ -3,6 +3,7 @@
 import * as Blockly from "blockly"
 import LabCodeMainContent from "./lab-code-main-content"
 import ActivityTemplate from "../activity-structure/activity-template"
+import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
 	nextPageLink: LabPages

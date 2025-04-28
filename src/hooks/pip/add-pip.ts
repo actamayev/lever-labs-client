@@ -12,6 +12,7 @@ import useToastOptions from "../../components/toast-options"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
+import { AddPipData, PipData, PipUUID } from "@bluedotrobots/common-ts"
 
 export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

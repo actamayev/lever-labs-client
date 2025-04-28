@@ -10,8 +10,9 @@ import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
+import { SandboxProject } from "@bluedotrobots/common-ts"
 
-function SandboxProjectHeader({ project } : {project: SandboxProject}) {
+function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const starSandboxProject = useStarSandboxProject()
 	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
 	const personalInfoClass = usePersonalInfoContext()

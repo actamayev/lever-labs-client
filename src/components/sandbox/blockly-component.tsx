@@ -3,6 +3,7 @@
 import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
@@ -20,6 +21,7 @@ interface Props {
 	onXmlChange?: (xml: string) => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 function BlocklyComponent(props: Props) {
 	const {
 		toolboxConfig,
@@ -34,12 +36,15 @@ function BlocklyComponent(props: Props) {
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const initializeBlocks = useInitializeBlocks()
 	const [isCentered, setIsCentered] = useState(false)
+	const pathname = usePathname()
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)
 	}, [isDarkMode])
 
-	const centerWorkspace = useCallback((workspace: Blockly.WorkspaceSvg) => {
+	const centerWorkspace = useCallback(() => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
 		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 
 		workspace.scrollCenter()
@@ -59,13 +64,27 @@ function BlocklyComponent(props: Props) {
 		if (onXmlChange) {
 			onXmlChange(newXml)
 		}
-	}, [setCppCode, onXmlChange])
+
+		// Center workspace on first initialization
+		if (!isCentered) {
+			centerWorkspace()
+		}
+	}, [setCppCode, onXmlChange, isCentered, centerWorkspace])
+
+	// Reset isCentered when pathname changes (navigation)
+	useEffect(() => {
+		setIsCentered(false)
+	}, [pathname])
 
 	// Add effect to center workspace after it's initialized and when blocks change
 	useEffect(() => {
-		if (!workspaceRef.current || isCentered) return
-		centerWorkspace(workspaceRef.current)
-	}, [centerWorkspace, initialXml, isCentered])
+		if (isCentered) return
+		const timer = setTimeout(() => {
+			centerWorkspace()
+		}, 100) // Small delay to ensure workspace is fully rendered
+
+		return () => clearTimeout(timer)
+	}, [centerWorkspace, initialXml, isCentered, pathname])
 
 	useEffect(() => {
 		if (!containerRef.current) return

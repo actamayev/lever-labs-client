@@ -13,12 +13,13 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 
 export default function LoginComponent() {
 	const [error, setError] = useState("")
 	const loginSubmit = useLoginSubmit(setError)
 
-	const form = useForm<LoginFormValues>({
+	const form = useForm<LoginRequest>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			contact: "",
@@ -26,7 +27,7 @@ export default function LoginComponent() {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: LoginFormValues) => {
+	const onSubmit = useCallback(async (values: LoginRequest) => {
 		await loginSubmit(values)
 	}, [loginSubmit])
 
@@ -35,7 +36,7 @@ export default function LoginComponent() {
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
 					<ContactInput control={form.control} />
-					<PasswordField<LoginFormValues>
+					<PasswordField<LoginRequest>
 						control={form.control}
 						name="password"
 						// showForgotPassword={true}

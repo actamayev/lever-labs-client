@@ -4,6 +4,7 @@ import { useEffect } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 
 export default function useRedirectKnownUserToLab (): void {
 	const authClass = useAuthContext()
@@ -13,6 +14,6 @@ export default function useRedirectKnownUserToLab (): void {
 	useEffect(() => {
 		if (!authClass.isLoggedIn) return
 		if (!personalInfoClass.username) return navigate("/register-username")
-		return navigate("/career-quest")
+		return navigate(PageToNavigateAfterLogin)
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, navigate, personalInfoClass.username])
 }

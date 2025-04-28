@@ -8,6 +8,7 @@ import { isNonSuccessResponse } from "../../../utils/type-checks"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../../utils/error-handling/set-error-axios-response"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function useUsernameSubmit (setError: (error: string) => void): (username: string) => Promise<void> {
 	const authClass = useAuthContext()
@@ -27,7 +28,7 @@ export default function useUsernameSubmit (setError: (error: string) => void): (
 			personalInfoClass.setUsername(username)
 			// TODO 3/16/25: The user is navigated to /lab. I believe this is because as soon as the username is set,
 			// the useRedirectUserWithUsername moves the user to /lab
-			navigate("/career-quest")
+			navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {

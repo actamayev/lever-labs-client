@@ -6,17 +6,18 @@ import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../components/toast-options"
 import { useApiClientContext } from "../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
 
 export default function useSubscribeForUpdates(
 	isLoading: boolean,
 	setIsLoading: (value: React.SetStateAction<boolean>) => void,
 ): (
-	values: EmailUpdatesFormValues
+	values: EmailUpdatesRequest
 ) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
-	return useCallback(async (values: EmailUpdatesFormValues): Promise<void> => {
+	return useCallback(async (values: EmailUpdatesRequest): Promise<void> => {
 		try {
 			if (!values.email || isLoading) return
 			setIsLoading(true)

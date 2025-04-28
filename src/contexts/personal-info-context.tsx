@@ -3,6 +3,7 @@
 import { createContext, useContext } from "react"
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
+import { PersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -10,7 +11,7 @@ class PersonalInfoClass {
 	public name: string | null = null
 
 	public isRetrievingPersonalInfo = false
-	public retrievedPeronsalInfo = false
+	public retrievedPersonalInfo = false
 	public defaultSiteTheme: SiteThemes = "light"
 	public sandboxNotesOpen: boolean = false
 	public profilePictureUrl: string | null = null
@@ -34,7 +35,7 @@ class PersonalInfoClass {
 	})
 
 	public setRetrievedPersonalInfo = action((newState: boolean): void => {
-		this.retrievedPeronsalInfo = newState
+		this.retrievedPersonalInfo = newState
 	})
 
 	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
