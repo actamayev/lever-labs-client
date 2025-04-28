@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Sounds } from "@bluedotrobots/common-ts"
 import rgbToBlocklyColor from "./blockly/rgb-to-blocky"
 
 export const bentoIconSize = 40

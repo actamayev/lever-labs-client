@@ -16,6 +16,7 @@ import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { useGarageContext } from "../../../../contexts/garage-context"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
+import { Sounds } from "@bluedotrobots/common-ts"
 
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)

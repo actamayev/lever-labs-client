@@ -1,3 +1,4 @@
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { allPages, careerQuestPages, labPages, staticPages } from "../utils/constants"
 
 declare global {
