@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { Sounds } from "@bluedotrobots/common-ts"
 import rgbToBlocklyColor from "./blockly/rgb-to-blocky"
 
 export const bentoIconSize = 40
@@ -127,3 +128,5 @@ export const soundMappings: SoundMapping = {
 
 export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
+
+export const PageToNavigateAfterLogin = "/garage"

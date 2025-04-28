@@ -12,6 +12,7 @@ import {
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import useEditSandboxProjectName from "../../../hooks/sandbox/edit-sandbox-project-name"
+import { SandboxProject } from "@bluedotrobots/common-ts"
 
 interface Props {
 	project: SandboxProject

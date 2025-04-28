@@ -1,23 +1,12 @@
+import { AddPipData } from "@bluedotrobots/common-ts"
+
 declare global {
 	interface IncompletePipData extends AddPipData {
 		wifiNetworkName?: string
 		wifiPassword?: string
 	}
 
-	interface AddPipData {
-		pipUUID: PipUUID
-		shouldAutoConnect: boolean
-		pipName?: string
-	}
-
 	type WifiPipDataKeys = "wifiNetworkName" | "wifiPassword"
-
-	interface PipData {
-		pipName: string
-		pipUUID: PipUUID
-		userPipUUIDId: number
-		pipConnectionStatus: PipConnectionStatus
-	}
 
 	interface AddingNewPipRequirements {
 		doesPipUUIDExist: boolean
@@ -26,19 +15,6 @@ declare global {
 		userAlreadyAddedUUID: boolean
 		checkedConnectedToWifi: boolean
 	}
-
-	type PipConnectionStatus =
-		ESPConnectionStatus |
-		// "offline" | // Pip is not connected to the internet/ is turned off.
-		"online" | // Pip is connected to the internet, but not connected to any browser clients
-		// "updating firmware" | // ESP changed to this state when client approves firmware update
-		"connected to other user" // Connected to somone else
-		// "connected" // Connected to me
-
-	type ESPConnectionStatus =
-		"offline" | // Not connected to internet/is turned off.
-		"updating firmware" | // ESP changed to this state when client approves firmware update
-		"connected" // Connected to the internet/is active
 
 	type NewPipConnectionStatuses = "connected" | "connecting" | "failed"
 }

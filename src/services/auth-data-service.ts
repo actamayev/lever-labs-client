@@ -2,6 +2,8 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { AllCommonResponses, ErrorResponse, ErrorResponses, GoogleAuthSuccess, LoginRequest, LoginSuccess,
+	NonSuccessResponse, RegisterRequest, RegisterSuccess, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
 
 export default class AuthDataService {
 	private readonly pathHeader: EndpointHeaders = "/auth"
@@ -9,7 +11,7 @@ export default class AuthDataService {
 	constructor(private readonly httpClient: BlueDotHttpClient) {
 	}
 
-	async login(loginInformation: LoginFormValues): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
+	async login(loginInformation: LoginRequest): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
 		return await this.httpClient.http.post<LoginSuccess | NonSuccessResponse>(
 			`${this.pathHeader}/login`, { loginInformation }, { headers: { "No-Auth-Required": "true" }}
 		)
@@ -21,7 +23,7 @@ export default class AuthDataService {
 		)
 	}
 
-	async register(registerInformation: RegisterCredentialsToSend): Promise<AxiosResponse<RegisterSuccess | NonSuccessResponse>> {
+	async register(registerInformation: RegisterRequest): Promise<AxiosResponse<RegisterSuccess | NonSuccessResponse>> {
 		return await this.httpClient.http.post<RegisterSuccess | NonSuccessResponse>(
 			`${this.pathHeader}/register`, { registerInformation }, { headers: { "No-Auth-Required": "true" }}
 		)

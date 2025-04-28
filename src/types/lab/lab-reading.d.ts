@@ -1,3 +1,5 @@
+import { QuestionUUID } from "@bluedotrobots/common-ts"
+
 declare global {
 	interface ContentBlock {
 		id: ContentBlockID
@@ -8,8 +10,6 @@ declare global {
 			demoLink?: LabPages
 		}
 	}
-
-	type QuestionUUID = string & { readonly __brand: unique symbol }
 
 	interface QuizQuestions {
 		questions: Question[]

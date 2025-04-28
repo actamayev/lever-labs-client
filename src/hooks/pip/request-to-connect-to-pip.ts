@@ -7,6 +7,7 @@ import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
+import { PipUUID } from "@bluedotrobots/common-ts"
 
 export default function useRequestToConnectToPip(): (
 	pipUUID: PipUUID

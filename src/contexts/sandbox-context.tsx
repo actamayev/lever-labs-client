@@ -1,5 +1,6 @@
 "use client"
 
+import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"

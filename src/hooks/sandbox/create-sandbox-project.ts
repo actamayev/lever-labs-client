@@ -7,6 +7,7 @@ import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useCreateSandboxProject(): () => Promise<ProjectUUID | undefined> {
 	const sandboxClass = useSandboxContext()

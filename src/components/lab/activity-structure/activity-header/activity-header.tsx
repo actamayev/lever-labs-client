@@ -6,6 +6,7 @@ import { Button } from "../../../shadcn/ui/button"
 import ReadingProgressBar from "./reading-progress-bar"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LessonProgressIconContainer from "./lesson-progress-icon-container"
+import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
 	lessonTitle?: LessonNames

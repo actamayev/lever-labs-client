@@ -9,16 +9,17 @@ import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"
 import useSubscribeForUpdates from "../../hooks/subscribe-for-updates"
 import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
 
 export default function SignUpForUpdates() {
 	const [isLoading, setIsLoading] = useState(false)
 	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading)
 
-	const onSubmit = useCallback(async (values: EmailUpdatesFormValues) => {
+	const onSubmit = useCallback(async (values: EmailUpdatesRequest) => {
 		await subscribeForUpdates(values)
 	}, [subscribeForUpdates])
 
-	const form = useForm<EmailUpdatesFormValues>({
+	const form = useForm<EmailUpdatesRequest>({
 		resolver: zodResolver(emailUpdatesSchema),
 		defaultValues: {
 			email: ""

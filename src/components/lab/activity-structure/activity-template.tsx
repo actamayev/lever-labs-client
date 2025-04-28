@@ -5,6 +5,7 @@ import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 import ActivityHeader from "./activity-header/activity-header"
 import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
 	activityType: ActivityType

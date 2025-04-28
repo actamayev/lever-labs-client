@@ -8,6 +8,7 @@ import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
 	const sandboxClass = useSandboxContext()

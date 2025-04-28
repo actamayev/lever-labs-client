@@ -3,6 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
+import { ProgressStatus } from "@bluedotrobots/common-ts"
 
 export default function useLilypadVariants(): (progress: ProgressStatus) => string {
 	return useCallback((progress) => cn(

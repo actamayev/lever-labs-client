@@ -3,6 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import { BookOpen, ClipboardList, CodeXml } from "lucide-react"
+import { ProgressStatus } from "@bluedotrobots/common-ts"
 
 interface Props {
 	progress: ProgressStatus

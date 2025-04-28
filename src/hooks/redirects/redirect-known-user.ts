@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
-import { PrivatePageNames } from "../../utils/constants"
+import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
@@ -26,6 +26,6 @@ export default function useRedirectKnownUser(): void {
 			isPrivatePage
 		) return
 
-		navigate("/career-quest")
+		navigate(PageToNavigateAfterLogin)
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, pathname, navigate, personalInfoClass.username])
 }

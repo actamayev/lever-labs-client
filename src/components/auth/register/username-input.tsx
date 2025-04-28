@@ -1,16 +1,17 @@
 "use client"
 
 import { Control, FieldPath } from "react-hook-form"
+import { NewUsernameRequest } from "@bluedotrobots/common-ts"
 import { Input } from "../../shadcn/ui/input"
 import CharacterCounter from "../../character-counter"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import useHandleTypeUsername from "../../../hooks/handle-type-validation/handle-type-username"
 
-interface Props<T extends RegisterUsernameFormValues | RegisterFormValues> {
+interface Props<T extends NewUsernameRequest | RegisterFormValues> {
 	control: Control<T>
 }
 
-export default function UsernameInput<T extends RegisterUsernameFormValues | RegisterFormValues>({
+export default function UsernameInput<T extends NewUsernameRequest | RegisterFormValues>({
 	control,
 }: Props<T>) {
 	const handleTypeUsername = useHandleTypeUsername()

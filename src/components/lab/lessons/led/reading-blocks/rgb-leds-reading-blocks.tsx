@@ -6,6 +6,7 @@ import DidYouKnow from "../../../reading/did-you-know"
 import { CustomPalette } from "../../../../icons/custom-palette"
 import { BulletedList, NumberedList } from "../../../reading/ordered-list"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 const rgbLedsReadingBlocks: ContentBlock[] = [
 	{

@@ -2,6 +2,9 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { ActivityUUID, AllCommonResponses, ErrorResponse, ErrorResponses,
+	RetrievedQuestionsResponse,
+	RetrievedUserActivityProgressResponse, SuccessResponse } from "@bluedotrobots/common-ts"
 
 export default class LabActivityTrackingDataService {
 	private readonly pathHeader: EndpointHeaders = "/lab-activity-tracking"

@@ -5,6 +5,7 @@ import DidYouKnow from "../../../reading/did-you-know"
 import { CustomMarsRover } from "../../../../icons/custom-mars-rover"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
 import { BulletedList } from "../../../reading/ordered-list"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 const ledsInRoboticsReadingBlocks: ContentBlock[] = [
 	{
