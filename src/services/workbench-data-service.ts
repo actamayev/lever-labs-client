@@ -2,6 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { ErrorResponses, PipUUID, SuccessResponse, TuneToPlay } from "@bluedotrobots/common-ts"
 
 export default class WorkbenchDataService {
 	private readonly pathHeader: EndpointHeaders = "/workbench"

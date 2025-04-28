@@ -3,8 +3,9 @@
 import { Control } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 
-export default function ContactInput ({ control } : { control: Control<LoginFormValues>}) {
+export default function ContactInput ({ control } : { control: Control<LoginRequest>}) {
 	return (
 		<FormField
 			control={control}

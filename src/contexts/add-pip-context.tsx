@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { createContext, useContext, useMemo } from "react"
 import { addPipSchema } from "../utils/pip/pip-schemas"
+import { PipUUID } from "@bluedotrobots/common-ts"
 
 class AddPipClass {
 	public addingNewPipRequirements: AddingNewPipRequirements = {

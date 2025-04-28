@@ -1,5 +1,7 @@
 "use client"
 
+import { ActivityUUID } from "@bluedotrobots/common-ts"
+
 const defaultLedActivities: DefaultActivity[] = [
 	{
 		activityUrl: "/lab/led/reading/intro-to-leds",

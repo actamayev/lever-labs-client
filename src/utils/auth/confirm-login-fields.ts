@@ -1,8 +1,9 @@
 "use client"
 
+import { LoginRequest } from "@bluedotrobots/common-ts"
 import isEmpty from "lodash-es/isEmpty"
 
-export default function confirmLoginFields(credentials: LoginFormValues, setError: (error: string) => void): boolean {
+export default function confirmLoginFields(credentials: LoginRequest, setError: (error: string) => void): boolean {
 	if (isEmpty(credentials.contact) && isEmpty(credentials.password)) {
 		setError("Welcome back! Please enter your email/username and password to log in")
 		return false

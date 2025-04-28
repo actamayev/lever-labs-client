@@ -2,6 +2,8 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { AllCommonResponses, ErrorResponse, ErrorResponses, NonSuccessResponse,
+	PersonalInfoResponse, ProfilePictureUrl, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
 
 export default class PersonalInfoDataService {
 	private readonly pathHeader: EndpointHeaders = "/personal-info"

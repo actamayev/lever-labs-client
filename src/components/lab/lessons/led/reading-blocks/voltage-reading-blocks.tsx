@@ -7,6 +7,7 @@ import { CustomSolar } from "../../../../icons/custom-solar"
 import DefinitionText from "../../../reading/definition-text"
 import { CustomBucket } from "../../../../icons/custom-bucket"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 const voltageReadingBlocks: ContentBlock[] = [
 	{

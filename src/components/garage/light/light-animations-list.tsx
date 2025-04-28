@@ -14,6 +14,7 @@ import { CustomYoga } from "../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
 import { useGarageContext } from "../../../contexts/garage-context"
 import useLightsAnimation from "../../../hooks/garage/lights-animation"
+import { LightAnimation } from "@bluedotrobots/common-ts"
 
 interface Animation {
 	name: LightAnimation

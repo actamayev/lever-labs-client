@@ -8,6 +8,7 @@ import { useEffect, useCallback } from "react"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
+import { LedControlData } from "@bluedotrobots/common-ts"
 
 export default function useSetDefaultColorsUseEffect(): void {
 	const garageClass = useGarageContext()
@@ -25,7 +26,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 			) return
 
 			const selectedColorShade = garageClass.selectedColorShade
-			const ledControlData: LedControlDataToSend = {
+			const ledControlData: LedControlData = {
 				topLeftColor: {
 					r: Math.round(garageClass.dotColors[0].r * selectedColorShade),
 					g: Math.round(garageClass.dotColors[0].g * selectedColorShade),

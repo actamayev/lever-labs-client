@@ -18,6 +18,7 @@ import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 import { useWorkbenchContext } from "../../../contexts/workbench-context"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
+import { TuneToPlay } from "@bluedotrobots/common-ts"
 
 function VolumeContent() {
 	const workbenchClass = useWorkbenchContext()

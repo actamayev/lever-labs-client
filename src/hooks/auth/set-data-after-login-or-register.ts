@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { LoginSuccess, RegisterSuccess } from "@bluedotrobots/common-ts"
 
 export default function useSetDataAfterLoginOrRegister(): (authData: LoginSuccess | RegisterSuccess) => void {
 	const authClass = useAuthContext()

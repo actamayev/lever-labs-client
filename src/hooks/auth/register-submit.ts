@@ -10,6 +10,7 @@ import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { SiteThemes } from "@bluedotrobots/common-ts"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,

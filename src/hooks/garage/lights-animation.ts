@@ -7,6 +7,7 @@ import { usePipContext } from "../../contexts/pip-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { LightAnimation } from "@bluedotrobots/common-ts"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

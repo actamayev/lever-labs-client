@@ -11,6 +11,7 @@ import { useApiClientContext } from "../../../contexts/blue-dot-api-client-conte
 import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
 import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import { SiteThemes } from "@bluedotrobots/common-ts"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

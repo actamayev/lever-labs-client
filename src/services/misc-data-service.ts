@@ -2,6 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { AllCommonResponses } from "@bluedotrobots/common-ts"
 
 export default class MiscDataService {
 	private readonly pathHeader: EndpointHeaders = "/misc"

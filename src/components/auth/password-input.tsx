@@ -6,16 +6,17 @@ import { Control, FieldPath } from "react-hook-form"
 import { Input } from "@/components/shadcn/ui/input"
 import { Button } from "@/components/shadcn/ui/button"
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 // import Link from "next/link"
 
-interface PasswordFieldProps<T extends LoginFormValues | RegisterFormValues> {
+interface PasswordFieldProps<T extends LoginRequest | RegisterFormValues> {
 	control: Control<T>
 	name: FieldPath<T>
 	placeholder?: string
 	// showForgotPassword?: boolean
 }
 
-export default function PasswordField<T extends LoginFormValues | RegisterFormValues>({
+export default function PasswordField<T extends LoginRequest | RegisterFormValues>({
 	control,
 	name,
 	placeholder = "Password"

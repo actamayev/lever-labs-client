@@ -5,6 +5,7 @@ import { Cpu } from "lucide-react"
 import DefinitionText from "../../../reading/definition-text"
 import ColoredText from "../../../reading/colored-text"
 import { ReadingBlockHeader, ReadingBlockSectionHeader, ReadingBlockWithImage } from "../../../reading/reading-styles"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 const introToLedsReadingBlocks: ContentBlock[] = [
 	{

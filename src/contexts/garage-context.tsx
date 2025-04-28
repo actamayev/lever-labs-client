@@ -4,6 +4,7 @@ import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { createContext, useContext } from "react"
+import { IncomingSensorData, LightAnimation, MotorControlInput } from "@bluedotrobots/common-ts"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 0, b: 0, a: 1 }

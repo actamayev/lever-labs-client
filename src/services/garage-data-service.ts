@@ -2,6 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { AllCommonResponses, LightAnimation, PipUUID } from "@bluedotrobots/common-ts"
 
 export default class GarageDataService {
 	private readonly pathHeader: EndpointHeaders = "/garage"

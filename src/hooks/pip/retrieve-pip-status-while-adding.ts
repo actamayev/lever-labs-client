@@ -10,6 +10,7 @@ import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { PipUUID } from "@bluedotrobots/common-ts"
 
 export default function useRetrievePipStatusWhileAdding(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

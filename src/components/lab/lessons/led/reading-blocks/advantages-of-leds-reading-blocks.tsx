@@ -8,6 +8,7 @@ import { CustomToaster } from "../../../../icons/custom-toaster"
 import { CustomUV } from "../../../../icons/custom-uv"
 import { BulletedList } from "../../../reading/ordered-list"
 import DefinitionText from "../../../reading/definition-text"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 const advantagesOfLEDsReadingBlocks: ContentBlock[] = [
 	{

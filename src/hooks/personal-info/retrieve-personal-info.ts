@@ -16,7 +16,7 @@ export default function useRetrievePersonalInfo(): () => Promise<void> {
 			if (
 				personalInfoClass.isRetrievingPersonalInfo === true ||
 				isNull(blueDotApiClient.httpClient.accessToken) ||
-				personalInfoClass.retrievedPeronsalInfo === true
+				personalInfoClass.retrievedPersonalInfo === true
 			) return
 
 			personalInfoClass.setIsRetrievingPersonalDetails(true)

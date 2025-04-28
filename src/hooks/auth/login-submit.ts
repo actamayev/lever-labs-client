@@ -12,8 +12,9 @@ import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 
-export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginFormValues) => Promise<void> {
+export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
 	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
@@ -21,7 +22,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
 
-	return useCallback(async (loginInformation: LoginFormValues): Promise<void> => {
+	return useCallback(async (loginInformation: LoginRequest): Promise<void> => {
 		setError("")
 		try {
 			const areCredentialsValid = confirmLoginFields(loginInformation, setError)

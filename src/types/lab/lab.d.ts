@@ -1,16 +1,11 @@
+import { ActivityType, ActivityUUID, ProgressStatus } from "@bluedotrobots/common-ts"
+
 declare global {
 	type ActivityTypePath =
 	| `Reading/${string}`
 	// | `Video/${string}
 	| `Demo/${string}`
 	| `Code/${string}`
-	| "Summary"
-
-	type ActivityType =
-	| "Reading"
-	// | "Video"
-	| "Code"
-	| "Demo"
 	| "Summary"
 
 	type UncertainActivityType =
@@ -30,8 +25,6 @@ declare global {
 		// stackWithPrevious?: boolean
 		// skipConnection?: boolean
 	}
-
-	type ProgressStatus = "IN_PROGRESS" | "COMPLETED" | null
 
 	interface FullActivity extends DefaultActivity {
 		activityStatus: ProgressStatus
