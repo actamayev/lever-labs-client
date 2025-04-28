@@ -14,10 +14,14 @@ jobs:
       with:
         node-version: 'lts/*'
         cache: 'npm'
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@bluedotrobots'
 
     - name: Install dependencies
       run: npm ci
-
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
+    
     - name: Fix linting
       run: npm run lint:fix
 
@@ -35,9 +39,13 @@ jobs:
       with:
         node-version: 'lts/*'
         cache: 'npm'
+        registry-url: 'https://npm.pkg.github.com'
+        scope: '@bluedotrobots'
 
     - name: Install dependencies
       run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.PACKAGES_TOKEN }}
 
     - name: Run type-check
       run: npm run type-check
