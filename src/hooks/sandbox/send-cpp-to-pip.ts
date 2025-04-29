@@ -8,6 +8,8 @@ import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
 
 export default function useSendCppToPip(): (
 	cppCode: string,
@@ -16,12 +18,18 @@ export default function useSendCppToPip(): (
 	const pipClass = usePipContext()
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
+	const serialManager = useSerialManagerContext()
 
-	return useCallback(async (
-		cppCode: string,
-		rect: DOMRect
-	) => {
+	return useCallback(async (cppCode: string, rect: DOMRect) => {
 		try {
+			if (serialManager.connected) {
+				const bytecode = CppParser.cppToByte(cppCode)
+				const buffer = MessageBuilder.createBytecodeMessage(bytecode)
+
+				void serialManager.sendBinaryMessage(buffer)
+				return
+			}
+
 			if (isNull(pipClass.selectedPip)) {
 				return toast.neutral({
 					title: "You have not connected to a Pip",
@@ -68,5 +76,5 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass, toast])
+	}, [blueDotApiClient.sandboxDataService, pipClass, serialManager, toast])
 }

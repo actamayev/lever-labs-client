@@ -15,7 +15,6 @@ class SerialManagerClass {
 	}
 
 	async connectToDevice(): Promise<void> {
-		console.log("this.connected", this.connected)
 		if (this.connected) return
 
 		try {
@@ -85,39 +84,6 @@ class SerialManagerClass {
 			this.connected = false
 			this.errorMessage = null
 		})
-	}
-
-	async sendMessage(message: string): Promise<void> {
-		if (!this.connected || !this.writer) {
-			this.errorMessage = "Not connected to device"
-			return
-		}
-
-		try {
-			// Add newline as message terminator
-			const messageWithNewline = message + "\n"
-
-			// Convert string to Uint8Array
-			const encoder = new TextEncoder()
-			const data = encoder.encode(messageWithNewline)
-
-			// Send data
-			await this.writer.write(data)
-
-			// Add to messages
-			runInAction(() => {
-				this.messages.push({
-					content: message,
-					direction: "sent",
-					timestamp: new Date()
-				})
-			})
-
-		} catch (error) {
-			runInAction(() => {
-				this.errorMessage = error instanceof Error ? error.message : String(error)
-			})
-		}
 	}
 
 	private async readLoop(): Promise<void> {
@@ -209,8 +175,8 @@ class SerialManagerClass {
 			.join(" ")
 	}
 
-	public logout(): void {
-		this.disconnect()
+	public async logout(): Promise<void> {
+		await this.disconnect()
 		this.port = null
 		this.reader = null
 		this.writer = null
@@ -221,16 +187,16 @@ class SerialManagerClass {
 	}
 }
 
-const serialManagerInstance = new SerialManagerClass()
+const serialManagerClass = new SerialManagerClass()
 
-const SerialManagerContext = createContext(serialManagerInstance)
+const SerialManagerContext = createContext(serialManagerClass)
 
 export default function SerialManagerProvider({ children }: { children: React.ReactNode }) {
 	return (
-		<SerialManagerContext.Provider value={serialManagerInstance}>
+		<SerialManagerContext.Provider value={serialManagerClass}>
 			{children}
 		</SerialManagerContext.Provider>
 	)
 }
 
-export const useSerialManager = () => useContext(SerialManagerContext)
+export const useSerialManagerContext = () => useContext(SerialManagerContext)

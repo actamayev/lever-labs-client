@@ -1,14 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import { observer } from "mobx-react"
-import React, { useState } from "react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "./shadcn/ui/button"
-import { useSerialManager } from "../contexts/serial-manager-context"
+import { useSerialManagerContext } from "../contexts/serial-manager-context"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SerialConnector () {
-	const [messageText, setMessageText] = useState("")
-	const serialManager = useSerialManager() // Use the hook to get the serial manager instance
+	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
 
 	const handleConnect = async () => {
 		await serialManager.connectToDevice()
@@ -16,51 +13,6 @@ function SerialConnector () {
 
 	const handleDisconnect = async () => {
 		await serialManager.disconnect()
-	}
-
-	const handleSendMessage = async (e: React.FormEvent) => {
-		e.preventDefault()
-		if (messageText.trim()) {
-			await serialManager.sendMessage(messageText)
-			setMessageText("")
-		}
-	}
-
-	const handleTurnOnLEDs = async () => {
-		if (!serialManager.connected) return
-
-		const whiteColor = { r: 255, g: 255, b: 255 }
-		const buffer = MessageBuilder.createLedMessage(
-			{
-				topLeftColor: whiteColor,
-				topRightColor: whiteColor,
-				middleLeftColor: whiteColor,
-				middleRightColor: whiteColor,
-				backLeftColor: whiteColor,
-				backRightColor: whiteColor,
-			}
-		)
-
-		await serialManager.sendBinaryMessage(buffer)
-	}
-
-	const handleTurnOffLEDs = async () => {
-		if (!serialManager.connected) return
-
-		// Method 1: Using TURN_OFF animation
-		const offColor = { r: 0, g: 0, b: 0 }
-		const buffer = MessageBuilder.createLedMessage(
-			{
-				topLeftColor: offColor,
-				topRightColor: offColor,
-				middleLeftColor: offColor,
-				middleRightColor: offColor,
-				backLeftColor: offColor,
-				backRightColor: offColor,
-			}
-		)
-
-		await serialManager.sendBinaryMessage(buffer)
 	}
 
 	return (
@@ -113,61 +65,6 @@ function SerialConnector () {
 						Error: {serialManager.errorMessage}
 					</div>
 				)}
-			</div>
-
-			<div className="mb-6">
-				<h2 className="text-xl font-semibold mb-2">LED Controls</h2>
-				<div className="flex space-x-2">
-					<button
-						onClick={handleTurnOnLEDs}
-						disabled={!serialManager.connected}
-						className={`px-4 py-2 rounded ${
-							!serialManager.connected
-								? "bg-gray-300 cursor-not-allowed"
-								: "bg-green-500 hover:bg-green-600 text-white"
-						}`}
-					>
-            Turn On LEDs (White)
-					</button>
-
-					<button
-						onClick={handleTurnOffLEDs}
-						disabled={!serialManager.connected}
-						className={`px-4 py-2 rounded ${
-							!serialManager.connected
-								? "bg-gray-300 cursor-not-allowed"
-								: "bg-yellow-500 hover:bg-yellow-600 text-white"
-						}`}
-					>
-            Turn Off LEDs
-					</button>
-				</div>
-			</div>
-
-			{/* Message Sender */}
-			<div className="mb-6">
-				<form onSubmit={handleSendMessage} className="flex space-x-2">
-					<input
-						type="text"
-						value={messageText}
-						onChange={(e) => setMessageText(e.target.value)}
-						placeholder="Type a message to send to ESP32..."
-						disabled={!serialManager.connected}
-						className="flex-1 px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-					/>
-
-					<button
-						type="submit"
-						disabled={!serialManager.connected || !messageText.trim()}
-						className={`px-4 py-2 rounded ${
-							!serialManager.connected || !messageText.trim()
-								? "bg-gray-300 cursor-not-allowed"
-								: "bg-blue-500 hover:bg-blue-600 text-white"
-						}`}
-					>
-						Send
-					</button>
-				</form>
 			</div>
 
 			{/* Messages */}

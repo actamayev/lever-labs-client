@@ -9,13 +9,13 @@ import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
-import { useSerialManager } from "../../contexts/serial-manager-context"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
 export default function useSetDefaultColorsUseEffect(): void {
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
-	const serialManager = useSerialManager()
+	const serialManager = useSerialManagerContext()
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
@@ -60,6 +60,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 				const buffer = MessageBuilder.createLedMessage(ledControlData)
 
 				void serialManager.sendBinaryMessage(buffer)
+				return
 			}
 
 			if (
