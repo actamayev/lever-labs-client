@@ -8,6 +8,7 @@ import SandboxProvider from "../src/contexts/sandbox-context"
 import WorkbenchProvider from "../src/contexts/workbench-context"
 import LabReadingProvider from "../src/contexts/lab-reading-context"
 import PersonalInfoProvider from "../src/contexts/personal-info-context"
+import SerialManagerProvider from "../src/contexts/serial-manager-context"
 import PageTransitionProvider from "../src/contexts/page-transition-context"
 import ActivityProgressProvider from "../src/contexts/activity-progress-context"
 import BlueDotApiClientProvider from "../src/contexts/blue-dot-api-client-context"
@@ -27,7 +28,9 @@ export default function ContextLevelComponent ({ children } : { children: React.
 												<SandboxProvider>
 													<GarageProvider>
 														<WorkbenchProvider>
-															{children}
+															<SerialManagerProvider>
+																{children}
+															</SerialManagerProvider>
 														</WorkbenchProvider>
 													</GarageProvider>
 												</SandboxProvider>

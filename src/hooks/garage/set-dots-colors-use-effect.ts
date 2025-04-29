@@ -5,28 +5,25 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
+import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
-import { LedControlData } from "@bluedotrobots/common-ts"
+import { useSerialManager } from "../../contexts/serial-manager-context"
 
 export default function useSetDefaultColorsUseEffect(): void {
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
-
+	const serialManager = useSerialManager()
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
 		debounce(() => {
-			if (
-				isNull(pipClass.selectedPip)
-				|| pipClass.selectedPip.pipConnectionStatus === "offline"
-				|| isEmpty(garageClass.selectedDots)
-			) return
+			if (isEmpty(garageClass.selectedDots)) return
 
 			const selectedColorShade = garageClass.selectedColorShade
-			const ledControlData: LedControlData = {
+			const ledControlData: Omit<LedControlData, "pipUUID"> = {
 				topLeftColor: {
 					r: Math.round(garageClass.dotColors[0].r * selectedColorShade),
 					g: Math.round(garageClass.dotColors[0].g * selectedColorShade),
@@ -57,10 +54,21 @@ export default function useSetDefaultColorsUseEffect(): void {
 					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
 					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
 				},
-				pipUUID: pipClass.selectedPip.pipUUID
 			}
 
-			socketClass.emitLedColorControl(ledControlData)
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createLedMessage(ledControlData)
+
+				void serialManager.sendBinaryMessage(buffer)
+			}
+
+			if (
+				isNull(pipClass.selectedPip)
+				|| pipClass.selectedPip.pipConnectionStatus === "offline"
+				|| isEmpty(garageClass.selectedDots)
+			) return
+
+			socketClass.emitLedColorControl({...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
 		}, 10),
 		[garageClass.selectedColorRgba, garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
 	)
