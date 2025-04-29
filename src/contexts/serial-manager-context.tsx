@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react"
 import { makeAutoObservable, runInAction } from "mobx"
+import { MessageType } from "@bluedotrobots/common-ts"
 
 class SerialManagerClass {
 	public port: SerialPort | null = null
@@ -9,6 +10,7 @@ class SerialManagerClass {
 	public connecting: boolean = false
 	public messages: Message[] = []
 	public errorMessage: string | null = null
+	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -45,9 +47,17 @@ class SerialManagerClass {
 				this.errorMessage = null
 			})
 
+			// Send handshake immediately after connection established
+			if (this.writer) {
+				// Use the binary protocol - create a 1-byte buffer with HANDSHAKE value (11)
+				const handshakeMsg = new Uint8Array([MessageType.SERIAL_HANDSHAKE]) // 11 is HANDSHAKE enum value
+				await this.writer.write(handshakeMsg)
+				console.log("Sent handshake to ESP32")
+			}
+
 			// Start reading loop
 			this.readLoop()
-
+			this.startKeepAlive()
 		} catch (error) {
 			runInAction(() => {
 				this.connecting = false
@@ -56,10 +66,43 @@ class SerialManagerClass {
 		}
 	}
 
+	private startKeepAlive(): void {
+		// Clear any existing interval
+		if (this.keepAliveInterval) {
+			clearInterval(this.keepAliveInterval)
+		}
+
+		// Send keepalive message every 5 seconds
+		this.keepAliveInterval = setInterval(async () => {
+			if (this.connected && this.writer) {
+				try {
+					// Use the binary protocol - create a 1-byte buffer with KEEPALIVE value (12)
+					const keepaliveMsg = new Uint8Array([MessageType.SERIAL_KEEPALIVE]) // 12 is KEEPALIVE enum value
+					await this.writer.write(keepaliveMsg)
+					console.log("sending message")
+				} catch (error) {
+					console.error("Keepalive error:", error)
+				}
+			}
+		}, 5000)
+	}
+
 	async disconnect(): Promise<void> {
 		if (!this.connected) return
 
 		try {
+			// Send disconnect notification before closing
+			if (this.writer) {
+			// Create a 1-byte buffer with SERIAL_END value (13)
+				const disconnectMsg = new Uint8Array([MessageType.SERIAL_END])
+				await this.writer.write(disconnectMsg)
+				console.log("Sent disconnect notification to ESP32")
+
+				// Short delay to allow message to be sent
+				await new Promise(resolve => setTimeout(resolve, 50))
+			}
+
+			// Then proceed with normal disconnect procedure
 			if (this.reader) {
 				await this.reader.cancel()
 				this.reader.releaseLock()
@@ -75,6 +118,12 @@ class SerialManagerClass {
 
 		} catch (error) {
 			console.error("Error disconnecting:", error)
+		}
+
+		// Clear the keepalive interval
+		if (this.keepAliveInterval) {
+			clearInterval(this.keepAliveInterval)
+			this.keepAliveInterval = null
 		}
 
 		runInAction(() => {
