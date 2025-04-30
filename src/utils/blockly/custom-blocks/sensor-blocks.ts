@@ -11,6 +11,7 @@ import {
 	IRSensorType
 } from "../block-types/sensor-block-types"
 import { sensorsCategoryColour } from "../../constants"
+import { toLower } from "lodash-es"
 
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
@@ -36,28 +37,27 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
 		}
 	},
-	[SENSORS_BLOCK_TYPES.TOF_READ]: {
+	[SENSORS_BLOCK_TYPES.SIDE_TOF_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {
 				this.appendDummyInput()
-					.appendField("Read distance from")
+					.appendField("Is object near side")
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
-                                [key.toLowerCase(), value] as [string, string]
+								[key.toLowerCase(), value] as [string, string]
 							)
 						),
-						SENSORS_FIELD_VALUES.TOF_READ
+						SENSORS_FIELD_VALUES.SIDE_TOF_READ
 					)
-					.appendField("ToF sensor")
-				this.setOutput(true, "Number")
+				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
-				this.setTooltip("Read distance in mm from Time of Flight sensor")
+				this.setTooltip("Returns true if an object is detected by the front-left or front-right sensor")
 			}
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.TOF_READ) as LeftRightSensorType
-			return [`readToF(TOF_${sensor})`, Order.FUNCTION_CALL]
+			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.SIDE_TOF_READ) as LeftRightSensorType
+			return [`is_object_near_side_${toLower(sensor)}()`, Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.IR_READ]: {

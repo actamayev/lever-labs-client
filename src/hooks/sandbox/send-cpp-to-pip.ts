@@ -26,7 +26,13 @@ export default function useSendCppToPip(): (
 				const bytecode = CppParser.cppToByte(cppCode)
 				const buffer = MessageBuilder.createBytecodeMessage(bytecode)
 
-				void serialManager.sendBinaryMessage(buffer)
+				const success = await serialManager.sendBinaryMessage(buffer)
+				if (success) {
+					fireConfetti(
+						rect,
+						({ particleCount: 300, startVelocity: 30 })
+					)
+				}
 				return
 			}
 

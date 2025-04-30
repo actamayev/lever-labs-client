@@ -187,10 +187,10 @@ class SerialManagerClass {
 		}
 	}
 
-	async sendBinaryMessage(buffer: ArrayBuffer): Promise<void> {
+	async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
 		if (!this.connected || !this.writer) {
 			this.errorMessage = "Not connected to device"
-			return
+			return false
 		}
 
 		try {
@@ -209,10 +209,13 @@ class SerialManagerClass {
 					isBinary: true
 				})
 			})
+			// TODO: Await a success response from the ESP before returning true
+			return true
 		} catch (error) {
 			runInAction(() => {
 				this.errorMessage = error instanceof Error ? error.message : String(error)
 			})
+			return false
 		}
 	}
 

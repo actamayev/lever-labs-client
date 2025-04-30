@@ -4,16 +4,16 @@
 
 export enum SENSORS_BLOCK_TYPES {
     IMU_READ = "imu_read",
-    TOF_READ = "tof_read",
     IR_READ = "ir_read",
-    COLOR_SENSOR_READ = "color_sensor_read"
+    COLOR_SENSOR_READ = "color_sensor_read",
+	SIDE_TOF_READ = "side_tof_read"
 }
 
 export enum SENSORS_FIELD_VALUES {
     IMU_READ = "imu_value",
-    TOF_READ = "tof_sensor",
     IR_READ = "ir_sensor",
-    COLOR_SENSOR_READ = "color_sensor"
+    COLOR_SENSOR_READ = "color_sensor",
+	SIDE_TOF_READ = "side_tof_value"
 }
 
 // For these complex nested structures, we'll keep them as objects
