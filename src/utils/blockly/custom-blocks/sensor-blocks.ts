@@ -60,6 +60,20 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			return [`is_object_near_side_${toLower(sensor)}()`, Order.FUNCTION_CALL]
 		}
 	},
+	[SENSORS_BLOCK_TYPES.CENTER_TOF_READ]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Is object in front")
+				this.setOutput(true, "Boolean")
+				this.setColour(sensorsCategoryColour)
+				this.setTooltip("Returns true if an object is detected in front")
+			}
+		},
+		generator: (_block: Blockly.Block): [string, number] => {
+			return ["is_object_in_front()", Order.FUNCTION_CALL]
+		}
+	},
 	[SENSORS_BLOCK_TYPES.IR_READ]: {
 		definition: {
 			init: function(this: Blockly.Block) {
