@@ -28,14 +28,12 @@ function SerialConnector () {
 						className={`w-3 h-3 rounded-full mr-2 ${serialManager.connected ? "bg-green-500" : "bg-red-500"}`}
 					/>
 					<span>
-						{serialManager.connected
-							? "Connected"
-							: "Disconnected"}
+						{serialManager.connected ? "Connected" : "Disconnected"}
 					</span>
 				</div>
 
 				<div className="flex space-x-2">
-					<button
+					<Button
 						onClick={handleConnect}
 						disabled={serialManager.connected}
 						className={`px-4 py-2 rounded ${
@@ -45,9 +43,9 @@ function SerialConnector () {
 						}`}
 					>
 						Connect
-					</button>
+					</Button>
 
-					<button
+					<Button
 						onClick={handleDisconnect}
 						disabled={!serialManager.connected}
 						className={`px-4 py-2 rounded ${
@@ -57,7 +55,7 @@ function SerialConnector () {
 						}`}
 					>
 						Disconnect
-					</button>
+					</Button>
 				</div>
 
 				{serialManager.errorMessage && (
@@ -75,7 +73,7 @@ function SerialConnector () {
 					Message Log
 						</div>
 						<Button
-							onClick={() => serialManager.messages = []}
+							onClick={serialManager.clearMessages}
 						>
 							Clear messages
 						</Button>

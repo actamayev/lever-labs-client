@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { makeAutoObservable, runInAction } from "mobx"
+import { action, makeAutoObservable, runInAction } from "mobx"
 import { MessageType } from "@bluedotrobots/common-ts"
 
 class SerialManagerClass {
@@ -266,6 +266,10 @@ class SerialManagerClass {
 			this.connected = false
 		})
 	}
+
+	public clearMessages = action(() => {
+		this.messages = []
+	})
 
 	public async logout(): Promise<void> {
 		await this.disconnect() // This handles port, reader, writer and connected
