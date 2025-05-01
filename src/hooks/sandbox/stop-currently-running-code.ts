@@ -3,18 +3,27 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
+	const serialManager = useSerialManagerContext()
 
 	return useCallback(async () => {
 		try {
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createStopSandboxCodeMessage()
+
+				await serialManager.sendBinaryMessage(buffer)
+				return
+			}
 			if (
 				isNull(pipClass.selectedPip) ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
@@ -34,5 +43,5 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass.selectedPip, toast])
+	}, [blueDotApiClient.sandboxDataService, pipClass.selectedPip, serialManager, toast])
 }

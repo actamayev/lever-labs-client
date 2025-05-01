@@ -34,6 +34,7 @@ export default function useEditSandboxProject(): (
 			if (!isEqual(createSandboxProjectResponse.status, 200) || isNonSuccessResponse(createSandboxProjectResponse.data)) {
 				throw Error ("Unable to edit sandbox project")
 			}
+			sandboxClass.updateProjectLastUpdated(project.projectUUID)
 		} catch (error) {
 			console.error(error)
 			toast.negative({
