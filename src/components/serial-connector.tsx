@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable no-nested-ternary */
 import { observer } from "mobx-react"
 import { Button } from "./shadcn/ui/button"

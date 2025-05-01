@@ -1,7 +1,9 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { buttonsCategoryColour, ledCategoryColour, motorsCategoryColour, screenCategoryColour, speakerCategoryColour } from "../constants"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { buttonsCategoryColour, screenCategoryColour, speakerCategoryColour,
+	ledCategoryColour, motorsCategoryColour } from "../constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
@@ -34,27 +36,27 @@ const ledCategory: CustomCategoryInfo = {
 	]
 }
 
-const screenCategory: CustomCategoryInfo = {
-	...baseCategory,
-	name: "Screen",
-	colour: screenCategoryColour,
-	contents: [
-	]
-}
+// const screenCategory: CustomCategoryInfo = {
+// 	...baseCategory,
+// 	name: "Screen",
+// 	colour: screenCategoryColour,
+// 	contents: [
+// 	]
+// }
 
-const speakerCategory: CustomCategoryInfo = {
-	...baseCategory,
-	name: "Speaker",
-	colour: speakerCategoryColour,
-	contents: []
-}
+// const speakerCategory: CustomCategoryInfo = {
+// 	...baseCategory,
+// 	name: "Speaker",
+// 	colour: speakerCategoryColour,
+// 	contents: []
+// }
 
-const buttonsCategory: CustomCategoryInfo = {
-	...baseCategory,
-	name: "Buttons",
-	colour: buttonsCategoryColour,
-	contents: []
-}
+// const buttonsCategory: CustomCategoryInfo = {
+// 	...baseCategory,
+// 	name: "Buttons",
+// 	colour: buttonsCategoryColour,
+// 	contents: []
+// }
 
 // Then update the toolboxConfig object to include the variables category:
 export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
@@ -64,9 +66,9 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		sensorsCategory,
 		motorsCategory,
 		ledCategory,
-		screenCategory,
-		speakerCategory,
-		buttonsCategory
+		// screenCategory,
+		// speakerCategory,
+		// buttonsCategory
 	]
 }
 

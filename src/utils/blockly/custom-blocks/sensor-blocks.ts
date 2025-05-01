@@ -1,6 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
+import toLower from "lodash-es/toLower"
 import { Order } from "../order"
 import {
 	SENSORS_BLOCK_TYPES,
@@ -11,7 +12,6 @@ import {
 	IRSensorType
 } from "../block-types/sensor-block-types"
 import { sensorsCategoryColour } from "../../constants"
-import { toLower } from "lodash-es"
 
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {

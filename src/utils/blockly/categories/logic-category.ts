@@ -2,7 +2,8 @@
 
 import { baseCategory } from "./base-category"
 import { logicCategoryColour } from "../../constants"
-import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../block-types/logic-block-types"
+import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES,
+	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../block-types/logic-block-types"
 
 const variableCategory: CustomCategoryInfo = {
 	...baseCategory,
@@ -57,15 +58,25 @@ const loopsCategory: CustomCategoryInfo = {
 	]
 }
 
+const startCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Start",
+	colour: logicCategoryColour,
+	contents: [
+		{ kind: "block", type: START_BLOCK_TYPES.BUTTON_PRESS_START },
+	]
+}
+
 // Then include them in the parent category
 export const logicCategory: ParentCategoryInfo = {
 	...baseCategory,
 	name: "Logic",
 	colour: logicCategoryColour,
 	contents: [
+		startCategory,
 		variableCategory,
 		conditionalsCategory,
 		mathCategory,
-		loopsCategory
+		loopsCategory,
 	]
 }

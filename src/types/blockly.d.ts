@@ -78,6 +78,7 @@ declare global {
 	| "Conditionals"
 	| "Math"
 	| "Loops"
+	| "Start"
 }
 
 export {}
