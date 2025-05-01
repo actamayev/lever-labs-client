@@ -16,7 +16,8 @@ export default function useGarageActions(): {
 	const serialManager = useSerialManagerContext()
 
 	const activateAction = async (action: Actions): Promise<void> => {
-		if (action === "headlights") {
+		switch (action) {
+		case "headlights":
 			garageClass.setAreHeadlightsOn(true)
 
 			if (serialManager.connected) {
@@ -31,23 +32,25 @@ export default function useGarageActions(): {
 				areHeadlightsOn: true
 			})
 			return
+
+		case "horn":
+			garageClass.setIsHornPressed(true)
+
+			if (!pipClass.selectedPip) return
+			socketClass.emitHornSound({
+				pipUUID: pipClass.selectedPip.pipUUID,
+				hornStatus: true
+			})
+			return
 		}
-
-		// Horn action
-		garageClass.setIsHornPressed(true)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: true
-		})
 	}
 
 	/**
    * Handle turning an action off
    */
 	const deactivateAction = async (action: Actions): Promise<void> => {
-		if (action === "headlights") {
+		switch (action) {
+		case "headlights":
 			garageClass.setAreHeadlightsOn(false)
 
 			if (serialManager.connected) {
@@ -62,16 +65,17 @@ export default function useGarageActions(): {
 				areHeadlightsOn: false
 			})
 			return
+
+		case "horn":
+			garageClass.setIsHornPressed(false)
+
+			if (!pipClass.selectedPip) return
+			socketClass.emitHornSound({
+				pipUUID: pipClass.selectedPip.pipUUID,
+				hornStatus: false
+			})
+			return
 		}
-
-		// Horn action
-		garageClass.setIsHornPressed(false)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: false
-		})
 	}
 
 	return {
