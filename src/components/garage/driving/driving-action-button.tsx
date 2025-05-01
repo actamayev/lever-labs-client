@@ -4,14 +4,10 @@ import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomHorn } from "../../icons/custom-horn"
-import { usePipContext } from "../../../contexts/pip-context"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomHeadlights } from "../../icons/custom-headlights"
-import { useGarageContext } from "../../../contexts/garage-context"
-import { useSocketContext } from "../../../contexts/socket-context"
+import useGarageActions from "../../../hooks/garage/garage-actions"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 interface ArrowKeyButtonProps {
 	action: Actions
@@ -26,10 +22,7 @@ function DrivingActionButton({
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
+	const { activateAction, deactivateAction } = useGarageActions()
 
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {
@@ -59,56 +52,13 @@ function DrivingActionButton({
 	}, [isPressed])
 
 	// Handle button click for action buttons
-	const handleButtonDown = async () => {
-		if (action === "headlights") {
-			garageClass.setAreHeadlightsOn(true)
-
-			if (serialManager.connected) {
-				const buffer = MessageBuilder.createHeadlightMessage(true)
-
-				return await serialManager.sendBinaryMessage(buffer)
-			}
-			if (!pipClass.selectedPip) return
-			socketClass.emitHeadLightStatus({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				areHeadlightsOn: true
-			})
-			return
-		}
-		garageClass.setIsHornPressed(true)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: true
-		})
+	const handleButtonDown = () => {
+		activateAction(action)
 	}
 
 	// Handle button release for action buttons
-	const handleButtonUp = async () => {
-		if (action === "headlights") {
-			garageClass.setAreHeadlightsOn(false)
-
-			if (serialManager.connected) {
-				const buffer = MessageBuilder.createHeadlightMessage(false)
-
-				return await serialManager.sendBinaryMessage(buffer)
-			}
-
-			if (!pipClass.selectedPip) return
-			socketClass.emitHeadLightStatus({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				areHeadlightsOn: false
-			})
-			return
-		}
-		garageClass.setIsHornPressed(false)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: false
-		})
+	const handleButtonUp = () => {
+		deactivateAction(action)
 	}
 
 	return (
