@@ -54,10 +54,21 @@ export default function useSetDefaultColorsUseEffect(): void {
 					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
 					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
 				},
+				leftHeadlightColor: {
+					r: Math.round(garageClass.dotColors[6].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[6].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[6].b * selectedColorShade)
+				},
+				rightHeadlightColor: {
+					r: Math.round(garageClass.dotColors[7].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[7].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[7].b * selectedColorShade)
+				}
 			}
 
 			if (serialManager.connected) {
 				const buffer = MessageBuilder.createLedMessage(ledControlData)
+				console.log("Sending LED message to serial manager:", buffer.byteLength)
 
 				void serialManager.sendBinaryMessage(buffer)
 				return
@@ -83,7 +94,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 		}
 	}, [debouncedEmitLedColors])
 
-	// This use effect updates the dot color with no delay, when the selected dots change, or color shdae, or selected color change
+	// This use effect updates the dot color with no delay, when the selected dots change, or color shade, or selected color change
 	useEffect(() => {
 		garageClass.updateDotColor(garageClass.selectedDots,
 			{

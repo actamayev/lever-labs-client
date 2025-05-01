@@ -204,7 +204,7 @@ class SerialManagerClass {
 					isBinary: true
 				})
 			})
-			// TODO: Await a success response from the ESP before returning true
+			// 4/30/25 TODO: Await a success response from the ESP before returning true
 			return true
 		} catch (error) {
 			runInAction(() => {

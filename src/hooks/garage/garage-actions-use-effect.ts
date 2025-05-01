@@ -5,14 +5,17 @@ import { actionMappings } from "../../utils/constants"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 export default function useGarageActionsUseEffect(): void {
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
+	const serialManager = useSerialManagerContext()
 
 	// Key event handlers
-	const handleKeyDown = (event: KeyboardEvent): void => {
+	const handleKeyDown = async (event: KeyboardEvent): Promise<void> => {
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
@@ -20,11 +23,17 @@ export default function useGarageActionsUseEffect(): void {
 
 		if (mapping === "headlights") {
 			garageClass.setAreHeadlightsOn(true)
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createHeadlightMessage(true)
+
+				await serialManager.sendBinaryMessage(buffer)
+				return
+			}
 
 			if (pipClass.selectedPip) {
 				socketClass.emitHeadLightStatus({
 					pipUUID: pipClass.selectedPip.pipUUID,
-					headlightsStatus: true
+					areHeadlightsOn: true
 				})
 			}
 			return
@@ -39,7 +48,7 @@ export default function useGarageActionsUseEffect(): void {
 		}
 	}
 
-	const handleKeyUp = (event: KeyboardEvent): void => {
+	const handleKeyUp = async (event: KeyboardEvent): Promise<void> => {
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
@@ -47,11 +56,17 @@ export default function useGarageActionsUseEffect(): void {
 
 		if (mapping === "headlights") {
 			garageClass.setAreHeadlightsOn(false)
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createHeadlightMessage(false)
+
+				await serialManager.sendBinaryMessage(buffer)
+				return
+			}
 
 			if (pipClass.selectedPip) {
 				socketClass.emitHeadLightStatus({
 					pipUUID: pipClass.selectedPip.pipUUID,
-					headlightsStatus: false
+					areHeadlightsOn: false
 				})
 			}
 			return

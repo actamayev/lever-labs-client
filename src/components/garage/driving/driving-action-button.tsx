@@ -10,6 +10,8 @@ import { CustomHeadlights } from "../../icons/custom-headlights"
 import { useGarageContext } from "../../../contexts/garage-context"
 import { useSocketContext } from "../../../contexts/socket-context"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
+import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 interface ArrowKeyButtonProps {
 	action: Actions
@@ -27,6 +29,7 @@ function DrivingActionButton({
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
+	const serialManager = useSerialManagerContext()
 
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {
@@ -56,14 +59,19 @@ function DrivingActionButton({
 	}, [isPressed])
 
 	// Handle button click for action buttons
-	const handleButtonDown = () => {
+	const handleButtonDown = async () => {
 		if (action === "headlights") {
 			garageClass.setAreHeadlightsOn(true)
 
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createHeadlightMessage(true)
+
+				return await serialManager.sendBinaryMessage(buffer)
+			}
 			if (!pipClass.selectedPip) return
 			socketClass.emitHeadLightStatus({
 				pipUUID: pipClass.selectedPip.pipUUID,
-				headlightsStatus: true
+				areHeadlightsOn: true
 			})
 			return
 		}
@@ -77,14 +85,20 @@ function DrivingActionButton({
 	}
 
 	// Handle button release for action buttons
-	const handleButtonUp = () => {
+	const handleButtonUp = async () => {
 		if (action === "headlights") {
 			garageClass.setAreHeadlightsOn(false)
+
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createHeadlightMessage(false)
+
+				return await serialManager.sendBinaryMessage(buffer)
+			}
 
 			if (!pipClass.selectedPip) return
 			socketClass.emitHeadLightStatus({
 				pipUUID: pipClass.selectedPip.pipUUID,
-				headlightsStatus: false
+				areHeadlightsOn: false
 			})
 			return
 		}
