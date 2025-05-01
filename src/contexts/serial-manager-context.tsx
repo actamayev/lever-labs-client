@@ -9,7 +9,6 @@ class SerialManagerClass {
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
 	public connected: boolean = false
-	public connecting: boolean = false
 	public messages: Message[] = []
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
@@ -34,8 +33,6 @@ class SerialManagerClass {
 		if (this.connected) return
 
 		try {
-			this.connecting = true
-
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (!navigator.serial) {
 				throw new Error("Web Serial API not supported in this browser")
@@ -57,7 +54,6 @@ class SerialManagerClass {
 				this.reader = reader
 				this.writer = writer
 				this.connected = true
-				this.connecting = false
 				this.errorMessage = null
 			})
 
@@ -88,10 +84,6 @@ class SerialManagerClass {
 					this.errorMessage = error instanceof Error ? error.message : String(error)
 				})
 			}
-
-			runInAction(() => {
-				this.connecting = false
-			})
 		}
 	}
 
@@ -278,7 +270,6 @@ class SerialManagerClass {
 	public async logout(): Promise<void> {
 		await this.disconnect() // This handles port, reader, writer and connected
 		runInAction(() => {
-			this.connecting = false
 			this.messages = []
 			this.errorMessage = null
 		})

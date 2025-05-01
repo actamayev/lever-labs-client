@@ -28,20 +28,18 @@ function SerialConnector () {
 						className={`w-3 h-3 rounded-full mr-2 ${serialManager.connected ? "bg-green-500" : "bg-red-500"}`}
 					/>
 					<span>
-						{serialManager.connecting
-							? "Connecting..."
-							: serialManager.connected
-								? "Connected"
-								: "Disconnected"}
+						{serialManager.connected
+							? "Connected"
+							: "Disconnected"}
 					</span>
 				</div>
 
 				<div className="flex space-x-2">
 					<button
 						onClick={handleConnect}
-						disabled={serialManager.connected || serialManager.connecting}
+						disabled={serialManager.connected}
 						className={`px-4 py-2 rounded ${
-							serialManager.connected || serialManager.connecting
+							serialManager.connected
 								? "bg-gray-300 cursor-not-allowed"
 								: "bg-blue-500 hover:bg-blue-600 text-white"
 						}`}
