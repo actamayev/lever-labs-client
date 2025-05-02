@@ -9,10 +9,10 @@ export default function useLogoutListenerUseEffect(): void {
 	const logout = useLogout()
 	const router = useRouter()
 
-	const handleStorageChange = useCallback((event: StorageEvent): void => {
+	const handleStorageChange = useCallback(async (event: StorageEvent): Promise<void> => {
 		if (event.key !== "Access Token" || event.newValue) return
 		// Access Token was cleared, trigger logout
-		logout()
+		await logout()
 		router.refresh()
 	}, [logout, router])
 

@@ -13,6 +13,7 @@ import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
 import { SandboxProject } from "@bluedotrobots/common-ts"
+import SerialConnector from "../../serial-connector"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -159,6 +160,8 @@ function TheSandboxPage() {
 					)}
 				</div>
 			</div>
+
+			<SerialConnector />
 
 		</WorkbenchLayout>
 	)
