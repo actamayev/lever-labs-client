@@ -1,8 +1,8 @@
 "use client"
 
 import { createContext, useContext } from "react"
+import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { MessageType } from "@bluedotrobots/common-ts"
 
 class SerialManagerClass {
 	public port: SerialPort | null = null
@@ -20,8 +20,8 @@ class SerialManagerClass {
 			// Can't use async here, so use a synchronous approach
 			if (this.connected && this.writer) {
 				try {
-					const disconnectMsg = new Uint8Array([MessageType.SERIAL_END])
-					this.writer.write(disconnectMsg)
+					const disconnectMsg = MessageBuilder.createSerialEndMessage()
+					void this.writer.write(new Uint8Array(disconnectMsg))
 				} catch (e) {
 					console.error("Error during page unload:", e)
 				}
@@ -60,8 +60,8 @@ class SerialManagerClass {
 			// Send handshake immediately after connection established
 			if (this.writer) {
 				// Use the binary protocol - create a 1-byte buffer with HANDSHAKE value (11)
-				const handshakeMsg = new Uint8Array([MessageType.SERIAL_HANDSHAKE]) // 11 is HANDSHAKE enum value
-				await this.writer.write(handshakeMsg)
+				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
+				await this.writer.write(new Uint8Array(handshakeMsg))
 				console.log("Sent handshake to ESP32")
 			}
 
@@ -97,8 +97,8 @@ class SerialManagerClass {
 		this.keepAliveInterval = setInterval(async () => {
 			if (this.connected && this.writer) {
 				try {
-					const keepaliveMsg = new Uint8Array([MessageType.SERIAL_KEEPALIVE])
-					await this.writer.write(keepaliveMsg)
+					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
+					await this.writer.write(new Uint8Array(keepaliveMsg))
 					console.log("sending message")
 				} catch (error) {
 					console.error("Keepalive error:", error)
@@ -114,8 +114,8 @@ class SerialManagerClass {
 		try {
 		// Send disconnect notification before closing
 			if (this.writer) {
-				const disconnectMsg = new Uint8Array([MessageType.SERIAL_END])
-				await this.writer.write(disconnectMsg)
+				const disconnectMsg = MessageBuilder.createSerialEndMessage()
+				await this.writer.write(new Uint8Array(disconnectMsg))
 				console.log("Sent disconnect notification to ESP32")
 
 				// Short delay to allow message to be sent
@@ -191,6 +191,7 @@ class SerialManagerClass {
 		try {
 		// Convert to Uint8Array for writing
 			const data = new Uint8Array(buffer)
+			console.log(data)
 
 			// Send data
 			await this.writer.write(data)
