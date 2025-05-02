@@ -5,6 +5,7 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useParams } from "next/navigation"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
@@ -21,7 +22,6 @@ import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 

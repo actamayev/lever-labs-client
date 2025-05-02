@@ -13,7 +13,7 @@ export default function useHandleLogout(): (
 
 	return useCallback(async () => {
 		try {
-			logout()
+			await logout()
 			const response = await blueDotApiClient.authDataService.logout()
 			if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
 				throw new Error("Failed to logout")

@@ -1,69 +1,27 @@
 "use client"
 
 import { useEffect } from "react"
+import useGarageActions from "./garage-actions"
 import { actionMappings } from "../../utils/constants"
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
 
 export default function useGarageActionsUseEffect(): void {
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
+	const { activateAction, deactivateAction } = useGarageActions()
 
 	// Key event handlers
-	const handleKeyDown = (event: KeyboardEvent): void => {
+	const handleKeyDown = async (event: KeyboardEvent): Promise<void> => {
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
-		const mapping = actionMappings[key]
-
-		if (mapping === "headlights") {
-			garageClass.setAreHeadlightsOn(true)
-
-			if (pipClass.selectedPip) {
-				socketClass.emitHeadLightStatus({
-					pipUUID: pipClass.selectedPip.pipUUID,
-					headlightsStatus: true
-				})
-			}
-			return
-		}
-		garageClass.setIsHornPressed(true)
-
-		if (pipClass.selectedPip) {
-			socketClass.emitHornSound({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: true
-			})
-		}
+		const action = actionMappings[key]
+		await activateAction(action)
 	}
 
-	const handleKeyUp = (event: KeyboardEvent): void => {
+	const handleKeyUp = async (event: KeyboardEvent): Promise<void> => {
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
-		const mapping = actionMappings[key]
-
-		if (mapping === "headlights") {
-			garageClass.setAreHeadlightsOn(false)
-
-			if (pipClass.selectedPip) {
-				socketClass.emitHeadLightStatus({
-					pipUUID: pipClass.selectedPip.pipUUID,
-					headlightsStatus: false
-				})
-			}
-			return
-		}
-		garageClass.setIsHornPressed(false)
-
-		if (pipClass.selectedPip) {
-			socketClass.emitHornSound({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: false
-			})
-		}
+		const action = actionMappings[key]
+		await deactivateAction(action)
 	}
 
 	// Set up key event listeners

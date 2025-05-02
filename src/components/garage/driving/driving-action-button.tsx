@@ -4,11 +4,9 @@ import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomHorn } from "../../icons/custom-horn"
-import { usePipContext } from "../../../contexts/pip-context"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomHeadlights } from "../../icons/custom-headlights"
-import { useGarageContext } from "../../../contexts/garage-context"
-import { useSocketContext } from "../../../contexts/socket-context"
+import useGarageActions from "../../../hooks/garage/garage-actions"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 
 interface ArrowKeyButtonProps {
@@ -24,9 +22,7 @@ function DrivingActionButton({
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
+	const { activateAction, deactivateAction } = useGarageActions()
 
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {
@@ -57,44 +53,12 @@ function DrivingActionButton({
 
 	// Handle button click for action buttons
 	const handleButtonDown = () => {
-		if (action === "headlights") {
-			garageClass.setAreHeadlightsOn(true)
-
-			if (!pipClass.selectedPip) return
-			socketClass.emitHeadLightStatus({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				headlightsStatus: true
-			})
-			return
-		}
-		garageClass.setIsHornPressed(true)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: true
-		})
+		activateAction(action)
 	}
 
 	// Handle button release for action buttons
 	const handleButtonUp = () => {
-		if (action === "headlights") {
-			garageClass.setAreHeadlightsOn(false)
-
-			if (!pipClass.selectedPip) return
-			socketClass.emitHeadLightStatus({
-				pipUUID: pipClass.selectedPip.pipUUID,
-				headlightsStatus: false
-			})
-			return
-		}
-		garageClass.setIsHornPressed(false)
-
-		if (!pipClass.selectedPip) return
-		socketClass.emitHornSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			hornStatus: false
-		})
+		deactivateAction(action)
 	}
 
 	return (

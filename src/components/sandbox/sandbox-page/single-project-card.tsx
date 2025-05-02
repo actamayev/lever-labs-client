@@ -17,6 +17,7 @@ import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import useDeleteSandboxProject from "../../../hooks/sandbox/delete-sandbox-project"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
+import { useRelativeDateFormatter } from "../../../hooks/sandbox/date-formatting"
 
 // eslint-disable-next-line max-lines-per-function
 function SingleProjectCard({ project } : { project: SandboxProject }) {
@@ -26,6 +27,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const [isDeleteMode, setIsDeleteMode] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [newProjectName, setNewProjectName] = useState(project.projectName || "")
+	const relativeDateFormatter = useRelativeDateFormatter()
 
 	const handleProjectClick = useCallback((projectUUID: ProjectUUID) => {
 		if (isDeleteMode) return
@@ -105,7 +107,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 							</DropdownMenu>
 						</div>
 						<div className="text-sm text-hare mt-2">
-							Last updated: {new Date(project.updatedAt).toLocaleDateString()}
+							Last updated: {relativeDateFormatter(project.updatedAt)}
 						</div>
 					</>
 				) : (

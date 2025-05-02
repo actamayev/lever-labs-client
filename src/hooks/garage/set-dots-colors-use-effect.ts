@@ -5,28 +5,26 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
+import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../contexts/pip-context"
 import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
-import { LedControlData } from "@bluedotrobots/common-ts"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
+// eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
-
+	const serialManager = useSerialManagerContext()
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
 		debounce(() => {
-			if (
-				isNull(pipClass.selectedPip)
-				|| pipClass.selectedPip.pipConnectionStatus === "offline"
-				|| isEmpty(garageClass.selectedDots)
-			) return
+			if (isEmpty(garageClass.selectedDots)) return
 
 			const selectedColorShade = garageClass.selectedColorShade
-			const ledControlData: LedControlData = {
+			const ledControlData: Omit<LedControlData, "pipUUID"> = {
 				topLeftColor: {
 					r: Math.round(garageClass.dotColors[0].r * selectedColorShade),
 					g: Math.round(garageClass.dotColors[0].g * selectedColorShade),
@@ -57,12 +55,38 @@ export default function useSetDefaultColorsUseEffect(): void {
 					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
 					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
 				},
-				pipUUID: pipClass.selectedPip.pipUUID
+				leftHeadlightColor: {
+					r: Math.round(garageClass.dotColors[6].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[6].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[6].b * selectedColorShade)
+				},
+				rightHeadlightColor: {
+					r: Math.round(garageClass.dotColors[7].r * selectedColorShade),
+					g: Math.round(garageClass.dotColors[7].g * selectedColorShade),
+					b: Math.round(garageClass.dotColors[7].b * selectedColorShade)
+				}
 			}
 
-			socketClass.emitLedColorControl(ledControlData)
+			if (serialManager.connected) {
+				const buffer = MessageBuilder.createLedMessage(ledControlData)
+				console.log("Sending LED message to serial manager:", buffer.byteLength)
+
+				void serialManager.sendBinaryMessage(buffer)
+				return
+			}
+
+			if (
+				isNull(pipClass.selectedPip)
+				|| pipClass.selectedPip.pipConnectionStatus === "offline"
+				|| isEmpty(garageClass.selectedDots)
+			) return
+
+			socketClass.emitLedColorControl({...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
 		}, 10),
-		[garageClass.selectedColorRgba, garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
+		[garageClass.selectedColorRgba.r,
+			garageClass.selectedColorRgba.g,
+			garageClass.selectedColorRgba.b,
+			garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
 	)
 
 	// This use
@@ -74,7 +98,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 		}
 	}, [debouncedEmitLedColors])
 
-	// This use effect updates the dot color with no delay, when the selected dots change, or color shdae, or selected color change
+	// This use effect updates the dot color with no delay, when the selected dots change, or color shade, or selected color change
 	useEffect(() => {
 		garageClass.updateDotColor(garageClass.selectedDots,
 			{
@@ -84,5 +108,9 @@ export default function useSetDefaultColorsUseEffect(): void {
 				a: 1
 			}
 		)
-	}, [garageClass.selectedDots, garageClass.selectedColorRgba, garageClass.selectedColorShade, garageClass])
+	}, [garageClass.selectedDots,
+		garageClass.selectedColorRgba.r,
+		garageClass.selectedColorRgba.g,
+		garageClass.selectedColorRgba.b,
+		garageClass.selectedColorShade, garageClass])
 }

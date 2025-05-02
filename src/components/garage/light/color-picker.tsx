@@ -10,7 +10,7 @@ function ColorPicker() {
 	const garageClass = useGarageContext()
 
 	const colorToShow = useMemo(() => {
-		// This is done to ensure the shade of the color wheeel stays constant
+		// This is done to ensure the shade of the color wheel stays constant
 		const hsva = rgbaToHsva(garageClass.selectedColorRgba)
 		hsva.v = 100
 		return hsva

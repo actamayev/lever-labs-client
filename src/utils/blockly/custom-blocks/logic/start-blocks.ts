@@ -1,0 +1,22 @@
+"use client"
+
+import * as Blockly from "blockly"
+import { logicCategoryColour } from "../../../constants"
+import { START_BLOCK_TYPES } from "../../block-types/logic-block-types"
+
+export const startBlocks: Record<START_BLOCK_TYPES, CustomBlock> = {
+	[START_BLOCK_TYPES.BUTTON_PRESS_START]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Start program when button is pressed")
+				this.setNextStatement(true, null)
+				this.setColour(logicCategoryColour)
+				this.setTooltip("Program will wait until the button is pressed before starting")
+			}
+		},
+		generator: (_block: Blockly.Block): string => {
+			return "wait_for_button_press();\n"
+		}
+	}
+}

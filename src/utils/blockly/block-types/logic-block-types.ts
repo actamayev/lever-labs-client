@@ -24,6 +24,10 @@ export enum CONDITIONAL_BLOCK_TYPES {
     IF_2ELSEIF_ELSE = "controls_if_2elseif"
 }
 
+export enum START_BLOCK_TYPES {
+    BUTTON_PRESS_START = "button_press_start"
+}
+
 export enum CONDITIONAL_FIELD_VALUES {
     IF_CONDITION = "IF0",
     IF_DO = "DO0",
@@ -83,6 +87,7 @@ export enum LOOP_FIELD_VALUES {
 
 // For ease of use, we'll create a namespace object that combines all block types
 export type LOGIC_BLOCK_TYPES =
+    | START_BLOCK_TYPES
 	| VARIABLE_BLOCK_TYPES
 	| CONDITIONAL_BLOCK_TYPES
 	| MATH_BLOCK_TYPES
