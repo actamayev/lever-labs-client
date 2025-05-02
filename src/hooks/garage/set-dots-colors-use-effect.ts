@@ -11,6 +11,7 @@ import { useGarageContext } from "../../contexts/garage-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
+// eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {
 	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
@@ -82,7 +83,10 @@ export default function useSetDefaultColorsUseEffect(): void {
 
 			socketClass.emitLedColorControl({...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
 		}, 10),
-		[garageClass.selectedColorRgba, garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
+		[garageClass.selectedColorRgba.r,
+			garageClass.selectedColorRgba.g,
+			garageClass.selectedColorRgba.b,
+			garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
 	)
 
 	// This use
@@ -104,5 +108,9 @@ export default function useSetDefaultColorsUseEffect(): void {
 				a: 1
 			}
 		)
-	}, [garageClass.selectedDots, garageClass.selectedColorRgba, garageClass.selectedColorShade, garageClass])
+	}, [garageClass.selectedDots,
+		garageClass.selectedColorRgba.r,
+		garageClass.selectedColorRgba.g,
+		garageClass.selectedColorRgba.b,
+		garageClass.selectedColorShade, garageClass])
 }
