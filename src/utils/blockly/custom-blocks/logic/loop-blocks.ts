@@ -1,73 +1,73 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { Order } from "../../order"
+// import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants"
-import { cppGenerator } from "../../../cpp/cpp-generator"
+// import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "../../block-types/logic-block-types"
 
 export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
-	[LOOP_BLOCK_TYPES.WHILE_UNTIL]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendDummyInput()
-					.appendField(new Blockly.FieldDropdown([
-						["while", "WHILE"],
-						["until", "UNTIL"]
-					]), LOOP_FIELD_VALUES.WHILE_MODE)
+	// [LOOP_BLOCK_TYPES.WHILE_UNTIL]: {
+	// 	definition: {
+	// 		init: function(this: Blockly.Block) {
+	// 			this.appendDummyInput()
+	// 				.appendField(new Blockly.FieldDropdown([
+	// 					["while", "WHILE"],
+	// 					["until", "UNTIL"]
+	// 				]), LOOP_FIELD_VALUES.WHILE_MODE)
 
-				this.appendValueInput(LOOP_FIELD_VALUES.WHILE_BOOL)
-					.setCheck("Boolean")
+	// 			this.appendValueInput(LOOP_FIELD_VALUES.WHILE_BOOL)
+	// 				.setCheck("Boolean")
 
-				this.appendStatementInput(LOOP_FIELD_VALUES.WHILE_DO)
-					.appendField("do")
+	// 			this.appendStatementInput(LOOP_FIELD_VALUES.WHILE_DO)
+	// 				.appendField("do")
 
-				this.setPreviousStatement(true, null)
-				this.setNextStatement(true, null)
-				this.setColour(logicCategoryColour)
-				this.setTooltip("While/Until a condition is true, do some statements")
-			}
-		},
-		generator: (block: Blockly.Block): string => {
-			const until = block.getFieldValue(LOOP_FIELD_VALUES.WHILE_MODE) === "UNTIL"
-			let condition = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
-			if (until) {
-				condition = `!(${condition})`
-			}
-			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.WHILE_DO)
-			return `while (${condition}) {\n${bodyCode}}\n`
-		}
-	},
+	// 			this.setPreviousStatement(true, null)
+	// 			this.setNextStatement(true, null)
+	// 			this.setColour(logicCategoryColour)
+	// 			this.setTooltip("While/Until a condition is true, do some statements")
+	// 		}
+	// 	},
+	// 	generator: (block: Blockly.Block): string => {
+	// 		const until = block.getFieldValue(LOOP_FIELD_VALUES.WHILE_MODE) === "UNTIL"
+	// 		let condition = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
+	// 		if (until) {
+	// 			condition = `!(${condition})`
+	// 		}
+	// 		const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.WHILE_DO)
+	// 		return `while (${condition}) {\n${bodyCode}}\n`
+	// 	}
+	// },
 
-	[LOOP_BLOCK_TYPES.REPEAT]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendDummyInput()
-					.appendField("repeat")
+	// [LOOP_BLOCK_TYPES.REPEAT]: {
+	// 	definition: {
+	// 		init: function(this: Blockly.Block) {
+	// 			this.appendDummyInput()
+	// 				.appendField("repeat")
 
-				this.appendValueInput(LOOP_FIELD_VALUES.REPEAT_TIMES)
-					.setCheck("Number")
+	// 			this.appendValueInput(LOOP_FIELD_VALUES.REPEAT_TIMES)
+	// 				.setCheck("Number")
 
-				this.appendDummyInput()
-					.appendField("times")
+	// 			this.appendDummyInput()
+	// 				.appendField("times")
 
-				this.appendStatementInput(LOOP_FIELD_VALUES.REPEAT_DO)
-					.appendField("do")
+	// 			this.appendStatementInput(LOOP_FIELD_VALUES.REPEAT_DO)
+	// 				.appendField("do")
 
-				this.setPreviousStatement(true, null)
-				this.setNextStatement(true, null)
-				this.setColour(logicCategoryColour)
-				this.setTooltip("Repeat statements a specified number of times")
-			}
-		},
-		generator: (block: Blockly.Block): string => {
-			const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
-			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
-			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
-			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
-		}
-	},
+	// 			this.setPreviousStatement(true, null)
+	// 			this.setNextStatement(true, null)
+	// 			this.setColour(logicCategoryColour)
+	// 			this.setTooltip("Repeat statements a specified number of times")
+	// 		}
+	// 	},
+	// 	generator: (block: Blockly.Block): string => {
+	// 		const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
+	// 		const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
+	// 		const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
+	// 		return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
+	// 	}
+	// },
 	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
 		definition: {
 			init: function(this: Blockly.Block) {

@@ -11,13 +11,24 @@ import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
-import { Button } from "../../shadcn/ui/button"
+import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
+import { CustomUsb } from "../../icons/custom-usb"
 
+// eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const starSandboxProject = useStarSandboxProject()
 	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
 	const personalInfoClass = usePersonalInfoContext()
 	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
+	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
+
+	const handleConnect = async () => {
+		await serialManager.connectToDevice()
+	}
+
+	const handleDisconnect = async () => {
+		await serialManager.disconnect()
+	}
 
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
@@ -55,7 +66,28 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 					tooltipContent="STAR"
 				/>
 			</div>
-			<div>
+			<div className="flex flex-row items-center justify-center space-x-4">
+				<CustomTooltip
+					tooltipTrigger={
+						<button
+							onClick={serialManager.connected ? handleDisconnect : handleConnect}
+							className={`p-2 rounded-md transition-none ${
+								serialManager.connected
+									? "bg-red-100 dark:bg-red-900 text-cardinal"
+									: "text-blue-600 dark:text-blue-300 hover:bg-polar	"
+							}`}
+							title={serialManager.connected ? "Disconnect" : "Connect"}
+						>
+							<div className="flex items-center justify-start space-x-2 font-medium">
+								<CustomUsb />
+								<span className="ml-2">
+									{serialManager.connected ? "DISCONNECT" : "CONNECT"}
+								</span>
+							</div>
+						</button>
+					}
+					tooltipContent={serialManager.connected ? "DISCONNECT" : "CONNECT"}
+				/>
 				<CustomTooltip
 					tooltipTrigger={
 						<button

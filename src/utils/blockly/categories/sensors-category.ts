@@ -9,7 +9,7 @@ import { SENSORS_BLOCK_TYPES } from "../block-types/sensor-block-types"
 // First define the sub-categories
 const imuSensorsCategory: CustomCategoryInfo = {
 	...baseCategory,
-	name: "IMU",
+	name: "Motion Sensor",
 	colour: sensorsCategoryColour,
 	contents: [
 		{ kind: "block", type: SENSORS_BLOCK_TYPES.IMU_READ }
@@ -26,23 +26,23 @@ const distanceSensorsCategory: CustomCategoryInfo = {
 	]
 }
 
-const irSensorsCategory: CustomCategoryInfo = {
-	...baseCategory,
-	name: "IR Sensors",
-	colour: sensorsCategoryColour,
-	contents: [
-		{ kind: "block", type: SENSORS_BLOCK_TYPES.IR_READ }
-	]
-}
+// const irSensorsCategory: CustomCategoryInfo = {
+// 	...baseCategory,
+// 	name: "IR Sensors",
+// 	colour: sensorsCategoryColour,
+// 	contents: [
+// 		{ kind: "block", type: SENSORS_BLOCK_TYPES.IR_READ }
+// 	]
+// }
 
-const colorSensorCategory: CustomCategoryInfo = {
-	...baseCategory,
-	name: "Color Sensor",
-	colour: sensorsCategoryColour,
-	contents: [
-		{ kind: "block", type: SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ }
-	]
-}
+// const colorSensorCategory: CustomCategoryInfo = {
+// 	...baseCategory,
+// 	name: "Color Sensor",
+// 	colour: sensorsCategoryColour,
+// 	contents: [
+// 		{ kind: "block", type: SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ }
+// 	]
+// }
 
 // Then include them in the parent category
 export const sensorsCategory: ParentCategoryInfo = {
@@ -52,7 +52,7 @@ export const sensorsCategory: ParentCategoryInfo = {
 	contents: [
 		imuSensorsCategory,
 		distanceSensorsCategory,
-		irSensorsCategory,
-		colorSensorCategory
+		// irSensorsCategory,
+		// colorSensorCategory
 	]
 }

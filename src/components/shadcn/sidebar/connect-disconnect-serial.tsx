@@ -1,10 +1,10 @@
 "use client"
 
-import { Usb } from "lucide-react"
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
 import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
+import { CustomUsb } from "../../icons/custom-usb"
 
 function ConnectDisconnectSerialSidebarButton() {
 	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
@@ -16,7 +16,6 @@ function ConnectDisconnectSerialSidebarButton() {
 	const handleDisconnect = async () => {
 		await serialManager.disconnect()
 	}
-
 
 	return (
 		<SidebarMenu>
@@ -42,7 +41,7 @@ function ConnectDisconnectSerialSidebarButton() {
 					<div className="flex items-center justify-start space-x-4 w-full"> {/* Added w-full */}
 						<div className={cn("ml-2.5 flex-shrink-0 w-[35px] h-[35px]")}>
 							<div className="relative flex items-center justify-center w-full h-full">
-								<Usb
+								<CustomUsb
 									className={cn(
 										"h-[35px] w-[35px]",
 										serialManager.connected ? "text-cardinal" : "text-blue-600 dark:text-blue-300"
