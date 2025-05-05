@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
+import { SandboxProject } from "@bluedotrobots/common-ts"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
@@ -10,7 +11,7 @@ import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
-import { SandboxProject } from "@bluedotrobots/common-ts"
+import { Button } from "../../shadcn/ui/button"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const starSandboxProject = useStarSandboxProject()
