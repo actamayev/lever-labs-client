@@ -79,7 +79,8 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 							title={serialManager.connected ? "Disconnect" : "Connect"}
 						>
 							<div className="flex items-center justify-start space-x-2 font-medium">
-								<CustomUsb />
+								<CustomUsb
+								/>
 								<span className="ml-2">
 									{serialManager.connected ? "DISCONNECT" : "CONNECT"}
 								</span>

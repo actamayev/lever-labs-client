@@ -68,27 +68,27 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	// 		return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 	// 	}
 	// },
-	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
-		definition: {
-			init: function(this: Blockly.Block) {
-				this.appendDummyInput()
-					.appendField("Delay")
-					.appendField(
-						new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
-						LOOP_BLOCK_TYPES.ESP32_DELAY
-					)
-					.appendField("milliseconds")
-				this.setPreviousStatement(true, null)
-				this.setNextStatement(true, null)
-				this.setColour(logicCategoryColour)
-				this.setTooltip("Delay for a certain number of milliseconds")
-			}
-		},
-		generator: (block: Blockly.Block): string => {
-			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
-			return `delay(${delay});\n`  // Changed to standard Arduino delay
-		}
-	},
+	// [LOOP_BLOCK_TYPES.ESP32_DELAY]: {
+	// 	definition: {
+	// 		init: function(this: Blockly.Block) {
+	// 			this.appendDummyInput()
+	// 				.appendField("Delay")
+	// 				.appendField(
+	// 					new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
+	// 					LOOP_BLOCK_TYPES.ESP32_DELAY
+	// 				)
+	// 				.appendField("milliseconds")
+	// 			this.setPreviousStatement(true, null)
+	// 			this.setNextStatement(true, null)
+	// 			this.setColour(logicCategoryColour)
+	// 			this.setTooltip("Delay for a certain number of milliseconds")
+	// 		}
+	// 	},
+	// 	generator: (block: Blockly.Block): string => {
+	// 		const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
+	// 		return `delay(${delay});\n`  // Changed to standard Arduino delay
+	// 	}
+	// },
 	[LOOP_BLOCK_TYPES.ESP32_LOOP]: {
 		definition: {
 			init: function(this: Blockly.Block) {
