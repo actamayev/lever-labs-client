@@ -28,7 +28,7 @@ export default function useGarageActions(): {
 
 			if (
 				!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus !== "connected"
+				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 			socketClass.emitHeadLightStatus({
 				pipUUID: pipClass.selectedPip.pipUUID,
@@ -41,7 +41,7 @@ export default function useGarageActions(): {
 
 			if (
 				!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus !== "connected"
+				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 			socketClass.emitHornSound({
 				pipUUID: pipClass.selectedPip.pipUUID,
@@ -67,7 +67,7 @@ export default function useGarageActions(): {
 
 			if (
 				!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus !== "connected"
+				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 			socketClass.emitHeadLightStatus({
 				pipUUID: pipClass.selectedPip.pipUUID,
@@ -80,7 +80,7 @@ export default function useGarageActions(): {
 
 			if (
 				!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus !== "connected"
+				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 			socketClass.emitHornSound({
 				pipUUID: pipClass.selectedPip.pipUUID,
