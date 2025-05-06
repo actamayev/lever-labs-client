@@ -24,6 +24,7 @@ export default function useSendCppToPip(): (
 		try {
 			if (serialManager.connected) {
 				const bytecode = CppParser.cppToByte(cppCode)
+				console.log("bytecode", bytecode)
 				const buffer = MessageBuilder.createBytecodeMessage(bytecode)
 
 				const success = await serialManager.sendBinaryMessage(buffer)

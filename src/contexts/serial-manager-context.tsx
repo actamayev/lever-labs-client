@@ -158,6 +158,7 @@ class SerialManagerClass {
 						const line = lines[i].trim()
 						// eslint-disable-next-line max-depth
 						if (line) {
+							console.log("Received:", line)
 							runInAction(() => {
 								this.messages.push({
 									content: line,

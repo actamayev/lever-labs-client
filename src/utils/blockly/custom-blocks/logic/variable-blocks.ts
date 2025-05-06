@@ -125,10 +125,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Create bool variable")
 					.appendField(new Blockly.FieldTextInput("myBool"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
 					.appendField("=")
-					.appendField(new Blockly.FieldDropdown([
-						["true", "true"],
-						["false", "false"]
-					]), "BOOL_VALUE")
+				this.appendValueInput(VARIABLE_FIELD_VALUES.VARIABLE_VALUE)
+					.setCheck("Boolean") // Allow any number input
 
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
@@ -138,7 +136,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
-			const value = block.getFieldValue("BOOL_VALUE")
+			const value = cppGenerator.valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "false"
 
 			return `bool ${varName} = ${value};\n`
 		}

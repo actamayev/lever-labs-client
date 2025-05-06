@@ -4,16 +4,16 @@ const nextConfig = {
 	images: {
 		remotePatterns: [
 			{
-				protocol: 'https',
-				hostname: 'blue-dot-robots-local-bucket.s3.us-east-1.amazonaws.com',
+				protocol: "https",
+				hostname: "blue-dot-robots-local-bucket.s3.us-east-1.amazonaws.com",
 			},
 			{
-				protocol: 'https',
-				hostname: 'blue-dot-robots-staging-bucket.s3.us-east-1.amazonaws.com',
+				protocol: "https",
+				hostname: "blue-dot-robots-staging-bucket.s3.us-east-1.amazonaws.com",
 			},
 			{
-				protocol: 'https',
-				hostname: 'blue-dot-robots-production-bucket.s3.us-east-1.amazonaws.com',
+				protocol: "https",
+				hostname: "blue-dot-robots-production-bucket.s3.us-east-1.amazonaws.com",
 			},
 		],
 	},
