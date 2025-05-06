@@ -23,5 +23,8 @@
   "shellcheck.exclude": ["SC2148", "SC2034"],
 	"shellcheck.ignorePatterns": {
 		"**/*.env*": true
-	}
+	},
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }

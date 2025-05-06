@@ -7,6 +7,7 @@ import ProfileSidebarButton from "./profile-sidebar-button"
 import MappedNavData from "./mapped-nav-data"
 import { PrivatePageNames, OpenPages } from "../../../utils/constants"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
+import ConnectDisconnectSerial from "./connect-disconnect-serial"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()
@@ -39,6 +40,7 @@ export default function PrimarySidebar() {
 
 			<SidebarFooter>
 				<AddPipSidebarButton />
+				<ConnectDisconnectSerial />
 				<ProfileSidebarButton />
 			</SidebarFooter>
 		</Sidebar>

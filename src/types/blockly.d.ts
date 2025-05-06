@@ -70,7 +70,7 @@ declare global {
 	type SensorCategoryName =
 	| "IR Sensors"
 	| "Distance Sensors"
-	| "IMU"
+	| "Motion Sensor"
 	| "Color Sensor"
 
 	type LogicCategoryName =
