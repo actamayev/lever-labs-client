@@ -52,9 +52,9 @@ const loopsCategory: CustomCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		// { kind: "block", type: LOOP_BLOCK_TYPES.WHILE_UNTIL },
-		// { kind: "block", type: LOOP_BLOCK_TYPES.REPEAT },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.REPEAT },
 		{ kind: "block", type: LOOP_BLOCK_TYPES.ESP32_LOOP },
-		// { kind: "block", type: LOOP_BLOCK_TYPES.ESP32_DELAY },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.ESP32_DELAY },
 	]
 }
 
@@ -74,7 +74,7 @@ export const logicCategory: ParentCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		startCategory,
-		// variableCategory,
+		variableCategory,
 		conditionalsCategory,
 		mathCategory,
 		loopsCategory,
