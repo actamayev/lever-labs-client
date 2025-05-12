@@ -13,7 +13,6 @@ class SerialManagerClass {
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
-	public lastPollingExtensionTime = 0
 
 	constructor() {
 		makeAutoObservable(this)
@@ -64,11 +63,9 @@ class SerialManagerClass {
 				// Use the binary protocol - create a 1-byte buffer with HANDSHAKE value (11)
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
-				console.log("Sent handshake to ESP32")
 			}
 
 			port.addEventListener("disconnect", () => {
-				console.log("Device disconnected")
 				this.cleanupConnection()
 			})
 
@@ -77,11 +74,7 @@ class SerialManagerClass {
 			this.startKeepAlive()
 		} catch (error) {
 			// Check if it's a user cancellation (NotFoundError)
-			if (error instanceof DOMException && error.name === "NotFoundError") {
-				// User canceled the selection - don't show an error
-				console.log("User canceled device selection")
-			} else {
-				// Other errors should still be shown
+			if (!(error instanceof DOMException && error.name === "NotFoundError")) {
 				runInAction(() => {
 					this.errorMessage = error instanceof Error ? error.message : String(error)
 				})
@@ -101,7 +94,6 @@ class SerialManagerClass {
 				try {
 					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
 					await this.writer.write(new Uint8Array(keepaliveMsg))
-					console.log("sending message")
 				} catch (error) {
 					console.error("Keepalive error:", error)
 					await this.cleanupConnection() // Add this line
@@ -118,7 +110,6 @@ class SerialManagerClass {
 			if (this.writer) {
 				const disconnectMsg = MessageBuilder.createSerialEndMessage()
 				await this.writer.write(new Uint8Array(disconnectMsg))
-				console.log("Sent disconnect notification to ESP32")
 
 				// Short delay to allow message to be sent
 				await new Promise(resolve => setTimeout(resolve, 50))
@@ -194,7 +185,6 @@ class SerialManagerClass {
 		try {
 		// Convert to Uint8Array for writing
 			const data = new Uint8Array(buffer)
-			console.log(data)
 
 			// Send data
 			await this.writer.write(data)

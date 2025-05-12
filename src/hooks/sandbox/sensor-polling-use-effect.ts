@@ -44,8 +44,6 @@ export default function useSensorPollingUseEffect (): void {
 
 			if (hadActivity) {
 				void pollSensors()
-			} else {
-				console.log("No user activity in the last 30 seconds, not extending polling")
 			}
 		}, SENSOR_POLLING_INTERVAL) // Check every 30 seconds
 

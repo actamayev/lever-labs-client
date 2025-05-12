@@ -18,7 +18,6 @@ export default function usePollSensors(): () => Promise<void> {
 		try {
 			if (serialManager.connected) {
 				const buffer = MessageBuilder.createStartSensorPollingMessage()
-				console.log("Polling sensors")
 
 				await serialManager.sendBinaryMessage(buffer)
 				return
