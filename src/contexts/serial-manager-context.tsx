@@ -12,6 +12,8 @@ class SerialManagerClass {
 	public messages: Message[] = []
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
+	public hasUserActivity = false
+	public lastPollingExtensionTime = 0
 
 	constructor() {
 		makeAutoObservable(this)
@@ -271,6 +273,17 @@ class SerialManagerClass {
 
 	public clearMessages = action(() => {
 		this.messages = []
+	})
+
+	public markUserActivity = action(() => {
+		this.hasUserActivity = true
+	})
+
+	// Method to check and reset user activity
+	public checkAndResetUserActivity = action(() => {
+		const hadActivity = this.hasUserActivity
+		this.hasUserActivity = false
+		return hadActivity
 	})
 
 	public async logout(): Promise<void> {

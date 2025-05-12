@@ -130,3 +130,4 @@ export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/block
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
 
 export const PageToNavigateAfterLogin = "/garage"
+export const SENSOR_POLLING_INTERVAL = 30000 // 30 seconds
