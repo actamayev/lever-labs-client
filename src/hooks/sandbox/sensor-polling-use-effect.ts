@@ -1,17 +1,23 @@
 "use client"
 
 import { useEffect } from "react"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import isNull from "lodash-es/isNull"
 import usePollSensors from "./poll-sensors"
+import { usePipContext } from "../../contexts/pip-context"
 import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
 export default function useSensorPollingUseEffect (): void {
 	const serialManager = useSerialManagerContext()
 	const pollSensors = usePollSensors()
+	const pipClass = usePipContext()
 
 	// Setup event listeners for user activity
 	useEffect(() => {
-		if (!serialManager.connected) return
+		if (
+			!serialManager.connected &&
+			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
+		) return
 
 		const handleActivity = (): void => {
 			serialManager.markUserActivity()
@@ -32,11 +38,14 @@ export default function useSensorPollingUseEffect (): void {
 			window.removeEventListener("touchstart", handleActivity)
 			window.removeEventListener("scroll", handleActivity)
 		}
-	}, [serialManager, serialManager.connected])
+	}, [pipClass.selectedPip, serialManager, serialManager.connected])
 
 	// Setup interval to check for activity and send polling extension
 	useEffect(() => {
-		if (!serialManager.connected) return
+		if (
+			!serialManager.connected &&
+			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
+		) return
 
 		const interval = setInterval(() => {
 			// Check if there was activity during this 30-second interval
@@ -48,5 +57,5 @@ export default function useSensorPollingUseEffect (): void {
 		}, SENSOR_POLLING_INTERVAL) // Check every 30 seconds
 
 		return (): void => clearInterval(interval)
-	}, [pollSensors, serialManager, serialManager.connected])
+	}, [pipClass.selectedPip, pollSensors, serialManager, serialManager.connected])
 }
