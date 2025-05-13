@@ -7,11 +7,12 @@ import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
+import { EmptySandboxXml } from "../../utils/constants"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
+import useSensorPollingUseEffect from "../../hooks/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-import { EmptySandboxXml } from "../../utils/constants"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -37,6 +38,7 @@ function BlocklyComponent(props: Props) {
 	const initializeBlocks = useInitializeBlocks()
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
+	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode)

@@ -1,10 +1,21 @@
 "use client"
 
 import * as Blockly from "blockly"
+import { ITheme } from "blockly/core/theme"
+
+const commonStyles: ITheme = {
+	base: Blockly.Themes.Classic,
+	startHats: true,
+	fontStyle: {
+		family: "Lexend",
+		weight: "normal",
+		size: 10,
+	},
+	name: "",
+}
 
 // Define dark and light themes
 export const darkTheme = Blockly.Theme.defineTheme("dark", {
-	"base": Blockly.Themes.Classic,
 	"componentStyles": {
 		"workspaceBackgroundColour": "#1f2937", // dark gray background
 		"toolboxBackgroundColour": "#141F23",
@@ -18,11 +29,10 @@ export const darkTheme = Blockly.Theme.defineTheme("dark", {
 		"scrollbarOpacity": 0.4,
 		"cursorColour": "#ffffff",
 	},
-	name: ""
+	...commonStyles
 })
 
 export const lightTheme = Blockly.Theme.defineTheme("light", {
-	"base": Blockly.Themes.Classic,
 	"componentStyles": {
 		"workspaceBackgroundColour": "#ffffff",
 		"toolboxBackgroundColour": "#f3f4f6",
@@ -36,7 +46,7 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 		"scrollbarOpacity": 0.4,
 		"cursorColour": "#1f2937",
 	},
-	name: ""
+	...commonStyles
 })
 
 const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
@@ -58,7 +68,6 @@ const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
 	sounds: false,
 	theme: isDarkMode ? darkTheme : lightTheme,
 	maxTrashcanContents: 0,
-	// renderer: "thrasos",
 })
 
 export default getWorkspaceConfig
