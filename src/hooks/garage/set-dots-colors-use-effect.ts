@@ -69,7 +69,6 @@ export default function useSetDefaultColorsUseEffect(): void {
 
 			if (serialManager.connected) {
 				const buffer = MessageBuilder.createLedMessage(ledControlData)
-				console.log("Sending LED message to serial manager:", buffer.byteLength)
 
 				void serialManager.sendBinaryMessage(buffer)
 				return

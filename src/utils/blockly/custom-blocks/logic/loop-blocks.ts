@@ -1,9 +1,9 @@
 "use client"
 
 import * as Blockly from "blockly"
-// import { Order } from "../../order"
+import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants"
-// import { cppGenerator } from "../../../cpp/cpp-generator"
+import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "../../block-types/logic-block-types"
 
@@ -40,55 +40,55 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	// 	}
 	// },
 
-	// [LOOP_BLOCK_TYPES.REPEAT]: {
-	// 	definition: {
-	// 		init: function(this: Blockly.Block) {
-	// 			this.appendDummyInput()
-	// 				.appendField("repeat")
+	[LOOP_BLOCK_TYPES.REPEAT]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("repeat")
 
-	// 			this.appendValueInput(LOOP_FIELD_VALUES.REPEAT_TIMES)
-	// 				.setCheck("Number")
+				this.appendValueInput(LOOP_FIELD_VALUES.REPEAT_TIMES)
+					.setCheck("Number")
 
-	// 			this.appendDummyInput()
-	// 				.appendField("times")
+				this.appendDummyInput()
+					.appendField("times")
 
-	// 			this.appendStatementInput(LOOP_FIELD_VALUES.REPEAT_DO)
-	// 				.appendField("do")
+				this.appendStatementInput(LOOP_FIELD_VALUES.REPEAT_DO)
+					.appendField("do")
 
-	// 			this.setPreviousStatement(true, null)
-	// 			this.setNextStatement(true, null)
-	// 			this.setColour(logicCategoryColour)
-	// 			this.setTooltip("Repeat statements a specified number of times")
-	// 		}
-	// 	},
-	// 	generator: (block: Blockly.Block): string => {
-	// 		const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
-	// 		const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
-	// 		const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
-	// 		return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
-	// 	}
-	// },
-	// [LOOP_BLOCK_TYPES.ESP32_DELAY]: {
-	// 	definition: {
-	// 		init: function(this: Blockly.Block) {
-	// 			this.appendDummyInput()
-	// 				.appendField("Delay")
-	// 				.appendField(
-	// 					new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
-	// 					LOOP_BLOCK_TYPES.ESP32_DELAY
-	// 				)
-	// 				.appendField("milliseconds")
-	// 			this.setPreviousStatement(true, null)
-	// 			this.setNextStatement(true, null)
-	// 			this.setColour(logicCategoryColour)
-	// 			this.setTooltip("Delay for a certain number of milliseconds")
-	// 		}
-	// 	},
-	// 	generator: (block: Blockly.Block): string => {
-	// 		const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
-	// 		return `delay(${delay});\n`  // Changed to standard Arduino delay
-	// 	}
-	// },
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(logicCategoryColour)
+				this.setTooltip("Repeat statements a specified number of times")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
+			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
+			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
+			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
+		}
+	},
+	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
+		definition: {
+			init: function(this: Blockly.Block) {
+				this.appendDummyInput()
+					.appendField("Delay")
+					.appendField(
+						new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
+						LOOP_BLOCK_TYPES.ESP32_DELAY
+					)
+					.appendField("milliseconds")
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(logicCategoryColour)
+				this.setTooltip("Delay for a certain number of milliseconds")
+			}
+		},
+		generator: (block: Blockly.Block): string => {
+			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
+			return `delay(${delay});\n`  // Changed to standard Arduino delay
+		}
+	},
 	[LOOP_BLOCK_TYPES.ESP32_LOOP]: {
 		definition: {
 			init: function(this: Blockly.Block) {

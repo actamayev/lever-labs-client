@@ -70,4 +70,10 @@ export default class SandboxDataService {
 			`${this.pathHeader}/stop-currently-running-code`, { pipUUID }
 		)
 	}
+
+	async pollSensors(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			`${this.pathHeader}/poll-sensors`, { pipUUID }
+		)
+	}
 }

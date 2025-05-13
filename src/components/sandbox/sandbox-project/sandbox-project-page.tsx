@@ -77,8 +77,6 @@ function SandboxProjectPage() {
 		// Only trigger the save if we're past the initial mounting period
 		if (isMountedLongEnough) {
 			debouncedSaveProject(newXml)
-		} else {
-			console.log("Ignoring save during initial mount period")
 		}
 	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject, isMountedLongEnough])
 
