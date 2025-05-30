@@ -20,6 +20,7 @@ import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
 import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
 import ShowLoadingPipConnectionStatus from "./show-loading-pip-connection-status"
+import ConnectUsbButton from "../connect-usb-button"
 
 function AddPipForm() {
 	const addPip = useAddPip(true)
@@ -48,8 +49,11 @@ function AddPipForm() {
 							<div className="flex flex-col text-3xl">
 								<div className="flex flex-row mb-6">
 									<p className="font-bold">Step 1:&nbsp;</p>
-									<p>Turn on your Pip</p>
+									<p>Turn your Pip on, and plug it into the computer. Press the Connect button below:</p>
 								</div>
+								<span>
+									<ConnectUsbButton />
+								</span>
 								<div className="flex flex-row mb-6">
 									<p className="font-bold">Step 2:&nbsp;</p>
 									<p>
