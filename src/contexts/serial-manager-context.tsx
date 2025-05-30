@@ -1,7 +1,8 @@
+/* eslint-disable max-depth */
 "use client"
 
 import { createContext, useContext } from "react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { ESPMessage, MessageBuilder, WiFiConnectionResultPayload } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable, runInAction } from "mobx"
 
 class SerialManagerClass {
@@ -13,6 +14,7 @@ class SerialManagerClass {
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
+	public onWiFiConnectionResult: ((status: "success" | "wifi_only" | "failed") => void) | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -146,19 +148,46 @@ class SerialManagerClass {
 				// If there's at least one complete line
 				if (lines.length > 1) {
 				// Process all complete lines
-				// eslint-disable-next-line max-depth
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
-						// eslint-disable-next-line max-depth
 						if (line) {
 							console.log("Received:", line)
-							runInAction(() => {
-								this.messages.push({
-									content: line,
-									direction: "received",
-									timestamp: new Date()
+
+							// Try to parse as JSON to see if it's structured data
+							try {
+								const jsonMessage = JSON.parse(line)
+								if (jsonMessage.route && jsonMessage.payload) {
+									// This is a structured message, handle it
+									this.handleStructuredMessage(jsonMessage)
+									// Still add to messages for debugging
+									runInAction(() => {
+										this.messages.push({
+											content: line,
+											direction: "received",
+											timestamp: new Date(),
+											isStructured: true
+										})
+									})
+								} else {
+									// Regular log message
+									runInAction(() => {
+										this.messages.push({
+											content: line,
+											direction: "received",
+											timestamp: new Date()
+										})
+									})
+								}
+							} catch {
+								// Not JSON, treat as regular log message
+								runInAction(() => {
+									this.messages.push({
+										content: line,
+										direction: "received",
+										timestamp: new Date()
+									})
 								})
-							})
+							}
 						}
 					}
 
@@ -173,6 +202,13 @@ class SerialManagerClass {
 
 			})
 			await this.cleanupConnection()
+		}
+	}
+
+	private handleStructuredMessage(message: ESPMessage): void {
+		if (message.route === "/wifi-connection-result") {
+			const status = (message.payload as WiFiConnectionResultPayload).status  // Now properly typed
+			this.onWiFiConnectionResult?.(status)
 		}
 	}
 

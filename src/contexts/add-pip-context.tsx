@@ -1,12 +1,11 @@
 "use client"
 
-import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, UseFormReturn } from "react-hook-form"
 import { createContext, useContext, useMemo } from "react"
 import { addPipSchema } from "../utils/pip/pip-schemas"
-import { PipUUID } from "@bluedotrobots/common-ts"
+import { PipUUID, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 
 class AddPipClass {
 	public addingNewPipRequirements: AddingNewPipRequirements = {
@@ -16,7 +15,6 @@ class AddPipClass {
 		userAlreadyAddedUUID: false,
 		checkedConnectedToWifi: false
 	}
-	public encodedWifiCredentials: string | null = null
 	public mirroredFormValues: IncompletePipData = {
 		pipUUID: "" as PipUUID,
 		shouldAutoConnect: true,
@@ -24,8 +22,8 @@ class AddPipClass {
 		wifiNetworkName: "",
 		wifiPassword: ""
 	}
-	public newPipConnectionStatus: NewPipConnectionStatuses | null = null
-	public isUserReadyToConnectToPipDialog: boolean | null = null
+	public wifiConnectionStatus: WiFiConnectionStatus | null = null
+	public isTestingWiFiConnection: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -46,31 +44,12 @@ class AddPipClass {
 		this.addingNewPipRequirements[field] = value
 	}
 
-	public setEncodedWifiCredentials = action((newState: string | null) => {
-		this.encodedWifiCredentials = newState
+	public setWifiConnectionStatus = action((status: WiFiConnectionStatus | null) => {
+		this.wifiConnectionStatus = status
 	})
 
-	public setNewPipConnectionStatus = action((newState: NewPipConnectionStatuses | null) => {
-		this.newPipConnectionStatus = newState
-	})
-
-	public setIsUserReadyToConnectToPipDialog = action((newState: boolean | null) => {
-		this.isUserReadyToConnectToPipDialog = newState
-	})
-
-	private encodeWifiData = action((field: "wifiNetworkName" | "wifiPassword", value: string) => {
-		if (field === "wifiNetworkName") {
-			this.newPipConnectionStatus = null
-			if (isEmpty(value)) {
-				return this.setEncodedWifiCredentials(null)
-			}
-		}
-		this.setEncodedWifiCredentials(btoa(JSON.stringify(
-			{
-				ssid: this.mirroredFormValues.wifiNetworkName,
-				password: this.mirroredFormValues.wifiPassword
-			}
-		)))
+	public setIsTestingWiFiConnection = action((testing: boolean) => {
+		this.isTestingWiFiConnection = testing
 	})
 
 	public updateMirroredFormValues<K extends keyof IncompletePipData>(
@@ -78,16 +57,6 @@ class AddPipClass {
 		value: IncompletePipData[K]
 	): void {
 		this.mirroredFormValues[field] = value
-		if (
-			this.isWifiField(field) &&
-			typeof value === "string"
-		) {
-			this.encodeWifiData(field, value)
-		}
-	}
-
-	private isWifiField(field: keyof IncompletePipData): field is WifiPipDataKeys {
-		return field === "wifiNetworkName" || field === "wifiPassword"
 	}
 
 	private resetMirroredFormValues = action(() => {
@@ -106,15 +75,14 @@ class AddPipClass {
 	}
 
 	public resetAddPipMethods = action(() => {
-		this.setIsUserReadyToConnectToPipDialog(null)
-		this.setNewPipConnectionStatus(null)
+		this.setWifiConnectionStatus(null)
+		this.setIsTestingWiFiConnection(false)
 		this.resetAddingPipRequirements()
 		this.resetMirroredFormValues()
 	})
 
 	public logout() {
 		this.resetAddPipMethods()
-		this.setEncodedWifiCredentials(null)
 	}
 }
 

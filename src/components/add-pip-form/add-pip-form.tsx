@@ -18,8 +18,7 @@ import useAddPip from "../../hooks/pip/add-pip"
 import { DottedTextTooltip } from "../dotted-underline-text"
 import SelectAutoreconnectToPip from "./select-autoconnect-to-pip"
 import { useAddPipContext } from "../../contexts/add-pip-context"
-import ConnectToPipInstructions from "./connect-to-pip-ip-instructions"
-import ShowLoadingPipConnectionStatus from "./show-loading-pip-connection-status"
+import UploadWiFiCredentials from "./upload-wifi-credentials"
 import ConnectUsbButton from "../connect-usb-button"
 
 function AddPipForm() {
@@ -54,14 +53,15 @@ function AddPipForm() {
 								<span>
 									<ConnectUsbButton />
 								</span>
+
 								<div className="flex flex-row mb-6">
 									<p className="font-bold">Step 2:&nbsp;</p>
 									<p>
-										Enter your
+            Enter your
 										<DottedTextTooltip tooltipMessage="Look for a 5-character code in the package Pip came with">
-										Pip's ID
+            Pip's ID
 										</DottedTextTooltip>
-										and pick a name for your new friend
+            and pick a name for your new friend
 									</p>
 								</div>
 								<div className="flex flex-row gap-4">
@@ -72,10 +72,16 @@ function AddPipForm() {
 										<EnterPipName />
 									</div>
 								</div>
+
+								{/* Add Step 3 header */}
+								<div className="flex flex-row mb-6">
+									<p className="font-bold">Step 3:&nbsp;</p>
+									<p>Enter your WiFi credentials</p>
+								</div>
 								<EnterWifiCreds />
-								<ConnectToPipInstructions />
+								<UploadWiFiCredentials />
+
 								<SelectAutoreconnectToPip />
-								<ShowLoadingPipConnectionStatus />
 								<AddPipButton />
 							</div>
 						</form>

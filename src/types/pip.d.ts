@@ -16,7 +16,7 @@ declare global {
 		checkedConnectedToWifi: boolean
 	}
 
-	type NewPipConnectionStatuses = "connected" | "connecting" | "failed"
+	// type WiFiConnectionStatus = ""
 }
 
 export {}
