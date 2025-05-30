@@ -23,15 +23,19 @@ export default function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
-				<Analytics />
-				<SpeedInsights />
-				<Script
-					src="https://app.rybbit.io/api/script.js"
-					data-site-id="338"
-					async
-					data-track-query="false" // Enhances privacy by not tracking query parameters
-					data-debounce="300" // Slightly faster response to navigation (default is 500ms)
-				/>
+				{process.env.NODE_ENV !== "development" && (
+					<>
+						<Analytics />
+						<SpeedInsights />
+						<Script
+							src="https://app.rybbit.io/api/script.js"
+							data-site-id="338"
+							async
+							data-track-query="false" // Enhances privacy by not tracking query parameters
+							data-debounce="300" // Slightly faster response to navigation (default is 500ms)
+						/>
+					</>
+				)}
 			</body>
 		</html>
 	)
