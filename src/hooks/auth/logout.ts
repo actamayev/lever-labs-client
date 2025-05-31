@@ -6,7 +6,6 @@ import { usePipContext } from "../../contexts/pip-context"
 import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useGarageContext } from "../../contexts/garage-context"
-import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
@@ -21,7 +20,6 @@ export default function useLogout(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
-	const addPipClass = useAddPipContext()
 	const socketClass = useSocketContext()
 	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
@@ -35,8 +33,6 @@ export default function useLogout(): () => Promise<void> {
 	return useCallback(async (): Promise<void> => {
 		personalInfoClass.logout()
 		pipClass.logout()
-		addPipClass?.store.logout()
-		addPipClass?.form.reset()
 		socketClass.logout()
 		authClass.logout()
 		blueDotApiClient.logout()
@@ -48,6 +44,6 @@ export default function useLogout(): () => Promise<void> {
 		garageClass.logout()
 		await serialManagerClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass, sandboxClass, garageClass,
-		socketClass, authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialManagerClass, navigate])
+	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
+		authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialManagerClass, navigate])
 }

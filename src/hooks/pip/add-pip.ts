@@ -1,56 +1,51 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import { AxiosError } from "axios"
 import { useCallback } from "react"
+import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import isEmpty from "lodash-es/isEmpty"
-import useValidatePipData from "./validate-pip-data"
+import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import useExitAfterAddPip from "./exit-after-add-pip"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
-import { AddPipData, PipData, PipUUID } from "@bluedotrobots/common-ts"
 
-export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promise<void> {
+export default function useAddPip(
+	resetAddPipVars: () => void,
+	incompletePipData: IncompletePipData
+): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 	const pipClass = usePipContext()
-	const addPipClass = useAddPipContext()
-	const validatePipData = useValidatePipData()
 	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
-			if (isNull(addPipClass)) return
-			const { pipUUID, pipName, shouldAutoConnect } = addPipClass.store.mirroredFormValues as {
-				pipUUID: PipUUID, pipName: string, shouldAutoConnect: boolean
+			if (isNull(incompletePipData.pipUUID)) {
+				return toast.negative({
+					title: "Please connect your Pip to USB",
+					description: "Please reload the page if you've connected it"
+				})
 			}
-			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
+			if (pipClass.checkIfUUIDAlreadyExists(incompletePipData.pipUUID) === true) {
 				return toast.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
 			}
 
-			if (validatePipData() === false) {
+			if (!incompletePipData.wiFiNetworkName || !incompletePipData.pipUUID) {
 				return toast.negative({
 					title: "Unable to validate Pip data",
 					description: "Please enter data and try submitting again"
 				})
 			}
 
-			if (isEmpty(pipName)) addPipClass.form.setValue("pipName", undefined)
-			if (!addPipClass.store.addingNewPipRequirements.isPipOnline) {
-				addPipClass.form.setValue("shouldAutoConnect", false)
-			}
 			const dataToSend: AddPipData = {
-				pipUUID,
-				pipName,
-				shouldAutoConnect,
+				pipUUID: incompletePipData.pipUUID,
+				pipName: incompletePipData.pipName,
 			}
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
@@ -59,15 +54,13 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 				throw new Error("Add Pip failed")
 			}
 			const pipDataToAdd: PipData = {
-				pipName: pipName || addPipDataResponse.data.pipName,
-				pipUUID: pipUUID,
+				pipName: addPipDataResponse.data.pipName,
+				pipUUID: incompletePipData.pipUUID,
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
-				pipConnectionStatus: addPipDataResponse.data.pipConnectionStatus
+				pipConnectionStatus: "connected"
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			if (shouldAutoNavigateToLab) {
-				exitAfterAddPip()
-			}
+			exitAfterAddPip(resetAddPipVars)
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
@@ -86,12 +79,11 @@ export default function useAddPip(shouldAutoNavigateToLab: boolean): () => Promi
 					}
 				}
 			}
-			if (isNull(addPipClass)) return
-			const { pipName } = addPipClass.store.mirroredFormValues
 			return toast.negative({
-				title: `Unable to add ${pipName} at this time`,
+				title: `Unable to add ${incompletePipData.pipName || "Pip"} at this time`,
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [addPipClass, pipClass, validatePipData, blueDotApiClient.pipDataService, shouldAutoNavigateToLab, toast, exitAfterAddPip])
+	}, [incompletePipData.pipUUID, incompletePipData.wiFiNetworkName, incompletePipData.pipName, pipClass,
+		blueDotApiClient.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
 }

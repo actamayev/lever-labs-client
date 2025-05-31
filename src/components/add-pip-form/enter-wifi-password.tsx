@@ -1,37 +1,20 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
-import { observer } from "mobx-react"
 import { Eye, EyeOff } from "lucide-react"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import LockIconAndTooltip from "../lock-icon-and-tooltip"
-import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form"
+import { Control } from "react-hook-form"
 
-function EnterWifiPassword() {
-	const addPipClass = useAddPipContext()
+export default function EnterWifiPassword({ control }: { control: Control<IncompletePipData> }) {
 	const [showPassword, setShowPassword] = useState(false)
-
-	const typeNetworkPassword = useCallback((
-		event: React.ChangeEvent<HTMLInputElement>,
-		onChange: (value: string) => void
-	) => {
-		const input = event.target.value
-		if (input.length > 200) return
-		if (isNull(addPipClass)) return
-
-		onChange(input)
-		addPipClass.store.updateMirroredFormValues("wifiPassword", input)
-	}, [addPipClass])
-
-	if (isNull(addPipClass)) return null
 
 	return (
 		<FormField
-			control={addPipClass.form.control}
-			name="wifiPassword"
+			control={control}
+			name="wiFiPassword"
 			render={({ field }) => (
 				<FormItem className="mt-2">
 					<FormControl>
@@ -45,14 +28,13 @@ function EnterWifiPassword() {
 								placeholder="Network Password"
 								autoComplete="new-password"
 								autoSave="off"
-								onChange={(e) => typeNetworkPassword(e, field.onChange)}
 							/>
 							<Button
 								type="button"
 								variant="ghost"
 								size="sm"
 								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1.5 mr-4 hover:bg-polar"
-								onClick={() => setShowPassword(prevState => !prevState)}
+								onClick={() => setShowPassword(prev => !prev)}
 							>
 								{showPassword ? (
 									<EyeOff className="!h-7 !w-7" />
@@ -71,5 +53,3 @@ function EnterWifiPassword() {
 		/>
 	)
 }
-
-export default observer(EnterWifiPassword)

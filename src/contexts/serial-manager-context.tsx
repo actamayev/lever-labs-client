@@ -2,7 +2,7 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { ESPMessage, MessageBuilder, WiFiConnectionResultPayload } from "@bluedotrobots/common-ts"
+import { ESPMessage, MessageBuilder, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable, runInAction } from "mobx"
 
 class SerialManagerClass {
@@ -14,7 +14,7 @@ class SerialManagerClass {
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
-	public onWiFiConnectionResult: ((status: "success" | "wifi_only" | "failed") => void) | null = null
+	public onWiFiConnectionResult: ((status: WiFiConnectionStatus) => void) | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -206,10 +206,26 @@ class SerialManagerClass {
 	}
 
 	private handleStructuredMessage(message: ESPMessage): void {
-		if (message.route === "/wifi-connection-result") {
-			const status = (message.payload as WiFiConnectionResultPayload).status  // Now properly typed
-			this.onWiFiConnectionResult?.(status)
+		if (message.route !== "/wifi-connection-result") return
+		const status = (message.payload as WiFiConnectionResultPayload).status
+
+		// Convert to enum
+		let enumStatus: WiFiConnectionStatus
+		switch (status) {
+		case "success":
+			enumStatus = WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
+			break
+		case "wifi_only":
+			enumStatus = WiFiConnectionStatus.WIFI_ONLY
+			break
+		case "failed":
+			enumStatus = WiFiConnectionStatus.FAILED
+			break
+		default:
+			enumStatus = WiFiConnectionStatus.FAILED
 		}
+
+		this.onWiFiConnectionResult?.(enumStatus)
 	}
 
 	async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
