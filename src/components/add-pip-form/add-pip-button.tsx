@@ -4,6 +4,7 @@ import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { Button } from "../shadcn/ui/button"
+import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
 interface Props {
 	wiFiConnectionStatus: WiFiConnectionStatus | null
@@ -12,16 +13,16 @@ interface Props {
 
 function AddPipButton(props: Props) {
 	const { wiFiConnectionStatus, wiFiNetworkName } = props
+	const serialManager = useSerialManagerContext()
 
-	// Don't show button until WiFi credentials have been successfully tested
-	if (wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return null
+	if (!serialManager.isReadyToAddPip()) return null
 
-	// Show add button when WiFi is connected but pip hasn't been added to account yet
+	// Show add button when all conditions are met
 	return (
 		<div className="flex justify-between mt-6 items-center">
 			<Button
 				type="submit"
-				disabled={isEmpty(wiFiNetworkName)}
+				disabled={isEmpty(wiFiNetworkName) || wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS}
 				className="p-5 text-2xl"
 			>
 				Add Pip to Account

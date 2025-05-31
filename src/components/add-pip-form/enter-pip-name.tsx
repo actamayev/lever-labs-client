@@ -31,7 +31,7 @@ export default function EnterPipName({ control }: { control: Control<IncompleteP
 								minLength={3}
 								className="w-full h-14 !text-2xl dark:border-gray-600 pr-8 focus:ring-0 focus:ring-offset-0
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
-								placeholder="Name"
+								placeholder="Pip"
 							/>
 							<CharacterCounter
 								value={field.value}

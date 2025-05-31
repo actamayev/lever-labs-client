@@ -2,7 +2,8 @@
 "use client"
 
 import { createContext, useContext } from "react"
-import { ESPMessage, MessageBuilder, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import { ESPMessage, MessageBuilder, PipIDPayload,
+	PipUUID, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable, runInAction } from "mobx"
 
 class SerialManagerClass {
@@ -15,6 +16,13 @@ class SerialManagerClass {
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
 	public onWiFiConnectionResult: ((status: WiFiConnectionStatus) => void) | null = null
+
+	// NEW: Add Pip flow state
+	public pipId: PipUUID | null = null
+	public showWiFiSection: boolean = false
+	public showNameSection: boolean = false
+	public wiFiTestCompleted: boolean = false
+	public hasBeenDisconnected: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -58,6 +66,8 @@ class SerialManagerClass {
 				this.writer = writer
 				this.connected = true
 				this.errorMessage = null
+				// Reset flow state on new connection
+				this.hasBeenDisconnected = false
 			})
 
 			// Send handshake immediately after connection established
@@ -68,7 +78,7 @@ class SerialManagerClass {
 			}
 
 			port.addEventListener("disconnect", () => {
-				this.cleanupConnection()
+				this.handleDisconnection()
 			})
 
 			// Start reading loop
@@ -82,6 +92,14 @@ class SerialManagerClass {
 				})
 			}
 		}
+	}
+
+	// NEW: Handle disconnection
+	private handleDisconnection(): void {
+		runInAction(() => {
+			this.hasBeenDisconnected = true
+		})
+		this.cleanupConnection()
 	}
 
 	private startKeepAlive(): void {
@@ -206,6 +224,16 @@ class SerialManagerClass {
 	}
 
 	private handleStructuredMessage(message: ESPMessage): void {
+		// NEW: Handle PipID message
+		if (message.route === "/pip-id") {
+			runInAction(() => {
+				this.pipId = (message.payload as PipIDPayload).pipId
+				this.showWiFiSection = true
+				console.log("Received PipID:", this.pipId)
+			})
+			return
+		}
+
 		if (message.route !== "/wifi-connection-result") return
 		const status = (message.payload as WiFiConnectionResultPayload).status
 
@@ -214,6 +242,10 @@ class SerialManagerClass {
 		switch (status) {
 		case "success":
 			enumStatus = WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
+			runInAction(() => {
+				this.wiFiTestCompleted = true
+				this.showNameSection = true
+			})
 			break
 		case "wifi_only":
 			enumStatus = WiFiConnectionStatus.WIFI_ONLY
@@ -328,11 +360,29 @@ class SerialManagerClass {
 		return hadActivity
 	})
 
+	// NEW: Reset flow state
+	public resetFlowState = action(() => {
+		this.pipId = null
+		this.showWiFiSection = false
+		this.showNameSection = false
+		this.wiFiTestCompleted = false
+		this.hasBeenDisconnected = false
+	})
+
+	// NEW: Check if ready to add pip
+	public isReadyToAddPip = (): boolean => {
+		return this.pipId !== null &&
+			this.wiFiTestCompleted &&
+			this.hasBeenDisconnected &&
+			!this.connected
+	}
+
 	public async logout(): Promise<void> {
 		await this.disconnect() // This handles port, reader, writer and connected
 		runInAction(() => {
 			this.messages = []
 			this.errorMessage = null
+			this.resetFlowState()
 		})
 	}
 }

@@ -18,6 +18,7 @@ function ConnectUsbButton() {
 		<CustomTooltip
 			tooltipTrigger={
 				<button
+					type="button"
 					onClick={serialManager.connected ? handleDisconnect : handleConnect}
 					className={`p-2 rounded-md transition-none ${
 						serialManager.connected

@@ -8,10 +8,10 @@ import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 
 interface Props {
 	formValues: IncompletePipData
-	isTestingWiFiConnection: boolean  // Changed to boolean
-	wifiConnectionStatus: WiFiConnectionStatus | null  // Added separate status
-	setIsTestingWiFiConnection: (testing: boolean) => void  // Simplified setter
-	setWifiConnectionStatus: (status: WiFiConnectionStatus) => void  // Added callback
+	isTestingWiFiConnection: boolean
+	wifiConnectionStatus: WiFiConnectionStatus | null
+	setIsTestingWiFiConnection: (testing: boolean) => void
+	setWifiConnectionStatus: (status: WiFiConnectionStatus) => void
 }
 
 function UploadWiFiCredentials(props: Props) {
@@ -37,19 +37,19 @@ function UploadWiFiCredentials(props: Props) {
 	}, [serialManager, setIsTestingWiFiConnection, setWifiConnectionStatus])
 
 	const uploadCredentials = useCallback(async () => {
-		if (!formValues.wiFiNetworkName || !formValues.wiFiPassword) return
+		// NEW: Only require network name, password is optional
+		if (!formValues.wiFiNetworkName) return
 
 		setIsTestingWiFiConnection(true)
 
 		const message = MessageBuilder.createWiFiCredentialsMessage(
 			formValues.wiFiNetworkName,
-			formValues.wiFiPassword
+			formValues.wiFiPassword || "" // Use empty string if no password
 		)
 		const success = await serialManager.sendBinaryMessage(message)
 
 		if (!success) {
 			setIsTestingWiFiConnection(false)
-			// Could call onWiFiConnectionResult(WiFiConnectionStatus.FAILED) here
 		}
 	}, [formValues.wiFiNetworkName, formValues.wiFiPassword, serialManager, setIsTestingWiFiConnection])
 
@@ -62,7 +62,7 @@ function UploadWiFiCredentials(props: Props) {
 	}
 
 	const getButtonVariant = () => {
-		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "default" // or "success" if you have it
+		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "default"
 		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "secondary"
 		if (wifiConnectionStatus === WiFiConnectionStatus.FAILED) return "destructive"
 		return "default"
@@ -71,16 +71,13 @@ function UploadWiFiCredentials(props: Props) {
 	const isButtonDisabled = () => {
 		return isTestingWiFiConnection ||
 			!serialManager.connected ||
-			!formValues.wiFiNetworkName ||
-			!formValues.wiFiPassword ||
+			!formValues.wiFiNetworkName || // NEW: Only require network name
 			wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
 	}
 
 	return (
 		<div className="mt-6">
 			<div className="flex flex-col">
-				<div className="font-bold mb-2">Step 3: Upload WiFi Credentials</div>
-
 				{/* Show status message */}
 				{wifiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY && (
 					<p className="text-amber-600 mb-2">
