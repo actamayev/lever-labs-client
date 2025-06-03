@@ -171,9 +171,11 @@ class SerialManagerClass {
 						if (line) {
 							console.log("Received:", line)
 
+							const cleanLine = line.replace(/^\[(CRIT|HIGH|LOW|NORMAL)\]\s*/, "")
+
 							// Try to parse as JSON to see if it's structured data
 							try {
-								const jsonMessage = JSON.parse(line)
+								const jsonMessage = JSON.parse(cleanLine)
 								if (jsonMessage.route && jsonMessage.payload) {
 									// This is a structured message, handle it
 									this.handleStructuredMessage(jsonMessage)
