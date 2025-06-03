@@ -31,7 +31,8 @@ export default function UsernameInput<T extends NewUsernameRequest | RegisterFor
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
 								}}
-								className="w-full pr-16 truncate h-12 rounded-xl !text-xl font-light border-2"
+								className="w-full pr-16 truncate h-12 rounded-xl !text-xl \
+								font-light border-2 bg-polar shadow-none border-swan"
 								maxLength={100}
 							/>
 							<CharacterCounter

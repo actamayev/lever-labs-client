@@ -36,6 +36,7 @@ export default function EnterPipName({ control }: { control: Control<IncompleteP
 							<CharacterCounter
 								value={field.value}
 								characterLimit={20}
+								extraClasses="right-12"
 							/>
 							<div className="absolute inset-y-0 right-2 flex items-center">
 								<CustomTooltip

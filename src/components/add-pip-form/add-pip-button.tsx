@@ -15,14 +15,16 @@ function AddPipButton(props: Props) {
 	const { wiFiConnectionStatus, wiFiNetworkName } = props
 	const serialManager = useSerialManagerContext()
 
-	if (!serialManager.isReadyToAddPip()) return null
-
 	// Show add button when all conditions are met
 	return (
 		<div className="flex justify-between mt-6 items-center">
 			<Button
 				type="submit"
-				disabled={isEmpty(wiFiNetworkName) || wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS}
+				disabled={(
+					isEmpty(wiFiNetworkName) ||
+					wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS ||
+					!serialManager.isReadyToAddPip()
+				)}
 				className="p-5 text-2xl"
 			>
 				Add Pip to Account

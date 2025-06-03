@@ -18,7 +18,7 @@ export default function ContactInput ({ control } : { control: Control<LoginRequ
 							{...field}
 							maxLength={100}
 							min={3}
-							className="h-12 !text-xl font-light"
+							className="h-12 !text-xl font-light bg-polar shadow-none border-swan"
 						/>
 					</FormControl>
 					<FormMessage />

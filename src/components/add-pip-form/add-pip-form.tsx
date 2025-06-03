@@ -131,12 +131,6 @@ function AddPipForm() {
 											<p>Name your Pip (optional)</p>
 										</div>
 										<EnterPipName control={form.control} />
-									</>
-								)}
-
-								{/* Step 6: Disconnect and Add - Show when disconnected */}
-								{serialManager.hasBeenDisconnected && (
-									<>
 										<div className="flex flex-row mb-6 mt-8">
 											<p className="font-bold">Step 6:&nbsp;</p>
 											<p>Unplug your Pip from USB and click Add to Account</p>
