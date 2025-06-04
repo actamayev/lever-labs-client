@@ -13,7 +13,7 @@ import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks
 
 export default function useAddPip(
 	resetAddPipVars: () => void,
-	incompletePipData: IncompletePipData
+	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
@@ -23,20 +23,21 @@ export default function useAddPip(
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
 		try {
-			if (isNull(incompletePipData.pipUUID)) {
+			const pipUUID = getFormValues().pipUUID
+			if (isNull(pipUUID)) {
 				return toast.negative({
 					title: "Please connect your Pip to USB",
 					description: "Please reload the page if you've connected it"
 				})
 			}
-			if (pipClass.checkIfUUIDAlreadyExists(incompletePipData.pipUUID) === true) {
+			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				return toast.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
 			}
 
-			if (!incompletePipData.wiFiNetworkName || !incompletePipData.pipUUID) {
+			if (!getFormValues().wiFiNetworkName || !pipUUID) {
 				return toast.negative({
 					title: "Unable to validate Pip data",
 					description: "Please enter data and try submitting again"
@@ -44,8 +45,8 @@ export default function useAddPip(
 			}
 
 			const dataToSend: AddPipData = {
-				pipUUID: incompletePipData.pipUUID,
-				pipName: incompletePipData.pipName,
+				pipUUID: pipUUID,
+				pipName: getFormValues().pipName,
 			}
 
 			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
@@ -55,7 +56,7 @@ export default function useAddPip(
 			}
 			const pipDataToAdd: PipData = {
 				pipName: addPipDataResponse.data.pipName,
-				pipUUID: incompletePipData.pipUUID,
+				pipUUID: pipUUID,
 				userPipUUIDId: addPipDataResponse.data.userPipUUIDId,
 				pipConnectionStatus: "connected"
 			}
@@ -80,10 +81,9 @@ export default function useAddPip(
 				}
 			}
 			return toast.negative({
-				title: `Unable to add ${incompletePipData.pipName || "Pip"} at this time`,
+				title: `Unable to add ${getFormValues().pipName || "Pip"} at this time`,
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [incompletePipData.pipUUID, incompletePipData.wiFiNetworkName, incompletePipData.pipName, pipClass,
-		blueDotApiClient.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
+	}, [getFormValues, pipClass, blueDotApiClient.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
 }

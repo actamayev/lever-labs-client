@@ -10,10 +10,10 @@ import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { usePageTransitionContext } from "../../contexts/page-transition-context"
 import { useActivityProgressContext } from "../../contexts/activity-progress-context"
+import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
 export default function useLogout(): () => Promise<void> {
 	const authClass = useAuthContext()
@@ -28,7 +28,7 @@ export default function useLogout(): () => Promise<void> {
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
 	const garageClass = useGarageContext()
-	const serialManagerClass = useSerialManagerContext()
+	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	return useCallback(async (): Promise<void> => {
 		personalInfoClass.logout()
@@ -42,8 +42,8 @@ export default function useLogout(): () => Promise<void> {
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()
-		await serialManagerClass.logout()
+		await serialMessageManagerClass.logout()
 		navigate("/")
 	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
-		authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialManagerClass, navigate])
+		authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialMessageManagerClass, navigate])
 }

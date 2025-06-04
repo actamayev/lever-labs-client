@@ -60,7 +60,7 @@ function AddPipForm() {
 		}
 	}, [serialMessageManagerClass.pipId, form])
 
-	const addPip = useAddPip(resetAddPipVars, form.getValues())
+	const addPip = useAddPip(resetAddPipVars, () => form.getValues())
 
 	return (
 		<div>
@@ -128,7 +128,7 @@ function AddPipForm() {
 											<p className="font-bold">Step 6:&nbsp;</p>
 											<p>Unplug your Pip from USB and click Add to Account</p>
 										</div>
-										<AddPipButton />
+										<AddPipButton getFormValues={() => form.getValues()} />
 									</>
 								)}
 							</div>
