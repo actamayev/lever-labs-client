@@ -24,8 +24,7 @@ function NetworkContent() {
 
 	const selectedPip = pipClass.selectedPip
 	if (isNull(selectedPip)) return null
-	// console.log("serialManager.connected", serialManager.connected)
-	switch (selectedPip?.pipConnectionStatus) {
+	switch (selectedPip.pipConnectionStatus) {
 	case "offline":
 		return (
 			<>
@@ -59,16 +58,6 @@ function NetworkContent() {
 				className="rounded-xl bg-eel"
 			>
 				DISCONNECT
-			</Button>
-		)
-	case undefined:
-		return (
-			<Button
-				onClick={clearWiFiCredentials}
-				className="rounded-xl bg-eel h-9 mt-2"
-				disabled={!serialManager.connected}
-			>
-					CLEAR WIFI CREDENTIALS
 			</Button>
 		)
 	default: return null
