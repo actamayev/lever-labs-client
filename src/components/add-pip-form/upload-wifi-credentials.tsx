@@ -7,12 +7,7 @@ import { Button } from "../shadcn/ui/button"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
-interface Props {
-	getFormValues: () => IncompletePipData
-}
-
-function UploadWiFiCredentials(props: Props) {
-	const { getFormValues } = props
+function UploadWiFiCredentials({ getFormValues }: { getFormValues: () => IncompletePipData }) {
 	const serialManager = useSerialManagerContext()
 	const serialMessageManager = useSerialMessageManagerContext()
 
@@ -29,9 +24,7 @@ function UploadWiFiCredentials(props: Props) {
 	}, [serialManager, serialMessageManager])
 
 	const uploadCredentials = useCallback(async () => {
-		// NEW: Only require network name, password is optional
 		if (!getFormValues().wiFiNetworkName) return
-		console.log("Uploading WiFi credentials:", getFormValues().wiFiNetworkName, getFormValues().wiFiPassword)
 
 		serialMessageManager.setIsTestingWiFiConnection(true)
 
@@ -48,17 +41,28 @@ function UploadWiFiCredentials(props: Props) {
 
 	const getButtonText = () => {
 		if (serialMessageManager.isTestingWiFiConnection) return "Testing Connection..."
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "✓ Connected Successfully"
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "⚠ WiFi Connected (Server Unreachable)"
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED) return "✗ Connection Failed - Try Again"
+		switch (serialMessageManager.wiFiConnectionStatus) {
+		case WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS:
+			return "✓ Connected Successfully"
+		case WiFiConnectionStatus.WIFI_ONLY:
+			return "⚠ WiFi Connected (Server Unreachable)"
+		case WiFiConnectionStatus.FAILED:
+			return "✗ Connection Failed - Try Again"
+		}
 		return "Upload WiFi Credentials"
 	}
 
 	const getButtonVariant = () => {
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "default"
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "secondary"
-		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED) return "destructive"
-		return "default"
+		switch (serialMessageManager.wiFiConnectionStatus) {
+		case WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS:
+			return "default"
+		case WiFiConnectionStatus.WIFI_ONLY:
+			return "secondary"
+		case WiFiConnectionStatus.FAILED:
+			return "destructive"
+		default:
+			return "default"
+		}
 	}
 
 	const isButtonDisabled = () => {

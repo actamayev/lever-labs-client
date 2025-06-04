@@ -132,7 +132,6 @@ class MessageManagerClass extends EventTarget {
 			runInAction(() => {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
-				console.log("Received PipID:", this.pipId)
 			})
 			this.dispatchEvent(new CustomEvent("pipIdReceived", { detail: this.pipId }))
 			break
@@ -166,7 +165,7 @@ class MessageManagerClass extends EventTarget {
 			break
 		}
 		default:
-			console.log("Unknown message route:", message.route)
+			console.info("Unknown message route:", message.route)
 			break
 		}
 	}

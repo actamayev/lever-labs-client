@@ -173,7 +173,7 @@ class SerialConnectionManagerClass extends EventTarget {
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
 						if (line) {
-							console.log("Received:", line)
+							console.info("Received:", line)
 							// Emit raw message event
 							this.dispatchEvent(new CustomEvent("rawMessage", { detail: line }))
 						}
