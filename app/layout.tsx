@@ -17,13 +17,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+	console.log("process.env.NODE_ENV:", process.env.NODE_ENV)
 	return (
 		<html lang="en" className={`${lexend.variable}`}>
 			<body>
 				<Providers>
 					{children}
 				</Providers>
-				{process.env.NODE_ENV !== "development" && (
+				{process.env.NODE_ENV === "production" && (
 					<>
 						<Analytics />
 						<SpeedInsights />
