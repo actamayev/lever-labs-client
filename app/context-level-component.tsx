@@ -3,7 +3,6 @@ import PipProvider from "../src/contexts/pip-context"
 import AuthProvider from "../src/contexts/auth-context"
 import GarageProvider from "../src/contexts/garage-context"
 import SocketProvider from "../src/contexts/socket-context"
-import AddPipProvider from "../src/contexts/add-pip-context"
 import SandboxProvider from "../src/contexts/sandbox-context"
 import WorkbenchProvider from "../src/contexts/workbench-context"
 import LabReadingProvider from "../src/contexts/lab-reading-context"
@@ -12,6 +11,7 @@ import SerialManagerProvider from "../src/contexts/serial-manager-context"
 import PageTransitionProvider from "../src/contexts/page-transition-context"
 import ActivityProgressProvider from "../src/contexts/activity-progress-context"
 import BlueDotApiClientProvider from "../src/contexts/blue-dot-api-client-context"
+import SerialMessageManagerProvider from "../src/contexts/serial-message-manager"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
 	return (
@@ -20,25 +20,25 @@ export default function ContextLevelComponent ({ children } : { children: React.
 				<AuthProvider>
 					<PersonalInfoProvider>
 						<PipProvider>
-							<AddPipProvider>
-								<BlueDotApiClientProvider>
-									<SocketProvider>
-										<LabReadingProvider>
-											<ActivityProgressProvider>
-												<SandboxProvider>
-													<GarageProvider>
-														<WorkbenchProvider>
-															<SerialManagerProvider>
+							<BlueDotApiClientProvider>
+								<SocketProvider>
+									<LabReadingProvider>
+										<ActivityProgressProvider>
+											<SandboxProvider>
+												<GarageProvider>
+													<WorkbenchProvider>
+														<SerialManagerProvider>
+															<SerialMessageManagerProvider>
 																{children}
-															</SerialManagerProvider>
-														</WorkbenchProvider>
-													</GarageProvider>
-												</SandboxProvider>
-											</ActivityProgressProvider>
-										</LabReadingProvider>
-									</SocketProvider>
-								</BlueDotApiClientProvider>
-							</AddPipProvider>
+															</SerialMessageManagerProvider>
+														</SerialManagerProvider>
+													</WorkbenchProvider>
+												</GarageProvider>
+											</SandboxProvider>
+										</ActivityProgressProvider>
+									</LabReadingProvider>
+								</SocketProvider>
+							</BlueDotApiClientProvider>
 						</PipProvider>
 					</PersonalInfoProvider>
 				</AuthProvider>

@@ -1,5 +1,4 @@
 import { Viewport } from "next"
-import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../src/styles/index.css"
@@ -23,19 +22,8 @@ export default function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
-				{process.env.NODE_ENV !== "development" && (
-					<>
-						<Analytics />
-						<SpeedInsights />
-						<Script
-							src="https://app.rybbit.io/api/script.js"
-							data-site-id="338"
-							async
-							data-track-query="false" // Enhances privacy by not tracking query parameters
-							data-debounce="300" // Slightly faster response to navigation (default is 500ms)
-						/>
-					</>
-				)}
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	)

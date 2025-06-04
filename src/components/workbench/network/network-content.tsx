@@ -8,7 +8,7 @@ import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-p
 
 function NetworkContent() {
 	const pipClass = usePipContext()
-	const diconnectFromPip = useDisconnectFromPip()
+	const disconnectFromPip = useDisconnectFromPip()
 	const requestToConnectToPip = useRequestToConnectToPip()
 
 	const selectedPip = pipClass.selectedPip
@@ -34,7 +34,7 @@ function NetworkContent() {
 	case "connected":
 		return (
 			<Button
-				onClick={() => diconnectFromPip(selectedPip)}
+				onClick={() => disconnectFromPip(selectedPip)}
 				className="rounded-xl bg-eel"
 			>
 				DISCONNECT

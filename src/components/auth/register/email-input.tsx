@@ -16,7 +16,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 							placeholder="Email"
 							{...field}
 							maxLength={100}
-							className="h-12 rounded-xl !text-xl font-light border-2"
+							className="h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
 						/>
 					</FormControl>
 					<FormMessage />
