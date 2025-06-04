@@ -86,9 +86,6 @@ class MessageManagerClass extends EventTarget {
 				})
 			})
 		}
-
-		// Emit event for UI components
-		this.dispatchEvent(new CustomEvent("messageReceived", { detail: line }))
 	}
 
 	private handleConnected = (): void => {
@@ -133,7 +130,6 @@ class MessageManagerClass extends EventTarget {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
 			})
-			this.dispatchEvent(new CustomEvent("pipIdReceived", { detail: this.pipId }))
 			break
 		}
 		case "/wifi-connection-result": {
@@ -161,7 +157,6 @@ class MessageManagerClass extends EventTarget {
 			}
 
 			this.onWiFiConnectionResult?.(enumStatus)
-			this.dispatchEvent(new CustomEvent("wifiConnectionResult", { detail: enumStatus }))
 			break
 		}
 		default:
@@ -177,7 +172,6 @@ class MessageManagerClass extends EventTarget {
 
 	public clearMessages = action(() => {
 		this.messages = []
-		this.dispatchEvent(new CustomEvent("messagesCleared"))
 	})
 
 	// Reset flow state
@@ -188,7 +182,6 @@ class MessageManagerClass extends EventTarget {
 		this.wiFiTestCompleted = false
 		this.hasBeenDisconnected = false
 		this.isReadyToDisconnect = false
-		this.dispatchEvent(new CustomEvent("flowStateReset"))
 	})
 
 	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null) => {
@@ -205,7 +198,6 @@ class MessageManagerClass extends EventTarget {
 			this.messages = []
 			this.resetFlowState()
 		})
-		this.dispatchEvent(new CustomEvent("loggedOut"))
 		this.setWiFiConnectionStatus(null)
 		this.setIsTestingWiFiConnection(false)
 	}
