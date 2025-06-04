@@ -12,7 +12,7 @@ export default function LockIconAndTooltip() {
 					type="button"
 					variant="ghost"
 					size="sm"
-					className="h-auto p-1.5 hover:bg-polar"
+					className="h-auto p-1.5 hover:bg-swan"
 				>
 					<Lock className="!h-7 !w-7" />
 				</Button>
