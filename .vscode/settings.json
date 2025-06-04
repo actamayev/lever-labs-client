@@ -26,5 +26,6 @@
 	},
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "cSpell.enabled": true
 }
