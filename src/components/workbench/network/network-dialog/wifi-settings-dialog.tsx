@@ -1,12 +1,15 @@
 "use client"
 
+import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
-import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useEffect } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../../contexts/serial-message-manager"
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../shadcn/ui/dialog"
+import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
+import ShowNetworksSection from "./show-networks-section"
+import { Button } from "../../../shadcn/ui/button"
+import ScanNetworksSection from "./scan-networks-section"
 
 interface WiFiSettingsDialogProps {
 	open: boolean
@@ -31,6 +34,21 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		}
 	}, [serialManager, serialMessageManager])
 
+	const scanForNetworks = useCallback(async () => {
+		if (!serialManager.connected || serialMessageManager.isScanning) return
+
+		serialMessageManager.setIsScanning(true)
+		serialMessageManager.clearScannedNetworks() // Clear before starting new scan
+
+		try {
+			const message = MessageBuilder.createScanWiFiNetworksMessage()
+			await serialManager.sendBinaryMessage(message)
+		} catch (error) {
+			console.error("Failed to scan for networks:", error)
+			serialMessageManager.setIsScanning(false)
+		}
+	}, [serialManager, serialMessageManager])
+
 	// Request saved networks when dialog opens
 	useEffect(() => {
 		if (open && serialManager.connected) {
@@ -39,37 +57,6 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 	}, [open, requestSavedNetworks, serialManager.connected])
 
 	if (!serialManager.connected) return null
-
-	const ShowNetworksSection  = observer(() => {
-		if (serialMessageManager.isLoadingSavedNetworks) {
-			return (
-				<div className="flex items-center justify-center py-8">
-					<div className="text-sm text-muted-foreground">Loading saved networks...</div>
-				</div>
-			)
-		}
-
-		if (isEmpty(serialMessageManager.savedNetworks)) {
-			return (
-				<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300 rounded-lg text-center">
-					No saved networks found
-				</div>
-			)
-		}
-
-		return (
-			<div className="space-y-2">
-				{serialMessageManager.savedNetworks.map((network) => (
-					<div
-						key={network.index}
-						className="flex items-center justify-between p-3 border rounded-lg bg-gray-50"
-					>
-						<div className="font-medium text-sm">{network.ssid}</div>
-					</div>
-				))}
-			</div>
-		)
-	})
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
@@ -85,6 +72,19 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 						<h3 className="text-lg font-medium mb-3">Saved Networks</h3>
 
 						<ShowNetworksSection />
+						<div className="flex items-center justify-between mb-3">
+							<h3 className="text-lg font-medium">Add New Network</h3>
+							<Button
+								onClick={scanForNetworks}
+								disabled={serialMessageManager.isScanning}
+								className="flex items-center gap-2"
+								variant="outline"
+							>
+								<Wifi className="h-4 w-4" />
+								{serialMessageManager.isScanning ? "Scanning..." : "Scan Networks"}
+							</Button>
+						</div>
+						<ScanNetworksSection />
 					</div>
 				</div>
 			</DialogContent>

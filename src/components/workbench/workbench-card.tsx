@@ -8,7 +8,7 @@ import VolumeContent from "./volume/volume-content"
 import BatteryContent from "./battery/battery-content"
 import NetworkContent from "./network/network-content"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
-import WifiSettingsDialog from "./network/wifi-settings-dialog"
+import WifiSettingsDialog from "./network/network-dialog/wifi-settings-dialog"
 
 function WorkbenchCard() {
 	const workbenchClass = useWorkbenchContext()
