@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react"
 import { action, makeObservable, observable, runInAction } from "mobx"
-import { ESPMessage, PipIDPayload, PipUUID, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
+	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { serialConnectionManager } from "./serial-manager-context"
 
 class SerialMessageManagerClass extends EventTarget {
@@ -16,6 +17,8 @@ class SerialMessageManagerClass extends EventTarget {
 	public wiFiConnectionStatus: WiFiConnectionStatus | null = null
 	public isTestingWiFiConnection: boolean = false
 	public isReadyToDisconnect: boolean = false
+	public savedNetworks: SavedWiFiNetwork[] = []
+	public isLoadingSavedNetworks: boolean = false
 
 	constructor() {
 		super()
@@ -30,6 +33,8 @@ class SerialMessageManagerClass extends EventTarget {
 			wiFiConnectionStatus: observable,
 			isTestingWiFiConnection: observable,
 			isReadyToDisconnect: observable,
+			savedNetworks: observable,
+			isLoadingSavedNetworks: observable,
 		})
 		this.setupEventListeners()
 	}
@@ -105,6 +110,8 @@ class SerialMessageManagerClass extends EventTarget {
 			this.wiFiTestCompleted = false
 			this.wiFiConnectionStatus = null
 			this.isTestingWiFiConnection = false
+			this.savedNetworks = []
+			this.isLoadingSavedNetworks = false
 		})
 		this.dispatchEvent(new CustomEvent("disconnected"))
 	}
@@ -159,6 +166,19 @@ class SerialMessageManagerClass extends EventTarget {
 			this.onWiFiConnectionResult?.(enumStatus)
 			break
 		}
+		case "/saved-networks": {
+			// Handle saved networks response
+			runInAction(() => {
+				this.isLoadingSavedNetworks = false
+				this.savedNetworks = message.payload as SavedWiFiNetwork[]
+			})
+
+			// Emit event for PipContext to listen to
+			this.dispatchEvent(new CustomEvent("savedNetworksReceived", {
+				detail: this.savedNetworks
+			}))
+			break
+		}
 		default:
 			console.info("Unknown message route:", message.route)
 			break
@@ -182,6 +202,8 @@ class SerialMessageManagerClass extends EventTarget {
 		this.wiFiTestCompleted = false
 		this.hasBeenDisconnected = false
 		this.isReadyToDisconnect = false
+		this.savedNetworks = []
+		this.isLoadingSavedNetworks = false
 	})
 
 	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null) => {
@@ -190,6 +212,10 @@ class SerialMessageManagerClass extends EventTarget {
 
 	public setIsTestingWiFiConnection = action((isTesting: boolean) => {
 		this.isTestingWiFiConnection = isTesting
+	})
+
+	public setIsLoadingSavedNetworks = action((isLoading: boolean) => {
+		this.isLoadingSavedNetworks = isLoading
 	})
 
 	public async logout(): Promise<void> {
