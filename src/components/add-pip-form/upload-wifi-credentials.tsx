@@ -5,86 +5,79 @@ import { useCallback, useEffect } from "react"
 import { MessageBuilder, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { Button } from "../shadcn/ui/button"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
 interface Props {
-	formValues: IncompletePipData
-	isTestingWiFiConnection: boolean
-	wifiConnectionStatus: WiFiConnectionStatus | null
-	setIsTestingWiFiConnection: (testing: boolean) => void
-	setWifiConnectionStatus: (status: WiFiConnectionStatus) => void
+	getFormValues: () => IncompletePipData
 }
 
 function UploadWiFiCredentials(props: Props) {
-	const {
-		isTestingWiFiConnection,
-		formValues,
-		setIsTestingWiFiConnection,
-		wifiConnectionStatus,
-		setWifiConnectionStatus
-	} = props
+	const { getFormValues } = props
 	const serialManager = useSerialManagerContext()
+	const serialMessageManager = useSerialMessageManagerContext()
 
 	// Listen for WiFi connection results
 	useEffect(() => {
-		serialManager.onWiFiConnectionResult = (status: WiFiConnectionStatus) => {
-			setIsTestingWiFiConnection(false)
-			setWifiConnectionStatus(status)
+		serialMessageManager.onWiFiConnectionResult = (status: WiFiConnectionStatus) => {
+			serialMessageManager.setIsTestingWiFiConnection(false)
+			serialMessageManager.setWiFiConnectionStatus(status)
 		}
 
 		return () => {
-			serialManager.onWiFiConnectionResult = null
+			serialMessageManager.onWiFiConnectionResult = null
 		}
-	}, [serialManager, setIsTestingWiFiConnection, setWifiConnectionStatus])
+	}, [serialManager, serialMessageManager])
 
 	const uploadCredentials = useCallback(async () => {
 		// NEW: Only require network name, password is optional
-		if (!formValues.wiFiNetworkName) return
+		if (!getFormValues().wiFiNetworkName) return
+		console.log("Uploading WiFi credentials:", getFormValues().wiFiNetworkName, getFormValues().wiFiPassword)
 
-		setIsTestingWiFiConnection(true)
+		serialMessageManager.setIsTestingWiFiConnection(true)
 
 		const message = MessageBuilder.createWiFiCredentialsMessage(
-			formValues.wiFiNetworkName,
-			formValues.wiFiPassword || "" // Use empty string if no password
+			getFormValues().wiFiNetworkName,
+			getFormValues().wiFiPassword || "" // Use empty string if no password
 		)
 		const success = await serialManager.sendBinaryMessage(message)
 
 		if (!success) {
-			setIsTestingWiFiConnection(false)
+			serialMessageManager.setIsTestingWiFiConnection(false)
 		}
-	}, [formValues.wiFiNetworkName, formValues.wiFiPassword, serialManager, setIsTestingWiFiConnection])
+	}, [getFormValues, serialManager, serialMessageManager])
 
 	const getButtonText = () => {
-		if (isTestingWiFiConnection) return "Testing Connection..."
-		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "✓ Connected Successfully"
-		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "⚠ WiFi Connected (Server Unreachable)"
-		if (wifiConnectionStatus === WiFiConnectionStatus.FAILED) return "✗ Connection Failed - Try Again"
+		if (serialMessageManager.isTestingWiFiConnection) return "Testing Connection..."
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "✓ Connected Successfully"
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "⚠ WiFi Connected (Server Unreachable)"
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED) return "✗ Connection Failed - Try Again"
 		return "Upload WiFi Credentials"
 	}
 
 	const getButtonVariant = () => {
-		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "default"
-		if (wifiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "secondary"
-		if (wifiConnectionStatus === WiFiConnectionStatus.FAILED) return "destructive"
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS) return "default"
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY) return "secondary"
+		if (serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED) return "destructive"
 		return "default"
 	}
 
 	const isButtonDisabled = () => {
-		return isTestingWiFiConnection ||
+		return serialMessageManager.isTestingWiFiConnection ||
 			!serialManager.connected ||
-			!formValues.wiFiNetworkName || // NEW: Only require network name
-			wifiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
+			!getFormValues().wiFiNetworkName || // NEW: Only require network name
+			serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
 	}
 
 	return (
 		<div className="mt-6">
 			<div className="flex flex-col">
 				{/* Show status message */}
-				{wifiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY && (
+				{serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY && (
 					<p className="text-amber-600 mb-2">
 						WiFi connected but can't reach our servers. This might be a captive portal network.
 					</p>
 				)}
-				{wifiConnectionStatus === WiFiConnectionStatus.FAILED && (
+				{serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED && (
 					<p className="text-red-600 mb-2">
 						Connection failed. Please check your WiFi credentials and try again.
 					</p>

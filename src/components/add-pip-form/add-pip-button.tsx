@@ -1,19 +1,11 @@
 "use client"
 
-import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
-import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { Button } from "../shadcn/ui/button"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
-interface Props {
-	wiFiConnectionStatus: WiFiConnectionStatus | null
-	wiFiNetworkName: string
-}
-
-function AddPipButton(props: Props) {
-	const { wiFiConnectionStatus, wiFiNetworkName } = props
-	const serialManager = useSerialManagerContext()
+function AddPipButton() {
+	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	// Show add button when all conditions are met
 	return (
@@ -21,9 +13,8 @@ function AddPipButton(props: Props) {
 			<Button
 				type="submit"
 				disabled={(
-					isEmpty(wiFiNetworkName) ||
-					wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS ||
-					!serialManager.isReadyToAddPip()
+					!serialMessageManagerClass.isReadyToDisconnect ||
+					!serialMessageManagerClass.hasBeenDisconnected
 				)}
 				className="p-5 text-2xl"
 			>

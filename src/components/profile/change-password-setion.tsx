@@ -89,7 +89,7 @@ function ChangePasswordSection() {
 				</div>
 				<div className="space-y-2">
 					<Label htmlFor="new-password" className="text-base md:text-lg font-medium text-eel mb-2 block">
-								New Password
+						New Password
 					</Label>
 					<div className="relative w-full">
 						<Input

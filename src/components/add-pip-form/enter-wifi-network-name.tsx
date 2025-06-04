@@ -17,7 +17,7 @@ export default function EnterWifiNetworkName({ control }: { control: Control<Inc
 							<Input
 								{...field}
 								maxLength={50}
-								className="w-full h-14 !text-2xl dark:border-gray-600 pr-16 focus:ring-0 focus:ring-offset-0
+								className="w-full h-14 !text-2xl dark:border-gray-600 pr-16 focus:ring-0 focus:ring-offset-0 bg-polar
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Network Name"
 								autoComplete="off"

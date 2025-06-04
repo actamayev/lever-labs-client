@@ -11,6 +11,7 @@ import SerialManagerProvider from "../src/contexts/serial-manager-context"
 import PageTransitionProvider from "../src/contexts/page-transition-context"
 import ActivityProgressProvider from "../src/contexts/activity-progress-context"
 import BlueDotApiClientProvider from "../src/contexts/blue-dot-api-client-context"
+import SerialMessageManagerProvider from "../src/contexts/serial-message-manager"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
 	return (
@@ -27,7 +28,9 @@ export default function ContextLevelComponent ({ children } : { children: React.
 												<GarageProvider>
 													<WorkbenchProvider>
 														<SerialManagerProvider>
-															{children}
+															<SerialMessageManagerProvider>
+																{children}
+															</SerialMessageManagerProvider>
 														</SerialManagerProvider>
 													</WorkbenchProvider>
 												</GarageProvider>

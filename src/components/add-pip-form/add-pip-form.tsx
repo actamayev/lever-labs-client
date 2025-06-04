@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect } from "react"
 import {
 	Card,
 	CardContent,
@@ -10,7 +10,6 @@ import {
 } from "@/components/shadcn/ui/card"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
@@ -22,11 +21,11 @@ import { addPipSchema } from "../../utils/pip/pip-schemas"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
 // eslint-disable-next-line max-lines-per-function
 function AddPipForm() {
-	const [wiFiConnectionStatus, setWiFiConnectionStatus] = useState<WiFiConnectionStatus | null>(null)
-	const [isTestingWiFiConnection, setIsTestingWiFiConnection] = useState(false)
+	const serialMessageManagerClass = useSerialMessageManagerContext()
 	const serialManager = useSerialManagerContext()
 
 	const form = useForm<IncompletePipData>({
@@ -46,20 +45,20 @@ function AddPipForm() {
 			pipName: "Pip",
 			pipUUID: null
 		})
-		setWiFiConnectionStatus(null)
-		setIsTestingWiFiConnection(false)
+		serialMessageManagerClass.setWiFiConnectionStatus(null)
+		serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		// Only reset flow state if we're completely done or starting over
 		if (!serialManager.connected) {
-			serialManager.resetFlowState()
+			serialMessageManagerClass.resetFlowState()
 		}
-	}, [form, serialManager])
+	}, [form, serialManager.connected, serialMessageManagerClass])
 
 	// NEW: Update pipUUID when pipId is received
 	useEffect(() => {
-		if (serialManager.pipId) {
-			form.setValue("pipUUID", serialManager.pipId)
+		if (serialMessageManagerClass.pipId) {
+			form.setValue("pipUUID", serialMessageManagerClass.pipId)
 		}
-	}, [serialManager.pipId, form])
+	}, [serialMessageManagerClass.pipId, form])
 
 	const addPip = useAddPip(resetAddPipVars, form.getValues())
 
@@ -95,7 +94,7 @@ function AddPipForm() {
 								</span>
 
 								{/* Step 2: WiFi Credentials - Show only when connected */}
-								{serialManager.showWiFiSection && (
+								{serialMessageManagerClass.showWiFiSection && (
 									<>
 										<div className="flex flex-row mb-6 mt-8">
 											<p className="font-bold">Step 2:&nbsp;</p>
@@ -113,18 +112,12 @@ function AddPipForm() {
 											<p className="font-bold">Step 4:&nbsp;</p>
 											<p>Upload WiFi credentials to test connection</p>
 										</div>
-										<UploadWiFiCredentials
-											formValues={form.getValues()}
-											isTestingWiFiConnection={isTestingWiFiConnection}
-											wifiConnectionStatus={wiFiConnectionStatus}
-											setIsTestingWiFiConnection={setIsTestingWiFiConnection}
-											setWifiConnectionStatus={setWiFiConnectionStatus}
-										/>
+										<UploadWiFiCredentials getFormValues={() => form.getValues()} />
 									</>
 								)}
 
 								{/* Step 5: Name Pip - Show only after WiFi success */}
-								{serialManager.showNameSection && (
+								{(serialMessageManagerClass.isReadyToDisconnect) && (
 									<>
 										<div className="flex flex-row mb-6 mt-8">
 											<p className="font-bold">Step 5:&nbsp;</p>
@@ -135,10 +128,7 @@ function AddPipForm() {
 											<p className="font-bold">Step 6:&nbsp;</p>
 											<p>Unplug your Pip from USB and click Add to Account</p>
 										</div>
-										<AddPipButton
-											wiFiConnectionStatus={wiFiConnectionStatus}
-											wiFiNetworkName={form.getValues().wiFiNetworkName}
-										/>
+										<AddPipButton />
 									</>
 								)}
 							</div>
