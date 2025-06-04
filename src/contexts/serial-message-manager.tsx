@@ -3,7 +3,7 @@ import { action, makeObservable, observable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, PipUUID, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { serialConnectionManager } from "./serial-manager-context"
 
-class MessageManagerClass extends EventTarget {
+class SerialMessageManagerClass extends EventTarget {
 	public messages: Message[] = []
 	public onWiFiConnectionResult: ((status: WiFiConnectionStatus) => void) | null = null
 
@@ -203,7 +203,7 @@ class MessageManagerClass extends EventTarget {
 	}
 }
 
-export const serialMessageManager = new MessageManagerClass()
+export const serialMessageManager = new SerialMessageManagerClass()
 
 const SerialMessageManagerContext = createContext(serialMessageManager)
 
