@@ -2,11 +2,11 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import { PipData } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { PipData } from "@bluedotrobots/common-ts"
 
 export default function useDisconnectFromPip(): (
 	pipData: PipData

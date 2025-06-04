@@ -1,34 +1,15 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
-import { useCallback } from "react"
-import { observer } from "mobx-react"
+import { Control } from "react-hook-form"
 import { Input } from "../shadcn/ui/input"
 import LockIconAndTooltip from "../lock-icon-and-tooltip"
-import { useAddPipContext } from "../../contexts/add-pip-context"
 import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form"
 
-function EnterWifiNetworkName() {
-	const addPipClass = useAddPipContext()
-
-	const typeNetworkName = useCallback((
-		event: React.ChangeEvent<HTMLInputElement>,
-		onChange: (value: string) => void
-	) => {
-		const input = event.target.value
-		if (input.length > 50) return
-		if (isNull(addPipClass)) return
-
-		onChange(input)
-		addPipClass.store.updateMirroredFormValues("wifiNetworkName", input)
-	}, [addPipClass])
-
-	if (isNull(addPipClass)) return null
-
+export default function EnterWifiNetworkName({ control }: { control: Control<IncompletePipData> }) {
 	return (
 		<FormField
-			control={addPipClass.form.control}
-			name="wifiNetworkName"
+			control={control}
+			name="wiFiNetworkName"
 			render={({ field }) => (
 				<FormItem>
 					<FormControl>
@@ -36,11 +17,10 @@ function EnterWifiNetworkName() {
 							<Input
 								{...field}
 								maxLength={50}
-								className="w-full h-14 !text-2xl dark:border-gray-600 pr-16 focus:ring-0 focus:ring-offset-0
+								className="w-full h-14 !text-2xl dark:border-gray-600 pr-16 focus:ring-0 focus:ring-offset-0 bg-polar
 								focus-visible:ring-0 focus-visible:ring-offset-0 focus:outline-none"
 								placeholder="Network Name"
 								autoComplete="off"
-								onChange={(e) => typeNetworkName(e, field.onChange)}
 							/>
 							<div className="absolute inset-y-0 right-2 flex items-center">
 								<LockIconAndTooltip />
@@ -53,5 +33,3 @@ function EnterWifiNetworkName() {
 		/>
 	)
 }
-
-export default observer(EnterWifiNetworkName)

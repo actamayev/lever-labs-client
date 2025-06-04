@@ -6,22 +6,20 @@ import { usePipContext } from "../../contexts/pip-context"
 import { useAuthContext } from "../../contexts/auth-context"
 import { useSocketContext } from "../../contexts/socket-context"
 import { useGarageContext } from "../../contexts/garage-context"
-import { useAddPipContext } from "../../contexts/add-pip-context"
 import { useSandboxContext } from "../../contexts/sandbox-context"
 import { useWorkbenchContext } from "../../contexts/workbench-context"
 import { useLabReadingContext } from "../../contexts/lab-reading-context"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { usePageTransitionContext } from "../../contexts/page-transition-context"
 import { useActivityProgressContext } from "../../contexts/activity-progress-context"
+import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
 export default function useLogout(): () => Promise<void> {
 	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
-	const addPipClass = useAddPipContext()
 	const socketClass = useSocketContext()
 	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
@@ -30,13 +28,11 @@ export default function useLogout(): () => Promise<void> {
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
 	const garageClass = useGarageContext()
-	const serialManagerClass = useSerialManagerContext()
+	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	return useCallback(async (): Promise<void> => {
 		personalInfoClass.logout()
 		pipClass.logout()
-		addPipClass?.store.logout()
-		addPipClass?.form.reset()
 		socketClass.logout()
 		authClass.logout()
 		blueDotApiClient.logout()
@@ -46,8 +42,8 @@ export default function useLogout(): () => Promise<void> {
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()
-		await serialManagerClass.logout()
+		await serialMessageManagerClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, addPipClass?.store, addPipClass?.form, pageTransitionClass, sandboxClass, garageClass,
-		socketClass, authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialManagerClass, navigate])
+	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
+		authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialMessageManagerClass, navigate])
 }

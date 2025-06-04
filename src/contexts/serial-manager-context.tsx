@@ -1,22 +1,31 @@
+/* eslint-disable max-depth */
 "use client"
 
-import { createContext, useContext } from "react"
+import { makeObservable, observable, runInAction } from "mobx"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { action, makeAutoObservable, runInAction } from "mobx"
+import { createContext, useContext } from "react"
 
-class SerialManagerClass {
+class SerialConnectionManagerClass extends EventTarget {
 	public port: SerialPort | null = null
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
 	public connected: boolean = false
-	public messages: Message[] = []
 	public errorMessage: string | null = null
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
 
 	constructor() {
-		makeAutoObservable(this)
+		super()
+		makeObservable(this, {
+			port: observable,
+			reader: observable,
+			writer: observable,
+			connected: observable,
+			errorMessage: observable,
+			hasUserActivity: observable
+		})
 		if (typeof window === "undefined") return
+
 		window.addEventListener("beforeunload", () => {
 			// Can't use async here, so use a synchronous approach
 			if (this.connected && this.writer) {
@@ -29,6 +38,7 @@ class SerialManagerClass {
 			}
 		})
 	}
+
 
 	async connectToDevice(): Promise<void> {
 		if (this.connected) return
@@ -46,6 +56,7 @@ class SerialManagerClass {
 			if (!port.readable || !port.writable) {
 				throw new Error("Port is not readable or writable")
 			}
+
 			// Get reader and writer
 			const reader = port.readable.getReader()
 			const writer = port.writable.getWriter()
@@ -58,15 +69,17 @@ class SerialManagerClass {
 				this.errorMessage = null
 			})
 
+			// Emit connected event
+			this.dispatchEvent(new CustomEvent("connected"))
+
 			// Send handshake immediately after connection established
 			if (this.writer) {
-				// Use the binary protocol - create a 1-byte buffer with HANDSHAKE value (11)
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}
 
 			port.addEventListener("disconnect", () => {
-				this.cleanupConnection()
+				this.handleDisconnection()
 			})
 
 			// Start reading loop
@@ -75,11 +88,18 @@ class SerialManagerClass {
 		} catch (error) {
 			// Check if it's a user cancellation (NotFoundError)
 			if (!(error instanceof DOMException && error.name === "NotFoundError")) {
+				const errorMsg = error instanceof Error ? error.message : String(error)
 				runInAction(() => {
-					this.errorMessage = error instanceof Error ? error.message : String(error)
+					this.errorMessage = errorMsg
 				})
+				this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
 			}
 		}
+	}
+
+	private handleDisconnection(): void {
+		this.dispatchEvent(new CustomEvent("disconnected"))
+		this.cleanupConnection()
 	}
 
 	private startKeepAlive(): void {
@@ -96,7 +116,9 @@ class SerialManagerClass {
 					await this.writer.write(new Uint8Array(keepaliveMsg))
 				} catch (error) {
 					console.error("Keepalive error:", error)
-					await this.cleanupConnection() // Add this line
+					const errorMsg = error instanceof Error ? error.message : String(error)
+					this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
+					await this.cleanupConnection()
 				}
 			}
 		}, 5000)
@@ -106,7 +128,7 @@ class SerialManagerClass {
 		if (!this.connected) return
 
 		try {
-		// Send disconnect notification before closing
+			// Send disconnect notification before closing
 			if (this.writer) {
 				const disconnectMsg = MessageBuilder.createSerialEndMessage()
 				await this.writer.write(new Uint8Array(disconnectMsg))
@@ -114,19 +136,21 @@ class SerialManagerClass {
 				// Short delay to allow message to be sent
 				await new Promise(resolve => setTimeout(resolve, 50))
 			}
+			this.dispatchEvent(new CustomEvent("disconnected"))
 
 			await this.cleanupConnection()
 		} catch (error) {
 			console.error("Error disconnecting:", error)
+			const errorMsg = error instanceof Error ? error.message : String(error)
+			this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
 		}
 	}
 
-	// eslint-disable-next-line complexity
 	private async readLoop(): Promise<void> {
 		if (!this.reader) return
 
 		try {
-		// Create text decoder for converting Uint8Array to string
+			// Create text decoder for converting Uint8Array to string
 			const decoder = new TextDecoder()
 			let buffer = ""
 
@@ -145,20 +169,13 @@ class SerialManagerClass {
 
 				// If there's at least one complete line
 				if (lines.length > 1) {
-				// Process all complete lines
-				// eslint-disable-next-line max-depth
+					// Process all complete lines
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
-						// eslint-disable-next-line max-depth
 						if (line) {
-							console.log("Received:", line)
-							runInAction(() => {
-								this.messages.push({
-									content: line,
-									direction: "received",
-									timestamp: new Date()
-								})
-							})
+							console.info("Received:", line)
+							// Emit raw message event
+							this.dispatchEvent(new CustomEvent("rawMessage", { detail: line }))
 						}
 					}
 
@@ -168,43 +185,50 @@ class SerialManagerClass {
 			}
 		} catch (error) {
 			console.error("Error in read loop:", error)
+			const errorMsg = error instanceof Error ? error.message : String(error)
 			runInAction(() => {
-				this.errorMessage = error instanceof Error ? error.message : String(error)
-
+				this.errorMessage = errorMsg
 			})
+			this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
 			await this.cleanupConnection()
 		}
 	}
 
 	async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
 		if (!this.connected || !this.writer) {
-			this.errorMessage = "Not connected to device"
+			const errorMsg = "Not connected to device"
+			runInAction(() => {
+				this.errorMessage = errorMsg
+			})
+			this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
 			return false
 		}
 
 		try {
-		// Convert to Uint8Array for writing
+			// Convert to Uint8Array for writing
 			const data = new Uint8Array(buffer)
 
 			// Send data
 			await this.writer.write(data)
 
-			// Add to messages list with formatted display
-			runInAction(() => {
-				this.messages.push({
-					content: this.formatBinaryForDisplay(buffer),
-					direction: "sent",
+			// Emit sent message event with formatted display
+			const formattedData = this.formatBinaryForDisplay(buffer)
+			this.dispatchEvent(new CustomEvent("messageSent", {
+				detail: {
+					content: formattedData,
 					timestamp: new Date(),
 					isBinary: true
-				})
-			})
-			// 4/30/25 TODO: Await a success response from the ESP before returning true
+				}
+			}))
+
 			return true
 		} catch (error) {
+			const errorMsg = error instanceof Error ? error.message : String(error)
 			runInAction(() => {
-				this.errorMessage = error instanceof Error ? error.message : String(error)
+				this.errorMessage = errorMsg
 			})
-			await this.cleanupConnection() // Add this line
+			this.dispatchEvent(new CustomEvent("error", { detail: errorMsg }))
+			await this.cleanupConnection()
 			return false
 		}
 	}
@@ -218,7 +242,7 @@ class SerialManagerClass {
 	}
 
 	private async cleanupConnection(): Promise<void> {
-	// Clean up reader
+		// Clean up reader
 		if (this.reader) {
 			try {
 				await this.reader.cancel()
@@ -261,37 +285,36 @@ class SerialManagerClass {
 		})
 	}
 
-	public clearMessages = action(() => {
-		this.messages = []
-	})
-
-	public markUserActivity = action(() => {
-		this.hasUserActivity = true
-	})
+	public markUserActivity = (): void => {
+		runInAction(() => {
+			this.hasUserActivity = true
+		})
+	}
 
 	// Method to check and reset user activity
-	public checkAndResetUserActivity = action(() => {
+	public checkAndResetUserActivity = (): boolean => {
 		const hadActivity = this.hasUserActivity
-		this.hasUserActivity = false
+		runInAction(() => {
+			this.hasUserActivity = false
+		})
 		return hadActivity
-	})
+	}
 
 	public async logout(): Promise<void> {
-		await this.disconnect() // This handles port, reader, writer and connected
+		await this.disconnect()
 		runInAction(() => {
-			this.messages = []
 			this.errorMessage = null
 		})
 	}
 }
 
-const serialManagerClass = new SerialManagerClass()
+export const serialConnectionManager = new SerialConnectionManagerClass()
 
-const SerialManagerContext = createContext(serialManagerClass)
+const SerialManagerContext = createContext(serialConnectionManager)
 
 export default function SerialManagerProvider({ children }: { children: React.ReactNode }) {
 	return (
-		<SerialManagerContext.Provider value={serialManagerClass}>
+		<SerialManagerContext.Provider value={serialConnectionManager}>
 			{children}
 		</SerialManagerContext.Provider>
 	)

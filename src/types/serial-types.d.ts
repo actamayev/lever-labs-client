@@ -12,7 +12,8 @@ declare global {
 		content: string
 		direction: "sent" | "received"
 		timestamp: Date
-		isBinary?: boolean;
+		isBinary?: boolean
+		isStructured?: boolean
 	}
 }
 
