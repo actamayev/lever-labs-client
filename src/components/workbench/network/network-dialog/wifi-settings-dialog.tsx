@@ -2,14 +2,14 @@
 
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { Button } from "../../../shadcn/ui/button"
+import ShowNetworksSection from "./show-networks-section"
+import ScanNetworksSection from "./scan-networks-section"
 import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
-import ShowNetworksSection from "./show-networks-section"
-import { Button } from "../../../shadcn/ui/button"
-import ScanNetworksSection from "./scan-networks-section"
 
 interface WiFiSettingsDialogProps {
 	open: boolean
@@ -19,6 +19,7 @@ interface WiFiSettingsDialogProps {
 function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 	const serialManager = useSerialManagerContext()
 	const serialMessageManager = useSerialMessageManagerContext()
+	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const requestSavedNetworks = useCallback(async () => {
 		if (!serialManager.connected) return
@@ -38,7 +39,16 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		if (!serialManager.connected || serialMessageManager.isScanning) return
 
 		serialMessageManager.setIsScanning(true)
-		serialMessageManager.clearScannedNetworks() // Clear before starting new scan
+		serialMessageManager.clearScannedNetworks()
+
+		// Set 10-second timeout
+		scanTimeoutRef.current = setTimeout(() => {
+			if (serialMessageManager.isScanning) {
+				serialMessageManager.setIsScanning(false)
+				console.error("WiFi scan timed out after 10 seconds")
+				// You could also show a toast notification here
+			}
+		}, 10000)
 
 		try {
 			const message = MessageBuilder.createScanWiFiNetworksMessage()
@@ -46,6 +56,10 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManager.setIsScanning(false)
+			if (scanTimeoutRef.current) {
+				clearTimeout(scanTimeoutRef.current)
+				scanTimeoutRef.current = null
+			}
 		}
 	}, [serialManager, serialMessageManager])
 
@@ -55,6 +69,22 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 			requestSavedNetworks()
 		}
 	}, [open, requestSavedNetworks, serialManager.connected])
+
+	// Clear timeout when scanning completes or component unmounts
+	useEffect(() => {
+		if (!serialMessageManager.isScanning && scanTimeoutRef.current) {
+			clearTimeout(scanTimeoutRef.current)
+			scanTimeoutRef.current = null
+		}
+	}, [serialMessageManager.isScanning])
+
+	useEffect(() => {
+		return () => {
+			if (scanTimeoutRef.current) {
+				clearTimeout(scanTimeoutRef.current)
+			}
+		}
+	}, [])
 
 	if (!serialManager.connected) return null
 
