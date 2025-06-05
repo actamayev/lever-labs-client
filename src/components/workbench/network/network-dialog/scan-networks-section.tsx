@@ -10,9 +10,15 @@ import { useSerialManagerContext } from "../../../../contexts/serial-manager-con
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
+interface ScanNetworksSectionProps {
+    networks?: ScannedWiFiNetworkItem[]
+}
+
 // eslint-disable-next-line max-lines-per-function
-function ScanNetworksSection () {
+function ScanNetworksSection({ networks }: ScanNetworksSectionProps) {
 	const serialMessageManager = useSerialMessageManagerContext()
+	const networksToShow = networks || serialMessageManager.scannedNetworks
+
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [password, setPassword] = useState("")
 	const [isConnecting, setIsConnecting] = useState(false)
@@ -53,17 +59,18 @@ function ScanNetworksSection () {
 				<div className="text-sm text-muted-foreground">Scanning for networks...</div>
 			</div>
 		)
-	} else if (serialMessageManager.scannedNetworks.length === 0) {
+	} else if (networksToShow.length === 0) {
 		return (
-			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300 rounded-lg text-center">
+			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300
+			dark:border-gray-700 rounded-lg text-center">
 				Click "Scan Networks" to find nearby WiFi networks
 			</div>
 		)
 	}
 
 	return (
-		<div className="max-h-60 overflow-y-auto border border-gray-200 rounded-lg bg-white">
-			{serialMessageManager.scannedNetworks.map((network, index) => (
+		<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
+			{networksToShow.map((network, index) => (
 				<Collapsible
 					key={`${network.ssid}-${index}`}
 					open={selectedNetworkIndex === index}
@@ -78,8 +85,8 @@ function ScanNetworksSection () {
 					}}
 				>
 					<CollapsibleTrigger asChild>
-						<div className="flex items-center justify-between p-3 bg-white hover:bg-gray-50
-						cursor-pointer border-b border-gray-100 last:border-b-0">
+						<div className="flex items-center justify-between p-3 bg-inherit hover:bg-gray-50 dark:hover:bg-gray-800
+						cursor-pointer border-b border-gray-100 dark:border-gray-800 last:border-b-0">
 							<div className="flex items-center gap-3">
 								{getWiFiStrengthIcon(network.rssi)}
 								<span className="font-medium text-sm">{network.ssid}</span>
@@ -94,7 +101,7 @@ function ScanNetworksSection () {
 					</CollapsibleTrigger>
 
 					<CollapsibleContent>
-						<div className="px-3 pb-3 pt-2 bg-gray-50 border-b border-gray-100">
+						<div className="px-3 pb-3 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-800">
 							<div className="flex items-center gap-2">
 								{network.encrypted && (  // Add this condition
 									<Input

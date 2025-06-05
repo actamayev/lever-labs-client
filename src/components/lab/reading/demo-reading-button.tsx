@@ -22,11 +22,6 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 	}, [defaultSiteTheme])
 
 
-	const demoClasses = useMemo(() => {
-		return "bg-yellow-100 border-bee text-yellow-800 \
-		dark:bg-yellow-900 dark:border-yellow-600 dark:text-yellow-200"
-	}, [])
-
 	const navigateToDemo = useCallback(() => {
 		pageTransitionClass.setDirection("down") // Set before navigating
 		navigate(block.action.demoLink as LabPages)
@@ -36,8 +31,9 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 		<TactileButton
 			onClick={navigateToDemo}
 			className={cn(
-				"px-6 !py-5 text-3xl rounded-2xl border-2 w-full h-16",
-				demoClasses
+				"px-6 !py-5 text-3xl rounded-2xl w-full h-16",
+				"bg-yellow-100 text-yellow-800",
+				"dark:bg-yellow-900 dark:border-yellow-600 dark:text-yellow-200"
 			)}
 			shadowColor={demoShadowColor}
 		>
