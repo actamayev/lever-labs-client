@@ -31,7 +31,12 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 
 	// Otherwise use ClassicLayout (not logged in, or not a private/open page)
 	let extraClasses = undefined
-	if (pathname === "/") extraClasses = ""
+	if (
+		pathname === "/" ||
+		pathname === "/community-guidelines" ||
+		pathname === "/privacy" ||
+		pathname === "/terms"
+	) extraClasses = ""
 
 	return (
 		<ClassicLayout extraClasses={extraClasses}>

@@ -40,6 +40,9 @@ export const staticPages = [
 	"/contact",
 	"/mission",
 	"/schools",
+	"/terms",
+	"/privacy",
+	"/community-guidelines",
 	"/404"
 ] as const
 
