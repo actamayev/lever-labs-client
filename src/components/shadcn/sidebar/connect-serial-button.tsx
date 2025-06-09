@@ -3,18 +3,15 @@
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
-import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
 import { CustomUsb } from "../../icons/custom-usb"
+import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
 
-function ConnectDisconnectSerialSidebarButton() {
+function ConnectSerialButton() {
 	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
 
 	const handleConnect = async () => {
+		if (serialManager.connected) return // If already connected, do nothing
 		await serialManager.connectToDevice()
-	}
-
-	const handleDisconnect = async () => {
-		await serialManager.disconnect()
 	}
 
 	return (
@@ -28,15 +25,15 @@ function ConnectDisconnectSerialSidebarButton() {
 						"border-2 border-transparent rounded-xl",
 						// Active/hover states
 						serialManager.connected
-							? "!bg-red-100 dark:!bg-red-900"
+							? "!bg-blue dark:!bg-blue"
 							: "hover:!bg-polar",
 						// Size and dimensions - apply consistent sizing regardless of collapsible state
 						"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 						// Custom styles passed from parent
-						serialManager.connected && "!border-cardinal",
+						serialManager.connected && "!border-macaw",
 						// customStyles
 					)}
-					onClick={serialManager.connected ? handleDisconnect : handleConnect}
+					onClick={handleConnect}
 				>
 					<div className="flex items-center justify-start space-x-4 w-full"> {/* Added w-full */}
 						<div className={cn("ml-2.5 flex-shrink-0 w-[35px] h-[35px]")}>
@@ -44,16 +41,16 @@ function ConnectDisconnectSerialSidebarButton() {
 								<CustomUsb
 									className={cn(
 										"h-[35px] w-[35px]",
-										serialManager.connected ? "text-cardinal" : "text-blue-600 dark:text-blue-300"
+										serialManager.connected ? "text-macaw" : "text-blue-600 dark:text-blue-300"
 									)}
 								/>
 							</div>
 						</div>
 						<div className={cn(
 							"text-base font-medium",
-							serialManager.connected ? "text-cardinal" : "text-wolf"
+							serialManager.connected ? "text-macaw" : "text-wolf"
 						)}>
-							{serialManager.connected ? "DISCONNECT" : "CONNECT"}
+							{serialManager.connected ? "CONNECTED" : "CONNECT"}
 						</div>
 					</div>
 				</SidebarMenuButton>
@@ -62,4 +59,4 @@ function ConnectDisconnectSerialSidebarButton() {
 	)
 }
 
-export default observer(ConnectDisconnectSerialSidebarButton)
+export default observer(ConnectSerialButton)

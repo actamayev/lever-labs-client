@@ -285,7 +285,7 @@ class LabReadingClass {
 		return !!this.quizAttempts.get(questionId)?.find(attempt => attempt.isCorrect)
 	}
 
-	public areQuizesInBlockCorrect(blockId: ContentBlockID): boolean {
+	public areQuizzesInBlockCorrect(blockId: ContentBlockID): boolean {
 		const questions = this.activeBlocks.find(block => block.id === blockId)?.action.quiz?.questions
 		if (!questions) return false
 

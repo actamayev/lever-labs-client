@@ -6,6 +6,7 @@ import { isValidRoute } from "../../utils/type-checks"
 import { useAuthContext } from "../../contexts/auth-context"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
+// eslint-disable-next-line complexity
 function NullUserNavLink() {
 	const pathname = usePathname()
 	const authClass = useAuthContext()
@@ -15,6 +16,9 @@ function NullUserNavLink() {
 		pathname === "/contact" ||
 		pathname === "/mission" ||
 		pathname === "/schools" ||
+		pathname === "/community-guidelines" ||
+		pathname === "/privacy" ||
+		pathname === "/terms" ||
 		!isValidRoute(pathname)
 	) {
 		return (

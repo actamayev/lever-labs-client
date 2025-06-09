@@ -1,26 +1,24 @@
 "use client"
+import { Dispatch, SetStateAction } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import { Settings } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
 import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
-import { useCallback } from "react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 
-function NetworkContent() {
+interface Props {
+	setIsWiFiSettingsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+function NetworkContent(props: Props) {
+	const { setIsWiFiSettingsOpen } = props
 	const pipClass = usePipContext()
 	const disconnectFromPip = useDisconnectFromPip()
 	const requestToConnectToPip = useRequestToConnectToPip()
 	const serialManager = useSerialManagerContext()
-
-	const clearWiFiCredentials = useCallback(async () => {
-		if (serialManager.connected === false) return
-
-		const message = MessageBuilder.createClearWiFiNetworksMessage()
-		await serialManager.sendBinaryMessage(message)
-	}, [serialManager])
 
 	const selectedPip = pipClass.selectedPip
 	if (isNull(selectedPip)) return null
@@ -31,13 +29,19 @@ function NetworkContent() {
 				<div className="text-base font-medium">
 				Please connect {selectedPip.pipName} to the internet
 				</div>
-				<Button
-					onClick={clearWiFiCredentials}
-					className="rounded-xl bg-eel h-9 mt-2"
-					disabled={!serialManager.connected}
-				>
-					CLEAR WIFI CREDENTIALS
-				</Button>
+				<div className="flex gap-2 mt-2">
+					<Button
+						onClick={(e) => {
+							e.stopPropagation() // Prevent event bubbling
+							setIsWiFiSettingsOpen(true)
+						}}
+						className="rounded-xl bg-eel h-9 px-3"
+						disabled={!serialManager.connected}
+						title="WiFi Settings"
+					>
+						<Settings className="h-4 w-4" />
+					</Button>
+				</div>
 			</>
 		)
 	case "online":

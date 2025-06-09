@@ -14,6 +14,7 @@ import AuthTemplate from "../../templates/auth-template"
 import useLoginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import { LoginRequest } from "@bluedotrobots/common-ts"
+import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 
 export default function LoginComponent() {
 	const [error, setError] = useState("")
@@ -39,7 +40,6 @@ export default function LoginComponent() {
 					<PasswordField<LoginRequest>
 						control={form.control}
 						name="password"
-						// showForgotPassword={true}
 					/>
 					<AuthButton title="LOG IN" />
 
@@ -52,6 +52,7 @@ export default function LoginComponent() {
 					</div>
 				</form>
 			</Form>
+			<TermsAndPrivacyAgreement />
 		</AuthTemplate>
 	)
 }
