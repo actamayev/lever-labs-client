@@ -13,13 +13,10 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 }
 
-// const BlocklyComponent = lazy(() => import("../../sandbox/blockly-component"))
-
 export default function LabCodeMainContent(props: Props) {
 	const {
 		codingTitle,
 		codingDescription,
-		// toolboxConfig
 	} = props
 	const [cppCode, setCppCode] = useState("")
 

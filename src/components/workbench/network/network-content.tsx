@@ -1,9 +1,8 @@
 "use client"
-import { Dispatch, SetStateAction, useCallback } from "react"
+import { Dispatch, SetStateAction } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "../../shadcn/ui/button"
 import { usePipContext } from "../../../contexts/pip-context"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
@@ -21,13 +20,6 @@ function NetworkContent(props: Props) {
 	const requestToConnectToPip = useRequestToConnectToPip()
 	const serialManager = useSerialManagerContext()
 
-	const clearWiFiCredentials = useCallback(async () => {
-		if (serialManager.connected === false) return
-
-		const message = MessageBuilder.createClearWiFiNetworksMessage()
-		await serialManager.sendBinaryMessage(message)
-	}, [serialManager])
-
 	const selectedPip = pipClass.selectedPip
 	if (isNull(selectedPip)) return null
 	switch (selectedPip.pipConnectionStatus) {
@@ -38,13 +30,6 @@ function NetworkContent(props: Props) {
 				Please connect {selectedPip.pipName} to the internet
 				</div>
 				<div className="flex gap-2 mt-2">
-					<Button
-						onClick={clearWiFiCredentials}
-						className="rounded-xl bg-eel h-9 flex-1"
-						disabled={!serialManager.connected}
-					>
-						CLEAR WIFI CREDENTIALS
-					</Button>
 					<Button
 						onClick={(e) => {
 							e.stopPropagation() // Prevent event bubbling
