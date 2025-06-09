@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
 import { Separator } from "../components/shadcn/ui/separator"
 import { ComplianceMainHeader, ComplianceParagraph, ComplianceSectionHeader } from "../components/compliance"
 
@@ -56,7 +57,14 @@ export default function CommunityGuidelines() {
 				<ComplianceMainHeader>Please Don’t Use Blue Dot Robots to...</ComplianceMainHeader>
 				<ComplianceSectionHeader>Attack a Person or Group of People with Words and Actions</ComplianceSectionHeader>
 				<ComplianceParagraph>
-		Blue Dot Robots is a safe place for learners of all backgrounds. Harassment and hurtful content will not be tolerated. Using project names, descriptions, or code comments that promote hate - as well as harassing, targeting, or making inappropriate remarks towards someone - are considered abuse. The same goes for inappropriate usernames and profile information. As stated in the terms, Blue Dot Robots reserves the right to replace images or remove these accounts at its sole discretion. Rule of thumb: if you are making someone feel attacked or hurt, then you shouldn’t be doing it. We take these reports seriously and may delete your account without previous notice if such activity is verified by our team.
+		Blue Dot Robots is a safe place for learners of all backgrounds. Harassment and hurtful content will not be tolerated. Using project names, descriptions, or code comments that promote hate - as well as harassing, targeting, or making inappropriate remarks towards someone - are considered abuse. The same goes for inappropriate usernames and profile information. As stated in the {""}
+					<Link
+						href="/terms"
+						className="underline"
+					>
+						terms
+					</Link>
+		, Blue Dot Robots reserves the right to replace images or remove these accounts at its sole discretion. Rule of thumb: if you are making someone feel attacked or hurt, then you shouldn’t be doing it. We take these reports seriously and may delete your account without previous notice if such activity is verified by our team.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>Create Harmful or Dangerous Robot Code</ComplianceSectionHeader>
