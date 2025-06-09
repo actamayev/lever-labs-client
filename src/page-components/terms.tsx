@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
 import { Separator } from "../components/shadcn/ui/separator"
 import { ComplianceMainHeader, ComplianceParagraph, ComplianceSectionHeader } from "../components/compliance"
 
@@ -24,7 +25,7 @@ export default function TermsPage() {
 					Blue Dot Robots may amend, update, or change these Terms and Conditions at any time in our sole discretion. Any changes will be effective immediately upon posting the revised version on our website. We will indicate at the bottom of the Terms and Conditions the date these terms were last revised. Your continued use of the Service after such posting constitutes your acceptance of the revised terms. If you do not agree to abide by these Terms and Conditions, you are not authorized to use, access, or participate in the Service.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					PLEASE NOTE THAT THESE TERMS AND CONDITIONS CONTAIN A MANDATORY ARBITRATION OF DISPUTES PROVISION THAT REQUIRES THE USE OF ARBITRATION ON AN INDIVIDUAL BASIS TO RESOLVE DISPUTES IN CERTAIN CIRCUMSTANCES, RATHER THAN JURY TRIALS OR CLASS ACTION LAWSUITS. VIEW THESE TERMS IN SECTION 24.
+					PLEASE NOTE THAT THESE TERMS AND CONDITIONS CONTAIN A MANDATORY ARBITRATION OF DISPUTES PROVISION THAT REQUIRES THE USE OF ARBITRATION ON AN INDIVIDUAL BASIS TO RESOLVE DISPUTES IN CERTAIN CIRCUMSTANCES, RATHER THAN JURY TRIALS OR CLASS ACTION LAWSUITS. VIEW THESE TERMS IN SECTION 25.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>2. Description of Service</ComplianceSectionHeader>
@@ -40,7 +41,14 @@ export default function TermsPage() {
 
 				<ComplianceSectionHeader>3. Acceptable Use of the Service</ComplianceSectionHeader>
 				<ComplianceParagraph>
-					You are responsible for your use of the Service, and for any use of the Service made using your account. Our goal is to create a positive, useful, and safe user experience. To promote this goal, we prohibit certain kinds of conduct that may be harmful to other users, our educational mission, or our systems. When you use the Services, you must comply with our Community Guidelines.
+					You are responsible for your use of the Service, and for any use of the Service made using your account. Our goal is to create a positive, useful, and safe user experience. To promote this goal, we prohibit certain kinds of conduct that may be harmful to other users, our educational mission, or our systems. When you use the Services, you must comply with our {""}
+					<Link
+						href={"/community-guidelines"}
+						className="underline"
+					>
+					Community Guidelines
+					</Link>
+					.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					When you use the Service, you must not:
@@ -63,7 +71,14 @@ export default function TermsPage() {
 					In connection with registering for and using the Service, you agree (i) to provide accurate, current and complete information about yourself and/or your organization as requested by Blue Dot Robots; (ii) to maintain the confidentiality of your password and other information related to the security of your account; (iii) to maintain and promptly update any registration information you provide to Blue Dot Robots, to keep such information accurate, current and complete; and (iv) to be fully responsible for all use of your account and for any actions that take place through your account.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					Users under 13 must follow additional requirements outlined in our Privacy Policy.
+					Users under 13 must follow additional requirements outlined in our {""}
+					<Link
+						href={"/privacy"}
+						className="underline"
+					>
+					Privacy Policy
+					</Link>
+					.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					<strong>School Account Creation:</strong> Schools may create accounts on behalf of their students and teachers. When schools create accounts for students under 13, the school represents that it has obtained all necessary parental consents and agrees to act as Blue Dot Robots' agent for compliance purposes as outlined in the applicable school agreement. School administrators and teachers may manage student accounts within their institution but may not access or modify accounts from other schools or institutions.
@@ -176,7 +191,13 @@ export default function TermsPage() {
 					<strong>Individual Account Creation:</strong> Individual consumers create their own accounts and are fully responsible for maintaining account security, providing accurate information, and ensuring appropriate use of the Service. Parents or legal guardians creating accounts for minor children accept full responsibility for their child's use of the Service and compliance with these Terms and Conditions.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					<strong>Parental Notifications for Users Under 13:</strong> When a user under the age of thirteen (13) creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13. This email will include information about how parents can access, modify, or delete their child's account and data at any time by contacting us at bluedotrobots@gmail.com.
+					<strong>Parental Notifications for Users Under 13:</strong> When a user under the age of thirteen (13) creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13. This email will include information about how parents can access, modify, or delete their child's account and data at any time by contacting us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Account%20Modification%20Request"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					<strong>Parental Supervision and Control:</strong> Parents and guardians are responsible for supervising their child's use of Pip robots and ensuring safe use of robot hardware. Parents may contact Blue Dot Robots at any time to modify their child's account settings or request account deletion.
@@ -267,7 +288,14 @@ export default function TermsPage() {
 
 				<ComplianceSectionHeader>22. Privacy</ComplianceSectionHeader>
 				<ComplianceParagraph>
-					Use of the Service is also governed by our Privacy Policy, a copy of which is located here. By using the Service, you consent to the terms of the Privacy Policy. Our Privacy Policy explains how we collect, use, and protect information from users, including special protections for users under 13 years of age in compliance with COPPA and other applicable privacy laws.
+					Use of the Service is also governed by our Privacy Policy, a copy of which is located at {""}
+					<Link
+						href={"/privacy"}
+						className="underline"
+					>
+						www.bluedotrobots.com/privacy
+					</Link>
+					. By using the Service, you consent to the terms of the Privacy Policy. Our Privacy Policy explains how we collect, use, and protect information from users, including special protections for users under 13 years of age in compliance with COPPA and other applicable privacy laws.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>23. Export Controls and International Use</ComplianceSectionHeader>
@@ -294,7 +322,14 @@ export default function TermsPage() {
 					<strong>Class Action Waiver:</strong> Disputes will be resolved individually only. You waive your right to participate in class action lawsuits or class-wide arbitration.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					<strong>Opt-Out:</strong> Individual consumers may opt out of this arbitration agreement by emailing bluedotrobots@gmail.com within 30 days of first using the Service, including your name and a clear opt-out statement.
+					<strong>Opt-Out:</strong> Individual consumers may opt out of this arbitration agreement by emailing {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Arbitration%20Opt-Out%20Request"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link> {""}
+					within 30 days of first using the Service, including your name and a clear opt-out statement.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>26. Miscellaneous</ComplianceSectionHeader>

@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
 import { Separator } from "../components/shadcn/ui/separator"
 import { ComplianceMainHeader, ComplianceParagraph, ComplianceSectionHeader } from "../components/compliance"
 
@@ -29,7 +30,14 @@ export default function PrivacyPage() {
 
 				<ComplianceSectionHeader>a. Account Registration</ComplianceSectionHeader>
 				<ComplianceParagraph>
-					To register for a Blue Dot Robots account, you may provide us with your age and email address. If you are under the age of 13, we require you to provide your parent's or legal guardian's email address instead of your own. When schools create accounts for their students, the school provides the necessary information and acts as our agent for obtaining parental consent for users under 13, as outlined in our Terms and Conditions.
+					To register for a Blue Dot Robots account, you may provide us with your age and email address. If you are under the age of 13, we require you to provide your parent's or legal guardian's email address instead of your own. When schools create accounts for their students, the school provides the necessary information and acts as our agent for obtaining parental consent for users under 13, as outlined in our {""}
+					<Link
+						href="/terms"
+						className="underline"
+					>
+					Terms and Conditions
+					</Link>
+					.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					You may also register for a Blue Dot Robots account using certain social logins, such as Google. If you register for Blue Dot Robots using a social login, Blue Dot Robots may receive information about you from your social login provider, including your email address and contacts.
@@ -51,7 +59,13 @@ export default function PrivacyPage() {
 					When you create coding projects and programs for Pip robots through our platform, we collect and store your code, project descriptions, comments, and any related content you create ("Robotics Projects"). These projects represent your learning progress and creative work in robotics programming, and may include solutions to coding challenges, custom robot behaviors, and innovative applications of robotics concepts.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					Blue Dot Robots may analyze your Robotics Projects to understand learning patterns, improve our educational content, and develop better robotics curricula. When you choose to share projects publicly or with specific users, other community members may view, learn from, and build upon your code as part of the collaborative learning experience. You retain ownership of your original project content while granting us the necessary rights to operate the platform and facilitate educational sharing as outlined in our Terms and Conditions.
+					Blue Dot Robots may analyze your Robotics Projects to understand learning patterns, improve our educational content, and develop better robotics curricula. When you choose to share projects publicly or with specific users, other community members may view, learn from, and build upon your code as part of the collaborative learning experience. You retain ownership of your original project content while granting us the necessary rights to operate the platform and facilitate educational sharing as outlined in our {""}
+					<Link
+						href="/terms"
+						className="underline"
+					>
+					Terms and Conditions
+					</Link>.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>d. Robot Sensor Data</ComplianceSectionHeader>
@@ -72,7 +86,14 @@ export default function PrivacyPage() {
 
 				<ComplianceSectionHeader>f. Google Analytics</ComplianceSectionHeader>
 				<ComplianceParagraph>
-					We use Google Analytics, which is a web analytics tool that helps us understand how users engage with our robotics education platform. Like many services, Google Analytics uses first-party cookies to track user interactions, as in our case, where they are used to collect information about how users navigate our lessons, interact with coding challenges, and engage with robotics content. This information is used to compile reports and to help us improve our educational platform. These reports disclose website trends without identifying individual users. You can opt out of Google Analytics by installing Google's browser add-on available at tools.google.com/dlpage/gaoptout.
+					We use Google Analytics, which is a web analytics tool that helps us understand how users engage with our robotics education platform. Like many services, Google Analytics uses first-party cookies to track user interactions, as in our case, where they are used to collect information about how users navigate our lessons, interact with coding challenges, and engage with robotics content. This information is used to compile reports and to help us improve our educational platform. These reports disclose website trends without identifying individual users. You can opt out of Google Analytics by installing Google's browser add-on available at {""}
+					<a
+						href="https://tools.google.com/dlpage/gaoptout"
+						className="underline"
+					>
+					tools.google.com/dlpage/gaoptout
+					</a>
+					.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>g. Cookies</ComplianceSectionHeader>
@@ -145,10 +166,24 @@ export default function PrivacyPage() {
 					<li>Delete your Blue Dot Robots account by following the instructions in the Service</li>
 				</ul>
 				<ComplianceParagraph>
-					For users under the age of 13, parents and legal guardians have the right to access, review, modify, or delete their child's account and personal information at any time. Parents may contact us at bluedotrobots@gmail.com to exercise these rights on behalf of their children. Parents can also request information about what data we have collected from their child, and how we use that data. We will respond to parental requests within a reasonable timeframe and may require verification of parental identity before processing such requests.
+					For users under the age of 13, parents and legal guardians have the right to access, review, modify, or delete their child's account and personal information at any time. Parents may contact us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Parental%20Request"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link> {""}
+					to exercise these rights on behalf of their children. Parents can also request information about what data we have collected from their child, and how we use that data. We will respond to parental requests within a reasonable timeframe and may require verification of parental identity before processing such requests.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					You may update or correct your information through your account settings page. To request access to your personal information, request deletion of your account, or make other privacy-related requests, please send an email to bluedotrobots@gmail.com. You may also delete your Blue Dot Robots account at any time through your account settings, though this action cannot be undone and will result in loss of access to your projects and learning progress.
+					You may update or correct your information through your account settings page. To request access to your personal information, request deletion of your account, or make other privacy-related requests, please send an email to {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Privacy%20Inquiry"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>
+					. You may also delete your Blue Dot Robots account at any time through your account settings, though this action cannot be undone and will result in loss of access to your projects and learning progress.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					Please note that these rights are not absolute and Blue Dot Robots may refuse requests to exercise data subject rights if there is a legitimate reason, such as if we cannot authenticate your identity, if the request could violate the rights of a third party or applicable law, or if the request could interfere with our educational services or prevent us from delivering services you requested. We will explain our reasoning if we are unable to fulfill a particular request.
@@ -190,10 +225,24 @@ export default function PrivacyPage() {
 					Child Users may participate in supervised classroom robotics activities when their school has a Blue Dot Robots institutional account. In these cases, the Child User's profile and projects will be visible to their teachers and school administrators as part of the educational program, but additional privacy protections ensure that personal information is not shared beyond the immediate educational context.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					Parents may modify or remove their child's Age Restrictions by contacting us at bluedotrobots@gmail.com and providing appropriate verification of their parental status. Additionally, parents can report any concerns about their child's use of the platform or any inappropriate content to the same email address. We take all reports seriously and will investigate and respond promptly to ensure the safety of our young learners.
+					Parents may modify or remove their child's Age Restrictions by contacting us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Remove%20Age%20Restrictions"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link> {""}
+					and providing appropriate verification of their parental status. Additionally, parents can report any concerns about their child's use of the platform or any inappropriate content to the same email address. We take all reports seriously and will investigate and respond promptly to ensure the safety of our young learners.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					With regards to the Children's Online Privacy Protection Act (COPPA), Blue Dot Robots collects personal information from children under the age of 13 for the sole purpose of providing educational robotics services and maintaining the internal operations of our platform. If we discover that we have unknowingly collected additional personal information from these children beyond what is necessary for educational purposes, we will delete it immediately. If you believe this to be the case, please contact us at bluedotrobots@gmail.com.
+					With regards to the Children's Online Privacy Protection Act (COPPA), Blue Dot Robots collects personal information from children under the age of 13 for the sole purpose of providing educational robotics services and maintaining the internal operations of our platform. If we discover that we have unknowingly collected additional personal information from these children beyond what is necessary for educational purposes, we will delete it immediately. If you believe this to be the case, please contact us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=COPPA%20Inquiry"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>
+					.
 				</ComplianceParagraph>
 
 				<ComplianceSectionHeader>7. Blue Dot Robots for Schools</ComplianceSectionHeader>
@@ -218,7 +267,14 @@ export default function PrivacyPage() {
 					Individual consumers who create Blue Dot Robots accounts have full control over their robotics learning experience and privacy settings. Consumer users create their own accounts and are responsible for maintaining account security, providing accurate information, and ensuring appropriate use of the platform and Pip robots. Parents or legal guardians creating accounts for their minor children accept full responsibility for their child's use of the Service and compliance with these privacy terms and our Community Guidelines.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					When a consumer user under the age of 13 creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13, including how parents can access, modify, or delete their child's account and data at any time by contacting us at bluedotrobots@gmail.com. Parents have the right to review their child's robotics projects, learning progress, and platform usage, and may modify privacy settings or request account deletion at any time.
+					When a consumer user under the age of 13 creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13, including how parents can access, modify, or delete their child's account and data at any time by contacting us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Consumer%20Account%20Inquiry"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>
+					. Parents have the right to review their child's robotics projects, learning progress, and platform usage, and may modify privacy settings or request account deletion at any time.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
 					Consumer accounts are not automatically associated with any institutional accounts or classroom settings unless explicitly connected by the user. Individual users have full control over their project sharing settings and may choose to make their robotics projects completely private, selectively shared with specific users, or fully public to the Blue Dot Robots community. Parents may modify privacy settings and project sharing permissions on behalf of their minor children to ensure appropriate levels of privacy and safety.
@@ -244,10 +300,23 @@ export default function PrivacyPage() {
 
 				<ComplianceSectionHeader>12. Contact Us</ComplianceSectionHeader>
 				<ComplianceParagraph>
-					Blue Dot Robots, Inc. is the data controller of your personal information for the purposes of applicable privacy regulations. For all data privacy inquiries, questions about this Privacy Policy, requests to exercise your data subject rights, or concerns about your child's privacy and safety on our platform, please contact our privacy team at bluedotrobots@gmail.com.
+					Blue Dot Robots, Inc. is the data controller of your personal information for the purposes of applicable privacy regulations. For all data privacy inquiries, questions about this Privacy Policy, requests to exercise your data subject rights, or concerns about your child's privacy and safety on our platform, please contact our privacy team at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Privacy%20Inquiry"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>.
 				</ComplianceParagraph>
 				<ComplianceParagraph>
-					For all technical support inquiries, general questions about our robotics education platform, Pip robot troubleshooting, or other non-privacy-related concerns, please also contact us at bluedotrobots@gmail.com. We are committed to responding promptly to all privacy-related requests and will work with you to address any concerns about how we collect, use, or protect your personal information in connection with our robotics education services.
+					For all technical support inquiries, general questions about our robotics education platform, Pip robot troubleshooting, or other non-privacy-related concerns, please also contact us at {""}
+					<Link
+						href="mailto:bluedotrobots@gmail.com?subject=Troubleshooting%20Inquiry"
+						className="underline"
+					>
+						bluedotrobots@gmail.com
+					</Link>
+					. We are committed to responding promptly to all privacy-related requests and will work with you to address any concerns about how we collect, use, or protect your personal information in connection with our robotics education services.
 				</ComplianceParagraph>
 				<Separator className="bg-swan my-10 h-1 rounded-full"/>
 
