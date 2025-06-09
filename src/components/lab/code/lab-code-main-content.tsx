@@ -1,9 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import * as Blockly from "blockly"
 import isEmpty from "lodash-es/isEmpty"
 import { Check, Upload } from "lucide-react"
-import { lazy, Suspense, useState } from "react"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../shadcn/ui/card"
 

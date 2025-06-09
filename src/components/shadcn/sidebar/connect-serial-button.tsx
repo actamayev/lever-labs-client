@@ -3,10 +3,10 @@
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
-import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
 import { CustomUsb } from "../../icons/custom-usb"
+import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
 
-function ConnectDisconnectSerialSidebarButton() {
+function ConnectSerialButton() {
 	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
 
 	const handleConnect = async () => {
@@ -59,4 +59,4 @@ function ConnectDisconnectSerialSidebarButton() {
 	)
 }
 
-export default observer(ConnectDisconnectSerialSidebarButton)
+export default observer(ConnectSerialButton)

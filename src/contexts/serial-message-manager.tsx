@@ -45,6 +45,21 @@ class SerialMessageManagerClass extends EventTarget {
 		this.setupEventListeners()
 	}
 
+	get knownNetworks(): ScannedWiFiNetworkItem[] {
+		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
+		return this.scannedNetworks.filter(network => savedSSIDs.includes(network.ssid))
+	}
+
+	get otherNetworks(): ScannedWiFiNetworkItem[] {
+		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
+		return this.scannedNetworks.filter(network => !savedSSIDs.includes(network.ssid))
+	}
+
+	get previouslyConnected(): SavedWiFiNetwork[] {
+		const scannedSSIDs = this.scannedNetworks.map(network => network.ssid)
+		return this.savedNetworks.filter(network => !scannedSSIDs.includes(network.ssid))
+	}
+
 	private setupEventListeners(): void {
 		// Listen to raw messages from connection manager
 		serialConnectionManager.addEventListener("rawMessage", this.handleRawMessage)

@@ -15,7 +15,7 @@ export default function AgeInput<T extends { age: number | null }>({
 }: Props<T>) {
 	const handleTypeAge = useHandleTypeAge()
 
-	// TODO: 6/9/25: Fix the placeholder text color to reflect Duolingo.
+	// TODO: 6/9/25: Fix the placeholder text color (dark mode) to reflect Duolingo.
 	return (
 		<FormField
 			control={control}

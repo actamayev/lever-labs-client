@@ -1,23 +1,19 @@
 "use client"
 
 import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useState } from "react"
-import { ChevronRight, Lock, Wifi, WifiHigh, WifiLow } from "lucide-react"
 import { ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
+import { ChevronRight, Lock, Wifi, WifiHigh, WifiLow } from "lucide-react"
 import { Input } from "../../../shadcn/ui/input"
 import { Button } from "../../../shadcn/ui/button"
 import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
-interface ScanNetworksSectionProps {
-    networks?: ScannedWiFiNetworkItem[]
-}
-
 // eslint-disable-next-line max-lines-per-function
-function ScanNetworksSection({ networks }: ScanNetworksSectionProps) {
+function ScanNetworksSection() {
 	const serialMessageManager = useSerialMessageManagerContext()
-	const networksToShow = networks || serialMessageManager.scannedNetworks
 
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [password, setPassword] = useState("")
@@ -59,7 +55,7 @@ function ScanNetworksSection({ networks }: ScanNetworksSectionProps) {
 				<div className="text-sm text-muted-foreground">Scanning for networks...</div>
 			</div>
 		)
-	} else if (networksToShow.length === 0) {
+	} else if (isEmpty(serialMessageManager.otherNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300
 			dark:border-gray-700 rounded-lg text-center">
@@ -70,7 +66,7 @@ function ScanNetworksSection({ networks }: ScanNetworksSectionProps) {
 
 	return (
 		<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
-			{networksToShow.map((network, index) => (
+			{serialMessageManager.otherNetworks.map((network, index) => (
 				<Collapsible
 					key={`${network.ssid}-${index}`}
 					open={selectedNetworkIndex === index}

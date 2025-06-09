@@ -1,14 +1,12 @@
 "use client"
 
+import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
-import { SavedWiFiNetwork } from "@bluedotrobots/common-ts"
+import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 
-interface PreviouslyConnectedSectionProps {
-    networks: SavedWiFiNetwork[]
-}
-
-function PreviouslyConnectedSection({ networks }: PreviouslyConnectedSectionProps) {
-	if (networks.length === 0) {
+function PreviouslyConnectedSection() {
+	const serialMessageManager = useSerialMessageManagerContext()
+	if (isEmpty(serialMessageManager.previouslyConnected)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
@@ -19,7 +17,7 @@ function PreviouslyConnectedSection({ networks }: PreviouslyConnectedSectionProp
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{networks.map((network) => (
+			{serialMessageManager.previouslyConnected.map((network) => (
 				<div
 					key={`previous-${network.index}`}
 					className="flex items-center justify-between p-3 border-b border-gray-100 dark:border-gray-800 last:border-b-0"

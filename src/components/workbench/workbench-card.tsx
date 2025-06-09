@@ -59,8 +59,8 @@ function WorkbenchCard() {
 					if (isWiFiSettingsOpen) return
 
 					// Don't hide if the mouse is moving to the dialog
-					const relatedTarget = e.relatedTarget as Element
-					if (relatedTarget && relatedTarget.closest("[role=\"dialog\"]")) return
+					const relatedTarget = e.relatedTarget
+					if (relatedTarget && (relatedTarget as Element).closest("[role=\"dialog\"]")) return
 
 					workbenchClass.setWorkbenchItemHoveringOver(false)
 					workbenchClass.setWorkbenchItemToShow(null)

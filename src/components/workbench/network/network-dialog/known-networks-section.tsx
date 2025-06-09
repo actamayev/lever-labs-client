@@ -1,14 +1,13 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
+import isEmpty from "lodash-es/isEmpty"
 import { Wifi, WifiHigh, WifiLow, Check } from "lucide-react"
+import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 
-interface KnownNetworksSectionProps {
-    networks: ScannedWiFiNetworkItem[]
-}
+function KnownNetworksSection() {
+	const serialMessageManager = useSerialMessageManagerContext()
 
-function KnownNetworksSection({ networks }: KnownNetworksSectionProps) {
 	const getWiFiStrengthIcon = (rssi: number) => {
 		if (rssi > -50) {
 			return <Wifi className="h-4 w-4 text-gray-700" />
@@ -18,7 +17,7 @@ function KnownNetworksSection({ networks }: KnownNetworksSectionProps) {
 		return <WifiLow className="h-4 w-4 text-gray-500" />
 	}
 
-	if (networks.length === 0) {
+	if (isEmpty(serialMessageManager.knownNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
@@ -29,7 +28,7 @@ function KnownNetworksSection({ networks }: KnownNetworksSectionProps) {
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{networks.map((network, index) => (
+			{serialMessageManager.knownNetworks.map((network, index) => (
 				<div
 					key={`known-${network.ssid}-${index}`}
 					className="flex items-center justify-between p-3 border-b border-gray-100 last:border-b-0"

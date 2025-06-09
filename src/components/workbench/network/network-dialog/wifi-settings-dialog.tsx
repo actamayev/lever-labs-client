@@ -6,12 +6,11 @@ import { useCallback, useEffect, useRef } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
+import KnownNetworksSection from "./known-networks-section"
+import PreviouslyConnectedSection from "./previously-connected-section"
 import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
-import { categorizeNetworks } from "../../../../utils/pip/network-categorizer"
-import KnownNetworksSection from "./known-networks-section"
-import PreviouslyConnectedSection from "./previously-connected-section"
 
 interface WiFiSettingsDialogProps {
 	open: boolean
@@ -90,11 +89,6 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		}
 	}, [])
 
-	const categorizedNetworks = categorizeNetworks(
-		serialMessageManager.scannedNetworks,
-		serialMessageManager.savedNetworks
-	)
-
 	if (!serialManager.connected) return null
 
 	return (
@@ -115,7 +109,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 							{/* Known Networks Section */}
 							<div>
 								<h3 className="text-lg font-medium mb-3">Known Networks</h3>
-								<KnownNetworksSection networks={categorizedNetworks.knownNetworks} />
+								<KnownNetworksSection />
 							</div>
 
 							{/* Other Networks Section */}
@@ -132,13 +126,13 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 										{serialMessageManager.isScanning ? "Scanning..." : "Scan Networks"}
 									</Button>
 								</div>
-								<ScanNetworksSection networks={categorizedNetworks.otherNetworks} />
+								<ScanNetworksSection />
 							</div>
 
 							{/* Previously Connected Section */}
 							<div>
 								<h3 className="text-lg font-medium mb-3">Previously Connected</h3>
-								<PreviouslyConnectedSection networks={categorizedNetworks.previouslyConnected} />
+								<PreviouslyConnectedSection />
 							</div>
 						</>
 					)}
