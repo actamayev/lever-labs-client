@@ -15,6 +15,7 @@ export default function AgeInput<T extends { age: number | null }>({
 }: Props<T>) {
 	const handleTypeAge = useHandleTypeAge()
 
+	// TODO: 6/9/25: Fix the placeholder text color to reflect Duolingo.
 	return (
 		<FormField
 			control={control}
@@ -34,8 +35,7 @@ export default function AgeInput<T extends { age: number | null }>({
 								const numericValue = sanitizedValue === "" ? null : parseInt(sanitizedValue, 10)
 								field.onChange(numericValue)
 							}}
-							className="w-full h-12 rounded-xl !text-xl placeholder:!text-black
-							font-light border-2 bg-polar shadow-none border-swan"
+							className="w-full h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
 							maxLength={3}
 						/>
 					</FormControl>
