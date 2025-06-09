@@ -249,6 +249,8 @@ export default function PrivacyPage() {
 				<ComplianceParagraph>
 					For all technical support inquiries, general questions about our robotics education platform, Pip robot troubleshooting, or other non-privacy-related concerns, please also contact us at bluedotrobots@gmail.com. We are committed to responding promptly to all privacy-related requests and will work with you to address any concerns about how we collect, use, or protect your personal information in connection with our robotics education services.
 				</ComplianceParagraph>
+				<Separator className="bg-swan my-10 h-1 rounded-full"/>
+
 				<ComplianceParagraph>
 					Last revised on June 9, 2025
 				</ComplianceParagraph>

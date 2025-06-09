@@ -14,6 +14,8 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import useRegisterSubmit from "../../../hooks/auth/register-submit"
+import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import AgeInput from "./age-input"
 
 export default function RegisterComponent() {
 	const [error, setError] = useState("")
@@ -22,10 +24,10 @@ export default function RegisterComponent() {
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
 		defaultValues: {
+			age: null,
 			email: "",
 			username: "",
 			password: "",
-			passwordConfirmation: ""
 		}
 	})
 
@@ -37,18 +39,13 @@ export default function RegisterComponent() {
 		<AuthTemplate title="Create a new account">
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+					<AgeInput control={form.control} />
 					<UsernameInput control={form.control} />
 					<EmailInput control={form.control} />
 
 					<PasswordField<RegisterFormValues>
 						control={form.control}
 						name="password"
-					/>
-
-					<PasswordField<RegisterFormValues>
-						control={form.control}
-						name="passwordConfirmation"
-						placeholder="Confirm Password"
 					/>
 
 					<AuthButton	title="CREATE ACCOUNT" />
@@ -62,6 +59,7 @@ export default function RegisterComponent() {
 					</div>
 				</form>
 			</Form>
+			<TermsAndPrivacyAgreement />
 		</AuthTemplate>
 	)
 }

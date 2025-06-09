@@ -25,6 +25,15 @@ export const emailUpdatesSchema = z.object({
 })
 
 export const registerSchema = z.object({
+	age: z.number({
+		required_error: "Please enter your age",
+		invalid_type_error: "Age must be a number",
+	})
+		.max(120, "Please enter a valid age")
+		.nullable()
+		.refine((val) => val !== null, {
+			message: "Please enter your age",
+		}),
 	email: z.string()
 		.min(3, "Please enter your email to create your account")
 		.max(100, "That's a bit long for an email - could you check it?")
@@ -35,7 +44,4 @@ export const registerSchema = z.object({
 	password: z.string()
 		.min(6, "For security, use at least 6 characters for your password")
 		.max(100, "That's an unusually long password - could you verify it?"),
-	passwordConfirmation: z.string()
-		.min(6, "Please confirm your password")
-		.max(100, "That's an unusually long password - could you verify it?")
 })

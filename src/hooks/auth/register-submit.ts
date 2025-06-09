@@ -1,16 +1,17 @@
 "use client"
 
 import { useCallback } from "react"
+import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import { SiteThemes } from "@bluedotrobots/common-ts"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { useAuthContext } from "../../contexts/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
-import { PageToNavigateAfterLogin } from "../../utils/constants"
-import { SiteThemes } from "@bluedotrobots/common-ts"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
@@ -27,15 +28,20 @@ export default function useRegisterSubmit (
 			if (areCredentialsValid === false) return
 
 			authClass.setAuthenticating(true)
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			const { passwordConfirmation, ...restOfCredentials } = registerCredentials
 			if (typeof window === "undefined") return
 
 			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
 			let siteTheme: SiteThemes = "dark"
 			if (siteThemeFromStorage === "light") siteTheme = "light"
+			if (isNull(registerCredentials.age)) return
 
-			const response = await blueDotApiClient.authDataService.register({ ...restOfCredentials, siteTheme })
+			const registerRequest = {
+				...registerCredentials,
+				age: registerCredentials.age,
+				siteTheme
+			}
+
+			const response = await blueDotApiClient.authDataService.register(registerRequest)
 
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to register. Please reload the page and try again")

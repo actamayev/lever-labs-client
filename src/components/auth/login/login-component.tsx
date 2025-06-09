@@ -40,7 +40,6 @@ export default function LoginComponent() {
 					<PasswordField<LoginRequest>
 						control={form.control}
 						name="password"
-						// showForgotPassword={true}
 					/>
 					<AuthButton title="LOG IN" />
 

@@ -12,7 +12,7 @@ export default function confirmRegisterFields(
 
 	if (
 		isEmpty(credentials.email) || isEmpty(credentials.password) ||
-		isEmpty(credentials.passwordConfirmation) || isEmpty(credentials.username)
+		isEmpty(credentials.username)
 	) {
 		setError("Let's get your account set up! Fill in all fields to get started")
 		return false
@@ -21,9 +21,6 @@ export default function confirmRegisterFields(
 		return false
 	} else if (credentials.password.length < 6) {
 		setError("For better security, please use at least 6 characters for your password")
-		return false
-	} else if (!isEqual(credentials.password, credentials.passwordConfirmation)) {
-		setError("The passwords don't quite match - please try again")
 		return false
 	} else {
 		setError("")

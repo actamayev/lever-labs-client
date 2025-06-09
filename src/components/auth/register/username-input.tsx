@@ -5,7 +5,7 @@ import { NewUsernameRequest } from "@bluedotrobots/common-ts"
 import { Input } from "../../shadcn/ui/input"
 import CharacterCounter from "../../character-counter"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
-import useHandleTypeUsername from "../../../hooks/handle-type-validation/handle-type-username"
+import { useHandleTypeUsername } from "../../../hooks/handle-type-validation/handle-type-fields"
 
 interface Props<T extends NewUsernameRequest | RegisterFormValues> {
 	control: Control<T>
@@ -27,6 +27,7 @@ export default function UsernameInput<T extends NewUsernameRequest | RegisterFor
 							<Input
 								placeholder="Username"
 								{...field}
+								value={field.value?.toString() || ""}
 								onChange={(event) => {
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
@@ -36,7 +37,7 @@ export default function UsernameInput<T extends NewUsernameRequest | RegisterFor
 								maxLength={100}
 							/>
 							<CharacterCounter
-								value={field.value}
+								value={field.value?.toString() || ""}
 								characterLimit={100}
 								extraClasses="right-3"
 							/>
