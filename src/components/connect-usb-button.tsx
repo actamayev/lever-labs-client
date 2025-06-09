@@ -8,11 +8,8 @@ function ConnectUsbButton() {
 	const serialManager = useSerialManagerContext()
 
 	const handleConnect = async () => {
+		if (serialManager.connected) return
 		await serialManager.connectToDevice()
-	}
-
-	const handleDisconnect = async () => {
-		await serialManager.disconnect()
 	}
 
 	return (
@@ -20,23 +17,23 @@ function ConnectUsbButton() {
 			tooltipTrigger={
 				<button
 					type="button"
-					onClick={serialManager.connected ? handleDisconnect : handleConnect}
+					onClick={handleConnect}
 					className={`p-2 rounded-md transition-none ${
 						serialManager.connected
-							? "bg-red-100 dark:bg-red-900 text-cardinal"
+							? "bg-blue-100 dark:bg-blue-900 text-macaw !border-macaw"
 							: "text-blue-600 dark:text-blue-300 hover:bg-polar"
 					}`}
-					title={serialManager.connected ? "Disconnect" : "Connect"}
+					title={serialManager.connected ? "Connected" : "Connect"}
 				>
 					<div className="flex items-center justify-start space-x-2 font-medium">
 						<CustomUsb />
 						<span className="ml-2">
-							{serialManager.connected ? "DISCONNECT" : "CONNECT"}
+							{serialManager.connected ? "CONNECTED" : "CONNECT"}
 						</span>
 					</div>
 				</button>
 			}
-			tooltipContent={serialManager.connected ? "DISCONNECT" : "CONNECT"}
+			tooltipContent={serialManager.connected ? "CONNECTED" : "CONNECT"}
 		/>
 	)
 }

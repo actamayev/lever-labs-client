@@ -1,6 +1,9 @@
 import { createContext, useContext } from "react"
 import { action, makeObservable, observable, runInAction } from "mobx"
-import { ESPMessage, PipIDPayload, PipUUID, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
+	ScanCompletePayload,
+	ScannedWiFiNetworkItem,
+	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { serialConnectionManager } from "./serial-manager-context"
 
 class SerialMessageManagerClass extends EventTarget {
@@ -16,6 +19,10 @@ class SerialMessageManagerClass extends EventTarget {
 	public wiFiConnectionStatus: WiFiConnectionStatus | null = null
 	public isTestingWiFiConnection: boolean = false
 	public isReadyToDisconnect: boolean = false
+	public savedNetworks: SavedWiFiNetwork[] = []
+	public isLoadingSavedNetworks: boolean = false
+	public scannedNetworks: ScannedWiFiNetworkItem[] = []
+	public isScanning: boolean = false
 
 	constructor() {
 		super()
@@ -30,8 +37,27 @@ class SerialMessageManagerClass extends EventTarget {
 			wiFiConnectionStatus: observable,
 			isTestingWiFiConnection: observable,
 			isReadyToDisconnect: observable,
+			savedNetworks: observable,
+			isLoadingSavedNetworks: observable,
+			scannedNetworks: observable,
+			isScanning: observable
 		})
 		this.setupEventListeners()
+	}
+
+	get knownNetworks(): ScannedWiFiNetworkItem[] {
+		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
+		return this.scannedNetworks.filter(network => savedSSIDs.includes(network.ssid))
+	}
+
+	get otherNetworks(): ScannedWiFiNetworkItem[] {
+		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
+		return this.scannedNetworks.filter(network => !savedSSIDs.includes(network.ssid))
+	}
+
+	get previouslyConnected(): SavedWiFiNetwork[] {
+		const scannedSSIDs = this.scannedNetworks.map(network => network.ssid)
+		return this.savedNetworks.filter(network => !scannedSSIDs.includes(network.ssid))
 	}
 
 	private setupEventListeners(): void {
@@ -105,6 +131,10 @@ class SerialMessageManagerClass extends EventTarget {
 			this.wiFiTestCompleted = false
 			this.wiFiConnectionStatus = null
 			this.isTestingWiFiConnection = false
+			this.savedNetworks = []
+			this.isLoadingSavedNetworks = false
+			this.scannedNetworks = []
+			this.isScanning = false
 		})
 		this.dispatchEvent(new CustomEvent("disconnected"))
 	}
@@ -159,6 +189,37 @@ class SerialMessageManagerClass extends EventTarget {
 			this.onWiFiConnectionResult?.(enumStatus)
 			break
 		}
+		case "/saved-networks": {
+			// Handle saved networks response
+			runInAction(() => {
+				this.isLoadingSavedNetworks = false
+				this.savedNetworks = message.payload as SavedWiFiNetwork[]
+			})
+
+			// Emit event for PipContext to listen to
+			this.dispatchEvent(new CustomEvent("savedNetworksReceived", {
+				detail: this.savedNetworks
+			}))
+			break
+		}
+		case "/scan-result-item": {
+			// Handle individual scan result item
+			const networkItem = message.payload as ScannedWiFiNetworkItem
+			runInAction(() => {
+				this.scannedNetworks.push(networkItem)
+			})
+			break
+		}
+
+		case "/scan-complete": {
+			// Handle scan completion
+			const scanComplete = message.payload as ScanCompletePayload
+			runInAction(() => {
+				this.isScanning = false
+			})
+			console.log(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+			break
+		}
 		default:
 			console.info("Unknown message route:", message.route)
 			break
@@ -182,6 +243,10 @@ class SerialMessageManagerClass extends EventTarget {
 		this.wiFiTestCompleted = false
 		this.hasBeenDisconnected = false
 		this.isReadyToDisconnect = false
+		this.savedNetworks = []
+		this.isLoadingSavedNetworks = false
+		this.scannedNetworks = []
+		this.isScanning = false
 	})
 
 	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null) => {
@@ -190,6 +255,18 @@ class SerialMessageManagerClass extends EventTarget {
 
 	public setIsTestingWiFiConnection = action((isTesting: boolean) => {
 		this.isTestingWiFiConnection = isTesting
+	})
+
+	public setIsLoadingSavedNetworks = action((isLoading: boolean) => {
+		this.isLoadingSavedNetworks = isLoading
+	})
+
+	public setIsScanning = action((isScanning: boolean) => {
+		this.isScanning = isScanning
+	})
+
+	public clearScannedNetworks = action(() => {
+		this.scannedNetworks = []
 	})
 
 	public async logout(): Promise<void> {

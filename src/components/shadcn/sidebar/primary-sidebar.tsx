@@ -3,11 +3,11 @@
 import { usePathname } from "next/navigation"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/shadcn/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
-import ProfileSidebarButton from "./profile-sidebar-button"
 import MappedNavData from "./mapped-nav-data"
-import { PrivatePageNames, OpenPages } from "../../../utils/constants"
+import ProfileSidebarButton from "./profile-sidebar-button"
+import ConnectDisconnectSerial from "./connect-serial-button"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
-import ConnectDisconnectSerial from "./connect-disconnect-serial"
+import { PrivatePageNames, OpenPages } from "../../../utils/constants"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()

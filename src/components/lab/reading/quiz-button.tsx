@@ -12,7 +12,7 @@ import { useLabReadingContext } from "../../../contexts/lab-reading-context"
 function QuizButton({ block } : { block: ContentBlock }) {
 	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
-	const isQuizCorrect = labReadingClass.areQuizesInBlockCorrect(block.id)
+	const isQuizCorrect = labReadingClass.areQuizzesInBlockCorrect(block.id)
 
 	const quizShadowColor = useMemo(() => {
 		if (defaultSiteTheme === "light") {
@@ -25,18 +25,17 @@ function QuizButton({ block } : { block: ContentBlock }) {
 
 	const quizButtonClasses = useMemo(() => {
 		if (isQuizCorrect) {
-			return "bg-green-100 border-green-400 text-green-800 \
-				dark:bg-green-900 dark:border-green-600 dark:text-green-200"
+			return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
 		}
-		return "bg-purple-100 border-beetle text-purple-800 \
-			dark:bg-purple-900 dark:border-purple-600 dark:text-purple-200"
+		return "bg-purple-100 text-purple-800 \
+			dark:bg-purple-900 dark:text-purple-200"
 	}, [isQuizCorrect])
 
 	return (
 		<TactileButton
 			onClick={() => labReadingClass.openQuiz(block)}
 			className={cn(
-				"px-6 !py-5 text-3xl transition-none rounded-2xl border-2 w-full h-16",
+				"px-6 !py-5 text-3xl duration-150 rounded-2xl border-2 w-full h-16",
 				quizButtonClasses
 			)}
 			shadowColor={quizShadowColor}

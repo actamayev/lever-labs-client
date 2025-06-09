@@ -51,10 +51,10 @@ declare global {
 	//Auth
 	type LoginOrRegister = "Login" | "Register"
 	interface RegisterFormValues {
+		age: number | null
 		email: string
 		username: string
 		password: string
-		passwordConfirmation: string
 	}
 
 	//Sandbox

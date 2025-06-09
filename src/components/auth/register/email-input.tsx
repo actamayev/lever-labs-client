@@ -1,10 +1,24 @@
 "use client"
 
-import { Control } from "react-hook-form"
+import { Control, useWatch } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
 export default function EmailInput({ control }: { control: Control<RegisterFormValues> }) {
+	// Watch the age field to determine placeholder text
+	const ageValue = useWatch({
+		control,
+		name: "age"
+	})
+
+	// Determine placeholder based on age
+	const getPlaceholder = () => {
+		if (ageValue && ageValue < 13) {
+			return "Parent's email"
+		}
+		return "Email"
+	}
+
 	return (
 		<FormField
 			control={control}
@@ -13,7 +27,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<Input
-							placeholder="Email"
+							placeholder={getPlaceholder()}
 							{...field}
 							maxLength={100}
 							className="h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
