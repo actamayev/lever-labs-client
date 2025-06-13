@@ -25,7 +25,6 @@ class SerialConnectionManagerClass extends EventTarget {
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
 	public connected: boolean = false
-	public errorMessage: string | null = null
 	public detectedDevices: DetectedDevice[] = []
 	public isScanning: boolean = false
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
@@ -38,7 +37,6 @@ class SerialConnectionManagerClass extends EventTarget {
 			reader: observable,
 			writer: observable,
 			connected: observable,
-			errorMessage: observable,
 			hasUserActivity: observable,
 			detectedDevices: observable,
 			isScanning: observable
@@ -190,8 +188,8 @@ class SerialConnectionManagerClass extends EventTarget {
 		} catch (error) {
 			runInAction(() => {
 				this.isScanning = false
-				this.errorMessage = error instanceof Error ? error.message : String(error)
 			})
+			console.error("Error scanning for devices:", error)
 			return []
 		}
 	}
@@ -215,7 +213,6 @@ class SerialConnectionManagerClass extends EventTarget {
 				this.reader = reader
 				this.writer = writer
 				this.connected = true
-				this.errorMessage = null
 			})
 
 			this.dispatchEvent(createCustomEvent("connected"))
@@ -233,10 +230,6 @@ class SerialConnectionManagerClass extends EventTarget {
 			this.readLoop()
 			this.startKeepAlive()
 		} catch (error) {
-			const errorMsg = error instanceof Error ? error.message : String(error)
-			runInAction(() => {
-				this.errorMessage = errorMsg
-			})
 			console.error("Error connecting to port:", error)
 		}
 	}
@@ -264,10 +257,6 @@ class SerialConnectionManagerClass extends EventTarget {
 		} catch (error) {
 			// Check if it's a user cancellation
 			if (!(error instanceof DOMException && error.name === "NotFoundError")) {
-				const errorMsg = error instanceof Error ? error.message : String(error)
-				runInAction(() => {
-					this.errorMessage = errorMsg
-				})
 				console.error("Error requesting port:", error)
 			}
 		}
@@ -287,10 +276,6 @@ class SerialConnectionManagerClass extends EventTarget {
 			await this.connectToSpecificPort(port)
 		} catch (error) {
 			if (!(error instanceof DOMException && error.name === "NotFoundError")) {
-				const errorMsg = error instanceof Error ? error.message : String(error)
-				runInAction(() => {
-					this.errorMessage = errorMsg
-				})
 				console.error("Error requesting new device:", error)
 			}
 		}
@@ -370,21 +355,13 @@ class SerialConnectionManagerClass extends EventTarget {
 			}
 		} catch (error) {
 			console.error("Error in read loop:", error)
-			const errorMsg = error instanceof Error ? error.message : String(error)
-			runInAction(() => {
-				this.errorMessage = errorMsg
-			})
 			await this.cleanupConnection()
 		}
 	}
 
 	async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
 		if (!this.connected || !this.writer) {
-			const errorMsg = "Not connected to device"
-			runInAction(() => {
-				this.errorMessage = errorMsg
-			})
-			console.error(errorMsg)
+			console.error("Not connected to device")
 			return false
 		}
 
@@ -401,10 +378,6 @@ class SerialConnectionManagerClass extends EventTarget {
 
 			return true
 		} catch (error) {
-			const errorMsg = error instanceof Error ? error.message : String(error)
-			runInAction(() => {
-				this.errorMessage = errorMsg
-			})
 			console.error("Error sending binary message:", error)
 			await this.cleanupConnection()
 			return false
@@ -496,9 +469,6 @@ class SerialConnectionManagerClass extends EventTarget {
 
 	public async logout(): Promise<void> {
 		await this.disconnect()
-		runInAction(() => {
-			this.errorMessage = null
-		})
 	}
 }
 
