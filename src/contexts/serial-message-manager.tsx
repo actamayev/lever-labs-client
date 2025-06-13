@@ -205,6 +205,15 @@ class SerialMessageManagerClass extends EventTarget {
 			this.dispatchEvent(createCustomEvent("savedNetworksReceived", { ...this.savedNetworks}))
 			break
 		}
+
+		case "/scan-started": {
+			runInAction(() => {
+				this.isScanning = true
+				this.scannedNetworks = [] // Clear previous results
+			})
+			break
+		}
+
 		case "/scan-result-item": {
 			// Handle individual scan result item
 			const networkItem = message.payload as ScannedWiFiNetworkItem
