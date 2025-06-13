@@ -5,6 +5,7 @@ import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
 	ScannedWiFiNetworkItem,
 	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { serialConnectionManager } from "./serial-manager-context"
+import { createCustomEvent } from "../utils/custom-event-dispatcher"
 
 class SerialMessageManagerClass extends EventTarget {
 	public messages: Message[] = []
@@ -119,7 +120,7 @@ class SerialMessageManagerClass extends EventTarget {
 			// Reset flow state on new connection
 			this.hasBeenDisconnected = false
 		})
-		this.dispatchEvent(new CustomEvent("connected"))
+		this.dispatchEvent(createCustomEvent("connected"))
 	}
 
 	private handleDisconnected = (): void => {
@@ -136,7 +137,7 @@ class SerialMessageManagerClass extends EventTarget {
 			this.scannedNetworks = []
 			this.isScanning = false
 		})
-		this.dispatchEvent(new CustomEvent("disconnected"))
+		this.dispatchEvent(createCustomEvent("disconnected"))
 	}
 
 	private handleMessageSent = (event: Event): void => {
@@ -150,7 +151,7 @@ class SerialMessageManagerClass extends EventTarget {
 				isBinary: messageData.isBinary
 			})
 		})
-		this.dispatchEvent(new CustomEvent("messageSent", { detail: messageData }))
+		this.dispatchEvent(createCustomEvent("messageSent", { ... messageData }))
 	}
 
 	private handleStructuredMessage(message: ESPMessage): void {
@@ -197,9 +198,7 @@ class SerialMessageManagerClass extends EventTarget {
 			})
 
 			// Emit event for PipContext to listen to
-			this.dispatchEvent(new CustomEvent("savedNetworksReceived", {
-				detail: this.savedNetworks
-			}))
+			this.dispatchEvent(createCustomEvent("savedNetworksReceived", { ...this.savedNetworks}))
 			break
 		}
 		case "/scan-result-item": {
