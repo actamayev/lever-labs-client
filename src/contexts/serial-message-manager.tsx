@@ -61,6 +61,10 @@ class SerialMessageManagerClass extends EventTarget {
 		return this.savedNetworks.filter(network => !scannedSSIDs.includes(network.ssid))
 	}
 
+	get scannedNetworksByRssiStrength(): ScannedWiFiNetworkItem[] {
+		return this.scannedNetworks.slice().sort((a, b) => b.rssi - a.rssi)
+	}
+
 	private setupEventListeners(): void {
 		// Listen to raw messages from connection manager
 		serialConnectionManager.addEventListener("rawMessage", this.handleRawMessage)

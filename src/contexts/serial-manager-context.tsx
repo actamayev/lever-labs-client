@@ -223,10 +223,6 @@ class SerialConnectionManagerClass extends EventTarget {
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}
 
-			// Note: We don't add a port-specific disconnect listener here because
-			// we already handle disconnects globally in the constructor with
-			// navigator.serial.addEventListener("disconnect", ...)
-
 			this.readLoop()
 			this.startKeepAlive()
 		} catch (error) {

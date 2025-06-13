@@ -16,10 +16,8 @@ import AddPipButton from "./add-pip-button"
 import BackButton from "../buttons/back-button"
 import useAddPip from "../../hooks/pip/add-pip"
 import ConnectUsbButton from "../connect-usb-button"
-import EnterWifiPassword from "./enter-wifi-password"
+import WiFiScanSection from "./wifi-scan-section"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
-import EnterWifiNetworkName from "./enter-wifi-network-name"
-import UploadWiFiCredentials from "./upload-wifi-credentials"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
 
@@ -33,7 +31,7 @@ function AddPipForm() {
 		defaultValues: {
 			wiFiNetworkName: "",
 			wiFiPassword: "",
-			pipName: "Pip", // NEW: Default name
+			pipName: "Pip", // Default name
 			pipUUID: null
 		}
 	})
@@ -47,13 +45,16 @@ function AddPipForm() {
 		})
 		serialMessageManagerClass.setWiFiConnectionStatus(null)
 		serialMessageManagerClass.setIsTestingWiFiConnection(false)
+		// Clear scanned networks when resetting
+		serialMessageManagerClass.clearScannedNetworks()
+		serialMessageManagerClass.setIsScanning(false)
 		// Only reset flow state if we're completely done or starting over
 		if (!serialManager.connected) {
 			serialMessageManagerClass.resetFlowState()
 		}
 	}, [form, serialManager.connected, serialMessageManagerClass])
 
-	// NEW: Update pipUUID when pipId is received
+	// Update pipUUID when pipId is received
 	useEffect(() => {
 		if (serialMessageManagerClass.pipId) {
 			form.setValue("pipUUID", serialMessageManagerClass.pipId)
@@ -93,39 +94,26 @@ function AddPipForm() {
 									<ConnectUsbButton />
 								</span>
 
-								{/* Step 2: WiFi Credentials - Show only when connected */}
+								{/* WiFi Section - Show only when connected */}
 								{serialMessageManagerClass.showWiFiSection && (
-									<>
-										<div className="flex flex-row mb-6 mt-8">
-											<p className="font-bold">Step 2:&nbsp;</p>
-											<p>Enter your WiFi network name</p>
-										</div>
-										<EnterWifiNetworkName control={form.control}/>
-
-										<div className="flex flex-row mb-6 mt-4">
-											<p className="font-bold">Step 3:&nbsp;</p>
-											<p>Enter your WiFi password</p>
-										</div>
-										<EnterWifiPassword control={form.control}/>
-
-										<div className="flex flex-row mb-6 mt-6">
-											<p className="font-bold">Step 4:&nbsp;</p>
-											<p>Upload WiFi credentials to test connection</p>
-										</div>
-										<UploadWiFiCredentials getFormValues={() => form.getValues()} />
-									</>
+									<div className="mt-8">
+										<WiFiScanSection
+											control={form.control}
+											setValue={form.setValue}
+										/>
+									</div>
 								)}
 
-								{/* Step 5: Name Pip - Show only after WiFi success */}
+								{/* Step 3: Name Pip - Show only after WiFi success */}
 								{(serialMessageManagerClass.isReadyToDisconnect) && (
 									<>
 										<div className="flex flex-row mb-6 mt-8">
-											<p className="font-bold">Step 5:&nbsp;</p>
+											<p className="font-bold">Step 3:&nbsp;</p>
 											<p>Name your Pip (optional)</p>
 										</div>
 										<EnterPipName control={form.control} />
 										<div className="flex flex-row mb-6 mt-8">
-											<p className="font-bold">Step 6:&nbsp;</p>
+											<p className="font-bold">Step 4:&nbsp;</p>
 											<p>Unplug your Pip from USB and click Add to Account</p>
 										</div>
 										<AddPipButton getFormValues={() => form.getValues()} />
