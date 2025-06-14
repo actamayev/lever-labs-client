@@ -31,16 +31,21 @@ export default function useAddPip(
 				})
 			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
+				exitAfterAddPip(resetAddPipVars)
 				return toast.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
 			}
 
-			if (!getFormValues().selectedWiFiNetworkName || !pipUUID) {
+			const formValues = getFormValues()
+			const hasSelectedWiFi = formValues.selectedWiFiNetworkName && formValues.selectedWiFiNetworkName.trim() !== ""
+			const hasManualWiFi = formValues.manualWiFiNetworkName && formValues.manualWiFiNetworkName.trim() !== ""
+
+			if ((!hasSelectedWiFi && !hasManualWiFi) || !pipUUID) {
 				return toast.negative({
 					title: "Unable to validate Pip data",
-					description: "Please enter data and try submitting again"
+					description: "Please connect to a WiFi network and try again"
 				})
 			}
 

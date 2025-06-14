@@ -2,15 +2,16 @@
 
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import { useState, useCallback } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Control, UseFormSetValue } from "react-hook-form"
+import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
 import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
-import { cn } from "../../lib/shadcn/utils"
 
 interface WiFiScanSectionProps {
 	control: Control<IncompletePipData>
@@ -72,7 +73,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 				</div>
 
 				{/* Scanned Networks List */}
-				{(serialMessageManager.isScanning || serialMessageManager.scannedNetworks.length > 0) && (
+				{(serialMessageManager.isScanning || !isEmpty(serialMessageManager.scannedNetworks)) && (
 					<div className="mb-4">
 						<ScannedNetworkList
 							control={control}

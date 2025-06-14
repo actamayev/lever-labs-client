@@ -14,10 +14,10 @@ const PIP_ROBOT_USB_ID = {
 }
 
 interface DetectedDevice {
-  port: SerialPort
-  info: SerialPortInfo
-  displayName: string
-  isKnownRobot: boolean
+	port: SerialPort
+	info: SerialPortInfo
+	displayName: string
+	isKnownRobot: boolean
 }
 
 class SerialConnectionManagerClass extends EventTarget {
@@ -51,12 +51,12 @@ class SerialConnectionManagerClass extends EventTarget {
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (navigator.serial) {
 			navigator.serial.addEventListener("connect", (event) => {
-				console.log("USB device connected:", event)
+				console.info("USB device connected:", event)
 				this.handleDevicePluggedIn(event.target as SerialPort)
 			})
 
 			navigator.serial.addEventListener("disconnect", (event) => {
-				console.log("USB device disconnected:", event)
+				console.info("USB device disconnected:", event)
 				this.handleDeviceUnplugged(event.target as SerialPort)
 			})
 		}
@@ -85,7 +85,7 @@ class SerialConnectionManagerClass extends EventTarget {
 			for (const port of ports) {
 				const info = port.getInfo()
 				if (this.isPipRobot(info)) {
-					console.log("Found previously authorized Pip robot, attempting auto-reconnect...")
+					console.info("Found previously authorized Pip robot, attempting auto-reconnect...")
 					await this.connectToSpecificPort(port)
 					return true
 				}
@@ -94,7 +94,7 @@ class SerialConnectionManagerClass extends EventTarget {
 			// If we have any previously authorized port and no specific Pip robot found,
 			// try the first one (assuming user only connects Pip robots)
 			if (ports.length > 0) {
-				console.log("Found previously authorized device, attempting auto-reconnect...")
+				console.info("Found previously authorized device, attempting auto-reconnect...")
 				await this.connectToSpecificPort(ports[0])
 				return true
 			}
@@ -108,7 +108,7 @@ class SerialConnectionManagerClass extends EventTarget {
 
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
-		console.log("New device plugged in, checking if it's a Pip robot...")
+		console.info("New device plugged in, checking if it's a Pip robot...")
 
 		// Don't auto-connect if we're already connected
 		if (this.connected) return
@@ -118,7 +118,7 @@ class SerialConnectionManagerClass extends EventTarget {
 
 			// Check if this is a Pip robot
 			if (this.isPipRobot(info)) {
-				console.log("Pip robot detected! Attempting auto-connect...")
+				console.info("Pip robot detected! Attempting auto-connect...")
 
 				// Emit event for UI feedback
 				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: true }))
@@ -126,7 +126,7 @@ class SerialConnectionManagerClass extends EventTarget {
 				// Attempt to connect
 				await this.connectToSpecificPort(port)
 			} else {
-				console.log("Unknown device plugged in:", "Pip")
+				console.info("Unknown device plugged in:", "Pip")
 
 				// Still emit event for UI awareness
 				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: false }))
@@ -138,14 +138,14 @@ class SerialConnectionManagerClass extends EventTarget {
 
 	// Handle when a USB device is unplugged
 	private handleDeviceUnplugged(port: SerialPort): void {
-		console.log("Device unplugged")
+		console.info("Device unplugged")
 
 		// Check if it's our currently connected port
 		if (this.port === port && this.connected) {
-			console.log("Our connected device was unplugged")
+			console.info("Our connected device was unplugged")
 			this.handleDisconnection()
 		} else {
-			console.log("Unrelated device was unplugged")
+			console.info("Unrelated device was unplugged")
 		}
 
 		// Emit event for UI feedback
@@ -280,11 +280,11 @@ class SerialConnectionManagerClass extends EventTarget {
 	private handleDisconnection(): void {
 		// Prevent multiple disconnection handling
 		if (!this.connected) {
-			console.log("Disconnection already handled")
+			console.info("Disconnection already handled")
 			return
 		}
 
-		console.log("Handling device disconnection")
+		console.info("Handling device disconnection")
 		this.dispatchEvent(createCustomEvent("disconnected"))
 		this.cleanupConnection()
 	}
@@ -394,7 +394,7 @@ class SerialConnectionManagerClass extends EventTarget {
 			return // Already cleaned up
 		}
 
-		console.log("Cleaning up connection...")
+		console.info("Cleaning up connection...")
 
 		// Clean up reader
 		if (this.reader) {
@@ -425,7 +425,7 @@ class SerialConnectionManagerClass extends EventTarget {
 			} catch (e) {
 				// Ignore errors if port is already closed or closing
 				if (e instanceof DOMException && e.name === "InvalidStateError") {
-					console.log("Port already closed or closing")
+					console.info("Port already closed or closing")
 				} else {
 					console.error("Error closing port:", e)
 				}
@@ -446,7 +446,7 @@ class SerialConnectionManagerClass extends EventTarget {
 			this.connected = false
 		})
 
-		console.log("Connection cleanup complete")
+		console.info("Connection cleanup complete")
 	}
 
 	public markUserActivity = (): void => {

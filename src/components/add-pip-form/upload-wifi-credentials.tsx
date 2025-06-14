@@ -8,8 +8,10 @@ function UploadWiFiCredentials() {
 	const serialMessageManager = useSerialMessageManagerContext()
 
 	// Only show if there are connection issues
-	if (serialMessageManager.wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_ONLY &&
-		serialMessageManager.wiFiConnectionStatus !== WiFiConnectionStatus.FAILED) {
+	if (
+		serialMessageManager.wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_ONLY &&
+		serialMessageManager.wiFiConnectionStatus !== WiFiConnectionStatus.FAILED
+	) {
 		return null
 	}
 
@@ -18,14 +20,14 @@ function UploadWiFiCredentials() {
 			{/* Show status message */}
 			{serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY && (
 				<div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-					<p className="text-amber-800 text-sm">
+					<p className="text-beakInner text-sm">
 						⚠ WiFi connected but can't reach our servers. This might be a captive portal network.
 					</p>
 				</div>
 			)}
 			{serialMessageManager.wiFiConnectionStatus === WiFiConnectionStatus.FAILED && (
 				<div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-					<p className="text-red-800 text-sm">
+					<p className="text-cardinal text-sm">
 						✗ Connection failed. Please check your WiFi credentials and try again.
 					</p>
 				</div>

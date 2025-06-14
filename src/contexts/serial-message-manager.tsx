@@ -230,7 +230,7 @@ class SerialMessageManagerClass extends EventTarget {
 			runInAction(() => {
 				this.isScanning = false
 			})
-			console.log(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+			console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
 			break
 		}
 		default:
@@ -280,6 +280,13 @@ class SerialMessageManagerClass extends EventTarget {
 
 	public clearScannedNetworks = action(() => {
 		this.scannedNetworks = []
+	})
+
+	public addSavedNetwork = action((network: SavedWiFiNetwork) => {
+		// Only add if not already present
+		if (!this.savedNetworks.find(n => n.ssid === network.ssid)) {
+			this.savedNetworks.push(network)
+		}
 	})
 
 	public async logout(): Promise<void> {

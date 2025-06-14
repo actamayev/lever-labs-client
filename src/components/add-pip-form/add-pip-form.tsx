@@ -94,9 +94,7 @@ function AddPipForm() {
 									<p className="font-bold">Step 1:&nbsp;</p>
 									<p>Turn your Pip on, and plug it into your computer via USB. Press the Connect button below:</p>
 								</div>
-								<span>
-									<ConnectUsbButton />
-								</span>
+								<span><ConnectUsbButton /></span>
 
 								{/* WiFi Section - Show only when connected */}
 								{serialMessageManagerClass.showWiFiSection && (

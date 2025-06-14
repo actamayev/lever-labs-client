@@ -24,7 +24,7 @@ function AddPipButton({ getFormValues }: { getFormValues: () => IncompletePipDat
 		<div className="flex justify-between mt-6 items-center">
 			<Button
 				type="submit"
-				disabled={(!isReadyToAdd())}
+				disabled={!isReadyToAdd()}
 				className="p-5 text-2xl"
 			>
 				Add Pip to Account

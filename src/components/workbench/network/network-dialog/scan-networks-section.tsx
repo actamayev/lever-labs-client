@@ -3,43 +3,56 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useState } from "react"
-import { ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
 import { ChevronRight, Eye, EyeOff, Lock } from "lucide-react"
+import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
 import { Input } from "../../../shadcn/ui/input"
 import { Button } from "../../../shadcn/ui/button"
+import NetworkStrengthIcon from "../../../network-strength-icon"
 import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
-import NetworkStrengthIcon from "../../../network-strength-icon"
 
 // eslint-disable-next-line max-lines-per-function
 function ScanNetworksSection() {
+	const serialManager = useSerialManagerContext()
 	const serialMessageManager = useSerialMessageManagerContext()
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [password, setPassword] = useState("")
 	const [isConnecting, setIsConnecting] = useState(false)
 	const [showPassword, setShowPassword] = useState(false)
-	const serialManager = useSerialManagerContext()
 
-	const handleConnectToNetwork = useCallback((network: ScannedWiFiNetworkItem) => {
-		if (!serialManager.connected) return
-		if (network.encrypted && !password.trim()) return  // Only check password for encrypted networks
+	const handleConnectToNetwork = useCallback(async (network: ScannedWiFiNetworkItem) => {
+		if (
+			!serialManager.connected ||
+			(network.encrypted && !password.trim())
+		) return
 
 		setIsConnecting(true)
 
 		try {
-			// TODO 6/13/25: Send connect message to ESP32
 			console.log(`Connecting to ${network.ssid} with password: ${network.encrypted ? password : ""}`)
 
-			// Reset form after connection attempt
-			setSelectedNetworkIndex(null)
-			setPassword("")
+			const message = MessageBuilder.createWiFiCredentialsMessage(
+				network.ssid,
+				password.trim()
+			)
+			const success = await serialManager.sendBinaryMessage(message)
+			if (success) {
+				// Add to saved networks (this will make it appear in knownNetworks)
+				serialMessageManager.addSavedNetwork({
+					ssid: network.ssid,
+					index: 0 // or appropriate index
+				})
+				// Don't remove from scannedNetworks - keep it there
+				setPassword("") // Only clear password
+				setSelectedNetworkIndex(null)
+			}
 		} catch (error) {
 			console.error("Failed to connect to network:", error)
 		} finally {
 			setIsConnecting(false)
 		}
-	}, [serialManager, password])
+	}, [serialManager, password, serialMessageManager])
 
 	if (serialMessageManager.isScanning) {
 		return (
@@ -122,9 +135,12 @@ function ScanNetworksSection() {
 									</div>
 								)}
 								<Button
-									onClick={() => handleConnectToNetwork(network)}
+									onClick={(e) => {
+										e.stopPropagation() // Add this to prevent event bubbling
+										handleConnectToNetwork(network)
+									}}
 									disabled={(network.encrypted && !password.trim()) || isConnecting}
-									className={`h-8 px-3 text-sm ${network.encrypted ? "" : "ml-auto"}`}  // Add margin for open networks
+									className={`h-8 px-3 text-sm ${network.encrypted ? "" : "ml-auto"}`}
 									size="sm"
 								>
 									{isConnecting ? "Connecting..." : "Connect"}
