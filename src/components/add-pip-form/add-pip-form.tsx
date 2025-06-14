@@ -29,8 +29,10 @@ function AddPipForm() {
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
-			wiFiNetworkName: "",
-			wiFiPassword: "",
+			selectedWiFiNetworkName: "",
+			selectedWiFiPassword: "",
+			manualWiFiNetworkName: "", // Add this
+			manualWiFiPassword: "", // Add this
 			pipName: "Pip", // Default name
 			pipUUID: null
 		}
@@ -38,9 +40,11 @@ function AddPipForm() {
 
 	const resetAddPipVars = useCallback(() => {
 		form.reset({
-			wiFiNetworkName: "",
-			wiFiPassword: "",
-			pipName: "Pip",
+			selectedWiFiNetworkName: "",
+			selectedWiFiPassword: "",
+			manualWiFiNetworkName: "", // Add this
+			manualWiFiPassword: "", // Add this
+			pipName: "Pip", // Default name
 			pipUUID: null
 		})
 		serialMessageManagerClass.setWiFiConnectionStatus(null)

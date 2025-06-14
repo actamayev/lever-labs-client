@@ -19,18 +19,19 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../shadcn/u
 interface ScannedNetworksListProps {
 	control: Control<IncompletePipData>
 	setValue: UseFormSetValue<IncompletePipData>
+	selectedNetworkIndex: number | null
+	setSelectedNetworkIndex: (index: number | null) => void
 }
 
-function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
+function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelectedNetworkIndex }: ScannedNetworksListProps) {
 	const serialMessageManager = useSerialMessageManagerContext()
 	const serialManager = useSerialManagerContext()
-	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [showPassword, setShowPassword] = useState(false)
 
 	// Watch the password field for real-time updates
 	const watchedPassword = useWatch({
 		control,
-		name: "wiFiPassword",
+		name: "selectedWiFiPassword",
 		defaultValue: ""
 	})
 
@@ -48,18 +49,19 @@ function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
 
 	const handleNetworkSelect = useCallback((network: ScannedWiFiNetworkItem, index: number) => {
 		// Set the form values when a network is selected
-		setValue("wiFiNetworkName", network.ssid)
+		setValue("selectedWiFiNetworkName", network.ssid)
 
 		setSelectedNetworkIndex(index)
-		setValue("wiFiPassword", "")
+		setValue("selectedWiFiPassword", "")
 		setShowPassword(false)
-	}, [setValue])
+	}, [setSelectedNetworkIndex, setValue])
 
 	// Upload credentials function
 	const uploadCredentials = useCallback(async (network: ScannedWiFiNetworkItem, networkPassword: string) => {
 		if (!network.ssid) return
 
 		serialMessageManager.setIsTestingWiFiConnection(true)
+		serialMessageManager.setWiFiConnectionStatus(null) // Reset status
 
 		const message = MessageBuilder.createWiFiCredentialsMessage(
 			network.ssid,
@@ -77,7 +79,7 @@ function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
 		await uploadCredentials(network, network.encrypted ? watchedPassword : "")
 
 		// Reset selection
-		setValue("wiFiPassword", "")
+		setValue("selectedWiFiPassword", "")
 		setShowPassword(false)
 	}, [uploadCredentials, watchedPassword, setValue])
 
@@ -112,7 +114,7 @@ function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
 								handleNetworkSelect(network, index)
 							} else {
 								setSelectedNetworkIndex(null)
-								setValue("wiFiPassword", "")
+								setValue("selectedWiFiPassword", "")
 								setShowPassword(false)
 							}
 						}}
@@ -142,7 +144,7 @@ function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
 													type={showPassword ? "text" : "password"}
 													placeholder="Enter WiFi password"
 													value={watchedPassword || ""}
-													onChange={(e) => setValue("wiFiPassword", e.target.value)}
+													onChange={(e) => setValue("selectedWiFiPassword", e.target.value)}
 													className="h-12 !text-xl pr-12"
 													onKeyDown={(e) => {
 														if (e.key === "Enter" && watchedPassword) {
@@ -183,8 +185,8 @@ function ScannedNetworksList({ control, setValue }: ScannedNetworksListProps) {
 										<Button
 											onClick={async () => {
 												// Update form values
-												setValue("wiFiNetworkName", network.ssid)
-												setValue("wiFiPassword", "")
+												setValue("selectedWiFiNetworkName", network.ssid)
+												setValue("selectedWiFiPassword", "")
 												// Upload credentials
 												await uploadCredentials(network, "")
 											}}

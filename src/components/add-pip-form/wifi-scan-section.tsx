@@ -21,12 +21,15 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 	const serialManager = useSerialManagerContext()
 	const serialMessageManager = useSerialMessageManagerContext()
 	const [showManualEntry, setShowManualEntry] = useState(false)
+	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 
 	const scanForNetworks = useCallback(async () => {
 		if (!serialManager.connected || serialMessageManager.isScanning) return
 
 		serialMessageManager.setIsScanning(true)
+		serialMessageManager.setWiFiConnectionStatus(null)
 		serialMessageManager.clearScannedNetworks()
+		setSelectedNetworkIndex(null)
 
 		try {
 			const message = MessageBuilder.createScanWiFiNetworksMessage()
@@ -74,6 +77,8 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 						<ScannedNetworkList
 							control={control}
 							setValue={setValue}
+							selectedNetworkIndex={selectedNetworkIndex}
+							setSelectedNetworkIndex={setSelectedNetworkIndex}
 						/>
 					</div>
 				)}

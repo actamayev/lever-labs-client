@@ -37,7 +37,7 @@ export default function useAddPip(
 				})
 			}
 
-			if (!getFormValues().wiFiNetworkName || !pipUUID) {
+			if (!getFormValues().selectedWiFiNetworkName || !pipUUID) {
 				return toast.negative({
 					title: "Unable to validate Pip data",
 					description: "Please enter data and try submitting again"
