@@ -5,20 +5,7 @@ import { createContext, useContext } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { makeObservable, observable, runInAction } from "mobx"
 import { createCustomEvent } from "../utils/custom-event-dispatcher"
-
-// Define your Pip robot's USB identifiers
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const PIP_ROBOT_USB_ID = {
-	usbVendorId: 0x303a,
-	usbProductId: 0x1001  // ESP32-S3 DevKit
-}
-
-interface DetectedDevice {
-	port: SerialPort
-	info: SerialPortInfo
-	displayName: string
-	isKnownRobot: boolean
-}
+import { PIP_ROBOT_USB_ID } from "../utils/constants"
 
 class SerialConnectionManagerClass extends EventTarget {
 	public port: SerialPort | null = null
