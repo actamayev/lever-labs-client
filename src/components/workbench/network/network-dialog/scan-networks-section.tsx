@@ -30,8 +30,6 @@ function ScanNetworksSection() {
 		setIsConnecting(true)
 
 		try {
-			console.log(`Connecting to ${network.ssid} with password: ${network.encrypted ? password : ""}`)
-
 			const message = MessageBuilder.createWiFiCredentialsMessage(
 				network.ssid,
 				password.trim()
