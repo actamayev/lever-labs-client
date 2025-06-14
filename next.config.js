@@ -22,7 +22,6 @@ const nextConfig = {
 		},
 	},
 	experimental: {
-		optimizeCss: true, // Optimize CSS
 		scrollRestoration: true, // Better scroll restoration
 	},
 
