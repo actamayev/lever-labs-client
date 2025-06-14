@@ -123,9 +123,8 @@ function ScanNetworksSection() {
 								)}
 								<Button
 									onClick={() => handleConnectToNetwork(network)}
-									// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-									disabled={network.encrypted ? !password.trim() : false || isConnecting}
-									className={`h-8 px-3 text-sm ${!network.encrypted ? "ml-auto" : ""}`}  // Add margin for open networks
+									disabled={(network.encrypted && !password.trim()) || isConnecting}
+									className={`h-8 px-3 text-sm ${network.encrypted ? "" : "ml-auto"}`}  // Add margin for open networks
 									size="sm"
 								>
 									{isConnecting ? "Connecting..." : "Connect"}

@@ -1,5 +1,4 @@
 /* eslint-disable max-lines-per-function */
-/* eslint-disable max-len */
 "use client"
 
 import { observer } from "mobx-react"
@@ -93,7 +92,10 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 
 	if (isEmpty(serialMessageManager.scannedNetworks)) {
 		return (
-			<div className="text-lg text-muted-foreground py-4 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg text-center">
+			<div
+				className="text-lg text-muted-foreground py-4 border border-dashed
+				border-gray-300 dark:border-gray-700 rounded-lg text-center"
+			>
 				No networks found. Try scanning again or use manual entry.
 			</div>
 		)
@@ -120,7 +122,10 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 						}}
 					>
 						<CollapsibleTrigger asChild>
-							<div className="flex items-center justify-between p-4 bg-inherit hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer border-b border-gray-100 dark:border-gray-800 last:border-b-0">
+							<div
+								className="flex items-center justify-between p-4 bg-inherit hover:bg-gray-50
+								dark:hover:bg-gray-800 cursor-pointer border-b border-gray-100 dark:border-gray-800 last:border-b-0"
+							>
 								<div className="flex items-center gap-3">
 									<NetworkStrengthIcon rssi={network.rssi} />
 									<span className="font-medium text-lg">{network.ssid}</span>
@@ -136,7 +141,28 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 
 						<CollapsibleContent>
 							<div className="px-4 pb-4 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-800">
-								{network.encrypted ? (
+								{!network.encrypted ? (
+									<div className="space-y-3">
+										<div className="text-lg text-green-600 mb-2">
+											✓ Open network - no password required
+										</div>
+										<Button
+											onClick={async () => {
+												// Update form values
+												setValue("selectedWiFiNetworkName", network.ssid)
+												setValue("selectedWiFiPassword", "")
+												// Upload credentials
+												await uploadCredentials(network, "")
+											}}
+											disabled={serialMessageManager.isTestingWiFiConnection}
+											className="h-12 px-6 text-lg"
+											size="lg"
+										>
+											{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
+										</Button>
+										<UploadWiFiCredentials />
+									</div>
+								) : (
 									<div className="space-y-3">
 										<div className="flex items-center gap-3">
 											<div className="relative flex-1">
@@ -175,27 +201,6 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 												{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
 											</Button>
 										</div>
-										<UploadWiFiCredentials />
-									</div>
-								) : (
-									<div className="space-y-3">
-										<div className="text-lg text-green-600 mb-2">
-											✓ Open network - no password required
-										</div>
-										<Button
-											onClick={async () => {
-												// Update form values
-												setValue("selectedWiFiNetworkName", network.ssid)
-												setValue("selectedWiFiPassword", "")
-												// Upload credentials
-												await uploadCredentials(network, "")
-											}}
-											disabled={serialMessageManager.isTestingWiFiConnection}
-											className="h-12 px-6 text-lg"
-											size="lg"
-										>
-											{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
-										</Button>
 										<UploadWiFiCredentials />
 									</div>
 								)}
