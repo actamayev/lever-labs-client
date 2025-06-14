@@ -11,17 +11,17 @@ const nextConfig = {
 	compress: true, // Enable gzip compression
 
 	// Performance optimizations
-	swcMinify: true, // Use SWC for minification (faster than Terser)
-	experimental: {
-		turbo: {
-			// Enable Turbopack for faster development builds
-			rules: {
-				"*.svg": {
-					loaders: ["@svgr/webpack"],
-					as: "*.js",
-				},
+	// Note: swcMinify is now default in Next.js 15, so removed
+	turbopack: {
+		// Turbopack configuration (moved from experimental.turbo)
+		rules: {
+			"*.svg": {
+				loaders: ["@svgr/webpack"],
+				as: "*.js",
 			},
 		},
+	},
+	experimental: {
 		optimizeCss: true, // Optimize CSS
 		scrollRestoration: true, // Better scroll restoration
 	},
