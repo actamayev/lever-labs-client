@@ -18,6 +18,7 @@ export default function LabCodeMainContent(props: Props) {
 		codingTitle,
 		codingDescription,
 	} = props
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [cppCode, setCppCode] = useState("")
 
 	return (

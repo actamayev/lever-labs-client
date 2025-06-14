@@ -30,7 +30,7 @@ function ConnectSerialButton() {
 						// Size and dimensions - apply consistent sizing regardless of collapsible state
 						"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 						// Custom styles passed from parent
-						serialManager.connected && "!border-macaw",
+						serialManager.connected && "!border-selectedSidebarButtonBorder",
 						// customStyles
 					)}
 					onClick={handleConnect}

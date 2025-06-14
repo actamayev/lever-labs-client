@@ -2,8 +2,10 @@ import { AddPipData } from "@bluedotrobots/common-ts"
 
 declare global {
 	interface IncompletePipData extends AddPipData {
-		wiFiNetworkName: string
-		wiFiPassword: string
+		selectedWiFiNetworkName: string
+		selectedWiFiPassword: string
+		manualWiFiNetworkName?: string
+		manualWiFiPassword?: string
 	}
 }
 

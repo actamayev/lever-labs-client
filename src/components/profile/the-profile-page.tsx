@@ -15,7 +15,7 @@ import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import { usePersonalInfoContext } from "../../contexts/personal-info-context"
 import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-theme"
 import { cn } from "../../lib/shadcn/utils"
-import ChangePasswordSetion from "./change-password-setion"
+import ChangePasswordSection from "./change-password-section"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function ProfilePage() {
@@ -165,7 +165,7 @@ function ProfilePage() {
 					)}
 				</div>
 
-				<ChangePasswordSetion />
+				<ChangePasswordSection />
 
 				{/* Theme Toggle */}
 				<div className="mb-8 flex items-center">
