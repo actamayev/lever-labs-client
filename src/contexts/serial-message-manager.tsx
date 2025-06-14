@@ -179,6 +179,7 @@ class SerialMessageManagerClass extends EventTarget {
 					this.wiFiTestCompleted = true
 					this.showNameSection = true
 					this.isReadyToDisconnect = true
+					this.showWiFiSection = false
 				})
 				break
 			case "wifi_only":
