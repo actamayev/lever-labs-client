@@ -15,6 +15,13 @@ declare global {
 		isBinary?: boolean
 		isStructured?: boolean
 	}
+
+	interface DetectedDevice {
+		port: SerialPort
+		info: SerialPortInfo
+		displayName: string
+		isKnownRobot: boolean
+	}
 }
 
 export {}

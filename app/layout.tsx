@@ -22,8 +22,12 @@ export default function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
-				<Analytics />
-				<SpeedInsights />
+				{process.env.VERCEL_ENV === "production" && (
+					<>
+						<Analytics />
+						<SpeedInsights />
+					</>
+				)}
 			</body>
 		</html>
 	)

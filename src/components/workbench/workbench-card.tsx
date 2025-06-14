@@ -25,6 +25,7 @@ function WorkbenchCard() {
 			setPosition({ top: rect.bottom, left: rect.left })
 		}
 	}, [workbenchClass.workbenchItemToShow])
+
 	useEffect(() => {
 		if (isWiFiSettingsOpen) {
 			workbenchClass.setWorkbenchItemHoveringOver(true)

@@ -1,6 +1,6 @@
 "use client"
 
-import { isEmpty } from "lodash-es"
+import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
 

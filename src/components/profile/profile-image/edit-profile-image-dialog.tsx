@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
+import isEmpty from "lodash-es/isEmpty"
 import { Pencil, Trash2, Save } from "lucide-react"
 import { useState, useRef, useCallback } from "react"
 import {
@@ -53,7 +54,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const handleImageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		const files = e.target.files
 
-		if (!files || files.length === 0) {
+		if (!files || isEmpty(files)) {
 			return
 		}
 

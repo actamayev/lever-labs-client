@@ -5,6 +5,7 @@ import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
 	ScannedWiFiNetworkItem,
 	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { serialConnectionManager } from "./serial-manager-context"
+import { createCustomEvent } from "../utils/custom-event-dispatcher"
 
 class SerialMessageManagerClass extends EventTarget {
 	public messages: Message[] = []
@@ -58,6 +59,10 @@ class SerialMessageManagerClass extends EventTarget {
 	get previouslyConnected(): SavedWiFiNetwork[] {
 		const scannedSSIDs = this.scannedNetworks.map(network => network.ssid)
 		return this.savedNetworks.filter(network => !scannedSSIDs.includes(network.ssid))
+	}
+
+	get scannedNetworksByRssiStrength(): ScannedWiFiNetworkItem[] {
+		return this.scannedNetworks.slice().sort((a, b) => b.rssi - a.rssi)
 	}
 
 	private setupEventListeners(): void {
@@ -119,7 +124,7 @@ class SerialMessageManagerClass extends EventTarget {
 			// Reset flow state on new connection
 			this.hasBeenDisconnected = false
 		})
-		this.dispatchEvent(new CustomEvent("connected"))
+		this.dispatchEvent(createCustomEvent("connected"))
 	}
 
 	private handleDisconnected = (): void => {
@@ -136,7 +141,7 @@ class SerialMessageManagerClass extends EventTarget {
 			this.scannedNetworks = []
 			this.isScanning = false
 		})
-		this.dispatchEvent(new CustomEvent("disconnected"))
+		this.dispatchEvent(createCustomEvent("disconnected"))
 	}
 
 	private handleMessageSent = (event: Event): void => {
@@ -150,7 +155,7 @@ class SerialMessageManagerClass extends EventTarget {
 				isBinary: messageData.isBinary
 			})
 		})
-		this.dispatchEvent(new CustomEvent("messageSent", { detail: messageData }))
+		this.dispatchEvent(createCustomEvent("messageSent", { ... messageData }))
 	}
 
 	private handleStructuredMessage(message: ESPMessage): void {
@@ -174,6 +179,7 @@ class SerialMessageManagerClass extends EventTarget {
 					this.wiFiTestCompleted = true
 					this.showNameSection = true
 					this.isReadyToDisconnect = true
+					this.showWiFiSection = false
 				})
 				break
 			case "wifi_only":
@@ -197,11 +203,18 @@ class SerialMessageManagerClass extends EventTarget {
 			})
 
 			// Emit event for PipContext to listen to
-			this.dispatchEvent(new CustomEvent("savedNetworksReceived", {
-				detail: this.savedNetworks
-			}))
+			this.dispatchEvent(createCustomEvent("savedNetworksReceived", { ...this.savedNetworks}))
 			break
 		}
+
+		case "/scan-started": {
+			runInAction(() => {
+				this.isScanning = true
+				this.scannedNetworks = [] // Clear previous results
+			})
+			break
+		}
+
 		case "/scan-result-item": {
 			// Handle individual scan result item
 			const networkItem = message.payload as ScannedWiFiNetworkItem
@@ -217,7 +230,7 @@ class SerialMessageManagerClass extends EventTarget {
 			runInAction(() => {
 				this.isScanning = false
 			})
-			console.log(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+			console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
 			break
 		}
 		default:
@@ -267,6 +280,13 @@ class SerialMessageManagerClass extends EventTarget {
 
 	public clearScannedNetworks = action(() => {
 		this.scannedNetworks = []
+	})
+
+	public addSavedNetwork = action((network: SavedWiFiNetwork) => {
+		// Only add if not already present
+		if (!this.savedNetworks.find(n => n.ssid === network.ssid)) {
+			this.savedNetworks.push(network)
+		}
 	})
 
 	public async logout(): Promise<void> {
