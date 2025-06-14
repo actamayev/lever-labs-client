@@ -17,10 +17,9 @@ export default function EnterWifiPassword({ control, onSubmit }: EnterWifiPasswo
 	const [showPassword, setShowPassword] = useState(false)
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter" && onSubmit) {
-			e.preventDefault()
-			onSubmit()
-		}
+		if (e.key !== "Enter" || !onSubmit) return
+		e.preventDefault()
+		onSubmit()
 	}
 
 	return (

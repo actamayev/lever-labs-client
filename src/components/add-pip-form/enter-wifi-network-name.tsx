@@ -12,10 +12,9 @@ interface EnterWifiNetworkNameProps {
 
 export default function EnterWifiNetworkName({ control, onSubmit }: EnterWifiNetworkNameProps) {
 	const handleKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter" && onSubmit) {
-			e.preventDefault()
-			onSubmit()
-		}
+		if (e.key !== "Enter" || !onSubmit) return
+		e.preventDefault()
+		onSubmit()
 	}
 
 	return (
