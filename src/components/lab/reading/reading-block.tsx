@@ -7,10 +7,9 @@ import QuizButton from "./quiz-button"
 import { cn } from "../../../lib/shadcn/utils"
 import ContinueButton from "./continue-button"
 import DemoReadingButton from "./demo-reading-button"
-import { useLabReadingContext } from "../../../classes/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 function ReadingBlock({ block } : { block: ContentBlock }) {
-	const labReadingClass = useLabReadingContext()
 
 	const isRevealed = useMemo(() => {
 		return labReadingClass.checkIfBlockIsShown(block.id)

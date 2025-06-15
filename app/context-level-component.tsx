@@ -3,7 +3,6 @@ import PipProvider from "../src/classes/pip-context"
 import SocketProvider from "../src/classes/socket-context"
 import SandboxProvider from "../src/classes/sandbox-context"
 import WorkbenchProvider from "../src/classes/workbench-context"
-import LabReadingProvider from "../src/classes/lab-reading-context"
 import PersonalInfoProvider from "../src/classes/personal-info-context"
 import SerialManagerProvider from "../src/classes/serial-manager-context"
 import PageTransitionProvider from "../src/classes/page-transition-context"
@@ -16,17 +15,15 @@ export default function ContextLevelComponent ({ children } : { children: React.
 				<PersonalInfoProvider>
 					<PipProvider>
 						<SocketProvider>
-							<LabReadingProvider>
-								<SandboxProvider>
-									<WorkbenchProvider>
-										<SerialManagerProvider>
-											<SerialMessageManagerProvider>
-												{children}
-											</SerialMessageManagerProvider>
-										</SerialManagerProvider>
-									</WorkbenchProvider>
-								</SandboxProvider>
-							</LabReadingProvider>
+							<SandboxProvider>
+								<WorkbenchProvider>
+									<SerialManagerProvider>
+										<SerialMessageManagerProvider>
+											{children}
+										</SerialMessageManagerProvider>
+									</SerialManagerProvider>
+								</WorkbenchProvider>
+							</SandboxProvider>
 						</SocketProvider>
 					</PipProvider>
 				</PersonalInfoProvider>

@@ -8,7 +8,7 @@ import { useSocketContext } from "../../classes/socket-context"
 import garageClass from "../../classes/garage-class"
 import { useSandboxContext } from "../../classes/sandbox-context"
 import { useWorkbenchContext } from "../../classes/workbench-context"
-import { useLabReadingContext } from "../../classes/lab-reading-context"
+import labReadingClass from "../../classes/lab-reading-class"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { usePageTransitionContext } from "../../classes/page-transition-context"
@@ -19,7 +19,6 @@ export default function useLogout(): () => Promise<void> {
 	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
-	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
 	const pageTransitionClass = usePageTransitionContext()
 	const workbenchClass = useWorkbenchContext()

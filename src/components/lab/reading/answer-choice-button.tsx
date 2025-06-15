@@ -5,12 +5,11 @@ import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { useLabReadingContext } from "../../../classes/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 import useAnswerChoiceButtonListener from "../../../hooks/listeners/answer-choice-button-listener"
 
 // eslint-disable-next-line max-lines-per-function
 function AnswerChoiceButton({ index } : {index: AnswerChoiceID}) {
-	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
 	useAnswerChoiceButtonListener()
 

@@ -7,10 +7,9 @@ import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { useLabReadingContext } from "../../../classes/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 function QuizButton({ block } : { block: ContentBlock }) {
-	const labReadingClass = useLabReadingContext()
 	const defaultSiteTheme = useDefaultSiteTheme()
 	const isQuizCorrect = labReadingClass.areQuizzesInBlockCorrect(block.id)
 

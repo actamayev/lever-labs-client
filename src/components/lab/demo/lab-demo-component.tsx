@@ -7,7 +7,7 @@ import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import { usePageTransitionContext } from "../../../classes/page-transition-context"
-import { useLabReadingContext } from "../../../classes/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 import AnimatedTransitionWrapper from "../../animated-transition-wrapper"
 
 interface Props {
@@ -26,7 +26,6 @@ function LabDemoComponent(props: Props) {
 	} = props
 	const router = useRouter()
 	const pageTransitionClass = usePageTransitionContext()
-	const labReadingClass = useLabReadingContext()
 
 	const goBack = useCallback(() => {
 		pageTransitionClass.setDirection("up")

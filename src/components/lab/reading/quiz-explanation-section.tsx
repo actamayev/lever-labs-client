@@ -5,10 +5,9 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { useLabReadingContext } from "../../../classes/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 function QuizExplanationSection() {
-	const labReadingClass = useLabReadingContext()
 
 	const CheckButton = observer(() => {
 		if (labReadingClass.activeQuiz?.isCorrect === true) return null
