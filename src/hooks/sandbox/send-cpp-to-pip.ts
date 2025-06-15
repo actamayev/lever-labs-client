@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import fireConfetti from "../fire-confetti"
+import fireConfetti from "../../utils/fire-confetti"
 import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
@@ -79,5 +79,5 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	}, [blueDotApiClientClass.sandboxDataService, pipClass, toast])
+	}, [toast])
 }

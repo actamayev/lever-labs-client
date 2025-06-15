@@ -4,15 +4,14 @@ import { ReactNode } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import ProfileSidebar from "./profile-sidebar"
-import useUsername from "../../hooks/memos/username"
+import personalInfoClass from "../../classes/personal-info-class"
 
 interface SidebarLayoutProps {
-  children: ReactNode;
+	children: ReactNode
 }
 
 function ProfileLayout({ children }: SidebarLayoutProps) {
-	const username = useUsername()
-	const isLoggedIn = !isNull(username)
+	const isLoggedIn = !isNull(personalInfoClass.username)
 
 	return (
 		<div className="relative">

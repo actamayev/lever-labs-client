@@ -29,5 +29,5 @@ export default function usePlayTune(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.workbenchDataService, pipClass.selectedPip?.pipUUID, toast, workbenchClass.selectedSound])
+	}, [toast])
 }

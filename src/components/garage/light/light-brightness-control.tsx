@@ -20,12 +20,12 @@ function LightBrightnessControl() {
 	const decreaseBrightness = useCallback(() => {
 		const newValue = Math.max(0, brightnessPercent - 5)
 		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent, garageClass])
+	}, [brightnessPercent])
 
 	const increaseBrightness = useCallback(() => {
 		const newValue = Math.min(100, brightnessPercent + 5)
 		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent, garageClass])
+	}, [brightnessPercent])
 
 	const enforceRGBRange = useCallback((value: string) => {
 		const numValue = parseInt(value || "0")

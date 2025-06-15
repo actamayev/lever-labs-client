@@ -11,7 +11,6 @@ import CharacterCounter from "../character-counter"
 import ProfileImage from "./profile-image/profile-image"
 import useEditName from "../../hooks/personal-info/edit-name"
 import useEditUsername from "../../hooks/personal-info/edit-username"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import personalInfoClass from "../../classes/personal-info-class"
 import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-theme"
 import { cn } from "../../lib/shadcn/utils"
@@ -25,7 +24,6 @@ function ProfilePage() {
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false)
 	const updateName = useEditName()
 	const updateUsername = useEditUsername()
-	const defaultSiteTheme = useDefaultSiteTheme()
 	const setDefaultSiteTheme = useSetDefaultSiteTheme()
 	const [usernameError, setUsernameError] = useState("")
 
@@ -49,7 +47,7 @@ function ProfilePage() {
 		if (usernameError) {
 			setUsernameError("")
 		}
-	}, [personalInfoClass.username, usernameError])
+	}, [usernameError])
 
 	const saveUsername = useCallback(async () => {
 		const errorMessage = await updateUsername(username)
@@ -174,7 +172,7 @@ function ProfilePage() {
 						onClick={setDefaultSiteTheme}
 						className="rounded-full h-9 w-9 md:h-10 md:w-10"
 					>
-						{defaultSiteTheme === "light" ? (
+						{personalInfoClass.defaultSiteTheme === "light" ? (
 							<Moon className="h-5 w-5 md:!h-6 md:!w-6" />
 						) : (
 							<Sun className="h-5 w-5 md:!h-6 md:!w-6" />
@@ -184,7 +182,7 @@ function ProfilePage() {
 						className="ml-3 text-base md:text-lg font-medium cursor-pointer"
 						onClick={setDefaultSiteTheme}
 					>
-						{defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
+						{personalInfoClass.defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
 				</div>
 			</div>

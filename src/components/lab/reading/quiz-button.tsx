@@ -6,21 +6,20 @@ import { CheckCircle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomQuiz } from "../../icons/custom-quiz"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
 import labReadingClass from "../../../classes/lab-reading-class"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 function QuizButton({ block } : { block: ContentBlock }) {
-	const defaultSiteTheme = useDefaultSiteTheme()
 	const isQuizCorrect = labReadingClass.areQuizzesInBlockCorrect(block.id)
 
 	const quizShadowColor = useMemo(() => {
-		if (defaultSiteTheme === "light") {
+		if (personalInfoClass.defaultSiteTheme === "light") {
 			if (isQuizCorrect) return "rgb(74, 222, 128)"
 			else return "rgb(192 132 252)"
 		}
 		if (isQuizCorrect) return "rgb(22 163 74)"
 		else return "rgb(147 51 234)"
-	}, [defaultSiteTheme, isQuizCorrect])
+	}, [isQuizCorrect])
 
 	const quizButtonClasses = useMemo(() => {
 		if (isQuizCorrect) {

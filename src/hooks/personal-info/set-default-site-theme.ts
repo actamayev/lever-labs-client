@@ -5,17 +5,15 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
-import useDefaultSiteTheme from "../memos/default-site-theme"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
 	const toast = useToastOptions()
-	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return useCallback(async () => {
 		try {
-			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
+			const newSiteTheme = personalInfoClass.defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
 			if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
 				return // No toast because we don't want a negative toast if someone isn't logged in
@@ -31,5 +29,5 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [defaultSiteTheme, personalInfoClass, toast])
+	}, [toast])
 }

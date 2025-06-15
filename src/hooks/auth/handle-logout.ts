@@ -16,5 +16,5 @@ export default function useHandleLogout(): (
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClientClass.authDataService, logout])
+	}, [logout])
 }

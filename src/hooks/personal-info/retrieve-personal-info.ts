@@ -8,7 +8,6 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePersonalInfo(): () => Promise<void> {
-
 	return useCallback(async () => {
 		try {
 			if (

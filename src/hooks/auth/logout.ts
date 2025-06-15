@@ -32,6 +32,5 @@ export default function useLogout(): () => Promise<void> {
 		garageClass.logout()
 		await serialMessageManagerClass.logout()
 		navigate("/")
-	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
-		labReadingClass, workbenchClass, serialMessageManagerClass, navigate])
+	}, [navigate])
 }

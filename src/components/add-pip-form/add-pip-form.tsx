@@ -54,14 +54,14 @@ function AddPipForm() {
 		if (!serialConnectionManagerClass.connected) {
 			serialMessageManagerClass.resetFlowState()
 		}
-	}, [form, serialConnectionManagerClass.connected, serialMessageManagerClass])
+	}, [form])
 
 	// Update pipUUID when pipId is received
 	useEffect(() => {
 		if (serialMessageManagerClass.pipId) {
 			form.setValue("pipUUID", serialMessageManagerClass.pipId)
 		}
-	}, [serialMessageManagerClass.pipId, form])
+	}, [form])
 
 	const addPip = useAddPip(resetAddPipVars, () => form.getValues())
 
