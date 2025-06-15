@@ -5,14 +5,13 @@ import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../../utils/type-checks"
-import { usePersonalInfoContext } from "../../../classes/personal-info-context"
+import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function useUsernameSubmit (setError: (error: string) => void): (username: string) => Promise<void> {
 	const navigate = useTypedNavigate()
-	const personalInfoClass = usePersonalInfoContext()
 
 	return useCallback(async (username: string): Promise<void> => {
 		setError("")

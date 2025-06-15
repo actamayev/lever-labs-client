@@ -4,11 +4,10 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePersonalInfo(): () => Promise<void> {
-	const personalInfoClass = usePersonalInfoContext()
 
 	return useCallback(async () => {
 		try {

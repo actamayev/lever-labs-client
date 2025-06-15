@@ -5,14 +5,13 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useUploadProfilePicture(): (
 	selectedImage: File | null,
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
-	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (

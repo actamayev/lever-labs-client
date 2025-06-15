@@ -1,10 +1,9 @@
 "use client"
 
 import { useCallback, useEffect } from "react"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useSiteThemeListenerUseEffect(): void {
-	const personalInfoClass = usePersonalInfoContext()
 
 	const handleStorageChange = useCallback((event: StorageEvent): void => {
 		if (

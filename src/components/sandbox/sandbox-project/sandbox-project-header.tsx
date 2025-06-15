@@ -9,7 +9,7 @@ import CustomTooltip from "../../custom-tooltip"
 import ConnectUsbButton from "../../connect-usb-button"
 import EditableProjectTitle from "./editable-project-title"
 import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
-import { usePersonalInfoContext } from "../../../classes/personal-info-context"
+import personalInfoClass from "../../../classes/personal-info-class"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
 
@@ -17,7 +17,6 @@ import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandb
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const starSandboxProject = useStarSandboxProject()
 	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
-	const personalInfoClass = usePersonalInfoContext()
 	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
 
 	return (

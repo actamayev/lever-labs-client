@@ -16,7 +16,7 @@ import {
 } from "../../shadcn/ui/dialog"
 import LoadingOval from "../../loading-oval"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import { usePersonalInfoContext } from "../../../classes/personal-info-context"
+import personalInfoClass from "../../../classes/personal-info-class"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
@@ -28,7 +28,6 @@ interface EditProfileImageDialogProps {
 
 // eslint-disable-next-line max-lines-per-function
 function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps) {
-	const personalInfoClass = usePersonalInfoContext()
 	const fileInputRef = useRef<HTMLInputElement>(null)
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 	const [selectedImage, setSelectedImage] = useState<File | null>(null)

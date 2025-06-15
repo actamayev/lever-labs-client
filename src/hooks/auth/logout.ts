@@ -9,14 +9,13 @@ import garageClass from "../../classes/garage-class"
 import { useSandboxContext } from "../../classes/sandbox-context"
 import { useWorkbenchContext } from "../../classes/workbench-context"
 import labReadingClass from "../../classes/lab-reading-class"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import pageTransitionClass from "../../classes/page-transition-class"
 import activityProgressClass from "../../classes/activity-progress-class"
 import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 export default function useLogout(): () => Promise<void> {
-	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
 	const navigate = useTypedNavigate()

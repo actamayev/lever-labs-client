@@ -4,12 +4,11 @@ import { observer } from "mobx-react"
 import { useState, useCallback } from "react"
 import Image from "next/image"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
-import { usePersonalInfoContext } from "../../../classes/personal-info-context"
+import personalInfoClass from "../../../classes/personal-info-class"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import { Pencil } from "lucide-react"
 
 function ProfileImage() {
-	const personalInfoClass = usePersonalInfoContext()
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [isHovered, setIsHovered] = useState(false)
 

@@ -1,10 +1,9 @@
 "use client"
 
 import { useMemo } from "react"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useUsername (): string | null {
-	const personalInfoClass = usePersonalInfoContext()
 
 	return useMemo(() => {
 		return personalInfoClass.username

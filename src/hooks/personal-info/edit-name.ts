@@ -6,10 +6,9 @@ import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isErrorResponses } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useEditName(): (newName: string) => Promise<void> {
-	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (newName: string) => {

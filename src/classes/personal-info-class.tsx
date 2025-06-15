@@ -1,6 +1,5 @@
 "use client"
 
-import { createContext, useContext } from "react"
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
 import { PersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
@@ -83,16 +82,6 @@ class PersonalInfoClass {
 	}
 }
 
-const personalInfoInstance = new PersonalInfoClass()
+const personalInfoClass = new PersonalInfoClass()
 
-const PersonalInfoContext = createContext(personalInfoInstance)
-
-export default function PersonalInfoProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<PersonalInfoContext.Provider value={personalInfoInstance}>
-			{children}
-		</PersonalInfoContext.Provider>
-	)
-}
-
-export const usePersonalInfoContext = () => useContext(PersonalInfoContext)
+export default personalInfoClass

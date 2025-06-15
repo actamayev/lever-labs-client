@@ -12,14 +12,13 @@ import ProfileImage from "./profile-image/profile-image"
 import useEditName from "../../hooks/personal-info/edit-name"
 import useEditUsername from "../../hooks/personal-info/edit-username"
 import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-theme"
 import { cn } from "../../lib/shadcn/utils"
 import ChangePasswordSection from "./change-password-section"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function ProfilePage() {
-	const personalInfoClass = usePersonalInfoContext()
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [username, setUsername] = useState(personalInfoClass.username || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
@@ -34,7 +33,7 @@ function ProfilePage() {
 	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setName(e.target.value)
 		setIsNameChanged(e.target.value !== personalInfoClass.name)
-	}, [personalInfoClass.name])
+	}, [])
 
 	const saveName = useCallback(async () => {
 		await updateName(name)

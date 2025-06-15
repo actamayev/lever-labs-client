@@ -6,11 +6,10 @@ import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
 import useTypedNavigate from "../navigate/typed-navigate"
 import authClass from "../../classes/auth-class"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useRedirectKnownUser(): void {
 	const navigate = useTypedNavigate()
-	const personalInfoClass = usePersonalInfoContext()
 	const pathname = usePathname()
 
 	useEffect(() => {

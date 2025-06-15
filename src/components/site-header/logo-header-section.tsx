@@ -8,11 +8,10 @@ import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 	const pathname = usePathname()
-	const personalInfoClass = usePersonalInfoContext()
 
 	const whereToNavigate = useMemo(() => {
 		if (

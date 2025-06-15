@@ -5,11 +5,10 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
-import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useSetSandboxNotesOpenStatus(): () => Promise<void> {
-	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
 
 	return useCallback(async () => {
