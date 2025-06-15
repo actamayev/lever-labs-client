@@ -171,7 +171,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 							/>
 						) : (
 							<CustomUserCircle
-								className="w-32 h-32 rounded-full object-cover cursor-pointer text-black dark:text-white"
+								className="w-32 h-32 rounded-full object-cover cursor-pointer text-questionText"
 								style={imageStyle}
 								onClick={handleOpenFileSelector}
 								onMouseEnter={handleMouseEnter}

@@ -1,12 +1,12 @@
 "use client"
 
-import { observer } from "mobx-react"
-import { useState, useCallback } from "react"
 import Image from "next/image"
-import EditProfileImageDialog from "./edit-profile-image-dialog"
-import personalInfoClass from "../../../classes/personal-info-class"
-import { CustomUserCircle } from "../../icons/custom-user-circle"
+import { observer } from "mobx-react"
 import { Pencil } from "lucide-react"
+import { useState, useCallback } from "react"
+import EditProfileImageDialog from "./edit-profile-image-dialog"
+import { CustomUserCircle } from "../../icons/custom-user-circle"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 function ProfileImage() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -40,15 +40,13 @@ function ProfileImage() {
 					height={128}
 				/>
 			) : (
-				<div className="text-black dark:text-white">
-					<CustomUserCircle
-						className="w-32 h-32 rounded-full object-cover cursor-pointer"
-						style={imageStyle}
-						onClick={handleOpenDialog}
-						onMouseEnter={handleMouseEnter}
-						onMouseLeave={handleMouseLeave}
-					/>
-				</div>
+				<CustomUserCircle
+					className="w-32 h-32 rounded-full object-cover cursor-pointer text-questionText"
+					style={imageStyle}
+					onClick={handleOpenDialog}
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
+				/>
 			)}
 			<div
 				className="absolute top-2 right-1 bg-eel dark:bg-polar
