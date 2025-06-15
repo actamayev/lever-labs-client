@@ -8,7 +8,7 @@ import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
 import PreviouslyConnectedSection from "./previously-connected-section"
-import serialConnectionManagerClass from "../../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
 

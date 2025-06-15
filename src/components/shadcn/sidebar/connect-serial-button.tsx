@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomUsb } from "../../icons/custom-usb"
-import serialConnectionManagerClass from "../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 function ConnectSerialButton() {
 	const handleConnect = async () => {

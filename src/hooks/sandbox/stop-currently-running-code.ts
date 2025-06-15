@@ -8,7 +8,7 @@ import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 	const toast = useToastOptions()

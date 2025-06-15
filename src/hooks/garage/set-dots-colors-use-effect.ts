@@ -9,7 +9,7 @@ import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {

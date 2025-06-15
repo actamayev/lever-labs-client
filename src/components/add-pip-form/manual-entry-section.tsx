@@ -6,7 +6,7 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { observer } from "mobx-react"
 

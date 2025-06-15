@@ -8,7 +8,7 @@ import pipClass from "../../classes/pip-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
 	return useCallback(async (newAnimation: LightAnimation) => {

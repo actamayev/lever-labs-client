@@ -4,7 +4,7 @@ import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
 	ScannedWiFiNetworkItem,
 	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import { createCustomEvent } from "../utils/custom-event-dispatcher"
-import serialConnectionManagerClass from "./serial-manager-class"
+import serialConnectionManagerClass from "./serial-connection-manager-class"
 
 class SerialMessageManagerClass extends EventTarget {
 	public messages: Message[] = []

@@ -10,7 +10,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 interface WiFiScanSectionProps {

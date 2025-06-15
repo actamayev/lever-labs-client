@@ -11,7 +11,7 @@ import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import NetworkStrengthIcon from "../network-strength-icon"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../shadcn/ui/collapsible"
 

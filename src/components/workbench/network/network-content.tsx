@@ -7,7 +7,7 @@ import { Button } from "../../shadcn/ui/button"
 import pipClass from "../../../classes/pip-class"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
-import serialConnectionManagerClass from "../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 interface Props {
 	setIsWiFiSettingsOpen: Dispatch<SetStateAction<boolean>>

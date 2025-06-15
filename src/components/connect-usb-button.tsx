@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import CustomTooltip from "./custom-tooltip"
 import { CustomUsb } from "./icons/custom-usb"
-import serialConnectionManagerClass from "../classes/serial-manager-class"
+import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
 function EnhancedConnectUsbButton() {
 

@@ -5,7 +5,7 @@ import isNull from "lodash-es/isNull"
 import usePollSensors from "./poll-sensors"
 import pipClass from "../../classes/pip-class"
 import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useSensorPollingUseEffect (): void {
 	const pollSensors = usePollSensors()

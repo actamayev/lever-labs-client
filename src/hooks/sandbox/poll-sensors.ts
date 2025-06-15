@@ -6,7 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import serialConnectionManagerClass from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function usePollSensors(): () => Promise<void> {
