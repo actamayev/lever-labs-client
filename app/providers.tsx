@@ -8,14 +8,13 @@ import { Slide, ToastContainer } from "react-toastify"
 // Custom hooks from your application
 import { observer } from "mobx-react"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
-import useGetAuthDataFromStorage from "@/hooks/auth/get-auth-data-from-storage"
+import useRetrievePipInfoUseEffect from "@/hooks/pip/retrieve-pip-info-use-effect"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
-import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
+import useSocketEventsUseEffect from "@/hooks/socket-events/socket-events-use-effect"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-analytics"
+import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "@/hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "@/hooks/personal-info/retrieve-personal-info-use-effect"
-import useSocketEventsUseEffect from "@/hooks/socket-events/socket-events-use-effect"
-import useRetrievePipInfoUseEffect from "@/hooks/pip/retrieve-pip-info-use-effect"
 import useResetTransitionDirectionUseEffect from "@/hooks/listeners/reset-transition-direction-use-effect"
 
 function RedirectHandler() {
@@ -26,8 +25,6 @@ function RedirectHandler() {
 const ObserverRedirectHandler = observer(RedirectHandler)
 
 export default function Providers({ children }: { children: ReactNode }) {
-	const getAuthDataFromStorage = useGetAuthDataFromStorage()
-	getAuthDataFromStorage()
 	useLogoutListenerUseEffect()
 	useSiteThemeListenerUseEffect()
 	useInitializeGoogleAnalytics()

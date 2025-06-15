@@ -10,7 +10,6 @@ const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping)
 }, {} as Record<MotorDirection, MotorDriveKeyMapping>)
 
 export default function useComputeMotorControl(): () => MotorControlInput {
-
 	// Compute motor control values based on pressed keys
 	return (): MotorControlInput => {
 		const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }

@@ -29,8 +29,6 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
 
 		try {
-			console.log("Requesting saved networks...")
-			// Send the message to request saved networks
 			const message = MessageBuilder.createGetSavedWiFiNetworks()
 			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {

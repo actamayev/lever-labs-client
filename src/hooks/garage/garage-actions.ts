@@ -1,10 +1,10 @@
 "use client"
 
+import { MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 export default function useGarageActions(): {
 	activateAction: (action: Actions) => Promise<void>

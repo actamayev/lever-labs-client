@@ -30,7 +30,8 @@ function VolumeContent() {
 		if (workbenchClass.isMuted && value[0] > 0) {
 			workbenchClass.setIsMuted(false)
 		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [workbenchClass.isMuted])
 
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		// Prevent arrow keys from changing slider value
