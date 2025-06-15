@@ -1,9 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import isEqual from "lodash-es/isEqual"
 import useLogout from "./logout"
-import { isErrorResponse } from "../../utils/type-checks"
 import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useHandleLogout(): (
@@ -13,11 +11,9 @@ export default function useHandleLogout(): (
 
 	return useCallback(async () => {
 		try {
+			// Awaiting here so that the access token isn't cleared before the request is sent
+			await blueDotApiClient.authDataService.logout()
 			await logout()
-			const response = await blueDotApiClient.authDataService.logout()
-			if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
-				throw new Error("Failed to logout")
-			}
 		} catch (error) {
 			console.error(error)
 		}
