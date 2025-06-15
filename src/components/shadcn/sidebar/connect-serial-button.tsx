@@ -1,5 +1,6 @@
 "use client"
 
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
@@ -7,10 +8,11 @@ import { CustomUsb } from "../../icons/custom-usb"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 function ConnectSerialButton() {
-	const handleConnect = async () => {
+	const handleConnect = useCallback(async () => {
 		if (serialConnectionManagerClass.connected) return // If already connected, do nothing
 		await serialConnectionManagerClass.connectToDevice()
-	}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [serialConnectionManagerClass.connected])
 
 	return (
 		<SidebarMenu>

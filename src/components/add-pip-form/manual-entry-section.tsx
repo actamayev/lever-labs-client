@@ -1,5 +1,6 @@
 "use client"
 
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Control, useWatch } from "react-hook-form"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
@@ -28,7 +29,7 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 		defaultValue: ""
 	})
 
-	const handleManualConnect = async () => {
+	const handleManualConnect = useCallback(async () => {
 		if (
 			serialMessageManagerClass.isTestingWiFiConnection ||
 			!watchedManualNetworkName ||
@@ -49,7 +50,8 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 		if (!success) {
 			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		}
-	}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [watchedManualNetworkName, watchedManualPassword, serialMessageManagerClass.isTestingWiFiConnection])
 
 	return (
 		<div className="space-y-4 p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">

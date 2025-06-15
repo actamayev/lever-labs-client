@@ -9,10 +9,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { EmptySandboxXml } from "../../utils/constants"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
+import personalInfoClass from "../../classes/personal-info-class"
 import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../hooks/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-import personalInfoClass from "../../classes/personal-info-class"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
