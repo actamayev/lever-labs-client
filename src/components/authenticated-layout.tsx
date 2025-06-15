@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import authClass from "@/classes/auth-context"
+import authClass from "@/classes/auth-class"
 import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
 
 function AuthenticatedLayout({ children }: { children: React.ReactNode }) {

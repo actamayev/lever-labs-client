@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { usePathname } from "next/navigation"
 import { PrivatePageNames } from "../../utils/constants"
 import useTypedNavigate from "../navigate/typed-navigate"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
 // This hook exists to make sure that Google users who have not registered their username are unable to go to private pages

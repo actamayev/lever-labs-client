@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 interface LinkAuthHeaderProps {

@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import { useSocketContext } from "../../classes/socket-context"
 import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { LoginSuccess, RegisterSuccess } from "@bluedotrobots/common-ts"

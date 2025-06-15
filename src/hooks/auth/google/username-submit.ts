@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useTypedNavigate from "../../navigate/typed-navigate"
-import authClass from "../../../classes/auth-context"
+import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../../utils/type-checks"
 import { usePersonalInfoContext } from "../../../classes/personal-info-context"
 import { useApiClientContext } from "../../../classes/blue-dot-api-client-context"

@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BlueTactileButton } from "./tactile-buttons"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 
 interface Props {
 	loading?: boolean

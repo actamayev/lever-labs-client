@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../classes/pip-context"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import { useSocketContext } from "../../classes/socket-context"
 import { useGarageContext } from "../../classes/garage-context"
 import { useSandboxContext } from "../../classes/sandbox-context"

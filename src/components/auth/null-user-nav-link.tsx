@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { isValidRoute } from "../../utils/type-checks"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
 // eslint-disable-next-line complexity

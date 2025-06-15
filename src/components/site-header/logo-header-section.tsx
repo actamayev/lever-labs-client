@@ -6,7 +6,7 @@ import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import authClass from "../../classes/auth-context"
+import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
