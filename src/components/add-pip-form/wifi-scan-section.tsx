@@ -1,17 +1,17 @@
 "use client"
 
+import { useState } from "react"
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { useState, useCallback } from "react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Control, UseFormSetValue } from "react-hook-form"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import useScanForNetworks from "../../hooks/scan-for-networks"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 interface WiFiScanSectionProps {
 	control: Control<IncompletePipData>
@@ -21,24 +21,7 @@ interface WiFiScanSectionProps {
 function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 	const [showManualEntry, setShowManualEntry] = useState(false)
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
-
-	const scanForNetworks = useCallback(async () => {
-		if (!serialConnectionManagerClass.connected || serialMessageManagerClass.isScanning) return
-
-		serialMessageManagerClass.setIsScanning(true)
-		serialMessageManagerClass.setWiFiConnectionStatus(null)
-		serialMessageManagerClass.clearScannedNetworks()
-		setSelectedNetworkIndex(null)
-
-		try {
-			const message = MessageBuilder.createScanWiFiNetworksMessage()
-			await serialConnectionManagerClass.sendBinaryMessage(message)
-		} catch (error) {
-			console.error("Failed to scan for networks:", error)
-			serialMessageManagerClass.setIsScanning(false)
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialConnectionManagerClass.connected, serialMessageManagerClass.isScanning])
+	const { scanForNetworks } = useScanForNetworks()
 
 	return (
 		<div className="space-y-6">

@@ -48,7 +48,8 @@ function ScanNetworksSection() {
 		} finally {
 			setIsConnecting(false)
 		}
-	}, [password])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [password, serialConnectionManagerClass.connected])
 
 	if (serialMessageManagerClass.isScanning) {
 		return (

@@ -8,7 +8,8 @@ function BatteryContent() {
 	const getTimeText = useMemo(() => {
 		if (workbenchClass.isCharging) return "Estimated time to full charge:"
 		return "Estimated time remaining:"
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [workbenchClass.isCharging])
 
 	return (
 		<>

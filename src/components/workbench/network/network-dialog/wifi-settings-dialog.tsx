@@ -2,14 +2,15 @@
 
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
-import { useCallback, useEffect, useRef } from "react"
+import { useCallback, useEffect } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
+import useScanForNetworks from "../../../../hooks/scan-for-networks"
 import PreviouslyConnectedSection from "./previously-connected-section"
-import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
+import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
 
 interface WiFiSettingsDialogProps {
@@ -19,7 +20,8 @@ interface WiFiSettingsDialogProps {
 
 // eslint-disable-next-line max-lines-per-function
 function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
-	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+	// Use the custom hook
+	const { scanForNetworks } = useScanForNetworks()
 
 	const requestSavedNetworks = useCallback(async () => {
 		if (!serialConnectionManagerClass.connected) return
@@ -27,42 +29,16 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
 
 		try {
+			console.log("Requesting saved networks...")
+			// Send the message to request saved networks
 			const message = MessageBuilder.createGetSavedWiFiNetworks()
 			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {
 			console.error("Failed to request saved networks:", error)
 			serialMessageManagerClass.setIsLoadingSavedNetworks(false)
 		}
-	}, [])
-
-	const scanForNetworks = useCallback(async () => {
-		if (!serialConnectionManagerClass.connected || serialMessageManagerClass.isScanning) return
-
-		serialMessageManagerClass.setIsScanning(true)
-		serialMessageManagerClass.clearScannedNetworks()
-
-		// Set 10-second timeout
-		scanTimeoutRef.current = setTimeout(() => {
-			if (serialMessageManagerClass.isScanning) {
-				serialMessageManagerClass.setIsScanning(false)
-				console.error("WiFi scan timed out after 10 seconds")
-				// You could also show a toast notification here
-			}
-		}, 10000)
-
-		try {
-			const message = MessageBuilder.createScanWiFiNetworksMessage()
-			await serialConnectionManagerClass.sendBinaryMessage(message)
-		} catch (error) {
-			console.error("Failed to scan for networks:", error)
-			serialMessageManagerClass.setIsScanning(false)
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-			if (scanTimeoutRef.current) {
-				clearTimeout(scanTimeoutRef.current)
-				scanTimeoutRef.current = null
-			}
-		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [serialConnectionManagerClass.connected])
 
 	// Request saved networks when dialog opens
 	useEffect(() => {
@@ -70,23 +46,6 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 			requestSavedNetworks()
 		}
 	}, [open, requestSavedNetworks])
-
-	// Clear timeout when scanning completes or component unmounts
-	useEffect(() => {
-		if (!serialMessageManagerClass.isScanning && scanTimeoutRef.current) {
-			clearTimeout(scanTimeoutRef.current)
-			scanTimeoutRef.current = null
-		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialMessageManagerClass.isScanning])
-
-	useEffect(() => {
-		return () => {
-			if (scanTimeoutRef.current) {
-				clearTimeout(scanTimeoutRef.current)
-			}
-		}
-	}, [])
 
 	if (!serialConnectionManagerClass.connected) return null
 

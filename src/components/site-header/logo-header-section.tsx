@@ -20,7 +20,8 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 		) return "/register-username"
 		if (authClass.isLoggedIn) return PageToNavigateAfterLogin
 		return "/"
-	}, [pathname])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pathname, authClass.isLoggedIn, personalInfoClass.username])
 
 	return (
 		<div
