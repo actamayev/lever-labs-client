@@ -1,3 +1,5 @@
+"use client"
+
 import { action, makeObservable, observable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload,

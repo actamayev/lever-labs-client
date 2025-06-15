@@ -1,3 +1,5 @@
+"use client"
+
 import { Wifi, WifiHigh, WifiLow } from "lucide-react"
 
 export default function NetworkStrengthIcon ({ rssi} : {rssi: number}) {

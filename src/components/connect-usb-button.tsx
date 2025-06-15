@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import CustomTooltip from "./custom-tooltip"
 import { CustomUsb } from "./icons/custom-usb"

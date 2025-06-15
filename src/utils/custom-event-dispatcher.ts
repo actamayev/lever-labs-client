@@ -1,3 +1,5 @@
+"use client"
+
 import { SavedWiFiNetwork } from "@bluedotrobots/common-ts"
 
 interface MessageSentData {

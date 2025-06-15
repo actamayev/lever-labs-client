@@ -62,13 +62,11 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 						</div>
 					) : (
 						<>
-							{/* Known Networks Section */}
 							<div>
 								<h3 className="text-lg font-medium mb-3">Known Networks</h3>
 								<KnownNetworksSection />
 							</div>
 
-							{/* Other Networks Section */}
 							<div>
 								<div className="flex items-center justify-between mb-3">
 									<h3 className="text-lg font-medium">Other Networks</h3>

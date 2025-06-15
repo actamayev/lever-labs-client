@@ -1,3 +1,5 @@
+"use client"
+
 import { useCallback, useEffect, useRef } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import serialMessageManagerClass from "../classes/serial-message-manager-class"
