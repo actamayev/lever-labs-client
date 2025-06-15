@@ -1,7 +1,6 @@
 "use client"
 
 import { useCallback } from "react"
-import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
@@ -9,17 +8,16 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useUploadProfilePicture(): (
-	selectedImage: File | null,
+	selectedImage: File,
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
 	const toast = useToastOptions()
 
 	return useCallback(async (
-		selectedImage: File | null,
+		selectedImage: File ,
 		setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 	) => {
 		try {
-			if (isNull(selectedImage)) return
 			setIsLoading(true)
 			const uploadProfilePictureResponse = await blueDotApiClientClass.personalInfoDataService.uploadProfilePicture(selectedImage)
 			if (!isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {

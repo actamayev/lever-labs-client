@@ -3,10 +3,10 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { isErrorResponse } from "../../utils/type-checks"
 import pipClass from "../../classes/pip-class"
-import useToastOptions from "../../components/toast-options"
+import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
+import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useChangeAudibleStatus(): () => Promise<void> {
@@ -30,5 +30,6 @@ export default function useChangeAudibleStatus(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, workbenchClass.isMuted, pipClass.selectedPip])
 }

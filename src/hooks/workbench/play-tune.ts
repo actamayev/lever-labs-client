@@ -29,5 +29,6 @@ export default function usePlayTune(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, workbenchClass.selectedSound, pipClass.selectedPip])
 }

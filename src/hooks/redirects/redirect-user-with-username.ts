@@ -1,13 +1,13 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import useTypedNavigate from "../navigate/typed-navigate"
 import { useEffect } from "react"
 import authClass from "../../classes/auth-class"
-import personalInfoClass from "../../classes/personal-info-class"
+import useTypedNavigate from "../navigate/typed-navigate"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
+import personalInfoClass from "../../classes/personal-info-class"
 
-export default function useRedirectUserWithUsername (): void  {
+export default function useRedirectUserWithUsername(): void  {
 	const navigate = useTypedNavigate()
 
 	useEffect(() => {
@@ -16,5 +16,6 @@ export default function useRedirectUserWithUsername (): void  {
 		}
 		if (isNull(personalInfoClass.username)) return
 		navigate(PageToNavigateAfterLogin)
-	}, [navigate])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [navigate, authClass.isLoggedIn, personalInfoClass.username])
 }

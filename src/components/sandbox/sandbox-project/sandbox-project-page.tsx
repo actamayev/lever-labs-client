@@ -21,7 +21,7 @@ import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import personalInfoClass from "../../../classes/personal-info-class"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
-import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-project-use-effect"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 

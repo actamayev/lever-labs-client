@@ -6,7 +6,7 @@ import authClass from "../../classes/auth-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 
-export default function useRedirectKnownUserToLab (): void {
+export default function useRedirectKnownUserToLab(): void {
 	const navigate = useTypedNavigate()
 
 	useEffect(() => {
