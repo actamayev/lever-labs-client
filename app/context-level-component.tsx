@@ -5,29 +5,26 @@ import SandboxProvider from "../src/classes/sandbox-context"
 import WorkbenchProvider from "../src/classes/workbench-context"
 import PersonalInfoProvider from "../src/classes/personal-info-context"
 import SerialManagerProvider from "../src/classes/serial-manager-context"
-import PageTransitionProvider from "../src/classes/page-transition-context"
 import SerialMessageManagerProvider from "../src/classes/serial-message-manager"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
 	return (
 		<>
-			<PageTransitionProvider>
-				<PersonalInfoProvider>
-					<PipProvider>
-						<SocketProvider>
-							<SandboxProvider>
-								<WorkbenchProvider>
-									<SerialManagerProvider>
-										<SerialMessageManagerProvider>
-											{children}
-										</SerialMessageManagerProvider>
-									</SerialManagerProvider>
-								</WorkbenchProvider>
-							</SandboxProvider>
-						</SocketProvider>
-					</PipProvider>
-				</PersonalInfoProvider>
-			</PageTransitionProvider>
+			<PersonalInfoProvider>
+				<PipProvider>
+					<SocketProvider>
+						<SandboxProvider>
+							<WorkbenchProvider>
+								<SerialManagerProvider>
+									<SerialMessageManagerProvider>
+										{children}
+									</SerialMessageManagerProvider>
+								</SerialManagerProvider>
+							</WorkbenchProvider>
+						</SandboxProvider>
+					</SocketProvider>
+				</PipProvider>
+			</PersonalInfoProvider>
 			<ToastContainer
 				position="bottom-right"
 				autoClose={5000}

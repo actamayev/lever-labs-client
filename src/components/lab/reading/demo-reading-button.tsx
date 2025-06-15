@@ -6,12 +6,11 @@ import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomWizardHat } from "../../icons/custom-wizard-hat"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { usePageTransitionContext } from "../../../classes/page-transition-context"
+import pageTransitionClass from "../../../classes/page-transition-class"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 function DemoReadingButton({ block } : { block: ContentBlock }) {
 	const defaultSiteTheme = useDefaultSiteTheme()
-	const pageTransitionClass = usePageTransitionContext()
 	const navigate = useTypedNavigate()
 
 	const demoShadowColor = useMemo(() => {

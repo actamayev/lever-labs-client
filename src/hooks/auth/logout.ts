@@ -11,7 +11,7 @@ import { useWorkbenchContext } from "../../classes/workbench-context"
 import labReadingClass from "../../classes/lab-reading-class"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { usePageTransitionContext } from "../../classes/page-transition-context"
+import pageTransitionClass from "../../classes/page-transition-class"
 import activityProgressClass from "../../classes/activity-progress-class"
 import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
@@ -20,7 +20,6 @@ export default function useLogout(): () => Promise<void> {
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
 	const navigate = useTypedNavigate()
-	const pageTransitionClass = usePageTransitionContext()
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
 	const serialMessageManagerClass = useSerialMessageManagerContext()

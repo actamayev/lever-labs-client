@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react"
 import CustomTooltip from "../../custom-tooltip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import { usePageTransitionContext } from "../../../classes/page-transition-context"
+import pageTransitionClass from "../../../classes/page-transition-class"
 import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
@@ -22,7 +22,6 @@ export default function ActivityFooter(props: Props) {
 		nextPageTooltip
 	} = props
 	const navigate = useTypedNavigate()
-	const pageTransitionClass = usePageTransitionContext()
 
 	const goToNextPage = useCallback(() => {
 		if (!nextPageLink) return

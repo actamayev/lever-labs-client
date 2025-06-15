@@ -3,10 +3,9 @@
 import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
 import { useCallback, useEffect } from "react"
-import { usePageTransitionContext } from "../../classes/page-transition-context"
+import pageTransitionClass from "../../classes/page-transition-class"
 
 export default function useResetTransitionDirectionUseEffect(): void {
-	const pageTransitionClass = usePageTransitionContext()
 	const pathname = usePathname()
 
 	// This is here to disable setting direction to null when the user in in the lesson.

@@ -4,7 +4,7 @@
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { motion } from "framer-motion"
-import { usePageTransitionContext } from "../classes/page-transition-context"
+import pageTransitionClass from "../classes/page-transition-class"
 
 // 2/18/25 TODO:
 // Change this animation to be more like  https://tympanus.net/Development/PageTransitions/ differnet easing
@@ -33,8 +33,6 @@ const variants = {
 }
 
 function PageWrapper({ children }: { children: React.ReactNode }) {
-	const pageTransitionClass = usePageTransitionContext()
-
 	return (
 		<motion.div
 			className="absolute w-full h-full"
