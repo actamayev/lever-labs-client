@@ -8,7 +8,7 @@ import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts
 import { Input } from "../../../shadcn/ui/input"
 import { Button } from "../../../shadcn/ui/button"
 import NetworkStrengthIcon from "../../../network-strength-icon"
-import serialManager from "../../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
@@ -21,7 +21,7 @@ function ScanNetworksSection() {
 
 	const handleConnectToNetwork = useCallback(async (network: ScannedWiFiNetworkItem) => {
 		if (
-			!serialManager.connected ||
+			!serialConnectionManagerClass.connected ||
 			(network.encrypted && !password.trim())
 		) return
 
@@ -32,7 +32,7 @@ function ScanNetworksSection() {
 				network.ssid,
 				password.trim()
 			)
-			const success = await serialManager.sendBinaryMessage(message)
+			const success = await serialConnectionManagerClass.sendBinaryMessage(message)
 			if (success) {
 				// Add to saved networks (this will make it appear in knownNetworks)
 				serialMessageManagerClass.addSavedNetwork({

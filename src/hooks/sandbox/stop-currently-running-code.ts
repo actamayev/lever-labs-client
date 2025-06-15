@@ -8,17 +8,17 @@ import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 	const toast = useToastOptions()
 
 	return useCallback(async () => {
 		try {
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 			if (
@@ -40,5 +40,5 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, serialManager, toast])
+	}, [blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, toast])
 }

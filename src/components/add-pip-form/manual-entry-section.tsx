@@ -6,7 +6,7 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { observer } from "mobx-react"
 
@@ -44,7 +44,7 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 			watchedManualNetworkName.trim(),
 			watchedManualPassword || ""
 		)
-		const success = await serialManager.sendBinaryMessage(message)
+		const success = await serialConnectionManagerClass.sendBinaryMessage(message)
 
 		if (!success) {
 			serialMessageManagerClass.setIsTestingWiFiConnection(false)

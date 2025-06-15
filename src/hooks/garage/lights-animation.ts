@@ -8,18 +8,18 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
 	return useCallback(async (newAnimation: LightAnimation) => {
 		try {
 			if (garageClass.selectedAnimation === newAnimation) return
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const lightType = lightToLEDType[newAnimation]
 				const buffer = MessageBuilder.createLightAnimationMessage(lightType)
 
 				garageClass.setSelectedAnimation(newAnimation)
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 			if (
@@ -39,5 +39,5 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [pipClass.selectedPip, serialManager])
+	}, [pipClass.selectedPip])
 }

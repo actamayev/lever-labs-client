@@ -9,7 +9,7 @@ import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 
 export default function useSendCppToPip(): (
 	cppCode: string,
@@ -19,11 +19,11 @@ export default function useSendCppToPip(): (
 
 	return useCallback(async (cppCode: string, rect: DOMRect) => {
 		try {
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const bytecode = CppParser.cppToByte(cppCode)
 				const buffer = MessageBuilder.createBytecodeMessage(bytecode)
 
-				const success = await serialManager.sendBinaryMessage(buffer)
+				const success = await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				if (success) {
 					fireConfetti(
 						rect,
@@ -79,5 +79,5 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	}, [blueDotApiClientClass.sandboxDataService, pipClass, serialManager, toast])
+	}, [blueDotApiClientClass.sandboxDataService, pipClass, toast])
 }

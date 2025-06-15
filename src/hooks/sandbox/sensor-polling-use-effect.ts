@@ -5,7 +5,7 @@ import isNull from "lodash-es/isNull"
 import usePollSensors from "./poll-sensors"
 import pipClass from "../../classes/pip-class"
 import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 
 export default function useSensorPollingUseEffect (): void {
 	const pollSensors = usePollSensors()
@@ -13,12 +13,12 @@ export default function useSensorPollingUseEffect (): void {
 	// Setup event listeners for user activity
 	useEffect(() => {
 		if (
-			!serialManager.connected &&
+			!serialConnectionManagerClass.connected &&
 			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
 		) return
 
 		const handleActivity = (): void => {
-			serialManager.markUserActivity()
+			serialConnectionManagerClass.markUserActivity()
 		}
 
 		// Add event listeners for mouse and keyboard activity
@@ -36,18 +36,18 @@ export default function useSensorPollingUseEffect (): void {
 			window.removeEventListener("touchstart", handleActivity)
 			window.removeEventListener("scroll", handleActivity)
 		}
-	}, [pipClass.selectedPip, serialManager, serialManager.connected])
+	}, [pipClass.selectedPip, serialConnectionManagerClass.connected])
 
 	// Setup interval to check for activity and send polling extension
 	useEffect(() => {
 		if (
-			!serialManager.connected &&
+			!serialConnectionManagerClass.connected &&
 			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
 		) return
 
 		const interval = setInterval(() => {
 			// Check if there was activity during this 30-second interval
-			const hadActivity = serialManager.checkAndResetUserActivity()
+			const hadActivity = serialConnectionManagerClass.checkAndResetUserActivity()
 
 			if (hadActivity) {
 				void pollSensors()
@@ -55,5 +55,5 @@ export default function useSensorPollingUseEffect (): void {
 		}, SENSOR_POLLING_INTERVAL) // Check every 30 seconds
 
 		return (): void => clearInterval(interval)
-	}, [pipClass.selectedPip, pollSensors, serialManager, serialManager.connected])
+	}, [pipClass.selectedPip, pollSensors, serialConnectionManagerClass.connected])
 }

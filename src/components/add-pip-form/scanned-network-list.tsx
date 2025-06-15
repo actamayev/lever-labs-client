@@ -11,7 +11,7 @@ import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import NetworkStrengthIcon from "../network-strength-icon"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../shadcn/ui/collapsible"
 
@@ -64,12 +64,12 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 			network.ssid,
 			networkPassword || ""
 		)
-		const success = await serialManager.sendBinaryMessage(message)
+		const success = await serialConnectionManagerClass.sendBinaryMessage(message)
 
 		if (!success) {
 			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		}
-	}, [serialManager, serialMessageManagerClass])
+	}, [serialMessageManagerClass])
 
 	const handlePasswordSubmit = useCallback(async (network: ScannedWiFiNetworkItem) => {
 		// Upload credentials using the watched password value

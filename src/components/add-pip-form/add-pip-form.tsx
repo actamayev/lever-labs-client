@@ -18,7 +18,7 @@ import useAddPip from "../../hooks/pip/add-pip"
 import ConnectUsbButton from "../connect-usb-button"
 import WiFiScanSection from "./wifi-scan-section"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
@@ -51,10 +51,10 @@ function AddPipForm() {
 		serialMessageManagerClass.clearScannedNetworks()
 		serialMessageManagerClass.setIsScanning(false)
 		// Only reset flow state if we're completely done or starting over
-		if (!serialManager.connected) {
+		if (!serialConnectionManagerClass.connected) {
 			serialMessageManagerClass.resetFlowState()
 		}
-	}, [form, serialManager.connected, serialMessageManagerClass])
+	}, [form, serialConnectionManagerClass.connected, serialMessageManagerClass])
 
 	// Update pipUUID when pipId is received
 	useEffect(() => {

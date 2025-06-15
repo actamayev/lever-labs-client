@@ -6,17 +6,17 @@ import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function usePollSensors(): () => Promise<void> {
 
 	return useCallback(async () => {
 		try {
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createStartSensorPollingMessage()
 
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 			if (
@@ -32,6 +32,6 @@ export default function usePollSensors(): () => Promise<void> {
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, serialManager])
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, pipClass.selectedPip])
 
 }

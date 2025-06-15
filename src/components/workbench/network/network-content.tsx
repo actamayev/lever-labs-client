@@ -7,7 +7,7 @@ import { Button } from "../../shadcn/ui/button"
 import pipClass from "../../../classes/pip-class"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
-import serialManager from "../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../classes/serial-manager-class"
 
 interface Props {
 	setIsWiFiSettingsOpen: Dispatch<SetStateAction<boolean>>
@@ -34,7 +34,7 @@ function NetworkContent(props: Props) {
 							setIsWiFiSettingsOpen(true)
 						}}
 						className="rounded-xl bg-eel h-9 px-3"
-						disabled={!serialManager.connected}
+						disabled={!serialConnectionManagerClass.connected}
 						title="WiFi Settings"
 					>
 						<Settings className="h-4 w-4" />

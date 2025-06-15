@@ -8,7 +8,7 @@ import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
 import PreviouslyConnectedSection from "./previously-connected-section"
-import serialManager from "../../../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
 
@@ -22,13 +22,13 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const requestSavedNetworks = useCallback(async () => {
-		if (!serialManager.connected) return
+		if (!serialConnectionManagerClass.connected) return
 
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
 
 		try {
 			const message = MessageBuilder.createGetSavedWiFiNetworks()
-			await serialManager.sendBinaryMessage(message)
+			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {
 			console.error("Failed to request saved networks:", error)
 			serialMessageManagerClass.setIsLoadingSavedNetworks(false)
@@ -36,7 +36,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 	}, [])
 
 	const scanForNetworks = useCallback(async () => {
-		if (!serialManager.connected || serialMessageManagerClass.isScanning) return
+		if (!serialConnectionManagerClass.connected || serialMessageManagerClass.isScanning) return
 
 		serialMessageManagerClass.setIsScanning(true)
 		serialMessageManagerClass.clearScannedNetworks()
@@ -52,7 +52,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 
 		try {
 			const message = MessageBuilder.createScanWiFiNetworksMessage()
-			await serialManager.sendBinaryMessage(message)
+			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManagerClass.setIsScanning(false)
@@ -66,10 +66,10 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 
 	// Request saved networks when dialog opens
 	useEffect(() => {
-		if (open && serialManager.connected) {
+		if (open && serialConnectionManagerClass.connected) {
 			requestSavedNetworks()
 		}
-	}, [open, requestSavedNetworks, serialManager.connected])
+	}, [open, requestSavedNetworks, serialConnectionManagerClass.connected])
 
 	// Clear timeout when scanning completes or component unmounts
 	useEffect(() => {
@@ -87,7 +87,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		}
 	}, [])
 
-	if (!serialManager.connected) return null
+	if (!serialConnectionManagerClass.connected) return null
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>

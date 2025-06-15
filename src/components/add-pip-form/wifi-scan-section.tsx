@@ -10,7 +10,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import serialManager from "../../classes/serial-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 interface WiFiScanSectionProps {
@@ -23,7 +23,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 
 	const scanForNetworks = useCallback(async () => {
-		if (!serialManager.connected || serialMessageManagerClass.isScanning) return
+		if (!serialConnectionManagerClass.connected || serialMessageManagerClass.isScanning) return
 
 		serialMessageManagerClass.setIsScanning(true)
 		serialMessageManagerClass.setWiFiConnectionStatus(null)
@@ -32,7 +32,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 
 		try {
 			const message = MessageBuilder.createScanWiFiNetworksMessage()
-			await serialManager.sendBinaryMessage(message)
+			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManagerClass.setIsScanning(false)
@@ -52,7 +52,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 					<Button
 						type="button"
 						onClick={scanForNetworks}
-						disabled={serialMessageManagerClass.isScanning || !serialManager.connected}
+						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.connected}
 						className={cn(
 							"flex items-center gap-2",
 							serialMessageManagerClass.isScanning ? "cursor-not-allowed" : "cursor-pointer"
