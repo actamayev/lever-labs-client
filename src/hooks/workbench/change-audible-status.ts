@@ -30,5 +30,5 @@ export default function useChangeAudibleStatus(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.workbenchDataService, pipClass.selectedPip?.pipUUID, toast, workbenchClass])
+	}, [toast])
 }

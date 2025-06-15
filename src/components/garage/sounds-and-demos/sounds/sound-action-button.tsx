@@ -2,6 +2,7 @@
 
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
+import { Sounds } from "@bluedotrobots/common-ts"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
 import { CustomFart } from "../../../icons/custom-fart"
@@ -16,7 +17,6 @@ import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import garageClass from "../../../../classes/garage-class"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
-import { Sounds } from "@bluedotrobots/common-ts"
 
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
@@ -61,6 +61,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 			buttonElement.style.transform = ""
 			buttonElement.style.boxShadow = ""
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.soundPlaying, sound])
 
 	// Handle button click for action buttons

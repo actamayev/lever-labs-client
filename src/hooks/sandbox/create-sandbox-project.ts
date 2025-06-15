@@ -30,5 +30,5 @@ export default function useCreateSandboxProject(): () => Promise<ProjectUUID | u
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
+	}, [toast])
 }

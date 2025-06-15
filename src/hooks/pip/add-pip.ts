@@ -88,5 +88,5 @@ export default function useAddPip(
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [getFormValues, pipClass, blueDotApiClientClass.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
+	}, [getFormValues, exitAfterAddPip, resetAddPipVars, toast])
 }

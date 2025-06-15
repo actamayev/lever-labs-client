@@ -126,7 +126,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 			setPreviewUrl(null)
 			setSelectedImage(null)
 		}
-	}, [previewUrl, personalInfoClass.profilePictureUrl])
+	}, [previewUrl])
 
 	// Determine which image to show
 	const hasProfilePicture = !isNull(personalInfoClass.profilePictureUrl)

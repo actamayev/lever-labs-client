@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
+import { TuneToPlay } from "@bluedotrobots/common-ts"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,7 +19,6 @@ import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 import workbenchClass from "../../../classes/workbench-class"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
-import { TuneToPlay } from "@bluedotrobots/common-ts"
 
 function VolumeContent() {
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
@@ -30,7 +30,7 @@ function VolumeContent() {
 		if (workbenchClass.isMuted && value[0] > 0) {
 			workbenchClass.setIsMuted(false)
 		}
-	}, [workbenchClass])
+	}, [])
 
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		// Prevent arrow keys from changing slider value

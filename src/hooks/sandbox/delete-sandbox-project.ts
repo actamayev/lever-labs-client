@@ -4,11 +4,11 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
+import sandboxClass from "../../classes/sandbox-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
 	const toast = useToastOptions()
@@ -32,5 +32,5 @@ export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) =>
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
+	}, [toast])
 }

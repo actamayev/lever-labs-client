@@ -20,7 +20,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 		) return "/register-username"
 		if (authClass.isLoggedIn) return PageToNavigateAfterLogin
 		return "/"
-	}, [authClass.isLoggedIn, pathname, personalInfoClass.username])
+	}, [pathname])
 
 	return (
 		<div

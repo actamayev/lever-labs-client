@@ -43,5 +43,5 @@ export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => v
 				description: "Happy building!"
 			})
 		}
-	}, [pipClass, requestToConnectToPip, toast])
+	}, [requestToConnectToPip, toast])
 }

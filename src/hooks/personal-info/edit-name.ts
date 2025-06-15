@@ -31,5 +31,5 @@ export default function useEditName(): (newName: string) => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
+	}, [toast])
 }

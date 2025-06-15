@@ -10,7 +10,6 @@ import serialConnectionManagerClass from "../../classes/serial-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function usePollSensors(): () => Promise<void> {
-
 	return useCallback(async () => {
 		try {
 			if (serialConnectionManagerClass.connected) {
@@ -32,6 +31,5 @@ export default function usePollSensors(): () => Promise<void> {
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, pipClass.selectedPip])
-
+	}, [])
 }

@@ -19,7 +19,7 @@ function ReadingContainer({ blocks, readingName } : Props) {
 	useEffect(() => {
 		labReadingClass.setBlocks(blocks, readingName)
 		labReadingClass.setShownBlocks(blocks[0].id)
-	}, [blocks, labReadingClass, readingName])
+	}, [blocks, readingName])
 
 	return (
 		<div className="h-full flex relative">

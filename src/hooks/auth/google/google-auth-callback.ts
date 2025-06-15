@@ -2,16 +2,16 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
+import { SiteThemes } from "@bluedotrobots/common-ts"
 import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
-import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
-import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
-import { SiteThemes } from "@bluedotrobots/common-ts"
+import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -46,5 +46,5 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClientClass.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
+	}, [navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
 }

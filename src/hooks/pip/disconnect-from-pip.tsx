@@ -37,5 +37,5 @@ export default function useDisconnectFromPip(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.pipDataService, pipClass, toast])
+	}, [toast])
 }

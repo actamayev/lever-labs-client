@@ -14,7 +14,7 @@ function BatteryIcon() {
 		else if (workbenchClass.batteryPercentage <= 40) return "text-bee"
 		else if (workbenchClass.batteryPercentage <= 70) return "text-fox"
 		return "text-macaw"
-	}, [workbenchClass.isCharging, workbenchClass.batteryPercentage])
+	}, [])
 
 	function BatteryIconToShow() {
 		const baseClasses = "!h-14 !w-14"

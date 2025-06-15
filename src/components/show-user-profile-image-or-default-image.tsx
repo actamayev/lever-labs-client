@@ -7,22 +7,22 @@ import { cn } from "../lib/shadcn/utils"
 import { CustomUserCircle } from "./icons/custom-user-circle"
 import isNull from "lodash-es/isNull"
 import Image from "next/image"
+import personalInfoClass from "../classes/personal-info-class"
 
 interface Props {
-	profileImageUrl: string | null
 	onClickCreatorPicture?: (e: any) => void
 	extraClasses: string
 }
 
 function ShowUserProfileImageOrDefaultImage(props: Props) {
-	const { profileImageUrl, onClickCreatorPicture, extraClasses } = props
+	const { onClickCreatorPicture, extraClasses } = props
 
 	const handleClick = useCallback((e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation()
 		if (onClickCreatorPicture) onClickCreatorPicture(e)
 	}, [onClickCreatorPicture])
 
-	if (isNull(profileImageUrl)) {
+	if (isNull(personalInfoClass.profilePictureUrl)) {
 		return (
 			<CustomUserCircle
 				className={cn(
@@ -36,7 +36,7 @@ function ShowUserProfileImageOrDefaultImage(props: Props) {
 
 	return (
 		<Image
-			src={profileImageUrl}
+			src={personalInfoClass.profilePictureUrl}
 			alt="Creator's Profile"
 			className={extraClasses}
 			onClick={handleClick}

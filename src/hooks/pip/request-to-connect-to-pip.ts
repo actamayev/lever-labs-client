@@ -3,11 +3,11 @@
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import { PipUUID } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
-import { PipUUID } from "@bluedotrobots/common-ts"
 
 export default function useRequestToConnectToPip(): (
 	pipUUID: PipUUID
@@ -69,5 +69,5 @@ export default function useRequestToConnectToPip(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.pipDataService, pipClass, toast])
+	}, [toast])
 }

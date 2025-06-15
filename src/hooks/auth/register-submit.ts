@@ -52,5 +52,5 @@ export default function useRegisterSubmit (
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClientClass.authDataService, navigate, setDataAfterRegister, setError])
+	}, [navigate, setDataAfterRegister, setError])
 }

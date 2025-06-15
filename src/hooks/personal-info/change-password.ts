@@ -87,5 +87,5 @@ export default function useChangePassword(): (
 			})
 			return "An unexpected error occurred"
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, toast])
+	}, [toast])
 }

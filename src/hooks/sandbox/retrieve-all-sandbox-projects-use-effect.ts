@@ -31,9 +31,7 @@ export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 			console.error(error)
 			sandboxClass.setIsRetrievingAllSandboxProjects(false)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService,
-		sandboxClass.isRetrievingAllSandboxProjects, sandboxClass.hasRetrievedAllSandboxProjects])
+	}, [])
 
 	useEffect(() => {
 		void retrieveAllSandboxProjects()

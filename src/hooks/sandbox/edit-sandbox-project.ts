@@ -40,5 +40,5 @@ export default function useEditSandboxProject(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
+	}, [toast])
 }

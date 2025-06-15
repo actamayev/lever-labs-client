@@ -40,5 +40,5 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, toast])
+	}, [toast])
 }

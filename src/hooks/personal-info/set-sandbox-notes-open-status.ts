@@ -27,5 +27,5 @@ export default function useSetSandboxNotesOpenStatus(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [personalInfoClass, blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, toast])
+	}, [toast])
 }

@@ -3,6 +3,7 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 import useTypedNavigate from "../navigate/typed-navigate"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
@@ -12,7 +13,6 @@ import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
-import { LoginRequest } from "@bluedotrobots/common-ts"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
@@ -40,5 +40,5 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClientClass.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
+	}, [navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
 }

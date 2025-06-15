@@ -20,7 +20,7 @@ function GettingStartedAddPip() {
 	const onClick = useCallback(() => {
 		if (!isNull(pipClass.selectedPip)) return
 		navigate("/add-pip")
-	}, [navigate, pipClass.selectedPip])
+	}, [navigate])
 
 	return (
 		<CustomTooltip

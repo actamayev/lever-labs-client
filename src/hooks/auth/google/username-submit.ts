@@ -2,13 +2,13 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import useTypedNavigate from "../../navigate/typed-navigate"
 import authClass from "../../../classes/auth-class"
+import useTypedNavigate from "../../navigate/typed-navigate"
 import { isNonSuccessResponse } from "../../../utils/type-checks"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
 import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../../utils/error-handling/set-error-axios-response"
-import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function useUsernameSubmit (setError: (error: string) => void): (username: string) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -31,5 +31,5 @@ export default function useUsernameSubmit (setError: (error: string) => void): (
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClientClass.authDataService, navigate, personalInfoClass, setError])
+	}, [navigate, setError])
 }

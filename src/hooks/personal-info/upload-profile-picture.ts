@@ -37,5 +37,5 @@ export default function useUploadProfilePicture(): (
 		} finally {
 			setIsLoading(false)
 		}
-	}, [blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
+	}, [toast])
 }

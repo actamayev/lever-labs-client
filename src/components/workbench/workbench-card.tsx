@@ -23,15 +23,19 @@ function WorkbenchCard() {
 			const rect = batteryIcon.getBoundingClientRect()
 			setPosition({ top: rect.bottom, left: rect.left })
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.workbenchItemToShow])
 
 	useEffect(() => {
 		if (isWiFiSettingsOpen) {
 			workbenchClass.setWorkbenchItemHoveringOver(true)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isWiFiSettingsOpen, workbenchClass])
+
 	const widthToSet = useMemo(() => {
 		return workbenchClass.fixedWidth - 25
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.fixedWidth])
 
 	if (isNull(workbenchClass.workbenchItemToShow)) return null

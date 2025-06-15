@@ -9,7 +9,6 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: ProjectUUID): void {
-
 	const retrieveSingleSandboxProject = useCallback(async () => {
 		try {
 			// If we already have the project in the context, no need to fetch it again
@@ -35,7 +34,7 @@ export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: Pr
 			console.error(error)
 			sandboxClass.setIsRetrievingSingleProject(projectUUID, false)
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, projectUUID, sandboxClass])
+	}, [projectUUID])
 
 	useEffect(() => {
 		void retrieveSingleSandboxProject()

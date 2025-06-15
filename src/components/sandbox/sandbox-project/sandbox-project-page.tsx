@@ -38,7 +38,7 @@ function SandboxProjectPage() {
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
@@ -75,7 +75,7 @@ function SandboxProjectPage() {
 		if (isMountedLongEnough) {
 			debouncedSaveProject(newXml)
 		}
-	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject, isMountedLongEnough])
+	}, [project, isLoading, projectUUID, debouncedSaveProject, isMountedLongEnough])
 
 	if (!project || isLoading) {
 		return (

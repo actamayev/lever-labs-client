@@ -103,6 +103,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 				a: 1
 			}
 		)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.selectedDots,
 		garageClass.selectedColorRgba.r,
 		garageClass.selectedColorRgba.g,

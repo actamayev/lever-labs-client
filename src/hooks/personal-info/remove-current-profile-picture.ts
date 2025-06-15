@@ -35,5 +35,5 @@ export default function useRemoveCurrentProfilePicture(): (
 				title: "Unable to remove profile picture at this time. Please reload page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
+	}, [toast])
 }

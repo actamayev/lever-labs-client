@@ -13,5 +13,6 @@ export default function useRedirectKnownUserToLab (): void {
 		if (!authClass.isLoggedIn) return
 		if (!personalInfoClass.username) return navigate("/register-username")
 		return navigate(PageToNavigateAfterLogin)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, navigate, personalInfoClass.username])
 }

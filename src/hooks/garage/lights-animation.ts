@@ -3,11 +3,11 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
 import serialConnectionManagerClass from "../../classes/serial-manager-class"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
@@ -39,5 +39,5 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [pipClass.selectedPip])
+	}, [])
 }

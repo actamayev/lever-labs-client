@@ -4,14 +4,13 @@ import { useCallback, useEffect } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useSiteThemeListenerUseEffect(): void {
-
 	const handleStorageChange = useCallback((event: StorageEvent): void => {
 		if (
 			event.key !== "defaultSiteTheme" ||
 			(event.newValue !== "light" && event.newValue !== "dark")
 		) return
 		personalInfoClass.setDefaultSiteTheme(event.newValue, false)
-	}, [personalInfoClass])
+	}, [])
 
 	useEffect(() => {
 		window.addEventListener("storage", handleStorageChange)

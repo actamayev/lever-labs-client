@@ -7,7 +7,6 @@ import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 
 export default function useGarageSoundsUseEffect(): void {
-
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
 	// Check if the event target is an input field or any element where typing is expected
@@ -51,6 +50,5 @@ export default function useGarageSoundsUseEffect(): void {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 }

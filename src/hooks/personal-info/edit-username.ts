@@ -6,9 +6,9 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
-import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
 
 export default function useEditUsername(): (newUsername: string) => Promise<string | null> {
 	const toast = useToastOptions()
@@ -70,5 +70,5 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 			})
 			return "An unexpected error occurred"
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
+	}, [toast])
 }

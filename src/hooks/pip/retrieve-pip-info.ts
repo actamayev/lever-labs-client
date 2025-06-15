@@ -38,5 +38,5 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [pipClass, blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.pipDataService, toast])
+	}, [toast])
 }

@@ -21,5 +21,5 @@ export default function useSocketEventsUseEffect(): void {
 			socketClass.off("pipStatusUpdate", handlePipStatusUpdate)
 			socketClass.off("incomingSensorData", handleIncomingSensorData)
 		}
-	}, [handlePipStatusUpdate, socketClass, handleIncomingSensorData])
+	}, [handlePipStatusUpdate, handleIncomingSensorData])
 }

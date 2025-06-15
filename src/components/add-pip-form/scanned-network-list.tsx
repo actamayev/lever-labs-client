@@ -69,7 +69,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 		if (!success) {
 			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		}
-	}, [serialMessageManagerClass])
+	}, [])
 
 	const handlePasswordSubmit = useCallback(async (network: ScannedWiFiNetworkItem) => {
 		// Upload credentials using the watched password value

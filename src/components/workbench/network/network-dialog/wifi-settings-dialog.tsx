@@ -69,7 +69,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		if (open && serialConnectionManagerClass.connected) {
 			requestSavedNetworks()
 		}
-	}, [open, requestSavedNetworks, serialConnectionManagerClass.connected])
+	}, [open, requestSavedNetworks])
 
 	// Clear timeout when scanning completes or component unmounts
 	useEffect(() => {
@@ -77,6 +77,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 			clearTimeout(scanTimeoutRef.current)
 			scanTimeoutRef.current = null
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serialMessageManagerClass.isScanning])
 
 	useEffect(() => {

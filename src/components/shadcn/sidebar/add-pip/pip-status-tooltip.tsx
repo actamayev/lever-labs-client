@@ -8,7 +8,6 @@ import CustomTooltip from "../../../custom-tooltip"
 import pipClass from "../../../../classes/pip-class"
 
 function PipStatusTooltip() {
-
 	const getStatusColor = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {

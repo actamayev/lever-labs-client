@@ -35,5 +35,5 @@ export default function useStarSandboxProject(): (projectUUID: ProjectUUID) => P
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
+	}, [toast])
 }

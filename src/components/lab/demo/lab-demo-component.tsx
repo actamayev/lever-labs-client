@@ -30,7 +30,7 @@ function LabDemoComponent(props: Props) {
 		pageTransitionClass.setDirection("up")
 		router.back()
 		labReadingClass.handleDemoComplete(blockId)
-	}, [pageTransitionClass, router, labReadingClass, blockId])
+	}, [router, blockId])
 
 	return (
 		<AnimatedTransitionWrapper>

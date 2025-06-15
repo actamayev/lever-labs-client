@@ -28,5 +28,6 @@ export default function useRedirectBackToRegisterUsername(): void {
 		if (!isPrivatePage) return
 
 		navigate("/register-username")
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authClass.isLoggedIn, pathname, navigate, personalInfoClass, personalInfoClass.username, personalInfoClass.email])
 }

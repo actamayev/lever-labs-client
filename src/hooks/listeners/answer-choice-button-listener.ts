@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import labReadingClass from "../../classes/lab-reading-class"
 
 export default function useAnswerChoiceButtonListener(): void {
-
 	// Add keyboard event listener
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent): void => {
@@ -19,5 +18,5 @@ export default function useAnswerChoiceButtonListener(): void {
 
 		window.addEventListener("keydown", handleKeyPress)
 		return (): void => window.removeEventListener("keydown", handleKeyPress)
-	}, [labReadingClass])
+	}, [])
 }

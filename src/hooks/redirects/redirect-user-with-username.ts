@@ -16,5 +16,5 @@ export default function useRedirectUserWithUsername (): void  {
 		}
 		if (isNull(personalInfoClass.username)) return
 		navigate(PageToNavigateAfterLogin)
-	}, [authClass.isLoggedIn, navigate, personalInfoClass, personalInfoClass.username])
+	}, [navigate])
 }

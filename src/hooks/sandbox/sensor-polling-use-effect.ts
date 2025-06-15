@@ -36,7 +36,7 @@ export default function useSensorPollingUseEffect (): void {
 			window.removeEventListener("touchstart", handleActivity)
 			window.removeEventListener("scroll", handleActivity)
 		}
-	}, [pipClass.selectedPip, serialConnectionManagerClass.connected])
+	}, [])
 
 	// Setup interval to check for activity and send polling extension
 	useEffect(() => {
@@ -55,5 +55,5 @@ export default function useSensorPollingUseEffect (): void {
 		}, SENSOR_POLLING_INTERVAL) // Check every 30 seconds
 
 		return (): void => clearInterval(interval)
-	}, [pipClass.selectedPip, pollSensors, serialConnectionManagerClass.connected])
+	}, [pollSensors])
 }

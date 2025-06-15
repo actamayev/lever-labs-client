@@ -14,5 +14,5 @@ export default function useHandleIncomingSensorData(): (data: IncomingSensorData
 		// 	title: "Unable to control motor",
 		// 	description: data.error
 		// })
-	}, [garageClass])
+	}, [])
 }

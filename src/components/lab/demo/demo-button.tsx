@@ -26,7 +26,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
 		// }
 		setActiveDemoName(demo.demoTitle)
-	}, [activeDemoName, demo.demoTitle, pipClass.selectedPip, toast])
+	}, [activeDemoName, demo.demoTitle, toast])
 
 	return (
 		<button

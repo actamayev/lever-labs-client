@@ -27,7 +27,7 @@ function Workbench() {
 		updateDimensions()
 		window.addEventListener("resize", updateDimensions)
 		return () => window.removeEventListener("resize", updateDimensions)
-	}, [workbenchClass])
+	}, [])
 
 	// Calculate section heights
 	const topSectionHeight = workbenchClass.windowHeight / 5  // 1/4 of screen height

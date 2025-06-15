@@ -11,5 +11,5 @@ export default function useGetAuthDataFromStorage(): () => void {
 		const accessToken = authClass.getAuthDataFromStorage()
 		blueDotApiClientClass.httpClient.accessToken = accessToken
 		socketClass.setAccessToken(accessToken)
-	}, [socketClass])
+	}, [])
 }

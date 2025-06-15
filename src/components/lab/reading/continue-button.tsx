@@ -17,7 +17,7 @@ function ContinueButton(props: Props) {
 	const clickContinue = useCallback(() => {
 		if (isContinued) return
 		labReadingClass.handleContinue(blockId, setIsContinued)
-	}, [blockId, isContinued, labReadingClass])
+	}, [blockId, isContinued])
 
 	return (
 		<BlueTactileButton

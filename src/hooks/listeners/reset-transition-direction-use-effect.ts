@@ -32,5 +32,5 @@ export default function useResetTransitionDirectionUseEffect(): void {
 		}, 1000)
 
 		return (): void => clearTimeout(timer) // Cleanup timer if direction changes quickly
-	}, [isCurrentLocationLesson, pageTransitionClass, pageTransitionClass.direction])
+	}, [isCurrentLocationLesson])
 }

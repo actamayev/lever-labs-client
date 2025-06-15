@@ -3,11 +3,11 @@
 import { useCallback } from "react"
 import toUpper from "lodash-es/toUpper"
 import { ArrowRight } from "lucide-react"
+import { ActivityType } from "@bluedotrobots/common-ts"
 import CustomTooltip from "../../custom-tooltip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import pageTransitionClass from "../../../classes/page-transition-class"
-import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
 	nextPageLink?: LabPages
@@ -27,7 +27,7 @@ export default function ActivityFooter(props: Props) {
 		if (!nextPageLink) return
 		pageTransitionClass.setDirection("left")
 		navigate(nextPageLink)
-	}, [navigate, nextPageLink, pageTransitionClass])
+	}, [navigate, nextPageLink])
 
 	return (
 		<footer
