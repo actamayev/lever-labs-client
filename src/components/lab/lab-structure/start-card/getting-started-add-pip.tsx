@@ -7,14 +7,13 @@ import { Bot, PlusCircle } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import CustomTooltip from "../../../custom-tooltip"
 import PipButtonTooltip from "../../../pip-button-tooltip"
-import { usePipContext } from "../../../../classes/pip-context"
+import pipClass from "../../../../classes/pip-class"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import PipStatusTooltip from "../../../shadcn/sidebar/add-pip/pip-status-tooltip"
 import useSetSelectedPipFirstPipUseEffect from "../../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 // Simplified PipStatus component specifically for the card
 function GettingStartedAddPip() {
-	const pipClass = usePipContext()
 	const navigate = useTypedNavigate()
 	useSetSelectedPipFirstPipUseEffect()
 

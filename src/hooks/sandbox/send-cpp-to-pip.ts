@@ -5,19 +5,17 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import fireConfetti from "../fire-confetti"
 import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import serialManager from "../../classes/serial-manager-class"
 
 export default function useSendCppToPip(): (
 	cppCode: string,
 	rect: DOMRect
 ) => Promise<void> {
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
-	const serialManager = useSerialManagerContext()
 
 	return useCallback(async (cppCode: string, rect: DOMRect) => {
 		try {

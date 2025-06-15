@@ -3,14 +3,12 @@
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import usePollSensors from "./poll-sensors"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import serialManager from "../../classes/serial-manager-class"
 
 export default function useSensorPollingUseEffect (): void {
-	const serialManager = useSerialManagerContext()
 	const pollSensors = usePollSensors()
-	const pipClass = usePipContext()
 
 	// Setup event listeners for user activity
 	useEffect(() => {

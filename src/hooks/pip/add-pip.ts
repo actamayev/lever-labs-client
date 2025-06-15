@@ -6,7 +6,7 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import useExitAfterAddPip from "./exit-after-add-pip"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
@@ -16,7 +16,6 @@ export default function useAddPip(
 	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
 	const toast = useToastOptions()
-	const pipClass = usePipContext()
 	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity

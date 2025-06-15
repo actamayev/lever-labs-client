@@ -4,16 +4,14 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import serialManager from "../../classes/serial-manager-class"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
-	const serialManager = useSerialManagerContext()
 
 	return useCallback(async () => {
 		try {

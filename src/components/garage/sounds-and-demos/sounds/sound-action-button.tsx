@@ -8,10 +8,10 @@ import { CustomFart } from "../../../icons/custom-fart"
 import { CustomEngine } from "../../../icons/custom-engine"
 import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomElephant } from "../../../icons/custom-elephant"
-import { usePipContext } from "../../../../classes/pip-context"
+import pipClass from "../../../../classes/pip-class"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import { CustomCountdown } from "../../../icons/custom-countdown"
-import { useSocketContext } from "../../../../classes/socket-context"
+import socketClass from "../../../../classes/socket-class"
 import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import garageClass from "../../../../classes/garage-class"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
@@ -20,8 +20,6 @@ import { Sounds } from "@bluedotrobots/common-ts"
 
 function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
 
 	// Map direction to the correct icon
 	const getSoundIcon = (): ReactNode => {

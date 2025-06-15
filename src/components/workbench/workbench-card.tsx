@@ -7,11 +7,10 @@ import { cn } from "../../lib/shadcn/utils"
 import VolumeContent from "./volume/volume-content"
 import BatteryContent from "./battery/battery-content"
 import NetworkContent from "./network/network-content"
-import { useWorkbenchContext } from "../../classes/workbench-context"
+import workbenchClass from "../../classes/workbench-class"
 import WifiSettingsDialog from "./network/network-dialog/wifi-settings-dialog"
 
 function WorkbenchCard() {
-	const workbenchClass = useWorkbenchContext()
 	const [position, setPosition] = useState({ top: 0, left: 0 })
 	const [isWiFiSettingsOpen, setIsWiFiSettingsOpen] = useState(false)
 

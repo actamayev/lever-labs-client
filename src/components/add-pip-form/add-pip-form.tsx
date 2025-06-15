@@ -18,13 +18,11 @@ import useAddPip from "../../hooks/pip/add-pip"
 import ConnectUsbButton from "../connect-usb-button"
 import WiFiScanSection from "./wifi-scan-section"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
+import serialManager from "../../classes/serial-manager-class"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function AddPipForm() {
-	const serialMessageManagerClass = useSerialMessageManagerContext()
-	const serialManager = useSerialManagerContext()
 
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),

@@ -1,7 +1,6 @@
 /* eslint-disable max-depth */
 "use client"
 
-import { createContext, useContext } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { makeObservable, observable, runInAction } from "mobx"
 import { createCustomEvent } from "../utils/custom-event-dispatcher"
@@ -455,16 +454,6 @@ class SerialConnectionManagerClass extends EventTarget {
 	}
 }
 
-export const serialConnectionManager = new SerialConnectionManagerClass()
+const serialConnectionManagerClass = new SerialConnectionManagerClass()
 
-const SerialManagerContext = createContext(serialConnectionManager)
-
-export default function SerialManagerProvider({ children }: { children: React.ReactNode }) {
-	return (
-		<SerialManagerContext.Provider value={serialConnectionManager}>
-			{children}
-		</SerialManagerContext.Provider>
-	)
-}
-
-export const useSerialManagerContext = () => useContext(SerialManagerContext)
+export default serialConnectionManagerClass

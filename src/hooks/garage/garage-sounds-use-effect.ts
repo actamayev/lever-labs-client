@@ -2,13 +2,11 @@
 
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
-import { useSocketContext } from "../../classes/socket-context"
+import socketClass from "../../classes/socket-class"
 
 export default function useGarageSoundsUseEffect(): void {
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
 
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {

@@ -4,11 +4,9 @@ import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomUsb } from "../../icons/custom-usb"
-import { useSerialManagerContext } from "../../../classes/serial-manager-context"
+import serialManager from "../../../classes/serial-manager-class"
 
 function ConnectSerialButton() {
-	const serialManager = useSerialManagerContext() // Use the hook to get the serial manager instance
-
 	const handleConnect = async () => {
 		if (serialManager.connected) return // If already connected, do nothing
 		await serialManager.connectToDevice()

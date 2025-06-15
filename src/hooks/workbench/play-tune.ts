@@ -4,15 +4,13 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
-import { useWorkbenchContext } from "../../classes/workbench-context"
+import workbenchClass from "../../classes/workbench-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function usePlayTune(): () => Promise<void> {
 	const toast = useToastOptions()
-	const workbenchClass = useWorkbenchContext()
-	const pipClass = usePipContext()
 
 	return useCallback(async () => {
 		try {

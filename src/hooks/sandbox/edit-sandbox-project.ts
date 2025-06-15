@@ -6,7 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../classes/sandbox-context"
+import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
@@ -14,7 +14,6 @@ export default function useEditSandboxProject(): (
 	projectUUID: ProjectUUID,
 	newXml: string
 ) => Promise<void> {
-	const sandboxClass = useSandboxContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (

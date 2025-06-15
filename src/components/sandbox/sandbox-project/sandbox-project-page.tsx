@@ -10,12 +10,12 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
 import SandboxProjectHeader from "./sandbox-project-header"
-import { usePipContext } from "../../../classes/pip-context"
+import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useSendCppToPip from "../../../hooks/sandbox/send-cpp-to-pip"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
-import { useSandboxContext } from "../../../classes/sandbox-context"
+import sandboxClass from "../../../classes/sandbox-class"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
 import personalInfoClass from "../../../classes/personal-info-class"
@@ -31,8 +31,6 @@ function SandboxProjectPage() {
 	const projectUUID = params.projectUUID as ProjectUUID
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
 	useSetSelectedPipFirstPipUseEffect()
-	const sandboxClass = useSandboxContext()
-	const pipClass = usePipContext()
 	const [cppCode, setCppCode] = useState("")
 	const sendCppToPip = useSendCppToPip()
 	const editSandboxProject = useEditSandboxProject()

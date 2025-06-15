@@ -3,7 +3,7 @@
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
@@ -12,7 +12,6 @@ import { PipUUID } from "@bluedotrobots/common-ts"
 export default function useRequestToConnectToPip(): (
 	pipUUID: PipUUID
 ) => Promise<void> {
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity

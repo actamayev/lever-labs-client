@@ -16,12 +16,11 @@ import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
 import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
-import { useWorkbenchContext } from "../../../classes/workbench-context"
+import workbenchClass from "../../../classes/workbench-class"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
 import { TuneToPlay } from "@bluedotrobots/common-ts"
 
 function VolumeContent() {
-	const workbenchClass = useWorkbenchContext()
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
 	const playTune = usePlayTune()
 	const changeAudibleStatus = useChangeAudibleStatus()

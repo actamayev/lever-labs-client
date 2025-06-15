@@ -4,10 +4,10 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
-import { usePipContext } from "../../../classes/pip-context"
+import pipClass from "../../../classes/pip-class"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
-import { useSerialManagerContext } from "../../../classes/serial-manager-context"
+import serialManager from "../../../classes/serial-manager-class"
 
 interface Props {
 	setIsWiFiSettingsOpen: Dispatch<SetStateAction<boolean>>
@@ -15,10 +15,8 @@ interface Props {
 
 function NetworkContent(props: Props) {
 	const { setIsWiFiSettingsOpen } = props
-	const pipClass = usePipContext()
 	const disconnectFromPip = useDisconnectFromPip()
 	const requestToConnectToPip = useRequestToConnectToPip()
-	const serialManager = useSerialManagerContext()
 
 	const selectedPip = pipClass.selectedPip
 	if (isNull(selectedPip)) return null

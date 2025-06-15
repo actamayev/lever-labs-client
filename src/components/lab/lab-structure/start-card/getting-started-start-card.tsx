@@ -3,10 +3,9 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import GettingStartedAddPip from "./getting-started-add-pip"
-import { usePipContext } from "../../../../classes/pip-context"
+import pipClass from "../../../../classes/pip-class"
 
 function GettingStartedStartCard() {
-	const pipClass = usePipContext()
 
 	function getCardContent() {
 		if (isEmpty(pipClass.pipData)) {

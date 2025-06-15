@@ -3,7 +3,7 @@
 import { ReactNode } from "react"
 import { AnimatePresence } from "framer-motion"
 import { GoogleOAuthProvider } from "@react-oauth/google"
-import ContextLevelComponent from "app/context-level-component"
+import { Slide, ToastContainer } from "react-toastify"
 
 // Custom hooks from your application
 import { observer } from "mobx-react"
@@ -38,14 +38,27 @@ export default function Providers({ children }: { children: ReactNode }) {
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
-			<ContextLevelComponent>
-				<ObserverRedirectHandler />
-				<ConditionalLayout>
-					<AnimatePresence mode="wait">
-						{children}
-					</AnimatePresence>
-				</ConditionalLayout>
-			</ContextLevelComponent>
+			<ObserverRedirectHandler />
+			<ConditionalLayout>
+				<AnimatePresence mode="wait">
+					{children}
+				</AnimatePresence>
+			</ConditionalLayout>
+			<ToastContainer
+				position="bottom-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick={false}
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				transition={Slide}
+				style={{ width: "min(400px, 90vw)" }}
+				toastStyle={{ width: "min(400px, 90vw)" }}
+				limit={1}
+			/>
 		</GoogleOAuthProvider>
 	)
 }

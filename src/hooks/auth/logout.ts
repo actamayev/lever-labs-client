@@ -2,26 +2,21 @@
 
 import { useCallback } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
-import { useSocketContext } from "../../classes/socket-context"
+import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
-import { useSandboxContext } from "../../classes/sandbox-context"
-import { useWorkbenchContext } from "../../classes/workbench-context"
+import sandboxClass from "../../classes/sandbox-class"
+import workbenchClass from "../../classes/workbench-class"
 import labReadingClass from "../../classes/lab-reading-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import pageTransitionClass from "../../classes/page-transition-class"
 import activityProgressClass from "../../classes/activity-progress-class"
-import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 export default function useLogout(): () => Promise<void> {
-	const pipClass = usePipContext()
-	const socketClass = useSocketContext()
 	const navigate = useTypedNavigate()
-	const workbenchClass = useWorkbenchContext()
-	const sandboxClass = useSandboxContext()
-	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	return useCallback(async (): Promise<void> => {
 		personalInfoClass.logout()

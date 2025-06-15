@@ -5,12 +5,11 @@ import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePipInfo(): () => Promise<void> {
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	return useCallback(async () => {

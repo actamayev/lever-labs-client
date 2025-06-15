@@ -1,11 +1,10 @@
-import { createContext, useContext } from "react"
 import { action, makeObservable, observable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload,
 	ScannedWiFiNetworkItem,
 	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
-import { serialConnectionManager } from "./serial-manager-context"
 import { createCustomEvent } from "../utils/custom-event-dispatcher"
+import serialConnectionManagerClass from "./serial-manager-class"
 
 class SerialMessageManagerClass extends EventTarget {
 	public messages: Message[] = []
@@ -67,14 +66,14 @@ class SerialMessageManagerClass extends EventTarget {
 
 	private setupEventListeners(): void {
 		// Listen to raw messages from connection manager
-		serialConnectionManager.addEventListener("rawMessage", this.handleRawMessage)
+		serialConnectionManagerClass.addEventListener("rawMessage", this.handleRawMessage)
 
 		// Listen to connection events
-		serialConnectionManager.addEventListener("connected", this.handleConnected)
-		serialConnectionManager.addEventListener("disconnected", this.handleDisconnected)
+		serialConnectionManagerClass.addEventListener("connected", this.handleConnected)
+		serialConnectionManagerClass.addEventListener("disconnected", this.handleDisconnected)
 
 		// Listen to sent messages
-		serialConnectionManager.addEventListener("messageSent", this.handleMessageSent)
+		serialConnectionManagerClass.addEventListener("messageSent", this.handleMessageSent)
 	}
 
 	private handleRawMessage = (event: Event): void => {
@@ -241,7 +240,7 @@ class SerialMessageManagerClass extends EventTarget {
 
 	// Send binary message through connection manager
 	public async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
-		return await serialConnectionManager.sendBinaryMessage(buffer)
+		return await serialConnectionManagerClass.sendBinaryMessage(buffer)
 	}
 
 	public clearMessages = action(() => {
@@ -290,7 +289,7 @@ class SerialMessageManagerClass extends EventTarget {
 	})
 
 	public async logout(): Promise<void> {
-		await serialConnectionManager.logout()
+		await serialConnectionManagerClass.logout()
 		runInAction(() => {
 			this.messages = []
 			this.resetFlowState()
@@ -300,16 +299,6 @@ class SerialMessageManagerClass extends EventTarget {
 	}
 }
 
-export const serialMessageManager = new SerialMessageManagerClass()
+const serialMessageManagerClass = new SerialMessageManagerClass()
 
-const SerialMessageManagerContext = createContext(serialMessageManager)
-
-export default function SerialMessageManagerProvider({ children }: { children: React.ReactNode }) {
-	return (
-		<SerialMessageManagerContext.Provider value={serialMessageManager}>
-			{children}
-		</SerialMessageManagerContext.Provider>
-	)
-}
-
-export const useSerialMessageManagerContext = () => useContext(SerialMessageManagerContext)
+export default serialMessageManagerClass

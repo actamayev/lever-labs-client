@@ -1,17 +1,15 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
-import { useSocketContext } from "../../classes/socket-context"
+import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useApplyMotorControl(): (motorControl: MotorControlInput, forceEmit?: boolean) => void {
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	// Map motor control values to drive directions

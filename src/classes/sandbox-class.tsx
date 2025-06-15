@@ -86,16 +86,6 @@ class SandboxClass {
 	}
 }
 
-const sandboxInstance = new SandboxClass()
+const sandboxClass = new SandboxClass()
 
-const SandboxContext = createContext(sandboxInstance)
-
-export default function SandboxProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<SandboxContext.Provider value={sandboxInstance}>
-			{children}
-		</SandboxContext.Provider>
-	)
-}
-
-export const useSandboxContext = () => useContext(SandboxContext)
+export default sandboxClass

@@ -6,16 +6,13 @@ import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
 import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
-import { useSocketContext } from "../../classes/socket-context"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import socketClass from "../../classes/socket-class"
+import serialManager from "../../classes/serial-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(

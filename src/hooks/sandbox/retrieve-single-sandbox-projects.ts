@@ -4,12 +4,11 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../classes/sandbox-context"
+import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: ProjectUUID): void {
-	const sandboxClass = useSandboxContext()
 
 	const retrieveSingleSandboxProject = useCallback(async () => {
 		try {

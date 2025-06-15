@@ -8,14 +8,12 @@ import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts
 import { Input } from "../../../shadcn/ui/input"
 import { Button } from "../../../shadcn/ui/button"
 import NetworkStrengthIcon from "../../../network-strength-icon"
-import { useSerialManagerContext } from "../../../../classes/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../../../classes/serial-message-manager"
+import serialManager from "../../../../classes/serial-manager-class"
+import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function
 function ScanNetworksSection() {
-	const serialManager = useSerialManagerContext()
-	const serialMessageManager = useSerialMessageManagerContext()
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [password, setPassword] = useState("")
 	const [isConnecting, setIsConnecting] = useState(false)
@@ -37,7 +35,7 @@ function ScanNetworksSection() {
 			const success = await serialManager.sendBinaryMessage(message)
 			if (success) {
 				// Add to saved networks (this will make it appear in knownNetworks)
-				serialMessageManager.addSavedNetwork({
+				serialMessageManagerClass.addSavedNetwork({
 					ssid: network.ssid,
 					index: 0 // or appropriate index
 				})
@@ -50,15 +48,15 @@ function ScanNetworksSection() {
 		} finally {
 			setIsConnecting(false)
 		}
-	}, [serialManager, password, serialMessageManager])
+	}, [password])
 
-	if (serialMessageManager.isScanning) {
+	if (serialMessageManagerClass.isScanning) {
 		return (
 			<div className="flex items-center justify-center py-8">
 				<div className="text-sm text-muted-foreground">Scanning for networks...</div>
 			</div>
 		)
-	} else if (isEmpty(serialMessageManager.otherNetworks)) {
+	} else if (isEmpty(serialMessageManagerClass.otherNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300
 			dark:border-gray-700 rounded-lg text-center">
@@ -69,7 +67,7 @@ function ScanNetworksSection() {
 
 	return (
 		<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
-			{serialMessageManager.otherNetworks.map((network, index) => (
+			{serialMessageManagerClass.otherNetworks.map((network, index) => (
 				<Collapsible
 					key={`${network.ssid}-${index}`}
 					open={selectedNetworkIndex === index}

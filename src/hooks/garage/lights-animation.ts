@@ -3,17 +3,14 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import serialManager from "../../classes/serial-manager-class"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
-
 	return useCallback(async (newAnimation: LightAnimation) => {
 		try {
 			if (garageClass.selectedAnimation === newAnimation) return

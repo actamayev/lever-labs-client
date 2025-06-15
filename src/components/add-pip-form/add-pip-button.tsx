@@ -3,10 +3,9 @@
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../shadcn/ui/button"
-import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 function AddPipButton({ getFormValues }: { getFormValues: () => IncompletePipData }) {
-	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	// Show add button when all conditions are met
 	const isReadyToAdd = () => {

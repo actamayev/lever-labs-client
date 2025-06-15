@@ -1,14 +1,13 @@
 "use client"
 
 import { useCallback } from "react"
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
 import { PipStatusUpdate } from "@bluedotrobots/common-ts"
 
 export default function useHandlePipStatusUpdate(): (data: PipStatusUpdate) => void {
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 	const requestToConnectToPip = useRequestToConnectToPip()
 

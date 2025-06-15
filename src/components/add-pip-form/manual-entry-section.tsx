@@ -6,8 +6,8 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
+import serialManager from "../../classes/serial-manager-class"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { observer } from "mobx-react"
 
 interface ManualEntrySectionProps {
@@ -15,9 +15,6 @@ interface ManualEntrySectionProps {
 }
 
 function ManualEntrySection({ control }: ManualEntrySectionProps) {
-	const serialManager = useSerialManagerContext()
-	const serialMessageManager = useSerialMessageManagerContext()
-
 	// Watch the manual form fields for real-time updates
 	const watchedManualNetworkName = useWatch({
 		control,
@@ -33,15 +30,15 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 
 	const handleManualConnect = async () => {
 		if (
-			serialMessageManager.isTestingWiFiConnection ||
+			serialMessageManagerClass.isTestingWiFiConnection ||
 			!watchedManualNetworkName ||
 			watchedManualNetworkName.trim() === ""
 		) {
 			return // Don't submit if no network name
 		}
 
-		serialMessageManager.setIsTestingWiFiConnection(true)
-		serialMessageManager.setWiFiConnectionStatus(null) // Reset status
+		serialMessageManagerClass.setIsTestingWiFiConnection(true)
+		serialMessageManagerClass.setWiFiConnectionStatus(null) // Reset status
 
 		const message = MessageBuilder.createWiFiCredentialsMessage(
 			watchedManualNetworkName.trim(),
@@ -50,7 +47,7 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 		const success = await serialManager.sendBinaryMessage(message)
 
 		if (!success) {
-			serialMessageManager.setIsTestingWiFiConnection(false)
+			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		}
 	}
 
@@ -73,14 +70,14 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 					type="button"
 					onClick={handleManualConnect}
 					disabled={
-						serialMessageManager.isTestingWiFiConnection ||
+						serialMessageManagerClass.isTestingWiFiConnection ||
                         !watchedManualNetworkName ||
                         watchedManualNetworkName.trim() === ""
 					}
 					className="h-12 px-6 text-lg mb-4"
 					size="lg"
 				>
-					{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
+					{serialMessageManagerClass.isTestingWiFiConnection ? "Testing..." : "Connect"}
 				</Button>
 				<UploadWiFiCredentials />
 			</div>

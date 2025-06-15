@@ -1,18 +1,15 @@
 "use client"
 
-import { usePipContext } from "../../classes/pip-context"
+import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
-import { useSocketContext } from "../../classes/socket-context"
-import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import socketClass from "../../classes/socket-class"
+import serialManager from "../../classes/serial-manager-class"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 export default function useGarageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 	} {
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
 
 	const activateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
