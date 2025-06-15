@@ -15,6 +15,7 @@ export default function useRemoveCurrentProfilePicture(): (
 	return useCallback(async (
 		setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>
 	): Promise<void> => {
+		const previousProfilePictureUrl = personalInfoClass.profilePictureUrl
 		try {
 			personalInfoClass.setProfilePictureUrl(null)
 			setIsDeletingCurrentPicture(false)
@@ -28,9 +29,7 @@ export default function useRemoveCurrentProfilePicture(): (
 			})
 		} catch (error) {
 			console.error(error)
-			personalInfoClass.setProfilePictureUrl(
-				personalInfoClass.profilePictureUrl
-			)  // if fails, reset the url to what it previously was
+			personalInfoClass.setProfilePictureUrl(previousProfilePictureUrl)  // if fails, reset the url to what it previously was
 			toast.negative({
 				title: "Unable to remove profile picture at this time. Please reload page and try again"
 			})

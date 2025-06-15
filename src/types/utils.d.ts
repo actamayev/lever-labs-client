@@ -46,8 +46,6 @@ declare global {
 		[key: string]: React.ReactNode
 	}
 
-	type PageTransitionDirections = null | "left" | "right" | "up" | "down"
-
 	//Auth
 	type LoginOrRegister = "Login" | "Register"
 	interface RegisterFormValues {

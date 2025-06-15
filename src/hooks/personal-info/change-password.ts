@@ -1,13 +1,13 @@
 /* eslint-disable max-depth */
 "use client"
 
+import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { AxiosError } from "axios"
 
 export default function useChangePassword(): (
 	oldPassword: string,
@@ -42,7 +42,7 @@ export default function useChangePassword(): (
 			)
 
 			if (!isEqual(updatePasswordResponse.status, 200) || isNonSuccessResponse(updatePasswordResponse.data)) {
-				throw Error
+				throw Error("Unable to change password")
 			}
 
 			toast.positive({

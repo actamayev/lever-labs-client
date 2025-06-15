@@ -31,7 +31,7 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activityProgressClass.isRetrievingActivityProgress,
 		blueDotApiClientClass.httpClient.accessToken,
-		activityProgressClass.didRetrieveAllActivityProgress,])
+		activityProgressClass.didRetrieveAllActivityProgress])
 
 	useEffect(() => {
 		void retrieveAllActivities()

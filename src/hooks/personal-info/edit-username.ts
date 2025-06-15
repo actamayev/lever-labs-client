@@ -70,5 +70,6 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 			})
 			return "An unexpected error occurred"
 		}
-	}, [toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, personalInfoClass.username])
 }
