@@ -5,7 +5,7 @@ import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useSocketContext } from "../../classes/socket-context"
 import { useGarageContext } from "../../classes/garage-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
@@ -14,8 +14,7 @@ export default function useApplyMotorControl(): (motorControl: MotorControlInput
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
-	const blueDotApiClient = useApiClientContext()
-
+	
 	// Map motor control values to drive directions
 	const motorControlToDriveDirections = (motorControl: { vertical: number, horizontal: number }): Set<DriveDirection> => {
 		const directions = new Set<DriveDirection>()
@@ -67,7 +66,7 @@ export default function useApplyMotorControl(): (motorControl: MotorControlInput
 		// Update current directions
 		garageClass.updatePressedDirections(newDirections)
 
-		if (isNull(blueDotApiClient.httpClient.accessToken)) return
+		if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip" })

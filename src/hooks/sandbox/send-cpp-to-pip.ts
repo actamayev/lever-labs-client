@@ -8,7 +8,7 @@ import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 export default function useSendCppToPip(): (
@@ -16,7 +16,6 @@ export default function useSendCppToPip(): (
 	rect: DOMRect
 ) => Promise<void> {
 	const pipClass = usePipContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 	const serialManager = useSerialManagerContext()
 
@@ -62,7 +61,7 @@ export default function useSendCppToPip(): (
 			}
 			pipClass.setIsSendingCppToPip(true)
 
-			const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
+			const connectToPipResponse = await blueDotApiClientClass.sandboxDataService.sendSandboxCodeToPip(
 				pipClass.selectedPip.pipUUID, cppCode
 			)
 
@@ -82,5 +81,5 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass, serialManager, toast])
+	}, [blueDotApiClientClass.sandboxDataService, pipClass, serialManager, toast])
 }

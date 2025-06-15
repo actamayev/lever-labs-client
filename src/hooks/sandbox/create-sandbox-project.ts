@@ -6,19 +6,18 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import { useSandboxContext } from "../../classes/sandbox-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useCreateSandboxProject(): () => Promise<ProjectUUID | undefined> {
 	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async () => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) return
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 
-			const createSandboxProjectResponse = await blueDotApiClient.sandboxDataService.createSandboxProject()
+			const createSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.createSandboxProject()
 			if (!isEqual(createSandboxProjectResponse.status, 200) || isErrorResponse(createSandboxProjectResponse.data)) {
 				throw Error ("Unable to create new sandbox project")
 			}
@@ -32,5 +31,5 @@ export default function useCreateSandboxProject(): () => Promise<ProjectUUID | u
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, sandboxClass, toast])
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
 }

@@ -7,14 +7,13 @@ import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
-import { useApiClientContext } from "../../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
 import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
 import { SiteThemes } from "@bluedotrobots/common-ts"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
@@ -32,7 +31,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			let siteTheme: SiteThemes = "dark"
 			if (siteThemeFromStorage === "light") siteTheme = "light"
 
-			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
+			const googleCallbackResponse = await blueDotApiClientClass.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
 			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
@@ -47,5 +46,5 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
+	}, [blueDotApiClientClass.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
 }

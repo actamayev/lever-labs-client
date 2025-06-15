@@ -7,7 +7,7 @@ import isUndefined from "lodash-es/isUndefined"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../classes/sandbox-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useEditSandboxProjectName(): (
@@ -15,7 +15,6 @@ export default function useEditSandboxProjectName(): (
 	newProjectName: string
 ) => Promise<void> {
 	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (
@@ -23,14 +22,14 @@ export default function useEditSandboxProjectName(): (
 		newProjectName: string
 	) => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) return
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
 			if (
 				isUndefined(project) ||
 				project.projectName === newProjectName
 			) return
 
-			const editSandboxProjectNameResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectName(
+			const editSandboxProjectNameResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProjectName(
 				project.projectUUID,
 				newProjectName
 			)
@@ -46,5 +45,5 @@ export default function useEditSandboxProjectName(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, sandboxClass, toast])
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
 }

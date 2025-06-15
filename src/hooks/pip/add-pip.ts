@@ -8,14 +8,13 @@ import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import useExitAfterAddPip from "./exit-after-add-pip"
 import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useAddPip(
 	resetAddPipVars: () => void,
 	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 	const pipClass = usePipContext()
 	const exitAfterAddPip = useExitAfterAddPip()
@@ -54,7 +53,7 @@ export default function useAddPip(
 				pipName: getFormValues().pipName,
 			}
 
-			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
+			const addPipDataResponse = await blueDotApiClientClass.pipDataService.addPip(dataToSend)
 
 			if (!isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
@@ -90,5 +89,5 @@ export default function useAddPip(
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [getFormValues, pipClass, blueDotApiClient.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
+	}, [getFormValues, pipClass, blueDotApiClientClass.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
 }

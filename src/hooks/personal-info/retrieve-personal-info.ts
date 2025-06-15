@@ -5,23 +5,22 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePersonalInfo(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 
 	return useCallback(async () => {
 		try {
 			if (
 				personalInfoClass.isRetrievingPersonalInfo === true ||
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				personalInfoClass.retrievedPersonalInfo === true
 			) return
 
 			personalInfoClass.setIsRetrievingPersonalDetails(true)
 
-			const personalInfoResponse = await blueDotApiClient.personalInfoDataService.retrievePersonalInfo()
+			const personalInfoResponse = await blueDotApiClientClass.personalInfoDataService.retrievePersonalInfo()
 			if (!isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
 				throw Error ("Unable to retrieve personal info")
 			}
@@ -32,5 +31,5 @@ export default function useRetrievePersonalInfo(): () => Promise<void> {
 			console.error(error)
 			personalInfoClass.setIsRetrievingPersonalDetails(false)
 		}
-	}, [personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService])
+	}, [personalInfoClass, blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService])
 }

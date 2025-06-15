@@ -7,10 +7,9 @@ import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import useDefaultSiteTheme from "../memos/default-site-theme"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
 	const defaultSiteTheme = useDefaultSiteTheme()
@@ -19,10 +18,10 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 		try {
 			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
-			if (isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
 				return // No toast because we don't want a negative toast if someone isn't logged in
 			}
-			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
+			const siteThemeResponse = await blueDotApiClientClass.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
 			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
 				throw Error("Unable to save new default site theme")
 			}
@@ -33,5 +32,5 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])
+	}, [defaultSiteTheme, personalInfoClass, blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, toast])
 }

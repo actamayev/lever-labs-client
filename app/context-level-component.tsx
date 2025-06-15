@@ -8,8 +8,6 @@ import LabReadingProvider from "../src/classes/lab-reading-context"
 import PersonalInfoProvider from "../src/classes/personal-info-context"
 import SerialManagerProvider from "../src/classes/serial-manager-context"
 import PageTransitionProvider from "../src/classes/page-transition-context"
-import ActivityProgressProvider from "../src/classes/activity-progress-context"
-import BlueDotApiClientProvider from "../src/classes/blue-dot-api-client-context"
 import SerialMessageManagerProvider from "../src/classes/serial-message-manager"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
@@ -18,25 +16,21 @@ export default function ContextLevelComponent ({ children } : { children: React.
 			<PageTransitionProvider>
 				<PersonalInfoProvider>
 					<PipProvider>
-						<BlueDotApiClientProvider>
-							<SocketProvider>
-								<LabReadingProvider>
-									<ActivityProgressProvider>
-										<SandboxProvider>
-											<GarageProvider>
-												<WorkbenchProvider>
-													<SerialManagerProvider>
-														<SerialMessageManagerProvider>
-															{children}
-														</SerialMessageManagerProvider>
-													</SerialManagerProvider>
-												</WorkbenchProvider>
-											</GarageProvider>
-										</SandboxProvider>
-									</ActivityProgressProvider>
-								</LabReadingProvider>
-							</SocketProvider>
-						</BlueDotApiClientProvider>
+						<SocketProvider>
+							<LabReadingProvider>
+								<SandboxProvider>
+									<GarageProvider>
+										<WorkbenchProvider>
+											<SerialManagerProvider>
+												<SerialMessageManagerProvider>
+													{children}
+												</SerialMessageManagerProvider>
+											</SerialManagerProvider>
+										</WorkbenchProvider>
+									</GarageProvider>
+								</SandboxProvider>
+							</LabReadingProvider>
+						</SocketProvider>
 					</PipProvider>
 				</PersonalInfoProvider>
 			</PageTransitionProvider>

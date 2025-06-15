@@ -3,10 +3,10 @@
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import useToastOptions from "../components/toast-options"
-import { useApiClientContext } from "../classes/blue-dot-api-client-context"
-import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
 import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
+import useToastOptions from "../components/toast-options"
+import blueDotApiClientClass from "../classes/blue-dot-api-client-class"
+import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
 
 export default function useSubscribeForUpdates(
 	isLoading: boolean,
@@ -14,14 +14,13 @@ export default function useSubscribeForUpdates(
 ): (
 	values: EmailUpdatesRequest
 ) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (values: EmailUpdatesRequest): Promise<void> => {
 		try {
 			if (!values.email || isLoading) return
 			setIsLoading(true)
-			const subscribeForUpdatesResponse = await blueDotApiClient.miscDataService.subscribeForUpdates(values.email)
+			const subscribeForUpdatesResponse = await blueDotApiClientClass.miscDataService.subscribeForUpdates(values.email)
 			if (!isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
 				throw new Error("Email subscription failed")
 			}
@@ -44,5 +43,5 @@ export default function useSubscribeForUpdates(
 		} finally {
 			setIsLoading(false)
 		}
-	}, [blueDotApiClient.miscDataService, isLoading, setIsLoading, toast])
+	}, [isLoading, setIsLoading, toast])
 }

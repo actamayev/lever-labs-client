@@ -7,10 +7,9 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../classes/pip-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function usePollSensors(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const serialManager = useSerialManagerContext()
 
@@ -23,18 +22,18 @@ export default function usePollSensors(): () => Promise<void> {
 				return
 			}
 			if (
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				isNull(pipClass.selectedPip) ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
-			const sensorPollingResponse = await blueDotApiClient.sandboxDataService.pollSensors(pipClass.selectedPip.pipUUID)
+			const sensorPollingResponse = await blueDotApiClientClass.sandboxDataService.pollSensors(pipClass.selectedPip.pipUUID)
 			if (!isEqual(sensorPollingResponse.status, 200) || isNonSuccessResponse(sensorPollingResponse.data)) {
 				throw Error ("Unable to poll sensors")
 			}
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, pipClass.selectedPip, serialManager])
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, serialManager])
 
 }

@@ -7,10 +7,9 @@ import { isErrorResponse } from "../../utils/type-checks"
 import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { useWorkbenchContext } from "../../classes/workbench-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useChangeAudibleStatus(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 	const workbenchClass = useWorkbenchContext()
 	const pipClass = usePipContext()
@@ -18,7 +17,7 @@ export default function useChangeAudibleStatus(): () => Promise<void> {
 	return useCallback(async () => {
 		try {
 			if (isNull(pipClass.selectedPip?.pipUUID)) return
-			const playTuneResponse = await blueDotApiClient.workbenchDataService.changeAudibleStatus(
+			const playTuneResponse = await blueDotApiClientClass.workbenchDataService.changeAudibleStatus(
 				!workbenchClass.isMuted,
 				pipClass.selectedPip.pipUUID
 			)
@@ -33,5 +32,5 @@ export default function useChangeAudibleStatus(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.workbenchDataService, pipClass.selectedPip?.pipUUID, toast, workbenchClass])
+	}, [blueDotApiClientClass.workbenchDataService, pipClass.selectedPip?.pipUUID, toast, workbenchClass])
 }

@@ -5,13 +5,12 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRemoveCurrentProfilePicture(): (
 	setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
 	const personalInfoClass = usePersonalInfoContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (
@@ -20,7 +19,7 @@ export default function useRemoveCurrentProfilePicture(): (
 		try {
 			personalInfoClass.setProfilePictureUrl(null)
 			setIsDeletingCurrentPicture(false)
-			const response = await blueDotApiClient.personalInfoDataService.removeCurrentProfilePicture()
+			const response = await blueDotApiClientClass.personalInfoDataService.removeCurrentProfilePicture()
 
 			if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
 				return
@@ -37,5 +36,5 @@ export default function useRemoveCurrentProfilePicture(): (
 				title: "Unable to remove profile picture at this time. Please reload page and try again"
 			})
 		}
-	}, [blueDotApiClient.personalInfoDataService, personalInfoClass, toast])
+	}, [blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
 }

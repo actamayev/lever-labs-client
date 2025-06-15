@@ -7,11 +7,10 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const pipClass = usePipContext()
 	const toast = useToastOptions()
 	const serialManager = useSerialManagerContext()
@@ -29,7 +28,7 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
-			const stopScriptResponse = await blueDotApiClient.sandboxDataService.stopCurrentlyRunningCode(
+			const stopScriptResponse = await blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode(
 				pipClass.selectedPip.pipUUID
 			)
 
@@ -43,5 +42,5 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass.selectedPip, serialManager, toast])
+	}, [blueDotApiClientClass.sandboxDataService, pipClass.selectedPip, serialManager, toast])
 }

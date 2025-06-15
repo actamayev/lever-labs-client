@@ -1,15 +1,14 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import BlueDotHttpClient from "./blue-dot-http-client"
 import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"
 import MiscDataService from "../services/misc-data-service"
-import BlueDotHttpClient from "./blue-dot-http-client"
+import GarageDataService from "../services/garage-data-service"
 import SandboxDataService from "../services/sandbox-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import LabActivityTrackingDataService from "../services/lab-activity-tracking-data-service"
-import GarageDataService from "../services/garage-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
@@ -43,16 +42,6 @@ class BlueDotApiClient {
 	}
 }
 
-const apiClientInstance = new BlueDotApiClient()
+const blueDotApiClientClass = new BlueDotApiClient()
 
-const BlueDotApiClientContext = createContext(apiClientInstance)
-
-export default function BlueDotApiClientProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<BlueDotApiClientContext.Provider value={apiClientInstance}>
-			{children}
-		</BlueDotApiClientContext.Provider>
-	)
-}
-
-export const useApiClientContext = () => useContext(BlueDotApiClientContext)
+export default blueDotApiClientClass

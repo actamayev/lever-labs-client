@@ -5,23 +5,22 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../classes/sandbox-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
-
+	
 	const retrieveAllSandboxProjects = useCallback(async () => {
 		try {
 			if (
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				sandboxClass.isRetrievingAllSandboxProjects === true ||
 				sandboxClass.hasRetrievedAllSandboxProjects === true
 			) return
 
 			sandboxClass.setIsRetrievingAllSandboxProjects(true)
 
-			const sandboxProjectsResponse = await blueDotApiClient.sandboxDataService.retrieveAllSandboxProjects()
+			const sandboxProjectsResponse = await blueDotApiClientClass.sandboxDataService.retrieveAllSandboxProjects()
 			if (!isEqual(sandboxProjectsResponse.status, 200) || isErrorResponse(sandboxProjectsResponse.data)) {
 				throw Error ("Unable to retrieve sandbox projects")
 			}
@@ -35,7 +34,7 @@ export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 			sandboxClass.setIsRetrievingAllSandboxProjects(false)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService,
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService,
 		sandboxClass.isRetrievingAllSandboxProjects, sandboxClass.hasRetrievedAllSandboxProjects])
 
 	useEffect(() => {

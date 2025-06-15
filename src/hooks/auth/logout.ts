@@ -10,20 +10,18 @@ import { useSandboxContext } from "../../classes/sandbox-context"
 import { useWorkbenchContext } from "../../classes/workbench-context"
 import { useLabReadingContext } from "../../classes/lab-reading-context"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { usePageTransitionContext } from "../../classes/page-transition-context"
-import { useActivityProgressContext } from "../../classes/activity-progress-context"
+import activityProgressClass from "../../classes/activity-progress-class"
 import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 export default function useLogout(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
 	const socketClass = useSocketContext()
 	const labReadingClass = useLabReadingContext()
 	const navigate = useTypedNavigate()
 	const pageTransitionClass = usePageTransitionContext()
-	const activityProgressClass = useActivityProgressContext()
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
 	const garageClass = useGarageContext()
@@ -34,7 +32,7 @@ export default function useLogout(): () => Promise<void> {
 		pipClass.logout()
 		socketClass.logout()
 		authClass.logout()
-		blueDotApiClient.logout()
+		blueDotApiClientClass.logout()
 		labReadingClass.logout()
 		pageTransitionClass.logout()
 		activityProgressClass.logout()
@@ -44,5 +42,5 @@ export default function useLogout(): () => Promise<void> {
 		await serialMessageManagerClass.logout()
 		navigate("/")
 	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
-		blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialMessageManagerClass, navigate])
+		labReadingClass, workbenchClass, serialMessageManagerClass, navigate])
 }

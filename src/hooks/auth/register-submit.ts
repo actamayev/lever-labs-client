@@ -10,13 +10,12 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
 ): (registerCredentials: RegisterFormValues) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterRegister = useSetDataAfterLoginOrRegister()
 
@@ -40,7 +39,7 @@ export default function useRegisterSubmit (
 				siteTheme
 			}
 
-			const response = await blueDotApiClient.authDataService.register(registerRequest)
+			const response = await blueDotApiClientClass.authDataService.register(registerRequest)
 
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to register. Please reload the page and try again")
@@ -53,5 +52,5 @@ export default function useRegisterSubmit (
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError])
+	}, [blueDotApiClientClass.authDataService, navigate, setDataAfterRegister, setError])
 }

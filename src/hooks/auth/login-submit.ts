@@ -9,13 +9,12 @@ import { isNonSuccessResponse } from "../../utils/type-checks"
 import useRetrieveDataAfterLogin from "./retrieve-data-after-login"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 import { LoginRequest } from "@bluedotrobots/common-ts"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
@@ -28,7 +27,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 			if (areCredentialsValid === false) return
 
 			authClass.setAuthenticating(true)
-			const response = await blueDotApiClient.authDataService.login(loginInformation)
+			const response = await blueDotApiClientClass.authDataService.login(loginInformation)
 			if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 				setError("Unable to log in. Please reload the page and try again")
 				return
@@ -41,5 +40,5 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
+	}, [blueDotApiClientClass.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
 }

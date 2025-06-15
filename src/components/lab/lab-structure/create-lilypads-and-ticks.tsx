@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"
 import PathTickMark from "./path-tick-mark"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
-import { useActivityProgressContext } from "../../../classes/activity-progress-context"
+import activityProgressClass from "../../../classes/activity-progress-class"
 
 interface LilyPadPositions {
     x: number
@@ -14,7 +14,6 @@ interface LilyPadPositions {
 }
 
 function CreateLilypadsAndTicks() {
-	const activityProgressClass = useActivityProgressContext()
 	const [lilypadPositions, setLilypadPositions] = useState<LilyPadPositions[]>([])
 	const containerRef = useRef<HTMLDivElement>(null)
 	const lilypadSectionRef = useRef<HTMLDivElement>(null)
@@ -39,7 +38,7 @@ function CreateLilypadsAndTicks() {
 
 		setLilypadPositions(positions)
 		// This dependency is needed so that the ticks are made when the activities are loaded in:
-	}, [activityProgressClass.activities])
+	}, [])
 
 	return (
 		<div ref={containerRef} className="flex">

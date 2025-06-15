@@ -7,21 +7,20 @@ import isUndefined from "lodash-es/isUndefined"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useSandboxContext } from "../../classes/sandbox-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
 	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (projectUUID: ProjectUUID) => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) return
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
 			if (isUndefined(project)) return
 
-			const deleteSandboxProjectResponse = await blueDotApiClient.sandboxDataService.deleteSandboxProject(project.projectUUID)
+			const deleteSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.deleteSandboxProject(project.projectUUID)
 			if (!isEqual(deleteSandboxProjectResponse.status, 200) || isNonSuccessResponse(deleteSandboxProjectResponse.data)) {
 				throw Error ("Unable to delete sandbox project")
 			}
@@ -34,5 +33,5 @@ export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) =>
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, sandboxClass, toast])
+	}, [blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.sandboxDataService, sandboxClass, toast])
 }

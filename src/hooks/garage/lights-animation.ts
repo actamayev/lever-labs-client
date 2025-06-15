@@ -6,12 +6,11 @@ import isEqual from "lodash-es/isEqual"
 import { usePipContext } from "../../classes/pip-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { useGarageContext } from "../../classes/garage-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const garageClass = useGarageContext()
 	const pipClass = usePipContext()
 	const serialManager = useSerialManagerContext()
@@ -28,14 +27,14 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 				return
 			}
 			if (
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				isNull(pipClass.selectedPip) ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
 			garageClass.setSelectedAnimation(newAnimation)
 
-			const newLightsAnimationResponse = await blueDotApiClient.garageDataService.lightsAnimation(
+			const newLightsAnimationResponse = await blueDotApiClientClass.garageDataService.lightsAnimation(
 				newAnimation, pipClass.selectedPip.pipUUID
 			)
 			if (!isEqual(newLightsAnimationResponse.status, 200) || isNonSuccessResponse(newLightsAnimationResponse.data)) {
@@ -44,6 +43,6 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.garageDataService, blueDotApiClient.httpClient.accessToken, garageClass, pipClass.selectedPip, serialManager])
+	}, [blueDotApiClientClass.garageDataService, blueDotApiClientClass.httpClient.accessToken, garageClass, pipClass.selectedPip, serialManager])
 
 }

@@ -6,13 +6,12 @@ import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { usePersonalInfoContext } from "../../classes/personal-info-context"
-import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useUploadProfilePicture(): (
 	selectedImage: File | null,
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
 
@@ -23,7 +22,7 @@ export default function useUploadProfilePicture(): (
 		try {
 			if (isNull(selectedImage)) return
 			setIsLoading(true)
-			const uploadProfilePictureResponse = await blueDotApiClient.personalInfoDataService.uploadProfilePicture(selectedImage)
+			const uploadProfilePictureResponse = await blueDotApiClientClass.personalInfoDataService.uploadProfilePicture(selectedImage)
 			if (!isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {
 				return
 			}
@@ -39,5 +38,5 @@ export default function useUploadProfilePicture(): (
 		} finally {
 			setIsLoading(false)
 		}
-	}, [blueDotApiClient.personalInfoDataService, personalInfoClass, toast])
+	}, [blueDotApiClientClass.personalInfoDataService, personalInfoClass, toast])
 }
