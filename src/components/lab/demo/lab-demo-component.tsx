@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation"
 import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import pageTransitionClass from "../../../classes/page-transition-class"
 import labReadingClass from "../../../classes/lab-reading-class"
-import AnimatedTransitionWrapper from "../../animated-transition-wrapper"
 
 interface Props {
 	lessonDemoTitle: string
@@ -27,29 +25,26 @@ function LabDemoComponent(props: Props) {
 	const router = useRouter()
 
 	const goBack = useCallback(() => {
-		pageTransitionClass.setDirection("up")
 		router.back()
 		labReadingClass.handleDemoComplete(blockId)
 	}, [router, blockId])
 
 	return (
-		<AnimatedTransitionWrapper>
-			<DemoTemplate>
-				<main className="flex-1 flex items-center flex-col justify-center p-4">
-					<DemoCard
-						lessonDemoTitle={lessonDemoTitle}
-						demoDeliverables={demoDeliverables}
-						demos={demos}
-					/>
-					<BlueTactileButton
-						onClick={goBack}
-						className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
-					>
+		<DemoTemplate>
+			<main className="flex-1 flex items-center flex-col justify-center p-4">
+				<DemoCard
+					lessonDemoTitle={lessonDemoTitle}
+					demoDeliverables={demoDeliverables}
+					demos={demos}
+				/>
+				<BlueTactileButton
+					onClick={goBack}
+					className="px-6 !py-5 text-3xl w-3/4 h-16 mt-12"
+				>
 					CONTINUE
-					</BlueTactileButton>
-				</main>
-			</DemoTemplate>
-		</AnimatedTransitionWrapper>
+				</BlueTactileButton>
+			</main>
+		</DemoTemplate>
 	)
 }
 

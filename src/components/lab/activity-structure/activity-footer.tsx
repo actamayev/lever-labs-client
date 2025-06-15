@@ -7,7 +7,6 @@ import { ActivityType } from "@bluedotrobots/common-ts"
 import CustomTooltip from "../../custom-tooltip"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import pageTransitionClass from "../../../classes/page-transition-class"
 
 interface Props {
 	nextPageLink?: LabPages
@@ -25,7 +24,6 @@ export default function ActivityFooter(props: Props) {
 
 	const goToNextPage = useCallback(() => {
 		if (!nextPageLink) return
-		pageTransitionClass.setDirection("left")
 		navigate(nextPageLink)
 	}, [navigate, nextPageLink])
 

@@ -9,13 +9,11 @@ import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import useRetrieveDataAfterLogin from "./retrieve-data-after-login"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
-import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
-	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
@@ -32,7 +30,7 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 				setError("Unable to log in. Please reload the page and try again")
 				return
 			}
-			setDataAfterLogin(response.data)
+			authClass.setAccessToken(response.data.accessToken, true)
 			void retrieveDataAfterLogin()
 			if (pathname === "/login") navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
@@ -40,5 +38,5 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
+	}, [navigate, pathname, retrieveDataAfterLogin, setError])
 }

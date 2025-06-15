@@ -1,8 +1,8 @@
 "use client"
 
-import { motorKeyMappings } from "../../utils/constants"
-import garageClass from "../../classes/garage-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
+import garageClass from "../../classes/garage-class"
+import { motorKeyMappings } from "../../utils/constants"
 
 const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping) => {
 	acc[mapping.direction] = mapping

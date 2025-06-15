@@ -5,7 +5,6 @@ import { useCallback, useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomWizardHat } from "../../icons/custom-wizard-hat"
-import pageTransitionClass from "../../../classes/page-transition-class"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import personalInfoClass from "../../../classes/personal-info-class"
 
@@ -21,7 +20,6 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 	}, [personalInfoClass.defaultSiteTheme])
 
 	const navigateToDemo = useCallback(() => {
-		pageTransitionClass.setDirection("down") // Set before navigating
 		navigate(block.action.demoLink as LabPages)
 	}, [block.action.demoLink, navigate])
 

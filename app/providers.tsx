@@ -15,7 +15,6 @@ import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-an
 import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "@/hooks/redirects/redirect-back-to-register-username"
 import useRetrievePersonalInfoUseEffect from "@/hooks/personal-info/retrieve-personal-info-use-effect"
-import useResetTransitionDirectionUseEffect from "@/hooks/listeners/reset-transition-direction-use-effect"
 
 function RedirectHandler() {
 	useRedirectBackToRegisterUsername()
@@ -31,7 +30,6 @@ export default function Providers({ children }: { children: ReactNode }) {
 	useRetrievePersonalInfoUseEffect()
 	useSocketEventsUseEffect()
 	useRetrievePipInfoUseEffect()
-	useResetTransitionDirectionUseEffect()
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>

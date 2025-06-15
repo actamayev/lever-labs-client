@@ -39,5 +39,7 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [garageClass.selectedAnimation, serialConnectionManagerClass.connected,
+		blueDotApiClientClass.httpClient.accessToken, pipClass.selectedPip])
 }

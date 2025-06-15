@@ -11,7 +11,6 @@ import workbenchClass from "../../classes/workbench-class"
 import labReadingClass from "../../classes/lab-reading-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import pageTransitionClass from "../../classes/page-transition-class"
 import activityProgressClass from "../../classes/activity-progress-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
@@ -25,7 +24,6 @@ export default function useLogout(): () => Promise<void> {
 		authClass.logout()
 		blueDotApiClientClass.logout()
 		labReadingClass.logout()
-		pageTransitionClass.logout()
 		activityProgressClass.logout()
 		workbenchClass.logout()
 		sandboxClass.logout()

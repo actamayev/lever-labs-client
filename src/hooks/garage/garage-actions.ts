@@ -10,7 +10,6 @@ export default function useGarageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 	} {
-
 	const activateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
 		case "headlights":

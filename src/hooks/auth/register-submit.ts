@@ -4,20 +4,18 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { SiteThemes } from "@bluedotrobots/common-ts"
-import useTypedNavigate from "../navigate/typed-navigate"
 import authClass from "../../classes/auth-class"
+import useTypedNavigate from "../navigate/typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
-import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
-import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
 ): (registerCredentials: RegisterFormValues) => Promise<void> {
 	const navigate = useTypedNavigate()
-	const setDataAfterRegister = useSetDataAfterLoginOrRegister()
 
 	return useCallback(async (registerCredentials: RegisterFormValues): Promise<void> => {
 		setError("")
@@ -45,12 +43,12 @@ export default function useRegisterSubmit (
 				setError("Unable to register. Please reload the page and try again")
 				return
 			}
-			setDataAfterRegister(response.data)
+			authClass.setAccessToken(response.data.accessToken, true)
 			navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [navigate, setDataAfterRegister, setError])
+	}, [navigate, setError])
 }

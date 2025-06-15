@@ -4,8 +4,8 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import activityProgressClass from "../../classes/activity-progress-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrieveAllActivitiesUseEffect(): void {
 	const retrieveAllActivities = useCallback(async () => {
@@ -28,7 +28,10 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 			console.error(error)
 			activityProgressClass.setIsRetrievingAllActivityProgress(false)
 		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activityProgressClass.isRetrievingActivityProgress,
+		blueDotApiClientClass.httpClient.accessToken,
+		activityProgressClass.didRetrieveAllActivityProgress,])
 
 	useEffect(() => {
 		void retrieveAllActivities()
