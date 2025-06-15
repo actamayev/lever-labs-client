@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 import ActivityHeader from "./activity-header/activity-header"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {

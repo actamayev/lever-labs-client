@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import useLogout from "./logout"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 
 export default function useHandleLogout(): (
 ) => Promise<void> {

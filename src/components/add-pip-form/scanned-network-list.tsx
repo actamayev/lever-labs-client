@@ -11,8 +11,8 @@ import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import NetworkStrengthIcon from "../network-strength-icon"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../shadcn/ui/collapsible"
 
 interface ScannedNetworksListProps {

@@ -12,7 +12,7 @@ import { CustomQuiz } from "../../icons/custom-quiz"
 import AnswerChoiceButton from "./answer-choice-button"
 import QuizListDropdownItem from "./quiz-list-dropdown-item"
 import QuizExplanationSection from "./quiz-explanation-section"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 function QuizSection() {
 	const labReadingClass = useLabReadingContext()

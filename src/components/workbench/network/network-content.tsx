@@ -4,10 +4,10 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
-import { usePipContext } from "../../../contexts/pip-context"
+import { usePipContext } from "../../../classes/pip-context"
 import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
 import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
-import { useSerialManagerContext } from "../../../contexts/serial-manager-context"
+import { useSerialManagerContext } from "../../../classes/serial-manager-context"
 
 interface Props {
 	setIsWiFiSettingsOpen: Dispatch<SetStateAction<boolean>>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect } from "react"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
 export default function useSiteThemeListenerUseEffect(): void {
 	const personalInfoClass = usePersonalInfoContext()

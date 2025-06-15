@@ -4,18 +4,17 @@ import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import useRetrieveDataAfterLogin from "./retrieve-data-after-login"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 import { LoginRequest } from "@bluedotrobots/common-ts"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
-	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const navigate = useTypedNavigate()
@@ -42,5 +41,5 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
+	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin, setError])
 }

@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import Wheel from "@uiw/react-color-wheel"
 import { rgbaToHsva } from "@uiw/color-convert"
-import { useGarageContext } from "../../../contexts/garage-context"
+import { useGarageContext } from "../../../classes/garage-context"
 
 function ColorPicker() {
 	const garageClass = useGarageContext()

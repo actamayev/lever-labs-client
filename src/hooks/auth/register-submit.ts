@@ -5,18 +5,17 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { SiteThemes } from "@bluedotrobots/common-ts"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
 import confirmRegisterFields from "../../utils/auth/confirm-register-fields"
 import useSetDataAfterLoginOrRegister from "./set-data-after-login-or-register"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 
 export default function useRegisterSubmit (
 	setError: (error: string) => void,
 ): (registerCredentials: RegisterFormValues) => Promise<void> {
-	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
 	const setDataAfterRegister = useSetDataAfterLoginOrRegister()
@@ -54,5 +53,5 @@ export default function useRegisterSubmit (
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [authClass, blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError])
+	}, [blueDotApiClient.authDataService, navigate, setDataAfterRegister, setError])
 }

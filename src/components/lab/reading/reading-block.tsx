@@ -7,7 +7,7 @@ import QuizButton from "./quiz-button"
 import { cn } from "../../../lib/shadcn/utils"
 import ContinueButton from "./continue-button"
 import DemoReadingButton from "./demo-reading-button"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 function ReadingBlock({ block } : { block: ContentBlock }) {
 	const labReadingClass = useLabReadingContext()

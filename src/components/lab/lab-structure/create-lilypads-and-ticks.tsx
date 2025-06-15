@@ -5,7 +5,7 @@ import { useRef, useEffect, useState } from "react"
 import Lilypad from "./lilypad/lilypad"
 import PathTickMark from "./path-tick-mark"
 import setLessonVerticalPosition from "../../../utils/lab/set-lesson-vertical-position"
-import { useActivityProgressContext } from "../../../contexts/activity-progress-context"
+import { useActivityProgressContext } from "../../../classes/activity-progress-context"
 
 interface LilyPadPositions {
     x: number

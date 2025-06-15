@@ -16,7 +16,7 @@ import {
 } from "../../shadcn/ui/dialog"
 import LoadingOval from "../../loading-oval"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import { usePersonalInfoContext } from "../../../classes/personal-info-context"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
 import { TactileButton } from "../../shadcn/ui/tactile-button"

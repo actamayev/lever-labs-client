@@ -1,13 +1,12 @@
 "use client"
 
 import { useCallback } from "react"
-import { useAuthContext } from "../../contexts/auth-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import authClass from "../../classes/auth-context"
+import { useSocketContext } from "../../classes/socket-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { LoginSuccess, RegisterSuccess } from "@bluedotrobots/common-ts"
 
 export default function useSetDataAfterLoginOrRegister(): (authData: LoginSuccess | RegisterSuccess) => void {
-	const authClass = useAuthContext()
 	const socketClass = useSocketContext()
 	const blueDotApiClient = useApiClientContext()
 
@@ -15,5 +14,5 @@ export default function useSetDataAfterLoginOrRegister(): (authData: LoginSucces
 		blueDotApiClient.httpClient.accessToken = authData.accessToken
 		authClass.setAccessToken(authData.accessToken, true)
 		socketClass.setAccessToken(authData.accessToken)
-	}, [authClass, blueDotApiClient.httpClient, socketClass])
+	}, [blueDotApiClient.httpClient, socketClass])
 }

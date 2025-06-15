@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { rgbaToHex } from "@uiw/color-convert"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomPip } from "../../icons/custom-pip"
-import { useGarageContext } from "../../../contexts/garage-context"
+import { useGarageContext } from "../../../classes/garage-context"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DOT_POSITIONS = [

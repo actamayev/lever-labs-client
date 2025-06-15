@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import CustomTooltip from "./custom-tooltip"
 import { CustomUsb } from "./icons/custom-usb"
-import { useSerialManagerContext } from "../contexts/serial-manager-context"
+import { useSerialManagerContext } from "../classes/serial-manager-context"
 
 function EnhancedConnectUsbButton() {
 	const serialManager = useSerialManagerContext()

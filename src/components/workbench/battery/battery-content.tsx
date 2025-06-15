@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../../classes/workbench-context"
 
 function BatteryContent() {
 	const workbenchClass = useWorkbenchContext()

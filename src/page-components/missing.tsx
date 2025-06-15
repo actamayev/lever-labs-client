@@ -2,14 +2,13 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import { useAuthContext } from "../contexts/auth-context"
+import authClass from "../classes/auth-context"
 import { CustomHouse } from "../components/icons/custom-house"
 import { CustomBriefcase } from "../components/icons/custom-briefcase"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 import { PageToNavigateAfterLogin } from "../utils/constants"
 
 function Missing() {
-	const authClass = useAuthContext()
 	const destination = authClass.isLoggedIn ? PageToNavigateAfterLogin : "/"
 
 	return (

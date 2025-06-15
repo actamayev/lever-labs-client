@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { useCallback, useMemo, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import useToastOptions from "../../toast-options"
-import { usePipContext } from "../../../contexts/pip-context"
+import { usePipContext } from "../../../classes/pip-context"
 
 function DemoButton({ demo } : { demo: Demo }) {
 	const pipClass = usePipContext()

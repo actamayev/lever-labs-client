@@ -3,10 +3,10 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { PipData } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 
 export default function useDisconnectFromPip(): (
 	pipData: PipData

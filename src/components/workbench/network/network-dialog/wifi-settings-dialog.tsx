@@ -8,8 +8,8 @@ import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
 import PreviouslyConnectedSection from "./previously-connected-section"
-import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../../../classes/serial-message-manager"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
 
 interface WiFiSettingsDialogProps {

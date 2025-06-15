@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import GettingStartedAddPip from "./getting-started-add-pip"
-import { usePipContext } from "../../../../contexts/pip-context"
+import { usePipContext } from "../../../../classes/pip-context"
 
 function GettingStartedStartCard() {
 	const pipClass = usePipContext()

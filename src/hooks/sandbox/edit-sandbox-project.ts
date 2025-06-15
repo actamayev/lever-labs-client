@@ -6,8 +6,8 @@ import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useSandboxContext } from "../../classes/sandbox-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useEditSandboxProject(): (

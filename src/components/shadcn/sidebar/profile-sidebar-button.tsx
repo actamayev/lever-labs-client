@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "./custom-sidebar-button"
-import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
+import { usePersonalInfoContext } from "../../../classes/personal-info-context"
 import ShowUserProfileImageOrDefaultImage from "../../show-user-profile-image-or-default-image"
 
 function ProfileSidebarButton() {

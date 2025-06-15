@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation"
 import DemoCard from "./demo-card"
 import DemoTemplate from "../activity-structure/demo-template"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { usePageTransitionContext } from "../../../contexts/page-transition-context"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { usePageTransitionContext } from "../../../classes/page-transition-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 import AnimatedTransitionWrapper from "../../animated-transition-wrapper"
 
 interface Props {

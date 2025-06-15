@@ -6,10 +6,10 @@ import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
 import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { usePipContext } from "../../classes/pip-context"
+import { useGarageContext } from "../../classes/garage-context"
+import { useSocketContext } from "../../classes/socket-context"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {

@@ -7,7 +7,7 @@ import { cn } from "../../lib/shadcn/utils"
 import WorkbenchTopSection from "./workbench-top-section"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
 import DrivingControls from "../garage/driving/driving-controls"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../classes/workbench-context"
 
 function Workbench() {
 	const workbenchClass = useWorkbenchContext()

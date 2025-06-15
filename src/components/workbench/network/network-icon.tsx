@@ -1,12 +1,12 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
+import { usePipContext } from "../../../classes/pip-context"
 import isNull from "lodash-es/isNull"
 import { Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../../classes/workbench-context"
 
 function NetworkIcon() {
 	const pipClass = usePipContext()

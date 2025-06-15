@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../../classes/workbench-context"
 
 function BatteryIcon() {
 	const workbenchClass = useWorkbenchContext()

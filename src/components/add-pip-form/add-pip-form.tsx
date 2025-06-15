@@ -18,8 +18,8 @@ import useAddPip from "../../hooks/pip/add-pip"
 import ConnectUsbButton from "../connect-usb-button"
 import WiFiScanSection from "./wifi-scan-section"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 // eslint-disable-next-line max-lines-per-function
 function AddPipForm() {

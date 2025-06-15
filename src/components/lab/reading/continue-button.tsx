@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { StepForward } from "lucide-react"
 import { useCallback, useState } from "react"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 interface Props {
 	blockId: ContentBlockID

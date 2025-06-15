@@ -6,7 +6,7 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { AxiosError } from "axios"
 
 export default function useChangePassword(): (

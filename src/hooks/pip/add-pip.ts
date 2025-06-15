@@ -6,9 +6,9 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import useExitAfterAddPip from "./exit-after-add-pip"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useAddPip(

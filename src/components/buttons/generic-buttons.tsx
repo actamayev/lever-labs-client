@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BlueTactileButton } from "./tactile-buttons"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-context"
 
 interface Props {
 	loading?: boolean
@@ -11,7 +11,6 @@ interface Props {
 
 function AuthButton(props: Props) {
 	const { loading, title } = props
-	const authClass = useAuthContext()
 
 	return (
 		<BlueTactileButton

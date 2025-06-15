@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import toUpper from "lodash-es/toUpper"
 import { observer } from "mobx-react"
-import { usePipContext } from "../contexts/pip-context"
+import { usePipContext } from "../classes/pip-context"
 
 function PipButtonTooltip() {
 	const pipClass = usePipContext()

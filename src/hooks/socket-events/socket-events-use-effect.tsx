@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
-import { useSocketContext } from "../../contexts/socket-context"
+import { useSocketContext } from "../../classes/socket-context"
 import useHandlePipStatusUpdate from "./handle-pip-status-update"
 import useHandleIncomingSensorData from "./handle-incoming-sensor-data"
 

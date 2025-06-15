@@ -2,7 +2,6 @@
 
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 
 class AuthClass {
 	private _accessToken: string | null = null
@@ -49,16 +48,6 @@ class AuthClass {
 	}
 }
 
-const authInstance = new AuthClass()
+const authClass = new AuthClass()
 
-const AuthContext = createContext(authInstance)
-
-export default function AuthProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<AuthContext.Provider value={authInstance}>
-			{children}
-		</AuthContext.Provider>
-	)
-}
-
-export const useAuthContext = () => useContext(AuthContext)
+export default authClass

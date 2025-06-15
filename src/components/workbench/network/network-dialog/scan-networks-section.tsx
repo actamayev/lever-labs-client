@@ -8,8 +8,8 @@ import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts
 import { Input } from "../../../shadcn/ui/input"
 import { Button } from "../../../shadcn/ui/button"
 import NetworkStrengthIcon from "../../../network-strength-icon"
-import { useSerialManagerContext } from "../../../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../../../classes/serial-message-manager"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function

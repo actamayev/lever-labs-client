@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import useRequestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"

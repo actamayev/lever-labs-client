@@ -1,7 +1,7 @@
 "use client"
 
 import { motorKeyMappings } from "../../utils/constants"
-import { useGarageContext } from "../../contexts/garage-context"
+import { useGarageContext } from "../../classes/garage-context"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping) => {

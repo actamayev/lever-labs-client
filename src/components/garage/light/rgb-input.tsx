@@ -5,7 +5,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Input } from "../../shadcn/ui/input"
 import { Label } from "../../shadcn/ui/label"
-import { useGarageContext } from "../../../contexts/garage-context"
+import { useGarageContext } from "../../../classes/garage-context"
 
 function RGBInput() {
 	const garageClass = useGarageContext()

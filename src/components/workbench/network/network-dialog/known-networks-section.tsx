@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Check } from "lucide-react"
-import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import { useSerialMessageManagerContext } from "../../../../classes/serial-message-manager"
 import NetworkStrengthIcon from "../../../network-strength-icon"
 
 function KnownNetworksSection() {

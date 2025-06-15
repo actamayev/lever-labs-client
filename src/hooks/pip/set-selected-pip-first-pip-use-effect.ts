@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 
 export default function useSetSelectedPipFirstPipUseEffect(): void {
 	const pipClass = usePipContext()

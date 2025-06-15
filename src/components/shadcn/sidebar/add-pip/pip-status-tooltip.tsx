@@ -5,7 +5,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../../lib/shadcn/utils"
 import CustomTooltip from "../../../custom-tooltip"
-import { usePipContext } from "../../../../contexts/pip-context"
+import { usePipContext } from "../../../../classes/pip-context"
 
 function PipStatusTooltip() {
 	const pipClass = usePipContext()

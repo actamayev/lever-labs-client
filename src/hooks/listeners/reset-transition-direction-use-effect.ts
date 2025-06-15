@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
 import { useCallback, useEffect } from "react"
-import { usePageTransitionContext } from "../../contexts/page-transition-context"
+import { usePageTransitionContext } from "../../classes/page-transition-context"
 
 export default function useResetTransitionDirectionUseEffect(): void {
 	const pageTransitionClass = usePageTransitionContext()

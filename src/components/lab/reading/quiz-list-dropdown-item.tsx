@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { DropdownMenuItem } from "../../shadcn/ui/dropdown-menu"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 interface Props {
 	blockId: ContentBlockID

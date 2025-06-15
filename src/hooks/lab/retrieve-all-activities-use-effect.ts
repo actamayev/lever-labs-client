@@ -4,8 +4,8 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { useActivityProgressContext } from "../../contexts/activity-progress-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import { useActivityProgressContext } from "../../classes/activity-progress-context"
 
 export default function useRetrieveAllActivitiesUseEffect(): void {
 	const blueDotApiClient = useApiClientContext()

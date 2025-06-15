@@ -5,7 +5,7 @@ import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 import useAnswerChoiceButtonListener from "../../../hooks/listeners/answer-choice-button-listener"
 
 // eslint-disable-next-line max-lines-per-function

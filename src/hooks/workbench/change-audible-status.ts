@@ -4,10 +4,10 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../../utils/type-checks"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useWorkbenchContext } from "../../classes/workbench-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 
 export default function useChangeAudibleStatus(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

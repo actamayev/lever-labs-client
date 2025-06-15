@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useGarageContext } from "../contexts/garage-context"
+import { useGarageContext } from "../classes/garage-context"
 
 function ShowPipColorOnScreen() {
 	const garageClass = useGarageContext()

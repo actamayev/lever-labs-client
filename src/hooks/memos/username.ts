@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
 export default function useUsername (): string | null {
 	const personalInfoClass = usePersonalInfoContext()

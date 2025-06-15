@@ -5,7 +5,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 function QuizExplanationSection() {
 	const labReadingClass = useLabReadingContext()

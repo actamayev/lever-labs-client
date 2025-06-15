@@ -4,11 +4,11 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

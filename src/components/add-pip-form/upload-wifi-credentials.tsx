@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 function UploadWiFiCredentials() {
 	const serialMessageManager = useSerialMessageManagerContext()

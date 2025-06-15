@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import CustomTooltip from "../../../custom-tooltip"
-import { useLabReadingContext } from "../../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../../classes/lab-reading-context"
 
 function ReadingProgressBar() {
 	const labReadingClass = useLabReadingContext()

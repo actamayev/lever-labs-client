@@ -2,21 +2,20 @@
 
 import { useCallback } from "react"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { usePipContext } from "../../contexts/pip-context"
-import { useAuthContext } from "../../contexts/auth-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
-import { useLabReadingContext } from "../../contexts/lab-reading-context"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { usePageTransitionContext } from "../../contexts/page-transition-context"
-import { useActivityProgressContext } from "../../contexts/activity-progress-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { usePipContext } from "../../classes/pip-context"
+import authClass from "../../classes/auth-context"
+import { useSocketContext } from "../../classes/socket-context"
+import { useGarageContext } from "../../classes/garage-context"
+import { useSandboxContext } from "../../classes/sandbox-context"
+import { useWorkbenchContext } from "../../classes/workbench-context"
+import { useLabReadingContext } from "../../classes/lab-reading-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
+import { usePageTransitionContext } from "../../classes/page-transition-context"
+import { useActivityProgressContext } from "../../classes/activity-progress-context"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 export default function useLogout(): () => Promise<void> {
-	const authClass = useAuthContext()
 	const blueDotApiClient = useApiClientContext()
 	const personalInfoClass = usePersonalInfoContext()
 	const pipClass = usePipContext()
@@ -45,5 +44,5 @@ export default function useLogout(): () => Promise<void> {
 		await serialMessageManagerClass.logout()
 		navigate("/")
 	}, [personalInfoClass, pipClass, pageTransitionClass, sandboxClass, garageClass, socketClass,
-		authClass, blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialMessageManagerClass, navigate])
+		blueDotApiClient, labReadingClass, activityProgressClass, workbenchClass, serialMessageManagerClass, navigate])
 }

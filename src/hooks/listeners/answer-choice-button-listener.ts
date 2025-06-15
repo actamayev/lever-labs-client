@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { useLabReadingContext } from "../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../classes/lab-reading-context"
 
 export default function useAnswerChoiceButtonListener(): void {
 	const labReadingClass = useLabReadingContext()

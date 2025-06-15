@@ -4,7 +4,7 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../components/toast-options"
-import { useApiClientContext } from "../contexts/blue-dot-api-client-context"
+import { useApiClientContext } from "../classes/blue-dot-api-client-context"
 import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
 import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
 

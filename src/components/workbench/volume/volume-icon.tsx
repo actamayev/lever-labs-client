@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../../classes/workbench-context"
 
 function VolumeWorkbench() {
 	const workbenchClass = useWorkbenchContext()

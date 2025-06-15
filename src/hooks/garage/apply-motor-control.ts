@@ -1,11 +1,11 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { usePipContext } from "../../contexts/pip-context"
+import { usePipContext } from "../../classes/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useSocketContext } from "../../classes/socket-context"
+import { useGarageContext } from "../../classes/garage-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function

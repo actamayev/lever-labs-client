@@ -7,7 +7,7 @@ import { Minus, PlusIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import { useGarageContext } from "../../../contexts/garage-context"
+import { useGarageContext } from "../../../classes/garage-context"
 
 function LightBrightnessControl() {
 	const garageClass = useGarageContext()

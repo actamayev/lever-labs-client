@@ -6,7 +6,7 @@ import VolumeIcon from "./volume/volume-icon"
 import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../classes/workbench-context"
 
 function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }) {
 	const workbenchClass = useWorkbenchContext()

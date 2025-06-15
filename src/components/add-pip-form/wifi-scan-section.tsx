@@ -10,8 +10,8 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 
 interface WiFiScanSectionProps {
 	control: Control<IncompletePipData>

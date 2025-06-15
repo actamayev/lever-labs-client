@@ -4,7 +4,7 @@ import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "../custom-sidebar-button"
-import { usePipContext } from "../../../../contexts/pip-context"
+import { usePipContext } from "../../../../classes/pip-context"
 import useSetSelectedPipFirstPipUseEffect from "../../../../hooks/pip/set-selected-pip-first-pip-use-effect"
 
 function AddPipSidebarButton() {

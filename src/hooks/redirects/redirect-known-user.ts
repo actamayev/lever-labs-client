@@ -5,11 +5,10 @@ import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { useAuthContext } from "../../contexts/auth-context"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import authClass from "../../classes/auth-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
 export default function useRedirectKnownUser(): void {
-	const authClass = useAuthContext()
 	const navigate = useTypedNavigate()
 	const personalInfoClass = usePersonalInfoContext()
 	const pathname = usePathname()

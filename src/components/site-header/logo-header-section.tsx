@@ -6,13 +6,12 @@ import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-context"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 	const pathname = usePathname()
-	const authClass = useAuthContext()
 	const personalInfoClass = usePersonalInfoContext()
 
 	const whereToNavigate = useMemo(() => {

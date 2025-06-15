@@ -4,8 +4,8 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { useSandboxContext } from "../../classes/sandbox-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 
 export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 	const sandboxClass = useSandboxContext()

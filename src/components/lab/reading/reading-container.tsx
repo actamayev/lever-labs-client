@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import { useLabReadingContext } from "../../../classes/lab-reading-context"
 
 interface Props {
 	blocks: ContentBlock[]

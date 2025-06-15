@@ -16,7 +16,7 @@ import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
 import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import { useWorkbenchContext } from "../../../classes/workbench-context"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
 import { TuneToPlay } from "@bluedotrobots/common-ts"
 

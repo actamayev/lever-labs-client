@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { motorKeyMappings } from "../../utils/constants"
 import useApplyMotorControl from "./apply-motor-control"
 import useComputeMotorControl from "./compute-motor-control"
-import { useGarageContext } from "../../contexts/garage-context"
+import { useGarageContext } from "../../classes/garage-context"
 
 export default function useMotorDriveUseEffect(): void {
 	const garageClass = useGarageContext()

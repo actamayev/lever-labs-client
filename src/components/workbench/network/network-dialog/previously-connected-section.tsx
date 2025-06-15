@@ -2,7 +2,7 @@
 
 import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
-import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import { useSerialMessageManagerContext } from "../../../../classes/serial-message-manager"
 
 function PreviouslyConnectedSection() {
 	const serialMessageManager = useSerialMessageManagerContext()

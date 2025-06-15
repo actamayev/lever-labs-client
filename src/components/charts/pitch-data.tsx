@@ -16,7 +16,7 @@ import React, { useEffect, useState, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/shadcn/ui/card"
 import { Button } from "@/components/shadcn/ui/button"
 import { Slider } from "@/components/shadcn/ui/slider"
-import { useGarageContext } from "../../contexts/garage-context"
+import { useGarageContext } from "../../classes/garage-context"
 
 // Configuration
 const centerAngle = 94

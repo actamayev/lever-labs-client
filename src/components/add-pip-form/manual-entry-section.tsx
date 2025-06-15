@@ -6,8 +6,8 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
+import { useSerialMessageManagerContext } from "../../classes/serial-message-manager"
 import { observer } from "mobx-react"
 
 interface ManualEntrySectionProps {

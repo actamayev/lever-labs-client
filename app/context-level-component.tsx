@@ -1,47 +1,44 @@
 import { Slide, ToastContainer } from "react-toastify"
-import PipProvider from "../src/contexts/pip-context"
-import AuthProvider from "../src/contexts/auth-context"
-import GarageProvider from "../src/contexts/garage-context"
-import SocketProvider from "../src/contexts/socket-context"
-import SandboxProvider from "../src/contexts/sandbox-context"
-import WorkbenchProvider from "../src/contexts/workbench-context"
-import LabReadingProvider from "../src/contexts/lab-reading-context"
-import PersonalInfoProvider from "../src/contexts/personal-info-context"
-import SerialManagerProvider from "../src/contexts/serial-manager-context"
-import PageTransitionProvider from "../src/contexts/page-transition-context"
-import ActivityProgressProvider from "../src/contexts/activity-progress-context"
-import BlueDotApiClientProvider from "../src/contexts/blue-dot-api-client-context"
-import SerialMessageManagerProvider from "../src/contexts/serial-message-manager"
+import PipProvider from "../src/classes/pip-context"
+import GarageProvider from "../src/classes/garage-context"
+import SocketProvider from "../src/classes/socket-context"
+import SandboxProvider from "../src/classes/sandbox-context"
+import WorkbenchProvider from "../src/classes/workbench-context"
+import LabReadingProvider from "../src/classes/lab-reading-context"
+import PersonalInfoProvider from "../src/classes/personal-info-context"
+import SerialManagerProvider from "../src/classes/serial-manager-context"
+import PageTransitionProvider from "../src/classes/page-transition-context"
+import ActivityProgressProvider from "../src/classes/activity-progress-context"
+import BlueDotApiClientProvider from "../src/classes/blue-dot-api-client-context"
+import SerialMessageManagerProvider from "../src/classes/serial-message-manager"
 
 export default function ContextLevelComponent ({ children } : { children: React.ReactNode }) {
 	return (
 		<>
 			<PageTransitionProvider>
-				<AuthProvider>
-					<PersonalInfoProvider>
-						<PipProvider>
-							<BlueDotApiClientProvider>
-								<SocketProvider>
-									<LabReadingProvider>
-										<ActivityProgressProvider>
-											<SandboxProvider>
-												<GarageProvider>
-													<WorkbenchProvider>
-														<SerialManagerProvider>
-															<SerialMessageManagerProvider>
-																{children}
-															</SerialMessageManagerProvider>
-														</SerialManagerProvider>
-													</WorkbenchProvider>
-												</GarageProvider>
-											</SandboxProvider>
-										</ActivityProgressProvider>
-									</LabReadingProvider>
-								</SocketProvider>
-							</BlueDotApiClientProvider>
-						</PipProvider>
-					</PersonalInfoProvider>
-				</AuthProvider>
+				<PersonalInfoProvider>
+					<PipProvider>
+						<BlueDotApiClientProvider>
+							<SocketProvider>
+								<LabReadingProvider>
+									<ActivityProgressProvider>
+										<SandboxProvider>
+											<GarageProvider>
+												<WorkbenchProvider>
+													<SerialManagerProvider>
+														<SerialMessageManagerProvider>
+															{children}
+														</SerialMessageManagerProvider>
+													</SerialManagerProvider>
+												</WorkbenchProvider>
+											</GarageProvider>
+										</SandboxProvider>
+									</ActivityProgressProvider>
+								</LabReadingProvider>
+							</SocketProvider>
+						</BlueDotApiClientProvider>
+					</PipProvider>
+				</PersonalInfoProvider>
 			</PageTransitionProvider>
 			<ToastContainer
 				position="bottom-right"

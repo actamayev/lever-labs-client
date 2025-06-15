@@ -6,8 +6,8 @@ import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
 import useDefaultSiteTheme from "../memos/default-site-theme"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import { usePersonalInfoContext } from "../../classes/personal-info-context"
+import { useApiClientContext } from "../../classes/blue-dot-api-client-context"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
 	const blueDotApiClient = useApiClientContext()

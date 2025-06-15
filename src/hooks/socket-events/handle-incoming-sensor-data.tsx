@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback } from "react"
-import { useGarageContext } from "../../contexts/garage-context"
+import { useGarageContext } from "../../classes/garage-context"
 import { IncomingSensorData } from "@bluedotrobots/common-ts"
 
 export default function useHandleIncomingSensorData(): (data: IncomingSensorData) => void {

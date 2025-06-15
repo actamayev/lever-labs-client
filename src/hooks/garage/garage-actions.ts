@@ -1,9 +1,9 @@
 "use client"
 
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import { usePipContext } from "../../classes/pip-context"
+import { useGarageContext } from "../../classes/garage-context"
+import { useSocketContext } from "../../classes/socket-context"
+import { useSerialManagerContext } from "../../classes/serial-manager-context"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 
 export default function useGarageActions(): {
