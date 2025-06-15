@@ -8,10 +8,10 @@ import { LoginSuccess, RegisterSuccess } from "@bluedotrobots/common-ts"
 
 export default function useSetDataAfterLoginOrRegister(): (authData: LoginSuccess | RegisterSuccess) => void {
 	const socketClass = useSocketContext()
-	
+
 	return useCallback((authData: LoginSuccess | RegisterSuccess): void => {
 		blueDotApiClientClass.httpClient.accessToken = authData.accessToken
 		authClass.setAccessToken(authData.accessToken, true)
 		socketClass.setAccessToken(authData.accessToken)
-	}, [blueDotApiClientClass.httpClient, socketClass])
+	}, [socketClass])
 }

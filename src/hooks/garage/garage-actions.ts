@@ -1,7 +1,7 @@
 "use client"
 
 import { usePipContext } from "../../classes/pip-context"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import { useSocketContext } from "../../classes/socket-context"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
@@ -10,7 +10,6 @@ export default function useGarageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 	} {
-	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const serialManager = useSerialManagerContext()

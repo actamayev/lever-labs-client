@@ -3,7 +3,6 @@
 import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 import { IncomingSensorData, LightAnimation, MotorControlInput, Sounds } from "@bluedotrobots/common-ts"
 
 class GarageClass {
@@ -178,16 +177,6 @@ class GarageClass {
 	}
 }
 
-const garageInstance = new GarageClass()
+const garageClass = new GarageClass()
 
-const GarageContext = createContext(garageInstance)
-
-export default function GarageProvider({ children }: { children: React.ReactNode }) {
-	return (
-		<GarageContext.Provider value={garageInstance}>
-			{children}
-		</GarageContext.Provider>
-	)
-}
-
-export const useGarageContext = () => useContext(GarageContext)
+export default garageClass

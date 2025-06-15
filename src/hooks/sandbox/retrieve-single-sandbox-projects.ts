@@ -10,7 +10,7 @@ import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: ProjectUUID): void {
 	const sandboxClass = useSandboxContext()
-	
+
 	const retrieveSingleSandboxProject = useCallback(async () => {
 		try {
 			// If we already have the project in the context, no need to fetch it again

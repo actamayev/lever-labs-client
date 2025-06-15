@@ -9,7 +9,7 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrieveAllSandboxProjectsUseEffect(): void {
 	const sandboxClass = useSandboxContext()
-	
+
 	const retrieveAllSandboxProjects = useCallback(async () => {
 		try {
 			if (

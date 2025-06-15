@@ -5,7 +5,7 @@ import useTypedNavigate from "../navigate/typed-navigate"
 import { usePipContext } from "../../classes/pip-context"
 import authClass from "../../classes/auth-class"
 import { useSocketContext } from "../../classes/socket-context"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import { useSandboxContext } from "../../classes/sandbox-context"
 import { useWorkbenchContext } from "../../classes/workbench-context"
 import { useLabReadingContext } from "../../classes/lab-reading-context"
@@ -24,7 +24,6 @@ export default function useLogout(): () => Promise<void> {
 	const pageTransitionClass = usePageTransitionContext()
 	const workbenchClass = useWorkbenchContext()
 	const sandboxClass = useSandboxContext()
-	const garageClass = useGarageContext()
 	const serialMessageManagerClass = useSerialMessageManagerContext()
 
 	return useCallback(async (): Promise<void> => {

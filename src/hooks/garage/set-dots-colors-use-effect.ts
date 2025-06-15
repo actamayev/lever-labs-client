@@ -7,13 +7,12 @@ import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
 import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
 import { usePipContext } from "../../classes/pip-context"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import { useSocketContext } from "../../classes/socket-context"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {
-	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 	const serialManager = useSerialManagerContext()

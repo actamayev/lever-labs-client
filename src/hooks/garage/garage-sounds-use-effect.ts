@@ -3,11 +3,10 @@
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants"
 import { usePipContext } from "../../classes/pip-context"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import { useSocketContext } from "../../classes/socket-context"
 
 export default function useGarageSoundsUseEffect(): void {
-	const garageClass = useGarageContext()
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
 

@@ -1,6 +1,5 @@
 import { Slide, ToastContainer } from "react-toastify"
 import PipProvider from "../src/classes/pip-context"
-import GarageProvider from "../src/classes/garage-context"
 import SocketProvider from "../src/classes/socket-context"
 import SandboxProvider from "../src/classes/sandbox-context"
 import WorkbenchProvider from "../src/classes/workbench-context"
@@ -19,15 +18,13 @@ export default function ContextLevelComponent ({ children } : { children: React.
 						<SocketProvider>
 							<LabReadingProvider>
 								<SandboxProvider>
-									<GarageProvider>
-										<WorkbenchProvider>
-											<SerialManagerProvider>
-												<SerialMessageManagerProvider>
-													{children}
-												</SerialMessageManagerProvider>
-											</SerialManagerProvider>
-										</WorkbenchProvider>
-									</GarageProvider>
+									<WorkbenchProvider>
+										<SerialManagerProvider>
+											<SerialMessageManagerProvider>
+												{children}
+											</SerialMessageManagerProvider>
+										</SerialManagerProvider>
+									</WorkbenchProvider>
 								</SandboxProvider>
 							</LabReadingProvider>
 						</SocketProvider>

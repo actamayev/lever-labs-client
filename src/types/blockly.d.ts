@@ -33,7 +33,7 @@ declare global {
 		expanded?: string | boolean
 	}
 
-	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
+	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents">, PartialCategoryInfo {
 		name: BlocklyCategoryName
 		colour: HexColor
 		contents: Array<{
@@ -42,7 +42,7 @@ declare global {
 		}>
 	}
 
-	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents"> extends PartialCategoryInfo {
+	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents">, PartialCategoryInfo {
 		name: ParentCategoryName
 		colour: HexColor
 		contents: Array<CustomCategoryInfo>

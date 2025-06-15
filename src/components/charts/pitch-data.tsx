@@ -16,7 +16,7 @@ import React, { useEffect, useState, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/shadcn/ui/card"
 import { Button } from "@/components/shadcn/ui/button"
 import { Slider } from "@/components/shadcn/ui/slider"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 
 // Configuration
 const centerAngle = 94
@@ -32,7 +32,6 @@ interface ChartData {
 
 // eslint-disable-next-line max-lines-per-function
 function AngleVisualization() {
-	const garageClass = useGarageContext()
 	const [formattedData, setFormattedData] = useState<ChartData[]>([])
 	const [isPaused, setIsPaused] = useState(false)
 	const [historyPosition, setHistoryPosition] = useState(100) // 0-100 percentage

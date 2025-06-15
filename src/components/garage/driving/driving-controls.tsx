@@ -4,14 +4,13 @@ import { observer } from "mobx-react"
 import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
-import { useGarageContext } from "../../../classes/garage-context"
+import garageClass from "../../../classes/garage-class"
 import useMotorDriveUseEffect from "../../../hooks/garage/motor-drive-use-effect"
 import useGarageActionsUseEffect from "../../../hooks/garage/garage-actions-use-effect"
 
 function DrivingControls() {
 	useMotorDriveUseEffect()
 	useGarageActionsUseEffect()
-	const garageClass = useGarageContext()
 
 	return (
 		<div className="flex flex-row items-center justify-between gap-8">

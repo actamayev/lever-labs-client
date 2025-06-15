@@ -32,5 +32,5 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [defaultSiteTheme, personalInfoClass, blueDotApiClientClass.httpClient.accessToken, blueDotApiClientClass.personalInfoDataService, toast])
+	}, [defaultSiteTheme, personalInfoClass, toast])
 }

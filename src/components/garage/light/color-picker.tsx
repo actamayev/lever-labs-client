@@ -4,10 +4,9 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import Wheel from "@uiw/react-color-wheel"
 import { rgbaToHsva } from "@uiw/color-convert"
-import { useGarageContext } from "../../../classes/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 function ColorPicker() {
-	const garageClass = useGarageContext()
 
 	const colorToShow = useMemo(() => {
 		// This is done to ensure the shade of the color wheel stays constant

@@ -5,10 +5,9 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Input } from "../../shadcn/ui/input"
 import { Label } from "../../shadcn/ui/label"
-import { useGarageContext } from "../../../classes/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 function RGBInput() {
-	const garageClass = useGarageContext()
 
 	// Function to enforce RGB range (0-255)
 	const enforceRGBRange = useCallback((value: string) => {

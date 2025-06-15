@@ -7,10 +7,9 @@ import { Minus, PlusIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import { useGarageContext } from "../../../classes/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 function LightBrightnessControl() {
-	const garageClass = useGarageContext()
 	const [isDecreasing, setIsDecreasing] = useState(false)
 	const [isIncreasing, setIsIncreasing] = useState(false)
 	const intervalRef = useRef<NodeJS.Timeout | null>(null)

@@ -13,7 +13,7 @@ import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import { CustomCountdown } from "../../../icons/custom-countdown"
 import { useSocketContext } from "../../../../classes/socket-context"
 import { CustomPartyPopper } from "../../../icons/custom-party-popper"
-import { useGarageContext } from "../../../../classes/garage-context"
+import garageClass from "../../../../classes/garage-class"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 import { Sounds } from "@bluedotrobots/common-ts"
@@ -22,7 +22,6 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const socketClass = useSocketContext()
 	const pipClass = usePipContext()
-	const garageClass = useGarageContext()
 
 	// Map direction to the correct icon
 	const getSoundIcon = (): ReactNode => {

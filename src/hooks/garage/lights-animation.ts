@@ -5,13 +5,12 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { usePipContext } from "../../classes/pip-context"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
 import { useSerialManagerContext } from "../../classes/serial-manager-context"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
-	const garageClass = useGarageContext()
 	const pipClass = usePipContext()
 	const serialManager = useSerialManagerContext()
 
@@ -43,6 +42,5 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClientClass.garageDataService, blueDotApiClientClass.httpClient.accessToken, garageClass, pipClass.selectedPip, serialManager])
-
+	}, [pipClass.selectedPip, serialManager])
 }

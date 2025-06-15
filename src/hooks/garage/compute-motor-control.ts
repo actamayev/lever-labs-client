@@ -1,7 +1,7 @@
 "use client"
 
 import { motorKeyMappings } from "../../utils/constants"
-import { useGarageContext } from "../../classes/garage-context"
+import garageClass from "../../classes/garage-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping) => {
@@ -10,7 +10,6 @@ const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping)
 }, {} as Record<MotorDirection, MotorDriveKeyMapping>)
 
 export default function useComputeMotorControl(): () => MotorControlInput {
-	const garageClass = useGarageContext()
 
 	// Compute motor control values based on pressed keys
 	return (): MotorControlInput => {
