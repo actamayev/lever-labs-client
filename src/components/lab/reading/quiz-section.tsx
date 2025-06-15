@@ -15,7 +15,6 @@ import QuizExplanationSection from "./quiz-explanation-section"
 import labReadingClass from "../../../classes/lab-reading-class"
 
 function QuizSection() {
-
 	if (!labReadingClass.currentQuestion || !labReadingClass.activeQuiz) return null
 
 	return (

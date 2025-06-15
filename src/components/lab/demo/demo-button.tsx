@@ -26,7 +26,8 @@ function DemoButton({ demo } : { demo: Demo }) {
 		// 	return toast.negative({ title: "Please connect your Pip to the internet"})
 		// }
 		setActiveDemoName(demo.demoTitle)
-	}, [activeDemoName, demo.demoTitle, toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activeDemoName, demo.demoTitle, pipClass.selectedPip])
 
 	return (
 		<button

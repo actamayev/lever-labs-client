@@ -6,7 +6,6 @@ import { Button } from "../shadcn/ui/button"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 function AddPipButton({ getFormValues }: { getFormValues: () => IncompletePipData }) {
-
 	// Show add button when all conditions are met
 	const isReadyToAdd = () => {
 		const formValues = getFormValues()

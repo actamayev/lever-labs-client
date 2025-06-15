@@ -7,7 +7,6 @@ import { rgbaToHsva } from "@uiw/color-convert"
 import garageClass from "../../../classes/garage-class"
 
 function ColorPicker() {
-
 	const colorToShow = useMemo(() => {
 		// This is done to ensure the shade of the color wheel stays constant
 		const hsva = rgbaToHsva(garageClass.selectedColorRgba)

@@ -1,14 +1,14 @@
 "use client"
 
-import { Control, useWatch } from "react-hook-form" // Add useWatch import
-import { Button } from "../shadcn/ui/button"
+import { observer } from "mobx-react"
+import { Control, useWatch } from "react-hook-form"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { Button } from "../shadcn/ui/button"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
-import { observer } from "mobx-react"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 interface ManualEntrySectionProps {
     control: Control<IncompletePipData>

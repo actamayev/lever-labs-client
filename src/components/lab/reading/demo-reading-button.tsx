@@ -17,8 +17,8 @@ function DemoReadingButton({ block } : { block: ContentBlock }) {
 			return "rgb(255 200 0)"
 		}
 		return "rgb(202 138 4)"
-	}, [])
-
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [personalInfoClass.defaultSiteTheme])
 
 	const navigateToDemo = useCallback(() => {
 		pageTransitionClass.setDirection("down") // Set before navigating

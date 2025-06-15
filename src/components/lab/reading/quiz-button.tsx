@@ -19,14 +19,14 @@ function QuizButton({ block } : { block: ContentBlock }) {
 		}
 		if (isQuizCorrect) return "rgb(22 163 74)"
 		else return "rgb(147 51 234)"
-	}, [isQuizCorrect])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isQuizCorrect, personalInfoClass.defaultSiteTheme])
 
 	const quizButtonClasses = useMemo(() => {
 		if (isQuizCorrect) {
 			return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
 		}
-		return "bg-purple-100 text-purple-800 \
-			dark:bg-purple-900 dark:text-purple-200"
+		return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
 	}, [isQuizCorrect])
 
 	return (

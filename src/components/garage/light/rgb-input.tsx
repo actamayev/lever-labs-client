@@ -8,7 +8,6 @@ import { Label } from "../../shadcn/ui/label"
 import garageClass from "../../../classes/garage-class"
 
 function RGBInput() {
-
 	// Function to enforce RGB range (0-255)
 	const enforceRGBRange = useCallback((value: string) => {
 		const numValue = parseInt(value || "0")

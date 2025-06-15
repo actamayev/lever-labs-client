@@ -4,11 +4,10 @@ import { Check } from "lucide-react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import labReadingClass from "../../../classes/lab-reading-class"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 
 function QuizExplanationSection() {
-
 	const CheckButton = observer(() => {
 		if (labReadingClass.activeQuiz?.isCorrect === true) return null
 		return (

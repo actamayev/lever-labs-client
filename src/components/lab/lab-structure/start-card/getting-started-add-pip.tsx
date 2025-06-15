@@ -20,7 +20,8 @@ function GettingStartedAddPip() {
 	const onClick = useCallback(() => {
 		if (!isNull(pipClass.selectedPip)) return
 		navigate("/add-pip")
-	}, [navigate])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [navigate, pipClass.selectedPip])
 
 	return (
 		<CustomTooltip

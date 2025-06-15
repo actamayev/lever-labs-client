@@ -17,7 +17,6 @@ const DOT_POSITIONS = [
 ]
 
 function LightDotsSelector() {
-
 	return (
 		<div className="flex items-start justify-end">
 			<div className="relative w-full h-full px-5">

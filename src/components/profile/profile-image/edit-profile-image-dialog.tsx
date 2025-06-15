@@ -15,11 +15,11 @@ import {
 	DialogClose
 } from "../../shadcn/ui/dialog"
 import LoadingOval from "../../loading-oval"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
 import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
@@ -126,7 +126,8 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 			setPreviewUrl(null)
 			setSelectedImage(null)
 		}
-	}, [previewUrl])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [previewUrl, personalInfoClass.profilePictureUrl])
 
 	// Determine which image to show
 	const hasProfilePicture = !isNull(personalInfoClass.profilePictureUrl)
@@ -134,8 +135,10 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
                   (pendingDelete ? null : personalInfoClass.profilePictureUrl)
 
 	return (
-		<Dialog open={isOpen} onOpenChange={(open) => {
-			if (!open) {
+		<Dialog
+			open={isOpen}
+			onOpenChange={(open) => {
+				if (open) return
 				// Clean up when dialog closes
 				if (previewUrl) {
 					URL.revokeObjectURL(previewUrl)
@@ -144,8 +147,8 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 				setSelectedImage(null)
 				setPendingDelete(false)
 				onClose()
-			}
-		}}>
+			}}
+		>
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle>Edit Profile Image</DialogTitle>

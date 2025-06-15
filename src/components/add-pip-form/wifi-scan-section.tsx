@@ -37,7 +37,8 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManagerClass.setIsScanning(false)
 		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [serialConnectionManagerClass.connected, serialMessageManagerClass.isScanning])
 
 	return (
 		<div className="space-y-6">
