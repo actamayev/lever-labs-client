@@ -37,8 +37,8 @@ class BlueDotApiClient {
 	}
 
 	public logout() {
-		this.httpClient.accessToken = null
 		this.initializeServices()
+		this.httpClient.logout()
 	}
 }
 

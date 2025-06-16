@@ -3,18 +3,20 @@
 import { useForm } from "react-hook-form"
 import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { NewUsernameRequest } from "@bluedotrobots/common-ts"
 import { Form } from "../../shadcn/ui/form"
 import AuthButton from "../../buttons/generic-buttons"
+import UsernameInput from "../register/username-input"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import UsernameInput from "../register/username-input"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import usernameSubmit from "../../../utils/auth/google/username-submit"
 import { registerUsernameSchema } from "../../../utils/auth/auth-schemas"
-import useUsernameSubmit from "../../../hooks/auth/google/username-submit"
-import { NewUsernameRequest } from "@bluedotrobots/common-ts"
 
 export default function RegisterUsernameComponent() {
 	const [error, setError] = useState("")
-	const usernameSubmit = useUsernameSubmit(setError)
+	const navigate = useTypedNavigate()
 
 	const form = useForm<NewUsernameRequest>({
 		resolver: zodResolver(registerUsernameSchema),
@@ -27,8 +29,9 @@ export default function RegisterUsernameComponent() {
 	const isDisabled = useMemo(() => username.length < 4, [username])
 
 	const onSubmit = useCallback(async (values: NewUsernameRequest) => {
-		await usernameSubmit(values.username)
-	}, [usernameSubmit])
+		await usernameSubmit(values.username, setError)
+		navigate(PageToNavigateAfterLogin)
+	}, [navigate])
 
 	return (
 		<>

@@ -7,7 +7,8 @@ import isEqual from "lodash-es/isEqual"
 import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import useExitAfterAddPip from "./exit-after-add-pip"
+import useTypedNavigate from "../navigate/typed-navigate"
+import { PageToNavigateAfterLogin } from "../../utils/constants"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
@@ -15,7 +16,12 @@ export default function useAddPip(
 	resetAddPipVars: () => void,
 	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
-	const exitAfterAddPip = useExitAfterAddPip()
+	const navigate = useTypedNavigate()
+
+	const exitAfterAddPip = useCallback(() => {
+		resetAddPipVars()
+		navigate(PageToNavigateAfterLogin)
+	}, [navigate, resetAddPipVars])
 
 	// eslint-disable-next-line complexity
 	return useCallback(async () => {
@@ -28,8 +34,8 @@ export default function useAddPip(
 				})
 			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
-				exitAfterAddPip(resetAddPipVars)
-				return toastClass.negative({
+				exitAfterAddPip()
+				return toastClass.neutral({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
@@ -63,7 +69,7 @@ export default function useAddPip(
 				pipConnectionStatus: "connected"
 			}
 			pipClass.addNewPip(pipDataToAdd)
-			exitAfterAddPip(resetAddPipVars)
+			exitAfterAddPip()
 		} catch (error) {
 			console.error(error)
 			if (error instanceof AxiosError) {
@@ -87,5 +93,5 @@ export default function useAddPip(
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [getFormValues, exitAfterAddPip, resetAddPipVars])
+	}, [getFormValues, exitAfterAddPip])
 }

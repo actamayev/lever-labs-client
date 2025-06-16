@@ -19,6 +19,10 @@ class AuthClass {
 		return !isNull(this._accessToken)
 	}
 
+	get accessToken(): string | null {
+		return this._accessToken
+	}
+
 	public getAuthDataFromStorage(): string | null {
 		if (typeof window === "undefined") return null
 		const storedAccessToken = localStorage.getItem("Access Token")
@@ -26,16 +30,17 @@ class AuthClass {
 		return this._accessToken
 	}
 
-	public setAccessToken = action((accessToken: string | null, saveToStorage = false): void => {
+	public setAccessToken = action((accessToken: string | null): void => {
 		this._accessToken = accessToken
-		blueDotApiClientClass.httpClient.accessToken = accessToken
-		socketClass.setAccessToken(accessToken)
-		if (typeof window === "undefined") return
-		if (!isNull(accessToken) && saveToStorage === true) {
-			localStorage.setItem("Access Token", accessToken as string)
-		} else if (isNull(accessToken) && saveToStorage === true) {
+		if (isNull(accessToken)) {
+			if (typeof window === "undefined") return
 			localStorage.removeItem("Access Token")
+			return
 		}
+		blueDotApiClientClass.httpClient.setAuthHeader(accessToken)
+		socketClass.connect(accessToken)
+		if (typeof window === "undefined") return
+		localStorage.setItem("Access Token", accessToken as string)
 	})
 
 	public setAuthenticating = action((authenticating: boolean): void => {
@@ -47,7 +52,7 @@ class AuthClass {
 	})
 
 	public logout() {
-		this.setAccessToken(null, true)
+		this.setAccessToken(null)
 		this.setShowLoginOrRegister("Register")
 		this.setAuthenticating(false)
 	}

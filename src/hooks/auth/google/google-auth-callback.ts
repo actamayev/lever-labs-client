@@ -10,7 +10,7 @@ import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
-import retrieveDataAfterLogin from "../retrieve-data-after-login"
+import retrieveDataAfterLogin from "../../../utils/auth/retrieve-data-after-login"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
@@ -35,7 +35,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
 				throw Error("Unable to log in")
 			}
-			authClass.setAccessToken(googleCallbackResponse.data.accessToken, true)
+			authClass.setAccessToken(googleCallbackResponse.data.accessToken)
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}

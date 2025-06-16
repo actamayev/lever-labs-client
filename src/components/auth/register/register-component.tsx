@@ -2,22 +2,22 @@
 
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
+import { Form } from "@/components/shadcn/ui/form"
+import AgeInput from "./age-input"
 import EmailInput from "./email-input"
 import OrComponent from "../or-component"
 import UsernameInput from "./username-input"
 import PasswordField from "../password-input"
-import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
 import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import { registerSchema } from "../../../utils/auth/auth-schemas"
 import registerSubmit from "../../../utils/auth/register-submit"
-import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
-import AgeInput from "./age-input"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import { registerSchema } from "../../../utils/auth/auth-schemas"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function RegisterComponent() {
 	const [error, setError] = useState("")
@@ -33,6 +33,7 @@ export default function RegisterComponent() {
 		}
 	})
 
+	// TODO: After registration, doesn't set access token correclty?
 	const onSubmit = useCallback(async (values: RegisterFormValues) => {
 		await registerSubmit(values, setError)
 		navigate(PageToNavigateAfterLogin)

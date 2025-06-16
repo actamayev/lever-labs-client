@@ -5,11 +5,11 @@ import isEqual from "lodash-es/isEqual"
 import { SiteThemes } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import confirmRegisterFields from "./confirm-register-fields"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../error-handling/set-error-axios-response"
 
-export default async function useRegisterSubmit (
+export default async function useRegisterSubmit(
 	registerCredentials: RegisterFormValues,
 	setError: (error: string) => void,
 ): Promise<void> {
@@ -38,7 +38,7 @@ export default async function useRegisterSubmit (
 			setError("Unable to register. Please reload the page and try again")
 			return
 		}
-		authClass.setAccessToken(response.data.accessToken, true)
+		authClass.setAccessToken(response.data.accessToken)
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)
 	} finally {
