@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { StepForward } from "lucide-react"
 import { useCallback, useState } from "react"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 interface Props {
 	blockId: ContentBlockID
@@ -13,12 +13,11 @@ interface Props {
 function ContinueButton(props: Props) {
 	const { blockId } = props
 	const [isContinued, setIsContinued] = useState(false)
-	const labReadingClass = useLabReadingContext()
 
 	const clickContinue = useCallback(() => {
 		if (isContinued) return
 		labReadingClass.handleContinue(blockId, setIsContinued)
-	}, [blockId, isContinued, labReadingClass])
+	}, [blockId, isContinued])
 
 	return (
 		<BlueTactileButton

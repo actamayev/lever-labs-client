@@ -5,24 +5,20 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
 import useToastOptions from "../../components/toast-options"
-import useDefaultSiteTheme from "../memos/default-site-theme"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import personalInfoClass from "../../classes/personal-info-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const personalInfoClass = usePersonalInfoContext()
 	const toast = useToastOptions()
-	const defaultSiteTheme = useDefaultSiteTheme()
 
 	return useCallback(async () => {
 		try {
-			const newSiteTheme = defaultSiteTheme === "light" ? "dark" : "light"
+			const newSiteTheme = personalInfoClass.defaultSiteTheme === "light" ? "dark" : "light"
 			personalInfoClass.setDefaultSiteTheme(newSiteTheme)
-			if (isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
 				return // No toast because we don't want a negative toast if someone isn't logged in
 			}
-			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
+			const siteThemeResponse = await blueDotApiClientClass.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
 			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
 				throw Error("Unable to save new default site theme")
 			}
@@ -33,5 +29,6 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [defaultSiteTheme, personalInfoClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, personalInfoClass.defaultSiteTheme])
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-class"
 import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 interface LinkAuthHeaderProps {
@@ -29,7 +29,6 @@ interface SetLoginOrRegisterAuthHeaderProps {
 
 function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderProps) {
 	const { title, setShowLoginOrRegister } = props
-	const authClass = useAuthContext()
 
 	return (
 		<BlueTactileButton

@@ -2,7 +2,7 @@
 
 import { useRef } from "react"
 import { toast, ToastOptions as ReactToastifyOptions, Id } from "react-toastify"
-import useDefaultSiteTheme from "../hooks/memos/default-site-theme"
+import personalInfoClass from "../classes/personal-info-class"
 
 // Rename our options interface to avoid conflict with react-toastify's ToastOptions
 interface CustomToastOptions {
@@ -14,8 +14,6 @@ interface CustomToastOptions {
 
 // eslint-disable-next-line max-lines-per-function
 export default function useToastOptions() {
-	const defaultSiteTheme = useDefaultSiteTheme()
-	// Keep track of whether a toast is currently active
 	const isToastActiveRef = useRef(false)
 
 	const createToastContent = (
@@ -70,7 +68,7 @@ export default function useToastOptions() {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: defaultSiteTheme
+			theme: personalInfoClass.defaultSiteTheme
 		}
 
 		return showToastIfNotActive(toast, content, options)
@@ -84,7 +82,7 @@ export default function useToastOptions() {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: defaultSiteTheme
+			theme: personalInfoClass.defaultSiteTheme
 		}
 
 		return showToastIfNotActive(toast, content, options)
@@ -97,7 +95,7 @@ export default function useToastOptions() {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: defaultSiteTheme
+			theme: personalInfoClass.defaultSiteTheme
 		}
 
 		return showToastIfNotActive(toast, content, options)
@@ -110,7 +108,7 @@ export default function useToastOptions() {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: defaultSiteTheme
+			theme: personalInfoClass.defaultSiteTheme
 		}
 
 		return showToastIfNotActive(toast.error, content, options)

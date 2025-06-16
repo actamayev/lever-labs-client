@@ -7,7 +7,15 @@ import FooterSocialSection from "./footer-social-section"
 
 export default function Footer() {
 	const pathname = usePathname() // This returns the current path as a string
-	if (pathname !== "/") return null
+	if (
+		pathname !== "/" &&
+		pathname !== "/terms" &&
+		pathname !== "/privacy" &&
+		pathname !== "/mission" &&
+		pathname !== "/contact" &&
+		pathname !== "/schools" &&
+		pathname !== "/community-guidelines"
+	) return null
 
 	return (
 		<footer id="footer" className="bg-standardBackground/70 w-full pb-3 md:py-3 z-20 duration-0">
@@ -18,6 +26,21 @@ export default function Footer() {
 						{/* Left section - Social links (desktop) */}
 						<div className="hidden md:flex md:items-center md:justify-start">
 							<FooterSocialSection />
+							<FooterLink
+								linkTo="/terms"
+								linkTitle="Terms"
+								extraClasses="ml-6"
+							/>
+							<FooterLink
+								linkTo="/privacy"
+								linkTitle="Privacy"
+								extraClasses="ml-6"
+							/>
+							<FooterLink
+								linkTo="/community-guidelines"
+								linkTitle="Community Guidelines"
+								extraClasses="ml-6"
+							/>
 						</div>
 
 						{/* Center section - Company name */}
@@ -34,7 +57,6 @@ export default function Footer() {
 							<FooterLink
 								linkTo="/mission"
 								linkTitle="About Us"
-								extraClasses=""
 							/>
 							<FooterLink
 								linkTo="/contact"

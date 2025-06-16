@@ -5,19 +5,17 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { AddPipData, PipData } from "@bluedotrobots/common-ts"
+import pipClass from "../../classes/pip-class"
 import useExitAfterAddPip from "./exit-after-add-pip"
-import { usePipContext } from "../../contexts/pip-context"
 import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useAddPip(
 	resetAddPipVars: () => void,
 	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
-	const pipClass = usePipContext()
 	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity
@@ -54,7 +52,7 @@ export default function useAddPip(
 				pipName: getFormValues().pipName,
 			}
 
-			const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
+			const addPipDataResponse = await blueDotApiClientClass.pipDataService.addPip(dataToSend)
 
 			if (!isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 				throw new Error("Add Pip failed")
@@ -90,5 +88,5 @@ export default function useAddPip(
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [getFormValues, pipClass, blueDotApiClient.pipDataService, exitAfterAddPip, resetAddPipVars, toast])
+	}, [getFormValues, exitAfterAddPip, resetAddPipVars, toast])
 }

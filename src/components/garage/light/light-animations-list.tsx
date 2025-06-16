@@ -12,7 +12,7 @@ import {
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
-import { useGarageContext } from "../../../contexts/garage-context"
+import garageClass from "../../../classes/garage-class"
 import useLightsAnimation from "../../../hooks/garage/lights-animation"
 import { LightAnimation } from "@bluedotrobots/common-ts"
 
@@ -51,7 +51,6 @@ const ANIMATIONS: Animation[] = [
 ]
 
 function LightAnimationsList() {
-	const garageClass = useGarageContext()
 	const lightsAnimation = useLightsAnimation()
 
 	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`

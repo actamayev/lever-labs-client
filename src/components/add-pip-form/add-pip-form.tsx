@@ -1,31 +1,29 @@
 "use client"
 
 import { observer } from "mobx-react"
+import isNull from "lodash-es/isNull"
+import { useForm } from "react-hook-form"
 import { useCallback, useEffect } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 import {
 	Card,
 	CardContent,
 	CardHeader,
 	CardTitle,
 } from "@/components/shadcn/ui/card"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
 import BackButton from "../buttons/back-button"
 import useAddPip from "../../hooks/pip/add-pip"
-import ConnectUsbButton from "../connect-usb-button"
 import WiFiScanSection from "./wifi-scan-section"
+import ConnectUsbButton from "../connect-usb-button"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function AddPipForm() {
-	const serialMessageManagerClass = useSerialMessageManagerContext()
-	const serialManager = useSerialManagerContext()
-
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
@@ -53,16 +51,17 @@ function AddPipForm() {
 		serialMessageManagerClass.clearScannedNetworks()
 		serialMessageManagerClass.setIsScanning(false)
 		// Only reset flow state if we're completely done or starting over
-		if (!serialManager.connected) {
+		if (!serialConnectionManagerClass.connected) {
 			serialMessageManagerClass.resetFlowState()
 		}
-	}, [form, serialManager.connected, serialMessageManagerClass])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [form, serialConnectionManagerClass.connected])
 
 	// Update pipUUID when pipId is received
 	useEffect(() => {
-		if (serialMessageManagerClass.pipId) {
-			form.setValue("pipUUID", serialMessageManagerClass.pipId)
-		}
+		if (isNull(serialMessageManagerClass.pipId)) return
+		form.setValue("pipUUID", serialMessageManagerClass.pipId)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serialMessageManagerClass.pipId, form])
 
 	const addPip = useAddPip(resetAddPipVars, () => form.getValues())

@@ -4,6 +4,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { ChevronDown } from "lucide-react"
+import { TuneToPlay } from "@bluedotrobots/common-ts"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,12 +17,10 @@ import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
 import usePlayTune from "../../../hooks/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import workbenchClass from "../../../classes/workbench-class"
 import useChangeAudibleStatus from "../../../hooks/workbench/change-audible-status"
-import { TuneToPlay } from "@bluedotrobots/common-ts"
 
 function VolumeContent() {
-	const workbenchClass = useWorkbenchContext()
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
 	const playTune = usePlayTune()
 	const changeAudibleStatus = useChangeAudibleStatus()
@@ -31,7 +30,8 @@ function VolumeContent() {
 		if (workbenchClass.isMuted && value[0] > 0) {
 			workbenchClass.setIsMuted(false)
 		}
-	}, [workbenchClass])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [workbenchClass.isMuted])
 
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		// Prevent arrow keys from changing slider value

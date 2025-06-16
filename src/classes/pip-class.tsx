@@ -4,7 +4,6 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 import { PipConnectionStatus, PipData, PipStatusUpdate, PipUUID } from "@bluedotrobots/common-ts"
 
 class PipClass {
@@ -92,16 +91,6 @@ class PipClass {
 	}
 }
 
-const pipInstance = new PipClass()
+const pipClass = new PipClass()
 
-const PipContext = createContext(pipInstance)
-
-export default function PipProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<PipContext.Provider value={pipInstance}>
-			{children}
-		</PipContext.Provider>
-	)
-}
-
-export const usePipContext = () => useContext(PipContext)
+export default pipClass

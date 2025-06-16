@@ -4,11 +4,9 @@ import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import workbenchClass from "../../../classes/workbench-class"
 
 function VolumeWorkbench() {
-	const workbenchClass = useWorkbenchContext()
-
 	const SpeakerIconToShow = () => {
 		const baseClasses = "!h-11 !w-11" // Slightly smaller to accommodate text below
 		const strokeWidth = 2.5

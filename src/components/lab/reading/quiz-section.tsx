@@ -12,11 +12,9 @@ import { CustomQuiz } from "../../icons/custom-quiz"
 import AnswerChoiceButton from "./answer-choice-button"
 import QuizListDropdownItem from "./quiz-list-dropdown-item"
 import QuizExplanationSection from "./quiz-explanation-section"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 function QuizSection() {
-	const labReadingClass = useLabReadingContext()
-
 	if (!labReadingClass.currentQuestion || !labReadingClass.activeQuiz) return null
 
 	return (

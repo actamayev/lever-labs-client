@@ -7,15 +7,12 @@ import QuizButton from "./quiz-button"
 import { cn } from "../../../lib/shadcn/utils"
 import ContinueButton from "./continue-button"
 import DemoReadingButton from "./demo-reading-button"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 function ReadingBlock({ block } : { block: ContentBlock }) {
-	const labReadingClass = useLabReadingContext()
-
 	const isRevealed = useMemo(() => {
 		return labReadingClass.checkIfBlockIsShown(block.id)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [block.id, labReadingClass.shownBlocks])
+	}, [block.id])
 
 	return (
 		<div

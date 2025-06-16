@@ -5,11 +5,9 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { cn } from "../../../../lib/shadcn/utils"
 import CustomTooltip from "../../../custom-tooltip"
-import { usePipContext } from "../../../../contexts/pip-context"
+import pipClass from "../../../../classes/pip-class"
 
 function PipStatusTooltip() {
-	const pipClass = usePipContext()
-
 	const getStatusColor = useMemo(() => {
 		if (isNull(pipClass.selectedPip)) return ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { cn } from "../../../lib/shadcn/utils"
 import { DropdownMenuItem } from "../../shadcn/ui/dropdown-menu"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 interface Props {
 	blockId: ContentBlockID
@@ -13,7 +13,6 @@ interface Props {
 
 function QuizListDropdownItem(props: Props) {
 	const { blockId, question } = props
-	const labReadingClass = useLabReadingContext()
 
 	const isCorrect = labReadingClass.quizAttempts.get(question.questionUUID)?.some(attempt => attempt.isCorrect)
 

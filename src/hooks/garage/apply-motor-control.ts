@@ -1,20 +1,16 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { usePipContext } from "../../contexts/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import socketClass from "../../classes/socket-class"
+import garageClass from "../../classes/garage-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useApplyMotorControl(): (motorControl: MotorControlInput, forceEmit?: boolean) => void {
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
-	const blueDotApiClient = useApiClientContext()
 
 	// Map motor control values to drive directions
 	const motorControlToDriveDirections = (motorControl: { vertical: number, horizontal: number }): Set<DriveDirection> => {
@@ -67,7 +63,7 @@ export default function useApplyMotorControl(): (motorControl: MotorControlInput
 		// Update current directions
 		garageClass.updatePressedDirections(newDirections)
 
-		if (isNull(blueDotApiClient.httpClient.accessToken)) return
+		if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 
 		if (isNull(pipClass.selectedPip)) {
 			return toast.negative({ title: "Please add a Pip" })

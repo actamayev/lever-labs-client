@@ -3,17 +3,15 @@
 import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import { usePipContext } from "../../contexts/pip-context"
-import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 import { PipUUID } from "@bluedotrobots/common-ts"
+import pipClass from "../../classes/pip-class"
+import useToastOptions from "../../components/toast-options"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
 export default function useRequestToConnectToPip(): (
 	pipUUID: PipUUID
 ) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
@@ -36,7 +34,7 @@ export default function useRequestToConnectToPip(): (
 				})
 			}
 			}
-			const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(foundPip.pipUUID)
+			const connectToPipResponse = await blueDotApiClientClass.pipDataService.requestToConnectToPip(foundPip.pipUUID)
 
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Connect to Pip failed")
@@ -71,5 +69,5 @@ export default function useRequestToConnectToPip(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.pipDataService, pipClass, toast])
+	}, [toast])
 }

@@ -4,24 +4,21 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
-	const serialManager = useSerialManagerContext()
 
 	return useCallback(async () => {
 		try {
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 			if (
@@ -29,7 +26,7 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
-			const stopScriptResponse = await blueDotApiClient.sandboxDataService.stopCurrentlyRunningCode(
+			const stopScriptResponse = await blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode(
 				pipClass.selectedPip.pipUUID
 			)
 
@@ -43,5 +40,6 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass.selectedPip, serialManager, toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, serialConnectionManagerClass.connected, pipClass.selectedPip])
 }

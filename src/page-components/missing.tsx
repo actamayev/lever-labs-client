@@ -2,14 +2,13 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import { useAuthContext } from "../contexts/auth-context"
-import { CustomHouse } from "../components/icons/custom-house"
-import { CustomBriefcase } from "../components/icons/custom-briefcase"
-import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
+import authClass from "../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../utils/constants"
+import { CustomHouse } from "../components/icons/custom-house"
+import { CustomGarage } from "../components/icons/custom-garage"
+import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing() {
-	const authClass = useAuthContext()
 	const destination = authClass.isLoggedIn ? PageToNavigateAfterLogin : "/"
 
 	return (
@@ -21,8 +20,8 @@ function Missing() {
 				<BlackWhiteTactileButton className="text-2xl p-5">
 					{authClass.isLoggedIn ? (
 						<>
-							RETURN TO CAREER QUEST
-							<CustomBriefcase className="ml-2 !h-7 !w-7" />
+							RETURN TO GARAGE
+							<CustomGarage className="ml-2 !h-7 !w-7" />
 						</>
 					) : (
 						<>

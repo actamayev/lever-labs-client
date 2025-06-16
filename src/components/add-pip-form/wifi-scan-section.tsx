@@ -1,17 +1,17 @@
 "use client"
 
+import { useState } from "react"
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { useState, useCallback } from "react"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Control, UseFormSetValue } from "react-hook-form"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import useScanForNetworks from "../../hooks/scan-for-networks"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 interface WiFiScanSectionProps {
 	control: Control<IncompletePipData>
@@ -19,27 +19,9 @@ interface WiFiScanSectionProps {
 }
 
 function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
-	const serialManager = useSerialManagerContext()
-	const serialMessageManager = useSerialMessageManagerContext()
 	const [showManualEntry, setShowManualEntry] = useState(false)
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
-
-	const scanForNetworks = useCallback(async () => {
-		if (!serialManager.connected || serialMessageManager.isScanning) return
-
-		serialMessageManager.setIsScanning(true)
-		serialMessageManager.setWiFiConnectionStatus(null)
-		serialMessageManager.clearScannedNetworks()
-		setSelectedNetworkIndex(null)
-
-		try {
-			const message = MessageBuilder.createScanWiFiNetworksMessage()
-			await serialManager.sendBinaryMessage(message)
-		} catch (error) {
-			console.error("Failed to scan for networks:", error)
-			serialMessageManager.setIsScanning(false)
-		}
-	}, [serialManager, serialMessageManager])
+	const { scanForNetworks } = useScanForNetworks()
 
 	return (
 		<div className="space-y-6">
@@ -54,12 +36,15 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 					<Button
 						type="button"
 						onClick={scanForNetworks}
-						disabled={serialMessageManager.isScanning || !serialManager.connected}
-						className={cn("flex items-center gap-2", serialMessageManager.isScanning ? "cursor-not-allowed" : "cursor-pointer")}
+						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.connected}
+						className={cn(
+							"flex items-center gap-2",
+							serialMessageManagerClass.isScanning ? "cursor-not-allowed" : "cursor-pointer"
+						)}
 						variant="outline"
 					>
 						<Wifi className="h-4 w-4" />
-						{serialMessageManager.isScanning ? "Scanning..." : "Scan for Networks"}
+						{serialMessageManagerClass.isScanning ? "Scanning..." : "Scan for Networks"}
 					</Button>
 
 					<Button
@@ -73,7 +58,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 				</div>
 
 				{/* Scanned Networks List */}
-				{(serialMessageManager.isScanning || !isEmpty(serialMessageManager.scannedNetworks)) && (
+				{(serialMessageManagerClass.isScanning || !isEmpty(serialMessageManagerClass.scannedNetworks)) && (
 					<div className="mb-4">
 						<ScannedNetworkList
 							control={control}

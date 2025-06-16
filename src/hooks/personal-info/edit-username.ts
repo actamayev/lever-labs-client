@@ -6,19 +6,17 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
+import personalInfoClass from "../../classes/personal-info-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 
 export default function useEditUsername(): (newUsername: string) => Promise<string | null> {
-	const personalInfoClass = usePersonalInfoContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
 	return useCallback(async (newUsername: string) => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
 				return "You must be logged in to update your username"
 			}
 
@@ -34,7 +32,7 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 				return "Username cannot exceed 50 characters"
 			}
 
-			const updateNameResponse = await blueDotApiClient.personalInfoDataService.updateUsername(newUsername)
+			const updateNameResponse = await blueDotApiClientClass.personalInfoDataService.updateUsername(newUsername)
 
 			if (!isEqual(updateNameResponse.status, 200) || isNonSuccessResponse(updateNameResponse.data)) {
 				throw Error
@@ -72,5 +70,6 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 			})
 			return "An unexpected error occurred"
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, personalInfoClass, toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, personalInfoClass.username])
 }

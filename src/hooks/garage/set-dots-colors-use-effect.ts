@@ -6,17 +6,13 @@ import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
 import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import pipClass from "../../classes/pip-class"
+import garageClass from "../../classes/garage-class"
+import socketClass from "../../classes/socket-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useSetDefaultColorsUseEffect(): void {
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
@@ -67,10 +63,10 @@ export default function useSetDefaultColorsUseEffect(): void {
 				}
 			}
 
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createLedMessage(ledControlData)
 
-				void serialManager.sendBinaryMessage(buffer)
+				void serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 
@@ -107,6 +103,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 				a: 1
 			}
 		)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.selectedDots,
 		garageClass.selectedColorRgba.r,
 		garageClass.selectedColorRgba.g,

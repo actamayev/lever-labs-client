@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { rgbaToHex } from "@uiw/color-convert"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomPip } from "../../icons/custom-pip"
-import { useGarageContext } from "../../../contexts/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DOT_POSITIONS = [
@@ -17,8 +17,6 @@ const DOT_POSITIONS = [
 ]
 
 function LightDotsSelector() {
-	const garageClass = useGarageContext()
-
 	return (
 		<div className="flex items-start justify-end">
 			<div className="relative w-full h-full px-5">

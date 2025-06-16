@@ -3,16 +3,14 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { PipData } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useDisconnectFromPip(): (
 	pipData: PipData
 ) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (pipData: PipData) => {
@@ -25,7 +23,7 @@ export default function useDisconnectFromPip(): (
 				})
 			}
 
-			const connectToPipResponse = await blueDotApiClient.pipDataService.disconnectFromPip(pipData.pipUUID)
+			const connectToPipResponse = await blueDotApiClientClass.pipDataService.disconnectFromPip(pipData.pipUUID)
 
 			if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 				throw new Error("Disconnect from Pip failed")
@@ -39,5 +37,5 @@ export default function useDisconnectFromPip(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.pipDataService, pipClass, toast])
+	}, [toast])
 }

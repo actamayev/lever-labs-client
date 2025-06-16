@@ -2,14 +2,13 @@
 
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import workbenchClass from "../../../classes/workbench-class"
 
 function BatteryContent() {
-	const workbenchClass = useWorkbenchContext()
-
 	const getTimeText = useMemo(() => {
 		if (workbenchClass.isCharging) return "Estimated time to full charge:"
 		return "Estimated time remaining:"
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.isCharging])
 
 	return (

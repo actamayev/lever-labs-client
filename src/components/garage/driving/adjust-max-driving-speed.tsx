@@ -2,11 +2,9 @@
 
 import { observer } from "mobx-react"
 import { Slider } from "../../shadcn/ui/slider"
-import { useGarageContext } from "../../../contexts/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 function AdjustMaxDrivingSpeed() {
-	const garageClass = useGarageContext()
-
 	const handleValueChange = (value: number[]) => {
 		const newMaxSpeed = value[0]
 		garageClass.setMotorThrottlePercent(newMaxSpeed)

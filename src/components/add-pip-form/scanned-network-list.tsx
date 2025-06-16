@@ -11,8 +11,8 @@ import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import NetworkStrengthIcon from "../network-strength-icon"
 import UploadWiFiCredentials from "./upload-wifi-credentials"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
-import { useSerialMessageManagerContext } from "../../contexts/serial-message-manager"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../shadcn/ui/collapsible"
 
 interface ScannedNetworksListProps {
@@ -23,8 +23,6 @@ interface ScannedNetworksListProps {
 }
 
 function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelectedNetworkIndex }: ScannedNetworksListProps) {
-	const serialMessageManager = useSerialMessageManagerContext()
-	const serialManager = useSerialManagerContext()
 	const [showPassword, setShowPassword] = useState(false)
 
 	// Watch the password field for real-time updates
@@ -36,15 +34,15 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 
 	// Listen for WiFi connection results
 	useEffect(() => {
-		serialMessageManager.onWiFiConnectionResult = (status: WiFiConnectionStatus) => {
-			serialMessageManager.setIsTestingWiFiConnection(false)
-			serialMessageManager.setWiFiConnectionStatus(status)
+		serialMessageManagerClass.onWiFiConnectionResult = (status: WiFiConnectionStatus) => {
+			serialMessageManagerClass.setIsTestingWiFiConnection(false)
+			serialMessageManagerClass.setWiFiConnectionStatus(status)
 		}
 
 		return () => {
-			serialMessageManager.onWiFiConnectionResult = null
+			serialMessageManagerClass.onWiFiConnectionResult = null
 		}
-	}, [serialMessageManager])
+	}, [])
 
 	const handleNetworkSelect = useCallback((network: ScannedWiFiNetworkItem, index: number) => {
 		// Set the form values when a network is selected
@@ -59,19 +57,19 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 	const uploadCredentials = useCallback(async (network: ScannedWiFiNetworkItem, networkPassword: string) => {
 		if (!network.ssid) return
 
-		serialMessageManager.setIsTestingWiFiConnection(true)
-		serialMessageManager.setWiFiConnectionStatus(null) // Reset status
+		serialMessageManagerClass.setIsTestingWiFiConnection(true)
+		serialMessageManagerClass.setWiFiConnectionStatus(null) // Reset status
 
 		const message = MessageBuilder.createWiFiCredentialsMessage(
 			network.ssid,
 			networkPassword || ""
 		)
-		const success = await serialManager.sendBinaryMessage(message)
+		const success = await serialConnectionManagerClass.sendBinaryMessage(message)
 
 		if (!success) {
-			serialMessageManager.setIsTestingWiFiConnection(false)
+			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 		}
-	}, [serialManager, serialMessageManager])
+	}, [])
 
 	const handlePasswordSubmit = useCallback(async (network: ScannedWiFiNetworkItem) => {
 		// Upload credentials using the watched password value
@@ -82,7 +80,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 		setShowPassword(false)
 	}, [uploadCredentials, watchedPassword, setValue])
 
-	if (serialMessageManager.isScanning) {
+	if (serialMessageManagerClass.isScanning) {
 		return (
 			<div className="flex items-center justify-center py-8 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
 				<div className="text-lg text-muted-foreground">Scanning for networks...</div>
@@ -90,7 +88,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 		)
 	}
 
-	if (isEmpty(serialMessageManager.scannedNetworks)) {
+	if (isEmpty(serialMessageManagerClass.scannedNetworks)) {
 		return (
 			<div
 				className="text-lg text-muted-foreground py-4 border border-dashed
@@ -104,10 +102,10 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 	return (
 		<div>
 			<h4 className="text-xl font-medium mb-3">
-				Available Networks ({serialMessageManager.scannedNetworksByRssiStrength.length})
+				Available Networks ({serialMessageManagerClass.scannedNetworksByRssiStrength.length})
 			</h4>
 			<div className="max-h-80 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900">
-				{serialMessageManager.scannedNetworksByRssiStrength.map((network, index) => (
+				{serialMessageManagerClass.scannedNetworksByRssiStrength.map((network, index) => (
 					<Collapsible
 						key={`${network.ssid}-${index}`}
 						open={selectedNetworkIndex === index}
@@ -154,11 +152,11 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 												// Upload credentials
 												await uploadCredentials(network, "")
 											}}
-											disabled={serialMessageManager.isTestingWiFiConnection}
+											disabled={serialMessageManagerClass.isTestingWiFiConnection}
 											className="h-12 px-6 text-lg"
 											size="lg"
 										>
-											{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
+											{serialMessageManagerClass.isTestingWiFiConnection ? "Testing..." : "Connect"}
 										</Button>
 										<UploadWiFiCredentials />
 									</div>
@@ -194,11 +192,11 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 											</div>
 											<Button
 												onClick={() => handlePasswordSubmit(network)}
-												disabled={!watchedPassword || serialMessageManager.isTestingWiFiConnection}
+												disabled={!watchedPassword || serialMessageManagerClass.isTestingWiFiConnection}
 												className="h-12 px-6 text-lg"
 												size="lg"
 											>
-												{serialMessageManager.isTestingWiFiConnection ? "Testing..." : "Connect"}
+												{serialMessageManagerClass.isTestingWiFiConnection ? "Testing..." : "Connect"}
 											</Button>
 										</div>
 										<UploadWiFiCredentials />

@@ -3,15 +3,12 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
-import { isErrorResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
+import sandboxClass from "../../classes/sandbox-class"
+import { isErrorResponse } from "../../utils/type-checks"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: ProjectUUID): void {
-	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
-
 	const retrieveSingleSandboxProject = useCallback(async () => {
 		try {
 			// If we already have the project in the context, no need to fetch it again
@@ -19,14 +16,14 @@ export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: Pr
 			if (foundProject) return
 
 			if (
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				sandboxClass.isRetrievingSingleProject(projectUUID)
 			) return
 
 			// Set loading state
 			sandboxClass.setIsRetrievingSingleProject(projectUUID, true)
 
-			const sandboxProjectResponse = await blueDotApiClient.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
+			const sandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
 			if (!isEqual(sandboxProjectResponse.status, 200) || isErrorResponse(sandboxProjectResponse.data)) {
 				throw Error ("Unable to retrieve sandbox project")
 			}
@@ -37,7 +34,7 @@ export default function useRetrieveSingleSandboxProjectUseEffect(projectUUID: Pr
 			console.error(error)
 			sandboxClass.setIsRetrievingSingleProject(projectUUID, false)
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, projectUUID, sandboxClass])
+	}, [projectUUID])
 
 	useEffect(() => {
 		void retrieveSingleSandboxProject()
