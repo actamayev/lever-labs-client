@@ -13,13 +13,15 @@ import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
-import useRegisterSubmit from "../../../hooks/auth/register-submit"
+import registerSubmit from "../../../utils/auth/register-submit"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import AgeInput from "./age-input"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import { PageToNavigateAfterLogin } from "../../../utils/constants"
 
 export default function RegisterComponent() {
 	const [error, setError] = useState("")
-	const registerSubmit = useRegisterSubmit(setError)
+	const navigate = useTypedNavigate()
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -32,8 +34,9 @@ export default function RegisterComponent() {
 	})
 
 	const onSubmit = useCallback(async (values: RegisterFormValues) => {
-		await registerSubmit(values)
-	}, [registerSubmit])
+		await registerSubmit(values, setError)
+		navigate(PageToNavigateAfterLogin)
+	}, [navigate])
 
 	return (
 		<AuthTemplate title="Create a new account">
