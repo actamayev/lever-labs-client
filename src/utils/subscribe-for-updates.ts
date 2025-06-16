@@ -6,7 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
 import toastClass from "../classes/toast-class"
 import blueDotApiClientClass from "../classes/blue-dot-api-client-class"
-import { isMessageResponse, isNonSuccessResponse } from "../utils/type-checks"
+import { isMessageResponse, isNonSuccessResponse } from "./type-checks"
 
 export default function useSubscribeForUpdates(
 	isLoading: boolean,

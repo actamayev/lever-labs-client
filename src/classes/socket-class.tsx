@@ -10,6 +10,7 @@ import { HeadlightData, HornData, IncomingSensorData,
 class SocketClass extends EventEmitter {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
+	// TODO: Remove this (access authclass directly)
 	public accessToken: string | null = null
 
 	constructor() {

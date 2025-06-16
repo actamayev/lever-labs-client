@@ -2,14 +2,12 @@
 
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
-import usePollSensors from "./poll-sensors"
+import pollSensors from "./poll-sensors"
 import pipClass from "../../classes/pip-class"
 import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useSensorPollingUseEffect (): void {
-	const pollSensors = usePollSensors()
-
 	// Setup event listeners for user activity
 	useEffect(() => {
 		if (
@@ -55,5 +53,5 @@ export default function useSensorPollingUseEffect (): void {
 		}, SENSOR_POLLING_INTERVAL) // Check every 30 seconds
 
 		return (): void => clearInterval(interval)
-	}, [pollSensors])
+	}, [])
 }

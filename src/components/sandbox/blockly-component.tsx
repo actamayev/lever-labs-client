@@ -11,7 +11,7 @@ import { EmptySandboxXml } from "../../utils/constants"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
-import useSensorPollingUseEffect from "../../hooks/sandbox/sensor-polling-use-effect"
+import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 interface Props {

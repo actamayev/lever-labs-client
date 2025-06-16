@@ -1,5 +1,6 @@
 "use client"
 
+import { SandboxProject } from "@bluedotrobots/common-ts"
 import { Dispatch, SetStateAction, useCallback } from "react"
 import {
 	Dialog,
@@ -11,8 +12,7 @@ import {
 } from "../../shadcn/ui/dialog"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import useEditSandboxProjectName from "../../../hooks/sandbox/edit-sandbox-project-name"
-import { SandboxProject } from "@bluedotrobots/common-ts"
+import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 
 interface Props {
 	project: SandboxProject
@@ -24,7 +24,6 @@ interface Props {
 
 export default function RenameProjectDialog(props: Props) {
 	const { project, isRenameDialogOpen, setIsRenameDialogOpen, newProjectName, setNewProjectName } = props
-	const editSandboxProjectName = useEditSandboxProjectName()
 
 	const handleCancelRename = useCallback(() => {
 		setIsRenameDialogOpen(false)
@@ -33,7 +32,7 @@ export default function RenameProjectDialog(props: Props) {
 	const handleSaveRename = useCallback(async () => {
 		await editSandboxProjectName(project.projectUUID, newProjectName)
 		setIsRenameDialogOpen(false)
-	}, [editSandboxProjectName, project.projectUUID, newProjectName, setIsRenameDialogOpen])
+	}, [project.projectUUID, newProjectName, setIsRenameDialogOpen])
 
 	return (
 

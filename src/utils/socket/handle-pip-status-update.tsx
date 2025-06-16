@@ -3,7 +3,7 @@
 import { PipStatusUpdate } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
+import requestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
 
 export default function handlePipStatusUpdate(data: PipStatusUpdate) : void {

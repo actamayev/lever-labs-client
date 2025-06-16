@@ -3,8 +3,8 @@
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import socketClass from "../../classes/socket-class"
-import handlePipStatusUpdate from "./handle-pip-status-update"
-import handleIncomingSensorData from "./handle-incoming-sensor-data"
+import handlePipStatusUpdate from "../../utils/socket/handle-pip-status-update"
+import handleIncomingSensorData from "../../utils/socket/handle-incoming-sensor-data"
 
 export default function useSocketEventsUseEffect(): void {
 	useEffect(() => {

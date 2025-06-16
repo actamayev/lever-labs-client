@@ -16,7 +16,6 @@ interface Section {
 
 function TheLabPage() {
 	useEffect(() => void retrieveAllActivities(), [])
-
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	// const motorSectionRef = useRef<HTMLDivElement>(null)
 	const [clickedSection, setClickedSection] = useState<LessonNames>("LED")
