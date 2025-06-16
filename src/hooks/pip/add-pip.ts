@@ -6,8 +6,8 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
+import toastClass from "../../classes/toast-class"
 import useExitAfterAddPip from "./exit-after-add-pip"
-import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 
@@ -15,7 +15,6 @@ export default function useAddPip(
 	resetAddPipVars: () => void,
 	getFormValues: () => IncompletePipData
 ): () => Promise<void> {
-	const toast = useToastOptions()
 	const exitAfterAddPip = useExitAfterAddPip()
 
 	// eslint-disable-next-line complexity
@@ -23,14 +22,14 @@ export default function useAddPip(
 		try {
 			const pipUUID = getFormValues().pipUUID
 			if (isNull(pipUUID)) {
-				return toast.negative({
+				return toastClass.negative({
 					title: "Please connect your Pip to USB",
 					description: "Please reload the page if you've connected it"
 				})
 			}
 			if (pipClass.checkIfUUIDAlreadyExists(pipUUID) === true) {
 				exitAfterAddPip(resetAddPipVars)
-				return toast.negative({
+				return toastClass.negative({
 					title: "Unable to add Pip ID",
 					description: "You've already added a Pip with this ID"
 				})
@@ -41,7 +40,7 @@ export default function useAddPip(
 			const hasManualWiFi = formValues.manualWiFiNetworkName && formValues.manualWiFiNetworkName.trim() !== ""
 
 			if ((!hasSelectedWiFi && !hasManualWiFi) || !pipUUID) {
-				return toast.negative({
+				return toastClass.negative({
 					title: "Unable to validate Pip data",
 					description: "Please connect to a WiFi network and try again"
 				})
@@ -71,22 +70,22 @@ export default function useAddPip(
 				if (isMessageResponse(error.response?.data)) {
 					// eslint-disable-next-line max-depth
 					if (error.response.data.message === "User already registered this Pip UUID") {
-						return toast.negative({
+						return toastClass.negative({
 							title: "Unable to add Pip ID",
 							description: "You have a Pip with this ID"
 						})
 					} else if (error.response.data.message === "Pip UUID doesn't exist") {
-						return toast.negative({
+						return toastClass.negative({
 							title: "Unable to add Pip ID",
 							description: "The Pip ID you entered does not exist"
 						})
 					}
 				}
 			}
-			return toast.negative({
+			return toastClass.negative({
 				title: `Unable to add ${getFormValues().pipName || "Pip"} at this time`,
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [getFormValues, exitAfterAddPip, resetAddPipVars, toast])
+	}, [getFormValues, exitAfterAddPip, resetAddPipVars])
 }

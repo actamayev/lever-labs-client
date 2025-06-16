@@ -2,16 +2,14 @@
 
 import isNull from "lodash-es/isNull"
 import pipClass from "../../classes/pip-class"
-import useToastOptions from "../../components/toast-options"
 import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
+import toastClass from "../../classes/toast-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useApplyMotorControl(): (motorControl: MotorControlInput, forceEmit?: boolean) => void {
-	const toast = useToastOptions()
-
 	// Map motor control values to drive directions
 	const motorControlToDriveDirections = (motorControl: { vertical: number, horizontal: number }): Set<DriveDirection> => {
 		const directions = new Set<DriveDirection>()
@@ -66,10 +64,10 @@ export default function useApplyMotorControl(): (motorControl: MotorControlInput
 		if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 
 		if (isNull(pipClass.selectedPip)) {
-			return toast.negative({ title: "Please add a Pip" })
+			return toastClass.negative({ title: "Please add a Pip" })
 		}
 		if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-			return toast.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
+			return toastClass.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
 		}
 
 		// Emit motor control via socket

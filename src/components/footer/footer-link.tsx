@@ -9,6 +9,7 @@ interface Props {
 	extraClasses?: string
 }
 
+// Use: https://www.shadcnblocks.com/block/footer7
 export default function FooterLink(props: Props) {
 	const { linkTo, linkTitle, extraClasses } = props
 
@@ -17,7 +18,7 @@ export default function FooterLink(props: Props) {
 			<Link
 				href={linkTo}
 				className={cn(
-					"text-questionText hover:underline duration-0",
+					"text-questionText hover:underline duration-0 whitespace-nowrap",
 					extraClasses
 				)}
 			>

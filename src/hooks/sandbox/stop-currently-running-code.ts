@@ -5,14 +5,12 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
-import useToastOptions from "../../components/toast-options"
+import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useStopCurrentlyRunningCode(): () => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async () => {
 		try {
 			if (serialConnectionManagerClass.connected) {
@@ -35,11 +33,11 @@ export default function useStopCurrentlyRunningCode(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			return toast.negative({
+			return toastClass.negative({
 				title: "Unable to stop currently running code on Pip at this time",
 				description: "Please reload the page and try again"
 			})
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast, serialConnectionManagerClass.connected, pipClass.selectedPip])
+	}, [serialConnectionManagerClass.connected, pipClass.selectedPip])
 }

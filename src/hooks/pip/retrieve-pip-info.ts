@@ -1,17 +1,15 @@
 "use client"
 
+import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
-import { useCallback } from "react"
-import { isErrorResponse } from "../../utils/type-checks"
 import pipClass from "../../classes/pip-class"
-import useToastOptions from "../../components/toast-options"
+import toastClass from "../../classes/toast-class"
+import { isErrorResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePipInfo(): () => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async () => {
 		try {
 			if (
@@ -33,10 +31,10 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 		} catch (error) {
 			console.error(error)
 			pipClass.setIsRetrievingPipData(false)
-			return toast.negative({
+			return toastClass.negative({
 				title: "Unable to retrieve Pip Info",
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [toast])
+	}, [])
 }

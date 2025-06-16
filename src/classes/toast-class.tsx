@@ -1,10 +1,7 @@
-"use client"
-
-import { useRef } from "react"
+// classes/toast-class.ts
 import { toast, ToastOptions as ReactToastifyOptions, Id } from "react-toastify"
-import personalInfoClass from "../classes/personal-info-class"
+import personalInfoClass from "./personal-info-class"
 
-// Rename our options interface to avoid conflict with react-toastify's ToastOptions
 interface CustomToastOptions {
 	title: string
 	description?: string
@@ -12,11 +9,11 @@ interface CustomToastOptions {
 	duration?: number
 }
 
-// eslint-disable-next-line max-lines-per-function
-export default function useToastOptions() {
-	const isToastActiveRef = useRef(false)
+class ToastClass {
+	// Replace useRef with simple class property
+	private isToastActive: boolean = false
 
-	const createToastContent = (
+	private createToastContent = (
 		title: string,
 		description: string | undefined,
 		action: React.ReactNode | undefined
@@ -33,25 +30,25 @@ export default function useToastOptions() {
 	)
 
 	// Helper function to display a toast only if no toast is active
-	const showToastIfNotActive = <TData,>(
+	private showToastIfNotActive = <TData,>(
 		toastFn: (content: React.ReactNode, options?: ReactToastifyOptions<TData>) => Id,
 		content: React.ReactNode,
 		options: ReactToastifyOptions<TData>
 	) => {
-		if (isToastActiveRef.current) {
+		if (this.isToastActive) {
 			// If a toast is already active, don't create a new one
 			return
 		}
 
 		// Set active flag to true
-		isToastActiveRef.current = true
+		this.isToastActive = true
 
 		// Create the toast with the provided function and options
 		toastFn(content, {
 			...options,
 			onClose: () => {
 				// When toast closes, reset the active flag
-				isToastActiveRef.current = false
+				this.isToastActive = false
 				// Call the original onClose if provided
 				if (options.onClose) options.onClose()
 			}
@@ -60,8 +57,8 @@ export default function useToastOptions() {
 		return
 	}
 
-	const superPositive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
-		const content = createToastContent(title, description, action)
+	public superPositive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
 			className: "!bg-green-500 !text-white !border-green-600 font-bold",
@@ -71,11 +68,11 @@ export default function useToastOptions() {
 			theme: personalInfoClass.defaultSiteTheme
 		}
 
-		return showToastIfNotActive(toast, content, options)
+		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	const positive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
-		const content = createToastContent(title, description, action)
+	public positive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
 			className: "!bg-macaw !text-white !border-blue-600 font-bold",
@@ -85,11 +82,11 @@ export default function useToastOptions() {
 			theme: personalInfoClass.defaultSiteTheme
 		}
 
-		return showToastIfNotActive(toast, content, options)
+		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	const neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
-		const content = createToastContent(title, description, action)
+	public neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
 			closeButton: true,
@@ -98,11 +95,11 @@ export default function useToastOptions() {
 			theme: personalInfoClass.defaultSiteTheme
 		}
 
-		return showToastIfNotActive(toast, content, options)
+		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	const negative = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
-		const content = createToastContent(title, description, action)
+	public negative = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
 			closeButton: true,
@@ -111,19 +108,16 @@ export default function useToastOptions() {
 			theme: personalInfoClass.defaultSiteTheme
 		}
 
-		return showToastIfNotActive(toast.error, content, options)
+		return this.showToastIfNotActive(toast.error, content, options)
 	}
 
 	// Add a function to clear the active toast flag manually if needed
-	const clearToastActive = () => {
-		isToastActiveRef.current = false
-	}
-
-	return {
-		superPositive,
-		positive,
-		neutral,
-		negative,
-		clearToastActive
+	public clearToastActive = () => {
+		this.isToastActive = false
 	}
 }
+
+// Export singleton instance
+const toastClass = new ToastClass()
+
+export default toastClass

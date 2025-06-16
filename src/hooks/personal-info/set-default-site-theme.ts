@@ -3,14 +3,12 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
+import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
-import useToastOptions from "../../components/toast-options"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async () => {
 		try {
 			const newSiteTheme = personalInfoClass.defaultSiteTheme === "light" ? "dark" : "light"
@@ -24,11 +22,11 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 			}
 		} catch (error) {
 			console.error(error)
-			return toast.negative({
+			return toastClass.negative({
 				title: "Unable to change site theme at this time",
 				description: "Please reload the page and try again"
 			})
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast, personalInfoClass.defaultSiteTheme])
+	}, [personalInfoClass.defaultSiteTheme])
 }

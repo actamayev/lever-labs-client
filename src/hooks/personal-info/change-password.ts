@@ -5,7 +5,7 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import useToastOptions from "../../components/toast-options"
+import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
 
@@ -13,8 +13,6 @@ export default function useChangePassword(): (
 	oldPassword: string,
 	newPassword: string
 ) => Promise<string | null> {
-	const toast = useToastOptions()
-
 	// eslint-disable-next-line complexity
 	return useCallback(async (
 		oldPassword: string,
@@ -45,7 +43,7 @@ export default function useChangePassword(): (
 				throw Error("Unable to change password")
 			}
 
-			toast.positive({
+			toastClass.positive({
 				title: "Password updated successfully"
 			})
 			return null // Success, no error
@@ -73,7 +71,7 @@ export default function useChangePassword(): (
 				}
 
 				if (error.response?.status === 500) {
-					toast.negative({
+					toastClass.negative({
 						title: "Server error",
 						description: "Please try again later"
 					})
@@ -81,11 +79,11 @@ export default function useChangePassword(): (
 				}
 			}
 
-			toast.negative({
+			toastClass.negative({
 				title: "Unable to change password",
 				description: "Please reload the page and try again"
 			})
 			return "An unexpected error occurred"
 		}
-	}, [toast])
+	}, [])
 }

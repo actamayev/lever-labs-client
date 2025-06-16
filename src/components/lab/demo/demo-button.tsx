@@ -4,11 +4,10 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { useCallback, useMemo, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import useToastOptions from "../../toast-options"
 import pipClass from "../../../classes/pip-class"
+import toastClass from "../../../classes/toast-class"
 
 function DemoButton({ demo } : { demo: Demo }) {
-	const toast = useToastOptions()
 	const [activeDemoName, setActiveDemoName] = useState<DemoNames | null>(null)
 
 	const isDemoActive = useMemo(() => {
@@ -17,7 +16,7 @@ function DemoButton({ demo } : { demo: Demo }) {
 
 	const setActiveDemo = useCallback(() => {
 		if (isNull(pipClass.selectedPip)) {
-			return toast.negative({ title: "Please add a Pip to your account" })
+			return toastClass.negative({ title: "Please add a Pip to your account" })
 		}
 		if (activeDemoName === demo.demoTitle) {
 			return setActiveDemoName(null)

@@ -5,14 +5,12 @@ import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import useToastOptions from "../../components/toast-options"
+import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
 
 export default function useEditUsername(): (newUsername: string) => Promise<string | null> {
-	const toast = useToastOptions()
-
 	// eslint-disable-next-line complexity
 	return useCallback(async (newUsername: string) => {
 		try {
@@ -55,7 +53,7 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 				}
 
 				if (error.response?.status === 500) {
-					toast.negative({
+					toastClass.negative({
 						title: "Server error",
 						description: "Please try again later"
 					})
@@ -64,12 +62,12 @@ export default function useEditUsername(): (newUsername: string) => Promise<stri
 			}
 
 			// Add a default return for any other error case
-			toast.negative({
+			toastClass.negative({
 				title: "Unable to edit username",
 				description: "Please reload the page and try again"
 			})
 			return "An unexpected error occurred"
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast, personalInfoClass.username])
+	}, [personalInfoClass.username])
 }

@@ -2,16 +2,14 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
-import useToastOptions from "../../components/toast-options"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRemoveCurrentProfilePicture(): (
 	setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>
 ) => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async (
 		setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>
 	): Promise<void> => {
@@ -24,15 +22,15 @@ export default function useRemoveCurrentProfilePicture(): (
 			if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
 				return
 			}
-			toast.positive({
+			toastClass.positive({
 				title: "Profile picture removed"
 			})
 		} catch (error) {
 			console.error(error)
 			personalInfoClass.setProfilePictureUrl(previousProfilePictureUrl)  // if fails, reset the url to what it previously was
-			toast.negative({
+			toastClass.negative({
 				title: "Unable to remove profile picture at this time. Please reload page and try again"
 			})
 		}
-	}, [toast])
+	}, [])
 }

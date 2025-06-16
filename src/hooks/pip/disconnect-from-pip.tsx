@@ -4,20 +4,18 @@ import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { PipData } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
-import useToastOptions from "../../components/toast-options"
+import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useDisconnectFromPip(): (
 	pipData: PipData
 ) => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async (pipData: PipData) => {
 		try {
 			const foundPip = pipClass.findPipFromUUID(pipData.pipUUID)
 			if (foundPip?.pipConnectionStatus !== "connected") {
-				return toast.neutral({
+				return toastClass.neutral({
 					title: "Unable to disconnect from Pip",
 					description: "Looks like you're not currently connected to this Pip. Please reload the page and try again"
 				})
@@ -32,10 +30,10 @@ export default function useDisconnectFromPip(): (
 			pipClass.setSelectedPipToFirstPip()
 		} catch (error) {
 			console.error(error)
-			return toast.negative({
+			return toastClass.negative({
 				title: `Unable to disconnect from ${pipData.pipName} at this time`,
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [toast])
+	}, [])
 }

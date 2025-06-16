@@ -6,13 +6,11 @@ import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 import sandboxClass from "../../classes/sandbox-class"
-import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import toastClass from "../../classes/toast-class"
 
 export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async (projectUUID: ProjectUUID) => {
 		try {
 			if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
@@ -27,10 +25,10 @@ export default function useDeleteSandboxProject(): (projectUUID: ProjectUUID) =>
 			sandboxClass.deleteSandboxProject(projectUUID)
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			toastClass.negative({
 				title: "Unable to delete sandbox project",
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [toast])
+	}, [])
 }

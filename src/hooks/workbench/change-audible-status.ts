@@ -4,14 +4,12 @@ import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import pipClass from "../../classes/pip-class"
+import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
-import useToastOptions from "../../components/toast-options"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useChangeAudibleStatus(): () => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async () => {
 		try {
 			if (isNull(pipClass.selectedPip?.pipUUID)) return
@@ -25,11 +23,11 @@ export default function useChangeAudibleStatus(): () => Promise<void> {
 			workbenchClass.setIsMuted(!workbenchClass.isMuted)
 		} catch (error) {
 			console.error(error)
-			return toast.negative({
+			return toastClass.negative({
 				title: "Unable to change mute status",
 				description: "Please reload the page and try again"
 			})
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast, workbenchClass.isMuted, pipClass.selectedPip])
+	}, [workbenchClass.isMuted, pipClass.selectedPip])
 }

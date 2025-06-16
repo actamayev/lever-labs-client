@@ -3,14 +3,12 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import toastClass from "../../classes/toast-class"
 import { isErrorResponses } from "../../utils/type-checks"
-import useToastOptions from "../../components/toast-options"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useEditName(): (newName: string) => Promise<void> {
-	const toast = useToastOptions()
-
 	return useCallback(async (newName: string) => {
 		try {
 			if (
@@ -26,11 +24,11 @@ export default function useEditName(): (newName: string) => Promise<void> {
 			personalInfoClass.setName(newName)
 		} catch (error) {
 			console.error(error)
-			toast.negative({
+			toastClass.negative({
 				title: "Unable to edit name",
 				description: "Please reload the page and try again"
 			})
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast, personalInfoClass.name])
+	}, [personalInfoClass.name])
 }
