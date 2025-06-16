@@ -1,16 +1,14 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { usePipContext } from "../../../contexts/pip-context"
+import pipClass from "../../../classes/pip-class"
 import isNull from "lodash-es/isNull"
 import { Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
+import workbenchClass from "../../../classes/workbench-class"
 
 function NetworkIcon() {
-	const pipClass = usePipContext()
-	const workbenchClass = useWorkbenchContext()
 
 	const WifiIconToShow = observer(() => {
 		const baseClasses = "!h-12 !w-12" // Slightly smaller to accommodate text below

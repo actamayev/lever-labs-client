@@ -3,30 +3,27 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import fireConfetti from "../fire-confetti"
 import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
-import { usePipContext } from "../../contexts/pip-context"
+import pipClass from "../../classes/pip-class"
+import fireConfetti from "../../utils/fire-confetti"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useSendCppToPip(): (
 	cppCode: string,
 	rect: DOMRect
 ) => Promise<void> {
-	const pipClass = usePipContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
-	const serialManager = useSerialManagerContext()
 
 	return useCallback(async (cppCode: string, rect: DOMRect) => {
 		try {
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const bytecode = CppParser.cppToByte(cppCode)
 				const buffer = MessageBuilder.createBytecodeMessage(bytecode)
 
-				const success = await serialManager.sendBinaryMessage(buffer)
+				const success = await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				if (success) {
 					fireConfetti(
 						rect,
@@ -62,7 +59,7 @@ export default function useSendCppToPip(): (
 			}
 			pipClass.setIsSendingCppToPip(true)
 
-			const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
+			const connectToPipResponse = await blueDotApiClientClass.sandboxDataService.sendSandboxCodeToPip(
 				pipClass.selectedPip.pipUUID, cppCode
 			)
 
@@ -82,5 +79,6 @@ export default function useSendCppToPip(): (
 		} finally {
 			pipClass.setIsSendingCppToPip(false)
 		}
-	}, [blueDotApiClient.sandboxDataService, pipClass, serialManager, toast])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [toast, serialConnectionManagerClass.connected, pipClass.selectedPip, pipClass.isSendingCppToPip])
 }

@@ -1,11 +1,9 @@
 "use client"
 
 import { useEffect } from "react"
-import { useLabReadingContext } from "../../contexts/lab-reading-context"
+import labReadingClass from "../../classes/lab-reading-class"
 
 export default function useAnswerChoiceButtonListener(): void {
-	const labReadingClass = useLabReadingContext()
-
 	// Add keyboard event listener
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent): void => {
@@ -20,5 +18,5 @@ export default function useAnswerChoiceButtonListener(): void {
 
 		window.addEventListener("keydown", handleKeyPress)
 		return (): void => window.removeEventListener("keydown", handleKeyPress)
-	}, [labReadingClass])
+	}, [])
 }

@@ -1,14 +1,13 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import useUsername from "../../hooks/memos/username"
+import { observer } from "mobx-react"
+import personalInfoClass from "../../classes/personal-info-class"
 
-export default function SupportSectionContainer({ children } : { children: React.ReactNode }) {
-	const username = useUsername()
-
+function SupportSectionContainer({ children } : { children: React.ReactNode }) {
 	let parentClasses = "px-8 sm:px-8 md:px-16 lg:px-72 mt-12"
 	let childClasses = ""
-	if (!isNull(username)) {
+	if (!isNull(personalInfoClass.username)) {
 		parentClasses = "px-8 sm:px-8 md:px-16 lg:px-32 mt-5"
 		childClasses = "max-w-xl"
 	}
@@ -24,3 +23,5 @@ export default function SupportSectionContainer({ children } : { children: React
 		</div>
 	)
 }
+
+export default observer(SupportSectionContainer)

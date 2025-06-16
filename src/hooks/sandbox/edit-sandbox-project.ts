@@ -6,16 +6,14 @@ import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
 import useToastOptions from "../../components/toast-options"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useSandboxContext } from "../../contexts/sandbox-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import sandboxClass from "../../classes/sandbox-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 
 export default function useEditSandboxProject(): (
 	projectUUID: ProjectUUID,
 	newXml: string
 ) => Promise<void> {
-	const sandboxClass = useSandboxContext()
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	return useCallback(async (
@@ -23,11 +21,11 @@ export default function useEditSandboxProject(): (
 		newXml: string
 	) => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) return
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
 			const project = sandboxClass.sandboxProjects.get(projectUUID)
 			if (isUndefined(project)) return
 
-			const createSandboxProjectResponse = await blueDotApiClient.sandboxDataService.editSandboxProject(
+			const createSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProject(
 				project.projectUUID,
 				newXml
 			)
@@ -42,5 +40,5 @@ export default function useEditSandboxProject(): (
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.sandboxDataService, sandboxClass, toast])
+	}, [toast])
 }

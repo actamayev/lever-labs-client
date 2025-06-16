@@ -1,0 +1,67 @@
+"use client"
+
+import { observer } from "mobx-react"
+import { useState, useCallback } from "react"
+import { Save } from "lucide-react"
+import { Input } from "../shadcn/ui/input"
+import { Label } from "../shadcn/ui/label"
+import { Button } from "../shadcn/ui/button"
+import CharacterCounter from "../character-counter"
+import useEditName from "../../hooks/personal-info/edit-name"
+import personalInfoClass from "../../classes/personal-info-class"
+
+// eslint-disable-next-line max-lines-per-function, complexity
+function ChangeNameSection() {
+	const [name, setName] = useState(personalInfoClass.name || "")
+	const [isNameChanged, setIsNameChanged] = useState(false)
+	const updateName = useEditName()
+
+	// Name handling
+	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		setName(e.target.value)
+		setIsNameChanged(e.target.value !== personalInfoClass.name)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [personalInfoClass.name])
+
+	const saveName = useCallback(async () => {
+		await updateName(name)
+		setIsNameChanged(false)
+	}, [name, updateName])
+
+	return (
+		<div className="mb-6">
+			<Label htmlFor="name" className="text-base md:text-lg font-medium text-eel mb-2 block">
+				Name
+			</Label>
+			<div className="flex flex-col sm:flex-row sm:items-center gap-2">
+				<div className="relative w-full max-w-xl">
+					<Input
+						id="name"
+						value={name}
+						onChange={handleNameChange}
+						className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl
+								bg-polar !text-eel font-light border-swan shadow-none"
+						maxLength={50}
+					/>
+					<CharacterCounter
+						value={name}
+						characterLimit={50}
+						extraClasses="right-3"
+					/>
+				</div>
+				{isNameChanged && (
+					<Button
+						onClick={saveName}
+						size="default"
+						variant="ghost"
+						className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
+					>
+						<Save className="h-5 w-5 md:!h-6 md:!w-6" />
+					</Button>
+				)}
+			</div>
+		</div>
+	)
+}
+
+export default observer(ChangeNameSection)

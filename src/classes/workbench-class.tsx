@@ -2,7 +2,6 @@
 
 import { TuneToPlay } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 
 class WorkbenchClass {
 	public workbenchItemToShow: WorkbenchItemsToShow = null
@@ -64,16 +63,6 @@ class WorkbenchClass {
 	}
 }
 
-const workbenchInstance = new WorkbenchClass()
+const workbenchClass = new WorkbenchClass()
 
-const WorkbenchContext = createContext(workbenchInstance)
-
-export default function WorkbenchProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<WorkbenchContext.Provider value={workbenchInstance}>
-			{children}
-		</WorkbenchContext.Provider>
-	)
-}
-
-export const useWorkbenchContext = () => useContext(WorkbenchContext)
+export default workbenchClass

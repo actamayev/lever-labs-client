@@ -3,7 +3,6 @@
 import EventEmitter from "events"
 import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
-import { createContext, useContext } from "react"
 import { action, makeObservable, observable } from "mobx"
 import { HeadlightData, HornData, IncomingSensorData,
 	LedControlData, MotorControlData, PipStatusUpdate, SoundData } from "@bluedotrobots/common-ts"
@@ -130,16 +129,6 @@ class SocketClass extends EventEmitter {
 	})
 }
 
-const socketInstance = new SocketClass()
+const socketClass = new SocketClass()
 
-const SocketContext = createContext(socketInstance)
-
-export default function SocketProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<SocketContext.Provider value={socketInstance}>
-			{children}
-		</SocketContext.Provider>
-	)
-}
-
-export const useSocketContext = () => useContext(SocketContext)
+export default socketClass

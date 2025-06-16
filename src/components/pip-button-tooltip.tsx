@@ -3,11 +3,9 @@
 import isNull from "lodash-es/isNull"
 import toUpper from "lodash-es/toUpper"
 import { observer } from "mobx-react"
-import { usePipContext } from "../contexts/pip-context"
+import pipClass from "../classes/pip-class"
 
 function PipButtonTooltip() {
-	const pipClass = usePipContext()
-
 	if (isNull(pipClass.selectedPip)) {
 		return "Add a Pip"
 	} else if (pipClass.selectedPip.pipConnectionStatus === "connected") {

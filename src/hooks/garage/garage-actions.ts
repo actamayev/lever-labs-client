@@ -1,28 +1,23 @@
 "use client"
 
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
+import pipClass from "../../classes/pip-class"
+import garageClass from "../../classes/garage-class"
+import socketClass from "../../classes/socket-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useGarageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 	} {
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
-
 	const activateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
 		case "headlights":
 			garageClass.setAreHeadlightsOn(true)
 
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createHeadlightMessage(true)
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 
@@ -59,9 +54,9 @@ export default function useGarageActions(): {
 		case "headlights":
 			garageClass.setAreHeadlightsOn(false)
 
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const buffer = MessageBuilder.createHeadlightMessage(false)
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 

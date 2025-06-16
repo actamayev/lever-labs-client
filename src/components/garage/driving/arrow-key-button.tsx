@@ -5,16 +5,14 @@ import { ReactNode, useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
-import { useGarageContext } from "../../../contexts/garage-context"
+import garageClass from "../../../classes/garage-class"
 import useComputeMotorControl from "../../../hooks/garage/compute-motor-control"
 import useApplyMotorControl from "../../../hooks/garage/apply-motor-control"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const defaultSiteTheme = useDefaultSiteTheme()
-	const shadowColor = defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-	const garageClass = useGarageContext()
+	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 	const computeMotorControl = useComputeMotorControl()
 	const applyMotorControl = useApplyMotorControl()
 

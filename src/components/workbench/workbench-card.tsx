@@ -7,11 +7,10 @@ import { cn } from "../../lib/shadcn/utils"
 import VolumeContent from "./volume/volume-content"
 import BatteryContent from "./battery/battery-content"
 import NetworkContent from "./network/network-content"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
+import workbenchClass from "../../classes/workbench-class"
 import WifiSettingsDialog from "./network/network-dialog/wifi-settings-dialog"
 
 function WorkbenchCard() {
-	const workbenchClass = useWorkbenchContext()
 	const [position, setPosition] = useState({ top: 0, left: 0 })
 	const [isWiFiSettingsOpen, setIsWiFiSettingsOpen] = useState(false)
 
@@ -24,15 +23,19 @@ function WorkbenchCard() {
 			const rect = batteryIcon.getBoundingClientRect()
 			setPosition({ top: rect.bottom, left: rect.left })
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.workbenchItemToShow])
 
 	useEffect(() => {
 		if (isWiFiSettingsOpen) {
 			workbenchClass.setWorkbenchItemHoveringOver(true)
 		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isWiFiSettingsOpen, workbenchClass])
+
 	const widthToSet = useMemo(() => {
 		return workbenchClass.fixedWidth - 25
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.fixedWidth])
 
 	if (isNull(workbenchClass.workbenchItemToShow)) return null

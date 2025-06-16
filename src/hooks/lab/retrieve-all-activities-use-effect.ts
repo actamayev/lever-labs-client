@@ -4,24 +4,21 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { useActivityProgressContext } from "../../contexts/activity-progress-context"
+import activityProgressClass from "../../classes/activity-progress-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrieveAllActivitiesUseEffect(): void {
-	const blueDotApiClient = useApiClientContext()
-	const activityProgressClass = useActivityProgressContext()
-
 	const retrieveAllActivities = useCallback(async () => {
 		try {
 			if (
 				activityProgressClass.isRetrievingActivityProgress === true ||
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				activityProgressClass.didRetrieveAllActivityProgress === true
 			) return
 
 			activityProgressClass.setIsRetrievingAllActivityProgress(true)
 
-			const userActivityProgressResponse = await blueDotApiClient.labActivityTrackingDataService.retrieveUserActivityProgress()
+			const userActivityProgressResponse = await blueDotApiClientClass.labActivityTrackingDataService.retrieveUserActivityProgress()
 			if (!isEqual(userActivityProgressResponse.status, 200) || isErrorResponse(userActivityProgressResponse.data)) {
 				throw Error ("Unable to retrieve lab activity tracking data")
 			}
@@ -31,7 +28,10 @@ export default function useRetrieveAllActivitiesUseEffect(): void {
 			console.error(error)
 			activityProgressClass.setIsRetrievingAllActivityProgress(false)
 		}
-	}, [activityProgressClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.labActivityTrackingDataService])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [activityProgressClass.isRetrievingActivityProgress,
+		blueDotApiClientClass.httpClient.accessToken,
+		activityProgressClass.didRetrieveAllActivityProgress])
 
 	useEffect(() => {
 		void retrieveAllActivities()

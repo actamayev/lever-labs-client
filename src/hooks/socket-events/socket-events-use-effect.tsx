@@ -2,12 +2,11 @@
 
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
-import { useSocketContext } from "../../contexts/socket-context"
+import socketClass from "../../classes/socket-class"
 import useHandlePipStatusUpdate from "./handle-pip-status-update"
 import useHandleIncomingSensorData from "./handle-incoming-sensor-data"
 
 export default function useSocketEventsUseEffect(): void {
-	const socketClass = useSocketContext()
 	const handlePipStatusUpdate = useHandlePipStatusUpdate()
 	const handleIncomingSensorData = useHandleIncomingSensorData()
 
@@ -22,5 +21,5 @@ export default function useSocketEventsUseEffect(): void {
 			socketClass.off("pipStatusUpdate", handlePipStatusUpdate)
 			socketClass.off("incomingSensorData", handleIncomingSensorData)
 		}
-	}, [handlePipStatusUpdate, socketClass, handleIncomingSensorData])
+	}, [handlePipStatusUpdate, handleIncomingSensorData])
 }

@@ -2,11 +2,9 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { useGarageContext } from "../contexts/garage-context"
+import garageClass from "../classes/garage-class"
 
 function ShowPipColorOnScreen() {
-	const garageClass = useGarageContext()
-
 	// Early return if no sensor data with better nullish checking
 	if (isNull(garageClass.sensorData)) return null
 

@@ -9,7 +9,7 @@ import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
 import WorkbenchLayout from "../../layouts/workbench-layout"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import { useSandboxContext } from "../../../contexts/sandbox-context"
+import sandboxClass from "../../../classes/sandbox-class"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
 import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
@@ -18,7 +18,6 @@ import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retri
 function TheSandboxPage() {
 	useRetrieveAllSandboxProjectsUseEffect()
 	const navigate = useTypedNavigate()
-	const sandboxClass = useSandboxContext()
 	const createSandboxProject = useCreateSandboxProject()
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")

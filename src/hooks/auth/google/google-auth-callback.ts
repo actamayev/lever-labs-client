@@ -2,21 +2,19 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
+import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
+import { SiteThemes } from "@bluedotrobots/common-ts"
+import authClass from "../../../classes/auth-class"
 import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
-import useSetDataAfterLoginOrRegister from "../set-data-after-login-or-register"
-import { useApiClientContext } from "../../../contexts/blue-dot-api-client-context"
-import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
-import { usePathname } from "next/navigation"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
-import { SiteThemes } from "@bluedotrobots/common-ts"
+import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
 	const navigate = useTypedNavigate()
-	const setDataAfterLogin = useSetDataAfterLoginOrRegister()
 	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
 
@@ -32,13 +30,13 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			let siteTheme: SiteThemes = "dark"
 			if (siteThemeFromStorage === "light") siteTheme = "light"
 
-			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
+			const googleCallbackResponse = await blueDotApiClientClass.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
 			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
 				throw Error("Unable to log in")
 			}
-			setDataAfterLogin(googleCallbackResponse.data)
+			authClass.setAccessToken(googleCallbackResponse.data.accessToken, true)
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
@@ -47,5 +45,5 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.authDataService, navigate, pathname, retrieveDataAfterLogin, setDataAfterLogin])
+	}, [navigate, pathname, retrieveDataAfterLogin])
 }

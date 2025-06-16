@@ -5,13 +5,11 @@ import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback } from "react"
 import { isErrorResponse } from "../../utils/type-checks"
-import { usePipContext } from "../../contexts/pip-context"
+import pipClass from "../../classes/pip-class"
 import useToastOptions from "../../components/toast-options"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default function useRetrievePipInfo(): () => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const pipClass = usePipContext()
 	const toast = useToastOptions()
 
 	return useCallback(async () => {
@@ -19,13 +17,13 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 			if (
 				pipClass.isRetrievingPipData === true ||
 				!isEmpty(pipClass.pipData) ||
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				pipClass.retrievedPipData === true
 			) return
 
 			pipClass.setIsRetrievingPipData(true)
 
-			const pipDataResponse = await blueDotApiClient.pipDataService.retrievePreviouslyAddedPips()
+			const pipDataResponse = await blueDotApiClientClass.pipDataService.retrievePreviouslyAddedPips()
 			if (!isEqual(pipDataResponse.status, 200) || isErrorResponse(pipDataResponse.data)) {
 				throw Error ("Unable to retrieve pip Data")
 			}
@@ -40,5 +38,5 @@ export default function useRetrievePipInfo(): () => Promise<void> {
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [pipClass, blueDotApiClient.httpClient.accessToken, blueDotApiClient.pipDataService, toast])
+	}, [toast])
 }

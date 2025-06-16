@@ -2,7 +2,8 @@
 
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
+import socketClass from "./socket-class"
+import blueDotApiClientClass from "./blue-dot-api-client-class"
 
 class AuthClass {
 	private _accessToken: string | null = null
@@ -11,6 +12,7 @@ class AuthClass {
 
 	constructor() {
 		makeAutoObservable(this)
+		this.getAuthDataFromStorage()
 	}
 
 	get isLoggedIn(): boolean {
@@ -26,6 +28,8 @@ class AuthClass {
 
 	public setAccessToken = action((accessToken: string | null, saveToStorage = false): void => {
 		this._accessToken = accessToken
+		blueDotApiClientClass.httpClient.accessToken = accessToken
+		socketClass.setAccessToken(accessToken)
 		if (typeof window === "undefined") return
 		if (!isNull(accessToken) && saveToStorage === true) {
 			localStorage.setItem("Access Token", accessToken as string)
@@ -49,16 +53,6 @@ class AuthClass {
 	}
 }
 
-const authInstance = new AuthClass()
+const authClass = new AuthClass()
 
-const AuthContext = createContext(authInstance)
-
-export default function AuthProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<AuthContext.Provider value={authInstance}>
-			{children}
-		</AuthContext.Provider>
-	)
-}
-
-export const useAuthContext = () => useContext(AuthContext)
+export default authClass

@@ -3,39 +3,34 @@
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { usePipContext } from "../../contexts/pip-context"
-import { isNonSuccessResponse } from "../../utils/type-checks"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
-import { useSerialManagerContext } from "../../contexts/serial-manager-context"
+import pipClass from "../../classes/pip-class"
+import { isNonSuccessResponse } from "../../utils/type-checks"
+import garageClass from "../../classes/garage-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useLightsAnimation(): (newAnimation: LightAnimation) => Promise<void> {
-	const blueDotApiClient = useApiClientContext()
-	const garageClass = useGarageContext()
-	const pipClass = usePipContext()
-	const serialManager = useSerialManagerContext()
-
 	return useCallback(async (newAnimation: LightAnimation) => {
 		try {
 			if (garageClass.selectedAnimation === newAnimation) return
-			if (serialManager.connected) {
+			if (serialConnectionManagerClass.connected) {
 				const lightType = lightToLEDType[newAnimation]
 				const buffer = MessageBuilder.createLightAnimationMessage(lightType)
 
 				garageClass.setSelectedAnimation(newAnimation)
-				await serialManager.sendBinaryMessage(buffer)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
 			}
 			if (
-				isNull(blueDotApiClient.httpClient.accessToken) ||
+				isNull(blueDotApiClientClass.httpClient.accessToken) ||
 				isNull(pipClass.selectedPip) ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
 
 			garageClass.setSelectedAnimation(newAnimation)
 
-			const newLightsAnimationResponse = await blueDotApiClient.garageDataService.lightsAnimation(
+			const newLightsAnimationResponse = await blueDotApiClientClass.garageDataService.lightsAnimation(
 				newAnimation, pipClass.selectedPip.pipUUID
 			)
 			if (!isEqual(newLightsAnimationResponse.status, 200) || isNonSuccessResponse(newLightsAnimationResponse.data)) {
@@ -44,6 +39,7 @@ export default function useLightsAnimation(): (newAnimation: LightAnimation) => 
 		} catch (error) {
 			console.error(error)
 		}
-	}, [blueDotApiClient.garageDataService, blueDotApiClient.httpClient.accessToken, garageClass, pipClass.selectedPip, serialManager])
-
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [garageClass.selectedAnimation, serialConnectionManagerClass.connected,
+		blueDotApiClientClass.httpClient.accessToken, pipClass.selectedPip])
 }

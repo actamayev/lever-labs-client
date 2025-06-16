@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
-import useDefaultSiteTheme from "../../../hooks/memos/default-site-theme"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 type Props = {
   extraClasses?: string;
@@ -18,8 +18,6 @@ function DefinitionText (props: Props) {
 		noSpaceBefore = false,
 		noSpaceAfter = false,
 	} = props
-	const defaultSiteTheme = useDefaultSiteTheme()
-
 	return (
 		<>
 			{!noSpaceBefore && <> </>}
@@ -29,7 +27,7 @@ function DefinitionText (props: Props) {
 					extraClasses
 				)}
 				style={{
-					backgroundColor: defaultSiteTheme === "light" ? "rgb(255, 255, 0)" : "rgba(180, 140, 0, 0.3)"
+					backgroundColor: personalInfoClass.defaultSiteTheme === "light" ? "rgb(255, 255, 0)" : "rgba(180, 140, 0, 0.3)"
 				}}
 			>
 				{children}

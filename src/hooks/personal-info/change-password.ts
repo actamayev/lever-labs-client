@@ -1,19 +1,18 @@
 /* eslint-disable max-depth */
 "use client"
 
+import { AxiosError } from "axios"
 import { useCallback } from "react"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import useToastOptions from "../../components/toast-options"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../../utils/type-checks"
-import { useApiClientContext } from "../../contexts/blue-dot-api-client-context"
-import { AxiosError } from "axios"
 
 export default function useChangePassword(): (
 	oldPassword: string,
 	newPassword: string
 ) => Promise<string | null> {
-	const blueDotApiClient = useApiClientContext()
 	const toast = useToastOptions()
 
 	// eslint-disable-next-line complexity
@@ -22,7 +21,7 @@ export default function useChangePassword(): (
 		newPassword: string
 	) => {
 		try {
-			if (isNull(blueDotApiClient.httpClient.accessToken)) {
+			if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
 				return "You must be logged in to change your password"
 			}
 
@@ -38,12 +37,12 @@ export default function useChangePassword(): (
 				return "New password must be at least 6 characters"
 			}
 
-			const updatePasswordResponse = await blueDotApiClient.personalInfoDataService.changePassword(
+			const updatePasswordResponse = await blueDotApiClientClass.personalInfoDataService.changePassword(
 				oldPassword, newPassword
 			)
 
 			if (!isEqual(updatePasswordResponse.status, 200) || isNonSuccessResponse(updatePasswordResponse.data)) {
-				throw Error
+				throw Error("Unable to change password")
 			}
 
 			toast.positive({
@@ -88,5 +87,5 @@ export default function useChangePassword(): (
 			})
 			return "An unexpected error occurred"
 		}
-	}, [blueDotApiClient.httpClient.accessToken, blueDotApiClient.personalInfoDataService, toast])
+	}, [toast])
 }

@@ -7,10 +7,9 @@ import { cn } from "../../lib/shadcn/utils"
 import WorkbenchTopSection from "./workbench-top-section"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
 import DrivingControls from "../garage/driving/driving-controls"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
+import workbenchClass from "../../classes/workbench-class"
 
 function Workbench() {
-	const workbenchClass = useWorkbenchContext()
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const pathname = usePathname()
 
@@ -28,7 +27,7 @@ function Workbench() {
 		updateDimensions()
 		window.addEventListener("resize", updateDimensions)
 		return () => window.removeEventListener("resize", updateDimensions)
-	}, [workbenchClass])
+	}, [])
 
 	// Calculate section heights
 	const topSectionHeight = workbenchClass.windowHeight / 5  // 1/4 of screen height

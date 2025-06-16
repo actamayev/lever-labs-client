@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react"
 import QuizSection from "./quiz-section"
 import ReadingBlock from "./reading-block"
 import { cn } from "../../../lib/shadcn/utils"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 
 interface Props {
 	blocks: ContentBlock[]
@@ -14,13 +14,12 @@ interface Props {
 }
 
 function ReadingContainer({ blocks, readingName } : Props) {
-	const labReadingClass = useLabReadingContext()
 	const contentRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		labReadingClass.setBlocks(blocks, readingName)
 		labReadingClass.setShownBlocks(blocks[0].id)
-	}, [blocks, labReadingClass, readingName])
+	}, [blocks, readingName])
 
 	return (
 		<div className="h-full flex relative">

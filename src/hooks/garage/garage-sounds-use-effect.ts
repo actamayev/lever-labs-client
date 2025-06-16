@@ -2,15 +2,11 @@
 
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants"
-import { usePipContext } from "../../contexts/pip-context"
-import { useGarageContext } from "../../contexts/garage-context"
-import { useSocketContext } from "../../contexts/socket-context"
+import pipClass from "../../classes/pip-class"
+import garageClass from "../../classes/garage-class"
+import socketClass from "../../classes/socket-class"
 
 export default function useGarageSoundsUseEffect(): void {
-	const garageClass = useGarageContext()
-	const socketClass = useSocketContext()
-	const pipClass = usePipContext()
-
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
 	// Check if the event target is an input field or any element where typing is expected
@@ -54,6 +50,5 @@ export default function useGarageSoundsUseEffect(): void {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 }

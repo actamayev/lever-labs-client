@@ -5,8 +5,8 @@ import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
 import { ButtonProps } from "../shadcn/ui/button"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import useDefaultSiteTheme from "../../hooks/memos/default-site-theme"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import personalInfoClass from "../../classes/personal-info-class"
 
 type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 	shadowHeight?: 2 | 4
@@ -15,8 +15,6 @@ type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 
 export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
 	({ className, shadowHeight = 4, isPressed, ...props }, ref) => {
-		const defaultSiteTheme = useDefaultSiteTheme()
-
 		return (
 			<TactileButton
 				ref={ref}
@@ -31,7 +29,7 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 						cursor-default bg-blue-300  text-blue-950 \
 						dark:bg-blue-950 dark:text-blue-200 "
 				)}
-				shadowColor={defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={shadowHeight}
 				{...props}
 			/>
@@ -41,17 +39,15 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 
 export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
 	({ className, shadowHeight = 4, ...props }, ref) => {
-		const defaultSiteTheme = useDefaultSiteTheme()
-
 		return (
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center duration-150 rounded-2xl !bg-standardBackground",
+					"flex items-center transition-none rounded-2xl !bg-standardBackground",
 					"text-eel dark:text-wolf",
 					className
 				)}
-				shadowColor={defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
 				shadowHeight={shadowHeight}
 				{...props}
 			/>
@@ -65,7 +61,6 @@ type LandingCTAProps = ColoredTactileButtonProps & {
 
 export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
 	({ children, navigateTo, ...props }, ref) => { // Add ref parameter here
-		const defaultSiteTheme = useDefaultSiteTheme()
 		const navigate = useTypedNavigate()
 		return (
 			<TactileButton
@@ -78,7 +73,7 @@ export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, Lan
 					"bg-green-500 border-none text-white",
 					"dark:bg-green-900 dark:border-green-600 dark:text-green-200"
 				)}
-				shadowColor={defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
 				{...props}
 			>
 				{children}

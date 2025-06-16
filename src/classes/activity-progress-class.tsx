@@ -2,7 +2,6 @@
 
 import isEmpty from "lodash-es/isEmpty"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 import defaultLedActivities from "../components/lab/lessons/led/default-led-activities"
 import { UserActivityProgress } from "@bluedotrobots/common-ts"
 
@@ -99,17 +98,6 @@ class ActivityProgressClass {
 	}
 }
 
-const activityProgressInstance = new ActivityProgressClass()
+const activityProgressClass = new ActivityProgressClass()
 
-const ActivityProgressContext = createContext(activityProgressInstance)
-
-export default function ActivityProgressProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<ActivityProgressContext.Provider value={activityProgressInstance}>
-			{children}
-		</ActivityProgressContext.Provider>
-	)
-}
-
-export const useActivityProgressContext = () => useContext(ActivityProgressContext)
-
+export default activityProgressClass

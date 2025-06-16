@@ -3,13 +3,12 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { isValidRoute } from "../../utils/type-checks"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-class"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
 // eslint-disable-next-line complexity
 function NullUserNavLink() {
 	const pathname = usePathname()
-	const authClass = useAuthContext()
 
 	if (
 		pathname === "/" ||

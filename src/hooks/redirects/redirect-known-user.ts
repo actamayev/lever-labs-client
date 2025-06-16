@@ -3,15 +3,13 @@
 import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
-import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
+import authClass from "../../classes/auth-class"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { useAuthContext } from "../../contexts/auth-context"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
+import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
 
 export default function useRedirectKnownUser(): void {
-	const authClass = useAuthContext()
 	const navigate = useTypedNavigate()
-	const personalInfoClass = usePersonalInfoContext()
 	const pathname = usePathname()
 
 	useEffect(() => {
@@ -27,5 +25,6 @@ export default function useRedirectKnownUser(): void {
 		) return
 
 		navigate(PageToNavigateAfterLogin)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authClass.isAuthenticating, authClass.isLoggedIn, pathname, navigate, personalInfoClass.username])
 }

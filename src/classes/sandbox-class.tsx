@@ -3,7 +3,6 @@
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { createContext, useContext } from "react"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
@@ -86,16 +85,6 @@ class SandboxClass {
 	}
 }
 
-const sandboxInstance = new SandboxClass()
+const sandboxClass = new SandboxClass()
 
-const SandboxContext = createContext(sandboxInstance)
-
-export default function SandboxProvider ({ children }: { children: React.ReactNode }) {
-	return (
-		<SandboxContext.Provider value={sandboxInstance}>
-			{children}
-		</SandboxContext.Provider>
-	)
-}
-
-export const useSandboxContext = () => useContext(SandboxContext)
+export default sandboxClass

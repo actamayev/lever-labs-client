@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import ActivityFooter from "./activity-footer"
 import { cn } from "../../../lib/shadcn/utils"
 import ActivityHeader from "./activity-header/activity-header"
-import { useLabReadingContext } from "../../../contexts/lab-reading-context"
+import labReadingClass from "../../../classes/lab-reading-class"
 import { ActivityType } from "@bluedotrobots/common-ts"
 
 interface Props {
@@ -25,9 +25,8 @@ function ActivityTemplate(props: Props) {
 		lessonTitle,
 		lessonProgressPercent,
 		children,
-		activityType,
+		activityType
 	} = props
-	const labReadingClass = useLabReadingContext()
 
 	return (
 		<div className="flex flex-col h-screen min-h-0">

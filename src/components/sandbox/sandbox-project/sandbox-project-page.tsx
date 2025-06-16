@@ -9,19 +9,19 @@ import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
+import pipClass from "../../../classes/pip-class"
+import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
-import { usePipContext } from "../../../contexts/pip-context"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import useSendCppToPip from "../../../hooks/sandbox/send-cpp-to-pip"
 import BlocklyLoadingComponent from "../blockly-loading-component"
+import useSendCppToPip from "../../../hooks/sandbox/send-cpp-to-pip"
+import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
-import { useSandboxContext } from "../../../contexts/sandbox-context"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
-import { usePersonalInfoContext } from "../../../contexts/personal-info-context"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
-import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-projects"
+import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-project-use-effect"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -31,9 +31,6 @@ function SandboxProjectPage() {
 	const projectUUID = params.projectUUID as ProjectUUID
 	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
 	useSetSelectedPipFirstPipUseEffect()
-	const sandboxClass = useSandboxContext()
-	const pipClass = usePipContext()
-	const personalInfoClass = usePersonalInfoContext()
 	const [cppCode, setCppCode] = useState("")
 	const sendCppToPip = useSendCppToPip()
 	const editSandboxProject = useEditSandboxProject()
@@ -41,7 +38,7 @@ function SandboxProjectPage() {
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
@@ -78,7 +75,7 @@ function SandboxProjectPage() {
 		if (isMountedLongEnough) {
 			debouncedSaveProject(newXml)
 		}
-	}, [project, isLoading, sandboxClass, projectUUID, debouncedSaveProject, isMountedLongEnough])
+	}, [project, isLoading, projectUUID, debouncedSaveProject, isMountedLongEnough])
 
 	if (!project || isLoading) {
 		return (

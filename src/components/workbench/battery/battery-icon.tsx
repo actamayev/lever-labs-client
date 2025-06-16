@@ -3,11 +3,10 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
+import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { useWorkbenchContext } from "../../../contexts/workbench-context"
 
 function BatteryIcon() {
-	const workbenchClass = useWorkbenchContext()
 	// Determine which speaker icon to show based on volume level
 	const getColorClass = useMemo(() => {
 		if (workbenchClass.isCharging) return "text-chargingGreen"
@@ -15,6 +14,7 @@ function BatteryIcon() {
 		else if (workbenchClass.batteryPercentage <= 40) return "text-bee"
 		else if (workbenchClass.batteryPercentage <= 70) return "text-fox"
 		return "text-macaw"
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.isCharging, workbenchClass.batteryPercentage])
 
 	function BatteryIconToShow() {

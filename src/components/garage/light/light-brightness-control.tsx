@@ -7,10 +7,9 @@ import { Minus, PlusIcon } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import { useGarageContext } from "../../../contexts/garage-context"
+import garageClass from "../../../classes/garage-class"
 
 function LightBrightnessControl() {
-	const garageClass = useGarageContext()
 	const [isDecreasing, setIsDecreasing] = useState(false)
 	const [isIncreasing, setIsIncreasing] = useState(false)
 	const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -21,12 +20,12 @@ function LightBrightnessControl() {
 	const decreaseBrightness = useCallback(() => {
 		const newValue = Math.max(0, brightnessPercent - 5)
 		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent, garageClass])
+	}, [brightnessPercent])
 
 	const increaseBrightness = useCallback(() => {
 		const newValue = Math.min(100, brightnessPercent + 5)
 		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent, garageClass])
+	}, [brightnessPercent])
 
 	const enforceRGBRange = useCallback((value: string) => {
 		const numValue = parseInt(value || "0")

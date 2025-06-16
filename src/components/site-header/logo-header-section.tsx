@@ -6,14 +6,12 @@ import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import { useAuthContext } from "../../contexts/auth-context"
+import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
-import { usePersonalInfoContext } from "../../contexts/personal-info-context"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 	const pathname = usePathname()
-	const authClass = useAuthContext()
-	const personalInfoClass = usePersonalInfoContext()
 
 	const whereToNavigate = useMemo(() => {
 		if (
@@ -22,7 +20,8 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 		) return "/register-username"
 		if (authClass.isLoggedIn) return PageToNavigateAfterLogin
 		return "/"
-	}, [authClass.isLoggedIn, pathname, personalInfoClass.username])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [pathname, authClass.isLoggedIn, personalInfoClass.username])
 
 	return (
 		<div

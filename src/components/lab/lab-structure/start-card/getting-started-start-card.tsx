@@ -2,12 +2,10 @@
 
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import pipClass from "../../../../classes/pip-class"
 import GettingStartedAddPip from "./getting-started-add-pip"
-import { usePipContext } from "../../../../contexts/pip-context"
 
 function GettingStartedStartCard() {
-	const pipClass = usePipContext()
-
 	function getCardContent() {
 		if (isEmpty(pipClass.pipData)) {
 			return "Connect your Pip to the internet to get started. It only takes a minute!"

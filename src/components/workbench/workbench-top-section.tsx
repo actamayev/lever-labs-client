@@ -6,10 +6,9 @@ import VolumeIcon from "./volume/volume-icon"
 import BatteryIcon from "./battery/battery-icon"
 import NetworkIcon from "./network/network-icon"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants"
-import { useWorkbenchContext } from "../../contexts/workbench-context"
+import workbenchClass from "../../classes/workbench-class"
 
 function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }) {
-	const workbenchClass = useWorkbenchContext()
 	const pathname = usePathname()
 
 	// Check if we're on the garage page

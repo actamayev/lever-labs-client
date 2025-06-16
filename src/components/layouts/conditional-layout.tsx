@@ -4,13 +4,12 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import ClassicLayout from "./classic-layout"
-import useUsername from "../../hooks/memos/username"
 import InternalPagesLayout from "./internal-pages-layout"
 import { PrivatePageNames, OpenPages } from "../../utils/constants"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const pathname = usePathname()
-	const username = useUsername()
 
 	const isPrivatePage = PrivatePageNames.some(privatePath =>
 		pathname.startsWith(privatePath)
@@ -21,7 +20,7 @@ function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	)
 
 	// If user is logged in (has username) AND the page is either private or open
-	if (!isNull(username) && (isPrivatePage || isOpenPage)) {
+	if (!isNull(personalInfoClass.username) && (isPrivatePage || isOpenPage)) {
 		return (
 			<InternalPagesLayout>
 				{children}

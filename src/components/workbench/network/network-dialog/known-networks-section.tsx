@@ -3,13 +3,11 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Check } from "lucide-react"
-import { useSerialMessageManagerContext } from "../../../../contexts/serial-message-manager"
+import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import NetworkStrengthIcon from "../../../network-strength-icon"
 
 function KnownNetworksSection() {
-	const serialMessageManager = useSerialMessageManagerContext()
-
-	if (isEmpty(serialMessageManager.knownNetworks)) {
+	if (isEmpty(serialMessageManagerClass.knownNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
@@ -20,7 +18,7 @@ function KnownNetworksSection() {
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{serialMessageManager.knownNetworks.map((network, index) => (
+			{serialMessageManagerClass.knownNetworks.map((network, index) => (
 				<div
 					key={`known-${network.ssid}-${index}`}
 					className="flex items-center justify-between p-3 border-b border-gray-100 last:border-b-0"
