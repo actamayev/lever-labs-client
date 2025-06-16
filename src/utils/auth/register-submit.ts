@@ -9,7 +9,7 @@ import confirmRegisterFields from "./confirm-register-fields"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../error-handling/set-error-axios-response"
 
-export default async function useRegisterSubmit(
+export default async function registerSubmit(
 	registerCredentials: RegisterFormValues,
 	setError: (error: string) => void,
 ): Promise<void> {
