@@ -15,15 +15,13 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
-import usePlayTune from "../../../utils/workbench/play-tune"
+import playTune from "../../../utils/workbench/play-tune"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 import workbenchClass from "../../../classes/workbench-class"
-import useChangeAudibleStatus from "../../../utils/workbench/change-audible-status"
+import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
 
 function VolumeContent() {
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
-	const playTune = usePlayTune()
-	const changeAudibleStatus = useChangeAudibleStatus()
 
 	const handleVolumeChange = useCallback((value: number[]) => {
 		workbenchClass.setVolume(value[0])

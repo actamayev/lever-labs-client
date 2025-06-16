@@ -3,21 +3,21 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useMemo, useState } from "react"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
 import isEmailValid from "../../utils/auth/is-email-valid"
 import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"
-import useSubscribeForUpdates from "../../utils/subscribe-for-updates"
-import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
+import subscribeForUpdates from "../../utils/subscribe-for-updates"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
-import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
+import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
 export default function SignUpForUpdates() {
 	const [isLoading, setIsLoading] = useState(false)
-	const subscribeForUpdates = useSubscribeForUpdates(isLoading, setIsLoading)
 
 	const onSubmit = useCallback(async (values: EmailUpdatesRequest) => {
-		await subscribeForUpdates(values)
-	}, [subscribeForUpdates])
+		if (isLoading) return
+		await subscribeForUpdates(values, setIsLoading )
+	}, [isLoading])
 
 	const form = useForm<EmailUpdatesRequest>({
 		resolver: zodResolver(emailUpdatesSchema),
