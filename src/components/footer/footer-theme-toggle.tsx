@@ -1,13 +1,10 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
-import useSetDefaultSiteTheme from "../../hooks/personal-info/set-default-site-theme"
+import setDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
 
-function FooterThemeToggle() {
-	const setDefaultSiteTheme = useSetDefaultSiteTheme()
-
+export default function FooterThemeToggle() {
 	return (
 		<Button
 			variant="ghost"
@@ -20,5 +17,3 @@ function FooterThemeToggle() {
 		</Button>
 	)
 }
-
-export default observer(FooterThemeToggle)

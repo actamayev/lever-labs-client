@@ -8,15 +8,14 @@ import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import ConnectUsbButton from "../../connect-usb-button"
 import EditableProjectTitle from "./editable-project-title"
-import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import personalInfoClass from "../../../classes/personal-info-class"
+import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
 import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
-import useSetSandboxNotesOpenStatus from "../../../hooks/personal-info/set-sandbox-notes-open-status"
+import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const starSandboxProject = useStarSandboxProject()
-	const setSandboxNotesOpenStatus = useSetSandboxNotesOpenStatus()
 	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
 
 	return (

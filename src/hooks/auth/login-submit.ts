@@ -7,15 +7,14 @@ import { LoginRequest } from "@bluedotrobots/common-ts"
 import useTypedNavigate from "../navigate/typed-navigate"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import useRetrieveDataAfterLogin from "./retrieve-data-after-login"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
+import retrieveDataAfterLogin from "./retrieve-data-after-login"
 
 export default function useLoginSubmit (setError: (error: string) => void): (loginInformation: LoginRequest) => Promise<void> {
 	const navigate = useTypedNavigate()
-	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
 
 	return useCallback(async (loginInformation: LoginRequest): Promise<void> => {
@@ -31,12 +30,12 @@ export default function useLoginSubmit (setError: (error: string) => void): (log
 				return
 			}
 			authClass.setAccessToken(response.data.accessToken, true)
-			void retrieveDataAfterLogin()
+			retrieveDataAfterLogin()
 			if (pathname === "/login") navigate(PageToNavigateAfterLogin)
 		} catch (error: unknown) {
 			setErrorAxiosResponse(error, setError)
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [navigate, pathname, retrieveDataAfterLogin, setError])
+	}, [navigate, pathname, setError])
 }

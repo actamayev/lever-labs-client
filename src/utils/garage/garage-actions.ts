@@ -6,7 +6,7 @@ import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-export default function useGarageActions(): {
+export default function garageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 	} {

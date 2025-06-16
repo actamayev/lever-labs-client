@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
-import { isErrorResponse } from "../../utils/type-checks"
+import { isErrorResponse } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 

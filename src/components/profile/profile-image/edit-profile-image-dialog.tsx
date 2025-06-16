@@ -18,8 +18,8 @@ import LoadingOval from "../../loading-oval"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
-import useUploadProfilePicture from "../../../hooks/personal-info/upload-profile-picture"
-import useRemoveCurrentProfilePicture from "../../../hooks/personal-info/remove-current-profile-picture"
+import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
+import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
@@ -34,8 +34,6 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const [isLoading, setIsLoading] = useState(false)
 	const [pendingDelete, setPendingDelete] = useState(false)
 
-	const uploadProfilePicture = useUploadProfilePicture()
-	const removeCurrentProfilePicture = useRemoveCurrentProfilePicture()
 	const [isHovered, setIsHovered] = useState(false)
 	const handleMouseEnter = useCallback(() => setIsHovered(true), [])
 	const handleMouseLeave = useCallback(() => setIsHovered(false), [])
@@ -105,7 +103,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 		}
 
 		onClose()
-	}, [isLoading, pendingDelete, selectedImage, uploadProfilePicture, previewUrl, removeCurrentProfilePicture, onClose])
+	}, [isLoading, pendingDelete, selectedImage, previewUrl, onClose])
 
 	const handleDelete = useCallback(() => {
 		// If we have a preview but no saved profile picture, just clear the preview without marking for deletion

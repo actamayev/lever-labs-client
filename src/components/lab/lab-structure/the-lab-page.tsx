@@ -1,20 +1,22 @@
 "use client"
 
+import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import LabStartCard from "./start-card/lab-start-card"
-// import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
+import SeeAllLessonIcons from "./see-all-lesson-icons"
 import LilypadContainer from "./lilypad/lilypad-container"
 import CreateLilypadsAndTicks from "./create-lilypads-and-ticks"
-import SeeAllLessonIcons from "./see-all-lesson-icons"
-import useRetrieveAllActivitiesUseEffect from "../../../hooks/lab/retrieve-all-activities-use-effect"
+// import LabVerticalDivider from "../lab-structure/lab-vertical-divider"
+import retrieveAllActivities from "../../../utils/lab/retrieve-all-activities"
 
 interface Section {
 	ref: React.RefObject<HTMLDivElement>
 	name: LessonNames
 }
 
-export default function TheLabPage() {
-	useRetrieveAllActivitiesUseEffect()
+function TheLabPage() {
+	useEffect(() => void retrieveAllActivities(), [])
+
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	// const motorSectionRef = useRef<HTMLDivElement>(null)
 	const [clickedSection, setClickedSection] = useState<LessonNames>("LED")
@@ -73,3 +75,5 @@ export default function TheLabPage() {
 		</div>
 	)
 }
+
+export default observer(TheLabPage)

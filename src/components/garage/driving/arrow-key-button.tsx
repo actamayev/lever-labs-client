@@ -4,17 +4,15 @@ import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 import garageClass from "../../../classes/garage-class"
-import useComputeMotorControl from "../../../hooks/garage/compute-motor-control"
-import useApplyMotorControl from "../../../hooks/garage/apply-motor-control"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 import personalInfoClass from "../../../classes/personal-info-class"
+import applyMotorControl from "../../../utils/garage/apply-motor-control"
+import computeMotorControl from "../../../utils/garage/compute-motor-control"
 
 function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-	const computeMotorControl = useComputeMotorControl()
-	const applyMotorControl = useApplyMotorControl()
 
 	// Map direction to the correct icon
 	const getMotorDirectionIcon = (): ReactNode => {

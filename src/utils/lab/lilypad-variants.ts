@@ -1,13 +1,12 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { ProgressStatus } from "@bluedotrobots/common-ts"
 
-export default function useLilypadVariants(): (progress: ProgressStatus) => string {
-	return useCallback((progress) => cn(
-		// Base styles with explicit oval shape
+export default function lilypadVariants(progress: ProgressStatus) : string {
+	// Base styles with explicit oval shape
+	return cn(
 		"rounded-[50%] flex items-center justify-center relative", // Changed to 50% for a smooth oval
 		// Shadow and press effect
 		isNull(progress) && [
@@ -30,5 +29,5 @@ export default function useLilypadVariants(): (progress: ProgressStatus) => stri
 			"group-active:shadow-[0_0_0_0_rgb(49,145,203)]", // fully compressed on click
 			"group-active:transform group-active:translate-y-2.5 duration-150", // move down to match shadow
 		]
-	), [])
+	)
 }

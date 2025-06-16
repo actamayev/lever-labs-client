@@ -1,6 +1,6 @@
 "use client"
 
-import { CustomTreasureMap } from "../components/icons/custom-treasure-map"
+import { CustomTreasureMap } from "../../components/icons/custom-treasure-map"
 
 export const careerData: CareerData[] = [
 	{

@@ -10,12 +10,11 @@ import { CredentialResponse } from "@react-oauth/google"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
-import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import retrieveDataAfterLogin from "../retrieve-data-after-login"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
-	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
 
 	return useCallback(async (successResponse: CredentialResponse) => {
@@ -45,5 +44,5 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 		} catch (error) {
 			console.error(error)
 		}
-	}, [navigate, pathname, retrieveDataAfterLogin])
+	}, [navigate, pathname])
 }

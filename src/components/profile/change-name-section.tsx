@@ -7,14 +7,13 @@ import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
 import CharacterCounter from "../character-counter"
-import useEditName from "../../hooks/personal-info/edit-name"
+import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function ChangeNameSection() {
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
-	const updateName = useEditName()
 
 	// Name handling
 	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,9 +23,9 @@ function ChangeNameSection() {
 	}, [personalInfoClass.name])
 
 	const saveName = useCallback(async () => {
-		await updateName(name)
+		await editName(name)
 		setIsNameChanged(false)
-	}, [name, updateName])
+	}, [name])
 
 	return (
 		<div className="mb-6">
