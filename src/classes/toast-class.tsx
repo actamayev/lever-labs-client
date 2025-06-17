@@ -1,3 +1,5 @@
+"use client"
+
 import { toast, ToastOptions as ReactToastifyOptions, Id } from "react-toastify"
 import personalInfoClass from "./personal-info-class"
 
