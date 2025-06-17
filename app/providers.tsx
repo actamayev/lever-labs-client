@@ -8,7 +8,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 // Custom hooks from your application
 import { observer } from "mobx-react"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
-import personalInfoClass from "../src/classes/personal-info-class"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
@@ -35,11 +34,7 @@ export default function Providers({ children }: { children: ReactNode }) {
 	useLogoutListenerUseEffect()
 	useSiteThemeListenerUseEffect()
 	useInitializeGoogleAnalytics()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	useEffect(() => {
-		void retrieveInfo()
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [personalInfoClass.username])
+	useEffect(() => void retrieveInfo(), [])
 	useSocketEventsUseEffect()
 
 	return (
