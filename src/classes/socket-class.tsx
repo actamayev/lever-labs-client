@@ -38,14 +38,12 @@ class SocketClass extends EventEmitter {
 			this.isConnected = true
 		})
 
-		this._socket.on("disconnect", (reason: Socket.DisconnectReason) => {
+		this._socket.on("disconnect", (_reason: Socket.DisconnectReason) => {
 			this.isConnected = false
-			console.info("Disconnected from backend:", reason)
 		})
 
 		// Handle reconnection attempts
-		this._socket.on("reconnect_attempt", (attempt) => {
-			console.info(`Attempting to reconnect... (${attempt})`)
+		this._socket.on("reconnect_attempt", (_attempt) => {
 		})
 	})
 

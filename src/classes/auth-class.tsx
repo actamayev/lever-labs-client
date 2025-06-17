@@ -41,8 +41,7 @@ class AuthClass {
 		this._accessToken = accessToken
 		if (isNull(accessToken)) {
 			if (typeof window === "undefined") return
-			localStorage.removeItem("Access Token")
-			return
+			return localStorage.removeItem("Access Token")
 		}
 		blueDotApiClientClass.httpClient.setAuthHeader(accessToken)
 		socketClass.connect(accessToken)
