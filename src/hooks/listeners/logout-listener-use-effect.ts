@@ -2,19 +2,21 @@
 
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect } from "react"
-import useLogout from "../auth/logout"
+import logout from "../../utils/auth/logout"
+import useTypedNavigate from "../navigate/typed-navigate"
 
 export default function useLogoutListenerUseEffect(): void {
 	// not calling the api in handle logout here on purpose - just need to get the user out where they're connected to internet or not
-	const logout = useLogout()
 	const router = useRouter()
+	const navigate = useTypedNavigate()
 
 	const handleStorageChange = useCallback(async (event: StorageEvent): Promise<void> => {
 		if (event.key !== "Access Token" || event.newValue) return
 		// Access Token was cleared, trigger logout
 		await logout()
+		navigate("/")
 		router.refresh()
-	}, [logout, router])
+	}, [navigate, router])
 
 	useEffect(() => {
 		window.addEventListener("storage", handleStorageChange)

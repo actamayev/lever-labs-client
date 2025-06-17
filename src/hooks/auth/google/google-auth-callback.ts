@@ -5,19 +5,20 @@ import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { SiteThemes } from "@bluedotrobots/common-ts"
-import authClass from "../../../classes/auth-class"
 import { CredentialResponse } from "@react-oauth/google"
+import pipClass from "../../../classes/pip-class"
+import authClass from "../../../classes/auth-class"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
-import { PageToNavigateAfterLogin } from "../../../utils/constants"
-import useRetrieveDataAfterLogin from "../retrieve-data-after-login"
+import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
-	const retrieveDataAfterLogin = useRetrieveDataAfterLogin()
 	const pathname = usePathname()
 
+	// eslint-disable-next-line complexity
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
 			if (
@@ -36,14 +37,18 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
 				throw Error("Unable to log in")
 			}
-			authClass.setAccessToken(googleCallbackResponse.data.accessToken, true)
+			authClass.setAccessToken(googleCallbackResponse.data.accessToken)
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
-			void retrieveDataAfterLogin()
-			if (pathname === "/login") navigate(PageToNavigateAfterLogin)
+			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
+			pipClass.setPipData(googleCallbackResponse.data.userPipData)
+			if (
+				pathname === "/login" ||
+				pathname === "/register"
+			) navigate(PageToNavigateAfterLogin)
 		} catch (error) {
 			console.error(error)
 		}
-	}, [navigate, pathname, retrieveDataAfterLogin])
+	}, [navigate, pathname])
 }

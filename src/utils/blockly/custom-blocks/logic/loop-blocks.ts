@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { Order } from "../../order"
-import { logicCategoryColour } from "../../../constants"
+import { logicCategoryColour } from "../../../constants/constants"
 import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "../../block-types/logic-block-types"

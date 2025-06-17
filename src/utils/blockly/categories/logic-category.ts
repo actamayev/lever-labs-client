@@ -1,7 +1,7 @@
 "use client"
 
 import { baseCategory } from "./base-category"
-import { logicCategoryColour } from "../../constants"
+import { logicCategoryColour } from "../../constants/constants"
 import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES,
 	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "../block-types/logic-block-types"
 

@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect } from "react"
-import useGarageActions from "./garage-actions"
-import { actionMappings } from "../../utils/constants"
+import garageActions from "../../utils/garage/garage-actions"
+import { actionMappings } from "../../utils/constants/constants"
 
 export default function useGarageActionsUseEffect(): void {
-	const { activateAction, deactivateAction } = useGarageActions()
+	const { activateAction, deactivateAction } = garageActions()
 
 	// Key event handlers
 	const handleKeyDown = async (event: KeyboardEvent): Promise<void> => {

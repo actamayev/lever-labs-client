@@ -1,6 +1,6 @@
 "use client"
 
-import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import DemosSection from "./demos-section"
 import SoundsSection from "./sounds/sounds-section"
 

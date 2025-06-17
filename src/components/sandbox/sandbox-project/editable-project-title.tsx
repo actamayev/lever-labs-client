@@ -1,9 +1,9 @@
 "use client"
 import debounce from "lodash-es/debounce"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
-import { Input } from "../../shadcn/ui/input"
-import useEditSandboxProjectName from "../../../hooks/sandbox/edit-sandbox-project-name"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
+import { Input } from "../../shadcn/ui/input"
+import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function
 export default function EditableProjectTitle({ project }: { project: SandboxProject }) {
@@ -13,12 +13,11 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	const [editingName, setEditingName] = useState("") // Temporary state for editing
 	const inputRef = useRef<HTMLInputElement>(null)
 	const measureRef = useRef<HTMLSpanElement>(null)
-	const editProjectName = useEditSandboxProjectName()
 
 	// Create a debounced function for updating the project name
 	const debouncedUpdateName = useRef(
 		debounce((uuid: ProjectUUID, name: string) => {
-			editProjectName(uuid, name)
+			editSandboxProjectName(uuid, name)
 		}, 500)
 	).current
 

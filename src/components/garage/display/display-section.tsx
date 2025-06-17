@@ -1,6 +1,6 @@
 "use client"
 
-import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 export default function DisplaySection() {
 	return (

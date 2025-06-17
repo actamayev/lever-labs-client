@@ -1,5 +1,5 @@
 import { ProjectUUID } from "@bluedotrobots/common-ts"
-import { allPages, careerQuestPages, labPages, staticPages } from "../utils/constants"
+import { allPages, careerQuestPages, labPages, staticPages } from "../utils/constants/page-constants"
 
 declare global {
 	type LabPages = (typeof labPages)[number];

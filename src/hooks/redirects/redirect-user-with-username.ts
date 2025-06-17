@@ -4,7 +4,7 @@ import isNull from "lodash-es/isNull"
 import { useEffect } from "react"
 import authClass from "../../classes/auth-class"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useRedirectUserWithUsername(): void  {

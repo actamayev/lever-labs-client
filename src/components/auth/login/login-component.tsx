@@ -1,9 +1,11 @@
 "use client"
 
 import { useForm } from "react-hook-form"
+import { usePathname } from "next/navigation"
 import { useCallback, useState } from "react"
 import { Form } from "@/components/shadcn/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { LoginRequest } from "@bluedotrobots/common-ts"
 import OrComponent from "../or-component"
 import ContactInput from "./contact-input"
 import PasswordField from "../password-input"
@@ -11,14 +13,16 @@ import GoogleSignIn from "../google/google-sign-in"
 import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import useLoginSubmit from "../../../hooks/auth/login-submit"
+import loginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
-import { LoginRequest } from "@bluedotrobots/common-ts"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function LoginComponent() {
 	const [error, setError] = useState("")
-	const loginSubmit = useLoginSubmit(setError)
+	const navigate = useTypedNavigate()
+	const pathname = usePathname()
 
 	const form = useForm<LoginRequest>({
 		resolver: zodResolver(loginSchema),
@@ -29,8 +33,10 @@ export default function LoginComponent() {
 	})
 
 	const onSubmit = useCallback(async (values: LoginRequest) => {
-		await loginSubmit(values)
-	}, [loginSubmit])
+		const success = await loginSubmit(values, setError)
+		if (success === false) return
+		if (pathname === "/login") navigate(PageToNavigateAfterLogin)
+	}, [navigate, pathname])
 
 	return (
 		<AuthTemplate title="Log in">

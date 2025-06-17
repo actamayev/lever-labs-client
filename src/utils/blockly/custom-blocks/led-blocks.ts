@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { ledCategoryColour } from "../../constants"
+import { ledCategoryColour } from "../../constants/constants"
 import { LEDSensorType, SENSOR_TYPES } from "../block-types/sensor-block-types"
 import { LED_BLOCK_TYPES } from "../block-types/led-block-types"
 

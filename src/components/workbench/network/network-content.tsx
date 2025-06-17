@@ -5,8 +5,8 @@ import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
 import pipClass from "../../../classes/pip-class"
-import useDisconnectFromPip from "../../../hooks/pip/disconnect-from-pip"
-import useRequestToConnectToPip from "../../../hooks/pip/request-to-connect-to-pip"
+import disconnectFromPip from "../../../utils/pip/disconnect-from-pip"
+import requestToConnectToPip from "../../../utils/pip/request-to-connect-to-pip"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 interface Props {
@@ -15,8 +15,6 @@ interface Props {
 
 function NetworkContent(props: Props) {
 	const { setIsWiFiSettingsOpen } = props
-	const disconnectFromPip = useDisconnectFromPip()
-	const requestToConnectToPip = useRequestToConnectToPip()
 
 	const selectedPip = pipClass.selectedPip
 	if (isNull(selectedPip)) return null

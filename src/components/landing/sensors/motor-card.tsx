@@ -1,7 +1,7 @@
 "use client"
 
 import SensorsSkeleton from "./sensors-skeleton"
-import { bentoIconSize } from "../../../utils/constants"
+import { bentoIconSize } from "../../../utils/constants/constants"
 import MotorSpinAnimation from "../../icon-animations/motor-spin-animation"
 
 export default function MotorCard() {

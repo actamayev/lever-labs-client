@@ -3,7 +3,7 @@
 // Define the Sensors category
 
 import { baseCategory } from "./base-category"
-import { sensorsCategoryColour } from "../../constants"
+import { sensorsCategoryColour } from "../../constants/constants"
 import { SENSORS_BLOCK_TYPES } from "../block-types/sensor-block-types"
 
 // First define the sub-categories

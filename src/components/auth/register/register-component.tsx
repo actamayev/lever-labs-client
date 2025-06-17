@@ -2,24 +2,26 @@
 
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
+import { Form } from "@/components/shadcn/ui/form"
+import AgeInput from "./age-input"
 import EmailInput from "./email-input"
 import OrComponent from "../or-component"
 import UsernameInput from "./username-input"
 import PasswordField from "../password-input"
-import { Form } from "@/components/shadcn/ui/form"
 import GoogleSignIn from "../google/google-sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
 import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
+import registerSubmit from "../../../utils/auth/register-submit"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
-import useRegisterSubmit from "../../../hooks/auth/register-submit"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
-import AgeInput from "./age-input"
+import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 
 export default function RegisterComponent() {
 	const [error, setError] = useState("")
-	const registerSubmit = useRegisterSubmit(setError)
+	const navigate = useTypedNavigate()
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -32,8 +34,10 @@ export default function RegisterComponent() {
 	})
 
 	const onSubmit = useCallback(async (values: RegisterFormValues) => {
-		await registerSubmit(values)
-	}, [registerSubmit])
+		const success = await registerSubmit(values, setError)
+		if (success === false) return
+		navigate(PageToNavigateAfterLogin)
+	}, [navigate])
 
 	return (
 		<AuthTemplate title="Create a new account">

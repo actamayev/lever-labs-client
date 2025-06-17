@@ -6,7 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import { CustomHorn } from "../../icons/custom-horn"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomHeadlights } from "../../icons/custom-headlights"
-import useGarageActions from "../../../hooks/garage/garage-actions"
+import garageActions from "../../../utils/garage/garage-actions"
 import personalInfoClass from "../../../classes/personal-info-class"
 
 interface ArrowKeyButtonProps {
@@ -21,7 +21,7 @@ function DrivingActionButton({
 }: ArrowKeyButtonProps) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
-	const { activateAction, deactivateAction } = useGarageActions()
+	const { activateAction, deactivateAction } = garageActions()
 
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {

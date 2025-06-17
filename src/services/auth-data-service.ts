@@ -2,7 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, ErrorResponse, ErrorResponses, GoogleAuthSuccess, LoginRequest, LoginSuccess,
+import { EmailUpdatesRequest, ErrorResponse, ErrorResponses, GoogleAuthSuccess, LoginRequest, LoginSuccess,
 	NonSuccessResponse, RegisterRequest, RegisterSuccess, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
 
 export default class AuthDataService {
@@ -29,8 +29,8 @@ export default class AuthDataService {
 		)
 	}
 
-	async registerUsername(username: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
+	async registerUsername(username: string): Promise<AxiosResponse<EmailUpdatesRequest | NonSuccessResponse>> {
+		return await this.httpClient.http.post<EmailUpdatesRequest | NonSuccessResponse>(
 			`${this.pathHeader}/set-username`, { username }
 		)
 	}

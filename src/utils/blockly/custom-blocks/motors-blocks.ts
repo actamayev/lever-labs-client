@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { motorsCategoryColour } from "../../constants"
+import { motorsCategoryColour } from "../../constants/constants"
 import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "../block-types/motor-block-types"
 
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {

@@ -15,15 +15,18 @@ import { Form } from "../shadcn/ui/form"
 import EnterPipName from "./enter-pip-name"
 import AddPipButton from "./add-pip-button"
 import BackButton from "../buttons/back-button"
-import useAddPip from "../../hooks/pip/add-pip"
+import addPip from "../../utils/pip/add-pip"
 import WiFiScanSection from "./wifi-scan-section"
 import ConnectUsbButton from "../connect-usb-button"
 import { addPipSchema } from "../../utils/pip/pip-schemas"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function AddPipForm() {
+	const navigate = useTypedNavigate()
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
 		defaultValues: {
@@ -64,7 +67,12 @@ function AddPipForm() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serialMessageManagerClass.pipId, form])
 
-	const addPip = useAddPip(resetAddPipVars, () => form.getValues())
+	const addPipCallback = useCallback(async() => {
+		const addPipResponse = await addPip(() => form.getValues())
+		if (addPipResponse === false) return
+		resetAddPipVars()
+		navigate(PageToNavigateAfterLogin)
+	}, [form, navigate, resetAddPipVars])
 
 	return (
 		<div>
@@ -82,7 +90,7 @@ function AddPipForm() {
 				<CardContent>
 					<Form {...form}>
 						<form
-							onSubmit={form.handleSubmit(addPip)}
+							onSubmit={form.handleSubmit(addPipCallback)}
 							onKeyDown={(e) => {
 								if (e.key === "Enter") e.preventDefault()
 							}}

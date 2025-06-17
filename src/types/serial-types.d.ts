@@ -1,10 +1,9 @@
-import type { SerialPort } from "w3c-web-serial"
-
 declare global {
 	interface Navigator {
 		serial: {
 			requestPort: (options?: { filters: Array<{ usbVendorId?: number; usbProductId?: number }> }) => Promise<SerialPort>
 			getPorts: () => Promise<SerialPort[]>
+			addEventListener: (event: string, callback: (event: Event) => void) => void
 		}
 	}
 

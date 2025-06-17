@@ -1,17 +1,14 @@
 "use client"
 
 import { useEffect } from "react"
-import isNull from "lodash-es/isNull"
+import authClass from "../../classes/auth-class"
 import socketClass from "../../classes/socket-class"
-import useHandlePipStatusUpdate from "./handle-pip-status-update"
-import useHandleIncomingSensorData from "./handle-incoming-sensor-data"
+import handlePipStatusUpdate from "../../utils/socket/handle-pip-status-update"
+import handleIncomingSensorData from "../../utils/socket/handle-incoming-sensor-data"
 
 export default function useSocketEventsUseEffect(): void {
-	const handlePipStatusUpdate = useHandlePipStatusUpdate()
-	const handleIncomingSensorData = useHandleIncomingSensorData()
-
 	useEffect(() => {
-		if (isNull(socketClass.accessToken)) return
+		if (authClass.isFinishedWithSignup === false) return
 
 		// Listen for the 'pipStatusUpdate' event emitted from SocketClass
 		socketClass.on("pipStatusUpdate", handlePipStatusUpdate)
@@ -21,5 +18,6 @@ export default function useSocketEventsUseEffect(): void {
 			socketClass.off("pipStatusUpdate", handlePipStatusUpdate)
 			socketClass.off("incomingSensorData", handleIncomingSensorData)
 		}
-	}, [handlePipStatusUpdate, handleIncomingSensorData])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
 }

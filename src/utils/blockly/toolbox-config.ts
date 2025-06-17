@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { buttonsCategoryColour, screenCategoryColour, speakerCategoryColour,
-	ledCategoryColour, motorsCategoryColour } from "../constants"
+	ledCategoryColour, motorsCategoryColour } from "../constants/constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"

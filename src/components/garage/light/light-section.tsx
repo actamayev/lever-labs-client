@@ -6,7 +6,7 @@ import ColorPicker from "./color-picker"
 import LightDotsSelector from "./light-dots-selector"
 import LightAnimationsList from "./light-animations-list"
 import LightBrightnessControl from "./light-brightness-control"
-import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import useSetDefaultColorsUseEffect from "../../../hooks/garage/set-dots-colors-use-effect"
 
 function LightSection() {

@@ -1,20 +1,21 @@
 /* eslint-disable max-len */
 "use client"
 
+import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import { LightAnimation } from "@bluedotrobots/common-ts"
+import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
-import useLightsAnimation from "../../../hooks/garage/lights-animation"
-import { LightAnimation } from "@bluedotrobots/common-ts"
+import lightsAnimation from "../../../utils/garage/lights-animation"
 
 interface Animation {
 	name: LightAnimation
@@ -51,9 +52,8 @@ const ANIMATIONS: Animation[] = [
 ]
 
 function LightAnimationsList() {
-	const lightsAnimation = useLightsAnimation()
-
 	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`
+	const optimizedLightsAnimation = useCallback(lightsAnimation, [])
 
 	return (
 		<DropdownMenu>
@@ -81,7 +81,7 @@ function LightAnimationsList() {
 				{ANIMATIONS.map((animation) => (
 					<DropdownMenuItem
 						key={animation.name}
-						onClick={() => lightsAnimation(animation.name)}
+						onClick={() => optimizedLightsAnimation(animation.name)}
 						className={cn(
 							"my-0.5 p-2 rounded-xl cursor-pointer text-sm transition-none flex items-center space-x-2 hover:!bg-polar",
 							garageClass.selectedAnimation === animation.name

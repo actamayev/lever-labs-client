@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
 import useTypedNavigate from "../navigate/typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
-import { PageToNavigateAfterLogin, PrivatePageNames } from "../../utils/constants"
+import { PrivatePageNames, PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 
 export default function useRedirectKnownUser(): void {
 	const navigate = useTypedNavigate()

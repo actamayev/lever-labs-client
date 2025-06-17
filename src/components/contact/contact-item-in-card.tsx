@@ -4,7 +4,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
-import useToastOptions from "../toast-options"
+import toastClass from "../../classes/toast-class"
 
 interface Props {
 	name: string
@@ -13,22 +13,21 @@ interface Props {
 
 function ContactItemInCard(props: Props) {
 	const { name, email } = props
-	const toast = useToastOptions()
 
 	const copyToClipboard = useCallback(async () => {
 		try {
 			await navigator.clipboard.writeText(email)
-			return toast.neutral({
+			return toastClass.neutral({
 				title: `${email} copied to clipboard`
 			})
 		} catch (error) {
 			console.error(error)
-			return toast.neutral({
+			return toastClass.neutral({
 				title: "Unable to copy email to clipboard at this time",
 				description: "Please reload the page and try again"
 			})
 		}
-	}, [email, toast])
+	}, [email])
 
 	return (
 		<CustomTooltip

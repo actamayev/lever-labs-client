@@ -1,7 +1,7 @@
 "use client"
 
 import SensorsSkeleton from "./sensors-skeleton"
-import { bentoIconSize } from "../../../utils/constants"
+import { bentoIconSize } from "../../../utils/constants/constants"
 import CompassRotationAnimation from "../../icon-animations/compass-rotation-animation"
 
 export default function IMUCard() {
