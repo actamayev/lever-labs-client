@@ -33,9 +33,9 @@ export default function RegisterComponent() {
 		}
 	})
 
-	// TODO: After registration, doesn't set access token correclty?
 	const onSubmit = useCallback(async (values: RegisterFormValues) => {
-		await registerSubmit(values, setError)
+		const success = await registerSubmit(values, setError)
+		if (success === false) return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate])
 

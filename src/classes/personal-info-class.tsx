@@ -46,6 +46,12 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
 	})
 
+	public setRegisteredValues = action((username: string, email: string, defaultSiteTheme: SiteThemes): void => {
+		this.username = username
+		this.email = email
+		this.setDefaultSiteTheme(defaultSiteTheme)
+	})
+
 	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, addToLocalStorage: boolean = true): void => {
 		this.defaultSiteTheme = newSiteTheme
 		if (typeof window === "undefined") return

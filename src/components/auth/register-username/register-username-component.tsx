@@ -29,7 +29,8 @@ export default function RegisterUsernameComponent() {
 	const isDisabled = useMemo(() => username.length < 4, [username])
 
 	const onSubmit = useCallback(async (values: NewUsernameRequest) => {
-		await usernameSubmit(values.username, setError)
+		const success = await usernameSubmit(values.username, setError)
+		if (success === false) return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate])
 
