@@ -2,12 +2,13 @@
 
 import { ReactNode, useEffect } from "react"
 import { AnimatePresence } from "framer-motion"
-import { GoogleOAuthProvider } from "@react-oauth/google"
 import { Slide, ToastContainer } from "react-toastify"
+import { GoogleOAuthProvider } from "@react-oauth/google"
 
 // Custom hooks from your application
 import { observer } from "mobx-react"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
+import personalInfoClass from "../src/classes/personal-info-class"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
@@ -23,13 +24,23 @@ function RedirectHandler() {
 
 const ObserverRedirectHandler = observer(RedirectHandler)
 
+const retrieveInfo = async () => {
+	await retrievePersonalInfo()
+	// We wait for the personal info to be retrieved, and then retrieve the pip info.
+	// We wait for the username to be retrieved to be certain that we should retrieve the pip info
+	void retrievePipInfo()
+}
+
 export default function Providers({ children }: { children: ReactNode }) {
 	useLogoutListenerUseEffect()
 	useSiteThemeListenerUseEffect()
 	useInitializeGoogleAnalytics()
-	useEffect(() => void retrievePersonalInfo(), [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		void retrieveInfo()
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [personalInfoClass.username])
 	useSocketEventsUseEffect()
-	useEffect(() => void retrievePipInfo(), [])
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>

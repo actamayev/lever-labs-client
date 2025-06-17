@@ -11,9 +11,9 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 export default async function retrievePipInfo(): Promise<void> {
 	try {
 		if (
-			pipClass.isRetrievingPipData === true ||
-			!isEmpty(pipClass.pipData) ||
 			authClass.isFinishedWithSignup === false ||
+			!isEmpty(pipClass.pipData) ||
+			pipClass.isRetrievingPipData === true ||
 			pipClass.retrievedPipData === true
 		) return
 

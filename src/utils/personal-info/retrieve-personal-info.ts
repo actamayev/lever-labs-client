@@ -10,9 +10,9 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 export default async function retrievePersonalInfo(): Promise<void> {
 	try {
 		if (
-			personalInfoClass.isRetrievingPersonalInfo === true ||
 			authClass.isLoggedIn === false || // NOTE: This is not authClass.isFinishedWithSignup on purpose.
 			// We need to retrieve the personal info wherever we are to confirm Google users have finished registering their usernames
+			personalInfoClass.isRetrievingPersonalInfo === true ||
 			personalInfoClass.retrievedPersonalInfo === true
 		) return
 
