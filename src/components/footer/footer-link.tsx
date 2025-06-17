@@ -9,7 +9,7 @@ interface Props {
 	extraClasses?: string
 }
 
-// Use: https://www.shadcnblocks.com/block/footer7
+// TODO 6/17/25: https://www.shadcnblocks.com/block/footer7
 export default function FooterLink(props: Props) {
 	const { linkTo, linkTitle, extraClasses } = props
 

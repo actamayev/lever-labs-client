@@ -12,7 +12,7 @@ import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-re
 
 export default async function loginSubmit(
 	loginInformation: LoginRequest,
-	setError: (error: string) => void,
+	setError: (error: string) => void
 ) : Promise<boolean> {
 	try {
 		setError("")

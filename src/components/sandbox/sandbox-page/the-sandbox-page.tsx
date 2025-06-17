@@ -1,8 +1,8 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useEffect, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
+import { useCallback, useEffect, useState } from "react"
 import { SandboxProject } from "@bluedotrobots/common-ts"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"

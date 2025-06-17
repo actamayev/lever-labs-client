@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import LabStartCard from "./start-card/lab-start-card"
 import SeeAllLessonIcons from "./see-all-lesson-icons"
@@ -14,7 +13,7 @@ interface Section {
 	name: LessonNames
 }
 
-function TheLabPage() {
+export default function TheLabPage() {
 	useEffect(() => void retrieveAllActivities(), [])
 	const ledSectionRef = useRef<HTMLDivElement>(null)
 	// const motorSectionRef = useRef<HTMLDivElement>(null)
@@ -74,5 +73,3 @@ function TheLabPage() {
 		</div>
 	)
 }
-
-export default observer(TheLabPage)
