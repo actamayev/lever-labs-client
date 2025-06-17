@@ -1,6 +1,6 @@
 "use client"
 
-import { careerData } from "../../utils/career-data"
+import { careerData } from "../../utils/constants/career-data"
 import WorkbenchLayout from "../layouts/workbench-layout"
 import SingleCareerCard from "./career-card/single-career-card"
 

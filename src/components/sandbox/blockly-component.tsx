@@ -7,11 +7,11 @@ import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import { EmptySandboxXml } from "../../utils/constants"
+import { EmptySandboxXml } from "../../utils/constants/constants"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../classes/personal-info-class"
-import useInitializeBlocks from "../../hooks/blockly/initialize-blocks"
-import useSensorPollingUseEffect from "../../hooks/sandbox/sensor-polling-use-effect"
+import initializeBlocks from "../../utils/blockly/initialize-blocks"
+import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 interface Props {
@@ -34,7 +34,6 @@ function BlocklyComponent(props: Props) {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	const initializeBlocks = useInitializeBlocks()
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
 	useSensorPollingUseEffect()
@@ -126,7 +125,7 @@ function BlocklyComponent(props: Props) {
 		// 12/1/25 TODO: Fix, not working
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
-	}, [initializeBlocks, setupToolbox])
+	}, [setupToolbox])
 
 	return (
 		<div

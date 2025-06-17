@@ -3,6 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import socketClass from "./socket-class"
+import personalInfoClass from "./personal-info-class"
 import blueDotApiClientClass from "./blue-dot-api-client-class"
 
 class AuthClass {
@@ -15,8 +16,18 @@ class AuthClass {
 		this.getAuthDataFromStorage()
 	}
 
+	get accessToken(): string | null {
+		return this._accessToken
+	}
+
 	get isLoggedIn(): boolean {
 		return !isNull(this._accessToken)
+	}
+
+	get isFinishedWithSignup(): boolean {
+		// This is to make sure that users are both logged in, and they've set a username
+		// (Google users can be logged in, but haven't set a username yet)
+		return (this.isLoggedIn && !isNull(personalInfoClass.username))
 	}
 
 	public getAuthDataFromStorage(): string | null {
@@ -26,16 +37,16 @@ class AuthClass {
 		return this._accessToken
 	}
 
-	public setAccessToken = action((accessToken: string | null, saveToStorage = false): void => {
+	public setAccessToken = action((accessToken: string | null): void => {
 		this._accessToken = accessToken
-		blueDotApiClientClass.httpClient.accessToken = accessToken
-		socketClass.setAccessToken(accessToken)
-		if (typeof window === "undefined") return
-		if (!isNull(accessToken) && saveToStorage === true) {
-			localStorage.setItem("Access Token", accessToken as string)
-		} else if (isNull(accessToken) && saveToStorage === true) {
-			localStorage.removeItem("Access Token")
+		if (isNull(accessToken)) {
+			if (typeof window === "undefined") return
+			return localStorage.removeItem("Access Token")
 		}
+		blueDotApiClientClass.httpClient.setAuthHeader(accessToken)
+		socketClass.connect(accessToken)
+		if (typeof window === "undefined") return
+		localStorage.setItem("Access Token", accessToken as string)
 	})
 
 	public setAuthenticating = action((authenticating: boolean): void => {
@@ -47,7 +58,7 @@ class AuthClass {
 	})
 
 	public logout() {
-		this.setAccessToken(null, true)
+		this.setAccessToken(null)
 		this.setShowLoginOrRegister("Register")
 		this.setAuthenticating(false)
 	}

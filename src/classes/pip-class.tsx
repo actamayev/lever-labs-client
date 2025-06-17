@@ -27,6 +27,8 @@ class PipClass {
 
 	public setPipData(pipData: PipData[]): void {
 		pipData.map(singlePipData => this.addNewPip(singlePipData))
+		this.setRetrievedPipData(true)
+		this.setIsRetrievingPipData(false)
 	}
 
 	public addNewPip(pipData: PipData): void {
@@ -78,7 +80,7 @@ class PipClass {
 		this.isSendingCppToPip = newState
 	})
 
-	public setRetrievedPipData = action((newState: boolean): void => {
+	private setRetrievedPipData = action((newState: boolean): void => {
 		this.retrievedPipData = newState
 	})
 

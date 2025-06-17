@@ -6,7 +6,7 @@ import { useState, useCallback } from "react"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
-import useChangePassword from "../../hooks/personal-info/change-password"
+import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
@@ -15,7 +15,6 @@ function ChangePasswordSection() {
 	const [newPassword, setNewPassword] = useState("")
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false)
 	const [showNewPassword, setShowNewPassword] = useState(false)
-	const updatePassword = useChangePassword()
 	const [passwordError, setPasswordError] = useState("")
 
 	const handleCurrentPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +34,7 @@ function ChangePasswordSection() {
 	}, [passwordError])
 
 	const savePassword = useCallback(async () => {
-		const errorMessage = await updatePassword(currentPassword, newPassword)
+		const errorMessage = await changePassword(currentPassword, newPassword)
 		if (errorMessage) {
 			setPasswordError(errorMessage)
 		} else {
@@ -43,7 +42,7 @@ function ChangePasswordSection() {
 			setCurrentPassword("")
 			setNewPassword("")
 		}
-	}, [currentPassword, newPassword, updatePassword])
+	}, [currentPassword, newPassword])
 
 	// Check if password change is valid
 	const isPasswordChangeValid = currentPassword.length >= 6 &&

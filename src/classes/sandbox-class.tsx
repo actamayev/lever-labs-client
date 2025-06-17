@@ -18,16 +18,19 @@ class SandboxClass {
 		this.isRetrievingAllSandboxProjects = newIsRetrievingAllSandboxProjects
 	})
 
-	public setHasRetrievedAllSandboxProjects = action((newHasRetrievedAllSandboxProjects: boolean): void => {
+	private setHasRetrievedAllSandboxProjects = action((newHasRetrievedAllSandboxProjects: boolean): void => {
 		this.hasRetrievedAllSandboxProjects = newHasRetrievedAllSandboxProjects
 	})
 
 	public setSandboxProjects = action((sandboxProjects: SandboxProject[]): void => {
 		sandboxProjects.forEach(sandboxProject => this.addSandboxProject(sandboxProject))
+		this.setHasRetrievedAllSandboxProjects(true)
+		this.setIsRetrievingAllSandboxProjects(false)
 	})
 
 	public addSandboxProject = action((sandboxProject: SandboxProject): void => {
 		this.sandboxProjects.set(sandboxProject.projectUUID, sandboxProject)
+		this.setIsRetrievingSingleProject(sandboxProject.projectUUID, false)
 	})
 
 	public setIsRetrievingSingleProject = action((projectUUID: ProjectUUID, isRetrieving: boolean): void => {

@@ -4,14 +4,13 @@ import isNull from "lodash-es/isNull"
 import { useCallback } from "react"
 import LilypadIcon from "./lilypad-icon"
 import { cn } from "../../../../lib/shadcn/utils"
-import useLilypadVariants from "../../../../hooks/lab/lilypad-variants"
+import lilypadVariants from "../../../../utils/lab/lilypad-variants"
 import useTypedNavigate from "../../../../hooks/navigate/typed-navigate"
 import LilypadStatusIndicatorTooltip from "./lilypad-status-indicator-tooltip"
 
 export default function Lilypad({ activity } : { activity: FullActivity }) {
 	const { activityStatus, activityUrl, activityName, activityType, arcDirection } = activity
 	const navigate = useTypedNavigate()
-	const lilypadVariants = useLilypadVariants()
 
 	const navigateToLesson = useCallback(() => {
 		if (isNull(activityStatus)) return

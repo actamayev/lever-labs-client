@@ -7,7 +7,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
-import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
@@ -18,10 +18,10 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 			pathname === "/register-username" ||
 			(authClass.isLoggedIn && isNull(personalInfoClass.username))
 		) return "/register-username"
-		if (authClass.isLoggedIn) return PageToNavigateAfterLogin
+		if (authClass.isFinishedWithSignup) return PageToNavigateAfterLogin
 		return "/"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname, authClass.isLoggedIn, personalInfoClass.username])
+	}, [pathname, authClass.isFinishedWithSignup, authClass.isLoggedIn, personalInfoClass.username])
 
 	return (
 		<div

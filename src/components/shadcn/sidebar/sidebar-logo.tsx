@@ -5,7 +5,7 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
-import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
 export default function SidebarLogo() {
 	return (

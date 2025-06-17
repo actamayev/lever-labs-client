@@ -1,15 +1,12 @@
 "use client"
 
 import { useEffect } from "react"
-import { motorKeyMappings } from "../../utils/constants"
-import useApplyMotorControl from "./apply-motor-control"
-import useComputeMotorControl from "./compute-motor-control"
 import garageClass from "../../classes/garage-class"
+import { motorKeyMappings } from "../../utils/constants/constants"
+import applyMotorControl from "../../utils/garage/apply-motor-control"
+import computeMotorControl from "../../utils/garage/compute-motor-control"
 
 export default function useMotorDriveUseEffect(): void {
-	const computeMotorControl = useComputeMotorControl()
-	const applyMotorControl = useApplyMotorControl()
-
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
 		const key = event.key.toLowerCase()

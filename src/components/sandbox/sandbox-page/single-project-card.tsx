@@ -4,6 +4,7 @@ import { observer } from "mobx-react"
 import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"
 import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
+import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -14,20 +15,16 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import RenameProjectDialog from "./rename-project-dialog"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import useStarSandboxProject from "../../../hooks/sandbox/star-sandbox-project"
-import useDeleteSandboxProject from "../../../hooks/sandbox/delete-sandbox-project"
-import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
-import { useRelativeDateFormatter } from "../../../hooks/sandbox/date-formatting"
+import relativeDateFormatter from "../../../utils/sandbox/date-formatting"
+import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
+import deleteSandboxProject from "../../../utils/sandbox/delete-sandbox-project"
 
 // eslint-disable-next-line max-lines-per-function
 function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const navigate = useTypedNavigate()
-	const deleteSandboxProject = useDeleteSandboxProject()
-	const starSandboxProject = useStarSandboxProject()
 	const [isDeleteMode, setIsDeleteMode] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [newProjectName, setNewProjectName] = useState(project.projectName || "")
-	const relativeDateFormatter = useRelativeDateFormatter()
 
 	const handleProjectClick = useCallback((projectUUID: ProjectUUID) => {
 		if (isDeleteMode) return
@@ -42,7 +39,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 	const handleStarClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation()
 		starSandboxProject(project.projectUUID)
-	}, [starSandboxProject, project.projectUUID])
+	}, [project.projectUUID])
 
 	const handleRenameClick = useCallback((e: React.MouseEvent) => {
 		e.stopPropagation()
@@ -59,7 +56,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 		e.stopPropagation()
 		await deleteSandboxProject(project.projectUUID)
 		setIsDeleteMode(false)
-	}, [deleteSandboxProject, project.projectUUID])
+	}, [project.projectUUID])
 
 	return (
 		<>

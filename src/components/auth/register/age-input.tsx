@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Control, FieldPath } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
-import { useHandleTypeAge } from "../../../hooks/handle-type-validation/handle-type-fields"
+import { handleTypeAge } from "../../../utils/handle-type-validation/handle-type-fields"
 
 interface Props<T extends { age: number | null }> {
 	control: Control<T>
@@ -13,8 +13,6 @@ interface Props<T extends { age: number | null }> {
 export default function AgeInput<T extends { age: number | null }>({
 	control,
 }: Props<T>) {
-	const handleTypeAge = useHandleTypeAge()
-
 	// TODO: 6/9/25: Fix the placeholder text color (dark mode) to reflect Duolingo.
 	return (
 		<FormField

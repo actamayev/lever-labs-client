@@ -89,6 +89,7 @@ class ActivityProgressClass {
 		}
 
 		this.setDidRetrieveAllActivityProgress(true)
+		this.setIsRetrievingAllActivityProgress(false)
 	})
 
 	public logout() {

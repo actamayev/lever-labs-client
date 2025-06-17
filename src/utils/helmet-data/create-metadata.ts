@@ -1,5 +1,5 @@
 import { Metadata } from "next"
-import { PrivatePageNames } from "../constants"
+import { PrivatePageNames } from "../constants/page-constants"
 
 // Define the base domain for your site
 // eslint-disable-next-line @typescript-eslint/naming-convention

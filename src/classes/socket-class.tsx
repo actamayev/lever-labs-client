@@ -10,31 +10,20 @@ import { HeadlightData, HornData, IncomingSensorData,
 class SocketClass extends EventEmitter {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
-	public accessToken: string | null = null
 
 	constructor() {
 		super()
 		makeObservable(this, {
-			isConnected: observable,
-			accessToken: observable
+			isConnected: observable
 		})
 	}
 
-	public setAccessToken = action((accessToken: string | null) => {
-		this.accessToken = accessToken
-		if (isNull(accessToken)) return
-		this.connect()
-	})
-
-	private connect = action((): void => {
-		if (
-			isNull(this.accessToken) ||
-			!isNull(this._socket)
-		) return
+	public connect = action((accessToken: string): void => {
+		if (!isNull(this._socket)) return
 
 		this._socket = io(process.env.NEXT_PUBLIC_BASE_URL as string, {
 			path: "/socketio",
-			auth: { token: this.accessToken },
+			auth: { token: accessToken },
 			transports: ["websocket"]
 		})
 
@@ -49,14 +38,12 @@ class SocketClass extends EventEmitter {
 			this.isConnected = true
 		})
 
-		this._socket.on("disconnect", (reason: Socket.DisconnectReason) => {
+		this._socket.on("disconnect", (_reason: Socket.DisconnectReason) => {
 			this.isConnected = false
-			console.info("Disconnected from backend:", reason)
 		})
 
 		// Handle reconnection attempts
-		this._socket.on("reconnect_attempt", (attempt) => {
-			console.info(`Attempting to reconnect... (${attempt})`)
+		this._socket.on("reconnect_attempt", (_attempt) => {
 		})
 	})
 
@@ -125,7 +112,6 @@ class SocketClass extends EventEmitter {
 
 	public logout = action((): void => {
 		this.disconnect()
-		this.accessToken = null
 	})
 }
 

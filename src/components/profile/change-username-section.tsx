@@ -9,12 +9,11 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import CharacterCounter from "../character-counter"
 import personalInfoClass from "../../classes/personal-info-class"
-import useEditUsername from "../../hooks/personal-info/edit-username"
+import editUsername from "../../utils/personal-info/edit-username"
 
 function ChangeUsernameSection() {
 	const [username, setUsername] = useState(personalInfoClass.username || "")
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false)
-	const updateUsername = useEditUsername()
 	const [usernameError, setUsernameError] = useState("")
 
 	const handleUsernameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,7 @@ function ChangeUsernameSection() {
 	}, [usernameError, personalInfoClass.username])
 
 	const saveUsername = useCallback(async () => {
-		const errorMessage = await updateUsername(username)
+		const errorMessage = await editUsername(username)
 		if (errorMessage) {
 			setUsernameError(errorMessage)
 			setIsUsernameChanged(true) // Keep the save button visible
@@ -38,7 +37,7 @@ function ChangeUsernameSection() {
 			setUsernameError("")
 			setIsUsernameChanged(false)
 		}
-	}, [updateUsername, username])
+	}, [username])
 
 	return (
 		<div className="mb-6">

@@ -24,21 +24,8 @@ class BlueDotApiClient {
 	constructor() {
 	}
 
-	private initializeServices() {
-		this.httpClient = new BlueDotHttpClient()
-		this.authDataService = new AuthDataService(this.httpClient)
-		this.labActivityTrackingDataService = new LabActivityTrackingDataService(this.httpClient)
-		this.miscDataService = new MiscDataService(this.httpClient)
-		this.garageDataService = new GarageDataService(this.httpClient)
-		this.personalInfoDataService = new PersonalInfoDataService(this.httpClient)
-		this.pipDataService = new PipDataService(this.httpClient)
-		this.sandboxDataService = new SandboxDataService(this.httpClient)
-		this.workbenchDataService = new WorkbenchDataService(this.httpClient)
-	}
-
 	public logout() {
-		this.httpClient.accessToken = null
-		this.initializeServices()
+		this.httpClient.logout()
 	}
 }
 

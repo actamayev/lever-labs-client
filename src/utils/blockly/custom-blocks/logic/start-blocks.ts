@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { logicCategoryColour } from "../../../constants"
+import { logicCategoryColour } from "../../../constants/constants"
 import { START_BLOCK_TYPES } from "../../block-types/logic-block-types"
 
 export const startBlocks: Record<START_BLOCK_TYPES, CustomBlock> = {

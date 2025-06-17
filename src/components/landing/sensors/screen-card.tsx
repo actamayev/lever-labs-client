@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { TvMinimal } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"
-import { bentoIconSize } from "../../../utils/constants"
+import { bentoIconSize } from "../../../utils/constants/constants"
 
 export default function ScreenCard() {
 	const [isHovered, setIsHovered] = useState(false)

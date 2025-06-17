@@ -1,24 +1,23 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useState } from "react"
 import isUndefined from "lodash-es/isUndefined"
+import { useCallback, useEffect, useState } from "react"
 import { SandboxProject } from "@bluedotrobots/common-ts"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
+import sandboxClass from "../../../classes/sandbox-class"
 import WorkbenchLayout from "../../layouts/workbench-layout"
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
-import sandboxClass from "../../../classes/sandbox-class"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import useCreateSandboxProject from "../../../hooks/sandbox/create-sandbox-project"
-import useRetrieveAllSandboxProjectsUseEffect from "../../../hooks/sandbox/retrieve-all-sandbox-projects-use-effect"
+import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
+import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
-	useRetrieveAllSandboxProjectsUseEffect()
+	useEffect(() => void retrieveAllSandboxProjects(), [])
 	const navigate = useTypedNavigate()
-	const createSandboxProject = useCreateSandboxProject()
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")
 
@@ -32,7 +31,7 @@ function TheSandboxPage() {
 		} finally {
 			setIsCreating(false)
 		}
-	}, [createSandboxProject, navigate])
+	}, [navigate])
 
 	// Filter projects based on search query
 	const filterProjects = useCallback((projects: SandboxProject[]) => {
@@ -118,9 +117,11 @@ function TheSandboxPage() {
 								className="fill-fox text-fox"
 							/>
 							<h2 className="text-3xl font-semibold">All Projects</h2>
-							{searchQuery && <span className="ml-2 text-gray-500">
-                ({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
-							</span>}
+							{searchQuery && (
+								<span className="ml-2 text-gray-500">
+									({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
+								</span>
+							)}
 						</div>
 						{filteredAllProjects.length > 0 ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -141,7 +142,7 @@ function TheSandboxPage() {
 												onClick={handleCreateProject}
 												disabled={isCreating}
 											>
-                        Create your first project
+												Create your first project
 											</button>
 										</>
 									)}

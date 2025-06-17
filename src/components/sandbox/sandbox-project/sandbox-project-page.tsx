@@ -14,14 +14,14 @@ import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
-import useSendCppToPip from "../../../hooks/sandbox/send-cpp-to-pip"
+import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
-import useEditSandboxProject from "../../../hooks/sandbox/edit-sandbox-project"
-import useStopCurrentlyRunningCode from "../../../hooks/sandbox/stop-currently-running-code"
+import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
+import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
+import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
-import useRetrieveSingleSandboxProjectUseEffect from "../../../hooks/sandbox/retrieve-single-sandbox-project-use-effect"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -29,12 +29,9 @@ const BlocklyComponent = lazy(() => import("../blockly-component"))
 function SandboxProjectPage() {
 	const params = useParams()
 	const projectUUID = params.projectUUID as ProjectUUID
-	useRetrieveSingleSandboxProjectUseEffect(projectUUID)
+	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
-	const sendCppToPip = useSendCppToPip()
-	const editSandboxProject = useEditSandboxProject()
-	const stopCurrentlyRunningCode = useStopCurrentlyRunningCode()
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
