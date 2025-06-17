@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { createCustomCategory } from "../../../../../../utils/blockly/toolbox-config"
 import LabCodeComponent from "../../../../code/lab-code-component"
-import { ledCategoryColour } from "../../../../../../utils/constants"
+import { ledCategoryColour } from "../../../../../../utils/constants/constants"
 import { LED_BLOCK_TYPES } from "../../../../../../utils/blockly/block-types/led-block-types"
 
 export default function WarehousePipClient() {

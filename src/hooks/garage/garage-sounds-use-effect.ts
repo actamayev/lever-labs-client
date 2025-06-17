@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { soundMappings } from "../../utils/constants"
+import { soundMappings } from "../../utils/constants/constants"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"

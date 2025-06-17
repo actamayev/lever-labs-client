@@ -7,7 +7,7 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
-import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {

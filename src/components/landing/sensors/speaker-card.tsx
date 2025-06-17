@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Volume1, Volume2, Volume } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"
-import { bentoIconSize } from "../../../utils/constants"
+import { bentoIconSize } from "../../../utils/constants/constants"
 
 export default function SpeakerCard() {
 	const [isHovered, setIsHovered] = useState(false)

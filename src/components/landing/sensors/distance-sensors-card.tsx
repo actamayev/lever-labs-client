@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/shadcn/utils"
-import { bentoIconSize } from "../../../utils/constants"
+import { bentoIconSize } from "../../../utils/constants/constants"
 import RulerExpansionAnimation from "../../icon-animations/ruler-expansion-animation"
 import { landingSensorCardHeaderText, landingSensorCardText } from "../../../utils/text-styles"
 

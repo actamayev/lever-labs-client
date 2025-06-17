@@ -3,7 +3,7 @@
 import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
 import { CustomRemote } from "../icons/custom-remote"
-import { bentoIconSize } from "../../utils/constants"
+import { bentoIconSize } from "../../utils/constants/constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
 // Define the color states

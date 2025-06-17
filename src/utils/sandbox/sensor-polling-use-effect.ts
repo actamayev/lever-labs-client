@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import pollSensors from "./poll-sensors"
 import pipClass from "../../classes/pip-class"
-import { SENSOR_POLLING_INTERVAL } from "../../utils/constants"
+import { SENSOR_POLLING_INTERVAL } from "../constants/constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useSensorPollingUseEffect (): void {

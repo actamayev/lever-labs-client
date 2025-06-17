@@ -3,7 +3,7 @@
 
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { makeObservable, observable, runInAction } from "mobx"
-import { PIP_ROBOT_USB_ID } from "../utils/constants"
+import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import { createCustomEvent } from "../utils/custom-event-dispatcher"
 
 class SerialConnectionManagerClass extends EventTarget {

@@ -8,7 +8,7 @@ import { AddPipData, PipData } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import useTypedNavigate from "../navigate/typed-navigate"
-import { PageToNavigateAfterLogin } from "../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../../utils/type-checks"
 

@@ -15,7 +15,7 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import registerSubmit from "../../../utils/auth/register-submit"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
-import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 

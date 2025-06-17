@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import garageActions from "../../utils/garage/garage-actions"
-import { actionMappings } from "../../utils/constants"
+import { actionMappings } from "../../utils/constants/constants"
 
 export default function useGarageActionsUseEffect(): void {
 	const { activateAction, deactivateAction } = garageActions()

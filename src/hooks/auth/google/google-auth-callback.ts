@@ -10,7 +10,7 @@ import pipClass from "../../../classes/pip-class"
 import authClass from "../../../classes/auth-class"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
-import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 

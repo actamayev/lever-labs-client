@@ -3,9 +3,9 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import authClass from "../classes/auth-class"
-import { PageToNavigateAfterLogin } from "../utils/constants"
 import { CustomHouse } from "../components/icons/custom-house"
 import { CustomGarage } from "../components/icons/custom-garage"
+import { PageToNavigateAfterLogin } from "../utils/constants/page-constants"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing() {

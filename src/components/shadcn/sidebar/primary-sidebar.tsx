@@ -7,7 +7,7 @@ import MappedNavData from "./mapped-nav-data"
 import ProfileSidebarButton from "./profile-sidebar-button"
 import ConnectDisconnectSerial from "./connect-serial-button"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
-import { PrivatePageNames, OpenPages } from "../../../utils/constants"
+import { PrivatePageNames, OpenPages } from "../../../utils/constants/page-constants"
 
 export default function PrimarySidebar() {
 	const pathname = usePathname()

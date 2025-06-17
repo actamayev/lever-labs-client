@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Sounds } from "@bluedotrobots/common-ts"
-import rgbToBlocklyColor from "./blockly/rgb-to-hex"
+import rgbToBlocklyColor from "../blockly/rgb-to-hex"
 
 export const bentoIconSize = 40
 
@@ -11,80 +11,6 @@ export const ledCategoryColour = rgbToBlocklyColor(255, 150, 0) //fox
 export const screenCategoryColour = rgbToBlocklyColor(206, 130, 255) //beetle
 export const speakerCategoryColour = rgbToBlocklyColor(43, 112, 201) // humpback
 export const buttonsCategoryColour = rgbToBlocklyColor(182, 110, 40) // beakInner
-
-export const PrivatePageNames: PageNames[] = [
-	"/garage",
-	"/lab",
-	"/lab/welcome",
-	"/add-pip",
-	"/sandbox",
-	"/profile",
-	"/career-quest"
-]
-
-// These are pages that you can view if you're logged in or not.
-export const OpenPages: PageNames[] = [
-	"/mission",
-	"/contact"
-]
-
-export const staticPages = [
-	"/",
-	"/login",
-	"/register",
-	"/register-username",
-	"/garage",
-	"/add-pip",
-	"/sandbox",
-	"/profile",
-	"/contact",
-	"/mission",
-	"/schools",
-	"/terms",
-	"/privacy",
-	"/community-guidelines",
-	"/404"
-] as const
-
-export const ledLabPages = [
-	"/lab/led/reading/intro-to-leds",
-	"/lab/led/demo/led-light-show",
-	"/lab/led/reading/voltage",
-	"/lab/led/demo/first-light",
-	"/lab/led/reading/rgb-leds",
-	"/lab/led/demo/color-mixing",
-	"/lab/led/reading/intro-to-code",
-	"/lab/led/demo/blue-leds",
-	"/lab/led/demo/check-button-press",
-	"/lab/led/demo/simple-led-control",
-	"/lab/led/demo/multi-button-led-control",
-	"/lab/led/code/led-control",
-	"/lab/led/reading/leds-and-loops",
-	"/lab/led/demo/led-counting-loop",
-	"/lab/led/demo/led-breathing",
-	"/lab/led/code/breathing-leds",
-	"/lab/led/demo/check-button-press",
-	// "/lab/led/reading/gpio",
-	"/lab/led/demo/led-in-circle",
-	"/lab/led/reading/led-advantages",
-	"/lab/led/reading/leds-in-robotics",
-	"/lab/led/code/warehouse-pip",
-	"/lab/led/summary",
-] as const
-
-export const labPages = [
-	"/lab",
-	"/lab/welcome",
-	...ledLabPages,
-] as const
-
-export const careerQuestPages = [
-	"/career-quest",
-	"/career-quest/line-following",
-	...ledLabPages,
-] as const
-
-export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const
 
 export const motorKeyMappings: Record<string, MotorDriveKeyMapping> = {
 	"w": { direction: "up", axis: "vertical", value: 1 },
@@ -132,7 +58,6 @@ export const soundMappings: SoundMapping = {
 export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
 
-export const PageToNavigateAfterLogin = "/garage"
 export const SENSOR_POLLING_INTERVAL = 30000 // 30 seconds
 
 export const PIP_ROBOT_USB_ID = {

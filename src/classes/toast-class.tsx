@@ -1,4 +1,3 @@
-// classes/toast-class.ts
 import { toast, ToastOptions as ReactToastifyOptions, Id } from "react-toastify"
 import personalInfoClass from "./personal-info-class"
 
@@ -10,7 +9,6 @@ interface CustomToastOptions {
 }
 
 class ToastClass {
-	// Replace useRef with simple class property
 	private isToastActive: boolean = false
 
 	private createToastContent = (
@@ -35,10 +33,8 @@ class ToastClass {
 		content: React.ReactNode,
 		options: ReactToastifyOptions<TData>
 	) => {
-		if (this.isToastActive) {
-			// If a toast is already active, don't create a new one
-			return
-		}
+		// If a toast is already active, don't create a new one
+		if (this.isToastActive) return
 
 		// Set active flag to true
 		this.isToastActive = true
@@ -109,11 +105,6 @@ class ToastClass {
 		}
 
 		return this.showToastIfNotActive(toast.error, content, options)
-	}
-
-	// Add a function to clear the active toast flag manually if needed
-	public clearToastActive = () => {
-		this.isToastActive = false
 	}
 }
 

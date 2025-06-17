@@ -2,7 +2,7 @@
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
 	NonSuccessResponse, SiteThemes, ValidationErrorResponse } from "@bluedotrobots/common-ts"
-import { allPages } from "./constants"
+import { allPages } from "./constants/page-constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function isErrorResponse(data: any): data is ErrorResponse {

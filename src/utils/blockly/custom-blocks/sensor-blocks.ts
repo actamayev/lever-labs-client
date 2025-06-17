@@ -11,7 +11,7 @@ import {
 	LeftRightSensorType,
 	// IRSensorType
 } from "../block-types/sensor-block-types"
-import { sensorsCategoryColour } from "../../constants"
+import { sensorsCategoryColour } from "../../constants/constants"
 
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {

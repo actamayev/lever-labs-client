@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import ClassicLayout from "./classic-layout"
 import InternalPagesLayout from "./internal-pages-layout"
-import { PrivatePageNames, OpenPages } from "../../utils/constants"
+import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
