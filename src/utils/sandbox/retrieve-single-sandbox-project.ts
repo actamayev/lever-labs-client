@@ -27,7 +27,6 @@ export default async function retrieveSingleSandboxProject(projectUUID: ProjectU
 		}
 
 		sandboxClass.addSandboxProject(sandboxProjectResponse.data.sandboxProject)
-		sandboxClass.setIsRetrievingSingleProject(projectUUID, false)
 	} catch (error) {
 		console.error(error)
 		sandboxClass.setIsRetrievingSingleProject(projectUUID, false)

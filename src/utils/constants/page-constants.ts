@@ -10,8 +10,12 @@ export const PrivatePageNames: PageNames[] = [
 
 // These are pages that you can view if you're logged in or not.
 export const OpenPages: PageNames[] = [
+	"/contact",
 	"/mission",
-	"/contact"
+	"/schools",
+	"/terms",
+	"/privacy",
+	"/community-guidelines"
 ]
 
 export const staticPages = [
@@ -19,10 +23,14 @@ export const staticPages = [
 	"/login",
 	"/register",
 	"/register-username",
+
+	// Private:
 	"/garage",
 	"/add-pip",
 	"/sandbox",
 	"/profile",
+
+	// Open:
 	"/contact",
 	"/mission",
 	"/schools",

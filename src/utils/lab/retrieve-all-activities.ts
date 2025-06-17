@@ -21,7 +21,6 @@ export default async function retrieveAllActivities(): Promise<void> {
 			throw Error ("Unable to retrieve lab activity tracking data")
 		}
 		activityProgressClass.updateActivitiesFromServer(userActivityProgressResponse.data.userActivityProgress)
-		activityProgressClass.setIsRetrievingAllActivityProgress(false)
 	} catch (error) {
 		console.error(error)
 		activityProgressClass.setIsRetrievingAllActivityProgress(false)

@@ -22,9 +22,6 @@ export default async function retrieveAllSandboxProjects(): Promise<void> {
 		}
 
 		sandboxClass.setSandboxProjects(sandboxProjectsResponse.data.sandboxProjects)
-
-		sandboxClass.setHasRetrievedAllSandboxProjects(true)
-		sandboxClass.setIsRetrievingAllSandboxProjects(false)
 	} catch (error) {
 		console.error(error)
 		sandboxClass.setIsRetrievingAllSandboxProjects(false)

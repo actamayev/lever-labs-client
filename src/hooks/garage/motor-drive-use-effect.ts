@@ -3,8 +3,8 @@
 import { useEffect } from "react"
 import garageClass from "../../classes/garage-class"
 import { motorKeyMappings } from "../../utils/constants/constants"
-import computeMotorControl from "../../utils/garage/compute-motor-control"
 import applyMotorControl from "../../utils/garage/apply-motor-control"
+import computeMotorControl from "../../utils/garage/compute-motor-control"
 
 export default function useMotorDriveUseEffect(): void {
 	// Key event handlers

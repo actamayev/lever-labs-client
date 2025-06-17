@@ -14,7 +14,7 @@ export default function useRedirectBackToRegisterUsername(): void {
 
 	useEffect(() => {
 		if (
-			authClass.isFinishedWithSignup  === true || // If the user is logged in and has a username, no need to re-direct
+			authClass.isFinishedWithSignup === true || // If the user is logged in and has a username, no need to re-direct
 			isNull(personalInfoClass.email) // If the user doesn't have an email, no need to re-direct
 		) return
 

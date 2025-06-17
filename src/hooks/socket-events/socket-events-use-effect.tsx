@@ -8,7 +8,7 @@ import handleIncomingSensorData from "../../utils/socket/handle-incoming-sensor-
 
 export default function useSocketEventsUseEffect(): void {
 	useEffect(() => {
-		if (!authClass.isLoggedIn) return
+		if (authClass.isFinishedWithSignup === false) return
 
 		// Listen for the 'pipStatusUpdate' event emitted from SocketClass
 		socketClass.on("pipStatusUpdate", handlePipStatusUpdate)
@@ -18,5 +18,6 @@ export default function useSocketEventsUseEffect(): void {
 			socketClass.off("pipStatusUpdate", handlePipStatusUpdate)
 			socketClass.off("incomingSensorData", handleIncomingSensorData)
 		}
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
 }

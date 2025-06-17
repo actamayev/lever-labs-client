@@ -1,8 +1,8 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { cn } from "../../lib/shadcn/utils"
 import { ProgressStatus } from "@bluedotrobots/common-ts"
+import { cn } from "../../lib/shadcn/utils"
 
 export default function lilypadVariants(progress: ProgressStatus) : string {
 	// Base styles with explicit oval shape
