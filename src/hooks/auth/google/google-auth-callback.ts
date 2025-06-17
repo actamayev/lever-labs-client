@@ -6,12 +6,13 @@ import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { SiteThemes } from "@bluedotrobots/common-ts"
 import { CredentialResponse } from "@react-oauth/google"
+import pipClass from "../../../classes/pip-class"
 import authClass from "../../../classes/auth-class"
 import useTypedNavigate from "../../navigate/typed-navigate"
 import { isErrorResponses } from "../../../utils/type-checks"
 import { PageToNavigateAfterLogin } from "../../../utils/constants"
+import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-import retrieveDataAfterLogin from "../../../utils/auth/retrieve-data-after-login"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -40,7 +41,8 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			if (googleCallbackResponse.data.isNewUser === true) {
 				return navigate("/register-username")
 			}
-			void retrieveDataAfterLogin()
+			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
+			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			if (
 				pathname === "/login" ||
 				pathname === "/register"

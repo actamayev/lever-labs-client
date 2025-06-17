@@ -11,6 +11,7 @@ export default async function retrievePersonalInfo(): Promise<void> {
 	try {
 		if (
 			personalInfoClass.isRetrievingPersonalInfo === true ||
+			// TODO 6/16/25: Change all checks of this to authClass.isLoggedIn:
 			isNull(blueDotApiClientClass.httpClient.accessToken) ||
 			personalInfoClass.retrievedPersonalInfo === true
 		) return
@@ -22,8 +23,6 @@ export default async function retrievePersonalInfo(): Promise<void> {
 			throw Error ("Unable to retrieve personal info")
 		}
 		personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
-		personalInfoClass.setRetrievedPersonalInfo(true)
-		personalInfoClass.setIsRetrievingPersonalDetails(false)
 	} catch (error) {
 		console.error(error)
 		personalInfoClass.setIsRetrievingPersonalDetails(false)

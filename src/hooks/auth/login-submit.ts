@@ -2,12 +2,13 @@
 
 import isEqual from "lodash-es/isEqual"
 import { LoginRequest } from "@bluedotrobots/common-ts"
+import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
+import personalInfoClass from "../../classes/personal-info-class"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
-import retrieveDataAfterLogin from "../../utils/auth/retrieve-data-after-login"
 
 export default async function loginSubmit(
 	loginInformation: LoginRequest,
@@ -25,7 +26,8 @@ export default async function loginSubmit(
 			return false
 		}
 		authClass.setAccessToken(response.data.accessToken)
-		retrieveDataAfterLogin()
+		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
+		pipClass.setPipData(response.data.userPipData)
 		return true
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)

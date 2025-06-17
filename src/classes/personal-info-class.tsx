@@ -33,7 +33,7 @@ class PersonalInfoClass {
 		this.isRetrievingPersonalInfo = newState
 	})
 
-	public setRetrievedPersonalInfo = action((newState: boolean): void => {
+	private setRetrievedPersonalInfo = action((newState: boolean): void => {
 		this.retrievedPersonalInfo = newState
 	})
 
@@ -44,6 +44,8 @@ class PersonalInfoClass {
 		this.setSandboxNotesOpen(retrievedData.sandboxNotesOpen)
 		this.setProfilePictureUrl(retrievedData.profilePictureUrl)
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
+		this.setRetrievedPersonalInfo(true)
+		this.setIsRetrievingPersonalDetails(false)
 	})
 
 	public setRegisteredValues = action((username: string, email: string, defaultSiteTheme: SiteThemes): void => {

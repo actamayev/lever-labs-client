@@ -24,8 +24,6 @@ export default async function retrievePipInfo(): Promise<void> {
 			throw Error ("Unable to retrieve pip Data")
 		}
 		pipClass.setPipData(pipDataResponse.data.userPipData)
-		pipClass.setRetrievedPipData(true)
-		pipClass.setIsRetrievingPipData(false)
 	} catch (error) {
 		console.error(error)
 		pipClass.setIsRetrievingPipData(false)
