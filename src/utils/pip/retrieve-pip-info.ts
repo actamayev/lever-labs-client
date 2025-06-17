@@ -1,11 +1,11 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
+import authClass from "../../classes/auth-class"
 import { isErrorResponse } from "../type-checks"
+import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function retrievePipInfo(): Promise<void> {
@@ -13,7 +13,7 @@ export default async function retrievePipInfo(): Promise<void> {
 		if (
 			pipClass.isRetrievingPipData === true ||
 			!isEmpty(pipClass.pipData) ||
-			isNull(blueDotApiClientClass.httpClient.accessToken) ||
+			authClass.isFinishedWithSignup === false ||
 			pipClass.retrievedPipData === true
 		) return
 

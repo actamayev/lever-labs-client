@@ -13,12 +13,12 @@ export default function useRedirectBackToRegisterUsername(): void {
 	const navigate = useTypedNavigate()
 
 	useEffect(() => {
-		// If the user isn't logged in, no need to re-direct (return)
-		if (authClass.isLoggedIn === false) return
-		// If the user already has a username, no need to re-direct (return)
-		if (!isNull(personalInfoClass.username) || isNull(personalInfoClass.email)) return
+		if (
+			authClass.isFinishedWithSignup  === true || // If the user is logged in and has a username, no need to re-direct
+			isNull(personalInfoClass.email) // If the user doesn't have an email, no need to re-direct
+		) return
 
 		navigate("/register-username")
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [authClass.isLoggedIn, pathname, navigate, personalInfoClass, personalInfoClass.username, personalInfoClass.email])
+	}, [pathname, navigate, authClass.isFinishedWithSignup, personalInfoClass.email])
 }

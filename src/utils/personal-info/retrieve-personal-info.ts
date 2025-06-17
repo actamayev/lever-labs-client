@@ -1,9 +1,9 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../type-checks"
+import authClass from "../../classes/auth-class"
+import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
@@ -11,8 +11,8 @@ export default async function retrievePersonalInfo(): Promise<void> {
 	try {
 		if (
 			personalInfoClass.isRetrievingPersonalInfo === true ||
-			// TODO 6/16/25: Change all checks of this to authClass.isLoggedIn:
-			isNull(blueDotApiClientClass.httpClient.accessToken) ||
+			authClass.isLoggedIn === false || // NOTE: This is not authClass.isFinishedWithSignup on purpose.
+			// We need to retrieve the personal info wherever we are to confirm Google users have finished registering their usernames
 			personalInfoClass.retrievedPersonalInfo === true
 		) return
 

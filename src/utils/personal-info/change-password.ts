@@ -2,8 +2,8 @@
 "use client"
 
 import { AxiosError } from "axios"
-import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../type-checks"
@@ -14,7 +14,7 @@ export default async function changePassword(
 	newPassword: string
 ) : Promise<string | null> {
 	try {
-		if (isNull(blueDotApiClientClass.httpClient.accessToken)) {
+		if (authClass.isFinishedWithSignup === false) {
 			return "You must be logged in to change your password"
 		}
 

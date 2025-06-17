@@ -2,11 +2,11 @@
 
 import isNull from "lodash-es/isNull"
 import { MotorControlInput } from "@bluedotrobots/common-ts"
+import authClass from "../../classes/auth-class"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 // Map motor control values to drive directions
 const motorControlToDriveDirections = (motorControl: { vertical: number, horizontal: number }): Set<DriveDirection> => {
@@ -58,7 +58,7 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	// Update current directions
 	garageClass.updatePressedDirections(newDirections)
 
-	if (isNull(blueDotApiClientClass.httpClient.accessToken)) return
+	if (authClass.isFinishedWithSignup === false) return
 
 	if (isNull(pipClass.selectedPip)) {
 		return toastClass.negative({ title: "Please add a Pip" })

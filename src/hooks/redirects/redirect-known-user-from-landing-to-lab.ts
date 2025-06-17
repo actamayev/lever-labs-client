@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect } from "react"
-import useTypedNavigate from "../navigate/typed-navigate"
 import authClass from "../../classes/auth-class"
-import personalInfoClass from "../../classes/personal-info-class"
+import useTypedNavigate from "../navigate/typed-navigate"
 import { PageToNavigateAfterLogin } from "../../utils/constants"
+import personalInfoClass from "../../classes/personal-info-class"
 
 export default function useRedirectKnownUserToLab(): void {
 	const navigate = useTypedNavigate()

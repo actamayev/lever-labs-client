@@ -1,7 +1,7 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
+import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponses } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
@@ -10,7 +10,7 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 export default async function editName(newName: string) : Promise<void> {
 	try {
 		if (
-			isNull(blueDotApiClientClass.httpClient.accessToken) ||
+			authClass.isFinishedWithSignup === false ||
 			newName === personalInfoClass.name
 		) return
 

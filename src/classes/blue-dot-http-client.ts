@@ -25,10 +25,6 @@ export default class BlueDotHttpClient {
 		})
 	}
 
-	get accessToken(): string | null {
-		return this.http.defaults.headers["Authorization"] as string || null
-	}
-
 	// Simplified setter - just sets/deletes the header
 	public setAuthHeader(accessToken: string): void {
 		this.http.defaults.headers["Authorization"] = accessToken

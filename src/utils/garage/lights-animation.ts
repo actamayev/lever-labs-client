@@ -8,6 +8,7 @@ import { isNonSuccessResponse } from "../type-checks"
 import garageClass from "../../classes/garage-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import authClass from "../../classes/auth-class"
 
 export default async function lightsAnimation(newAnimation: LightAnimation): Promise<void> {
 	try {
@@ -21,7 +22,7 @@ export default async function lightsAnimation(newAnimation: LightAnimation): Pro
 			return
 		}
 		if (
-			isNull(blueDotApiClientClass.httpClient.accessToken) ||
+			authClass.isFinishedWithSignup === false ||
 			isNull(pipClass.selectedPip) ||
 			pipClass.selectedPip.pipConnectionStatus === "offline"
 		) return

@@ -3,6 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import socketClass from "./socket-class"
+import personalInfoClass from "./personal-info-class"
 import blueDotApiClientClass from "./blue-dot-api-client-class"
 
 class AuthClass {
@@ -15,12 +16,18 @@ class AuthClass {
 		this.getAuthDataFromStorage()
 	}
 
+	get accessToken(): string | null {
+		return this._accessToken
+	}
+
 	get isLoggedIn(): boolean {
 		return !isNull(this._accessToken)
 	}
 
-	get accessToken(): string | null {
-		return this._accessToken
+	get isFinishedWithSignup(): boolean {
+		// This is to make sure that users are both logged in, and they've set a username
+		// (Google users can be logged in, but haven't set a username yet)
+		return (this.isLoggedIn && !isNull(personalInfoClass.username))
 	}
 
 	public getAuthDataFromStorage(): string | null {

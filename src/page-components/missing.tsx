@@ -9,7 +9,7 @@ import { CustomGarage } from "../components/icons/custom-garage"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing() {
-	const destination = authClass.isLoggedIn ? PageToNavigateAfterLogin : "/"
+	const destination = authClass.isFinishedWithSignup ? PageToNavigateAfterLogin : "/"
 
 	return (
 		<div className="flex flex-col items-center gap-8 pt-16">
@@ -18,7 +18,7 @@ function Missing() {
 			</h1>
 			<Link href={destination}>
 				<BlackWhiteTactileButton className="text-2xl p-5">
-					{authClass.isLoggedIn ? (
+					{authClass.isFinishedWithSignup ? (
 						<>
 							RETURN TO GARAGE
 							<CustomGarage className="ml-2 !h-7 !w-7" />

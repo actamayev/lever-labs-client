@@ -4,9 +4,10 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
+import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function usePollSensors() : Promise<void> {
 	try {
@@ -17,7 +18,7 @@ export default async function usePollSensors() : Promise<void> {
 			return
 		}
 		if (
-			isNull(blueDotApiClientClass.httpClient.accessToken) ||
+			authClass.isFinishedWithSignup === false ||
 			isNull(pipClass.selectedPip) ||
 			pipClass.selectedPip.pipConnectionStatus === "offline"
 		) return
