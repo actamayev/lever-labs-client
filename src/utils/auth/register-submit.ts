@@ -6,9 +6,10 @@ import { SiteThemes } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import confirmRegisterFields from "./confirm-register-fields"
+import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../error-handling/set-error-axios-response"
-import personalInfoClass from "../../classes/personal-info-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function registerSubmit(
 	registerCredentials: RegisterFormValues,
@@ -45,6 +46,7 @@ export default async function registerSubmit(
 			registerCredentials.email,
 			siteTheme,
 		)
+		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		return true
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)

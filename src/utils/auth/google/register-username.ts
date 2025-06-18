@@ -7,8 +7,9 @@ import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
-export default async function usernameSubmit(
+export default async function registerUsername(
 	username: string,
 	setError: (error: string) => void
 ) : Promise<boolean> {
@@ -30,6 +31,7 @@ export default async function usernameSubmit(
 			response.data.email,
 			siteTheme,
 		)
+		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		return true
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)
