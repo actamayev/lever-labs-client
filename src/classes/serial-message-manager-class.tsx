@@ -2,10 +2,7 @@
 
 import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
-	ScanCompletePayload,
-	ScannedWiFiNetworkItem,
-	WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
-import serialConnectionManagerClass from "./serial-connection-manager-class"
+	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 
 interface MessageSentData {
 	content: string
@@ -203,15 +200,6 @@ class SerialMessageManagerClass {
 		}
 	}
 
-	// Send binary message through connection manager
-	public async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
-		return await serialConnectionManagerClass.sendBinaryMessage(buffer)
-	}
-
-	public clearMessages = action(() => {
-		this.messages = []
-	})
-
 	// Reset flow state
 	public resetFlowState = action(() => {
 		this.pipId = null
@@ -253,14 +241,12 @@ class SerialMessageManagerClass {
 		}
 	})
 
-	public logout(): void {
-		runInAction(() => {
-			this.messages = []
-			this.resetFlowState()
-		})
+	public logout = action((): void => {
+		this.messages = []
+		this.resetFlowState()
 		this.setWiFiConnectionStatus(null)
 		this.setIsTestingWiFiConnection(false)
-	}
+	})
 }
 
 const serialMessageManagerClass = new SerialMessageManagerClass()

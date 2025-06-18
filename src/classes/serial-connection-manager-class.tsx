@@ -136,48 +136,6 @@ class SerialConnectionManagerClass {
 		)
 	}
 
-	// Scan for available devices (this will show what's connected but not authorized)
-	async scanForDevices(): Promise<DetectedDevice[]> {
-		// Block scanning if user isn't logged in
-		if (!authClass.isFinishedWithSignup) {
-			console.error("Cannot scan for devices: user not logged in")
-			return []
-		}
-
-		runInAction(() => {
-			this.isScanning = true
-			this.detectedDevices = []
-		})
-
-		try {
-			// Get already authorized ports
-			const authorizedPorts = await navigator.serial.getPorts()
-
-			const devices: DetectedDevice[] = authorizedPorts.map(port => {
-				const info = port.getInfo()
-				return {
-					port,
-					info,
-					displayName: "Pip",
-					isKnownRobot: this.isPipRobot(info)
-				}
-			})
-
-			runInAction(() => {
-				this.detectedDevices = devices
-				this.isScanning = false
-			})
-
-			return devices
-		} catch (error) {
-			runInAction(() => {
-				this.isScanning = false
-			})
-			console.error("Error scanning for devices:", error)
-			return []
-		}
-	}
-
 	// Connect to a specific port (used for auto-reconnect and device selection)
 	async connectToSpecificPort(port: SerialPort): Promise<void> {
 		// Check auth state
@@ -222,7 +180,7 @@ class SerialConnectionManagerClass {
 	}
 
 	// Original connect method - now uses filtered device selection
-	async connectToDevice(): Promise<void> {
+	public async connectToDevice(): Promise<void> {
 		// Check auth state
 		if (!authClass.isFinishedWithSignup) {
 			console.error("Cannot connect: user not logged in")
@@ -255,19 +213,8 @@ class SerialConnectionManagerClass {
 		}
 	}
 
-	// Connect to a device from the scanned list
-	async connectToDetectedDevice(device: DetectedDevice): Promise<void> {
-		// Check auth state
-		if (!authClass.isFinishedWithSignup) {
-			console.error("Cannot connect: user not logged in")
-			return
-		}
-
-		await this.connectToSpecificPort(device.port)
-	}
-
 	// Request permission for a new device (forces the native browser dialog)
-	async requestNewDevice(): Promise<void> {
+	public async requestNewDevice(): Promise<void> {
 		// Check auth state
 		if (!authClass.isFinishedWithSignup) {
 			console.error("Cannot request new device: user not logged in")
