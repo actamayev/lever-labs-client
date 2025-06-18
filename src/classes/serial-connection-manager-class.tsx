@@ -1,12 +1,12 @@
 /* eslint-disable max-depth */
 "use client"
 
+import { makeAutoObservable, runInAction } from "mobx"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { makeObservable, observable, runInAction } from "mobx"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
-import { createCustomEvent } from "../utils/custom-event-dispatcher"
+import serialMessageManagerClass from "./serial-message-manager-class"
 
-class SerialConnectionManagerClass extends EventTarget {
+class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
@@ -17,16 +17,7 @@ class SerialConnectionManagerClass extends EventTarget {
 	public hasUserActivity = false
 
 	constructor() {
-		super()
-		makeObservable(this, {
-			port: observable,
-			reader: observable,
-			writer: observable,
-			connected: observable,
-			hasUserActivity: observable,
-			detectedDevices: observable,
-			isScanning: observable
-		})
+		makeAutoObservable(this)
 
 		if (typeof window === "undefined") return
 
@@ -106,16 +97,10 @@ class SerialConnectionManagerClass extends EventTarget {
 			if (this.isPipRobot(info)) {
 				console.info("Pip robot detected! Attempting auto-connect...")
 
-				// Emit event for UI feedback
-				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: true }))
-
 				// Attempt to connect
 				await this.connectToSpecificPort(port)
 			} else {
 				console.info("Unknown device plugged in:", "Pip")
-
-				// Still emit event for UI awareness
-				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: false }))
 			}
 		} catch (error) {
 			console.error("Error handling plugged device:", error)
@@ -133,10 +118,8 @@ class SerialConnectionManagerClass extends EventTarget {
 		} else {
 			console.info("Unrelated device was unplugged")
 		}
-
-		// Emit event for UI feedback
-		this.dispatchEvent(createCustomEvent("deviceRemoved"))
 	}
+
 	private isPipRobot(info: SerialPortInfo): boolean {
 		return (
 			(PIP_ROBOT_USB_ID.usbVendorId === info.usbVendorId) &&
@@ -201,7 +184,8 @@ class SerialConnectionManagerClass extends EventTarget {
 				this.connected = true
 			})
 
-			this.dispatchEvent(createCustomEvent("connected"))
+			// Directly call the message manager's connected handler
+			serialMessageManagerClass.handleConnected()
 
 			// Send handshake
 			if (this.writer) {
@@ -271,7 +255,10 @@ class SerialConnectionManagerClass extends EventTarget {
 		}
 
 		console.info("Handling device disconnection")
-		this.dispatchEvent(createCustomEvent("disconnected"))
+
+		// Directly call the message manager's disconnected handler
+		serialMessageManagerClass.handleDisconnected()
+
 		this.cleanupConnection()
 	}
 
@@ -302,7 +289,10 @@ class SerialConnectionManagerClass extends EventTarget {
 				await this.writer.write(new Uint8Array(disconnectMsg))
 				await new Promise(resolve => setTimeout(resolve, 50))
 			}
-			this.dispatchEvent(createCustomEvent("disconnected"))
+
+			// Directly call the message manager's disconnected handler
+			serialMessageManagerClass.handleDisconnected()
+
 			await this.cleanupConnection()
 		} catch (error) {
 			console.error("Error disconnecting:", error)
@@ -329,7 +319,7 @@ class SerialConnectionManagerClass extends EventTarget {
 						const line = lines[i].trim()
 						if (line) {
 							console.info("Received:", line)
-							this.dispatchEvent(createCustomEvent("rawMessage", line))
+							serialMessageManagerClass.handleRawMessage(line)
 						}
 					}
 					buffer = lines[lines.length - 1]
@@ -352,11 +342,11 @@ class SerialConnectionManagerClass extends EventTarget {
 			await this.writer.write(data)
 
 			const formattedData = this.formatBinaryForDisplay(buffer)
-			this.dispatchEvent(createCustomEvent("messageSent", {
+			serialMessageManagerClass.handleMessageSent({
 				content: formattedData,
 				timestamp: new Date(),
 				isBinary: true
-			}))
+			})
 
 			return true
 		} catch (error) {

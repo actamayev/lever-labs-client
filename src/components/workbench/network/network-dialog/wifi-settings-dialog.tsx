@@ -2,6 +2,7 @@
 
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useEffect } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "../../../shadcn/ui/button"
@@ -63,13 +64,28 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 					) : (
 						<>
 							<div>
-								<h3 className="text-lg font-medium mb-3">Known Networks</h3>
+								<h3 className="text-lg font-medium mb-3">
+									Known Networks
+									{!isEmpty(serialMessageManagerClass.knownNetworks) && (
+										<>
+											{" "}({serialMessageManagerClass.knownNetworks.length})
+										</>
+									)}
+								</h3>
 								<KnownNetworksSection />
 							</div>
 
 							<div>
 								<div className="flex items-center justify-between mb-3">
-									<h3 className="text-lg font-medium">Other Networks</h3>
+									<h3 className="text-lg font-medium">
+										Other Networks
+										{!serialMessageManagerClass.isScanning && (
+											<>
+												{" "}({serialMessageManagerClass.scannedNetworksByRssiStrength.length})
+											</>
+										)}
+
+									</h3>
 									<Button
 										onClick={scanForNetworks}
 										disabled={serialMessageManagerClass.isScanning}
@@ -85,7 +101,14 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 
 							{/* Previously Connected Section */}
 							<div>
-								<h3 className="text-lg font-medium mb-3">Previously Connected</h3>
+								<h3 className="text-lg font-medium mb-3">
+									Previously Connected
+									{!isEmpty(serialMessageManagerClass.previouslyConnected) && (
+										<>
+											{" "}({serialMessageManagerClass.previouslyConnected.length})
+										</>
+									)}
+								</h3>
 								<PreviouslyConnectedSection />
 							</div>
 						</>
