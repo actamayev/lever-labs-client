@@ -17,7 +17,6 @@ export default async function logout(): Promise<void> {
 	personalInfoClass.logout()
 	pipClass.logout()
 	socketClass.logout()
-	// Wait for auth logout (which waits for ESP disconnect) before proceeding
 	authClass.logout()
 	blueDotApiClientClass.logout()
 	labReadingClass.logout()
