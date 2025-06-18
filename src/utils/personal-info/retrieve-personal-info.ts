@@ -6,6 +6,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function retrievePersonalInfo(): Promise<void> {
 	try {
@@ -23,6 +24,8 @@ export default async function retrievePersonalInfo(): Promise<void> {
 			throw Error ("Unable to retrieve personal info")
 		}
 		personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
+		// This is here to auto-connect when the username is retrieved
+		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 	} catch (error) {
 		console.error(error)
 		personalInfoClass.setIsRetrievingPersonalDetails(false)

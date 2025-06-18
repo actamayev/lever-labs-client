@@ -253,8 +253,7 @@ class SerialMessageManagerClass {
 		}
 	})
 
-	public async logout(): Promise<void> {
-		await serialConnectionManagerClass.logout()
+	public logout(): void {
 		runInAction(() => {
 			this.messages = []
 			this.resetFlowState()

@@ -3,6 +3,7 @@
 
 import { makeAutoObservable, runInAction } from "mobx"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
+import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
 
@@ -20,9 +21,6 @@ class SerialConnectionManagerClass {
 		makeAutoObservable(this)
 
 		if (typeof window === "undefined") return
-
-		// Try to auto-reconnect on page load
-		this.tryAutoReconnect()
 
 		// Listen for USB device connections (when devices are plugged in)
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -83,12 +81,23 @@ class SerialConnectionManagerClass {
 		}
 	}
 
+	// Check and auto-connect if user is logged in (called when user logs in)
+	public async checkAndAutoConnectIfLoggedIn(): Promise<void> {
+		if (!authClass.isFinishedWithSignup || this.connected) return
+
+		try {
+			await this.tryAutoReconnect()
+		} catch (error) {
+			console.error("Login auto-connect failed:", error)
+		}
+	}
+
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
 		console.info("New device plugged in, checking if it's a Pip robot...")
 
-		// Don't auto-connect if we're already connected
-		if (this.connected) return
+		// Don't auto-connect if we're already connected OR if user isn't logged in
+		if (this.connected || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
@@ -129,6 +138,12 @@ class SerialConnectionManagerClass {
 
 	// Scan for available devices (this will show what's connected but not authorized)
 	async scanForDevices(): Promise<DetectedDevice[]> {
+		// Block scanning if user isn't logged in
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot scan for devices: user not logged in")
+			return []
+		}
+
 		runInAction(() => {
 			this.isScanning = true
 			this.detectedDevices = []
@@ -165,6 +180,12 @@ class SerialConnectionManagerClass {
 
 	// Connect to a specific port (used for auto-reconnect and device selection)
 	async connectToSpecificPort(port: SerialPort): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot connect: user not logged in")
+			return
+		}
+
 		if (this.connected) return
 
 		try {
@@ -202,6 +223,12 @@ class SerialConnectionManagerClass {
 
 	// Original connect method - now uses filtered device selection
 	async connectToDevice(): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot connect: user not logged in")
+			return
+		}
+
 		if (this.connected) return
 
 		try {
@@ -230,11 +257,23 @@ class SerialConnectionManagerClass {
 
 	// Connect to a device from the scanned list
 	async connectToDetectedDevice(device: DetectedDevice): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot connect: user not logged in")
+			return
+		}
+
 		await this.connectToSpecificPort(device.port)
 	}
 
 	// Request permission for a new device (forces the native browser dialog)
 	async requestNewDevice(): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot request new device: user not logged in")
+			return
+		}
+
 		try {
 			const port = await navigator.serial.requestPort({
 				filters: [PIP_ROBOT_USB_ID]

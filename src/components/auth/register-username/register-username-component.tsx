@@ -9,10 +9,10 @@ import AuthButton from "../../buttons/generic-buttons"
 import UsernameInput from "../register/username-input"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
-import usernameSubmit from "../../../utils/auth/google/username-submit"
 import { registerUsernameSchema } from "../../../utils/auth/auth-schemas"
+import registerUsername from "../../../utils/auth/google/register-username"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
 export default function RegisterUsernameComponent() {
 	const [error, setError] = useState("")
@@ -29,7 +29,7 @@ export default function RegisterUsernameComponent() {
 	const isDisabled = useMemo(() => username.length < 4, [username])
 
 	const onSubmit = useCallback(async (values: NewUsernameRequest) => {
-		const success = await usernameSubmit(values.username, setError)
+		const success = await registerUsername(values.username, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate])

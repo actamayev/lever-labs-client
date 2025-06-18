@@ -13,6 +13,7 @@ import { isErrorResponses } from "../../../utils/type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -43,6 +44,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			}
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			pipClass.setPipData(googleCallbackResponse.data.userPipData)
+			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 			if (
 				pathname === "/login" ||
 				pathname === "/register"
