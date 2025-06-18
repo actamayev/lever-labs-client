@@ -1,12 +1,13 @@
 /* eslint-disable max-depth */
 "use client"
 
+import { makeAutoObservable, runInAction } from "mobx"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { makeObservable, observable, runInAction } from "mobx"
+import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
-import { createCustomEvent } from "../utils/custom-event-dispatcher"
+import serialMessageManagerClass from "./serial-message-manager-class"
 
-class SerialConnectionManagerClass extends EventTarget {
+class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
@@ -17,21 +18,9 @@ class SerialConnectionManagerClass extends EventTarget {
 	public hasUserActivity = false
 
 	constructor() {
-		super()
-		makeObservable(this, {
-			port: observable,
-			reader: observable,
-			writer: observable,
-			connected: observable,
-			hasUserActivity: observable,
-			detectedDevices: observable,
-			isScanning: observable
-		})
+		makeAutoObservable(this)
 
 		if (typeof window === "undefined") return
-
-		// Try to auto-reconnect on page load
-		this.tryAutoReconnect()
 
 		// Listen for USB device connections (when devices are plugged in)
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -92,12 +81,23 @@ class SerialConnectionManagerClass extends EventTarget {
 		}
 	}
 
+	// Check and auto-connect if user is logged in (called when user logs in)
+	public async checkAndAutoConnectIfLoggedIn(): Promise<void> {
+		if (!authClass.isFinishedWithSignup || this.connected) return
+
+		try {
+			await this.tryAutoReconnect()
+		} catch (error) {
+			console.error("Login auto-connect failed:", error)
+		}
+	}
+
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
 		console.info("New device plugged in, checking if it's a Pip robot...")
 
-		// Don't auto-connect if we're already connected
-		if (this.connected) return
+		// Don't auto-connect if we're already connected OR if user isn't logged in
+		if (this.connected || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
@@ -106,16 +106,10 @@ class SerialConnectionManagerClass extends EventTarget {
 			if (this.isPipRobot(info)) {
 				console.info("Pip robot detected! Attempting auto-connect...")
 
-				// Emit event for UI feedback
-				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: true }))
-
 				// Attempt to connect
 				await this.connectToSpecificPort(port)
 			} else {
 				console.info("Unknown device plugged in:", "Pip")
-
-				// Still emit event for UI awareness
-				this.dispatchEvent(createCustomEvent("deviceDetected", { isKnownRobot: false }))
 			}
 		} catch (error) {
 			console.error("Error handling plugged device:", error)
@@ -133,10 +127,8 @@ class SerialConnectionManagerClass extends EventTarget {
 		} else {
 			console.info("Unrelated device was unplugged")
 		}
-
-		// Emit event for UI feedback
-		this.dispatchEvent(createCustomEvent("deviceRemoved"))
 	}
+
 	private isPipRobot(info: SerialPortInfo): boolean {
 		return (
 			(PIP_ROBOT_USB_ID.usbVendorId === info.usbVendorId) &&
@@ -144,44 +136,14 @@ class SerialConnectionManagerClass extends EventTarget {
 		)
 	}
 
-	// Scan for available devices (this will show what's connected but not authorized)
-	async scanForDevices(): Promise<DetectedDevice[]> {
-		runInAction(() => {
-			this.isScanning = true
-			this.detectedDevices = []
-		})
-
-		try {
-			// Get already authorized ports
-			const authorizedPorts = await navigator.serial.getPorts()
-
-			const devices: DetectedDevice[] = authorizedPorts.map(port => {
-				const info = port.getInfo()
-				return {
-					port,
-					info,
-					displayName: "Pip",
-					isKnownRobot: this.isPipRobot(info)
-				}
-			})
-
-			runInAction(() => {
-				this.detectedDevices = devices
-				this.isScanning = false
-			})
-
-			return devices
-		} catch (error) {
-			runInAction(() => {
-				this.isScanning = false
-			})
-			console.error("Error scanning for devices:", error)
-			return []
-		}
-	}
-
 	// Connect to a specific port (used for auto-reconnect and device selection)
 	async connectToSpecificPort(port: SerialPort): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot connect: user not logged in")
+			return
+		}
+
 		if (this.connected) return
 
 		try {
@@ -201,7 +163,8 @@ class SerialConnectionManagerClass extends EventTarget {
 				this.connected = true
 			})
 
-			this.dispatchEvent(createCustomEvent("connected"))
+			// Directly call the message manager's connected handler
+			serialMessageManagerClass.handleConnected()
 
 			// Send handshake
 			if (this.writer) {
@@ -217,7 +180,13 @@ class SerialConnectionManagerClass extends EventTarget {
 	}
 
 	// Original connect method - now uses filtered device selection
-	async connectToDevice(): Promise<void> {
+	public async connectToDevice(): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot connect: user not logged in")
+			return
+		}
+
 		if (this.connected) return
 
 		try {
@@ -244,13 +213,14 @@ class SerialConnectionManagerClass extends EventTarget {
 		}
 	}
 
-	// Connect to a device from the scanned list
-	async connectToDetectedDevice(device: DetectedDevice): Promise<void> {
-		await this.connectToSpecificPort(device.port)
-	}
-
 	// Request permission for a new device (forces the native browser dialog)
-	async requestNewDevice(): Promise<void> {
+	public async requestNewDevice(): Promise<void> {
+		// Check auth state
+		if (!authClass.isFinishedWithSignup) {
+			console.error("Cannot request new device: user not logged in")
+			return
+		}
+
 		try {
 			const port = await navigator.serial.requestPort({
 				filters: [PIP_ROBOT_USB_ID]
@@ -271,7 +241,10 @@ class SerialConnectionManagerClass extends EventTarget {
 		}
 
 		console.info("Handling device disconnection")
-		this.dispatchEvent(createCustomEvent("disconnected"))
+
+		// Directly call the message manager's disconnected handler
+		serialMessageManagerClass.handleDisconnected()
+
 		this.cleanupConnection()
 	}
 
@@ -302,7 +275,10 @@ class SerialConnectionManagerClass extends EventTarget {
 				await this.writer.write(new Uint8Array(disconnectMsg))
 				await new Promise(resolve => setTimeout(resolve, 50))
 			}
-			this.dispatchEvent(createCustomEvent("disconnected"))
+
+			// Directly call the message manager's disconnected handler
+			serialMessageManagerClass.handleDisconnected()
+
 			await this.cleanupConnection()
 		} catch (error) {
 			console.error("Error disconnecting:", error)
@@ -329,7 +305,7 @@ class SerialConnectionManagerClass extends EventTarget {
 						const line = lines[i].trim()
 						if (line) {
 							console.info("Received:", line)
-							this.dispatchEvent(createCustomEvent("rawMessage", line))
+							serialMessageManagerClass.handleRawMessage(line)
 						}
 					}
 					buffer = lines[lines.length - 1]
@@ -352,11 +328,11 @@ class SerialConnectionManagerClass extends EventTarget {
 			await this.writer.write(data)
 
 			const formattedData = this.formatBinaryForDisplay(buffer)
-			this.dispatchEvent(createCustomEvent("messageSent", {
+			serialMessageManagerClass.handleMessageSent({
 				content: formattedData,
 				timestamp: new Date(),
 				isBinary: true
-			}))
+			})
 
 			return true
 		} catch (error) {

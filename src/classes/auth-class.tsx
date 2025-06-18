@@ -57,7 +57,7 @@ class AuthClass {
 		this.showLoginOrRegister = loginOrRegister
 	})
 
-	public logout() {
+	public logout(): void {
 		this.setAccessToken(null)
 		this.setShowLoginOrRegister("Register")
 		this.setAuthenticating(false)
