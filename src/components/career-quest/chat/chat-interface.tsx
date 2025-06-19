@@ -4,10 +4,10 @@ import { observer } from "mobx-react"
 import { Send, Bot, Square } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import SingleMessage from "./single-message"
+import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { cn } from "../../../lib/shadcn/utils"
 
 interface Message {
 	id: string
@@ -85,7 +85,7 @@ function ChatInterface() {
 			<div
 				ref={messagesContainerRef}
 				className={cn(
-					"flex-1 min-h-0 max-h-full",
+					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden", // Added w-full and overflow-x-hidden
 					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
 				)}
 			>

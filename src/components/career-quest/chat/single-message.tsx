@@ -2,12 +2,13 @@
 "use client"
 
 import Image from "next/image"
-import { isNull } from "lodash-es"
+import isNull from "lodash-es/isNull"
+import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
-import { Send, Bot, Square } from "lucide-react"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
+import { cn } from "../../../lib/shadcn/utils"
 
 interface Message {
 	id: string
@@ -16,11 +17,11 @@ interface Message {
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function ChatInterface({ message } : { message: Message}) {
+function SingleMessage({ message } : { message: Message}) {
 	return (
 		<div
 			key={message.id}
-			className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+			className={`flex gap-3 min-w-0 w-full ${message.sender === "user" ? "justify-end" : "justify-start"}`}
 		>
 			{message.sender === "ai" && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
@@ -31,13 +32,20 @@ function ChatInterface({ message } : { message: Message}) {
 			)}
 
 			<div
-				className={`max-w-[80%] rounded-lg px-3 py-2 ${
+				className={cn(
+					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
 					message.sender === "user"
 						? "bg-macaw text-white ml-auto"
 						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-				}`}
+				)}
+				style={{ wordBreak: "break-all", overflowWrap: "anywhere" }}
 			>
-				<p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>
+				<p
+					className="text-sm whitespace-pre-wrap"
+					style={{ wordBreak: "break-all", overflowWrap: "anywhere" }}
+				>
+					{message.content}
+				</p>
 			</div>
 
 			{message.sender === "user" && (
@@ -61,4 +69,4 @@ function ChatInterface({ message } : { message: Message}) {
 	)
 }
 
-export default observer(ChatInterface)
+export default observer(SingleMessage)
