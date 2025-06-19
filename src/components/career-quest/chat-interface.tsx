@@ -6,8 +6,8 @@ import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { Send, Bot, Square } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
-import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
+import { Textarea } from "../shadcn/ui/textarea"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
@@ -16,27 +16,20 @@ interface Message {
 	id: string
 	content: string
 	sender: "user" | "ai"
-	timestamp: Date
 }
 
 // eslint-disable-next-line max-lines-per-function
 function ChatInterface() {
-	const [messages, setMessages] = useState<Message[]>([
-		{
-			id: "1",
-			content: "Hi! I'm here to help you understand the code and robotics. Ask me anything!",
-			sender: "ai",
-			timestamp: new Date()
-		}
-	])
+	const [messages, setMessages] = useState<Message[]>([])
 	const [inputValue, setInputValue] = useState("")
 	const [isLoading, setIsLoading] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const messagesContainerRef = useRef<HTMLDivElement>(null)
-	const inputRef = useRef<HTMLInputElement>(null)
+	const inputRef = useRef<HTMLTextAreaElement>(null)
 
-	// Check if there have been user messages (excluding the initial AI message)
+	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.sender === "user")
+	const hasAnyMessages = messages.length > 0
 
 	// Auto-scroll to bottom when new messages are added
 	useEffect(() => {
@@ -52,7 +45,6 @@ function ChatInterface() {
 			id: Date.now().toString(),
 			content: inputValue,
 			sender: "user",
-			timestamp: new Date()
 		}
 
 		setMessages(prev => [...prev, userMessage])
@@ -70,7 +62,6 @@ function ChatInterface() {
 				id: (Date.now() + 1).toString(),
 				content: "Thanks for your question! This is where I would respond with helpful information about the code or robotics concept.",
 				sender: "ai",
-				timestamp: new Date()
 			}
 			setMessages(prev => [...prev, aiMessage])
 			setIsLoading(false)
@@ -87,31 +78,27 @@ function ChatInterface() {
 			e.preventDefault()
 			handleSendMessage()
 		}
+		// Allow Shift+Enter for new lines
 	}
-
-	// Determine if button should be shown
-	const shouldShowButton = inputValue.trim() || hasUserMessages
 
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
-			{/* Header - Fixed height */}
-			<div className="flex items-center gap-3 p-4 border-b-2 border-swan flex-shrink-0">
-				<Avatar className="w-8 h-8">
-					<AvatarFallback className="bg-macaw text-white">
-						<Bot className="w-4 h-4" />
-					</AvatarFallback>
-				</Avatar>
-				<div>
-					<h3 className="font-semibold text-questionText">AI Assistant</h3>
-				</div>
-			</div>
-
 			{/* Chat Messages - Scrollable with fixed height */}
 			<div
 				ref={messagesContainerRef}
 				className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 max-h-full"
-				style={{ height: "calc(100% - 140px)" }}
 			>
+				{/* Empty state when no messages */}
+				{!hasAnyMessages && (
+					<div className="flex items-center justify-center h-full">
+						<div className="text-center">
+							<Bot className="w-12 h-12 mx-auto mb-4 text-macaw" />
+							<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
+							<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about the code or robotics concepts</p>
+						</div>
+					</div>
+				)}
+
 				{messages.map((message) => (
 					<div
 						key={message.id}
@@ -132,17 +119,7 @@ function ChatInterface() {
 									: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 							}`}
 						>
-							<p className="text-sm break-words">{message.content}</p>
-							<p className={`text-xs mt-1 ${
-								message.sender === "user"
-									? "text-blue-100"
-									: "text-gray-500 dark:text-gray-400"
-							}`}>
-								{message.timestamp.toLocaleTimeString([], {
-									hour: "2-digit",
-									minute: "2-digit"
-								})}
-							</p>
+							<p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>
 						</div>
 
 						{message.sender === "user" && (
@@ -187,24 +164,23 @@ function ChatInterface() {
 				<div ref={messagesEndRef} />
 			</div>
 
-			{/* Input Area - Fixed height */}
-			<div className="p-4 border-t-2 border-swan flex-shrink-0">
-				<div className="flex gap-2">
-					<Input
+			{/* Input Area with inline send button */}
+			<div className="p-4 flex-shrink-0">
+				<div className="relative">
+					<Textarea
 						ref={inputRef}
 						value={inputValue}
 						onChange={(e) => setInputValue(e.target.value)}
 						onKeyDown={handleKeyDown}
-						placeholder="Ask about the code..."
-						className="flex-1"
-						autoFocus
+						placeholder="Ask about the code"
+						className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan"
 					/>
-					{shouldShowButton && (
+					{(inputValue.trim() || hasUserMessages) && (
 						<Button
 							onClick={isLoading ? handleStopGeneration : handleSendMessage}
 							disabled={!isLoading && !inputValue.trim()}
 							size="icon"
-							className="shrink-0"
+							className="absolute right-2 bottom-2 h-8 w-8 shrink-0"
 							variant={isLoading ? "destructive" : "default"}
 						>
 							{isLoading ? (
