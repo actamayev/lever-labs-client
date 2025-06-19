@@ -51,6 +51,7 @@ function ViewOnlySandbox(props: Props) {
 		setCppCode(cppCode)
 
 		// Disable context menu on workspace
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (workspace) {
 			workspace.getCanvas().addEventListener("contextmenu", (e) => {
 				e.preventDefault()

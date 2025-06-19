@@ -1,25 +1,25 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import LineFollowing from "../../../src/components/career/line-following/line-following"
+import CqIntroduction from "../../../src/components/career/introduction/cq-introduction"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 
 export const metadata = createMetadata({
-	title: "Line Following",
+	title: "Career Quest Introduction",
 	// eslint-disable-next-line max-len
 	description: "Guide Pip through line-following to discover its purpose in a robotics adventure.",
-	path: "/career-quest/line-following",
+	path: "/career-quest/introduction",
 	keywords: [
 		"robotics adventure",
 		"coding challenges",
-		"line following robot"
+		"introduction to robotics"
 	]
 })
 
-export default function LineFollowingPage() {
+export default function CareerQuestIntroductionPage() {
 	return (
 		<AuthenticatedLayout>
 			<CareerActivityTemplate>
-				<LineFollowing />
+				<CqIntroduction />
 			</CareerActivityTemplate>
 		</AuthenticatedLayout>
 	)

@@ -17,6 +17,7 @@ declare global {
 		componentDifficulty: 1 | 2 | 3
 	}
 
+	// Existing interface for challenge cards
 	interface CareerData {
 		careerName: string
 		careerDescription: string
@@ -29,14 +30,27 @@ declare global {
 		codingConcepts: CodingConceptName[]
 	}
 
+	// New interface for introduction card
+	interface IntroductionData {
+		title: string
+		description: string
+		totalLessons: number
+		lessonsComplete: number
+		introUrl: CareerQuestPages
+		introIcon: LucideIcon
+		componentsUsed: ComponentsUsedCareerData[]
+		backgroundColor: string
+		codingConcepts: CodingConceptName[]
+	}
+
 	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null
 
 	type CodingConceptName =
-		| "Variables"
-		| "Loops"
-		| "Conditional Statements"
-		| "Functions"
-		| "Boolean Logic"
+	| "Variables"
+	| "Loops"
+	| "Conditional Statements"
+	| "Functions"
+	| "Boolean Logic"
 }
 
 export {}

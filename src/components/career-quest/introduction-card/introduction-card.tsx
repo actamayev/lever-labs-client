@@ -2,10 +2,15 @@
 
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
-import BackChallengeCard from "./back-career-card"
-import FrontChallengeCard from "./front-career-card"
+import { cn } from "../../../lib/shadcn/utils"
+import FrontIntroductionCard from "./front-introduction-card"
+import BackIntroductionCard from "./back-introduction-card"
 
-export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
+interface IntroCardProps {
+	introData: IntroductionData
+}
+
+export default function IntroductionCard({ introData }: IntroCardProps) {
 	const [flipped, setFlipped] = useState(false)
 
 	const flipCard = useCallback(() => {
@@ -13,7 +18,10 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	}, [])
 
 	return (
-		<div className={"relative overflow-hidden rounded-2xl text-white w-full aspect-[5/7]"}>
+		<div className={cn(
+			"relative overflow-hidden rounded-2xl text-white",
+			"w-full aspect-[750/321]",
+		)}>
 			{/* Card container */}
 			<motion.div
 				className="w-full h-full relative preserve-3d"
@@ -21,13 +29,13 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 				transition={{ duration: 0.7 }}
 				style={{ transformStyle: "preserve-3d" }}
 			>
-				<FrontChallengeCard
-					careerData={careerData}
+				<FrontIntroductionCard
+					introData={introData}
 					flipCard={flipCard}
 				/>
 
-				<BackChallengeCard
-					careerData={careerData}
+				<BackIntroductionCard
+					introData={introData}
 					flipCard={flipCard}
 				/>
 			</motion.div>

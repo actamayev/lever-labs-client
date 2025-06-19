@@ -3,10 +3,10 @@
 
 import { observer } from "mobx-react"
 import { Suspense } from "react"
-import BlocklyLoadingComponent from "../sandbox/blockly-loading-component"
-import ViewOnlyDemo from "./view-only-demo"
+import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
+import ViewOnlyDemo from "../view-only-demo"
 
-function LineFollowing() {
+function CQIntroduction() {
 	return (
 		<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
 			<ViewOnlyDemo
@@ -19,4 +19,4 @@ function LineFollowing() {
 	)
 }
 
-export default observer(LineFollowing)
+export default observer(CQIntroduction)

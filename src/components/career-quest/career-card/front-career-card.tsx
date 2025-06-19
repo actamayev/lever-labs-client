@@ -2,9 +2,10 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { Info } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import BackFlipButton from "./back-flip-button"
 import SingleComponentUsed from "../single-component-used"
+import SingleCodingConceptUsed from "../single-coding-concept-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface Props {
@@ -15,7 +16,8 @@ interface Props {
 // eslint-disable-next-line max-lines-per-function
 export default function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
+	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
+		totalLessons, lessonsComplete, backgroundColor, codingConcepts } = careerData
 
 	// Calculate progress percentage
 	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
@@ -23,79 +25,106 @@ export default function FrontCareerCard(props: Props) {
 	return (
 		<motion.div
 			className={cn(
-				"absolute w-full h-full backface-hidden flex cursor-default",
+				"absolute w-full h-full backface-hidden flex flex-col cursor-default",
 				backgroundColor
 			)}
 			style={{
 				backfaceVisibility: "hidden",
 			}}
 		>
-			{/* Left Section */}
-			<div className="w-1/2 flex flex-col p-6">
-				{/* Title */}
-				<h3 className="text-2xl font-bold mb-5">{careerName}</h3>
+			{/* Header with title and progress */}
+			<div className="flex justify-between items-start p-4 pb-2">
+				<h3 className="text-lg font-bold text-white flex-1 mr-2">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className="w-full h-5 bg-emerald-600 rounded-full overflow-hidden relative mb-5">
+				<div className="w-20 h-3 bg-emerald-600 rounded-full overflow-hidden relative">
 					<div
 						className="relative h-full rounded-full duration-0 ease-out bg-emerald-300"
 						style={{
 							width: `${progressPercentage}%`,
 						}}
 					>
-						{/* Highlight shadow effect - only on the completed part */}
+						{/* Highlight shadow effect */}
 						<div
-							className="absolute top-1 left-2 right-2 rounded-full"
+							className="absolute top-0.5 left-1 right-1 rounded-full"
 							style={{
 								background: "rgb(167, 243, 208)",
-								height: "3px"
+								height: "2px"
 							}}
 						/>
 					</div>
-
-					{/* Text inside progress bar */}
-					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium cursor-default">
-						{lessonsComplete} / {totalLessons}
+					<div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+						{lessonsComplete}/{totalLessons}
 					</div>
 				</div>
+			</div>
 
-				{/* Component Icons */}
-				<div className="flex flex-wrap gap-2 mb-auto">
+			{/* Icon/Image Section */}
+			<div className="flex-1 flex items-center justify-center px-4 py-2">
+				<Icon
+					size="120"
+					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
+					fill="white"
+				/>
+			</div>
+
+			{/* Components Section */}
+			<div className="px-4 pb-2">
+				<h4 className="text-sm font-medium text-white mb-2">Sensors:</h4>
+				<div className="flex flex-wrap gap-1.5 justify-center">
 					{componentsUsed.slice(0, 4).map((component) => (
 						<SingleComponentUsed
 							key={component.componentName}
 							component={component}
+							// size="small"
 						/>
 					))}
 					{componentsUsed.length > 4 && (
-						<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
-							<span className="font-bold">+{componentsUsed.length - 4}</span>
+						<div className="w-8 h-8 bg-emerald-600 rounded-xl flex items-center justify-center">
+							<span className="font-bold text-xs">+{componentsUsed.length - 4}</span>
 						</div>
 					)}
 				</div>
+			</div>
 
-				{/* Continue Button */}
+			{/* Coding Concepts Section */}
+			<div className="px-4 pb-4">
+				<h4 className="text-sm font-medium text-white mb-2">Concepts:</h4>
+				<div className="flex flex-wrap gap-1.5 justify-center">
+					{codingConcepts.slice(0, 3).map((codingConcept) => (
+						<SingleCodingConceptUsed
+							key={codingConcept}
+							codingConcept={codingConcept}
+							// size="small"
+						/>
+					))}
+					{codingConcepts.length > 3 && (
+						<div className="w-8 h-8 bg-teal-600 rounded-xl flex items-center justify-center">
+							<span className="font-bold text-xs">+{codingConcepts.length - 3}</span>
+						</div>
+					)}
+				</div>
+			</div>
+
+			{/* Continue Button */}
+			<div className="p-4 pt-2">
 				<Link href={careerUrl}>
 					<TactileButton
-						className="duration-150 text-emerald-600 bg-white h-12 rounded-2xl text-base w-full"
+						className="duration-150 text-emerald-600 bg-white h-10 rounded-xl text-sm w-full"
 						shadowColor="rgb(178,214,201)"
 					>
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}
 					</TactileButton>
 				</Link>
-
 			</div>
 
-			{/* Right Section with Image */}
-			<div className="w-1/2 flex items-center justify-center">
-				<Icon
-					size="200"
-					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
-					fill="white"
-				/>
-			</div>
-
-			<BackFlipButton onFlip={flipCard} />
+			{/* Flip Button */}
+			<button
+				onClick={flipCard}
+				className="absolute top-4 right-4 size-6 rounded-full flex items-center justify-center focus:outline-none duration-0 z-10"
+			>
+				<Info size={20} strokeWidth={2.5} className="text-white"/>
+			</button>
 		</motion.div>
 	)
 }

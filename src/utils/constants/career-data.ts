@@ -1,16 +1,45 @@
-"use client"
+/* eslint-disable max-len */
+import { Navigation, BookOpen } from "lucide-react"
 
-import { CustomTreasureMap } from "../../components/icons/custom-treasure-map"
+// Introduction data
+export const introductionData: IntroductionData = {
+	title: "Introduction to Robotics",
+	description: "Start your robotics journey! Learn the basics of programming, sensors, and robotics concepts. In this introductory section, you'll get familiar with the fundamental building blocks that power all robotics challenges.",
+	totalLessons: 5,
+	lessonsComplete: 0,
+	introUrl: "/career-quest/introduction",
+	introIcon: BookOpen,
+	backgroundColor: "bg-blue-500",
+	componentsUsed: [
+		{
+			componentName: "LED",
+			componentDifficulty: 1,
+		},
+		{
+			componentName: "Speaker",
+			componentDifficulty: 1,
+		},
+		{
+			componentName: "Motors + Encoders",
+			componentDifficulty: 1,
+		}
+	],
+	codingConcepts: [
+		"Variables",
+		"Functions",
+		"Conditional Statements",
+	]
+}
 
-export const careerData: CareerData[] = [
+// Challenge data
+export const challengeData: CareerData[] = [
 	{
-		careerName: "Line following",
-		// eslint-disable-next-line max-len
-		careerDescription: "In this role, you'll program Pip to drive along a drawn line using IR sensors to detect black or white surfaces. By controlling the motors independently, you'll ensure Pip stays on track.",
-		totalLessons: 10,
+		careerName: "Line Following",
+		careerDescription: "Program Pip to follow a drawn line using IR sensors to detect black or white surfaces. Master precise motor control to keep your robot perfectly on track through curves and intersections.",
+		totalLessons: 8,
 		lessonsComplete: 0,
 		careerUrl: "/career-quest/line-following",
-		careerIcon: CustomTreasureMap,
+		careerIcon: Navigation,
 		backgroundColor: "bg-emerald-500",
 		componentsUsed: [
 			{

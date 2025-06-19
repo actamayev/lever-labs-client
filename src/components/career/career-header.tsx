@@ -2,8 +2,8 @@
 
 import { X } from "lucide-react"
 import { Button } from "../shadcn/ui/button"
-import CareerProgressBar from "./career-progress-bar"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import CareerProgressBar from "../career-quest/career-progress-bar"
 
 export default function CareerQuestActivityHeader() {
 	const typedNavigate = useTypedNavigate()

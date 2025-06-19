@@ -74,6 +74,7 @@ export const labPages = [
 
 export const careerQuestPages = [
 	"/career-quest",
+	"/career-quest/introduction",
 	"/career-quest/line-following"
 ] as const
 
