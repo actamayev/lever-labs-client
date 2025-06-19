@@ -9,6 +9,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
+import ChatInterface from "./chat-interface"
 import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
 
 interface Props {
@@ -30,10 +31,10 @@ function ViewOnlyDemo(props: Props) {
 
 	return (
 		<div className={cn("flex flex-col h-full", extraClasses)}>
-			{/* Main content area with left panel and sandbox */}
+			{/* Main content area with left panel, sandbox, and chat */}
 			<div className="flex flex-row flex-1 gap-4 p-4">
 				{/* Left Panel */}
-				<div className="flex flex-col w-1/5 bg-white dark:bg-gray-800 rounded-lg border-2 border-swan p-4">
+				<div className="flex flex-col w-1/4 bg-white dark:bg-gray-800 rounded-lg border-2 border-swan p-4">
 					{/* Description section (2/3 height) */}
 					<div className="flex-[2] mb-4">
 						<h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
@@ -62,6 +63,11 @@ function ViewOnlyDemo(props: Props) {
 						setCppCode={setCppCode}
 						extraClasses="h-full"
 					/>
+				</div>
+
+				{/* Chat Interface */}
+				<div className="w-1/3">
+					<ChatInterface />
 				</div>
 			</div>
 

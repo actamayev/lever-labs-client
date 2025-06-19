@@ -1,18 +1,35 @@
 "use client"
 
+import Image from "next/image"
+import isNull from "lodash-es/isNull"
+import { observer } from "mobx-react"
+import { Avatar, AvatarFallback } from "@/components/shadcn/ui/avatar"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "./custom-sidebar-button"
-import ShowUserProfileImageOrDefaultImage from "../../show-user-profile-image-or-default-image"
+import { CustomUserCircle } from "../../icons/custom-user-circle"
+import personalInfoClass from "../../../classes/personal-info-class"
 
-export default function ProfileSidebarButton() {
+function ProfileSidebarButton() {
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">
 				<CustomSidebarButton
 					icon={(
-						<div className="relative flex items-center justify-center w-full h-full">
-							<ShowUserProfileImageOrDefaultImage  />
-						</div>
+						<Avatar className="w-full h-full">
+							{isNull(personalInfoClass.profilePictureUrl) ? (
+								<AvatarFallback className="bg-gray-500 text-white">
+									<CustomUserCircle className="w-4 h-4" />
+								</AvatarFallback>
+							) : (
+								<Image
+									src={personalInfoClass.profilePictureUrl}
+									alt="Your profile"
+									width={32}
+									height={32}
+									className="rounded-full object-cover w-full h-full"
+								/>
+							)}
+						</Avatar>
 					)}
 					text="PROFILE"
 					goTo="/profile"
@@ -21,3 +38,5 @@ export default function ProfileSidebarButton() {
 		</SidebarMenu>
 	)
 }
+
+export default observer(ProfileSidebarButton)

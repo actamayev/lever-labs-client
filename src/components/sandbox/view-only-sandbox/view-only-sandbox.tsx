@@ -6,11 +6,11 @@ import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
+import { cppGenerator } from "../../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
-import { cppGenerator } from "../../../utils/cpp/cpp-generator"
 
 interface Props {
 	initialXml: string
