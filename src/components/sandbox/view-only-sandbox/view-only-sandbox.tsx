@@ -10,9 +10,11 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
+import { cppGenerator } from "../../../utils/cpp/cpp-generator"
 
 interface Props {
 	initialXml: string
+	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 }
 
@@ -20,6 +22,7 @@ interface Props {
 function ViewOnlySandbox(props: Props) {
 	const {
 		initialXml,
+		setCppCode,
 		extraClasses = "h-1/2",
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -41,6 +44,17 @@ function ViewOnlySandbox(props: Props) {
 		workspace.scrollCenter()
 		setIsCentered(true)
 	}, [workspaceConfiguration.zoom?.startScale])
+
+	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+		workspaceRef.current = workspace
+		const cppCode = cppGenerator.workspaceToCode(workspace)
+		setCppCode(cppCode)
+
+		// Center workspace on first initialization
+		if (!isCentered) {
+			centerWorkspace()
+		}
+	}, [setCppCode, isCentered, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -83,7 +97,6 @@ function ViewOnlySandbox(props: Props) {
 		initializeBlocks()
 	}, [])
 
-	console.log(initialXml)
 	return (
 		<div
 			ref={containerRef}
@@ -93,6 +106,7 @@ function ViewOnlySandbox(props: Props) {
 				initialXml={initialXml}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
+				onWorkspaceChange={handleWorkspaceChange}
 			/>
 		</div>
 	)
