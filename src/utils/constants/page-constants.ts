@@ -74,8 +74,7 @@ export const labPages = [
 
 export const careerQuestPages = [
 	"/career-quest",
-	"/career-quest/line-following",
-	...ledLabPages,
+	"/career-quest/line-following"
 ] as const
 
 export const allPages = [...staticPages, ...labPages, ...careerQuestPages] as const

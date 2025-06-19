@@ -49,7 +49,10 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 	...commonStyles
 })
 
-const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
+const getWorkspaceConfig = (
+	isDarkMode: boolean,
+	viewOnly: boolean
+): Blockly.BlocklyOptions => ({
 	grid: {
 		spacing: 20,
 		length: 3,
@@ -64,7 +67,7 @@ const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
 		minScale: 0.3,
 		scaleSpeed: 1.2,
 	},
-	trashcan: true,
+	trashcan: viewOnly ? false : true,
 	sounds: false,
 	theme: isDarkMode ? darkTheme : lightTheme,
 	maxTrashcanContents: 0,

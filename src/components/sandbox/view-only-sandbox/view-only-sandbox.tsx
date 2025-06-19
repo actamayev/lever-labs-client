@@ -1,35 +1,26 @@
 "use client"
 
 import * as Blockly from "blockly"
-import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { cn } from "../../lib/shadcn/utils"
-import { EmptySandboxXml } from "../../utils/constants/constants"
-import { cppGenerator } from "../../utils/cpp/cpp-generator"
-import personalInfoClass from "../../classes/personal-info-class"
-import initializeBlocks from "../../utils/blockly/initialize-blocks"
-import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
-import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+import { cn } from "../../../lib/shadcn/utils"
+import personalInfoClass from "../../../classes/personal-info-class"
+import initializeBlocks from "../../../utils/blockly/initialize-blocks"
+import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
+import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
 
 interface Props {
-	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	setCppCode: React.Dispatch<React.SetStateAction<string>>
-	extraClasses?: string
 	initialXml: string
-	onXmlChange?: (xml: string) => void
+	extraClasses?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-function BlocklyComponent(props: Props) {
+function ViewOnlySandbox(props: Props) {
 	const {
-		toolboxConfig,
-		setCppCode,
+		initialXml,
 		extraClasses = "h-1/2",
-		initialXml = EmptySandboxXml,
-		onXmlChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -39,7 +30,7 @@ function BlocklyComponent(props: Props) {
 	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
-		return getWorkspaceConfig(isDarkMode, false)
+		return getWorkspaceConfig(isDarkMode, true)
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback(() => {
@@ -50,26 +41,6 @@ function BlocklyComponent(props: Props) {
 		workspace.scrollCenter()
 		setIsCentered(true)
 	}, [workspaceConfiguration.zoom?.startScale])
-
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		workspaceRef.current = workspace
-		const newXml = Blockly.Xml.domToText(
-			Blockly.Xml.workspaceToDom(workspace)
-		)
-		const cppCode = cppGenerator.workspaceToCode(workspace)
-
-		setCppCode(cppCode)
-
-		// Notify parent component if onXmlChange callback exists
-		if (onXmlChange) {
-			onXmlChange(newXml)
-		}
-
-		// Center workspace on first initialization
-		if (!isCentered) {
-			centerWorkspace()
-		}
-	}, [setCppCode, onXmlChange, isCentered, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -108,39 +79,23 @@ function BlocklyComponent(props: Props) {
 		}
 	}, [isDarkMode])
 
-	const setupToolbox = useCallback(() => {
-		if (!workspaceRef.current) return
-
-		const toolbox = workspaceRef.current.getToolbox()
-		if (!toolbox) return
-
-		const flyout = toolbox.getFlyout()
-		if (isNull(flyout)) return
-		flyout.autoClose = false
-	}, [])
-
 	useEffect(() => {
 		initializeBlocks()
-		setupToolbox()
-		// 12/1/25 TODO: Fix, not working
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
-	}, [setupToolbox])
+	}, [])
 
+	console.log(initialXml)
 	return (
 		<div
 			ref={containerRef}
 			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
 		>
 			<BlocklyWorkspace
-				toolboxConfiguration={toolboxConfig}
 				initialXml={initialXml}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
-				onWorkspaceChange={handleWorkspaceChange}
 			/>
 		</div>
 	)
 }
 
-export default observer(BlocklyComponent)
+export default observer(ViewOnlySandbox)
