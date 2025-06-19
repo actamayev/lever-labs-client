@@ -50,6 +50,14 @@ function ViewOnlySandbox(props: Props) {
 		const cppCode = cppGenerator.workspaceToCode(workspace)
 		setCppCode(cppCode)
 
+		// Disable context menu on workspace
+		if (workspace) {
+			workspace.getCanvas().addEventListener("contextmenu", (e) => {
+				e.preventDefault()
+				e.stopPropagation()
+			})
+		}
+
 		// Center workspace on first initialization
 		if (!isCentered) {
 			centerWorkspace()

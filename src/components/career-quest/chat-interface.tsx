@@ -79,9 +79,9 @@ function ChatInterface() {
 	}
 
 	return (
-		<div className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg border-2 border-swan">
-			{/* Chat Header */}
-			<div className="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-600">
+		<div className="flex flex-col bg-white dark:bg-gray-800 rounded-lg border-2 border-swan" style={{ height: "100%" }}>
+			{/* Chat Header - Fixed height */}
+			<div className="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-600 flex-shrink-0">
 				<Avatar className="w-8 h-8">
 					<AvatarFallback className="bg-blue-500 text-white">
 						<Bot className="w-4 h-4" />
@@ -93,84 +93,86 @@ function ChatInterface() {
 				</div>
 			</div>
 
-			{/* Chat Messages */}
-			<ScrollArea ref={scrollAreaRef} className="flex-1 p-4">
-				<div className="space-y-4">
-					{messages.map((message) => (
-						<div
-							key={message.id}
-							className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-						>
-							{message.sender === "ai" && (
+			{/* Chat Messages - Scrollable area with fixed height */}
+			<div className="flex-1 overflow-hidden">
+				<ScrollArea className="h-full">
+					<div className="p-4 space-y-4">
+						{messages.map((message) => (
+							<div
+								key={message.id}
+								className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+							>
+								{message.sender === "ai" && (
+									<Avatar className="w-8 h-8 mt-1">
+										<AvatarFallback className="bg-blue-500 text-white">
+											<Bot className="w-4 h-4" />
+										</AvatarFallback>
+									</Avatar>
+								)}
+
+								<div
+									className={`max-w-[80%] rounded-lg px-3 py-2 ${
+										message.sender === "user"
+											? "bg-blue-500 text-white ml-auto"
+											: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+									}`}
+								>
+									<p className="text-sm">{message.content}</p>
+									<p className={`text-xs mt-1 ${
+										message.sender === "user"
+											? "text-blue-100"
+											: "text-gray-500 dark:text-gray-400"
+									}`}>
+										{message.timestamp.toLocaleTimeString([], {
+											hour: "2-digit",
+											minute: "2-digit"
+										})}
+									</p>
+								</div>
+
+								{message.sender === "user" && (
+									<Avatar className="w-8 h-8 mt-1">
+										{!isNull(personalInfoClass.profilePictureUrl) ? (
+											<Image
+												src={personalInfoClass.profilePictureUrl}
+												alt="Your profile"
+												width={32}
+												height={32}
+												className="rounded-full object-cover w-full h-full"
+											/>
+										) : (
+											<AvatarFallback className="bg-gray-500 text-white">
+												<CustomUserCircle className="w-4 h-4" />
+											</AvatarFallback>
+										)}
+									</Avatar>
+								)}
+							</div>
+						))}
+
+						{/* Loading indicator */}
+						{isLoading && (
+							<div className="flex gap-3 justify-start">
 								<Avatar className="w-8 h-8 mt-1">
 									<AvatarFallback className="bg-blue-500 text-white">
 										<Bot className="w-4 h-4" />
 									</AvatarFallback>
 								</Avatar>
-							)}
-
-							<div
-								className={`max-w-[80%] rounded-lg px-3 py-2 ${
-									message.sender === "user"
-										? "bg-blue-500 text-white ml-auto"
-										: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-								}`}
-							>
-								<p className="text-sm">{message.content}</p>
-								<p className={`text-xs mt-1 ${
-									message.sender === "user"
-										? "text-blue-100"
-										: "text-gray-500 dark:text-gray-400"
-								}`}>
-									{message.timestamp.toLocaleTimeString([], {
-										hour: "2-digit",
-										minute: "2-digit"
-									})}
-								</p>
-							</div>
-
-							{message.sender === "user" && (
-								<Avatar className="w-8 h-8 mt-1">
-									{!isNull(personalInfoClass.profilePictureUrl) ? (
-										<Image
-											src={personalInfoClass.profilePictureUrl}
-											alt="Your profile"
-											width={32}
-											height={32}
-											className="rounded-full object-cover w-full h-full"
-										/>
-									) : (
-										<AvatarFallback className="bg-gray-500 text-white">
-											<CustomUserCircle className="w-4 h-4" />
-										</AvatarFallback>
-									)}
-								</Avatar>
-							)}
-						</div>
-					))}
-
-					{/* Loading indicator */}
-					{isLoading && (
-						<div className="flex gap-3 justify-start">
-							<Avatar className="w-8 h-8 mt-1">
-								<AvatarFallback className="bg-blue-500 text-white">
-									<Bot className="w-4 h-4" />
-								</AvatarFallback>
-							</Avatar>
-							<div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2">
-								<div className="flex space-x-1">
-									<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-									<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-									<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+								<div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2">
+									<div className="flex space-x-1">
+										<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+										<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+										<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+									</div>
 								</div>
 							</div>
-						</div>
-					)}
-				</div>
-			</ScrollArea>
+						)}
+					</div>
+				</ScrollArea>
+			</div>
 
-			{/* Chat Input */}
-			<div className="p-4 border-t border-gray-200 dark:border-gray-600">
+			{/* Chat Input - Fixed at bottom */}
+			<div className="p-4 border-t border-gray-200 dark:border-gray-600 flex-shrink-0">
 				<div className="flex gap-2">
 					<Input
 						value={inputValue}

@@ -56,7 +56,7 @@ const getWorkspaceConfig = (
 	grid: {
 		spacing: 20,
 		length: 3,
-		colour: isDarkMode ? "#374151" : "#ccc", // Darker grid for dark mode
+		colour: isDarkMode ? "#374151" : "#ccc",
 		snap: true,
 	},
 	zoom: {
@@ -71,6 +71,15 @@ const getWorkspaceConfig = (
 	sounds: false,
 	theme: isDarkMode ? darkTheme : lightTheme,
 	maxTrashcanContents: 0,
+	readOnly: viewOnly, // This makes blocks non-draggable and non-editable
+	move: viewOnly ? {
+		scrollbars: {
+			horizontal: false,
+			vertical: false
+		},
+		drag: false,
+		wheel: false
+	} : undefined,
 })
 
 export default getWorkspaceConfig
