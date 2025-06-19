@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import CareerActivityTemplate from "../../../src/components/career-quest/career-activity-template"
 import LineFollowing from "../../../src/components/career-quest/line-following"
+import CareerActivityTemplate from "../../../src/components/career-quest/career-activity-template"
 
 export const metadata = createMetadata({
 	title: "Line Following",
