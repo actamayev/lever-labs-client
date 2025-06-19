@@ -101,9 +101,7 @@ function ViewOnlySandbox(props: Props) {
 		}
 	}, [isDarkMode])
 
-	useEffect(() => {
-		initializeBlocks()
-	}, [])
+	useEffect(() => initializeBlocks(), [])
 
 	return (
 		<div

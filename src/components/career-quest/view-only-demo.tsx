@@ -4,13 +4,13 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import ChatInterface from "./chat-interface"
 import pipClass from "../../classes/pip-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
-import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
+import ChatInterface from "./chat-interface"
+import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
 
 interface Props {
 	initialXml: string
@@ -31,10 +31,10 @@ function ViewOnlyDemo(props: Props) {
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
-			{/* Main content area with left panel, sandbox, and chat */}
+			{/* Main content area with three columns */}
 			<div className="flex flex-row flex-1 gap-4 p-4 min-h-0">
-				{/* Left Panel */}
-				<div className="flex flex-col w-1/4 bg-white dark:bg-gray-800
+				{/* Left Panel - Full height */}
+				<div className="flex flex-col w-1/4 bg-standardBackground
 				rounded-lg border-2 border-swan p-4 max-h-full overflow-y-auto">
 					{/* Description section (2/3 height) */}
 					<div className="flex-[2] mb-4">
@@ -57,36 +57,39 @@ function ViewOnlyDemo(props: Props) {
 					</div>
 				</div>
 
-				{/* View Only Sandbox */}
-				<div className="flex-1 max-h-full">
-					<ViewOnlySandbox
-						initialXml={initialXml}
-						setCppCode={setCppCode}
-						extraClasses="h-full"
-					/>
+				{/* Middle Column - Sandbox + Buttons */}
+				<div className="flex flex-col flex-1 max-h-full">
+					{/* View Only Sandbox */}
+					<div className="flex-1">
+						<ViewOnlySandbox
+							initialXml={initialXml}
+							setCppCode={setCppCode}
+							extraClasses="h-full"
+						/>
+					</div>
+
+					{/* Buttons section - Only under sandbox */}
+					<div className="flex flex-row space-x-2 items-center justify-center pt-2 flex-shrink-0">
+						<AnimatedStateButton
+							buttonText="SEND CODE"
+							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+							onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+							className="duration-150 rounded-xl text-4xl"
+						/>
+						<TactileButton
+							className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+							shadowColor="rgb(150, 50, 75)"
+							onClick={stopCurrentlyRunningCode}
+						>
+							STOP
+						</TactileButton>
+					</div>
 				</div>
 
-				{/* Chat Interface */}
+				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
 					<ChatInterface />
 				</div>
-			</div>
-
-			{/* Buttons section */}
-			<div className="flex flex-row space-x-2 items-center justify-center p-4 flex-shrink-0">
-				<AnimatedStateButton
-					buttonText="SEND CODE"
-					isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-					onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-					className="duration-150 rounded-xl text-4xl"
-				/>
-				<TactileButton
-					className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
-					shadowColor="rgb(150, 50, 75)"
-					onClick={stopCurrentlyRunningCode}
-				>
-					STOP
-				</TactileButton>
 			</div>
 		</div>
 	)

@@ -93,16 +93,16 @@ function ChatInterface() {
 	const shouldShowButton = inputValue.trim() || hasUserMessages
 
 	return (
-		<div className="flex flex-col h-full max-h-full bg-white dark:bg-gray-800 rounded-lg border-2 border-swan overflow-hidden">
+		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 			{/* Header - Fixed height */}
-			<div className="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-600 flex-shrink-0">
+			<div className="flex items-center gap-3 p-4 border-b-2 border-swan flex-shrink-0">
 				<Avatar className="w-8 h-8">
-					<AvatarFallback className="bg-blue-500 text-white">
+					<AvatarFallback className="bg-macaw text-white">
 						<Bot className="w-4 h-4" />
 					</AvatarFallback>
 				</Avatar>
 				<div>
-					<h3 className="font-semibold text-gray-900 dark:text-white">AI Assistant</h3>
+					<h3 className="font-semibold text-questionText">AI Assistant</h3>
 					<p className="text-sm text-gray-500 dark:text-gray-400">Ask me about the code!</p>
 				</div>
 			</div>
@@ -120,7 +120,7 @@ function ChatInterface() {
 					>
 						{message.sender === "ai" && (
 							<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-								<AvatarFallback className="bg-blue-500 text-white">
+								<AvatarFallback className="bg-macaw text-white">
 									<Bot className="w-4 h-4" />
 								</AvatarFallback>
 							</Avatar>
@@ -129,7 +129,7 @@ function ChatInterface() {
 						<div
 							className={`max-w-[80%] rounded-lg px-3 py-2 ${
 								message.sender === "user"
-									? "bg-blue-500 text-white ml-auto"
+									? "bg-macaw text-white ml-auto"
 									: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 							}`}
 						>
@@ -157,7 +157,7 @@ function ChatInterface() {
 										className="rounded-full object-cover w-full h-full"
 									/>
 								) : (
-									<AvatarFallback className="bg-gray-500 text-white">
+									<AvatarFallback className="bg-questionText text-white">
 										<CustomUserCircle className="w-4 h-4" />
 									</AvatarFallback>
 								)}
@@ -170,15 +170,15 @@ function ChatInterface() {
 				{isLoading && (
 					<div className="flex gap-3 justify-start">
 						<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-							<AvatarFallback className="bg-blue-500 text-white">
+							<AvatarFallback className="bg-macaw text-white">
 								<Bot className="w-4 h-4" />
 							</AvatarFallback>
 						</Avatar>
-						<div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-3 py-2">
+						<div className="bg-wan rounded-lg px-3 py-2">
 							<div className="flex space-x-1">
-								<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-								<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-								<div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+								<div className="w-2 h-2 bg-swan rounded-full animate-bounce"></div>
+								<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+								<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
 							</div>
 						</div>
 					</div>
@@ -189,7 +189,7 @@ function ChatInterface() {
 			</div>
 
 			{/* Input Area - Fixed height */}
-			<div className="p-4 border-t border-gray-200 dark:border-gray-600 flex-shrink-0">
+			<div className="p-4 border-t-2 border-swan flex-shrink-0">
 				<div className="flex gap-2">
 					<Input
 						ref={inputRef}
