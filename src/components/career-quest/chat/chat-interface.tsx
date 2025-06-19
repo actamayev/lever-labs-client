@@ -1,16 +1,13 @@
-/* eslint-disable max-len */
 "use client"
 
-import Image from "next/image"
-import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { Send, Bot, Square } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
-import { Button } from "../shadcn/ui/button"
-import { Textarea } from "../shadcn/ui/textarea"
-import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
-import { CustomUserCircle } from "../icons/custom-user-circle"
-import personalInfoClass from "../../classes/personal-info-class"
+import SingleMessage from "./single-message"
+import { Button } from "../../shadcn/ui/button"
+import { Textarea } from "../../shadcn/ui/textarea"
+import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import { cn } from "../../../lib/shadcn/utils"
 
 interface Message {
 	id: string
@@ -18,7 +15,7 @@ interface Message {
 	sender: "user" | "ai"
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function ChatInterface() {
 	const [messages, setMessages] = useState<Message[]>([])
 	const [inputValue, setInputValue] = useState("")
@@ -60,6 +57,7 @@ function ChatInterface() {
 		setTimeout(() => {
 			const aiMessage: Message = {
 				id: (Date.now() + 1).toString(),
+				// eslint-disable-next-line max-len
 				content: "Thanks for your question! This is where I would respond with helpful information about the code or robotics concept.",
 				sender: "ai",
 			}
@@ -86,82 +84,52 @@ function ChatInterface() {
 			{/* Chat Messages - Scrollable with fixed height */}
 			<div
 				ref={messagesContainerRef}
-				className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 max-h-full"
+				className={cn(
+					"flex-1 min-h-0 max-h-full",
+					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
+				)}
 			>
 				{/* Empty state when no messages */}
 				{!hasAnyMessages && (
-					<div className="flex items-center justify-center h-full">
-						<div className="text-center">
-							<Bot className="w-12 h-12 mx-auto mb-4 text-macaw" />
-							<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
-							<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about the code or robotics concepts</p>
-						</div>
+					<div className="text-center">
+						<Bot className="w-12 h-12 mx-auto mb-4 text-macaw" />
+						<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
+						<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about the code or robotics concepts</p>
 					</div>
 				)}
 
-				{messages.map((message) => (
-					<div
-						key={message.id}
-						className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-					>
-						{message.sender === "ai" && (
-							<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-								<AvatarFallback className="bg-macaw text-white">
-									<Bot className="w-4 h-4" />
-								</AvatarFallback>
-							</Avatar>
-						)}
+				{/* Messages when they exist */}
+				{hasAnyMessages && (
+					<>
+						{messages.map((message) => (
+							<SingleMessage
+								key={message.id}
+								message={message}
+							/>
+						))}
 
-						<div
-							className={`max-w-[80%] rounded-lg px-3 py-2 ${
-								message.sender === "user"
-									? "bg-macaw text-white ml-auto"
-									: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-							}`}
-						>
-							<p className="text-sm break-words whitespace-pre-wrap">{message.content}</p>
-						</div>
-
-						{message.sender === "user" && (
-							<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-								{!isNull(personalInfoClass.profilePictureUrl) ? (
-									<Image
-										src={personalInfoClass.profilePictureUrl}
-										alt="Your profile"
-										width={32}
-										height={32}
-										className="rounded-full object-cover w-full h-full"
-									/>
-								) : (
-									<AvatarFallback className="bg-questionText text-white">
-										<CustomUserCircle className="w-4 h-4" />
+						{/* Loading indicator */}
+						{isLoading && (
+							<div className="flex gap-3 justify-start">
+								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+									<AvatarFallback className="bg-macaw text-white">
+										<Bot className="w-4 h-4" />
 									</AvatarFallback>
-								)}
-							</Avatar>
-						)}
-					</div>
-				))}
-
-				{/* Loading indicator */}
-				{isLoading && (
-					<div className="flex gap-3 justify-start">
-						<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-							<AvatarFallback className="bg-macaw text-white">
-								<Bot className="w-4 h-4" />
-							</AvatarFallback>
-						</Avatar>
-						<div className="bg-wan rounded-lg px-3 py-2">
-							<div className="flex space-x-1">
-								<div className="w-2 h-2 bg-swan rounded-full animate-bounce"></div>
-								<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-								<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+								</Avatar>
+								<div className="bg-wan rounded-lg px-3 py-2">
+									<div className="flex space-x-1">
+										<div className="w-2 h-2 bg-swan rounded-full animate-bounce"></div>
+										<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}/>
+										<div className="w-2 h-2 bg-swan rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}/>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				)}
+						)}
 
-				{/* Invisible div to scroll to */}
-				<div ref={messagesEndRef} />
+						{/* Invisible div to scroll to */}
+						<div ref={messagesEndRef} />
+					</>
+				)}
 			</div>
 
 			{/* Input Area with inline send button */}
@@ -172,7 +140,7 @@ function ChatInterface() {
 						value={inputValue}
 						onChange={(e) => setInputValue(e.target.value)}
 						onKeyDown={handleKeyDown}
-						placeholder="Ask about the code"
+						placeholder="Ask about the code or concepts"
 						className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan"
 					/>
 					{(inputValue.trim() || hasUserMessages) && (

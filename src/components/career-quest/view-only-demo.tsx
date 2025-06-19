@@ -9,7 +9,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
-import ChatInterface from "./chat-interface"
+import ChatInterface from "./chat/chat-interface"
 import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
 
 interface Props {
