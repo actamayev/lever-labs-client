@@ -103,7 +103,6 @@ function ChatInterface() {
 				</Avatar>
 				<div>
 					<h3 className="font-semibold text-questionText">AI Assistant</h3>
-					<p className="text-sm text-gray-500 dark:text-gray-400">Ask me about the code!</p>
 				</div>
 			</div>
 
