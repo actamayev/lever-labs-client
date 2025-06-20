@@ -7,6 +7,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
 
 interface Props {
 	careerData: CareerData
@@ -19,6 +20,9 @@ export default function FrontCareerCard(props: Props) {
 	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
 		totalLessons, lessonsComplete, backgroundColor, codingConcepts } = careerData
 
+	const colors = getDuolingoColors(backgroundColor)
+	const progressColors = getProgressColors(backgroundColor)
+
 	// Calculate progress percentage
 	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
 
@@ -26,29 +30,26 @@ export default function FrontCareerCard(props: Props) {
 		<motion.div
 			className={cn(
 				"absolute w-full h-full backface-hidden flex flex-col cursor-default",
-				backgroundColor
+				colors.bg
 			)}
-			style={{
-				backfaceVisibility: "hidden",
-			}}
+			style={{ backfaceVisibility: "hidden" }}
 		>
 			{/* Header with title and progress */}
 			<div className="flex justify-between items-start p-4 pb-2">
 				<h3 className="text-lg font-bold text-white flex-1 mr-2">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className="w-20 h-3 bg-emerald-600 rounded-full overflow-hidden relative">
+				<div className={cn("w-20 h-3 rounded-full overflow-hidden relative", progressColors.background)}>
 					<div
-						className="relative h-full rounded-full duration-0 ease-out bg-emerald-300"
+						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
 							width: `${progressPercentage}%`,
 						}}
 					>
 						{/* Highlight shadow effect */}
 						<div
-							className="absolute top-0.5 left-1 right-1 rounded-full"
+							className={cn("absolute top-0.5 left-1 right-1 rounded-full", progressColors.highlight)}
 							style={{
-								background: "rgb(167, 243, 208)",
 								height: "2px"
 							}}
 						/>
@@ -58,7 +59,6 @@ export default function FrontCareerCard(props: Props) {
 					</div>
 				</div>
 			</div>
-
 			{/* Icon/Image Section */}
 			<div className="flex-1 flex items-center justify-center px-4 py-2">
 				<Icon
@@ -76,11 +76,11 @@ export default function FrontCareerCard(props: Props) {
 						<SingleComponentUsed
 							key={component.componentName}
 							component={component}
-							// size="small"
+							baseColor={backgroundColor}
 						/>
 					))}
 					{componentsUsed.length > 4 && (
-						<div className="w-8 h-8 bg-emerald-600 rounded-xl flex items-center justify-center">
+						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg2)}>
 							<span className="font-bold text-xs">+{componentsUsed.length - 4}</span>
 						</div>
 					)}
@@ -95,11 +95,11 @@ export default function FrontCareerCard(props: Props) {
 						<SingleCodingConceptUsed
 							key={codingConcept}
 							codingConcept={codingConcept}
-							// size="small"
+							baseColor={backgroundColor}  // Pass base color
 						/>
 					))}
 					{codingConcepts.length > 3 && (
-						<div className="w-8 h-8 bg-teal-600 rounded-xl flex items-center justify-center">
+						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg1)}>
 							<span className="font-bold text-xs">+{codingConcepts.length - 3}</span>
 						</div>
 					)}
@@ -110,7 +110,7 @@ export default function FrontCareerCard(props: Props) {
 			<div className="p-4 pt-2">
 				<Link href={careerUrl}>
 					<TactileButton
-						className="duration-150 text-emerald-600 bg-white h-10 rounded-xl text-sm w-full"
+						className={cn("duration-150 bg-white h-10 rounded-xl text-sm w-full", colors.text)}
 						shadowColor="rgb(178,214,201)"
 					>
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}

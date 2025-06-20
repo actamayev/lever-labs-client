@@ -131,7 +131,7 @@ function ChangePasswordSection() {
 					disabled={!isPasswordChangeValid}
 					className="w-full sm:w-auto"
 				>
-					Save Changes
+					SAVE CHANGES
 				</Button>
 			</CardFooter>
 		</Card>

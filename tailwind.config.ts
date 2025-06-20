@@ -8,6 +8,32 @@ module.exports = {
 	content: [
 		"./src/**/*.{js,ts,jsx,tsx}", "./src/styles/**.css"
 	],
+	safelist: [
+		// Ensure all Duolingo color variants are always included
+		// Base colors
+		"bg-macaw", "bg-cardinal", "bg-bee", "bg-fox", "bg-beetle", "bg-humpback", "bg-beakInner",
+		"text-macaw", "text-cardinal", "text-bee", "text-fox", "text-beetle", "text-humpback", "text-beakInner",
+		"border-macaw", "border-cardinal", "border-bee", "border-fox", "border-beetle", "border-humpback", "border-beakInner",
+		"ring-macaw", "ring-cardinal", "ring-bee", "ring-fox", "ring-beetle", "ring-humpback", "ring-beakInner",
+
+		// Variant 1 colors
+		"bg-macaw-1", "bg-cardinal-1", "bg-bee-1", "bg-fox-1", "bg-beetle-1", "bg-humpback-1", "bg-beakInner-1",
+		"text-macaw-1", "text-cardinal-1", "text-bee-1", "text-fox-1", "text-beetle-1", "text-humpback-1", "text-beakInner-1",
+		"border-macaw-1", "border-cardinal-1", "border-bee-1", "border-fox-1", "border-beetle-1", "border-humpback-1", "border-beakInner-1",
+		"ring-macaw-1", "ring-cardinal-1", "ring-bee-1", "ring-fox-1", "ring-beetle-1", "ring-humpback-1", "ring-beakInner-1",
+
+		// Variant 2 colors
+		"bg-macaw-2", "bg-cardinal-2", "bg-bee-2", "bg-fox-2", "bg-beetle-2", "bg-humpback-2", "bg-beakInner-2",
+		"text-macaw-2", "text-cardinal-2", "text-bee-2", "text-fox-2", "text-beetle-2", "text-humpback-2", "text-beakInner-2",
+		"border-macaw-2", "border-cardinal-2", "border-bee-2", "border-fox-2", "border-beetle-2", "border-humpback-2", "border-beakInner-2",
+		"ring-macaw-2", "ring-cardinal-2", "ring-bee-2", "ring-fox-2", "ring-beetle-2", "ring-humpback-2", "ring-beakInner-2",
+
+		// Variant 3 colors
+		"bg-macaw-3", "bg-cardinal-3", "bg-bee-3", "bg-fox-3", "bg-beetle-3", "bg-humpback-3", "bg-beakInner-3",
+		"text-macaw-3", "text-cardinal-3", "text-bee-3", "text-fox-3", "text-beetle-3", "text-humpback-3", "text-beakInner-3",
+		"border-macaw-3", "border-cardinal-3", "border-bee-3", "border-fox-3", "border-beetle-3", "border-humpback-3", "border-beakInner-3",
+		"ring-macaw-3", "ring-cardinal-3", "ring-bee-3", "ring-fox-3", "ring-beetle-3", "ring-humpback-3", "ring-beakInner-3",
+	],
 	theme: {
 		extend: {
 			fontFamily: {
@@ -55,14 +81,35 @@ module.exports = {
 				swan: "rgb(var(--swan))",
 				hare: "rgb(var(--hare))",
 				macaw: "rgb(var(--macaw))",
+				"macaw-1": "rgb(var(--macaw-1))",
+				"macaw-2": "rgb(var(--macaw-2))",
+				"macaw-3": "rgb(var(--macaw-3))",
 				cardinal: "rgb(var(--cardinal))",
+				"cardinal-1": "rgb(var(--cardinal-1))",
+				"cardinal-2": "rgb(var(--cardinal-2))",
+				"cardinal-3": "rgb(var(--cardinal-3))",
 				bee: "rgb(var(--bee))",
+				"bee-1": "rgb(var(--bee-1))",
+				"bee-2": "rgb(var(--bee-2))",
+				"bee-3": "rgb(var(--bee-3))",
 				fox: "rgb(var(--fox))",
+				"fox-1": "rgb(var(--fox-1))",
+				"fox-2": "rgb(var(--fox-2))",
+				"fox-3": "rgb(var(--fox-3))",
 				beetle: "rgb(var(--beetle))",
+				"beetle-1": "rgb(var(--beetle-1))",
+				"beetle-2": "rgb(var(--beetle-2))",
+				"beetle-3": "rgb(var(--beetle-3))",
 				wolf: "rgb(var(--wolf))",
 				polar: "rgb(var(--polar))",
 				humpback: "rgb(var(--humpback))",
+				"humpback-1": "rgb(var(--humpback-1))",
+				"humpback-2": "rgb(var(--humpback-2))",
+				"humpback-3": "rgb(var(--humpback-3))",
 				beakInner: "rgb(var(--beakInner))",
+				"beakInner-1": "rgb(var(--beakInner-1))",
+				"beakInner-2": "rgb(var(--beakInner-2))",
+				"beakInner-3": "rgb(var(--beakInner-3))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -210,7 +257,16 @@ module.exports = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
-	const excludeKeys = ["eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle", "wolf", "polar", "humpback", "beakInner"]
+	const excludeKeys = [
+		"eel", "swan", "hare", "macaw", "cardinal", "bee", "fox", "beetle", "wolf", "polar", "humpback", "beakInner",
+		"macaw-1", "macaw-2", "macaw-3",
+		"cardinal-1", "cardinal-2", "cardinal-3",
+		"bee-1", "bee-2", "bee-3",
+		"fox-1", "fox-2", "fox-3",
+		"beetle-1", "beetle-2", "beetle-3",
+		"humpback-1", "humpback-2", "humpback-3",
+		"beakInner-1", "beakInner-2", "beakInner-3"
+	]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
 			.filter(([key]) => !excludeKeys.includes(key))

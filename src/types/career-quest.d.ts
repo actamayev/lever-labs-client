@@ -26,7 +26,7 @@ declare global {
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
-		backgroundColor: string
+		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
 	}
 
@@ -39,8 +39,9 @@ declare global {
 		introUrl: CareerQuestPages
 		introIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
-		backgroundColor: string
+		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
+		timeToComplete: number
 	}
 
 	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null

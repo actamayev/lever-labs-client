@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Info, Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
 
 interface Props {
 	careerData: CareerData
@@ -13,11 +14,13 @@ export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
 	const { careerName, careerDescription, backgroundColor } = careerData
 
+	const colors = getDuolingoColors(backgroundColor)
+
 	return (
 		<motion.div
 			className={cn(
 				"absolute w-full h-full backface-hidden flex flex-col",
-				backgroundColor
+				colors.bg
 			)}
 			style={{
 				backfaceVisibility: "hidden",

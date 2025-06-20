@@ -17,12 +17,39 @@
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
 		--macaw: 28 176 246;
+		--macaw-1: 100 200 255;     /* Lighter, softer blue */
+		--macaw-2: 15 140 200;      /* Deeper blue */
+		--macaw-3: 45 190 220;      /* Cyan-tinted blue */
+		
 		--cardinal: 255 75 75;
+		--cardinal-1: 255 120 120;  /* Lighter coral red */
+		--cardinal-2: 200 45 45;    /* Deeper red */
+		--cardinal-3: 255 95 60;    /* Orange-tinted red */
+		
 		--bee: 255 200 0;
+		--bee-1: 255 220 80;        /* Lighter golden yellow */
+		--bee-2: 220 160 0;         /* Deeper amber */
+		--bee-3: 255 185 20;        /* Slightly orange yellow */
+		
 		--fox: 255 150 0;
+		--fox-1: 255 180 60;        /* Lighter peach orange */
+		--fox-2: 200 110 0;         /* Deeper burnt orange */
+		--fox-3: 255 130 20;        /* More red-orange */
+		
 		--beetle: 206 130 255;
+		--beetle-1: 230 170 255;    /* Lighter lavender */
+		--beetle-2: 160 90 220;     /* Deeper purple */
+		--beetle-3: 180 120 255;    /* Blue-tinted purple */
+		
 		--humpback: 43 112 201;
+		--humpback-1: 80 140 230;   /* Lighter navy blue */
+		--humpback-2: 25 80 160;    /* Deeper navy */
+		--humpback-3: 60 100 180;   /* Indigo-tinted blue */
+		
 		--beakInner: 182 110 40;
+		--beakInner-1: 210 140 80;  /* Lighter tan */
+		--beakInner-2: 140 80 20;   /* Deeper brown */
+		--beakInner-3: 190 100 50;  /* Reddish brown */
 
 		/* Neutrals */
 		--eel: 75 75 75;
@@ -46,14 +73,41 @@
 		--career-quest-yellow: 253 217 11;
 
 		/* https://design.duolingo.com/identity/color */
-		/* Duolingo colors */
+		/* Duolingo colors - Dark mode variants */
 		--macaw: 72 191 248;
+		--macaw-1: 120 210 255;     /* Brighter light blue */
+		--macaw-2: 45 160 210;      /* Muted blue */
+		--macaw-3: 90 200 230;      /* Cyan-tinted blue */
+		
 		--cardinal: 255 75 75;
+		--cardinal-1: 255 140 140;  /* Softer red */
+		--cardinal-2: 180 50 50;    /* Muted red */
+		--cardinal-3: 255 110 80;   /* Orange-tinted red */
+		
 		--bee: 255 200 0;
+		--bee-1: 255 230 100;       /* Brighter yellow */
+		--bee-2: 200 150 0;         /* Muted amber */
+		--bee-3: 255 200 40;        /* Slightly orange yellow */
+		
 		--fox: 255 150 0;
+		--fox-1: 255 190 80;        /* Brighter orange */
+		--fox-2: 180 110 0;         /* Muted orange */
+		--fox-3: 255 150 40;        /* More red-orange */
+		
 		--beetle: 206 130 255;
+		--beetle-1: 240 180 255;    /* Brighter lavender */
+		--beetle-2: 140 80 200;     /* Muted purple */
+		--beetle-3: 200 140 255;    /* Blue-tinted purple */
+		
 		--humpback: 43 112 201;
+		--humpback-1: 100 150 240;  /* Brighter navy */
+		--humpback-2: 30 70 140;    /* Muted navy */
+		--humpback-3: 70 120 190;   /* Indigo-tinted blue */
+		
 		--beakInner: 182 110 40;
+		--beakInner-1: 220 150 90;  /* Brighter tan */
+		--beakInner-2: 120 70 25;   /* Muted brown */
+		--beakInner-3: 200 120 60;  /* Reddish brown */
 	
 		/* Neutrals */
 		--eel: 241 247 251;

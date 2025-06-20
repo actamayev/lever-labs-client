@@ -9,7 +9,8 @@ export const introductionData: IntroductionData = {
 	lessonsComplete: 0,
 	introUrl: "/career-quest/introduction",
 	introIcon: BookOpen,
-	backgroundColor: "bg-blue-500",
+	backgroundColor: "bee",
+	timeToComplete: 30,
 	componentsUsed: [
 		{
 			componentName: "LED",
@@ -40,7 +41,7 @@ export const challengeData: CareerData[] = [
 		lessonsComplete: 0,
 		careerUrl: "/career-quest/line-following",
 		careerIcon: Navigation,
-		backgroundColor: "bg-emerald-500",
+		backgroundColor: "beetle",
 		componentsUsed: [
 			{
 				componentName: "IR Sensors",
