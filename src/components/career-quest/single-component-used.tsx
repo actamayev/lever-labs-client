@@ -10,7 +10,7 @@ import { CustomRemote } from "../icons/custom-remote"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
-import { getDuolingoColorVariant } from "../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {
@@ -33,14 +33,18 @@ interface Props {
 export default function SingleComponentUsed(props: Props) {
 	const { component, baseColor } = props
 
-	const bgColorClass = getDuolingoColorVariant(baseColor, "bg", 2)
+	const colors = getDuolingoColors(baseColor)
 
 	return (
 		<CustomTooltip
 			tooltipTrigger={
 				<div
 					key={component.componentName}
-					className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", bgColorClass)}
+					className={cn(
+						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0",
+						colors.bg2,        // Base background (bg-baseColor-2)
+						colors.hoverBg3    // Hover background (hover:bg-baseColor-3)
+					)}
 					title={component.componentName}
 				>
 					{componentIcons[component.componentName]}

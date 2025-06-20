@@ -11,6 +11,12 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		bg2: `bg-${baseColor}-2`,  // For components
 		bg3: `bg-${baseColor}-3`,  // For additional elements
 
+		// Hover backgrounds
+		hoverBg: `hover:bg-${baseColor}`,
+		hoverBg1: `hover:bg-${baseColor}-1`,
+		hoverBg2: `hover:bg-${baseColor}-2`,
+		hoverBg3: `hover:bg-${baseColor}-3`,
+
 		// Text colors
 		text: `text-${baseColor}`,
 		text1: `text-${baseColor}-1`,
@@ -32,18 +38,6 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		shadow: `shadow-${baseColor}-2`,
 		hoverShadow: `hover:shadow-${baseColor}-3`,
 	}
-}
-
-/**
- * Get specific color variant class
- */
-export const getDuolingoColorVariant = (
-	baseColor: DuolingoColors,
-	type: "bg" | "text" | "border" | "ring",
-	variant?: 1 | 2 | 3
-): string => {
-	const suffix = variant ? `-${variant}` : ""
-	return `${type}-${baseColor}${suffix}`
 }
 
 /**

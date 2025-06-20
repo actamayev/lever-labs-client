@@ -43,7 +43,7 @@ export default function FrontIntroductionCard(props: Props) {
 					<div
 						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
-							width: `${progressPercentage}%`,
+							width: `${progressPercentage}%`
 						}}
 					>
 						{/* Highlight shadow effect - only on the completed part */}

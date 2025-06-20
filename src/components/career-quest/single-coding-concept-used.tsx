@@ -4,7 +4,7 @@ import { Binary, Repeat2, SquareFunction, Variable } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomConditional } from "../icons/custom-conditional"
-import { getDuolingoColorVariant } from "../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 
 const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
 	"Variables": <Variable />,
@@ -22,14 +22,18 @@ interface Props {
 export default function SingleCodingConceptUsed(props: Props) {
 	const { codingConcept, baseColor } = props
 
-	const bgColorClass = getDuolingoColorVariant(baseColor, "bg", 1)
+	const colors = getDuolingoColors(baseColor)
 
 	return (
 		<CustomTooltip
 			tooltipTrigger={
 				<div
 					key={codingConcept}
-					className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", bgColorClass)}
+					className={cn(
+						"w-10 h-10 rounded-2xl flex items-center justify-center",
+						colors.bg1,        // Base background (bg-baseColor-2)
+						colors.hoverBg2    // Hover background (hover:bg-baseColor-3)
+					)}
 					title={codingConcept}
 				>
 					{codingConceptIcons[codingConcept]}

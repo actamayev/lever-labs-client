@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable filenames/match-regex */
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette")
@@ -33,6 +34,12 @@ module.exports = {
 		"text-macaw-3", "text-cardinal-3", "text-bee-3", "text-fox-3", "text-beetle-3", "text-humpback-3", "text-beakInner-3",
 		"border-macaw-3", "border-cardinal-3", "border-bee-3", "border-fox-3", "border-beetle-3", "border-humpback-3", "border-beakInner-3",
 		"ring-macaw-3", "ring-cardinal-3", "ring-bee-3", "ring-fox-3", "ring-beetle-3", "ring-humpback-3", "ring-beakInner-3",
+
+		// Hover background colors
+		"hover:bg-macaw", "hover:bg-cardinal", "hover:bg-bee", "hover:bg-fox", "hover:bg-beetle", "hover:bg-humpback", "hover:bg-beakInner",
+		"hover:bg-macaw-1", "hover:bg-cardinal-1", "hover:bg-bee-1", "hover:bg-fox-1", "hover:bg-beetle-1", "hover:bg-humpback-1", "hover:bg-beakInner-1",
+		"hover:bg-macaw-2", "hover:bg-cardinal-2", "hover:bg-bee-2", "hover:bg-fox-2", "hover:bg-beetle-2", "hover:bg-humpback-2", "hover:bg-beakInner-2",
+		"hover:bg-macaw-3", "hover:bg-cardinal-3", "hover:bg-bee-3", "hover:bg-fox-3", "hover:bg-beetle-3", "hover:bg-humpback-3", "hover:bg-beakInner-3",
 
 		// Shadow colors for buttons
 		"shadow-macaw", "shadow-cardinal", "shadow-bee", "shadow-fox", "shadow-beetle", "shadow-humpback", "shadow-beakInner",
@@ -173,6 +180,37 @@ module.exports = {
 				"color-3": "hsl(var(--color-3))",
 				"color-4": "hsl(var(--color-4))",
 				"color-5": "hsl(var(--color-5))"
+			},
+			boxShadow: {
+				// Duolingo color shadows for buttons
+				"macaw": "0 4px 0 0 rgb(var(--macaw-2))",
+				"macaw-1": "0 4px 0 0 rgb(var(--macaw-1))",
+				"macaw-2": "0 4px 0 0 rgb(var(--macaw-2))",
+				"macaw-3": "0 4px 0 0 rgb(var(--macaw-3))",
+				"cardinal": "0 4px 0 0 rgb(var(--cardinal-2))",
+				"cardinal-1": "0 4px 0 0 rgb(var(--cardinal-1))",
+				"cardinal-2": "0 4px 0 0 rgb(var(--cardinal-2))",
+				"cardinal-3": "0 4px 0 0 rgb(var(--cardinal-3))",
+				"bee": "0 4px 0 0 rgb(var(--bee-2))",
+				"bee-1": "0 4px 0 0 rgb(var(--bee-1))",
+				"bee-2": "0 4px 0 0 rgb(var(--bee-2))",
+				"bee-3": "0 4px 0 0 rgb(var(--bee-3))",
+				"fox": "0 4px 0 0 rgb(var(--fox-2))",
+				"fox-1": "0 4px 0 0 rgb(var(--fox-1))",
+				"fox-2": "0 4px 0 0 rgb(var(--fox-2))",
+				"fox-3": "0 4px 0 0 rgb(var(--fox-3))",
+				"beetle": "0 4px 0 0 rgb(var(--beetle-2))",
+				"beetle-1": "0 4px 0 0 rgb(var(--beetle-1))",
+				"beetle-2": "0 4px 0 0 rgb(var(--beetle-2))",
+				"beetle-3": "0 4px 0 0 rgb(var(--beetle-3))",
+				"humpback": "0 4px 0 0 rgb(var(--humpback-2))",
+				"humpback-1": "0 4px 0 0 rgb(var(--humpback-1))",
+				"humpback-2": "0 4px 0 0 rgb(var(--humpback-2))",
+				"humpback-3": "0 4px 0 0 rgb(var(--humpback-3))",
+				"beakInner": "0 4px 0 0 rgb(var(--beakInner-2))",
+				"beakInner-1": "0 4px 0 0 rgb(var(--beakInner-1))",
+				"beakInner-2": "0 4px 0 0 rgb(var(--beakInner-2))",
+				"beakInner-3": "0 4px 0 0 rgb(var(--beakInner-3))",
 			},
 			borderRadius: {
 				lg: "var(--radius)",
