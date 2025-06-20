@@ -33,6 +33,12 @@ module.exports = {
 		"text-macaw-3", "text-cardinal-3", "text-bee-3", "text-fox-3", "text-beetle-3", "text-humpback-3", "text-beakInner-3",
 		"border-macaw-3", "border-cardinal-3", "border-bee-3", "border-fox-3", "border-beetle-3", "border-humpback-3", "border-beakInner-3",
 		"ring-macaw-3", "ring-cardinal-3", "ring-bee-3", "ring-fox-3", "ring-beetle-3", "ring-humpback-3", "ring-beakInner-3",
+
+		// Shadow colors for buttons
+		"shadow-macaw", "shadow-cardinal", "shadow-bee", "shadow-fox", "shadow-beetle", "shadow-humpback", "shadow-beakInner",
+		"shadow-macaw-1", "shadow-cardinal-1", "shadow-bee-1", "shadow-fox-1", "shadow-beetle-1", "shadow-humpback-1", "shadow-beakInner-1",
+		"shadow-macaw-2", "shadow-cardinal-2", "shadow-bee-2", "shadow-fox-2", "shadow-beetle-2", "shadow-humpback-2", "shadow-beakInner-2",
+		"shadow-macaw-3", "shadow-cardinal-3", "shadow-bee-3", "shadow-fox-3", "shadow-beetle-3", "shadow-humpback-3", "shadow-beakInner-3",
 	],
 	theme: {
 		extend: {

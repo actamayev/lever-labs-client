@@ -28,6 +28,9 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		ring1: `ring-${baseColor}-1`,
 		ring2: `ring-${baseColor}-2`,
 		ring3: `ring-${baseColor}-3`,
+
+		shadow: `shadow-${baseColor}-2`,
+		hoverShadow: `hover:shadow-${baseColor}-3`,
 	}
 }
 

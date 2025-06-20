@@ -5,8 +5,8 @@ import { motion } from "framer-motion"
 import { Info } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import SingleComponentUsed from "../single-component-used"
-import SingleCodingConceptUsed from "../single-coding-concept-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import SingleCodingConceptUsed from "../single-coding-concept-used"
 import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
 
 interface Props {
@@ -110,8 +110,9 @@ export default function FrontCareerCard(props: Props) {
 			<div className="p-4 pt-2">
 				<Link href={careerUrl}>
 					<TactileButton
-						className={cn("duration-150 bg-white h-10 rounded-xl text-sm w-full", colors.text)}
-						shadowColor="rgb(178,214,201)"
+						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
+						shadowClass={colors.shadow}
+						shadowHeight={4}
 					>
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}
 					</TactileButton>
