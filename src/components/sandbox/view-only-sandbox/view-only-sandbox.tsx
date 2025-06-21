@@ -2,10 +2,9 @@
 
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
-import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
+import { useEffect, useMemo, useRef } from "react"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
@@ -26,53 +25,11 @@ function ViewOnlySandbox(props: Props) {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	const [isCentered, setIsCentered] = useState(false)
-	const pathname = usePathname()
 	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, true)
 	}, [isDarkMode])
-
-	const centerWorkspace = useCallback(() => {
-		const workspace = workspaceRef.current
-		if (!workspace) return
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
-
-		workspace.scrollCenter()
-		setIsCentered(true)
-	}, [workspaceConfiguration.zoom?.startScale])
-
-	// Reset isCentered when pathname changes (navigation)
-	useEffect(() => {
-		setIsCentered(false)
-	}, [pathname])
-
-	// Add effect to center workspace after it's initialized and when blocks change
-	useEffect(() => {
-		if (isCentered) return
-		const timer = setTimeout(() => {
-			centerWorkspace()
-		}, 100) // Small delay to ensure workspace is fully rendered
-
-		return () => clearTimeout(timer)
-	}, [centerWorkspace, blocklyJson, isCentered, pathname])
-
-	useEffect(() => {
-		if (!containerRef.current) return
-
-		const resizeObserver = new ResizeObserver(() => {
-			if (workspaceRef.current) {
-				Blockly.svgResize(workspaceRef.current)
-			}
-		})
-
-		resizeObserver.observe(containerRef.current)
-
-		return () => {
-			resizeObserver.disconnect()
-		}
-	}, [])
 
 	useEffect(() => {
 		if (workspaceRef.current) {
