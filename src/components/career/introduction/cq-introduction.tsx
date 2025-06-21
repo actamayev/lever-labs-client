@@ -3,7 +3,6 @@
 
 import { Suspense } from "react"
 import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
-import { cn } from "@/lib/shadcn/utils"
 import SimpleSandbox from "../simple-sandbox/simple-sandbox"
 import careerQuestCode from "../../../utils/constants/career-quest/career-quest-code"
 
@@ -24,7 +23,6 @@ export default function CQIntroduction() {
 
 			{/* Main Content Area - Centered with 1/4 margins */}
 			<div className="w-2/3 mx-auto h-52 flex">
-				{/* SimpleSandbox - Left Half */}
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
 						<SimpleSandbox
@@ -51,8 +49,7 @@ export default function CQIntroduction() {
 				Whenever I come across a delay block in the instructions, I will pause everything I'm doing for the time that's indicated in the delay block run the two examples below to see the delay block in action.
 			</div>
 
-			<div className="w-2/3 mx-auto h-52 flex">
-				{/* SimpleSandbox - Left Half */}
+			<div className="w-2/3 mx-auto h-52 flex flex-row space-x-4">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
 						<SimpleSandbox
@@ -61,15 +58,36 @@ export default function CQIntroduction() {
 						/>
 					</Suspense>
 				</div>
-			</div>
-
-			<div className="w-2/3 mx-auto h-52 flex">
-				{/* SimpleSandbox - Left Half */}
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
 						<SimpleSandbox
 							blocklyJson={careerQuestCode[2].blocklyJson}
 							cppCode={careerQuestCode[2].cppCode}
+						/>
+					</Suspense>
+				</div>
+			</div>
+
+			<div className="w-2/3 mx-auto mb-8 text-center">
+				2. Repeat forever block.
+				This is a block will be using in almost every program (program is another word for a code will be using them interchangeably). As the name suggests, whatever code is inside, the forever block start starts again after reaching the end.
+				Run the code on the left first, and then the code on the right.
+			</div>
+
+			<div className="w-2/3 mx-auto h-52 flex flex-row space-x-4">
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[3].blocklyJson}
+							cppCode={careerQuestCode[3].cppCode}
+						/>
+					</Suspense>
+				</div>
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[4].blocklyJson}
+							cppCode={careerQuestCode[4].cppCode}
 						/>
 					</Suspense>
 				</div>
