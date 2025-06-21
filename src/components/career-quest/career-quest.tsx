@@ -14,8 +14,8 @@ export default function CareerQuest() {
 			</div>
 
 			{/* Challenges Section */}
-			<div className="my-4">
-				<h2 className="text-3xl font-bold text-center mb-8">Careers</h2>
+			<div className="">
+				<h2 className="text-3xl font-bold text-center my-4">Careers</h2>
 
 				{/* 2-column grid for challenge cards */}
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
