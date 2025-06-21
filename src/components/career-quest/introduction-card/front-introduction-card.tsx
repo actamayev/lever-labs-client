@@ -29,9 +29,7 @@ export default function FrontIntroductionCard(props: Props) {
 				"absolute w-full h-full backface-hidden flex cursor-default",
 				colors.bg
 			)}
-			style={{
-				backfaceVisibility: "hidden",
-			}}
+			style={{ backfaceVisibility: "hidden" }}
 		>
 			{/* Left Section */}
 			<div className="w-1/2 flex flex-col p-6">

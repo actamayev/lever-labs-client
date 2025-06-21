@@ -34,12 +34,12 @@ export default function FrontCareerCard(props: Props) {
 			)}
 			style={{ backfaceVisibility: "hidden" }}
 		>
-			{/* Header with title and progress */}
-			<div className="flex justify-between items-start p-4 pb-2">
-				<h3 className="text-lg font-bold text-white flex-1 mr-2">{careerName}</h3>
+			{/* Header with title */}
+			<div className="p-4 pb-2">
+				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className={cn("w-20 h-3 rounded-full overflow-hidden relative", progressColors.background)}>
+				<div className={cn("w-full h-4 rounded-full overflow-hidden relative", progressColors.background)}>
 					<div
 						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
@@ -50,15 +50,16 @@ export default function FrontCareerCard(props: Props) {
 						<div
 							className={cn("absolute top-0.5 left-1 right-1 rounded-full", progressColors.highlight)}
 							style={{
-								height: "2px"
+								height: "3px"
 							}}
 						/>
 					</div>
-					<div className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white">
 						{lessonsComplete}/{totalLessons}
 					</div>
 				</div>
 			</div>
+
 			{/* Icon/Image Section */}
 			<div className="flex-1 flex items-center justify-center px-4 py-2">
 				<Icon
