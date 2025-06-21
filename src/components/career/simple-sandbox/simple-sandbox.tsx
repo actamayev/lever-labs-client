@@ -1,11 +1,13 @@
 import { useState } from "react"
+import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import { Editor } from "@monaco-editor/react"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
-import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
+import personalInfoClass from "../../../classes/personal-info-class"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import ViewOnlySandbox from "../../sandbox/view-only-sandbox/view-only-sandbox"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
@@ -15,9 +17,13 @@ interface Props {
 	cppCode: string
 }
 
-export default function SimpleSandbox(props: Props) {
+function SimpleSandbox(props: Props) {
 	const { blocklyJson, cppCode } = props
 	const [showCode, setShowCode] = useState(false)
+
+	const codeLines = cppCode.split("\n").length
+	const needsScrollbar = codeLines > 5 // Adjust this threshold as needed
+
 
 	return (
 		<>
@@ -41,17 +47,47 @@ export default function SimpleSandbox(props: Props) {
 				) : (
 					<div className="h-full border-2 border-swan rounded-lg overflow-hidden">
 						<div className="h-full flex flex-col">
-							{/* Code Content */}
-							<div className="flex-1 overflow-auto">
-								<pre className={cn(
-									"h-full w-full p-4 text-sm font-mono",
-									"bg-white dark:bg-gray-900",
-									"text-gray-800 dark:text-gray-200",
-									"whitespace-pre-wrap break-words",
-									"resize-none outline-none"
-								)}>
-									{cppCode}
-								</pre>
+							<div className="flex-1">
+								<Editor
+									height="100%"
+									language="cpp"
+									value={cppCode}
+									theme={personalInfoClass.defaultSiteTheme === "dark" ? "vs-dark" : "vs"}
+									options={{
+										readOnly: true,
+										domReadOnly: true,
+										minimap: { enabled: false },
+										fontSize: 14,
+										lineNumbers: "on",
+										folding: true,
+										wordWrap: "on",
+										automaticLayout: true,
+										scrollBeyondLastLine: false,
+										renderWhitespace: "selection",
+										cursorBlinking: "smooth",
+										smoothScrolling: true,
+										// Completely disable hover tooltips and read-only messages
+										hover: { enabled: false },
+										quickSuggestions: false,
+										parameterHints: { enabled: false },
+										// Conditional scrollbar settings
+										scrollbar: {
+											vertical: needsScrollbar ? "auto" : "hidden",
+											horizontal: needsScrollbar ? "auto" : "hidden",
+											verticalHasArrows: false,
+											horizontalHasArrows: false,
+											verticalScrollbarSize: needsScrollbar ? 10 : 0,
+											horizontalScrollbarSize: needsScrollbar ? 10 : 0,
+										},
+										overviewRulerLanes: needsScrollbar ? 2 : 0,
+										hideCursorInOverviewRuler: !needsScrollbar,
+									}}
+									loading={
+										<div className="flex items-center justify-center h-full">
+											<div className="text-gray-500">Loading editor...</div>
+										</div>
+									}
+								/>
 							</div>
 						</div>
 					</div>
@@ -77,3 +113,5 @@ export default function SimpleSandbox(props: Props) {
 		</>
 	)
 }
+
+export default observer(SimpleSandbox)
