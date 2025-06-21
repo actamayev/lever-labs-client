@@ -1,6 +1,6 @@
 "use client"
 
-import { introductionData, challengeData } from "../../utils/constants/career-data"
+import { introductionData, challengeData } from "../../utils/constants/career-quest/career-data"
 import WorkbenchLayout from "../layouts/workbench-layout"
 import IntroductionCard from "./introduction-card/introduction-card"
 import SingleChallengeCard from "./career-card/single-career-card"

@@ -60,8 +60,8 @@ const getWorkspaceConfig = (
 		snap: true,
 	},
 	zoom: {
-		controls: true,
-		wheel: true,
+		controls: viewOnly ? false : true,
+		wheel: viewOnly ? false : true,
 		startScale: 1.0,
 		maxScale: 3,
 		minScale: 0.3,

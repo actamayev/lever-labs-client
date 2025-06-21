@@ -66,6 +66,7 @@ function SandboxProjectPage() {
 		if (!project || project.sandboxJson === newBlocklyJson || isLoading) return
 
 		// Update local state
+		console.log(newBlocklyJson)
 		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 
 		// Only trigger the save if we're past the initial mounting period

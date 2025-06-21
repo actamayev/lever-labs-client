@@ -30,10 +30,10 @@ export default function SimpleSandbox(props: Props) {
 					buttonText="SEND CODE"
 					isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 					onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-					className="duration-150 rounded-xl text-4xl"
+					className="duration-150 rounded-xl text-xl"
 				/>
 				<TactileButton
-					className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+					className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-xl !px-10"
 					shadowColor="rgb(150, 50, 75)"
 					onClick={stopCurrentlyRunningCode}
 				>
