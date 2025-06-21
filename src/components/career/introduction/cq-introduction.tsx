@@ -1,9 +1,11 @@
 /* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
 import { Suspense } from "react"
-import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
 import SimpleSandbox from "../simple-sandbox/simple-sandbox"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
+import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
 import careerQuestCode from "../../../utils/constants/career-quest/career-quest-code"
 
 // eslint-disable-next-line max-lines-per-function
@@ -130,19 +132,35 @@ export default function CQIntroduction() {
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
 						<SimpleSandbox
-							blocklyJson={careerQuestCode[5].blocklyJson}
-							cppCode={careerQuestCode[5].cppCode}
+							blocklyJson={careerQuestCode[7].blocklyJson}
+							cppCode={careerQuestCode[7].cppCode}
 						/>
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
 						<SimpleSandbox
-							blocklyJson={careerQuestCode[6].blocklyJson}
-							cppCode={careerQuestCode[6].cppCode}
+							blocklyJson={careerQuestCode[8].blocklyJson}
+							cppCode={careerQuestCode[8].cppCode}
 						/>
 					</Suspense>
 				</div>
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[9].blocklyJson}
+							cppCode={careerQuestCode[9].cppCode}
+						/>
+					</Suspense>
+				</div>
+			</div>
+
+			<div className="w-2/3 mx-auto flex justify-center mt-10">
+				<Link href="/career-quest">
+					<BlueTactileButton className="text-xs sm:text-sm font-normal px-3 sm:px-4">
+					BACK TO CAREER QUEST
+					</BlueTactileButton>
+				</Link>
 			</div>
 		</div>
 	)

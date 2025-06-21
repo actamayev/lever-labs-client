@@ -304,6 +304,162 @@ const careerQuestCode: CareerQuestCode[] = [
 			}
 		},
 		cppCode: "wait_for_button_press();\nwhile(true) {\n\trgbLed.set_led_white();\n\tdelay(1000);\n\trgbLed.set_led_green();\n\tdelay(1000);\n}"
+	},
+	{
+		blocklyJson: {
+			"blocks": {
+				"languageVersion": 0,
+				"blocks": [
+					{
+						"type": "esp32_loop",
+						"id": "-Vk!.3uhZz;^JL3m6jWX",
+						"x": -416,
+						"y": -241,
+						"inputs": {
+							"LOOP_BODY": {
+								"block": {
+									"type": "controls_if_else",
+									"id": "]w%8VB?=?X[wF$;K8JNo",
+									"inputs": {
+										"IF1": {
+											"block": {
+												"type": "side_tof_read",
+												"id": "aAP#53hsDBfvw@C`{h^~",
+												"fields": {
+													"side_tof_value": "LEFT"
+												}
+											}
+										},
+										"DO1": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "P)bh$Rk*Ian[~5p#G}wK",
+												"fields": {
+													"esp32_led_control": "RED"
+												}
+											}
+										},
+										"ELSE": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "Y[;LU:B~*pff}w4]83Ne",
+												"fields": {
+													"esp32_led_control": "GREEN"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		},
+		cppCode: "while(true) {\n\tif (is_object_near_side_left()) {\n\t\trgbLed.set_led_red();\n\t} else {\n\t\trgbLed.set_led_green();\n\t}\n}"
+	},
+	{
+		blocklyJson: {
+			"blocks": {
+				"languageVersion": 0,
+				"blocks": [
+					{
+						"type": "esp32_loop",
+						"id": "-Vk!.3uhZz;^JL3m6jWX",
+						"x": -416,
+						"y": -241,
+						"inputs": {
+							"LOOP_BODY": {
+								"block": {
+									"type": "controls_if_else",
+									"id": "]w%8VB?=?X[wF$;K8JNo",
+									"inputs": {
+										"IF1": {
+											"block": {
+												"type": "center_tof_read",
+												"id": "lKj={O$6.SoKcu:m](l!"
+											}
+										},
+										"DO1": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "P)bh$Rk*Ian[~5p#G}wK",
+												"fields": {
+													"esp32_led_control": "RED"
+												}
+											}
+										},
+										"ELSE": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "Y[;LU:B~*pff}w4]83Ne",
+												"fields": {
+													"esp32_led_control": "GREEN"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		},
+		cppCode: "while(true) {\n\tif (is_object_in_front()) {\n\t\trgbLed.set_led_red();\n\t} else {\n\t\trgbLed.set_led_green();\n\t}\n}"
+	},
+	{
+		blocklyJson: {
+			"blocks": {
+				"languageVersion": 0,
+				"blocks": [
+					{
+						"type": "esp32_loop",
+						"id": "-Vk!.3uhZz;^JL3m6jWX",
+						"x": -416,
+						"y": -241,
+						"inputs": {
+							"LOOP_BODY": {
+								"block": {
+									"type": "controls_if_else",
+									"id": "]w%8VB?=?X[wF$;K8JNo",
+									"inputs": {
+										"IF1": {
+											"block": {
+												"type": "side_tof_read",
+												"id": "aAP#53hsDBfvw@C`{h^~",
+												"fields": {
+													"side_tof_value": "RIGHT"
+												}
+											}
+										},
+										"DO1": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "P)bh$Rk*Ian[~5p#G}wK",
+												"fields": {
+													"esp32_led_control": "RED"
+												}
+											}
+										},
+										"ELSE": {
+											"block": {
+												"type": "esp32_led_control",
+												"id": "Y[;LU:B~*pff}w4]83Ne",
+												"fields": {
+													"esp32_led_control": "GREEN"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		},
+		cppCode: "while(true) {\n\tif (is_object_near_side_right()) {\n\t\trgbLed.set_led_red();\n\t} else {\n\t\trgbLed.set_led_green();\n\t}\n}"
 	}
 ]
 
