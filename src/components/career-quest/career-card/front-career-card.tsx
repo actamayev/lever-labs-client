@@ -39,7 +39,7 @@ export default function FrontCareerCard(props: Props) {
 				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className={cn("w-full h-4 rounded-full overflow-hidden relative", progressColors.background)}>
+				<div className={cn("w-full h-5 rounded-full overflow-hidden relative", progressColors.background)}>
 					<div
 						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
@@ -48,14 +48,14 @@ export default function FrontCareerCard(props: Props) {
 					>
 						{/* Highlight shadow effect */}
 						<div
-							className={cn("absolute top-0.5 left-1 right-1 rounded-full", progressColors.highlight)}
+							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
 							style={{
 								height: "3px"
 							}}
 						/>
 					</div>
 					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white">
-						{lessonsComplete}/{totalLessons}
+						{lessonsComplete} / {totalLessons}
 					</div>
 				</div>
 			</div>

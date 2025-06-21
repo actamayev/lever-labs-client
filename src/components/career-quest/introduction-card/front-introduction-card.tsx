@@ -54,7 +54,7 @@ export default function FrontIntroductionCard(props: Props) {
 					</div>
 
 					{/* Text inside progress bar */}
-					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium cursor-default">
+					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white cursor-default">
 						{lessonsComplete} / {totalLessons}
 					</div>
 				</div>
