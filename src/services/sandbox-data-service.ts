@@ -2,7 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, ErrorResponse, PipUUID, ProjectUUID,
+import { AllCommonResponses, BlocklyJson, ErrorResponse, PipUUID, ProjectUUID,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
 
 export default class SandboxDataService {
@@ -17,9 +17,9 @@ export default class SandboxDataService {
 		)
 	}
 
-	async editSandboxProject(projectUUID: ProjectUUID, newXml: string): Promise<AxiosResponse<AllCommonResponses>> {
+	async editSandboxProject(projectUUID: ProjectUUID, newJsonBlockly: BlocklyJson): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project/${projectUUID}`, { newXml }
+			`${this.pathHeader}/edit-sandbox-project/${projectUUID}`, { newJsonBlockly }
 		)
 	}
 

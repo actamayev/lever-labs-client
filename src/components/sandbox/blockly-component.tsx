@@ -5,9 +5,9 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
+import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import { EmptySandboxXml } from "../../utils/constants/constants"
 import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
@@ -18,8 +18,8 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
-	initialXml: string
-	onXmlChange?: (xml: string) => void
+	initialBlocklyJson: BlocklyJson
+	onJsonChange?: (json: BlocklyJson) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -28,8 +28,8 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		setCppCode,
 		extraClasses = "h-1/2",
-		initialXml = EmptySandboxXml,
-		onXmlChange
+		initialBlocklyJson = {},
+		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -53,23 +53,21 @@ function BlocklyComponent(props: Props) {
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
-		const newXml = Blockly.Xml.domToText(
-			Blockly.Xml.workspaceToDom(workspace)
-		)
-		const cppCode = cppGenerator.workspaceToCode(workspace)
+		const newJson = Blockly.serialization.workspaces.save(workspace)
 
+		const cppCode = cppGenerator.workspaceToCode(workspace)
 		setCppCode(cppCode)
 
-		// Notify parent component if onXmlChange callback exists
-		if (onXmlChange) {
-			onXmlChange(newXml)
+		// Notify parent component if onJsonChange callback exists
+		if (onJsonChange) {
+			onJsonChange(newJson)
 		}
 
 		// Center workspace on first initialization
 		if (!isCentered) {
 			centerWorkspace()
 		}
-	}, [setCppCode, onXmlChange, isCentered, centerWorkspace])
+	}, [setCppCode, onJsonChange, isCentered, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -84,7 +82,7 @@ function BlocklyComponent(props: Props) {
 		}, 100) // Small delay to ensure workspace is fully rendered
 
 		return () => clearTimeout(timer)
-	}, [centerWorkspace, initialXml, isCentered, pathname])
+	}, [centerWorkspace, initialBlocklyJson, isCentered, pathname])
 
 	useEffect(() => {
 		if (!containerRef.current) return
@@ -134,7 +132,7 @@ function BlocklyComponent(props: Props) {
 		>
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}
-				initialXml={initialXml}
+				initialJson={initialBlocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}

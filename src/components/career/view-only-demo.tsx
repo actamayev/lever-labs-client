@@ -11,9 +11,10 @@ import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import ChatInterface from "../career/chat/chat-interface"
 import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
+import { BlocklyJson } from "@bluedotrobots/common-ts"
 
 interface Props {
-	initialXml: string
+	jsonBlockly: BlocklyJson
 	description: string
 	beforeRunningText: string
 	extraClasses?: string
@@ -21,7 +22,7 @@ interface Props {
 
 function ViewOnlyDemo(props: Props) {
 	const {
-		initialXml,
+		jsonBlockly,
 		description,
 		beforeRunningText,
 		extraClasses = ""
@@ -62,7 +63,7 @@ function ViewOnlyDemo(props: Props) {
 					{/* View Only Sandbox */}
 					<div className="flex-1">
 						<ViewOnlySandbox
-							initialXml={initialXml}
+							blocklyJson={jsonBlockly}
 							setCppCode={setCppCode}
 							extraClasses="h-full"
 						/>

@@ -4,6 +4,7 @@ import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
+import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import { cppGenerator } from "../../../utils/cpp/cpp-generator"
@@ -13,7 +14,7 @@ import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
 
 interface Props {
-	initialXml: string
+	blocklyJson: BlocklyJson
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 }
@@ -21,7 +22,7 @@ interface Props {
 // eslint-disable-next-line max-lines-per-function
 function ViewOnlySandbox(props: Props) {
 	const {
-		initialXml,
+		blocklyJson,
 		setCppCode,
 		extraClasses = "h-1/2",
 	} = props
@@ -78,7 +79,7 @@ function ViewOnlySandbox(props: Props) {
 		}, 100) // Small delay to ensure workspace is fully rendered
 
 		return () => clearTimeout(timer)
-	}, [centerWorkspace, initialXml, isCentered, pathname])
+	}, [centerWorkspace, blocklyJson, isCentered, pathname])
 
 	useEffect(() => {
 		if (!containerRef.current) return
@@ -110,7 +111,7 @@ function ViewOnlySandbox(props: Props) {
 			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
 		>
 			<BlocklyWorkspace
-				initialXml={initialXml}
+				initialJson={blocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}

@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useParams } from "next/navigation"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { BlocklyJson, ProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
@@ -52,8 +52,8 @@ function SandboxProjectPage() {
 	}, [])
 
 	const debouncedSaveProject = useRef(
-		debounce((newXml: string) => {
-			editSandboxProject(projectUUID, newXml)
+		debounce((newBlocklyJson: BlocklyJson) => {
+			editSandboxProject(projectUUID, newBlocklyJson)
 		}, 250)
 	).current
 
@@ -62,15 +62,15 @@ function SandboxProjectPage() {
 		return () => debouncedSaveProject.cancel()
 	}, [debouncedSaveProject])
 
-	const handleXmlChange = useCallback((newXml: string) => {
-		if (!project || project.sandboxXml === newXml || isLoading) return
+	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
+		if (!project || project.sandboxJson === newBlocklyJson || isLoading) return
 
 		// Update local state
-		sandboxClass.updateProjectXml(projectUUID, newXml)
+		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 
 		// Only trigger the save if we're past the initial mounting period
 		if (isMountedLongEnough) {
-			debouncedSaveProject(newXml)
+			debouncedSaveProject(newBlocklyJson)
 		}
 	}, [project, isLoading, projectUUID, debouncedSaveProject, isMountedLongEnough])
 
@@ -112,8 +112,8 @@ function SandboxProjectPage() {
 								toolboxConfig={toolboxConfig}
 								setCppCode={setCppCode}
 								extraClasses="h-[90%]"
-								initialXml={project.sandboxXml}
-								onXmlChange={handleXmlChange}
+								initialBlocklyJson={project.sandboxJson}
+								onJsonChange={handleJsonChange}
 							/>
 						</Suspense>
 						<div className="flex flex-row mt-2 h-[10%] w-full space-x-2 items-center justify-center">
