@@ -23,44 +23,15 @@ export default function CQIntroduction() {
 			</div>
 
 			{/* Main Content Area - Centered with 1/4 margins */}
-			<div className="w-2/3 mx-auto h-52">
-				<div className="flex gap-4 h-full">
-					{/* SimpleSandbox - Left Half */}
-					<div className="flex-1 flex flex-col">
-						<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-							<SimpleSandbox
-								blocklyJson={careerQuestCode[0].blocklyJson}
-								cppCode={careerQuestCode[0].cppCode}
-							/>
-						</Suspense>
-					</div>
-
-					{/* Code Display - Right Half */}
-					<div className="flex-1 flex flex-col">
-						<div className="flex-1 border-2 border-swan rounded-lg overflow-hidden">
-							<div className="h-full flex flex-col">
-								{/* Header */}
-								<div className="bg-gray-100 dark:bg-gray-800 px-4 py-2 border-b border-swan">
-									<h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-										Generated C++ Code
-									</h3>
-								</div>
-
-								{/* Code Content */}
-								<div className="flex-1 overflow-auto">
-									<pre className={cn(
-										"h-full w-full p-4 text-sm font-mono",
-										"bg-white dark:bg-gray-900",
-										"text-gray-800 dark:text-gray-200",
-										"whitespace-pre-wrap break-words",
-										"resize-none outline-none"
-									)}>
-										{careerQuestCode[0].cppCode}
-									</pre>
-								</div>
-							</div>
-						</div>
-					</div>
+			<div className="w-2/3 mx-auto h-52 flex">
+				{/* SimpleSandbox - Left Half */}
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[0].blocklyJson}
+							cppCode={careerQuestCode[0].cppCode}
+						/>
+					</Suspense>
 				</div>
 			</div>
 
