@@ -18,7 +18,7 @@ function ProfileSidebarButton() {
 						<Avatar className="w-full h-full">
 							{isNull(personalInfoClass.profilePictureUrl) ? (
 								<AvatarFallback className="bg-gray-500 text-white">
-									<CustomUserCircle className="w-4 h-4" />
+									<CustomUserCircle className="w-6 h-6" />
 								</AvatarFallback>
 							) : (
 								<Image

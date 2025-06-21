@@ -12,14 +12,16 @@ import LabActivityTrackingDataService from "../services/lab-activity-tracking-da
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
-	public authDataService: AuthDataService = new AuthDataService(this.httpClient)
-	public labActivityTrackingDataService: LabActivityTrackingDataService = new LabActivityTrackingDataService(this.httpClient)
-	public miscDataService: MiscDataService = new MiscDataService(this.httpClient)
-	public garageDataService: GarageDataService = new GarageDataService(this.httpClient)
-	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient)
-	public pipDataService: PipDataService = new PipDataService(this.httpClient)
+	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
+	public labActivityTrackingDataService: LabActivityTrackingDataService = new LabActivityTrackingDataService(
+		this.httpClient, "/lab-activity-tracking"
+	)
+	public miscDataService: MiscDataService = new MiscDataService(this.httpClient, "/misc")
+	public garageDataService: GarageDataService = new GarageDataService(this.httpClient, "/garage")
+	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient, "/personal-info")
+	public pipDataService: PipDataService = new PipDataService(this.httpClient, "/pip")
 	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient, "/sandbox")
-	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient)
+	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient, "/workbench")
 
 	constructor() {
 	}

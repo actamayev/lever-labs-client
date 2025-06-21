@@ -3,16 +3,16 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AllCommonResponses, LightAnimation, PipUUID } from "@bluedotrobots/common-ts"
+import { BaseDataService } from "./base-data-service"
 
-export default class GarageDataService {
-	private readonly pathHeader: EndpointHeaders = "/garage"
-
-	constructor(private readonly httpClient: BlueDotHttpClient) {
+export default class GarageDataService extends BaseDataService {
+	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+		super(httpClient, pathHeader)
 	}
 
 	async lightsAnimation(lightAnimation: LightAnimation, pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/lights-animation`, { lightAnimation, pipUUID }
+			this.buildUrl("/lights-animation"), { lightAnimation, pipUUID }
 		)
 	}
 }
