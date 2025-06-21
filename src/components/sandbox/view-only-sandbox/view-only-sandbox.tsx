@@ -7,7 +7,6 @@ import { BlocklyWorkspace } from "react-blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import { cppGenerator } from "../../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
@@ -15,7 +14,6 @@ import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockl
 
 interface Props {
 	blocklyJson: BlocklyJson
-	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 }
 
@@ -23,7 +21,6 @@ interface Props {
 function ViewOnlySandbox(props: Props) {
 	const {
 		blocklyJson,
-		setCppCode,
 		extraClasses = "h-1/2",
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -45,26 +42,6 @@ function ViewOnlySandbox(props: Props) {
 		workspace.scrollCenter()
 		setIsCentered(true)
 	}, [workspaceConfiguration.zoom?.startScale])
-
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
-		workspaceRef.current = workspace
-		const cppCode = cppGenerator.workspaceToCode(workspace)
-		setCppCode(cppCode)
-
-		// Disable context menu on workspace
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (workspace) {
-			workspace.getCanvas().addEventListener("contextmenu", (e) => {
-				e.preventDefault()
-				e.stopPropagation()
-			})
-		}
-
-		// Center workspace on first initialization
-		if (!isCentered) {
-			centerWorkspace()
-		}
-	}, [setCppCode, isCentered, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -114,7 +91,6 @@ function ViewOnlySandbox(props: Props) {
 				initialJson={blocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
-				onWorkspaceChange={handleWorkspaceChange}
 			/>
 		</div>
 	)

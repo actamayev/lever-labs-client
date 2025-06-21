@@ -18,7 +18,7 @@ class BlueDotApiClient {
 	public garageDataService: GarageDataService = new GarageDataService(this.httpClient)
 	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient)
 	public pipDataService: PipDataService = new PipDataService(this.httpClient)
-	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient)
+	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient, "/sandbox")
 	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient)
 
 	constructor() {

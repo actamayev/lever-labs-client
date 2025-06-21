@@ -19,7 +19,8 @@ export default function CQIntroduction() {
 					description={"test"}
 					beforeRunningText={"before running test"}
 					extraClasses="h-full"
-					jsonBlockly={{}}
+					cppCode=""
+					blocklyJson={{}}
 				/>
 			</Suspense>
 		</>

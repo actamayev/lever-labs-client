@@ -4,11 +4,11 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { EmailUpdatesRequest, ErrorResponse, ErrorResponses, GoogleAuthSuccess, LoginRequest, LoginSuccess,
 	NonSuccessResponse, RegisterRequest, RegisterSuccess, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
+import { BaseDataService } from "./base-data-service"
 
-export default class AuthDataService {
-	private readonly pathHeader: EndpointHeaders = "/auth"
-
-	constructor(private readonly httpClient: BlueDotHttpClient) {
+export default class AuthDataService extends BaseDataService {
+	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+		super(httpClient, pathHeader)
 	}
 
 	async login(loginInformation: LoginRequest): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {

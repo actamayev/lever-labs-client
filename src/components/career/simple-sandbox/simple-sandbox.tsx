@@ -5,17 +5,21 @@ import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import ViewOnlySandbox from "../../sandbox/view-only-sandbox/view-only-sandbox"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
+import { BlocklyJson } from "@bluedotrobots/common-ts"
 
-// This is for a simple sandbox (no expanation, chat), and a code on teh right
-export default function SimpleSandbox() {
-	const cppCode = ""
+interface Props {
+	blocklyJson: BlocklyJson
+	cppCode: string
+}
+
+export default function SimpleSandbox(props: Props) {
+	const { blocklyJson, cppCode } = props
 
 	return (
 		<>
 			<div className="flex-1">
 				<ViewOnlySandbox
-					blocklyJson={{}}
-					setCppCode={setCppCode}
+					blocklyJson={blocklyJson}
 					extraClasses="h-full"
 				/>
 			</div>

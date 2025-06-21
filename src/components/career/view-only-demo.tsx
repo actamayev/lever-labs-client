@@ -2,33 +2,32 @@
 
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { useState } from "react"
+import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import AnimatedStateButton from "../magicui/animated-rainbow-button"
-import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
-import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import ChatInterface from "../career/chat/chat-interface"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 
 interface Props {
-	jsonBlockly: BlocklyJson
+	blocklyJson: BlocklyJson
 	description: string
 	beforeRunningText: string
+	cppCode: string
 	extraClasses?: string
 }
 
 function ViewOnlyDemo(props: Props) {
 	const {
-		jsonBlockly,
+		blocklyJson,
 		description,
 		beforeRunningText,
+		cppCode,
 		extraClasses = ""
 	} = props
-
-	const [cppCode, setCppCode] = useState("")
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
@@ -63,8 +62,7 @@ function ViewOnlyDemo(props: Props) {
 					{/* View Only Sandbox */}
 					<div className="flex-1">
 						<ViewOnlySandbox
-							blocklyJson={jsonBlockly}
-							setCppCode={setCppCode}
+							blocklyJson={blocklyJson}
 							extraClasses="h-full"
 						/>
 					</div>

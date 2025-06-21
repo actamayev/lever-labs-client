@@ -11,7 +11,8 @@ export default function LineFollowing() {
 				description={"test"}
 				beforeRunningText={"before running test"}
 				extraClasses="h-full"
-				jsonBlockly={{}}
+				cppCode=""
+				blocklyJson={{}}
 			/>
 		</Suspense>
 	)
