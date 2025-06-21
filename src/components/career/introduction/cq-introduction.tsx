@@ -92,6 +92,58 @@ export default function CQIntroduction() {
 					</Suspense>
 				</div>
 			</div>
+
+			<div className="w-2/3 mx-auto mb-8 text-center">
+				3. Start block.
+				Start block is optional, but we're going to be using it pretty often one place at the beginning of a program. I will not start running the program until you press my start button.
+				Run the code on the left first, and then the code on the right to see the start button in action
+			</div>
+
+			<div className="w-2/3 mx-auto h-64 flex flex-row space-x-4">
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[5].blocklyJson}
+							cppCode={careerQuestCode[5].cppCode}
+						/>
+					</Suspense>
+				</div>
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[6].blocklyJson}
+							cppCode={careerQuestCode[6].cppCode}
+						/>
+					</Suspense>
+				</div>
+			</div>
+
+			<div className="w-2/3 mx-auto mb-8 text-center">
+				Now, let's see how we can bring together all three types of blocks: logic, sensors, and actuators.
+				In the example below, we introduce one more really important logic block: the conditional block.
+				Conditional block check if the condition is true, and if it is a certain action is performed if it's not true, then a different action is done.
+				People perform conditionals so often you're probably don't even think about it. For example, when you wanna go into your room, you ask yourself is the door open if the door is open, then you walk through the doorway there is an open open and then walk-through conditions are all about asking if something is true for performing and action if it is in a different action if it isn't..
+				Let's see conditionals work in action
+			</div>
+
+			<div className="w-2/3 mx-auto h-64 flex flex-row space-x-4">
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[5].blocklyJson}
+							cppCode={careerQuestCode[5].cppCode}
+						/>
+					</Suspense>
+				</div>
+				<div className="flex-1 flex flex-col">
+					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
+						<SimpleSandbox
+							blocklyJson={careerQuestCode[6].blocklyJson}
+							cppCode={careerQuestCode[6].cppCode}
+						/>
+					</Suspense>
+				</div>
+			</div>
 		</div>
 	)
 }

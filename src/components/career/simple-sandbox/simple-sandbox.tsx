@@ -17,6 +17,7 @@ interface Props {
 	cppCode: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function SimpleSandbox(props: Props) {
 	const { blocklyJson, cppCode } = props
 	const [showCode, setShowCode] = useState(false)
@@ -70,6 +71,20 @@ function SimpleSandbox(props: Props) {
 										hover: { enabled: false },
 										quickSuggestions: false,
 										parameterHints: { enabled: false },
+										// Disable all editing features and auto-completion
+										tabCompletion: "off",
+										wordBasedSuggestions: "off",
+										suggestOnTriggerCharacters: false,
+										acceptSuggestionOnCommitCharacter: false,
+										acceptSuggestionOnEnter: "off",
+										formatOnType: false,
+										formatOnPaste: false,
+										autoClosingBrackets: "never",
+										autoClosingQuotes: "never",
+										autoSurround: "never",
+										snippetSuggestions: "none",
+										contextmenu: false,
+										dragAndDrop: false,
 										// Conditional scrollbar settings
 										scrollbar: {
 											vertical: needsScrollbar ? "auto" : "hidden",
