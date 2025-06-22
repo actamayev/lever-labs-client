@@ -5,7 +5,7 @@ import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 export const metadata = createMetadata({
 	title: "Garage",
 	// eslint-disable-next-line max-len
-	description: "Monitor Pip's vital stats, check battery levels, manage WiFi connectivity, adjust volume settings, and access real-time sensor data in this comprehensive dashboard for your robot companion.",
+	description: "Monitor Pip's vital stats, check battery levels, manage Wi-Fi connectivity, adjust volume settings, and access real-time sensor data in this comprehensive dashboard for your robot companion.",
 	path: "/garage",
 	keywords: ["robot dashboard", "sensor monitoring", "robot settings"]
 })

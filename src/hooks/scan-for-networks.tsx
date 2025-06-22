@@ -18,7 +18,7 @@ export default function useScanForNetworks(): { scanForNetworks: () => Promise<v
 		scanTimeoutRef.current = setTimeout(() => {
 			if (serialMessageManagerClass.isScanning) {
 				serialMessageManagerClass.setIsScanning(false)
-				console.error("WiFi scan timed out after 10 seconds")
+				console.error("Wi-Fi scan timed out after 10 seconds")
 				// You could also show a toast notification here
 			}
 		}, 10000)

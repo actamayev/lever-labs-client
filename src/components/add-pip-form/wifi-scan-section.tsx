@@ -29,7 +29,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 			<div>
 				<div className="flex flex-row mb-6">
 					<p className="font-bold">Step 2:&nbsp;</p>
-					<p>Scan for WiFi networks or enter manually</p>
+					<p>Scan for Wi-Fi networks or enter manually</p>
 				</div>
 
 				<div className="flex gap-4 mb-4">

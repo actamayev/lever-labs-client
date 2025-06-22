@@ -52,7 +52,7 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
-					<DialogTitle>WiFi Settings</DialogTitle>
+					<DialogTitle>Wi-Fi Settings</DialogTitle>
 					<DialogClose />
 				</DialogHeader>
 

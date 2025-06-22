@@ -46,7 +46,7 @@ function BatteryIcon() {
 				<div>
 					<WorkbenchIconTemplate
 						id="battery-icon"
-						extraButtonClasses="hover:border-swan hover:bg-standardBackground/50"
+						extraButtonClasses="hover:border-swan"
 					>
 						<BatteryIconToShow />
 						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>

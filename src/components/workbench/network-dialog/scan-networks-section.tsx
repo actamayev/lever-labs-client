@@ -54,14 +54,14 @@ function ScanNetworksSection() {
 	if (serialMessageManagerClass.isScanning) {
 		return (
 			<div className="flex items-center justify-center py-8">
-				<div className="text-sm text-muted-foreground">Scanning for networks...</div>
+				<div className="text-sm text-muted-foreground">Scanning for Networks...</div>
 			</div>
 		)
 	} else if (isEmpty(serialMessageManagerClass.otherNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300
 			dark:border-gray-700 rounded-lg text-center">
-				Click "Scan Networks" to find nearby WiFi networks
+				Click "Scan Networks" to find nearby Wi-Fi networks
 			</div>
 		)
 	}

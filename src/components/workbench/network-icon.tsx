@@ -112,7 +112,7 @@ function NetworkIcon() {
 						title="WiFi Settings"
 					>
 						<Settings className="h-4 w-4 mr-2" />
-						WiFi Settings
+						Wi-Fi Settings...
 					</Button>
 				</div>
 			)
