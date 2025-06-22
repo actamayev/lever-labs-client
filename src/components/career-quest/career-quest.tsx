@@ -13,18 +13,15 @@ export default function CareerQuest() {
 				<IntroductionCard introData={introductionData} />
 			</div>
 
-			{/* Challenges Section */}
-			<div className="">
-				<h2 className="text-3xl font-bold text-center my-4">Careers</h2>
+			<h2 className="text-3xl font-bold text-center my-4">Careers</h2>
 
-				{/* 2-column grid for challenge cards */}
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-					{careerData.map(singleCareerData => (
-						<div key={singleCareerData.careerName} className="flex justify-center">
-							<SingleCareerCard careerData={singleCareerData} />
-						</div>
-					))}
-				</div>
+			{/* 2-column grid for challenge cards */}
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+				{careerData.map(singleCareerData => (
+					<div key={singleCareerData.careerName} className="flex justify-center">
+						<SingleCareerCard careerData={singleCareerData} />
+					</div>
+				))}
 			</div>
 		</WorkbenchLayout>
 	)

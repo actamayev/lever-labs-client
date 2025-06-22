@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
@@ -9,6 +10,7 @@ import ChatInterface from "../career/chat/chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 
@@ -16,7 +18,6 @@ interface Props {
 	blocklyJson: BlocklyJson
 	description: string
 	beforeRunningText: string
-	cppCode: string
 	extraClasses?: string
 }
 
@@ -25,9 +26,10 @@ function ViewOnlyDemo(props: Props) {
 		blocklyJson,
 		description,
 		beforeRunningText,
-		cppCode,
 		extraClasses = ""
 	} = props
+
+	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
