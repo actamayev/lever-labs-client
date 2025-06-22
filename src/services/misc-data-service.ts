@@ -3,16 +3,16 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AllCommonResponses } from "@bluedotrobots/common-ts"
+import { BaseDataService } from "./base-data-service"
 
-export default class MiscDataService {
-	private readonly pathHeader: EndpointHeaders = "/misc"
-
-	constructor(private readonly httpClient: BlueDotHttpClient) {
+export default class MiscDataService extends BaseDataService {
+	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+		super(httpClient, pathHeader)
 	}
 
 	async subscribeForUpdates(email: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/subscribe-for-email-updates`, { email }, { headers: { "No-Auth-Required": "true" }}
+			this.buildUrl("/subscribe-for-email-updates"), { email }, { headers: { "No-Auth-Required": "true" }}
 		)
 	}
 }

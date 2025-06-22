@@ -2,6 +2,7 @@
 
 import { TvMinimal, Volume2 } from "lucide-react"
 
+import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../icons/custom-motor"
 import { CustomRuler } from "../icons/custom-ruler"
@@ -9,6 +10,7 @@ import { CustomRemote } from "../icons/custom-remote"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {
@@ -23,14 +25,26 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Screen": <TvMinimal />
 }
 
-export default function SingleComponentUsed({ component } : { component: ComponentsUsedCareerData }) {
+interface Props {
+	component: ComponentsUsedCareerData
+	baseColor: DuolingoColors
+}
+
+export default function SingleComponentUsed(props: Props) {
+	const { component, baseColor } = props
+
+	const colors = getDuolingoColors(baseColor)
+
 	return (
 		<CustomTooltip
 			tooltipTrigger={
 				<div
 					key={component.componentName}
-					className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center \
-						hover:bg-emerald-700"
+					className={cn(
+						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0",
+						colors.bg2,        // Base background (bg-baseColor-2)
+						colors.hoverBg3    // Hover background (hover:bg-baseColor-3)
+					)}
 					title={component.componentName}
 				>
 					{componentIcons[component.componentName]}

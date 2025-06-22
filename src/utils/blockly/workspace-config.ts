@@ -49,25 +49,38 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 	...commonStyles
 })
 
-const getWorkspaceConfig = (isDarkMode: boolean): Blockly.BlocklyOptions => ({
+const getWorkspaceConfig = (
+	isDarkMode: boolean,
+	viewOnly: boolean
+): Blockly.BlocklyOptions => ({
 	grid: {
 		spacing: 20,
 		length: 3,
-		colour: isDarkMode ? "#374151" : "#ccc", // Darker grid for dark mode
+		colour: isDarkMode ? "#374151" : "#ccc",
 		snap: true,
 	},
 	zoom: {
-		controls: true,
-		wheel: true,
+		controls: viewOnly ? false : true,
+		wheel: viewOnly ? false : true,
 		startScale: 1.0,
 		maxScale: 3,
 		minScale: 0.3,
 		scaleSpeed: 1.2,
 	},
-	trashcan: true,
+	trashcan: viewOnly ? false : true,
 	sounds: false,
 	theme: isDarkMode ? darkTheme : lightTheme,
 	maxTrashcanContents: 0,
+	readOnly: viewOnly, // This makes blocks non-draggable and non-editable
+	// For view-only, allow scrolling for centering but disable user interaction
+	move: viewOnly ? {
+		scrollbars: {
+			horizontal: true,  // Allow horizontal scrolling for centering
+			vertical: true     // Allow vertical scrolling for centering
+		},
+		drag: false,          // Disable dragging the workspace
+		wheel: false          // Disable mouse wheel scrolling by user
+	} : undefined,
 })
 
 export default getWorkspaceConfig

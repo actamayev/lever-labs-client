@@ -1,79 +1,86 @@
 "use client"
 
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, ErrorResponse, PipUUID, ProjectUUID,
+import { AllCommonResponses, BlocklyJson, ErrorResponse, PipUUID, ProjectUUID,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { BaseDataService } from "./base-data-service"
 
-export default class SandboxDataService {
-	private readonly pathHeader: EndpointHeaders = "/sandbox"
-
-	constructor(private readonly httpClient: BlueDotHttpClient) {
+export default class SandboxDataService extends BaseDataService {
+	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+		super(httpClient, pathHeader)
 	}
 
 	async createSandboxProject(): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
 		return await this.httpClient.http.post<RetrieveSandboxProjectResponse | ErrorResponse>(
-			`${this.pathHeader}/create-sandbox-project`
+			this.buildUrl("/create-sandbox-project")
 		)
 	}
 
-	async editSandboxProject(projectUUID: ProjectUUID, newXml: string): Promise<AxiosResponse<AllCommonResponses>> {
+	async editSandboxProject(projectUUID: ProjectUUID, newBlocklyJson: BlocklyJson): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project/${projectUUID}`, { newXml }
+			this.buildUrl(`/edit-sandbox-project/${projectUUID}`),
+			{ newBlocklyJson }
 		)
 	}
 
 	async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project-name/${projectUUID}`, { projectName }
+			this.buildUrl(`/edit-sandbox-project-name/${projectUUID}`),
+			{ projectName }
 		)
 	}
 
 	async editSandboxProjectNotes(projectUUID: ProjectUUID, projectNotes: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/edit-sandbox-project-notes/${projectUUID}`, { projectNotes }
+			this.buildUrl(`/edit-sandbox-project-notes/${projectUUID}`),
+			{ projectNotes }
 		)
 	}
 
 	async retrieveAllSandboxProjects(): Promise<AxiosResponse<RetrieveSandboxProjectsResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectsResponse | ErrorResponse>(
-			`${this.pathHeader}/retrieve-all-sandbox-projects`
+			this.buildUrl("/retrieve-all-sandbox-projects")
 		)
 	}
 
 	async retrieveSingleSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectResponse | ErrorResponse>(
-			`${this.pathHeader}/retrieve-single-sandbox-project/${projectUUID}`
+			this.buildUrl(`/retrieve-single-sandbox-project/${projectUUID}`)
 		)
 	}
 
 	async starSandboxProject(projectUUID: ProjectUUID, starStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/star-sandbox-project/${projectUUID}`, { starStatus }
+			this.buildUrl(`/star-sandbox-project/${projectUUID}`),
+			{ starStatus }
 		)
 	}
 
 	async deleteSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/delete-sandbox-project/${projectUUID}`
+			this.buildUrl(`/delete-sandbox-project/${projectUUID}`)
 		)
 	}
 
 	async sendSandboxCodeToPip(pipUUID: PipUUID, cppCode: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/send-sandbox-code-to-pip/`, { pipUUID, cppCode }
+			this.buildUrl("/send-sandbox-code-to-pip"),
+			{ pipUUID, cppCode }
 		)
 	}
 
 	async stopCurrentlyRunningCode(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/stop-currently-running-code`, { pipUUID }
+			this.buildUrl("/stop-currently-running-code"),
+			{ pipUUID }
 		)
 	}
 
 	async pollSensors(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/poll-sensors`, { pipUUID }
+			this.buildUrl("/poll-sensors"),
+			{ pipUUID }
 		)
 	}
 }

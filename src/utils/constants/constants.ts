@@ -55,7 +55,6 @@ export const soundMappings: SoundMapping = {
 	"8": "robot noise",
 }
 
-export const EmptySandboxXml = "<xml xmlns=\"https://developers.google.com/blockly/xml\"/>"
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
 
 export const SENSOR_POLLING_INTERVAL = 30000 // 30 seconds

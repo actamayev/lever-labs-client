@@ -19,11 +19,6 @@ declare global {
 		kinds: Record<BlockNames, CustomBlock>
 	}
 
-	interface BlocklyState {
-		xml: string
-		cppCode: string
-	}
-
 	interface PartialCategoryInfo {
 		kind: "category",
 		id: undefined,
