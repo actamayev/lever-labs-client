@@ -1,5 +1,5 @@
 "use client"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
@@ -8,6 +8,8 @@ import WorkbenchIconTemplate from "./workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
 
 function BatteryIcon() {
+	const [isOpen, setIsOpen] = useState(false)
+
 	// Determine color class based on battery state
 	const getColorClass = useMemo(() => {
 		if (workbenchClass.isCharging) return "text-chargingGreen"
@@ -41,13 +43,10 @@ function BatteryIcon() {
 	}
 
 	return (
-		<HoverCard openDelay={0} closeDelay={100}>
+		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>
 			<HoverCardTrigger asChild>
 				<div>
-					<WorkbenchIconTemplate
-						id="battery-icon"
-						extraButtonClasses="hover:border-swan"
-					>
+					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryIconToShow />
 						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
 							{workbenchClass.batteryPercentage}%

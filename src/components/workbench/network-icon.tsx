@@ -169,59 +169,52 @@ function NetworkIcon() {
 
 	return (
 		<>
-			<div className={cn(
-				"flex flex-col items-center justify-center ml-0.5 cursor-default",
-				pipClass.selectedPip?.pipConnectionStatus === "offline" ? "text-eel/50" : "text-eel"
-			)}>
-				<HoverCard
-					open={isHoverCardOpen}
-					onOpenChange={setIsHoverCardOpen}
-					openDelay={0}
-					closeDelay={100}
+			<HoverCard
+				open={isHoverCardOpen}
+				onOpenChange={setIsHoverCardOpen}
+				openDelay={0}
+				closeDelay={100}
+			>
+				<HoverCardTrigger asChild>
+					<div>
+						<WorkbenchIconTemplate extraButtonClasses={!isHoverCardOpen ? "" : "border-swan"}>
+							<WifiIconToShow />
+						</WorkbenchIconTemplate>
+					</div>
+				</HoverCardTrigger>
+
+				<HoverCardContent
+					className={cn(
+						"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
+						"bg-standardBackground shadow-lg",
+						"duration-0 z-30",
+					)}
+					side="bottom"
+					align="end"
+					sideOffset={5}
 				>
-					<HoverCardTrigger asChild>
-						<div>
-							<WorkbenchIconTemplate
-								extraButtonClasses="hover:border-swan hover:bg-standardBackground/50"
-							>
-								<WifiIconToShow />
-							</WorkbenchIconTemplate>
+					<div className="space-y-3">
+						<div className="flex items-center gap-2">
+							<div className={cn(
+								"w-2 h-2 rounded-full",
+								getStatusColor().replace("text-", "bg-")
+							)} />
+							<span className="font-medium">NETWORK</span>
 						</div>
-					</HoverCardTrigger>
 
-					<HoverCardContent
-						className={cn(
-							"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-							"bg-standardBackground shadow-lg",
-							"duration-0 z-30",
-						)}
-						side="bottom"
-						align="end"
-						sideOffset={5}
-					>
-						<div className="space-y-3">
-							<div className="flex items-center gap-2">
-								<div className={cn(
-									"w-2 h-2 rounded-full",
-									getStatusColor().replace("text-", "bg-")
-								)} />
-								<span className="font-medium">NETWORK</span>
-							</div>
-
-							<div className="flex justify-between items-center">
-								<span className="text-sm text-eel/70">Status</span>
-								<span className={cn("font-semibold text-sm", getStatusColor())}>
-									{getStatusText()}
-								</span>
-							</div>
-
-							<div className="pt-2">
-								{renderNetworkContent()}
-							</div>
+						<div className="flex justify-between items-center">
+							<span className="text-sm text-eel/70">Status</span>
+							<span className={cn("font-semibold text-sm", getStatusColor())}>
+								{getStatusText()}
+							</span>
 						</div>
-					</HoverCardContent>
-				</HoverCard>
-			</div>
+
+						<div className="pt-2">
+							{renderNetworkContent()}
+						</div>
+					</div>
+				</HoverCardContent>
+			</HoverCard>
 
 			<WifiSettingsDialog
 				open={isWiFiSettingsOpen}

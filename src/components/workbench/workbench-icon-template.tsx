@@ -5,15 +5,13 @@ import { buttonVariants } from "../shadcn/ui/button"
 interface Props {
 	children: React.ReactNode
 	extraButtonClasses?: string
-	id?: string
 }
 
 export default function WorkbenchIconTemplate(props: Props) {
-	const { children, extraButtonClasses = "", id } = props
+	const { children, extraButtonClasses = "" } = props
 
 	return (
 		<div
-			id={id}
 			className={cn(
 				buttonVariants({
 					variant: "ghost",

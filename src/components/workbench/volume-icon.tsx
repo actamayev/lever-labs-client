@@ -25,7 +25,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hove
 
 // eslint-disable-next-line max-lines-per-function
 function VolumeIcon() {
-	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
 
@@ -66,20 +66,18 @@ function VolumeIcon() {
 
 	return (
 		<HoverCard
-			open={isHoverCardOpen}
+			open={isOpen}
 			onOpenChange={(open) => {
 				// Don't close if dropdown is open
 				if (!open && isDropdownOpen) return
-				setIsHoverCardOpen(open)
+				setIsOpen(open)
 			}}
 			openDelay={0}
 			closeDelay={100}
 		>
 			<HoverCardTrigger asChild>
 				<div>
-					<WorkbenchIconTemplate
-						extraButtonClasses="hover:border-swan hover:bg-standardBackground/50"
-					>
+					<WorkbenchIconTemplate extraButtonClasses={isOpen ? "border-swan" : ""}>
 						<SpeakerIconToShow />
 						<span className={cn(
 							"text-base font-medium mt-0 w-full text-center",
