@@ -1,8 +1,8 @@
 "use client"
 
-import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
+import { BlocklyJson, ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
@@ -68,12 +68,12 @@ class SandboxClass {
 		project.updatedAt = new Date()
 	})
 
-	// Method to update project XML in the store
-	public updateProjectXml = action((projectUUID: ProjectUUID, newXml: string): void => {
+	// Method to update project JSON in the store
+	public updateProjectJson = action((projectUUID: ProjectUUID, newJson: BlocklyJson): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		project.sandboxXml = newXml
+		project.sandboxJson = newJson
 	})
 
 	public deleteSandboxProject = action((projectUUID: ProjectUUID): void => {

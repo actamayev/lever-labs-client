@@ -27,7 +27,7 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 						"active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0 \
 						shadow-[0_0_0_0_var(--shadow-color)] hover:shadow-[0_0_0_0_var(--shadow-color)] hover:translate-y-0 \
 						cursor-default bg-blue-300  text-blue-950 \
-						dark:bg-blue-950 dark:text-blue-200 "
+						dark:bg-blue-950 dark:text-blue-200"
 				)}
 				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={shadowHeight}

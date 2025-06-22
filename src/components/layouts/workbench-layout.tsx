@@ -4,10 +4,10 @@ import { cn } from "../../lib/shadcn/utils"
 import Workbench from "../workbench/workbench"
 
 interface WorkbenchLayoutProps {
-  children: React.ReactNode
-  extraChildrenClasses?: string
-  extraParentClasses?: string
-  preventElasticScroll?: boolean // Add this new prop
+	children: React.ReactNode
+	extraChildrenClasses?: string
+	extraParentClasses?: string
+	preventElasticScroll?: boolean // Add this new prop
 }
 
 export default function WorkbenchLayout(props: WorkbenchLayoutProps) {

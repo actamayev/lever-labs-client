@@ -16,11 +16,6 @@ export default function CareerActivityTemplate(props: Props) {
 			<div className="flex-1 min-h-0 pt-20">
 				{children}
 			</div>
-			{/* <ActivityFooter
-				nextPageLink={nextPageLink}
-				nextPageActivity={nextPageActivity}
-				nextPageTooltip={nextPageTooltip}
-			/> */}
 		</div>
 	)
 }

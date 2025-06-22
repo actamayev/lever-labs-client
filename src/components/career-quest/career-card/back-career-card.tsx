@@ -3,10 +3,8 @@
 import { motion } from "framer-motion"
 import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import BackFlipButton from "./back-flip-button"
-import { Separator } from "../../shadcn/ui/separator"
-import SingleComponentUsed from "../single-component-used"
-import SingleCodingConceptUsed from "../single-coding-concept-used"
+import BackFlipButton from "../back-flip-button"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
 
 interface Props {
 	careerData: CareerData
@@ -15,80 +13,47 @@ interface Props {
 
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, careerDescription, backgroundColor, componentsUsed, codingConcepts } = careerData
+	const { careerName, careerDescription, backgroundColor } = careerData
+
+	const colors = getDuolingoColors(backgroundColor)
 
 	return (
 		<motion.div
 			className={cn(
-				"absolute w-full h-full backface-hidden flex",
-				backgroundColor
+				"absolute w-full h-full backface-hidden flex flex-col",
+				colors.bg
 			)}
 			style={{
 				backfaceVisibility: "hidden",
 				transform: "rotateY(180deg)",
 			}}
 		>
-			<div className="w-full flex flex-col p-6">
-				<h3 className="text-2xl font-bold">{careerName}</h3>
-				<div className="text-base my-4">
-					{careerDescription}
+			<div className="w-full h-full flex flex-col p-4">
+				{/* Header */}
+				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
+
+				{/* Description */}
+				<div className="flex-1 flex flex-col justify-center">
+					<div className="text-sm text-white leading-relaxed text-center">
+						{careerDescription}
+					</div>
 				</div>
-				<div className="flex flex-row justify-between">
-					<div className="flex flex-col items-center w-1/3 px-2">
-						<h3 className="text-base font-medium text-center mb-3">
-							Sensors you'll be using:
-						</h3>
-						<div className="grid grid-cols-3 gap-2 w-full">
-							{componentsUsed.slice(0, 5).map((component) => (
-								<SingleComponentUsed
-									key={component.componentName}
-									component={component}
-								/>
-							))}
-							{componentsUsed.length > 5 && (
-								<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
-									<span className="font-bold">+{componentsUsed.length - 5}</span>
-								</div>
-							)}
-						</div>
-					</div>
 
-					<Separator orientation="vertical" className="bg-white rounded-2xl h-auto w-[2px]"/>
-
-					<div className="flex flex-col items-center w-1/3 px-2">
-						<h3 className="text-base font-medium text-center mb-3">
-							Coding Concepts
-						</h3>
-						<div className="grid grid-cols-3 gap-2 w-full justify-items-center">
-							{codingConcepts.slice(0, 5).map((codingConcept) => (
-								<SingleCodingConceptUsed
-									key={codingConcept}
-									codingConcept={codingConcept}
-								/>
-							))}
-							{codingConcepts.length > 5 && (
-								<div className="w-10 h-10 bg-teal-600 rounded-2xl flex items-center justify-center">
-									<span className="font-bold">+{codingConcepts.length - 5}</span>
-								</div>
-							)}
-						</div>
-					</div>
-
-					<Separator orientation="vertical" className="bg-white rounded-2xl h-auto w-[2px]"/>
-
-					<div className="flex flex-col items-center w-1/3 px-2">
-						<h3 className="text-base font-medium text-center mb-3">
-							Estimated time to complete:
-						</h3>
-						<div className="flex flex-row items-center gap-2 mt-2">
-							<Hourglass className="w-6 h-6"/>
-							<div className="font-medium text-base">10 hours</div>
-						</div>
+				{/* Time estimate */}
+				<div className="flex flex-col items-center mt-4">
+					<h4 className="text-sm font-medium text-white mb-2">Estimated time:</h4>
+					<div className="flex flex-row items-center gap-2">
+						<Hourglass className="w-5 h-5 text-white"/>
+						<div className="font-medium text-sm text-white">10 hours</div>
 					</div>
 				</div>
 			</div>
 
-			<BackFlipButton onFlip={flipCard} />
+			{/* Flip Button */}
+			<BackFlipButton
+				onFlip={flipCard}
+				extraClasses="top-4 right-4 size-8"
+			/>
 		</motion.div>
 	)
 }

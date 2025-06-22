@@ -57,6 +57,15 @@ declare global {
 
 	//Sandbox
 	type HexColor = string & { readonly __brand: unique symbol }
+
+	type DuolingoColors =
+	| "macaw"
+	| "cardinal"
+	| "bee"
+	| "fox"
+	| "beetle"
+	| "humpback"
+	| "beakInner"
 }
 
 export {}

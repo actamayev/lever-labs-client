@@ -7,6 +7,7 @@ import { useState, useCallback } from "react"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
+import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 
 function ProfileImage() {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -27,27 +28,31 @@ function ProfileImage() {
 
 	return (
 		<div className="relative inline-block" style={{ minWidth: "128px", maxWidth: "128px" }}>
-			{personalInfoClass.profilePictureUrl ? (
-				<Image
-					src={personalInfoClass.profilePictureUrl}
-					className="w-32 h-32 rounded-full object-cover cursor-pointer"
-					style={imageStyle}
-					onClick={handleOpenDialog}
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
-					alt="Profile Picture"
-					width={128}
-					height={128}
-				/>
-			) : (
-				<CustomUserCircle
-					className="w-32 h-32 rounded-full object-cover cursor-pointer text-questionText"
-					style={imageStyle}
-					onClick={handleOpenDialog}
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
-				/>
-			)}
+			<Avatar className="w-full h-full">
+				{personalInfoClass.profilePictureUrl ? (
+					<Image
+						src={personalInfoClass.profilePictureUrl}
+						className="w-32 h-32 rounded-full object-cover cursor-pointer"
+						style={imageStyle}
+						onClick={handleOpenDialog}
+						onMouseEnter={handleMouseEnter}
+						onMouseLeave={handleMouseLeave}
+						alt="Profile Picture"
+						width={128}
+						height={128}
+					/>
+				) : (
+					<AvatarFallback className="bg-standardBackground text-questionText">
+						<CustomUserCircle
+							className="w-full h-full cursor-pointer"
+							style={imageStyle}
+							onClick={handleOpenDialog}
+							onMouseEnter={handleMouseEnter}
+							onMouseLeave={handleMouseLeave}
+						/>
+					</AvatarFallback>
+				)}
+			</Avatar>
 			<div
 				className="absolute top-2 right-1 bg-eel dark:bg-polar
 				p-1 rounded-full cursor-pointer"

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
-import { cn } from "../../../lib/shadcn/utils"
 import BackCareerCard from "./back-career-card"
 import FrontCareerCard from "./front-career-card"
 
@@ -14,10 +13,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	}, [])
 
 	return (
-		<div className={cn(
-			"relative overflow-hidden rounded-2xl text-white",
-			"w-full aspect-[750/321]",
-		)}>
+		<div className={"relative overflow-hidden rounded-2xl text-white w-full aspect-[5/7]"}>
 			{/* Card container */}
 			<motion.div
 				className="w-full h-full relative preserve-3d"

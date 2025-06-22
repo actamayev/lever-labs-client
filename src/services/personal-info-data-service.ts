@@ -4,28 +4,28 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AllCommonResponses, ErrorResponse, ErrorResponses, NonSuccessResponse,
 	PersonalInfoResponse, ProfilePictureUrl, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
+import { BaseDataService } from "./base-data-service"
 
-export default class PersonalInfoDataService {
-	private readonly pathHeader: EndpointHeaders = "/personal-info"
-
-	constructor(private readonly httpClient: BlueDotHttpClient) {
+export default class PersonalInfoDataService extends BaseDataService {
+	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+		super(httpClient, pathHeader)
 	}
 
 	async retrievePersonalInfo(): Promise<AxiosResponse<PersonalInfoResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<PersonalInfoResponse | ErrorResponse>(
-			`${this.pathHeader}/get-personal-info`
+			this.buildUrl("/get-personal-info")
 		)
 	}
 
 	async setDefaultSiteTheme(newSiteTheme: SiteThemes): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			`${this.pathHeader}/set-default-site-theme/${newSiteTheme}`
+			this.buildUrl(`/set-default-site-theme/${newSiteTheme}`)
 		)
 	}
 
 	async setSandboxNotesOpenStatus(newSandboxNotesStatus: boolean): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			`${this.pathHeader}/set-sandbox-notes-open-status/${newSandboxNotesStatus}`
+			this.buildUrl(`/set-sandbox-notes-open-status/${newSandboxNotesStatus}`)
 		)
 	}
 
@@ -34,31 +34,31 @@ export default class PersonalInfoDataService {
 		formData.append("file", file, file.name)
 
 		return await this.httpClient.http.post<ProfilePictureUrl | NonSuccessResponse>(
-			`${this.pathHeader}/upload-profile-picture`, formData, { headers: { "Content-Type": file.type }}
+			this.buildUrl("/upload-profile-picture"), formData, { headers: { "Content-Type": file.type }}
 		)
 	}
 
 	async removeCurrentProfilePicture(): Promise<AxiosResponse<SuccessResponse | ErrorResponse>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponse>(
-			`${this.pathHeader}/remove-current-profile-picture`
+			this.buildUrl("/remove-current-profile-picture")
 		)
 	}
 
 	async updateName(name: string): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			`${this.pathHeader}/update-name/${name}`
+			this.buildUrl(`/update-name/${name}`)
 		)
 	}
 
 	async changePassword(oldPassword: string, newPassword: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/change-password`, { oldPassword, newPassword }
+			this.buildUrl("/change-password"), { oldPassword, newPassword }
 		)
 	}
 
 	async updateUsername(username: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			`${this.pathHeader}/update-username/${username}`
+			this.buildUrl(`/update-username/${username}`)
 		)
 	}
 }

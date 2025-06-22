@@ -3,9 +3,11 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "../../../lib/shadcn/utils"
-import BackFlipButton from "./back-flip-button"
+import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import SingleCodingConceptUsed from "../single-coding-concept-used"
+import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
 
 interface Props {
 	careerData: CareerData
@@ -15,7 +17,11 @@ interface Props {
 // eslint-disable-next-line max-lines-per-function
 export default function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon, totalLessons, lessonsComplete, backgroundColor } = careerData
+	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
+		totalLessons, lessonsComplete, backgroundColor, codingConcepts } = careerData
+
+	const colors = getDuolingoColors(backgroundColor)
+	const progressColors = getProgressColors(backgroundColor)
 
 	// Calculate progress percentage
 	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
@@ -23,79 +29,102 @@ export default function FrontCareerCard(props: Props) {
 	return (
 		<motion.div
 			className={cn(
-				"absolute w-full h-full backface-hidden flex cursor-default",
-				backgroundColor
+				"absolute w-full h-full backface-hidden flex flex-col cursor-default",
+				colors.bg
 			)}
-			style={{
-				backfaceVisibility: "hidden",
-			}}
+			style={{ backfaceVisibility: "hidden" }}
 		>
-			{/* Left Section */}
-			<div className="w-1/2 flex flex-col p-6">
-				{/* Title */}
-				<h3 className="text-2xl font-bold mb-5">{careerName}</h3>
+			{/* Header with title */}
+			<div className="p-4 pb-2">
+				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
 
 				{/* Progress Bar */}
-				<div className="w-full h-5 bg-emerald-600 rounded-full overflow-hidden relative mb-5">
+				<div className={cn("w-full h-5 rounded-full overflow-hidden relative", progressColors.background)}>
 					<div
-						className="relative h-full rounded-full duration-0 ease-out bg-emerald-300"
+						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
 							width: `${progressPercentage}%`,
 						}}
 					>
-						{/* Highlight shadow effect - only on the completed part */}
+						{/* Highlight shadow effect */}
 						<div
-							className="absolute top-1 left-2 right-2 rounded-full"
+							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
 							style={{
-								background: "rgb(167, 243, 208)",
 								height: "3px"
 							}}
 						/>
 					</div>
-
-					{/* Text inside progress bar */}
-					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium cursor-default">
+					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white cursor-default">
 						{lessonsComplete} / {totalLessons}
 					</div>
 				</div>
-
-				{/* Component Icons */}
-				<div className="flex flex-wrap gap-2 mb-auto">
-					{componentsUsed.slice(0, 4).map((component) => (
-						<SingleComponentUsed
-							key={component.componentName}
-							component={component}
-						/>
-					))}
-					{componentsUsed.length > 4 && (
-						<div className="w-10 h-10 bg-emerald-600 rounded-2xl flex items-center justify-center">
-							<span className="font-bold">+{componentsUsed.length - 4}</span>
-						</div>
-					)}
-				</div>
-
-				{/* Continue Button */}
-				<Link href={careerUrl}>
-					<TactileButton
-						className="duration-150 text-emerald-600 bg-white h-12 rounded-2xl text-base w-full"
-						shadowColor="rgb(178,214,201)"
-					>
-						{lessonsComplete === 0 ? "START" : "CONTINUE"}
-					</TactileButton>
-				</Link>
-
 			</div>
 
-			{/* Right Section with Image */}
-			<div className="w-1/2 flex items-center justify-center">
+			{/* Icon/Image Section */}
+			<div className="flex-1 flex items-center justify-center px-4 py-2">
 				<Icon
-					size="200"
-					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
+					size="120"
+					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
 					fill="white"
 				/>
 			</div>
 
-			<BackFlipButton onFlip={flipCard} />
+			{/* Components Section */}
+			<div className="px-4 pb-2">
+				<h4 className="text-sm font-medium text-white mb-2">Sensors:</h4>
+				<div className="flex flex-wrap gap-1.5 justify-center">
+					{componentsUsed.slice(0, 4).map((component) => (
+						<SingleComponentUsed
+							key={component.componentName}
+							component={component}
+							baseColor={backgroundColor}
+						/>
+					))}
+					{componentsUsed.length > 4 && (
+						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg2)}>
+							<span className="font-bold text-xs">+{componentsUsed.length - 4}</span>
+						</div>
+					)}
+				</div>
+			</div>
+
+			{/* Coding Concepts Section */}
+			<div className="px-4 pb-4">
+				<h4 className="text-sm font-medium text-white mb-2">Concepts:</h4>
+				<div className="flex flex-wrap gap-1.5 justify-center">
+					{codingConcepts.slice(0, 3).map((codingConcept) => (
+						<SingleCodingConceptUsed
+							key={codingConcept}
+							codingConcept={codingConcept}
+							baseColor={backgroundColor}  // Pass base color
+						/>
+					))}
+					{codingConcepts.length > 3 && (
+						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg1)}>
+							<span className="font-bold text-xs">+{codingConcepts.length - 3}</span>
+						</div>
+					)}
+				</div>
+			</div>
+
+			{/* Continue Button */}
+			<div className="p-4 pt-2">
+				<Link href={careerUrl}>
+					<TactileButton
+						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
+						shadowClass={colors.shadow}
+						shadowHeight={4}
+					>
+						{lessonsComplete === 0 ? "START" : "CONTINUE"}
+					</TactileButton>
+				</Link>
+			</div>
+
+			{/* Flip Button */}
+			<BackFlipButton
+				onFlip={flipCard}
+				extraClasses="top-4 right-4 size-8"
+			/>
 		</motion.div>
 	)
 }
