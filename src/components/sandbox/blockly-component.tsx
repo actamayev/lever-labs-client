@@ -8,7 +8,6 @@ import { BlocklyWorkspace } from "react-blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import { cppGenerator } from "../../utils/cpp/cpp-generator"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
@@ -16,7 +15,6 @@ import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/w
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
@@ -26,7 +24,6 @@ interface Props {
 function BlocklyComponent(props: Props) {
 	const {
 		toolboxConfig,
-		setCppCode,
 		extraClasses = "h-1/2",
 		initialBlocklyJson,
 		onJsonChange
@@ -55,9 +52,6 @@ function BlocklyComponent(props: Props) {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
-		const cppCode = cppGenerator.workspaceToCode(workspace)
-		setCppCode(cppCode)
-
 		// Notify parent component if onJsonChange callback exists
 		onJsonChange(newJson)
 
@@ -65,7 +59,7 @@ function BlocklyComponent(props: Props) {
 		if (!isCentered) {
 			centerWorkspace()
 		}
-	}, [setCppCode, onJsonChange, isCentered, centerWorkspace])
+	}, [onJsonChange, isCentered, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {

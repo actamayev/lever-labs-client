@@ -18,6 +18,7 @@ import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
@@ -66,7 +67,7 @@ function SandboxProjectPage() {
 		if (!project || project.sandboxJson === newBlocklyJson || isLoading) return
 
 		// Update local state
-		console.log(newBlocklyJson)
+		setCppCode(generateCppFromJson(newBlocklyJson))
 		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 
 		// Only trigger the save if we're past the initial mounting period
@@ -111,7 +112,6 @@ function SandboxProjectPage() {
 						<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
 							<BlocklyComponent
 								toolboxConfig={toolboxConfig}
-								setCppCode={setCppCode}
 								extraClasses="h-[90%]"
 								initialBlocklyJson={project.sandboxJson}
 								onJsonChange={handleJsonChange}
