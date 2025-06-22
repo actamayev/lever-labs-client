@@ -1,6 +1,6 @@
-import { useState } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import { useMemo, useState } from "react"
 import { Editor } from "@monaco-editor/react"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { Button } from "../../shadcn/ui/button"
@@ -9,22 +9,23 @@ import { TactileButton } from "../../shadcn/ui/tactile-button"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import ViewOnlySandbox from "../../sandbox/view-only-sandbox/view-only-sandbox"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 
 interface Props {
 	blocklyJson: BlocklyJson
-	cppCode: string
 }
 
 // eslint-disable-next-line max-lines-per-function
 function SimpleSandbox(props: Props) {
-	const { blocklyJson, cppCode } = props
+	const { blocklyJson } = props
 	const [showCode, setShowCode] = useState(false)
+
+	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
 
 	const codeLines = cppCode.split("\n").length
 	const needsScrollbar = codeLines > 5 // Adjust this threshold as needed
-
 
 	return (
 		<>

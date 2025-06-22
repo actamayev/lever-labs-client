@@ -27,10 +27,7 @@ export default function CQIntroduction() {
 			<div className="w-2/3 mx-auto h-52 flex">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[0].blocklyJson}
-							cppCode={careerQuestCode[0].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[0]} />
 					</Suspense>
 				</div>
 			</div>
@@ -54,18 +51,12 @@ export default function CQIntroduction() {
 			<div className="w-2/3 mx-auto h-52 flex flex-row space-x-4">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[1].blocklyJson}
-							cppCode={careerQuestCode[1].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[1]} />
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[2].blocklyJson}
-							cppCode={careerQuestCode[2].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[2]} />
 					</Suspense>
 				</div>
 			</div>
@@ -79,18 +70,12 @@ export default function CQIntroduction() {
 			<div className="w-2/3 mx-auto h-52 flex flex-row space-x-4">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[3].blocklyJson}
-							cppCode={careerQuestCode[3].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[3]} />
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[4].blocklyJson}
-							cppCode={careerQuestCode[4].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[4]} />
 					</Suspense>
 				</div>
 			</div>
@@ -104,18 +89,12 @@ export default function CQIntroduction() {
 			<div className="w-2/3 mx-auto h-64 flex flex-row space-x-4">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[5].blocklyJson}
-							cppCode={careerQuestCode[5].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[5]} />
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[6].blocklyJson}
-							cppCode={careerQuestCode[6].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[6]} />
 					</Suspense>
 				</div>
 			</div>
@@ -131,26 +110,17 @@ export default function CQIntroduction() {
 			<div className="w-2/3 mx-auto h-64 flex flex-row space-x-4">
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[7].blocklyJson}
-							cppCode={careerQuestCode[7].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[7]} />
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[8].blocklyJson}
-							cppCode={careerQuestCode[8].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[8]} />
 					</Suspense>
 				</div>
 				<div className="flex-1 flex flex-col">
 					<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-full" />}>
-						<SimpleSandbox
-							blocklyJson={careerQuestCode[9].blocklyJson}
-							cppCode={careerQuestCode[9].cppCode}
-						/>
+						<SimpleSandbox blocklyJson={careerQuestCode[9]} />
 					</Suspense>
 				</div>
 			</div>

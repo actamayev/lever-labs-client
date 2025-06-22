@@ -10,7 +10,7 @@ export class CppGenerator extends Blockly.Generator {
 		this.INDENT = "    " // 4 spaces for indentation
 	}
 
-	generateBlockSequence(firstBlock: Blockly.Block | null): string {
+	private generateBlockSequence(firstBlock: Blockly.Block | null): string {
 		let code = ""
 		let currentBlock = firstBlock
 
@@ -28,7 +28,7 @@ export class CppGenerator extends Blockly.Generator {
 		return code
 	}
 
-	workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
+	public workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!workspace) return ""
 
