@@ -73,7 +73,7 @@ function VolumeIcon() {
 				setIsHoverCardOpen(open)
 			}}
 			openDelay={0}
-			closeDelay={200}
+			closeDelay={100}
 		>
 			<HoverCardTrigger asChild>
 				<div>

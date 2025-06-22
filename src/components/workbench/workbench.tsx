@@ -38,11 +38,18 @@ function Workbench() {
 	const bottomSectionTop = topSectionHeight + middleSectionHeight
 
 	return (
-		<div className="w-[37.5%] z-20" ref={containerRef}>
-			{/* Top section with icons and workbench card - 1/4 height */}
-			<WorkbenchTopSection topSectionHeight={topSectionHeight}/>
+		<div className="w-[37.5%] relative" ref={containerRef}>
+			{/* Top section with icons and hover cards - highest z-index */}
+			<div className="relative z-50">
+				<WorkbenchTopSection topSectionHeight={topSectionHeight}/>
+			</div>
+
+			{/* Middle section - much lower z-index so hover cards appear above */}
 			<div
-				className={cn("fixed border-t border-b", isGaragePage ? "border-l" : "border-l-2")}
+				className={cn(
+					"fixed border-t border-b z-0",
+					isGaragePage ? "border-l" : "border-l-2"
+				)}
 				style={{
 					width: workbenchClass.fixedWidth + "px",
 					top: `${middleSectionTop}px`,
@@ -61,10 +68,10 @@ function Workbench() {
 				</div>
 			</div>
 
-			{/* Bottom section with driving controls - only show on garage page - 1/3 height */}
+			{/* Bottom section with driving controls - lower z-index */}
 			{isGaragePage && (
 				<div
-					className="fixed border-l border-t"
+					className="fixed border-l border-t z-0"
 					style={{
 						width: workbenchClass.fixedWidth + "px",
 						top: `${bottomSectionTop}px`,

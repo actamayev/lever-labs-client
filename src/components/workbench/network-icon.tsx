@@ -177,7 +177,7 @@ function NetworkIcon() {
 					open={isHoverCardOpen}
 					onOpenChange={setIsHoverCardOpen}
 					openDelay={0}
-					closeDelay={200}
+					closeDelay={100}
 				>
 					<HoverCardTrigger asChild>
 						<div>
@@ -205,7 +205,7 @@ function NetworkIcon() {
 									"w-2 h-2 rounded-full",
 									getStatusColor().replace("text-", "bg-")
 								)} />
-								<span className="font-medium">Network Status</span>
+								<span className="font-medium">NETWORK</span>
 							</div>
 
 							<div className="flex justify-between items-center">

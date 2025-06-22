@@ -69,7 +69,7 @@ function BatteryIcon() {
 				<div className="space-y-3">
 					<div className="flex items-center gap-2">
 						<div className={cn("w-2 h-2 rounded-full", getColorClass.replace("text-", "bg-"))} />
-						<span className="font-medium">Battery Status</span>
+						<span className="font-medium">BATTERY</span>
 					</div>
 
 					<div className="space-y-2">
