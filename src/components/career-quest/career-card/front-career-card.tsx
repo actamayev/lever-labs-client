@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Info } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
+import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
@@ -121,12 +121,10 @@ export default function FrontCareerCard(props: Props) {
 			</div>
 
 			{/* Flip Button */}
-			<button
-				onClick={flipCard}
-				className="absolute top-4 right-4 size-6 rounded-full flex items-center justify-center focus:outline-none duration-0 z-10"
-			>
-				<Info size={20} strokeWidth={2.5} className="text-white"/>
-			</button>
+			<BackFlipButton
+				onFlip={flipCard}
+				extraClasses="top-4 right-4 size-8"
+			/>
 		</motion.div>
 	)
 }

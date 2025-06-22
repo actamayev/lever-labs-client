@@ -1,8 +1,9 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Info, Hourglass } from "lucide-react"
+import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
+import BackFlipButton from "../back-flip-button"
 import { getDuolingoColors } from "../../../utils/duolingo-utils"
 
 interface Props {
@@ -49,12 +50,10 @@ export default function BackCareerCard(props: Props) {
 			</div>
 
 			{/* Flip Button */}
-			<button
-				onClick={flipCard}
-				className="absolute top-4 right-4 size-6 rounded-full flex items-center justify-center focus:outline-none duration-0"
-			>
-				<Info size={20} strokeWidth={2.5} className="text-white"/>
-			</button>
+			<BackFlipButton
+				onFlip={flipCard}
+				extraClasses="top-4 right-4 size-8"
+			/>
 		</motion.div>
 	)
 }
