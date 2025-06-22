@@ -19,7 +19,7 @@ interface Props {
 	setCppCode: React.Dispatch<React.SetStateAction<string>>
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
-	onJsonChange?: (json: BlocklyJson) => void
+	onJsonChange: (json: BlocklyJson) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -28,7 +28,7 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		setCppCode,
 		extraClasses = "h-1/2",
-		initialBlocklyJson = {},
+		initialBlocklyJson,
 		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -59,9 +59,7 @@ function BlocklyComponent(props: Props) {
 		setCppCode(cppCode)
 
 		// Notify parent component if onJsonChange callback exists
-		if (onJsonChange) {
-			onJsonChange(newJson)
-		}
+		onJsonChange(newJson)
 
 		// Center workspace on first initialization
 		if (!isCentered) {
