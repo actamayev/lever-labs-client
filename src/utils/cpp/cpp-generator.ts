@@ -10,9 +10,9 @@ export class CppGenerator extends Blockly.Generator {
 		this.INDENT = "    " // 4 spaces for indentation
 	}
 
-	private generateBlockSequence(firstBlock: Blockly.Block | null): string {
+	private generateBlockSequence(firstBlock: Blockly.Block): string {
 		let code = ""
-		let currentBlock = firstBlock
+		let currentBlock: Blockly.Block | null = firstBlock
 
 		while (currentBlock) {
 			const blockCode = this.blockToCode(currentBlock)

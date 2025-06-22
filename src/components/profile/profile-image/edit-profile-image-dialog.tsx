@@ -20,6 +20,8 @@ import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
+import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import { BlueTactileButton } from "../../buttons/tactile-buttons"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
@@ -155,27 +157,31 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 
 				<div className="flex flex-col items-center justify-center py-6">
 					<div className="relative mb-4">
-						{imageToShow ? (
-							<Image
-								src={imageToShow}
-								alt="Profile Image"
-								width={128}
-								height={128}
-								className="w-32 h-32 rounded-full object-cover cursor-pointer"
-								style={imageStyle}
-								onClick={handleOpenFileSelector}
-								onMouseEnter={handleMouseEnter}
-								onMouseLeave={handleMouseLeave}
-							/>
-						) : (
-							<CustomUserCircle
-								className="w-32 h-32 rounded-full object-cover cursor-pointer text-questionText"
-								style={imageStyle}
-								onClick={handleOpenFileSelector}
-								onMouseEnter={handleMouseEnter}
-								onMouseLeave={handleMouseLeave}
-							/>
-						)}
+						<Avatar className="w-full h-full">
+							{imageToShow ? (
+								<Image
+									src={imageToShow}
+									alt="Profile Image"
+									width={128}
+									height={128}
+									className="w-32 h-32 rounded-full object-cover cursor-pointer"
+									style={imageStyle}
+									onClick={handleOpenFileSelector}
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
+								/>
+							) : (
+								<AvatarFallback className="bg-standardBackground text-questionText">
+									<CustomUserCircle
+										className="w-32 h-32 cursor-pointer"
+										style={imageStyle}
+										onClick={handleOpenFileSelector}
+										onMouseEnter={handleMouseEnter}
+										onMouseLeave={handleMouseLeave}
+									/>
+								</AvatarFallback>
+							)}
+						</Avatar>
 
 						{/* Pencil icon for editing */}
 						<div
@@ -203,21 +209,22 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						<TactileButton
 							disabled={isLoading}
 							onClick={handleDelete}
-							className="bg-red-500"
-							shadowColor="rgb(176 36 56)"
+							className="bg-cardinal rounded-xl"
+							shadowClass="cardinal-2"
 						>
 							<Trash2 className="mr-2 h-4 w-4" />
 							Delete
 						</TactileButton>
 					)}
 
-					<TactileButton
+					<BlueTactileButton
 						disabled={isLoading}
 						onClick={handleSave}
+						className="rounded-xl"
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
 						{pendingDelete ? "Confirm Delete" : "Save"}
-					</TactileButton>
+					</BlueTactileButton>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

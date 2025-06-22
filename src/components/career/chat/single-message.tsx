@@ -35,7 +35,7 @@ function SingleMessage({ message } : { message: Message}) {
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
 					message.sender === "user"
-						? "bg-macaw text-white ml-auto"
+						? "bg-humpback text-white ml-auto"
 						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 				)}
 				style={{ wordBreak: "break-all", overflowWrap: "anywhere" }}
@@ -59,8 +59,8 @@ function SingleMessage({ message } : { message: Message}) {
 							className="rounded-full object-cover w-full h-full"
 						/>
 					) : (
-						<AvatarFallback className="bg-questionText text-white">
-							<CustomUserCircle className="w-4 h-4" />
+						<AvatarFallback className="bg-standardBackground text-questionText">
+							<CustomUserCircle className="w-full h-full" />
 						</AvatarFallback>
 					)}
 				</Avatar>

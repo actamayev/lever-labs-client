@@ -17,8 +17,8 @@ function ProfileSidebarButton() {
 					icon={(
 						<Avatar className="w-full h-full">
 							{isNull(personalInfoClass.profilePictureUrl) ? (
-								<AvatarFallback className="bg-questionText text-white">
-									<CustomUserCircle className="w-6 h-6" />
+								<AvatarFallback className="bg-standardBackground text-questionText">
+									<CustomUserCircle className="w-full h-full" />
 								</AvatarFallback>
 							) : (
 								<Image
