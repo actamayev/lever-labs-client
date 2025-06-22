@@ -1,0 +1,217 @@
+/* eslint-disable max-len */
+"use client"
+
+import { observer } from "mobx-react"
+import toUpper from "lodash-es/toUpper"
+import { useCallback, useState } from "react"
+import { TuneToPlay } from "@bluedotrobots/common-ts"
+import { Volume, Volume1, Volume2, VolumeOff, ChevronDown } from "lucide-react"
+import { cn } from "../../lib/shadcn/utils"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/shadcn/ui/dropdown-menu"
+import { Slider } from "../shadcn/ui/slider"
+import { Checkbox } from "../shadcn/ui/checkbox"
+import { Separator } from "../shadcn/ui/separator"
+import playTune from "../../utils/workbench/play-tune"
+import workbenchClass from "../../classes/workbench-class"
+import { Button, buttonVariants } from "../shadcn/ui/button"
+import WorkbenchIconTemplate from "./workbench-icon-template"
+import changeAudibleStatus from "../../utils/workbench/change-audible-status"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
+
+// eslint-disable-next-line max-lines-per-function
+function VolumeIcon() {
+	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
+	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
+
+	const SpeakerIconToShow = () => {
+		const baseClasses = "!h-11 !w-11"
+		const strokeWidth = 2.5
+		if (workbenchClass.isMuted) {
+			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
+		}
+
+		if (workbenchClass.volume <= 20) {
+			return <Volume className={baseClasses} strokeWidth={strokeWidth}/>
+		} else if (workbenchClass.volume <= 40) {
+			return <Volume1 className={baseClasses} strokeWidth={strokeWidth}/>
+		} else {
+			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
+		}
+	}
+
+	const handleVolumeChange = useCallback((value: number[]) => {
+		workbenchClass.setVolume(value[0])
+		if (workbenchClass.isMuted && value[0] > 0) {
+			workbenchClass.setIsMuted(false)
+		}
+	}, [])
+
+	const handleKeyDown = (event: React.KeyboardEvent) => {
+		// Prevent arrow keys from changing slider value
+		if (
+			event.key === "ArrowUp" ||
+			event.key === "ArrowDown" ||
+			event.key === "ArrowLeft" ||
+			event.key === "ArrowRight"
+		) {
+			event.preventDefault()
+		}
+	}
+
+	return (
+		<HoverCard
+			open={isHoverCardOpen}
+			onOpenChange={(open) => {
+				// Don't close if dropdown is open
+				if (!open && isDropdownOpen) return
+				setIsHoverCardOpen(open)
+			}}
+			openDelay={0}
+			closeDelay={200}
+		>
+			<HoverCardTrigger asChild>
+				<div>
+					<WorkbenchIconTemplate
+						extraButtonClasses="hover:border-swan hover:bg-standardBackground/50"
+					>
+						<SpeakerIconToShow />
+						<span className={cn(
+							"text-base font-medium mt-0 w-full text-center",
+							workbenchClass.isMuted && "opacity-50"
+						)}>
+							{workbenchClass.volume}%
+						</span>
+					</WorkbenchIconTemplate>
+				</div>
+			</HoverCardTrigger>
+
+			<HoverCardContent
+				className={cn(
+					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
+					"bg-standardBackground shadow-lg",
+					"animate-none duration-0",
+				)}
+				side="bottom"
+				align="center"
+				sideOffset={5}
+			>
+				<div className="w-full max-w-sm space-y-4">
+					{/* Header with mute toggle */}
+					<div className="flex justify-between items-center">
+						<div className="flex items-center gap-2">
+							<div className={cn(
+								"w-2 h-2 rounded-full",
+								workbenchClass.isMuted ? "bg-cardinal" : "bg-macaw"
+							)} />
+							<span className="font-medium">SOUND</span>
+						</div>
+						<div
+							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
+							onClick={changeAudibleStatus}
+						>
+							<div className="text-sm font-medium">MUTE</div>
+							<Checkbox checked={workbenchClass.isMuted} />
+						</div>
+					</div>
+
+					{/* Volume Slider */}
+					<div className="space-y-2">
+						<div className="flex justify-between items-center text-sm">
+							<span className="text-eel/70">Volume</span>
+							<span className={cn(
+								"font-semibold",
+								workbenchClass.isMuted ? "text-eel/50" : "text-eel"
+							)}>
+								{workbenchClass.volume}%
+							</span>
+						</div>
+						<div
+							className="cursor-pointer"
+							onKeyDown={handleKeyDown}
+							tabIndex={0}
+						>
+							<Slider
+								defaultValue={[workbenchClass.volume]}
+								max={100}
+								step={1}
+								onValueChange={handleVolumeChange}
+								className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
+								value={[workbenchClass.volume]}
+								onKeyDown={handleKeyDown}
+							/>
+						</div>
+					</div>
+
+					<Separator className="my-3" />
+
+					{/* Sound Controls */}
+					<div className="space-y-3">
+						<div className="text-sm font-medium text-eel/70">Test Sounds</div>
+						<div className="flex items-center gap-2">
+							<Button
+								disabled={workbenchClass.isMuted}
+								className="rounded-xl bg-eel flex-1"
+								onClick={playTune}
+							>
+								PLAY A TUNE
+							</Button>
+							<div className="w-24">
+								<DropdownMenu
+									open={isDropdownOpen}
+									onOpenChange={(open) => {
+										setIsDropdownOpen(open)
+										workbenchClass.setIsDropdownOpen(open)
+									}}
+								>
+									<DropdownMenuTrigger asChild>
+										<div
+											className={cn(
+												buttonVariants({
+													variant: "outline",
+													className: "flex items-center gap-1 rounded-xl justify-between w-full h-9 px-2"
+												}),
+												workbenchClass.isMuted && "opacity-50 pointer-events-none"
+											)}
+										>
+											<span className="text-xs font-medium">
+												{toUpper(workbenchClass.selectedSound)}
+											</span>
+											<ChevronDown className="h-3 w-3" />
+										</div>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent
+										className="rounded-xl bg-standardBackground border-swan"
+										align="end"
+									>
+										{testSounds.map((sound) => (
+											<DropdownMenuItem
+												key={sound}
+												onClick={() => {
+													workbenchClass.setSelectedSound(sound)
+													setIsDropdownOpen(false)
+												}}
+												className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
+											>
+												<span className="text-sm font-medium">
+													{toUpper(sound)}
+												</span>
+											</DropdownMenuItem>
+										))}
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+						</div>
+					</div>
+				</div>
+			</HoverCardContent>
+		</HoverCard>
+	)
+}
+
+export default observer(VolumeIcon)

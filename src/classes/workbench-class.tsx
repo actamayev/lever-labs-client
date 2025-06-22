@@ -4,8 +4,6 @@ import { TuneToPlay } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable } from "mobx"
 
 class WorkbenchClass {
-	public workbenchItemToShow: WorkbenchItemsToShow = null
-	public hoveringOverWorkbenchCard: boolean = false
 	public batteryPercentage = 100
 	public isCharging = false
 	public volume = 70
@@ -18,14 +16,6 @@ class WorkbenchClass {
 	constructor() {
 		makeAutoObservable(this)
 	}
-
-	public setWorkbenchItemToShow = action((newWorkBenchItemToShow: WorkbenchItemsToShow): void => {
-		this.workbenchItemToShow = newWorkBenchItemToShow
-	})
-
-	public setWorkbenchItemHoveringOver = action((newHoveringOverWorkbenchCard: boolean): void => {
-		this.hoveringOverWorkbenchCard = newHoveringOverWorkbenchCard
-	})
 
 	public setVolume = action((newVolume: number): void => {
 		this.volume = newVolume
@@ -52,8 +42,6 @@ class WorkbenchClass {
 	})
 
 	public logout() {
-		this.setWorkbenchItemToShow(null)
-		this.setWorkbenchItemHoveringOver(false)
 		this.setVolume(70)
 		this.setIsMuted(true)
 		this.setIsDropdownOpen(false)

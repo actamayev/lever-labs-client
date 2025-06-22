@@ -2,13 +2,13 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryLow, BatteryMedium, BatteryWarning } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import workbenchClass from "../../../classes/workbench-class"
-import WorkbenchIconTemplate from "../workbench-icon-template"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { cn } from "../../lib/shadcn/utils"
+import workbenchClass from "../../classes/workbench-class"
+import WorkbenchIconTemplate from "./workbench-icon-template"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
 
 function BatteryIcon() {
-	// Determine which speaker icon to show based on volume level
+	// Determine color class based on battery state
 	const getColorClass = useMemo(() => {
 		if (workbenchClass.isCharging) return "text-chargingGreen"
 		if (workbenchClass.batteryPercentage <= 20) return "text-cardinal"
@@ -46,8 +46,7 @@ function BatteryIcon() {
 				<div>
 					<WorkbenchIconTemplate
 						id="battery-icon"
-						onMouseEnter={() => {}} // No longer needed!
-						extraButtonClasses="hover:border-swan transition-all duration-200"
+						extraButtonClasses="hover:border-swan hover:bg-standardBackground/50"
 					>
 						<BatteryIconToShow />
 						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
@@ -61,24 +60,37 @@ function BatteryIcon() {
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
 					"bg-standardBackground shadow-lg",
-					"animate-in fade-in-0 zoom-in-95 duration-200",
-					// Duolingo-style rounded corners and playful styling
-					"rounded-tl-none" // Connect to trigger
+					"duration-0 animate-none",
 				)}
 				side="bottom"
 				align="start"
 				sideOffset={5}
 			>
-				<div className="space-y-2">
-					<div className="font-medium">Battery Status</div>
-					<div className="text-sm">
-						{getTimeText} 2 hours
+				<div className="space-y-3">
+					<div className="flex items-center gap-2">
+						<div className={cn("w-2 h-2 rounded-full", getColorClass.replace("text-", "bg-"))} />
+						<span className="font-medium">Battery Status</span>
 					</div>
-					{workbenchClass.isCharging && (
-						<div className="text-xs text-chargingGreen font-medium">
-							⚡ Charging
+
+					<div className="space-y-2">
+						<div className="flex justify-between items-center">
+							<span className="text-sm text-eel/70">Charge Level</span>
+							<span className={cn("font-semibold", getColorClass)}>
+								{workbenchClass.batteryPercentage}%
+							</span>
 						</div>
-					)}
+
+						{workbenchClass.isCharging && (
+							<div className="flex items-center gap-2 text-chargingGreen">
+								<span className="text-lg">⚡</span>
+								<span className="text-sm font-medium">Charging</span>
+							</div>
+						)}
+
+						<div className="text-sm text-eel/70">
+							{getTimeText} <span className="font-medium text-eel">2 hours</span>
+						</div>
+					</div>
 				</div>
 			</HoverCardContent>
 		</HoverCard>

@@ -1,13 +1,12 @@
 "use client"
 import { observer } from "mobx-react"
-import { usePathname } from "next/navigation"
 import { useEffect, useRef } from "react"
-import WorkbenchCard from "./workbench-card"
+import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
 import WorkbenchTopSection from "./workbench-top-section"
-import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
-import DrivingControls from "../garage/driving/driving-controls"
 import workbenchClass from "../../classes/workbench-class"
+import DrivingControls from "../garage/driving/driving-controls"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
 function Workbench() {
 	const containerRef = useRef<HTMLDivElement | null>(null)
@@ -80,7 +79,6 @@ function Workbench() {
 					</div>
 				</div>
 			)}
-			<WorkbenchCard />
 		</div>
 	)
 }

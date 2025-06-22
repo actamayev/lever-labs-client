@@ -2,11 +2,11 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
-import VolumeIcon from "./volume/volume-icon"
-import BatteryIcon from "./battery/battery-icon"
-import NetworkIcon from "./network/network-icon"
-import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
+import VolumeIcon from "./volume-icon"
+import BatteryIcon from "./battery-icon"
+import NetworkIcon from "./network-icon"
 import workbenchClass from "../../classes/workbench-class"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
 function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }) {
 	const pathname = usePathname()
@@ -26,15 +26,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 				borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 			}}
 		>
-			<div
-				className="relative p-3 z-50"
-				onMouseLeave={() => {
-					// Only close the card if we're not hovering over it
-					if (!workbenchClass.hoveringOverWorkbenchCard) {
-						workbenchClass.setWorkbenchItemToShow(null)
-					}
-				}}
-			>
+			<div className="relative p-3 z-50">
 				<div className="flex flex-row justify-between">
 					<BatteryIcon />
 					<VolumeIcon />

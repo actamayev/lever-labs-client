@@ -5,12 +5,12 @@ import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useState } from "react"
 import { ChevronRight, Eye, EyeOff, Lock } from "lucide-react"
 import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
-import { Input } from "../../../shadcn/ui/input"
-import { Button } from "../../../shadcn/ui/button"
-import NetworkStrengthIcon from "../../../network-strength-icon"
-import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
-import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
+import { Input } from "../../shadcn/ui/input"
+import { Button } from "../../shadcn/ui/button"
+import NetworkStrengthIcon from "../../network-strength-icon"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
+import serialMessageManagerClass from "../../../classes/serial-message-manager-class"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../shadcn/ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function
 function ScanNetworksSection() {
