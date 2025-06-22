@@ -9,6 +9,9 @@ import computeMotorControl from "../../utils/garage/compute-motor-control"
 export default function useMotorDriveUseEffect(): void {
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
+		const target = event.target as HTMLElement
+		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
+		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 		const key = event.key.toLowerCase()
 		if (!(key in motorKeyMappings)) return
 
@@ -26,6 +29,9 @@ export default function useMotorDriveUseEffect(): void {
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
+		const target = event.target as HTMLElement
+		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
+		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 		const key = event.key.toLowerCase()
 		if (!(key in motorKeyMappings)) return
 
