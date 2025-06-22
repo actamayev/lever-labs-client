@@ -72,13 +72,14 @@ const getWorkspaceConfig = (
 	theme: isDarkMode ? darkTheme : lightTheme,
 	maxTrashcanContents: 0,
 	readOnly: viewOnly, // This makes blocks non-draggable and non-editable
+	// For view-only, allow scrolling for centering but disable user interaction
 	move: viewOnly ? {
 		scrollbars: {
-			horizontal: false,
-			vertical: false
+			horizontal: true,  // Allow horizontal scrolling for centering
+			vertical: true     // Allow vertical scrolling for centering
 		},
-		drag: false,
-		wheel: false
+		drag: false,          // Disable dragging the workspace
+		wheel: false          // Disable mouse wheel scrolling by user
 	} : undefined,
 })
 
