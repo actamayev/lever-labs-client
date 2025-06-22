@@ -32,8 +32,8 @@ export const introductionData: IntroductionData = {
 	]
 }
 
-// Challenge data
-export const challengeData: CareerData[] = [
+// Career data
+export const careerData: CareerData[] = [
 	{
 		careerName: "Line Following",
 		careerDescription: "Program Pip to follow a drawn line using IR sensors to detect black or white surfaces. Master precise motor control to keep your robot perfectly on track through curves and intersections.",

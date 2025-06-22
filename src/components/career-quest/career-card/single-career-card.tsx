@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
-import BackChallengeCard from "./back-career-card"
-import FrontChallengeCard from "./front-career-card"
+import BackCareerCard from "./back-career-card"
+import FrontCareerCard from "./front-career-card"
 
 export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
 	const [flipped, setFlipped] = useState(false)
@@ -21,12 +21,12 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 				transition={{ duration: 0.7 }}
 				style={{ transformStyle: "preserve-3d" }}
 			>
-				<FrontChallengeCard
+				<FrontCareerCard
 					careerData={careerData}
 					flipCard={flipCard}
 				/>
 
-				<BackChallengeCard
+				<BackCareerCard
 					careerData={careerData}
 					flipCard={flipCard}
 				/>
