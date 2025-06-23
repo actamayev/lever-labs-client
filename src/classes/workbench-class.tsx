@@ -9,6 +9,7 @@ class WorkbenchClass {
 	public volume = 70
 	public isMuted = true
 	public selectedSound: TuneToPlay = "Breeze"
+	public isWiFiDialogOpen: boolean = false
 	public fixedWidth = 0
 	public windowHeight = 0
 
@@ -28,6 +29,10 @@ class WorkbenchClass {
 		this.selectedSound = newSelectedSound
 	})
 
+	public setIsWiFiDialogOpen = action((newIsWiFiDialogOpen: boolean): void => {
+		this.isWiFiDialogOpen = newIsWiFiDialogOpen
+	})
+
 	public setFixedWidth = action((newFixedWidth: number): void => {
 		this.fixedWidth = newFixedWidth
 	})
@@ -40,6 +45,7 @@ class WorkbenchClass {
 		this.setVolume(70)
 		this.setIsMuted(true)
 		this.setSelectedSound("Breeze")
+		this.setIsWiFiDialogOpen(false)
 		this.setFixedWidth(0)
 		this.setWindowHeight(0)
 	}

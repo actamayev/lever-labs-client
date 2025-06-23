@@ -8,19 +8,14 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { Button } from "../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
+import workbenchClass from "../../../classes/workbench-class"
 import useScanForNetworks from "../../../hooks/scan-for-networks"
 import PreviouslyConnectedSection from "./previously-connected-section"
 import serialMessageManagerClass from "../../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../shadcn/ui/dialog"
 
-interface WiFiSettingsDialogProps {
-	open: boolean
-	onOpenChange: (open: boolean) => void
-}
-
-// eslint-disable-next-line max-lines-per-function
-function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
+function WiFiSettingsDialog() {
 	// Use the custom hook
 	const { scanForNetworks } = useScanForNetworks()
 
@@ -41,15 +36,16 @@ function WiFiSettingsDialog({ open, onOpenChange }: WiFiSettingsDialogProps) {
 
 	// Request saved networks when dialog opens
 	useEffect(() => {
-		if (open && serialConnectionManagerClass.connected) {
+		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.connected) {
 			requestSavedNetworks()
 		}
-	}, [open, requestSavedNetworks])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [requestSavedNetworks, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.connected])
 
 	if (!serialConnectionManagerClass.connected) return null
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={workbenchClass.isWiFiDialogOpen} onOpenChange={workbenchClass.setIsWiFiDialogOpen}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>Wi-Fi Settings</DialogTitle>

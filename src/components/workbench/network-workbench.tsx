@@ -2,21 +2,21 @@
 
 import { useState } from "react"
 import { observer } from "mobx-react"
-import pipClass from "../../classes/pip-class"
 import isNull from "lodash-es/isNull"
 import { Wifi, WifiOff, Settings } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
+import pipClass from "../../classes/pip-class"
+import workbenchClass from "../../classes/workbench-class"
 import WorkbenchIconTemplate from "./workbench-icon-template"
 import disconnectFromPip from "../../utils/pip/disconnect-from-pip"
-import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
+import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function NetworkWorkbench() {
-	const [isWiFiSettingsOpen, setIsWiFiSettingsOpen] = useState(false)
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const WifiIconToShow = observer(() => {
@@ -104,7 +104,7 @@ function NetworkWorkbench() {
 					<Button
 						onClick={(e) => {
 							e.stopPropagation()
-							setIsWiFiSettingsOpen(true)
+							workbenchClass.setIsWiFiDialogOpen(true)
 							setIsHoverCardOpen(false) // Close hover card when opening dialog
 						}}
 						className="rounded-xl bg-eel h-9 px-3 w-full"
@@ -216,10 +216,7 @@ function NetworkWorkbench() {
 				</HoverCardContent>
 			</HoverCard>
 
-			<WifiSettingsDialog
-				open={isWiFiSettingsOpen}
-				onOpenChange={setIsWiFiSettingsOpen}
-			/>
+			<WifiSettingsDialog />
 		</>
 	)
 }
