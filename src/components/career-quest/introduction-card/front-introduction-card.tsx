@@ -95,7 +95,10 @@ export default function FrontIntroductionCard(props: Props) {
 				/>
 			</div>
 
-			<BackFlipButton onFlip={flipCard} />
+			<BackFlipButton
+				onFlip={flipCard}
+				extraClasses="absolute bottom-6 right-6 size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+			/>
 		</motion.div>
 	)
 }
