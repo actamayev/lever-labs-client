@@ -4,7 +4,7 @@ import { Suspense } from "react"
 import ViewOnlyDemo from "../view-only-demo"
 import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
 
-export default function LineFollowing() {
+export default function ObstacleAvoidance() {
 	return (
 		<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
 			<ViewOnlyDemo

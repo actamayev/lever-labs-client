@@ -1,25 +1,25 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import LineFollowing from "../../../src/components/career/line-following/line-following"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
+import ObstacleAvoidance from "../../../src/components/career/obstacle-avoidance/obstacle-avoidance"
 
 export const metadata = createMetadata({
-	title: "Line Following",
+	title: "Obstacle Avoidance",
 	// eslint-disable-next-line max-len
-	description: "Guide Pip through line-following to discover its purpose in a robotics adventure.",
-	path: "/career-quest/line-following",
+	description: "Guide Pip through smart navigation challenges as it learns to detect and avoid obstacles in its robotics adventure.",
+	path: "/career-quest/obstacle-avoidance",
 	keywords: [
-		"robotics adventure",
 		"coding challenges",
-		"line following robot"
+		"obstacle avoidance robot",
+		"navigation algorithms",
 	]
 })
 
-export default function LineFollowingPage() {
+export default function ObstacleAvoidancePage() {
 	return (
 		<AuthenticatedLayout>
 			<CareerActivityTemplate>
-				<LineFollowing />
+				<ObstacleAvoidance />
 			</CareerActivityTemplate>
 		</AuthenticatedLayout>
 	)

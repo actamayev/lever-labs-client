@@ -1,8 +1,8 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Send, Bot, Square } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
+import { Send, Square, BotMessageSquare } from "lucide-react"
 import SingleMessage from "./single-message"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
@@ -92,7 +92,7 @@ function ChatInterface() {
 				{/* Empty state when no messages */}
 				{!hasAnyMessages && (
 					<div className="text-center">
-						<Bot className="w-12 h-12 mx-auto mb-4 text-macaw" />
+						<BotMessageSquare className="w-12 h-12 mx-auto mb-4 text-macaw" />
 						<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
 						<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about the code or robotics concepts</p>
 					</div>
@@ -113,7 +113,7 @@ function ChatInterface() {
 							<div className="flex gap-3 justify-start">
 								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 									<AvatarFallback className="bg-macaw text-white">
-										<Bot className="w-4 h-4" />
+										<BotMessageSquare className="w-4 h-4" />
 									</AvatarFallback>
 								</Avatar>
 								<div className="bg-wan rounded-lg px-3 py-2">

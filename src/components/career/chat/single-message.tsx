@@ -3,12 +3,12 @@
 
 import Image from "next/image"
 import isNull from "lodash-es/isNull"
-import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
+import { BotMessageSquare } from "lucide-react"
+import { cn } from "../../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
-import { cn } from "../../../lib/shadcn/utils"
 
 interface Message {
 	id: string
@@ -26,7 +26,7 @@ function SingleMessage({ message } : { message: Message}) {
 			{message.sender === "ai" && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					<AvatarFallback className="bg-macaw text-white">
-						<Bot className="w-4 h-4" />
+						<BotMessageSquare className="w-4 h-4" />
 					</AvatarFallback>
 				</Avatar>
 			)}

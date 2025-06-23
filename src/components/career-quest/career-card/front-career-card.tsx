@@ -65,7 +65,6 @@ export default function FrontCareerCard(props: Props) {
 				<Icon
 					size="120"
 					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
-					fill="white"
 				/>
 			</div>
 
