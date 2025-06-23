@@ -15,7 +15,7 @@ import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
 
 // eslint-disable-next-line max-lines-per-function
-function NetworkIcon() {
+function NetworkWorkbench() {
 	const [isWiFiSettingsOpen, setIsWiFiSettingsOpen] = useState(false)
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
@@ -224,4 +224,4 @@ function NetworkIcon() {
 	)
 }
 
-export default observer(NetworkIcon)
+export default observer(NetworkWorkbench)

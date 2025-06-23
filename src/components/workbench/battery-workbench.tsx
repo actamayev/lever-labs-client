@@ -7,7 +7,7 @@ import workbenchClass from "../../classes/workbench-class"
 import WorkbenchIconTemplate from "./workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
 
-function BatteryIcon() {
+function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 
 	// Determine color class based on battery state
@@ -26,7 +26,7 @@ function BatteryIcon() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.isCharging])
 
-	function BatteryIconToShow() {
+	function BatteryWorkbenchToShow() {
 		const baseClasses = "!h-14 !w-14"
 		const strokeWidth = 2.5
 		if (workbenchClass.isCharging) {
@@ -47,7 +47,7 @@ function BatteryIcon() {
 			<HoverCardTrigger asChild>
 				<div>
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
-						<BatteryIconToShow />
+						<BatteryWorkbenchToShow />
 						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
 							{workbenchClass.batteryPercentage}%
 						</span>
@@ -96,4 +96,4 @@ function BatteryIcon() {
 	)
 }
 
-export default observer(BatteryIcon)
+export default observer(BatteryWorkbench)

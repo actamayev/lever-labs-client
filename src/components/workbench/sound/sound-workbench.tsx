@@ -15,7 +15,7 @@ import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
 // eslint-disable-next-line max-lines-per-function
-function VolumeIcon() {
+function SoundWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
@@ -145,4 +145,4 @@ function VolumeIcon() {
 	)
 }
 
-export default observer(VolumeIcon)
+export default observer(SoundWorkbench)

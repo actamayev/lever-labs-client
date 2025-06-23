@@ -2,9 +2,9 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
-import VolumeIcon from "./sound/volume-icon"
-import BatteryIcon from "./battery-icon"
-import NetworkIcon from "./network-icon"
+import BatteryWorkbench from "./battery-workbench"
+import NetworkWorkbench from "./network-workbench"
+import SoundWorkbench from "./sound/sound-workbench"
 import workbenchClass from "../../classes/workbench-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
@@ -28,9 +28,9 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 		>
 			<div className="relative p-3 z-50">
 				<div className="flex flex-row justify-between">
-					<BatteryIcon />
-					<VolumeIcon />
-					<NetworkIcon />
+					<BatteryWorkbench />
+					<SoundWorkbench />
+					<NetworkWorkbench />
 				</div>
 			</div>
 		</div>
