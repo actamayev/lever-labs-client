@@ -7,10 +7,19 @@ import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function changeAudibleStatus(): Promise<void> {
 	try {
-		if (isNull(pipClass.selectedPip?.pipUUID)) return
+		if (
+			isNull(pipClass.selectedPip) ||
+			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.connected)
+		) {
+			return toastClass.negative({
+				title: "Pip not connected",
+				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
+			})
+		}
 		const playTuneResponse = await blueDotApiClientClass.workbenchDataService.changeAudibleStatus(
 			!workbenchClass.isMuted,
 			pipClass.selectedPip.pipUUID

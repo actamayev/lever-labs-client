@@ -5,12 +5,12 @@ import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useState } from "react"
 import { ChevronRight, Eye, EyeOff, Lock } from "lucide-react"
 import { MessageBuilder, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts"
-import { Input } from "../../../shadcn/ui/input"
-import { Button } from "../../../shadcn/ui/button"
-import NetworkStrengthIcon from "../../../network-strength-icon"
-import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
-import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
+import { Input } from "../../shadcn/ui/input"
+import { Button } from "../../shadcn/ui/button"
+import NetworkStrengthIcon from "../../network-strength-icon"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
+import serialMessageManagerClass from "../../../classes/serial-message-manager-class"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../shadcn/ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function
 function ScanNetworksSection() {
@@ -54,14 +54,14 @@ function ScanNetworksSection() {
 	if (serialMessageManagerClass.isScanning) {
 		return (
 			<div className="flex items-center justify-center py-8">
-				<div className="text-sm text-muted-foreground">Scanning for networks...</div>
+				<div className="text-sm text-muted-foreground">Scanning for Networks...</div>
 			</div>
 		)
 	} else if (isEmpty(serialMessageManagerClass.otherNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed border-gray-300
 			dark:border-gray-700 rounded-lg text-center">
-				Click "Scan Networks" to find nearby WiFi networks
+				Click "Scan Networks" to find nearby Wi-Fi networks
 			</div>
 		)
 	}

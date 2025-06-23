@@ -19,14 +19,14 @@ function UploadWiFiCredentials() {
 			{serialMessageManagerClass.wiFiConnectionStatus === WiFiConnectionStatus.WIFI_ONLY && (
 				<div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
 					<p className="text-beakInner text-sm">
-						⚠ WiFi connected but can't reach our servers. This might be a captive portal network.
+						⚠ Wi-Fi connected but can't reach our servers. This might be a captive portal network.
 					</p>
 				</div>
 			)}
 			{serialMessageManagerClass.wiFiConnectionStatus === WiFiConnectionStatus.FAILED && (
 				<div className="p-3 bg-red-50 border border-red-200 rounded-lg">
 					<p className="text-cardinal text-sm">
-						✗ Connection failed. Please check your WiFi credentials and try again.
+						✗ Connection failed. Please check your Wi-Fi credentials and try again.
 					</p>
 				</div>
 			)}

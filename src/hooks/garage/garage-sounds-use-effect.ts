@@ -9,12 +9,9 @@ import socketClass from "../../classes/socket-class"
 export default function useGarageSoundsUseEffect(): void {
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
-	// Check if the event target is an input field or any element where typing is expected
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
-		target.isContentEditable) {
-			return // Skip processing keyboard shortcuts when typing in fields
-		}
+		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
@@ -29,12 +26,9 @@ export default function useGarageSoundsUseEffect(): void {
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
-	// Same check as handleKeyDown
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
-		target.isContentEditable) {
-			return
-		}
+		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
