@@ -100,7 +100,7 @@ function ChangePasswordSection() {
 							bg-polar !text-eel font-light border-swan"
 						/>
 						{newPassword.length > 0 && newPassword.length < 6 && (
-							<p className="text-sm text-red-500">
+							<p className="text-sm text-cardinal">
 								Password must be at least 6 characters.
 							</p>
 						)}
