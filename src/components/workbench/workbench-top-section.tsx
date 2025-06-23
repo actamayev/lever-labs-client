@@ -2,7 +2,7 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
-import VolumeIcon from "./volume-icon"
+import VolumeIcon from "./sound/volume-icon"
 import BatteryIcon from "./battery-icon"
 import NetworkIcon from "./network-icon"
 import workbenchClass from "../../classes/workbench-class"

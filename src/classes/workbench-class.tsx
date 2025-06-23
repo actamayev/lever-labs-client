@@ -1,15 +1,14 @@
 "use client"
 
-import { TuneToPlay } from "@bluedotrobots/common-ts"
 import { action, makeAutoObservable } from "mobx"
+import { TuneToPlay } from "@bluedotrobots/common-ts"
 
 class WorkbenchClass {
 	public batteryPercentage = 100
 	public isCharging = false
 	public volume = 70
 	public isMuted = true
-	public isDropdownOpen = false
-	public selectedSound: TuneToPlay = "Chime"
+	public selectedSound: TuneToPlay = "Breeze"
 	public fixedWidth = 0
 	public windowHeight = 0
 
@@ -23,10 +22,6 @@ class WorkbenchClass {
 
 	public setIsMuted = action((newIsMuted: boolean): void => {
 		this.isMuted = newIsMuted
-	})
-
-	public setIsDropdownOpen = action((newIsDropdownOpen: boolean): void => {
-		this.isDropdownOpen = newIsDropdownOpen
 	})
 
 	public setSelectedSound = action((newSelectedSound: TuneToPlay): void => {
@@ -44,8 +39,7 @@ class WorkbenchClass {
 	public logout() {
 		this.setVolume(70)
 		this.setIsMuted(true)
-		this.setIsDropdownOpen(false)
-		this.setSelectedSound("Chime")
+		this.setSelectedSound("Breeze")
 		this.setFixedWidth(0)
 		this.setWindowHeight(0)
 	}

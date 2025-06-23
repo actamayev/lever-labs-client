@@ -2,32 +2,22 @@
 "use client"
 
 import { observer } from "mobx-react"
-import toUpper from "lodash-es/toUpper"
 import { useCallback, useState } from "react"
-import { TuneToPlay } from "@bluedotrobots/common-ts"
-import { Volume, Volume1, Volume2, VolumeOff, ChevronDown } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/shadcn/ui/dropdown-menu"
-import { Slider } from "../shadcn/ui/slider"
-import { Checkbox } from "../shadcn/ui/checkbox"
-import { Separator } from "../shadcn/ui/separator"
-import playTune from "../../utils/workbench/play-tune"
-import workbenchClass from "../../classes/workbench-class"
-import { Button, buttonVariants } from "../shadcn/ui/button"
-import WorkbenchIconTemplate from "./workbench-icon-template"
-import changeAudibleStatus from "../../utils/workbench/change-audible-status"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../shadcn/ui/hover-card"
+import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
+import TestSounds from "./test-sounds"
+import { cn } from "../../../lib/shadcn/utils"
+import { Slider } from "../../shadcn/ui/slider"
+import { Checkbox } from "../../shadcn/ui/checkbox"
+import { Separator } from "../../shadcn/ui/separator"
+import workbenchClass from "../../../classes/workbench-class"
+import WorkbenchIconTemplate from "../workbench-icon-template"
+import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
 // eslint-disable-next-line max-lines-per-function
 function VolumeIcon() {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-	const testSounds: TuneToPlay[] = ["Chime", "Beep", "Alert"]
 
 	const SpeakerIconToShow = () => {
 		const baseClasses = "!h-11 !w-11"
@@ -148,64 +138,7 @@ function VolumeIcon() {
 
 					<Separator className="my-3" />
 
-					{/* Sound Controls */}
-					<div className="space-y-3">
-						<div className="text-sm font-medium text-eel/70">Test Sounds</div>
-						<div className="flex items-center gap-2">
-							<Button
-								disabled={workbenchClass.isMuted}
-								className="rounded-xl bg-eel flex-1"
-								onClick={playTune}
-							>
-								PLAY A TUNE
-							</Button>
-							<div className="w-24">
-								<DropdownMenu
-									open={isDropdownOpen}
-									onOpenChange={(open) => {
-										setIsDropdownOpen(open)
-										workbenchClass.setIsDropdownOpen(open)
-									}}
-								>
-									<DropdownMenuTrigger asChild>
-										<div
-											className={cn(
-												buttonVariants({
-													variant: "outline",
-													className: "flex items-center gap-1 rounded-xl justify-between w-full h-9 px-2"
-												}),
-												workbenchClass.isMuted && "opacity-50 pointer-events-none"
-											)}
-										>
-											<span className="text-xs font-medium">
-												{toUpper(workbenchClass.selectedSound)}
-											</span>
-											<ChevronDown className="h-3 w-3" />
-										</div>
-									</DropdownMenuTrigger>
-									<DropdownMenuContent
-										className="rounded-xl bg-standardBackground border-swan"
-										align="end"
-									>
-										{testSounds.map((sound) => (
-											<DropdownMenuItem
-												key={sound}
-												onClick={() => {
-													workbenchClass.setSelectedSound(sound)
-													setIsDropdownOpen(false)
-												}}
-												className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
-											>
-												<span className="text-sm font-medium">
-													{toUpper(sound)}
-												</span>
-											</DropdownMenuItem>
-										))}
-									</DropdownMenuContent>
-								</DropdownMenu>
-							</div>
-						</div>
-					</div>
+					<TestSounds isDropdownOpen={isDropdownOpen} setIsDropdownOpen={setIsDropdownOpen}/>
 				</div>
 			</HoverCardContent>
 		</HoverCard>
