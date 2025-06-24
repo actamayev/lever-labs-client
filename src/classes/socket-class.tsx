@@ -1,21 +1,18 @@
 "use client"
 
-import EventEmitter from "events"
 import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
-import { action, makeObservable, observable } from "mobx"
-import { HeadlightData, HornData, IncomingSensorData,
-	LedControlData, MotorControlData, PipStatusUpdate, SoundData } from "@bluedotrobots/common-ts"
+import { action, makeAutoObservable } from "mobx"
+import { HeadlightData, HornData, LedControlData, MotorControlData, SoundData } from "@bluedotrobots/common-ts"
+import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
+import handleIncomingSensorData from "../utils/socket/handle-incoming-sensor-data"
 
-class SocketClass extends EventEmitter {
+class SocketClass {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
 
 	constructor() {
-		super()
-		makeObservable(this, {
-			isConnected: observable
-		})
+		makeAutoObservable(this)
 	}
 
 	public connect = action((accessToken: string): void => {
@@ -50,15 +47,8 @@ class SocketClass extends EventEmitter {
 	private setupPipEvents = action((): void => {
 		// This is for receiving socket events from the backend.
 		if (!this._socket) return
-		this._socket.on("pip-connection-status-update", (data: PipStatusUpdate) => {
-			this.emit("pipStatusUpdate", data) // Emit event with processed data
-		})
-		this._socket.on("motor-control-ack", (response: { success: boolean, error?: string }) => {
-			this.emit("motorControlAck", response)
-		})
-		this._socket.on("sensor-data", (data: IncomingSensorData) => {
-			this.emit("incomingSensorData", data) // Emit event with processed data
-		})
+		this._socket.on("pip-connection-status-update", handlePipStatusUpdate)
+		this._socket.on("sensor-data", handleIncomingSensorData)
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {

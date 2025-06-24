@@ -11,7 +11,6 @@ import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
-import useSocketEventsUseEffect from "@/hooks/socket-events/socket-events-use-effect"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-analytics"
 import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
 import useRedirectBackToRegisterUsername from "@/hooks/redirects/redirect-back-to-register-username"
@@ -35,7 +34,6 @@ export default function Providers({ children }: { children: ReactNode }) {
 	useSiteThemeListenerUseEffect()
 	useInitializeGoogleAnalytics()
 	useEffect(() => void retrieveInfo(), [])
-	useSocketEventsUseEffect()
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
