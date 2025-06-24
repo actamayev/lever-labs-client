@@ -11,7 +11,7 @@ interface MessageSentData {
 }
 
 class SerialMessageManagerClass {
-	public messages: Message[] = []
+	public messages: SerialMessage[] = []
 	public onWiFiConnectionResult: ((status: WiFiConnectionStatus) => void) | null = null
 
 	// Pip flow state

@@ -7,7 +7,7 @@ declare global {
 		}
 	}
 
-	interface Message {
+	interface SerialMessage {
 		content: string
 		direction: "sent" | "received"
 		timestamp: Date
