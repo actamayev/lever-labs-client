@@ -12,6 +12,8 @@ import chatsClass from "../../../classes/chat-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import { isErrorResponse, isErrorResponses } from "../../../utils/type-checks"
+import { isEqual } from "lodash-es"
 
 interface ChatInterfaceProps {
 	blocklyJson: BlocklyJson
@@ -21,6 +23,7 @@ interface ChatInterfaceProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
+	const [currentStreamId, setCurrentStreamId] = useState<string | null>(null)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const messagesContainerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -53,6 +56,13 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}
 	}, [messages])
 
+	// Clear streamId when streaming stops
+	useEffect(() => {
+		if (!isStreaming && currentStreamId) {
+			setCurrentStreamId(null)
+		}
+	}, [isStreaming, currentStreamId])
+
 	const handleSendMessage = async () => {
 		if (!inputValue.trim() || isStreaming) return
 
@@ -72,7 +82,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			chatsClass.resetChatState(challengeId)
 
 			// Send request to backend - challengeId will be included in the WebSocket response
-			await blueDotApiClientClass.careerQuestDataService.sendChatMessage({
+			const response = await blueDotApiClientClass.careerQuestDataService.sendChatMessage({
 				challengeData,
 				userCode: cppCode,
 				interactionType: "generalQuestion",
@@ -80,6 +90,10 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 				conversationHistory
 			})
 
+			console.log(response)
+			if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
+
+			setCurrentStreamId(response.data.streamId)
 		} catch (error) {
 			console.error("Failed to send chat message:", error)
 
@@ -88,8 +102,20 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}
 	}
 
-	const handleStopGeneration = () => {
+	const handleStopGeneration = async () => {
+		// Stop on backend if we have a streamId
+		if (currentStreamId) {
+			try {
+				await blueDotApiClientClass.careerQuestDataService.stopChatStream(currentStreamId)
+				console.log("Stream stopped on backend")
+			} catch (error) {
+				console.error("Failed to stop stream on backend:", error)
+			}
+		}
+
+		// Always reset local state
 		chatsClass.resetChatState(challengeId)
+		setCurrentStreamId(null)
 	}
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -170,6 +196,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 						onKeyDown={handleKeyDown}
 						placeholder="Ask about the code or concepts"
 						className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan"
+						// disabled={isStreaming}
 					/>
 					{(inputValue.trim() || hasUserMessages) && (
 						<Button
