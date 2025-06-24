@@ -8,7 +8,6 @@ import SingleMessage from "./single-message"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
-import socketClass from "../../../classes/socket-class"
 import chatsClass from "../../../classes/chat-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
@@ -22,7 +21,6 @@ interface ChatInterfaceProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
-	const [isLoading, setIsLoading] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const messagesContainerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -37,19 +35,16 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const isStreaming = chatsClass.isStreaming(challengeId)
 	const conversationHistory = chatsClass.getConversationHistory(challengeId)
 
+	// Check if we're waiting for a response (streaming message with no content yet)
+	const isWaitingForResponse = useMemo(() => {
+		if (!isStreaming) return false
+		const streamingMessage = messages.find(msg => msg.isStreaming)
+		return streamingMessage ? streamingMessage.content.length === 0 : false
+	}, [isStreaming, messages])
+
 	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
-
-	// Set challenge context when component mounts
-	useEffect(() => {
-		socketClass.setChallengeContext(challengeId)
-
-		return () => {
-			// Don't clear context on unmount as user might navigate back
-			// socketClass.clearChallengeContext()
-		}
-	}, [challengeId])
 
 	// Auto-scroll to bottom when new messages are added
 	useEffect(() => {
@@ -58,19 +53,11 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}
 	}, [messages])
 
-	// Handle when streaming completes
-	useEffect(() => {
-		if (!isStreaming && isLoading) {
-			setIsLoading(false)
-		}
-	}, [isStreaming, isLoading])
-
 	const handleSendMessage = async () => {
-		if (!inputValue.trim() || isLoading) return
+		if (!inputValue.trim() || isStreaming) return
 
 		const messageToSend = inputValue
 		setInputValue("")
-		setIsLoading(true)
 
 		// Add user message to chats
 		chatsClass.addUserMessage(challengeId, messageToSend)
@@ -84,7 +71,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			// Reset chat state for new conversation
 			chatsClass.resetChatState(challengeId)
 
-			// Send request to backend
+			// Send request to backend - challengeId will be included in the WebSocket response
 			await blueDotApiClientClass.careerQuestDataService.sendChatMessage({
 				challengeData,
 				userCode: cppCode,
@@ -95,7 +82,6 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 
 		} catch (error) {
 			console.error("Failed to send chat message:", error)
-			setIsLoading(false)
 
 			// Add error message to chats
 			chatsClass.addErrorMessage(challengeId, "Sorry, I encountered an error. Please try again.")
@@ -103,7 +89,6 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	}
 
 	const handleStopGeneration = () => {
-		setIsLoading(false)
 		chatsClass.resetChatState(challengeId)
 	}
 
@@ -151,8 +136,8 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 							/>
 						))}
 
-						{/* Loading indicator when waiting for stream to start */}
-						{isLoading && !isStreaming && (
+						{/* Loading indicator when waiting for response to start */}
+						{isWaitingForResponse && (
 							<div className="flex gap-3 justify-start">
 								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 									<AvatarFallback className="bg-macaw text-white">
@@ -185,17 +170,16 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 						onKeyDown={handleKeyDown}
 						placeholder="Ask about the code or concepts"
 						className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan"
-						disabled={isLoading}
 					/>
 					{(inputValue.trim() || hasUserMessages) && (
 						<Button
-							onClick={isLoading ? handleStopGeneration : handleSendMessage}
-							disabled={!isLoading && !inputValue.trim()}
+							onClick={isStreaming ? handleStopGeneration : handleSendMessage}
+							disabled={!isStreaming && !inputValue.trim()}
 							size="icon"
 							className="absolute right-2 bottom-2 h-8 w-8 shrink-0"
-							variant={isLoading ? "destructive" : "default"}
+							variant={isStreaming ? "destructive" : "default"}
 						>
-							{isLoading ? (
+							{isStreaming ? (
 								<Square className="w-4 h-4" />
 							) : (
 								<Send className="w-4 h-4" />

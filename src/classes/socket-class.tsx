@@ -13,9 +13,6 @@ class SocketClass {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
 
-	// Track current challenge context for chat
-	public currentChallengeId: string | null = null
-
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -61,9 +58,9 @@ class SocketClass {
 		if (!this._socket) return
 
 		this._socket.on("chatbot-stream", (event: ChatbotStreamEvent) => {
-			// Use current challenge context
-			if (!this.currentChallengeId) {
-				console.warn("Received chatbot event but no current challenge ID set")
+			// Now we get challengeId directly from the event
+			if (!event.challengeId) {
+				console.warn("Received chatbot event without challengeId")
 				return
 			}
 
@@ -82,44 +79,21 @@ class SocketClass {
 	})
 
 	private handleChatbotStart = action((event: ChatbotStreamEvent): void => {
-		if (!this.currentChallengeId) return
-
-		chatsClass.startStreaming(this.currentChallengeId, event.interactionType)
-		console.info("Chatbot started for challenge:", this.currentChallengeId, "interaction:", event.interactionType)
+		chatsClass.startStreaming(event.challengeId, event.interactionType)
+		console.info("Chatbot started for challenge:", event.challengeId, "interaction:", event.interactionType)
 	})
 
 	private handleChatbotChunk = action((event: ChatbotStreamEvent): void => {
-		if (!this.currentChallengeId) return
-
-		console.log("Chunk received for challenge:", this.currentChallengeId, "content:", event.content)
+		console.log("Chunk received for challenge:", event.challengeId, "content:", event.content)
 
 		if (event.content) {
-			chatsClass.addStreamingChunk(this.currentChallengeId, event.content)
+			chatsClass.addStreamingChunk(event.challengeId, event.content)
 		}
 	})
 
 	private handleChatbotComplete = action((event: ChatbotStreamEvent): void => {
-		if (!this.currentChallengeId) return
-
-		chatsClass.completeStreaming(this.currentChallengeId, event.fullResponse)
-		console.log("Chatbot completed for challenge:", this.currentChallengeId)
-	})
-
-	// Set current challenge context for chat
-	public setChallengeContext = action((challengeId: string): void => {
-		this.currentChallengeId = challengeId
-	})
-
-	// Clear challenge context
-	public clearChallengeContext = action((): void => {
-		this.currentChallengeId = null
-	})
-
-	// Method to reset chatbot state for current challenge
-	public resetChatbotState = action((): void => {
-		if (this.currentChallengeId) {
-			chatsClass.resetChatState(this.currentChallengeId)
-		}
+		chatsClass.completeStreaming(event.challengeId, event.fullResponse)
+		console.log("Chatbot completed for challenge:", event.challengeId)
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {
@@ -169,7 +143,6 @@ class SocketClass {
 			this._socket = null
 		}
 		this.isConnected = false
-		this.currentChallengeId = null
 	})
 
 	public logout = action((): void => {
