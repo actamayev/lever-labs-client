@@ -9,7 +9,7 @@ import { OBSTACLE_AVOIDANCE_CHALLENGE } from "../../../utils/constants/career-qu
 export default function ObstacleAvoidance() {
 	return (
 		<>
-			<div className="w-full min-h-screen p-4">
+			{/* <div className="w-full min-h-screen p-4">
 				<div className="w-2/3 mx-auto mb-8 text-center">
 					<div className="space-y-4">
 						<div>
@@ -30,7 +30,7 @@ export default function ObstacleAvoidance() {
 						If they press the check code and it isn't the right solution (for simple programs, the solns should be simple (hard-coded)) --/ should send to the LLM, and it should give feedback.
 					</div>
 				</div>
-			</div>
+			</div> */}
 			<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
 				<ViewOnlyDemo
 					challengeData={OBSTACLE_AVOIDANCE_CHALLENGE}

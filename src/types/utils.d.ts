@@ -5,7 +5,7 @@ declare global {
 
 	type EndpointHeaders =
 		| "/auth"
-		| "/career-quest"
+		| "/chat"
 		| "/lab-activity-tracking"
 		| "/misc"
 		| "/garage"

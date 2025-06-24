@@ -21,6 +21,7 @@ export interface ChatState {
 class ChatsClass {
 	// Map of challengeId -> ChatState
 	public chats = observable.map<string, ChatState>()
+	public currentStreamId: string | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -136,6 +137,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
+		this.setCurrentStreamId(null)
 	})
 
 	// Reset chat state for a challenge
@@ -144,6 +146,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
+		this.setCurrentStreamId(null)
 	})
 
 	// Clear all messages for a challenge
@@ -153,6 +156,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
+		this.setCurrentStreamId(null)
 	})
 
 	// Check if currently streaming for a challenge
@@ -181,10 +185,16 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
+		this.setCurrentStreamId(null)
+	})
+
+	public setCurrentStreamId = action((newCurrentStreamId: string | null): void => {
+		this.currentStreamId = newCurrentStreamId
 	})
 
 	public logout(): void {
 		this.chats.clear()
+		this.setCurrentStreamId(null)
 	}
 }
 

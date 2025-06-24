@@ -5,14 +5,14 @@ import { ErrorResponses, SuccessResponse, IncomingChatData, StartChatSuccess } f
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
-export default class CareerQuestDataService extends BaseDataService {
+export default class ChatDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 
-	async sendChatMessage(chatMessage: IncomingChatData): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
+	async sendCareerQuestMessage(chatMessage: IncomingChatData): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
-			this.buildUrl("/chat"), chatMessage
+			this.buildUrl("/send-career-quest-message"), chatMessage
 		)
 	}
 
