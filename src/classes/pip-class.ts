@@ -84,7 +84,7 @@ class PipClass {
 		this.retrievedPipData = newState
 	})
 
-	public logout() {
+	public logout(): void {
 		this.pipData = []
 		this.setIsRetrievingPipData(false)
 		this.setSelectedPip(null)

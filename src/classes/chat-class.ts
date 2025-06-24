@@ -183,7 +183,7 @@ class ChatsClass {
 		chatState.currentInteractionType = null
 	})
 
-	public logout() {
+	public logout(): void {
 		this.chats.clear()
 	}
 }

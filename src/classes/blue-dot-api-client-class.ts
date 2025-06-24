@@ -28,7 +28,7 @@ class BlueDotApiClient {
 	constructor() {
 	}
 
-	public logout() {
+	public logout(): void {
 		this.httpClient.logout()
 	}
 }
