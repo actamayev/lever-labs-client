@@ -2,6 +2,7 @@
 
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
+import chatsClass from "../../classes/chat-class"
 import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
 import sandboxClass from "../../classes/sandbox-class"
@@ -16,6 +17,7 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 export default async function logout(): Promise<void> {
 	personalInfoClass.logout()
 	pipClass.logout()
+	chatsClass.logout()
 	socketClass.logout()
 	authClass.logout()
 	blueDotApiClientClass.logout()

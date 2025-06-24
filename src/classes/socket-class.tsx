@@ -4,7 +4,8 @@ import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { action, makeAutoObservable } from "mobx"
 import { HeadlightData, HornData, LedControlData, MotorControlData,
-	SoundData, ChatbotStreamEvent, InteractionType } from "@bluedotrobots/common-ts"
+	SoundData, ChatbotStreamEvent } from "@bluedotrobots/common-ts"
+import chatsClass from "./chat-class"
 import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
 import handleIncomingSensorData from "../utils/socket/handle-incoming-sensor-data"
 
@@ -12,10 +13,8 @@ class SocketClass {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
 
-	// Chatbot state
-	public chatbotStreaming: boolean = false
-	public currentChatbotResponse: string = ""
-	public currentInteractionType: InteractionType | null = null
+	// Track current challenge context for chat
+	public currentChallengeId: string | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -62,6 +61,12 @@ class SocketClass {
 		if (!this._socket) return
 
 		this._socket.on("chatbot-stream", (event: ChatbotStreamEvent) => {
+			// Use current challenge context
+			if (!this.currentChallengeId) {
+				console.warn("Received chatbot event but no current challenge ID set")
+				return
+			}
+
 			switch (event.type) {
 			case "chatbotStart":
 				this.handleChatbotStart(event)
@@ -77,31 +82,44 @@ class SocketClass {
 	})
 
 	private handleChatbotStart = action((event: ChatbotStreamEvent): void => {
-		this.chatbotStreaming = true
-		this.currentChatbotResponse = ""
-		this.currentInteractionType = event.interactionType
-		console.info("Chatbot started for:", event.interactionType)
+		if (!this.currentChallengeId) return
+
+		chatsClass.startStreaming(this.currentChallengeId, event.interactionType)
+		console.info("Chatbot started for challenge:", this.currentChallengeId, "interaction:", event.interactionType)
 	})
 
 	private handleChatbotChunk = action((event: ChatbotStreamEvent): void => {
-		console.log(event.content)
+		if (!this.currentChallengeId) return
+
+		console.log("Chunk received for challenge:", this.currentChallengeId, "content:", event.content)
+
 		if (event.content) {
-			this.currentChatbotResponse += event.content
+			chatsClass.addStreamingChunk(this.currentChallengeId, event.content)
 		}
 	})
 
 	private handleChatbotComplete = action((event: ChatbotStreamEvent): void => {
-		this.chatbotStreaming = false
-		this.currentInteractionType = null
-		console.log("Chatbot completed:", event.fullResponse)
-		// The complete response is stored in currentChatbotResponse from chunks
+		if (!this.currentChallengeId) return
+
+		chatsClass.completeStreaming(this.currentChallengeId, event.fullResponse)
+		console.log("Chatbot completed for challenge:", this.currentChallengeId)
 	})
 
-	// Method to reset chatbot state (for new conversations)
+	// Set current challenge context for chat
+	public setChallengeContext = action((challengeId: string): void => {
+		this.currentChallengeId = challengeId
+	})
+
+	// Clear challenge context
+	public clearChallengeContext = action((): void => {
+		this.currentChallengeId = null
+	})
+
+	// Method to reset chatbot state for current challenge
 	public resetChatbotState = action((): void => {
-		this.chatbotStreaming = false
-		this.currentChatbotResponse = ""
-		this.currentInteractionType = null
+		if (this.currentChallengeId) {
+			chatsClass.resetChatState(this.currentChallengeId)
+		}
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {
@@ -151,7 +169,7 @@ class SocketClass {
 			this._socket = null
 		}
 		this.isConnected = false
-		this.resetChatbotState()
+		this.currentChallengeId = null
 	})
 
 	public logout = action((): void => {

@@ -9,11 +9,12 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
+import { ChatMessageRole } from "@bluedotrobots/common-ts"
 
 interface Message {
 	id: string
 	content: string
-	sender: "user" | "ai"
+	sender: ChatMessageRole
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
@@ -23,7 +24,7 @@ function SingleMessage({ message } : { message: Message}) {
 			key={message.id}
 			className={`flex gap-3 min-w-0 w-full ${message.sender === "user" ? "justify-end" : "justify-start"}`}
 		>
-			{message.sender === "ai" && (
+			{message.sender === "assistant" && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					<AvatarFallback className="bg-macaw text-white">
 						<BotMessageSquare className="w-4 h-4" />
@@ -38,11 +39,11 @@ function SingleMessage({ message } : { message: Message}) {
 						? "bg-humpback text-white ml-auto"
 						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 				)}
-				style={{ wordBreak: "break-all", overflowWrap: "anywhere" }}
+				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
 				<p
 					className="text-sm whitespace-pre-wrap"
-					style={{ wordBreak: "break-all", overflowWrap: "anywhere" }}
+					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 				>
 					{message.content}
 				</p>

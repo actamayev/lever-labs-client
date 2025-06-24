@@ -3,21 +3,16 @@
 import { observer } from "mobx-react"
 import { useState, useRef, useEffect, useMemo } from "react"
 import { Send, Square, BotMessageSquare } from "lucide-react"
-import { BlocklyJson, ChallengeData, ChatMessage } from "@bluedotrobots/common-ts"
+import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import SingleMessage from "./single-message"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
 import socketClass from "../../../classes/socket-class"
+import chatsClass from "../../../classes/chat-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-
-interface Message {
-	id: string
-	content: string
-	sender: "user" | "ai"
-}
 
 interface ChatInterfaceProps {
 	blocklyJson: BlocklyJson
@@ -26,28 +21,35 @@ interface ChatInterfaceProps {
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
-	const [messages, setMessages] = useState<Message[]>([])
 	const [inputValue, setInputValue] = useState("")
 	const [isLoading, setIsLoading] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const messagesContainerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
-	const [currentStreamingMessageId, setCurrentStreamingMessageId] = useState<string | null>(null)
+
+	const challengeId = challengeData.id
 
 	// Generate current C++ code from Blockly
 	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
 
-	// Convert local messages to conversation history format for API
-	const conversationHistory = useMemo((): ChatMessage[] => {
-		return messages.map(msg => ({
-			role: msg.sender === "user" ? "user" : "assistant" as const,
-			content: msg.content
-		}))
-	}, [messages])
+	// Get messages directly from chats class
+	const messages = chatsClass.getMessages(challengeId)
+	const isStreaming = chatsClass.isStreaming(challengeId)
+	const conversationHistory = chatsClass.getConversationHistory(challengeId)
 
 	// Check if there have been user messages
-	const hasUserMessages = messages.some(message => message.sender === "user")
+	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
+
+	// Set challenge context when component mounts
+	useEffect(() => {
+		socketClass.setChallengeContext(challengeId)
+
+		return () => {
+			// Don't clear context on unmount as user might navigate back
+			// socketClass.clearChallengeContext()
+		}
+	}, [challengeId])
 
 	// Auto-scroll to bottom when new messages are added
 	useEffect(() => {
@@ -56,35 +58,22 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}
 	}, [messages])
 
-	// Watch for chatbot streaming updates
+	// Handle when streaming completes
 	useEffect(() => {
-		if (socketClass.chatbotStreaming && currentStreamingMessageId) {
-			// Update the streaming message with current response
-			setMessages(prev => prev.map(msg =>
-				msg.id === currentStreamingMessageId
-					? { ...msg, content: socketClass.currentChatbotResponse }
-					: msg
-			))
-		} else if (!socketClass.chatbotStreaming && currentStreamingMessageId) {
-			// Streaming finished, clear the streaming message ID
-			setCurrentStreamingMessageId(null)
+		if (!isStreaming && isLoading) {
 			setIsLoading(false)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [socketClass.currentChatbotResponse, socketClass.chatbotStreaming, currentStreamingMessageId])
+	}, [isStreaming, isLoading])
 
 	const handleSendMessage = async () => {
 		if (!inputValue.trim() || isLoading) return
 
-		const userMessage: Message = {
-			id: Date.now().toString(),
-			content: inputValue,
-			sender: "user",
-		}
-
-		setMessages(prev => [...prev, userMessage])
+		const messageToSend = inputValue
 		setInputValue("")
 		setIsLoading(true)
+
+		// Add user message to chats
+		chatsClass.addUserMessage(challengeId, messageToSend)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
@@ -92,46 +81,30 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}, 0)
 
 		try {
-			// Create AI message placeholder for streaming
-			const aiMessageId = (Date.now() + 1).toString()
-			const aiMessage: Message = {
-				id: aiMessageId,
-				content: "",
-				sender: "ai",
-			}
-			setMessages(prev => [...prev, aiMessage])
-			setCurrentStreamingMessageId(aiMessageId)
-
-			// Reset socket state for new conversation
-			socketClass.resetChatbotState()
+			// Reset chat state for new conversation
+			chatsClass.resetChatState(challengeId)
 
 			// Send request to backend
 			await blueDotApiClientClass.careerQuestDataService.sendChatMessage({
 				challengeData,
 				userCode: cppCode,
 				interactionType: "generalQuestion",
-				message: inputValue,
+				message: messageToSend,
 				conversationHistory
 			})
 
 		} catch (error) {
 			console.error("Failed to send chat message:", error)
 			setIsLoading(false)
-			setCurrentStreamingMessageId(null)
 
-			// Update the AI message with error
-			setMessages(prev => prev.map(msg =>
-				msg.id === currentStreamingMessageId
-					? { ...msg, content: "Sorry, I encountered an error. Please try again." }
-					: msg
-			))
+			// Add error message to chats
+			chatsClass.addErrorMessage(challengeId, "Sorry, I encountered an error. Please try again.")
 		}
 	}
 
 	const handleStopGeneration = () => {
 		setIsLoading(false)
-		setCurrentStreamingMessageId(null)
-		socketClass.resetChatbotState()
+		chatsClass.resetChatState(challengeId)
 	}
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -142,13 +115,20 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		// Allow Shift+Enter for new lines
 	}
 
+	// Convert chat messages to display format
+	const displayMessages = messages.map(msg => ({
+		id: msg.id,
+		content: msg.content,
+		sender: msg.role
+	}))
+
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 			{/* Chat Messages - Scrollable with fixed height */}
 			<div
 				ref={messagesContainerRef}
 				className={cn(
-					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden", // Added w-full and overflow-x-hidden
+					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden",
 					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
 				)}
 			>
@@ -164,15 +144,15 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 				{/* Messages when they exist */}
 				{hasAnyMessages && (
 					<>
-						{messages.map((message) => (
+						{displayMessages.map((message) => (
 							<SingleMessage
 								key={message.id}
 								message={message}
 							/>
 						))}
 
-						{/* Loading indicator when streaming */}
-						{isLoading && currentStreamingMessageId && (
+						{/* Loading indicator when waiting for stream to start */}
+						{isLoading && !isStreaming && (
 							<div className="flex gap-3 justify-start">
 								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 									<AvatarFallback className="bg-macaw text-white">
