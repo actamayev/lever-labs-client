@@ -86,13 +86,6 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		await handleSendMessage()
 	}, [challengeId, handleSendMessage, isStreaming])
 
-	// Convert chat messages to display format
-	const displayMessages = messages.map(msg => ({
-		id: msg.id,
-		content: msg.content,
-		sender: msg.role
-	}))
-
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 			{/* Chat Messages - Scrollable with fixed height */}
@@ -115,7 +108,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 				{/* Messages when they exist */}
 				{hasAnyMessages && (
 					<>
-						{displayMessages.map((message) => (
+						{messages.map((message) => (
 							<SingleMessage
 								key={message.id}
 								message={message}
@@ -156,7 +149,6 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 						onKeyDown={handleKeyDown}
 						placeholder="Ask about the code or concepts"
 						className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan"
-						// disabled={isStreaming}
 					/>
 					{(inputValue.trim() || hasUserMessages) && (
 						<Button

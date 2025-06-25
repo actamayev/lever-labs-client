@@ -3,16 +3,8 @@
 import { action, makeAutoObservable, observable } from "mobx"
 import { InteractionType, ChatMessageRole} from "@bluedotrobots/common-ts"
 
-export interface ChatMessage {
-	id: string
-	role: ChatMessageRole
-	content: string
-	timestamp: Date
-	isStreaming?: boolean
-}
-
 export interface ChatState {
-	messages: ChatMessage[]
+	messages: ChatClassMessage[]
 	isStreaming: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
@@ -45,7 +37,7 @@ class ChatsClass {
 	}
 
 	// Get messages for a challenge
-	public getMessages(challengeId: string): ChatMessage[] {
+	public getMessages(challengeId: string): ChatClassMessage[] {
 		return this.getChatState(challengeId).messages
 	}
 
@@ -64,7 +56,7 @@ class ChatsClass {
 	public addUserMessage = action((challengeId: string, content: string): void => {
 		const chatState = this.getChatState(challengeId)
 
-		const message: ChatMessage = {
+		const message: ChatClassMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
 			content,
@@ -79,7 +71,7 @@ class ChatsClass {
 		const chatState = this.getChatState(challengeId)
 
 		// Create streaming message placeholder
-		const streamingMessage: ChatMessage = {
+		const streamingMessage: ChatClassMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
 			content: "",
@@ -172,7 +164,7 @@ class ChatsClass {
 	// Add error message
 	public addErrorMessage = action((challengeId: string, error: string): void => {
 		const chatState = this.getChatState(challengeId)
-		const message: ChatMessage = {
+		const message: ChatClassMessage = {
 			id: `error-${Date.now()}`,
 			role: "assistant",
 			content: error,
