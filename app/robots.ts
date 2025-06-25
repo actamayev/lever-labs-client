@@ -11,7 +11,10 @@ export default function robots(): MetadataRoute.Robots {
 					"/mission",
 					"/contact",
 					"/login",
-					"/register"
+					"/register",
+					"/privacy",
+					"/community-guidelines",
+					"/terms"
 				],
 				disallow: [
 					"/garage/",
