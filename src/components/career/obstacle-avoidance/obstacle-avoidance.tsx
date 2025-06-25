@@ -18,7 +18,7 @@ export default function ObstacleAvoidance() {
 		LED_BLOCK_TYPES.ESP32_LED_CONTROL,
 		CONDITIONAL_BLOCK_TYPES.IF,
 		CONDITIONAL_BLOCK_TYPES.IF_ELSE
-	], { addSeparators: true })
+	])
 
 	return (
 		<div className="w-full min-h-screen p-4">
