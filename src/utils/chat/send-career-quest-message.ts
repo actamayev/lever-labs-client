@@ -35,7 +35,7 @@ export default async function sendCareerQuestMessage(
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
-			title: "Unable to stop message stream",
+			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})
 	}
