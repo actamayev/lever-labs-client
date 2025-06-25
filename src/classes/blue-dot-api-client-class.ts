@@ -3,6 +3,7 @@
 import BlueDotHttpClient from "./blue-dot-http-client"
 import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"
+import ChatDataService from "../services/chat-data-service"
 import MiscDataService from "../services/misc-data-service"
 import GarageDataService from "../services/garage-data-service"
 import SandboxDataService from "../services/sandbox-data-service"
@@ -22,11 +23,12 @@ class BlueDotApiClient {
 	public pipDataService: PipDataService = new PipDataService(this.httpClient, "/pip")
 	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient, "/sandbox")
 	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient, "/workbench")
+	public chatDataService: ChatDataService = new ChatDataService(this.httpClient, "/chat")
 
 	constructor() {
 	}
 
-	public logout() {
+	public logout(): void {
 		this.httpClient.logout()
 	}
 }

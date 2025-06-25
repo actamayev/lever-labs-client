@@ -1,31 +1,47 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Send, Bot, Square } from "lucide-react"
-import { useState, useRef, useEffect } from "react"
+import { Send, Square, BotMessageSquare } from "lucide-react"
+import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import SingleMessage from "./single-message"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
+import chatsClass from "../../../classes/chat-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import stopChatStream from "../../../utils/chat/stop-chat-stream"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
 
-interface Message {
-	id: string
-	content: string
-	sender: "user" | "ai"
+interface ChatInterfaceProps {
+	blocklyJson: BlocklyJson
+	challengeData: ChallengeData
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function ChatInterface() {
-	const [messages, setMessages] = useState<Message[]>([])
+function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
-	const [isLoading, setIsLoading] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
-	const messagesContainerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
+	// Generate current C++ code from Blockly
+	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
+
+	// Get messages directly from chats class
+	const messages = chatsClass.getMessages(challengeData.id)
+	const isStreaming = chatsClass.isStreaming(challengeData.id)
+	const conversationHistory = chatsClass.getConversationHistory(challengeData.id)
+
+	// Check if we're waiting for a response (streaming message with no content yet)
+	const isWaitingForResponse = useMemo(() => {
+		if (!isStreaming) return false
+		const streamingMessage = messages.find(msg => msg.isStreaming)
+		return streamingMessage ? streamingMessage.content.length === 0 : false
+	}, [isStreaming, messages])
+
 	// Check if there have been user messages
-	const hasUserMessages = messages.some(message => message.sender === "user")
+	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
 
 	// Auto-scroll to bottom when new messages are added
@@ -35,41 +51,21 @@ function ChatInterface() {
 		}
 	}, [messages])
 
-	const handleSendMessage = () => {
-		if (!inputValue.trim() || isLoading) return
+	const handleSendMessage = useCallback(async () => {
+		if (!inputValue.trim() || isStreaming) return
 
-		const userMessage: Message = {
-			id: Date.now().toString(),
-			content: inputValue,
-			sender: "user",
-		}
-
-		setMessages(prev => [...prev, userMessage])
 		setInputValue("")
-		setIsLoading(true)
+
+		// Add user message to chats
+		chatsClass.addUserMessage(challengeData.id, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
 			inputRef.current?.focus()
 		}, 0)
 
-		// Simulate AI response (replace this with your actual API call)
-		setTimeout(() => {
-			const aiMessage: Message = {
-				id: (Date.now() + 1).toString(),
-				// eslint-disable-next-line max-len
-				content: "Thanks for your question! This is where I would respond with helpful information about the code or robotics concept.",
-				sender: "ai",
-			}
-			setMessages(prev => [...prev, aiMessage])
-			setIsLoading(false)
-		}, 1000)
-	}
-
-	const handleStopGeneration = () => {
-		setIsLoading(false)
-		// Here you would also cancel any ongoing API requests
-	}
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue, conversationHistory)
+	}, [challengeData, conversationHistory, cppCode, inputValue, isStreaming])
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && !e.shiftKey) {
@@ -79,20 +75,26 @@ function ChatInterface() {
 		// Allow Shift+Enter for new lines
 	}
 
+	const onClickAction = useCallback(async () => {
+		if (isStreaming) {
+			return await stopChatStream(challengeData.id)
+		}
+		await handleSendMessage()
+	}, [challengeData.id, handleSendMessage, isStreaming])
+
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 			{/* Chat Messages - Scrollable with fixed height */}
 			<div
-				ref={messagesContainerRef}
 				className={cn(
-					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden", // Added w-full and overflow-x-hidden
+					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden",
 					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
 				)}
 			>
 				{/* Empty state when no messages */}
 				{!hasAnyMessages && (
 					<div className="text-center">
-						<Bot className="w-12 h-12 mx-auto mb-4 text-macaw" />
+						<BotMessageSquare className="w-12 h-12 mx-auto mb-4 text-macaw" />
 						<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
 						<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about the code or robotics concepts</p>
 					</div>
@@ -108,12 +110,12 @@ function ChatInterface() {
 							/>
 						))}
 
-						{/* Loading indicator */}
-						{isLoading && (
+						{/* Loading indicator when waiting for response to start */}
+						{isWaitingForResponse && (
 							<div className="flex gap-3 justify-start">
 								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 									<AvatarFallback className="bg-macaw text-white">
-										<Bot className="w-4 h-4" />
+										<BotMessageSquare className="w-4 h-4" />
 									</AvatarFallback>
 								</Avatar>
 								<div className="bg-wan rounded-lg px-3 py-2">
@@ -145,13 +147,13 @@ function ChatInterface() {
 					/>
 					{(inputValue.trim() || hasUserMessages) && (
 						<Button
-							onClick={isLoading ? handleStopGeneration : handleSendMessage}
-							disabled={!isLoading && !inputValue.trim()}
+							onClick={onClickAction}
+							disabled={!isStreaming && !inputValue.trim()}
 							size="icon"
 							className="absolute right-2 bottom-2 h-8 w-8 shrink-0"
-							variant={isLoading ? "destructive" : "default"}
+							variant={isStreaming ? "destructive" : "default"}
 						>
-							{isLoading ? (
+							{isStreaming ? (
 								<Square className="w-4 h-4" />
 							) : (
 								<Send className="w-4 h-4" />

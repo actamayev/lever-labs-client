@@ -78,7 +78,7 @@ class PersonalInfoClass {
 		this.username = newUsername
 	})
 
-	public logout() {
+	public logout(): void {
 		this.username = null
 		this.email = null
 		this.setIsRetrievingPersonalDetails(false)
