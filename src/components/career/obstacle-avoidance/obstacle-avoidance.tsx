@@ -4,7 +4,7 @@
 import { Suspense } from "react"
 import ViewOnlyDemo from "../view-only-demo"
 import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
-import { OBSTACLE_AVOIDANCE_CHALLENGE } from "../../../utils/constants/career-quest/career-llm-data"
+import { OBSTACLE_AVOIDANCE_CHALLENGE } from "@bluedotrobots/common-ts"
 
 export default function ObstacleAvoidance() {
 	return (

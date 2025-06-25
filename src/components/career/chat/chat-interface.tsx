@@ -64,7 +64,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData, cppCode, inputValue, conversationHistory)
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue, conversationHistory)
 	}, [challengeData, conversationHistory, cppCode, inputValue, isStreaming])
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
