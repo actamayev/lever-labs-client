@@ -101,17 +101,12 @@ class SocketClass {
 		this._socket.emit("play-sound", soundDataToSend)
 	})
 
-	// Disconnect socket (e.g., on logout)
-	public disconnect = action((): void => {
+	public logout = action((): void => {
 		if (this._socket) {
 			this._socket.disconnect()
 			this._socket = null
 		}
 		this.isConnected = false
-	})
-
-	public logout = action((): void => {
-		this.disconnect()
 	})
 }
 

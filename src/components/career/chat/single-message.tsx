@@ -10,7 +10,6 @@ import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 
-// eslint-disable-next-line max-lines-per-function, complexity
 function SingleMessage({ message } : { message: ChatClassMessage}) {
 	return (
 		<div

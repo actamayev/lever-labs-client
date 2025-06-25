@@ -136,44 +136,10 @@ class ChatsClass {
 		this.setCurrentStreamId(null)
 	})
 
-	// Clear all messages for a challenge
-	public clearChat = action((challengeId: string): void => {
-		const chatState = this.getChatState(challengeId)
-		chatState.messages = []
-		chatState.isStreaming = false
-		chatState.currentStreamingMessageId = null
-		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
-	})
-
 	// Check if currently streaming for a challenge
 	public isStreaming(challengeId: string): boolean {
 		return this.getChatState(challengeId).isStreaming
 	}
-
-	// Get current interaction type for a challenge
-	public getCurrentInteractionType(challengeId: string): InteractionType | null {
-		return this.getChatState(challengeId).currentInteractionType
-	}
-
-	// Add error message
-	public addErrorMessage = action((challengeId: string, error: string): void => {
-		const chatState = this.getChatState(challengeId)
-		const message: ChatClassMessage = {
-			id: `error-${Date.now()}`,
-			role: "assistant",
-			content: error,
-			timestamp: new Date()
-		}
-
-		chatState.messages.push(message)
-
-		// Reset streaming state if there was an error
-		chatState.isStreaming = false
-		chatState.currentStreamingMessageId = null
-		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
-	})
 
 	public setCurrentStreamId = action((newCurrentStreamId: string | null): void => {
 		this.currentStreamId = newCurrentStreamId
