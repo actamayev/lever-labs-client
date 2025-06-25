@@ -1,9 +1,5 @@
 import * as Blockly from "blockly"
 import { CssConfig } from "blockly/core/toolbox/category"
-import { MOTOR_BLOCK_TYPES } from "../utils/blockly/block-types/motor-block-types"
-import { LED_BLOCK_TYPES } from "../utils/blockly/block-types/led-block-types"
-import { LOGIC_BLOCK_TYPES } from "../utils/blockly/block-types/logic-block-types"
-import { SENSORS_BLOCK_TYPES } from "../utils/blockly/block-types/sensor-block-types"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -42,12 +38,6 @@ declare global {
 		colour: HexColor
 		contents: Array<CustomCategoryInfo>
 	}
-
-	type BlockNames =
-	| MOTOR_BLOCK_TYPES
-	| LED_BLOCK_TYPES
-	| LOGIC_BLOCK_TYPES
-	| SENSORS_BLOCK_TYPES
 
 	type BlocklyCategoryName =
 	| "Screen"

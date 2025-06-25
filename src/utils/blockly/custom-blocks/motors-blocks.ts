@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { motorsCategoryColour } from "../../constants/constants"
-import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "../block-types/motor-block-types"
+import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "@bluedotrobots/common-ts"
 
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.GO_FORWARD]: {

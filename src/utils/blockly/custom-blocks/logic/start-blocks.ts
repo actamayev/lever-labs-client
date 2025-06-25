@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { logicCategoryColour } from "../../../constants/constants"
-import { START_BLOCK_TYPES } from "../../block-types/logic-block-types"
+import { START_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 export const startBlocks: Record<START_BLOCK_TYPES, CustomBlock> = {
 	[START_BLOCK_TYPES.BUTTON_PRESS_START]: {

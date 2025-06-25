@@ -2,8 +2,7 @@
 
 import * as Blockly from "blockly"
 import { ledCategoryColour } from "../../constants/constants"
-import { LEDSensorType, SENSOR_TYPES } from "../block-types/sensor-block-types"
-import { LED_BLOCK_TYPES } from "../block-types/led-block-types"
+import { LEDSensorType, SENSOR_TYPES, LED_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 	[LED_BLOCK_TYPES.ESP32_LED_CONTROL]: {

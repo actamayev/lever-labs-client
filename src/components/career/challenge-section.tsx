@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import ChatInterface from "./chat/chat-interface"
@@ -16,20 +15,16 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 
 interface Props {
-	initialBlocklyJson: BlocklyJson
 	challengeData: ChallengeData
-	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
 }
 
 function ChallengeSection(props: Props) {
 	const {
-		initialBlocklyJson,
 		challengeData,
-		toolboxConfig,
-		extraClasses = ""
+		extraClasses = "h-full"
 	} = props
-	const [cppCode, setCppCode] = useState(generateCppFromJson(initialBlocklyJson))
+	const [cppCode, setCppCode] = useState(generateCppFromJson(challengeData.initialBlocklyJson))
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
@@ -62,7 +57,7 @@ function ChallengeSection(props: Props) {
 				{/* Middle Column - Sandbox + Buttons */}
 				<div className="flex flex-col flex-1 max-h-full">
 					<InteractiveMiniSandbox
-						toolboxConfig={toolboxConfig}
+						toolboxConfig={challengeData.toolboxConfig}
 						initialBlocklyJson={{}}
 						extraClasses="h-full"
 						onJsonChange={(newBlocklyJson) => (setCppCode(generateCppFromJson(newBlocklyJson)))}
@@ -89,7 +84,7 @@ function ChallengeSection(props: Props) {
 				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
 					<ChatInterface
-						blocklyJson={initialBlocklyJson}
+						blocklyJson={challengeData.initialBlocklyJson}
 						challengeData={challengeData}
 					/>
 				</div>

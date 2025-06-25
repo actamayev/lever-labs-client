@@ -5,21 +5,8 @@ import { Suspense } from "react"
 import { OBSTACLE_AVOIDANCE_CHALLENGE } from "@bluedotrobots/common-ts"
 import ChallengeSection from "../challenge-section"
 import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
-import { createFlyoutToolbox } from "../../../utils/blockly/create-flyout-toolbox"
-import { LED_BLOCK_TYPES } from "../../../utils/blockly/block-types/led-block-types"
-import { CONDITIONAL_BLOCK_TYPES, START_BLOCK_TYPES } from "../../../utils/blockly/block-types/logic-block-types"
-import { SENSORS_BLOCK_TYPES } from "../../../utils/blockly/block-types/sensor-block-types"
 
 export default function ObstacleAvoidance() {
-	const basicObstacleAvoidanceToolbox = createFlyoutToolbox([
-		START_BLOCK_TYPES.BUTTON_PRESS_START,
-		SENSORS_BLOCK_TYPES.CENTER_TOF_READ,
-		SENSORS_BLOCK_TYPES.SIDE_TOF_READ,
-		LED_BLOCK_TYPES.ESP32_LED_CONTROL,
-		CONDITIONAL_BLOCK_TYPES.IF,
-		CONDITIONAL_BLOCK_TYPES.IF_ELSE
-	])
-
 	return (
 		<div className="w-full min-h-screen p-4">
 			<div className="w-2/3 mx-auto text-center">
@@ -50,12 +37,7 @@ export default function ObstacleAvoidance() {
 				</div>
 			</div>
 			<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
-				<ChallengeSection
-					challengeData={OBSTACLE_AVOIDANCE_CHALLENGE}
-					extraClasses="h-full"
-					toolboxConfig={basicObstacleAvoidanceToolbox}
-					initialBlocklyJson={{}}
-				/>
+				<ChallengeSection challengeData={OBSTACLE_AVOIDANCE_CHALLENGE} />
 			</Suspense>
 		</div>
 	)
