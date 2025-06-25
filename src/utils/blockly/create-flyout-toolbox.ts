@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 
 interface ToolboxItem {
-	kind: "block";
+	kind: "block"
 	type: BlockNames
 }
 

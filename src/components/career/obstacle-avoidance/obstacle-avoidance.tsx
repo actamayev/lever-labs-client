@@ -54,7 +54,7 @@ export default function ObstacleAvoidance() {
 					challengeData={OBSTACLE_AVOIDANCE_CHALLENGE}
 					extraClasses="h-full"
 					toolboxConfig={basicObstacleAvoidanceToolbox}
-					blocklyJson={{}}
+					initialBlocklyJson={{}}
 				/>
 			</Suspense>
 		</div>
