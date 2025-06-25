@@ -41,7 +41,7 @@ class WorkbenchClass {
 		this.windowHeight = newWindowHeight
 	})
 
-	public logout() {
+	public logout(): void {
 		this.setVolume(70)
 		this.setIsMuted(true)
 		this.setSelectedSound("Breeze")

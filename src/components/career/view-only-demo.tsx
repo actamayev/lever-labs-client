@@ -3,7 +3,7 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import ChatInterface from "../career/chat/chat-interface"
@@ -16,6 +16,7 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 
 interface Props {
 	blocklyJson: BlocklyJson
+	challengeData: ChallengeData
 	description: string
 	beforeRunningText: string
 	extraClasses?: string
@@ -24,6 +25,7 @@ interface Props {
 function ViewOnlyDemo(props: Props) {
 	const {
 		blocklyJson,
+		challengeData,
 		description,
 		beforeRunningText,
 		extraClasses = ""
@@ -89,7 +91,10 @@ function ViewOnlyDemo(props: Props) {
 
 				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
-					<ChatInterface />
+					<ChatInterface
+						blocklyJson={blocklyJson}
+						challengeData={challengeData}
+					/>
 				</div>
 			</div>
 		</div>

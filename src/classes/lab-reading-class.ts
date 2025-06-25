@@ -1,10 +1,10 @@
 "use client"
 
-import { QuestionUUID } from "@bluedotrobots/common-ts"
 import isNil from "lodash-es/isNil"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
+import { QuestionUUID } from "@bluedotrobots/common-ts"
 
 class LabReadingClass {
 	public currentReadingName: ReadingNames | null = null
@@ -429,7 +429,7 @@ class LabReadingClass {
 		return lastBlock.id === blockId
 	}
 
-	public logout() {
+	public logout(): void {
 		this.currentReadingName = null
 		this.activeBlocks = []
 		this.shownBlocks = []

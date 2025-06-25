@@ -15,7 +15,7 @@ class ActivityProgressClass {
 		this.assignDefaultActivities()
 	}
 
-	private assignDefaultActivities() {
+	private assignDefaultActivities(): void {
 		this.activities = defaultLedActivities.map(activity => ({
 			...activity,
 			activityStatus: null,
@@ -92,7 +92,7 @@ class ActivityProgressClass {
 		this.setIsRetrievingAllActivityProgress(false)
 	})
 
-	public logout() {
+	public logout(): void {
 		this.setDidRetrieveAllActivityProgress(false)
 		this.setIsRetrievingAllActivityProgress(false)
 		this.activities = []

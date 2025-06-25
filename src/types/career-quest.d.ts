@@ -44,8 +44,6 @@ declare global {
 		timeToComplete: number
 	}
 
-	type WorkbenchItemsToShow = "battery" | "network" | "volume" | null
-
 	type CodingConceptName =
 	| "Variables"
 	| "Loops"

@@ -65,7 +65,6 @@ export default function FrontCareerCard(props: Props) {
 				<Icon
 					size="120"
 					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
-					fill="white"
 				/>
 			</div>
 
@@ -107,9 +106,9 @@ export default function FrontCareerCard(props: Props) {
 				</div>
 			</div>
 
-			{/* Continue Button */}
-			<div className="p-4 pt-2">
-				<Link href={careerUrl}>
+			{/* Continue Button and Flip Button */}
+			<div className="p-4 pt-2 flex flex-row items-center gap-3">
+				<Link href={careerUrl} className="flex-1">
 					<TactileButton
 						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
 						shadowClass={colors.shadow}
@@ -118,13 +117,13 @@ export default function FrontCareerCard(props: Props) {
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}
 					</TactileButton>
 				</Link>
-			</div>
 
-			{/* Flip Button */}
-			<BackFlipButton
-				onFlip={flipCard}
-				extraClasses="top-4 right-4 size-8"
-			/>
+				{/* Flip Button */}
+				<BackFlipButton
+					onFlip={flipCard}
+					extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+				/>
+			</div>
 		</motion.div>
 	)
 }

@@ -39,21 +39,22 @@ export default function BackCareerCard(props: Props) {
 					</div>
 				</div>
 
-				{/* Time estimate */}
-				<div className="flex flex-col items-center mt-4">
-					<h4 className="text-sm font-medium text-white mb-2">Estimated time:</h4>
+				{/* Bottom section with time estimate and flip button - 40px tall */}
+				<div className="flex flex-row items-center justify-between mt-4 h-10">
+					{/* Time estimate - Bottom Left */}
 					<div className="flex flex-row items-center gap-2">
 						<Hourglass className="w-5 h-5 text-white"/>
-						<div className="font-medium text-sm text-white">10 hours</div>
+						<div className="text-sm text-white">
+							<span className="font-medium">10 hours</span>
+						</div>
 					</div>
+
+					<BackFlipButton
+						onFlip={flipCard}
+						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+					/>
 				</div>
 			</div>
-
-			{/* Flip Button */}
-			<BackFlipButton
-				onFlip={flipCard}
-				extraClasses="top-4 right-4 size-8"
-			/>
 		</motion.div>
 	)
 }
