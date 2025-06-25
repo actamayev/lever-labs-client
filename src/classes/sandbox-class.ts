@@ -80,7 +80,7 @@ class SandboxClass {
 		this.sandboxProjects.delete(projectUUID)
 	})
 
-	public logout() {
+	public logout(): void {
 		this.setIsRetrievingAllSandboxProjects(false)
 		this.setHasRetrievedAllSandboxProjects(false)
 		this.sandboxProjects = new Map()

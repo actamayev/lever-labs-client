@@ -147,7 +147,7 @@ class GarageClass {
 		this.selectedColorShade = newShade
 	})
 
-	public logout() {
+	public logout(): void {
 		this.setSelectedColorRgba({ r: 0 , g: 255, b: 0, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5, 6, 7]
 		this.dotColors = {

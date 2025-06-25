@@ -1,7 +1,8 @@
 "use client"
 
 import { action, makeAutoObservable, observable } from "mobx"
-import { InteractionType, ChatMessageRole} from "@bluedotrobots/common-ts"
+import { InteractionType, ChatMessageRole, ChatbotStreamStartEvent,
+	ChatbotStreamChunkEvent, ChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
 
 export interface ChatState {
 	messages: ChatClassMessage[]
@@ -67,8 +68,8 @@ class ChatsClass {
 	})
 
 	// Start streaming for a challenge
-	public startStreaming = action((challengeId: string, interactionType: InteractionType): void => {
-		const chatState = this.getChatState(challengeId)
+	public startStreaming = action((startEvent: ChatbotStreamStartEvent): void => {
+		const chatState = this.getChatState(startEvent.challengeId)
 
 		// Create streaming message placeholder
 		const streamingMessage: ChatClassMessage = {
@@ -82,15 +83,15 @@ class ChatsClass {
 		chatState.messages.push(streamingMessage)
 		chatState.isStreaming = true
 		chatState.currentStreamingMessageId = streamingMessage.id
-		chatState.currentInteractionType = interactionType
+		chatState.currentInteractionType = startEvent.interactionType
 	})
 
 	// Add chunk to streaming message
-	public addStreamingChunk = action((challengeId: string, chunk: string): void => {
-		const chatState = this.getChatState(challengeId)
+	public addStreamingChunk = action((chunkEvent: ChatbotStreamChunkEvent): void => {
+		const chatState = this.getChatState(chunkEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for challenge:", challengeId)
+			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeId)
 			return
 		}
 
@@ -99,13 +100,13 @@ class ChatsClass {
 		)
 
 		if (streamingMessage) {
-			streamingMessage.content += chunk
+			streamingMessage.content += chunkEvent.content
 		}
 	})
 
 	// Complete streaming
-	public completeStreaming = action((challengeId: string, finalContent?: string): void => {
-		const chatState = this.getChatState(challengeId)
+	public completeStreaming = action((completeEvent: ChatbotStreamCompleteEvent): void => {
+		const chatState = this.getChatState(completeEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {
 			return
@@ -116,12 +117,6 @@ class ChatsClass {
 		)
 
 		if (streamingMessage) {
-			// Use final content if provided, otherwise keep accumulated content
-			if (finalContent) {
-				streamingMessage.content = finalContent
-			}
-
-			// Mark as no longer streaming
 			streamingMessage.isStreaming = false
 		}
 
