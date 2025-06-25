@@ -22,20 +22,16 @@ interface ChatInterfaceProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
-	// const [currentStreamId, setCurrentStreamId] = useState<string | null>(null)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
-	const messagesContainerRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
-
-	const challengeId = challengeData.id
 
 	// Generate current C++ code from Blockly
 	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
 
 	// Get messages directly from chats class
-	const messages = chatsClass.getMessages(challengeId)
-	const isStreaming = chatsClass.isStreaming(challengeId)
-	const conversationHistory = chatsClass.getConversationHistory(challengeId)
+	const messages = chatsClass.getMessages(challengeData.id)
+	const isStreaming = chatsClass.isStreaming(challengeData.id)
+	const conversationHistory = chatsClass.getConversationHistory(challengeData.id)
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -61,7 +57,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		setInputValue("")
 
 		// Add user message to chats
-		chatsClass.addUserMessage(challengeId, inputValue)
+		chatsClass.addUserMessage(challengeData.id, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
@@ -69,7 +65,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}, 0)
 
 		await sendCareerQuestMessage(challengeData, cppCode, inputValue, conversationHistory)
-	}, [challengeData, challengeId, conversationHistory, cppCode, inputValue, isStreaming])
+	}, [challengeData, conversationHistory, cppCode, inputValue, isStreaming])
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && !e.shiftKey) {
@@ -81,16 +77,15 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 
 	const onClickAction = useCallback(async () => {
 		if (isStreaming) {
-			return await stopChatStream(challengeId)
+			return await stopChatStream(challengeData.id)
 		}
 		await handleSendMessage()
-	}, [challengeId, handleSendMessage, isStreaming])
+	}, [challengeData.id, handleSendMessage, isStreaming])
 
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 			{/* Chat Messages - Scrollable with fixed height */}
 			<div
-				ref={messagesContainerRef}
 				className={cn(
 					"flex-1 min-h-0 max-h-full w-full overflow-x-hidden",
 					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
