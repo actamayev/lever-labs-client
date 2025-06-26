@@ -2,7 +2,6 @@
 
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
-import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -32,23 +31,12 @@ function InteractiveMiniSandbox(props: Props) {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	const [isCentered, setIsCentered] = useState(false)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
-	const pathname = usePathname()
 	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
-
-	const centerWorkspace = useCallback(() => {
-		const workspace = workspaceRef.current
-		if (!workspace) return
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
-
-		workspace.scrollCenter()
-		setIsCentered(true)
-	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
@@ -58,19 +46,13 @@ function InteractiveMiniSandbox(props: Props) {
 		if (onJsonChange) {
 			onJsonChange(newJson)
 		}
-
-		// Center workspace on first initialization
-		if (!isCentered) {
-			centerWorkspace()
-		}
-	}, [onJsonChange, isCentered, centerWorkspace])
+	}, [onJsonChange])
 
 	const toggleToolbox = useCallback(() => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
 		const flyout = workspace.getFlyout()
-
 		const newVisibility = !isToolboxVisible
 
 		if (flyout) {
@@ -79,28 +61,12 @@ function InteractiveMiniSandbox(props: Props) {
 			setIsToolboxVisible(newVisibility)
 		}
 
-		// Trigger a resize to adjust the workspace layout
 		setTimeout(() => {
 			if (workspace) {
 				Blockly.svgResize(workspace)
 			}
 		}, 100)
 	}, [isToolboxVisible])
-
-	// Reset isCentered when pathname changes (navigation)
-	useEffect(() => {
-		setIsCentered(false)
-	}, [pathname])
-
-	// Add effect to center workspace after it's initialized and when blocks change
-	useEffect(() => {
-		if (isCentered) return
-		const timer = setTimeout(() => {
-			centerWorkspace()
-		}, 100) // Small delay to ensure workspace is fully rendered
-
-		return () => clearTimeout(timer)
-	}, [centerWorkspace, initialBlocklyJson, isCentered, pathname])
 
 	useEffect(() => {
 		if (!containerRef.current) return
