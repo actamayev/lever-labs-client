@@ -4,15 +4,6 @@ interface Props {
 	children: React.ReactNode
 }
 
-// Reusable Header Component for Main Title
-export function ComplianceMainHeader ({ children }: Props)  {
-	return (
-		<h1 className="text-3xl md:text-4xl font-semibold text-questionText mb-12">
-			{children}
-		</h1>
-	)
-}
-
 // Reusable Section Header Component
 export function ComplianceSectionHeader ({ children }: Props) {
 	return (

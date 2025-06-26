@@ -2,7 +2,7 @@
 "use client"
 
 import { Suspense } from "react"
-import { OBSTACLE_AVOIDANCE_CHALLENGE } from "@bluedotrobots/common-ts"
+import { OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2 } from "@bluedotrobots/common-ts"
 import ChallengeSection from "../challenge-section"
 import BlocklyLoadingComponent from "../../sandbox/blockly-loading-component"
 
@@ -37,7 +37,26 @@ export default function ObstacleAvoidance() {
 				</div>
 			</div>
 			<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
-				<ChallengeSection challengeData={OBSTACLE_AVOIDANCE_CHALLENGE} />
+				<ChallengeSection challengeData={OBSTACLE_AVOIDANCE_CHALLENGE_1} />
+			</Suspense>
+			<div className="w-2/3 mx-auto text-center">
+				<div className="space-y-4">
+					<div>
+						Great job! Now, you might be wondering why I asked you to change the color of my LEDs to indicate if there's an object in front of me.
+						After all, I'm not going to drive around and avoid obstacle by just changing my LEDs!
+						The reason I asked you to use LEDs is that it's always best to test your code in a controlled environment, so that if your code did something unexpected, you can fix it before I start bumping into things.
+						Writing code is both straightforward and tricky, because I will follow your instructions exactly as you tell me. So if there's something in your code that you didn't mean for me to do, I have no way of knowing that, and I will do it anyway.
+					</div>
+					<div>
+						Now that we know that your LED solution works, lets try bringing the motors in, and I'll try some basic obstacle avoidance.
+						We'll start with the code you just wrote as a template, and I want you to add a couple of blocks.
+						First, I need to drive around! Make it so that if I detect an object in front, I stop. Otherwise, I should keep driving forward at 50% speed.
+						Second, lets add a start button. Whenever I'm going to drive around, it's a good idea to have a start button. This way, I don't start moving as soon as I get the instructions - I'll wait for you to press my button to begin.
+					</div>
+				</div>
+			</div>
+			<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
+				<ChallengeSection challengeData={OBSTACLE_AVOIDANCE_CHALLENGE_2} />
 			</Suspense>
 		</div>
 	)

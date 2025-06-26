@@ -58,7 +58,7 @@ function ChallengeSection(props: Props) {
 				<div className="flex flex-col flex-1 max-h-full">
 					<InteractiveMiniSandbox
 						toolboxConfig={challengeData.toolboxConfig}
-						initialBlocklyJson={{}}
+						initialBlocklyJson={challengeData.initialBlocklyJson}
 						extraClasses="h-full"
 						onJsonChange={(newBlocklyJson) => (setCppCode(generateCppFromJson(newBlocklyJson)))}
 					/>
