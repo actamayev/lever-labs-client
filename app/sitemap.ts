@@ -1,4 +1,3 @@
-// app/sitemap.ts
 import { MetadataRoute } from "next"
 
 // Base URL for the site
@@ -10,9 +9,9 @@ const currentDate = new Date().toISOString().split("T")[0]
 
 // Define route types with their priorities and change frequencies
 type RouteConfig = {
-  path: string
-  changeFreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
-  priority: number
+	path: string
+	changeFreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
+	priority: number
 }
 
 // Main pages with higher priority

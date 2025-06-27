@@ -5,6 +5,7 @@ import { cppGenerator } from "../cpp/cpp-generator"
 import createAllBlocks from "./custom-blocks/create-all-blocks"
 
 export default function initializeBlocks(): void {
+	if (cppGenerator.areBlocksInitialized) return
 	const blocks = createAllBlocks().kinds
 
 	Object.entries(blocks).forEach(([blockName, blockData]) => {
@@ -21,4 +22,5 @@ export default function initializeBlocks(): void {
 		// Set the generator function
 		cppGenerator.forBlock[blockName] = blockData.generator.bind(cppGenerator)
 	})
+	cppGenerator.areBlocksInitialized = true
 }

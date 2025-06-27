@@ -11,7 +11,6 @@ export default async function stopChatStream(challengeId: string): Promise<void>
 
 		if (chatsClass.currentStreamId) {
 			await blueDotApiClientClass.chatDataService.stopChatStream(chatsClass.currentStreamId)
-			console.log("Stream stopped on backend")
 		}
 
 		// Always reset local state

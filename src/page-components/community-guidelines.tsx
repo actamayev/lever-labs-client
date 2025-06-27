@@ -10,7 +10,7 @@ import { ComplianceParagraph, ComplianceSectionHeader } from "../components/comp
 export default function CommunityGuidelines() {
 	return (
 		<ProfileLayout>
-			<SupportSectionContainer title="Terms and Conditions of Service">
+			<SupportSectionContainer title="Community Guidelines">
 				<div>
 					<ComplianceSectionHeader>Blue Dot Robots is a community of robotics learners</ComplianceSectionHeader>
 					<ComplianceParagraph>

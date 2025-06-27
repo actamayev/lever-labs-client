@@ -56,15 +56,12 @@ function InteractiveMiniSandbox(props: Props) {
 		const newVisibility = !isToolboxVisible
 
 		if (flyout) {
-			console.log("Using flyout.setVisible")
 			flyout.setVisible(newVisibility)
 			setIsToolboxVisible(newVisibility)
 		}
 
 		setTimeout(() => {
-			if (workspace) {
-				Blockly.svgResize(workspace)
-			}
+			Blockly.svgResize(workspace)
 		}, 100)
 	}, [isToolboxVisible])
 
