@@ -4,7 +4,14 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function SupportSectionContainer({ children } : { children: React.ReactNode }) {
+interface Props {
+	children: React.ReactNode
+	title?: string
+}
+
+function SupportSectionContainer(props: Props) {
+	const { children, title = "About Us"} = props
+
 	let parentClasses = "px-8 sm:px-8 md:px-16 lg:px-72 mt-12"
 	let childClasses = ""
 	if (!isNull(personalInfoClass.username)) {
@@ -15,7 +22,7 @@ function SupportSectionContainer({ children } : { children: React.ReactNode }) {
 	return (
 		<div className={parentClasses}>
 			<div className="font-medium text-3xl text-questionText">
-				About Us
+				{title}
 			</div>
 			<div className={childClasses}>
 				{children}

@@ -4,7 +4,7 @@
 
 import { baseCategory } from "./base-category"
 import { sensorsCategoryColour } from "../../constants/constants"
-import { SENSORS_BLOCK_TYPES } from "../block-types/sensor-block-types"
+import { SENSORS_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 // First define the sub-categories
 const imuSensorsCategory: CustomCategoryInfo = {

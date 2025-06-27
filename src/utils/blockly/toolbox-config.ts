@@ -7,8 +7,7 @@ import { buttonsCategoryColour, screenCategoryColour, speakerCategoryColour,
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
-import { MOTOR_BLOCK_TYPES } from "./block-types/motor-block-types"
-import { LED_BLOCK_TYPES } from "./block-types/led-block-types"
+import { BlockNames, LED_BLOCK_TYPES, MOTOR_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {

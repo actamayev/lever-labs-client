@@ -1,37 +1,30 @@
 "use client"
 
-import { useMemo } from "react"
+import { useState } from "react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
-import ChatInterface from "../career/chat/chat-interface"
+import ChatInterface from "./chat/chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import ViewOnlySandbox from "../sandbox/view-only-sandbox/view-only-sandbox"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
+import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 
 interface Props {
-	blocklyJson: BlocklyJson
 	challengeData: ChallengeData
-	description: string
-	beforeRunningText: string
 	extraClasses?: string
 }
 
-function ViewOnlyDemo(props: Props) {
+function ChallengeSection(props: Props) {
 	const {
-		blocklyJson,
 		challengeData,
-		description,
-		beforeRunningText,
-		extraClasses = ""
+		extraClasses = "h-full"
 	} = props
-
-	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
+	const [cppCode, setCppCode] = useState(generateCppFromJson(challengeData.initialBlocklyJson))
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
@@ -46,7 +39,7 @@ function ViewOnlyDemo(props: Props) {
 							What this code does:
 						</h3>
 						<div className="text-gray-700 dark:text-gray-300 leading-relaxed">
-							{description}
+							{challengeData.description}
 						</div>
 					</div>
 
@@ -56,20 +49,19 @@ function ViewOnlyDemo(props: Props) {
 							Before running code, make sure:
 						</h3>
 						<div className="text-gray-700 dark:text-gray-300 leading-relaxed">
-							{beforeRunningText}
+							{challengeData.beforeRunningText}
 						</div>
 					</div>
 				</div>
 
 				{/* Middle Column - Sandbox + Buttons */}
 				<div className="flex flex-col flex-1 max-h-full">
-					{/* View Only Sandbox */}
-					<div className="flex-1">
-						<ViewOnlySandbox
-							blocklyJson={blocklyJson}
-							extraClasses="h-full"
-						/>
-					</div>
+					<InteractiveMiniSandbox
+						toolboxConfig={challengeData.toolboxConfig}
+						initialBlocklyJson={challengeData.initialBlocklyJson}
+						extraClasses="h-full"
+						onJsonChange={(newBlocklyJson) => (setCppCode(generateCppFromJson(newBlocklyJson)))}
+					/>
 
 					{/* Buttons section - Only under sandbox */}
 					<div className="flex flex-row space-x-2 items-center justify-center pt-2 flex-shrink-0">
@@ -92,7 +84,7 @@ function ViewOnlyDemo(props: Props) {
 				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
 					<ChatInterface
-						blocklyJson={blocklyJson}
+						blocklyJson={challengeData.initialBlocklyJson}
 						challengeData={challengeData}
 					/>
 				</div>
@@ -101,4 +93,4 @@ function ViewOnlyDemo(props: Props) {
 	)
 }
 
-export default observer(ViewOnlyDemo)
+export default observer(ChallengeSection)

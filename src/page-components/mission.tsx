@@ -2,10 +2,10 @@
 
 /* eslint-disable max-len */
 import { useEffect } from "react"
+import ProfileLayout from "../components/profile/profile-layout"
 import SupportSection from "../components/support/support-section"
 import SupportHeader, { SupportBorder } from "../components/support/support-header"
 import SupportSectionContainer from "../components/support/support-section-container"
-import ProfileLayout from "../components/profile/profile-layout"
 
 export default function Mission() {
 	useEffect(() => {

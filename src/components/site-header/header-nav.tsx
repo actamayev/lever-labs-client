@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { cn } from "../../lib/shadcn/utils"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 
@@ -35,9 +36,10 @@ export default function HeaderNav() {
 
 				{/* Right section with buttons */}
 				<div
-					className={`flex items-center z-10 ${
-						!isScrolled ? "hidden sm:flex" : "flex"
-					}`}
+					className={cn(
+						"flex items-center z-10",
+						isScrolled ? "flex" : "hidden sm:flex"
+					)}
 				>
 					<LoginLogoutHeaderItem />
 				</div>

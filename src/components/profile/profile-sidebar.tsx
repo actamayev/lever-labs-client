@@ -28,7 +28,7 @@ const SidebarSection = ({ title, children }: SidebarSectionProps) => {
 }
 
 interface SidebarLinkProps {
-	href: string
+	href: PageNames
 	children: React.ReactNode
 }
 
@@ -37,6 +37,17 @@ const SidebarLink = ({ href, children }: SidebarLinkProps) => {
 		<Link
 			href={href}
 			className="block text-lg hover:bg-swan rounded-lg py-1 px-6 mx-4 font-semibold text-eel"
+		>
+			{children}
+		</Link>
+	)
+}
+
+const BelowSidebarLink = ({ href, children }: SidebarLinkProps) => {
+	return (
+		<Link
+			href={href}
+			className="block text-xs font-semibold text-hare hover:text-wolf"
 		>
 			{children}
 		</Link>
@@ -76,6 +87,11 @@ export default function ProfileSidebar() {
 				<LogOut className="mr-2 h-4 w-4" />
 				LOG OUT
 			</BlackWhiteTactileButton>
+			<div className="flex flex-row justify-center space-x-4 mt-4">
+				<BelowSidebarLink href="/privacy">PRIVACY</BelowSidebarLink>
+				<BelowSidebarLink href="/terms">TERMS</BelowSidebarLink>
+				<BelowSidebarLink href="/community-guidelines">COMMUNITY GUIDELINES</BelowSidebarLink>
+			</div>
 		</div>
 	)
 }

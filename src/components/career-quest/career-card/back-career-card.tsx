@@ -13,7 +13,7 @@ interface Props {
 
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, careerDescription, backgroundColor } = careerData
+	const { careerName, careerDescription, backgroundColor, expectedCompletionTime } = careerData
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -45,7 +45,7 @@ export default function BackCareerCard(props: Props) {
 					<div className="flex flex-row items-center gap-2">
 						<Hourglass className="w-5 h-5 text-white"/>
 						<div className="text-sm text-white">
-							<span className="font-medium">10 hours</span>
+							<span className="font-medium">{expectedCompletionTime}</span>
 						</div>
 					</div>
 

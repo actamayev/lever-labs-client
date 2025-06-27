@@ -28,20 +28,7 @@ declare global {
 		componentsUsed: ComponentsUsedCareerData[]
 		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
-	}
-
-	// New interface for introduction card
-	interface IntroductionData {
-		title: string
-		description: string
-		totalLessons: number
-		lessonsComplete: number
-		introUrl: CareerQuestPages
-		introIcon: LucideIcon
-		componentsUsed: ComponentsUsedCareerData[]
-		backgroundColor: DuolingoColors
-		codingConcepts: CodingConceptName[]
-		timeToComplete: number
+		expectedCompletionTime: string
 	}
 
 	type CodingConceptName =
