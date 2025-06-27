@@ -92,6 +92,7 @@ function InteractiveMiniSandbox(props: Props) {
 
 	useEffect(() => initializeBlocks(), [])
 
+	// 6/26/25 TODO: Center workspace doesn't exist/work because it doesn't re-adjust for the toolbox not existing
 	return (
 		<div
 			ref={containerRef}

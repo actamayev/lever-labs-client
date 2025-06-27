@@ -28,6 +28,7 @@ declare global {
 		componentsUsed: ComponentsUsedCareerData[]
 		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
+		expectedCompletionTime: string
 	}
 
 	// New interface for introduction card

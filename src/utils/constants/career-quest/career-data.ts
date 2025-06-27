@@ -64,6 +64,7 @@ export const careerData: CareerData[] = [
 			"Boolean Logic",
 			"Conditional Statements",
 			"Loops"
-		]
+		],
+		expectedCompletionTime: "1 hour"
 	}
 ]
