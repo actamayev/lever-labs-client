@@ -7,7 +7,7 @@ import FrontIntroductionCard from "./front-introduction-card"
 import BackIntroductionCard from "./back-introduction-card"
 
 interface IntroCardProps {
-	introData: IntroductionData
+	introData: CareerData
 }
 
 export default function IntroductionCard({ introData }: IntroCardProps) {

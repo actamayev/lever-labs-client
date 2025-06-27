@@ -8,6 +8,7 @@ interface Props {
 	children: React.ReactNode
 	title?: string
 }
+
 function SupportSectionContainer(props: Props) {
 	const { children, title = "About Us"} = props
 

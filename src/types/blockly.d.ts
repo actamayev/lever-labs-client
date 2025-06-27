@@ -1,4 +1,5 @@
 import * as Blockly from "blockly"
+import { BlockNames } from "@bluedotrobots/common-ts"
 import { CssConfig } from "blockly/core/toolbox/category"
 
 declare global {
