@@ -1,4 +1,3 @@
-// app/sitemap.ts
 import { MetadataRoute } from "next"
 
 // Base URL for the site
@@ -10,9 +9,9 @@ const currentDate = new Date().toISOString().split("T")[0]
 
 // Define route types with their priorities and change frequencies
 type RouteConfig = {
-  path: string
-  changeFreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
-  priority: number
+	path: string
+	changeFreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
+	priority: number
 }
 
 // Main pages with higher priority
@@ -33,6 +32,15 @@ const userRoutes: RouteConfig[] = [
 	{ path: "/add-pip", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/settings", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
+]
+
+// Account and user pages
+const miscRoutes: RouteConfig[] = [
+	{ path: "/privacy", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/schools", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/mission", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/terms", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/community-guidelines", changeFreq: "monthly", priority: 0.8 },
 ]
 
 // Lab pages
@@ -84,7 +92,6 @@ function routesToSitemapEntries(routes: RouteConfig[]): MetadataRoute.Sitemap {
 
 // Generate the sitemap
 export default function sitemap(): MetadataRoute.Sitemap {
-	// Combine all routes
 	const allRoutes = [
 		...routesToSitemapEntries(mainRoutes),
 		...routesToSitemapEntries(userRoutes),
@@ -92,7 +99,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		...routesToSitemapEntries(ledReadingRoutes),
 		...routesToSitemapEntries(ledDemoRoutes),
 		...routesToSitemapEntries(ledCodeRoutes),
-		// Add new route categories here as your site grows
+		...routesToSitemapEntries(miscRoutes),
 	]
 
 	return allRoutes

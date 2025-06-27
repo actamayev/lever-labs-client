@@ -10,7 +10,7 @@ import {
 	IMUSensorType,
 	LeftRightSensorType,
 	// IRSensorType
-} from "../block-types/sensor-block-types"
+} from "@bluedotrobots/common-ts"
 import { sensorsCategoryColour } from "../../constants/constants"
 
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {

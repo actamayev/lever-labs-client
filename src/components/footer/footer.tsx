@@ -1,12 +1,16 @@
+/* eslint-disable max-len */
 "use client"
 
+import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import FooterLink from "./footer-link"
 import FooterThemeToggle from "./footer-theme-toggle"
 import FooterSocialSection from "./footer-social-section"
 
+// eslint-disable-next-line max-lines-per-function
 export default function Footer() {
-	const pathname = usePathname() // This returns the current path as a string
+	const pathname = usePathname()
 	if (
 		pathname !== "/" &&
 		pathname !== "/terms" &&
@@ -18,81 +22,85 @@ export default function Footer() {
 	) return null
 
 	return (
-		<footer id="footer" className="bg-standardBackground/70 w-full pb-3 md:py-3 z-20 duration-0">
-			<div className="flex justify-center w-full px-4 sm:px-60">
-				<div className="w-full max-w-screen-2xl">
-					{/* Mobile: Stack vertically, Desktop: 3 columns */}
-					<div className="flex flex-col items-center space-y-6 md:space-y-0 md:grid md:grid-cols-3 w-full">
-						{/* Left section - Social links (desktop) */}
-						<div className="hidden md:flex md:items-center md:justify-start">
-							<FooterSocialSection />
-							<FooterLink
-								linkTo="/terms"
-								linkTitle="Terms"
-								extraClasses="ml-6"
+		<footer id="footer" className="bg-standardBackground py-6 md:py-8 z-20 border-t border-landingOuterBorder">
+			<div className="container max-w-screen-2xl mx-auto px-4 sm:px-60">
+				{/* Main footer content */}
+				<div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
+					{/* Logo and company section */}
+					<div className="col-span-3 lg:mb-0 space-y-4">
+						<Link
+							href="/"
+							className="inline-flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 duration-0"
+						>
+							<Image
+								src="/favicon.svg"
+								alt="Logo"
+								className="h-8 sm:h-10 -ml-0.5"
+								style={{ verticalAlign: "middle", width: "auto" }}
+								width={32}
+								height={32}
 							/>
-							<FooterLink
-								linkTo="/privacy"
-								linkTitle="Privacy"
-								extraClasses="ml-6"
-							/>
-							<FooterLink
-								linkTo="/community-guidelines"
-								linkTitle="Community Guidelines"
-								extraClasses="ml-6"
-							/>
-						</div>
+							<span className="ml-2 inline">
+            Blue Dot Robots
+							</span>
+						</Link>
+						<FooterSocialSection />
+						<FooterThemeToggle />
+					</div>
 
-						{/* Center section - Company name */}
-						<div className="flex items-center justify-center">
-							<FooterLink
-								linkTo="/"
-								linkTitle="Blue Dot Robots"
-								extraClasses="font-bold text-base"
-							/>
-						</div>
-
-						{/* Right section - About, Contact, Theme (desktop) */}
-						<div className="hidden md:flex md:items-center md:justify-end md:gap-6">
-							<FooterLink
-								linkTo="/mission"
-								linkTitle="About Us"
-							/>
-							<FooterLink
-								linkTo="/contact"
-								linkTitle="Contact Us"
-							/>
-							<FooterLink
-								linkTo="/schools"
-								linkTitle="Schools"
-							/>
-							<FooterThemeToggle />
-						</div>
-
-						{/* Mobile-only stacked sections */}
-						<div className="flex flex-col items-center space-y-6 md:hidden w-full">
-							{/* Contact Us and About Us on same line */}
-							<div className="flex items-center justify-center space-x-6">
+					{/* Navigation sections */}
+					<div className="col-span-1">
+						<h3 className="mb-4 font-bold text-sm">Company</h3>
+						<ul className="space-y-3 text-sm">
+							<li className="text-muted-foreground hover:text-primary">
 								<FooterLink
 									linkTo="/mission"
 									linkTitle="About Us"
+									extraClasses="font-medium hover:text-primary"
 								/>
+							</li>
+							<li className="text-muted-foreground hover:text-primary">
 								<FooterLink
 									linkTo="/contact"
 									linkTitle="Contact Us"
+									extraClasses="font-medium hover:text-primary"
 								/>
+							</li>
+							<li className="text-muted-foreground hover:text-primary">
 								<FooterLink
 									linkTo="/schools"
 									linkTitle="Schools"
+									extraClasses="font-medium hover:text-primary"
 								/>
-							</div>
+							</li>
+						</ul>
+					</div>
 
-							{/* Social Links and Theme Toggle combined */}
-							<div className="flex items-center justify-center space-x-6 mb-4 md:mb-0">
-								<FooterSocialSection />
-								<FooterThemeToggle />
-							</div>
-						</div>
+					<div className="col-span-1">
+						<h3 className="mb-4 font-bold text-sm">Privacy and Terms</h3>
+						<ul className="space-y-3 text-sm">
+							<li className="text-muted-foreground hover:text-primary">
+								<FooterLink
+									linkTo="/terms"
+									linkTitle="Terms"
+									extraClasses="font-medium hover:text-primary"
+								/>
+							</li>
+							<li className="text-muted-foreground hover:text-primary">
+								<FooterLink
+									linkTo="/privacy"
+									linkTitle="Privacy"
+									extraClasses="font-medium hover:text-primary"
+								/>
+							</li>
+							<li className="text-muted-foreground hover:text-primary">
+								<FooterLink
+									linkTo="/community-guidelines"
+									linkTitle="Community Guidelines"
+									extraClasses="font-medium hover:text-primary"
+								/>
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>

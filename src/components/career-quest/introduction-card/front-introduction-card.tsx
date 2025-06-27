@@ -9,13 +9,13 @@ import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
 
 interface Props {
-	introData: IntroductionData
+	introData: CareerData
 	flipCard: () => void
 }
 
 export default function FrontIntroductionCard(props: Props) {
 	const { introData, flipCard } = props
-	const { title, totalLessons, lessonsComplete, introUrl, introIcon: Icon, componentsUsed, backgroundColor } = introData
+	const { careerName, totalLessons, lessonsComplete, careerUrl, careerIcon: Icon, componentsUsed, backgroundColor } = introData
 
 	const colors = getDuolingoColors(backgroundColor)
 	const progressColors = getProgressColors(backgroundColor)
@@ -34,7 +34,7 @@ export default function FrontIntroductionCard(props: Props) {
 			{/* Left Section */}
 			<div className="w-1/2 flex flex-col p-6">
 				{/* Title */}
-				<h3 className="text-2xl font-bold mb-5">{title}</h3>
+				<h3 className="text-2xl font-bold mb-5">{careerName}</h3>
 
 				{/* Progress Bar */}
 				<div className={cn("w-full h-5 rounded-full overflow-hidden relative mb-5", progressColors.background)}>
@@ -76,7 +76,7 @@ export default function FrontIntroductionCard(props: Props) {
 				</div>
 
 				{/* Continue Button */}
-				<Link href={introUrl}>
+				<Link href={careerUrl}>
 					<TactileButton
 						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
 						shadowClass={colors.shadow}

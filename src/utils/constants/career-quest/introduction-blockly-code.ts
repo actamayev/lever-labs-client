@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 
-const careerQuestCode: BlocklyJson[] = [
+const introductionBlocklyCode: BlocklyJson[] = [
 	{
 		"blocks": {
 			"languageVersion": 0,
@@ -428,4 +428,4 @@ const careerQuestCode: BlocklyJson[] = [
 	}
 ]
 
-export default careerQuestCode
+export default introductionBlocklyCode

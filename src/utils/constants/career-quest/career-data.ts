@@ -2,33 +2,33 @@
 import { Bot, Route } from "lucide-react"
 
 // Introduction data
-export const introductionData: IntroductionData = {
-	title: "Introduction to Robotics",
-	description: "Start your robotics journey! Learn the basics of programming, sensors, and robotics concepts. In this introductory section, you'll get familiar with the fundamental building blocks that power all robotics challenges.",
+export const introductionData: CareerData = {
+	careerName: "Introduction to Robotics",
+	careerDescription: "Start your robotics journey! Learn the basics of programming, sensors, and robotics concepts. In this introductory section, you'll get familiar with the fundamental building blocks that power all robotics challenges.",
 	totalLessons: 5,
 	lessonsComplete: 0,
-	introUrl: "/career-quest/introduction",
-	introIcon: Bot,
+	careerUrl: "/career-quest/introduction",
+	careerIcon: Bot,
 	backgroundColor: "humpback",
-	timeToComplete: 30,
+	expectedCompletionTime: "1 hour",
 	componentsUsed: [
 		{
 			componentName: "LED",
 			componentDifficulty: 1,
 		},
 		{
-			componentName: "Speaker",
+			componentName: "Side Distance Sensors",
 			componentDifficulty: 1,
 		},
 		{
-			componentName: "Motors + Encoders",
+			componentName: "Multizone Distance Sensor",
 			componentDifficulty: 1,
 		}
 	],
 	codingConcepts: [
-		"Variables",
-		"Functions",
+		"Loops",
 		"Conditional Statements",
+		"Boolean Logic",
 	]
 }
 
@@ -42,6 +42,7 @@ export const careerData: CareerData[] = [
 		careerUrl: "/career-quest/obstacle-avoidance",
 		careerIcon: Route,
 		backgroundColor: "fox",
+		expectedCompletionTime: "1 hour",
 		componentsUsed: [
 			{
 				componentName: "Side Distance Sensors",
