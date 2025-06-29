@@ -1,8 +1,9 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPMessage, PipIDPayload, PipUUID, SavedWiFiNetwork,
+import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import handleUsbConnectionMotors from "../utils/socket/handle-usb-connection-motors"
 
 interface MessageSentData {
 	content: string
@@ -122,6 +123,7 @@ class SerialMessageManagerClass {
 		})
 	}
 
+	// eslint-disable-next-line complexity
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
 		case "/pip-id": {
@@ -192,6 +194,16 @@ class SerialMessageManagerClass {
 				this.isScanning = false
 			})
 			console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+			break
+		}
+
+		case "/motors-disabled-usb": {
+			handleUsbConnectionMotors(message.payload as StandardJsonStatusMessage)
+			break
+		}
+
+		case "/program-paused-usb": {
+			handleUsbConnectionMotors(message.payload as StandardJsonStatusMessage)
 			break
 		}
 		default:
