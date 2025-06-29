@@ -9,7 +9,9 @@ import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
+// eslint-disable-next-line complexity
 export default async function sendCppToPip(
 	cppCode: string,
 	rect: DOMRect
@@ -17,6 +19,19 @@ export default async function sendCppToPip(
 	try {
 		if (serialConnectionManagerClass.connected) {
 			const bytecode = CppParser.cppToByte(cppCode)
+
+			// Check if the program has motor commands but no start button
+			const hasMotorCommands = checkForMotorCommands(bytecode)
+			const hasStartButton = checkForStartButton(bytecode)
+
+			if (hasMotorCommands && !hasStartButton) {
+				return toastClass.negative({
+					title: "Start button required for USB connection",
+					// eslint-disable-next-line max-len
+					description: "When connected via USB, programs with motor commands must begin with the \"Start program when button is pressed\" block"
+				})
+			}
+
 			const buffer = MessageBuilder.createBytecodeMessage(bytecode)
 
 			const success = await serialConnectionManagerClass.sendBinaryMessage(buffer)
