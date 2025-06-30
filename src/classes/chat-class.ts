@@ -9,6 +9,8 @@ export interface ChatState {
 	isStreaming: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
+	isRetrievingMessages: boolean
+	hasRetrievedMessages: boolean
 }
 
 class ChatsClass {
@@ -27,7 +29,9 @@ class ChatsClass {
 			messages: [],
 			isStreaming: false,
 			currentStreamingMessageId: null,
-			currentInteractionType: null
+			currentInteractionType: null,
+			isRetrievingMessages: false,
+			hasRetrievedMessages: false
 		})
 	}
 
@@ -41,6 +45,30 @@ class ChatsClass {
 	public getMessages(challengeId: string): ChatClassMessage[] {
 		return this.getChatState(challengeId).messages
 	}
+
+	// Check if messages have been retrieved for a challenge
+	public hasRetrievedMessages(challengeId: string): boolean {
+		return this.getChatState(challengeId).hasRetrievedMessages
+	}
+
+	// Check if currently retrieving messages for a challenge
+	public isRetrievingMessages(challengeId: string): boolean {
+		return this.getChatState(challengeId).isRetrievingMessages
+	}
+
+	// Set retrieving messages state
+	public setIsRetrievingMessages = action((challengeId: string, isRetrieving: boolean): void => {
+		const chatState = this.getChatState(challengeId)
+		chatState.isRetrievingMessages = isRetrieving
+	})
+
+	// Set retrieved messages from backend
+	public setRetrievedMessages = action((challengeId: string, messages: ChatClassMessage[]): void => {
+		const chatState = this.getChatState(challengeId)
+		chatState.messages = messages
+		chatState.hasRetrievedMessages = true
+		chatState.isRetrievingMessages = false
+	})
 
 	// Add a user message
 	public addUserMessage = action((challengeId: string, content: string): void => {
