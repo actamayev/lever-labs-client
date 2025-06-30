@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable, observable } from "mobx"
-import { InteractionType, ChatMessageRole, ChatbotStreamStartEvent,
+import { InteractionType, ChatbotStreamStartEvent,
 	ChatbotStreamChunkEvent, ChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
 
 export interface ChatState {
@@ -40,17 +40,6 @@ class ChatsClass {
 	// Get messages for a challenge
 	public getMessages(challengeId: string): ChatClassMessage[] {
 		return this.getChatState(challengeId).messages
-	}
-
-	// Get conversation history (excluding streaming messages)
-	public getConversationHistory(challengeId: string): Array<{role: ChatMessageRole, content: string}> {
-		const messages = this.getMessages(challengeId)
-		return messages
-			.filter(msg => !msg.isStreaming)
-			.map(msg => ({
-				role: msg.role,
-				content: msg.content
-			}))
 	}
 
 	// Add a user message

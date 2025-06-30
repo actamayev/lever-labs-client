@@ -1,7 +1,7 @@
 "use client"
 
 import { AxiosResponse } from "axios"
-import { ErrorResponses, SuccessResponse, IncomingChatData, StartChatSuccess } from "@bluedotrobots/common-ts"
+import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingCareerQuestChatData } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -10,7 +10,7 @@ export default class ChatDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async sendCareerQuestMessage(chatMessage: IncomingChatData): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
+	async sendCareerQuestMessage(chatMessage: OutgoingCareerQuestChatData): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
 			this.buildUrl("/send-career-quest-message"), chatMessage
 		)

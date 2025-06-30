@@ -31,7 +31,6 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	// Get messages directly from chats class
 	const messages = chatsClass.getMessages(challengeData.id)
 	const isStreaming = chatsClass.isStreaming(challengeData.id)
-	const conversationHistory = chatsClass.getConversationHistory(challengeData.id)
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -64,8 +63,8 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue, conversationHistory)
-	}, [challengeData, conversationHistory, cppCode, inputValue, isStreaming])
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
+	}, [challengeData, cppCode, inputValue, isStreaming])
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && !e.shiftKey) {
