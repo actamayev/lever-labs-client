@@ -6,7 +6,7 @@ import toastClass from "../../classes/toast-class"
 import requestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
 
-export default function handlePipStatusUpdate(data: PipStatusUpdate) : void {
+export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 	const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
 	pipClass.updatePipConnectionStatus(data)
 	const { newConnectionStatus } = data
