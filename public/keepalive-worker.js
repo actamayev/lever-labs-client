@@ -1,4 +1,4 @@
-// Simplified Web Worker for background keepalive messages
+// Simplified Web Worker for background keepalive messages (without this worker, the keep alive messages to the ESP over USB stop sending when the user changes their tab)
 let keepaliveInterval = null
 
 self.onmessage = function(e) {
