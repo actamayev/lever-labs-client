@@ -60,25 +60,9 @@ class SerialConnectionManagerClass {
 			this.keepaliveWorker = new Worker("/keepalive-worker.js")
 
 			this.workerMessageHandler = (e: MessageEvent): void => {
-				const { type, timestamp } = e.data
-
-				switch (type) {
-				case "SEND_KEEPALIVE":
+				if (e.data.type === "SEND_KEEPALIVE") {
 					// Worker is telling us to send a keepalive
 					void this.sendKeepaliveFromWorker()
-					break
-
-				case "PONG":
-					console.debug("Worker health check OK:", { timestamp, isRunning: e.data.isRunning })
-					break
-
-				case "ERROR":
-					console.error("Worker error:", e.data.error)
-					this.fallbackToMainThreadKeepalive()
-					break
-
-				default:
-					console.warn("Unknown worker message:", type)
 				}
 			}
 
