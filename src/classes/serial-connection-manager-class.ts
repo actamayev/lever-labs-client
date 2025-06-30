@@ -20,6 +20,7 @@ class SerialConnectionManagerClass {
 	// Web Worker for background keepalives
 	private keepaliveWorker: Worker | null = null
 	private workerMessageHandler?: (e: MessageEvent) => void
+	private readonly keepAliveTimeout = 100
 
 	constructor() {
 		makeAutoObservable(this)
@@ -107,7 +108,7 @@ class SerialConnectionManagerClass {
 					await this.cleanupConnection()
 				}
 			}
-		}, 100)
+		}, this.keepAliveTimeout)
 	}
 
 	// Try to auto-reconnect to previously authorized devices
@@ -315,7 +316,7 @@ class SerialConnectionManagerClass {
 			console.info("Starting worker-based keepalive")
 			this.keepaliveWorker.postMessage({
 				type: "START_KEEPALIVE",
-				data: { interval: 100 } // 100ms interval
+				data: { interval: this.keepAliveTimeout }
 			})
 		} else {
 			console.warn("Worker not available, using main thread keepalive")
@@ -501,13 +502,6 @@ class SerialConnectionManagerClass {
 		}
 
 		await this.disconnect()
-	}
-
-	// Optional: Health check for worker
-	public checkWorkerHealth(): void {
-		if (this.keepaliveWorker) {
-			this.keepaliveWorker.postMessage({ type: "PING" })
-		}
 	}
 }
 
