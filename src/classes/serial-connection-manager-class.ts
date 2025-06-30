@@ -17,10 +17,18 @@ class SerialConnectionManagerClass {
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 	public hasUserActivity = false
 
+	// Web Worker for background keepalives
+	private keepaliveWorker: Worker | null = null
+	private workerMessageHandler?: (e: MessageEvent) => void
+	private readonly keepAliveTimeout = 100
+
 	constructor() {
 		makeAutoObservable(this)
 
 		if (typeof window === "undefined") return
+
+		// Initialize Web Worker
+		this.initializeKeepaliveWorker()
 
 		// Listen for USB device connections (when devices are plugged in)
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -46,6 +54,61 @@ class SerialConnectionManagerClass {
 				}
 			}
 		})
+	}
+
+	private initializeKeepaliveWorker(): void {
+		try {
+			this.keepaliveWorker = new Worker("/keepalive-worker.js")
+
+			this.workerMessageHandler = (e: MessageEvent): void => {
+				if (e.data.type === "SEND_KEEPALIVE") {
+					// Worker is telling us to send a keepalive
+					void this.sendKeepaliveFromWorker()
+				}
+			}
+
+			this.keepaliveWorker.addEventListener("message", this.workerMessageHandler)
+
+			console.info("Keepalive worker initialized successfully")
+		} catch (error) {
+			console.error("Failed to initialize keepalive worker:", error)
+			this.fallbackToMainThreadKeepalive()
+		}
+	}
+
+	private async sendKeepaliveFromWorker(): Promise<void> {
+		if (this.connected && this.writer) {
+			try {
+				const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
+				await this.writer.write(new Uint8Array(keepaliveMsg))
+			} catch (error) {
+				console.error("Keepalive error from worker:", error)
+				await this.cleanupConnection()
+			}
+		}
+	}
+
+	private fallbackToMainThreadKeepalive(): void {
+		console.warn("Falling back to main thread keepalive")
+		this.startMainThreadKeepalive()
+	}
+
+	private startMainThreadKeepalive(): void {
+		if (this.keepAliveInterval) {
+			clearInterval(this.keepAliveInterval)
+		}
+
+		this.keepAliveInterval = setInterval(async () => {
+			if (this.connected && this.writer) {
+				try {
+					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
+					await this.writer.write(new Uint8Array(keepaliveMsg))
+				} catch (error) {
+					console.error("Main thread keepalive error:", error)
+					await this.cleanupConnection()
+				}
+			}
+		}, this.keepAliveTimeout)
 	}
 
 	// Try to auto-reconnect to previously authorized devices
@@ -173,7 +236,7 @@ class SerialConnectionManagerClass {
 			}
 
 			this.readLoop()
-			this.startKeepAlive()
+			this.startWorkerKeepalive()
 		} catch (error) {
 			console.error("Error connecting to port:", error)
 		}
@@ -248,22 +311,30 @@ class SerialConnectionManagerClass {
 		this.cleanupConnection()
 	}
 
-	private startKeepAlive(): void {
-		if (this.keepAliveInterval) {
-			clearInterval(this.keepAliveInterval)
+	private startWorkerKeepalive(): void {
+		if (this.keepaliveWorker) {
+			console.info("Starting worker-based keepalive")
+			this.keepaliveWorker.postMessage({
+				type: "START_KEEPALIVE",
+				data: { interval: this.keepAliveTimeout }
+			})
+		} else {
+			console.warn("Worker not available, using main thread keepalive")
+			this.startMainThreadKeepalive()
+		}
+	}
+
+	private stopKeepalive(): void {
+		// Stop worker keepalive
+		if (this.keepaliveWorker) {
+			this.keepaliveWorker.postMessage({ type: "STOP_KEEPALIVE" })
 		}
 
-		this.keepAliveInterval = setInterval(async () => {
-			if (this.connected && this.writer) {
-				try {
-					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
-					await this.writer.write(new Uint8Array(keepaliveMsg))
-				} catch (error) {
-					console.error("Keepalive error:", error)
-					await this.cleanupConnection()
-				}
-			}
-		}, 5000)
+		// Stop main thread keepalive
+		if (this.keepAliveInterval) {
+			clearInterval(this.keepAliveInterval)
+			this.keepAliveInterval = null
+		}
 	}
 
 	async disconnect(): Promise<void> {
@@ -358,6 +429,9 @@ class SerialConnectionManagerClass {
 
 		console.info("Cleaning up connection...")
 
+		// Stop keepalives first
+		this.stopKeepalive()
+
 		// Clean up reader
 		if (this.reader) {
 			try {
@@ -394,12 +468,6 @@ class SerialConnectionManagerClass {
 			}
 		}
 
-		// Clear keepalive interval
-		if (this.keepAliveInterval) {
-			clearInterval(this.keepAliveInterval)
-			this.keepAliveInterval = null
-		}
-
 		// Reset state
 		runInAction(() => {
 			this.port = null
@@ -426,6 +494,13 @@ class SerialConnectionManagerClass {
 	}
 
 	public async logout(): Promise<void> {
+		// Cleanup worker
+		if (this.keepaliveWorker && this.workerMessageHandler) {
+			this.keepaliveWorker.removeEventListener("message", this.workerMessageHandler)
+			this.keepaliveWorker.terminate()
+			this.keepaliveWorker = null
+		}
+
 		await this.disconnect()
 	}
 }
