@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
+import retrieveCareerQuestChat from "../../../utils/chat/retrieve-career-quest-chat"
 
 interface ChatInterfaceProps {
 	blocklyJson: BlocklyJson
@@ -31,7 +32,15 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	// Get messages directly from chats class
 	const messages = chatsClass.getMessages(challengeData.id)
 	const isStreaming = chatsClass.isStreaming(challengeData.id)
-	const conversationHistory = chatsClass.getConversationHistory(challengeData.id)
+	const isRetrievingMessages = chatsClass.isRetrievingMessages(challengeData.id)
+	const hasRetrievedMessages = chatsClass.hasRetrievedMessages(challengeData.id)
+
+	// Retrieve chat messages when component mounts
+	useEffect(() => {
+		if (!hasRetrievedMessages && !isRetrievingMessages) {
+			retrieveCareerQuestChat(challengeData.id)
+		}
+	}, [challengeData.id, hasRetrievedMessages, isRetrievingMessages])
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -64,8 +73,8 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue, conversationHistory)
-	}, [challengeData, conversationHistory, cppCode, inputValue, isStreaming])
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
+	}, [challengeData, cppCode, inputValue, isStreaming])
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && !e.shiftKey) {
@@ -81,6 +90,24 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		}
 		await handleSendMessage()
 	}, [challengeData.id, handleSendMessage, isStreaming])
+
+	// Show loading state while retrieving messages
+	if (isRetrievingMessages) {
+		return (
+			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
+				<div className="flex-1 flex items-center justify-center">
+					<div className="text-center">
+						<div className="flex space-x-1 justify-center mb-4">
+							<div className="w-2 h-2 bg-macaw rounded-full animate-bounce"></div>
+							<div className="w-2 h-2 bg-macaw rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}/>
+							<div className="w-2 h-2 bg-macaw rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}/>
+						</div>
+						<p className="text-sm text-gray-500 dark:text-gray-400">Loading conversation...</p>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
