@@ -1,6 +1,7 @@
 "use client"
 
 import { z } from "zod"
+import { PipUUID } from "@bluedotrobots/common-ts"
 
 export const addPipSchema = z.object({
 	selectedWiFiNetworkName: z.string().optional(),
@@ -16,5 +17,5 @@ export const addPipSchema = z.object({
 	pipName: z.string()
 		.min(3, "Let's make the name a bit longer - at least 3 characters")
 		.max(20, "That's a bit long! Could you shorten it to 20 characters?"),
-	pipUUID: z.string().nullable()
+	pipUUID: z.custom<PipUUID>().nullable()
 })
