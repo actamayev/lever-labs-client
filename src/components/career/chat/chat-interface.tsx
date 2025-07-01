@@ -10,7 +10,7 @@ import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
 import chatsClass from "../../../classes/chat-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import stopChatStream from "../../../utils/chat/stop-chat-stream"
+import stopCqChatStream from "../../../utils/chat/stop-cq-chat-stream"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
 import retrieveCareerQuestChat from "../../../utils/chat/retrieve-career-quest-chat"
@@ -86,7 +86,7 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 
 	const onClickAction = useCallback(async () => {
 		if (isStreaming) {
-			return await stopChatStream(challengeData.id)
+			return await stopCqChatStream(challengeData.id)
 		}
 		await handleSendMessage()
 	}, [challengeData.id, handleSendMessage, isStreaming])
