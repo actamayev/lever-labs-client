@@ -2,12 +2,19 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
+import { BlocklyJson, ProjectUUID, SandboxProject, ChatMessage,
+	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
+
+// Extended interface for internal state management
+interface SandboxProjectWithStreaming extends SandboxProject {
+	isStreaming: boolean
+	currentStreamingMessageId: string | null
+}
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
 	public hasRetrievedAllSandboxProjects = false
-	public sandboxProjects: Map<ProjectUUID, SandboxProject> = new Map()
+	public sandboxProjects: Map<ProjectUUID, SandboxProjectWithStreaming> = new Map()
 	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map()
 
 	constructor() {
@@ -29,7 +36,13 @@ class SandboxClass {
 	})
 
 	public addSandboxProject = action((sandboxProject: SandboxProject): void => {
-		this.sandboxProjects.set(sandboxProject.projectUUID, sandboxProject)
+		// Add streaming state to the project
+		const projectWithStreaming: SandboxProjectWithStreaming = {
+			...sandboxProject,
+			isStreaming: false,
+			currentStreamingMessageId: null
+		}
+		this.sandboxProjects.set(sandboxProject.projectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.projectUUID, false)
 	})
 
@@ -79,6 +92,88 @@ class SandboxClass {
 	public deleteSandboxProject = action((projectUUID: ProjectUUID): void => {
 		this.sandboxProjects.delete(projectUUID)
 	})
+
+	// Chat-related methods
+	public addUserMessage = action((projectUUID: ProjectUUID, content: string): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		const message: ChatMessage = {
+			role: "user",
+			content,
+			timestamp: new Date()
+		}
+
+		project.sandboxChatMessages.push(message)
+	})
+
+	public startStreaming = action((event: SandboxChatbotStreamStartOrCompleteEvent): void => {
+		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
+		if (isUndefined(project)) return
+
+		// Create streaming message placeholder
+		const streamingMessage: ChatMessage = {
+			role: "assistant",
+			content: "",
+			timestamp: new Date()
+		}
+
+		// Generate a unique ID for the streaming message
+		const streamingMessageId = `streaming-${Date.now()}`
+
+		project.sandboxChatMessages.push(streamingMessage)
+		project.isStreaming = true
+		project.currentStreamingMessageId = streamingMessageId
+	})
+
+	public addStreamingChunk = action((event: SandboxChatbotStreamChunkEvent): void => {
+		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
+		if (isUndefined(project)) return
+
+		if (!project.isStreaming || !project.currentStreamingMessageId) {
+			console.warn("Received chunk but not streaming for project:", event.sandboxProjectUUID)
+			return
+		}
+
+		// Find the last message (which should be the streaming one)
+		const lastMessage = project.sandboxChatMessages[project.sandboxChatMessages.length - 1]
+		if (lastMessage && lastMessage.role === "assistant") {
+			lastMessage.content += event.content
+		}
+	})
+
+	public completeStreaming = action((event: SandboxChatbotStreamStartOrCompleteEvent): void => {
+		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
+		if (isUndefined(project)) return
+
+		if (!project.isStreaming) {
+			return
+		}
+
+		// Reset streaming state
+		project.isStreaming = false
+		project.currentStreamingMessageId = null
+	})
+
+	public resetChatStreamingState = action((projectUUID: ProjectUUID): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		project.isStreaming = false
+		project.currentStreamingMessageId = null
+	})
+
+	// Check if currently streaming for a project
+	public isStreaming(projectUUID: ProjectUUID): boolean {
+		const project = this.sandboxProjects.get(projectUUID)
+		return project?.isStreaming || false
+	}
+
+	// Get chat messages for a project
+	public getChatMessages(projectUUID: ProjectUUID): ChatMessage[] {
+		const project = this.sandboxProjects.get(projectUUID)
+		return project?.sandboxChatMessages || []
+	}
 
 	public logout(): void {
 		this.setIsRetrievingAllSandboxProjects(false)
