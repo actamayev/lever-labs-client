@@ -1,8 +1,8 @@
 "use client"
 
 import { action, makeAutoObservable, observable } from "mobx"
-import { InteractionType, ChatbotStreamStartEvent,
-	ChatbotStreamChunkEvent, ChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
+import { InteractionType, CqChatbotStreamStartEvent,
+	CqChatbotStreamChunkEvent, CqChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
 
 export interface ChatState {
 	messages: ChatClassMessage[]
@@ -85,7 +85,7 @@ class ChatsClass {
 	})
 
 	// Start streaming for a challenge
-	public startStreaming = action((startEvent: ChatbotStreamStartEvent): void => {
+	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
 		const chatState = this.getChatState(startEvent.challengeId)
 
 		// Create streaming message placeholder
@@ -104,7 +104,7 @@ class ChatsClass {
 	})
 
 	// Add chunk to streaming message
-	public addStreamingChunk = action((chunkEvent: ChatbotStreamChunkEvent): void => {
+	public addStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
 		const chatState = this.getChatState(chunkEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {
@@ -122,7 +122,7 @@ class ChatsClass {
 	})
 
 	// Complete streaming
-	public completeStreaming = action((completeEvent: ChatbotStreamCompleteEvent): void => {
+	public completeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
 		const chatState = this.getChatState(completeEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {

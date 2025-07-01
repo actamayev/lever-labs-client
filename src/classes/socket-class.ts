@@ -56,9 +56,9 @@ class SocketClass {
 	private setupChatbotEvents = action((): void => {
 		if (!this._socket) return
 
-		this._socket.on("chatbot-stream-start", chatsClass.startStreaming)
-		this._socket.on("chatbot-stream-chunk", chatsClass.addStreamingChunk)
-		this._socket.on("chatbot-stream-complete", chatsClass.completeStreaming)
+		this._socket.on("cq-chatbot-stream-start", chatsClass.startStreaming)
+		this._socket.on("cq-chatbot-stream-chunk", chatsClass.addStreamingChunk)
+		this._socket.on("cq-chatbot-stream-complete", chatsClass.completeStreaming)
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {
