@@ -1,21 +1,23 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
+import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
-import chatsClass from "../../classes/chat-class"
+import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function stopChatStream(challengeId: string): Promise<void> {
+export default async function stopChatStream(chatReset: () => string | null): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		if (chatsClass.currentStreamId) {
-			await blueDotApiClientClass.chatDataService.stopChatStream(chatsClass.currentStreamId)
-		}
+		const streamId = chatReset()
+		if (isNull(streamId)) return
 
-		// Always reset local state
-		chatsClass.resetChatState(challengeId)
-		chatsClass.setCurrentStreamId(null)
+		const response = await blueDotApiClientClass.chatDataService.stopChatStream(streamId)
+		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
+			console.error("Failed to stop chat stream")
+		}
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

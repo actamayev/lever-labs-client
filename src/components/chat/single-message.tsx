@@ -5,18 +5,28 @@ import Image from "next/image"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { CustomUserCircle } from "../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import { ChatMessageRole } from "@bluedotrobots/common-ts"
+import { cn } from "../../lib/shadcn/utils"
+import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
+import { CustomUserCircle } from "../icons/custom-user-circle"
+import personalInfoClass from "../../classes/personal-info-class"
+import AssistantMessageMarkdown from "./assistant-message-markdown"
 
-function SingleMessage({ message } : { message: ChatClassMessage}) {
+interface SingleMessageData {
+	messageId: string
+	role: ChatMessageRole
+	content: string
+}
+
+function SingleMessage({ message } : { message: SingleMessageData }) {
+	const isUser = message.role === "user"
+
 	return (
 		<div
-			key={message.id}
-			className={`flex gap-3 min-w-0 w-full ${message.role === "user" ? "justify-end" : "justify-start"}`}
+			key={message.messageId}
+			className={`flex gap-3 min-w-0 w-full ${isUser ? "justify-end" : "justify-start"}`}
 		>
-			{message.role === "assistant" && (
+			{!isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					<AvatarFallback className="bg-macaw text-white">
 						<BotMessageSquare className="w-4 h-4" />
@@ -27,21 +37,26 @@ function SingleMessage({ message } : { message: ChatClassMessage}) {
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					message.role === "user"
+					isUser
 						? "bg-humpback text-white ml-auto"
 						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
-				<p
-					className="text-sm whitespace-pre-wrap"
-					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-				>
-					{message.content}
-				</p>
+				{isUser ? (
+					// For user messages, keep simple text display
+					<p
+						className="text-sm whitespace-pre-wrap"
+						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+					>
+						{message.content}
+					</p>
+				) : (
+					<AssistantMessageMarkdown messageContent={message.content} />
+				)}
 			</div>
 
-			{message.role === "user" && (
+			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					{!isNull(personalInfoClass.profilePictureUrl) ? (
 						<Image

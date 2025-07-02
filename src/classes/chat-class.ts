@@ -1,8 +1,17 @@
 "use client"
 
 import { action, makeAutoObservable, observable } from "mobx"
-import { InteractionType, ChatbotStreamStartEvent,
-	ChatbotStreamChunkEvent, ChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
+import { InteractionType, CqChatbotStreamStartEvent,
+	CqChatbotStreamChunkEvent, CqChatbotStreamCompleteEvent,
+	ChatMessageRole } from "@bluedotrobots/common-ts"
+
+interface ChatClassMessage {
+	id: string
+	role: ChatMessageRole
+	content: string
+	timestamp: Date
+	isStreaming?: boolean
+}
 
 export interface ChatState {
 	messages: ChatClassMessage[]
@@ -16,7 +25,8 @@ export interface ChatState {
 class ChatsClass {
 	// Map of challengeId -> ChatState
 	public chats = observable.map<string, ChatState>()
-	public currentStreamId: string | null = null
+	// Map of challengeId -> streamId for tracking concurrent streams
+	public currentStreamIds: Map<string, string | null> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -85,7 +95,7 @@ class ChatsClass {
 	})
 
 	// Start streaming for a challenge
-	public startStreaming = action((startEvent: ChatbotStreamStartEvent): void => {
+	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
 		const chatState = this.getChatState(startEvent.challengeId)
 
 		// Create streaming message placeholder
@@ -104,7 +114,7 @@ class ChatsClass {
 	})
 
 	// Add chunk to streaming message
-	public addStreamingChunk = action((chunkEvent: ChatbotStreamChunkEvent): void => {
+	public addStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
 		const chatState = this.getChatState(chunkEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {
@@ -122,7 +132,7 @@ class ChatsClass {
 	})
 
 	// Complete streaming
-	public completeStreaming = action((completeEvent: ChatbotStreamCompleteEvent): void => {
+	public completeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
 		const chatState = this.getChatState(completeEvent.challengeId)
 
 		if (!chatState.isStreaming || !chatState.currentStreamingMessageId) {
@@ -141,7 +151,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
+		this.setCurrentStreamId(completeEvent.challengeId, null)
 	})
 
 	// Reset chat state for a challenge
@@ -150,7 +160,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
+		this.setCurrentStreamId(challengeId, null)
 	})
 
 	// Check if currently streaming for a challenge
@@ -158,13 +168,18 @@ class ChatsClass {
 		return this.getChatState(challengeId).isStreaming
 	}
 
-	public setCurrentStreamId = action((newCurrentStreamId: string | null): void => {
-		this.currentStreamId = newCurrentStreamId
+	// Stream ID management methods
+	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {
+		this.currentStreamIds.set(challengeId, streamId)
 	})
+
+	public getCurrentStreamId(challengeId: string): string | null {
+		return this.currentStreamIds.get(challengeId) || null
+	}
 
 	public logout(): void {
 		this.chats.clear()
-		this.setCurrentStreamId(null)
+		this.currentStreamIds.clear()
 	}
 }
 

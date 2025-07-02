@@ -4,6 +4,7 @@ import debounce from "lodash-es/debounce"
 import { useState, useRef, useEffect } from "react"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
+import SandboxChatInterface from "./sandbox-chat-interface"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
 
@@ -43,6 +44,7 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 			<TabsList className="mb-2">
 				<TabsTrigger value="code">Code</TabsTrigger>
 				<TabsTrigger value="notes">Notes</TabsTrigger>
+				<TabsTrigger value="chat">Chat</TabsTrigger>
 			</TabsList>
 
 			<TabsContent value="code" className="flex-1 overflow-auto bg-polar p-4 rounded">
@@ -57,6 +59,13 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none"
 					value={notes}
 					onChange={handleNotesChange}
+				/>
+			</TabsContent>
+
+			<TabsContent value="chat" className="flex-1 min-h-0">
+				<SandboxChatInterface
+					projectUUID={project.projectUUID}
+					cppCode={cppCode}
 				/>
 			</TabsContent>
 		</Tabs>

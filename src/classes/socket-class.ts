@@ -3,8 +3,15 @@
 import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { action, makeAutoObservable } from "mobx"
-import { HeadlightData, HornData, LedControlData, MotorControlData, SoundData } from "@bluedotrobots/common-ts"
+import {
+	HeadlightData,
+	HornData,
+	LedControlData,
+	MotorControlData,
+	SoundData,
+} from "@bluedotrobots/common-ts"
 import chatsClass from "./chat-class"
+import sandboxClass from "./sandbox-class"
 import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
 import handleIncomingSensorData from "../utils/socket/handle-incoming-sensor-data"
 
@@ -56,9 +63,15 @@ class SocketClass {
 	private setupChatbotEvents = action((): void => {
 		if (!this._socket) return
 
-		this._socket.on("chatbot-stream-start", chatsClass.startStreaming)
-		this._socket.on("chatbot-stream-chunk", chatsClass.addStreamingChunk)
-		this._socket.on("chatbot-stream-complete", chatsClass.completeStreaming)
+		// Career Quest chatbot events
+		this._socket.on("cq-chatbot-stream-start", chatsClass.startStreaming)
+		this._socket.on("cq-chatbot-stream-chunk", chatsClass.addStreamingChunk)
+		this._socket.on("cq-chatbot-stream-complete", chatsClass.completeStreaming)
+
+		// Sandbox chatbot events
+		this._socket.on("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
+		this._socket.on("sandbox-chatbot-stream-chunk", sandboxClass.addStreamingChunk)
+		this._socket.on("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
 	})
 
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {

@@ -6,7 +6,7 @@ import isEmpty from "lodash-es/isEmpty"
 import { ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
-import ChatInterface from "./chat/chat-interface"
+import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
@@ -83,7 +83,7 @@ function ChallengeSection(props: Props) {
 
 				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
-					<ChatInterface
+					<CqChatInterface
 						blocklyJson={challengeData.initialBlocklyJson}
 						challengeData={challengeData}
 					/>
