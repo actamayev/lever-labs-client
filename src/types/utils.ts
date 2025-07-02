@@ -56,6 +56,11 @@ declare global {
 		password: string
 	}
 
+	interface NewGoogleInfoFormValues {
+		age: number | null
+		username: string
+	}
+
 	//Sandbox
 	type HexColor = string & { readonly __brand: unique symbol }
 

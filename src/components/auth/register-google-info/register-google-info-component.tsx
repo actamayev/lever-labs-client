@@ -1,9 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { useCallback, useMemo, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { NewUsernameRequest } from "@bluedotrobots/common-ts"
+import { useCallback, useMemo, useState } from "react"
 import { Form } from "../../shadcn/ui/form"
 import AuthButton from "../../buttons/generic-buttons"
 import UsernameInput from "../register/username-input"
@@ -11,25 +10,26 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import { registerUsernameSchema } from "../../../utils/auth/auth-schemas"
-import registerUsername from "../../../utils/auth/google/register-username"
+import registerGoogleInfo from "../../../utils/auth/google/register-google-info"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
-export default function RegisterUsernameComponent() {
+export default function RegisterGoogleInfoComponent() {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 
-	const form = useForm<NewUsernameRequest>({
+	const form = useForm<NewGoogleInfoFormValues>({
 		resolver: zodResolver(registerUsernameSchema),
 		defaultValues: {
-			username: ""
+			username: "",
+			age: null
 		}
 	})
 
 	const username = form.watch("username")
 	const isDisabled = useMemo(() => username.length < 4, [username])
 
-	const onSubmit = useCallback(async (values: NewUsernameRequest) => {
-		const success = await registerUsername(values.username, setError)
+	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues) => {
+		const success = await registerGoogleInfo(values, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate])

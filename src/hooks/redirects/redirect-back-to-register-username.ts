@@ -18,7 +18,7 @@ export default function useRedirectBackToRegisterUsername(): void {
 			isNull(personalInfoClass.email) // If the user doesn't have an email, no need to re-direct
 		) return
 
-		navigate("/register-username")
+		navigate("/register-google")
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, navigate, authClass.isFinishedWithSignup, personalInfoClass.email])
 }
