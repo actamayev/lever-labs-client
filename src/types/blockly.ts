@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import * as Blockly from "blockly"
-import { BlockNames } from "@bluedotrobots/common-ts"
 import { CssConfig } from "blockly/core/toolbox/category"
+import { BlockNames, ToolboxItem, } from "@bluedotrobots/common-ts"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -26,15 +26,10 @@ declare global {
 		expanded?: string | boolean
 	}
 
-	interface CustomContents {
-		kind: "block"
-		type: BlockNames
-	}
-
 	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents" | "kind" | "id" | "categorystyle" | "cssconfig" | "hidden" | "expanded">, PartialCategoryInfo {
 		name: BlocklyCategoryName
 		colour: HexColor
-		contents: CustomContents[]
+		contents: ToolboxItem[]
 	}
 
 	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents" | "kind" | "id" | "categorystyle" | "cssconfig" | "hidden" | "expanded">, PartialCategoryInfo {
