@@ -30,6 +30,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 	const isWaitingForResponse = useMemo(() => {
 		if (!isStreaming) return false
 		const lastMessage = messages[messages.length - 1]
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		return lastMessage && lastMessage.role === "assistant" && lastMessage.content.length === 0
 	}, [isStreaming, messages])
 
