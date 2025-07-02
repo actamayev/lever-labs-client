@@ -8,6 +8,12 @@ declare global {
 		timestamp: Date
 		isStreaming?: boolean
 	}
+
+	interface SingleMessageData {
+		messageId: string
+		role: ChatMessageRole
+		content: string
+	}
 }
 
 export {}

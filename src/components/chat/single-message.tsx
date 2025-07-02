@@ -5,15 +5,15 @@ import Image from "next/image"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { CustomUserCircle } from "../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import { cn } from "../../lib/shadcn/utils"
+import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
+import { CustomUserCircle } from "../icons/custom-user-circle"
+import personalInfoClass from "../../classes/personal-info-class"
 
-function SingleMessage({ message } : { message: ChatClassMessage}) {
+function SingleMessage({ message } : { message: SingleMessageData }) {
 	return (
 		<div
-			key={message.id}
+			key={message.messageId}
 			className={`flex gap-3 min-w-0 w-full ${message.role === "user" ? "justify-end" : "justify-start"}`}
 		>
 			{message.role === "assistant" && (

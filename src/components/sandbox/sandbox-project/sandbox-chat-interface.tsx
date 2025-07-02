@@ -9,7 +9,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
 import sandboxClass from "../../../classes/sandbox-class"
-import SingleMessage from "../../career/chat/single-message"
+import SingleMessage from "../../chat/single-message"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
 import stopSandboxChatStream from "../../../utils/chat/stop-sandbox-chat-stream"
@@ -104,11 +104,9 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 							<SingleMessage
 								key={`${projectUUID}-${index}`}
 								message={{
-									id: projectUUID,
+									messageId: `${projectUUID}-${message.timestamp}`,
 									role: message.role,
-									content: message.content,
-									timestamp: message.timestamp,
-									isStreaming: isStreaming && index === messages.length - 1 && message.role === "assistant"
+									content: message.content
 								}}
 							/>
 						))}

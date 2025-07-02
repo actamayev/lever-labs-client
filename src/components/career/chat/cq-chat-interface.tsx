@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { Send, Square, BotMessageSquare } from "lucide-react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
-import SingleMessage from "./single-message"
+import SingleMessage from "../../chat/single-message"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import { Textarea } from "../../shadcn/ui/textarea"
@@ -133,7 +133,10 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 						{messages.map((message) => (
 							<SingleMessage
 								key={message.id}
-								message={message}
+								message={{
+									messageId: message.id,
+									...message
+								}}
 							/>
 						))}
 
