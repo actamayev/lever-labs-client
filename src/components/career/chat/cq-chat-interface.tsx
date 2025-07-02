@@ -8,7 +8,7 @@ import chatsClass from "../../../classes/chat-class"
 import SingleMessage from "../../chat/single-message"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
-import stopCqChatStream from "../../../utils/chat/stop-cq-chat-stream"
+import stopCqChatStream from "../../../utils/chat/stop-chat-stream"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
 import retrieveCareerQuestChat from "../../../utils/chat/retrieve-career-quest-chat"
@@ -18,7 +18,6 @@ interface ChatInterfaceProps {
 	challengeData: ChallengeData
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
 function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -74,12 +73,20 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
 	}, [challengeData, cppCode, inputValue, isStreaming])
 
+	const chatReset = useCallback((): string | null => {
+		// Reset streaming state immediately for UI responsiveness
+		chatsClass.resetChatState(challengeData.id)
+
+		// Get stream ID for this specific challenge and stop it
+		return chatsClass.getCurrentStreamId(challengeData.id)
+	}, [challengeData.id])
+
 	const onClickAction = useCallback(async () => {
 		if (isStreaming) {
-			return await stopCqChatStream(challengeData.id)
+			return await stopCqChatStream(chatReset)
 		}
 		await handleSendMessage()
-	}, [challengeData.id, handleSendMessage, isStreaming])
+	}, [chatReset, handleSendMessage, isStreaming])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingMessages) {

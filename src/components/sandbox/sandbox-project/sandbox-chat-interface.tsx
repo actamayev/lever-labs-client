@@ -6,17 +6,16 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-message"
 import sandboxClass from "../../../classes/sandbox-class"
+import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
-import stopSandboxChatStream from "../../../utils/chat/stop-sandbox-chat-stream"
 
 interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
 	cppCode: string
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
 function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -62,12 +61,20 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		await sendSandboxMessage(projectUUID, cppCode, inputValue)
 	}, [projectUUID, cppCode, inputValue, isStreaming])
 
+	const chatReset = useCallback((): string | null => {
+		// Reset streaming state immediately for UI responsiveness
+		sandboxClass.resetChatStreamingState(projectUUID)
+
+		// If you implement stream ID tracking in sandbox class, uncomment this:
+		return sandboxClass.getCurrentStreamId(projectUUID)
+	}, [projectUUID])
+
 	const onClickAction = useCallback(async () => {
 		if (isStreaming) {
-			return await stopSandboxChatStream(projectUUID)
+			return await stopChatStream(chatReset)
 		}
 		await handleSendMessage()
-	}, [projectUUID, handleSendMessage, isStreaming])
+	}, [isStreaming, handleSendMessage, chatReset])
 
 	return (
 		<ChatParentComponent>
