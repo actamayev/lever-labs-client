@@ -133,16 +133,15 @@ body {
   stroke: none !important;
 }
 
-.blocklyTreeLabel {
+.blocklyToolboxCategoryLabel {
   font-family: 'Lexend', sans-serif !important;
   font-weight: normal !important;
 }
 
-.blocklyTreeRow {
+.blocklyToolboxCategory {
   font-family: 'Lexend', sans-serif !important;
 }
 
-/* Optional: Style the entire toolbox */
 .blocklyToolboxDiv {
   font-family: 'Lexend', sans-serif !important;
 }
