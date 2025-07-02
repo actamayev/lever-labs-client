@@ -134,14 +134,17 @@ body {
 }
 
 .blocklyTreeLabel {
-  font-family: 'Lexend', sans-serif;
-  font-weight: normal;
-  font-size: 15px;
+  font-family: 'Lexend', sans-serif !important;
+  font-weight: normal !important;
 }
 
-/* If you want to style the entire toolbox */
+.blocklyTreeRow {
+  font-family: 'Lexend', sans-serif !important;
+}
+
+/* Optional: Style the entire toolbox */
 .blocklyToolboxDiv {
-  font-family: 'Lexend', sans-serif;
+  font-family: 'Lexend', sans-serif !important;
 }
 
 .preserve-3d {
