@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import * as Blockly from "blockly"
 import { BlockNames } from "@bluedotrobots/common-ts"
 import { CssConfig } from "blockly/core/toolbox/category"
@@ -17,27 +18,29 @@ declare global {
 	}
 
 	interface PartialCategoryInfo {
-		kind: "category",
-		id: undefined,
-		categorystyle: undefined,
-		cssconfig: CssConfig | undefined,
+		kind: "category"
+		id: undefined
+		categorystyle: undefined
+		cssconfig: CssConfig | undefined
 		hidden: undefined
 		expanded?: string | boolean
 	}
 
-	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents">, PartialCategoryInfo {
-		name: BlocklyCategoryName
-		colour: HexColor
-		contents: Array<{
-			kind: "block"
-			type: BlockNames
-		}>
+	interface CustomContents {
+		kind: "block"
+		type: BlockNames
 	}
 
-	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents">, PartialCategoryInfo {
+	interface CustomCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents" | "kind" | "id" | "categorystyle" | "cssconfig" | "hidden" | "expanded">, PartialCategoryInfo {
+		name: BlocklyCategoryName
+		colour: HexColor
+		contents: CustomContents[]
+	}
+
+	interface ParentCategoryInfo extends Omit<Blockly.utils.toolbox.CategoryInfo, "contents" | "kind" | "id" | "categorystyle" | "cssconfig" | "hidden" | "expanded">, PartialCategoryInfo {
 		name: ParentCategoryName
 		colour: HexColor
-		contents: Array<CustomCategoryInfo>
+		contents: CustomCategoryInfo[]
 	}
 
 	type BlocklyCategoryName =

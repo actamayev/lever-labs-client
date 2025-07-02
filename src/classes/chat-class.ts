@@ -2,7 +2,16 @@
 
 import { action, makeAutoObservable, observable } from "mobx"
 import { InteractionType, CqChatbotStreamStartEvent,
-	CqChatbotStreamChunkEvent, CqChatbotStreamCompleteEvent} from "@bluedotrobots/common-ts"
+	CqChatbotStreamChunkEvent, CqChatbotStreamCompleteEvent,
+	ChatMessageRole } from "@bluedotrobots/common-ts"
+
+interface ChatClassMessage {
+	id: string
+	role: ChatMessageRole
+	content: string
+	timestamp: Date
+	isStreaming?: boolean
+}
 
 export interface ChatState {
 	messages: ChatClassMessage[]

@@ -5,10 +5,17 @@ import Image from "next/image"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
+import { ChatMessageRole } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
+
+interface SingleMessageData {
+	messageId: string
+	role: ChatMessageRole
+	content: string
+}
 
 function SingleMessage({ message } : { message: SingleMessageData }) {
 	return (
