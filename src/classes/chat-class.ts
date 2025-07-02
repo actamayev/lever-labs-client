@@ -16,7 +16,8 @@ export interface ChatState {
 class ChatsClass {
 	// Map of challengeId -> ChatState
 	public chats = observable.map<string, ChatState>()
-	public currentStreamId: string | null = null
+	// Map of challengeId -> streamId for tracking concurrent streams
+	public currentStreamIds: Map<string, string | null> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -141,7 +142,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
+		this.setCurrentStreamId(completeEvent.challengeId, null)
 	})
 
 	// Reset chat state for a challenge
@@ -150,7 +151,7 @@ class ChatsClass {
 		chatState.isStreaming = false
 		chatState.currentStreamingMessageId = null
 		chatState.currentInteractionType = null
-		this.setCurrentStreamId(null)
+		this.setCurrentStreamId(challengeId, null)
 	})
 
 	// Check if currently streaming for a challenge
@@ -158,13 +159,18 @@ class ChatsClass {
 		return this.getChatState(challengeId).isStreaming
 	}
 
-	public setCurrentStreamId = action((newCurrentStreamId: string | null): void => {
-		this.currentStreamId = newCurrentStreamId
+	// Stream ID management methods
+	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {
+		this.currentStreamIds.set(challengeId, streamId)
 	})
+
+	public getCurrentStreamId(challengeId: string): string | null {
+		return this.currentStreamIds.get(challengeId) || null
+	}
 
 	public logout(): void {
 		this.chats.clear()
-		this.setCurrentStreamId(null)
+		this.currentStreamIds.clear()
 	}
 }
 

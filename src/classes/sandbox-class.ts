@@ -16,6 +16,7 @@ class SandboxClass {
 	public hasRetrievedAllSandboxProjects = false
 	public sandboxProjects: Map<ProjectUUID, SandboxProjectWithStreaming> = new Map()
 	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map()
+	public currentStreamIds: Map<ProjectUUID, string | null> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -146,21 +147,21 @@ class SandboxClass {
 		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
 		if (isUndefined(project)) return
 
-		if (!project.isStreaming) {
-			return
-		}
+		if (!project.isStreaming) return
 
 		// Reset streaming state
 		project.isStreaming = false
 		project.currentStreamingMessageId = null
 	})
 
+	// Update the resetChatStreamingState method to also clear stream ID:
 	public resetChatStreamingState = action((projectUUID: ProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		project.isStreaming = false
 		project.currentStreamingMessageId = null
+		this.setCurrentStreamId(projectUUID, null)
 	})
 
 	// Check if currently streaming for a project
@@ -175,11 +176,21 @@ class SandboxClass {
 		return project?.sandboxChatMessages || []
 	}
 
+	public setCurrentStreamId = action((projectUUID: ProjectUUID, streamId: string | null): void => {
+		this.currentStreamIds.set(projectUUID, streamId)
+	})
+
+	public getCurrentStreamId(projectUUID: ProjectUUID): string | null {
+		return this.currentStreamIds.get(projectUUID) || null
+	}
+
+	// Update logout method to clear stream IDs:
 	public logout(): void {
 		this.setIsRetrievingAllSandboxProjects(false)
 		this.setHasRetrievedAllSandboxProjects(false)
 		this.sandboxProjects = new Map()
 		this.retrievingSingleProjects = new Map()
+		this.currentStreamIds.clear()
 	}
 }
 

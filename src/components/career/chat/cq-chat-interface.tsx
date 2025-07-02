@@ -21,7 +21,7 @@ interface ChatInterfaceProps {
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
+function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -193,4 +193,4 @@ function ChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	)
 }
 
-export default observer(ChatInterface)
+export default observer(CqChatInterface)
