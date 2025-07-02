@@ -1,8 +1,8 @@
 import { observer } from "mobx-react"
 import { Send, Square } from "lucide-react"
 import { Dispatch, RefObject, SetStateAction } from "react"
-import { Button } from "../../shadcn/ui/button"
-import { Textarea } from "../../shadcn/ui/textarea"
+import { Button } from "../shadcn/ui/button"
+import { Textarea } from "../shadcn/ui/textarea"
 
 interface Props {
 	inputRef: RefObject<HTMLTextAreaElement>

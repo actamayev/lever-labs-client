@@ -3,12 +3,12 @@
 import { observer } from "mobx-react"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-message"
 import sandboxClass from "../../../classes/sandbox-class"
-import ChatTextArea from "../../career/chat/chat-text-area"
+import ChatParentComponent from "../../chat/chat-parent-component"
+import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
-import ChatParentComponent from "../../career/chat/chat-parent-component"
-import ChatMessagesFramework from "../../career/chat/chat-messages-framework"
 import stopSandboxChatStream from "../../../utils/chat/stop-sandbox-chat-stream"
 
 interface SandboxChatInterfaceProps {

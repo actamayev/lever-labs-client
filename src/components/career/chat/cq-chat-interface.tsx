@@ -3,11 +3,11 @@
 import { observer } from "mobx-react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
-import ChatTextArea from "./chat-text-area"
+import ChatTextArea from "../../chat/chat-text-area"
 import chatsClass from "../../../classes/chat-class"
 import SingleMessage from "../../chat/single-message"
-import ChatParentComponent from "./chat-parent-component"
-import ChatMessagesFramework from "./chat-messages-framework"
+import ChatParentComponent from "../../chat/chat-parent-component"
+import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import stopCqChatStream from "../../../utils/chat/stop-cq-chat-stream"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
@@ -101,7 +101,6 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 
 	return (
 		<ChatParentComponent>
-			{/* Chat Messages - Scrollable with fixed height */}
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}

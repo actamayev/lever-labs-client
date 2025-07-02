@@ -1,8 +1,8 @@
 import { RefObject } from "react"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import { cn } from "../../lib/shadcn/utils"
+import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
 interface Props {
 	hasAnyMessages: boolean

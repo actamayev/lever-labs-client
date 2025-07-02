@@ -145,9 +145,7 @@ class SandboxClass {
 
 	public completeStreaming = action((event: SandboxChatbotStreamStartOrCompleteEvent): void => {
 		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
-		if (isUndefined(project)) return
-
-		if (!project.isStreaming) return
+		if (isUndefined(project) || !project.isStreaming) return
 
 		// Reset streaming state
 		project.isStreaming = false
