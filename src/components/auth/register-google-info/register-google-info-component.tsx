@@ -2,8 +2,9 @@
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useState } from "react"
 import { Form } from "../../shadcn/ui/form"
+import AgeInput from "../register/age-input"
 import AuthButton from "../../buttons/generic-buttons"
 import UsernameInput from "../register/username-input"
 import ErrorMessage from "../../messages/error-message"
@@ -25,9 +26,6 @@ export default function RegisterGoogleInfoComponent() {
 		}
 	})
 
-	const username = form.watch("username")
-	const isDisabled = useMemo(() => username.length < 4, [username])
-
 	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues) => {
 		const success = await registerGoogleInfo(values, setError)
 		if (success === false) return
@@ -35,18 +33,17 @@ export default function RegisterGoogleInfoComponent() {
 	}, [navigate])
 
 	return (
-		<>
-			<AuthTemplate title="Choose your username">
-				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
-						<UsernameInput control={form.control} />
+		<AuthTemplate title="Choose your username">
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+					<AgeInput control={form.control} />
+					<UsernameInput control={form.control} />
 
-						<AuthButton loading={isDisabled} title="CONTINUE" />
+					<AuthButton title="CONTINUE" />
 
-						{error && <ErrorMessage error={error} />}
-					</form>
-				</Form>
-			</AuthTemplate>
-		</>
+					{error && <ErrorMessage error={error} />}
+				</form>
+			</Form>
+		</AuthTemplate>
 	)
 }
