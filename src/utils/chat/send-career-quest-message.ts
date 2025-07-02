@@ -9,8 +9,8 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function sendCareerQuestMessage(
 	careerQuestChallengeId: string,
-	cppCode: string,
-	inputValue: string,
+	userCode: string,
+	message: string,
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
@@ -21,14 +21,14 @@ export default async function sendCareerQuestMessage(
 		// Send request to backend - challengeId will be included in the WebSocket response
 		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({
 			careerQuestChallengeId,
-			userCode: cppCode,
+			userCode,
 			interactionType: "generalQuestion",
-			message: inputValue,
+			message,
 		})
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		chatsClass.setCurrentStreamId(response.data.streamId)
+		chatsClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
