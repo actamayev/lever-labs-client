@@ -18,7 +18,7 @@ export default async function registerGoogleInfo(
 	try {
 		authClass.setAuthenticating(true)
 		if (isNull(googleInfo.age)) return false
-		const cleanGoogleData: NewGoogleInfoRequest  = {
+		const cleanGoogleData: NewGoogleInfoRequest = {
 			age: googleInfo.age,
 			username: googleInfo.username
 		}

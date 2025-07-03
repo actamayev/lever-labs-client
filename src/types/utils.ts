@@ -21,10 +21,6 @@ declare global {
 		textColor: string
 	}
 
-	interface HelmetData {
-		[key: string]: React.ReactNode
-	}
-
 	//Auth
 	type LoginOrRegister = "Login" | "Register"
 	interface RegisterFormValues {

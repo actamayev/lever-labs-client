@@ -39,7 +39,7 @@ export default function UsernameInput<T extends FormWithUsername>({
 								maxLength={100}
 							/>
 							<CharacterCounter
-								value={field.value?.toString() || ""}
+								value={field.value.toString() || ""}
 								characterLimit={100}
 								extraClasses="right-3"
 							/>
