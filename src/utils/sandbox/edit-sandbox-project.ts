@@ -15,11 +15,11 @@ export default async function editSandboxProject(projectUUID: ProjectUUID, newBl
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const createSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProject(
+		const editSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProject(
 			project.projectUUID,
 			newBlocklyJson
 		)
-		if (!isEqual(createSandboxProjectResponse.status, 200) || isNonSuccessResponse(createSandboxProjectResponse.data)) {
+		if (!isEqual(editSandboxProjectResponse.status, 200) || isNonSuccessResponse(editSandboxProjectResponse.data)) {
 			throw Error ("Unable to edit sandbox project")
 		}
 		sandboxClass.updateProjectLastUpdated(project.projectUUID)

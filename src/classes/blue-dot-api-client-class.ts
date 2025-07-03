@@ -10,6 +10,7 @@ import SandboxDataService from "../services/sandbox-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import LabActivityTrackingDataService from "../services/lab-activity-tracking-data-service"
+import CareerQuestDataService from "../services/career-quest-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
@@ -24,6 +25,7 @@ class BlueDotApiClient {
 	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient, "/sandbox")
 	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient, "/workbench")
 	public chatDataService: ChatDataService = new ChatDataService(this.httpClient, "/chat")
+	public careerQuestDataService: CareerQuestDataService = new CareerQuestDataService(this.httpClient, "/career-quest")
 
 	constructor() {
 	}
