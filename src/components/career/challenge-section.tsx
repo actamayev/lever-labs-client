@@ -84,7 +84,7 @@ function ChallengeSection(props: Props) {
 				{/* Right Panel - Chat Interface Full height */}
 				<div className="w-1/3 max-h-full">
 					<CqChatInterface
-						blocklyJson={challengeData.initialBlocklyJson}
+						cppCode={cppCode}
 						challengeData={challengeData}
 					/>
 				</div>

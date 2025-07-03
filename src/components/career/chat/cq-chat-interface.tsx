@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { ChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import chatsClass from "../../../classes/chat-class"
@@ -9,22 +9,18 @@ import SingleMessage from "../../chat/single-message"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import stopCqChatStream from "../../../utils/chat/stop-chat-stream"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
 import retrieveCareerQuestChat from "../../../utils/chat/retrieve-career-quest-chat"
 
 interface ChatInterfaceProps {
-	blocklyJson: BlocklyJson
+	cppCode: string
 	challengeData: ChallengeData
 }
 
-function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
+function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
-
-	// Generate current C++ code from Blockly
-	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
 
 	// Get messages directly from chats class
 	const messages = chatsClass.getMessages(challengeData.id)
