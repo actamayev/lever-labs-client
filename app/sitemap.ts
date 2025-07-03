@@ -9,14 +9,14 @@ const currentDate = new Date().toISOString().split("T")[0]
 
 // Define route types with their priorities and change frequencies
 type RouteConfig = {
-	path: string
+	path: PageNames
 	changeFreq: "always" | "hourly" | "daily" | "weekly" | "monthly" | "yearly" | "never"
 	priority: number
 }
 
 // Main pages with higher priority
 const mainRoutes: RouteConfig[] = [
-	{ path: "", changeFreq: "weekly", priority: 1.0 },
+	{ path: "/", changeFreq: "weekly", priority: 1.0 },
 	{ path: "/lab", changeFreq: "weekly", priority: 1.0 },
 	{ path: "/sandbox", changeFreq: "monthly", priority: 1 },
 	{ path: "/career-quest", changeFreq: "monthly", priority: 1 },
@@ -28,9 +28,8 @@ const mainRoutes: RouteConfig[] = [
 const userRoutes: RouteConfig[] = [
 	{ path: "/login", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/register", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/register-username", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/register-google", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/add-pip", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/settings", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
 ]
 

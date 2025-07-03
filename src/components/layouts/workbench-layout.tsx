@@ -7,7 +7,7 @@ interface WorkbenchLayoutProps {
 	children: React.ReactNode
 	extraChildrenClasses?: string
 	extraParentClasses?: string
-	preventElasticScroll?: boolean // Add this new prop
+	preventElasticScroll?: boolean
 }
 
 export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
@@ -20,12 +20,20 @@ export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
 
 	return (
 		<div className={cn("h-screen relative", extraParentClasses)}>
-			{/* Main content area with optional elastic scroll prevention */}
-			<div className={cn(
-				"w-[62.5%] overflow-y-auto",
-				preventElasticScroll ? "overscroll-none" : "",
-				extraChildrenClasses
-			)}>
+			{/* Main content area with hidden scrollbar */}
+			<div
+				className={cn(
+					"w-[62.5%] overflow-y-auto scrollbar-hide",
+					preventElasticScroll ? "overscroll-none" : "",
+					extraChildrenClasses
+				)}
+				style={{
+					/* Firefox */
+					scrollbarWidth: "none",
+					/* IE and Edge */
+					msOverflowStyle: "none",
+				}}
+			>
 				{children}
 			</div>
 

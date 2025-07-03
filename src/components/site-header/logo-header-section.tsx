@@ -15,9 +15,9 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
 
 	const whereToNavigate = useMemo(() => {
 		if (
-			pathname === "/register-username" ||
+			pathname === "/register-google" ||
 			(authClass.isLoggedIn && isNull(personalInfoClass.username))
-		) return "/register-username"
+		) return "/register-google"
 		if (authClass.isFinishedWithSignup) return PageToNavigateAfterLogin
 		return "/"
 	// eslint-disable-next-line react-hooks/exhaustive-deps

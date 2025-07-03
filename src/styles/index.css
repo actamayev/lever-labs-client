@@ -158,6 +158,22 @@ body {
   border-radius: 1rem; /* Equivalent to rounded-2xl */
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Alternative approach - make scrollbar transparent */
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Ensure the content is still scrollable */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+
 html, body {
   overscroll-behavior: none !important;
   /* overflow-x: hidden; */

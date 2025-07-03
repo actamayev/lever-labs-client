@@ -40,7 +40,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			}
 			authClass.setAccessToken(googleCallbackResponse.data.accessToken)
 			if (googleCallbackResponse.data.isNewUser === true) {
-				return navigate("/register-username")
+				return navigate("/register-google")
 			}
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			pipClass.setPipData(googleCallbackResponse.data.userPipData)

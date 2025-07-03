@@ -22,7 +22,7 @@ export const staticPages = [
 	"/",
 	"/login",
 	"/register",
-	"/register-username",
+	"/register-google",
 
 	// Private:
 	"/garage",

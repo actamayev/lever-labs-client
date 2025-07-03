@@ -11,7 +11,7 @@ function LoginLogoutHeaderItem() {
 
 	if (
 		!isNull(personalInfoClass.username) ||
-		pathname === "/register-username"
+		pathname === "/register-google"
 	) return null
 	return <NullUserNavLink />
 }

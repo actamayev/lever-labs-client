@@ -3,6 +3,7 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { EmailUpdatesRequest, ErrorResponse, ErrorResponses, GoogleAuthSuccess, LoginRequest, LoginSuccess,
+	NewGoogleInfoRequest,
 	NonSuccessResponse, RegisterRequest, RegisterSuccess, SiteThemes, SuccessResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 
@@ -29,9 +30,9 @@ export default class AuthDataService extends BaseDataService {
 		)
 	}
 
-	async registerUsername(username: string): Promise<AxiosResponse<EmailUpdatesRequest | NonSuccessResponse>> {
+	async registerGoogleInfo(googleInfo: NewGoogleInfoRequest): Promise<AxiosResponse<EmailUpdatesRequest | NonSuccessResponse>> {
 		return await this.httpClient.http.post<EmailUpdatesRequest | NonSuccessResponse>(
-			this.buildUrl("/set-username"), { username }
+			this.buildUrl("/register-google-info"), { ...googleInfo }
 		)
 	}
 

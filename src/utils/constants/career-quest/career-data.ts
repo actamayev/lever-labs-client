@@ -10,7 +10,7 @@ export const introductionData: CareerData = {
 	careerUrl: "/career-quest/introduction",
 	careerIcon: Bot,
 	backgroundColor: "humpback",
-	expectedCompletionTime: "1 hour",
+	expectedCompletionTime: "1 HOUR",
 	componentsUsed: [
 		{
 			componentName: "LED",
@@ -42,7 +42,7 @@ export const careerData: CareerData[] = [
 		careerUrl: "/career-quest/obstacle-avoidance",
 		careerIcon: Route,
 		backgroundColor: "fox",
-		expectedCompletionTime: "1 hour",
+		expectedCompletionTime: "1 HOUR",
 		componentsUsed: [
 			{
 				componentName: "Side Distance Sensors",
