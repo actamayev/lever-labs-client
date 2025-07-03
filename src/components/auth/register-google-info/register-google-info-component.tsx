@@ -1,8 +1,8 @@
 "use client"
 
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Form } from "../../shadcn/ui/form"
 import AgeInput from "../register/age-input"
 import AuthButton from "../../buttons/generic-buttons"

@@ -21,28 +21,6 @@ declare global {
 		textColor: string
 	}
 
-	// Define the lesson routes structure
-	interface LessonRoutes {
-		path: "led"
-		children: ElementChild[]
-	}
-
-	// Define the base route structure
-	interface BaseRoute {
-		index?: boolean
-		path?: string
-		element: JSX.Element
-		children?: ElementChild[]
-	}
-
-	interface ElementChild {
-		path: ActivityTypePath
-		element: JSX.Element
-	}
-
-	// Create a union type for all possible route types
-	type RouteType = LessonRoutes | BaseRoute
-
 	interface HelmetData {
 		[key: string]: React.ReactNode
 	}

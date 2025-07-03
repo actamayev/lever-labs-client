@@ -1,4 +1,4 @@
-import RegisterGoogleInfoWrapper from "./register-username-wrapper"
+import RegisterGoogleInfoWrapper from "./register-google-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

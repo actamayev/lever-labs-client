@@ -1,13 +1,6 @@
 import { ActivityType, ActivityUUID, ProgressStatus } from "@bluedotrobots/common-ts"
 
 declare global {
-	type ActivityTypePath =
-	| `Reading/${string}`
-	// | `Video/${string}
-	| `Demo/${string}`
-	| `Code/${string}`
-	| "Summary"
-
 	type UncertainActivityType =
 	| ActivityType
 	| "Loading"
