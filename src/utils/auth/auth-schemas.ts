@@ -15,6 +15,15 @@ export const registerUsernameSchema = z.object({
 	username: z.string()
 		.min(3, "Choose a username that's at least 3 characters")
 		.max(100, "Could you pick a shorter username?"),
+	age: z.number({
+		required_error: "Please enter your age",
+		invalid_type_error: "Age must be a number",
+	})
+		.max(120, "Please enter a valid age")
+		.nullable()
+		.refine((val) => val !== null, {
+			message: "Please enter your age",
+		}),
 })
 
 export const emailUpdatesSchema = z.object({

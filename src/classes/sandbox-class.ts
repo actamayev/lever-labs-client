@@ -138,6 +138,7 @@ class SandboxClass {
 
 		// Find the last message (which should be the streaming one)
 		const lastMessage = project.sandboxChatMessages[project.sandboxChatMessages.length - 1]
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (lastMessage && lastMessage.role === "assistant") {
 			lastMessage.content += event.content
 		}

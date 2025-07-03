@@ -13,10 +13,10 @@ import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-i
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-analytics"
 import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
-import useRedirectBackToRegisterUsername from "@/hooks/redirects/redirect-back-to-register-username"
+import useRedirectBackToRegisterGoogle from "@/hooks/redirects/redirect-back-to-register-google"
 
 function RedirectHandler() {
-	useRedirectBackToRegisterUsername()
+	useRedirectBackToRegisterGoogle()
 	return null
 }
 

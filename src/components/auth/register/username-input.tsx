@@ -1,17 +1,21 @@
 "use client"
 
 import { Control, FieldPath } from "react-hook-form"
-import { NewUsernameRequest } from "@bluedotrobots/common-ts"
 import { Input } from "../../shadcn/ui/input"
 import CharacterCounter from "../../character-counter"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import { handleTypeUsername } from "../../../utils/handle-type-validation/handle-type-fields"
 
-interface Props<T extends NewUsernameRequest | RegisterFormValues> {
+// Base interface for any form that has a username field
+interface FormWithUsername {
+	username: string
+}
+
+interface Props<T extends FormWithUsername> {
 	control: Control<T>
 }
 
-export default function UsernameInput<T extends NewUsernameRequest | RegisterFormValues>({
+export default function UsernameInput<T extends FormWithUsername>({
 	control,
 }: Props<T>) {
 	return (
@@ -25,7 +29,7 @@ export default function UsernameInput<T extends NewUsernameRequest | RegisterFor
 							<Input
 								placeholder="Username"
 								{...field}
-								value={field.value?.toString() || ""}
+								value={field.value.toString() || ""}
 								onChange={(event) => {
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
@@ -35,7 +39,7 @@ export default function UsernameInput<T extends NewUsernameRequest | RegisterFor
 								maxLength={100}
 							/>
 							<CharacterCounter
-								value={field.value?.toString() || ""}
+								value={field.value.toString() || ""}
 								characterLimit={100}
 								extraClasses="right-3"
 							/>

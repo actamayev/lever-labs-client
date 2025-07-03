@@ -8,7 +8,7 @@ import useTypedNavigate from "../navigate/typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 
 // This hook exists to make sure that Google users who have not registered their username are unable to go to private pages
-export default function useRedirectBackToRegisterUsername(): void {
+export default function useRedirectBackToRegisterGoogle(): void {
 	const pathname = usePathname()
 	const navigate = useTypedNavigate()
 
@@ -18,7 +18,7 @@ export default function useRedirectBackToRegisterUsername(): void {
 			isNull(personalInfoClass.email) // If the user doesn't have an email, no need to re-direct
 		) return
 
-		navigate("/register-username")
+		navigate("/register-google")
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, navigate, authClass.isFinishedWithSignup, personalInfoClass.email])
 }
