@@ -1,3 +1,5 @@
+// SOLUTION: Target the blocklyWidgetDiv positioning specifically
+
 "use client"
 
 import * as Blockly from "blockly"
@@ -41,9 +43,139 @@ function InteractiveMiniSandbox(props: Props) {
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
-
 		onJsonChange(newJson)
 	}, [onJsonChange])
+
+	// SOLUTION: Fix blocklyWidgetDiv scroll jumping
+	useEffect(() => {
+		let savedScrollPosition = { x: window.scrollX, y: window.scrollY }
+		let isBlocklyWidgetActive = false
+
+		// Monitor blocklyWidgetDiv changes
+		const handleWidgetMutation = (mutations: MutationRecord[]) => {
+			for (const mutation of mutations) {
+				const target = mutation.target as HTMLElement
+
+				// Check if this is a blocklyWidgetDiv mutation
+				if (target && target.classList && target.classList.contains("blocklyWidgetDiv")) {
+					// Save scroll position when widget becomes active
+					if (!isBlocklyWidgetActive) {
+						savedScrollPosition = { x: window.scrollX, y: window.scrollY }
+						isBlocklyWidgetActive = true
+
+						// Force restore scroll position after any potential jumps
+						setTimeout(() => {
+							window.scrollTo(savedScrollPosition.x, savedScrollPosition.y)
+						}, 0)
+						setTimeout(() => {
+							window.scrollTo(savedScrollPosition.x, savedScrollPosition.y)
+						}, 10)
+						setTimeout(() => {
+							window.scrollTo(savedScrollPosition.x, savedScrollPosition.y)
+						}, 50)
+					}
+				}
+			}
+		}
+
+		// Monitor focus events specifically on blocklyWidgetDiv and inputs
+		const handleFocusIn = (event: FocusEvent) => {
+			const target = event.target as HTMLElement
+
+			if (target && (
+				(target.classList && target.classList.contains("blocklyWidgetDiv")) ||
+				(target.classList && target.classList.contains("blocklyHtmlInput")) ||
+				target.closest(".blocklyWidgetDiv")
+			)) {
+				// Save position immediately on focus
+				savedScrollPosition = { x: window.scrollX, y: window.scrollY }
+				isBlocklyWidgetActive = true
+			}
+		}
+
+		const handleFocusOut = (event: FocusEvent) => {
+			const target = event.target as HTMLElement
+
+			if (target && (
+				(target.classList && target.classList.contains("blocklyWidgetDiv")) ||
+				(target.classList && target.classList.contains("blocklyHtmlInput")) ||
+				target.closest(".blocklyWidgetDiv")
+			)) {
+				// Reset when focus leaves
+				setTimeout(() => {
+					isBlocklyWidgetActive = false
+				}, 100)
+			}
+		}
+
+		// Aggressively prevent scrolling during widget operations
+		const handleScroll = (event: Event) => {
+			if (isBlocklyWidgetActive) {
+				event.preventDefault()
+				event.stopImmediatePropagation()
+				// Force scroll back to saved position
+				window.scrollTo(savedScrollPosition.x, savedScrollPosition.y)
+				return false
+			}
+		}
+
+		// Set up mutation observer for DOM changes
+		const mutationObserver = new MutationObserver(handleWidgetMutation)
+		mutationObserver.observe(document.body, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ["style", "class"]
+		})
+
+		// Add event listeners
+		document.addEventListener("focusin", handleFocusIn, true)
+		document.addEventListener("focusout", handleFocusOut, true)
+		window.addEventListener("scroll", handleScroll, { passive: false, capture: true })
+		document.addEventListener("scroll", handleScroll, { passive: false, capture: true })
+
+		return () => {
+			mutationObserver.disconnect()
+			document.removeEventListener("focusin", handleFocusIn, true)
+			document.removeEventListener("focusout", handleFocusOut, true)
+			window.removeEventListener("scroll", handleScroll, { capture: true })
+			document.removeEventListener("scroll", handleScroll, { capture: true })
+		}
+	}, [])
+
+	// Additional CSS-based fix
+	useEffect(() => {
+		// Add CSS to prevent widget div from affecting layout
+		const style = document.createElement("style")
+		style.textContent = `
+			.blocklyWidgetDiv {
+				position: fixed !important;
+				z-index: 9999 !important;
+				pointer-events: auto !important;
+			}
+			
+			.blocklyWidgetDiv * {
+				position: static !important;
+			}
+			
+			.blocklyHtmlInput {
+				position: static !important;
+			}
+			
+			/* Prevent scroll anchoring during Blockly operations */
+			body.blockly-widget-active {
+				overflow-anchor: none !important;
+				scroll-behavior: auto !important;
+			}
+		`
+		document.head.appendChild(style)
+
+		return () => {
+			if (document.head.contains(style)) {
+				document.head.removeChild(style)
+			}
+		}
+	}, [])
 
 	const toggleToolbox = useCallback(() => {
 		const workspace = workspaceRef.current
@@ -86,7 +218,6 @@ function InteractiveMiniSandbox(props: Props) {
 
 	useEffect(() => initializeBlocks(), [])
 
-	// 6/26/25 TODO: Center workspace doesn't exist/work because it doesn't re-adjust for the toolbox not existing
 	return (
 		<div
 			ref={containerRef}
