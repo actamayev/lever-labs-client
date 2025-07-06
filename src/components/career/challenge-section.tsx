@@ -17,6 +17,7 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
+import { Separator } from "../shadcn/ui/separator"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
@@ -91,7 +92,9 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 					</div>
 
 					{/* Before running section (1/3 height) */}
-					<div className="flex-1 border-t border-swan pt-4">
+					<Separator orientation="horizontal" className="rounded-full h-0.5" />
+
+					<div className="flex-1 pt-4">
 						<h3 className="text-lg font-semibold mb-3 text-questionText">
 							Before running code, make sure:
 						</h3>
