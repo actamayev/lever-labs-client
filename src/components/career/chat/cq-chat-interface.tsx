@@ -16,6 +16,7 @@ interface ChatInterfaceProps {
 	challengeData: ChallengeData
 }
 
+// eslint-disable-next-line max-lines-per-function
 function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -25,6 +26,16 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const messages = careerQuestClass.getMessages(challengeData.id)
 	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
 	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
+
+	useEffect(() => {
+		if (messagesEndRef.current) {
+			// Use scrollTop instead of scrollIntoView to only scroll the container
+			const container = messagesEndRef.current.closest(".overflow-y-auto")
+			if (container) {
+				container.scrollTop = container.scrollHeight
+			}
+		}
+	}, [messages])
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -36,13 +47,6 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
-
-	// Auto-scroll to bottom when new messages are added
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-		}
-	}, [messages])
 
 	const handleSendMessage = useCallback(async () => {
 		if (!inputValue.trim() || isStreaming) return
