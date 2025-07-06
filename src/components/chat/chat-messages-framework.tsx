@@ -15,7 +15,6 @@ interface Props {
 // eslint-disable-next-line max-lines-per-function
 function ChatMessagesFramework(props: Props) {
 	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef } = props
-
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
