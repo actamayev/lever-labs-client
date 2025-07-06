@@ -63,10 +63,11 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
+		const currentStreamId = sandboxClass.getCurrentStreamId(projectUUID)
 		sandboxClass.resetChatStreamingState(projectUUID)
 
 		// If you implement stream ID tracking in sandbox class, uncomment this:
-		return sandboxClass.getCurrentStreamId(projectUUID)
+		return currentStreamId
 	}, [projectUUID])
 
 	const onClickAction = useCallback(async () => {
@@ -83,6 +84,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
 				messagesEndRef={messagesEndRef}
+				isStreaming={isStreaming}
 			>
 				{messages.map((message, index) => (
 					<SingleMessage

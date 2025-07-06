@@ -25,7 +25,7 @@ function ChatTextArea(props: Props) {
 	}
 
 	return (
-		<div className="p-4 flex-shrink-0">
+		<div className="px-4 pb-4 flex-shrink-0">
 			<div className="relative">
 				<Textarea
 					ref={inputRef}
