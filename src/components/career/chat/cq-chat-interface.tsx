@@ -102,6 +102,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
+				isStreaming={isStreaming}  // Add this line
 				messagesEndRef={messagesEndRef}
 			>
 				{messages.map((message) => (
