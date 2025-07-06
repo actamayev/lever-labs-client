@@ -79,7 +79,7 @@ function ChallengeSection(props: Props) {
 	// Reset the flag when switching between challenges
 	useEffect(() => {
 		isFirstChangeAfterInitRef.current = true
-	}, [challengeData.id])
+	}, [challengeData.id, hasRetrievedData])
 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
