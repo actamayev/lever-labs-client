@@ -69,7 +69,7 @@ class SerialConnectionManagerClass {
 
 			this.keepaliveWorker.addEventListener("message", this.workerMessageHandler)
 
-			console.info("Keepalive worker initialized successfully")
+			// console.info("Keepalive worker initialized successfully")
 		} catch (error) {
 			console.error("Failed to initialize keepalive worker:", error)
 			this.fallbackToMainThreadKeepalive()

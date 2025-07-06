@@ -2,6 +2,7 @@
 
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import isEqual from "lodash-es/isEqual"
 import debounce from "lodash-es/debounce"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
@@ -10,12 +11,13 @@ import pipClass from "../../classes/pip-class"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import careerQuestClass from "../../classes/career-quest-class"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
+import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
-import careerQuestClass from "../../classes/career-quest-class"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
 interface Props {
@@ -70,15 +72,19 @@ function ChallengeSection(props: Props) {
 	}, [debouncedSaveProject])
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
-		if (newBlocklyJson.sandboxJson === newBlocklyJson) return
+	// Compare stripped versions to ignore position changes
+		const currentJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id)
+		if (currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
+			return // No meaningful changes, don't save
+		}
 
-		// Update local state
+		// Update local state with full JSON (including positions)
 		setCppCode(generateCppFromJson(newBlocklyJson))
 
 		// Update career quest class
 		careerQuestClass.updateBlocklyJson(challengeData.id, newBlocklyJson)
 
-		// Only trigger the save if we're past the initial mounting period AND backend data has been retrieved
+		// Only save if conditions are met
 		if (isMountedLongEnough && careerQuestClass.hasRetrievedMessages(challengeData.id)) {
 			debouncedSaveProject(newBlocklyJson)
 		}

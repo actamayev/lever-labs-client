@@ -65,7 +65,6 @@ class CareerQuestClass {
 	// Get messages for a challenge
 	public getMessages(challengeId: string): ChatClassMessage[] {
 		const challengeData = this.getChallengeData(challengeId)
-		// console.log("challengeId", challengeId, challengeData)
 		return challengeData?.messages || []
 	}
 

@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import isEqual from "lodash-es/isEqual"
 import debounce from "lodash-es/debounce"
 import { useParams } from "next/navigation"
 import { BlocklyJson, ProjectUUID } from "@bluedotrobots/common-ts"
@@ -23,6 +24,7 @@ import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
+import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -64,7 +66,12 @@ function SandboxProjectPage() {
 	}, [debouncedSaveProject])
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
-		if (!project || project.sandboxJson === newBlocklyJson || isLoading) return
+	// Compare stripped versions to ignore position changes
+		if (!project || isLoading) return
+
+		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
+			return // No meaningful changes, don't save
+		}
 
 		// Update local state
 		setCppCode(generateCppFromJson(newBlocklyJson))

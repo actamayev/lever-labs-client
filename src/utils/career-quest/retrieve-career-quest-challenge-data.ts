@@ -1,7 +1,6 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -36,13 +35,7 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 			}
 		})
 
-		// Extract sandbox JSON - it should be a BlocklyJson object
-		const sandboxJson: BlocklyJson | null = challengeResponse.data.sandboxJson
-			? challengeResponse.data.sandboxJson as BlocklyJson
-			: null
-
-		console.log(transformedMessages)
-		careerQuestClass.setRetrievedData(challengeId, transformedMessages, sandboxJson)
+		careerQuestClass.setRetrievedData(challengeId, transformedMessages, challengeResponse.data.sandboxJson)
 	} catch (error) {
 		console.error(error)
 		careerQuestClass.setIsRetrievingMessages(challengeId, false)
