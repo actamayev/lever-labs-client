@@ -92,20 +92,20 @@ function ChallengeSection(props: Props) {
 				rounded-lg border-2 border-swan p-4 max-h-full overflow-y-auto">
 					{/* Description section (2/3 height) */}
 					<div className="flex-[2] mb-4">
-						<h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+						<h3 className="text-lg font-semibold mb-3 text-questionText">
 							What this code does:
 						</h3>
-						<div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+						<div className="text-eel leading-relaxed">
 							{challengeData.description}
 						</div>
 					</div>
 
 					{/* Before running section (1/3 height) */}
-					<div className="flex-1 border-t border-gray-200 dark:border-gray-600 pt-4">
-						<h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">
+					<div className="flex-1 border-t border-swan pt-4">
+						<h3 className="text-lg font-semibold mb-3 text-questionText">
 							Before running code, make sure:
 						</h3>
-						<div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+						<div className="text-eel leading-relaxed">
 							{challengeData.beforeRunningText}
 						</div>
 					</div>

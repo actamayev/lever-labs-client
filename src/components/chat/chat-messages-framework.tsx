@@ -26,7 +26,7 @@ function ChatMessagesFramework(props: Props) {
 				<div className="text-center">
 					<BotMessageSquare className="w-12 h-12 mx-auto mb-4 text-macaw" />
 					<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
-					<p className="text-sm text-gray-500 dark:text-gray-400">Ask questions about your code or robotics concepts</p>
+					<p className="text-sm text-wolf">Ask questions about your code or robotics concepts</p>
 				</div>
 			)}
 
