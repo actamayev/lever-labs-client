@@ -17,7 +17,7 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
-	onJsonChange?: (json: BlocklyJson) => void
+	onJsonChange: (json: BlocklyJson) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -42,10 +42,7 @@ function InteractiveMiniSandbox(props: Props) {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
-		// Notify parent component if onJsonChange callback exists
-		if (onJsonChange) {
-			onJsonChange(newJson)
-		}
+		onJsonChange(newJson)
 	}, [onJsonChange])
 
 	const toggleToolbox = useCallback(() => {

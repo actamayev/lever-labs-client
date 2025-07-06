@@ -1,43 +1,41 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { ChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
-import chatsClass from "../../../classes/chat-class"
 import SingleMessage from "../../chat/single-message"
+import careerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
-import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import stopCqChatStream from "../../../utils/chat/stop-chat-stream"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
-import retrieveCareerQuestChat from "../../../utils/chat/retrieve-career-quest-chat"
 
 interface ChatInterfaceProps {
-	blocklyJson: BlocklyJson
+	cppCode: string
 	challengeData: ChallengeData
 }
 
-function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
+// eslint-disable-next-line max-lines-per-function
+function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
-	// Generate current C++ code from Blockly
-	const cppCode = useMemo(() => generateCppFromJson(blocklyJson), [blocklyJson])
+	// Get messages directly from career quest class
+	const messages = careerQuestClass.getMessages(challengeData.id)
+	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
+	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
 
-	// Get messages directly from chats class
-	const messages = chatsClass.getMessages(challengeData.id)
-	const isStreaming = chatsClass.isStreaming(challengeData.id)
-	const isRetrievingMessages = chatsClass.isRetrievingMessages(challengeData.id)
-	const hasRetrievedMessages = chatsClass.hasRetrievedMessages(challengeData.id)
-
-	// Retrieve chat messages when component mounts
 	useEffect(() => {
-		if (!hasRetrievedMessages && !isRetrievingMessages) {
-			retrieveCareerQuestChat(challengeData.id)
+		if (messagesEndRef.current) {
+			// Use scrollTop instead of scrollIntoView to only scroll the container
+			const container = messagesEndRef.current.closest(".overflow-y-auto")
+			if (container) {
+				container.scrollTop = container.scrollHeight
+			}
 		}
-	}, [challengeData.id, hasRetrievedMessages, isRetrievingMessages])
+	}, [messages])
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -50,20 +48,13 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
 
-	// Auto-scroll to bottom when new messages are added
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-		}
-	}, [messages])
-
 	const handleSendMessage = useCallback(async () => {
 		if (!inputValue.trim() || isStreaming) return
 
 		setInputValue("")
 
-		// Add user message to chats
-		chatsClass.addUserMessage(challengeData.id, inputValue)
+		// Add user message to career quest class
+		careerQuestClass.addUserMessage(challengeData.id, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
@@ -75,10 +66,11 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		chatsClass.resetChatState(challengeData.id)
+		const streamId = careerQuestClass.getCurrentStreamId(challengeData.id)
+		careerQuestClass.resetChatState(challengeData.id)
 
 		// Get stream ID for this specific challenge and stop it
-		return chatsClass.getCurrentStreamId(challengeData.id)
+		return streamId
 	}, [challengeData.id])
 
 	const onClickAction = useCallback(async () => {
@@ -111,6 +103,7 @@ function CqChatInterface({ blocklyJson, challengeData }: ChatInterfaceProps) {
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
+				isStreaming={isStreaming}  // Add this line
 				messagesEndRef={messagesEndRef}
 			>
 				{messages.map((message) => (

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
-import debounce from "lodash-es/debounce"
+import isEqual from "lodash-es/isEqual"
 import { useParams } from "next/navigation"
 import { BlocklyJson, ProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -20,6 +20,7 @@ import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
+import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
@@ -33,48 +34,37 @@ function SandboxProjectPage() {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
+	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
-	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
-	const [isMountedLongEnough, setIsMountedLongEnough] = useState(false)
-
-	// Add a timer to track when component has been mounted for 1 second
-	useEffect(() => {
-		// This is here to prevent the edit from being triggered too early
-		const timer = setTimeout(() => {
-			setIsMountedLongEnough(true)
-		}, 500)
-
-		return () => clearTimeout(timer)
-	}, [])
-
-	const debouncedSaveProject = useRef(
-		debounce((newBlocklyJson: BlocklyJson) => {
-			editSandboxProject(projectUUID, newBlocklyJson)
-		}, 250)
-	).current
-
-	// Clean up debounce on unmount
-	useEffect(() => {
-		return () => debouncedSaveProject.cancel()
-	}, [debouncedSaveProject])
+	const isFirstChangeAfterInitRef = useRef(true)
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
-		if (!project || project.sandboxJson === newBlocklyJson || isLoading) return
+		if (!project || isLoading) return
 
-		// Update local state
+		// Skip the first change event which happens during workspace initialization
+		if (isFirstChangeAfterInitRef.current) {
+			isFirstChangeAfterInitRef.current = false
+			return
+		}
+
+		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
+			return
+		}
+
 		setCppCode(generateCppFromJson(newBlocklyJson))
 		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
+		editSandboxProject(projectUUID, newBlocklyJson)
+	}, [project, isLoading, projectUUID])
 
-		// Only trigger the save if we're past the initial mounting period
-		if (isMountedLongEnough) {
-			debouncedSaveProject(newBlocklyJson)
-		}
-	}, [project, isLoading, projectUUID, debouncedSaveProject, isMountedLongEnough])
+	// Reset the flag when navigating to a different project
+	useEffect(() => {
+		isFirstChangeAfterInitRef.current = true
+	}, [projectUUID])
 
 	if (!project || isLoading) {
 		return (
