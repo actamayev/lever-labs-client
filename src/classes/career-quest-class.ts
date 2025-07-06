@@ -26,7 +26,7 @@ interface ExtendedChallengeData extends ChallengeData {
 	currentInteractionType: InteractionType | null
 	isRetrievingMessages: boolean
 	hasRetrievedMessages: boolean
-	updatedBlocklyJson: BlocklyJson
+	updatedBlocklyJson?: BlocklyJson
 }
 
 class CareerQuestClass {

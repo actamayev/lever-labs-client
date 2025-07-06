@@ -3,8 +3,7 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
-import debounce from "lodash-es/debounce"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
@@ -42,7 +41,6 @@ function ChallengeSection(props: Props) {
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id) || challengeData.initialBlocklyJson
 	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
-	const [isMountedLongEnough, setIsMountedLongEnough] = useState(false)
 
 	// Update CPP code when blockly JSON changes
 	useEffect(() => {
@@ -50,29 +48,8 @@ function ChallengeSection(props: Props) {
 		setCppCode(newCppCode)
 	}, [currentBlocklyJson])
 
-	// Add a timer to track when component has been mounted for 1 second
-	useEffect(() => {
-		// This is here to prevent the edit from being triggered too early
-		const timer = setTimeout(() => {
-			setIsMountedLongEnough(true)
-		}, 500)
-
-		return () => clearTimeout(timer)
-	}, [])
-
-	const debouncedSaveProject = useRef(
-		debounce((newBlocklyJson: BlocklyJson) => {
-			editCareerQuestSandboxProject(challengeData.id, newBlocklyJson)
-		}, 250)
-	).current
-
-	// Clean up debounce on unmount
-	useEffect(() => {
-		return () => debouncedSaveProject.cancel()
-	}, [debouncedSaveProject])
-
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
-	// Compare stripped versions to ignore position changes
+		// Compare stripped versions to ignore position changes
 		const currentJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id)
 		if (currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
 			return // No meaningful changes, don't save
@@ -84,11 +61,11 @@ function ChallengeSection(props: Props) {
 		// Update career quest class
 		careerQuestClass.updateBlocklyJson(challengeData.id, newBlocklyJson)
 
-		// Only save if conditions are met
-		if (isMountedLongEnough && careerQuestClass.hasRetrievedMessages(challengeData.id)) {
-			debouncedSaveProject(newBlocklyJson)
+		// Save immediately if we've retrieved messages from backend
+		if (careerQuestClass.hasRetrievedMessages(challengeData.id)) {
+			editCareerQuestSandboxProject(challengeData.id, newBlocklyJson)
 		}
-	}, [challengeData.id, isMountedLongEnough, debouncedSaveProject])
+	}, [challengeData.id])
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
