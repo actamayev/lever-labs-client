@@ -2,7 +2,6 @@
 
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
-import chatsClass from "../../classes/chat-class"
 import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
 import sandboxClass from "../../classes/sandbox-class"
@@ -13,12 +12,13 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import activityProgressClass from "../../classes/activity-progress-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import careerQuestClass from "../../classes/career-quest-class"
 
 export default async function logout(): Promise<void> {
 	personalInfoClass.logout()
 	pipClass.logout()
-	chatsClass.logout()
 	socketClass.logout()
+	careerQuestClass.logout()
 	authClass.logout()
 	blueDotApiClientClass.logout()
 	labReadingClass.logout()

@@ -15,6 +15,8 @@ import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
+import careerQuestClass from "../../classes/career-quest-class"
+import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
 interface Props {
 	challengeData: ChallengeData
@@ -27,8 +29,24 @@ function ChallengeSection(props: Props) {
 		challengeData,
 		extraClasses = "h-full"
 	} = props
-	const [cppCode, setCppCode] = useState(generateCppFromJson(challengeData.initialBlocklyJson))
+
+	// Initialize challenge in career quest class and get extended data
+	useEffect(() => {
+		careerQuestClass.initializeChallenge(challengeData)
+		// Retrieve backend data (chat messages + sandbox JSON)
+		retrieveCareerQuestChallengeData(challengeData.id)
+	}, [challengeData])
+
+	// Get the current blockly JSON (either initial or updated from backend)
+	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id) || challengeData.initialBlocklyJson
+	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
 	const [isMountedLongEnough, setIsMountedLongEnough] = useState(false)
+
+	// Update CPP code when blockly JSON changes
+	useEffect(() => {
+		const newCppCode = generateCppFromJson(currentBlocklyJson)
+		setCppCode(newCppCode)
+	}, [currentBlocklyJson])
 
 	// Add a timer to track when component has been mounted for 1 second
 	useEffect(() => {
@@ -56,13 +74,15 @@ function ChallengeSection(props: Props) {
 
 		// Update local state
 		setCppCode(generateCppFromJson(newBlocklyJson))
-		challengeData.initialBlocklyJson = newBlocklyJson
 
-		// Only trigger the save if we're past the initial mounting period
-		if (isMountedLongEnough) {
+		// Update career quest class
+		careerQuestClass.updateBlocklyJson(challengeData.id, newBlocklyJson)
+
+		// Only trigger the save if we're past the initial mounting period AND backend data has been retrieved
+		if (isMountedLongEnough && careerQuestClass.hasRetrievedMessages(challengeData.id)) {
 			debouncedSaveProject(newBlocklyJson)
 		}
-	}, [challengeData, isMountedLongEnough, debouncedSaveProject])
+	}, [challengeData.id, isMountedLongEnough, debouncedSaveProject])
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
@@ -96,7 +116,7 @@ function ChallengeSection(props: Props) {
 				<div className="flex flex-col flex-1 max-h-full">
 					<InteractiveMiniSandbox
 						toolboxConfig={challengeData.toolboxConfig}
-						initialBlocklyJson={challengeData.initialBlocklyJson}
+						initialBlocklyJson={currentBlocklyJson}
 						extraClasses="h-full"
 						onJsonChange={handleJsonChange}
 					/>

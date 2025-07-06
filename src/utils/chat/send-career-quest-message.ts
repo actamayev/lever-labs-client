@@ -2,9 +2,9 @@
 
 import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
-import chatsClass from "../../classes/chat-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
+import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function sendCareerQuestMessage(
@@ -16,7 +16,7 @@ export default async function sendCareerQuestMessage(
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Reset chat state for new conversation
-		chatsClass.resetChatState(careerQuestChallengeId)
+		careerQuestClass.resetChatState(careerQuestChallengeId)
 
 		// Send request to backend - challengeId will be included in the WebSocket response
 		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({
@@ -28,7 +28,7 @@ export default async function sendCareerQuestMessage(
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		chatsClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
+		careerQuestClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

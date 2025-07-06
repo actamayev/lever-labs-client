@@ -10,8 +10,8 @@ import {
 	MotorControlData,
 	SoundData,
 } from "@bluedotrobots/common-ts"
-import chatsClass from "./chat-class"
 import sandboxClass from "./sandbox-class"
+import careerQuestClass from "./career-quest-class"
 import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
 import handleIncomingSensorData from "../utils/socket/handle-incoming-sensor-data"
 
@@ -64,9 +64,9 @@ class SocketClass {
 		if (!this._socket) return
 
 		// Career Quest chatbot events
-		this._socket.on("cq-chatbot-stream-start", chatsClass.startStreaming)
-		this._socket.on("cq-chatbot-stream-chunk", chatsClass.addStreamingChunk)
-		this._socket.on("cq-chatbot-stream-complete", chatsClass.completeStreaming)
+		this._socket.on("cq-chatbot-stream-start", careerQuestClass.startStreaming)
+		this._socket.on("cq-chatbot-stream-chunk", careerQuestClass.addStreamingChunk)
+		this._socket.on("cq-chatbot-stream-complete", careerQuestClass.completeStreaming)
 
 		// Sandbox chatbot events
 		this._socket.on("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
