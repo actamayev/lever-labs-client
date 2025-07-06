@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import { RefObject, useEffect, useRef, useState, useCallback } from "react"
 import { observer } from "mobx-react"
-import { ArrowDown, BotMessageSquare, ChevronDown } from "lucide-react"
+import { ArrowDown, BotMessageSquare } from "lucide-react"
+import { RefObject, useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
@@ -170,7 +169,8 @@ function ChatMessagesFramework(props: Props) {
 			<button
 				onClick={handleScrollToBottomClick}
 				className={cn(
-					"absolute bottom-6 left-1/2 -translate-x-1/2 bg-standardBackground text-questionText rounded-full z-50 flex items-center justify-center",
+					"absolute bottom-6 left-1/2 -translate-x-1/2 bg-standardBackground",
+					"text-questionText rounded-full z-50 flex items-center justify-center",
 					"transition-all duration-300 ease-in-out size-8 p-0", // Removed padding so icon can overflow
 					"!border-swan border",
 					showScrollButton
