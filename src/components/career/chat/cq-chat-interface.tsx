@@ -66,10 +66,11 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
+		const streamId = careerQuestClass.getCurrentStreamId(challengeData.id)
 		careerQuestClass.resetChatState(challengeData.id)
 
 		// Get stream ID for this specific challenge and stop it
-		return careerQuestClass.getCurrentStreamId(challengeData.id)
+		return streamId
 	}, [challengeData.id])
 
 	const onClickAction = useCallback(async () => {
