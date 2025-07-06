@@ -5,7 +5,6 @@ import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
-import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
@@ -19,17 +18,8 @@ import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interact
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
-interface Props {
-	challengeData: ChallengeData
-	extraClasses?: string
-}
-
 // eslint-disable-next-line max-lines-per-function
-function ChallengeSection(props: Props) {
-	const {
-		challengeData,
-		extraClasses = "h-full"
-	} = props
+function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
 
 	// Initialize challenge in career quest class and get extended data
@@ -84,12 +74,12 @@ function ChallengeSection(props: Props) {
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
 	return (
-		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
+		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
 			{/* Main content area with three columns */}
 			<div className="flex flex-row flex-1 gap-4 p-4 min-h-0">
 				{/* Left Panel - Full height */}
 				<div className="flex flex-col w-1/4 bg-standardBackground
-				rounded-lg border-2 border-swan p-4 max-h-full overflow-y-auto">
+				rounded-lg border-2 border-swan p-4 h-full overflow-y-auto">
 					{/* Description section (2/3 height) */}
 					<div className="flex-[2] mb-4">
 						<h3 className="text-lg font-semibold mb-3 text-questionText">
@@ -112,14 +102,16 @@ function ChallengeSection(props: Props) {
 				</div>
 
 				{/* Middle Column - Sandbox + Buttons */}
-				<div className="flex flex-col flex-1 max-h-full">
-					<InteractiveMiniSandbox
-						key={workspaceKey} // This will force remount when data is retrieved
-						toolboxConfig={challengeData.toolboxConfig}
-						initialBlocklyJson={currentBlocklyJson}
-						extraClasses="h-full"
-						onJsonChange={handleJsonChange}
-					/>
+				<div className="flex flex-col flex-1 h-full">
+					<div className="flex-1 min-h-0"> {/* Container for sandbox with proper height constraint */}
+						<InteractiveMiniSandbox
+							key={workspaceKey} // This will force remount when data is retrieved
+							toolboxConfig={challengeData.toolboxConfig}
+							initialBlocklyJson={currentBlocklyJson}
+							extraClasses="h-full"
+							onJsonChange={handleJsonChange}
+						/>
+					</div>
 
 					{/* Buttons section - Only under sandbox */}
 					<div className="flex flex-row space-x-2 items-center justify-center pt-2 flex-shrink-0">
@@ -140,7 +132,7 @@ function ChallengeSection(props: Props) {
 				</div>
 
 				{/* Right Panel - Chat Interface Full height */}
-				<div className="w-1/3 max-h-full">
+				<div className="w-1/3 h-full">
 					<CqChatInterface
 						cppCode={cppCode}
 						challengeData={challengeData}
