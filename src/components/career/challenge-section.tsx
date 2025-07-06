@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
@@ -30,6 +30,7 @@ function ChallengeSection(props: Props) {
 		challengeData,
 		extraClasses = "h-full"
 	} = props
+	const isFirstChangeAfterInitRef = useRef(true)
 
 	// Initialize challenge in career quest class and get extended data
 	useEffect(() => {
@@ -40,6 +41,8 @@ function ChallengeSection(props: Props) {
 
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id) || challengeData.initialBlocklyJson
+	const hasRetrievedData = careerQuestClass.hasRetrievedMessages(challengeData.id)
+
 	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
 
 	// Update CPP code when blockly JSON changes
@@ -49,6 +52,12 @@ function ChallengeSection(props: Props) {
 	}, [currentBlocklyJson])
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
+		// Skip the first change event which happens during workspace initialization
+		if (isFirstChangeAfterInitRef.current) {
+			isFirstChangeAfterInitRef.current = false
+			return
+		}
+
 		// Compare stripped versions to ignore position changes
 		const currentJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id)
 		if (currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
@@ -66,6 +75,13 @@ function ChallengeSection(props: Props) {
 			editCareerQuestSandboxProject(challengeData.id, newBlocklyJson)
 		}
 	}, [challengeData.id])
+
+	// Reset the flag when switching between challenges
+	useEffect(() => {
+		isFirstChangeAfterInitRef.current = true
+	}, [challengeData.id])
+
+	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
 	return (
 		<div className={cn("flex flex-col h-full max-h-screen overflow-hidden", extraClasses)}>
@@ -98,6 +114,7 @@ function ChallengeSection(props: Props) {
 				{/* Middle Column - Sandbox + Buttons */}
 				<div className="flex flex-col flex-1 max-h-full">
 					<InteractiveMiniSandbox
+						key={workspaceKey} // This will force remount when data is retrieved
 						toolboxConfig={challengeData.toolboxConfig}
 						initialBlocklyJson={currentBlocklyJson}
 						extraClasses="h-full"
