@@ -11,7 +11,7 @@ import {
 	ChallengeData
 } from "@bluedotrobots/common-ts"
 
-interface ChatClassMessage {
+interface ChatMessage {
 	id: string
 	role: ChatMessageRole
 	content: string
@@ -20,7 +20,7 @@ interface ChatClassMessage {
 }
 
 interface ExtendedChallengeData extends ChallengeData {
-	messages: ChatClassMessage[]
+	messages: ChatMessage[]
 	isStreaming: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
@@ -58,12 +58,12 @@ class CareerQuestClass {
 	})
 
 	// Get challenge data for a challenge
-	public getChallengeData(challengeId: string): ExtendedChallengeData | undefined {
+	private getChallengeData(challengeId: string): ExtendedChallengeData | undefined {
 		return this.careerQuestChallengeData.get(challengeId)
 	}
 
 	// Get messages for a challenge
-	public getMessages(challengeId: string): ChatClassMessage[] {
+	public getMessages(challengeId: string): ChatMessage[] {
 		const challengeData = this.getChallengeData(challengeId)
 		return challengeData?.messages || []
 	}
@@ -105,19 +105,18 @@ class CareerQuestClass {
 	// Set retrieved data from backend (both messages and sandbox JSON)
 	public setRetrievedData = action((
 		challengeId: string,
-		messages: ChatClassMessage[],
+		messages: ChatMessage[],
 		sandboxJson: BlocklyJson | null
 	): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (challengeData) {
-			challengeData.messages = messages
-			challengeData.hasRetrievedMessages = true
-			challengeData.isRetrievingMessages = false
+		if (!challengeData) return
+		challengeData.messages = messages
+		challengeData.hasRetrievedMessages = true
+		challengeData.isRetrievingMessages = false
 
-			// Update blockly JSON if we got data from backend
-			if (sandboxJson) {
-				challengeData.updatedBlocklyJson = sandboxJson
-			}
+		// Update blockly JSON if we got data from backend
+		if (sandboxJson) {
+			challengeData.updatedBlocklyJson = sandboxJson
 		}
 	})
 
@@ -126,7 +125,7 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (!challengeData) return
 
-		const message: ChatClassMessage = {
+		const message: ChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
 			content,
@@ -142,7 +141,7 @@ class CareerQuestClass {
 		if (!challengeData) return
 
 		// Create streaming message placeholder
-		const streamingMessage: ChatClassMessage = {
+		const streamingMessage: ChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
 			content: "",
