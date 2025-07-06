@@ -70,12 +70,9 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		return currentStreamId
 	}, [projectUUID])
 
-	const onClickAction = useCallback(async () => {
-		if (isStreaming) {
-			return await stopChatStream(chatReset)
-		}
-		await handleSendMessage()
-	}, [isStreaming, handleSendMessage, chatReset])
+	const onStopStreaming = useCallback(async () => {
+		return await stopChatStream(chatReset)
+	}, [chatReset])
 
 	return (
 		<ChatParentComponent>
@@ -98,11 +95,10 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				))}
 			</ChatMessagesFramework>
 
-
 			<ChatTextArea
 				inputRef={inputRef}
 				handleSendMessage={handleSendMessage}
-				onClickAction={onClickAction}
+				onStopStreaming={onStopStreaming}
 				inputValue={inputValue}
 				setInputValue={setInputValue}
 				hasUserMessages={hasUserMessages}

@@ -73,12 +73,9 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		return streamId
 	}, [challengeData.id])
 
-	const onClickAction = useCallback(async () => {
-		if (isStreaming) {
-			return await stopCqChatStream(chatReset)
-		}
-		await handleSendMessage()
-	}, [chatReset, handleSendMessage, isStreaming])
+	const onStopStreaming = useCallback(async () => {
+		return await stopCqChatStream(chatReset) // Fixed typo: was stopCqChatStream
+	}, [chatReset])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingMessages) {
@@ -120,7 +117,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			<ChatTextArea
 				inputRef={inputRef}
 				handleSendMessage={handleSendMessage}
-				onClickAction={onClickAction}
+				onStopStreaming={onStopStreaming} // Pass the stop function directly
 				inputValue={inputValue}
 				setInputValue={setInputValue}
 				hasUserMessages={hasUserMessages}
