@@ -6,7 +6,7 @@ import useTypedNavigate from "../navigate/typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 
-export default function useRedirectKnownUserToLab(): void {
+export default function useRedirectKnownUserToGarage(): void {
 	const navigate = useTypedNavigate()
 
 	useEffect(() => {

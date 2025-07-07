@@ -33,7 +33,7 @@ export default async function lightsAnimation(newAnimation: LightAnimation): Pro
 			newAnimation, pipClass.selectedPip.pipUUID
 		)
 		if (!isEqual(newLightsAnimationResponse.status, 200) || isNonSuccessResponse(newLightsAnimationResponse.data)) {
-			throw Error ("Unable to retrieve lab activity tracking data")
+			throw Error ("Unable to animate lights")
 		}
 	} catch (error) {
 		console.error(error)

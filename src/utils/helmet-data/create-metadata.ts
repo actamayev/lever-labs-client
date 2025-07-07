@@ -109,7 +109,6 @@ function isProtectedPage(path: PageNames): boolean {
 	// Check if the path is in your PrivatePageNames array
 	// Or use a more flexible approach checking for prefixes
 	return PrivatePageNames.includes(path) ||
-		path.startsWith("/lab/") ||
 		path.startsWith("/career-quest/") ||
 		path.startsWith("/garage/") ||
 		path.startsWith("/add-pip/") ||

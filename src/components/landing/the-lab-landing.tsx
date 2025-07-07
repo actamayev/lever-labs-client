@@ -78,7 +78,7 @@ export default function TheLab() {
 					</p>
 
 					<div className="pt-6 sm:pt-8 flex items-center justify-center">
-						<LandingCTAButton navigateTo="/lab">
+						<LandingCTAButton navigateTo="/garage">
 							Try the lab for free
 						</LandingCTAButton>
 					</div>
