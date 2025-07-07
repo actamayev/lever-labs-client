@@ -7,7 +7,7 @@ import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-message"
 import careerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
-import stopCqChatStream from "../../../utils/chat/stop-chat-stream"
+import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
 
@@ -74,7 +74,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	}, [challengeData.id])
 
 	const onStopStreaming = useCallback(async () => {
-		return await stopCqChatStream(chatReset) // Fixed typo: was stopCqChatStream
+		return await stopChatStream(chatReset)
 	}, [chatReset])
 
 	// Show loading state while retrieving messages
@@ -100,7 +100,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
-				isStreaming={isStreaming}  // Add this line
+				isStreaming={isStreaming}
 				messagesEndRef={messagesEndRef}
 			>
 				{messages.map((message) => (
@@ -117,7 +117,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			<ChatTextArea
 				inputRef={inputRef}
 				handleSendMessage={handleSendMessage}
-				onStopStreaming={onStopStreaming} // Pass the stop function directly
+				onStopStreaming={onStopStreaming}
 				inputValue={inputValue}
 				setInputValue={setInputValue}
 				hasUserMessages={hasUserMessages}
