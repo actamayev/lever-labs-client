@@ -2,10 +2,10 @@
 
 import { Power, Wifi, ThumbsUp } from "lucide-react"
 import ShowIcon from "./show-icon"
-import RightArrow from "../lab/welcome-page/right-arrow"
 import { HoverIconEnlarge } from "../hover-icon-enlarge"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"
+import RightArrow from "../right-arrow"
 
 export default function SimpleSetup() {
 	return (

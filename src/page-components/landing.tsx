@@ -7,19 +7,18 @@ import TheLittleThings from "../components/landing/the-little-things"
 import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
-import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
-import TheLabLanding from "../components/landing/the-lab-landing"
+import useRedirectKnownUserToGarage from "../hooks/redirects/redirect-known-user-from-landing-to-garage"
+import CareerQuestLanding from "../components/landing/career-quest-landing"
 import LearnByDoing from "../components/landing/learn-by-doing"
 import LandingSensors from "../components/landing/sensors/landing-sensors"
 import AllAgesWelcome from "../components/landing/all-ages-welcome"
 // import CodeThatComesAlive from "../components/landing/code-that-comes-alive"
-import DesignedForClassroom from "../components/landing/designed-for-classroom"
 import SimpleSetup from "../components/landing/simple-setup"
 import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
 
 function Landing() {
-	useRedirectKnownUserToLab()
+	useRedirectKnownUserToGarage()
 	return (
 		<>
 			<div className="min-h-screen w-full relative">
@@ -36,7 +35,7 @@ function Landing() {
 				</LandingSectionContainer>
 
 				<LandingSectionContainer>
-					<TheLabLanding />
+					<CareerQuestLanding />
 				</LandingSectionContainer>
 
 				<LandingSectionContainer>
@@ -54,10 +53,6 @@ function Landing() {
 				{/* <LandingSectionContainer>
 					<CodeThatComesAlive />
 				</LandingSectionContainer> */}
-
-				<LandingSectionContainer>
-					<DesignedForClassroom />
-				</LandingSectionContainer>
 
 				<LandingSectionContainer>
 					<SimpleSetup />

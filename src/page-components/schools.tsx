@@ -23,17 +23,17 @@ export default function SchoolsPage() {
 					</div>
 					<SupportBorder />
 					<SupportSection sectionTitle="The fun, accessible way to bring robotics into your classroom" extraClasses="mt-10">
-						We believe robotics education should be as accessible as it is engaging. That's why we've created Pip and the Lab – a seamless combination that turns complex robotics concepts into hands-on, delightful learning experiences for students of all levels.
+						We believe robotics education should be as accessible as it is engaging. That's why we've created Pip and the Career Quest - a seamless combination that turns complex robotics concepts into hands-on, delightful learning experiences for students of all levels.
 					</SupportSection>
 					<SupportBorder />
 
 					<SupportSection sectionTitle="Complete robotics curriculum" extraClasses="mt-10">
-						From basic LEDs to advanced controls, our comprehensive curriculum grows with your students. The Lab guides learners through concepts at their own pace, making robotics accessible to everyone in your classroom.
+						From basic LEDs to advanced controls, our comprehensive curriculum grows with your students. The Career Quest guides learners through concepts at their own pace, making robotics accessible to everyone in your classroom.
 					</SupportSection>
 					<SupportBorder />
 
 					<SupportSection sectionTitle="Any Pip, any computer, any time" extraClasses="mt-10">
-						Students can use any Pip robot from any computer – their progress automatically saves to their account! This means flexible learning environments and no more "I forgot my robot at home" excuses.
+						Students can use any Pip robot from any computer - their progress automatically saves to their account! This means flexible learning environments and no more "I forgot my robot at home" excuses.
 					</SupportSection>
 					<SupportBorder />
 
@@ -81,7 +81,7 @@ export default function SchoolsPage() {
 					<SupportBorder />
 
 					<SupportSection sectionTitle="Coming soon to classrooms" extraClasses="mt-10">
-						We're working hard to perfect Pip for educational settings. If you're interested in bringing robot-powered learning to your school, please reach out – we'd love to hear from you.
+						We're working hard to perfect Pip for educational settings. If you're interested in bringing robot-powered learning to your school, please reach out - we'd love to hear from you.
 						<div
 							className="border-2 border-swan rounded-lg py-1
 							px-0.5 mx-auto bg-standardBackground w-80 my-5"

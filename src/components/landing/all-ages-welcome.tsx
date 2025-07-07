@@ -15,7 +15,8 @@ export default function AllAgesWelcome() {
 				<div>
 					<LandingSectionHeaderText text="all ages welcome" />
 					<p className={landingParagraph("mt-4 sm:mt-8")}>
-						We've made Pip and the Lab accessible to everyone - whether you're just curious or already a robotics expert.
+						We've made Pip and the Career Quest accessible to everyone -
+						whether you're just curious or already a robotics expert.
 						No matter where you're starting from, we've got the perfect path for you!
 					</p>
 				</div>
@@ -48,7 +49,7 @@ export default function AllAgesWelcome() {
 						<div className="ml-3 sm:ml-4">
 							<h3 className={landingBulletTextTitle()}>Explore freely</h3>
 							<p className={landingBulletTextParagraph()}>
-								Once you've mastered the Lab, head to the Sandbox where you can create anything you imagine -
+								Once you've mastered the Career Quest, head to the Sandbox where you can create anything you imagine -
 								the only limit is your imagination.
 							</p>
 						</div>

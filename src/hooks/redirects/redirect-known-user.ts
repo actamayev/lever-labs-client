@@ -16,7 +16,7 @@ export default function useRedirectKnownUser(): void {
 		const isPrivatePage = PrivatePageNames.some(privatePath =>
 			pathname.startsWith(privatePath)
 		)
-		// if the user is logged in and has a username, go to lab
+		// if the user is logged in and has a username, go to PageToNavigateAfterLogin
 		if (
 			authClass.isLoggedIn === false ||
 			isNull(personalInfoClass.username) ||

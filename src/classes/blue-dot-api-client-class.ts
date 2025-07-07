@@ -9,15 +9,11 @@ import GarageDataService from "../services/garage-data-service"
 import SandboxDataService from "../services/sandbox-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
-import LabActivityTrackingDataService from "../services/lab-activity-tracking-data-service"
 import CareerQuestDataService from "../services/career-quest-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
-	public labActivityTrackingDataService: LabActivityTrackingDataService = new LabActivityTrackingDataService(
-		this.httpClient, "/lab-activity-tracking"
-	)
 	public miscDataService: MiscDataService = new MiscDataService(this.httpClient, "/misc")
 	public garageDataService: GarageDataService = new GarageDataService(this.httpClient, "/garage")
 	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient, "/personal-info")
