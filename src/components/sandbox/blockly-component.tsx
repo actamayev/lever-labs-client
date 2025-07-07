@@ -98,6 +98,7 @@ function BlocklyComponent(props: Props) {
 		}
 	}, [isDarkMode])
 
+	// This keeps the category from having a blue border when clicked
 	const setupToolbox = useCallback(() => {
 		if (!workspaceRef.current) return
 
