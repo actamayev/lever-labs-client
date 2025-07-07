@@ -7,7 +7,7 @@ import TheLittleThings from "../components/landing/the-little-things"
 import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
 import SmallRobotBigPossibilities from "../components/landing/small-robot-big-possibilities"
-import useRedirectKnownUserToLab from "../hooks/redirects/redirect-known-user-from-landing-to-lab"
+import useRedirectKnownUserToGarage from "../hooks/redirects/redirect-known-user-from-landing-to-garage"
 import TheLabLanding from "../components/landing/the-lab-landing"
 import LearnByDoing from "../components/landing/learn-by-doing"
 import LandingSensors from "../components/landing/sensors/landing-sensors"
@@ -19,7 +19,7 @@ import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
 
 function Landing() {
-	useRedirectKnownUserToLab()
+	useRedirectKnownUserToGarage()
 	return (
 		<>
 			<div className="min-h-screen w-full relative">

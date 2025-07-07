@@ -1,9 +1,7 @@
 import { ProjectUUID } from "@bluedotrobots/common-ts"
-import { allPages, careerQuestPages, labPages, staticPages } from "../utils/constants/page-constants"
+import { allPages, careerQuestPages, staticPages } from "../utils/constants/page-constants"
 
 declare global {
-	type LabPages = (typeof labPages)[number];
-
 	type SandboxPages =
 	| "/sandbox"
 	| `/sandbox/${ProjectUUID}`
