@@ -1,3 +1,5 @@
+// SOLUTION: Target the blocklyWidgetDiv positioning specifically
+
 "use client"
 
 import * as Blockly from "blockly"
@@ -41,9 +43,42 @@ function InteractiveMiniSandbox(props: Props) {
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
-
 		onJsonChange(newJson)
 	}, [onJsonChange])
+
+	// Additional CSS-based fix
+	useEffect(() => {
+		// Add CSS to prevent widget div from affecting layout
+		const style = document.createElement("style")
+		style.textContent = `
+			.blocklyWidgetDiv {
+				position: fixed !important;
+				z-index: 9999 !important;
+				pointer-events: auto !important;
+			}
+
+			.blocklyWidgetDiv * {
+				position: static !important;
+			}
+
+			.blocklyHtmlInput {
+				position: static !important;
+			}
+
+			/* Prevent scroll anchoring during Blockly operations */
+			body.blockly-widget-active {
+				overflow-anchor: none !important;
+				scroll-behavior: auto !important;
+			}
+		`
+		document.head.appendChild(style)
+
+		return () => {
+			if (document.head.contains(style)) {
+				document.head.removeChild(style)
+			}
+		}
+	}, [])
 
 	const toggleToolbox = useCallback(() => {
 		const workspace = workspaceRef.current
@@ -86,7 +121,6 @@ function InteractiveMiniSandbox(props: Props) {
 
 	useEffect(() => initializeBlocks(), [])
 
-	// 6/26/25 TODO: Center workspace doesn't exist/work because it doesn't re-adjust for the toolbox not existing
 	return (
 		<div
 			ref={containerRef}

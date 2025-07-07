@@ -1,13 +1,13 @@
 import { observer } from "mobx-react"
 import { Send, Square } from "lucide-react"
-import { Dispatch, RefObject, SetStateAction } from "react"
+import { Dispatch, RefObject, SetStateAction, useCallback } from "react"
 import { Button } from "../shadcn/ui/button"
 import { Textarea } from "../shadcn/ui/textarea"
 
 interface Props {
 	inputRef: RefObject<HTMLTextAreaElement>
 	handleSendMessage: () => Promise<void>
-	onClickAction: () => Promise<void>
+	onStopStreaming: () => Promise<void>
 	inputValue: string
 	setInputValue: Dispatch<SetStateAction<string>>
 	hasUserMessages: boolean
@@ -15,13 +15,27 @@ interface Props {
 }
 
 function ChatTextArea(props: Props) {
-	const { handleSendMessage, onClickAction, inputRef, inputValue, setInputValue, hasUserMessages, isStreaming } = props
+	const { handleSendMessage, onStopStreaming, inputRef, inputValue, setInputValue, hasUserMessages, isStreaming } = props
+
+	// Create the conditional logic inside the component
+	const onClickAction = useCallback(async () => {
+		if (isStreaming) {
+			await onStopStreaming()
+		} else {
+			await handleSendMessage()
+		}
+	}, [isStreaming, onStopStreaming, handleSendMessage])
+
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault()
 			handleSendMessage()
 		}
-		// Allow Shift+Enter for new lines
+
+		if (e.key === "Escape" && isStreaming) {
+			e.preventDefault()
+			onStopStreaming()
+		}
 	}
 
 	return (
