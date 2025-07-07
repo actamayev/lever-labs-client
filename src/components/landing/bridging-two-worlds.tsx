@@ -26,7 +26,7 @@ export default function BridgingTwoWorlds() {
 					<LandingSectionHeaderText text="bridging two worlds" />
 					<p className={landingParagraph("mt-4 sm:mt-8")}>
 						Robotics is all about bringing the physical and digital worlds together, and we help you explore both!
-						With Pip and the Lab, your code jumps off the screen and into real life.
+						With Pip and the Career Quest, your code jumps off the screen and into real life.
 					</p>
 				</>
 			}

@@ -1,8 +1,8 @@
 "use client"
 
-import { landingParagraph, landingTableHeader, landingTableText } from "../../utils/text-styles"
 import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import { landingParagraph, landingTableHeader, landingTableText } from "../../utils/text-styles"
 
 export default function LearnByDoing() {
 	return (
@@ -13,16 +13,16 @@ export default function LearnByDoing() {
 					<LandingSectionHeaderText text="learn by doing" />
 					<p className={landingParagraph("mt-4 sm:mt-8")}>
 						We bring Pip into the learning at every step to create an experience you won't
-						find anywhere else. The Lab teaches you cool concepts, and Pip shows you how they work in real life.
+						find anywhere else. Career Quest teaches you cool concepts, and Pip shows you how they work in real life.
 					</p>
 				</>
 			}
 			rightContent={
-				<div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md w-full">
+				<div className="bg-white dark:bg-gray-800 overflow-hidden shadow-md w-full rounded-2xl border-2 border-swan">
 					{/* Header row */}
 					<div className="grid grid-cols-2 text-questionText">
 						<div className={landingTableHeader()}>
-							In the lab
+							In the Career Quest
 						</div>
 						<div className={landingTableHeader()}>
 							With Pip

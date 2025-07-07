@@ -1,7 +1,7 @@
 "use client"
 
 import { ChevronRight } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../lib/shadcn/utils"
 
 export default function RightArrow({ iconSize } : { iconSize?: string }) {
 	return (

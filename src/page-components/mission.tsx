@@ -19,7 +19,7 @@ export default function Mission() {
 					<div className="flex flex-col">
 						<div>
 							We believe that anyone can learn robotics with Pip.
-							Our free, interactive Lab makes learning feel like play, and that's by design: Learning is easier when you're having fun.
+							Our free, interactive Career Quest makes learning feel like play, and that's by design: Learning is easier when you're having fun.
 						</div>
 					</div>
 				</SupportSection>
@@ -44,7 +44,7 @@ export default function Mission() {
 							Millions of people are interested in robotics, but most educational products either require hours of setup or offer limited learning paths.
 						</div>
 						<div>
-							Pip and the Lab work together seamlessly to turn abstract concepts into hands-on experiences.
+							Pip and the Career Quest work together seamlessly to turn abstract concepts into hands-on experiences.
 							Write code in our web-based platform and watch your ideas come to life through Pip in real-time.
 						</div>
 						<div>

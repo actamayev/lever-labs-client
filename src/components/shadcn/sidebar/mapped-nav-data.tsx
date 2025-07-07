@@ -10,7 +10,6 @@ import {
 	SidebarMenuItem,
 } from "@/components/shadcn/ui/sidebar"
 import { cn } from "../../../lib/shadcn/utils"
-import { CustomBeaker } from "../../icons/custom-beaker"
 import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomSandbox } from "../../icons/custom-sandbox"
@@ -22,12 +21,6 @@ const navData: SidebarNavData[] = [
 		url: "/career-quest",
 		icon: CustomBriefcase,
 		textColor: "text-careerQuestYellow"
-	},
-	{
-		title: "Lab",
-		url: "/lab",
-		icon: CustomBeaker,
-		textColor: "text-labIconColor"
 	},
 	{
 		title: "Sandbox",
