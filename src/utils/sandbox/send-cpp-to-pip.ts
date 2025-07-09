@@ -17,7 +17,7 @@ export default async function sendCppToPip(
 	rect: DOMRect
 ) : Promise<void> {
 	try {
-		if (serialConnectionManagerClass.connected) {
+		if (serialConnectionManagerClass.pipTurnedOn) {
 			const bytecode = CppParser.cppToByte(cppCode)
 
 			// Check if the program has motor commands but no start button

@@ -15,7 +15,7 @@ export default function garageActions(): {
 		case "headlights":
 			garageClass.setAreHeadlightsOn(true)
 
-			if (serialConnectionManagerClass.connected) {
+			if (serialConnectionManagerClass.pipTurnedOn) {
 				const buffer = MessageBuilder.createHeadlightMessage(true)
 				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return
@@ -54,7 +54,7 @@ export default function garageActions(): {
 		case "headlights":
 			garageClass.setAreHeadlightsOn(false)
 
-			if (serialConnectionManagerClass.connected) {
+			if (serialConnectionManagerClass.pipTurnedOn) {
 				const buffer = MessageBuilder.createHeadlightMessage(false)
 				await serialConnectionManagerClass.sendBinaryMessage(buffer)
 				return

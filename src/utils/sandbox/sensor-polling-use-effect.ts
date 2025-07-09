@@ -11,7 +11,7 @@ export default function useSensorPollingUseEffect (): void {
 	// Setup event listeners for user activity
 	useEffect(() => {
 		if (
-			!serialConnectionManagerClass.connected &&
+			!serialConnectionManagerClass.pipTurnedOn &&
 			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
 		) return
 
@@ -39,7 +39,7 @@ export default function useSensorPollingUseEffect (): void {
 	// Setup interval to check for activity and send polling extension
 	useEffect(() => {
 		if (
-			!serialConnectionManagerClass.connected &&
+			!serialConnectionManagerClass.pipTurnedOn &&
 			(isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline")
 		) return
 

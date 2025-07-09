@@ -12,6 +12,8 @@ class SerialConnectionManagerClass {
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
 	public connected: boolean = false
+	// eslint-disable-next-line max-len
+	public pipTurnedOn: boolean = false // This is to track if Pip has fully turned on (waits until Pip's button has been pressed for 1 second)
 	public detectedDevices: DetectedDevice[] = []
 	public isScanning: boolean = false
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
@@ -77,7 +79,7 @@ class SerialConnectionManagerClass {
 	}
 
 	private async sendKeepaliveFromWorker(): Promise<void> {
-		if (this.connected && this.writer) {
+		if (this.pipTurnedOn && this.writer) {
 			try {
 				const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
 				await this.writer.write(new Uint8Array(keepaliveMsg))
@@ -99,7 +101,7 @@ class SerialConnectionManagerClass {
 		}
 
 		this.keepAliveInterval = setInterval(async () => {
-			if (this.connected && this.writer) {
+			if (this.pipTurnedOn && this.writer) {
 				try {
 					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
 					await this.writer.write(new Uint8Array(keepaliveMsg))
@@ -146,7 +148,7 @@ class SerialConnectionManagerClass {
 
 	// Check and auto-connect if user is logged in (called when user logs in)
 	public async checkAndAutoConnectIfLoggedIn(): Promise<void> {
-		if (!authClass.isFinishedWithSignup || this.connected) return
+		if (!authClass.isFinishedWithSignup || this.pipTurnedOn) return
 
 		try {
 			await this.tryAutoReconnect()
@@ -160,7 +162,7 @@ class SerialConnectionManagerClass {
 		console.info("New device plugged in, checking if it's a Pip robot...")
 
 		// Don't auto-connect if we're already connected OR if user isn't logged in
-		if (this.connected || !authClass.isFinishedWithSignup) return
+		if (this.pipTurnedOn || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
@@ -181,11 +183,9 @@ class SerialConnectionManagerClass {
 
 	// Handle when a USB device is unplugged
 	private handleDeviceUnplugged(port: SerialPort): void {
-		console.info("Device unplugged")
-
 		// Check if it's our currently connected port
-		if (this.port === port && this.connected) {
-			console.info("Our connected device was unplugged")
+		if (this.port === port && this.pipTurnedOn) {
+			console.info("Pip was unplugged or turned off")
 			this.handleDisconnection()
 		} else {
 			console.info("Unrelated device was unplugged")
@@ -224,6 +224,7 @@ class SerialConnectionManagerClass {
 				this.reader = reader
 				this.writer = writer
 				this.connected = true
+				// Don't set pipTurnedOn here - wait until we get the response from serial message manager
 			})
 
 			// Directly call the message manager's connected handler
@@ -250,7 +251,7 @@ class SerialConnectionManagerClass {
 			return
 		}
 
-		if (this.connected) return
+		if (this.pipTurnedOn) return
 
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -298,7 +299,7 @@ class SerialConnectionManagerClass {
 
 	private handleDisconnection(): void {
 		// Prevent multiple disconnection handling
-		if (!this.connected) {
+		if (!this.pipTurnedOn) {
 			console.info("Disconnection already handled")
 			return
 		}
@@ -338,7 +339,7 @@ class SerialConnectionManagerClass {
 	}
 
 	async disconnect(): Promise<void> {
-		if (!this.connected) return
+		if (!this.pipTurnedOn) return
 
 		try {
 			if (this.writer) {
@@ -389,7 +390,7 @@ class SerialConnectionManagerClass {
 	}
 
 	async sendBinaryMessage(buffer: ArrayBuffer): Promise<boolean> {
-		if (!this.connected || !this.writer) {
+		if (!this.pipTurnedOn || !this.writer) {
 			console.error("Not connected to device")
 			return false
 		}
@@ -474,6 +475,7 @@ class SerialConnectionManagerClass {
 			this.reader = null
 			this.writer = null
 			this.connected = false
+			this.pipTurnedOn = false
 		})
 
 		console.info("Connection cleanup complete")

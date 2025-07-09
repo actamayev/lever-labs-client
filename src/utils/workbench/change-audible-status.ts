@@ -13,7 +13,7 @@ export default async function changeAudibleStatus(): Promise<void> {
 	try {
 		if (
 			isNull(pipClass.selectedPip) ||
-			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.connected)
+			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.pipTurnedOn)
 		) {
 			return toastClass.negative({
 				title: "Pip not connected",
