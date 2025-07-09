@@ -53,13 +53,16 @@ function SandboxProjectPage() {
 		}
 
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
+			if (isEmpty(cppCode)) {
+				setCppCode(generateCppFromJson(newBlocklyJson))
+			}
 			return
 		}
 
 		setCppCode(generateCppFromJson(newBlocklyJson))
 		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
-	}, [project, isLoading, projectUUID])
+	}, [project, isLoading, projectUUID, cppCode])
 
 	// Reset the flag when navigating to a different project
 	useEffect(() => {
