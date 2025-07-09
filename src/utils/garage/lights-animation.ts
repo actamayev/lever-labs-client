@@ -4,16 +4,16 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { LightAnimation, lightToLEDType, MessageBuilder } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
-import { isNonSuccessResponse } from "../type-checks"
+import authClass from "../../classes/auth-class"
 import garageClass from "../../classes/garage-class"
+import { isNonSuccessResponse } from "../type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import authClass from "../../classes/auth-class"
 
 export default async function lightsAnimation(newAnimation: LightAnimation): Promise<void> {
 	try {
 		if (garageClass.selectedAnimation === newAnimation) return
-		if (serialConnectionManagerClass.connected) {
+		if (serialConnectionManagerClass.pipTurnedOn) {
 			const lightType = lightToLEDType[newAnimation]
 			const buffer = MessageBuilder.createLightAnimationMessage(lightType)
 

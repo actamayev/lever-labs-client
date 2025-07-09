@@ -20,7 +20,7 @@ function WiFiSettingsDialog() {
 	const { scanForNetworks } = useScanForNetworks()
 
 	const requestSavedNetworks = useCallback(async () => {
-		if (!serialConnectionManagerClass.connected) return
+		if (!serialConnectionManagerClass.pipTurnedOn) return
 
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
 
@@ -32,17 +32,17 @@ function WiFiSettingsDialog() {
 			serialMessageManagerClass.setIsLoadingSavedNetworks(false)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialConnectionManagerClass.connected])
+	}, [serialConnectionManagerClass.pipTurnedOn])
 
 	// Request saved networks when dialog opens
 	useEffect(() => {
-		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.connected) {
+		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.pipTurnedOn) {
 			requestSavedNetworks()
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [requestSavedNetworks, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.connected])
+	}, [requestSavedNetworks, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.pipTurnedOn])
 
-	if (!serialConnectionManagerClass.connected) return null
+	if (!serialConnectionManagerClass.pipTurnedOn) return null
 
 	return (
 		<Dialog open={workbenchClass.isWiFiDialogOpen} onOpenChange={workbenchClass.setIsWiFiDialogOpen}>

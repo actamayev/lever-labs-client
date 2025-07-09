@@ -8,7 +8,7 @@ import serialConnectionManagerClass from "../classes/serial-connection-manager-c
 
 function EnhancedConnectUsbButton() {
 	const handleConnect = useCallback(async () => {
-		if (serialConnectionManagerClass.connected) return
+		if (serialConnectionManagerClass.pipTurnedOn) return
 
 		// First try auto-reconnect
 		const autoConnected = await serialConnectionManagerClass.tryAutoReconnect()
@@ -17,10 +17,10 @@ function EnhancedConnectUsbButton() {
 		// If auto-reconnect failed, go straight to new device request
 		await serialConnectionManagerClass.requestNewDevice()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialConnectionManagerClass.connected])
+	}, [serialConnectionManagerClass.pipTurnedOn])
 
 	const getButtonState = () => {
-		if (serialConnectionManagerClass.connected) {
+		if (serialConnectionManagerClass.pipTurnedOn) {
 			return {
 				text: "CONNECTED",
 				className: "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 border-green-300 dark:border-green-700",
@@ -67,7 +67,7 @@ function EnhancedConnectUsbButton() {
 				</button>
 			}
 			tooltipContent={
-				serialConnectionManagerClass.connected
+				serialConnectionManagerClass.pipTurnedOn
 					? "Pip connected successfully!"
 					: "Click to connect your Pip"
 			}

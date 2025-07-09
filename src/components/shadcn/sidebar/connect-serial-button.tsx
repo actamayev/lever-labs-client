@@ -9,28 +9,28 @@ import serialConnectionManagerClass from "../../../classes/serial-connection-man
 
 function ConnectSerialButton() {
 	const handleConnect = useCallback(async () => {
-		if (serialConnectionManagerClass.connected) return // If already connected, do nothing
+		if (serialConnectionManagerClass.pipTurnedOn) return // If already connected, do nothing
 		await serialConnectionManagerClass.connectToDevice()
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialConnectionManagerClass.connected])
+	}, [serialConnectionManagerClass.pipTurnedOn])
 
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start w-full">
 				<SidebarMenuButton
-					isActive={serialConnectionManagerClass.connected}
+					isActive={serialConnectionManagerClass.pipTurnedOn}
 					className={cn(
 					// Base styles - ensure consistent sizing
 						"transition-none !flex items-center justify-start !p-0 !h-[50px] w-full", // Added w-full
 						"border-2 border-transparent rounded-xl",
 						// Active/hover states
-						serialConnectionManagerClass.connected
+						serialConnectionManagerClass.pipTurnedOn
 							? "!bg-blue dark:!bg-blue"
 							: "hover:!bg-polar",
 						// Size and dimensions - apply consistent sizing regardless of collapsible state
 						"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
 						// Custom styles passed from parent
-						serialConnectionManagerClass.connected && "!border-selectedSidebarButtonBorder cursor-default",
+						serialConnectionManagerClass.pipTurnedOn && "!border-selectedSidebarButtonBorder cursor-default",
 						// customStyles
 					)}
 					onClick={handleConnect}
@@ -41,16 +41,16 @@ function ConnectSerialButton() {
 								<CustomUsb
 									className={cn(
 										"h-[35px] w-[35px]",
-										serialConnectionManagerClass.connected ? "text-macaw" : "text-blue-600 dark:text-blue-300"
+										serialConnectionManagerClass.pipTurnedOn ? "text-macaw" : "text-blue-600 dark:text-blue-300"
 									)}
 								/>
 							</div>
 						</div>
 						<div className={cn(
 							"text-base font-medium",
-							serialConnectionManagerClass.connected ? "text-macaw" : "text-wolf"
+							serialConnectionManagerClass.pipTurnedOn ? "text-macaw" : "text-wolf"
 						)}>
-							{serialConnectionManagerClass.connected ? "CONNECTED" : "CONNECT"}
+							{serialConnectionManagerClass.pipTurnedOn ? "CONNECTED" : "CONNECT"}
 						</div>
 					</div>
 				</SidebarMenuButton>

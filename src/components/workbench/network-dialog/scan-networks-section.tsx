@@ -21,7 +21,7 @@ function ScanNetworksSection() {
 
 	const handleConnectToNetwork = useCallback(async (network: ScannedWiFiNetworkItem) => {
 		if (
-			!serialConnectionManagerClass.connected ||
+			!serialConnectionManagerClass.pipTurnedOn ||
 			(network.encrypted && !password.trim())
 		) return
 
@@ -49,7 +49,7 @@ function ScanNetworksSection() {
 			setIsConnecting(false)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [password, serialConnectionManagerClass.connected])
+	}, [password, serialConnectionManagerClass.pipTurnedOn])
 
 	if (serialMessageManagerClass.isScanning) {
 		return (

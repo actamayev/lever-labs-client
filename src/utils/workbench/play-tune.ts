@@ -13,7 +13,7 @@ export default async function playTune(): Promise<void> {
 	try {
 		if (
 			isNull(pipClass.selectedPip) ||
-			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.connected)
+			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.pipTurnedOn)
 		) {
 			return toastClass.negative({
 				title: "Pip not connected",

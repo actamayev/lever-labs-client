@@ -108,7 +108,7 @@ function NetworkWorkbench() {
 							setIsHoverCardOpen(false) // Close hover card when opening dialog
 						}}
 						className="rounded-xl bg-eel h-9 px-3 w-full"
-						disabled={!serialConnectionManagerClass.connected}
+						disabled={!serialConnectionManagerClass.pipTurnedOn}
 						title="WiFi Settings"
 					>
 						<Settings className="h-4 w-4 mr-2" />
