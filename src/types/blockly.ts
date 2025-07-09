@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import * as Blockly from "blockly"
 import { CssConfig } from "blockly/core/toolbox/category"
-import { BlockNames, ToolboxItem, } from "@bluedotrobots/common-ts"
+import { BlocklyCategoryName, BlockNames, ParentCategoryName, ToolboxItem, } from "@bluedotrobots/common-ts"
 
 declare global {
 	interface CustomBlockDefinition {
@@ -37,32 +37,6 @@ declare global {
 		colour: HexColor
 		contents: CustomCategoryInfo[]
 	}
-
-	type BlocklyCategoryName =
-	| "Screen"
-	| "Motors"
-	| "LED"
-	| "Speaker"
-	| "Buttons"
-	| SensorCategoryName
-	| LogicCategoryName
-
-	type ParentCategoryName =
-	| "Sensors"
-	| "Logic"
-
-	type SensorCategoryName =
-	| "IR Sensors"
-	| "Distance Sensors"
-	| "Motion Sensor"
-	| "Color Sensor"
-
-	type LogicCategoryName =
-	| "Variables"
-	| "Conditionals"
-	| "Math"
-	| "Loops"
-	| "Start"
 }
 
 export {}
