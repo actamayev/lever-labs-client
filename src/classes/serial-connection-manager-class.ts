@@ -232,7 +232,6 @@ class SerialConnectionManagerClass {
 
 			// Send handshake
 			if (this.writer) {
-				// console.log
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}

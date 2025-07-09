@@ -128,7 +128,6 @@ class SerialMessageManagerClass {
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
 		case "/pip-id": {
-			console.log("message", message)
 			runInAction(() => {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
