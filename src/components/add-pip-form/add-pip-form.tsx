@@ -54,11 +54,11 @@ function AddPipForm() {
 		serialMessageManagerClass.clearScannedNetworks()
 		serialMessageManagerClass.setIsScanning(false)
 		// Only reset flow state if we're completely done or starting over
-		if (!serialConnectionManagerClass.connected) {
+		if (!serialConnectionManagerClass.pipTurnedOn) {
 			serialMessageManagerClass.resetFlowState()
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [form, serialConnectionManagerClass.connected])
+	}, [form, serialConnectionManagerClass.pipTurnedOn])
 
 	// Update pipUUID when pipId is received
 	useEffect(() => {

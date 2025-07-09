@@ -36,7 +36,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 					<Button
 						type="button"
 						onClick={scanForNetworks}
-						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.connected}
+						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.pipTurnedOn}
 						className={cn(
 							"flex items-center gap-2",
 							serialMessageManagerClass.isScanning ? "cursor-not-allowed" : "cursor-pointer"

@@ -11,7 +11,7 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 
 export default async function stopCurrentlyRunningCode(): Promise<void> {
 	try {
-		if (serialConnectionManagerClass.connected) {
+		if (serialConnectionManagerClass.pipTurnedOn) {
 			const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)

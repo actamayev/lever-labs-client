@@ -9,7 +9,7 @@ export default function useScanForNetworks(): { scanForNetworks: () => Promise<v
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const scanForNetworks = useCallback(async () => {
-		if (!serialConnectionManagerClass.connected || serialMessageManagerClass.isScanning) return
+		if (!serialConnectionManagerClass.pipTurnedOn || serialMessageManagerClass.isScanning) return
 
 		serialMessageManagerClass.setIsScanning(true)
 		serialMessageManagerClass.clearScannedNetworks()
@@ -36,7 +36,7 @@ export default function useScanForNetworks(): { scanForNetworks: () => Promise<v
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [serialConnectionManagerClass.connected, serialMessageManagerClass.isScanning])
+	}, [serialConnectionManagerClass.pipTurnedOn, serialMessageManagerClass.isScanning])
 
 	// Clear timeout when scanning completes
 	useEffect(() => {

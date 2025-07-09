@@ -11,7 +11,7 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 
 export default async function usePollSensors() : Promise<void> {
 	try {
-		if (serialConnectionManagerClass.connected) {
+		if (serialConnectionManagerClass.pipTurnedOn) {
 			const buffer = MessageBuilder.createStartSensorPollingMessage()
 
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)

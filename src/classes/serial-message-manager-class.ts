@@ -4,6 +4,7 @@ import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import handleUsbConnectionMotors from "../utils/socket/handle-usb-connection-motors"
+import serialConnectionManagerClass from "./serial-connection-manager-class"
 
 interface MessageSentData {
 	content: string
@@ -130,6 +131,8 @@ class SerialMessageManagerClass {
 			runInAction(() => {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
+				// Add this line:
+				serialConnectionManagerClass.pipTurnedOn = true
 			})
 			break
 		}

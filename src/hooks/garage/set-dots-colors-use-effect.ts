@@ -63,7 +63,7 @@ export default function useSetDefaultColorsUseEffect(): void {
 				}
 			}
 
-			if (serialConnectionManagerClass.connected) {
+			if (serialConnectionManagerClass.pipTurnedOn) {
 				const buffer = MessageBuilder.createLedMessage(ledControlData)
 
 				void serialConnectionManagerClass.sendBinaryMessage(buffer)
