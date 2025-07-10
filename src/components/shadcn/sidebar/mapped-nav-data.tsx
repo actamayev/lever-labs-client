@@ -1,9 +1,11 @@
 "use client"
 
 import { useCallback } from "react"
+import { School } from "lucide-react"
+import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import toUpper from "lodash-es/toUpper"
 import { usePathname } from "next/navigation"
-import { observer } from "mobx-react"
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -13,10 +15,9 @@ import {
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
+import studentClass from "../../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
-// import { CustomStudent } from "../../icons/custom-student" // You'll need to create this icon
-import studentClass from "../../../classes/student-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
@@ -42,8 +43,8 @@ const baseNavData: SidebarNavData[] = [
 const studentNavData: SidebarNavData = {
 	title: "Student",
 	url: "/student",
-	icon: CustomBriefcase,
-	textColor: "text-blue-600" // or whatever color you prefer
+	icon: School,
+	textColor: "text-beetle"
 }
 
 function MappedNavData() {
@@ -54,9 +55,9 @@ function MappedNavData() {
 	}, [pathname])
 
 	// Conditionally include student page if user has classroom data
-	const navData = studentClass.classroomData.length > 0
-		? [...baseNavData, studentNavData]
-		: baseNavData
+	const navData = isEmpty(studentClass.classroomData)
+		? baseNavData
+		: [...baseNavData, studentNavData]
 
 	return (
 		<SidebarGroup>
