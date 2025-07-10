@@ -30,10 +30,4 @@ export default class StudentDataService extends BaseDataService {
 			this.buildUrl("/classrooms")
 		)
 	}
-
-	async retrievePendingInvitations(): Promise<AxiosResponse<StudentClassroomData[] | ErrorResponse>> {
-		return await this.httpClient.http.get<StudentClassroomData[] | ErrorResponse>(
-			this.buildUrl("/pending-invitations")
-		)
-	}
 }

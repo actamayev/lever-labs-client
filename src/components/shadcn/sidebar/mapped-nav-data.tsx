@@ -3,6 +3,7 @@
 import { useCallback } from "react"
 import toUpper from "lodash-es/toUpper"
 import { usePathname } from "next/navigation"
+import { observer } from "mobx-react"
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -14,8 +15,10 @@ import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
+// import { CustomStudent } from "../../icons/custom-student" // You'll need to create this icon
+import studentClass from "../../../classes/student-class"
 
-const navData: SidebarNavData[] = [
+const baseNavData: SidebarNavData[] = [
 	{
 		title: "Career Quest",
 		url: "/career-quest",
@@ -36,12 +39,24 @@ const navData: SidebarNavData[] = [
 	},
 ]
 
-export default function MappedNavData() {
+const studentNavData: SidebarNavData = {
+	title: "Student",
+	url: "/student",
+	icon: CustomBriefcase,
+	textColor: "text-blue-600" // or whatever color you prefer
+}
+
+function MappedNavData() {
 	const pathname = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {
 		return pathname.startsWith(itemUrl)
 	}, [pathname])
+
+	// Conditionally include student page if user has classroom data
+	const navData = studentClass.classroomData.length > 0
+		? [...baseNavData, studentNavData]
+		: baseNavData
 
 	return (
 		<SidebarGroup>
@@ -78,3 +93,5 @@ export default function MappedNavData() {
 		</SidebarGroup>
 	)
 }
+
+export default observer(MappedNavData)
