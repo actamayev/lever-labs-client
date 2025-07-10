@@ -1,6 +1,7 @@
 "use client"
 import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
+import { AlertCircle } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { cn } from "../../lib/shadcn/utils"
 import ProfileLayout from "../profile/profile-layout"
@@ -15,7 +16,7 @@ function SchoolSettingsPage() {
 
 	const submit = useCallback(async () => {
 		if (!isValidClassCode(classCode)) return
-		await joinClass(classCode)
+		await joinClass(classCode, setError)
 	}, [classCode])
 
 	const colors = getDuolingoColors("humpback")
@@ -44,11 +45,24 @@ function SchoolSettingsPage() {
 							setClassCode(e.target.value)
 							setError("")
 						}}
-						className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl
-								bg-polar !text-eel font-light border-swan shadow-none"
+						className={cn(
+							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
+							error
+								? "border-cardinal"
+								: "border-swan"
+						)}
 						maxLength={5}
 						placeholder="APPLE"
 					/>
+
+					{/* Error Area */}
+					{error && (
+						<div className="flex items-center mt-2 text-red-500 text-sm font-medium">
+							<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+							<span>{error}</span>
+						</div>
+					)}
+
 					<TactileButton
 						onClick={submit}
 						className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
