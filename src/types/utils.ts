@@ -12,6 +12,8 @@ declare global {
 		| "/pip"
 		| "/personal-info"
 		| "/sandbox"
+		| "/student"
+		| "/teacher"
 		| "/workbench"
 
 	interface SidebarNavData {

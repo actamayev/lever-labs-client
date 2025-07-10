@@ -67,7 +67,8 @@ export default function ProfileSidebar() {
 		<div className="fixed right-0 top-0 w-[350px] mr-36 mt-6 rounded-lg h-full flex flex-col">
 			<div >
 				<SidebarSection title="Account">
-					<SidebarLink href="/profile">Profile</SidebarLink>
+					<SidebarLink href="/settings/profile">Profile</SidebarLink>
+					<SidebarLink href="/settings/schools">Blue Dot for Schools</SidebarLink>
 				</SidebarSection>
 
 				{/* <SidebarSection title="Support">

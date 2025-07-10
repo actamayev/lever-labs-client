@@ -20,7 +20,8 @@ const mainRoutes: RouteConfig[] = [
 	{ path: "/sandbox", changeFreq: "monthly", priority: 1 },
 	{ path: "/career-quest", changeFreq: "monthly", priority: 1 },
 	{ path: "/garage", changeFreq: "monthly", priority: 1 },
-	{ path: "/profile", changeFreq: "monthly", priority: 1 },
+	{ path: "/settings/profile", changeFreq: "monthly", priority: 1 },
+	{ path: "/settings/schools", changeFreq: "monthly", priority: 1 },
 ]
 
 // Account and user pages
