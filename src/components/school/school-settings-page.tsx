@@ -1,29 +1,10 @@
 "use client"
 import { observer } from "mobx-react"
-import { useCallback, useState } from "react"
-import { AlertCircle, CheckCircle } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { cn } from "../../lib/shadcn/utils"
+import JoinClassroom from "./join-classroom"
 import ProfileLayout from "../profile/profile-layout"
-import joinClass from "../../utils/student/join-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
-import { isValidClassCode } from "../../utils/validate-class-code"
+import RequestTeacherAccess from "./request-teacher-access"
 
 function SchoolSettingsPage() {
-	const [classCode, setClassCode] = useState("")
-	const [error, setError] = useState("")
-	const [success, setSuccess] = useState("")
-
-	const submit = useCallback(async () => {
-		if (!isValidClassCode(classCode)) return
-		setError("")
-		setSuccess("")
-		await joinClass(classCode, setError, setSuccess)
-	}, [classCode])
-
-	const colors = getDuolingoColors("humpback")
-
 	return (
 		<ProfileLayout>
 			<div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 mt-5 max-w-full">
@@ -31,62 +12,9 @@ function SchoolSettingsPage() {
 					Blue Dot for Schools
 				</div>
 
-				<div className="mr-20">
-					<div className="text-wolf text-2xl border-b-2 border-swan pb-2 font-medium">
-						Join a classroom
-					</div>
-					<div className="text-eel font-light mt-2">
-						Enter the 5-letter code you received from your teacher.
-						Once you join, they'll be able to follow your progress and give you assignments.
-					</div>
-				</div>
-				<div className="relative w-full max-w-xl mt-5 flex flex-col">
-					<Input
-						id="name"
-						value={classCode}
-						onChange={(e) => {
-							setClassCode(e.target.value)
-							setError("")
-							setSuccess("")
-						}}
-						className={cn(
-							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
-							// eslint-disable-next-line no-nested-ternary
-							error
-								? "border-cardinal"
-								: success
-									? "border-chargingGreen"
-									: "border-swan"
-						)}
-						maxLength={5}
-						placeholder="APPLE"
-					/>
+				<JoinClassroom />
 
-					{/* Error/Success Area */}
-					{error && (
-						<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-							<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-							<span>{error}</span>
-						</div>
-					)}
-
-					{success && (
-						<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-							<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-							<span>{success}</span>
-						</div>
-					)}
-
-					<TactileButton
-						onClick={submit}
-						className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
-						shadowHeight={4}
-						shadowClass={colors.shadow}
-						disabled={!isValidClassCode(classCode)}
-					>
-						SUBMIT
-					</TactileButton>
-				</div>
+				<RequestTeacherAccess />
 			</div>
 		</ProfileLayout>
 	)

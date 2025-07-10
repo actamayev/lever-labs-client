@@ -9,7 +9,7 @@ import { isNonSuccessResponse } from "../type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 // eslint-disable-next-line complexity
-export default async function joinClass(
+export default async function joinClassroom(
 	classCode: ClassCode,
 	setError: Dispatch<SetStateAction<string>>,
 	setSuccess: Dispatch<SetStateAction<string>>
