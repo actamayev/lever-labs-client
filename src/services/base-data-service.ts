@@ -1,3 +1,5 @@
+"use client"
+
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export abstract class BaseDataService {

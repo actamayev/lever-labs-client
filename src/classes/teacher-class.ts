@@ -1,3 +1,5 @@
+"use client"
+
 import { makeAutoObservable } from "mobx"
 import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode } from "@bluedotrobots/common-ts"
 

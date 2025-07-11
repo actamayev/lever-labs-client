@@ -1,3 +1,5 @@
+"use client"
+
 import { AxiosError } from "axios"
 import { Dispatch, SetStateAction } from "react"
 import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"

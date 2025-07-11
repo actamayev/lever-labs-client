@@ -1,3 +1,5 @@
+"use client"
+
 import { ClassCode } from "@bluedotrobots/common-ts"
 
 export function isValidClassCode(input: string): input is ClassCode {
