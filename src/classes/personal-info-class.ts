@@ -2,7 +2,7 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
-import { PersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
+import { PersonalInfoResponse, SiteThemes, TeacherData } from "@bluedotrobots/common-ts"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -14,6 +14,7 @@ class PersonalInfoClass {
 	public defaultSiteTheme: SiteThemes = "light"
 	public sandboxNotesOpen: boolean = false
 	public profilePictureUrl: string | null = null
+	public teacherData: TeacherData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -46,6 +47,7 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
 		this.setRetrievedPersonalInfo(true)
 		this.setIsRetrievingPersonalDetails(false)
+		this.setTeacherData(retrievedData.teacherData)
 	})
 
 	public setRegisteredValues = action((username: string, email: string, defaultSiteTheme: SiteThemes): void => {
@@ -78,6 +80,10 @@ class PersonalInfoClass {
 		this.username = newUsername
 	})
 
+	public setTeacherData = action((newTeacherData: TeacherData | null): void => {
+		this.teacherData = newTeacherData
+	})
+
 	public logout(): void {
 		this.username = null
 		this.email = null
@@ -87,6 +93,7 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme("light")
 		this.setSandboxNotesOpen(false)
 		this.setName(null)
+		this.setTeacherData(null)
 	}
 }
 
