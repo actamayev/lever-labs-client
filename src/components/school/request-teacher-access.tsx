@@ -7,6 +7,7 @@ import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
+import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line max-lines-per-function
 function RequestTeacherAccess() {
@@ -44,28 +45,26 @@ function RequestTeacherAccess() {
 		}
 	}, [error, success])
 
+	const clearForm = useCallback(() => {
+		setFirstName("")
+		setLastName("")
+		setSchoolName("")
+	}, [])
+
 	const submitRequest = useCallback(async () => {
 		setIsSubmitting(true)
 		setError("")
 		setSuccess("")
-
-		const result = await requestBecomeTeacher({
+		const teacherData: IncomingTeacherRequestData = {
 			teacherFirstName: firstName.trim(),
 			teacherLastName: lastName.trim(),
 			schoolName: schoolName.trim()
-		})
-
-		if (result.isSuccess) {
-			setSuccess(result.message)
-			setFirstName("")
-			setLastName("")
-			setSchoolName("")
-		} else {
-			setError(result.message)
 		}
 
+		await requestBecomeTeacher(teacherData, setError, setSuccess, clearForm)
+
 		setIsSubmitting(false)
-	}, [firstName, lastName, schoolName])
+	}, [clearForm, firstName, lastName, schoolName])
 
 	// Check if form is valid
 	const isFormValid = firstName.trim().length > 0 &&
@@ -73,7 +72,7 @@ function RequestTeacherAccess() {
 		schoolName.trim().length > 0
 
 	return (
-		<Card className="mb-8 max-w-xl w-full">
+		<Card className="max-w-xl w-full my-8">
 			<CardHeader className="px-4 md:px-6">
 				<CardTitle className="text-xl md:text-2xl">Request Teacher Access</CardTitle>
 			</CardHeader>
