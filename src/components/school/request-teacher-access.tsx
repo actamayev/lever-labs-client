@@ -92,7 +92,6 @@ function RequestTeacherAccess() {
 						onChange={handleFirstNameChange}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
-						placeholder="Enter your first name"
 					/>
 				</div>
 
@@ -110,7 +109,6 @@ function RequestTeacherAccess() {
 						onChange={handleLastNameChange}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
-						placeholder="Enter your last name"
 					/>
 				</div>
 
@@ -128,7 +126,6 @@ function RequestTeacherAccess() {
 						onChange={handleSchoolNameChange}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
-						placeholder="Enter your school name"
 					/>
 				</div>
 
