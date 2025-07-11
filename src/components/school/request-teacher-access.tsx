@@ -156,112 +156,125 @@ function RequestTeacherAccess() {
 	}
 
 	return (
-		<Card className="max-w-xl w-full my-8">
-			<CardHeader className="px-4 md:px-6">
-				<CardTitle className="text-xl md:text-2xl">
-					{hasExistingData ? "Teacher Information" : "Request Teacher Access"}
-				</CardTitle>
-			</CardHeader>
-			<CardContent className="space-y-4 px-4 md:px-6">
-				{getStatusMessage()}
-
-				<div className="space-y-2">
-					<Label
-						htmlFor="teacher-first-name"
-						className="text-base md:text-lg font-medium text-eel mb-2 block"
-					>
-						First Name
-					</Label>
-					<Input
-						id="teacher-first-name"
-						type="text"
-						value={firstName}
-						onChange={handleFirstNameChange}
-						disabled={isFormDisabled}
-						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-						bg-polar !text-eel font-light border-swan"
-					/>
+		<div className="mt-10">
+			<div className="mr-20">
+				<div className="text-wolf text-2xl border-b-2 border-swan pb-2 font-medium">
+					{hasExistingData ? "Teacher Account" : "Become a Teacher"}
 				</div>
-
-				<div className="space-y-2">
-					<Label
-						htmlFor="teacher-last-name"
-						className="text-base md:text-lg font-medium text-eel mb-2 block"
-					>
-						Last Name
-					</Label>
-					<Input
-						id="teacher-last-name"
-						type="text"
-						value={lastName}
-						onChange={handleLastNameChange}
-						disabled={isFormDisabled}
-						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-						bg-polar !text-eel font-light border-swan"
-					/>
+				<div className="text-eel font-light mt-2">
+					{hasExistingData
+						? "Manage your teacher account information and view your approval status."
+						: "Request teacher access to create classrooms, assign lessons, and track student progress."
+					}
 				</div>
+			</div>
+			<Card className="max-w-xl w-full my-8">
+				<CardHeader className="px-4 md:px-6">
+					<CardTitle className="text-xl md:text-2xl">
+						{hasExistingData ? "Teacher Information" : "Request Teacher Access"}
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="space-y-4 px-4 md:px-6">
+					{getStatusMessage()}
 
-				<div className="space-y-2">
-					<div className="flex items-center gap-2">
+					<div className="space-y-2">
 						<Label
-							htmlFor="school-name"
+							htmlFor="teacher-first-name"
 							className="text-base md:text-lg font-medium text-eel mb-2 block"
 						>
-							School Name
+						First Name
 						</Label>
-						{hasExistingData && (
-							<CustomTooltip
-								tooltipTrigger={
-									<Button
-										type="button"
-										variant="ghost"
-										size="sm"
-										className="h-auto p-1.5 hover:bg-polar"
-									>
-										<Info className="!h-4 !w-4 text-gray-500" />
-									</Button>
-								}
-								tooltipContent="School name cannot be edited after submission"
-							/>
-						)}
-					</div>
-					<Input
-						id="school-name"
-						type="text"
-						value={schoolName}
-						onChange={handleSchoolNameChange}
-						disabled={hasExistingData || isFormDisabled}
-						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
+						<Input
+							id="teacher-first-name"
+							type="text"
+							value={firstName}
+							onChange={handleFirstNameChange}
+							disabled={isFormDisabled}
+							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
-					/>
-				</div>
-
-				{error && (
-					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-						<span>{error}</span>
+						/>
 					</div>
-				)}
 
-				{success && (
-					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-						<span>{success}</span>
+					<div className="space-y-2">
+						<Label
+							htmlFor="teacher-last-name"
+							className="text-base md:text-lg font-medium text-eel mb-2 block"
+						>
+						Last Name
+						</Label>
+						<Input
+							id="teacher-last-name"
+							type="text"
+							value={lastName}
+							onChange={handleLastNameChange}
+							disabled={isFormDisabled}
+							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
+						bg-polar !text-eel font-light border-swan"
+						/>
 					</div>
-				)}
-			</CardContent>
-			<CardFooter className="px-4 md:px-6">
-				<TactileButton
-					onClick={submitRequest}
-					disabled={!isFormValid || isSubmitting || isFormDisabled}
-					className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
-					shadowHeight={4}
-					shadowClass={colors.shadow}
-				>
-					{getButtonText()}
-				</TactileButton>
-			</CardFooter>
-		</Card>
+
+					<div className="space-y-2">
+						<div className="flex items-center gap-2">
+							<Label
+								htmlFor="school-name"
+								className="text-base md:text-lg font-medium text-eel mb-2 block"
+							>
+							School Name
+							</Label>
+							{hasExistingData && (
+								<CustomTooltip
+									tooltipTrigger={
+										<Button
+											type="button"
+											variant="ghost"
+											size="sm"
+											className="h-auto p-1.5 hover:bg-polar"
+										>
+											<Info className="!h-4 !w-4 text-gray-500" />
+										</Button>
+									}
+									tooltipContent="School name cannot be edited after submission"
+								/>
+							)}
+						</div>
+						<Input
+							id="school-name"
+							type="text"
+							value={schoolName}
+							onChange={handleSchoolNameChange}
+							disabled={hasExistingData || isFormDisabled}
+							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
+						bg-polar !text-eel font-light border-swan"
+						/>
+					</div>
+
+					{error && (
+						<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
+							<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+							<span>{error}</span>
+						</div>
+					)}
+
+					{success && (
+						<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
+							<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+							<span>{success}</span>
+						</div>
+					)}
+				</CardContent>
+				<CardFooter className="px-4 md:px-6">
+					<TactileButton
+						onClick={submitRequest}
+						disabled={!isFormValid || isSubmitting || isFormDisabled}
+						className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
+					>
+						{getButtonText()}
+					</TactileButton>
+				</CardFooter>
+			</Card>
+		</div>
 	)
 }
 
