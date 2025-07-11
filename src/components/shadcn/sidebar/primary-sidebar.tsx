@@ -12,7 +12,20 @@ import { PrivatePageNames, OpenPages } from "../../../utils/constants/page-const
 export default function PrimarySidebar() {
 	const pathname = usePathname()
 
-	const isPrivatePage = PrivatePageNames.includes(pathname as PageNames)
+	const isPrivatePage = PrivatePageNames.some(privatePage => {
+		// Exact match for most pages
+		if (pathname === privatePage) return true
+
+		// Prefix match for class-manager and whiteboard
+		if (
+			(privatePage === "/class-manager" || privatePage === "/whiteboard") &&
+			pathname.startsWith(privatePage + "/")
+		) {
+			return true
+		}
+
+		return false
+	})
 
 	const isOpenPage = OpenPages.some(openPath =>
 		pathname.startsWith(openPath)

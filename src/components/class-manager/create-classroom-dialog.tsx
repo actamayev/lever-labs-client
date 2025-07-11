@@ -49,7 +49,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 			(classCode: ClassCode) => {
 				// Close dialog and redirect to new classroom
 				onOpenChange(false)
-				navigate(`/c/${classCode}`)
+				navigate(`/class-manager/${classCode}`)
 			}
 		)
 

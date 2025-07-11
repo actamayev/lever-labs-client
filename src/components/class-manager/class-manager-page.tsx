@@ -24,7 +24,7 @@ function ClassManagerPage() {
 	}, [])
 
 	const handleClassroomClick = (classCode: ClassCode) => {
-		navigate(`/c/${classCode}`)
+		navigate(`/class-manager/${classCode}`)
 	}
 
 	if (teacherClass.isRetrievingClassroomData) {

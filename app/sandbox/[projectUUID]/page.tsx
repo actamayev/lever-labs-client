@@ -5,23 +5,24 @@ import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project/sandbox-project-page"
 
 interface SandboxProjectPageProps {
-    params: {
+    params: Promise<{
         projectUUID: ProjectUUID
-    }
+    }>
 }
 
-export function generateMetadata({ params }: SandboxProjectPageProps) {
+export async function generateMetadata({ params }: SandboxProjectPageProps) {
+	const { projectUUID } = await params
 	return createMetadata({
 		title: "Sandbox Project",
 		// eslint-disable-next-line max-len
 		description: "Create, save, and edit custom Pip robot programs with an intuitive block-based or text coding interface in your personal project workspace.",
-		path: `/sandbox/${params.projectUUID}`,
+		path: `/sandbox/${projectUUID}`,
 		keywords: ["custom robot programs", "project workspace", "saved coding projects"]
 	})
 }
 
-export default function CustomSandboxProjectPage({ params }: SandboxProjectPageProps) {
-	const { projectUUID } = params
+export default async function CustomSandboxProjectPage({ params }: SandboxProjectPageProps) {
+	const { projectUUID } = await params
 
 	// Basic validation - adjust regex based on your UUID format
 	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition

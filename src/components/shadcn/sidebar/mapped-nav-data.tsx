@@ -66,8 +66,8 @@ function MappedNavData() {
 	const isApprovedTeacher = personalInfoClass.teacherData?.isApproved === true
 
 	const studentNavData: SidebarNavData = {
-		title: "Student",
-		url: "/student",
+		title: "Whiteboard",
+		url: "/whiteboard",
 		icon: School,
 		textColor: "text-beetle"
 	}
@@ -98,7 +98,7 @@ function MappedNavData() {
 				<SidebarMenu>
 					{navData.map((item) => {
 						const active = isActive(item.url)
-						const isStudentItem = item.url === "/student"
+						const isWhiteboardItem = item.url === "/whiteboard"
 
 						// Create styled icon elements
 						const iconElement = (
@@ -108,7 +108,7 @@ function MappedNavData() {
 							)}>
 								<item.icon className="h-[35px] w-[35px]" />
 								{/* Notification circle for pending invites */}
-								{isStudentItem && hasPendingInvites && (
+								{isWhiteboardItem && hasPendingInvites && (
 									<div className="absolute -top-1 -right-1 w-3 h-3 bg-cardinal border-2 border-white rounded-full" />
 								)}
 							</div>
