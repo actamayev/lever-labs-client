@@ -7,6 +7,7 @@ export const PrivatePageNames: PageNames[] = [
 	"/career-quest",
 	// Don't include career quest sub-routes (including them results in the sidebar showing on those pages)
 	"/student",
+	"/class-manager",
 ]
 
 // These are pages that you can view if you're logged in or not.
@@ -30,6 +31,7 @@ export const staticPages = [
 	"/add-pip",
 	"/sandbox",
 	"/student",
+	"/class-manager",
 	"/settings/profile",
 	"/settings/schools",
 

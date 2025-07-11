@@ -17,7 +17,7 @@ declare global {
 		| "/workbench"
 
 	interface SidebarNavData {
-		title: "Sandbox" | "Career Quest" | "Garage" | "Student"
+		title: "Sandbox" | "Career Quest" | "Garage" | "Student" | "Class Manager"
 		url: PageNames
 		icon: LucideIcon
 		textColor: string

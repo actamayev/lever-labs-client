@@ -17,6 +17,7 @@ import CustomSidebarButton from "./custom-sidebar-button"
 import studentClass from "../../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
@@ -61,6 +62,9 @@ function MappedNavData() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [studentClass.classroomData])
 
+	// Check if user is approved teacher
+	const isApprovedTeacher = personalInfoClass.teacherData?.isApproved === true
+
 	const studentNavData: SidebarNavData = {
 		title: "Student",
 		url: "/student",
@@ -68,10 +72,25 @@ function MappedNavData() {
 		textColor: "text-beetle"
 	}
 
-	// Conditionally include student page if user has active classroom data
-	const navData = hasActiveClasses
-		? [...baseNavData, studentNavData]
-		: baseNavData
+	const teacherNavData: SidebarNavData = {
+		title: "Class Manager",
+		url: "/class-manager",
+		icon: School,
+		textColor: "text-fox"
+	}
+
+	// Build navData conditionally
+	const navData = [...baseNavData]
+
+	// Add student nav if user has active classes
+	if (hasActiveClasses) {
+		navData.push(studentNavData)
+	}
+
+	// Add teacher nav if user is approved teacher
+	if (isApprovedTeacher) {
+		navData.push(teacherNavData)
+	}
 
 	return (
 		<SidebarGroup>
