@@ -11,6 +11,8 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import studentClass from "../../classes/student-class"
+import teacherClass from "../../classes/teacher-class"
 
 export default async function logout(): Promise<void> {
 	personalInfoClass.logout()
@@ -23,5 +25,7 @@ export default async function logout(): Promise<void> {
 	sandboxClass.logout()
 	garageClass.logout()
 	serialMessageManagerClass.logout()
+	studentClass.logout()
+	teacherClass.logout()
 	await serialConnectionManagerClass.logout()
 }

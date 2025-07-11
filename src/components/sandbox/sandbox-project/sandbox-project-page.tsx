@@ -4,7 +4,6 @@ import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
-import { useParams } from "next/navigation"
 import { BlocklyJson, ProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
@@ -27,10 +26,12 @@ import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
+interface SandboxProjectPageProps {
+	projectUUID: ProjectUUID
+}
+
 // eslint-disable-next-line max-lines-per-function, complexity
-function SandboxProjectPage() {
-	const params = useParams()
-	const projectUUID = params.projectUUID as ProjectUUID
+function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
