@@ -3,27 +3,28 @@
 import { Plus } from "lucide-react"
 import { observer } from "mobx-react"
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
 import teacherClass from "../../classes/teacher-class"
-import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
+import { TactileButton } from "../shadcn/ui/tactile-button"
 import CreateClassroomDialog from "./create-classroom-dialog"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 
 function ClassManagerPage() {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
-	const router = useRouter()
 	const colors = getDuolingoColors("humpback")
+	const navigate = useTypedNavigate()
 
 	// Fetch classroom data on component mount
 	useEffect(() => {
 		retrieveTeacherClassrooms()
 	}, [])
 
-	const handleClassroomClick = (classCode: string) => {
-		router.push(`/c/${classCode}`)
+	const handleClassroomClick = (classCode: ClassCode) => {
+		navigate(`/c/${classCode}`)
 	}
 
 	if (teacherClass.isRetrievingClassroomData) {
@@ -35,13 +36,12 @@ function ClassManagerPage() {
 	}
 
 	return (
-		<div className="p-6">
+		<div className="pt-40">
 			{/* Classrooms Grid */}
 			{teacherClass.classroomData.length === 0 ? (
-				<div className="text-center py-16">
-					<div className="text-xl text-wolf mb-4">No classrooms yet</div>
+				<div className="text-center">
 					<div className="text-eel font-light mb-6">
-						Create your first classroom to start managing students and assignments.
+						Add a class to get started
 					</div>
 					<TactileButton
 						onClick={() => setIsCreateDialogOpen(true)}
@@ -49,8 +49,10 @@ function ClassManagerPage() {
 						shadowHeight={4}
 						shadowClass={colors.shadow}
 					>
-						<Plus className="h-5 w-5 mr-2" />
-						Create Your First Classroom
+						<div className="flex items-center justify-center">
+							<Plus className="h-5 w-5 mr-2" />
+							Create class
+						</div>
 					</TactileButton>
 				</div>
 			) : (

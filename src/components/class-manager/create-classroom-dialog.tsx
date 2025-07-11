@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { useRouter } from "next/navigation"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { IncomingClassroomData, ClassCode } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
@@ -12,6 +11,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
 import createClassroom from "../../utils/teacher/create-classroom"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean
@@ -25,7 +25,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
 	const [isSubmitting, setIsSubmitting] = useState(false)
-	const router = useRouter()
+	const navigate = useTypedNavigate()
 
 	const colors = getDuolingoColors("humpback")
 
@@ -49,12 +49,12 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 			(classCode: ClassCode) => {
 				// Close dialog and redirect to new classroom
 				onOpenChange(false)
-				router.push(`/c/${classCode}`)
+				navigate(`/c/${classCode}`)
 			}
 		)
 
 		setIsSubmitting(false)
-	}, [classroomName, classroomDescription, onOpenChange, router])
+	}, [classroomName, classroomDescription, onOpenChange, navigate])
 
 	const handleClose = useCallback(() => {
 		// Reset form when closing
@@ -71,17 +71,17 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 		<Dialog open={isOpen} onOpenChange={handleClose}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
-					<DialogTitle>Create New Classroom</DialogTitle>
+					<DialogTitle>Create class</DialogTitle>
 					<DialogClose />
 				</DialogHeader>
 
 				<div className="space-y-4">
 					<div className="space-y-2">
-						<Label htmlFor="classroom-name" className="text-base font-medium text-eel">
-							Classroom Name *
+						<Label htmlFor="class-name" className="text-base font-medium text-eel">
+							Class Name *
 						</Label>
 						<Input
-							id="classroom-name"
+							id="class-name"
 							type="text"
 							value={classroomName}
 							onChange={(e) => {
@@ -91,18 +91,18 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 									setSuccess("")
 								}
 							}}
-							className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan"
+							className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
 							placeholder="The awesome robotics class"
 							disabled={isSubmitting}
 						/>
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="classroom-description" className="text-base font-medium text-eel">
+						<Label htmlFor="class-description" className="text-base font-medium text-eel">
 							Description (Optional)
 						</Label>
 						<Textarea
-							id="classroom-description"
+							id="class-description"
 							value={classroomDescription}
 							onChange={(e) => {
 								setClassroomDescription(e.target.value)
@@ -111,8 +111,8 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 									setSuccess("")
 								}
 							}}
-							className="w-full min-h-20 text-lg bg-polar !text-eel font-light border-swan resize-none"
-							placeholder="Brief description of the classroom..."
+							className="w-full min-h-20 text-lg bg-polar !text-eel font-light border-swan resize-none shadow-none"
+							placeholder="This is the best class in the whole wide world"
 							disabled={isSubmitting}
 						/>
 					</div>

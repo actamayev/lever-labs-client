@@ -1,14 +1,12 @@
 "use client"
 
-import { ArrowLeft } from "lucide-react"
-import { observer } from "mobx-react"
 import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { observer } from "mobx-react"
+import { ArrowLeft } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
-import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
 import teacherClass from "../../classes/teacher-class"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 
 interface ClassroomPageProps {
@@ -16,8 +14,7 @@ interface ClassroomPageProps {
 }
 
 function ClassroomPage({ classCode }: ClassroomPageProps) {
-	const router = useRouter()
-	const colors = getDuolingoColors("humpback")
+	const navigate = useTypedNavigate()
 
 	// Fetch detailed classroom data on component mount
 	useEffect(() => {
@@ -26,9 +23,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps) {
 
 	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 
-	const handleBackClick = () => {
-		router.push("/class-manager")
-	}
+	const handleBackClick = () => navigate("/class-manager")
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
