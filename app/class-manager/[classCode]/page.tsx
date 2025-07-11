@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: ClassroomPageProps) {
 	const { classCode } = await params
 
 	return createMetadata({
-		title: `Classroom ${classCode}`,
+		title: "Class Manager",
 		description: "Manage your classroom, track student progress, and assign robotics lessons.",
 		path: `/class-manager/${classCode}`,
 		keywords: ["classroom management", "student tracking", "teacher dashboard"]

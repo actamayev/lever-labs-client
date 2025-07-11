@@ -23,6 +23,10 @@ function ClassroomPage({ classCode }: ClassroomPageProps) {
 
 	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 
+	useEffect(() => {
+		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
+	}, [classroomData?.classroomName])
+
 	const handleBackClick = () => navigate("/class-manager")
 
 	if (teacherClass.isRetrievingDetailedData) {
