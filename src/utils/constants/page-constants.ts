@@ -5,8 +5,7 @@ export const PrivatePageNames: PageNames[] = [
 	"/settings/profile",
 	"/settings/schools",
 	"/career-quest",
-	"/career-quest/introduction",
-	"/career-quest/obstacle-avoidance",
+	// Don't include career quest sub-routes (including them results in the sidebar showing on those pages)
 	"/student",
 ]
 

@@ -38,6 +38,8 @@ export default async function requestBecomeTeacher(
 				// eslint-disable-next-line max-len
 				} else if (response?.data.message === "Your application to be a teacher was not accepted. Please contact our support team") {
 					setError("Your previous teacher application was not accepted. Please contact our support team for assistance.")
+				} else if (response?.data.message === "Your application to be a teacher is still being processed") {
+					setError("Your application to be a teacher is still being processed.")
 				} else if (response?.data.validationError) {
 					setError("Please ensure all fields are filled in correctly.")
 				} else {

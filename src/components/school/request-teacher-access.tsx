@@ -2,12 +2,13 @@
 
 import { observer } from "mobx-react"
 import { useState, useCallback } from "react"
+import { AlertCircle, CheckCircle } from "lucide-react"
+import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
-import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
 function RequestTeacherAccess() {
@@ -132,15 +133,17 @@ function RequestTeacherAccess() {
 				</div>
 
 				{error && (
-					<p className="text-sm text-cardinal mt-1">
-						{error}
-					</p>
+					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
+						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{error}</span>
+					</div>
 				)}
 
 				{success && (
-					<p className="text-sm text-green-600 mt-1">
-						{success}
-					</p>
+					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{success}</span>
+					</div>
 				)}
 			</CardContent>
 			<CardFooter className="px-4 md:px-6">
