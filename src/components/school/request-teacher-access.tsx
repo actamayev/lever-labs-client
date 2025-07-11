@@ -1,16 +1,22 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useState, useCallback } from "react"
-import { AlertCircle, CheckCircle } from "lucide-react"
+import { useState, useCallback, useEffect } from "react"
+import { AlertCircle, CheckCircle, Info } from "lucide-react"
 import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
-import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { cn } from "../../lib/shadcn/utils"
+import CustomTooltip from "../custom-tooltip"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
+import personalInfoClass from "../../classes/personal-info-class"
+import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
+import editTeacherData from "../../utils/teacher/edit-teacher-data" // Placeholder import
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function RequestTeacherAccess() {
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
@@ -18,6 +24,19 @@ function RequestTeacherAccess() {
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
 	const [isSubmitting, setIsSubmitting] = useState(false)
+
+	const teacherData = personalInfoClass.teacherData
+	const hasExistingData = teacherData !== null
+	const colors = getDuolingoColors("humpback")
+
+	// Pre-populate form with existing data
+	useEffect(() => {
+		if (hasExistingData) {
+			setFirstName(teacherData.teacherFirstName)
+			setLastName(teacherData.teacherLastName)
+			setSchoolName(teacherData.schoolName)
+		}
+	}, [hasExistingData, teacherData])
 
 	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setFirstName(e.target.value)
@@ -47,6 +66,7 @@ function RequestTeacherAccess() {
 	}, [error, success])
 
 	const clearForm = useCallback(() => {
+		// Only clear for new requests, not when editing existing data
 		setFirstName("")
 		setLastName("")
 		setSchoolName("")
@@ -56,28 +76,95 @@ function RequestTeacherAccess() {
 		setIsSubmitting(true)
 		setError("")
 		setSuccess("")
-		const teacherData: IncomingTeacherRequestData = {
+
+		const teacherRequestData: IncomingTeacherRequestData = {
 			teacherFirstName: firstName.trim(),
 			teacherLastName: lastName.trim(),
 			schoolName: schoolName.trim()
 		}
 
-		await requestBecomeTeacher(teacherData, setError, setSuccess, clearForm)
+		if (hasExistingData) {
+			// Call edit function for existing teacher data
+			await editTeacherData(teacherRequestData, setError, setSuccess)
+		} else {
+			// Call original request function for new applications
+			await requestBecomeTeacher(teacherRequestData, setError, setSuccess, clearForm)
+		}
 
 		setIsSubmitting(false)
-	}, [clearForm, firstName, lastName, schoolName])
+	}, [clearForm, firstName, lastName, schoolName, hasExistingData])
 
-	// Check if form is valid
-	const isFormValid = firstName.trim().length > 0 &&
-		lastName.trim().length > 0 &&
-		schoolName.trim().length > 0
+	// Check if form is valid - different logic for existing vs new applications
+	const isFormValid = hasExistingData
+		? (
+			// For editing: both names must not be empty AND at least one name must have changed
+			firstName.trim().length > 0 &&
+			lastName.trim().length > 0 &&
+			(
+				firstName.trim() !== teacherData.teacherFirstName ||
+				lastName.trim() !== teacherData.teacherLastName
+			)
+		)
+		: firstName.trim().length > 0 && lastName.trim().length > 0 && schoolName.trim().length > 0
+
+	// Get status message based on teacher data
+	const getStatusMessage = () => {
+		if (!hasExistingData) return null
+
+		if (teacherData.isApproved === true) {
+			return (
+				<div className="flex items-center mb-4 text-chargingGreen text-sm font-medium">
+					<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<span>Your teacher account has been approved! You can update your information below.</span>
+				</div>
+			)
+		}
+
+		if (teacherData.isApproved === null) {
+			return (
+				<div className="flex items-center mb-4 text-blue-600 text-sm font-medium">
+					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<span>Your teacher application is still being reviewed. You can update your information below.</span>
+				</div>
+			)
+		}
+
+		if (teacherData.isApproved === false) {
+			return (
+				<div className="flex items-center mb-4 text-cardinal text-sm font-medium">
+					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<span>
+						Your teacher application was not accepted.
+						Please contact our support team at bluedotrobots@gmail.com for assistance.
+					</span>
+				</div>
+			)
+		}
+
+		return null
+	}
+
+	// Determine if form should be disabled (when application was rejected)
+	const isFormDisabled = hasExistingData && teacherData.isApproved === false
+
+	// Get button text based on state
+	const getButtonText = () => {
+		if (isSubmitting) {
+			return hasExistingData ? "UPDATING..." : "SUBMITTING..."
+		}
+		return hasExistingData ? "UPDATE INFORMATION" : "REQUEST ACCESS"
+	}
 
 	return (
 		<Card className="max-w-xl w-full my-8">
 			<CardHeader className="px-4 md:px-6">
-				<CardTitle className="text-xl md:text-2xl">Request Teacher Access</CardTitle>
+				<CardTitle className="text-xl md:text-2xl">
+					{hasExistingData ? "Teacher Information" : "Request Teacher Access"}
+				</CardTitle>
 			</CardHeader>
 			<CardContent className="space-y-4 px-4 md:px-6">
+				{getStatusMessage()}
+
 				<div className="space-y-2">
 					<Label
 						htmlFor="teacher-first-name"
@@ -90,6 +177,7 @@ function RequestTeacherAccess() {
 						type="text"
 						value={firstName}
 						onChange={handleFirstNameChange}
+						disabled={isFormDisabled}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
 					/>
@@ -107,23 +195,42 @@ function RequestTeacherAccess() {
 						type="text"
 						value={lastName}
 						onChange={handleLastNameChange}
+						disabled={isFormDisabled}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
 					/>
 				</div>
 
 				<div className="space-y-2">
-					<Label
-						htmlFor="school-name"
-						className="text-base md:text-lg font-medium text-eel mb-2 block"
-					>
-						School Name
-					</Label>
+					<div className="flex items-center gap-2">
+						<Label
+							htmlFor="school-name"
+							className="text-base md:text-lg font-medium text-eel mb-2 block"
+						>
+							School Name
+						</Label>
+						{hasExistingData && (
+							<CustomTooltip
+								tooltipTrigger={
+									<Button
+										type="button"
+										variant="ghost"
+										size="sm"
+										className="h-auto p-1.5 hover:bg-polar"
+									>
+										<Info className="!h-4 !w-4 text-gray-500" />
+									</Button>
+								}
+								tooltipContent="School name cannot be edited after submission"
+							/>
+						)}
+					</div>
 					<Input
 						id="school-name"
 						type="text"
 						value={schoolName}
 						onChange={handleSchoolNameChange}
+						disabled={hasExistingData || isFormDisabled}
 						className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
 						bg-polar !text-eel font-light border-swan"
 					/>
@@ -144,13 +251,15 @@ function RequestTeacherAccess() {
 				)}
 			</CardContent>
 			<CardFooter className="px-4 md:px-6">
-				<Button
+				<TactileButton
 					onClick={submitRequest}
-					disabled={!isFormValid || isSubmitting}
-					className="w-full sm:w-auto"
+					disabled={!isFormValid || isSubmitting || isFormDisabled}
+					className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
+					shadowHeight={4}
+					shadowClass={colors.shadow}
 				>
-					{isSubmitting ? "SUBMITTING..." : "REQUEST ACCESS"}
-				</Button>
+					{getButtonText()}
+				</TactileButton>
 			</CardFooter>
 		</Card>
 	)

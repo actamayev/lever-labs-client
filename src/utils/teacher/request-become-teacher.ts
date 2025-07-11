@@ -1,8 +1,8 @@
 import { AxiosError } from "axios"
 import { Dispatch, SetStateAction } from "react"
+import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line complexity
 export default async function requestBecomeTeacher(

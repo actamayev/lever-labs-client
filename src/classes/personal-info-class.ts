@@ -1,8 +1,9 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
-import { PersonalInfoResponse, SiteThemes, TeacherData } from "@bluedotrobots/common-ts"
+import { PersonalInfoResponse, SiteThemes, TeacherData, TeacherName } from "@bluedotrobots/common-ts"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -83,6 +84,12 @@ class PersonalInfoClass {
 	public setTeacherData = action((newTeacherData: TeacherData | null): void => {
 		this.teacherData = newTeacherData
 	})
+
+	public setTeacherNameData = action(({ teacherFirstName, teacherLastName }: TeacherName): void => {
+		if (isNull(this.teacherData)) return
+		Object.assign(this.teacherData, { teacherFirstName, teacherLastName })
+	})
+
 
 	public logout(): void {
 		this.username = null
