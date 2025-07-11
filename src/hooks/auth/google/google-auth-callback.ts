@@ -39,7 +39,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				throw Error("Unable to log in")
 			}
 			authClass.setAccessToken(googleCallbackResponse.data.accessToken)
-			if (googleCallbackResponse.data.isNewUser === true) {
+			if (googleCallbackResponse.data.isNewUser === true || isUndefined(googleCallbackResponse.data.personalInfo)) {
 				return navigate("/register-google")
 			}
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)

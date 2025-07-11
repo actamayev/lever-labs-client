@@ -48,7 +48,9 @@ export const staticPages = [
 ] as const
 
 export const careerQuestPages = [
-
+	"/career-quest",
+	"/career-quest/introduction",
+	"/career-quest/obstacle-avoidance",
 ] as const
 
 export const allPages = [...staticPages, ...careerQuestPages] as const

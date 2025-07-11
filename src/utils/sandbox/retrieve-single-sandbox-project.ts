@@ -1,10 +1,11 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
-import sandboxClass from "../../classes/sandbox-class"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
+import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveSingleSandboxProject(projectUUID: ProjectUUID): Promise<void> {
@@ -22,7 +23,11 @@ export default async function retrieveSingleSandboxProject(projectUUID: ProjectU
 		sandboxClass.setIsRetrievingSingleProject(projectUUID, true)
 
 		const sandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
-		if (!isEqual(sandboxProjectResponse.status, 200) || isErrorResponse(sandboxProjectResponse.data)) {
+		if (
+			!isEqual(sandboxProjectResponse.status, 200) ||
+			isErrorResponse(sandboxProjectResponse.data) ||
+			isNull(sandboxProjectResponse.data.sandboxProject)
+		) {
 			throw Error ("Unable to retrieve sandbox project")
 		}
 
