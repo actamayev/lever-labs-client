@@ -10,7 +10,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import createClassroom from "../../utils/teacher/create-classroom"
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean
@@ -67,64 +67,62 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 					<DialogClose />
 				</DialogHeader>
 
-				<div className="space-y-4">
-					<div className="space-y-2">
-						<Label htmlFor="class-name" className="text-base font-medium text-eel">
+				<div className="space-y-2">
+					<Label htmlFor="class-name" className="text-base font-medium text-eel">
 							Class Name
-						</Label>
-						<Input
-							id="class-name"
-							type="text"
-							value={classroomName}
-							onChange={(e) => {
-								setClassroomName(e.target.value)
-								if (error || success) {
-									setError("")
-									setSuccess("")
-								}
-							}}
-							className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
-							placeholder="The awesome robotics class"
-							disabled={isSubmitting}
-							maxLength={100}
-						/>
-					</div>
-
-					{error && (
-						<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-							<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-							<span>{error}</span>
-						</div>
-					)}
-
-					{success && (
-						<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-							<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-							<span>{success}</span>
-						</div>
-					)}
-
-					<div className="flex gap-3 pt-4">
-						<TactileButton
-							onClick={handleClose}
-							disabled={isSubmitting}
-							className="flex-1 h-10 rounded-xl text-lg border border-swan bg-polar text-eel hover:bg-gray-50"
-							shadowHeight={2}
-							shadowClass="shadow-gray-300"
-						>
-							Cancel
-						</TactileButton>
-						<TactileButton
-							onClick={handleSubmit}
-							disabled={!isFormValid || isSubmitting}
-							className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
-							shadowHeight={4}
-							shadowClass={colors.shadow}
-						>
-							{isSubmitting ? "Creating..." : "Create"}
-						</TactileButton>
-					</div>
+					</Label>
+					<Input
+						id="class-name"
+						type="text"
+						value={classroomName}
+						onChange={(e) => {
+							setClassroomName(e.target.value)
+							if (error || success) {
+								setError("")
+								setSuccess("")
+							}
+						}}
+						className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
+						placeholder="The awesome robotics class"
+						disabled={isSubmitting}
+						maxLength={100}
+					/>
 				</div>
+
+				{error && (
+					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
+						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{error}</span>
+					</div>
+				)}
+
+				{success && (
+					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{success}</span>
+					</div>
+				)}
+
+				<DialogFooter className="flex justify-end gap-2">
+					<TactileButton
+						onClick={handleClose}
+						disabled={isSubmitting}
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel hover:bg-questionText"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						CANCEL
+					</TactileButton>
+					<TactileButton
+						onClick={handleSubmit}
+						disabled={!isFormValid || isSubmitting}
+						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
+					>
+						{isSubmitting ? "CREATING..." : "CREATE"}
+					</TactileButton>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	)

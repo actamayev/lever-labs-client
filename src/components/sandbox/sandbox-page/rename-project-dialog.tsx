@@ -11,8 +11,10 @@ import {
 	DialogClose
 } from "../../shadcn/ui/dialog"
 import { Input } from "../../shadcn/ui/input"
-import { Button } from "../../shadcn/ui/button"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { cn } from "../../../lib/shadcn/utils"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
 
 interface Props {
 	project: SandboxProject
@@ -24,6 +26,8 @@ interface Props {
 
 export default function RenameProjectDialog(props: Props) {
 	const { project, isRenameDialogOpen, setIsRenameDialogOpen, newProjectName, setNewProjectName } = props
+
+	const colors = getDuolingoColors("humpback")
 
 	const handleCancelRename = useCallback(() => {
 		setIsRenameDialogOpen(false)
@@ -58,8 +62,22 @@ export default function RenameProjectDialog(props: Props) {
 					/>
 				</div>
 				<DialogFooter className="flex justify-end gap-2">
-					<Button variant="outline" onClick={handleCancelRename}>Cancel</Button>
-					<Button onClick={handleSaveRename}>Save</Button>
+					<TactileButton
+						onClick={handleCancelRename}
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel hover:bg-questionText"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						CANCEL
+					</TactileButton>
+					<TactileButton
+						onClick={handleSaveRename}
+						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
+					>
+						SAVE
+					</TactileButton>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

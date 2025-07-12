@@ -13,6 +13,9 @@ import { Input } from "../shadcn/ui/input"
 import { Button } from "../shadcn/ui/button"
 import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { cn } from "../../lib/shadcn/utils"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 
 interface Props {
 	classroom: BasicTeacherClassroomData
@@ -25,6 +28,8 @@ interface Props {
 export default function RenameClassroomDialog(props: Props) {
 	const { classroom, isRenameDialogOpen, setIsRenameDialogOpen, newClassroomName, setNewClassroomName } = props
 	const [error, setError] = useState("")
+
+	const colors = getDuolingoColors("humpback")
 
 	const handleCancelRename = useCallback(() => {
 		setIsRenameDialogOpen(false)
@@ -63,8 +68,22 @@ export default function RenameClassroomDialog(props: Props) {
 					{error && <p className="text-cardinal">{error}</p>}
 				</div>
 				<DialogFooter className="flex justify-end gap-2">
-					<Button variant="outline" onClick={handleCancelRename}>Cancel</Button>
-					<Button onClick={handleSaveRename}>Save</Button>
+					<TactileButton
+						onClick={handleCancelRename}
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel hover:bg-questionText"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						Cancel
+					</TactileButton>
+					<TactileButton
+						onClick={handleSaveRename}
+						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
+					>
+						Save
+					</TactileButton>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
