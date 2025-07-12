@@ -35,7 +35,6 @@ export default function RenameProjectDialog(props: Props) {
 	}, [project.projectUUID, newProjectName, setIsRenameDialogOpen])
 
 	return (
-
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
 			<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
 				<DialogHeader>

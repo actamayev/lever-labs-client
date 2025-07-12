@@ -1,17 +1,16 @@
 "use client"
 
 import { useState, useCallback } from "react"
+import { ClassCode } from "@bluedotrobots/common-ts"
 import { AlertCircle, CheckCircle } from "lucide-react"
-import { IncomingClassroomData, ClassCode } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
-import { Textarea } from "../shadcn/ui/textarea"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import createClassroom from "../../utils/teacher/create-classroom"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean
@@ -21,7 +20,6 @@ interface CreateClassroomDialogProps {
 // eslint-disable-next-line max-lines-per-function
 export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps) {
 	const [classroomName, setClassroomName] = useState("")
-	const [classroomDescription, setClassroomDescription] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
 	const [isSubmitting, setIsSubmitting] = useState(false)
@@ -37,13 +35,8 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 		setIsSubmitting(true)
 
-		const classroomData: IncomingClassroomData = {
-			classroomName: classroomName.trim(),
-			classroomDescription: classroomDescription.trim() || undefined
-		}
-
 		await createClassroom(
-			classroomData,
+			classroomName.trim(),
 			setError,
 			setSuccess,
 			(classCode: ClassCode) => {
@@ -54,12 +47,11 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 		)
 
 		setIsSubmitting(false)
-	}, [classroomName, classroomDescription, onOpenChange, navigate])
+	}, [classroomName, onOpenChange, navigate])
 
 	const handleClose = useCallback(() => {
 		// Reset form when closing
 		setClassroomName("")
-		setClassroomDescription("")
 		setError("")
 		setSuccess("")
 		onOpenChange(false)
@@ -78,7 +70,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 				<div className="space-y-4">
 					<div className="space-y-2">
 						<Label htmlFor="class-name" className="text-base font-medium text-eel">
-							Class Name *
+							Class Name
 						</Label>
 						<Input
 							id="class-name"
@@ -94,26 +86,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 							className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
 							placeholder="The awesome robotics class"
 							disabled={isSubmitting}
-						/>
-					</div>
-
-					<div className="space-y-2">
-						<Label htmlFor="class-description" className="text-base font-medium text-eel">
-							Description (Optional)
-						</Label>
-						<Textarea
-							id="class-description"
-							value={classroomDescription}
-							onChange={(e) => {
-								setClassroomDescription(e.target.value)
-								if (error || success) {
-									setError("")
-									setSuccess("")
-								}
-							}}
-							className="w-full min-h-20 text-lg bg-polar !text-eel font-light border-swan resize-none shadow-none"
-							placeholder="This is the best class in the whole wide world"
-							disabled={isSubmitting}
+							maxLength={100}
 						/>
 					</div>
 
@@ -148,7 +121,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 							shadowHeight={4}
 							shadowClass={colors.shadow}
 						>
-							{isSubmitting ? "Creating..." : "Create Classroom"}
+							{isSubmitting ? "Creating..." : "Create"}
 						</TactileButton>
 					</div>
 				</div>

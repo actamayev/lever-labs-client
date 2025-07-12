@@ -23,12 +23,12 @@ export default async function joinClassroom(
 			setSuccess("Successfully joined the class!")
 		}
 
+		// TODO: if successful, should navigate to /student/classcode, or whatever url structure we decide
 	} catch (error: unknown) {
 		console.error(error)
 
 		// Handle axios error responses
 		if (error instanceof AxiosError) {
-			console.log(error)
 			const { status, response } = error
 
 			if (status === 400) {

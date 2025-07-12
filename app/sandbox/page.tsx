@@ -17,5 +17,3 @@ export default function SandboxPage() {
 		</AuthenticatedLayout>
 	)
 }
-
-// todo: change the helmet in /class-manager to relfect the class name

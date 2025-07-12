@@ -2,8 +2,7 @@
 
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCode, ClassCodeResponse, DetailedClassroomData,
-	IncomingClassroomData, IncomingTeacherRequestData, NonSuccessResponse,
-	TeacherName} from "@bluedotrobots/common-ts"
+	IncomingTeacherRequestData, NonSuccessResponse, TeacherName } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -24,9 +23,15 @@ export default class TeacherDataService extends BaseDataService {
 		)
 	}
 
-	async createClassroom(createClassroomData: IncomingClassroomData): Promise<AxiosResponse<ClassCodeResponse | NonSuccessResponse>> {
+	async createClassroom(classroomName: string): Promise<AxiosResponse<ClassCodeResponse | NonSuccessResponse>> {
 		return await this.httpClient.http.post<ClassCodeResponse | NonSuccessResponse>(
-			this.buildUrl("/create-classroom"), { createClassroomData }
+			this.buildUrl("/create-classroom"), { classroomName }
+		)
+	}
+
+	async editClassroomName(classroomName: string, classCode: ClassCode): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/edit-classroom-name/${classCode}`), { classroomName }
 		)
 	}
 

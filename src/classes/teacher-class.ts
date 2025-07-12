@@ -41,6 +41,12 @@ class TeacherClass {
 		this.classroomData.push(classroom)
 	}
 
+	public editClassroomName(classCode: ClassCode, newClassroomName: string): void {
+		const classroom = this.classroomData.find((foundClassroom) => foundClassroom.classCode === classCode)
+		if (!classroom) return
+		classroom.classroomName = newClassroomName
+	}
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()

@@ -81,13 +81,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps) {
 							</span>
 						</div>
 
-						{classroomData?.classroomDescription && (
-							<div>
-								<span className="text-wolf font-medium">Description: </span>
-								<span className="text-eel">{classroomData.classroomDescription}</span>
-							</div>
-						)}
-
 						{classroomData?.students && (
 							<div>
 								<span className="text-wolf font-medium">Students: </span>
