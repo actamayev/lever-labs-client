@@ -74,7 +74,7 @@ export default function RenameClassroomDialog(props: Props) {
 						shadowHeight={4}
 						shadowClass="shadow-hare"
 					>
-						Cancel
+						CANCEL
 					</TactileButton>
 					<TactileButton
 						onClick={handleSaveRename}
@@ -82,7 +82,7 @@ export default function RenameClassroomDialog(props: Props) {
 						shadowHeight={4}
 						shadowClass={colors.shadow}
 					>
-						Save
+						SAVE
 					</TactileButton>
 				</DialogFooter>
 			</DialogContent>

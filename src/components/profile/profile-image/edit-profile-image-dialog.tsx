@@ -21,7 +21,8 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { cn } from "../../../lib/shadcn/utils"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean
@@ -134,6 +135,9 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const imageToShow = previewUrl ||
                   (pendingDelete ? null : personalInfoClass.profilePictureUrl)
 
+	const colors = getDuolingoColors("humpback")
+	const deleteColors = getDuolingoColors("cardinal")
+
 	return (
 		<Dialog
 			open={isOpen}
@@ -209,22 +213,25 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						<TactileButton
 							disabled={isLoading}
 							onClick={handleDelete}
-							className="bg-cardinal rounded-xl"
-							shadowClass="cardinal-2"
+							className={cn("flex-1 h-10 rounded-xl text-lg text-white", deleteColors.bg)}
+							shadowHeight={4}
+							shadowClass={deleteColors.shadow}
 						>
 							<Trash2 className="mr-2 h-4 w-4" />
-							Delete
+							DELETE
 						</TactileButton>
 					)}
 
-					<BlueTactileButton
+					<TactileButton
 						disabled={isLoading}
 						onClick={handleSave}
-						className="rounded-xl"
+						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
-						{pendingDelete ? "Confirm Delete" : "Save"}
-					</BlueTactileButton>
+						{pendingDelete ? "CONFIRM DELETE" : "SAVE"}
+					</TactileButton>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
