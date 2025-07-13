@@ -106,7 +106,7 @@ function RequestTeacherAccess() {
 			return (
 				<div className="flex items-center mb-4 text-blue-600 text-sm font-medium">
 					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
-					<span>Your teacher application is still being reviewed. You can update your information below.</span>
+					<span>Your teacher application is being reviewed. You can update your information below.</span>
 				</div>
 			)
 		} else if (teacherData.isApproved === false) {
@@ -224,7 +224,7 @@ function RequestTeacherAccess() {
 							onChange={handleSchoolNameChange}
 							disabled={hasExistingData || isFormDisabled}
 							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-						bg-polar !text-eel font-light border-swan"
+							bg-polar !text-eel font-light border-swan"
 						/>
 					</div>
 
