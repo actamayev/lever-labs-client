@@ -57,13 +57,6 @@ function RequestTeacherAccess() {
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const clearForm = useCallback(() => {
-		setFirstName("")
-		setLastName("")
-		setSchoolName("")
-		setError("")
-	}, [])
-
 	const submitRequest = useCallback(async () => {
 		setIsSubmitting(true)
 		clearErrorAndSuccess()
@@ -79,11 +72,11 @@ function RequestTeacherAccess() {
 			await editTeacherData(teacherRequestData, setError, setSuccess)
 		} else {
 			// Call original request function for new applications
-			await requestBecomeTeacher(teacherRequestData, setError, setSuccess, clearForm)
+			await requestBecomeTeacher(teacherRequestData, setError, setSuccess)
 		}
 
 		setIsSubmitting(false)
-	}, [clearForm, clearErrorAndSuccess, firstName, lastName, schoolName, hasExistingData])
+	}, [clearErrorAndSuccess, firstName, lastName, schoolName, hasExistingData])
 
 	// Check if form is valid - different logic for existing vs new applications
 	const isFormValid = hasExistingData

@@ -10,8 +10,7 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 export default async function requestBecomeTeacher(
 	data: IncomingTeacherRequestData,
 	setError: Dispatch<SetStateAction<string>>,
-	setSuccess: Dispatch<SetStateAction<string>>,
-	clearForm: () => void
+	setSuccess: Dispatch<SetStateAction<string>>
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
@@ -24,7 +23,7 @@ export default async function requestBecomeTeacher(
 		}
 
 		setSuccess("Teacher request submitted successfully! You'll be notified when approved.")
-		clearForm()
+		setError("")
 	} catch (error: unknown) {
 		console.error(error)
 
@@ -36,7 +35,7 @@ export default async function requestBecomeTeacher(
 				// eslint-disable-next-line max-depth
 				if (response?.data.message === "You have already been approved to be a teacher") {
 					setSuccess("You're already an approved teacher! You can create classrooms and manage students.")
-					clearForm()
+					setError("")
 				// eslint-disable-next-line max-len
 				} else if (response?.data.message === "Your application to be a teacher was not accepted. Please contact our support team") {
 					setError("Your previous teacher application was not accepted. Please contact our support team for assistance.")
