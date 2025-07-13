@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCode, ClassCodeResponse, DetailedClassroomData,
 	IncomingTeacherRequestData, NonSuccessResponse, TeacherName } from "@bluedotrobots/common-ts"

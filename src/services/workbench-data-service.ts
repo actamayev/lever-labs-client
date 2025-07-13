@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { ErrorResponses, PipUUID, SuccessResponse, TuneToPlay } from "@bluedotrobots/common-ts"

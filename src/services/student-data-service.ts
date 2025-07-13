@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, ClassCode, ErrorResponse, InviteResponse, StudentClassroomData } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"

@@ -17,7 +17,6 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps) {
 
 	const classroomData = studentClass.getClassroomData(classCode)
 
-	console.log(classroomData)
 	useEffect(() => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
 	}, [classroomData?.classroomName])

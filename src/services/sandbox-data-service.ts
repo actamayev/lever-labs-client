@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, BlocklyJson, CreateSandboxProjectResponse, ErrorResponse, PipUUID, ProjectUUID,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
