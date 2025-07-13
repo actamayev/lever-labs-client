@@ -7,8 +7,10 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 
 export default function JoinClassroom() {
+	const navigate = useTypedNavigate()
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
@@ -18,7 +20,9 @@ export default function JoinClassroom() {
 		setError("")
 		setSuccess("")
 		await joinClassroom(classCode, setError, setSuccess)
-	}, [classCode])
+		if (!success) return
+		navigate(`/whiteboard/${classCode}`)
+	}, [classCode, navigate, success])
 
 	const colors = getDuolingoColors("humpback")
 

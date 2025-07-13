@@ -74,6 +74,7 @@ class SocketClass {
 		this._socket.on("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
 	})
 
+	// 7/12/25 TODO: Setup student and teacher specific events
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
