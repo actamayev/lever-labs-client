@@ -30,6 +30,10 @@ class StudentClass {
 		this.classroomData = classroomInfo
 	})
 
+	public addClassroomData = action((classroomInfo: StudentClassroomData): void => {
+		this.classroomData.push(classroomInfo)
+	})
+
 	public getClassroomData = (classCode: ClassCode): StudentClassroomData | undefined => {
 		return this.classroomData.find((classroom) => classroom.classCode === classCode)
 	}
