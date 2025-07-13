@@ -1,7 +1,8 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { ITheme } from "blockly/core/theme"
+
+type ITheme = Parameters<typeof Blockly.Theme.defineTheme>[1]
 
 const commonStyles: ITheme = {
 	base: Blockly.Themes.Classic,
