@@ -20,7 +20,7 @@ declare global {
 		kind: "category"
 		id: undefined
 		categorystyle: undefined
-		cssconfig: Blockly.utils.toolbox.CategoryInfo["cssconfig"] | undefined
+		cssconfig: Blockly.ToolboxCategory.CssConfig | undefined
 		hidden: undefined
 		expanded?: string | boolean
 	}
