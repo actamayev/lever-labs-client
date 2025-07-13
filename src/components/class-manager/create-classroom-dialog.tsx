@@ -45,7 +45,6 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 			setError,
 			setSuccess,
 			(classCode: ClassCode) => {
-				// Close dialog and redirect to new classroom
 				onOpenChange(false)
 				navigate(`/class-manager/${classCode}`)
 			}
@@ -55,7 +54,6 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 	}, [classroomName, onOpenChange, navigate])
 
 	const handleClose = useCallback(() => {
-		// Reset form when closing
 		setClassroomName("")
 		clearErrorAndSuccess()
 		onOpenChange(false)

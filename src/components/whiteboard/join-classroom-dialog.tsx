@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useMemo } from "react"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
@@ -40,13 +40,18 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 	}, [classCode, clearErrorAndSuccess, navigate])
 
 	const handleClose = useCallback(() => {
-		// Reset form when closing
 		setClassCode("")
 		clearErrorAndSuccess()
 		onOpenChange(false)
 	}, [clearErrorAndSuccess, onOpenChange])
 
 	const isFormValid = isValidClassCode(classCode)
+
+	const borderColor = useMemo(() => {
+		if (error) return "border-cardinal"
+		if (success) return "border-chargingGreen"
+		return "border-swan"
+	}, [error, success])
 
 	return (
 		<Dialog open={isOpen} onOpenChange={handleClose}>
@@ -70,12 +75,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 						}}
 						className={cn(
 							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
-							// eslint-disable-next-line no-nested-ternary
-							error
-								? "border-cardinal"
-								: success
-									? "border-chargingGreen"
-									: "border-swan"
+							borderColor
 						)}
 						maxLength={5}
 						placeholder="APPLE"
