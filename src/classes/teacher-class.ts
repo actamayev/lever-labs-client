@@ -1,7 +1,8 @@
 "use client"
 
-import { makeAutoObservable } from "mobx"
-import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode } from "@bluedotrobots/common-ts"
+import { action, makeAutoObservable } from "mobx"
+import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherData } from "@bluedotrobots/common-ts"
+import { isNull } from "lodash-es"
 
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
@@ -9,6 +10,7 @@ class TeacherClass {
 	public isRetrievingClassroomData = false
 	public retrievedClassroomData = false
 	public isRetrievingDetailedData = false
+	public teacherData: TeacherData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -47,12 +49,22 @@ class TeacherClass {
 		classroom.classroomName = newClassroomName
 	}
 
+	public setTeacherData = action((teacherData: TeacherData | null): void => {
+		this.teacherData = teacherData
+	})
+
+	public setTeacherNameData = action((teacherFirstName: string, teacherLastName: string): void => {
+		if (isNull(this.teacherData)) return
+		Object.assign(this.teacherData, { teacherFirstName, teacherLastName })
+	})
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
 		this.isRetrievingClassroomData = false
 		this.retrievedClassroomData = false
 		this.isRetrievingDetailedData = false
+		this.teacherData = null
 	}
 }
 

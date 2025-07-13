@@ -12,9 +12,9 @@ import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
-import personalInfoClass from "../../classes/personal-info-class"
 import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
-import editTeacherData from "../../utils/teacher/edit-teacher-data" // Placeholder import
+import editTeacherData from "../../utils/teacher/edit-teacher-data"
+import teacherClass from "../../classes/teacher-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function RequestTeacherAccess() {
@@ -25,7 +25,7 @@ function RequestTeacherAccess() {
 	const [success, setSuccess] = useState("")
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
-	const teacherData = personalInfoClass.teacherData
+	const teacherData = teacherClass.teacherData
 	const hasExistingData = teacherData !== null
 	const colors = getDuolingoColors("humpback")
 
@@ -118,18 +118,14 @@ function RequestTeacherAccess() {
 					<span>Your teacher account has been approved! You can update your information below.</span>
 				</div>
 			)
-		}
-
-		if (teacherData.isApproved === null) {
+		} else if (teacherData.isApproved === null) {
 			return (
 				<div className="flex items-center mb-4 text-blue-600 text-sm font-medium">
 					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
 					<span>Your teacher application is still being reviewed. You can update your information below.</span>
 				</div>
 			)
-		}
-
-		if (teacherData.isApproved === false) {
+		} else if (teacherData.isApproved === false) {
 			return (
 				<div className="flex items-center mb-4 text-cardinal text-sm font-medium">
 					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />

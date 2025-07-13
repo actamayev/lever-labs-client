@@ -15,9 +15,9 @@ import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
 import loginSubmit from "../../../hooks/auth/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
-import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
 export default function LoginComponent() {
 	const [error, setError] = useState("")

@@ -10,7 +10,6 @@ import {
 	DialogClose
 } from "../shadcn/ui/dialog"
 import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
 import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
 import { TactileButton } from "../shadcn/ui/tactile-button"

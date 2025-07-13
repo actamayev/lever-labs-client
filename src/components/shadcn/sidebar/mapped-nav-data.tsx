@@ -17,7 +17,7 @@ import CustomSidebarButton from "./custom-sidebar-button"
 import studentClass from "../../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
-import personalInfoClass from "../../../classes/personal-info-class"
+import teacherClass from "../../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
@@ -63,7 +63,7 @@ function MappedNavData() {
 	}, [studentClass.classroomData])
 
 	// Check if user is approved teacher
-	const isApprovedTeacher = personalInfoClass.teacherData?.isApproved === true
+	const isApprovedTeacher = teacherClass.teacherData?.isApproved === true
 
 	const studentNavData: SidebarNavData = {
 		title: "Whiteboard",

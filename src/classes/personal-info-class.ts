@@ -1,9 +1,8 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
-import { PersonalInfoResponse, SiteThemes, TeacherData, TeacherName } from "@bluedotrobots/common-ts"
+import { BasicPersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -15,7 +14,6 @@ class PersonalInfoClass {
 	public defaultSiteTheme: SiteThemes = "light"
 	public sandboxNotesOpen: boolean = false
 	public profilePictureUrl: string | null = null
-	public teacherData: TeacherData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -39,7 +37,7 @@ class PersonalInfoClass {
 		this.retrievedPersonalInfo = newState
 	})
 
-	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
+	public setRetrievedPersonalData = action((retrievedData: BasicPersonalInfoResponse): void => {
 		this.username = retrievedData.username
 		this.email = retrievedData.email
 		this.setName(retrievedData.name)
@@ -48,7 +46,6 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme(retrievedData.defaultSiteTheme)
 		this.setRetrievedPersonalInfo(true)
 		this.setIsRetrievingPersonalDetails(false)
-		this.setTeacherData(retrievedData.teacherData)
 	})
 
 	public setRegisteredValues = action((username: string, email: string, defaultSiteTheme: SiteThemes): void => {
@@ -81,16 +78,6 @@ class PersonalInfoClass {
 		this.username = newUsername
 	})
 
-	public setTeacherData = action((newTeacherData: TeacherData | null): void => {
-		this.teacherData = newTeacherData
-	})
-
-	public setTeacherNameData = action(({ teacherFirstName, teacherLastName }: TeacherName): void => {
-		if (isNull(this.teacherData)) return
-		Object.assign(this.teacherData, { teacherFirstName, teacherLastName })
-	})
-
-
 	public logout(): void {
 		this.username = null
 		this.email = null
@@ -100,7 +87,6 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme("light")
 		this.setSandboxNotesOpen(false)
 		this.setName(null)
-		this.setTeacherData(null)
 	}
 }
 

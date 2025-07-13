@@ -15,6 +15,7 @@ import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import studentClass from "../../../classes/student-class"
+import teacherClass from "../../../classes/teacher-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -44,6 +45,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				return navigate("/register-google")
 			}
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
+			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
 			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			studentClass.setRetrievedStudentData(googleCallbackResponse.data.studentClasses)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()

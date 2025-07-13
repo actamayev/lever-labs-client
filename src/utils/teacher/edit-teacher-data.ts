@@ -6,8 +6,8 @@ import { IncomingTeacherRequestData, TeacherName } from "@bluedotrobots/common-t
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import teacherClass from "../../classes/teacher-class"
 
 export default async function editTeacherData(
 	teacherNameData: IncomingTeacherRequestData,
@@ -19,8 +19,8 @@ export default async function editTeacherData(
 
 		// Check if no changes were made
 		if (
-			teacherNameData.teacherFirstName === personalInfoClass.teacherData?.teacherFirstName &&
-			teacherNameData.teacherLastName === personalInfoClass.teacherData?.teacherLastName
+			teacherNameData.teacherFirstName === teacherClass.teacherData?.teacherFirstName &&
+			teacherNameData.teacherLastName === teacherClass.teacherData.teacherLastName
 		) {
 			setError("No changes detected. Please modify your information before updating.")
 			return
@@ -36,11 +36,10 @@ export default async function editTeacherData(
 		}
 
 		// Update the local data
-		personalInfoClass.setTeacherNameData(teacherNameData)
+		teacherClass.setTeacherNameData(teacherNameData.teacherFirstName, teacherNameData.teacherLastName)
 
 		// Set success message
 		setSuccess("Teacher information updated successfully!")
-
 	} catch (error) {
 		console.error(error)
 
