@@ -1,5 +1,6 @@
 "use client"
 
+import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 import {
 	Dialog,
@@ -10,11 +11,10 @@ import {
 	DialogClose
 } from "../shadcn/ui/dialog"
 import { Input } from "../shadcn/ui/input"
-import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
-import editClassroomName from "../../utils/teacher/edit-classroom-name"
-import { TactileButton } from "../shadcn/ui/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
+import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
+import editClassroomName from "../../utils/teacher/edit-classroom-name"
 
 interface Props {
 	classroom: BasicTeacherClassroomData

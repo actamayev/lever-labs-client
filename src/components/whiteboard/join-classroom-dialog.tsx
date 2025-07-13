@@ -1,0 +1,121 @@
+"use client"
+
+import { useState, useCallback } from "react"
+import { AlertCircle, CheckCircle } from "lucide-react"
+import { Input } from "../shadcn/ui/input"
+import { Label } from "../shadcn/ui/label"
+import { cn } from "../../lib/shadcn/utils"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import joinClassroom from "../../utils/student/join-classroom"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import { isValidClassCode } from "../../utils/validate-class-code"
+
+interface CreateClassroomDialogProps {
+	isOpen: boolean
+	onOpenChange: (open: boolean) => void
+}
+
+// eslint-disable-next-line max-lines-per-function
+export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps) {
+	const [classCode, setClassCode] = useState("")
+	const [error, setError] = useState("")
+	const [success, setSuccess] = useState("")
+	const navigate = useTypedNavigate()
+
+	const colors = getDuolingoColors("humpback")
+
+	const handleSubmit = useCallback(async () => {
+		if (!isValidClassCode(classCode)) return
+		setError("")
+		setSuccess("")
+		const joinedClassroom = await joinClassroom(classCode, setError, setSuccess)
+		if (!joinedClassroom) return
+		navigate(`/whiteboard/${classCode}`)
+	}, [classCode, navigate])
+
+	const handleClose = useCallback(() => {
+		// Reset form when closing
+		setClassCode("")
+		setError("")
+		setSuccess("")
+		onOpenChange(false)
+	}, [onOpenChange])
+
+	const isFormValid = isValidClassCode(classCode)
+
+	return (
+		<Dialog open={isOpen} onOpenChange={handleClose}>
+			<DialogContent className="sm:max-w-[500px]">
+				<DialogHeader>
+					<DialogTitle>Join a classroom</DialogTitle>
+					<DialogClose />
+				</DialogHeader>
+
+				<div className="space-y-2">
+					<Label htmlFor="class-name" className="text-base font-medium text-eel">
+						Class Code
+					</Label>
+					<Input
+						id="class-code"
+						type="text"
+						value={classCode}
+						onChange={(e) => {
+							setClassCode(e.target.value)
+							if (error || success) {
+								setError("")
+								setSuccess("")
+							}
+						}}
+						className={cn(
+							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
+							// eslint-disable-next-line no-nested-ternary
+							error
+								? "border-cardinal"
+								: success
+									? "border-chargingGreen"
+									: "border-swan"
+						)}
+						maxLength={5}
+						placeholder="APPLE"
+					/>
+				</div>
+
+				{error && (
+					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
+						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{error}</span>
+					</div>
+				)}
+
+				{success && (
+					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<span>{success}</span>
+					</div>
+				)}
+
+				<DialogFooter className="flex justify-end gap-2">
+					<TactileButton
+						onClick={handleClose}
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel hover:bg-questionText"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						CANCEL
+					</TactileButton>
+					<TactileButton
+						onClick={handleSubmit}
+						disabled={!isFormValid}
+						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
+					>
+						JOIN
+					</TactileButton>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+	)
+}

@@ -6,15 +6,15 @@ import { AlertCircle, CheckCircle, Info } from "lucide-react"
 import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
-import { Button } from "../shadcn/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
+import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
+import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
-import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
 import editTeacherData from "../../utils/teacher/edit-teacher-data"
-import teacherClass from "../../classes/teacher-class"
+import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function RequestTeacherAccess() {
@@ -38,44 +38,46 @@ function RequestTeacherAccess() {
 		}
 	}, [hasExistingData, teacherData])
 
+	const clearErrorAndSuccess = useCallback(() => {
+		setError("")
+		setSuccess("")
+	}, [])
+
 	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setFirstName(e.target.value)
 		// Clear messages when user starts typing
 		if (error || success) {
-			setError("")
-			setSuccess("")
+			clearErrorAndSuccess()
 		}
-	}, [error, success])
+	}, [clearErrorAndSuccess, error, success])
 
 	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setLastName(e.target.value)
 		// Clear messages when user starts typing
 		if (error || success) {
-			setError("")
-			setSuccess("")
+			clearErrorAndSuccess()
 		}
-	}, [error, success])
+	}, [clearErrorAndSuccess, error, success])
 
 	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setSchoolName(e.target.value)
 		// Clear messages when user starts typing
 		if (error || success) {
-			setError("")
-			setSuccess("")
+			clearErrorAndSuccess()
 		}
-	}, [error, success])
+	}, [clearErrorAndSuccess, error, success])
 
 	const clearForm = useCallback(() => {
 		// Only clear for new requests, not when editing existing data
 		setFirstName("")
 		setLastName("")
 		setSchoolName("")
-	}, [])
+		clearErrorAndSuccess()
+	}, [clearErrorAndSuccess])
 
 	const submitRequest = useCallback(async () => {
 		setIsSubmitting(true)
-		setError("")
-		setSuccess("")
+		clearErrorAndSuccess()
 
 		const teacherRequestData: IncomingTeacherRequestData = {
 			teacherFirstName: firstName.trim(),
@@ -92,7 +94,7 @@ function RequestTeacherAccess() {
 		}
 
 		setIsSubmitting(false)
-	}, [clearForm, firstName, lastName, schoolName, hasExistingData])
+	}, [clearForm, clearErrorAndSuccess, firstName, lastName, schoolName, hasExistingData])
 
 	// Check if form is valid - different logic for existing vs new applications
 	const isFormValid = hasExistingData
@@ -148,7 +150,7 @@ function RequestTeacherAccess() {
 		if (isSubmitting) {
 			return hasExistingData ? "UPDATING..." : "SUBMITTING..."
 		}
-		return hasExistingData ? "UPDATE INFORMATION" : "REQUEST ACCESS"
+		return hasExistingData ? "UPDATE" : "SUBMIT"
 	}
 
 	return (

@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { StudentClassroomData } from "@bluedotrobots/common-ts"
+import { ClassCode, StudentClassroomData } from "@bluedotrobots/common-ts"
 
 class StudentClass {
 	public isRetrievingStudentData = false
@@ -29,6 +29,10 @@ class StudentClass {
 	private setClassroomData = action((classroomInfo: StudentClassroomData[]): void => {
 		this.classroomData = classroomInfo
 	})
+
+	public getClassroomData = (classCode: ClassCode): StudentClassroomData | undefined => {
+		return this.classroomData.find((classroom) => classroom.classCode === classCode)
+	}
 
 	public logout(): void {
 		this.setClassroomData([])

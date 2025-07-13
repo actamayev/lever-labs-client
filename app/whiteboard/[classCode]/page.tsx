@@ -1,0 +1,37 @@
+import { notFound } from "next/navigation"
+import { ClassCode } from "@bluedotrobots/common-ts"
+import AuthenticatedLayout from "../../../src/components/authenticated-layout"
+import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
+import SingleWhiteboardPage from "../../../src/components/whiteboard-page/whiteboard-page"
+
+interface ClassroomPageProps {
+	params: Promise<{
+		classCode: ClassCode
+	}>
+}
+
+export async function generateMetadata({ params }: ClassroomPageProps) {
+	const { classCode } = await params
+
+	return createMetadata({
+		title: "Whiteboard",
+		description: "View your classroom whiteboard.",
+		path: `/whiteboard/${classCode}`,
+		keywords: ["whiteboard", "classroom", "student tracking"]
+	})
+}
+
+export default async function WhiteboardRoutePage({ params }: ClassroomPageProps) {
+	const { classCode } = await params
+
+	// Basic validation for class code format (5 uppercase letters)
+	if (!classCode || !/^[A-Za-z0-9]{5}$/.test(classCode)) {
+		notFound()
+	}
+
+	return (
+		<AuthenticatedLayout>
+			<SingleWhiteboardPage classCode={classCode} />
+		</AuthenticatedLayout>
+	)
+}

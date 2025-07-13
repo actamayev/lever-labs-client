@@ -63,7 +63,7 @@ function ClassManagerPage() {
 					>
 						<div className="flex items-center justify-center">
 							<Plus className="h-5 w-5 mr-2" />
-							Create class
+							CREATE CLASS
 						</div>
 					</TactileButton>
 				</div>

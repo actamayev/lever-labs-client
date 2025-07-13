@@ -64,7 +64,7 @@ export default function RenameProjectDialog(props: Props) {
 				<DialogFooter className="flex justify-end gap-2">
 					<TactileButton
 						onClick={handleCancelRename}
-						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel hover:bg-questionText"
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel"
 						shadowHeight={4}
 						shadowClass="shadow-hare"
 					>

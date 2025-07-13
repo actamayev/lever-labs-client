@@ -19,10 +19,10 @@ export default function JoinClassroom() {
 		if (!isValidClassCode(classCode)) return
 		setError("")
 		setSuccess("")
-		await joinClassroom(classCode, setError, setSuccess)
-		if (!success) return
+		const joinedClassroom = await joinClassroom(classCode, setError, setSuccess)
+		if (!joinedClassroom) return
 		navigate(`/whiteboard/${classCode}`)
-	}, [classCode, navigate, success])
+	}, [classCode, navigate])
 
 	const colors = getDuolingoColors("humpback")
 
@@ -39,7 +39,7 @@ export default function JoinClassroom() {
 			</div>
 			<div className="relative w-full max-w-xl mt-5 flex flex-col">
 				<Input
-					id="name"
+					id="class-code"
 					value={classCode}
 					onChange={(e) => {
 						setClassCode(e.target.value)

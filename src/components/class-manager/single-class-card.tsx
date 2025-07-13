@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Edit, EllipsisVertical } from "lucide-react"
-import { BasicTeacherClassroomData, ClassCode } from "@bluedotrobots/common-ts"
+import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
 import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../shadcn/ui/dropdown-menu"
@@ -16,15 +16,15 @@ function SingleClassCard(props: Props) {
 	const { classroom, handleRenameClick } = props
 	const navigate = useTypedNavigate()
 
-	const handleClassroomClick = (classCode: ClassCode) => {
-		navigate(`/class-manager/${classCode}`)
+	const handleClassroomClick = () => {
+		navigate(`/class-manager/${classroom.classCode}`)
 	}
 
 	return (
 		<Card
 			key={classroom.classCode}
 			className="group cursor-pointer duration-0 border-swan bg-standardBackground hover:bg-polar relative overflow-hidden"
-			onClick={() => handleClassroomClick(classroom.classCode)}
+			onClick={handleClassroomClick}
 		>
 			<CardHeader className="pb-3 relative">
 				<div className="flex items-start justify-between">
@@ -48,7 +48,7 @@ function SingleClassCard(props: Props) {
 								className="cursor-pointer text-lg hover:!bg-polar"
 							>
 								<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
-									Rename
+								Rename
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

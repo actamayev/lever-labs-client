@@ -1,8 +1,8 @@
 "use client"
 
+import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherData } from "@bluedotrobots/common-ts"
-import { isNull } from "lodash-es"
 
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
