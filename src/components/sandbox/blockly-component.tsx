@@ -10,6 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
+import filterToolboxConfig from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
@@ -28,6 +29,8 @@ function BlocklyComponent(props: Props) {
 		initialBlocklyJson,
 		onJsonChange
 	} = props
+
+	const [searchTerm, setSearchTerm] = useState("")
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
@@ -38,6 +41,10 @@ function BlocklyComponent(props: Props) {
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
+
+	const filteredToolboxConfig = useMemo(() => {
+		return filterToolboxConfig(toolboxConfig, searchTerm)
+	}, [toolboxConfig, searchTerm])
 
 	const centerWorkspace = useCallback(() => {
 		const workspace = workspaceRef.current
@@ -119,17 +126,38 @@ function BlocklyComponent(props: Props) {
 	}, [setupToolbox])
 
 	return (
-		<div
-			ref={containerRef}
-			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
-		>
-			<BlocklyWorkspace
-				toolboxConfiguration={toolboxConfig}
-				initialJson={initialBlocklyJson}
-				workspaceConfiguration={workspaceConfiguration}
-				className="h-full duration-0"
-				onWorkspaceChange={handleWorkspaceChange}
-			/>
+		<div className={cn("flex flex-col", extraClasses)}>
+			{/* Search Bar */}
+			<div className="mb-4">
+				<input
+					type="text"
+					placeholder="search for blocks"
+					value={searchTerm}
+					onChange={(e) => setSearchTerm(e.target.value)}
+					className={cn(
+						"w-full px-4 py-2 rounded-lg border-2 border-swan",
+						"focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+						"transition-all duration-200",
+						isDarkMode
+							? "bg-gray-800 text-white placeholder-gray-400 border-gray-600"
+							: "bg-white text-gray-900 placeholder-gray-500 border-gray-300"
+					)}
+				/>
+			</div>
+
+			{/* Blockly Workspace */}
+			<div
+				ref={containerRef}
+				className="relative z-0 rounded-lg overflow-hidden border-2 border-swan flex-1"
+			>
+				<BlocklyWorkspace
+					toolboxConfiguration={filteredToolboxConfig}
+					initialJson={initialBlocklyJson}
+					workspaceConfiguration={workspaceConfiguration}
+					className="h-full duration-0"
+					onWorkspaceChange={handleWorkspaceChange}
+				/>
+			</div>
 		</div>
 	)
 }

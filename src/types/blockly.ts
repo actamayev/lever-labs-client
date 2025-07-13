@@ -5,6 +5,7 @@ import { BlocklyCategoryName, BlockNames, ParentCategoryName, ToolboxItem, } fro
 declare global {
 	interface CustomBlockDefinition {
 		init(this: Blockly.Block): void
+		keywords?: string[] // Add this line to support search keywords
 	}
 
 	interface CustomBlock {
