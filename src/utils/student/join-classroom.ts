@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction } from "react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
+import studentClass from "../../classes/student-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 // eslint-disable-next-line complexity
@@ -22,7 +23,7 @@ export default async function joinClassroom(
 		if (!isEqual(joinClassResponse.status, 200) || isNonSuccessResponse(joinClassResponse.data)) {
 			throw Error("Unable to join class")
 		}
-
+		studentClass.addClassroomData({...joinClassResponse.data})
 		return true
 	} catch (error: unknown) {
 		console.error(error)

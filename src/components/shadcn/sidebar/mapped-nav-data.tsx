@@ -60,7 +60,7 @@ function MappedNavData() {
 			hasPendingInvites: pendingInvites
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [studentClass.classroomData])
+	}, [studentClass.classroomData.length])
 
 	// Check if user is approved teacher
 	const isApprovedTeacher = teacherClass.teacherData?.isApproved === true
