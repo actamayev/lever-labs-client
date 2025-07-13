@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import * as Blockly from "blockly"
-import { CssConfig } from "blockly/core/toolbox/category"
 import { BlocklyCategoryName, BlockNames, ParentCategoryName, ToolboxItem, } from "@bluedotrobots/common-ts"
 
 declare global {
@@ -21,7 +20,7 @@ declare global {
 		kind: "category"
 		id: undefined
 		categorystyle: undefined
-		cssconfig: CssConfig | undefined
+		cssconfig: Blockly.utils.toolbox.CategoryInfo["cssconfig"] | undefined
 		hidden: undefined
 		expanded?: string | boolean
 	}

@@ -9,7 +9,7 @@ import serialConnectionManagerClass from "./serial-connection-manager-class"
 interface MessageSentData {
 	content: string
 	timestamp: Date
-	isBinary?: boolean
+	isBinary: boolean
 }
 
 class SerialMessageManagerClass {

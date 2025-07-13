@@ -25,5 +25,6 @@ export default async function createSandboxProject(): Promise<ProjectUUID | unde
 			title: "Unable to create sandbox project",
 			description: "Please reload the page and try again"
 		})
+		return undefined
 	}
 }

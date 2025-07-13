@@ -9,8 +9,8 @@ import { BlocklyJson } from "@bluedotrobots/common-ts"
 export function stripBlockPositions(blocklyJson: BlocklyJson): BlocklyJson {
 	const cloned = cloneDeep(blocklyJson)
 
-	if (cloned.blocks?.blocks) {
-		cloned.blocks.blocks = cloned.blocks.blocks.map((block: { [x: string]: any; x: any; y: any }) => {
+	if (cloned["blocks"]?.["blocks"]) {
+		cloned["blocks"]["blocks"] = cloned["blocks"]["blocks"].map((block: { [x: string]: any; x: any; y: any }) => {
 			const { x, y, ...blockWithoutPosition } = block
 			return blockWithoutPosition
 		})

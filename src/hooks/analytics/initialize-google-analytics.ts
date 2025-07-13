@@ -13,7 +13,7 @@ export default function useInitializeGoogleAnalytics(): void {
 			try {
 				// Dynamically import ReactGA only when needed
 				const ReactGA = (await import("react-ga4")).default
-				ReactGA.initialize(process.env.NEXT_PUBLIC_MEASUREMENT_ID as string)
+				ReactGA.initialize(process.env["NEXT_PUBLIC_MEASUREMENT_ID"] as string)
 				setAnalyticsInitialized(true)
 			} catch (error) {
 				console.error("Failed to initialize Google Analytics:", error)
