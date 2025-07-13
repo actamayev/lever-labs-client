@@ -31,11 +31,10 @@ function RequestTeacherAccess() {
 
 	// Pre-populate form with existing data
 	useEffect(() => {
-		if (hasExistingData) {
-			setFirstName(teacherData.teacherFirstName)
-			setLastName(teacherData.teacherLastName)
-			setSchoolName(teacherData.schoolName)
-		}
+		if (!hasExistingData) return
+		setFirstName(teacherData.teacherFirstName)
+		setLastName(teacherData.teacherLastName)
+		setSchoolName(teacherData.schoolName)
 	}, [hasExistingData, teacherData])
 
 	const clearErrorAndSuccess = useCallback(() => {
@@ -45,30 +44,20 @@ function RequestTeacherAccess() {
 
 	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setFirstName(e.target.value)
-		// Clear messages when user starts typing
-		if (error || success) {
-			clearErrorAndSuccess()
-		}
-	}, [clearErrorAndSuccess, error, success])
+		clearErrorAndSuccess()
+	}, [clearErrorAndSuccess])
 
 	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setLastName(e.target.value)
-		// Clear messages when user starts typing
-		if (error || success) {
-			clearErrorAndSuccess()
-		}
-	}, [clearErrorAndSuccess, error, success])
+		clearErrorAndSuccess()
+	}, [clearErrorAndSuccess])
 
 	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		setSchoolName(e.target.value)
-		// Clear messages when user starts typing
-		if (error || success) {
-			clearErrorAndSuccess()
-		}
-	}, [clearErrorAndSuccess, error, success])
+		clearErrorAndSuccess()
+	}, [clearErrorAndSuccess])
 
 	const clearForm = useCallback(() => {
-		// Only clear for new requests, not when editing existing data
 		setFirstName("")
 		setLastName("")
 		setSchoolName("")

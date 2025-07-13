@@ -26,22 +26,25 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 	const colors = getDuolingoColors("humpback")
 
-	const handleSubmit = useCallback(async () => {
-		if (!isValidClassCode(classCode)) return
+	const clearErrorAndSuccess = useCallback(() => {
 		setError("")
 		setSuccess("")
+	}, [])
+
+	const handleSubmit = useCallback(async () => {
+		if (!isValidClassCode(classCode)) return
+		clearErrorAndSuccess()
 		const joinedClassroom = await joinClassroom(classCode, setError, setSuccess)
 		if (!joinedClassroom) return
 		navigate(`/whiteboard/${classCode}`)
-	}, [classCode, navigate])
+	}, [classCode, clearErrorAndSuccess, navigate])
 
 	const handleClose = useCallback(() => {
 		// Reset form when closing
 		setClassCode("")
-		setError("")
-		setSuccess("")
+		clearErrorAndSuccess()
 		onOpenChange(false)
-	}, [onOpenChange])
+	}, [clearErrorAndSuccess, onOpenChange])
 
 	const isFormValid = isValidClassCode(classCode)
 
@@ -63,10 +66,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 						value={classCode}
 						onChange={(e) => {
 							setClassCode(e.target.value)
-							if (error || success) {
-								setError("")
-								setSuccess("")
-							}
+							clearErrorAndSuccess()
 						}}
 						className={cn(
 							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",

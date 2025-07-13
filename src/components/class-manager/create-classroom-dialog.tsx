@@ -27,6 +27,11 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 	const colors = getDuolingoColors("humpback")
 
+	const clearErrorAndSuccess = useCallback(() => {
+		setError("")
+		setSuccess("")
+	}, [])
+
 	const handleSubmit = useCallback(async () => {
 		if (!classroomName.trim()) {
 			setError("Classroom name is required")
@@ -52,10 +57,9 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 	const handleClose = useCallback(() => {
 		// Reset form when closing
 		setClassroomName("")
-		setError("")
-		setSuccess("")
+		clearErrorAndSuccess()
 		onOpenChange(false)
-	}, [onOpenChange])
+	}, [clearErrorAndSuccess, onOpenChange])
 
 	const isFormValid = classroomName.trim().length > 0
 
@@ -77,10 +81,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 						value={classroomName}
 						onChange={(e) => {
 							setClassroomName(e.target.value)
-							if (error || success) {
-								setError("")
-								setSuccess("")
-							}
+							clearErrorAndSuccess()
 						}}
 						className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
 						placeholder="The awesome robotics class"
