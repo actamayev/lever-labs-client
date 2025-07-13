@@ -38,7 +38,7 @@ export default function Providers({ children }: { children: ReactNode }) {
 	useEffect(() => void retrieveInfo(), [])
 
 	return (
-		<GoogleOAuthProvider clientId={process.env["NEXT_PUBLIC_GOOGLE_CLIENT_ID"] as string}>
+		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
 			<ObserverRedirectHandler />
 			<ConditionalLayout>
 				<AnimatePresence mode="wait">

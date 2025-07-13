@@ -26,7 +26,7 @@ class SocketClass {
 	public connect = action((accessToken: string): void => {
 		if (!isNull(this._socket)) return
 
-		this._socket = io(process.env["NEXT_PUBLIC_BASE_URL"] as string, {
+		this._socket = io(process.env.NEXT_PUBLIC_BASE_URL as string, {
 			path: "/socketio",
 			auth: { token: accessToken },
 			transports: ["websocket"]
