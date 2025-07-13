@@ -61,8 +61,8 @@ function RequestTeacherAccess() {
 		setFirstName("")
 		setLastName("")
 		setSchoolName("")
-		clearErrorAndSuccess()
-	}, [clearErrorAndSuccess])
+		setError("")
+	}, [])
 
 	const submitRequest = useCallback(async () => {
 		setIsSubmitting(true)
