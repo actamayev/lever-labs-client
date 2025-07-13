@@ -4,6 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
+import teacherClass from "../../classes/teacher-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
@@ -24,6 +25,7 @@ export default async function retrievePersonalInfo(): Promise<void> {
 			throw Error ("Unable to retrieve personal info")
 		}
 		personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
+		teacherClass.setTeacherData(personalInfoResponse.data.teacherData)
 		// This is here to auto-connect when the username is retrieved
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 	} catch (error) {

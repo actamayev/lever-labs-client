@@ -20,8 +20,10 @@ export default function robots(): MetadataRoute.Robots {
 					"/garage/",
 					"/add-pip/",
 					"/sandbox/",
-					"/profile/",
-					"/career-quest/"
+					"/settings/",
+					"/career-quest/",
+					"/class-manager/",
+					"/whiteboard/",
 				]
 			}
 		],

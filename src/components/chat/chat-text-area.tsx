@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { Send, Square } from "lucide-react"
 import { Dispatch, RefObject, SetStateAction, useCallback } from "react"

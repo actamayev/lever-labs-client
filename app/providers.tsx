@@ -8,6 +8,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 // Custom hooks from your application
 import { observer } from "mobx-react"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
+import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
@@ -27,6 +28,7 @@ const retrieveInfo = async () => {
 	// We wait for the personal info to be retrieved, and then retrieve the pip info.
 	// We wait for the username to be retrieved to be certain that we should retrieve the pip info
 	void retrievePipInfo()
+	void retrieveClassrooms()
 }
 
 export default function Providers({ children }: { children: ReactNode }) {

@@ -67,7 +67,8 @@ export default function ProfileSidebar() {
 		<div className="fixed right-0 top-0 w-[350px] mr-36 mt-6 rounded-lg h-full flex flex-col">
 			<div >
 				<SidebarSection title="Account">
-					<SidebarLink href="/profile">Profile</SidebarLink>
+					<SidebarLink href="/settings/profile">Profile</SidebarLink>
+					<SidebarLink href="/settings/schools">Blue Dot for Schools</SidebarLink>
 				</SidebarSection>
 
 				{/* <SidebarSection title="Support">
@@ -87,10 +88,15 @@ export default function ProfileSidebar() {
 				<LogOut className="mr-2 h-4 w-4" />
 				LOG OUT
 			</BlackWhiteTactileButton>
-			<div className="flex flex-row justify-center space-x-4 mt-4">
-				<BelowSidebarLink href="/privacy">PRIVACY</BelowSidebarLink>
-				<BelowSidebarLink href="/terms">TERMS</BelowSidebarLink>
-				<BelowSidebarLink href="/community-guidelines">COMMUNITY GUIDELINES</BelowSidebarLink>
+			<div className="flex flex-col items-center justify-center">
+				<div className="flex flex-row justify-center space-x-4 mt-4">
+					<BelowSidebarLink href="/privacy">PRIVACY</BelowSidebarLink>
+					<BelowSidebarLink href="/terms">TERMS</BelowSidebarLink>
+					<BelowSidebarLink href="/community-guidelines">COMMUNITY GUIDELINES</BelowSidebarLink>
+				</div>
+				<div className="flex flex-row justify-center space-x-4 mt-2">
+					<BelowSidebarLink href="/schools">SCHOOLS</BelowSidebarLink>
+				</div>
 			</div>
 		</div>
 	)

@@ -1,3 +1,6 @@
 Periodically, run `depcheck` to make sure no unused dependencies
 To count how many lines of code, run cloc . in terminal
 	`cloc . --include-lang=TypeScript --exclude-dir=node_modules,dist` excludes node_modules and dist, and only counts ts
+
+To kill process running on port 3000:
+	sudo lsof -ti:3000 | xargs sudo kill -9

@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import { BlocklyJson, CareerQuestChallengeData, ErrorResponses, SuccessResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"

@@ -1,7 +1,5 @@
-"use client"
-
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, BlocklyJson, ErrorResponse, PipUUID, ProjectUUID,
+import { AllCommonResponses, BlocklyJson, CreateSandboxProjectResponse, ErrorResponse, PipUUID, ProjectUUID,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
@@ -11,8 +9,8 @@ export default class SandboxDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async createSandboxProject(): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
-		return await this.httpClient.http.post<RetrieveSandboxProjectResponse | ErrorResponse>(
+	async createSandboxProject(): Promise<AxiosResponse<CreateSandboxProjectResponse | ErrorResponse>> {
+		return await this.httpClient.http.post<CreateSandboxProjectResponse | ErrorResponse>(
 			this.buildUrl("/create-sandbox-project")
 		)
 	}

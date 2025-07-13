@@ -1,3 +1,5 @@
+"use client"
+
 import { StandardJsonStatusMessage } from "@bluedotrobots/common-ts"
 import toastClass from "../../classes/toast-class"
 

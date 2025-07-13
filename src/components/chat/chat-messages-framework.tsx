@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { ArrowDown, BotMessageSquare } from "lucide-react"
 import { RefObject, useEffect, useRef, useState, useCallback } from "react"
