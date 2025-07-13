@@ -8,8 +8,8 @@ export default class StudentDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async joinClass(classCode: ClassCode): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
+	async joinClass(classCode: ClassCode): Promise<AxiosResponse<StudentClassroomData | ErrorResponse>> {
+		return await this.httpClient.http.post<StudentClassroomData | ErrorResponse>(
 			this.buildUrl(`/join-class/${classCode}`)
 		)
 	}
