@@ -7,10 +7,10 @@ import { Label } from "../shadcn/ui/label"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import joinClassroom from "../../utils/student/join-classroom"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import { isValidClassCode } from "../../utils/validate-class-code"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean

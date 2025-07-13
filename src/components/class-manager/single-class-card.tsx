@@ -26,7 +26,7 @@ function SingleClassCard(props: Props) {
 			className="group cursor-pointer duration-0 border-swan bg-standardBackground hover:bg-polar relative overflow-hidden"
 			onClick={handleClassroomClick}
 		>
-			<CardHeader className="pb-3 relative">
+			<CardHeader className="relative">
 				<div className="flex items-start justify-between">
 					<div className="flex-1 min-w-0">
 						<CardTitle className="text-xl text-wolf line-clamp-2 pr-8">

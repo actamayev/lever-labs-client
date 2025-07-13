@@ -35,9 +35,7 @@ export default function RenameClassroomDialog(props: Props) {
 	}, [setIsRenameDialogOpen])
 
 	const handleSaveRename = useCallback(async () => {
-		// You'll need to implement this function to update the classroom name
 		await editClassroomName(classCode, newClassroomName, setError)
-
 		setIsRenameDialogOpen(false)
 	}, [classCode, newClassroomName, setError, setIsRenameDialogOpen])
 
