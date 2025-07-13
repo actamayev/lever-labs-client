@@ -103,7 +103,7 @@ function ClassManagerPage() {
 			{/* Rename Classroom Dialog */}
 			{selectedClassroom && (
 				<RenameClassroomDialog
-					classroom={selectedClassroom}
+					classCode={selectedClassroom.classCode}
 					isRenameDialogOpen={isRenameDialogOpen}
 					setIsRenameDialogOpen={setIsRenameDialogOpen}
 					newClassroomName={newClassroomName}

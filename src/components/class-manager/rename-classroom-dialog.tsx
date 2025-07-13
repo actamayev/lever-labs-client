@@ -1,6 +1,6 @@
 "use client"
 
-import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts"
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 import {
 	Dialog,
@@ -17,7 +17,7 @@ import { getDuolingoColors } from "../../utils/duolingo-utils"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
 
 interface Props {
-	classroom: BasicTeacherClassroomData
+	classCode: ClassCode
 	isRenameDialogOpen: boolean
 	setIsRenameDialogOpen: Dispatch<SetStateAction<boolean>>
 	newClassroomName: string
@@ -25,7 +25,7 @@ interface Props {
 }
 
 export default function RenameClassroomDialog(props: Props) {
-	const { classroom, isRenameDialogOpen, setIsRenameDialogOpen, newClassroomName, setNewClassroomName } = props
+	const { classCode, isRenameDialogOpen, setIsRenameDialogOpen, newClassroomName, setNewClassroomName } = props
 	const [error, setError] = useState("")
 
 	const colors = getDuolingoColors("humpback")
@@ -36,10 +36,10 @@ export default function RenameClassroomDialog(props: Props) {
 
 	const handleSaveRename = useCallback(async () => {
 		// You'll need to implement this function to update the classroom name
-		await editClassroomName(classroom.classCode, newClassroomName, setError)
+		await editClassroomName(classCode, newClassroomName, setError)
 
 		setIsRenameDialogOpen(false)
-	}, [classroom.classCode, newClassroomName, setError, setIsRenameDialogOpen])
+	}, [classCode, newClassroomName, setError, setIsRenameDialogOpen])
 
 	return (
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
