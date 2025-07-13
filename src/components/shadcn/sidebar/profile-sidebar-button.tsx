@@ -32,7 +32,7 @@ function ProfileSidebarButton() {
 						</Avatar>
 					)}
 					text="PROFILE"
-					goTo="/profile"
+					goTo="/settings/profile"
 				/>
 			</SidebarMenuItem>
 		</SidebarMenu>

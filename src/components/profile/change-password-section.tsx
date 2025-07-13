@@ -8,6 +8,9 @@ import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
 import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { cn } from "../../lib/shadcn/utils"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 
 // eslint-disable-next-line max-lines-per-function
 function ChangePasswordSection() {
@@ -48,6 +51,8 @@ function ChangePasswordSection() {
 	const isPasswordChangeValid = currentPassword.length >= 6 &&
 		newPassword.length >= 6 &&
 		currentPassword !== newPassword
+
+	const colors = getDuolingoColors("humpback")
 
 	return (
 		<Card className="mb-8 max-w-xl w-full">
@@ -126,13 +131,15 @@ function ChangePasswordSection() {
 				)}
 			</CardContent>
 			<CardFooter className="px-4 md:px-6">
-				<Button
+				<TactileButton
 					onClick={savePassword}
 					disabled={!isPasswordChangeValid}
-					className="w-full sm:w-auto"
+					className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+					shadowHeight={4}
+					shadowClass={colors.shadow}
 				>
 					SAVE CHANGES
-				</Button>
+				</TactileButton>
 			</CardFooter>
 		</Card>
 	)

@@ -9,10 +9,12 @@ import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
 import sandboxClass from "../../../classes/sandbox-class"
 import WorkbenchLayout from "../../layouts/workbench-layout"
-import { BlueTactileButton } from "../../buttons/tactile-buttons"
 import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { cn } from "../../../lib/shadcn/utils"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -21,6 +23,7 @@ function TheSandboxPage() {
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")
 
+	const colors = getDuolingoColors("humpback")
 	// Handle create new project
 	const handleCreateProject = useCallback(async () => {
 		setIsCreating(true)
@@ -79,9 +82,11 @@ function TheSandboxPage() {
 			<div className="flex flex-row relative w-full">
 				{/* Main content column */}
 				<div className="w-full p-5">
-					<BlueTactileButton
-						className="px-4 py-2 bg-blue-600 text-white mb-10 text-2xl rounded-2xl"
+					<TactileButton
 						onClick={handleCreateProject}
+						className={cn("flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white", colors.bg)}
+						shadowHeight={4}
+						shadowClass={colors.shadow}
 						disabled={isCreating}
 						size="lg"
 					>
@@ -89,7 +94,7 @@ function TheSandboxPage() {
 							<PlusCircle className="!size-8 mr-2"/>
 							NEW PROJECT
 						</div>
-					</BlueTactileButton>
+					</TactileButton>
 
 					{/* Starred Projects Section */}
 					{filteredStarredProjects.length > 0 && (

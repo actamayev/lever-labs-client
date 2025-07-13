@@ -2,7 +2,7 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { isValidSiteTheme } from "../utils/type-checks"
-import { PersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
+import { BasicPersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -37,7 +37,7 @@ class PersonalInfoClass {
 		this.retrievedPersonalInfo = newState
 	})
 
-	public setRetrievedPersonalData = action((retrievedData: PersonalInfoResponse): void => {
+	public setRetrievedPersonalData = action((retrievedData: BasicPersonalInfoResponse): void => {
 		this.username = retrievedData.username
 		this.email = retrievedData.email
 		this.setName(retrievedData.name)

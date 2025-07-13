@@ -1,5 +1,3 @@
-"use client"
-
 import { AxiosResponse } from "axios"
 import { ErrorResponses, SuccessResponse, StartChatSuccess,
 	OutgoingCareerQuestChatData, ProjectUUID, OutgoingSandboxChatData} from "@bluedotrobots/common-ts"

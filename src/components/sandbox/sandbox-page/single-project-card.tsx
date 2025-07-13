@@ -69,7 +69,30 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 				onClick={() => handleProjectClick(project.projectUUID)}
 				onDoubleClick={() => !isDeleteMode && handleProjectClick(project.projectUUID)}
 			>
-				{!isDeleteMode ? (
+				{isDeleteMode ? (
+					<div className="flex flex-col items-center text-white">
+						<div className="text-center mb-2 text-base">
+							Are you sure you want to delete&nbsp;
+							<span className="font-bold">
+								{truncate(project.projectName || "Untitled Project")}?
+							</span>
+						</div>
+						<div className="flex gap-4">
+							<Button
+								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
+								onClick={handleCancelDelete}
+							>
+								CANCEL
+							</Button>
+							<Button
+								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
+								onClick={handleConfirmDelete}
+							>
+								DELETE
+							</Button>
+						</div>
+					</div>
+				) : (
 					<>
 						<div className="flex justify-between items-center">
 							<div className="font-medium truncate text-2xl">
@@ -107,29 +130,6 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 							Last updated: {relativeDateFormatter(project.updatedAt)}
 						</div>
 					</>
-				) : (
-					<div className="flex flex-col items-center text-white">
-						<div className="text-center mb-2 text-base">
-							Are you sure you want to delete&nbsp;
-							<span className="font-bold">
-								{truncate(project.projectName || "Untitled Project")}?
-							</span>
-						</div>
-						<div className="flex gap-4">
-							<Button
-								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
-								onClick={handleCancelDelete}
-							>
-								CANCEL
-							</Button>
-							<Button
-								className="bg-white hover:bg-[rgb(247,247,247)] text-cardinal px-4 rounded-md text-base"
-								onClick={handleConfirmDelete}
-							>
-								DELETE
-							</Button>
-						</div>
-					</div>
 				)}
 			</div>
 

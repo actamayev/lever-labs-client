@@ -12,10 +12,12 @@ declare global {
 		| "/pip"
 		| "/personal-info"
 		| "/sandbox"
+		| "/student"
+		| "/teacher"
 		| "/workbench"
 
 	interface SidebarNavData {
-		title: "Sandbox" | "Career Quest" | "Garage"
+		title: "Sandbox" | "Career Quest" | "Garage" | "Whiteboard" | "Class Manager"
 		url: PageNames
 		icon: LucideIcon
 		textColor: string

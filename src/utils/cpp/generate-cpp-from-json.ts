@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { cppGenerator } from "./cpp-generator"

@@ -2,8 +2,12 @@ export const PrivatePageNames: PageNames[] = [
 	"/garage",
 	"/add-pip",
 	"/sandbox",
-	"/profile",
-	"/career-quest"
+	"/settings/profile",
+	"/settings/schools",
+	"/career-quest",
+	// Don't include career quest sub-routes (including them results in the sidebar showing on those pages)
+	"/class-manager",
+	"/whiteboard",
 ]
 
 // These are pages that you can view if you're logged in or not.
@@ -26,7 +30,14 @@ export const staticPages = [
 	"/garage",
 	"/add-pip",
 	"/sandbox",
-	"/profile",
+	"/class-manager",
+	"/whiteboard",
+	"/settings/profile",
+	"/settings/schools",
+
+	"/career-quest",
+	"/career-quest/introduction",
+	"/career-quest/obstacle-avoidance",
 
 	// Open:
 	"/contact",
@@ -41,7 +52,7 @@ export const staticPages = [
 export const careerQuestPages = [
 	"/career-quest",
 	"/career-quest/introduction",
-	"/career-quest/obstacle-avoidance"
+	"/career-quest/obstacle-avoidance",
 ] as const
 
 export const allPages = [...staticPages, ...careerQuestPages] as const

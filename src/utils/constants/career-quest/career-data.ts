@@ -1,3 +1,5 @@
+"use client"
+
 /* eslint-disable max-len */
 import { Bot, Route } from "lucide-react"
 

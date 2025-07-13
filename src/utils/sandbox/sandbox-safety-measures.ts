@@ -1,3 +1,5 @@
+"use client"
+
 import isEmpty from "lodash-es/isEmpty"
 import { BytecodeOpCode } from "@bluedotrobots/common-ts"
 
