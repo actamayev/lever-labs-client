@@ -4,6 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { LoginRequest } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
+import studentClass from "../../classes/student-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
 import confirmLoginFields from "../../utils/auth/confirm-login-fields"
@@ -29,6 +30,7 @@ export default async function loginSubmit(
 		authClass.setAccessToken(response.data.accessToken)
 		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
 		pipClass.setPipData(response.data.userPipData)
+		studentClass.setRetrievedStudentData(response.data.studentClasses)
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		return true
 	} catch (error: unknown) {
