@@ -64,7 +64,7 @@ function WhiteboardPage() {
 					<TactileButton
 						onClick={handleJoinClick}
 						className={cn(
-							"fixed bottom-8 right-8 h-14 w-14 rounded-full text-white shadow-xl z-50",
+							"fixed bottom-8 right-8 h-14 w-14 rounded-full text-white z-50",
 							colors.bg
 						)}
 						shadowHeight={4}
