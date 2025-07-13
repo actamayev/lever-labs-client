@@ -88,10 +88,15 @@ export default function ProfileSidebar() {
 				<LogOut className="mr-2 h-4 w-4" />
 				LOG OUT
 			</BlackWhiteTactileButton>
-			<div className="flex flex-row justify-center space-x-4 mt-4">
-				<BelowSidebarLink href="/privacy">PRIVACY</BelowSidebarLink>
-				<BelowSidebarLink href="/terms">TERMS</BelowSidebarLink>
-				<BelowSidebarLink href="/community-guidelines">COMMUNITY GUIDELINES</BelowSidebarLink>
+			<div className="flex flex-col items-center justify-center">
+				<div className="flex flex-row justify-center space-x-4 mt-4">
+					<BelowSidebarLink href="/privacy">PRIVACY</BelowSidebarLink>
+					<BelowSidebarLink href="/terms">TERMS</BelowSidebarLink>
+					<BelowSidebarLink href="/community-guidelines">COMMUNITY GUIDELINES</BelowSidebarLink>
+				</div>
+				<div className="flex flex-row justify-center space-x-4 mt-2">
+					<BelowSidebarLink href="/schools">SCHOOLS</BelowSidebarLink>
+				</div>
 			</div>
 		</div>
 	)
