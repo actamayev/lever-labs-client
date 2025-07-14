@@ -1,23 +1,14 @@
 import * as Blockly from "blockly"
 
+// Define types for toolbox items
+type ToolboxBlock = { kind: "block"; type: string }
+type ToolboxCategory = { kind: "category"; contents?: Array<ToolboxItem>; [key: string]: unknown }
+type ToolboxItem = ToolboxBlock | ToolboxCategory
+
 /**
  * A utility class for filtering Blockly toolbox configurations based on search terms.
  */
 export default class BlocklySearchFilter {
-	/**
-	 * Debug method to check if keywords are loaded correctly
-	 */
-	public static debugKeywords(): void {
-		console.log("🔍 Debugging Blockly Block Keywords:")
-
-		Object.keys(Blockly.Blocks).forEach(blockType => {
-			const blockDefinition = Blockly.Blocks[blockType]
-			if (blockDefinition && blockDefinition.keywords) {
-				console.log(`${blockType}:`, blockDefinition.keywords)
-			}
-		})
-	}
-
 	/**
 	 * Get searchable text from a block type
 	 */
@@ -63,7 +54,7 @@ export default class BlocklySearchFilter {
 	 * Check if a block matches the search term
 	 */
 	private static blockMatchesSearch(
-		item: { kind: string; type?: string },
+		item: ToolboxItem,
 		searchTerm: string
 	): boolean {
 		return (
@@ -74,24 +65,42 @@ export default class BlocklySearchFilter {
 	}
 
 	/**
-	 /**
-	  * Filter blocks within a category
-	  */
-	private static filterCategory(
-		category: { kind: string; contents?: Array<{ kind: string; type?: string }> },
-		searchTerm: string
-	): { kind: string; contents?: Array<{ kind: string; type?: string }> } | null {
-		if (category.kind === "category" && Array.isArray(category.contents)) {
-			const filteredBlocks = category.contents.filter((item) =>
-				this.blockMatchesSearch(item, searchTerm)
-			)
+	 * Check if an item is a category (subcategory)
+	 */
+	private static isCategory(item: ToolboxItem): item is ToolboxCategory {
+		return item.kind === "category" && Array.isArray(item.contents)
+	}
 
-			return filteredBlocks.length > 0 ? {
-				...category,
-				contents: filteredBlocks
-			} : null
+	/**
+	 * Filter blocks within a category (supports nested subcategories)
+	 */
+	private static filterCategory(
+		category: ToolboxCategory,
+		searchTerm: string
+	): ToolboxCategory | null {
+		if (category.kind !== "category" || !Array.isArray(category.contents)) {
+			return null
 		}
-		return null
+
+		const filteredContents: Array<ToolboxItem> = []
+
+		for (const item of category.contents) {
+			if (this.blockMatchesSearch(item, searchTerm)) {
+				// Direct block match
+				filteredContents.push(item)
+			} else if (this.isCategory(item)) {
+				// Recursively filter subcategory
+				const filteredSubcategory = this.filterCategory(item, searchTerm)
+				if (filteredSubcategory) {
+					filteredContents.push(filteredSubcategory)
+				}
+			}
+		}
+
+		return filteredContents.length > 0 ? {
+			...category,
+			contents: filteredContents
+		} : null
 	}
 
 	/**
@@ -117,9 +126,8 @@ export default class BlocklySearchFilter {
 			Array.isArray((toolboxConfig as { contents?: Array<unknown> }).contents)
 		) {
 			const filteredCategories = (toolboxConfig as { contents: Array<unknown> }).contents
-				// eslint-disable-next-line max-len
-				.map((category) => this.filterCategory(category as { kind: string; contents?: Array<{ kind: string; type?: string }> }, searchLower))
-				.filter((category): category is { kind: string; contents?: Array<{ kind: string; type?: string }> } => category !== null)
+				.map((category) => this.filterCategory(category as ToolboxCategory, searchLower))
+				.filter((category): category is ToolboxCategory => category !== null)
 
 			return {
 				...toolboxConfig,
