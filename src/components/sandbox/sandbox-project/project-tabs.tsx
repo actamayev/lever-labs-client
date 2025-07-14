@@ -1,25 +1,33 @@
 "use client"
 
+import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
-import { useState, useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
+import sandboxClass from "../../../classes/sandbox-class"
 
 interface ProjectTabsProps {
 	project: SandboxProject
 	cppCode: string
 }
 
-export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
-	const [notes, setNotes] = useState(project.projectNotes || "")
+function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
+	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
-		debounce((uuid: ProjectUUID, newNotes: string) => {
-			editSandboxProjectNotes(uuid, newNotes)
+		debounce(async (uuid: ProjectUUID, newNotes: string) => {
+			try {
+				await editSandboxProjectNotes(uuid, newNotes)
+				setHasUnsavedChanges(false) // Clear unsaved changes flag on successful save
+			} catch (error) {
+				// Keep unsaved changes flag true if save failed
+				console.error("Failed to save notes:", error)
+			}
 		}, 500)
 	).current
 
@@ -28,20 +36,34 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 		return () => debouncedSaveNotes.cancel()
 	}, [debouncedSaveNotes])
 
-	// Update local state if projectNotes changes from external source
+	// Handle beforeunload warning
 	useEffect(() => {
-		setNotes(project.projectNotes || "")
-	}, [project.projectNotes])
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (hasUnsavedChanges) {
+				e.preventDefault()
+				e.returnValue = "Changes you made may not be saved."
+			}
+		}
+
+		if (hasUnsavedChanges) {
+			window.addEventListener("beforeunload", handleBeforeUnload)
+		}
+
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	}, [hasUnsavedChanges])
 
 	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const newNotes = e.target.value
-		setNotes(newNotes)
+		sandboxClass.updateProjectNotes(project.projectUUID, newNotes)
+		setHasUnsavedChanges(true) // Set unsaved changes flag when user types
 		debouncedSaveNotes(project.projectUUID, newNotes)
 	}
 
 	return (
 		<Tabs defaultValue="code" className="w-full h-full flex flex-col">
-			<TabsList className="mb-2">
+			<TabsList className="mb-2 bg-polar">
 				<TabsTrigger value="code">Code</TabsTrigger>
 				<TabsTrigger value="notes">Notes</TabsTrigger>
 				<TabsTrigger value="chat">Chat</TabsTrigger>
@@ -53,16 +75,16 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 				</pre>
 			</TabsContent>
 
-			<TabsContent value="notes" className="flex-1">
+			<TabsContent value="notes" className="flex-1" data-notes-section="true">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none"
-					value={notes}
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
+					value={project.projectNotes || ""}
 					onChange={handleNotesChange}
 				/>
 			</TabsContent>
 
-			<TabsContent value="chat" className="flex-1 min-h-0">
+			<TabsContent value="chat" className="flex-1 min-h-0" data-chat-section="true">
 				<SandboxChatInterface
 					projectUUID={project.projectUUID}
 					cppCode={cppCode}
@@ -71,3 +93,5 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 		</Tabs>
 	)
 }
+
+export default observer(ProjectTabs)

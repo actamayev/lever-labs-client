@@ -106,7 +106,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 					<TactileButton
 						onClick={handleClose}
 						disabled={isSubmitting}
-						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel"
+						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel dark:bg-swan"
 						shadowHeight={4}
 						shadowClass="shadow-hare"
 					>

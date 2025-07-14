@@ -4,6 +4,7 @@ import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { BlocklyJson, ProjectUUID, SandboxProject, ChatMessage,
 	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
+import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
 // Extended interface for internal state management
 interface SandboxProjectWithStreaming extends SandboxProject {
@@ -37,9 +38,12 @@ class SandboxClass {
 	})
 
 	public addSandboxProject = action((sandboxProject: SandboxProject): void => {
+		// Normalize the sandboxJson to ensure consistent format
+		const normalizedSandboxJson = normalizeSandboxJson(sandboxProject.sandboxJson)
 		// Add streaming state to the project
 		const projectWithStreaming: SandboxProjectWithStreaming = {
 			...sandboxProject,
+			sandboxJson: normalizedSandboxJson,
 			isStreaming: false,
 			currentStreamingMessageId: null
 		}

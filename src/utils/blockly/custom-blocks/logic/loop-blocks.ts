@@ -59,7 +59,8 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Repeat statements a specified number of times")
-			}
+			},
+			keywords: ["repeat", "loop", "iterate", "count", "times", "number", "numeric"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
@@ -82,7 +83,8 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Delay for a certain number of milliseconds")
-			}
+			},
+			keywords: ["delay", "wait", "pause", "sleep", "milliseconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
@@ -100,7 +102,8 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("This is a forever loop")
-			}
+			},
+			keywords: ["loop", "repeat", "forever", "infinite", "endless", "continuous"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const bodyCode = generateStatementCode(block, "LOOP_BODY")

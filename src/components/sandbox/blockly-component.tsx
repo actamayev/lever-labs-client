@@ -10,14 +10,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
+import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
+	searchTerm?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -26,12 +27,15 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		extraClasses = "h-1/2",
 		initialBlocklyJson,
-		onJsonChange
+		onJsonChange,
+		searchTerm = ""
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
+	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
+	const previousSearchingRef = useRef(false)
 	const pathname = usePathname()
 	useSensorPollingUseEffect()
 
@@ -39,12 +43,18 @@ function BlocklyComponent(props: Props) {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
 
+	const filteredToolboxConfig = useMemo(() => {
+		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
+	}, [toolboxConfig, searchTerm])
+
 	const centerWorkspace = useCallback(() => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 
+		// Always center the workspace
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 		workspace.scrollCenter()
+
 		setIsCentered(true)
 	}, [workspaceConfiguration.zoom?.startScale])
 
@@ -52,14 +62,48 @@ function BlocklyComponent(props: Props) {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
-		// Notify parent component if onJsonChange callback exists
-		onJsonChange(newJson)
+		// Don't notify parent component if we're switching modes
+		if (!isSwitchingMode) {
+			onJsonChange(newJson)
+		}
 
 		// Center workspace on first initialization
 		if (!isCentered) {
 			centerWorkspace()
 		}
-	}, [onJsonChange, isCentered, centerWorkspace])
+	}, [onJsonChange, isCentered, centerWorkspace, isSwitchingMode])
+
+	// Track when we're switching between search modes
+	useEffect(() => {
+		const wasSearching = previousSearchingRef.current
+		const isSearching = searchTerm.trim().length > 0
+
+		let timer: NodeJS.Timeout | null = null
+
+		// If we're switching modes, set switching state and reset centering
+		if (wasSearching !== isSearching) {
+			setIsSwitchingMode(true)
+			setIsCentered(false) // Force re-centering when switching modes
+
+			// Reset switching state after a short delay
+			timer = setTimeout(() => {
+				setIsSwitchingMode(false)
+				// Explicitly center when switching back to normal mode
+				if (wasSearching && !isSearching) {
+					setTimeout(() => {
+						centerWorkspace()
+					}, 100)
+				}
+			}, 200)
+		}
+
+		// Update the ref for next comparison
+		previousSearchingRef.current = isSearching
+
+		return () => {
+			if (timer) clearTimeout(timer)
+		}
+	}, [searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -121,10 +165,11 @@ function BlocklyComponent(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
+			className={cn("relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan", extraClasses)}
 		>
 			<BlocklyWorkspace
-				toolboxConfiguration={toolboxConfig}
+				key={searchTerm.trim() ? "search-mode" : "normal-mode"}
+				toolboxConfiguration={filteredToolboxConfig}
 				initialJson={initialBlocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"

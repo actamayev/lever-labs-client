@@ -23,7 +23,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new float variable and assign an initial value")
-			}
+			},
+			keywords: ["declare", "create", "initialize", "define", "store", "memory", "decimal", "number", "float"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -47,7 +48,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Assign a new value to an existing variable")
-			}
+			},
+			keywords: ["assign", "set", "update", "change", "modify", "store", "value", "equal"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -66,7 +68,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of a variable")
-			}
+			},
+			keywords: ["get", "read", "retrieve", "access", "variable", "number", "float"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -90,7 +93,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new integer variable and assign an initial value")
-			}
+			},
+			keywords: ["declare", "create", "initialize", "define", "store", "memory", "integer", "number", "int"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -109,7 +113,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of an integer variable")
-			}
+			},
+			keywords: ["get", "read", "retrieve", "access", "variable", "integer", "number", "int"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -132,7 +137,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new boolean variable and assign an initial value")
-			}
+			},
+			keywords: ["declare", "create", "initialize", "define", "store", "memory", "boolean", "bool"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -151,7 +157,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of a boolean variable")
-			}
+			},
+			keywords: ["get", "read", "retrieve", "access", "variable", "boolean", "bool"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)

@@ -21,7 +21,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward at specified percentage (0-100%)")
-			}
+			},
+			keywords: ["motor", "move", "advance", "drive", "straight", "ahead", "fast", "slow", "speed", "velocity"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
@@ -44,7 +45,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward at specified percentage (0-100%)")
-			}
+			},
+			keywords: ["motor", "reverse", "back", "retreat", "return", "undo", "rewind", "speed", "velocity"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
@@ -73,7 +75,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified time and speed")
-			}
+			},
+			keywords: ["motor", "move", "advance", "drive", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const seconds = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_SECONDS) || "0"
@@ -103,7 +106,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified time and speed")
-			}
+			},
+			keywords: ["motor", "reverse", "back", "retreat", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const seconds = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_SECONDS) || "0"
@@ -133,7 +137,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified distance at given speed")
-			}
+			},
+			keywords: ["motor", "move", "advance", "drive", "distance", "cm", "centimeters", "length", "travel"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const distance = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_DISTANCE) || "0"
@@ -163,7 +168,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified distance at given speed")
-			}
+			},
+			keywords: ["motor", "reverse", "back", "retreat", "distance", "cm", "centimeters", "length", "travel"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const distance = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_DISTANCE) || "0"
@@ -197,7 +203,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Turn Pip by specified angle")
-			}
+			},
+			keywords: ["motor", "turn", "rotate", "spin", "angle", "degrees", "direction", "clockwise", "counterclockwise"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DIRECTION)
@@ -215,7 +222,8 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Stop all motors")
-			}
+			},
+			keywords: ["motor", "halt", "brake", "pause", "cease", "end", "quit", "freeze", "standstill"]
 		},
 		generator: (_block: Blockly.Block): string => {
 			return "stopMotors();\n"

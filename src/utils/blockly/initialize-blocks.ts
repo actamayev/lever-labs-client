@@ -16,7 +16,9 @@ export default function initializeBlocks(): void {
 				} else {
 					this.jsonInit(blockData.definition)
 				}
-			}
+			},
+			// Preserve keywords for search functionality
+			keywords: blockData.definition.keywords
 		}
 
 		// Set the generator function

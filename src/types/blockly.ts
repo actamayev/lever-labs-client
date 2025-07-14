@@ -5,6 +5,7 @@ import { BlocklyCategoryName, BlockNames, ParentCategoryName, ToolboxItem, } fro
 declare global {
 	interface CustomBlockDefinition {
 		init(this: Blockly.Block): void
+		keywords?: string[]
 	}
 
 	interface CustomBlock {
