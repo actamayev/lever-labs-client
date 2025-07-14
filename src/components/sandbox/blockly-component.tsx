@@ -141,7 +141,7 @@ function BlocklyComponent(props: Props) {
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className={cn(
-						"w-full px-4 py-2 pl-10 pr-12 rounded-lg border-2 border-swan !placeholder-red-500"
+						"w-full px-4 py-2 pl-10 pr-12 rounded-lg border-2 border-swan "
 					)}
 				/>
 				{searchTerm && (
@@ -149,7 +149,7 @@ function BlocklyComponent(props: Props) {
 						variant="ghost"
 						size="sm"
 						onClick={() => setSearchTerm("")}
-						className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-700"
+						className="absolute right-1 top-1/2 transform -translate-y-1/2 size-6 p-0 hover:bg-swan"
 					>
 						<X size={16} />
 					</Button>
