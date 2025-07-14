@@ -29,5 +29,7 @@ export default async function editSandboxProjectNotes(projectUUID: ProjectUUID, 
 			title: "Unable to edit project notes",
 			description: "Please reload the page and try again"
 		})
+		// Re-throw the error so calling code can handle it
+		throw error
 	}
 }

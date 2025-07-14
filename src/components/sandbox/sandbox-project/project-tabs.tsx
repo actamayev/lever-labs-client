@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
@@ -16,10 +16,18 @@ interface ProjectTabsProps {
 }
 
 function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
+	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
-		debounce((uuid: ProjectUUID, newNotes: string) => {
-			void editSandboxProjectNotes(uuid, newNotes)
+		debounce(async (uuid: ProjectUUID, newNotes: string) => {
+			try {
+				await editSandboxProjectNotes(uuid, newNotes)
+				setHasUnsavedChanges(false) // Clear unsaved changes flag on successful save
+			} catch (error) {
+				// Keep unsaved changes flag true if save failed
+				console.error("Failed to save notes:", error)
+			}
 		}, 500)
 	).current
 
@@ -28,9 +36,29 @@ function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 		return () => debouncedSaveNotes.cancel()
 	}, [debouncedSaveNotes])
 
+	// Handle beforeunload warning
+	useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (hasUnsavedChanges) {
+				e.preventDefault()
+				e.returnValue = "Changes you made may not be saved."
+				return "Changes you made may not be saved."
+			}
+		}
+
+		if (hasUnsavedChanges) {
+			window.addEventListener("beforeunload", handleBeforeUnload)
+		}
+
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	}, [hasUnsavedChanges])
+
 	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const newNotes = e.target.value
 		sandboxClass.updateProjectNotes(project.projectUUID, newNotes)
+		setHasUnsavedChanges(true) // Set unsaved changes flag when user types
 		debouncedSaveNotes(project.projectUUID, newNotes)
 	}
 
