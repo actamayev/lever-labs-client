@@ -38,6 +38,8 @@ function BlocklyComponent(props: Props) {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
+	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
+	const previousSearchingRef = useRef(false)
 	const pathname = usePathname()
 	useSensorPollingUseEffect()
 
@@ -52,9 +54,11 @@ function BlocklyComponent(props: Props) {
 	const centerWorkspace = useCallback(() => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 
+		// Always center the workspace
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 		workspace.scrollCenter()
+
 		setIsCentered(true)
 	}, [workspaceConfiguration.zoom?.startScale])
 
@@ -62,14 +66,41 @@ function BlocklyComponent(props: Props) {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
-		// Notify parent component if onJsonChange callback exists
-		onJsonChange(newJson)
+		// Don't notify parent component if we're switching modes
+		if (!isSwitchingMode) {
+			onJsonChange(newJson)
+		}
 
 		// Center workspace on first initialization
 		if (!isCentered) {
 			centerWorkspace()
 		}
-	}, [onJsonChange, isCentered, centerWorkspace])
+	}, [onJsonChange, isCentered, centerWorkspace, isSwitchingMode])
+
+	// Track when we're switching between search modes
+	useEffect(() => {
+		const wasSearching = previousSearchingRef.current
+		const isSearching = searchTerm.trim().length > 0
+
+		// If we're switching modes, set switching state and reset centering
+		if (wasSearching !== isSearching) {
+			setIsSwitchingMode(true)
+			setIsCentered(false) // Force re-centering when switching modes
+
+			// Reset switching state after a short delay
+			const timer = setTimeout(() => {
+				setIsSwitchingMode(false)
+			}, 200)
+
+			// Update the ref for next comparison
+			previousSearchingRef.current = isSearching
+
+			return () => clearTimeout(timer)
+		}
+
+		// Update the ref even if we're not switching modes
+		previousSearchingRef.current = isSearching
+	}, [searchTerm])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
