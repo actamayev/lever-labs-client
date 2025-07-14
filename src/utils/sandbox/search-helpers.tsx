@@ -5,6 +5,20 @@ import * as Blockly from "blockly"
  */
 export default class BlocklySearchFilter {
 	/**
+	 * Debug method to check if keywords are loaded correctly
+	 */
+	public static debugKeywords(): void {
+		console.log("🔍 Debugging Blockly Block Keywords:")
+
+		Object.keys(Blockly.Blocks).forEach(blockType => {
+			const blockDefinition = Blockly.Blocks[blockType]
+			if (blockDefinition && blockDefinition.keywords) {
+				console.log(`${blockType}:`, blockDefinition.keywords)
+			}
+		})
+	}
+
+	/**
 	 * Get searchable text from a block type
 	 */
 	private static getBlockSearchableText(blockType: string): string {
@@ -29,6 +43,11 @@ export default class BlocklySearchFilter {
 			// Add tooltip
 			if (typeof tempBlock.tooltip === "string") {
 				searchText += tempBlock.tooltip + " "
+			}
+
+			// Add keywords from the block definition
+			if (blockDefinition.keywords && Array.isArray(blockDefinition.keywords)) {
+				searchText += blockDefinition.keywords.join(" ") + " "
 			}
 
 			tempBlock.dispose()

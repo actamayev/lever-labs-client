@@ -23,7 +23,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new float variable and assign an initial value")
-			}
+			},
+			keywords: ["declare", "create", "initialize", "define", "store", "memory", "decimal", "number", "float"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -47,7 +48,8 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Assign a new value to an existing variable")
-			}
+			},
+			keywords: ["assign", "set", "update", "change", "modify", "store", "value", "equal"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)

@@ -22,7 +22,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("If a condition is true, then do some statements")
-			}
+			},
+			keywords: ["if", "then", "else", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"

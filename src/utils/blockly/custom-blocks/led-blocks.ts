@@ -22,7 +22,8 @@ export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(ledCategoryColour)
 				this.setTooltip("Change LED Status")
-			}
+			},
+			keywords: ["light", "color", "bright", "dim", "illuminate", "glow", "flash", "blink", "RGB", "bulb"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const state = block.getFieldValue(LED_BLOCK_TYPES.ESP32_LED_CONTROL) as LEDSensorType
