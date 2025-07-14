@@ -38,6 +38,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
+	const searchBarRef = useRef<HTMLInputElement>(null)
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo(() => {
@@ -77,6 +78,35 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 		isFirstChangeAfterInitRef.current = true
 	}, [projectUUID])
 
+	// Handle '/' key to focus search bar
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			// Only trigger if '/' is pressed
+			if (event.key !== "/") return
+
+			// Check if user is currently typing in notes or chat
+			const activeElement = document.activeElement
+			if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")) {
+				// Check if the focused element is in the notes or chat sections
+				const isInNotesOrChat = activeElement.closest("[data-notes-section=\"true\"]") ||
+					activeElement.closest("[data-chat-section=\"true\"]")
+
+				if (isInNotesOrChat) {
+					return // Don't focus search bar if user is typing in notes or chat
+				}
+			}
+
+			// Prevent default behavior (typing '/' in other inputs)
+			event.preventDefault()
+
+			// Focus the search bar
+			searchBarRef.current?.focus()
+		}
+
+		document.addEventListener("keydown", handleKeyDown)
+		return () => document.removeEventListener("keydown", handleKeyDown)
+	}, [])
+
 	if (!project || isLoading) {
 		return (
 			<div className="p-6">
@@ -111,6 +141,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 				>
 					<div className="flex-1 min-h-0 flex flex-col">
 						<BlocklySearchBar
+							ref={searchBarRef}
 							searchTerm={searchTerm}
 							onSearchChange={setSearchTerm}
 						/>

@@ -1,25 +1,25 @@
 "use client"
 
+import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
-import { useState, useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
+import sandboxClass from "../../../classes/sandbox-class"
 
 interface ProjectTabsProps {
 	project: SandboxProject
 	cppCode: string
 }
 
-export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
-	const [notes, setNotes] = useState(project.projectNotes || "")
-
+function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
 		debounce((uuid: ProjectUUID, newNotes: string) => {
-			editSandboxProjectNotes(uuid, newNotes)
+			void editSandboxProjectNotes(uuid, newNotes)
 		}, 500)
 	).current
 
@@ -28,14 +28,9 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 		return () => debouncedSaveNotes.cancel()
 	}, [debouncedSaveNotes])
 
-	// Update local state if projectNotes changes from external source
-	useEffect(() => {
-		setNotes(project.projectNotes || "")
-	}, [project.projectNotes])
-
 	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const newNotes = e.target.value
-		setNotes(newNotes)
+		sandboxClass.updateProjectNotes(project.projectUUID, newNotes)
 		debouncedSaveNotes(project.projectUUID, newNotes)
 	}
 
@@ -53,16 +48,16 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 				</pre>
 			</TabsContent>
 
-			<TabsContent value="notes" className="flex-1">
+			<TabsContent value="notes" className="flex-1" data-notes-section="true">
 				<Textarea
 					placeholder="Add notes about your project here..."
 					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
-					value={notes}
+					value={project.projectNotes || ""}
 					onChange={handleNotesChange}
 				/>
 			</TabsContent>
 
-			<TabsContent value="chat" className="flex-1 min-h-0">
+			<TabsContent value="chat" className="flex-1 min-h-0" data-chat-section="true">
 				<SandboxChatInterface
 					projectUUID={project.projectUUID}
 					cppCode={cppCode}
@@ -71,3 +66,5 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 		</Tabs>
 	)
 }
+
+export default observer(ProjectTabs)

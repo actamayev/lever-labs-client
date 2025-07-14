@@ -15,6 +15,7 @@ export default async function editSandboxProjectNotes(projectUUID: ProjectUUID, 
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project) || project.projectName === newProjectNotes) return
 
+		sandboxClass.updateProjectNotes(projectUUID, newProjectNotes)
 		const editSandboxProjectNotesResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProjectNotes(
 			project.projectUUID,
 			newProjectNotes
@@ -22,8 +23,6 @@ export default async function editSandboxProjectNotes(projectUUID: ProjectUUID, 
 		if (!isEqual(editSandboxProjectNotesResponse.status, 200) || isNonSuccessResponse(editSandboxProjectNotesResponse.data)) {
 			throw Error ("Unable to edit sandbox project notes")
 		}
-
-		sandboxClass.updateProjectNotes(projectUUID, newProjectNotes)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

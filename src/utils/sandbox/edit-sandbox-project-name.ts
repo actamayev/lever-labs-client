@@ -18,6 +18,7 @@ export default async function editSandboxProjectName(projectUUID: ProjectUUID, n
 				project.projectName === newProjectName
 		) return
 
+		sandboxClass.updateProjectName(projectUUID, newProjectName)
 		const editSandboxProjectNameResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProjectName(
 			project.projectUUID,
 			newProjectName
@@ -26,7 +27,6 @@ export default async function editSandboxProjectName(projectUUID: ProjectUUID, n
 			throw Error ("Unable to edit sandbox project name")
 		}
 
-		sandboxClass.updateProjectName(projectUUID, newProjectName)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
