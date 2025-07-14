@@ -37,7 +37,7 @@ function InteractiveMiniSandbox(props: Props) {
 	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
-		return getWorkspaceConfig(isDarkMode, false)
+		return getWorkspaceConfig(isDarkMode, false, true)
 	}, [isDarkMode])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {

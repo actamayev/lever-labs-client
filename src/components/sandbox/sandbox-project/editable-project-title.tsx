@@ -1,7 +1,6 @@
 "use client"
-import debounce from "lodash-es/debounce"
+import { SandboxProject } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
-import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import { Input } from "../../shadcn/ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 
@@ -13,13 +12,6 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	const [editingName, setEditingName] = useState("") // Temporary state for editing
 	const inputRef = useRef<HTMLInputElement>(null)
 	const measureRef = useRef<HTMLSpanElement>(null)
-
-	// Create a debounced function for updating the project name
-	const debouncedUpdateName = useRef(
-		debounce((uuid: ProjectUUID, name: string) => {
-			editSandboxProjectName(uuid, name)
-		}, 500)
-	).current
 
 	// Adjust input width based on content
 	const adjustInputWidth = () => {
@@ -53,12 +45,23 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		adjustInputWidth()
 	}, [editingName, isEditing])
 
-	// Clean up the debounce on unmount
+	// Handle beforeunload warning - only show if user is still editing
 	useEffect(() => {
-		return () => {
-			debouncedUpdateName.cancel()
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+			if (isEditing) {
+				e.preventDefault()
+				e.returnValue = "Changes you made may not be saved."
+			}
 		}
-	}, [debouncedUpdateName])
+
+		if (isEditing) {
+			window.addEventListener("beforeunload", handleBeforeUnload)
+		}
+
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	}, [isEditing])
 
 	// Update document title whenever projectName changes (not during editing)
 	useEffect(() => {
@@ -81,7 +84,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		// Only save if the name is not empty and has changed
 		if (newName.trim() && newName !== projectName) {
 			setProjectName(newName) // Update the displayed name
-			debouncedUpdateName(project.projectUUID, newName) // Save to DB
+			editSandboxProjectName(project.projectUUID, newName) // Save to DB immediately
 		} else {
 			// Revert to previous name if empty
 			setEditingName(projectName)

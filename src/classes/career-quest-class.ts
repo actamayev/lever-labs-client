@@ -10,6 +10,7 @@ import {
 	BlocklyJson,
 	ChallengeData
 } from "@bluedotrobots/common-ts"
+import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
 interface ChatMessage {
 	id: string
@@ -116,7 +117,8 @@ class CareerQuestClass {
 
 		// Update blockly JSON if we got data from backend
 		if (sandboxJson) {
-			challengeData.updatedBlocklyJson = sandboxJson
+			const normalizedSandboxJson = normalizeSandboxJson(sandboxJson)
+			challengeData.updatedBlocklyJson = normalizedSandboxJson
 		}
 	})
 

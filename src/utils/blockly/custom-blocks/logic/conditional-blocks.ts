@@ -22,7 +22,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("If a condition is true, then do some statements")
-			}
+			},
+			keywords: ["if", "then", "else", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
@@ -46,7 +47,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("If-else statement with one condition")
-			}
+			},
+			keywords: ["if", "else", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
@@ -76,7 +78,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("If-else statement with two conditions")
-			}
+			},
+			keywords: ["if", "else", "elseif", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition1 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
@@ -113,7 +116,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("If-else statement with three conditions")
-			}
+			},
+			keywords: ["if", "else", "elseif", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const condition1 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"

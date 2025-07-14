@@ -30,7 +30,11 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Read value from 9-axis IMU sensor")
-			}
+			},
+			keywords: [
+				"motion", "orientation", "gyroscope", "accelerometer", "rotation",
+				"tilt", "angle", "direction", "compass", "balance"
+			]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
@@ -53,7 +57,8 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected by the front-left or front-right sensor")
-			}
+			},
+			keywords: ["distance", "proximity", "detect", "obstacle", "wall", "barrier", "collision", "avoidance", "left", "right"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.SIDE_TOF_READ) as LeftRightSensorType
@@ -68,7 +73,8 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected in front")
-			}
+			},
+			keywords: ["distance", "proximity", "detect", "obstacle", "wall", "barrier", "collision", "avoidance", "front", "ahead"]
 		},
 		generator: (_block: Blockly.Block): [string, number] => {
 			return ["is_object_in_front()", Order.FUNCTION_CALL]

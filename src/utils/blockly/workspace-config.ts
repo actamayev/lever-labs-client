@@ -52,36 +52,54 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 
 const getWorkspaceConfig = (
 	isDarkMode: boolean,
-	viewOnly: boolean
-): Blockly.BlocklyOptions => ({
-	grid: {
-		spacing: 20,
-		length: 3,
-		colour: isDarkMode ? "#374151" : "#ccc",
-		snap: true,
-	},
-	zoom: {
-		controls: viewOnly ? false : true,
-		wheel: viewOnly ? false : true,
-		startScale: 1.0,
-		maxScale: 3,
-		minScale: 0.3,
-		scaleSpeed: 1.2,
-	},
-	trashcan: viewOnly ? false : true,
-	sounds: false,
-	theme: isDarkMode ? darkTheme : lightTheme,
-	maxTrashcanContents: 0,
-	readOnly: viewOnly, // This makes blocks non-draggable and non-editable
-	// For view-only, allow scrolling for centering but disable user interaction
-	move: viewOnly ? {
-		scrollbars: {
-			horizontal: true,  // Allow horizontal scrolling for centering
-			vertical: true     // Allow vertical scrolling for centering
+	viewOnly: boolean,
+	disableZoomAndScroll = false
+): Blockly.BlocklyOptions => {
+	// Configure movement and scrolling behavior
+	let moveConfig: Blockly.BlocklyOptions["move"] = undefined
+
+	if (viewOnly) {
+		moveConfig = {
+			scrollbars: {
+				horizontal: true,  // Allow horizontal scrolling for centering
+				vertical: true     // Allow vertical scrolling for centering
+			},
+			drag: false,          // Disable dragging the workspace
+			wheel: false          // Disable mouse wheel scrolling by user
+		}
+	} else if (disableZoomAndScroll) {
+		moveConfig = {
+			scrollbars: {
+				horizontal: false,  // Disable horizontal scrolling
+				vertical: false     // Disable vertical scrolling
+			},
+			drag: false,          // Disable dragging the workspace
+			wheel: false          // Disable mouse wheel scrolling
+		}
+	}
+
+	return {
+		grid: {
+			spacing: 20,
+			length: 3,
+			colour: isDarkMode ? "#374151" : "#ccc",
+			snap: true,
 		},
-		drag: false,          // Disable dragging the workspace
-		wheel: false          // Disable mouse wheel scrolling by user
-	} : undefined,
-})
+		zoom: {
+			controls: viewOnly ? false : !disableZoomAndScroll,
+			wheel: viewOnly ? false : !disableZoomAndScroll,
+			startScale: disableZoomAndScroll ? 0.8 : 1.0,
+			maxScale: 3,
+			minScale: 0.3,
+			scaleSpeed: 1.2,
+		},
+		trashcan: viewOnly ? false : true,
+		sounds: false,
+		theme: isDarkMode ? darkTheme : lightTheme,
+		maxTrashcanContents: 0,
+		readOnly: viewOnly, // This makes blocks non-draggable and non-editable
+		move: moveConfig,
+	}
+}
 
 export default getWorkspaceConfig

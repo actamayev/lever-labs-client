@@ -29,7 +29,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Compare two values")
-			}
+			},
+			keywords: ["compare", "equal", "not equal", "less than", "less than or equal to", "greater than", "greater than or equal to"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const OPERATORS: {[key: string]: string} = {
@@ -66,7 +67,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Combine two conditions with AND/OR")
-			}
+			},
+			keywords: ["and", "or", "combine", "boolean", "logic", "condition"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const operator = block.getFieldValue(MATH_FIELD_VALUES.OPERATION_OP) === "AND" ? "&&" : "||"
@@ -87,7 +89,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Returns true if the input is false, and false if the input is true")
-			}
+			},
+			keywords: ["not", "negate", "invert", "boolean", "logic", "condition"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.NEGATE_BOOL, Order.LOGICAL_NOT) || "false"
@@ -103,7 +106,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("A number value")
-			}
+			},
+			keywords: ["number", "integer", "float", "value", "numeric", "math"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const code = String(Number(block.getFieldValue(MATH_FIELD_VALUES.NUMBER_NUM)))
@@ -132,7 +136,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Do arithmetic operations")
-			}
+			},
+			keywords: ["math", "arithmetic", "operation", "calculate", "number", "numeric"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const OPERATORS: {[key: string]: [string, number]} = {
@@ -179,7 +184,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Apply a math function to a number")
-			}
+			},
+			keywords: ["math", "function", "apply", "number", "numeric"]
 		},
 		// eslint-disable-next-line complexity
 		generator: (block: Blockly.Block): [string, number] => {

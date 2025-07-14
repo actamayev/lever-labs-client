@@ -13,6 +13,7 @@ import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
+import BlocklySearchBar from "../blockly-search-bar"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
@@ -23,6 +24,7 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
+import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -35,12 +37,18 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
+	const [searchTerm, setSearchTerm] = useState("")
+	const searchBarRef = useRef<HTMLInputElement>(null)
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo(() => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
+
+	const filteredToolboxConfig = useMemo(() => {
+		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
+	}, [searchTerm])
 
 	const isFirstChangeAfterInitRef = useRef(true)
 
@@ -69,6 +77,35 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useEffect(() => {
 		isFirstChangeAfterInitRef.current = true
 	}, [projectUUID])
+
+	// Handle '/' key to focus search bar
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			// Only trigger if '/' is pressed
+			if (event.key !== "/") return
+
+			// Check if user is currently typing in notes or chat
+			const activeElement = document.activeElement
+			if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")) {
+				// Check if the focused element is in the notes or chat sections
+				const isInNotesOrChat = activeElement.closest("[data-notes-section=\"true\"]") ||
+					activeElement.closest("[data-chat-section=\"true\"]")
+
+				if (isInNotesOrChat) {
+					return // Don't focus search bar if user is typing in notes or chat
+				}
+			}
+
+			// Prevent default behavior (typing '/' in other inputs)
+			event.preventDefault()
+
+			// Focus the search bar
+			searchBarRef.current?.focus()
+		}
+
+		document.addEventListener("keydown", handleKeyDown)
+		return () => document.removeEventListener("keydown", handleKeyDown)
+	}, [])
 
 	if (!project || isLoading) {
 		return (
@@ -102,13 +139,19 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
 					}}
 				>
-					<div className="flex-1 min-h-0">
-						<Suspense fallback={<BlocklyLoadingComponent extraClasses="h-[90%]" />}>
+					<div className="flex-1 min-h-0 flex flex-col">
+						<BlocklySearchBar
+							ref={searchBarRef}
+							searchTerm={searchTerm}
+							onSearchChange={setSearchTerm}
+						/>
+						<Suspense fallback={<BlocklyLoadingComponent extraClasses="flex-1" />}>
 							<BlocklyComponent
-								toolboxConfig={toolboxConfig}
-								extraClasses="h-[90%]"
+								toolboxConfig={filteredToolboxConfig}
+								extraClasses="flex-1"
 								initialBlocklyJson={project.sandboxJson}
 								onJsonChange={handleJsonChange}
+								searchTerm={searchTerm}
 							/>
 						</Suspense>
 						<div className="flex flex-row mt-2 h-[10%] w-full space-x-2 items-center justify-center">
