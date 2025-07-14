@@ -13,15 +13,12 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
-import { Search, X } from "lucide-react"
-
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
+	searchTerm?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -30,10 +27,9 @@ function BlocklyComponent(props: Props) {
 		toolboxConfig,
 		extraClasses = "h-1/2",
 		initialBlocklyJson,
-		onJsonChange
+		onJsonChange,
+		searchTerm = ""
 	} = props
-
-	const [searchTerm, setSearchTerm] = useState("")
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
@@ -167,47 +163,18 @@ function BlocklyComponent(props: Props) {
 	}, [setupToolbox])
 
 	return (
-		<div className={cn("flex flex-col", extraClasses)}>
-			{/* Search Bar */}
-			<div className="relative">
-				<div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-eel">
-					<Search size={16} />
-				</div>
-				<Input
-					type="text"
-					placeholder="Search for blocks"
-					value={searchTerm}
-					onChange={(e) => setSearchTerm(e.target.value)}
-					className={cn(
-						"w-full px-4 py-2 pl-10 pr-12 rounded-t-lg border-2 border-swan rounded-b-none"
-					)}
-				/>
-				{searchTerm && (
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={() => setSearchTerm("")}
-						className="absolute right-1 top-1/2 transform -translate-y-1/2 size-6 p-0 hover:bg-swan"
-					>
-						<X size={16} />
-					</Button>
-				)}
-			</div>
-
-			{/* Blockly Workspace */}
-			<div
-				ref={containerRef}
-				className="relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan flex-1"
-			>
-				<BlocklyWorkspace
-					key={searchTerm.trim() ? "search-mode" : "normal-mode"}
-					toolboxConfiguration={filteredToolboxConfig}
-					initialJson={initialBlocklyJson}
-					workspaceConfiguration={workspaceConfiguration}
-					className="h-full duration-0"
-					onWorkspaceChange={handleWorkspaceChange}
-				/>
-			</div>
+		<div
+			ref={containerRef}
+			className={cn("relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan", extraClasses)}
+		>
+			<BlocklyWorkspace
+				key={searchTerm.trim() ? "search-mode" : "normal-mode"}
+				toolboxConfiguration={filteredToolboxConfig}
+				initialJson={initialBlocklyJson}
+				workspaceConfiguration={workspaceConfiguration}
+				className="h-full duration-0"
+				onWorkspaceChange={handleWorkspaceChange}
+			/>
 		</div>
 	)
 }
