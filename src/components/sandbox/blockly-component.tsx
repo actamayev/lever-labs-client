@@ -13,6 +13,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
