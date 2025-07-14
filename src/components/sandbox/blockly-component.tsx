@@ -13,6 +13,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+import { Input } from "../shadcn/ui/input"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -129,18 +130,16 @@ function BlocklyComponent(props: Props) {
 		<div className={cn("flex flex-col", extraClasses)}>
 			{/* Search Bar */}
 			<div className="mb-4">
-				<input
+				<Input
 					type="text"
-					placeholder="search for blocks"
+					placeholder="Search for blocks"
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className={cn(
 						"w-full px-4 py-2 rounded-lg border-2 border-swan",
-						"focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-						"transition-all duration-200",
 						isDarkMode
-							? "bg-gray-800 text-white placeholder-gray-400 border-gray-600"
-							: "bg-white text-gray-900 placeholder-gray-500 border-gray-300"
+							? "bg-gray-800 text-white placeholder-gray-400"
+							: "bg-white text-gray-900 placeholder-gray-500"
 					)}
 				/>
 			</div>
