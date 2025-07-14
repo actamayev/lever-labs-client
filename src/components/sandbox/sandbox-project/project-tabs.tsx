@@ -41,7 +41,7 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 
 	return (
 		<Tabs defaultValue="code" className="w-full h-full flex flex-col">
-			<TabsList className="mb-2">
+			<TabsList className="mb-2 bg-polar">
 				<TabsTrigger value="code">Code</TabsTrigger>
 				<TabsTrigger value="notes">Notes</TabsTrigger>
 				<TabsTrigger value="chat">Chat</TabsTrigger>
@@ -56,7 +56,7 @@ export default function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 			<TabsContent value="notes" className="flex-1">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none"
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
 					value={notes}
 					onChange={handleNotesChange}
 				/>
