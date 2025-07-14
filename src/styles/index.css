@@ -121,12 +121,6 @@ body {
     -webkit-text-fill-color: hsl(var(--foreground)) !important;
     caret-color: hsl(var(--foreground)) !important;
   }
-
-  /* Style placeholder text */
-  input::placeholder {
-    color: hsl(var(--muted-foreground)) !important;
-    -webkit-text-fill-color: hsl(var(--muted-foreground)) !important;
-  }
 }
 
 .blocklyMainBackground {
