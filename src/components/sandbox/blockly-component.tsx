@@ -82,13 +82,15 @@ function BlocklyComponent(props: Props) {
 		const wasSearching = previousSearchingRef.current
 		const isSearching = searchTerm.trim().length > 0
 
+		let timer: NodeJS.Timeout | null = null
+
 		// If we're switching modes, set switching state and reset centering
 		if (wasSearching !== isSearching) {
 			setIsSwitchingMode(true)
 			setIsCentered(false) // Force re-centering when switching modes
 
 			// Reset switching state after a short delay
-			const timer = setTimeout(() => {
+			timer = setTimeout(() => {
 				setIsSwitchingMode(false)
 				// Explicitly center when switching back to normal mode
 				if (wasSearching && !isSearching) {
@@ -97,15 +99,14 @@ function BlocklyComponent(props: Props) {
 					}, 100)
 				}
 			}, 200)
-
-			// Update the ref for next comparison
-			previousSearchingRef.current = isSearching
-
-			return () => clearTimeout(timer)
 		}
 
-		// Update the ref even if we're not switching modes
+		// Update the ref for next comparison
 		previousSearchingRef.current = isSearching
+
+		return () => {
+			if (timer) clearTimeout(timer)
+		}
 	}, [searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
