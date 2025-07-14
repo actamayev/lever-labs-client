@@ -42,7 +42,6 @@ function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 			if (hasUnsavedChanges) {
 				e.preventDefault()
 				e.returnValue = "Changes you made may not be saved."
-				return "Changes you made may not be saved."
 			}
 		}
 

@@ -13,10 +13,7 @@ export default async function editSandboxProjectName(projectUUID: ProjectUUID, n
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
-		if (
-			isUndefined(project) ||
-				project.projectName === newProjectName
-		) return
+		if (isUndefined(project) || project.projectName === newProjectName) return
 
 		sandboxClass.updateProjectName(projectUUID, newProjectName)
 		const editSandboxProjectNameResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProjectName(
@@ -26,12 +23,13 @@ export default async function editSandboxProjectName(projectUUID: ProjectUUID, n
 		if (!isEqual(editSandboxProjectNameResponse.status, 200) || isNonSuccessResponse(editSandboxProjectNameResponse.data)) {
 			throw Error ("Unable to edit sandbox project name")
 		}
-
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
 			title: "Unable to edit project name",
 			description: "Please reload the page and try again"
 		})
+		// Re-throw the error so calling code can handle it
+		throw error
 	}
 }
