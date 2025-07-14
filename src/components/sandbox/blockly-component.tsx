@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
-import filterToolboxConfig from "../../utils/sandbox/search-helpers"
+import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
@@ -43,7 +43,7 @@ function BlocklyComponent(props: Props) {
 	}, [isDarkMode])
 
 	const filteredToolboxConfig = useMemo(() => {
-		return filterToolboxConfig(toolboxConfig, searchTerm)
+		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
 	}, [toolboxConfig, searchTerm])
 
 	const centerWorkspace = useCallback(() => {
