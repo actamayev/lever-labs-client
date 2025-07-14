@@ -15,6 +15,13 @@ export default async function editSandboxProject(projectUUID: ProjectUUID, newBl
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
+		// Prevent saving empty or nearly empty workspaces
+		const hasBlocks = newBlocklyJson.blocks?.blocks && newBlocklyJson.blocks.blocks.length > 0
+		if (!hasBlocks) {
+			console.warn("Prevented saving empty workspace for project:", projectUUID)
+			return
+		}
+
 		const editSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProject(
 			project.projectUUID,
 			newBlocklyJson
