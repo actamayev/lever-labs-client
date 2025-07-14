@@ -162,6 +162,7 @@ function BlocklyComponent(props: Props) {
 				className="relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan flex-1"
 			>
 				<BlocklyWorkspace
+					key={searchTerm.trim() ? "search-mode" : "normal-mode"}
 					toolboxConfiguration={filteredToolboxConfig}
 					initialJson={initialBlocklyJson}
 					workspaceConfiguration={workspaceConfiguration}

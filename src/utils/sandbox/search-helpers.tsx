@@ -73,41 +73,31 @@ export default class BlocklySearchFilter {
 	}
 
 	/**
-	 * Filter blocks within a category (supports nested subcategories)
+	 * Recursively collect all blocks from a category and its subcategories
 	 */
-	private static filterCategory(
-		category: ToolboxCategory,
-		searchTerm: string
-	): ToolboxCategory | null {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		if (category.kind !== "category" || !Array.isArray(category.contents)) {
-			return null
+	private static collectAllBlocks(category: ToolboxCategory): Array<ToolboxBlock> {
+		const blocks: Array<ToolboxBlock> = []
+
+		if (!Array.isArray(category.contents)) {
+			return blocks
 		}
 
-		const filteredContents: Array<ToolboxItem> = []
-
 		for (const item of category.contents) {
-			if (this.blockMatchesSearch(item, searchTerm)) {
-				// Direct block match
-				filteredContents.push(item)
+			if (item.kind === "block") {
+				blocks.push(item)
 			} else if (this.isCategory(item)) {
-				// Recursively filter subcategory
-				const filteredSubcategory = this.filterCategory(item, searchTerm)
-				if (filteredSubcategory) {
-					filteredContents.push(filteredSubcategory)
-				}
+				// Recursively collect blocks from subcategories
+				blocks.push(...this.collectAllBlocks(item))
 			}
 		}
 
-		return filteredContents.length > 0 ? {
-			...category,
-			contents: filteredContents
-		} : null
+		return blocks
 	}
 
 	/**
 	 * Filter toolbox configuration based on search term
 	 */
+	// eslint-disable-next-line complexity
 	public static filterToolboxConfig(
 		toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition,
 		searchTerm: string
@@ -128,13 +118,25 @@ export default class BlocklySearchFilter {
 			"contents" in toolboxConfig &&
 			Array.isArray((toolboxConfig as { contents?: Array<unknown> }).contents)
 		) {
-			const filteredCategories = (toolboxConfig as { contents: Array<unknown> }).contents
-				.map((category) => this.filterCategory(category as ToolboxCategory, searchLower))
-				.filter((category): category is ToolboxCategory => category !== null)
+			// Collect all blocks from all categories
+			const allBlocks: Array<ToolboxBlock> = []
 
+			for (const category of (toolboxConfig as { contents: Array<unknown> }).contents) {
+				if (this.isCategory(category as ToolboxCategory)) {
+					allBlocks.push(...this.collectAllBlocks(category as ToolboxCategory))
+				}
+			}
+
+			// Filter blocks that match the search term
+			const matchingBlocks = allBlocks.filter((block) =>
+				this.blockMatchesSearch(block, searchLower)
+			)
+
+			// Return a flyout toolbox with all matching blocks (no categories)
+			// The parent component will handle the toolbox type change via React key
 			return {
-				...toolboxConfig,
-				contents: filteredCategories
+				kind: "flyoutToolbox",
+				contents: matchingBlocks
 			}
 		}
 
