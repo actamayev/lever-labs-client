@@ -14,6 +14,8 @@ import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import { Input } from "../shadcn/ui/input"
+import { Button } from "../shadcn/ui/button"
+import { Search, X } from "lucide-react"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
@@ -129,19 +131,29 @@ function BlocklyComponent(props: Props) {
 	return (
 		<div className={cn("flex flex-col", extraClasses)}>
 			{/* Search Bar */}
-			<div className="mb-4">
+			<div className="mb-4 relative">
+				<div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-eel">
+					<Search size={16} />
+				</div>
 				<Input
 					type="text"
 					placeholder="Search for blocks"
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className={cn(
-						"w-full px-4 py-2 rounded-lg border-2 border-swan",
-						isDarkMode
-							? "bg-gray-800 text-white placeholder-gray-400"
-							: "bg-white text-gray-900 placeholder-gray-500"
+						"w-full px-4 py-2 pl-10 pr-12 rounded-lg border-2 border-swan !placeholder-red-500"
 					)}
 				/>
+				{searchTerm && (
+					<Button
+						variant="ghost"
+						size="sm"
+						onClick={() => setSearchTerm("")}
+						className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0 hover:bg-gray-200 dark:hover:bg-gray-700"
+					>
+						<X size={16} />
+					</Button>
+				)}
 			</div>
 
 			{/* Blockly Workspace */}
