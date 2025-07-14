@@ -90,6 +90,12 @@ function BlocklyComponent(props: Props) {
 			// Reset switching state after a short delay
 			const timer = setTimeout(() => {
 				setIsSwitchingMode(false)
+				// Explicitly center when switching back to normal mode
+				if (wasSearching && !isSearching) {
+					setTimeout(() => {
+						centerWorkspace()
+					}, 100)
+				}
 			}, 200)
 
 			// Update the ref for next comparison
@@ -100,7 +106,7 @@ function BlocklyComponent(props: Props) {
 
 		// Update the ref even if we're not switching modes
 		previousSearchingRef.current = isSearching
-	}, [searchTerm])
+	}, [searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
