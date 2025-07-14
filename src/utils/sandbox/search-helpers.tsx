@@ -25,6 +25,7 @@ export default class BlocklySearchFilter {
 			// Extract text from field labels
 			for (const input of tempBlock.inputList) {
 				for (const field of input.fieldRow) {
+					// eslint-disable-next-line max-depth
 					if (field instanceof Blockly.FieldLabel) {
 						searchText += field.getText() + " "
 					}
@@ -78,6 +79,7 @@ export default class BlocklySearchFilter {
 		category: ToolboxCategory,
 		searchTerm: string
 	): ToolboxCategory | null {
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (category.kind !== "category" || !Array.isArray(category.contents)) {
 			return null
 		}
@@ -119,6 +121,7 @@ export default class BlocklySearchFilter {
 		// Check if it's a category toolbox
 		if (
 			typeof toolboxConfig === "object" &&
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			toolboxConfig !== null &&
 			"kind" in toolboxConfig &&
 			toolboxConfig.kind === "categoryToolbox" &&
