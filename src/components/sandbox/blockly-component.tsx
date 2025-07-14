@@ -131,7 +131,7 @@ function BlocklyComponent(props: Props) {
 	return (
 		<div className={cn("flex flex-col", extraClasses)}>
 			{/* Search Bar */}
-			<div className="mb-4 relative">
+			<div className="relative">
 				<div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-eel">
 					<Search size={16} />
 				</div>
@@ -141,7 +141,7 @@ function BlocklyComponent(props: Props) {
 					value={searchTerm}
 					onChange={(e) => setSearchTerm(e.target.value)}
 					className={cn(
-						"w-full px-4 py-2 pl-10 pr-12 rounded-lg border-2 border-swan "
+						"w-full px-4 py-2 pl-10 pr-12 rounded-t-lg border-2 border-swan rounded-b-none"
 					)}
 				/>
 				{searchTerm && (
@@ -159,7 +159,7 @@ function BlocklyComponent(props: Props) {
 			{/* Blockly Workspace */}
 			<div
 				ref={containerRef}
-				className="relative z-0 rounded-lg overflow-hidden border-2 border-swan flex-1"
+				className="relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan flex-1"
 			>
 				<BlocklyWorkspace
 					toolboxConfiguration={filteredToolboxConfig}
