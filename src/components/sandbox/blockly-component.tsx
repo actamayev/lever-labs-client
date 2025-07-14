@@ -74,6 +74,7 @@ function BlocklyComponent(props: Props) {
 	}, [onJsonChange, isCentered, centerWorkspace, isSwitchingMode])
 
 	// Track when we're switching between search modes
+	// @ts-expect-error - Not all code paths return a value, but this is intentional
 	useEffect(() => {
 		const wasSearching = previousSearchingRef.current
 		const isSearching = searchTerm.trim().length > 0
