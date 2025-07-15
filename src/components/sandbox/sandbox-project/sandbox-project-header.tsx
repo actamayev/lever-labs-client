@@ -57,10 +57,10 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 					tooltipTrigger={
 						<button
 							onClick={setSandboxNotesOpenStatus}
-							className={`p-2 rounded-md transition-none ${
+							className={`p-2 rounded-md transition-none border-2 ${
 								personalInfoClass.sandboxNotesOpen
-									? "bg-standardBackgroundHover text-macaw"
-									: "text-questionText hover:bg-polar"
+									? "bg-standardBackgroundHover text-macaw border-standardBackgroundHover"
+									: "text-questionText hover:bg-polar border-swan"
 							}`}
 							title={personalInfoClass.sandboxNotesOpen ? "Hide Code" : "Show Code"}
 						>

@@ -1,5 +1,6 @@
 "use client"
 
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,
@@ -69,6 +70,13 @@ class CareerQuestClass {
 		return challengeData?.messages || []
 	}
 
+	// Clear messages for a challenge
+	public clearMessages = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+		challengeData.messages = []
+	})
+
 	// Get updated blockly JSON for a challenge
 	public getUpdatedBlocklyJson(challengeId: string): BlocklyJson | null {
 		const challengeData = this.getChallengeData(challengeId)
@@ -78,9 +86,8 @@ class CareerQuestClass {
 	// Update blockly JSON for a challenge
 	public updateBlocklyJson = action((challengeId: string, newBlocklyJson: BlocklyJson): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (challengeData) {
-			challengeData.updatedBlocklyJson = newBlocklyJson
-		}
+		if (isUndefined(challengeData)) return
+		challengeData.updatedBlocklyJson = newBlocklyJson
 	})
 
 	// Check if messages have been retrieved for a challenge
@@ -98,9 +105,8 @@ class CareerQuestClass {
 	// Set retrieving messages state
 	public setIsRetrievingMessages = action((challengeId: string, isRetrieving: boolean): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (challengeData) {
-			challengeData.isRetrievingMessages = isRetrieving
-		}
+		if (isUndefined(challengeData)) return
+		challengeData.isRetrievingMessages = isRetrieving
 	})
 
 	// Set retrieved data from backend (both messages and sandbox JSON)
@@ -110,7 +116,7 @@ class CareerQuestClass {
 		sandboxJson: BlocklyJson | null
 	): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 		challengeData.messages = messages
 		challengeData.hasRetrievedMessages = true
 		challengeData.isRetrievingMessages = false
@@ -125,7 +131,7 @@ class CareerQuestClass {
 	// Add a user message
 	public addUserMessage = action((challengeId: string, content: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 
 		const message: ChatMessage = {
 			id: `user-${Date.now()}`,
@@ -140,7 +146,7 @@ class CareerQuestClass {
 	// Start streaming for a challenge
 	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
 		const challengeData = this.getChallengeData(startEvent.challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 
 		// Create streaming message placeholder
 		const streamingMessage: ChatMessage = {
@@ -160,7 +166,7 @@ class CareerQuestClass {
 	// Add chunk to streaming message
 	public addStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
 		const challengeData = this.getChallengeData(chunkEvent.challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 
 		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
 			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeId)
@@ -179,7 +185,7 @@ class CareerQuestClass {
 	// Complete streaming
 	public completeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
 		const challengeData = this.getChallengeData(completeEvent.challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 
 		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
 			return
@@ -201,9 +207,9 @@ class CareerQuestClass {
 	})
 
 	// Reset chat state for a challenge
-	public resetChatState = action((challengeId: string): void => {
+	public resetChatStreamingState = action((challengeId: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
-		if (!challengeData) return
+		if (isUndefined(challengeData)) return
 
 		challengeData.isStreaming = false
 		challengeData.currentStreamingMessageId = null

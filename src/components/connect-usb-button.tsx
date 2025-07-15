@@ -38,7 +38,7 @@ function EnhancedConnectUsbButton() {
 
 		return {
 			text: "CONNECT",
-			className: "text-blue-600 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900 border-blue-300 dark:border-blue-700",
+			className: "text-humpback hover:bg-blue-50 dark:hover:bg-blue-900 border-blue-300 dark:border-blue-700",
 			disabled: false
 		}
 	}
