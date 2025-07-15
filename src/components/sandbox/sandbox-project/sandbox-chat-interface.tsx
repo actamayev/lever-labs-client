@@ -3,6 +3,7 @@
 import { observer } from "mobx-react"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import { Trash2, X } from "lucide-react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-message"
 import sandboxClass from "../../../classes/sandbox-class"
@@ -10,14 +11,20 @@ import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
+import deleteSandboxChat from "../../../utils/chat/delete-sandbox-chat"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { cn } from "../../../lib/shadcn/utils"
 
 interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
 	cppCode: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
+	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -43,6 +50,11 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 			messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
 		}
 	}, [messages])
+
+	// Reset confirmation state when messages change (e.g., new message sent)
+	useEffect(() => {
+		setShowDeleteConfirmation(false)
+	}, [messages.length])
 
 	const handleSendMessage = useCallback(async () => {
 		if (!inputValue.trim() || isStreaming) return
@@ -74,8 +86,68 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
+	const handleDeleteClick = useCallback(() => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(true)
+	}, [hasAnyMessages, isStreaming])
+
+	const handleCancelDelete = useCallback(() => {
+		setShowDeleteConfirmation(false)
+	}, [])
+
+	const handleConfirmDelete = useCallback(async () => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(false)
+		await deleteSandboxChat(projectUUID)
+	}, [projectUUID, hasAnyMessages, isStreaming])
+
+	const redColors = getDuolingoColors("cardinal")
+	const blueColors = getDuolingoColors("humpback")
+
 	return (
 		<ChatParentComponent>
+			{/* Chat Header with Delete Button */}
+			{hasAnyMessages && (
+				<div className="flex justify-between items-center p-3 border-b-2 border-swan">
+					<span className="text-sm font-medium text-eel">Chat History</span>
+
+					{!showDeleteConfirmation ? (
+						<TactileButton
+							onClick={handleDeleteClick}
+							disabled={isStreaming}
+							className={cn("h-7 text-xs text-white", redColors.bg)}
+							title="Delete chat history"
+							shadowHeight={4}
+							shadowClass={redColors.shadow}
+						>
+							<Trash2 className="h-4 w-4" />
+							DELETE
+						</TactileButton>
+					) : (
+						<div className="flex items-center gap-2">
+							<TactileButton
+								onClick={handleConfirmDelete}
+								className={cn("h-7 px-2 text-xs", redColors.bg)}
+								shadowHeight={4}
+								shadowClass={redColors.shadow}
+							>
+								<Trash2 className="h-4 w-4" />
+								DELETE
+							</TactileButton>
+							<TactileButton
+								onClick={handleCancelDelete}
+								className={cn("h-7 px-2 text-xs", blueColors.bg)}
+								shadowHeight={4}
+								shadowClass={blueColors.shadow}
+							>
+								<X className="h-4 w-4" />
+								CANCEL
+							</TactileButton>
+						</div>
+					)}
+				</div>
+			)}
+
 			{/* Chat Messages - Scrollable with fixed height */}
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
