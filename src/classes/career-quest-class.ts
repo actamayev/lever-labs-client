@@ -1,6 +1,6 @@
 "use client"
 
-import isUndefined from "lodash/isUndefined"
+import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,

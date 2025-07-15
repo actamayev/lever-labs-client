@@ -102,12 +102,6 @@ const nextConfig = {
 
 		// Production optimizations
 		if (!dev && !isServer) {
-			// Tree shaking for lodash-es
-			config.resolve.alias = {
-				...config.resolve.alias,
-				"lodash-es": "lodash-es",
-			}
-
 			// Optimize chunks
 			config.optimization = {
 				...config.optimization,
