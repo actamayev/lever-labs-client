@@ -69,6 +69,14 @@ class CareerQuestClass {
 		return challengeData?.messages || []
 	}
 
+	// Clear messages for a challenge
+	public clearMessages = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (challengeData) {
+			challengeData.messages = []
+		}
+	})
+
 	// Get updated blockly JSON for a challenge
 	public getUpdatedBlocklyJson(challengeId: string): BlocklyJson | null {
 		const challengeData = this.getChallengeData(challengeId)

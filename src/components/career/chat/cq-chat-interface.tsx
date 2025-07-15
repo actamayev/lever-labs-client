@@ -6,10 +6,12 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-message"
 import careerQuestClass from "../../../classes/career-quest-class"
+import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
+import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
 
 interface ChatInterfaceProps {
 	cppCode: string
@@ -19,6 +21,7 @@ interface ChatInterfaceProps {
 // eslint-disable-next-line max-lines-per-function
 function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
+	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -36,6 +39,11 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			}
 		}
 	}, [messages])
+
+	// Reset confirmation state when messages change (e.g., new message sent)
+	useEffect(() => {
+		setShowDeleteConfirmation(false)
+	}, [messages.length])
 
 	// Check if we're waiting for a response (streaming message with no content yet)
 	const isWaitingForResponse = useMemo(() => {
@@ -77,6 +85,21 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
+	const handleDeleteClick = useCallback(() => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(true)
+	}, [hasAnyMessages, isStreaming])
+
+	const handleCancelDelete = useCallback(() => {
+		setShowDeleteConfirmation(false)
+	}, [])
+
+	const handleConfirmDelete = useCallback(async () => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(false)
+		await deleteCareerQuestChat(challengeData.id)
+	}, [challengeData.id, hasAnyMessages, isStreaming])
+
 	// Show loading state while retrieving messages
 	if (isRetrievingMessages) {
 		return (
@@ -97,6 +120,17 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 
 	return (
 		<ChatParentComponent>
+			{/* Chat Header with Delete Button */}
+			{hasAnyMessages && (
+				<DeleteChatHistoryHeader
+					showDeleteConfirmation={showDeleteConfirmation}
+					handleDeleteClick={handleDeleteClick}
+					handleConfirmDelete={handleConfirmDelete}
+					handleCancelDelete={handleCancelDelete}
+					isStreaming={isStreaming}
+				/>
+			)}
+
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}

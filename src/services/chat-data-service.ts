@@ -35,4 +35,10 @@ export default class ChatDataService extends BaseDataService {
 			this.buildUrl(`/delete-sandbox-chat/${projectUUID}`)
 		)
 	}
+
+	async deleteCareerQuestChat(challengeId: string): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			this.buildUrl(`/delete-career-quest-chat/${challengeId}`)
+		)
+	}
 }
