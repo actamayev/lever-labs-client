@@ -107,29 +107,43 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 		previousSearchingRef.current = false
 	}, [projectUUID])
 
-	// Handle '/' key to focus search bar
+	// Handle '/' key to focus search bar and 'Escape' key to unfocus it
 	useEffect(() => {
+		// eslint-disable-next-line complexity
 		const handleKeyDown = (event: KeyboardEvent) => {
-			// Only trigger if '/' is pressed
-			if (event.key !== "/") return
+			// Handle '/' key to focus search bar
+			if (event.key !== "/" && event.key !== "Escape") return
 
-			// Check if user is currently typing in notes or chat
-			const activeElement = document.activeElement
-			if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")) {
-				// Check if the focused element is in the notes or chat sections
-				const isInNotesOrChat = activeElement.closest("[data-notes-section=\"true\"]") ||
-					activeElement.closest("[data-chat-section=\"true\"]")
+			if (event.key === "/") {
+				// Check if user is currently typing in notes or chat
+				const activeElement = document.activeElement
+				if (activeElement && (activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA")) {
+					// Check if the focused element is in the notes or chat sections
+					const isInNotesOrChat = activeElement.closest("[data-notes-section=\"true\"]") ||
+						activeElement.closest("[data-chat-section=\"true\"]")
 
-				if (isInNotesOrChat) {
-					return // Don't focus search bar if user is typing in notes or chat
+					if (isInNotesOrChat) {
+						return // Don't focus search bar if user is typing in notes or chat
+					}
 				}
+
+				// Prevent default behavior (typing '/' in other inputs)
+				event.preventDefault()
+
+				// Focus the search bar
+				searchBarRef.current?.focus()
+				return
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+			} else if (event.key === "Escape") {
+				const activeElement = document.activeElement
+
+				// Check if the search bar is currently focused
+				if (activeElement === searchBarRef.current) {
+					// Blur the search bar
+					searchBarRef.current?.blur()
+				}
+				return
 			}
-
-			// Prevent default behavior (typing '/' in other inputs)
-			event.preventDefault()
-
-			// Focus the search bar
-			searchBarRef.current?.focus()
 		}
 
 		document.addEventListener("keydown", handleKeyDown)
