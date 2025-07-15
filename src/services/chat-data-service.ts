@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import { ErrorResponses, SuccessResponse, StartChatSuccess,
-	OutgoingCareerQuestChatData, ProjectUUID, OutgoingSandboxChatData, AllCommonResponses} from "@bluedotrobots/common-ts"
+	OutgoingCareerQuestChatData, ProjectUUID, AllCommonResponses, OutgoingChatData} from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -23,7 +23,7 @@ export default class ChatDataService extends BaseDataService {
 
 	async sendSandboxMessage(
 		projectUUID: ProjectUUID,
-		chatMessage: OutgoingSandboxChatData
+		chatMessage: OutgoingChatData
 	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
 			this.buildUrl(`/send-sandbox-message/${projectUUID}`), chatMessage

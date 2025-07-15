@@ -12,7 +12,7 @@ export default async function sendCareerQuestMessage(
 	careerQuestChallengeId: string,
 	userCode: string,
 	interactionType: InteractionType,
-	message?: string
+	message: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return

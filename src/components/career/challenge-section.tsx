@@ -76,12 +76,14 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
 	const handleHintClick = useCallback(async () => {
-		careerQuestClass.addUserMessage(challengeData.id, "Can you please give me a hint for this challenge?")
+		const message = "Can you please give me a hint for this challenge?"
+		careerQuestClass.addUserMessage(challengeData.id, message)
 
 		await sendCareerQuestMessage(
 			challengeData.id,
 			cppCode,
-			"hint"
+			"hint",
+			message
 		)
 	}, [challengeData.id, cppCode])
 
