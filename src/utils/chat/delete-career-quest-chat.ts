@@ -22,7 +22,7 @@ export default async function deleteCareerQuestChat(challengeId: string): Promis
 		careerQuestClass.clearMessages(challengeId)
 
 		// Reset chat streaming state
-		careerQuestClass.resetChatState(challengeId)
+		careerQuestClass.resetChatStreamingState(challengeId)
 		return
 	} catch (error) {
 		console.error(error)

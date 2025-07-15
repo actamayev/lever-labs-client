@@ -207,7 +207,7 @@ class CareerQuestClass {
 	})
 
 	// Reset chat state for a challenge
-	public resetChatState = action((challengeId: string): void => {
+	public resetChatStreamingState = action((challengeId: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
