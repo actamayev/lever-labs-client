@@ -38,7 +38,9 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useSetSelectedPipFirstPipUseEffect()
 	const [cppCode, setCppCode] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
+	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)
+	const previousSearchingRef = useRef(false)
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo(() => {
@@ -51,6 +53,30 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	}, [searchTerm])
 
 	const isFirstChangeAfterInitRef = useRef(true)
+
+	const handleSearchChange = useCallback((newSearchTerm: string) => {
+		const wasSearching = previousSearchingRef.current
+		const isSearching = newSearchTerm.trim().length > 0
+
+		// Set switching mode synchronously if we're transitioning between states
+		if (wasSearching !== isSearching) {
+			setIsSwitchingMode(true)
+		}
+
+		setSearchTerm(newSearchTerm)
+		previousSearchingRef.current = isSearching
+	}, [])
+
+	// Reset switching mode after a delay
+	useEffect(() => {
+		if (!isSwitchingMode) return
+
+		const timer = setTimeout(() => {
+			setIsSwitchingMode(false)
+		}, 200)
+
+		return () => clearTimeout(timer)
+	}, [isSwitchingMode])
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
 		if (!project || isLoading) return
@@ -76,6 +102,9 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	// Reset the flag when navigating to a different project
 	useEffect(() => {
 		isFirstChangeAfterInitRef.current = true
+		setIsSwitchingMode(false)
+		setSearchTerm("")
+		previousSearchingRef.current = false
 	}, [projectUUID])
 
 	// Handle '/' key to focus search bar
@@ -143,7 +172,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 						<BlocklySearchBar
 							ref={searchBarRef}
 							searchTerm={searchTerm}
-							onSearchChange={setSearchTerm}
+							onSearchChange={handleSearchChange}
 						/>
 						<Suspense fallback={<BlocklyLoadingComponent extraClasses="flex-1" />}>
 							<BlocklyComponent
@@ -152,6 +181,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 								initialBlocklyJson={project.sandboxJson}
 								onJsonChange={handleJsonChange}
 								searchTerm={searchTerm}
+								isSwitchingMode={isSwitchingMode}
 							/>
 						</Suspense>
 						<div className="flex flex-row mt-2 h-[10%] w-full space-x-2 items-center justify-center">

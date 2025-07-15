@@ -13,12 +13,15 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+import isEmpty from "lodash-es/isEmpty"
+
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
 	searchTerm?: string
+	isSwitchingMode: boolean
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -28,17 +31,16 @@ function BlocklyComponent(props: Props) {
 		extraClasses = "h-1/2",
 		initialBlocklyJson,
 		onJsonChange,
-		searchTerm = ""
+		searchTerm = "",
+		isSwitchingMode
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
-	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
-	const previousSearchingRef = useRef(false)
 	const pathname = usePathname()
 	useSensorPollingUseEffect()
-
+	const [isCentering, setIsCentering] = useState(false)
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
@@ -48,6 +50,7 @@ function BlocklyComponent(props: Props) {
 	}, [toolboxConfig, searchTerm])
 
 	const centerWorkspace = useCallback(() => {
+		setIsCentering(true)
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
@@ -56,6 +59,7 @@ function BlocklyComponent(props: Props) {
 		workspace.scrollCenter()
 
 		setIsCentered(true)
+		setIsCentering(false)
 	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
@@ -63,7 +67,7 @@ function BlocklyComponent(props: Props) {
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
 		// Don't notify parent component if we're switching modes
-		if (!isSwitchingMode) {
+		if (!isSwitchingMode && !isCentering) {
 			onJsonChange(newJson)
 		}
 
@@ -71,39 +75,30 @@ function BlocklyComponent(props: Props) {
 		if (!isCentered) {
 			centerWorkspace()
 		}
-	}, [onJsonChange, isCentered, centerWorkspace, isSwitchingMode])
+	}, [isSwitchingMode, isCentering, isCentered, onJsonChange, centerWorkspace])
 
-	// Track when we're switching between search modes
+	// Handle centering when switching modes
+	// @ts-expect-error - Not all code paths return a value, but this is intentional
 	useEffect(() => {
-		const wasSearching = previousSearchingRef.current
-		const isSearching = searchTerm.trim().length > 0
+		if (isSwitchingMode) {
+			// Force re-centering when switching modes
+			setIsCentered(false)
+		} else {
+			// After switching is complete, center the workspace
+			const timer = setTimeout(() => {
+				centerWorkspace()
+			}, 100)
 
-		let timer: NodeJS.Timeout | null = null
-
-		// If we're switching modes, set switching state and reset centering
-		if (wasSearching !== isSearching) {
-			setIsSwitchingMode(true)
-			setIsCentered(false) // Force re-centering when switching modes
-
-			// Reset switching state after a short delay
-			timer = setTimeout(() => {
-				setIsSwitchingMode(false)
-				// Explicitly center when switching back to normal mode
-				if (wasSearching && !isSearching) {
-					setTimeout(() => {
-						centerWorkspace()
-					}, 100)
-				}
-			}, 200)
+			return () => clearTimeout(timer)
 		}
+	}, [isSwitchingMode, centerWorkspace])
 
-		// Update the ref for next comparison
-		previousSearchingRef.current = isSearching
-
-		return () => {
-			if (timer) clearTimeout(timer)
+	useEffect(() => {
+		if (isEmpty(searchTerm)) {
+			setIsCentered(false)
+			centerWorkspace()
 		}
-	}, [searchTerm, centerWorkspace])
+	}, [isSwitchingMode, searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect(() => {
@@ -112,13 +107,13 @@ function BlocklyComponent(props: Props) {
 
 	// Add effect to center workspace after it's initialized and when blocks change
 	useEffect(() => {
-		if (isCentered) return
+		if (isCentered || isCentering) return
 		const timer = setTimeout(() => {
 			centerWorkspace()
 		}, 100) // Small delay to ensure workspace is fully rendered
 
 		return () => clearTimeout(timer)
-	}, [centerWorkspace, initialBlocklyJson, isCentered, pathname])
+	}, [centerWorkspace, initialBlocklyJson, isCentered, isCentering, pathname])
 
 	useEffect(() => {
 		if (!containerRef.current) return
