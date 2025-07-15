@@ -87,6 +87,18 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 		)
 	}, [challengeData.id, cppCode])
 
+	const handleCheckCode = useCallback(async () => {
+		const message = "Can you please check if my code is correct?"
+		careerQuestClass.addUserMessage(challengeData.id, message)
+
+		await sendCareerQuestMessage(
+			challengeData.id,
+			cppCode,
+			"checkCode",
+			message
+		)
+	}, [challengeData.id, cppCode])
+
 	return (
 		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
 			{/* Main content area with three columns */}
@@ -148,10 +160,18 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-							className="duration-150 rounded-xl text-4xl"
+							className="duration-150 rounded-xl text-3xl h-12"
 						/>
 						<TactileButton
-							className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+							className="bg-humpback text-white flex items-center justify-center
+							w-auto rounded-xl text-3xl h-12"
+							shadowColor="rgb(100, 150, 200)"
+							onClick={handleCheckCode}
+						>
+							CHECK CODE
+						</TactileButton>
+						<TactileButton
+							className="bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl h-12"
 							shadowColor="rgb(150, 50, 75)"
 							onClick={stopCurrentlyRunningCode}
 						>
