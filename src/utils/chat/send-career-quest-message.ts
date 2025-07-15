@@ -16,7 +16,7 @@ export default async function sendCareerQuestMessage(
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Reset chat state for new conversation
-		careerQuestClass.resetChatState(careerQuestChallengeId)
+		careerQuestClass.resetChatStreamingState(careerQuestChallengeId)
 
 		// Send request to backend - challengeId will be included in the WebSocket response
 		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({

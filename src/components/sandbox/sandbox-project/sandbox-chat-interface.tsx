@@ -10,14 +10,18 @@ import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
+import deleteSandboxChat from "../../../utils/chat/delete-sandbox-chat"
+import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
 
 interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
 	cppCode: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
+	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -43,6 +47,11 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 			messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
 		}
 	}, [messages])
+
+	// Reset confirmation state when messages change (e.g., new message sent)
+	useEffect(() => {
+		setShowDeleteConfirmation(false)
+	}, [messages.length])
 
 	const handleSendMessage = useCallback(async () => {
 		if (!inputValue.trim() || isStreaming) return
@@ -74,8 +83,34 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
+	const handleDeleteClick = useCallback(() => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(true)
+	}, [hasAnyMessages, isStreaming])
+
+	const handleCancelDelete = useCallback(() => {
+		setShowDeleteConfirmation(false)
+	}, [])
+
+	const handleConfirmDelete = useCallback(async () => {
+		if (!hasAnyMessages || isStreaming) return
+		setShowDeleteConfirmation(false)
+		await deleteSandboxChat(projectUUID)
+	}, [projectUUID, hasAnyMessages, isStreaming])
+
 	return (
 		<ChatParentComponent>
+			{/* Chat Header with Delete Button */}
+			{hasAnyMessages && (
+				<DeleteChatHistoryHeader
+					showDeleteConfirmation={showDeleteConfirmation}
+					handleDeleteClick={handleDeleteClick}
+					handleConfirmDelete={handleConfirmDelete}
+					handleCancelDelete={handleCancelDelete}
+					isStreaming={isStreaming}
+				/>
+			)}
+
 			{/* Chat Messages - Scrollable with fixed height */}
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
