@@ -17,6 +17,7 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
+import sendCareerQuestMessage from "../../utils/chat/send-career-quest-message"
 import { Separator } from "../shadcn/ui/separator"
 
 // eslint-disable-next-line max-lines-per-function
@@ -74,6 +75,30 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
+	const handleHintClick = useCallback(async () => {
+		const message = "Can you please give me a hint for this challenge?"
+		careerQuestClass.addUserMessage(challengeData.id, message)
+
+		await sendCareerQuestMessage(
+			challengeData.id,
+			cppCode,
+			"hint",
+			message
+		)
+	}, [challengeData.id, cppCode])
+
+	const handleCheckCode = useCallback(async () => {
+		const message = "Can you please check if my code is correct?"
+		careerQuestClass.addUserMessage(challengeData.id, message)
+
+		await sendCareerQuestMessage(
+			challengeData.id,
+			cppCode,
+			"checkCode",
+			message
+		)
+	}, [challengeData.id, cppCode])
+
 	return (
 		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
 			{/* Main content area with three columns */}
@@ -94,13 +119,26 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 					{/* Before running section (1/3 height) */}
 					<Separator orientation="horizontal" className="rounded-full h-0.5" />
 
-					<div className="flex-1 pt-4">
+					<div className="flex-[1] pt-4 mb-4">
 						<h3 className="text-lg font-semibold mb-3 text-questionText">
 							Before running code, make sure:
 						</h3>
 						<div className="text-eel leading-relaxed">
 							{challengeData.beforeRunningText}
 						</div>
+					</div>
+
+					{/* Hint button section */}
+					<Separator orientation="horizontal" className="rounded-full h-0.5" />
+
+					<div className="pt-4">
+						<TactileButton
+							className="w-full bg-beetle text-white rounded-xl text-lg font-semibold py-3"
+							shadowColor="rgb(140, 80, 200)"
+							onClick={handleHintClick}
+						>
+							GET HINT
+						</TactileButton>
 					</div>
 				</div>
 
@@ -122,10 +160,18 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							buttonText="SEND CODE"
 							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 							onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-							className="duration-150 rounded-xl text-4xl"
+							className="duration-150 rounded-xl text-3xl h-12"
 						/>
 						<TactileButton
-							className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+							className="bg-humpback text-white flex items-center justify-center
+							w-auto rounded-xl text-3xl h-12"
+							shadowColor="rgb(100, 150, 200)"
+							onClick={handleCheckCode}
+						>
+							CHECK CODE
+						</TactileButton>
+						<TactileButton
+							className="bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl h-12"
 							shadowColor="rgb(150, 50, 75)"
 							onClick={stopCurrentlyRunningCode}
 						>
