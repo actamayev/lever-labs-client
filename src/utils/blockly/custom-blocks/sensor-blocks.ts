@@ -33,7 +33,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			},
 			keywords: [
 				"motion", "orientation", "gyroscope", "accelerometer", "rotation",
-				"tilt", "angle", "direction", "compass", "balance"
+				"tilt", "angle", "direction", "compass", "balance", "imu", "yaw", "pitch", "roll", "acceleration", "velocity", "position",
 			]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
