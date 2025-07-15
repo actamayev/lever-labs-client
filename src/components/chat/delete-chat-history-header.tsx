@@ -41,7 +41,7 @@ export default function DeleteChatHistoryHeader({
 				<div className="flex items-center gap-2">
 					<TactileButton
 						onClick={handleConfirmDelete}
-						className={cn("h-7 px-2 text-xs", redColors.bg)}
+						className={cn("h-7 px-2 text-xs text-white", redColors.bg)}
 						shadowHeight={4}
 						shadowClass={redColors.shadow}
 					>
@@ -50,7 +50,7 @@ export default function DeleteChatHistoryHeader({
 					</TactileButton>
 					<TactileButton
 						onClick={handleCancelDelete}
-						className={cn("h-7 px-2 text-xs", blueColors.bg)}
+						className={cn("h-7 px-2 text-xs text-white", blueColors.bg)}
 						shadowHeight={4}
 						shadowClass={blueColors.shadow}
 					>
