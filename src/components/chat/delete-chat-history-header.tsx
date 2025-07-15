@@ -29,7 +29,7 @@ export default function DeleteChatHistoryHeader({
 				<TactileButton
 					onClick={handleDeleteClick}
 					disabled={isStreaming}
-					className={cn("h-7 text-xs text-white", redColors.bg)}
+					className={cn("h-7 px-2 text-xs text-white", redColors.bg)}
 					title="Delete chat history"
 					shadowHeight={4}
 					shadowClass={redColors.shadow}
