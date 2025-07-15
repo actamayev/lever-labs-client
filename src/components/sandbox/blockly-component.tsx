@@ -21,6 +21,7 @@ interface Props {
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
 	searchTerm?: string
+	isSwitchingMode: boolean
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -30,14 +31,13 @@ function BlocklyComponent(props: Props) {
 		extraClasses = "h-1/2",
 		initialBlocklyJson,
 		onJsonChange,
-		searchTerm = ""
+		searchTerm = "",
+		isSwitchingMode
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
-	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
-	const previousSearchingRef = useRef(false)
 	const pathname = usePathname()
 	useSensorPollingUseEffect()
 	const [isCentering, setIsCentering] = useState(false)
@@ -77,34 +77,21 @@ function BlocklyComponent(props: Props) {
 		}
 	}, [isSwitchingMode, isCentering, isCentered, onJsonChange, centerWorkspace])
 
-	// Track when we're switching between search modes
+	// Handle centering when switching modes
 	// @ts-expect-error - Not all code paths return a value, but this is intentional
 	useEffect(() => {
-		const wasSearching = previousSearchingRef.current
-		const isSearching = searchTerm.trim().length > 0
-
-		// Only set switching mode if we're actually transitioning between states
-		if (wasSearching !== isSearching) {
-			setIsSwitchingMode(true)
-			setIsCentered(false) // Force re-centering when switching modes
-
-			// Reset switching state after a short delay to allow for workspace re-render
+		if (isSwitchingMode) {
+			// Force re-centering when switching modes
+			setIsCentered(false)
+		} else {
+			// After switching is complete, center the workspace
 			const timer = setTimeout(() => {
-				setIsSwitchingMode(false)
-				// Explicitly center when switching back to normal mode
-				if (wasSearching && !isSearching) {
-					setTimeout(() => {
-						centerWorkspace()
-					}, 100)
-				}
-			}, 200)
+				centerWorkspace()
+			}, 100)
 
 			return () => clearTimeout(timer)
 		}
-
-		// Update the ref for next comparison
-		previousSearchingRef.current = isSearching
-	}, [searchTerm, centerWorkspace])
+	}, [isSwitchingMode, centerWorkspace])
 
 	useEffect(() => {
 		if (isEmpty(searchTerm)) {
