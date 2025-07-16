@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingCareerQuestCheckCodeMessage,
-	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData,
-	OutgoingCareerQuestGeneralMessage, CheckCodeResponse, NonSuccessResponse} from "@bluedotrobots/common-ts"
+	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData, OutgoingCareerQuestHintMessage,
+	OutgoingCareerQuestGeneralMessage, CheckCodeResponse, NonSuccessResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -21,8 +21,16 @@ export default class ChatDataService extends BaseDataService {
 	async checkCareerQuestCode(
 		chatData: OutgoingCareerQuestCheckCodeMessage
 	): Promise<AxiosResponse<CheckCodeResponse | NonSuccessResponse>> {
-		return await this.httpClient.http.post<CheckCodeResponse | NonSuccessResponse>(
+		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
 			this.buildUrl("/check-career-quest-code"), chatData
+		)
+	}
+
+	async requestCareerQuestHint(
+		chatData: OutgoingCareerQuestHintMessage
+	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
+		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
+			this.buildUrl("/request-career-quest-hint"), chatData
 		)
 	}
 

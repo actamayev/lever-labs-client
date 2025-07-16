@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import { isNil, isUndefined } from "lodash-es"
+import { isUndefined } from "lodash-es"
 
 interface SingleMessageData {
 	messageId: string

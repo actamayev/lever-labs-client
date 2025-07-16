@@ -134,14 +134,14 @@ class CareerQuestClass {
 		challengeData.messages.push(message)
 	})
 
-	public addHintRequestMessage = action((challengeId: string, content: string): void => {
+	public addHintRequestMessage = action((challengeId: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
 		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
 			role: "user",
-			content,
+			content: "?",
 			timestamp: new Date(),
 			isHintRequest: true
 		}

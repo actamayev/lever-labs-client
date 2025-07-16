@@ -5,23 +5,23 @@ import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import { Separator } from "../shadcn/ui/separator"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../classes/career-quest-class"
 import checkCareerQuestCode from "../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import sendCareerQuestMessage from "../../utils/chat/send-career-quest-message"
 import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
-import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
@@ -78,18 +78,6 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
-	const handleHintClick = useCallback(async () => {
-		const message = "Can you please give me a hint for this challenge?"
-		careerQuestClass.addHintRequestMessage(challengeData.id, message)
-
-		await sendCareerQuestMessage(
-			challengeData.id,
-			cppCode,
-			"hint",
-			message
-		)
-	}, [challengeData.id, cppCode])
-
 	const beeColors = getDuolingoColors("bee")
 
 	return (
@@ -128,7 +116,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 						<TactileButton
 							className="w-full bg-beetle text-white rounded-xl text-lg font-semibold py-3"
 							shadowColor="rgb(140, 80, 200)"
-							onClick={handleHintClick}
+							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
 						>
 							GET HINT
 						</TactileButton>

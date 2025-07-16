@@ -69,7 +69,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData.id, cppCode, "generalQuestion", inputValue)
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
 	}, [challengeData, cppCode, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {

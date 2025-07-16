@@ -32,7 +32,8 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 				role: msg.role,
 				content: msg.content,
 				timestamp: timestamp,
-				checkCodeRequest: msg.codeSubmissionData
+				checkCodeRequest: msg.codeSubmissionData,
+				isHintRequest: msg.isHint
 			}
 		})
 
