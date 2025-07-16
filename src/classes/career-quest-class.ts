@@ -7,24 +7,13 @@ import {
 	CqChatbotStreamStartEvent,
 	CqChatbotStreamChunkEvent,
 	CqChatbotStreamCompleteEvent,
-	ChatMessageRole,
 	BlocklyJson,
 	ChallengeData
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
-interface ChatMessage {
-	id: string
-	role: ChatMessageRole
-	content: string
-	timestamp: Date
-	isStreaming?: boolean
-	isCheckCodeRequest?: boolean
-	isHintRequest?: boolean
-}
-
 interface ExtendedChallengeData extends ChallengeData {
-	messages: ChatMessage[]
+	messages: CareerQuestChatMessage[]
 	isStreaming: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
@@ -67,7 +56,7 @@ class CareerQuestClass {
 	}
 
 	// Get messages for a challenge
-	public getMessages(challengeId: string): ChatMessage[] {
+	public getMessages(challengeId: string): CareerQuestChatMessage[] {
 		const challengeData = this.getChallengeData(challengeId)
 		return challengeData?.messages || []
 	}
@@ -114,7 +103,7 @@ class CareerQuestClass {
 	// Set retrieved data from backend (both messages and sandbox JSON)
 	public setRetrievedData = action((
 		challengeId: string,
-		messages: ChatMessage[],
+		messages: CareerQuestChatMessage[],
 		sandboxJson: BlocklyJson | null
 	): void => {
 		const challengeData = this.getChallengeData(challengeId)
@@ -135,7 +124,7 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
-		const message: ChatMessage = {
+		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
 			content,
@@ -149,7 +138,7 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
-		const message: ChatMessage = {
+		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
 			role: "user",
 			content,
@@ -164,12 +153,12 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
-		const message: ChatMessage = {
+		const message: CareerQuestChatMessage = {
 			id: `check-code-request-${Date.now()}`,
 			role: "user",
 			content: "?",
 			timestamp: new Date(),
-			isCheckCodeRequest: true
+			checkCodeRequest: null
 		}
 
 		challengeData.messages.push(message)
@@ -181,7 +170,7 @@ class CareerQuestClass {
 		if (isUndefined(challengeData)) return
 
 		// Create streaming message placeholder
-		const streamingMessage: ChatMessage = {
+		const streamingMessage: CareerQuestChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
 			content: "",

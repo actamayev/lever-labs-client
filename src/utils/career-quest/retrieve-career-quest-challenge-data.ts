@@ -25,13 +25,14 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 		}
 
 		// Transform backend messages to frontend format
-		const transformedMessages = challengeResponse.data.messages.map(msg => {
+		const transformedMessages: CareerQuestChatMessage[] = challengeResponse.data.messages.map(msg => {
 			const timestamp = new Date(msg.timestamp)
 			return {
 				id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
 				role: msg.role,
 				content: msg.content,
-				timestamp: timestamp
+				timestamp: timestamp,
+				checkCodeRequest: msg.codeSubmissionData
 			}
 		})
 

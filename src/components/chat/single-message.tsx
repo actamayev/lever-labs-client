@@ -11,18 +11,22 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
+import { isNil, isUndefined } from "lodash-es"
 
 interface SingleMessageData {
 	messageId: string
 	role: ChatMessageRole
 	content: string
-	isCheckCodeRequest?: boolean
+	checkCodeRequest?: {
+		userCode: string
+		isCorrect: boolean
+	} | null
 	isHintRequest?: boolean
 }
 
 function SingleMessage({ message } : { message: SingleMessageData }) {
 	const isUser = message.role === "user"
-	const isCheckCodeRequest = message.isCheckCodeRequest
+	const isCheckCodeRequest = !isUndefined(message.checkCodeRequest)
 	const isHintRequest = message.isHintRequest
 
 	// Determine alignment based on message type
@@ -33,7 +37,7 @@ function SingleMessage({ message } : { message: SingleMessageData }) {
 
 	// Determine message bubble styles
 	const getMessageBubbleStyles = () => {
-		if (isCheckCodeRequest) return "bg-macaw text-white"
+		if (isCheckCodeRequest) return "bg-fox text-white"
 		if (isHintRequest) return "bg-beetle text-white"
 		if (isUser) return "bg-humpback text-white ml-auto"
 		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
