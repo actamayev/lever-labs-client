@@ -20,6 +20,8 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
+import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
@@ -88,6 +90,8 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 		)
 	}, [challengeData.id, cppCode])
 
+	const beeColors = getDuolingoColors("bee")
+
 	return (
 		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
 			{/* Main content area with three columns */}
@@ -152,9 +156,11 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							className="duration-150 rounded-xl text-3xl h-12"
 						/>
 						<TactileButton
-							className="bg-humpback text-white flex items-center justify-center
-							w-auto rounded-xl text-3xl h-12"
-							shadowColor="rgb(100, 150, 200)"
+							className={cn(
+								"text-white flex items-center justify-center w-auto rounded-xl text-3xl h-12",
+								beeColors.bg
+							)}
+							shadowClass={beeColors.shadow}
 							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
 						>
 							CHECK CODE
