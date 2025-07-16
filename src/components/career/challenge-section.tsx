@@ -6,19 +6,20 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
+import { Separator } from "../shadcn/ui/separator"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../classes/career-quest-class"
+import checkCareerQuestCode from "../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
+import sendCareerQuestMessage from "../../utils/chat/send-career-quest-message"
 import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
-import sendCareerQuestMessage from "../../utils/chat/send-career-quest-message"
-import { Separator } from "../shadcn/ui/separator"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
@@ -77,24 +78,12 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 	const handleHintClick = useCallback(async () => {
 		const message = "Can you please give me a hint for this challenge?"
-		careerQuestClass.addUserMessage(challengeData.id, message)
+		careerQuestClass.addHintRequestMessage(challengeData.id, message)
 
 		await sendCareerQuestMessage(
 			challengeData.id,
 			cppCode,
 			"hint",
-			message
-		)
-	}, [challengeData.id, cppCode])
-
-	const handleCheckCode = useCallback(async () => {
-		const message = "Can you please check if my code is correct?"
-		careerQuestClass.addUserMessage(challengeData.id, message)
-
-		await sendCareerQuestMessage(
-			challengeData.id,
-			cppCode,
-			"checkCode",
 			message
 		)
 	}, [challengeData.id, cppCode])
@@ -166,7 +155,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							className="bg-humpback text-white flex items-center justify-center
 							w-auto rounded-xl text-3xl h-12"
 							shadowColor="rgb(100, 150, 200)"
-							onClick={handleCheckCode}
+							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
 						>
 							CHECK CODE
 						</TactileButton>

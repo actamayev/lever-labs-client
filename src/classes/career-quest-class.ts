@@ -19,6 +19,8 @@ interface ChatMessage {
 	content: string
 	timestamp: Date
 	isStreaming?: boolean
+	isCheckCodeRequest?: boolean
+	isHintRequest?: boolean
 }
 
 interface ExtendedChallengeData extends ChallengeData {
@@ -138,6 +140,36 @@ class CareerQuestClass {
 			role: "user",
 			content,
 			timestamp: new Date()
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	public addHintRequestMessage = action((challengeId: string, content: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		const message: ChatMessage = {
+			id: `hint-request-${Date.now()}`,
+			role: "user",
+			content,
+			timestamp: new Date(),
+			isHintRequest: true
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	public addCheckCodeRequestMessage = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		const message: ChatMessage = {
+			id: `check-code-request-${Date.now()}`,
+			role: "user",
+			content: "?",
+			timestamp: new Date(),
+			isCheckCodeRequest: true
 		}
 
 		challengeData.messages.push(message)

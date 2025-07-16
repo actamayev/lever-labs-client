@@ -16,15 +16,40 @@ interface SingleMessageData {
 	messageId: string
 	role: ChatMessageRole
 	content: string
+	isCheckCodeRequest?: boolean
+	isHintRequest?: boolean
 }
 
 function SingleMessage({ message } : { message: SingleMessageData }) {
 	const isUser = message.role === "user"
+	const isCheckCodeRequest = message.isCheckCodeRequest
+	const isHintRequest = message.isHintRequest
+
+	// Determine alignment based on message type
+	const getAlignment = () => {
+		if (isCheckCodeRequest || isHintRequest) return "justify-center"
+		return isUser ? "justify-end" : "justify-start"
+	}
+
+	// Determine message bubble styles
+	const getMessageBubbleStyles = () => {
+		if (isCheckCodeRequest) return "bg-macaw text-white"
+		if (isHintRequest) return "bg-beetle text-white"
+		if (isUser) return "bg-humpback text-white ml-auto"
+		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+	}
+
+	// Determine message text for special user requests
+	const getMessageText = () => {
+		if (isCheckCodeRequest) return "Is my code correct?"
+		if (isHintRequest) return "Can you please give me a hint for this challenge"
+		return message.content
+	}
 
 	return (
 		<div
 			key={message.messageId}
-			className={`flex gap-3 min-w-0 w-full ${isUser ? "justify-end" : "justify-start"}`}
+			className={`flex gap-3 min-w-0 w-full ${getAlignment()}`}
 		>
 			{!isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
@@ -37,26 +62,24 @@ function SingleMessage({ message } : { message: SingleMessageData }) {
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					isUser
-						? "bg-humpback text-white ml-auto"
-						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+					getMessageBubbleStyles()
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
 				{isUser ? (
-					// For user messages, keep simple text display
+					// For user messages, check if it's a special request type
 					<p
 						className="text-sm whitespace-pre-wrap"
 						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 					>
-						{message.content}
+						{getMessageText()}
 					</p>
 				) : (
 					<AssistantMessageMarkdown messageContent={message.content} />
 				)}
 			</div>
 
-			{isUser && (
+			{isUser && !isCheckCodeRequest && !isHintRequest && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					{!isNull(personalInfoClass.profilePictureUrl) ? (
 						<Image
