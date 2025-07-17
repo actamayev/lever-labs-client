@@ -12,7 +12,7 @@ import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 
-function SingleCareerQuestMessage({ message } : { message: SandboxChatMessage }) {
+function SingleSandboxMessage({ message } : { message: SandboxChatMessage }) {
 	const isUser = message.role === "user"
 
 	// Determine alignment based on message type
@@ -80,4 +80,4 @@ function SingleCareerQuestMessage({ message } : { message: SandboxChatMessage })
 	)
 }
 
-export default observer(SingleCareerQuestMessage)
+export default observer(SingleSandboxMessage)

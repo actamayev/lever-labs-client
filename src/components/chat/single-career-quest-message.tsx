@@ -2,24 +2,24 @@
 "use client"
 
 import Image from "next/image"
+import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
-import isUndefined from "lodash-es/isUndefined"
 import { observer } from "mobx-react"
+import isUndefined from "lodash-es/isUndefined"
 import { BotMessageSquare, PartyPopper, X } from "lucide-react"
+import HintButton from "./hint-button"
 import { cn } from "../../lib/shadcn/utils"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
-import HintButton from "./hint-button"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
-import { isEmpty } from "lodash-es"
 
 interface SingleCareerQuestMessageProps {
 	message: CareerQuestChatMessage
-	challengeId?: string
-	cppCode?: string
+	challengeId: string
+	cppCode: string
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
