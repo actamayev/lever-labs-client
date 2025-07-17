@@ -3,6 +3,7 @@
 
 import Image from "next/image"
 import isNull from "lodash-es/isNull"
+import isUndefined from "lodash-es/isUndefined"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
@@ -15,6 +16,7 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
+	const isEvaluationResult = !isUndefined(message.evaluationResult)
 
 	// Determine alignment based on message type
 	const getAlignment = () => {
@@ -27,6 +29,10 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 		if (isCheckCodeRequest) return "bg-fox text-white"
 		if (isHintRequest) return "bg-beetle text-white"
 		if (isUser) return "bg-humpback text-white ml-auto"
+		if (isEvaluationResult) {
+			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
+			return "bg-red-200 text-black"
+		}
 		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 	}
 
