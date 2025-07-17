@@ -41,13 +41,6 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
 
-	// Auto-scroll to bottom when new messages are added
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
-		}
-	}, [messages])
-
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
 		setShowDeleteConfirmation(false)
@@ -117,6 +110,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				isWaitingForResponse={isWaitingForResponse}
 				messagesEndRef={messagesEndRef}
 				isStreaming={isStreaming}
+				messages={messages}
 			>
 				{messages.map((message, index) => (
 					<SingleSandboxMessage

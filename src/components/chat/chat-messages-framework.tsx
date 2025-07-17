@@ -6,17 +6,18 @@ import { RefObject, useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
-interface Props {
+interface Props<T extends { role: string; timestamp: Date }> {
 	hasAnyMessages: boolean
 	children: React.ReactNode
 	isWaitingForResponse: boolean
 	isStreaming: boolean
 	messagesEndRef: RefObject<HTMLDivElement>
+	messages: T[] // Generic messages prop to track actual message changes
 }
 
 // eslint-disable-next-line max-lines-per-function
-function ChatMessagesFramework(props: Props) {
-	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef } = props
+function ChatMessagesFramework<T extends { role: string; timestamp: Date }>(props: Props<T>) {
+	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef, messages } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
@@ -83,11 +84,21 @@ function ChatMessagesFramework(props: Props) {
 
 		// Only auto-scroll if enabled and either not streaming or user hasn't manually scrolled
 		if (autoScrollEnabled && (!isStreaming || !userScrolledDuringStream.current)) {
-			// Use instant scrolling for streaming content, smooth for new messages
-			const behavior = isStreaming ? "auto" : "smooth"
+			// Determine scroll behavior based on the most recent message
+			let behavior: ScrollBehavior = "smooth"
+
+			// Use instant scrolling only for streaming assistant responses
+			if (isStreaming && messages.length > 0) {
+				const lastMessage = messages[messages.length - 1]
+				// If the last message is from assistant and we're streaming, use instant scroll
+				if (lastMessage.role === "assistant") {
+					behavior = "auto"
+				}
+			}
+
 			scrollToBottom(behavior)
 		}
-	}, [children, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
+	}, [messages.length, messages, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
 
 	// Reset when streaming ends
 	useEffect(() => {

@@ -31,16 +31,6 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
 	const isWaitingForResponse = careerQuestClass.isWaitingForResponse(challengeData.id)
 
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			// Use scrollTop instead of scrollIntoView to only scroll the container
-			const container = messagesEndRef.current.closest(".overflow-y-auto")
-			if (container) {
-				container.scrollTop = container.scrollHeight
-			}
-		}
-	}, [messages])
-
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
 		setShowDeleteConfirmation(false)
@@ -130,6 +120,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				isWaitingForResponse={isWaitingForResponse}
 				isStreaming={isStreaming}
 				messagesEndRef={messagesEndRef}
+				messages={messages}
 			>
 				{messages.map((message) => (
 					<SingleMessage
