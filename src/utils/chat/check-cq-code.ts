@@ -2,32 +2,34 @@
 
 import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
-import { isErrorResponses } from "../type-checks"
+import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function sendCareerQuestMessage(
+export default async function checkCareerQuestCode(
 	careerQuestChallengeId: string,
-	userCode: string,
-	message: string
+	userCode: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
+		careerQuestClass.addCheckCodeRequestMessage(careerQuestChallengeId)
 		// Reset chat state for new conversation
 		careerQuestClass.resetChatStreamingState(careerQuestChallengeId)
 
 		// Send request to backend - challengeId will be included in the WebSocket response
-		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({
+		const response = await blueDotApiClientClass.chatDataService.checkCareerQuestCode({
 			careerQuestChallengeId,
 			userCode,
-			message,
 		})
 
-		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
+		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) return
 
-		careerQuestClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
+		careerQuestClass.addEvaluationResultMessage(careerQuestChallengeId, {
+			isCorrect: response.data.isCorrect,
+			feedback: response.data.feedback
+		})
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

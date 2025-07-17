@@ -3,7 +3,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
 
-interface DeleteChatHistoryHeaderProps {
+interface ClearChatHistoryHeaderProps {
 	showDeleteConfirmation: boolean
 	handleDeleteClick: () => void
 	handleConfirmDelete: () => void
@@ -11,13 +11,13 @@ interface DeleteChatHistoryHeaderProps {
 	isStreaming: boolean
 }
 
-export default function DeleteChatHistoryHeader({
+export default function ClearChatHistoryHeader({
 	showDeleteConfirmation,
 	handleDeleteClick,
 	handleConfirmDelete,
 	handleCancelDelete,
 	isStreaming
-}: DeleteChatHistoryHeaderProps) {
+}: ClearChatHistoryHeaderProps) {
 	const redColors = getDuolingoColors("cardinal")
 	const blueColors = getDuolingoColors("humpback")
 
@@ -30,12 +30,12 @@ export default function DeleteChatHistoryHeader({
 					onClick={handleDeleteClick}
 					disabled={isStreaming}
 					className={cn("h-7 px-2 text-xs text-white", redColors.bg)}
-					title="Delete chat history"
+					title="Clear chat history"
 					shadowHeight={4}
 					shadowClass={redColors.shadow}
 				>
 					<Trash2 className="h-4 w-4" />
-					DELETE
+					CLEAR
 				</TactileButton>
 			) : (
 				<div className="flex items-center gap-2">
@@ -46,7 +46,7 @@ export default function DeleteChatHistoryHeader({
 						shadowClass={redColors.shadow}
 					>
 						<Trash2 className="h-4 w-4" />
-						DELETE
+						CLEAR
 					</TactileButton>
 					<TactileButton
 						onClick={handleCancelDelete}

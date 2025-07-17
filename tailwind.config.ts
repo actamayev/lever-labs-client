@@ -46,6 +46,14 @@ module.exports = {
 		"shadow-macaw-1", "shadow-cardinal-1", "shadow-bee-1", "shadow-fox-1", "shadow-beetle-1", "shadow-humpback-1", "shadow-beakInner-1",
 		"shadow-macaw-2", "shadow-cardinal-2", "shadow-bee-2", "shadow-fox-2", "shadow-beetle-2", "shadow-humpback-2", "shadow-beakInner-2",
 		"shadow-macaw-3", "shadow-cardinal-3", "shadow-bee-3", "shadow-fox-3", "shadow-beetle-3", "shadow-humpback-3", "shadow-beakInner-3",
+
+		// iMessage colors
+		"bg-iMessageBlue", "bg-iMessageGreen",
+		"text-iMessageBlue", "text-iMessageGreen",
+		"border-iMessageBlue", "border-iMessageGreen",
+		"ring-iMessageBlue", "ring-iMessageGreen",
+		"hover:bg-iMessageBlue", "hover:bg-iMessageGreen",
+		"shadow-iMessageBlue", "shadow-iMessageGreen",
 	],
 	theme: {
 		extend: {
@@ -123,6 +131,8 @@ module.exports = {
 				"beakInner-1": "rgb(var(--beakInner-1))",
 				"beakInner-2": "rgb(var(--beakInner-2))",
 				"beakInner-3": "rgb(var(--beakInner-3))",
+				iMessageBlue: "rgb(var(--iMessageBlue))",
+				iMessageGreen: "rgb(var(--iMessageGreen))",
 
 				card: {
 					DEFAULT: "hsl(var(--card))",
@@ -211,6 +221,8 @@ module.exports = {
 				"beakInner-1": "0 4px 0 0 rgb(var(--beakInner-1))",
 				"beakInner-2": "0 4px 0 0 rgb(var(--beakInner-2))",
 				"beakInner-3": "0 4px 0 0 rgb(var(--beakInner-3))",
+				"iMessageBlue": "0 4px 0 0 rgb(var(--iMessageBlue))",
+				"iMessageGreen": "0 4px 0 0 rgb(var(--iMessageGreen))",
 			},
 			borderRadius: {
 				lg: "var(--radius)",
@@ -309,7 +321,8 @@ function addVariablesForColors({ addBase, theme }: any): void {
 		"fox-1", "fox-2", "fox-3",
 		"beetle-1", "beetle-2", "beetle-3",
 		"humpback-1", "humpback-2", "humpback-3",
-		"beakInner-1", "beakInner-2", "beakInner-3"
+		"beakInner-1", "beakInner-2", "beakInner-3",
+		"iMessageBlue", "iMessageGreen"
 	]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)

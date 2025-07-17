@@ -7,22 +7,21 @@ import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function sendCareerQuestMessage(
+export default async function requestCareerQuestHint(
 	careerQuestChallengeId: string,
-	userCode: string,
-	message: string
+	userCode: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
+		careerQuestClass.addHintRequestMessage(careerQuestChallengeId)
 		// Reset chat state for new conversation
 		careerQuestClass.resetChatStreamingState(careerQuestChallengeId)
 
 		// Send request to backend - challengeId will be included in the WebSocket response
-		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({
+		const response = await blueDotApiClientClass.chatDataService.requestCareerQuestHint({
 			careerQuestChallengeId,
 			userCode,
-			message,
 		})
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
@@ -31,7 +30,7 @@ export default async function sendCareerQuestMessage(
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
-			title: "Unable to send message",
+			title: "Unable to request hint",
 			description: "Please reload the page and try again"
 		})
 	}

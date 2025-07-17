@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { ArrowDown, BotMessageSquare } from "lucide-react"
-import { RefObject, useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
@@ -11,17 +11,19 @@ interface Props {
 	children: React.ReactNode
 	isWaitingForResponse: boolean
 	isStreaming: boolean
-	messagesEndRef: RefObject<HTMLDivElement>
+	messageLength: number
 }
 
+// TODO 7/17/25: Fix auto-scroll behavior when streaming (should scroll with the socket updates)
 // eslint-disable-next-line max-lines-per-function
 function ChatMessagesFramework(props: Props) {
-	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef } = props
+	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messageLength } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
 	const userScrolledDuringStream = useRef(false)
 	const isScrollingProgrammatically = useRef(false)
+	const messagesEndRef = useRef<HTMLDivElement>(null)
 
 	// Check if user is at bottom of chat
 	const checkIfAtBottom = useCallback(() => {
@@ -83,11 +85,9 @@ function ChatMessagesFramework(props: Props) {
 
 		// Only auto-scroll if enabled and either not streaming or user hasn't manually scrolled
 		if (autoScrollEnabled && (!isStreaming || !userScrolledDuringStream.current)) {
-			// Use instant scrolling for streaming content, smooth for new messages
-			const behavior = isStreaming ? "auto" : "smooth"
-			scrollToBottom(behavior)
+			scrollToBottom("smooth")
 		}
-	}, [children, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
+	}, [messageLength, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
 
 	// Reset when streaming ends
 	useEffect(() => {

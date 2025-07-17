@@ -2,11 +2,11 @@
 
 import { observer } from "mobx-react"
 import { ChallengeData } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
-import SingleMessage from "../../chat/single-message"
+import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
 import careerQuestClass from "../../../classes/career-quest-class"
-import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
+import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
@@ -22,35 +22,18 @@ interface ChatInterfaceProps {
 function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
 	const messages = careerQuestClass.getMessages(challengeData.id)
 	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
 	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
-
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			// Use scrollTop instead of scrollIntoView to only scroll the container
-			const container = messagesEndRef.current.closest(".overflow-y-auto")
-			if (container) {
-				container.scrollTop = container.scrollHeight
-			}
-		}
-	}, [messages])
+	const isWaitingForResponse = careerQuestClass.isWaitingForResponse(challengeData.id)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
-
-	// Check if we're waiting for a response (streaming message with no content yet)
-	const isWaitingForResponse = useMemo(() => {
-		if (!isStreaming) return false
-		const streamingMessage = messages.find(msg => msg.isStreaming)
-		return streamingMessage ? streamingMessage.content.length === 0 : false
-	}, [isStreaming, messages])
 
 	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.role === "user")
@@ -69,7 +52,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData.id, cppCode, "generalQuestion", inputValue)
+		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
 	}, [challengeData, cppCode, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
@@ -122,7 +105,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		<ChatParentComponent>
 			{/* Chat Header with Delete Button */}
 			{hasAnyMessages && (
-				<DeleteChatHistoryHeader
+				<ClearChatHistoryHeader
 					showDeleteConfirmation={showDeleteConfirmation}
 					handleDeleteClick={handleDeleteClick}
 					handleConfirmDelete={handleConfirmDelete}
@@ -135,15 +118,14 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
 				isStreaming={isStreaming}
-				messagesEndRef={messagesEndRef}
+				messageLength={messages.length}
 			>
 				{messages.map((message) => (
-					<SingleMessage
+					<SingleCareerQuestMessage
 						key={message.id}
-						message={{
-							messageId: message.id,
-							...message
-						}}
+						message={message}
+						challengeId={challengeData.id}
+						cppCode={cppCode}
 					/>
 				))}
 			</ChatMessagesFramework>
