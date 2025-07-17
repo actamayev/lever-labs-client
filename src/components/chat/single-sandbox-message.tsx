@@ -15,21 +15,10 @@ import AssistantMessageMarkdown from "./assistant-message-markdown"
 function SingleSandboxMessage({ message } : { message: SandboxChatMessage }) {
 	const isUser = message.role === "user"
 
-	// Determine alignment based on message type
-	const getAlignment = () => {
-		return isUser ? "justify-end" : "justify-start"
-	}
-
-	// Determine message bubble styles
-	const getMessageBubbleStyles = () => {
-		if (isUser) return "bg-humpback text-white ml-auto"
-		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-	}
-
 	return (
 		<div
 			key={`${new Date(message.timestamp).getTime()}-${message.role}`}
-			className={`flex gap-3 min-w-0 w-full ${getAlignment()}`}
+			className={cn("flex gap-3 min-w-0 w-full", isUser ? "justify-end" : "justify-start")}
 		>
 			{!isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
@@ -42,7 +31,7 @@ function SingleSandboxMessage({ message } : { message: SandboxChatMessage }) {
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					getMessageBubbleStyles()
+					isUser ? "bg-humpback text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
