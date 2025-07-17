@@ -29,7 +29,7 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 		if (isUser) return "bg-iMessageBlue text-white ml-auto"
 		if (isEvaluationResult) {
 			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
-			return "bg-red-200 text-black"
+			return "bg-cardinal text-white"
 		}
 		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
 	}
@@ -58,7 +58,7 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 				)
 			}
 			return (
-				<AvatarFallback className="bg-red-200 text-black">
+				<AvatarFallback className="bg-cardinal text-white">
 					<X className="w-4 h-4" />
 				</AvatarFallback>
 			)
