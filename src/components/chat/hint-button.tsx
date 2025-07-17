@@ -41,15 +41,15 @@ function HintButton({ challengeId, cppCode, onHintRequest }: HintButtonProps) {
 			}`}
 		>
 			<TactileButton
-				shadowClass="shadow-beetle-2"
-				shadowHeight={2}
+				shadowColor="rgb(140, 80, 200)"
+				shadowHeight={4}
 				onClick={handleHintClick}
 				disabled={isLoading}
 				size="sm"
-				className="bg-beetle-2 hover:bg-beetle-2/90 text-white gap-2"
+				className="bg-beetle-2 text-white rounded-xl font-semibold gap-2"
 			>
 				<CustomLightbulb className="w-4 h-4" />
-				{isLoading ? "Getting hint..." : "Get a hint"}
+				{isLoading ? "Getting hint..." : "GET A HINT"}
 			</TactileButton>
 		</div>
 	)

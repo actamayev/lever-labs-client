@@ -14,6 +14,7 @@ import AssistantMessageMarkdown from "./assistant-message-markdown"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import HintButton from "./hint-button"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
+import { isEmpty } from "lodash-es"
 
 interface SingleCareerQuestMessageProps {
 	message: CareerQuestChatMessage
@@ -21,7 +22,7 @@ interface SingleCareerQuestMessageProps {
 	cppCode?: string
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCareerQuestMessageProps) {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
@@ -29,6 +30,25 @@ function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCaree
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
 	const shouldShowHintButton = message.shouldShowHintButton && challengeId && cppCode
+	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
+
+	// Don't render assistant messages that are streaming with no content yet
+	if (!isUser && isStreamingWithNoContent) {
+		return (
+			<div className="flex gap-3 min-w-0 w-full justify-start">
+				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+					<AssistantAvatar />
+				</Avatar>
+				<div className="flex items-center gap-1 py-2">
+					<div className="flex space-x-1">
+						<div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></div>
+						<div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+						<div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
 	// Determine message bubble styles
 	const getMessageBubbleStyles = () => {
