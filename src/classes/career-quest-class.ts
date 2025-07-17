@@ -191,7 +191,8 @@ class CareerQuestClass {
 			role: "assistant",
 			content: "",
 			timestamp: new Date(),
-			isStreaming: true
+			isStreaming: true,
+			isHintResponse: startEvent.interactionType === "hint"
 		}
 
 		challengeData.messages.push(streamingMessage)
