@@ -14,6 +14,7 @@ interface Props {
 	messageLength: number
 }
 
+// TODO 7/17/25: Fix auto-scroll behavior when streaming (should scroll with the socket updates)
 // eslint-disable-next-line max-lines-per-function
 function ChatMessagesFramework(props: Props) {
 	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messageLength } = props
