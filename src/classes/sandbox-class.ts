@@ -2,13 +2,14 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, ProjectUUID, SandboxProject, ChatMessage,
+import { BlocklyJson, ProjectUUID, SandboxProject, SandboxChatMessage,
 	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
 // Extended interface for internal state management
 interface SandboxProjectWithStreaming extends SandboxProject {
 	isStreaming: boolean
+	isWaitingForResponse: boolean
 	currentStreamingMessageId: string | null
 }
 
@@ -45,6 +46,7 @@ class SandboxClass {
 			...sandboxProject,
 			sandboxJson: normalizedSandboxJson,
 			isStreaming: false,
+			isWaitingForResponse: false,
 			currentStreamingMessageId: null
 		}
 		this.sandboxProjects.set(sandboxProject.projectUUID, projectWithStreaming)
@@ -103,7 +105,10 @@ class SandboxClass {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const message: ChatMessage = {
+		// Set waiting for response when sending user message
+		project.isWaitingForResponse = true
+
+		const message: SandboxChatMessage = {
 			role: "user",
 			content,
 			timestamp: new Date()
@@ -116,8 +121,11 @@ class SandboxClass {
 		const project = this.sandboxProjects.get(event.sandboxProjectUUID)
 		if (isUndefined(project)) return
 
+		// Set waiting for response to false when streaming starts
+		project.isWaitingForResponse = false
+
 		// Create streaming message placeholder
-		const streamingMessage: ChatMessage = {
+		const streamingMessage: SandboxChatMessage = {
 			role: "assistant",
 			content: "",
 			timestamp: new Date()
@@ -180,8 +188,21 @@ class SandboxClass {
 		return project?.isStreaming || false
 	}
 
+	// Check if waiting for response for a project
+	public isWaitingForResponse(projectUUID: ProjectUUID): boolean {
+		const project = this.sandboxProjects.get(projectUUID)
+		return project?.isWaitingForResponse || false
+	}
+
+	// Set waiting for response state
+	public setWaitingForResponse = action((projectUUID: ProjectUUID, isWaiting: boolean): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+		project.isWaitingForResponse = isWaiting
+	})
+
 	// Get chat messages for a project
-	public getChatMessages(projectUUID: ProjectUUID): ChatMessage[] {
+	public getChatMessages(projectUUID: ProjectUUID): SandboxChatMessage[] {
 		const project = this.sandboxProjects.get(projectUUID)
 		return project?.sandboxChatMessages || []
 	}

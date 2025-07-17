@@ -1,3 +1,4 @@
+import { BinaryEvaluationResult, ChatMessageRole } from "@bluedotrobots/common-ts"
 import { LucideIcon } from "lucide-react"
 
 declare global {
@@ -37,6 +38,19 @@ declare global {
 	| "Conditional Statements"
 	| "Functions"
 	| "Boolean Logic"
+
+	interface CareerQuestChatMessage {
+		id: string
+		role: ChatMessageRole
+		content: string
+		timestamp: Date
+		isStreaming?: boolean
+		isCheckCodeRequest?: boolean
+		evaluationResult?: BinaryEvaluationResult
+		isHintRequest?: boolean
+		isHintResponse?: boolean
+		shouldShowHintButton?: boolean
+	}
 }
 
 export {}

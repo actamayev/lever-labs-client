@@ -25,13 +25,55 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 		}
 
 		// Transform backend messages to frontend format
-		const transformedMessages = challengeResponse.data.messages.map(msg => {
+		const transformedMessages: CareerQuestChatMessage[] = []
+
+		challengeResponse.data.messages.forEach(msg => {
 			const timestamp = new Date(msg.timestamp)
-			return {
-				id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
-				role: msg.role,
-				content: msg.content,
-				timestamp: timestamp
+
+			// If this is a code submission, create two messages: the user request and the model's feedback
+			if (msg.codeSubmissionData) {
+				// 1. User's check code request message
+				transformedMessages.push({
+					id: `user-checkCode-${timestamp.getTime()}`,
+					role: "user",
+					content: "Is my code correct?",
+					timestamp: timestamp,
+					isCheckCodeRequest: true
+				})
+
+				// 2. Model's feedback message
+				transformedMessages.push({
+					id: `assistant-feedback-${timestamp.getTime()}`,
+					role: "assistant",
+					content: msg.codeSubmissionData.evaluationResult.feedback || "",
+					timestamp: timestamp,
+					evaluationResult: msg.codeSubmissionData.evaluationResult
+				})
+			} else if (msg.isHint) {
+				transformedMessages.push({
+					id: `user-hintRequest-${timestamp.getTime()}`,
+					role: "user",
+					content: "Can you please give me a hint?",
+					timestamp: timestamp,
+					isHintRequest: true
+				})
+
+				// 2. Model's hint response message
+				transformedMessages.push({
+					id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
+					role: msg.role,
+					content: msg.content,
+					timestamp: timestamp,
+					isHintResponse: true
+				})
+			} else {
+				// Normal message (not a code submission)
+				transformedMessages.push({
+					id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
+					role: msg.role,
+					content: msg.content,
+					timestamp: timestamp
+				})
 			}
 		})
 

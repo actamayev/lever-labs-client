@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
-import { ErrorResponses, SuccessResponse, StartChatSuccess,
-	OutgoingCareerQuestChatData, ProjectUUID, AllCommonResponses, OutgoingChatData} from "@bluedotrobots/common-ts"
+import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingCareerQuestCheckCodeMessage,
+	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData, OutgoingCareerQuestHintMessage,
+	OutgoingCareerQuestGeneralMessage, CheckCodeResponse, NonSuccessResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -9,9 +10,27 @@ export default class ChatDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async sendCareerQuestMessage(chatMessage: OutgoingCareerQuestChatData): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
+	async sendCareerQuestMessage(
+		chatData: OutgoingCareerQuestGeneralMessage
+	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
-			this.buildUrl("/send-career-quest-message"), chatMessage
+			this.buildUrl("/send-career-quest-message"), chatData
+		)
+	}
+
+	async checkCareerQuestCode(
+		chatData: OutgoingCareerQuestCheckCodeMessage
+	): Promise<AxiosResponse<CheckCodeResponse | NonSuccessResponse>> {
+		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
+			this.buildUrl("/check-career-quest-code"), chatData
+		)
+	}
+
+	async requestCareerQuestHint(
+		chatData: OutgoingCareerQuestHintMessage
+	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
+		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
+			this.buildUrl("/request-career-quest-hint"), chatData
 		)
 	}
 
@@ -23,7 +42,7 @@ export default class ChatDataService extends BaseDataService {
 
 	async sendSandboxMessage(
 		projectUUID: ProjectUUID,
-		chatMessage: OutgoingChatData
+		chatMessage: OutgoingSandboxChatData
 	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
 			this.buildUrl(`/send-sandbox-message/${projectUUID}`), chatMessage

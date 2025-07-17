@@ -7,23 +7,16 @@ import {
 	CqChatbotStreamStartEvent,
 	CqChatbotStreamChunkEvent,
 	CqChatbotStreamCompleteEvent,
-	ChatMessageRole,
 	BlocklyJson,
-	ChallengeData
+	ChallengeData,
+	BinaryEvaluationResult
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
-interface ChatMessage {
-	id: string
-	role: ChatMessageRole
-	content: string
-	timestamp: Date
-	isStreaming?: boolean
-}
-
 interface ExtendedChallengeData extends ChallengeData {
-	messages: ChatMessage[]
+	messages: CareerQuestChatMessage[]
 	isStreaming: boolean
+	isWaitingForResponse: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
 	isRetrievingMessages: boolean
@@ -49,6 +42,7 @@ class CareerQuestClass {
 			...staticChallengeData,
 			messages: [],
 			isStreaming: false,
+			isWaitingForResponse: false,
 			currentStreamingMessageId: null,
 			currentInteractionType: null,
 			isRetrievingMessages: false,
@@ -65,7 +59,7 @@ class CareerQuestClass {
 	}
 
 	// Get messages for a challenge
-	public getMessages(challengeId: string): ChatMessage[] {
+	public getMessages(challengeId: string): CareerQuestChatMessage[] {
 		const challengeData = this.getChallengeData(challengeId)
 		return challengeData?.messages || []
 	}
@@ -112,7 +106,7 @@ class CareerQuestClass {
 	// Set retrieved data from backend (both messages and sandbox JSON)
 	public setRetrievedData = action((
 		challengeId: string,
-		messages: ChatMessage[],
+		messages: CareerQuestChatMessage[],
 		sandboxJson: BlocklyJson | null
 	): void => {
 		const challengeData = this.getChallengeData(challengeId)
@@ -133,7 +127,13 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
-		const message: ChatMessage = {
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
+
+		// Set waiting for response when sending user message
+		challengeData.isWaitingForResponse = true
+
+		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
 			content,
@@ -143,18 +143,95 @@ class CareerQuestClass {
 		challengeData.messages.push(message)
 	})
 
+	public addHintRequestMessage = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
+
+		// Set waiting for response when requesting hint
+		challengeData.isWaitingForResponse = true
+
+		const message: CareerQuestChatMessage = {
+			id: `hint-request-${Date.now()}`,
+			role: "user",
+			content: "?",
+			timestamp: new Date(),
+			isHintRequest: true
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	public addCheckCodeRequestMessage = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
+
+		// Set waiting for response when checking code
+		challengeData.isWaitingForResponse = true
+
+		const message: CareerQuestChatMessage = {
+			id: `check-code-request-${Date.now()}`,
+			role: "user",
+			content: "?",
+			timestamp: new Date(),
+			isCheckCodeRequest: true
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	public addEvaluationResultMessage = action((challengeId: string, evaluationResult: BinaryEvaluationResult): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		// Set waiting for response to false when receiving evaluation result
+		challengeData.isWaitingForResponse = false
+
+		const message: CareerQuestChatMessage = {
+			id: `evaluation-result-${Date.now()}`,
+			role: "assistant",
+			content: evaluationResult.feedback,
+			timestamp: new Date(),
+			evaluationResult,
+			shouldShowHintButton: !evaluationResult.isCorrect // Show hint button for incorrect results
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	// Hide hint button from all messages in a challenge
+	public hideHintButtonForAllMessages = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		challengeData.messages.forEach(message => {
+			if (message.shouldShowHintButton) {
+				message.shouldShowHintButton = false
+			}
+		})
+	})
+
 	// Start streaming for a challenge
 	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
 		const challengeData = this.getChallengeData(startEvent.challengeId)
 		if (isUndefined(challengeData)) return
 
+		// Set waiting for response to false when streaming starts
+		challengeData.isWaitingForResponse = false
+
 		// Create streaming message placeholder
-		const streamingMessage: ChatMessage = {
+		const streamingMessage: CareerQuestChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
 			content: "",
 			timestamp: new Date(),
-			isStreaming: true
+			isStreaming: true,
+			isHintResponse: startEvent.interactionType === "hint"
 		}
 
 		challengeData.messages.push(streamingMessage)
@@ -222,6 +299,19 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		return challengeData?.isStreaming || false
 	}
+
+	// Check if waiting for response for a challenge
+	public isWaitingForResponse(challengeId: string): boolean {
+		const challengeData = this.getChallengeData(challengeId)
+		return challengeData?.isWaitingForResponse || false
+	}
+
+	// Set waiting for response state
+	public setWaitingForResponse = action((challengeId: string, isWaiting: boolean): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+		challengeData.isWaitingForResponse = isWaiting
+	})
 
 	// Stream ID management methods
 	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {

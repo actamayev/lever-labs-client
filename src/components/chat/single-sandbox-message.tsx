@@ -2,29 +2,50 @@
 "use client"
 
 import Image from "next/image"
+import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
-import { ChatMessageRole } from "@bluedotrobots/common-ts"
+import { SandboxChatMessage } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 
-interface SingleMessageData {
-	messageId: string
-	role: ChatMessageRole
-	content: string
+interface SingleSandboxMessageProps {
+	message: SandboxChatMessage
+	isStreaming?: boolean
 }
 
-function SingleMessage({ message } : { message: SingleMessageData }) {
+function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps) {
 	const isUser = message.role === "user"
+	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
+
+	// Don't render assistant messages that are streaming with no content yet
+	if (!isUser && isStreamingWithNoContent) {
+		return (
+			<div className="flex gap-3 min-w-0 w-full justify-start">
+				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+					<AvatarFallback className="bg-macaw text-white">
+						<BotMessageSquare className="w-4 h-4" />
+					</AvatarFallback>
+				</Avatar>
+				<div className="flex items-center gap-1 py-2">
+					<div className="flex space-x-1">
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce"></div>
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div
-			key={message.messageId}
-			className={`flex gap-3 min-w-0 w-full ${isUser ? "justify-end" : "justify-start"}`}
+			key={`${new Date(message.timestamp).getTime()}-${message.role}`}
+			className={cn("flex gap-3 min-w-0 w-full", isUser ? "justify-end" : "justify-start")}
 		>
 			{!isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
@@ -37,14 +58,12 @@ function SingleMessage({ message } : { message: SingleMessageData }) {
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					isUser
-						? "bg-humpback text-white ml-auto"
-						: "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+					isUser ? "bg-humpback text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
 				{isUser ? (
-					// For user messages, keep simple text display
+					// For user messages, check if it's a special request type
 					<p
 						className="text-sm whitespace-pre-wrap"
 						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
@@ -77,4 +96,4 @@ function SingleMessage({ message } : { message: SingleMessageData }) {
 	)
 }
 
-export default observer(SingleMessage)
+export default observer(SingleSandboxMessage)

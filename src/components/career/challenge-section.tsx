@@ -5,24 +5,29 @@ import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
+import { Separator } from "../shadcn/ui/separator"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { getDuolingoColors } from "../../utils/duolingo-utils"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../classes/career-quest-class"
+import checkCareerQuestCode from "../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
-import sendCareerQuestMessage from "../../utils/chat/send-career-quest-message"
-import { Separator } from "../shadcn/ui/separator"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
+	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
 
 	// Initialize challenge in career quest class and get extended data
 	useEffect(() => {
@@ -75,29 +80,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
-	const handleHintClick = useCallback(async () => {
-		const message = "Can you please give me a hint for this challenge?"
-		careerQuestClass.addUserMessage(challengeData.id, message)
-
-		await sendCareerQuestMessage(
-			challengeData.id,
-			cppCode,
-			"hint",
-			message
-		)
-	}, [challengeData.id, cppCode])
-
-	const handleCheckCode = useCallback(async () => {
-		const message = "Can you please check if my code is correct?"
-		careerQuestClass.addUserMessage(challengeData.id, message)
-
-		await sendCareerQuestMessage(
-			challengeData.id,
-			cppCode,
-			"checkCode",
-			message
-		)
-	}, [challengeData.id, cppCode])
+	const foxColors = getDuolingoColors("fox")
 
 	return (
 		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
@@ -133,11 +116,13 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 					<div className="pt-4">
 						<TactileButton
-							className="w-full bg-beetle text-white rounded-xl text-lg font-semibold py-3"
+							className="w-full bg-beetle-2 text-white rounded-xl text-lg font-semibold py-3"
 							shadowColor="rgb(140, 80, 200)"
-							onClick={handleHintClick}
+							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
+							disabled={isStreaming}
 						>
-							GET HINT
+							<CustomLightbulb className="w-4 h-4" />
+							GET A HINT
 						</TactileButton>
 					</div>
 				</div>
@@ -163,10 +148,13 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							className="duration-150 rounded-xl text-3xl h-12"
 						/>
 						<TactileButton
-							className="bg-humpback text-white flex items-center justify-center
-							w-auto rounded-xl text-3xl h-12"
-							shadowColor="rgb(100, 150, 200)"
-							onClick={handleCheckCode}
+							className={cn(
+								"text-white flex items-center justify-center w-auto rounded-xl text-3xl h-12",
+								foxColors.bg
+							)}
+							shadowClass={foxColors.shadow}
+							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
+							disabled={isStreaming || isEmpty(cppCode)}
 						>
 							CHECK CODE
 						</TactileButton>
