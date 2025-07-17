@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import sandboxClass from "../../../classes/sandbox-class"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
@@ -28,14 +28,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 	// Get messages and streaming state from sandbox class
 	const messages = sandboxClass.getChatMessages(projectUUID)
 	const isStreaming = sandboxClass.isStreaming(projectUUID)
-
-	// Check if we're waiting for a response (streaming message with no content yet)
-	const isWaitingForResponse = useMemo(() => {
-		if (!isStreaming) return false
-		const lastMessage = messages[messages.length - 1]
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-		return lastMessage && lastMessage.role === "assistant" && lastMessage.content.length === 0
-	}, [isStreaming, messages])
+	const isWaitingForResponse = sandboxClass.isWaitingForResponse(projectUUID)
 
 	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.role === "user")
@@ -116,6 +109,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 					<SingleSandboxMessage
 						key={`${projectUUID}-${index}`}
 						message={message}
+						isStreaming={isStreaming && index === messages.length - 1}
 					/>
 				))}
 			</ChatMessagesFramework>

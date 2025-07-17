@@ -84,15 +84,7 @@ function ChatMessagesFramework(props: Props) {
 
 		// Only auto-scroll if enabled and either not streaming or user hasn't manually scrolled
 		if (autoScrollEnabled && (!isStreaming || !userScrolledDuringStream.current)) {
-			// Determine scroll behavior based on the most recent message
-			let behavior: ScrollBehavior = "smooth"
-
-			// Use smooth scrolling for streaming assistant responses to follow the text
-			if (isStreaming && messageLength > 0) {
-				behavior = "smooth"
-			}
-
-			scrollToBottom(behavior)
+			scrollToBottom("smooth")
 		}
 	}, [messageLength, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
 

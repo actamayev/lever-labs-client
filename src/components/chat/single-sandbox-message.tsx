@@ -2,6 +2,7 @@
 "use client"
 
 import Image from "next/image"
+import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
@@ -12,8 +13,34 @@ import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 
-function SingleSandboxMessage({ message } : { message: SandboxChatMessage }) {
+interface SingleSandboxMessageProps {
+	message: SandboxChatMessage
+	isStreaming?: boolean
+}
+
+function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps) {
 	const isUser = message.role === "user"
+	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
+
+	// Don't render assistant messages that are streaming with no content yet
+	if (!isUser && isStreamingWithNoContent) {
+		return (
+			<div className="flex gap-3 min-w-0 w-full justify-start">
+				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+					<AvatarFallback className="bg-macaw text-white">
+						<BotMessageSquare className="w-4 h-4" />
+					</AvatarFallback>
+				</Avatar>
+				<div className="flex items-center gap-1 py-2">
+					<div className="flex space-x-1">
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce"></div>
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+						<div className="w-1.5 h-1.5 bg-hare rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div
