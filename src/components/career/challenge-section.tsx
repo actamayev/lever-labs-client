@@ -26,6 +26,7 @@ import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
+	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
 
 	// Initialize challenge in career quest class and get extended data
 	useEffect(() => {
@@ -117,6 +118,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							className="w-full bg-beetle-2 text-white rounded-xl text-lg font-semibold py-3"
 							shadowColor="rgb(140, 80, 200)"
 							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
+							disabled={isStreaming}
 						>
 							GET HINT
 						</TactileButton>
@@ -150,6 +152,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							)}
 							shadowClass={foxColors.shadow}
 							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
+							disabled={isStreaming}
 						>
 							CHECK CODE
 						</TactileButton>

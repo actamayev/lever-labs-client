@@ -8,7 +8,12 @@ import { oneDark, oneLight } from "react-syntax-highlighter/dist/cjs/styles/pris
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function AssistantMessageMarkdown({ messageContent } : { messageContent: string }) {
+interface AssistantMessageMarkdownProps {
+	messageContent: string
+	forceDarkMode?: boolean
+}
+
+function AssistantMessageMarkdown({ messageContent, forceDarkMode = false } : AssistantMessageMarkdownProps) {
 	return (
 		<div className="text-sm prose prose-sm max-w-none dark:prose-invert">
 			<ReactMarkdown
@@ -17,7 +22,8 @@ function AssistantMessageMarkdown({ messageContent } : { messageContent: string 
 					code({ node: _node, className, children, ...props }) {
 						const match = /language-(\w+)/.exec(className || "")
 						const isInline = !match
-						const syntaxTheme = personalInfoClass.defaultSiteTheme === "dark" ? oneDark : oneLight
+						const shouldUseDarkTheme = forceDarkMode || personalInfoClass.defaultSiteTheme === "dark"
+						const syntaxTheme = shouldUseDarkTheme ? oneDark : oneLight
 
 						return !isInline ? (
 							<SyntaxHighlighter
@@ -31,7 +37,9 @@ function AssistantMessageMarkdown({ messageContent } : { messageContent: string 
 						) : (
 							<code
 								className={cn(
-									"bg-gray-200 dark:bg-gray-600 px-1 py-0.5 rounded text-xs font-mono",
+									forceDarkMode
+										? "bg-gray-600 text-gray-100 px-1 py-0.5 rounded text-xs font-mono"
+										: "bg-gray-200 dark:bg-gray-600 px-1 py-0.5 rounded text-xs font-mono",
 									className
 								)}
 								{...props}

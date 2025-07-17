@@ -100,7 +100,10 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 						{getMessageText()}
 					</p>
 				) : (
-					<AssistantMessageMarkdown messageContent={message.content} />
+					<AssistantMessageMarkdown
+						messageContent={message.content}
+						forceDarkMode={isHintResponse}
+					/>
 				)}
 			</div>
 
