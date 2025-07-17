@@ -87,13 +87,13 @@ function ChatMessagesFramework<T extends { role: string; timestamp: Date; conten
 			// Determine scroll behavior based on the most recent message
 			let behavior: ScrollBehavior = "smooth"
 
-			// Use instant scrolling only for streaming assistant responses that already have content
+			// Use smooth scrolling for streaming assistant responses to follow the text
 			if (isStreaming && messages.length > 0) {
 				const lastMessage = messages[messages.length - 1]
-				// If the last message is from assistant and we're streaming, use instant scroll
-				// BUT only if the message already has content (not the initial empty streaming message)
-				if (lastMessage.role === "assistant" && lastMessage.content.length > 0) {
-					behavior = "auto"
+				// If the last message is from assistant and we're streaming, use smooth scroll
+				// to continuously follow the streaming content
+				if (lastMessage.role === "assistant") {
+					behavior = "smooth"
 				}
 			}
 
