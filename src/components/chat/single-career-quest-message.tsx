@@ -12,14 +12,23 @@ import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
+import HintButton from "./hint-button"
+import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
+
+interface SingleCareerQuestMessageProps {
+	message: CareerQuestChatMessage
+	challengeId?: string
+	cppCode?: string
+}
 
 // eslint-disable-next-line max-lines-per-function
-function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessage }) {
+function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCareerQuestMessageProps) {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
+	const shouldShowHintButton = message.shouldShowHintButton && challengeId && cppCode
 
 	// Determine message bubble styles
 	const getMessageBubbleStyles = () => {
@@ -84,25 +93,35 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 				</Avatar>
 			)}
 
-			<div
-				className={cn(
-					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					getMessageBubbleStyles()
-				)}
-				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-			>
-				{isUser ? (
-					// For user messages, check if it's a special request type
-					<p
-						className="text-sm whitespace-pre-wrap"
-						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-					>
-						{getMessageText()}
-					</p>
-				) : (
-					<AssistantMessageMarkdown
-						messageContent={message.content}
-						forceDarkMode={isHintResponse}
+			<div className="flex flex-col flex-1">
+				<div
+					className={cn(
+						"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
+						getMessageBubbleStyles()
+					)}
+					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+				>
+					{isUser ? (
+						// For user messages, check if it's a special request type
+						<p
+							className="text-sm whitespace-pre-wrap"
+							style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+						>
+							{getMessageText()}
+						</p>
+					) : (
+						<AssistantMessageMarkdown
+							messageContent={message.content}
+							forceDarkMode={isHintResponse}
+						/>
+					)}
+				</div>
+
+				{shouldShowHintButton && (
+					<HintButton
+						challengeId={challengeId}
+						cppCode={cppCode}
+						onHintRequest={requestCareerQuestHint}
 					/>
 				)}
 			</div>

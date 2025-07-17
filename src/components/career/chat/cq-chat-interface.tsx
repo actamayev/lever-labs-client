@@ -141,6 +141,8 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 					<SingleMessage
 						key={message.id}
 						message={message}
+						challengeId={challengeData.id}
+						cppCode={cppCode}
 					/>
 				))}
 			</ChatMessagesFramework>

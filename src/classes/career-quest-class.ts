@@ -125,6 +125,9 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
 
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
+
 		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
@@ -138,6 +141,9 @@ class CareerQuestClass {
 	public addHintRequestMessage = action((challengeId: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
+
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
 
 		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
@@ -153,6 +159,9 @@ class CareerQuestClass {
 	public addCheckCodeRequestMessage = action((challengeId: string): void => {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
+
+		// Hide hint button from all messages when a new message is added
+		this.hideHintButtonForAllMessages(challengeId)
 
 		const message: CareerQuestChatMessage = {
 			id: `check-code-request-${Date.now()}`,
@@ -174,10 +183,23 @@ class CareerQuestClass {
 			role: "assistant",
 			content: evaluationResult.feedback,
 			timestamp: new Date(),
-			evaluationResult
+			evaluationResult,
+			shouldShowHintButton: !evaluationResult.isCorrect // Show hint button for incorrect results
 		}
 
 		challengeData.messages.push(message)
+	})
+
+	// Hide hint button from all messages in a challenge
+	public hideHintButtonForAllMessages = action((challengeId: string): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		challengeData.messages.forEach(message => {
+			if (message.shouldShowHintButton) {
+				message.shouldShowHintButton = false
+			}
+		})
 	})
 
 	// Start streaming for a challenge

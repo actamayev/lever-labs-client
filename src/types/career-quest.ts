@@ -49,6 +49,7 @@ declare global {
 		evaluationResult?: BinaryEvaluationResult
 		isHintRequest?: boolean
 		isHintResponse?: boolean
+		shouldShowHintButton?: boolean
 	}
 }
 
