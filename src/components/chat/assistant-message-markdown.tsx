@@ -3,10 +3,15 @@
 
 import { observer } from "mobx-react"
 import ReactMarkdown from "react-markdown"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
+import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp"
 import { oneDark, oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism"
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
+
+// Register only the C++ language
+SyntaxHighlighter.registerLanguage("cpp", cpp)
+SyntaxHighlighter.registerLanguage("c++", cpp) // Register both cpp and c++ aliases
 
 interface AssistantMessageMarkdownProps {
 	messageContent: string
