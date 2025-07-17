@@ -30,7 +30,6 @@ export default async function checkCareerQuestCode(
 			isCorrect: response.data.isCorrect,
 			feedback: response.data.feedback
 		})
-		careerQuestClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
