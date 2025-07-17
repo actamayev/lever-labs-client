@@ -110,7 +110,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				isWaitingForResponse={isWaitingForResponse}
 				messagesEndRef={messagesEndRef}
 				isStreaming={isStreaming}
-				messages={messages}
+				messageLength={messages.length}
 			>
 				{messages.map((message, index) => (
 					<SingleSandboxMessage

@@ -6,18 +6,18 @@ import { RefObject, useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
-interface Props<T extends { role: string; timestamp: Date; content: string }> {
+interface Props {
 	hasAnyMessages: boolean
 	children: React.ReactNode
 	isWaitingForResponse: boolean
 	isStreaming: boolean
 	messagesEndRef: RefObject<HTMLDivElement>
-	messages: T[] // Generic messages prop to track actual message changes
+	messageLength: number
 }
 
 // eslint-disable-next-line max-lines-per-function
-function ChatMessagesFramework<T extends { role: string; timestamp: Date; content: string }>(props: Props<T>) {
-	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef, messages } = props
+function ChatMessagesFramework(props: Props) {
+	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef, messageLength } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
@@ -88,18 +88,13 @@ function ChatMessagesFramework<T extends { role: string; timestamp: Date; conten
 			let behavior: ScrollBehavior = "smooth"
 
 			// Use smooth scrolling for streaming assistant responses to follow the text
-			if (isStreaming && messages.length > 0) {
-				const lastMessage = messages[messages.length - 1]
-				// If the last message is from assistant and we're streaming, use smooth scroll
-				// to continuously follow the streaming content
-				if (lastMessage.role === "assistant") {
-					behavior = "smooth"
-				}
+			if (isStreaming && messageLength > 0) {
+				behavior = "smooth"
 			}
 
 			scrollToBottom(behavior)
 		}
-	}, [messages.length, messages, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
+	}, [messageLength, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
 
 	// Reset when streaming ends
 	useEffect(() => {

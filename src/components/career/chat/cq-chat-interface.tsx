@@ -120,7 +120,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				isWaitingForResponse={isWaitingForResponse}
 				isStreaming={isStreaming}
 				messagesEndRef={messagesEndRef}
-				messages={messages}
+				messageLength={messages.length}
 			>
 				{messages.map((message) => (
 					<SingleCareerQuestMessage
