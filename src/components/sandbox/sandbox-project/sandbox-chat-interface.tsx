@@ -11,7 +11,7 @@ import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
 import deleteSandboxChat from "../../../utils/chat/delete-sandbox-chat"
-import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
+import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 
 interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
@@ -102,7 +102,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		<ChatParentComponent>
 			{/* Chat Header with Delete Button */}
 			{hasAnyMessages && (
-				<DeleteChatHistoryHeader
+				<ClearChatHistoryHeader
 					showDeleteConfirmation={showDeleteConfirmation}
 					handleDeleteClick={handleDeleteClick}
 					handleConfirmDelete={handleConfirmDelete}

@@ -6,7 +6,7 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-career-quest-message"
 import careerQuestClass from "../../../classes/career-quest-class"
-import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
+import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
@@ -116,7 +116,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		<ChatParentComponent>
 			{/* Chat Header with Delete Button */}
 			{hasAnyMessages && (
-				<DeleteChatHistoryHeader
+				<ClearChatHistoryHeader
 					showDeleteConfirmation={showDeleteConfirmation}
 					handleDeleteClick={handleDeleteClick}
 					handleConfirmDelete={handleConfirmDelete}
