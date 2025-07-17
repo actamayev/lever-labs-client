@@ -6,7 +6,7 @@ import { RefObject, useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
-interface Props<T extends { role: string; timestamp: Date }> {
+interface Props<T extends { role: string; timestamp: Date; content: string }> {
 	hasAnyMessages: boolean
 	children: React.ReactNode
 	isWaitingForResponse: boolean
@@ -16,7 +16,7 @@ interface Props<T extends { role: string; timestamp: Date }> {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function ChatMessagesFramework<T extends { role: string; timestamp: Date }>(props: Props<T>) {
+function ChatMessagesFramework<T extends { role: string; timestamp: Date; content: string }>(props: Props<T>) {
 	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef, messages } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
@@ -87,11 +87,12 @@ function ChatMessagesFramework<T extends { role: string; timestamp: Date }>(prop
 			// Determine scroll behavior based on the most recent message
 			let behavior: ScrollBehavior = "smooth"
 
-			// Use instant scrolling only for streaming assistant responses
+			// Use instant scrolling only for streaming assistant responses that already have content
 			if (isStreaming && messages.length > 0) {
 				const lastMessage = messages[messages.length - 1]
 				// If the last message is from assistant and we're streaming, use instant scroll
-				if (lastMessage.role === "assistant") {
+				// BUT only if the message already has content (not the initial empty streaming message)
+				if (lastMessage.role === "assistant" && lastMessage.content.length > 0) {
 					behavior = "auto"
 				}
 			}
