@@ -10,6 +10,7 @@ import pipClass from "../../classes/pip-class"
 import { Separator } from "../shadcn/ui/separator"
 import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { getDuolingoColors } from "../../utils/duolingo-utils"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -120,6 +121,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
 							disabled={isStreaming}
 						>
+							<CustomLightbulb className="w-4 h-4" />
 							GET HINT
 						</TactileButton>
 					</div>
