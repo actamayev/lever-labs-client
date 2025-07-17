@@ -154,7 +154,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							)}
 							shadowClass={foxColors.shadow}
 							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
-							disabled={isStreaming}
+							disabled={isStreaming || isEmpty(cppCode)}
 						>
 							CHECK CODE
 						</TactileButton>
