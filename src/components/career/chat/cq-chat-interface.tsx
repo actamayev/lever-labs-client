@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { ChallengeData } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useMemo, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleMessage from "../../chat/single-career-quest-message"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -29,6 +29,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const messages = careerQuestClass.getMessages(challengeData.id)
 	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
 	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
+	const isWaitingForResponse = careerQuestClass.isWaitingForResponse(challengeData.id)
 
 	useEffect(() => {
 		if (messagesEndRef.current) {
@@ -44,13 +45,6 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	useEffect(() => {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
-
-	// Check if we're waiting for a response (streaming message with no content yet)
-	const isWaitingForResponse = useMemo(() => {
-		if (!isStreaming) return false
-		const streamingMessage = messages.find(msg => msg.isStreaming)
-		return streamingMessage ? streamingMessage.content.length === 0 : false
-	}, [isStreaming, messages])
 
 	// Check if there have been user messages
 	const hasUserMessages = messages.some(message => message.role === "user")

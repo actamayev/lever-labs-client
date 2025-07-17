@@ -16,6 +16,7 @@ import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 interface ExtendedChallengeData extends ChallengeData {
 	messages: CareerQuestChatMessage[]
 	isStreaming: boolean
+	isWaitingForResponse: boolean
 	currentStreamingMessageId: string | null
 	currentInteractionType: InteractionType | null
 	isRetrievingMessages: boolean
@@ -41,6 +42,7 @@ class CareerQuestClass {
 			...staticChallengeData,
 			messages: [],
 			isStreaming: false,
+			isWaitingForResponse: false,
 			currentStreamingMessageId: null,
 			currentInteractionType: null,
 			isRetrievingMessages: false,
@@ -128,6 +130,9 @@ class CareerQuestClass {
 		// Hide hint button from all messages when a new message is added
 		this.hideHintButtonForAllMessages(challengeId)
 
+		// Set waiting for response when sending user message
+		challengeData.isWaitingForResponse = true
+
 		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
@@ -144,6 +149,9 @@ class CareerQuestClass {
 
 		// Hide hint button from all messages when a new message is added
 		this.hideHintButtonForAllMessages(challengeId)
+
+		// Set waiting for response when requesting hint
+		challengeData.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
@@ -163,6 +171,9 @@ class CareerQuestClass {
 		// Hide hint button from all messages when a new message is added
 		this.hideHintButtonForAllMessages(challengeId)
 
+		// Set waiting for response when checking code
+		challengeData.isWaitingForResponse = true
+
 		const message: CareerQuestChatMessage = {
 			id: `check-code-request-${Date.now()}`,
 			role: "user",
@@ -177,6 +188,9 @@ class CareerQuestClass {
 	public addEvaluationResultMessage = action((challengeId: string, evaluationResult: BinaryEvaluationResult): void => {
 		const challengeData = this.getChallengeData(challengeId)
 		if (isUndefined(challengeData)) return
+
+		// Set waiting for response to false when receiving evaluation result
+		challengeData.isWaitingForResponse = false
 
 		const message: CareerQuestChatMessage = {
 			id: `evaluation-result-${Date.now()}`,
@@ -206,6 +220,9 @@ class CareerQuestClass {
 	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
 		const challengeData = this.getChallengeData(startEvent.challengeId)
 		if (isUndefined(challengeData)) return
+
+		// Set waiting for response to false when streaming starts
+		challengeData.isWaitingForResponse = false
 
 		// Create streaming message placeholder
 		const streamingMessage: CareerQuestChatMessage = {
@@ -282,6 +299,19 @@ class CareerQuestClass {
 		const challengeData = this.getChallengeData(challengeId)
 		return challengeData?.isStreaming || false
 	}
+
+	// Check if waiting for response for a challenge
+	public isWaitingForResponse(challengeId: string): boolean {
+		const challengeData = this.getChallengeData(challengeId)
+		return challengeData?.isWaitingForResponse || false
+	}
+
+	// Set waiting for response state
+	public setWaitingForResponse = action((challengeId: string, isWaiting: boolean): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+		challengeData.isWaitingForResponse = isWaiting
+	})
 
 	// Stream ID management methods
 	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {

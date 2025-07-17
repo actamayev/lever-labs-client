@@ -122,7 +122,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							disabled={isStreaming}
 						>
 							<CustomLightbulb className="w-4 h-4" />
-							GET HINT
+							GET A HINT
 						</TactileButton>
 					</div>
 				</div>

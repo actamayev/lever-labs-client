@@ -93,7 +93,38 @@ function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCaree
 				</Avatar>
 			)}
 
-			<div className="flex flex-col flex-1">
+			{shouldShowHintButton ? (
+				<div className="flex flex-col flex-1">
+					<div
+						className={cn(
+							"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
+							getMessageBubbleStyles()
+						)}
+						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+					>
+						{isUser ? (
+							// For user messages, check if it's a special request type
+							<p
+								className="text-sm whitespace-pre-wrap"
+								style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+							>
+								{getMessageText()}
+							</p>
+						) : (
+							<AssistantMessageMarkdown
+								messageContent={message.content}
+								forceDarkMode={isHintResponse}
+							/>
+						)}
+					</div>
+
+					<HintButton
+						challengeId={challengeId}
+						cppCode={cppCode}
+						onHintRequest={requestCareerQuestHint}
+					/>
+				</div>
+			) : (
 				<div
 					className={cn(
 						"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
@@ -116,15 +147,7 @@ function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCaree
 						/>
 					)}
 				</div>
-
-				{shouldShowHintButton && (
-					<HintButton
-						challengeId={challengeId}
-						cppCode={cppCode}
-						onHintRequest={requestCareerQuestHint}
-					/>
-				)}
-			</div>
+			)}
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
