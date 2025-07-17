@@ -5,30 +5,28 @@ import Image from "next/image"
 import isNull from "lodash-es/isNull"
 import isUndefined from "lodash-es/isUndefined"
 import { observer } from "mobx-react"
-import { BotMessageSquare } from "lucide-react"
+import { BotMessageSquare, PartyPopper, X } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
+import { CustomLightbulb } from "../icons/custom-lightbulb"
 
+// eslint-disable-next-line max-lines-per-function
 function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessage }) {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
+	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
-
-	// Determine alignment based on message type
-	const getAlignment = () => {
-		if (isCheckCodeRequest || isHintRequest) return "justify-center"
-		return isUser ? "justify-end" : "justify-start"
-	}
 
 	// Determine message bubble styles
 	const getMessageBubbleStyles = () => {
 		if (isCheckCodeRequest) return "bg-fox text-white"
-		if (isHintRequest) return "bg-beetle text-white"
-		if (isUser) return "bg-humpback text-white ml-auto"
+		if (isHintRequest) return "bg-beetle-2 text-white"
+		if (isHintResponse) return "bg-beetle-2 text-white"
+		if (isUser) return "bg-iMessageBlue text-white ml-auto"
 		if (isEvaluationResult) {
 			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
 			return "bg-red-200 text-black"
@@ -39,20 +37,50 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 	// Determine message text for special user requests
 	const getMessageText = () => {
 		if (isCheckCodeRequest) return "Is my code correct?"
-		if (isHintRequest) return "Can you please give me a hint for this challenge"
+		if (isHintRequest) return "Can you please give me a hint?"
 		return message.content
+	}
+
+	function AssistantAvatar() {
+		if (isHintResponse) {
+			return (
+				<AvatarFallback className="bg-beetle-2 text-white">
+					<CustomLightbulb className="w-4 h-4" />
+				</AvatarFallback>
+			)
+		}
+		else if (isEvaluationResult) {
+			if (message.evaluationResult?.isCorrect) {
+				return (
+					<AvatarFallback className="bg-chargingGreen text-white">
+						<PartyPopper className="w-4 h-4" />
+					</AvatarFallback>
+				)
+			}
+			return (
+				<AvatarFallback className="bg-red-200 text-black">
+					<X className="w-4 h-4" />
+				</AvatarFallback>
+			)
+		}
+		return (
+			<AvatarFallback className="bg-macaw text-white">
+				<BotMessageSquare className="w-4 h-4" />
+			</AvatarFallback>
+		)
 	}
 
 	return (
 		<div
 			key={message.id}
-			className={`flex gap-3 min-w-0 w-full ${getAlignment()}`}
+			className={cn(
+				"flex gap-3 min-w-0 w-full",
+				isUser ? "justify-end" : "justify-start"
+			)}
 		>
 			{!isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					<AvatarFallback className="bg-macaw text-white">
-						<BotMessageSquare className="w-4 h-4" />
-					</AvatarFallback>
+					<AssistantAvatar />
 				</Avatar>
 			)}
 
@@ -76,7 +104,7 @@ function SingleCareerQuestMessage({ message } : { message: CareerQuestChatMessag
 				)}
 			</div>
 
-			{isUser && !isCheckCodeRequest && !isHintRequest && (
+			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
 					{!isNull(personalInfoClass.profilePictureUrl) ? (
 						<Image

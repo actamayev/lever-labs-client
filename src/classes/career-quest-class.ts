@@ -8,7 +8,8 @@ import {
 	CqChatbotStreamChunkEvent,
 	CqChatbotStreamCompleteEvent,
 	BlocklyJson,
-	ChallengeData
+	ChallengeData,
+	BinaryEvaluationResult
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
@@ -159,6 +160,21 @@ class CareerQuestClass {
 			content: "?",
 			timestamp: new Date(),
 			isCheckCodeRequest: true
+		}
+
+		challengeData.messages.push(message)
+	})
+
+	public addEvaluationResultMessage = action((challengeId: string, evaluationResult: BinaryEvaluationResult): void => {
+		const challengeData = this.getChallengeData(challengeId)
+		if (isUndefined(challengeData)) return
+
+		const message: CareerQuestChatMessage = {
+			id: `evaluation-result-${Date.now()}`,
+			role: "assistant",
+			content: evaluationResult.feedback,
+			timestamp: new Date(),
+			evaluationResult
 		}
 
 		challengeData.messages.push(message)

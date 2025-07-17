@@ -48,6 +48,7 @@ declare global {
 		isCheckCodeRequest?: boolean
 		evaluationResult?: BinaryEvaluationResult
 		isHintRequest?: boolean
+		isHintResponse?: boolean
 	}
 }
 

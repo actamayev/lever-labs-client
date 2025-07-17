@@ -78,7 +78,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
 
-	const beeColors = getDuolingoColors("bee")
+	const foxColors = getDuolingoColors("fox")
 
 	return (
 		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
@@ -114,7 +114,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 
 					<div className="pt-4">
 						<TactileButton
-							className="w-full bg-beetle text-white rounded-xl text-lg font-semibold py-3"
+							className="w-full bg-beetle-2 text-white rounded-xl text-lg font-semibold py-3"
 							shadowColor="rgb(140, 80, 200)"
 							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
 						>
@@ -146,9 +146,9 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 						<TactileButton
 							className={cn(
 								"text-white flex items-center justify-center w-auto rounded-xl text-3xl h-12",
-								beeColors.bg
+								foxColors.bg
 							)}
-							shadowClass={beeColors.shadow}
+							shadowClass={foxColors.shadow}
 							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
 						>
 							CHECK CODE

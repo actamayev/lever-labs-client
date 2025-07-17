@@ -26,6 +26,10 @@ export default async function checkCareerQuestCode(
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) return
 
+		careerQuestClass.addEvaluationResultMessage(careerQuestChallengeId, {
+			isCorrect: response.data.isCorrect,
+			feedback: response.data.feedback
+		})
 		careerQuestClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
 	} catch (error) {
 		console.error(error)

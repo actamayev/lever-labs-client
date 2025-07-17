@@ -49,14 +49,30 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 					timestamp: timestamp,
 					evaluationResult: msg.codeSubmissionData.evaluationResult
 				})
+			} else if (msg.isHint) {
+				transformedMessages.push({
+					id: `user-hintRequest-${timestamp.getTime()}`,
+					role: "user",
+					content: "Can you please give me a hint?",
+					timestamp: timestamp,
+					isHintRequest: true
+				})
+
+				// 2. Model's hint response message
+				transformedMessages.push({
+					id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
+					role: msg.role,
+					content: msg.content,
+					timestamp: timestamp,
+					isHintResponse: true
+				})
 			} else {
 				// Normal message (not a code submission)
 				transformedMessages.push({
 					id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`,
 					role: msg.role,
 					content: msg.content,
-					timestamp: timestamp,
-					isHintRequest: msg.isHint
+					timestamp: timestamp
 				})
 			}
 		})
