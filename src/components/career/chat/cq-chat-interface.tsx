@@ -22,7 +22,6 @@ interface ChatInterfaceProps {
 function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
@@ -119,7 +118,6 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
 				isStreaming={isStreaming}
-				messagesEndRef={messagesEndRef}
 				messageLength={messages.length}
 			>
 				{messages.map((message) => (

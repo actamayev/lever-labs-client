@@ -22,7 +22,6 @@ interface SandboxChatInterfaceProps {
 function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
-	const messagesEndRef = useRef<HTMLDivElement>(null)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages and streaming state from sandbox class
@@ -101,7 +100,6 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 			<ChatMessagesFramework
 				hasAnyMessages={hasAnyMessages}
 				isWaitingForResponse={isWaitingForResponse}
-				messagesEndRef={messagesEndRef}
 				isStreaming={isStreaming}
 				messageLength={messages.length}
 			>

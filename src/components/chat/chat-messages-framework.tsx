@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { ArrowDown, BotMessageSquare } from "lucide-react"
-import { RefObject, useEffect, useRef, useState, useCallback } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 
@@ -11,18 +11,18 @@ interface Props {
 	children: React.ReactNode
 	isWaitingForResponse: boolean
 	isStreaming: boolean
-	messagesEndRef: RefObject<HTMLDivElement>
 	messageLength: number
 }
 
 // eslint-disable-next-line max-lines-per-function
 function ChatMessagesFramework(props: Props) {
-	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messagesEndRef, messageLength } = props
+	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messageLength } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
 	const [autoScrollEnabled, setAutoScrollEnabled] = useState(true)
 	const userScrolledDuringStream = useRef(false)
 	const isScrollingProgrammatically = useRef(false)
+	const messagesEndRef = useRef<HTMLDivElement>(null)
 
 	// Check if user is at bottom of chat
 	const checkIfAtBottom = useCallback(() => {
