@@ -2,7 +2,7 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, ProjectUUID, SandboxProject, ChatMessage,
+import { BlocklyJson, ProjectUUID, SandboxProject, SandboxChatMessage,
 	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 
@@ -103,7 +103,7 @@ class SandboxClass {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const message: ChatMessage = {
+		const message: SandboxChatMessage = {
 			role: "user",
 			content,
 			timestamp: new Date()
@@ -117,7 +117,7 @@ class SandboxClass {
 		if (isUndefined(project)) return
 
 		// Create streaming message placeholder
-		const streamingMessage: ChatMessage = {
+		const streamingMessage: SandboxChatMessage = {
 			role: "assistant",
 			content: "",
 			timestamp: new Date()
@@ -181,7 +181,7 @@ class SandboxClass {
 	}
 
 	// Get chat messages for a project
-	public getChatMessages(projectUUID: ProjectUUID): ChatMessage[] {
+	public getChatMessages(projectUUID: ProjectUUID): SandboxChatMessage[] {
 		const project = this.sandboxProjects.get(projectUUID)
 		return project?.sandboxChatMessages || []
 	}

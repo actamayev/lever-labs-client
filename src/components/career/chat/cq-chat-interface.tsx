@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { ChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
-import SingleMessage from "../../chat/single-message"
+import SingleMessage from "../../chat/single-career-quest-message"
 import careerQuestClass from "../../../classes/career-quest-class"
 import DeleteChatHistoryHeader from "../../chat/delete-chat-history-header"
 import ChatParentComponent from "../../chat/chat-parent-component"
@@ -140,10 +140,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				{messages.map((message) => (
 					<SingleMessage
 						key={message.id}
-						message={{
-							messageId: message.id,
-							...message
-						}}
+						message={message}
 					/>
 				))}
 			</ChatMessagesFramework>

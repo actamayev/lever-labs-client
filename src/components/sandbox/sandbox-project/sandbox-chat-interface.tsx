@@ -4,10 +4,10 @@ import { observer } from "mobx-react"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useMemo, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
-import SingleMessage from "../../chat/single-message"
 import sandboxClass from "../../../classes/sandbox-class"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatParentComponent from "../../chat/chat-parent-component"
+import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendSandboxMessage from "../../../utils/chat/send-sandbox-message"
 import deleteSandboxChat from "../../../utils/chat/delete-sandbox-chat"
@@ -119,13 +119,9 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				isStreaming={isStreaming}
 			>
 				{messages.map((message, index) => (
-					<SingleMessage
+					<SingleSandboxMessage
 						key={`${projectUUID}-${index}`}
-						message={{
-							messageId: `${projectUUID}-${message.timestamp}`,
-							role: message.role,
-							content: message.content
-						}}
+						message={message}
 					/>
 				))}
 			</ChatMessagesFramework>

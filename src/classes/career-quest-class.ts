@@ -158,7 +158,7 @@ class CareerQuestClass {
 			role: "user",
 			content: "?",
 			timestamp: new Date(),
-			checkCodeRequest: null
+			isCheckCodeRequest: true
 		}
 
 		challengeData.messages.push(message)
