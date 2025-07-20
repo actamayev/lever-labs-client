@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 "use client"
 
+import { useState } from "react"
 import { observer } from "mobx-react"
-import { useCallback, useState } from "react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import TestSounds from "./test-sounds"
 import { cn } from "../../../lib/shadcn/utils"
@@ -13,6 +13,7 @@ import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import handleVolumeChange from "../../../utils/workbench/handle-volume-change"
 
 // eslint-disable-next-line max-lines-per-function
 function SoundWorkbench() {
@@ -34,13 +35,6 @@ function SoundWorkbench() {
 			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
 		}
 	}
-
-	const handleVolumeChange = useCallback((value: number[]) => {
-		workbenchClass.setVolume(value[0])
-		if (workbenchClass.isMuted && value[0] > 0) {
-			workbenchClass.setIsMuted(false)
-		}
-	}, [])
 
 	const handleKeyDown = (event: React.KeyboardEvent) => {
 		// Prevent arrow keys from changing slider value
@@ -101,7 +95,7 @@ function SoundWorkbench() {
 						</div>
 						<div
 							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-							onClick={changeAudibleStatus}
+							onClick={() => changeAudibleStatus(!workbenchClass.isMuted)}
 						>
 							<div className="text-sm font-medium">MUTE</div>
 							<Checkbox checked={workbenchClass.isMuted} />
