@@ -25,7 +25,7 @@ function ConnectSerialButton() {
 						"border-2 border-transparent rounded-xl",
 						// Active/hover states
 						serialConnectionManagerClass.pipTurnedOn
-							? "!bg-blue dark:!bg-blue"
+							? "!bg-selectedSidebarButtonBackground"
 							: "hover:!bg-polar",
 						// Size and dimensions - apply consistent sizing regardless of collapsible state
 						"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",

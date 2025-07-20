@@ -82,7 +82,7 @@ function SoundWorkbench() {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standardBackground shadow-lg",
+					"bg-standardBackground",
 					"animate-none duration-0",
 				)}
 				side="bottom"

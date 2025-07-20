@@ -8,12 +8,23 @@ import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import { MessageBuilder, tuneToSoundType } from "@bluedotrobots/common-ts"
 
+// eslint-disable-next-line complexity
 export default async function playTune(): Promise<void> {
 	try {
+		if (serialConnectionManagerClass.pipTurnedOn) {
+			const tuneToPlay = workbenchClass.selectedSound
+
+			const soundType = tuneToSoundType[tuneToPlay]
+			const buffer = MessageBuilder.createSoundMessage(soundType)
+
+			await serialConnectionManagerClass.sendBinaryMessage(buffer)
+			return
+		}
 		if (
 			isNull(pipClass.selectedPip) ||
-			(pipClass.selectedPip.pipConnectionStatus === "offline" && !serialConnectionManagerClass.pipTurnedOn)
+			(pipClass.selectedPip.pipConnectionStatus === "offline")
 		) {
 			return toastClass.negative({
 				title: "Pip not connected",

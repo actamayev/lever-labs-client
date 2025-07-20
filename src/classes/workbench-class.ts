@@ -8,7 +8,7 @@ class WorkbenchClass {
 	public isCharging = false
 	public volume = 70
 	public isMuted = true
-	public selectedSound: TuneToPlay = "Breeze"
+	public selectedSound: TuneToPlay = "Chime"
 	public isWiFiDialogOpen: boolean = false
 	public fixedWidth = 0
 	public windowHeight = 0
@@ -44,7 +44,7 @@ class WorkbenchClass {
 	public logout(): void {
 		this.setVolume(70)
 		this.setIsMuted(true)
-		this.setSelectedSound("Breeze")
+		this.setSelectedSound("Chime")
 		this.setIsWiFiDialogOpen(false)
 		this.setFixedWidth(0)
 		this.setWindowHeight(0)

@@ -6,13 +6,13 @@ import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { TuneToPlay } from "@bluedotrobots/common-ts"
 import { ChevronDown } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
+import { cn } from "../../../lib/shadcn/utils"
 import playTune from "../../../utils/workbench/play-tune"
 import workbenchClass from "../../../classes/workbench-class"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
@@ -24,7 +24,7 @@ interface Props {
 
 function TestSounds(props: Props) {
 	const { isDropdownOpen, setIsDropdownOpen } = props
-	const testSounds: TuneToPlay[] = ["Breeze", "Chime", "Chirp", "Pop", "Splash"]
+	const testSounds: TuneToPlay[] = ["Chime", "Chirp", "Drop", "Pop"]
 
 	return (
 		<div className="space-y-3">
@@ -47,7 +47,7 @@ function TestSounds(props: Props) {
 								className={cn(
 									buttonVariants({
 										variant: "outline",
-										className: "flex items-center gap-1 rounded-xl justify-between w-full h-9 px-2"
+										className: "flex items-center gap-1 rounded-xl justify-between w-full h-9 px-2 shadow-none"
 									}),
 									workbenchClass.isMuted && "opacity-50 pointer-events-none"
 								)}
@@ -59,7 +59,7 @@ function TestSounds(props: Props) {
 							</div>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
-							className="rounded-xl bg-standardBackground border-swan"
+							className="rounded-xl bg-standardBackground border-swan shadow-none"
 							align="end"
 						>
 							{testSounds.map((sound) => (
