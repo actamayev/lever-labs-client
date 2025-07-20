@@ -26,7 +26,7 @@ function BatteryWorkbench() {
 		if (workbenchClass.batteryData?.isCharging) {
 			return `Estimated time to full charge: ${workbenchClass.batteryData?.estimatedTimeToFull} minutes`
 		}
-		return `Estimated time remaining: ${workbenchClass.batteryData?.estimatedTimeToEmpty} minutes`
+		return ""
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.batteryData?.isCharging])
 
@@ -73,19 +73,17 @@ function BatteryWorkbench() {
 				sideOffset={5}
 			>
 				<div className="space-y-3">
-					<div className="flex items-center gap-2">
-						<div className={cn("w-2 h-2 rounded-full", getColorClass.replace("text-", "bg-"))} />
-						<span className="font-medium">BATTERY</span>
+					<div className="flex items-center justify-between gap-2">
+						<div className="flex items-center gap-2">
+							<div className={cn("w-2 h-2 rounded-full", getColorClass.replace("text-", "bg-"))} />
+							<span className="font-medium">BATTERY</span>
+						</div>
+						<span className={cn("font-semibold", getColorClass)}>
+							{workbenchClass.batteryData?.stateOfCharge}%
+						</span>
 					</div>
 
 					<div className="space-y-2">
-						<div className="flex justify-between items-center">
-							<span className="text-sm text-eel/70">Charge Level</span>
-							<span className={cn("font-semibold", getColorClass)}>
-								{workbenchClass.batteryData?.stateOfCharge}%
-							</span>
-						</div>
-
 						{workbenchClass.batteryData?.isCharging && (
 							<div className="flex items-center gap-2 text-chargingGreen">
 								<span className="text-lg">⚡</span>
