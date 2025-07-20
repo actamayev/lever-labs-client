@@ -1,21 +1,21 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Sounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts"
 import SoundActionButton from "./sound-action-button"
 import useGarageSoundsUseEffect from "../../../../hooks/garage/garage-sounds-use-effect"
 
 function SoundsSection() {
 	useGarageSoundsUseEffect()
-	const sounds: Sounds[] = [
-		"fart",
-		"monkey",
-		"elephant",
-		"fanfare",
-		"ufo",
-		"countdown",
-		"engine",
-		"robot noise"
+	const sounds: FunSounds[] = [
+		"Fart",
+		"Monkey",
+		"Elephant",
+		"Party",
+		"UFO",
+		"Countdown",
+		"Engine",
+		"Robot"
 	]
 
 	// 4/22/25 TODO: Make the top button hug the top border and the bottom border hug the bottom border

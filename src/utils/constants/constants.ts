@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Sounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts"
 import rgbToBlocklyColor from "../blockly/rgb-to-hex"
 
 export const bentoIconSize = 40
@@ -33,26 +33,26 @@ export const actionMappings: ActionMapping = {
 }
 
 interface SoundMapping {
-	[key: string]: Sounds
+	[key: string]: FunSounds
 }
 
 export const soundMappings: SoundMapping = {
-	"numpad1": "fart",
-	"1": "fart",
-	"numpad2": "monkey",
-	"2": "monkey",
-	"numpad3": "elephant",
-	"3": "elephant",
-	"numpad4": "fanfare",
-	"4": "fanfare",
-	"numpad5": "ufo",
-	"5": "ufo",
-	"numpad6": "countdown",
-	"6": "countdown",
-	"numpad7": "engine",
-	"7": "engine",
-	"numpad8": "robot noise",
-	"8": "robot noise",
+	"numpad1": "Fart",
+	"1": "Fart",
+	"numpad2": "Monkey",
+	"2": "Monkey",
+	"numpad3": "Elephant",
+	"3": "Elephant",
+	"numpad4": "Party",
+	"4": "Party",
+	"numpad5": "UFO",
+	"5": "UFO",
+	"numpad6": "Countdown",
+	"6": "Countdown",
+	"numpad7": "Engine",
+	"7": "Engine",
+	"numpad8": "Robot",
+	"8": "Robot"
 }
 
 export const WORKBENCH_ROUNDING_RADIUS = "48px"

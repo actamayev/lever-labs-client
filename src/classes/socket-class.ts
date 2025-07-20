@@ -8,7 +8,7 @@ import {
 	HornData,
 	LedControlData,
 	MotorControlData,
-	SoundData,
+	PlayFunSoundPayload,
 } from "@bluedotrobots/common-ts"
 import sandboxClass from "./sandbox-class"
 import careerQuestClass from "./career-quest-class"
@@ -107,12 +107,12 @@ class SocketClass {
 		this._socket.emit("headlight-update", headlightDataToSend)
 	})
 
-	public emitSound = action((soundDataToSend: SoundData): void => {
+	public emitFunSound = action((funSoundDataToSend: PlayFunSoundPayload): void => {
 		// This is for sending socket messages to the backend
 		if (!this._socket || !this.isConnected) {
 			return console.error("Socket not connected")
 		}
-		this._socket.emit("play-sound", soundDataToSend)
+		this._socket.emit("play-fun-sound", funSoundDataToSend)
 	})
 
 	public logout = action((): void => {
