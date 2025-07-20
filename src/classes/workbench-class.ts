@@ -46,22 +46,38 @@ class WorkbenchClass {
 		this.batteryDataLastUpdated = null
 	})
 
+	private initializeBatteryData = action((): void => {
+		this.batteryData = {
+			stateOfCharge: 0,
+			voltage: 0,
+			current: 0,
+			power: 0,
+			remainingCapacity: 0,
+			fullCapacity: 0,
+			health: 0,
+			isCharging: false,
+			isDischarging: false,
+			isLowBattery: false,
+			isCriticalBattery: false,
+			estimatedTimeToEmpty: 0,
+			estimatedTimeToFull: 0,
+		}
+	})
+
 	// These are my types for the battery data item:
 	// Helper that properly types the assignment
 	private assignBatteryValue<K extends keyof BatteryMonitorData>(
-		target: BatteryMonitorData,
 		key: K,
 		value: BatteryMonitorData[K]
 	): void {
-		target[key] = value
+		if (!this.batteryData) {
+			this.initializeBatteryData()
+		}
+		(this.batteryData as BatteryMonitorData)[key] = value
 	}
 
 	public setBatteryDataItem = action((batteryDataItem: BatteryMonitorDataItem): void => {
-		if (!this.batteryData) return
-
-		// TypeScript inference works properly here
 		this.assignBatteryValue(
-			this.batteryData,
 			batteryDataItem.key,
 			batteryDataItem.value as BatteryMonitorData[typeof batteryDataItem.key]
 		)
