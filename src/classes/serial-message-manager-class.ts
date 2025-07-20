@@ -2,9 +2,11 @@
 
 import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
-	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload,
+	WiFiConnectionStatus, BatteryMonitorDataItem } from "@bluedotrobots/common-ts"
 import handleUsbConnectionMotors from "../utils/socket/handle-usb-connection-motors"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
+import workbenchClass from "./workbench-class"
 
 interface MessageSentData {
 	content: string
@@ -126,6 +128,7 @@ class SerialMessageManagerClass {
 
 	// eslint-disable-next-line complexity
 	private handleStructuredMessage(message: ESPMessage): void {
+		console.info("Structured message:", message)
 		switch (message.route) {
 		case "/pip-id": {
 			runInAction(() => {
@@ -207,6 +210,17 @@ class SerialMessageManagerClass {
 
 		case "/program-paused-usb": {
 			handleUsbConnectionMotors(message.payload as StandardJsonStatusMessage)
+			break
+		}
+		case "/battery-monitor-data-item": {
+			const batteryDataItem = message.payload as BatteryMonitorDataItem
+			runInAction(() => {
+				workbenchClass.setBatteryDataItem(batteryDataItem)
+			})
+			break
+		}
+		case "/battery-monitor-data-complete": {
+			workbenchClass.setBatteryDataLastUpdated(new Date())
 			break
 		}
 		default:

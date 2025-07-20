@@ -25,10 +25,13 @@ function NetworkWorkbench() {
 		if (isNull(pipClass.selectedPip)) return null
 		else if (pipClass.selectedPip.pipConnectionStatus === "offline") {
 			return (
-				<WifiOff
-					className={cn(baseClasses, "text-cardinal")}
-					strokeWidth={strokeWidth}
-				/>
+				<div className="flex items-center justify-center flex-col text-cardinal opacity-50">
+					<WifiOff
+						className={cn(baseClasses)}
+						strokeWidth={strokeWidth}
+					/>
+					<span className="text-sm ">OFFLINE</span>
+				</div>
 			)
 		}
 		let colorClasses = ""

@@ -12,31 +12,38 @@ function BatteryWorkbench() {
 
 	// Determine color class based on battery state
 	const getColorClass = useMemo(() => {
-		if (workbenchClass.isCharging) return "text-chargingGreen"
-		if (workbenchClass.batteryPercentage <= 20) return "text-cardinal"
-		else if (workbenchClass.batteryPercentage <= 40) return "text-bee"
-		else if (workbenchClass.batteryPercentage <= 70) return "text-fox"
+		if (!workbenchClass.batteryData) return "opacity-50 text-cardinal"
+		if (workbenchClass.batteryData?.isCharging) return "text-chargingGreen"
+		if (workbenchClass.batteryData?.stateOfCharge <= 20) return "text-cardinal"
+		else if (workbenchClass.batteryData?.stateOfCharge <= 40) return "text-bee"
+		else if (workbenchClass.batteryData?.stateOfCharge <= 70) return "text-fox"
 		return "text-macaw"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [workbenchClass.isCharging, workbenchClass.batteryPercentage])
+	}, [workbenchClass.batteryData?.isCharging, workbenchClass.batteryData?.stateOfCharge])
 
 	const getTimeText = useMemo(() => {
-		if (workbenchClass.isCharging) return "Estimated time to full charge:"
-		return "Estimated time remaining:"
+		if (!workbenchClass.batteryData) return ""
+		if (workbenchClass.batteryData?.isCharging) {
+			return `Estimated time to full charge: ${workbenchClass.batteryData?.estimatedTimeToFull} minutes`
+		}
+		return `Estimated time remaining: ${workbenchClass.batteryData?.estimatedTimeToEmpty} minutes`
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [workbenchClass.isCharging])
+	}, [workbenchClass.batteryData?.isCharging])
 
 	function BatteryWorkbenchToShow() {
 		const baseClasses = "!h-14 !w-14"
 		const strokeWidth = 2.5
-		if (workbenchClass.isCharging) {
+		if (workbenchClass.batteryData?.isCharging) {
 			return <BatteryCharging className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		}
-		if (workbenchClass.batteryPercentage <= 20) {
+		if (!workbenchClass.batteryData?.stateOfCharge) {
+			return <BatteryFull className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
+		}
+		if (workbenchClass.batteryData?.stateOfCharge <= 20) {
 			return <BatteryWarning className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
-		} else if (workbenchClass.batteryPercentage <= 40) {
+		} else if (workbenchClass.batteryData?.stateOfCharge <= 40) {
 			return <BatteryLow className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
-		} else if (workbenchClass.batteryPercentage <= 70) {
+		} else if (workbenchClass.batteryData?.stateOfCharge <= 70) {
 			return <BatteryMedium className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
 		}
 		return <BatteryFull className={cn(baseClasses, getColorClass)} strokeWidth={strokeWidth}/>
@@ -49,7 +56,7 @@ function BatteryWorkbench() {
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryWorkbenchToShow />
 						<span className={cn("text-base font-medium -mt-2 text-center", getColorClass)}>
-							{workbenchClass.batteryPercentage}%
+							{workbenchClass.batteryData?.stateOfCharge}%
 						</span>
 					</WorkbenchIconTemplate>
 				</div>
@@ -75,11 +82,11 @@ function BatteryWorkbench() {
 						<div className="flex justify-between items-center">
 							<span className="text-sm text-eel/70">Charge Level</span>
 							<span className={cn("font-semibold", getColorClass)}>
-								{workbenchClass.batteryPercentage}%
+								{workbenchClass.batteryData?.stateOfCharge}%
 							</span>
 						</div>
 
-						{workbenchClass.isCharging && (
+						{workbenchClass.batteryData?.isCharging && (
 							<div className="flex items-center gap-2 text-chargingGreen">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Charging</span>
@@ -87,7 +94,7 @@ function BatteryWorkbench() {
 						)}
 
 						<div className="text-sm text-eel/70">
-							{getTimeText} <span className="font-medium text-eel">2 hours</span>
+							{getTimeText}
 						</div>
 					</div>
 				</div>
