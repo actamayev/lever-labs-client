@@ -25,29 +25,46 @@ function NetworkWorkbench() {
 		if (isNull(pipClass.selectedPip)) return null
 		else if (pipClass.selectedPip.pipConnectionStatus === "offline") {
 			return (
-				<WifiOff
-					className={cn(baseClasses, "text-cardinal")}
-					strokeWidth={strokeWidth}
-				/>
+				<div className="flex items-center justify-center flex-col text-cardinal opacity-50">
+					<WifiOff
+						className={cn(baseClasses)}
+						strokeWidth={strokeWidth}
+					/>
+					<span className="text-sm ">OFFLINE</span>
+				</div>
 			)
 		}
-		let colorClasses = ""
 		switch (pipClass.selectedPip.pipConnectionStatus) {
 		case "online":
-			colorClasses = "text-macaw"
-			break
+			return (
+				<div className="flex items-center justify-center flex-col text-macaw">
+					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
+					<span className="text-sm">CONNECTED</span>
+				</div>
+			)
 		case "connected to other user":
-			colorClasses = "text-beetle"
-			break
+			return (
+				<div className="flex items-center justify-center flex-col text-beetle">
+					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
+					<span className="text-sm">CONNECTED TO</span>
+					<span className="text-sm">ANOTHER USER</span>
+				</div>
+			)
 		case "connected":
-			colorClasses = "text-green-500"
-			break
+			return (
+				<div className="flex items-center justify-center flex-col text-green-500">
+					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
+					<span className="text-sm">CONNECTED</span>
+				</div>
+			)
 		default:
-			colorClasses = "text-wolf"
+			return (
+				<div className="flex items-center justify-center flex-col text-wolf">
+					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
+					<span className="text-sm">UNKNOWN STATUS</span>
+				</div>
+			)
 		}
-		return (
-			<Wifi className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
-		)
 	})
 
 	const getStatusText = () => {
@@ -186,7 +203,7 @@ function NetworkWorkbench() {
 				<HoverCardContent
 					className={cn(
 						"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-						"bg-standardBackground shadow-lg",
+						"bg-standardBackground",
 						"duration-0 z-30",
 					)}
 					side="bottom"
