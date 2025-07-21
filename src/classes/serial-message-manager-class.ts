@@ -136,10 +136,10 @@ class SerialMessageManagerClass {
 				this.showWiFiSection = true
 				// Add this line:
 				serialConnectionManagerClass.pipTurnedOn = true
-				pipClass.upsertPipData({
+				pipClass.addNewPip({
 					pipUUID: this.pipId,
 					pipName: "Pip",
-					userPipUUIDId: 0,
+					userPipUUIDId: 0, // This means that the pip is connected over serial
 					pipConnectionStatus: "connected to serial"
 				})
 			})

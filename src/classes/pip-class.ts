@@ -39,14 +39,6 @@ class PipClass {
 		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
 	}
 
-	public upsertPipData(pipData: PipData): void {
-		const pipToUpdate = this.pipData.find((pip) => pip.pipUUID === pipData.pipUUID)
-		if (!pipToUpdate) {
-			return this.addNewPip(pipData)
-		}
-		pipToUpdate.pipConnectionStatus = pipData.pipConnectionStatus
-	}
-
 	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
 		return this.pipData.some(
 			data => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
