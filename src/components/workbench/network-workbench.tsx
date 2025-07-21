@@ -207,7 +207,7 @@ function NetworkWorkbench() {
 						"duration-0 z-30",
 					)}
 					side="bottom"
-					align="end"
+					align="center"
 					sideOffset={5}
 				>
 					<div className="space-y-3">
