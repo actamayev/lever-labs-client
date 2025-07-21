@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { IncomingSensorData, LightAnimation, MotorControlInput, Sounds } from "@bluedotrobots/common-ts"
+import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
@@ -38,7 +38,7 @@ class GarageClass {
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
 	public lastThrottlePercent: number = 100
-	public soundPlaying: Sounds | null = null
+	public soundPlaying: FunSounds | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -139,7 +139,7 @@ class GarageClass {
 		this.pressedDirections = directions
 	})
 
-	public setSoundPlaying = action((newSoundPlaying: Sounds | null): void => {
+	public setSoundPlaying = action((newSoundPlaying: FunSounds | null): void => {
 		this.soundPlaying = newSoundPlaying
 	})
 

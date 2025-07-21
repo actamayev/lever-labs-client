@@ -2,46 +2,46 @@
 
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
-import { Sounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts"
 import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
-import { CustomFart } from "../../../icons/custom-fart"
-import { CustomEngine } from "../../../icons/custom-engine"
-import { CustomUfo } from "../../../icons/custom-ufo"
-import { CustomElephant } from "../../../icons/custom-elephant"
 import pipClass from "../../../../classes/pip-class"
+import { CustomUfo } from "../../../icons/custom-ufo"
+import { CustomFart } from "../../../icons/custom-fart"
+import garageClass from "../../../../classes/garage-class"
+import { CustomEngine } from "../../../icons/custom-engine"
+import { CustomElephant } from "../../../icons/custom-elephant"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import { CustomCountdown } from "../../../icons/custom-countdown"
-import socketClass from "../../../../classes/socket-class"
+import playFunSound from "../../../../utils/garage/play-fun-sound"
 import { CustomPartyPopper } from "../../../icons/custom-party-popper"
-import garageClass from "../../../../classes/garage-class"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 
-function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) {
+function SoundActionButton({ sound, index } : { sound: FunSounds, index: number }) {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 
 	// Map direction to the correct icon
 	const getSoundIcon = (): ReactNode => {
 		switch (sound) {
-		case "fart":
+		case "Fart":
 			return <CustomFart className="!size-10" />
-		case "monkey":
-			if (garageClass.soundPlaying === "monkey") {
+		case "Monkey":
+			if (garageClass.soundPlaying === "Monkey") {
 				return <CustomHearNoEvilMonkey className="!size-10" />
 			}
 			return <CustomSpeakNoEvilMonkey className="!size-10" />
-		case "elephant":
+		case "Elephant":
 			return <CustomElephant className="!size-10" />
-		case "fanfare":
+		case "Party":
 			return <CustomPartyPopper className="!size-10" />
-		case "ufo":
+		case "UFO":
 			return <CustomUfo className="!size-10" />
-		case "countdown":
+		case "Countdown":
 			return <CustomCountdown className="!size-10" />
-		case "robot noise":
+		case "Robot":
 			return <Bot className="!size-10" />
-		case "engine":
+		case "Engine":
 			return <CustomEngine className="!size-10" />
 		}
 	}
@@ -67,11 +67,7 @@ function SoundActionButton({ sound, index } : { sound: Sounds, index: number }) 
 	// Handle button click for action buttons
 	const handleButtonDown = () => {
 		if (!pipClass.selectedPip) return
-		garageClass.setSoundPlaying(sound)
-		socketClass.emitSound({
-			pipUUID: pipClass.selectedPip.pipUUID,
-			sound
-		})
+		playFunSound(sound)
 	}
 
 	// Handle button release for action buttons
