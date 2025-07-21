@@ -11,7 +11,6 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
-// eslint-disable-next-line max-lines-per-function
 function NetworkWorkbench() {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
