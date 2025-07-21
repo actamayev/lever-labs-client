@@ -7,7 +7,7 @@ class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
 	public batteryDataLastUpdated: Date | null = null
 	public volume = 70
-	public isMuted = true
+	public isMuted = false
 	public selectedSound: TuneToPlay = "Chime"
 	public isWiFiDialogOpen: boolean = false
 	public fixedWidth = 0
@@ -64,8 +64,6 @@ class WorkbenchClass {
 		}
 	})
 
-	// These are my types for the battery data item:
-	// Helper that properly types the assignment
 	private assignBatteryValue<K extends keyof BatteryMonitorData>(
 		key: K,
 		value: BatteryMonitorData[K]
@@ -93,7 +91,7 @@ class WorkbenchClass {
 
 	public logout(): void {
 		this.setVolume(70)
-		this.setIsMuted(true)
+		this.setIsMuted(false)
 		this.setSelectedSound("Chime")
 		this.setIsWiFiDialogOpen(false)
 		this.setFixedWidth(0)

@@ -128,7 +128,6 @@ class SerialMessageManagerClass {
 
 	// eslint-disable-next-line complexity
 	private handleStructuredMessage(message: ESPMessage): void {
-		console.info("Structured message:", message)
 		switch (message.route) {
 		case "/pip-id": {
 			runInAction(() => {

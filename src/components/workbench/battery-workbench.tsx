@@ -13,17 +13,17 @@ function BatteryWorkbench() {
 	// Determine color class based on battery state
 	const getColorClass = useMemo(() => {
 		if (!workbenchClass.batteryData) return "opacity-50 text-cardinal"
-		if (workbenchClass.batteryData?.isCharging) return "text-chargingGreen"
-		if (workbenchClass.batteryData?.stateOfCharge <= 20) return "text-cardinal"
-		else if (workbenchClass.batteryData?.stateOfCharge <= 40) return "text-bee"
-		else if (workbenchClass.batteryData?.stateOfCharge <= 70) return "text-fox"
+		if (workbenchClass.batteryData.isCharging) return "text-chargingGreen"
+		if (workbenchClass.batteryData.stateOfCharge <= 20) return "text-cardinal"
+		else if (workbenchClass.batteryData.stateOfCharge <= 40) return "text-bee"
+		else if (workbenchClass.batteryData.stateOfCharge <= 70) return "text-fox"
 		return "text-macaw"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [workbenchClass.batteryData?.isCharging, workbenchClass.batteryData?.stateOfCharge])
 
 	const getTimeText = useMemo(() => {
 		if (!workbenchClass.batteryData) return ""
-		if (workbenchClass.batteryData?.isCharging) {
+		if (workbenchClass.batteryData.isCharging) {
 			return `Estimated time to full charge: ${workbenchClass.batteryData?.estimatedTimeToFull} minutes`
 		}
 		return ""
