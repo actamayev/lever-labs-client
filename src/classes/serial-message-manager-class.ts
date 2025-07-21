@@ -4,9 +4,9 @@ import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload,
 	WiFiConnectionStatus, BatteryMonitorDataItem } from "@bluedotrobots/common-ts"
-import handleUsbConnectionMotors from "../utils/socket/handle-usb-connection-motors"
-import serialConnectionManagerClass from "./serial-connection-manager-class"
+import toastClass from "./toast-class"
 import workbenchClass from "./workbench-class"
+import serialConnectionManagerClass from "./serial-connection-manager-class"
 
 interface MessageSentData {
 	content: string
@@ -204,12 +204,12 @@ class SerialMessageManagerClass {
 		}
 
 		case "/motors-disabled-usb": {
-			handleUsbConnectionMotors(message.payload as StandardJsonStatusMessage)
+			toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
 			break
 		}
 
 		case "/program-paused-usb": {
-			handleUsbConnectionMotors(message.payload as StandardJsonStatusMessage)
+			toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
 			break
 		}
 		case "/battery-monitor-data-item": {

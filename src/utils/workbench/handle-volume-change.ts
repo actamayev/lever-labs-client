@@ -21,7 +21,6 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 		if (serialConnectionManagerClass.pipTurnedOn) {
 			const buffer = MessageBuilder.createSpeakerVolumeMessage(volume)
 
-			console.log("Sending buffer", buffer)
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}

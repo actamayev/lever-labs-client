@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BatteryMonitorData, BatteryMonitorDataItem, TuneToPlay } from "@bluedotrobots/common-ts"
+import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, TuneToPlay } from "@bluedotrobots/common-ts"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
@@ -81,6 +81,10 @@ class WorkbenchClass {
 			batteryDataItem.key,
 			batteryDataItem.value as BatteryMonitorData[typeof batteryDataItem.key]
 		)
+	})
+
+	public setBatteryData = action((batteryData: BatteryMonitorDataFull): void => {
+		this.batteryData = batteryData.batteryData
 	})
 
 	public setBatteryDataLastUpdated = action((newBatteryDataLastUpdated: Date): void => {

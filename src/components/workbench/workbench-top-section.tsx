@@ -29,8 +29,8 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 			<div className="relative p-3 z-50">
 				<div className="flex flex-row justify-between">
 					<BatteryWorkbench />
-					<SoundWorkbench />
 					<NetworkWorkbench />
+					<SoundWorkbench />
 				</div>
 			</div>
 		</div>
