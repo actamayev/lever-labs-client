@@ -2,7 +2,7 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
-import BatteryWorkbench from "./battery-workbench"
+import BatteryWorkbench from "./battery/battery-workbench"
 import NetworkWorkbench from "./network-workbench"
 import SoundWorkbench from "./sound/sound-workbench"
 import workbenchClass from "../../classes/workbench-class"
