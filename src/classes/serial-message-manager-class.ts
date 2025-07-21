@@ -7,6 +7,7 @@ import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFi
 import toastClass from "./toast-class"
 import workbenchClass from "./workbench-class"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
+import pipClass from "./pip-class"
 
 interface MessageSentData {
 	content: string
@@ -126,7 +127,7 @@ class SerialMessageManagerClass {
 		})
 	}
 
-	// eslint-disable-next-line complexity
+	// eslint-disable-next-line complexity, max-lines-per-function
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
 		case "/pip-id": {
@@ -135,6 +136,12 @@ class SerialMessageManagerClass {
 				this.showWiFiSection = true
 				// Add this line:
 				serialConnectionManagerClass.pipTurnedOn = true
+				pipClass.upsertPipData({
+					pipUUID: this.pipId,
+					pipName: "Pip",
+					userPipUUIDId: 0,
+					pipConnectionStatus: "connected to serial"
+				})
 			})
 			break
 		}

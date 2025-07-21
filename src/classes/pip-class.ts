@@ -17,10 +17,6 @@ class PipClass {
 		makeAutoObservable(this)
 	}
 
-	get doesUserHaveAPip(): boolean {
-		return !isEmpty(this.pipData)
-	}
-
 	public checkIfUUIDAlreadyExists(pipUUID: PipUUID): boolean {
 		return this.pipData.some(data => data.pipUUID === pipUUID)
 	}
@@ -41,6 +37,14 @@ class PipClass {
 		if (!pipToUpdate) return
 
 		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
+	}
+
+	public upsertPipData(pipData: PipData): void {
+		const pipToUpdate = this.pipData.find((pip) => pip.pipUUID === pipData.pipUUID)
+		if (!pipToUpdate) {
+			return this.addNewPip(pipData)
+		}
+		pipToUpdate.pipConnectionStatus = pipData.pipConnectionStatus
 	}
 
 	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {

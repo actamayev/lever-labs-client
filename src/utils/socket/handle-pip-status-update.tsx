@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 "use client"
 
 import { PipStatusUpdate } from "@bluedotrobots/common-ts"
@@ -10,14 +11,15 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 	const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
 	pipClass.updatePipConnectionStatus(data)
 	const { newConnectionStatus } = data
-	if (newConnectionStatus === "online") {
+	switch (newConnectionStatus) {
+	case "online":
 		const actionElement = (
 			<BlackWhiteTactileButton onClick={() => requestToConnectToPip(data.pipUUID)}>
 				{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
 			</BlackWhiteTactileButton>
 		)
 
-		let title
+		let title: string = ""
 		if (previousPipConnectionStatus === "connected") {
 			title = `Disconnected from ${pipClass.findPipNameFromUUID(data.pipUUID)}`
 		} else {
@@ -28,11 +30,11 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 			title,
 			action: actionElement
 		})
-	} else if (newConnectionStatus === "offline") {
+	case "offline":
 		return toastClass.neutral({
 			title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
 		})
-	} else if (newConnectionStatus === "connected") {
+	case "connected":
 		return toastClass.superPositive({
 			title: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`,
 			description: "Happy building!"

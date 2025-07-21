@@ -6,6 +6,7 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
+import workbenchClass from "./workbench-class"
 
 class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
@@ -79,14 +80,14 @@ class SerialConnectionManagerClass {
 	}
 
 	private async sendKeepaliveFromWorker(): Promise<void> {
-		if (this.pipTurnedOn && this.writer) {
-			try {
-				const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
-				await this.writer.write(new Uint8Array(keepaliveMsg))
-			} catch (error) {
-				console.error("Keepalive error from worker:", error)
-				await this.cleanupConnection()
-			}
+		if (!this.pipTurnedOn || !this.writer) return
+
+		try {
+			const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
+			await this.writer.write(new Uint8Array(keepaliveMsg))
+		} catch (error) {
+			console.error("Keepalive error from worker:", error)
+			await this.cleanupConnection()
 		}
 	}
 
@@ -235,7 +236,7 @@ class SerialConnectionManagerClass {
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}
-
+			workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
 			this.readLoop()
 			this.startWorkerKeepalive()
 		} catch (error) {

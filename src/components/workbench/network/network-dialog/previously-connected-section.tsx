@@ -2,7 +2,7 @@
 
 import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
-import serialMessageManagerClass from "../../../classes/serial-message-manager-class"
+import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 
 function PreviouslyConnectedSection() {
 	if (isEmpty(serialMessageManagerClass.previouslyConnected)) {
