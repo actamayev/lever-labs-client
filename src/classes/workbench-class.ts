@@ -6,7 +6,7 @@ import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, Tun
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
 	public batteryDataLastUpdated: Date | null = null
-	public volume = 70
+	public volume = 100
 	public isMuted = false
 	public selectedSound: TuneToPlay = "Chime"
 	public isWiFiDialogOpen: boolean = false
@@ -90,7 +90,7 @@ class WorkbenchClass {
 	})
 
 	public logout(): void {
-		this.setVolume(70)
+		this.setVolume(100)
 		this.setIsMuted(false)
 		this.setSelectedSound("Chime")
 		this.setIsWiFiDialogOpen(false)
