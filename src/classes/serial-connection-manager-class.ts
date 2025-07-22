@@ -236,7 +236,6 @@ class SerialConnectionManagerClass {
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}
-			workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
 			this.readLoop()
 			this.startWorkerKeepalive()
 		} catch (error) {
@@ -377,7 +376,6 @@ class SerialConnectionManagerClass {
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
 						if (line) {
-							console.info("Received:", line)
 							serialMessageManagerClass.handleRawMessage(line)
 						}
 					}
@@ -477,6 +475,7 @@ class SerialConnectionManagerClass {
 			this.writer = null
 			this.connected = false
 			this.pipTurnedOn = false
+			workbenchClass.setBatteryDataNull()
 		})
 
 		console.info("Connection cleanup complete")

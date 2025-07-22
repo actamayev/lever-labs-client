@@ -136,6 +136,7 @@ class SerialMessageManagerClass {
 				this.showWiFiSection = true
 				// Add this line:
 				serialConnectionManagerClass.pipTurnedOn = true
+				workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
 				pipClass.addNewPip({
 					pipUUID: this.pipId,
 					pipName: "Pip",

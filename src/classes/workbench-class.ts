@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, TuneToPlay } from "@bluedotrobots/common-ts"
+import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey, TuneToPlay } from "@bluedotrobots/common-ts"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
@@ -41,7 +41,7 @@ class WorkbenchClass {
 		this.windowHeight = newWindowHeight
 	})
 
-	private setBatteryDataNull = action((): void => {
+	public setBatteryDataNull = action((): void => {
 		this.batteryData = null
 		this.batteryDataLastUpdated = null
 	})
@@ -64,20 +64,22 @@ class WorkbenchClass {
 		}
 	})
 
-	private assignBatteryValue<K extends keyof BatteryMonitorData>(
+	private assignBatteryValue = action(<K extends keyof BatteryMonitorData>(
 		key: K,
 		value: BatteryMonitorData[K]
-	): void {
+	): void => {
 		if (!this.batteryData) {
 			this.initializeBatteryData()
 		}
 		(this.batteryData as BatteryMonitorData)[key] = value
-	}
+	})
 
-	public setBatteryDataItem = action((batteryDataItem: BatteryMonitorDataItem): void => {
+	public setBatteryDataItem = action(<K extends BatteryMonitorKey>(
+		batteryDataItem: BatteryMonitorDataItem<K>
+	): void => {
 		this.assignBatteryValue(
-			batteryDataItem.key,
-			batteryDataItem.value as BatteryMonitorData[typeof batteryDataItem.key]
+			batteryDataItem.key as keyof BatteryMonitorData,
+			batteryDataItem.value as BatteryMonitorData[keyof BatteryMonitorData]
 		)
 	})
 
