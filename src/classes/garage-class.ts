@@ -16,8 +16,6 @@ class GarageClass {
 		3: this.selectedColorRgba, // middle right
 		4: this.selectedColorRgba, // back left
 		5: this.selectedColorRgba, // back right
-		// 6: this.selectedColorRgba, // left headlight
-		// 7: this.selectedColorRgba // right headlight
 	}
 	public selectedAnimation: LightAnimation = "No animation"
 

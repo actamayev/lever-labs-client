@@ -7,6 +7,7 @@ import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
 import workbenchClass from "./workbench-class"
+import pipClass from "./pip-class"
 
 class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
@@ -305,7 +306,7 @@ class SerialConnectionManagerClass {
 		// Directly call the message manager's disconnected handler
 		serialMessageManagerClass.handleDisconnected()
 
-		this.cleanupConnection()
+		void this.cleanupConnection()
 	}
 
 	private startWorkerKeepalive(): void {
@@ -472,6 +473,7 @@ class SerialConnectionManagerClass {
 			this.connected = false
 			this.pipTurnedOn = false
 			workbenchClass.setBatteryDataNull()
+			pipClass.setPipPluggedInSerial(false)
 		})
 
 		console.info("Connection cleanup complete")

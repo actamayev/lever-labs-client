@@ -113,8 +113,6 @@ class SerialMessageManagerClass {
 			this.isLoadingSavedNetworks = false
 			this.scannedNetworks = []
 			this.isScanning = false
-			workbenchClass.setBatteryDataNull()
-			pipClass.setPipPluggedInSerial(false)
 		})
 	}
 
