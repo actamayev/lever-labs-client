@@ -1,17 +1,17 @@
 "use client"
-import { useMemo, useState } from "react"
+import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
+import { useMemo, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
+import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
-import useGetColorClasses from "../../../hooks/workbench/get-color-classes"
-import BatteryWorkbenchIcon from "./battery-workbench-icon"
-import { isNull } from "lodash-es"
+import useGetBatteryColorClasses from "../../../hooks/workbench/get-battery-color-classes"
 
 function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
-	const colorClasses = useGetColorClasses()
+	const batteryColorClasses = useGetBatteryColorClasses()
 	const getTimeText = useMemo(() => {
 		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
@@ -27,7 +27,7 @@ function BatteryWorkbench() {
 				<div>
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryWorkbenchIcon />
-						<span className={cn("text-base font-medium -mt-2 text-center", colorClasses)}>
+						<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
 							{isNull(workbenchClass.batteryDataLastUpdated) ? "\u00A0" : `${workbenchClass.batteryData?.stateOfCharge}%`}
 						</span>
 					</WorkbenchIconTemplate>
@@ -46,10 +46,10 @@ function BatteryWorkbench() {
 				<div className="space-y-3">
 					<div className="flex items-center justify-between gap-2">
 						<div className="flex items-center gap-2">
-							<div className={cn("w-2 h-2 rounded-full", colorClasses.replace("text-", "bg-"))} />
+							<div className={cn("w-2 h-2 rounded-full", batteryColorClasses.replace("text-", "bg-"))} />
 							<span className="font-medium">BATTERY</span>
 						</div>
-						<span className={cn("font-semibold", colorClasses)}>
+						<span className={cn("font-semibold", batteryColorClasses)}>
 							{isNull(workbenchClass.batteryData) ? "OFFLINE" : `${workbenchClass.batteryData.stateOfCharge}%`}
 						</span>
 					</div>
