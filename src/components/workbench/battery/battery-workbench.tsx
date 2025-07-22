@@ -37,8 +37,7 @@ function BatteryWorkbench() {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standardBackground",
-					"duration-0 animate-none",
+					"bg-standardBackground", "duration-0 animate-none",
 				)}
 				side="bottom"
 				align="start"
