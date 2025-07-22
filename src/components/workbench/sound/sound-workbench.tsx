@@ -80,7 +80,7 @@ function SoundWorkbench() {
 					"animate-none duration-0",
 				)}
 				side="bottom"
-				align="center"
+				align="end"
 				sideOffset={5}
 			>
 				<div className="w-full max-w-sm space-y-4">

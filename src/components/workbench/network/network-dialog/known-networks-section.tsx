@@ -3,8 +3,8 @@
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { Check } from "lucide-react"
-import serialMessageManagerClass from "../../../classes/serial-message-manager-class"
-import NetworkStrengthIcon from "../../network-strength-icon"
+import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
+import NetworkStrengthIcon from "../../../network-strength-icon"
 
 function KnownNetworksSection() {
 	if (isEmpty(serialMessageManagerClass.knownNetworks)) {

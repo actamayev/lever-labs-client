@@ -6,6 +6,8 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
+import workbenchClass from "./workbench-class"
+import pipClass from "./pip-class"
 
 class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
@@ -79,14 +81,14 @@ class SerialConnectionManagerClass {
 	}
 
 	private async sendKeepaliveFromWorker(): Promise<void> {
-		if (this.pipTurnedOn && this.writer) {
-			try {
-				const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
-				await this.writer.write(new Uint8Array(keepaliveMsg))
-			} catch (error) {
-				console.error("Keepalive error from worker:", error)
-				await this.cleanupConnection()
-			}
+		if (!this.pipTurnedOn || !this.writer) return
+
+		try {
+			const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
+			await this.writer.write(new Uint8Array(keepaliveMsg))
+		} catch (error) {
+			console.error("Keepalive error from worker:", error)
+			await this.cleanupConnection()
 		}
 	}
 
@@ -121,18 +123,18 @@ class SerialConnectionManagerClass {
 
 			const ports = await navigator.serial.getPorts()
 
-			// Look for a previously connected Pip robot
+			// Look for a previously connected Pip
 			for (const port of ports) {
 				const info = port.getInfo()
 				if (this.isPipRobot(info)) {
-					console.info("Found previously authorized Pip robot, attempting auto-reconnect...")
+					console.info("Found previously authorized Pip, attempting auto-reconnect...")
 					await this.connectToSpecificPort(port)
 					return true
 				}
 			}
 
-			// If we have any previously authorized port and no specific Pip robot found,
-			// try the first one (assuming user only connects Pip robots)
+			// If we have any previously authorized port and no specific Pip found,
+			// try the first one (assuming user only connects Pip)
 			if (ports.length > 0) {
 				console.info("Found previously authorized device, attempting auto-reconnect...")
 				await this.connectToSpecificPort(ports[0])
@@ -159,18 +161,14 @@ class SerialConnectionManagerClass {
 
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
-		console.info("New device plugged in, checking if it's a Pip robot...")
-
 		// Don't auto-connect if we're already connected OR if user isn't logged in
 		if (this.pipTurnedOn || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
 
-			// Check if this is a Pip robot
+			// Check if this is a Pip
 			if (this.isPipRobot(info)) {
-				console.info("Pip robot detected! Attempting auto-connect...")
-
 				// Attempt to connect
 				await this.connectToSpecificPort(port)
 			} else {
@@ -235,7 +233,6 @@ class SerialConnectionManagerClass {
 				const handshakeMsg = MessageBuilder.createSerialHandshakeMessage()
 				await this.writer.write(new Uint8Array(handshakeMsg))
 			}
-
 			this.readLoop()
 			this.startWorkerKeepalive()
 		} catch (error) {
@@ -309,7 +306,7 @@ class SerialConnectionManagerClass {
 		// Directly call the message manager's disconnected handler
 		serialMessageManagerClass.handleDisconnected()
 
-		this.cleanupConnection()
+		void this.cleanupConnection()
 	}
 
 	private startWorkerKeepalive(): void {
@@ -376,7 +373,6 @@ class SerialConnectionManagerClass {
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
 						if (line) {
-							console.info("Received:", line)
 							serialMessageManagerClass.handleRawMessage(line)
 						}
 					}
@@ -476,6 +472,8 @@ class SerialConnectionManagerClass {
 			this.writer = null
 			this.connected = false
 			this.pipTurnedOn = false
+			workbenchClass.setBatteryDataNull()
+			pipClass.setPipPluggedInSerial(false)
 		})
 
 		console.info("Connection cleanup complete")

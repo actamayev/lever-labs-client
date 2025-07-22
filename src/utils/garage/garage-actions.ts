@@ -34,6 +34,12 @@ export default function garageActions(): {
 		case "horn":
 			garageClass.setIsHornPressed(true)
 
+			if (serialConnectionManagerClass.pipTurnedOn) {
+				const buffer = MessageBuilder.createHornSoundMessage(true)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
+				return
+			}
+
 			if (
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
@@ -73,6 +79,11 @@ export default function garageActions(): {
 		case "horn":
 			garageClass.setIsHornPressed(false)
 
+			if (serialConnectionManagerClass.pipTurnedOn) {
+				const buffer = MessageBuilder.createHornSoundMessage(false)
+				await serialConnectionManagerClass.sendBinaryMessage(buffer)
+				return
+			}
 			if (
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
