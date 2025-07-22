@@ -7,6 +7,7 @@ import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFi
 import toastClass from "./toast-class"
 import workbenchClass from "./workbench-class"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
+import pipClass from "./pip-class"
 
 interface MessageSentData {
 	content: string
@@ -126,15 +127,16 @@ class SerialMessageManagerClass {
 		})
 	}
 
-	// eslint-disable-next-line complexity
+	// eslint-disable-next-line complexity, max-lines-per-function
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
 		case "/pip-id": {
 			runInAction(() => {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
-				// Add this line:
 				serialConnectionManagerClass.pipTurnedOn = true
+				workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
+				pipClass.setPipPluggedInSerial(true)
 			})
 			break
 		}
@@ -219,7 +221,7 @@ class SerialMessageManagerClass {
 			break
 		}
 		case "/battery-monitor-data-complete": {
-			workbenchClass.setBatteryDataLastUpdated(new Date())
+			workbenchClass.setBatteryDataLastUpdated()
 			break
 		}
 		default:

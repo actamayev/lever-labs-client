@@ -12,13 +12,10 @@ class PipClass {
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
 	public retrievedPipData: boolean = false
+	public pipPluggedInSerial: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
-	}
-
-	get doesUserHaveAPip(): boolean {
-		return !isEmpty(this.pipData)
 	}
 
 	public checkIfUUIDAlreadyExists(pipUUID: PipUUID): boolean {
@@ -84,12 +81,17 @@ class PipClass {
 		this.retrievedPipData = newState
 	})
 
+	public setPipPluggedInSerial = action((newState: boolean): void => {
+		this.pipPluggedInSerial = newState
+	})
+
 	public logout(): void {
 		this.pipData = []
 		this.setIsRetrievingPipData(false)
 		this.setSelectedPip(null)
 		this.setIsSendingCppToPip(false)
 		this.setRetrievedPipData(false)
+		this.setPipPluggedInSerial(false)
 	}
 }
 

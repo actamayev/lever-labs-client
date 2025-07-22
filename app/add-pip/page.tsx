@@ -4,10 +4,10 @@ import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Add Pip",
-	description: "Connect your Pip robot to Wi-Fi in under a minute, add it to your account, \
+	description: "Connect your Pip to Wi-Fi in under a minute, add it to your account, \
 	and start hands-on robotics experimentation right away.",
 	path: "/add-pip",
-	keywords: ["robot setup", "connect educational robot", "pip robot configuration"]
+	keywords: ["robot setup", "connect educational robot", "pip configuration"]
 })
 
 export default function AddPipPage() {

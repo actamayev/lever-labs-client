@@ -30,7 +30,7 @@ export default function SchoolsPage() {
 				<SupportBorder />
 
 				<SupportSection sectionTitle="Any Pip, any computer, any time" extraClasses="mt-10">
-						Students can use any Pip robot from any computer - their progress automatically saves to their account! This means flexible learning environments and no more "I forgot my robot at home" excuses.
+						Students can use any Pip from any computer - their progress automatically saves to their account! This means flexible learning environments and no more "I forgot my robot at home" excuses.
 				</SupportSection>
 				<SupportBorder />
 

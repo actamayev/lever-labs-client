@@ -1,12 +1,12 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, TuneToPlay } from "@bluedotrobots/common-ts"
+import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey, TuneToPlay } from "@bluedotrobots/common-ts"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
 	public batteryDataLastUpdated: Date | null = null
-	public volume = 70
+	public volume = 100
 	public isMuted = false
 	public selectedSound: TuneToPlay = "Chime"
 	public isWiFiDialogOpen: boolean = false
@@ -41,7 +41,7 @@ class WorkbenchClass {
 		this.windowHeight = newWindowHeight
 	})
 
-	private setBatteryDataNull = action((): void => {
+	public setBatteryDataNull = action((): void => {
 		this.batteryData = null
 		this.batteryDataLastUpdated = null
 	})
@@ -64,33 +64,37 @@ class WorkbenchClass {
 		}
 	})
 
-	private assignBatteryValue<K extends keyof BatteryMonitorData>(
+	private assignBatteryValue = action(<K extends keyof BatteryMonitorData>(
 		key: K,
 		value: BatteryMonitorData[K]
-	): void {
+	): void => {
 		if (!this.batteryData) {
 			this.initializeBatteryData()
 		}
 		(this.batteryData as BatteryMonitorData)[key] = value
-	}
+	})
 
-	public setBatteryDataItem = action((batteryDataItem: BatteryMonitorDataItem): void => {
+	public setBatteryDataItem = action(<K extends BatteryMonitorKey>(
+		batteryDataItem: BatteryMonitorDataItem<K>
+	): void => {
 		this.assignBatteryValue(
-			batteryDataItem.key,
-			batteryDataItem.value as BatteryMonitorData[typeof batteryDataItem.key]
+			batteryDataItem.key as keyof BatteryMonitorData,
+			batteryDataItem.value as BatteryMonitorData[keyof BatteryMonitorData]
 		)
 	})
 
 	public setBatteryData = action((batteryData: BatteryMonitorDataFull): void => {
 		this.batteryData = batteryData.batteryData
+		this.batteryData.isCharging = false // We are setting this because this always comes OTA (therefore not charging)
+		this.setBatteryDataLastUpdated()
 	})
 
-	public setBatteryDataLastUpdated = action((newBatteryDataLastUpdated: Date): void => {
-		this.batteryDataLastUpdated = newBatteryDataLastUpdated
+	public setBatteryDataLastUpdated = action((): void => {
+		this.batteryDataLastUpdated = new Date()
 	})
 
 	public logout(): void {
-		this.setVolume(70)
+		this.setVolume(100)
 		this.setIsMuted(false)
 		this.setSelectedSound("Chime")
 		this.setIsWiFiDialogOpen(false)
