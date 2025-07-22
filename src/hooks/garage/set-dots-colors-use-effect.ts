@@ -50,16 +50,6 @@ export default function useSetDefaultColorsUseEffect(): void {
 					r: Math.round(garageClass.dotColors[5].r * selectedColorShade),
 					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
 					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
-				},
-				leftHeadlightColor: {
-					r: Math.round(garageClass.dotColors[6].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[6].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[6].b * selectedColorShade)
-				},
-				rightHeadlightColor: {
-					r: Math.round(garageClass.dotColors[7].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[7].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[7].b * selectedColorShade)
 				}
 			}
 
