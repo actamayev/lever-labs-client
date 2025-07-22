@@ -6,6 +6,7 @@ import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import requestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
+import workbenchClass from "../../classes/workbench-class"
 
 export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 	const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
@@ -31,6 +32,7 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 			action: actionElement
 		})
 	case "offline":
+		workbenchClass.setBatteryDataNull()
 		return toastClass.neutral({
 			title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
 		})
