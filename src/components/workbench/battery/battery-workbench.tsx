@@ -13,7 +13,7 @@ function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 	const colorClasses = useGetColorClasses()
 	const getTimeText = useMemo(() => {
-		if (!workbenchClass.batteryData) return ""
+		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
 			return `Estimated time to full charge: ${workbenchClass.batteryData.estimatedTimeToFull} minutes`
 		}
@@ -51,7 +51,7 @@ function BatteryWorkbench() {
 							<span className="font-medium">BATTERY</span>
 						</div>
 						<span className={cn("font-semibold", colorClasses)}>
-							{workbenchClass.batteryData?.stateOfCharge}%
+							{isNull(workbenchClass.batteryData) ? "OFFLINE" : `${workbenchClass.batteryData.stateOfCharge}%`}
 						</span>
 					</div>
 
