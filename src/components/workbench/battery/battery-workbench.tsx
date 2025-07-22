@@ -14,7 +14,7 @@ function BatteryWorkbench() {
 	const getTimeText = useMemo(() => {
 		if (!workbenchClass.batteryData) return ""
 		if (workbenchClass.batteryData.isCharging) {
-			return `Estimated time to full charge: ${workbenchClass.batteryData?.estimatedTimeToFull} minutes`
+			return `Estimated time to full charge: ${workbenchClass.batteryData.estimatedTimeToFull} minutes`
 		}
 		return ""
 	// eslint-disable-next-line react-hooks/exhaustive-deps

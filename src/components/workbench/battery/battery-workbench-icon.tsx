@@ -14,11 +14,11 @@ function BatteryWorkbenchIcon() {
 	if (!workbenchClass.batteryData?.stateOfCharge) {
 		return <BatteryFull className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
 	}
-	if (workbenchClass.batteryData?.stateOfCharge <= 20) {
+	if (workbenchClass.batteryData.stateOfCharge <= 20) {
 		return <BatteryWarning className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
-	} else if (workbenchClass.batteryData?.stateOfCharge <= 40) {
+	} else if (workbenchClass.batteryData.stateOfCharge <= 40) {
 		return <BatteryLow className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
-	} else if (workbenchClass.batteryData?.stateOfCharge <= 70) {
+	} else if (workbenchClass.batteryData.stateOfCharge <= 70) {
 		return <BatteryMedium className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
 	}
 	return <BatteryFull className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>

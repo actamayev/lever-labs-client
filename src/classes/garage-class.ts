@@ -8,7 +8,7 @@ import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
 	public selectedColorShade: number = 1
-	public selectedDots: number[] = [0, 1, 2, 3, 4, 5, 6, 7]
+	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
 	public dotColors: { [key: number]: RgbaColor } = {
 		0: this.selectedColorRgba, // top left
 		1: this.selectedColorRgba, // top right
@@ -16,8 +16,8 @@ class GarageClass {
 		3: this.selectedColorRgba, // middle right
 		4: this.selectedColorRgba, // back left
 		5: this.selectedColorRgba, // back right
-		6: this.selectedColorRgba, // left headlight
-		7: this.selectedColorRgba // right headlight
+		// 6: this.selectedColorRgba, // left headlight
+		// 7: this.selectedColorRgba // right headlight
 	}
 	public selectedAnimation: LightAnimation = "No animation"
 
@@ -149,16 +149,14 @@ class GarageClass {
 
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 0 , g: 255, b: 0, a: 1 })
-		this.selectedDots = [0, 1, 2, 3, 4, 5, 6, 7]
+		this.selectedDots = [0, 1, 2, 3, 4, 5]
 		this.dotColors = {
 			0: { r: 0 , g: 255, b: 0, a: 1 },
 			1: { r: 0 , g: 255, b: 0, a: 1 },
 			2: { r: 0 , g: 255, b: 0, a: 1 },
 			3: { r: 0 , g: 255, b: 0, a: 1 },
 			4: { r: 0 , g: 255, b: 0, a: 1 },
-			5: { r: 0 , g: 255, b: 0, a: 1 },
-			6: { r: 0 , g: 255, b: 0, a: 1 },
-			7: { r: 0 , g: 255, b: 0, a: 1 }
+			5: { r: 0 , g: 255, b: 0, a: 1 }
 		}
 		this.setSelectedAnimation("No animation")
 		this.isDriving = false
