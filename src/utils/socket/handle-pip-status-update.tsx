@@ -27,15 +27,23 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 			title = `${pipClass.findPipNameFromUUID(data.pipUUID)} is online. Ready to connect?`
 		}
 
+		workbenchClass.setBatteryDataItem({
+			key: "isCharging",
+			value: false
+		})
 		return toastClass.positive({
 			title,
 			action: actionElement
 		})
-	case "offline":
-		workbenchClass.setBatteryDataNull()
-		return toastClass.neutral({
-			title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
-		})
+	case "offline": {
+		if (!pipClass.pipPluggedInSerial) {
+			workbenchClass.setBatteryDataNull()
+			return toastClass.neutral({
+				title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
+			})
+		}
+		break
+	}
 	case "connected":
 		return toastClass.superPositive({
 			title: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`,

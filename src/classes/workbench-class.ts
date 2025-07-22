@@ -85,6 +85,7 @@ class WorkbenchClass {
 
 	public setBatteryData = action((batteryData: BatteryMonitorDataFull): void => {
 		this.batteryData = batteryData.batteryData
+		this.batteryData.isCharging = false // We are setting this because this always comes OTA (therefore not charging)
 		this.setBatteryDataLastUpdated()
 	})
 
