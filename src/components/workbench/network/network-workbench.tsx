@@ -15,6 +15,7 @@ function NetworkWorkbench() {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = () => {
+		if (pipClass.pipPluggedInSerial) return "Connected to USB"
 		if (isNull(pipClass.selectedPip)) return "No device selected"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {
@@ -34,6 +35,7 @@ function NetworkWorkbench() {
 	}
 
 	const getStatusColor = () => {
+		if (pipClass.pipPluggedInSerial) return "text-green-500"
 		if (isNull(pipClass.selectedPip)) return "text-wolf"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {

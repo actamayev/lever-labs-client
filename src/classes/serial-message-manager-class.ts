@@ -114,6 +114,7 @@ class SerialMessageManagerClass {
 			this.scannedNetworks = []
 			this.isScanning = false
 			workbenchClass.setBatteryDataNull()
+			pipClass.setPipPluggedInSerial(false)
 		})
 	}
 
@@ -137,12 +138,7 @@ class SerialMessageManagerClass {
 				this.showWiFiSection = true
 				serialConnectionManagerClass.pipTurnedOn = true
 				workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
-				pipClass.addNewPip({
-					pipUUID: this.pipId,
-					pipName: "Pip",
-					userPipUUIDId: 0, // This means that the pip is connected over serial
-					pipConnectionStatus: "connected to serial"
-				})
+				pipClass.setPipPluggedInSerial(true)
 			})
 			break
 		}
