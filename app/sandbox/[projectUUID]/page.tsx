@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: SandboxProjectPageProps) {
 	return createMetadata({
 		title: "Sandbox Project",
 		// eslint-disable-next-line max-len
-		description: "Create, save, and edit custom Pip robot programs with an intuitive block-based or text coding interface in your personal project workspace.",
+		description: "Create, save, and edit custom Pip programs with an intuitive block-based or text coding interface in your personal project workspace.",
 		path: `/sandbox/${projectUUID}`,
 		keywords: ["custom robot programs", "project workspace", "saved coding projects"]
 	})

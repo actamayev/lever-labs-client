@@ -223,7 +223,7 @@ class SerialMessageManagerClass {
 			break
 		}
 		case "/battery-monitor-data-complete": {
-			workbenchClass.setBatteryDataLastUpdated(new Date())
+			workbenchClass.setBatteryDataLastUpdated()
 			break
 		}
 		default:

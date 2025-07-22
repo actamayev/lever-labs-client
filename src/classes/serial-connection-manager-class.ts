@@ -122,18 +122,18 @@ class SerialConnectionManagerClass {
 
 			const ports = await navigator.serial.getPorts()
 
-			// Look for a previously connected Pip robot
+			// Look for a previously connected Pip
 			for (const port of ports) {
 				const info = port.getInfo()
 				if (this.isPipRobot(info)) {
-					console.info("Found previously authorized Pip robot, attempting auto-reconnect...")
+					console.info("Found previously authorized Pip, attempting auto-reconnect...")
 					await this.connectToSpecificPort(port)
 					return true
 				}
 			}
 
-			// If we have any previously authorized port and no specific Pip robot found,
-			// try the first one (assuming user only connects Pip robots)
+			// If we have any previously authorized port and no specific Pip found,
+			// try the first one (assuming user only connects Pip)
 			if (ports.length > 0) {
 				console.info("Found previously authorized device, attempting auto-reconnect...")
 				await this.connectToSpecificPort(ports[0])
@@ -160,18 +160,14 @@ class SerialConnectionManagerClass {
 
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
-		console.info("New device plugged in, checking if it's a Pip robot...")
-
 		// Don't auto-connect if we're already connected OR if user isn't logged in
 		if (this.pipTurnedOn || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
 
-			// Check if this is a Pip robot
+			// Check if this is a Pip
 			if (this.isPipRobot(info)) {
-				console.info("Pip robot detected! Attempting auto-connect...")
-
 				// Attempt to connect
 				await this.connectToSpecificPort(port)
 			} else {

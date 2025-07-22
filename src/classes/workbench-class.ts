@@ -85,10 +85,11 @@ class WorkbenchClass {
 
 	public setBatteryData = action((batteryData: BatteryMonitorDataFull): void => {
 		this.batteryData = batteryData.batteryData
+		this.setBatteryDataLastUpdated()
 	})
 
-	public setBatteryDataLastUpdated = action((newBatteryDataLastUpdated: Date): void => {
-		this.batteryDataLastUpdated = newBatteryDataLastUpdated
+	public setBatteryDataLastUpdated = action((): void => {
+		this.batteryDataLastUpdated = new Date()
 	})
 
 	public logout(): void {

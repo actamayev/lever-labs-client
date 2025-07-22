@@ -1,6 +1,7 @@
 import { BatteryCharging, BatteryFull, BatteryWarning, BatteryLow, BatteryMedium } from "lucide-react"
-import workbenchClass from "../../../classes/workbench-class"
 import { cn } from "../../../lib/shadcn/utils"
+import pipClass from "../../../classes/pip-class"
+import workbenchClass from "../../../classes/workbench-class"
 import useGetColorClasses from "../../../hooks/workbench/get-color-classes"
 
 function BatteryWorkbenchIcon() {
@@ -8,7 +9,7 @@ function BatteryWorkbenchIcon() {
 	const baseClasses = "!h-14 !w-14"
 	const strokeWidth = 2.5
 
-	if (workbenchClass.batteryData?.isCharging) {
+	if (workbenchClass.batteryData?.isCharging || pipClass.pipPluggedInSerial) {
 		return <BatteryCharging className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
 	}
 	if (!workbenchClass.batteryData?.stateOfCharge) {
