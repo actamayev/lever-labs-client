@@ -4,6 +4,7 @@ import { Usb, Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import pipClass from "../../../classes/pip-class"
 
+// TODO: The Connected to serial icon is not working (shows offline)
 function NetworkIconToShow() {
 	const baseClasses = "!h-12 !w-12"
 	const strokeWidth = 2.5

@@ -113,6 +113,7 @@ class SerialMessageManagerClass {
 			this.isLoadingSavedNetworks = false
 			this.scannedNetworks = []
 			this.isScanning = false
+			workbenchClass.setBatteryDataNull()
 		})
 	}
 
@@ -134,7 +135,6 @@ class SerialMessageManagerClass {
 			runInAction(() => {
 				this.pipId = (message.payload as PipIDPayload).pipId
 				this.showWiFiSection = true
-				// Add this line:
 				serialConnectionManagerClass.pipTurnedOn = true
 				workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
 				pipClass.addNewPip({
