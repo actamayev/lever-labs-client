@@ -1,3 +1,4 @@
+import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryWarning, BatteryLow, BatteryMedium } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import pipClass from "../../../classes/pip-class"
@@ -25,4 +26,4 @@ function BatteryWorkbenchIcon() {
 	return <BatteryFull className={cn(baseClasses, colorClasses)} strokeWidth={strokeWidth}/>
 }
 
-export default BatteryWorkbenchIcon
+export default observer(BatteryWorkbenchIcon)
