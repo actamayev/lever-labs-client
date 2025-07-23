@@ -8,8 +8,26 @@ import disconnectFromPip from "../../../utils/pip/disconnect-from-pip"
 import requestToConnectToPip from "../../../utils/pip/request-to-connect-to-pip"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
+// eslint-disable-next-line max-lines-per-function
 function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }) {
 	const selectedPip = pipClass.selectedPip
+	if (pipClass.pipPluggedInSerial) {
+		return (
+			<Button
+				onClick={(e) => {
+					e.stopPropagation()
+					workbenchClass.setIsWiFiDialogOpen(true)
+					setIsHoverCardOpen(false) // Close hover card when opening dialog
+				}}
+				className="rounded-xl bg-eel h-9 px-3 w-full"
+				disabled={!serialConnectionManagerClass.pipTurnedOn}
+				title="WiFi Settings"
+			>
+				<Settings className="h-4 w-4 mr-2" />
+				Wi-Fi Settings...
+			</Button>
+		)
+	}
 	if (isNull(selectedPip)) {
 		return (
 			<div className="text-center text-eel/70">
@@ -58,13 +76,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 			</div>
 		)
 	case "connected to other user":
-		return (
-			<div className="text-center">
-				<div className="text-base font-medium text-beetle">
-					{selectedPip.pipName} is connected to another user
-				</div>
-			</div>
-		)
+		return null
 	case "connected":
 		return (
 			<div className="space-y-3">
@@ -84,11 +96,19 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 		)
 	case "connected to serial":
 		return (
-			<div className="space-y-3">
-				<div className="text-base font-medium text-green-500">
-					Connected to {selectedPip.pipName} via USB
-				</div>
-			</div>
+			<Button
+				onClick={(e) => {
+					e.stopPropagation()
+					workbenchClass.setIsWiFiDialogOpen(true)
+					setIsHoverCardOpen(false) // Close hover card when opening dialog
+				}}
+				className="rounded-xl bg-eel h-9 px-3 w-full"
+				disabled={!serialConnectionManagerClass.pipTurnedOn}
+				title="WiFi Settings"
+			>
+				<Settings className="h-4 w-4 mr-2" />
+				Wi-Fi Settings...
+			</Button>
 		)
 	default:
 		return (
