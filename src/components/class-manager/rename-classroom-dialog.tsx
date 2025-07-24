@@ -13,7 +13,7 @@ import {
 import { Input } from "../shadcn/ui/input"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
 
 interface Props {

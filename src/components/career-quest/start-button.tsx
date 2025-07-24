@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { cn } from "../../lib/shadcn/utils"
-import { getDuolingoColors } from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 
 interface Props {

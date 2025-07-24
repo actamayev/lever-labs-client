@@ -43,6 +43,7 @@ class GarageClass {
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	public textInput: string = ""
 	public selectedDesign: PreDefinedDesignName = "No design"
+	public isDesignOrTextActive: "design" | "text" | null = null
 
 	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
 		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
@@ -63,6 +64,7 @@ class GarageClass {
 		design.pixels.forEach((pixel: Point) => {
 			this.setPixelInBuffer(pixel.x, pixel.y, true)
 		})
+		this.isDesignOrTextActive = "design"
 	})
 
 	public applyTextToBuffer = action((): void => {
@@ -72,9 +74,11 @@ class GarageClass {
 		const y = 28 // Starting Y position
 		for (const char of this.textInput.toUpperCase()) {
 			const fontData = FONT_DATA[char]
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (!fontData) continue
 			for (let col = 0; col < 5; col++) {
 				for (let row = 0; row < 8; row++) {
+					// eslint-disable-next-line max-depth
 					if (fontData[col] & (1 << row)) {
 						this.setPixelInBuffer(x + col, y + row, true)
 					}
@@ -83,6 +87,7 @@ class GarageClass {
 			x += 6 // 5 pixels + 1 space
 			if (x >= DISPLAY_WIDTH - 5) break
 		}
+		this.isDesignOrTextActive = "text"
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
@@ -228,6 +233,7 @@ class GarageClass {
 		this.clearBuffer()
 		this.setTextInput("")
 		this.setSelectedDesign("No design" as PreDefinedDesignName)
+		this.isDesignOrTextActive = null
 	}
 }
 

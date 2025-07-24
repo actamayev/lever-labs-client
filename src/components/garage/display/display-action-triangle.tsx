@@ -1,13 +1,25 @@
+import { useMemo } from "react"
 import { TriangleIcon } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface DisplayActionTriangleProps {
 	applyToBuffer: () => void
 	isEmpty: boolean
+	isActive: boolean
 }
 
 export default function DisplayActionTriangle(props: DisplayActionTriangleProps) {
-	const { applyToBuffer, isEmpty } = props
+	const { applyToBuffer, isEmpty, isActive } = props
+
+	const triangleStyles = useMemo(() => {
+		if (isActive) {
+			return "text-chargingGreen fill-chargingGreen"
+		}
+		if (isEmpty) {
+			return "fill-standardBackground text-hare"
+		}
+		return "text-macaw fill-macaw"
+	}, [isActive, isEmpty])
 
 	return (
 		<button
@@ -23,9 +35,7 @@ export default function DisplayActionTriangle(props: DisplayActionTriangleProps)
 			<TriangleIcon
 				className={cn(
 					"transition-colors duration-200 rotate-90",
-					!isEmpty
-						? "text-macaw fill-macaw"
-						: "fill-standardBackground text-hare"
+					triangleStyles
 				)}
 				style={{ width: "60px", height: "60px" }}
 				strokeWidth={1.5}

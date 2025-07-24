@@ -10,7 +10,7 @@ import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import CreateClassroomDialog from "./create-classroom-dialog"
 import RenameClassroomDialog from "./rename-classroom-dialog"
-import { getDuolingoColors } from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 import SingleClassCard from "./single-class-card"
 

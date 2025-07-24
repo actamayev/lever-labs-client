@@ -4,7 +4,7 @@ import { Binary, Repeat2, SquareFunction, Variable } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomConditional } from "../icons/custom-conditional"
-import { getDuolingoColors } from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
 	"Variables": <Variable />,

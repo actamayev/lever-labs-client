@@ -1,9 +1,10 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { observer } from "mobx-react"
 import { useRef, useEffect, useCallback } from "react"
-import { Button } from "../../shadcn/ui/button"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
 import garageClass from "../../../classes/garage-class"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import { cn } from "../../../lib/shadcn/utils"
 
 function RenderDisplay () {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -86,6 +87,8 @@ function RenderDisplay () {
 		renderCanvas()
 	}, [renderCanvas])
 
+	const colors = getDuolingoColors("humpback")
+
 	return (
 		<div className="flex flex-col items-center space-y-4">
 			{/* Display Canvas */}
@@ -100,12 +103,14 @@ function RenderDisplay () {
 
 			{/* Conditional Draw Button */}
 			{garageClass.pixelBuffer.some(row => row.some(pixel => pixel)) && (
-				<Button
+				<TactileButton
 					onClick={exportBuffer}
-					className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2"
+					className={cn("text-white font-medium px-6 py-2 h-8 rounded-xl", colors.bg)}
+					shadowClass={colors.shadow2}
+					shadowHeight={4}
 				>
 					Draw
-				</Button>
+				</TactileButton>
 			)}
 		</div>
 	)

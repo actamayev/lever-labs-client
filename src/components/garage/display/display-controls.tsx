@@ -52,6 +52,7 @@ function DisplayControls () {
 					<DisplayActionTriangle
 						applyToBuffer={() => garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
 						isEmpty={garageClass.selectedDesign === "No design"}
+						isActive={garageClass.isDesignOrTextActive === "design"}
 					/>
 				</div>
 			</div>
@@ -73,6 +74,7 @@ function DisplayControls () {
 					<DisplayActionTriangle
 						applyToBuffer={garageClass.applyTextToBuffer}
 						isEmpty={!garageClass.textInput.trim()}
+						isActive={garageClass.isDesignOrTextActive === "text"}
 					/>
 				</div>
 			</div>

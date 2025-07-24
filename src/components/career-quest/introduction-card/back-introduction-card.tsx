@@ -7,7 +7,7 @@ import BackFlipButton from "../back-flip-button"
 import { Separator } from "../../shadcn/ui/separator"
 import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
-import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 interface Props {
 	introData: CareerData

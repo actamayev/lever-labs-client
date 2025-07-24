@@ -4,7 +4,7 @@
 /**
  * Generate Tailwind background classes for different color variants
  */
-export const getDuolingoColors = (baseColor: DuolingoColors) => {
+export default function getDuolingoColors(baseColor: DuolingoColors) {
 	return {
 		// Main background (base color)
 		bg: `bg-${baseColor}`,

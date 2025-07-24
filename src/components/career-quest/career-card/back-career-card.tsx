@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
-import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {

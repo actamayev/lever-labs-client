@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
-import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import StartButton from "../start-button"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 

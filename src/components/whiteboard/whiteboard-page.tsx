@@ -9,7 +9,7 @@ import studentClass from "../../classes/student-class"
 import JoinClassroomDialog from "./join-classroom-dialog"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import SingleWhiteboardCard from "./single-whiteboard-card"
-import { getDuolingoColors } from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function WhiteboardPage() {
