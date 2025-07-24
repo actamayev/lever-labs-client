@@ -28,17 +28,37 @@ export default function FrontCareerCard(props: Props) {
 
 	return (
 		<motion.div
-			className={cn(
-				"absolute w-full h-full backface-hidden flex flex-col cursor-default",
-				colors.bg
-			)}
-			style={{ backfaceVisibility: "hidden" }}
+			className={"absolute w-full h-full backface-hidden flex flex-col cursor-default"}
+			// style={{ backfaceVisibility: "hidden" }}
 		>
-			{/* Header with title */}
-			<div className="p-4 pb-2">
+			{/* Icon/Image Section */}
+			<div className={
+				cn(
+					"flex-1 flex items-center justify-center px-4 py-2 h-3/5 border-b border-white",
+					colors.bg2
+				)}
+			style={{
+				borderTopLeftRadius: "60px",
+				borderTopRightRadius: "60px"
+			}}
+			>
+				<Icon
+					size="120"
+					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
+				/>
+			</div>
+			<div
+				className={cn("h-2/5", colors.bg)}
+				style={{
+					borderBottomLeftRadius: "60px",
+					borderBottomRightRadius: "60px"
+				}}
+			>
 				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
 
-				{/* Progress Bar */}
+				{/* <div className="p-4 pb-2">
+				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
+
 				<div className={cn("w-full h-5 rounded-full overflow-hidden relative", progressColors.background)}>
 					<div
 						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
@@ -46,7 +66,6 @@ export default function FrontCareerCard(props: Props) {
 							width: `${progressPercentage}%`,
 						}}
 					>
-						{/* Highlight shadow effect */}
 						<div
 							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
 							style={{
@@ -58,19 +77,10 @@ export default function FrontCareerCard(props: Props) {
 						{lessonsComplete} / {totalLessons}
 					</div>
 				</div>
-			</div>
+			</div> */}
 
-			{/* Icon/Image Section */}
-			<div className="flex-1 flex items-center justify-center px-4 py-2">
-				<Icon
-					size="120"
-					className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28"
-				/>
-			</div>
-
-			{/* Components Section */}
-			<div className="px-4 pb-2">
-				<h4 className="text-sm font-medium text-white mb-2">Sensors:</h4>
+				{/* Components Section */}
+				{/* <div className="px-4 pb-2">
 				<div className="flex flex-wrap gap-1.5 justify-center">
 					{componentsUsed.slice(0, 4).map((component) => (
 						<SingleComponentUsed
@@ -85,44 +95,26 @@ export default function FrontCareerCard(props: Props) {
 						</div>
 					)}
 				</div>
-			</div>
+			</div> */}
 
-			{/* Coding Concepts Section */}
-			<div className="px-4 pb-4">
-				<h4 className="text-sm font-medium text-white mb-2">Concepts:</h4>
-				<div className="flex flex-wrap gap-1.5 justify-center">
-					{codingConcepts.slice(0, 3).map((codingConcept) => (
-						<SingleCodingConceptUsed
-							key={codingConcept}
-							codingConcept={codingConcept}
-							baseColor={backgroundColor}  // Pass base color
-						/>
-					))}
-					{codingConcepts.length > 3 && (
-						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg1)}>
-							<span className="font-bold text-xs">+{codingConcepts.length - 3}</span>
-						</div>
-					)}
+				{/* Continue Button and Flip Button */}
+				<div className="px-8 pb-4 p-2 flex flex-row items-center gap-3">
+					<Link href={careerUrl} className="flex-1">
+						<TactileButton
+							className={cn("duration-150 bg-white h-10 rounded-full text-base w-3/4", colors.text)}
+							shadowClass={colors.shadow}
+							shadowHeight={4}
+						>
+							{lessonsComplete === 0 ? "START" : "CONTINUE"}
+						</TactileButton>
+					</Link>
+
+					{/* Flip Button */}
+					<BackFlipButton
+						onFlip={flipCard}
+						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+					/>
 				</div>
-			</div>
-
-			{/* Continue Button and Flip Button */}
-			<div className="p-4 pt-2 flex flex-row items-center gap-3">
-				<Link href={careerUrl} className="flex-1">
-					<TactileButton
-						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
-						shadowClass={colors.shadow}
-						shadowHeight={4}
-					>
-						{lessonsComplete === 0 ? "START" : "CONTINUE"}
-					</TactileButton>
-				</Link>
-
-				{/* Flip Button */}
-				<BackFlipButton
-					onFlip={flipCard}
-					extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-				/>
 			</div>
 		</motion.div>
 	)
