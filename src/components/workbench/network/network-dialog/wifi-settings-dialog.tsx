@@ -19,7 +19,7 @@ function WiFiSettingsDialog() {
 	// Use the custom hook
 	const { scanForNetworks } = useScanForNetworks()
 
-	const requestSavedNetworks = useCallback(async () => {
+	const requestSavedNetworksAndWiFiScan = useCallback(async () => {
 		if (!serialConnectionManagerClass.pipTurnedOn) return
 
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
@@ -27,6 +27,7 @@ function WiFiSettingsDialog() {
 		try {
 			const message = MessageBuilder.createGetSavedWiFiNetworks()
 			await serialConnectionManagerClass.sendBinaryMessage(message)
+			void scanForNetworks("soft")
 		} catch (error) {
 			console.error("Failed to request saved networks:", error)
 			serialMessageManagerClass.setIsLoadingSavedNetworks(false)
@@ -37,10 +38,10 @@ function WiFiSettingsDialog() {
 	// Request saved networks when dialog opens
 	useEffect(() => {
 		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.pipTurnedOn) {
-			requestSavedNetworks()
+			void requestSavedNetworksAndWiFiScan()
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [requestSavedNetworks, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.pipTurnedOn])
+	}, [requestSavedNetworksAndWiFiScan, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.pipTurnedOn])
 
 	if (!serialConnectionManagerClass.pipTurnedOn) return null
 
@@ -83,7 +84,7 @@ function WiFiSettingsDialog() {
 
 									</h3>
 									<Button
-										onClick={scanForNetworks}
+										onClick={() => scanForNetworks("hard")}
 										disabled={serialMessageManagerClass.isScanning}
 										className="flex items-center gap-2"
 										variant="outline"

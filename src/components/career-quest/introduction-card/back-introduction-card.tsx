@@ -7,7 +7,8 @@ import BackFlipButton from "../back-flip-button"
 import { Separator } from "../../shadcn/ui/separator"
 import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {
 	introData: CareerData
@@ -37,6 +38,7 @@ export default function BackIntroductionCard(props: Props) {
 			style={{
 				backfaceVisibility: "hidden",
 				transform: "rotateY(180deg)",
+				borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
 			}}
 		>
 			<div className="w-full flex flex-col p-6">
@@ -54,7 +56,7 @@ export default function BackIntroductionCard(props: Props) {
 								<SingleComponentUsed
 									key={component.componentName}
 									component={component}
-									baseColor={backgroundColor}  // Pass base color instead of hardcoded bgColor
+									baseColor={backgroundColor}
 								/>
 							))}
 							{componentsUsed.length > 5 && (
@@ -76,7 +78,7 @@ export default function BackIntroductionCard(props: Props) {
 								<SingleCodingConceptUsed
 									key={codingConcept}
 									codingConcept={codingConcept}
-									baseColor={backgroundColor}  // Add missing baseColor prop
+									baseColor={backgroundColor}
 								/>
 							))}
 							{codingConcepts.length > 5 && (

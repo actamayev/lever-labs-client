@@ -21,7 +21,7 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface EditProfileImageDialogProps {
@@ -215,7 +215,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 							onClick={handleDelete}
 							className={cn("flex-1 h-10 rounded-xl text-lg text-white", deleteColors.bg)}
 							shadowHeight={4}
-							shadowClass={deleteColors.shadow}
+							shadowClass={deleteColors.shadow2}
 						>
 							<Trash2 className="mr-2 h-4 w-4" />
 							DELETE
@@ -227,7 +227,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 						onClick={handleSave}
 						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						{isLoading ? <LoadingOval /> : <Save className="mr-2 h-4 w-4" />}
 						{pendingDelete ? "CONFIRM DELETE" : "SAVE"}

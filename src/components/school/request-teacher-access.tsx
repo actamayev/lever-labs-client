@@ -11,7 +11,7 @@ import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editTeacherData from "../../utils/teacher/edit-teacher-data"
 import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
@@ -249,7 +249,7 @@ function RequestTeacherAccess() {
 						disabled={!isFormValid || isSubmitting || isFormDisabled}
 						className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						{getButtonText()}
 					</TactileButton>

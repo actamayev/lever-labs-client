@@ -63,7 +63,7 @@ function LightAnimationsList() {
 						buttonVariants({
 							variant: "outline",
 							className: "flex items-center gap-1 rounded-xl justify-between \
-								px-4 !py-6 font-medium cursor-pointer w-full border-2 border-swan hover:bg-swan shadow-none !text-xl"
+								px-4 !py-6 font-medium cursor-pointer w-full border-2 shadow-none !text-xl"
 						})
 					)}
 					style={{ height: "52px" }}
@@ -82,12 +82,7 @@ function LightAnimationsList() {
 					<DropdownMenuItem
 						key={animation.name}
 						onClick={() => optimizedLightsAnimation(animation.name)}
-						className={cn(
-							"my-0.5 p-2 rounded-xl cursor-pointer text-sm transition-none flex items-center space-x-2 hover:!bg-polar",
-							garageClass.selectedAnimation === animation.name
-								? "!bg-polar border-l-4 border-l-blue-500"
-								: "hover:!bg-polar border-l-4 border-l-transparent"
-						)}
+						className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
 					>
 						<div className="flex-shrink-0">
 							{animation.icon(rgbColor)}

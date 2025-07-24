@@ -4,7 +4,7 @@ import { AlertCircle, CheckCircle } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
@@ -78,7 +78,7 @@ export default function JoinClassroom() {
 					onClick={submit}
 					className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
 					shadowHeight={4}
-					shadowClass={colors.shadow}
+					shadowClass={colors.shadow2}
 					disabled={!isValidClassCode(classCode)}
 				>
 						SUBMIT

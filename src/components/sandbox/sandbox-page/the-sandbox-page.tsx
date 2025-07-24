@@ -14,7 +14,7 @@ import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {
@@ -86,7 +86,7 @@ function TheSandboxPage() {
 						onClick={handleCreateProject}
 						className={cn("flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 						disabled={isCreating}
 						size="lg"
 					>

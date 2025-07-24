@@ -14,7 +14,7 @@ import { Input } from "../../shadcn/ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 interface Props {
 	project: SandboxProject
@@ -74,7 +74,7 @@ export default function RenameProjectDialog(props: Props) {
 						onClick={handleSaveRename}
 						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						SAVE
 					</TactileButton>

@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
+import { useEffect, useState } from "react"
 import { Control, UseFormSetValue } from "react-hook-form"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
@@ -23,6 +23,12 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const { scanForNetworks } = useScanForNetworks()
 
+	//Trigger a soft scan on load
+	useEffect(() => {
+		scanForNetworks("soft")
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
 	return (
 		<div className="space-y-6">
 			{/* Scan for Networks Section */}
@@ -35,7 +41,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 				<div className="flex gap-4 mb-4">
 					<Button
 						type="button"
-						onClick={scanForNetworks}
+						onClick={() => scanForNetworks("hard")}
 						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.pipTurnedOn}
 						className={cn(
 							"flex items-center gap-2",

@@ -14,6 +14,7 @@ declare global {
 		axis: "vertical" | "horizontal"
 		value: -1 | 0 | 1
 	}
+	type PixelBuffer = boolean[][]
 }
 
 export {}

@@ -28,7 +28,9 @@ function BatteryWorkbench() {
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryWorkbenchIcon />
 						<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
-							{isNull(workbenchClass.batteryDataLastUpdated) ? "\u00A0" : `${workbenchClass.batteryData?.stateOfCharge}%`}
+							{isNull(workbenchClass.batteryDataLastUpdated) ?
+								"\u00A0" :
+								`${Math.max(0, Math.min(100, workbenchClass.batteryData?.stateOfCharge || 0))}%`}
 						</span>
 					</WorkbenchIconTemplate>
 				</div>
