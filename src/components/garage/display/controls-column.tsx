@@ -93,19 +93,13 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
+						className="rounded-xl bg-standardBackground mt-1 w-56 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
 					>
 						{PRE_DEFINED_DESIGNS.map((design) => (
 							<DropdownMenuItem
 								key={design.name}
 								onClick={() => setSelectedDesign(design.name)}
-								className={cn(
-									"my-0.5 p-2 rounded-lg cursor-pointer text-sm",
-									"transition-none flex items-center space-x-2 hover:!bg-polar",
-									selectedDesign === design.name
-										? "!bg-polar border-l-4 border-l-blue-500"
-										: "hover:!bg-polar border-l-4 border-l-transparent"
-								)}
+								className="cursor-pointer transition-none hover:!bg-polar rounded-lg text-xl"
 							>
 								{design.name}
 							</DropdownMenuItem>
