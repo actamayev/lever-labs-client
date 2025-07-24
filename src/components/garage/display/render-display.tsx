@@ -109,7 +109,7 @@ function RenderDisplay () {
 					shadowClass={colors.shadow2}
 					shadowHeight={4}
 				>
-					Draw
+					DRAW
 				</TactileButton>
 			)}
 		</div>
