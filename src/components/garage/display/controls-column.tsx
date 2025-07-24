@@ -1,9 +1,8 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 import { Input } from "../../shadcn/ui/input"
-import { PreDefinedDesign } from "../../../utils/constants/display-constants"
+import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 
 interface ControlsColumnProps {
-	designs: PreDefinedDesign[]
 	selectedDesign: string
 	textInput: string
 	onDesignChange: (design: string) => void
@@ -11,7 +10,7 @@ interface ControlsColumnProps {
 }
 
 export default function ControlsColumn(props: ControlsColumnProps) {
-	const { designs, selectedDesign, textInput, onDesignChange, onTextChange } = props
+	const { selectedDesign, textInput, onDesignChange, onTextChange } = props
 
 	return (
 		<div className="space-y-8">
@@ -24,7 +23,7 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 						{selectedDesign || "Select design..."}
 					</DropdownMenuTrigger>
 					<DropdownMenuContent className="bg-gray-800 border-gray-700">
-						{designs.map((design) => (
+						{PRE_DEFINED_DESIGNS.map((design) => (
 							<DropdownMenuItem
 								key={design.name}
 								onClick={() => onDesignChange(design.name)}

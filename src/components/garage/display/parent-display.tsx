@@ -50,10 +50,11 @@ export default function ParentDisplay() {
 		const y = 28 // Starting Y position
 
 		for (const char of text.toUpperCase()) {
-			const fontData = FONT_DATA[char] || FONT_DATA[" "]
+			const fontData = FONT_DATA[char]
 
 			for (let col = 0; col < 5; col++) {
 				for (let row = 0; row < 8; row++) {
+					// eslint-disable-next-line max-depth
 					if (fontData[col] & (1 << row)) {
 						setPixelInBuffer(x + col, y + row, true)
 					}
@@ -64,9 +65,6 @@ export default function ParentDisplay() {
 		}
 	}, [clearBuffer, setPixelInBuffer])
 
-	// Check if buffer has content
-	const hasContent = pixelBuffer.some(row => row.some(pixel => pixel))
-
 	return (
 		<div className="flex items-center justify-center bg-standardBackground text-white">
 			<div className="flex items-center">
@@ -74,7 +72,6 @@ export default function ParentDisplay() {
 
 					{/* Column 1 - Controls */}
 					<ControlsColumn
-						designs={PRE_DEFINED_DESIGNS}
 						selectedDesign={selectedDesign}
 						textInput={textInput}
 						onDesignChange={setSelectedDesign}
@@ -90,11 +87,7 @@ export default function ParentDisplay() {
 					/>
 
 					{/* Column 3 - Display Preview */}
-					<DisplayColumn
-						pixelBuffer={pixelBuffer}
-						hasContent={hasContent}
-					/>
-
+					<DisplayColumn pixelBuffer={pixelBuffer}/>
 				</div>
 			</div>
 		</div>

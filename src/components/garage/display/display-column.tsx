@@ -3,13 +3,7 @@ import { useRef, useEffect, useCallback } from "react"
 import { Button } from "../../shadcn/ui/button"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
 
-interface DisplayColumnProps {
-	pixelBuffer: boolean[][]
-	hasContent: boolean
-}
-
-export default function DisplayColumn(props: DisplayColumnProps) {
-	const { pixelBuffer, hasContent } = props
+export default function DisplayColumn({ pixelBuffer }: { pixelBuffer: boolean[][] }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
 	// Get canvas context
@@ -101,7 +95,7 @@ export default function DisplayColumn(props: DisplayColumnProps) {
 			</div>
 
 			{/* Conditional Draw Button */}
-			{hasContent && (
+			{pixelBuffer.some(row => row.some(pixel => pixel)) && (
 				<Button
 					onClick={exportBuffer}
 					className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2"
