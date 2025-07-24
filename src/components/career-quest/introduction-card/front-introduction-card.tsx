@@ -13,6 +13,7 @@ interface Props {
 	flipCard: () => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 export default function FrontIntroductionCard(props: Props) {
 	const { introData, flipCard } = props
 	const { careerName, totalLessons, lessonsComplete, careerUrl, careerIcon: Icon, componentsUsed, backgroundColor } = introData
@@ -25,26 +26,33 @@ export default function FrontIntroductionCard(props: Props) {
 
 	return (
 		<motion.div
-			className={cn(
-				"absolute w-full h-full backface-hidden flex cursor-default",
-				colors.bg
-			)}
-			style={{ backfaceVisibility: "hidden" }}
+			className={cn("absolute w-full h-full backface-hidden flex cursor-default", colors.bg2)}
+			style={{
+				backfaceVisibility: "hidden",
+				borderRadius: "60px"
+			}}
 		>
 			{/* Left Section */}
-			<div className="w-1/2 flex flex-col p-6">
+			<div className={cn("w-1/2 flex flex-col p-6", colors.bg2)}>
 				{/* Title */}
-				<h3 className="text-2xl font-bold mb-5">{careerName}</h3>
+				<h3
+					className="text-2xl font-bold mb-5"
+					style={{
+						fontSize: "27px",
+						lineHeight: "34px",
+						cursor: "text"
+					}}
+				>
+					{careerName}
+				</h3>
 
-				{/* Progress Bar */}
-				<div className={cn("w-full h-5 rounded-full overflow-hidden relative mb-5", progressColors.background)}>
+				{/* <div className={cn("w-full h-5 rounded-full overflow-hidden relative mb-5", progressColors.background)}>
 					<div
 						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
 						style={{
 							width: `${progressPercentage}%`
 						}}
 					>
-						{/* Highlight shadow effect - only on the completed part */}
 						<div
 							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
 							style={{
@@ -53,11 +61,10 @@ export default function FrontIntroductionCard(props: Props) {
 						/>
 					</div>
 
-					{/* Text inside progress bar */}
 					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white cursor-default">
 						{lessonsComplete} / {totalLessons}
 					</div>
-				</div>
+				</div> */}
 
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 mb-auto">
@@ -78,7 +85,7 @@ export default function FrontIntroductionCard(props: Props) {
 				{/* Continue Button */}
 				<Link href={careerUrl}>
 					<TactileButton
-						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
+						className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
 						shadowClass={colors.shadow2}
 						shadowHeight={4}
 					>
@@ -88,7 +95,12 @@ export default function FrontIntroductionCard(props: Props) {
 			</div>
 
 			{/* Right Section with Image */}
-			<div className="w-1/2 flex items-center justify-center">
+			<div
+				className={cn("w-1/2 flex items-center justify-center", colors.bg)}
+				style={{
+					borderRadius: "60px"
+				}}
+			>
 				<Icon
 					size="200"
 					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
