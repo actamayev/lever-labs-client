@@ -19,7 +19,6 @@ export default function IntroductionCard({ introData }: IntroCardProps) {
 
 	return (
 		<div className={cn("relative overflow-hidden text-white w-full aspect-[750/321]")}>
-			{/* Card container */}
 			<motion.div
 				className="w-full h-full relative preserve-3d"
 				animate={{ rotateY: flipped ? 180 : 0 }}

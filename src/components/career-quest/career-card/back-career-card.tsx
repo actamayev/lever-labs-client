@@ -31,19 +31,15 @@ export default function BackCareerCard(props: Props) {
 			}}
 		>
 			<div className="w-full h-full flex flex-col p-4">
-				{/* Header */}
 				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
 
-				{/* Description */}
 				<div className="flex-1 flex flex-col justify-center">
 					<div className="text-sm text-white leading-relaxed text-center">
 						{careerDescription}
 					</div>
 				</div>
 
-				{/* Bottom section with time estimate and flip button - 40px tall */}
 				<div className="flex flex-row items-center justify-between mt-4 h-10">
-					{/* Time estimate - Bottom Left */}
 					<div className="flex flex-row items-center gap-2">
 						<Hourglass className="w-5 h-5 text-white"/>
 						<div className="text-sm text-white">

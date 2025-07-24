@@ -86,29 +86,6 @@ export default function FrontCareerCard(props: Props) {
 						/>
 					</div>
 				</div>
-
-				{/* <div className="p-4 pb-2">
-				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
-
-				<div className={cn("w-full h-5 rounded-full overflow-hidden relative", progressColors.background)}>
-					<div
-						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
-						style={{
-							width: `${progressPercentage}%`,
-						}}
-					>
-						<div
-							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
-							style={{
-								height: "3px"
-							}}
-						/>
-					</div>
-					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white cursor-default">
-						{lessonsComplete} / {totalLessons}
-					</div>
-				</div>
-			</div> */}
 			</div>
 		</motion.div>
 	)

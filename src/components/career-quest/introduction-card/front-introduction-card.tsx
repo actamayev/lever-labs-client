@@ -62,26 +62,6 @@ export default function FrontIntroductionCard(props: Props) {
 					{careerName}
 				</h3>
 
-				{/* <div className={cn("w-full h-5 rounded-full overflow-hidden relative mb-5", progressColors.background)}>
-					<div
-						className={cn("relative h-full rounded-full duration-0 ease-out", progressColors.fill)}
-						style={{
-							width: `${progressPercentage}%`
-						}}
-					>
-						<div
-							className={cn("absolute top-1 left-2 right-2 rounded-full", progressColors.highlight)}
-							style={{
-								height: "3px"
-							}}
-						/>
-					</div>
-
-					<div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white cursor-default">
-						{lessonsComplete} / {totalLessons}
-					</div>
-				</div> */}
-
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 mb-auto">
 					{componentsUsed.slice(0, 4).map((component) => (

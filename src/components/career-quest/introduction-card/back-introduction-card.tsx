@@ -56,7 +56,7 @@ export default function BackIntroductionCard(props: Props) {
 								<SingleComponentUsed
 									key={component.componentName}
 									component={component}
-									baseColor={backgroundColor}  // Pass base color instead of hardcoded bgColor
+									baseColor={backgroundColor}
 								/>
 							))}
 							{componentsUsed.length > 5 && (
@@ -78,7 +78,7 @@ export default function BackIntroductionCard(props: Props) {
 								<SingleCodingConceptUsed
 									key={codingConcept}
 									codingConcept={codingConcept}
-									baseColor={backgroundColor}  // Add missing baseColor prop
+									baseColor={backgroundColor}
 								/>
 							))}
 							{codingConcepts.length > 5 && (
