@@ -10,7 +10,7 @@ import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function ChangePasswordSection() {
@@ -136,7 +136,7 @@ function ChangePasswordSection() {
 					disabled={!isPasswordChangeValid}
 					className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 					shadowHeight={4}
-					shadowClass={colors.shadow}
+					shadowClass={colors.shadow2}
 				>
 					SAVE CHANGES
 				</TactileButton>

@@ -10,7 +10,7 @@ import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import CreateClassroomDialog from "./create-classroom-dialog"
 import RenameClassroomDialog from "./rename-classroom-dialog"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 import SingleClassCard from "./single-class-card"
 
@@ -59,7 +59,7 @@ function ClassManagerPage() {
 						onClick={handleCreateClick}
 						className={cn("h-12 px-8 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						<div className="flex items-center justify-center">
 							<Plus className="h-5 w-5 mr-2" />
@@ -87,7 +87,7 @@ function ClassManagerPage() {
 							colors.bg
 						)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						<Plus className="h-6 w-6" />
 					</TactileButton>

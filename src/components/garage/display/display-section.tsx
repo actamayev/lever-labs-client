@@ -1,5 +1,7 @@
 "use client"
 
+import RenderDisplay from "./render-display"
+import DisplayControls from "./display-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 export default function DisplaySection() {
@@ -11,6 +13,10 @@ export default function DisplaySection() {
 				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS
 			}}
 		>
+			<div className="w-full grid grid-cols-2 pt-10 ml-[18px]">
+				<DisplayControls />
+				<RenderDisplay />
+			</div>
 		</div>
 	)
 }

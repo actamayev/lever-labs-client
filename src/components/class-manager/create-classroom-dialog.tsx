@@ -7,7 +7,7 @@ import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/typed-navigate"
 import createClassroom from "../../utils/teacher/create-classroom"
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
@@ -117,7 +117,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 						disabled={!isFormValid || isSubmitting}
 						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 					>
 						{isSubmitting ? "CREATING..." : "CREATE"}
 					</TactileButton>

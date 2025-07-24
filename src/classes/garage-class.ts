@@ -4,6 +4,8 @@ import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
+import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA,
+	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
@@ -37,6 +39,67 @@ class GarageClass {
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
 	public lastThrottlePercent: number = 100
 	public soundPlaying: FunSounds | null = null
+
+	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
+	public textInput: string = ""
+	public selectedDesign: PreDefinedDesignName = "No design"
+	public textOnBuffer: string = ""
+	public designOnBuffer: PreDefinedDesignName = "No design"
+
+	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
+		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
+			const newBuffer = this.pixelBuffer.map((row: boolean[]) => [...row])
+			newBuffer[y][x] = state
+			this.pixelBuffer = newBuffer
+		}
+	})
+
+	public clearBuffer = action((): void => {
+		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
+	})
+
+	public applyDesignToBuffer = action((designName: PreDefinedDesignName): void => {
+		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
+		if (!design) return
+		this.clearBuffer()
+		design.pixels.forEach((pixel: Point) => {
+			this.setPixelInBuffer(pixel.x, pixel.y, true)
+		})
+		this.designOnBuffer = designName
+		this.textOnBuffer = ""
+	})
+
+	public applyTextToBuffer = action((): void => {
+		if (!this.textInput.trim()) return
+		this.clearBuffer()
+		let x = 8 // Starting X position
+		const y = 28 // Starting Y position
+		for (const char of this.textInput.toUpperCase()) {
+			const fontData = FONT_DATA[char]
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+			if (!fontData) continue
+			for (let col = 0; col < 5; col++) {
+				for (let row = 0; row < 8; row++) {
+					// eslint-disable-next-line max-depth
+					if (fontData[col] & (1 << row)) {
+						this.setPixelInBuffer(x + col, y + row, true)
+					}
+				}
+			}
+			x += 6 // 5 pixels + 1 space
+			if (x >= DISPLAY_WIDTH - 5) break
+		}
+		this.textOnBuffer = this.textInput
+		this.designOnBuffer = "No design"
+	})
+
+	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
+		this.selectedDesign = designName
+	})
+
+	public setTextInput = action((value: string): void => {
+		this.textInput = value
+	})
 
 	constructor() {
 		makeAutoObservable(this)
@@ -170,6 +233,11 @@ class GarageClass {
 		this.setIsHornPressed(false)
 		this.setAreHeadlightsOn(false)
 		this.setSoundPlaying(null)
+		this.clearBuffer()
+		this.setTextInput("")
+		this.setSelectedDesign("No design" as PreDefinedDesignName)
+		this.textOnBuffer = ""
+		this.designOnBuffer = "No design"
 	}
 }
 

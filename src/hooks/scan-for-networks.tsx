@@ -5,10 +5,12 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import serialMessageManagerClass from "../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
-export default function useScanForNetworks(): { scanForNetworks: () => Promise<void> } {
+export default function useScanForNetworks(): {
+	scanForNetworks: (softOrHard: "soft" | "hard") => Promise<void>
+	} {
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-	const scanForNetworks = useCallback(async () => {
+	const scanForNetworks = useCallback(async (softOrHard: "soft" | "hard") => {
 		if (!serialConnectionManagerClass.pipTurnedOn || serialMessageManagerClass.isScanning) return
 
 		serialMessageManagerClass.setIsScanning(true)
@@ -23,8 +25,13 @@ export default function useScanForNetworks(): { scanForNetworks: () => Promise<v
 			}
 		}, 10000)
 
+		let message: ArrayBuffer
 		try {
-			const message = MessageBuilder.createScanWiFiNetworksMessage()
+			if (softOrHard === "soft") {
+				message = MessageBuilder.createSoftScanWiFiNetworksMessage()
+			} else {
+				message = MessageBuilder.createHardScanWiFiNetworksMessage()
+			}
 			await serialConnectionManagerClass.sendBinaryMessage(message)
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)

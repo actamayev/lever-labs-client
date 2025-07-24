@@ -4,7 +4,7 @@
 /**
  * Generate Tailwind background classes for different color variants
  */
-export const getDuolingoColors = (baseColor: DuolingoColors) => {
+export default function getDuolingoColors(baseColor: DuolingoColors) {
 	return {
 		// Main background (base color)
 		bg: `bg-${baseColor}`,
@@ -38,18 +38,11 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		ring2: `ring-${baseColor}-2`,
 		ring3: `ring-${baseColor}-3`,
 
-		shadow: `shadow-${baseColor}-2`,
-		hoverShadow: `hover:shadow-${baseColor}-3`,
-	}
-}
+		shadow: `shadow-${baseColor}`,
+		shadow1: `shadow-${baseColor}-1`,
+		shadow2: `shadow-${baseColor}-2`,
+		shadow3: `shadow-${baseColor}-3`,
 
-/**
- * Get progress bar colors (lighter variants work well for progress)
- */
-export const getProgressColors = (baseColor: DuolingoColors) => {
-	return {
-		background: `bg-${baseColor}-2`,    // Darker background
-		fill: `bg-${baseColor}-1`,          // Lighter fill
-		highlight: `bg-${baseColor}`,       // Main color for highlight
+		hoverShadow: `hover:shadow-${baseColor}-3`,
 	}
 }
