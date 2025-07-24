@@ -119,8 +119,6 @@ export default function FrontCareerCard(props: Props) {
 					</div>
 				</div>
 			</div> */}
-
-				{/* Components Section */}
 			</div>
 		</motion.div>
 	)

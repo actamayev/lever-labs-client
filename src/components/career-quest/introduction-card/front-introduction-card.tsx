@@ -32,11 +32,31 @@ export default function FrontIntroductionCard(props: Props) {
 				borderRadius: "60px"
 			}}
 		>
+
+			<div
+				className={cn("flex items-center justify-center", colors.bg)}
+				style={{
+					borderRadius: "60px",
+					width: "calc(50% - 16px)"
+				}}
+			>
+				<Icon
+					size="200"
+					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
+				/>
+			</div>
+
 			{/* Left Section */}
-			<div className={cn("w-1/2 flex flex-col p-6", colors.bg2)}>
+			<div
+				className={cn("flex flex-col pl-7", colors.bg2)}
+				style={{
+					width: "calc(50% + 16px)",
+					borderRadius: "60px"
+				}}
+			>
 				{/* Title */}
 				<h3
-					className="text-2xl font-bold mb-5"
+					className="text-2xl font-bold mb-5 mt-7"
 					style={{
 						fontSize: "27px",
 						lineHeight: "34px",
@@ -83,34 +103,23 @@ export default function FrontIntroductionCard(props: Props) {
 				</div>
 
 				{/* Continue Button */}
-				<Link href={careerUrl}>
-					<TactileButton
-						className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
-						shadowClass={colors.shadow2}
-						shadowHeight={4}
-					>
-						{lessonsComplete === 0 ? "START" : "CONTINUE"}
-					</TactileButton>
-				</Link>
+				<div className="flex flex-row items-center mb-6 w-full gap-3">
+					<Link href={careerUrl} className="flex-1">
+						<TactileButton
+							className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
+							shadowClass={colors.shadow}
+							shadowHeight={4}
+						>
+							{lessonsComplete === 0 ? "START" : "CONTINUE"}
+						</TactileButton>
+					</Link>
+					<BackFlipButton
+						onFlip={flipCard}
+						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+						style={{ marginRight: "30px" }}
+					/>
+				</div>
 			</div>
-
-			{/* Right Section with Image */}
-			<div
-				className={cn("w-1/2 flex items-center justify-center", colors.bg)}
-				style={{
-					borderRadius: "60px"
-				}}
-			>
-				<Icon
-					size="200"
-					className="w-12 h-12 md:w-24 md:h-24 lg:w-48 lg:h-48 xl:w-64 xl:h-64"
-				/>
-			</div>
-
-			<BackFlipButton
-				onFlip={flipCard}
-				extraClasses="absolute bottom-6 right-6 size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-			/>
 		</motion.div>
 	)
 }
