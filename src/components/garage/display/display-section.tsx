@@ -1,6 +1,7 @@
 "use client"
 
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
+import ParentDisplay from "./parent-display"
 
 export default function DisplaySection() {
 	return (
@@ -11,6 +12,7 @@ export default function DisplaySection() {
 				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS
 			}}
 		>
+			<ParentDisplay />
 		</div>
 	)
 }
