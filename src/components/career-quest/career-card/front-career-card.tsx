@@ -52,7 +52,7 @@ export default function FrontCareerCard(props: Props) {
 				}}
 			>
 				{/* make 3 sections. the top one should be 35% of the height, then 30%, then 35% */}
-				<div style={{ height: "35%" }} className="flex items-end">
+				<div style={{ height: "35%" }} className="flex items-center">
 					<h3
 						className="font-bold text-white ml-7"
 						style={{
@@ -63,7 +63,7 @@ export default function FrontCareerCard(props: Props) {
 						{careerName}
 					</h3>
 				</div>
-				<div style={{ height: "30%" }} className="items-center flex">
+				<div style={{ height: "30%" }} className="items-start flex">
 					<div className="flex flex-wrap gap-1.5 ml-7">
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
