@@ -5,6 +5,7 @@ import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {
 	careerData: CareerData
@@ -25,7 +26,7 @@ export default function BackCareerCard(props: Props) {
 			)}
 			style={{
 				backfaceVisibility: "hidden",
-				borderRadius: "60px",
+				borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
 				transform: "rotateY(180deg)",
 			}}
 		>

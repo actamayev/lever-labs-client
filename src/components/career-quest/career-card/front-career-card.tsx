@@ -1,13 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
-import SingleCodingConceptUsed from "../single-coding-concept-used"
 import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
+import StartButton from "../start-button"
+import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {
 	careerData: CareerData
@@ -31,13 +30,13 @@ export default function FrontCareerCard(props: Props) {
 			className={cn("absolute w-full h-full backface-hidden flex flex-col cursor-default", colors.bg2)}
 			style={{
 				backfaceVisibility: "hidden",
-				borderRadius: "60px"
+				borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
 			}}
 		>
 			{/* Icon/Image Section */}
 			<div
 				className={cn("flex-1 flex items-center justify-center px-4 py-2 h-3/5", colors.bg)}
-				style={{ borderRadius: "60px" }}
+				style={{ borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS }}
 			>
 				<Icon
 					size="120"
@@ -47,8 +46,8 @@ export default function FrontCareerCard(props: Props) {
 			<div
 				className={cn("h-2/5", colors.bg2)}
 				style={{
-					borderBottomLeftRadius: "60px",
-					borderBottomRightRadius: "60px"
+					borderBottomLeftRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
+					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
 				}}
 			>
 				<div style={{ height: "35%" }} className="flex items-center">
@@ -76,15 +75,11 @@ export default function FrontCareerCard(props: Props) {
 				</div>
 				<div style={{ height: "35%" }}>
 					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
-						<Link href={careerUrl} className="flex-1">
-							<TactileButton
-								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
-								shadowClass={colors.shadow}
-								shadowHeight={4}
-							>
-								{lessonsComplete === 0 ? "START" : "CONTINUE"}
-							</TactileButton>
-						</Link>
+						<StartButton
+							baseColor={backgroundColor}
+							lessonsComplete={lessonsComplete}
+							careerUrl={careerUrl}
+						/>
 
 						{/* Flip Button */}
 						<BackFlipButton

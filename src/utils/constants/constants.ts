@@ -56,6 +56,7 @@ export const soundMappings: SoundMapping = {
 }
 
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
+export const CAREER_QUEST_CARD_ROUNDING_RADIUS = "50px"
 
 export const SENSOR_POLLING_INTERVAL = 30000 // 30 seconds
 
