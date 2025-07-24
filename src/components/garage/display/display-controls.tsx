@@ -7,6 +7,7 @@ import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA, PRE_DEFINED_DESIGNS, Point } from "../../../utils/constants/display-constants"
+import DisplayActionTriangle from "./display-action-triangle"
 
 interface DisplayControlsProps {
 	setPixelBuffer: Dispatch<SetStateAction<PixelBuffer>>
@@ -107,26 +108,10 @@ export default function DisplayControls(props: DisplayControlsProps) {
 					</DropdownMenuContent>
 				</DropdownMenu>
 				<div className="flex justify-center">
-					<button
-						onClick={() => applyDesignToBuffer(selectedDesign)}
-						disabled={!selectedDesign}
-						className={cn("transition-all duration-200",
-							selectedDesign
-								? "hover:scale-110 cursor-pointer"
-								: "cursor-not-allowed"
-						)}
-						title={selectedDesign ? "Apply selected design" : "Select a design first"}
-					>
-						<TriangleIcon
-							className={cn(
-								"transition-colors duration-200 rotate-90",
-								selectedDesign
-									? "text-macaw fill-macaw"
-									: "fill-standardBackground text-hare"
-							)}
-							style={{ width: "60px", height: "60px" }}
-						/>
-					</button>
+					<DisplayActionTriangle
+						applyToBuffer={() => applyDesignToBuffer(selectedDesign)}
+						isEmpty={!selectedDesign}
+					/>
 				</div>
 			</div>
 
@@ -144,26 +129,10 @@ export default function DisplayControls(props: DisplayControlsProps) {
 					style={{ height: "60px" }}
 				/>
 				<div className="flex justify-center">
-					<button
-						onClick={applyTextToBuffer}
-						disabled={!textInput.trim()}
-						className={cn("transition-all duration-200",
-							textInput.trim()
-								? "hover:scale-110 cursor-pointer"
-								: "cursor-not-allowed"
-						)}
-						title={textInput.trim() ? "Apply entered text" : "Enter text first"}
-					>
-						<TriangleIcon
-							className={cn(
-								"transition-colors duration-200 rotate-90",
-								textInput.trim()
-									? "text-macaw fill-macaw"
-									: "fill-standardBackground text-hare"
-							)}
-							style={{ width: "60px", height: "60px" }}
-						/>
-					</button>
+					<DisplayActionTriangle
+						applyToBuffer={applyTextToBuffer}
+						isEmpty={!textInput.trim()}
+					/>
 				</div>
 			</div>
 		</div>
