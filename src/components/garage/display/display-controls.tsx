@@ -52,7 +52,7 @@ function DisplayControls () {
 					<DisplayActionTriangle
 						applyToBuffer={() => garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
 						isEmpty={garageClass.selectedDesign === "No design"}
-						isActive={garageClass.isDesignOrTextActive === "design"}
+						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
 					/>
 				</div>
 			</div>
@@ -63,6 +63,11 @@ function DisplayControls () {
 					placeholder="Enter text..."
 					value={garageClass.textInput}
 					onChange={(e) => garageClass.setTextInput(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" && garageClass.textInput.trim()) {
+							garageClass.applyTextToBuffer()
+						}
+					}}
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-start bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
@@ -74,7 +79,7 @@ function DisplayControls () {
 					<DisplayActionTriangle
 						applyToBuffer={garageClass.applyTextToBuffer}
 						isEmpty={!garageClass.textInput.trim()}
-						isActive={garageClass.isDesignOrTextActive === "text"}
+						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 					/>
 				</div>
 			</div>

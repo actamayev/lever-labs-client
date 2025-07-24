@@ -43,7 +43,8 @@ class GarageClass {
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	public textInput: string = ""
 	public selectedDesign: PreDefinedDesignName = "No design"
-	public isDesignOrTextActive: "design" | "text" | null = null
+	public textOnBuffer: string = ""
+	public designOnBuffer: PreDefinedDesignName = "No design"
 
 	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
 		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
@@ -64,7 +65,8 @@ class GarageClass {
 		design.pixels.forEach((pixel: Point) => {
 			this.setPixelInBuffer(pixel.x, pixel.y, true)
 		})
-		this.isDesignOrTextActive = "design"
+		this.designOnBuffer = designName
+		this.textOnBuffer = ""
 	})
 
 	public applyTextToBuffer = action((): void => {
@@ -87,7 +89,8 @@ class GarageClass {
 			x += 6 // 5 pixels + 1 space
 			if (x >= DISPLAY_WIDTH - 5) break
 		}
-		this.isDesignOrTextActive = "text"
+		this.textOnBuffer = this.textInput
+		this.designOnBuffer = "No design"
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
@@ -233,7 +236,8 @@ class GarageClass {
 		this.clearBuffer()
 		this.setTextInput("")
 		this.setSelectedDesign("No design" as PreDefinedDesignName)
-		this.isDesignOrTextActive = null
+		this.textOnBuffer = ""
+		this.designOnBuffer = "No design"
 	}
 }
 
