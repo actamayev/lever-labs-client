@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export const DISPLAY_WIDTH = 128
 export const DISPLAY_HEIGHT = 64
-export const PIXEL_SIZE = 4
+export const PIXEL_SIZE = 2
 export const CANVAS_WIDTH = DISPLAY_WIDTH * PIXEL_SIZE
 export const CANVAS_HEIGHT = DISPLAY_HEIGHT * PIXEL_SIZE
 
