@@ -1,74 +1,18 @@
 "use client"
 
-import { Dispatch, SetStateAction, useCallback, useState } from "react"
-import { ChevronDown, TriangleIcon } from "lucide-react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
+import { useState } from "react"
+import { observer } from "mobx-react"
+import { ChevronDown } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA, PRE_DEFINED_DESIGNS, Point } from "../../../utils/constants/display-constants"
+import garageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
+import { PRE_DEFINED_DESIGNS, PreDefinedDesignName } from "../../../utils/constants/display-constants"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 
-interface DisplayControlsProps {
-	setPixelBuffer: Dispatch<SetStateAction<PixelBuffer>>
-}
-
-// eslint-disable-next-line max-lines-per-function
-export default function DisplayControls(props: DisplayControlsProps) {
-	const { setPixelBuffer } = props
-	const [textInput, setTextInput] = useState<string>("")
-	const [selectedDesign, setSelectedDesign] = useState<string>("")
-
-	// Set pixel in buffer
-	const setPixelInBuffer = useCallback((x: number, y: number, state: boolean) => {
-		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
-			setPixelBuffer((prev: PixelBuffer) => {
-				const newBuffer = prev.map((row: boolean[]) => [...row])
-				newBuffer[y][x] = state
-				return newBuffer
-			})
-		}
-	}, [setPixelBuffer])
-
-	// Clear buffer
-	const clearBuffer = useCallback(() => {
-		setPixelBuffer(Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false)))
-	}, [setPixelBuffer])
-
-	// Apply design to buffer
-	const applyDesignToBuffer = useCallback((designName: string) => {
-		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
-		if (!design) return
-
-		clearBuffer()
-		design.pixels.forEach((pixel: Point) => {
-			setPixelInBuffer(pixel.x, pixel.y, true)
-		})
-	}, [clearBuffer, setPixelInBuffer])
-
-	// Apply text to buffer
-	const applyTextToBuffer = useCallback(() => {
-		if (!textInput.trim()) return
-
-		clearBuffer()
-		let x = 8 // Starting X position
-		const y = 28 // Starting Y position
-
-		for (const char of textInput.toUpperCase()) {
-			const fontData = FONT_DATA[char]
-
-			for (let col = 0; col < 5; col++) {
-				for (let row = 0; row < 8; row++) {
-					// eslint-disable-next-line max-depth
-					if (fontData[col] & (1 << row)) {
-						setPixelInBuffer(x + col, y + row, true)
-					}
-				}
-			}
-			x += 6 // 5 pixels + 1 space
-			if (x >= DISPLAY_WIDTH - 5) break // Don't overflow
-		}
-	}, [clearBuffer, setPixelInBuffer, textInput])
+function DisplayControls () {
+	const [selectedDesign, setSelectedDesign] = useState<PreDefinedDesignName | "">("")
 
 	return (
 		<div className="space-y-8">
@@ -109,7 +53,7 @@ export default function DisplayControls(props: DisplayControlsProps) {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => applyDesignToBuffer(selectedDesign)}
+						applyToBuffer={() => garageClass.applyDesignToBuffer(selectedDesign)}
 						isEmpty={!selectedDesign}
 					/>
 				</div>
@@ -119,8 +63,8 @@ export default function DisplayControls(props: DisplayControlsProps) {
 			<div className="flex flex-row gap-4">
 				<Input
 					placeholder="Enter text..."
-					value={textInput}
-					onChange={(e) => setTextInput(e.target.value)}
+					value={garageClass.textInput}
+					onChange={(e) => garageClass.setTextInput(e.target.value)}
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-start bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
@@ -130,11 +74,13 @@ export default function DisplayControls(props: DisplayControlsProps) {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={applyTextToBuffer}
-						isEmpty={!textInput.trim()}
+						applyToBuffer={garageClass.applyTextToBuffer}
+						isEmpty={!garageClass.textInput.trim()}
 					/>
 				</div>
 			</div>
 		</div>
 	)
 }
+
+export default observer(DisplayControls)

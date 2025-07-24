@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import { observer } from "mobx-react"
 import { useRef, useEffect, useCallback } from "react"
 import { Button } from "../../shadcn/ui/button"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
+import garageClass from "../../../classes/garage-class"
 
-export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffer }) {
+function RenderDisplay () {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
 	// Get canvas context
@@ -24,7 +26,7 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 		// Draw all pixels
 		for (let y = 0; y < DISPLAY_HEIGHT; y++) {
 			for (let x = 0; x < DISPLAY_WIDTH; x++) {
-				if (pixelBuffer[y] && pixelBuffer[y][x]) {
+				if (garageClass.pixelBuffer[y] && garageClass.pixelBuffer[y][x]) {
 					ctx.fillStyle = "#ffffff"
 					ctx.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)
 				}
@@ -46,7 +48,8 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 			ctx.lineTo(CANVAS_WIDTH, y * PIXEL_SIZE)
 			ctx.stroke()
 		}
-	}, [getContext, pixelBuffer])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [getContext, garageClass.pixelBuffer])
 
 	// Convert pixel buffer to SSD1306 format and export
 	const exportBuffer = useCallback(() => {
@@ -60,7 +63,7 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 				for (let bit = 0; bit < 8; bit++) {
 					const y = page * 8 + bit
 					// eslint-disable-next-line max-depth
-					if (y < DISPLAY_HEIGHT && pixelBuffer[y] && pixelBuffer[y][col]) {
+					if (y < DISPLAY_HEIGHT && garageClass.pixelBuffer[y] && garageClass.pixelBuffer[y][col]) {
 						byte |= (1 << bit)
 					}
 				}
@@ -75,7 +78,8 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 		console.log("Base64:", btoa(String.fromCharCode(...buffer)))
 
 		return buffer
-	}, [pixelBuffer])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [garageClass.pixelBuffer])
 
 	// Update canvas when pixel buffer changes
 	useEffect(() => {
@@ -95,7 +99,7 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 			</div>
 
 			{/* Conditional Draw Button */}
-			{pixelBuffer.some(row => row.some(pixel => pixel)) && (
+			{garageClass.pixelBuffer.some(row => row.some(pixel => pixel)) && (
 				<Button
 					onClick={exportBuffer}
 					className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2"
@@ -106,3 +110,5 @@ export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffe
 		</div>
 	)
 }
+
+export default observer(RenderDisplay)

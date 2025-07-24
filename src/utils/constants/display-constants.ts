@@ -10,8 +10,10 @@ export interface Point {
 	y: number
 }
 
+export type PreDefinedDesignName = "Happy Eyes" | "Sad Eyes" | "Heart" | "Smiley Face"
+
 export interface PreDefinedDesign {
-	name: string
+	name: PreDefinedDesignName
 	pixels: Point[]
 }
 

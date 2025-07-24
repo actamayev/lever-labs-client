@@ -1,15 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import RenderDisplay from "./RenderDisplay"
+import RenderDisplay from "./render-display"
 import DisplayControls from "./display-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../../../utils/constants/display-constants"
 
 export default function DisplaySection() {
-	const [pixelBuffer, setPixelBuffer] = useState<PixelBuffer>(() =>
-		Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
-	)
 	return (
 		<div
 			className="h-1/3 overflow-hidden border-t border-r border-b"
@@ -19,8 +14,8 @@ export default function DisplaySection() {
 			}}
 		>
 			<div className="w-full grid grid-cols-2 pt-10 ml-[18px]">
-				<DisplayControls setPixelBuffer={setPixelBuffer} />
-				<RenderDisplay pixelBuffer={pixelBuffer}/>
+				<DisplayControls />
+				<RenderDisplay />
 			</div>
 		</div>
 	)
