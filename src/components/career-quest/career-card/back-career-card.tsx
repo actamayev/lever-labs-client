@@ -25,6 +25,7 @@ export default function BackCareerCard(props: Props) {
 			)}
 			style={{
 				backfaceVisibility: "hidden",
+				borderRadius: "60px",
 				transform: "rotateY(180deg)",
 			}}
 		>

@@ -41,9 +41,10 @@ export default function SingleComponentUsed(props: Props) {
 				<div
 					key={component.componentName}
 					className={cn(
-						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0",
+						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0 border-2 border-white",
 						colors.bg2,        // Base background (bg-baseColor-2)
-						colors.hoverBg3    // Hover background (hover:bg-baseColor-3)
+						colors.hoverBg3,    // Hover background (hover:bg-baseColor-3)
+						colors.border3
 					)}
 					title={component.componentName}
 				>

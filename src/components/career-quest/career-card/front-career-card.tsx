@@ -35,14 +35,9 @@ export default function FrontCareerCard(props: Props) {
 			}}
 		>
 			{/* Icon/Image Section */}
-			<div className={
-				cn(
-					"flex-1 flex items-center justify-center px-4 py-2 h-3/5",
-					colors.bg
-				)}
-			style={{
-				borderRadius: "60px"
-			}}
+			<div
+				className={cn("flex-1 flex items-center justify-center px-4 py-2 h-3/5", colors.bg)}
+				style={{ borderRadius: "60px" }}
 			>
 				<Icon
 					size="120"
@@ -80,7 +75,7 @@ export default function FrontCareerCard(props: Props) {
 					</div>
 				</div>
 				<div style={{ height: "35%" }}>
-					<div className="pl-7 pb-4 flex flex-row items-start gap-3">
+					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
 						<Link href={careerUrl} className="flex-1">
 							<TactileButton
 								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
@@ -94,7 +89,10 @@ export default function FrontCareerCard(props: Props) {
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}
-							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0 mr-7"
+							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+							style={{
+								marginRight: "30px"
+							}}
 						/>
 					</div>
 				</div>
