@@ -28,18 +28,20 @@ export default function FrontCareerCard(props: Props) {
 
 	return (
 		<motion.div
-			className={"absolute w-full h-full backface-hidden flex flex-col cursor-default"}
-			// style={{ backfaceVisibility: "hidden" }}
+			className={cn("absolute w-full h-full backface-hidden flex flex-col cursor-default", colors.bg2)}
+			style={{
+				backfaceVisibility: "hidden",
+				borderRadius: "60px"
+			}}
 		>
 			{/* Icon/Image Section */}
 			<div className={
 				cn(
-					"flex-1 flex items-center justify-center px-4 py-2 h-3/5 border-b border-white",
-					colors.bg2
+					"flex-1 flex items-center justify-center px-4 py-2 h-3/5",
+					colors.bg
 				)}
 			style={{
-				borderTopLeftRadius: "60px",
-				borderTopRightRadius: "60px"
+				borderRadius: "60px"
 			}}
 			>
 				<Icon
@@ -48,13 +50,46 @@ export default function FrontCareerCard(props: Props) {
 				/>
 			</div>
 			<div
-				className={cn("h-2/5", colors.bg)}
+				className={cn("h-2/5", colors.bg2)}
 				style={{
 					borderBottomLeftRadius: "60px",
 					borderBottomRightRadius: "60px"
 				}}
 			>
-				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
+				{/* make 3 sections. the top one should be 35% of the height, then 30%, then 35% */}
+				<div style={{ height: "35%" }} className="border-b border-white flex items-end">
+					<h3 className="text-3xl font-bold text-white ml-7">{careerName}</h3>
+				</div>
+				<div style={{ height: "30%" }} className="border-b border-white items-center flex">
+					<div className="flex flex-wrap gap-1.5 ml-7">
+						{componentsUsed.slice(0, 4).map((component) => (
+							<SingleComponentUsed
+								key={component.componentName}
+								component={component}
+								baseColor={backgroundColor}
+							/>
+						))}
+					</div>
+				</div>
+				<div style={{ height: "35%" }}>
+					<div className="px-7 pb-4 p-2 flex flex-row items-start justify-start gap-3">
+						<Link href={careerUrl} className="flex-1">
+							<TactileButton
+								className={cn("duration-150 bg-white h-10 rounded-full text-base w-3/4", colors.text)}
+								shadowClass={colors.shadow}
+								shadowHeight={4}
+							>
+								{lessonsComplete === 0 ? "START" : "CONTINUE"}
+							</TactileButton>
+						</Link>
+
+						{/* Flip Button */}
+						<BackFlipButton
+							onFlip={flipCard}
+							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+						/>
+					</div>
+				</div>
 
 				{/* <div className="p-4 pb-2">
 				<h3 className="text-xl font-bold text-white mb-3">{careerName}</h3>
@@ -80,41 +115,6 @@ export default function FrontCareerCard(props: Props) {
 			</div> */}
 
 				{/* Components Section */}
-				{/* <div className="px-4 pb-2">
-				<div className="flex flex-wrap gap-1.5 justify-center">
-					{componentsUsed.slice(0, 4).map((component) => (
-						<SingleComponentUsed
-							key={component.componentName}
-							component={component}
-							baseColor={backgroundColor}
-						/>
-					))}
-					{componentsUsed.length > 4 && (
-						<div className={cn("w-8 h-8 rounded-xl flex items-center justify-center", colors.bg2)}>
-							<span className="font-bold text-xs">+{componentsUsed.length - 4}</span>
-						</div>
-					)}
-				</div>
-			</div> */}
-
-				{/* Continue Button and Flip Button */}
-				<div className="px-8 pb-4 p-2 flex flex-row items-center gap-3">
-					<Link href={careerUrl} className="flex-1">
-						<TactileButton
-							className={cn("duration-150 bg-white h-10 rounded-full text-base w-3/4", colors.text)}
-							shadowClass={colors.shadow}
-							shadowHeight={4}
-						>
-							{lessonsComplete === 0 ? "START" : "CONTINUE"}
-						</TactileButton>
-					</Link>
-
-					{/* Flip Button */}
-					<BackFlipButton
-						onFlip={flipCard}
-						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-					/>
-				</div>
 			</div>
 		</motion.div>
 	)
