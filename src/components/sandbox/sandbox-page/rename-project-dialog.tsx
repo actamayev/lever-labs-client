@@ -14,7 +14,7 @@ import { Input } from "../../shadcn/ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
 
 interface Props {
 	project: SandboxProject

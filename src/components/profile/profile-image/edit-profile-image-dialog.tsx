@@ -21,7 +21,7 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
 import { cn } from "../../../lib/shadcn/utils"
 
 interface EditProfileImageDialogProps {

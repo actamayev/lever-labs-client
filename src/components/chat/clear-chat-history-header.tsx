@@ -1,7 +1,7 @@
 import { Trash2, X } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../utils/get-duolingo-colors"
 
 interface ClearChatHistoryHeaderProps {
 	showDeleteConfirmation: boolean

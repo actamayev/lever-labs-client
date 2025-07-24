@@ -10,7 +10,7 @@ import { CustomRemote } from "../icons/custom-remote"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../utils/get-duolingo-colors"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {

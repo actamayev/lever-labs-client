@@ -10,7 +10,7 @@ import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { getDuolingoColors } from "../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function ChangePasswordSection() {

@@ -14,7 +14,7 @@ import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
-import { getDuolingoColors } from "../../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage() {

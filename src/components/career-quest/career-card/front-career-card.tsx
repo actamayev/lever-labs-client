@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
-import { getDuolingoColors, getProgressColors } from "../../../utils/duolingo-utils"
+import { getDuolingoColors } from "../../../utils/get-duolingo-colors"
 import StartButton from "../start-button"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
@@ -17,13 +17,9 @@ interface Props {
 export default function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
-		totalLessons, lessonsComplete, backgroundColor, codingConcepts } = careerData
+		lessonsComplete, backgroundColor } = careerData
 
 	const colors = getDuolingoColors(backgroundColor)
-	const progressColors = getProgressColors(backgroundColor)
-
-	// Calculate progress percentage
-	const progressPercentage = Math.max(7, Math.min(100, ((lessonsComplete) / totalLessons) * 100))
 
 	return (
 		<motion.div
@@ -80,7 +76,6 @@ export default function FrontCareerCard(props: Props) {
 							lessonsComplete={lessonsComplete}
 							careerUrl={careerUrl}
 						/>
-
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}

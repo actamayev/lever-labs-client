@@ -46,14 +46,3 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		hoverShadow: `hover:shadow-${baseColor}-3`,
 	}
 }
-
-/**
- * Get progress bar colors (lighter variants work well for progress)
- */
-export const getProgressColors = (baseColor: DuolingoColors) => {
-	return {
-		background: `bg-${baseColor}-2`,    // Darker background
-		fill: `bg-${baseColor}-1`,          // Lighter fill
-		highlight: `bg-${baseColor}`,       // Main color for highlight
-	}
-}
