@@ -57,10 +57,18 @@ export default function FrontCareerCard(props: Props) {
 				}}
 			>
 				{/* make 3 sections. the top one should be 35% of the height, then 30%, then 35% */}
-				<div style={{ height: "35%" }} className="border-b border-white flex items-end">
-					<h3 className="text-3xl font-bold text-white ml-7">{careerName}</h3>
+				<div style={{ height: "35%" }} className="flex items-end">
+					<h3
+						className="font-bold text-white ml-7"
+						style={{
+							fontSize: "27px",
+							lineHeight: "34px"
+						}}
+					>
+						{careerName}
+					</h3>
 				</div>
-				<div style={{ height: "30%" }} className="border-b border-white items-center flex">
+				<div style={{ height: "30%" }} className="items-center flex">
 					<div className="flex flex-wrap gap-1.5 ml-7">
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
@@ -72,10 +80,10 @@ export default function FrontCareerCard(props: Props) {
 					</div>
 				</div>
 				<div style={{ height: "35%" }}>
-					<div className="px-7 pb-4 p-2 flex flex-row items-start justify-start gap-3">
+					<div className="pl-7 pb-4 flex flex-row items-start gap-3">
 						<Link href={careerUrl} className="flex-1">
 							<TactileButton
-								className={cn("duration-150 bg-white h-10 rounded-full text-base w-3/4", colors.text)}
+								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text)}
 								shadowClass={colors.shadow}
 								shadowHeight={4}
 							>
@@ -86,7 +94,7 @@ export default function FrontCareerCard(props: Props) {
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}
-							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0 mr-7"
 						/>
 					</div>
 				</div>
