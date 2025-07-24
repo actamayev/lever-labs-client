@@ -9,6 +9,19 @@ export default function useGarageActionsUseEffect(): void {
 
 	// Key event handlers
 	const handleKeyDown = async (event: KeyboardEvent): Promise<void> => {
+		// Ignore if focus is in an input, textarea, or contenteditable element
+		const active = document.activeElement as HTMLElement
+		if (
+			active &&
+		(
+			active.tagName === "INPUT" ||
+			active.tagName === "TEXTAREA" ||
+			active.isContentEditable
+		)
+		) {
+			return
+		}
+
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
@@ -17,6 +30,19 @@ export default function useGarageActionsUseEffect(): void {
 	}
 
 	const handleKeyUp = async (event: KeyboardEvent): Promise<void> => {
+		// Ignore if focus is in an input, textarea, or contenteditable element
+		const active = document.activeElement as HTMLElement
+		if (
+			active &&
+		(
+			active.tagName === "INPUT" ||
+			active.tagName === "TEXTAREA" ||
+			active.isContentEditable
+		)
+		) {
+			return
+		}
+
 		const key = event.key.toLowerCase()
 		if (!(key in actionMappings)) return
 
