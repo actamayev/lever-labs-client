@@ -85,7 +85,7 @@ export default function DisplayColumn({ pixelBuffer }: { pixelBuffer: PixelBuffe
 	return (
 		<div className="flex flex-col items-center space-y-4">
 			{/* Display Canvas */}
-			<div className="border-2 border-swan rounded-lg overflow-hidden bg-standardBackground">
+			<div className="border-2 border-swan rounded-2xl overflow-hidden bg-standardBackground">
 				<canvas
 					ref={canvasRef}
 					width={CANVAS_WIDTH}

@@ -79,9 +79,9 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 							className={cn(
 								buttonVariants({
 									variant: "outline",
-									className: "flex items-center gap-1 rounded-2xl justify-between text-questionText \
-										px-4 !py-6 font-medium cursor-pointer w-full \
-										border-2 border-swan hover:bg-swan shadow-none !text-xl"
+									className: "flex items-center gap-1 rounded-2xl justify-between \
+										px-4 !py-6 font-medium w-full \
+										border-2 shadow-none !text-xl cursor-pointer"
 								})
 							)}
 							style={{ height: "60px" }}
@@ -93,14 +93,14 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 						</div>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
-						className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none"
+						className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
 					>
 						{PRE_DEFINED_DESIGNS.map((design) => (
 							<DropdownMenuItem
 								key={design.name}
 								onClick={() => setSelectedDesign(design.name)}
 								className={cn(
-									"my-0.5 p-2 rounded-xl cursor-pointer text-sm",
+									"my-0.5 p-2 rounded-lg cursor-pointer text-sm",
 									"transition-none flex items-center space-x-2 hover:!bg-polar",
 									selectedDesign === design.name
 										? "!bg-polar border-l-4 border-l-blue-500"
@@ -119,7 +119,7 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 						className={cn("transition-all duration-200",
 							selectedDesign
 								? "hover:scale-110 cursor-pointer"
-								: "opacity-50 cursor-not-allowed"
+								: "cursor-not-allowed"
 						)}
 						title={selectedDesign ? "Apply selected design" : "Select a design first"}
 					>
@@ -127,8 +127,8 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 							className={cn(
 								"transition-colors duration-200 rotate-90",
 								selectedDesign
-									? "text-blue-500 hover:text-blue-400 fill-blue-500 hover:fill-blue-400"
-									: "text-gray-600 fill-gray-600"
+									? "text-macaw fill-macaw"
+									: "fill-standardBackground text-hare"
 							)}
 							style={{ width: "60px", height: "60px" }}
 						/>
@@ -156,7 +156,7 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 						className={cn("transition-all duration-200",
 							textInput.trim()
 								? "hover:scale-110 cursor-pointer"
-								: "opacity-50 cursor-not-allowed"
+								: "cursor-not-allowed"
 						)}
 						title={textInput.trim() ? "Apply entered text" : "Enter text first"}
 					>
@@ -164,8 +164,8 @@ export default function ControlsColumn(props: ControlsColumnProps) {
 							className={cn(
 								"transition-colors duration-200 rotate-90",
 								textInput.trim()
-									? "text-blue-500 hover:text-blue-400 fill-blue-500 hover:fill-blue-400"
-									: "text-gray-600 fill-gray-600"
+									? "text-macaw fill-macaw"
+									: "fill-standardBackground text-hare"
 							)}
 							style={{ width: "60px", height: "60px" }}
 						/>
