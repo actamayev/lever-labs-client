@@ -79,7 +79,7 @@ export default function FrontIntroductionCard(props: Props) {
 				<Link href={careerUrl}>
 					<TactileButton
 						className={cn("duration-150 bg-white h-10 rounded-2xl text-base w-full", colors.text)}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 						shadowHeight={4}
 					>
 						{lessonsComplete === 0 ? "START" : "CONTINUE"}

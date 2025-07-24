@@ -32,7 +32,7 @@ export default function ClearChatHistoryHeader({
 					className={cn("h-7 px-2 text-xs text-white", redColors.bg)}
 					title="Clear chat history"
 					shadowHeight={4}
-					shadowClass={redColors.shadow}
+					shadowClass={redColors.shadow2}
 				>
 					<Trash2 className="h-4 w-4" />
 					CLEAR
@@ -43,7 +43,7 @@ export default function ClearChatHistoryHeader({
 						onClick={handleConfirmDelete}
 						className={cn("h-7 px-2 text-xs text-white", redColors.bg)}
 						shadowHeight={4}
-						shadowClass={redColors.shadow}
+						shadowClass={redColors.shadow2}
 					>
 						<Trash2 className="h-4 w-4" />
 						CLEAR
@@ -52,7 +52,7 @@ export default function ClearChatHistoryHeader({
 						onClick={handleCancelDelete}
 						className={cn("h-7 px-2 text-xs text-white", blueColors.bg)}
 						shadowHeight={4}
-						shadowClass={blueColors.shadow}
+						shadowClass={blueColors.shadow2}
 					>
 						<X className="h-4 w-4" />
 						CANCEL

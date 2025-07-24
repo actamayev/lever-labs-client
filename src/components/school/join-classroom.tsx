@@ -78,7 +78,7 @@ export default function JoinClassroom() {
 					onClick={submit}
 					className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
 					shadowHeight={4}
-					shadowClass={colors.shadow}
+					shadowClass={colors.shadow2}
 					disabled={!isValidClassCode(classCode)}
 				>
 						SUBMIT

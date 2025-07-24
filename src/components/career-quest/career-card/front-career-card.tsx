@@ -51,13 +51,13 @@ export default function FrontCareerCard(props: Props) {
 					borderBottomRightRadius: "60px"
 				}}
 			>
-				{/* make 3 sections. the top one should be 35% of the height, then 30%, then 35% */}
 				<div style={{ height: "35%" }} className="flex items-center">
 					<h3
 						className="font-bold text-white ml-7"
 						style={{
 							fontSize: "27px",
-							lineHeight: "34px"
+							lineHeight: "34px",
+							cursor: "text"
 						}}
 					>
 						{careerName}

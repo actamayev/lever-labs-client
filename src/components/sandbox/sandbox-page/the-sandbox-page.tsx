@@ -86,7 +86,7 @@ function TheSandboxPage() {
 						onClick={handleCreateProject}
 						className={cn("flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
-						shadowClass={colors.shadow}
+						shadowClass={colors.shadow2}
 						disabled={isCreating}
 						size="lg"
 					>

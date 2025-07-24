@@ -152,7 +152,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 								"text-white flex items-center justify-center w-auto rounded-xl text-3xl h-12",
 								foxColors.bg
 							)}
-							shadowClass={foxColors.shadow}
+							shadowClass={foxColors.shadow2}
 							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
 							disabled={isStreaming || isEmpty(cppCode)}
 						>

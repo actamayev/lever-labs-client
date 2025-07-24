@@ -136,7 +136,7 @@ function ChangePasswordSection() {
 					disabled={!isPasswordChangeValid}
 					className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 					shadowHeight={4}
-					shadowClass={colors.shadow}
+					shadowClass={colors.shadow2}
 				>
 					SAVE CHANGES
 				</TactileButton>

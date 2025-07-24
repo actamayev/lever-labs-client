@@ -38,7 +38,11 @@ export const getDuolingoColors = (baseColor: DuolingoColors) => {
 		ring2: `ring-${baseColor}-2`,
 		ring3: `ring-${baseColor}-3`,
 
-		shadow: `shadow-${baseColor}-2`,
+		shadow: `shadow-${baseColor}`,
+		shadow1: `shadow-${baseColor}-1`,
+		shadow2: `shadow-${baseColor}-2`,
+		shadow3: `shadow-${baseColor}-3`,
+
 		hoverShadow: `hover:shadow-${baseColor}-3`,
 	}
 }
