@@ -4,7 +4,8 @@ import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA, PRE_DEFINED_DESIGNS, Point } from "../utils/constants/display-constants"
+import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA,
+	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
@@ -41,6 +42,7 @@ class GarageClass {
 
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	public textInput: string = ""
+	public selectedDesign: PreDefinedDesignName = "No design"
 
 	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
 		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
@@ -54,7 +56,7 @@ class GarageClass {
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	})
 
-	public applyDesignToBuffer = action((designName: string): void => {
+	public applyDesignToBuffer = action((designName: PreDefinedDesignName): void => {
 		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
 		if (!design) return
 		this.clearBuffer()
@@ -81,6 +83,10 @@ class GarageClass {
 			x += 6 // 5 pixels + 1 space
 			if (x >= DISPLAY_WIDTH - 5) break
 		}
+	})
+
+	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
+		this.selectedDesign = designName
 	})
 
 	public setTextInput = action((value: string): void => {
@@ -221,6 +227,7 @@ class GarageClass {
 		this.setSoundPlaying(null)
 		this.clearBuffer()
 		this.setTextInput("")
+		this.setSelectedDesign("No design" as PreDefinedDesignName)
 	}
 }
 

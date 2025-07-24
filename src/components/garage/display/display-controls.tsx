@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { observer } from "mobx-react"
 import { ChevronDown } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
@@ -8,12 +7,10 @@ import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
-import { PRE_DEFINED_DESIGNS, PreDefinedDesignName } from "../../../utils/constants/display-constants"
+import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 
 function DisplayControls () {
-	const [selectedDesign, setSelectedDesign] = useState<PreDefinedDesignName | "">("")
-
 	return (
 		<div className="space-y-8">
 			{/* Pre-defined designs dropdown */}
@@ -25,14 +22,14 @@ function DisplayControls () {
 								buttonVariants({
 									variant: "outline",
 									className: "flex items-center gap-1 rounded-2xl justify-between \
-										px-4 !py-6 font-medium w-full \
+										px-4 !py-6 w-full \
 										border-2 shadow-none !text-xl cursor-pointer"
 								})
 							)}
 							style={{ height: "60px" }}
 						>
 							<span className="flex items-center gap-2">
-								{selectedDesign || "Select design..."}
+								{garageClass.selectedDesign}
 							</span>
 							<ChevronDown className="!size-6" />
 						</div>
@@ -43,7 +40,7 @@ function DisplayControls () {
 						{PRE_DEFINED_DESIGNS.map((design) => (
 							<DropdownMenuItem
 								key={design.name}
-								onClick={() => setSelectedDesign(design.name)}
+								onClick={() => garageClass.setSelectedDesign(design.name)}
 								className="cursor-pointer transition-none hover:!bg-polar rounded-lg text-xl"
 							>
 								{design.name}
@@ -53,8 +50,8 @@ function DisplayControls () {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => garageClass.applyDesignToBuffer(selectedDesign)}
-						isEmpty={!selectedDesign}
+						applyToBuffer={() => garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
+						isEmpty={garageClass.selectedDesign === "No design"}
 					/>
 				</div>
 			</div>
@@ -68,7 +65,7 @@ function DisplayControls () {
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-start bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
-						"[&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+						"[&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 font-medium"
 					)}
 					style={{ height: "60px" }}
 				/>

@@ -10,7 +10,7 @@ export interface Point {
 	y: number
 }
 
-export type PreDefinedDesignName = "Happy Eyes" | "Sad Eyes" | "Heart" | "Smiley Face"
+export type PreDefinedDesignName = "No design" | "Happy Eyes" | "Sad Eyes" | "Heart" | "Smiley Face"
 
 export interface PreDefinedDesign {
 	name: PreDefinedDesignName
