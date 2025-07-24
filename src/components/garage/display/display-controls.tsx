@@ -8,12 +8,12 @@ import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA, PRE_DEFINED_DESIGNS, Point } from "../../../utils/constants/display-constants"
 
-interface ControlsColumnProps {
+interface DisplayControlsProps {
 	setPixelBuffer: Dispatch<SetStateAction<PixelBuffer>>
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function ControlsColumn(props: ControlsColumnProps) {
+export default function DisplayControls(props: DisplayControlsProps) {
 	const { setPixelBuffer } = props
 	const [textInput, setTextInput] = useState<string>("")
 	const [selectedDesign, setSelectedDesign] = useState<string>("")

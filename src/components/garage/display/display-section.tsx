@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import DisplayColumn from "./display-column"
-import ControlsColumn from "./controls-column"
+import RenderDisplay from "./RenderDisplay"
+import DisplayControls from "./display-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../../../utils/constants/display-constants"
 
@@ -18,9 +18,9 @@ export default function DisplaySection() {
 				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS
 			}}
 		>
-			<div className="w-full grid grid-cols-2 gap-2 pt-10 ml-[18px]">
-				<ControlsColumn setPixelBuffer={setPixelBuffer} />
-				<DisplayColumn pixelBuffer={pixelBuffer}/>
+			<div className="w-full grid grid-cols-2 pt-10 ml-[18px]">
+				<DisplayControls setPixelBuffer={setPixelBuffer} />
+				<RenderDisplay pixelBuffer={pixelBuffer}/>
 			</div>
 		</div>
 	)

@@ -3,7 +3,7 @@ import { useRef, useEffect, useCallback } from "react"
 import { Button } from "../../shadcn/ui/button"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
 
-export default function DisplayColumn({ pixelBuffer }: { pixelBuffer: PixelBuffer }) {
+export default function RenderDisplay({ pixelBuffer }: { pixelBuffer: PixelBuffer }) {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
 	// Get canvas context
