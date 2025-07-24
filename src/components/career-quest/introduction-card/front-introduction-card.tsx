@@ -16,7 +16,7 @@ interface Props {
 // eslint-disable-next-line max-lines-per-function
 export default function FrontIntroductionCard(props: Props) {
 	const { introData, flipCard } = props
-	const { careerName, totalLessons, lessonsComplete, careerUrl, careerIcon: Icon, componentsUsed, backgroundColor } = introData
+	const { careerName, lessonsComplete, careerUrl, careerIcon: Icon, componentsUsed, backgroundColor } = introData
 
 	const colors = getDuolingoColors(backgroundColor)
 
