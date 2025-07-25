@@ -176,10 +176,3 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 }
 
 export default observer(AssistantMessageMarkdown)
-
-// Package.json dependencies needed:
-// npm install shiki
-// npm install @shikijs/langs
-// npm install @shikijs/themes
-
-// This approach will result in a bundle size of ~50-100KB instead of 1.2MB!

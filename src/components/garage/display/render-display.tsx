@@ -78,7 +78,6 @@ function RenderDisplay () {
 		// You'll need to import MessageBuilder and your connection manager
 		try {
 			await createDisplayMessage(buffer)
-			console.log("Display buffer sent to ESP32!")
 		} catch (error) {
 			console.error("Failed to send display buffer:", error)
 		}
