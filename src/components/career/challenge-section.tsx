@@ -8,7 +8,6 @@ import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import { Separator } from "../shadcn/ui/separator"
-import CqChatInterface from "./chat/cq-chat-interface"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
@@ -166,14 +165,6 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 							STOP
 						</TactileButton>
 					</div>
-				</div>
-
-				{/* Right Panel - Chat Interface Full height */}
-				<div className="w-1/3 h-full">
-					<CqChatInterface
-						cppCode={cppCode}
-						challengeData={challengeData}
-					/>
 				</div>
 			</div>
 		</div>
