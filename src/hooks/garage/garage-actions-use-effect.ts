@@ -12,6 +12,7 @@ export default function useGarageActionsUseEffect(): void {
 		// Ignore if focus is in an input, textarea, or contenteditable element
 		const active = document.activeElement as HTMLElement
 		if (
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			active &&
 		(
 			active.tagName === "INPUT" ||
@@ -33,6 +34,7 @@ export default function useGarageActionsUseEffect(): void {
 		// Ignore if focus is in an input, textarea, or contenteditable element
 		const active = document.activeElement as HTMLElement
 		if (
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			active &&
 		(
 			active.tagName === "INPUT" ||
