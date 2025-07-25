@@ -5,6 +5,7 @@ import garageClass from "../../../classes/garage-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { cn } from "../../../lib/shadcn/utils"
+import createDisplayMessage from "../../../utils/garage/create-display-message"
 
 function RenderDisplay () {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -53,7 +54,8 @@ function RenderDisplay () {
 	}, [getContext, garageClass.pixelBuffer])
 
 	// Convert pixel buffer to SSD1306 format and export
-	const exportBuffer = useCallback(() => {
+	// Replace the existing exportBuffer function with this:
+	const exportBuffer = useCallback(async () => {
 		// SSD1306 uses 1 bit per pixel, organized in pages of 8 vertical pixels
 		// Buffer size: 128 columns × 8 pages = 1024 bytes
 		const buffer = new Uint8Array(128 * 8)
@@ -72,13 +74,14 @@ function RenderDisplay () {
 			}
 		}
 
-		// Log buffer info
-		console.log("SSD1306 Buffer Export:")
-		console.log("Buffer size:", buffer.length, "bytes")
-		console.log("Buffer data:", Array.from(buffer).map(b => "0x" + b.toString(16).padStart(2, "0")).join(", "))
-		console.log("Base64:", btoa(String.fromCharCode(...buffer)))
-
-		return buffer
+		// Send to ESP32 instead of just logging
+		// You'll need to import MessageBuilder and your connection manager
+		try {
+			await createDisplayMessage(buffer)
+			console.log("Display buffer sent to ESP32!")
+		} catch (error) {
+			console.error("Failed to send display buffer:", error)
+		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.pixelBuffer])
 
