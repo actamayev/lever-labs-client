@@ -10,7 +10,7 @@ export interface TextSection {
 	id: string
 	content: string
 	triggerImage: string // Lucide icon name
-  }
+}
 
 export interface ChallengeSection {
 	type: "challenge"
