@@ -50,7 +50,9 @@ function DisplayControls () {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
+						applyToBuffer={() => {
+							garageClass.applyDesignToBuffer(garageClass.selectedDesign)
+						}}
 						isEmpty={garageClass.selectedDesign === "No design"}
 						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
 					/>
@@ -77,7 +79,9 @@ function DisplayControls () {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={garageClass.applyTextToBuffer}
+						applyToBuffer={() => {
+							garageClass.applyTextToBuffer()
+						}}
 						isEmpty={!garageClass.textInput.trim()}
 						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 					/>
