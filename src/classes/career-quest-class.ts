@@ -12,6 +12,7 @@ import {
 	BinaryEvaluationResult
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
+import { CareerSection, ChallengeSection } from "../utils/career-quest/career-quest-data"
 
 interface ExtendedChallengeData extends ChallengeData {
 	messages: CareerQuestChatMessage[]
@@ -29,6 +30,15 @@ class CareerQuestClass {
 	public careerQuestChallengeData = observable.map<string, ExtendedChallengeData>()
 	// Map of challengeId -> streamId for tracking concurrent streams
 	public currentStreamIds: Map<string, string | null> = new Map()
+	public careerData = observable.map<string, {
+		completedSectionIds: Set<string>
+		unlockedSectionIds: Set<string>
+	}>()
+	private challengeToCareerMap = new Map<string, { careerId: string, sectionId: string }>()
+
+	public registerChallengeSection = action((challengeId: string, careerId: string, sectionId: string): void => {
+		this.challengeToCareerMap.set(challengeId, { careerId, sectionId })
+	})
 
 	constructor() {
 		makeAutoObservable(this)
@@ -202,6 +212,14 @@ class CareerQuestClass {
 		}
 
 		challengeData.messages.push(message)
+
+		// If challenge is completed correctly, mark section as complete
+		if (evaluationResult.isCorrect) {
+			const careerSection = this.challengeToCareerMap.get(challengeId)
+			if (careerSection) {
+				this.markSectionComplete(careerSection.careerId, careerSection.sectionId)
+			}
+		}
 	})
 
 	// Hide hint button from all messages in a challenge
@@ -322,9 +340,84 @@ class CareerQuestClass {
 		return this.currentStreamIds.get(challengeId) || null
 	}
 
+	// Initialize career data
+	public initializeCareer = action((careerId: string): void => {
+		if (this.careerData.has(careerId)) return
+
+		this.careerData.set(careerId, {
+			completedSectionIds: new Set<string>(),
+			unlockedSectionIds: new Set<string>() // Will be populated based on completed challenges
+		})
+	})
+
+	// Check if a section is unlocked (can be viewed)
+	public isSectionUnlocked(careerId: string, sectionId: string, careerSections: CareerSection[]): boolean {
+		const careerInfo = this.careerData.get(careerId)
+		if (!careerInfo) return false
+
+		// Find the section index
+		const sectionIndex = careerSections.findIndex(section => section.id === sectionId)
+		if (sectionIndex === -1) return false
+
+		// First section is always unlocked
+		if (sectionIndex === 0) return true
+
+		// Check all previous sections for any incomplete challenges
+		for (let i = 0; i < sectionIndex; i++) {
+			const section = careerSections[i]
+			if (section.type === "challenge") {
+				const isCompleted = this.isChallengeCompleted(section.challengeData.id)
+				if (!isCompleted) {
+					return false // Previous challenge not completed, section is locked
+				}
+			}
+		}
+
+		return true
+	}
+
+	// Check if a challenge is completed (has a correct evaluation result)
+	public isChallengeCompleted(challengeId: string): boolean {
+		const challengeData = this.getChallengeData(challengeId)
+		if (!challengeData) return false
+
+		// Check if there's a correct evaluation result in the messages
+		return challengeData.messages.some(message =>
+			message.evaluationResult?.isCorrect === true
+		)
+	}
+
+	// Mark a section as completed
+	public markSectionComplete = action((careerId: string, sectionId: string): void => {
+		const careerInfo = this.careerData.get(careerId)
+		if (!careerInfo) return
+
+		careerInfo.completedSectionIds.add(sectionId)
+	})
+
+	// Get completed sections count for a career
+	public getCompletedSectionsCount(careerSections: CareerSection[]): number {
+		// Count completed challenges (since they gate progression)
+		const challengeSections = careerSections.filter((section): section is ChallengeSection =>
+			section.type === "challenge"
+		)
+		return challengeSections.filter(section =>
+			this.isChallengeCompleted(section.challengeData.id)
+		).length
+	}
+
+	// Get total challenge count for a career
+	public getTotalChallengesCount(careerSections: CareerSection[]): number {
+		return careerSections.filter((section): section is ChallengeSection =>
+			section.type === "challenge"
+		).length
+	}
+
 	public logout(): void {
 		this.careerQuestChallengeData.clear()
 		this.currentStreamIds.clear()
+		this.careerData.clear()
+		this.challengeToCareerMap.clear()
 	}
 }
 
