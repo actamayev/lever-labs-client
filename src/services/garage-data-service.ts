@@ -13,4 +13,10 @@ export default class GarageDataService extends BaseDataService {
 			this.buildUrl("/lights-animation"), { lightAnimation, pipUUID }
 		)
 	}
+
+	async createDisplayBuffer(buffer: Uint8Array, pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl("/display-buffer"), { buffer, pipUUID }
+		)
+	}
 }
