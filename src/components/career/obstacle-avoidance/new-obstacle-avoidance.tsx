@@ -14,6 +14,7 @@ const ICON_MAP = {
 
 type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: ChallengeData }
 
+// eslint-disable-next-line max-lines-per-function
 export default function ObstacleAvoidance() {
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
@@ -71,7 +72,13 @@ export default function ObstacleAvoidance() {
 	return (
 		<div className="flex h-full">
 			{/* Left Side - Scrollable Content */}
-			<div className="w-1/2 overflow-y-auto">
+			<div
+				className="w-1/2 overflow-y-auto scrollbar-hide"
+				style={{
+					scrollbarWidth: "none",
+					msOverflowStyle: "none"
+				}}
+			>
 				<div className="p-8 space-y-8">
 					{OBSTACLE_AVOIDANCE_CAREER.sections.map((section) => (
 						<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
