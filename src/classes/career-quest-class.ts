@@ -12,8 +12,9 @@ import {
 	CareerId,
 	BlocklyJson
 } from "@bluedotrobots/common-ts"
-import { CareerQuestData, ChallengeSection, CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
+import { CareerQuestData, ChallengeSection, CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -380,7 +381,7 @@ class CareerQuestClass {
 
 		// Update blockly JSON if provided
 		if (sandboxJson) {
-			challenge.updatedBlocklyJson = sandboxJson
+			challenge.updatedBlocklyJson = normalizeSandboxJson(sandboxJson)
 		}
 
 		if (isCompleted) {

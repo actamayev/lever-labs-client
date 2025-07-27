@@ -17,18 +17,18 @@ import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockl
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	extraClasses?: string
-	initialBlocklyJson: BlocklyJson
+	blocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
+	extraClasses?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
 function InteractiveMiniSandbox(props: Props) {
 	const {
 		toolboxConfig,
+		blocklyJson,
+		onJsonChange,
 		extraClasses = "h-1/2",
-		initialBlocklyJson,
-		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -148,7 +148,7 @@ function InteractiveMiniSandbox(props: Props) {
 
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}
-				initialJson={initialBlocklyJson}
+				initialJson={blocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}
