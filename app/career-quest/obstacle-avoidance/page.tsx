@@ -1,7 +1,7 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
-import NewObstacleAvoidance from "../../../src/components/career/obstacle-avoidance/new-obstacle-avoidance"
+import { OBSTACLE_AVOIDANCE_CAREER } from "../../../src/utils/career-quest/career-quest-data"
 
 export const metadata = createMetadata({
 	title: "Obstacle Avoidance",
@@ -18,9 +18,7 @@ export const metadata = createMetadata({
 export default function ObstacleAvoidancePage() {
 	return (
 		<AuthenticatedLayout>
-			<CareerActivityTemplate>
-				<NewObstacleAvoidance />
-			</CareerActivityTemplate>
+			<CareerActivityTemplate careerData={OBSTACLE_AVOIDANCE_CAREER} />
 		</AuthenticatedLayout>
 	)
 }

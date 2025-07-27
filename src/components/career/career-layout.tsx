@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy } from "lucide-react"
-import ChallengeSection from "../challenge-section"
-import { OBSTACLE_AVOIDANCE_CAREER } from "../../../utils/career-quest/career-quest-data"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { observer } from "mobx-react"
-import careerQuestClass from "../../../classes/career-quest-class"
+import { CareerQuestData } from "../../utils/career-quest/career-quest-data"
+import ChallengeSection from "./challenge-section"
+import careerQuestClass from "../../classes/career-quest-class"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
@@ -16,11 +16,15 @@ const ICON_MAP = {
 
 type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
 
+interface CareerLayoutProps {
+	careerData: CareerQuestData
+}
+
 // eslint-disable-next-line max-lines-per-function
-function NewObstacleAvoidance() {
+function CareerLayout({ careerData }: CareerLayoutProps) {
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
-		icon: OBSTACLE_AVOIDANCE_CAREER.initialImage
+		icon: careerData.initialImage
 	})
 
 	useEffect(() => {
@@ -29,7 +33,7 @@ function NewObstacleAvoidance() {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.getAttribute("data-section-id")
-						const section = OBSTACLE_AVOIDANCE_CAREER.sections.find(s => s.id === sectionId)
+						const section = careerData.sections.find(s => s.id === sectionId)
 
 						if (section) {
 							if (section.type === "text") {
@@ -52,11 +56,11 @@ function NewObstacleAvoidance() {
 		}, 100)
 
 		return () => intersectionObserver.disconnect()
-	}, [])
+	}, [careerData.sections])
 
 	useEffect(() => {
-		careerQuestClass.initializeCareer(OBSTACLE_AVOIDANCE_CAREER)
-	}, [])
+		careerQuestClass.initializeCareer(careerData)
+	}, [careerData])
 
 	const RightContent = () => {
 		if (rightContent.type === "image") {
@@ -70,14 +74,15 @@ function NewObstacleAvoidance() {
 
 		return (
 			<div className="h-full flex flex-col">
-				<ChallengeSection challengeData={rightContent.challengeData} />
+				<ChallengeSection
+					challengeData={rightContent.challengeData}
+				/>
 			</div>
 		)
 	}
 
 	return (
 		<div className="flex h-full">
-			{/* Left Side - Scrollable Content */}
 			<div
 				className="w-1/2 overflow-y-auto scrollbar-hide"
 				style={{
@@ -86,7 +91,7 @@ function NewObstacleAvoidance() {
 				}}
 			>
 				<div className="p-8 space-y-8">
-					{OBSTACLE_AVOIDANCE_CAREER.sections.map((section) => (
+					{careerData.sections.map((section) => (
 						<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
 							{section.type === "text" ? (
 								<div className="prose prose-lg max-w-none">
@@ -104,7 +109,6 @@ function NewObstacleAvoidance() {
 				</div>
 			</div>
 
-			{/* Right Side - Sticky Content */}
 			<div className="w-1/2 sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan">
 				<AnimatePresence mode="wait">
 					<motion.div
@@ -126,4 +130,4 @@ function NewObstacleAvoidance() {
 	)
 }
 
-export default observer(NewObstacleAvoidance)
+export default observer(CareerLayout)
