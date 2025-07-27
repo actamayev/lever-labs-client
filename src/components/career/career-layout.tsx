@@ -34,7 +34,7 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
 		careerQuestClass.getVisibleSections(careerData.careerId),
-	[careerData.careerId, careerQuestClass.getCompletedChallengesCount(careerData.careerId)]
+	[careerData.careerId, careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)]
 	)
 
 	const visibleSections = useMemo(() =>
@@ -43,7 +43,7 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 	)
 
 	// Get completion count to trigger unlock detection
-	const completionCount = careerQuestClass.getCompletedChallengesCount(careerData.careerId)
+	const completionCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)
 
 	// Initialize allowed sections for first time (all text sections before first challenge)
 	useEffect(() => {
@@ -192,7 +192,7 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 
 	useEffect(() => {
 		const initializeCareer = async () => {
-			careerQuestClass.initializeCareer(careerData)
+			// careerQuestClass.initializeCareer(careerData)
 			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerId)
 		}
 

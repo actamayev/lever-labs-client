@@ -10,10 +10,9 @@ import {
 	BinaryEvaluationResult,
 	CqChallengeData,
 	CareerId,
-	ChallengeId,
 	BlocklyJson
 } from "@bluedotrobots/common-ts"
-import { CareerQuestData, ChallengeSection } from "../utils/career-quest/career-quest-data"
+import { CareerQuestData, ChallengeSection, CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
 
 // Chat and streaming state interfaces
@@ -55,12 +54,10 @@ class CareerQuestClass {
 	// Main data structure: careerId -> CareerInstance
 	public careers = observable.map<string, CareerInstance>()
 
-	constructor(careerDefinitions?: Record<string, CareerQuestData>) {
+	constructor() {
 		makeAutoObservable(this)
 
-		if (careerDefinitions) {
-			this.initializeAllCareers(careerDefinitions)
-		}
+		this.initializeAllCareers(CAREER_DEFINITIONS)
 	}
 
 	// ========================================
@@ -73,7 +70,7 @@ class CareerQuestClass {
 		})
 	})
 
-	public initializeCareer = action((careerDefinition: CareerQuestData): void => {
+	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
 		if (this.careers.has(careerDefinition.careerId)) return
 
 		// Extract challenge IDs from career definition
@@ -362,46 +359,6 @@ class CareerQuestClass {
 	}
 
 	// ========================================
-	// PROGRESS TRACKING
-	// ========================================
-
-	public getCompletedChallengesCount(careerId: CareerId): number {
-		const career = this.getCareer(careerId)
-		return career?.progress.completedChallengeIds.size || 0
-	}
-
-	public getTotalChallengesCount(careerId: CareerId): number {
-		const career = this.getCareer(careerId)
-		return career?.challenges.size || 0
-	}
-
-	public isSectionUnlocked(careerId: CareerId, sectionId: ChallengeId): boolean {
-		const career = this.getCareer(careerId)
-		if (!career) return false
-
-		const careerSections = career.careerDefinition.sections
-		const sectionIndex = careerSections.findIndex(
-			section => section.type === "challenge" && section.challengeData.challengeId === sectionId)
-		if (sectionIndex === -1) return false
-
-		// First section is always unlocked
-		if (sectionIndex === 0) return true
-
-		// Check all previous sections for any incomplete challenges
-		for (let i = 0; i < sectionIndex; i++) {
-			const section = careerSections[i]
-			if (section.type === "challenge") {
-				const isCompleted = this.isChallengeCompleted(section.challengeData)
-				if (!isCompleted) {
-					return false // Previous challenge not completed, section is locked
-				}
-			}
-		}
-
-		return true
-	}
-
-	// ========================================
 	// DATA MANAGEMENT
 	// ========================================
 
@@ -607,15 +564,6 @@ class CareerQuestClass {
 		}
 
 		return visibleSectionIds
-	}
-
-	public getVisibleSectionsCount(careerId: CareerId): number {
-		return this.getVisibleSections(careerId).length
-	}
-
-	public getTotalSectionsCount(careerId: CareerId): number {
-		const career = this.getCareer(careerId)
-		return career?.careerDefinition.sections.length || 0
 	}
 
 	// Enhanced progress methods for header
