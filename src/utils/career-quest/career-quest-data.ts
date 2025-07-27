@@ -28,6 +28,37 @@ export interface CareerQuestData {
 	sections: CareerSection[]
 }
 
+export const INTRODUCTION_CAREER: CareerQuestData = {
+	careerId: "introduction" as CareerId,
+	careerTitle: "Introduction",
+	initialImage: "Bot", // Lucide icon
+	sections: [
+		{
+			type: "text",
+			id: "intro-1",
+			content: "Hello! Welcome to your first Career Quest! Today, you're going to show me how to navigate the world. I'm really clumsy and am used to bumping into things...",
+			triggerImage: "Navigation"
+		},
+		{
+			type: "text",
+			id: "breakdown-1",
+			content: "We'll break this career into two steps: 1. First, I'll use my distance sensors to 'see' 2. Then, I'll react to those distance measurements...",
+			triggerImage: "Eye"
+		},
+		{
+			type: "text",
+			id: "sensors-intro",
+			content: "Lets start with my distance sensors. I have three distance sensors, or three 'eyes', that let me 'see' the world around me...",
+			triggerImage: "Radar"
+		},
+		{
+			type: "challenge",
+			id: "obstacle-avoidance-001" as ChallengeId,
+			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
+		}
+	]
+}
+
 // Sample data for Obstacle Avoidance career
 export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	careerId: "obstacle-avoidance",

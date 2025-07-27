@@ -70,100 +70,109 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [challengeData.challengeId, hasRetrievedData])
 
 	const workspaceKey = `${challengeData.challengeId}-${hasRetrievedData ? "retrieved" : "initial"}`
-
 	const foxColors = getDuolingoColors("fox")
 
 	return (
-		<div className="flex flex-col h-[600px] w-full overflow-hidden mb-8">
-			{/* Main content area with three columns */}
-			<div className="flex flex-row flex-1 gap-4 p-4 min-h-0">
-				{/* Left Panel - Full height */}
-				<div className="flex flex-col w-1/4 bg-standardBackground
-				rounded-lg border-2 border-swan p-4 h-full overflow-y-auto">
-					{/* Description section (2/3 height) */}
-					<div className="flex-[2] mb-4">
-						<h3 className="text-lg font-semibold mb-3 text-questionText">
+		<div className="flex flex-col h-full p-4 gap-4">
+			{/* Challenge Title */}
+			<div className="text-center flex-shrink-0">
+				<h2 className="text-xl font-bold text-questionText">
+					{challengeData.title}
+				</h2>
+			</div>
+
+			{/* Description Section with Hint Button */}
+			<div className="flex-shrink-0 flex gap-4 max-h-[25%]">
+				{/* Two-column description card */}
+				<div className="flex-1 bg-standardBackground rounded-lg border-2 border-swan p-4 flex gap-4 overflow-hidden">
+					{/* Left Column - Description */}
+					<div className="flex-1 overflow-y-auto">
+						<h3 className="text-base font-semibold mb-2 text-questionText">
 							What this code does:
 						</h3>
-						<div className="text-eel leading-relaxed">
+						<p className="text-sm text-eel leading-relaxed">
 							{challengeData.description}
-						</div>
+						</p>
 					</div>
 
-					{/* Before running section (1/3 height) */}
-					<Separator orientation="horizontal" className="rounded-full h-0.5" />
+					{/* Vertical Separator */}
+					<Separator orientation="vertical" className="h-full w-0.5" />
 
-					<div className="flex-[1] pt-4 mb-4">
-						<h3 className="text-lg font-semibold mb-3 text-questionText">
-							Before running code, make sure:
-						</h3>
-						<div className="text-eel leading-relaxed">
-							{challengeData.beforeRunningText}
-						</div>
-					</div>
-
-					{/* Hint button section */}
-					<Separator orientation="horizontal" className="rounded-full h-0.5" />
-
-					<div className="pt-4">
-						<TactileButton
-							className="w-full bg-beetle-2 text-white rounded-xl text-lg font-semibold py-3"
-							shadowColor="rgb(140, 80, 200)"
-							onClick={() => requestCareerQuestHint({
-								careerId: challengeData.careerId,
-								challengeId: challengeData.challengeId
-							}, cppCode)}
-							disabled={isStreaming}
-						>
-							<CustomLightbulb className="w-4 h-4" />
-							GET A HINT
-						</TactileButton>
+					{/* Right Column - Before Running */}
+					<div className="flex-1 overflow-y-auto">
+						{challengeData.beforeRunningText ? (
+							<>
+								<h3 className="text-base font-semibold mb-2 text-questionText">
+									Before running code, make sure:
+								</h3>
+								<p className="text-sm text-eel leading-relaxed">
+									{challengeData.beforeRunningText}
+								</p>
+							</>
+						) : (
+							<div className="flex items-center justify-center h-full text-gray-400">
+								<p className="text-sm">No special instructions</p>
+							</div>
+						)}
 					</div>
 				</div>
 
-				{/* Middle Column - Sandbox + Buttons */}
-				<div className="flex flex-col flex-1 h-full">
-					<div className="flex-1 min-h-0"> {/* Container for sandbox with proper height constraint */}
-						<InteractiveMiniSandbox
-							key={workspaceKey} // This will force remount when data is retrieved
-							toolboxConfig={challengeData.toolboxConfig}
-							initialBlocklyJson={currentBlocklyJson}
-							extraClasses="h-full"
-							onJsonChange={handleJsonChange}
-						/>
-					</div>
-
-					{/* Buttons section - Only under sandbox */}
-					<div className="flex flex-row space-x-2 items-center justify-center pt-2 flex-shrink-0">
-						<AnimatedStateButton
-							buttonText="SEND CODE"
-							isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-							onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-							className="duration-150 rounded-xl text-3xl h-12"
-						/>
-						<TactileButton
-							className={cn(
-								"text-white flex items-center justify-center w-auto rounded-xl text-3xl h-12",
-								foxColors.bg
-							)}
-							shadowClass={foxColors.shadow2}
-							onClick={() => checkCareerQuestCode({
-								careerId: challengeData.careerId,
-								challengeId: challengeData.challengeId
-							}, cppCode)}
-							disabled={isStreaming || isEmpty(cppCode)}
-						>
-							CHECK CODE
-						</TactileButton>
-						<TactileButton
-							className="bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl h-12"
-							shadowColor="rgb(150, 50, 75)"
-							onClick={stopCurrentlyRunningCode}
-						>
-							STOP
-						</TactileButton>
-					</div>
+				{/* Standalone Hint Button */}
+				<div className="flex-shrink-0">
+					<TactileButton
+						className="bg-beetle-2 text-white rounded-lg p-3 h-fit"
+						shadowColor="rgb(140, 80, 200)"
+						onClick={() => requestCareerQuestHint({
+							careerId: challengeData.careerId,
+							challengeId: challengeData.challengeId
+						}, cppCode)}
+						disabled={isStreaming}
+					>
+						<CustomLightbulb className="w-5 h-5" />
+					</TactileButton>
 				</div>
+			</div>
+
+			{/* Sandbox Section - Middle (flexible height) */}
+			<div className="flex-1 min-h-0">
+				<InteractiveMiniSandbox
+					key={workspaceKey}
+					toolboxConfig={challengeData.toolboxConfig}
+					initialBlocklyJson={currentBlocklyJson}
+					extraClasses="h-full"
+					onJsonChange={handleJsonChange}
+				/>
+			</div>
+
+			{/* Action Buttons Section - Bottom */}
+			<div className="flex-shrink-0 flex gap-3">
+				<AnimatedStateButton
+					buttonText="SEND CODE"
+					isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+					onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+					className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
+				/>
+				<TactileButton
+					className={cn(
+						"flex-1 text-white flex items-center justify-center rounded-xl text-xl h-12 font-semibold",
+						foxColors.bg
+					)}
+					shadowClass={foxColors.shadow2}
+					onClick={() => checkCareerQuestCode({
+						careerId: challengeData.careerId,
+						challengeId: challengeData.challengeId
+					}, cppCode)}
+					disabled={isStreaming || isEmpty(cppCode)}
+				>
+					CHECK CODE
+				</TactileButton>
+				<TactileButton
+					className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
+					shadowColor="rgb(150, 50, 75)"
+					onClick={stopCurrentlyRunningCode}
+				>
+					STOP
+				</TactileButton>
 			</div>
 		</div>
 	)
