@@ -74,13 +74,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 	return (
 		<div className="flex flex-col h-full p-4 gap-4">
-			{/* Challenge Title */}
-			<div className="text-center flex-shrink-0">
-				<h2 className="text-xl font-bold text-questionText">
-					{challengeData.title}
-				</h2>
-			</div>
-
 			{/* Description Section with Hint Button */}
 			<div className="flex-shrink-0 flex gap-4 max-h-[25%]">
 				{/* Two-column description card */}
