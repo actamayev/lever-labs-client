@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy } from "lucide-react"
 import { observer } from "mobx-react"
@@ -27,20 +27,56 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 		icon: careerData.initialImage
 	})
 
+	// Memoize visible sections to prevent unnecessary re-calculations
+	const visibleSectionIds = useMemo(() =>
+		careerQuestClass.getVisibleSections(careerData.careerId),
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	[careerData.careerId, careerQuestClass.getCompletedChallengesCount(careerData.careerId)]
+	)
+
+	const visibleSections = useMemo(() =>
+		careerData.sections.filter(section => visibleSectionIds.includes(section.id)),
+	[careerData.sections, visibleSectionIds]
+	)
+
+	// Callback to prevent unnecessary state updates
+	const updateRightContent = useCallback((section: typeof visibleSections[0]) => {
+		setRightContent(prevContent => {
+			let newContent: RightContent
+
+			if (section.type === "text") {
+				newContent = { type: "image", icon: section.triggerImage }
+			} else {
+				newContent = { type: "challenge", challengeData: section.challengeData }
+			}
+
+			// Only update if content actually changed
+			if (prevContent.type !== newContent.type) {
+				return newContent
+			}
+
+			if (newContent.type === "image" && prevContent.type === "image") {
+				return prevContent.icon !== newContent.icon ? newContent : prevContent
+			}
+
+			if (newContent.type === "challenge" && prevContent.type === "challenge") {
+				return prevContent.challengeData.challengeId !== newContent.challengeData.challengeId ? newContent : prevContent
+			}
+
+			return newContent
+		})
+	}, [])
+
 	useEffect(() => {
 		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.getAttribute("data-section-id")
-						const section = careerData.sections.find(s => s.id === sectionId)
+						const section = visibleSections.find(s => s.id === sectionId)
 
 						if (section) {
-							if (section.type === "text") {
-								setRightContent({ type: "image", icon: section.triggerImage })
-							} else {
-								setRightContent({ type: "challenge", challengeData: section.challengeData })
-							}
+							updateRightContent(section)
 						}
 					}
 				})
@@ -49,14 +85,21 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 		)
 
 		// Small delay to ensure DOM is ready
-		setTimeout(() => {
+		const timeoutId = setTimeout(() => {
+			// Only observe visible sections
 			document.querySelectorAll("[data-section-id]").forEach((el) => {
-				intersectionObserver.observe(el)
+				const sectionId = el.getAttribute("data-section-id")
+				if (sectionId && visibleSectionIds.includes(sectionId)) {
+					intersectionObserver.observe(el)
+				}
 			})
 		}, 100)
 
-		return () => intersectionObserver.disconnect()
-	}, [careerData.sections])
+		return () => {
+			clearTimeout(timeoutId)
+			intersectionObserver.disconnect()
+		}
+	}, [visibleSectionIds, updateRightContent, visibleSections]) // Only re-run when section IDs change
 
 	useEffect(() => {
 		careerQuestClass.initializeCareer(careerData)
@@ -91,7 +134,8 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 				}}
 			>
 				<div className="p-8 space-y-8">
-					{careerData.sections.map((section) => (
+					{/* Only render visible sections */}
+					{visibleSections.map((section) => (
 						<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
 							{section.type === "text" ? (
 								<div className="prose prose-lg max-w-none">

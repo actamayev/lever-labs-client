@@ -572,6 +572,68 @@ class CareerQuestClass {
 		challenge.updatedBlocklyJson = newBlocklyJson
 	})
 
+	public getVisibleSections(careerId: CareerId): string[] {
+		const career = this.getCareer(careerId)
+		if (!career) return []
+
+		const visibleSectionIds: string[] = []
+		const sections = career.careerDefinition.sections
+
+		// Track if we've encountered an incomplete challenge (blocking further progress)
+		let hasBlockingChallenge = false
+
+		for (const section of sections) {
+			// If we've already hit a blocking challenge, stop adding sections
+			if (hasBlockingChallenge) {
+				break
+			}
+
+			if (section.type === "text") {
+				// Text sections are always visible if we haven't hit a blocking challenge
+				visibleSectionIds.push(section.id)
+			} else {
+				// Always show the challenge section itself (so user can see it and potentially complete it)
+				visibleSectionIds.push(section.id)
+
+				// Check if this challenge is completed
+				const isCompleted = this.isChallengeCompleted(section.challengeData)
+
+				// If this challenge is not completed, it becomes the blocking challenge
+				if (!isCompleted) {
+					hasBlockingChallenge = true
+				}
+			}
+		}
+
+		return visibleSectionIds
+	}
+
+	public getVisibleSectionsCount(careerId: CareerId): number {
+		return this.getVisibleSections(careerId).length
+	}
+
+	public getTotalSectionsCount(careerId: CareerId): number {
+		const career = this.getCareer(careerId)
+		return career?.careerDefinition.sections.length || 0
+	}
+
+	// Enhanced progress methods for header
+	public getCompletedChallengesForProgress(careerId: CareerId): number {
+		const career = this.getCareer(careerId)
+		if (!career) return 0
+
+		return career.progress.completedChallengeIds.size
+	}
+
+	public getTotalChallengesForProgress(careerId: CareerId): number {
+		const career = this.getCareer(careerId)
+		if (!career) return 0
+
+		// Count only challenge sections
+		return career.careerDefinition.sections.filter(section => section.type === "challenge").length
+	}
+
+
 	public logout(): void {
 		this.careers.clear()
 	}
