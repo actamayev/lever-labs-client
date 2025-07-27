@@ -22,6 +22,11 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 
+// Helper function to check if JSON has meaningful blocks
+function hasBlocks(blocklyJson: BlocklyJson): boolean {
+	return !!(blocklyJson?.blocks?.blocks && blocklyJson.blocks.blocks.length > 0)
+}
+
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson?.blocks?.blocks) return 0
 	return blocklyJson.blocks.blocks.length
@@ -45,6 +50,8 @@ function isValidNonEmptyJson(blocklyJson: BlocklyJson): boolean {
 function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
 	const hasInitializedRef = useRef(false)
+	const hasSeenExpectedBlocksRef = useRef(false) // NEW: Track if we've seen the initial blocks load
+	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 
 	// Get the current blockly JSON (either initial or updated from backend)
@@ -55,13 +62,41 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 	// Update CPP code when blockly JSON changes
 	useEffect(() => {
-		setCppCode(generateCppFromJson(currentBlocklyJson))
+		const newCppCode = generateCppFromJson(currentBlocklyJson)
+		setCppCode(newCppCode)
 	}, [currentBlocklyJson])
+
+	// Debounced save function to prevent multiple rapid saves
+	const debouncedSave = useCallback((blocklyJson: BlocklyJson) => {
+		// Clear any existing timeout
+		if (saveTimeoutRef.current) {
+			clearTimeout(saveTimeoutRef.current)
+		}
+
+		// Set new timeout
+		saveTimeoutRef.current = setTimeout(() => {
+			console.log("  🌐 Debounced save to backend")
+			editCareerQuestSandboxProject(challengeData.challengeId, blocklyJson)
+			saveTimeoutRef.current = null
+		}, 300) // 300ms debounce delay
+	}, [challengeData.challengeId])
 
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
 		const expectedBlockCount = getBlockCount(currentBlocklyJson)
 		const actualBlockCount = getBlockCount(newBlocklyJson)
+
+		console.log("🔧 Challenge handleJsonChange called", {
+			isFirst: isFirstChangeAfterInitRef.current,
+			hasInitialized: hasInitializedRef.current,
+			hasSeenExpectedBlocks: hasSeenExpectedBlocksRef.current,
+			hasBlocks: hasBlocks(newBlocklyJson),
+			isValid: isValidNonEmptyJson(newBlocklyJson),
+			hasRetrievedData,
+			newJson: newBlocklyJson,
+			expectedBlockCount,
+			actualBlockCount
+		})
 
 		// Skip the first change event which happens during workspace initialization
 		if (isFirstChangeAfterInitRef.current) {
@@ -75,26 +110,41 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				return
 			}
 
+			// Mark that we've seen the expected blocks if they match
+			if (expectedBlockCount > 0 && actualBlockCount === expectedBlockCount) {
+				hasSeenExpectedBlocksRef.current = true
+				console.log("  ✅ Workspace properly initialized with expected blocks")
+			}
+
 			hasInitializedRef.current = true
 			return
 		}
 
-		// Don't save if JSON is empty or invalid (common during initialization)
-		if (!isValidNonEmptyJson(newBlocklyJson)) {
-			console.log("  ⏭️ Skipping empty/invalid JSON")
-
-			// If we expected blocks but got empty, reset first change flag
-			if (expectedBlockCount > 0) {
-				console.log("  🔄 Expected", expectedBlockCount, "blocks but got empty - resetting first change flag")
-				isFirstChangeAfterInitRef.current = true
-				hasInitializedRef.current = false
-			}
-			return
+		// Track when we've seen the expected blocks (even after initialization)
+		if (expectedBlockCount > 0 && actualBlockCount === expectedBlockCount && !hasSeenExpectedBlocksRef.current) {
+			hasSeenExpectedBlocksRef.current = true
+			console.log("  ✅ First time seeing expected blocks - now allowing empty saves")
 		}
 
-		// Compare stripped versions to ignore position changes
+		// Only skip empty JSON if we haven't seen the expected blocks yet
+		if (!isValidNonEmptyJson(newBlocklyJson)) {
+			if (!hasSeenExpectedBlocksRef.current && expectedBlockCount > 0) {
+				console.log("  ⏭️ Skipping empty JSON - workspace still loading")
+				isFirstChangeAfterInitRef.current = true
+				hasInitializedRef.current = false
+				return
+			} else {
+				console.log("  🗑️ Allowing empty save - user deleted all blocks")
+				// Continue to save the empty workspace
+			}
+		}
+
+		// Compare stripped versions to ignore position changes (unless it's an intentional empty save)
 		const currentJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
-		if (currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
+		const isEmptyWorkspace = !isValidNonEmptyJson(newBlocklyJson)
+		const isIntentionalEmpty = isEmptyWorkspace && hasSeenExpectedBlocksRef.current
+
+		if (!isIntentionalEmpty && currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
 			console.log("  ⏭️ No meaningful changes detected")
 			// Still update CPP if it's empty (first meaningful change)
 			if (isEmpty(cppCode)) {
@@ -103,7 +153,11 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 			return
 		}
 
-		console.log("  💾 Processing meaningful change")
+		if (isIntentionalEmpty) {
+			console.log("  🗑️ Processing intentional empty workspace")
+		} else {
+			console.log("  💾 Processing meaningful change")
+		}
 
 		// Update local state with full JSON (including positions)
 		setCppCode(generateCppFromJson(newBlocklyJson))
@@ -113,12 +167,12 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 		// Only save to backend if we've retrieved data AND the workspace has initialized properly
 		if (hasRetrievedData && hasInitializedRef.current) {
-			console.log("  🌐 Saving to backend")
-			editCareerQuestSandboxProject(challengeData.challengeId, newBlocklyJson)
+			console.log("  📤 Queuing debounced save")
+			debouncedSave(newBlocklyJson)
 		} else {
 			console.log("  ⏸️ Not saving - hasRetrievedData:", hasRetrievedData, "hasInitialized:", hasInitializedRef.current)
 		}
-	}, [currentBlocklyJson, challengeData, hasRetrievedData, cppCode])
+	}, [challengeData, hasRetrievedData, cppCode, debouncedSave])
 
 	// Reset flags when switching between challenges or when data is retrieved
 	useEffect(() => {
@@ -126,15 +180,30 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 			challengeId: challengeData.challengeId,
 			hasRetrievedData
 		})
+
+		// Clear any pending saves when switching challenges
+		if (saveTimeoutRef.current) {
+			clearTimeout(saveTimeoutRef.current)
+			saveTimeoutRef.current = null
+		}
+
 		isFirstChangeAfterInitRef.current = true
 		hasInitializedRef.current = false
+		hasSeenExpectedBlocksRef.current = false // Reset the "seen expected blocks" flag
 
 		// Add a small delay to ensure workspace is fully ready before processing changes
 		const timer = setTimeout(() => {
 			console.log("⏰ Workspace should be ready now")
 		}, 100)
 
-		return () => clearTimeout(timer)
+		return () => {
+			clearTimeout(timer)
+			// Clear save timeout on cleanup
+			if (saveTimeoutRef.current) {
+				clearTimeout(saveTimeoutRef.current)
+				saveTimeoutRef.current = null
+			}
+		}
 	}, [challengeData.challengeId, hasRetrievedData]) // Only depend on primitives
 
 	// Create a stable workspace key - only change when challenge changes
