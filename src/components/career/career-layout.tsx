@@ -6,7 +6,9 @@ import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzz
 import { observer } from "mobx-react"
 import { CareerQuestData } from "../../utils/career-quest/career-quest-data"
 import ChallengeSection from "./challenge-section"
+import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
+import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import { CqChallengeData } from "@bluedotrobots/common-ts"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -30,7 +32,6 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
 		careerQuestClass.getVisibleSections(careerData.careerId),
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	[careerData.careerId, careerQuestClass.getCompletedChallengesCount(careerData.careerId)]
 	)
 
@@ -38,6 +39,12 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 		careerData.sections.filter(section => visibleSectionIds.includes(section.id)),
 	[careerData.sections, visibleSectionIds]
 	)
+
+	useEffect(() => {
+		careerQuestClass.initializeCareer(careerData)
+		// Pre-fetch all challenge data to prevent flickering
+		void careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerId)
+	}, [careerData])
 
 	// Callback to prevent unnecessary state updates
 	const updateRightContent = useCallback((section: typeof visibleSections[0]) => {
@@ -99,7 +106,7 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 			clearTimeout(timeoutId)
 			intersectionObserver.disconnect()
 		}
-	}, [visibleSectionIds, updateRightContent, visibleSections]) // Only re-run when section IDs change
+	}, [visibleSectionIds, updateRightContent, visibleSections])
 
 	useEffect(() => {
 		careerQuestClass.initializeCareer(careerData)
@@ -124,6 +131,12 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 		)
 	}
 
+	// Helper function to get current cpp code for a specific challenge
+	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
+		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
+		return generateCppFromJson(currentBlocklyJson)
+	}, [])
+
 	return (
 		<div className="flex h-full">
 			<div
@@ -142,10 +155,11 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 									<p className="leading-relaxed text-questionText">{section.content}</p>
 								</div>
 							) : (
-								<div className="h-screen flex items-center justify-center">
-									<div className="w-full max-w-md bg-standardBackground rounded-lg border-2 border-swan p-4">
-										<p className="text-center text-questionText">Challenge: {section.challengeData.title}</p>
-									</div>
+								<div className="h-[calc(100vh-10rem)]">
+									<CqChatInterface
+										cppCode={getCppCodeForChallenge(section.challengeData)}
+										challengeData={section.challengeData}
+									/>
 								</div>
 							)}
 						</div>

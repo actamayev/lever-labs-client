@@ -21,17 +21,11 @@ import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
-import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
 // eslint-disable-next-line max-lines-per-function
 function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
-
-	// Initialize challenge in career quest class and get extended data
-	useEffect(() => {
-		retrieveCareerQuestChallengeData(challengeData)
-	}, [challengeData])
 
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson

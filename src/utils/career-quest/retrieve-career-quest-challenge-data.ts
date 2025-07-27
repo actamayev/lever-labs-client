@@ -6,7 +6,7 @@ import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function retrieveCareerQuestChallengeData(	careerIdChallengeId: CareerIdChallengeId): Promise<void> {
+export default async function retrieveCareerQuestChallengeData(careerIdChallengeId: CareerIdChallengeId): Promise<void> {
 	try {
 		// If we already have retrieved messages for this challenge, no need to fetch again
 		if (careerQuestClass.hasRetrievedChallengeMessages(careerIdChallengeId)) return

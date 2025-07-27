@@ -14,6 +14,7 @@ import {
 	BlocklyJson
 } from "@bluedotrobots/common-ts"
 import { CareerQuestData, ChallengeSection } from "../utils/career-quest/career-quest-data"
+import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -633,6 +634,26 @@ class CareerQuestClass {
 		return career.careerDefinition.sections.filter(section => section.type === "challenge").length
 	}
 
+	public retrieveAllChallengeDataForCareer = action(async (careerId: CareerId): Promise<void> => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+
+		// Get all challenge sections from this career
+		const challengeSections = career.careerDefinition.sections.filter(
+			(section): section is ChallengeSection => section.type === "challenge"
+		)
+
+		// Retrieve data for all challenges in parallel
+		const retrievalPromises = challengeSections.map(section =>
+			retrieveCareerQuestChallengeData(section.challengeData)
+		)
+
+		try {
+			await Promise.all(retrievalPromises)
+		} catch (error) {
+			console.error("Failed to retrieve challenge data for career:", careerId, error)
+		}
+	})
 
 	public logout(): void {
 		this.careers.clear()

@@ -18,7 +18,8 @@ export default async function sendChallengeChatMessage(
 		careerQuestClass.resetChallengeStreamingState(careerIdChallengeId)
 
 		const response = await blueDotApiClientClass.chatDataService.sendChallengeChatMessage({
-			...careerIdChallengeId,
+			careerId: careerIdChallengeId.careerId,
+			challengeId: careerIdChallengeId.challengeId,
 			userCode,
 			message,
 		})

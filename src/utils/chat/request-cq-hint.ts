@@ -18,7 +18,8 @@ export default async function requestCareerQuestHint(
 		careerQuestClass.resetChallengeStreamingState(careerIdChallengeId)
 
 		const response = await blueDotApiClientClass.chatDataService.requestCareerQuestHint({
-			...careerIdChallengeId,
+			careerId: careerIdChallengeId.careerId,
+			challengeId: careerIdChallengeId.challengeId,
 			userCode,
 		})
 

@@ -18,7 +18,8 @@ export default async function checkCareerQuestCode(
 		careerQuestClass.resetChallengeStreamingState(careerIdChallengeId)
 
 		const response = await blueDotApiClientClass.chatDataService.checkCareerQuestCode({
-			...careerIdChallengeId,
+			careerId: careerIdChallengeId.careerId,
+			challengeId: careerIdChallengeId.challengeId,
 			userCode,
 		})
 
