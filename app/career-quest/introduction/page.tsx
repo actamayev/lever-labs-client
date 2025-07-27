@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import CqIntroduction from "../../../src/components/career/introduction/cq-introduction"
+// import CqIntroduction from "../../../src/components/career/introduction/cq-introduction"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 import { INTRODUCTION_CAREER } from "../../../src/utils/career-quest/career-quest-data"
 

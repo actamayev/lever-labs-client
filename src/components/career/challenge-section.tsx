@@ -24,11 +24,11 @@ import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-
 
 // Helper function to check if JSON has meaningful blocks
 function hasBlocks(blocklyJson: BlocklyJson): boolean {
-	return !!(blocklyJson?.blocks?.blocks && blocklyJson.blocks.blocks.length > 0)
+	return !!(blocklyJson.blocks?.blocks && blocklyJson.blocks.blocks.length > 0)
 }
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
-	if (!blocklyJson?.blocks?.blocks) return 0
+	if (!blocklyJson.blocks?.blocks) return 0
 	return blocklyJson.blocks.blocks.length
 }
 
@@ -172,7 +172,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		} else {
 			console.log("  ⏸️ Not saving - hasRetrievedData:", hasRetrievedData, "hasInitialized:", hasInitializedRef.current)
 		}
-	}, [challengeData, hasRetrievedData, cppCode, debouncedSave])
+	}, [currentBlocklyJson, hasRetrievedData, challengeData, cppCode, debouncedSave])
 
 	// Reset flags when switching between challenges or when data is retrieved
 	useEffect(() => {

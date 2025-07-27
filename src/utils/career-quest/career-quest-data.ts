@@ -29,7 +29,7 @@ export interface CareerQuestData {
 }
 
 export const INTRODUCTION_CAREER: CareerQuestData = {
-	careerId: "introduction" as CareerId,
+	careerId: "introduction",
 	careerTitle: "Introduction",
 	initialImage: "Bot", // Lucide icon
 	sections: [

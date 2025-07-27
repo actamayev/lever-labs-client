@@ -22,6 +22,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
 		careerQuestClass.getVisibleSections(careerData.careerId),
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	[careerData.careerId, careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)]
 	)
 
