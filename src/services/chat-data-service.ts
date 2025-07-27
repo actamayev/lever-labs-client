@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
-import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingCareerQuestCheckCodeMessage,
-	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData, OutgoingCareerQuestHintMessage,
-	OutgoingCareerQuestGeneralMessage, CheckCodeResponse, NonSuccessResponse } from "@bluedotrobots/common-ts"
+import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingCqChallengeCheckCodeMessage,
+	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData, OutgoingCqChallengeHintMessage,
+	OutgoingCqChallengeGeneralMessage, CheckCodeResponse, NonSuccessResponse, ChallengeId } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -10,16 +10,16 @@ export default class ChatDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async sendCareerQuestMessage(
-		chatData: OutgoingCareerQuestGeneralMessage
+	async sendChallengeChatMessage(
+		chatData: OutgoingCqChallengeGeneralMessage
 	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
-			this.buildUrl("/send-career-quest-message"), chatData
+			this.buildUrl("/send-challenge-chat-message"), chatData
 		)
 	}
 
 	async checkCareerQuestCode(
-		chatData: OutgoingCareerQuestCheckCodeMessage
+		chatData: OutgoingCqChallengeCheckCodeMessage
 	): Promise<AxiosResponse<CheckCodeResponse | NonSuccessResponse>> {
 		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
 			this.buildUrl("/check-career-quest-code"), chatData
@@ -27,7 +27,7 @@ export default class ChatDataService extends BaseDataService {
 	}
 
 	async requestCareerQuestHint(
-		chatData: OutgoingCareerQuestHintMessage
+		chatData: OutgoingCqChallengeHintMessage
 	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
 			this.buildUrl("/request-career-quest-hint"), chatData
@@ -55,7 +55,7 @@ export default class ChatDataService extends BaseDataService {
 		)
 	}
 
-	async deleteCareerQuestChat(challengeId: string): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+	async deleteCareerQuestChat(challengeId: ChallengeId): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
 			this.buildUrl(`/delete-career-quest-chat/${challengeId}`)
 		)

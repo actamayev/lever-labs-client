@@ -5,24 +5,26 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy } from "lucide-react"
 import ChallengeSection from "../challenge-section"
 import { OBSTACLE_AVOIDANCE_CAREER } from "../../../utils/career-quest/career-quest-data"
-import { ChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { observer } from "mobx-react"
+import careerQuestClass from "../../../classes/career-quest-class"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
 	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy
 }
 
-type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: ChallengeData }
+type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
 
 // eslint-disable-next-line max-lines-per-function
-export default function ObstacleAvoidance() {
+function NewObstacleAvoidance() {
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
 		icon: OBSTACLE_AVOIDANCE_CAREER.initialImage
 	})
 
 	useEffect(() => {
-		const observer = new IntersectionObserver(
+		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
@@ -32,7 +34,7 @@ export default function ObstacleAvoidance() {
 						if (section) {
 							if (section.type === "text") {
 								setRightContent({ type: "image", icon: section.triggerImage })
-							} else if (section.type === "challenge") {
+							} else {
 								setRightContent({ type: "challenge", challengeData: section.challengeData })
 							}
 						}
@@ -45,11 +47,15 @@ export default function ObstacleAvoidance() {
 		// Small delay to ensure DOM is ready
 		setTimeout(() => {
 			document.querySelectorAll("[data-section-id]").forEach((el) => {
-				observer.observe(el)
+				intersectionObserver.observe(el)
 			})
 		}, 100)
 
-		return () => observer.disconnect()
+		return () => intersectionObserver.disconnect()
+	}, [])
+
+	useEffect(() => {
+		careerQuestClass.initializeCareer(OBSTACLE_AVOIDANCE_CAREER)
 	}, [])
 
 	const RightContent = () => {
@@ -102,7 +108,10 @@ export default function ObstacleAvoidance() {
 			<div className="w-1/2 sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan">
 				<AnimatePresence mode="wait">
 					<motion.div
-						key={`${rightContent.type}-${rightContent.type === "image" ? rightContent.icon : rightContent.challengeData.id}`}
+						key={`${rightContent.type}-${rightContent.type === "image" ?
+							rightContent.icon :
+							rightContent.challengeData.challengeId}
+						`}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
@@ -116,3 +125,5 @@ export default function ObstacleAvoidance() {
 		</div>
 	)
 }
+
+export default observer(NewObstacleAvoidance)

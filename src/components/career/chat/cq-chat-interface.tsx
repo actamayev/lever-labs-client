@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { ChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
@@ -10,12 +10,12 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
-import sendCareerQuestMessage from "../../../utils/chat/send-career-quest-message"
+import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
 
 interface ChatInterfaceProps {
 	cppCode: string
-	challengeData: ChallengeData
+	challengeData: CqChallengeData
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -25,10 +25,10 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = careerQuestClass.getMessages(challengeData.id)
-	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
-	const isRetrievingMessages = careerQuestClass.isRetrievingMessages(challengeData.id)
-	const isWaitingForResponse = careerQuestClass.isWaitingForResponse(challengeData.id)
+	const messages = careerQuestClass.getChallengeMessages(challengeData)
+	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
+	const isRetrievingMessages = careerQuestClass.isRetrievingChallengeMessages(challengeData)
+	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
@@ -45,24 +45,24 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		setInputValue("")
 
 		// Add user message to career quest class
-		careerQuestClass.addUserMessage(challengeData.id, inputValue)
+		careerQuestClass.addChallengeUserMessage(challengeData, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendCareerQuestMessage(challengeData.id, cppCode, inputValue)
+		await sendChallengeChatMessage(challengeData, cppCode, inputValue)
 	}, [challengeData, cppCode, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = careerQuestClass.getCurrentStreamId(challengeData.id)
-		careerQuestClass.resetChatStreamingState(challengeData.id)
+		const streamId = careerQuestClass.getChallengeStreamId(challengeData)
+		careerQuestClass.resetChallengeStreamingState(challengeData)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId
-	}, [challengeData.id])
+	}, [challengeData])
 
 	const onStopStreaming = useCallback(async () => {
 		return await stopChatStream(chatReset)
@@ -80,8 +80,8 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const handleConfirmDelete = useCallback(async () => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
-		await deleteCareerQuestChat(challengeData.id)
-	}, [challengeData.id, hasAnyMessages, isStreaming])
+		await deleteCareerQuestChat(challengeData)
+	}, [challengeData, hasAnyMessages, isStreaming])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingMessages) {
@@ -124,7 +124,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 					<SingleCareerQuestMessage
 						key={message.id}
 						message={message}
-						challengeId={challengeData.id}
+						cqChallengeData={challengeData}
 						cppCode={cppCode}
 					/>
 				))}

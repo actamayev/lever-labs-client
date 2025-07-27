@@ -3,14 +3,15 @@
 import { useState, useEffect, useCallback } from "react"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 
 interface HintButtonProps {
-	challengeId: string
+	cqChallengeData: CqChallengeData
 	cppCode: string
-	onHintRequest: (challengeId: string, cppCode: string) => Promise<void>
+	onHintRequest: (careerIdChallengeId: CareerIdChallengeId, cppCode: string) => Promise<void>
 }
 
-function HintButton({ challengeId, cppCode, onHintRequest }: HintButtonProps) {
+function HintButton({ cqChallengeData, cppCode, onHintRequest }: HintButtonProps) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -28,11 +29,11 @@ function HintButton({ challengeId, cppCode, onHintRequest }: HintButtonProps) {
 
 		setIsLoading(true)
 		try {
-			await onHintRequest(challengeId, cppCode)
+			await onHintRequest(cqChallengeData, cppCode)
 		} finally {
 			setIsLoading(false)
 		}
-	}, [challengeId, cppCode, onHintRequest, isLoading])
+	}, [cqChallengeData, cppCode, onHintRequest, isLoading])
 
 	return (
 		<div

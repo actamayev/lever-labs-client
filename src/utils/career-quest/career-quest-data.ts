@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { ChallengeData, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
-	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
+import { CareerId, CqChallengeData, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
+	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5, ChallengeId } from "@bluedotrobots/common-ts"
 
 // Types for the new career quest structure
 export interface TextSection {
@@ -14,15 +14,15 @@ export interface TextSection {
 
 export interface ChallengeSection {
 	type: "challenge"
-	id: string
-	challengeData: ChallengeData
+	id: ChallengeId
+	challengeData: CqChallengeData
 	// Challenge completion determines if next sections are unlocked
 }
 
 export type CareerSection = TextSection | ChallengeSection
 
 export interface CareerQuestData {
-	careerId: string
+	careerId: CareerId
 	careerTitle: string
 	initialImage: string // Lucide icon name for the first image
 	sections: CareerSection[]
@@ -54,7 +54,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "challenge-1",
+			id: "obstacle-avoidance-001" as ChallengeId,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
 		},
 		{
@@ -71,7 +71,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "challenge-2",
+			id: "obstacle-avoidance-002" as ChallengeId,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_2
 		},
 		{
@@ -82,7 +82,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "challenge-3",
+			id: "obstacle-avoidance-003" as ChallengeId,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_3
 		},
 		{
@@ -93,7 +93,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "challenge-4",
+			id: "obstacle-avoidance-004" as ChallengeId,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_4
 		},
 		{
@@ -104,7 +104,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "challenge-5",
+			id: "obstacle-avoidance-005" as ChallengeId,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_5
 		},
 		{

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { BlocklyJson, ChallengeData } from "@bluedotrobots/common-ts"
+import { BlocklyJson, CqChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
 import { Separator } from "../shadcn/ui/separator"
@@ -24,20 +24,18 @@ import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
 // eslint-disable-next-line max-lines-per-function
-function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) {
+function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }) {
 	const isFirstChangeAfterInitRef = useRef(true)
-	const isStreaming = careerQuestClass.isStreaming(challengeData.id)
+	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 
 	// Initialize challenge in career quest class and get extended data
 	useEffect(() => {
-		careerQuestClass.initializeChallenge(challengeData)
-		// Retrieve backend data (chat messages + sandbox JSON)
-		retrieveCareerQuestChallengeData(challengeData.id)
+		retrieveCareerQuestChallengeData(challengeData)
 	}, [challengeData])
 
 	// Get the current blockly JSON (either initial or updated from backend)
-	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id) || challengeData.initialBlocklyJson
-	const hasRetrievedData = careerQuestClass.hasRetrievedMessages(challengeData.id)
+	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
+	const hasRetrievedData = careerQuestClass.hasRetrievedChallengeMessages(challengeData)
 
 	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
 
@@ -55,7 +53,7 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 		}
 
 		// Compare stripped versions to ignore position changes
-		const currentJson = careerQuestClass.getUpdatedBlocklyJson(challengeData.id)
+		const currentJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
 		if (currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
 			return // No meaningful changes, don't save
 		}
@@ -64,20 +62,20 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 		setCppCode(generateCppFromJson(newBlocklyJson))
 
 		// Update career quest class
-		careerQuestClass.updateBlocklyJson(challengeData.id, newBlocklyJson)
+		careerQuestClass.updateBlocklyJson({ ...challengeData }, newBlocklyJson)
 
 		// Save immediately if we've retrieved messages from backend
-		if (careerQuestClass.hasRetrievedMessages(challengeData.id)) {
-			editCareerQuestSandboxProject(challengeData.id, newBlocklyJson)
+		if (careerQuestClass.hasRetrievedChallengeMessages(challengeData)) {
+			editCareerQuestSandboxProject(challengeData.challengeId, newBlocklyJson)
 		}
-	}, [challengeData.id])
+	}, [challengeData])
 
 	// Reset the flag when switching between challenges
 	useEffect(() => {
 		isFirstChangeAfterInitRef.current = true
-	}, [challengeData.id, hasRetrievedData])
+	}, [challengeData.challengeId, hasRetrievedData])
 
-	const workspaceKey = `${challengeData.id}-${hasRetrievedData ? "retrieved" : "initial"}`
+	const workspaceKey = `${challengeData.challengeId}-${hasRetrievedData ? "retrieved" : "initial"}`
 
 	const foxColors = getDuolingoColors("fox")
 
@@ -117,7 +115,10 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 						<TactileButton
 							className="w-full bg-beetle-2 text-white rounded-xl text-lg font-semibold py-3"
 							shadowColor="rgb(140, 80, 200)"
-							onClick={() => requestCareerQuestHint(challengeData.id, cppCode)}
+							onClick={() => requestCareerQuestHint({
+								careerId: challengeData.careerId,
+								challengeId: challengeData.challengeId
+							}, cppCode)}
 							disabled={isStreaming}
 						>
 							<CustomLightbulb className="w-4 h-4" />
@@ -152,7 +153,10 @@ function ChallengeSection({ challengeData } : { challengeData: ChallengeData }) 
 								foxColors.bg
 							)}
 							shadowClass={foxColors.shadow2}
-							onClick={() => checkCareerQuestCode(challengeData.id, cppCode)}
+							onClick={() => checkCareerQuestCode({
+								careerId: challengeData.careerId,
+								challengeId: challengeData.challengeId
+							}, cppCode)}
 							disabled={isStreaming || isEmpty(cppCode)}
 						>
 							CHECK CODE

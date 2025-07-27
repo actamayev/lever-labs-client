@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { BlocklyJson, CareerQuestChallengeData, ErrorResponses, SuccessResponse } from "@bluedotrobots/common-ts"
+import { BlocklyJson, CareerQuestChallengeData, ChallengeId, ErrorResponses, SuccessResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -9,7 +9,7 @@ export default class CareerQuestDataService extends BaseDataService {
 	}
 
 	async editCareerQuestSandboxProject(
-		challengeId: string,
+		challengeId: ChallengeId,
 		newBlocklyJson: BlocklyJson
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
@@ -18,7 +18,7 @@ export default class CareerQuestDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveCareerQuestChallengeData(challengeId: string): Promise<AxiosResponse<CareerQuestChallengeData | ErrorResponses>> {
+	async retrieveCareerQuestChallengeData(challengeId: ChallengeId): Promise<AxiosResponse<CareerQuestChallengeData | ErrorResponses>> {
 		return await this.httpClient.http.get<CareerQuestChallengeData | ErrorResponses>(
 			this.buildUrl(`/get-career-quest-challenge-data/${challengeId}`)
 		)

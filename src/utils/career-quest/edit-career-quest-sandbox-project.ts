@@ -1,14 +1,14 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import { BlocklyJson, ChallengeId } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function editCareerQuestSandboxProject(
-	challengeId: string,
+	challengeId: ChallengeId,
 	newBlocklyJson: BlocklyJson
 ) : Promise<void> {
 	try {

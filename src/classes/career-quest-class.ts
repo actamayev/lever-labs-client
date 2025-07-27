@@ -1,147 +1,165 @@
+/* eslint-disable max-lines-per-function */
 "use client"
 
-import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,
 	CqChatbotStreamStartEvent,
 	CqChatbotStreamChunkEvent,
 	CqChatbotStreamCompleteEvent,
-	BlocklyJson,
-	ChallengeData,
-	BinaryEvaluationResult
+	BinaryEvaluationResult,
+	CqChallengeData,
+	CareerId,
+	ChallengeId,
+	BlocklyJson
 } from "@bluedotrobots/common-ts"
-import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import { CareerSection, ChallengeSection } from "../utils/career-quest/career-quest-data"
+import { CareerQuestData, ChallengeSection } from "../utils/career-quest/career-quest-data"
 
-interface ExtendedChallengeData extends ChallengeData {
+// Chat and streaming state interfaces
+interface ChatData {
 	messages: CareerQuestChatMessage[]
-	isStreaming: boolean
 	isWaitingForResponse: boolean
-	currentStreamingMessageId: string | null
-	currentInteractionType: InteractionType | null
-	isRetrievingMessages: boolean
 	hasRetrievedMessages: boolean
+	isRetrievingMessages: boolean
+}
+
+interface StreamingState {
+	isStreaming: boolean
+	currentStreamingMessageId: string | null
+	currentStreamId: string | null
+	currentInteractionType: InteractionType | null
+}
+
+interface CareerChatData extends ChatData, StreamingState {}
+
+interface ChallengeInstance extends ChatData, StreamingState {
+	challengeData: CqChallengeData
+	isCompleted: boolean
 	updatedBlocklyJson?: BlocklyJson
 }
 
+interface CareerProgress {
+	completedChallengeIds: Set<string>
+}
+
+interface CareerInstance {
+	careerDefinition: CareerQuestData
+	// Dynamic data
+	careerChat: CareerChatData
+	challenges: Map<string, ChallengeInstance>
+	progress: CareerProgress
+}
+
 class CareerQuestClass {
-	// Map of challengeId -> ExtendedChallengeData
-	public careerQuestChallengeData = observable.map<string, ExtendedChallengeData>()
-	// Map of challengeId -> streamId for tracking concurrent streams
-	public currentStreamIds: Map<string, string | null> = new Map()
-	public careerData = observable.map<string, {
-		completedSectionIds: Set<string>
-		unlockedSectionIds: Set<string>
-	}>()
-	private challengeToCareerMap = new Map<string, { careerId: string, sectionId: string }>()
+	// Main data structure: careerId -> CareerInstance
+	public careers = observable.map<string, CareerInstance>()
 
-	public registerChallengeSection = action((challengeId: string, careerId: string, sectionId: string): void => {
-		this.challengeToCareerMap.set(challengeId, { careerId, sectionId })
-	})
-
-	constructor() {
+	constructor(careerDefinitions?: Record<string, CareerQuestData>) {
 		makeAutoObservable(this)
+
+		if (careerDefinitions) {
+			this.initializeAllCareers(careerDefinitions)
+		}
 	}
 
-	// Initialize challenge with static data
-	public initializeChallenge = action((staticChallengeData: ChallengeData): void => {
-		if (this.careerQuestChallengeData.has(staticChallengeData.id)) return
+	// ========================================
+	// CAREER INITIALIZATION
+	// ========================================
 
-		const extendedData: ExtendedChallengeData = {
-			...staticChallengeData,
-			messages: [],
-			isStreaming: false,
-			isWaitingForResponse: false,
-			currentStreamingMessageId: null,
-			currentInteractionType: null,
-			isRetrievingMessages: false,
-			hasRetrievedMessages: false,
-			updatedBlocklyJson: staticChallengeData.initialBlocklyJson
+	private initializeAllCareers = action((careerDefinitions: Record<string, CareerQuestData>): void => {
+		Object.values(careerDefinitions).forEach(careerDefinition => {
+			this.initializeCareer(careerDefinition)
+		})
+	})
+
+	public initializeCareer = action((careerDefinition: CareerQuestData): void => {
+		if (this.careers.has(careerDefinition.careerId)) return
+
+		// Extract challenge IDs from career definition
+		const challengeSections = careerDefinition.sections.filter(
+			(section): section is ChallengeSection => section.type === "challenge"
+		)
+
+		// Initialize challenge data
+		const challenges = new Map<string, ChallengeInstance>()
+		challengeSections.forEach(section => {
+			challenges.set(section.challengeData.challengeId, {
+				// Static challenge data
+				challengeData: section.challengeData,  // ADD THIS
+
+				// Chat data
+				messages: [],
+				isWaitingForResponse: false,
+				hasRetrievedMessages: false,
+				isRetrievingMessages: false,
+
+				// Streaming state
+				isStreaming: false,
+				currentStreamingMessageId: null,
+				currentStreamId: null,
+				currentInteractionType: null,
+
+				// Completion
+				isCompleted: false
+			})
+		})
+
+		// Initialize career instance
+		const careerInstance: CareerInstance = {
+			careerDefinition,
+			careerChat: {
+				// Chat data
+				messages: [],
+				isWaitingForResponse: false,
+				hasRetrievedMessages: false,
+				isRetrievingMessages: false,
+
+				// Streaming state
+				isStreaming: false,
+				currentStreamingMessageId: null,
+				currentStreamId: null,
+				currentInteractionType: null
+			},
+			challenges,
+			progress: {
+				completedChallengeIds: new Set<string>()
+			}
 		}
 
-		this.careerQuestChallengeData.set(staticChallengeData.id, extendedData)
+		this.careers.set(careerDefinition.careerId, careerInstance)
 	})
 
-	// Get challenge data for a challenge
-	private getChallengeData(challengeId: string): ExtendedChallengeData | undefined {
-		return this.careerQuestChallengeData.get(challengeId)
+	// ========================================
+	// HELPER METHODS
+	// ========================================
+
+	private getCareer(careerId: CareerId): CareerInstance | undefined {
+		return this.careers.get(careerId)
 	}
 
-	// Get messages for a challenge
-	public getMessages(challengeId: string): CareerQuestChatMessage[] {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.messages || []
+	private getChallenge(cqInformation: CareerIdChallengeId): ChallengeInstance | undefined {
+		const career = this.getCareer(cqInformation.careerId)
+		return career?.challenges.get(cqInformation.challengeId)
 	}
 
-	// Clear messages for a challenge
-	public clearMessages = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.messages = []
-	})
+	// ========================================
+	// MESSAGE MANAGEMENT
+	// ========================================
 
-	// Get updated blockly JSON for a challenge
-	public getUpdatedBlocklyJson(challengeId: string): BlocklyJson | null {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.updatedBlocklyJson || null
+	// Challenge messages
+	public getChallengeMessages(cqInformation: CareerIdChallengeId): CareerQuestChatMessage[] {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.messages || []
 	}
 
-	// Update blockly JSON for a challenge
-	public updateBlocklyJson = action((challengeId: string, newBlocklyJson: BlocklyJson): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.updatedBlocklyJson = newBlocklyJson
-	})
-
-	// Check if messages have been retrieved for a challenge
-	public hasRetrievedMessages(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.hasRetrievedMessages || false
-	}
-
-	// Check if currently retrieving messages for a challenge
-	public isRetrievingMessages(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isRetrievingMessages || false
-	}
-
-	// Set retrieving messages state
-	public setIsRetrievingMessages = action((challengeId: string, isRetrieving: boolean): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.isRetrievingMessages = isRetrieving
-	})
-
-	// Set retrieved data from backend (both messages and sandbox JSON)
-	public setRetrievedData = action((
-		challengeId: string,
-		messages: CareerQuestChatMessage[],
-		sandboxJson: BlocklyJson | null
-	): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.messages = messages
-		challengeData.hasRetrievedMessages = true
-		challengeData.isRetrievingMessages = false
-
-		// Update blockly JSON if we got data from backend
-		if (sandboxJson) {
-			const normalizedSandboxJson = normalizeSandboxJson(sandboxJson)
-			challengeData.updatedBlocklyJson = normalizedSandboxJson
-		}
-	})
-
-	// Add a user message
-	public addUserMessage = action((challengeId: string, content: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeUserMessage = action((cqInformation: CareerIdChallengeId, content: string): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
 		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
+		this.hideChallengeHintButtons(cqInformation)
 
-		// Set waiting for response when sending user message
-		challengeData.isWaitingForResponse = true
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
@@ -150,18 +168,15 @@ class CareerQuestClass {
 			timestamp: new Date()
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addHintRequestMessage = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeHintRequestMessage = action((cqInformation: CareerIdChallengeId): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
-
-		// Set waiting for response when requesting hint
-		challengeData.isWaitingForResponse = true
+		this.hideChallengeHintButtons(cqInformation)
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
@@ -171,18 +186,15 @@ class CareerQuestClass {
 			isHintRequest: true
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addCheckCodeRequestMessage = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeCheckCodeRequestMessage = action((cqInformation: CareerIdChallengeId): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
-
-		// Set waiting for response when checking code
-		challengeData.isWaitingForResponse = true
+		this.hideChallengeHintButtons(cqInformation)
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `check-code-request-${Date.now()}`,
@@ -192,15 +204,18 @@ class CareerQuestClass {
 			isCheckCodeRequest: true
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addEvaluationResultMessage = action((challengeId: string, evaluationResult: BinaryEvaluationResult): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeEvaluationResultMessage = action((
+		cqInformation: CareerIdChallengeId,
+		evaluationResult: BinaryEvaluationResult
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		const career = this.getCareer(cqInformation.careerId)
+		if (!challenge || !career) return
 
-		// Set waiting for response to false when receiving evaluation result
-		challengeData.isWaitingForResponse = false
+		challenge.isWaitingForResponse = false
 
 		const message: CareerQuestChatMessage = {
 			id: `evaluation-result-${Date.now()}`,
@@ -208,41 +223,46 @@ class CareerQuestClass {
 			content: evaluationResult.feedback,
 			timestamp: new Date(),
 			evaluationResult,
-			shouldShowHintButton: !evaluationResult.isCorrect // Show hint button for incorrect results
+			shouldShowHintButton: !evaluationResult.isCorrect
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 
-		// If challenge is completed correctly, mark section as complete
+		// Mark challenge as completed if correct
 		if (evaluationResult.isCorrect) {
-			const careerSection = this.challengeToCareerMap.get(challengeId)
-			if (careerSection) {
-				this.markSectionComplete(careerSection.careerId, careerSection.sectionId)
-			}
+			challenge.isCompleted = true
+			career.progress.completedChallengeIds.add(cqInformation.challengeId)
 		}
 	})
 
-	// Hide hint button from all messages in a challenge
-	public hideHintButtonForAllMessages = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public hideChallengeHintButtons = action((cqInformation: CareerIdChallengeId): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		challengeData.messages.forEach(message => {
+		challenge.messages.forEach(message => {
 			if (message.shouldShowHintButton) {
 				message.shouldShowHintButton = false
 			}
 		})
 	})
 
-	// Start streaming for a challenge
-	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
-		const challengeData = this.getChallengeData(startEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public clearChallengeMessages = action((cqInformation: CareerIdChallengeId): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.messages = []
+	})
 
-		// Set waiting for response to false when streaming starts
-		challengeData.isWaitingForResponse = false
+	// ========================================
+	// STREAMING MANAGEMENT
+	// ========================================
 
-		// Create streaming message placeholder
+	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
+		// Note: You'll need to pass careerId in the event or determine it from challengeId
+		const challenge = this.getChallenge({ ...startEvent })
+		if (!challenge) return
+
+		challenge.isWaitingForResponse = false
+
 		const streamingMessage: CareerQuestChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
@@ -252,24 +272,23 @@ class CareerQuestClass {
 			isHintResponse: startEvent.interactionType === "hint"
 		}
 
-		challengeData.messages.push(streamingMessage)
-		challengeData.isStreaming = true
-		challengeData.currentStreamingMessageId = streamingMessage.id
-		challengeData.currentInteractionType = startEvent.interactionType
+		challenge.messages.push(streamingMessage)
+		challenge.isStreaming = true
+		challenge.currentStreamingMessageId = streamingMessage.id
+		challenge.currentInteractionType = startEvent.interactionType
 	})
 
-	// Add chunk to streaming message
-	public addStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
-		const challengeData = this.getChallengeData(chunkEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
+		const challenge = this.getChallenge({ ...chunkEvent })
+		if (!challenge) return
 
-		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
+		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
 			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeId)
 			return
 		}
 
-		const streamingMessage = challengeData.messages.find(
-			msg => msg.id === challengeData.currentStreamingMessageId
+		const streamingMessage = challenge.messages.find(
+			msg => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -277,17 +296,16 @@ class CareerQuestClass {
 		}
 	})
 
-	// Complete streaming
-	public completeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
-		const challengeData = this.getChallengeData(completeEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public completeChallengeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
+		const challenge = this.getChallenge({ ...completeEvent })
+		if (!challenge) return
 
-		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
+		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
 			return
 		}
 
-		const streamingMessage = challengeData.messages.find(
-			msg => msg.id === challengeData.currentStreamingMessageId
+		const streamingMessage = challenge.messages.find(
+			msg => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -295,68 +313,74 @@ class CareerQuestClass {
 		}
 
 		// Reset streaming state
-		challengeData.isStreaming = false
-		challengeData.currentStreamingMessageId = null
-		challengeData.currentInteractionType = null
-		this.setCurrentStreamId(completeEvent.challengeId, null)
+		challenge.isStreaming = false
+		challenge.currentStreamingMessageId = null
+		challenge.currentInteractionType = null
+		challenge.currentStreamId = null
 	})
 
-	// Reset chat state for a challenge
-	public resetChatStreamingState = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public resetChallengeStreamingState = action((cqInformation: CareerIdChallengeId): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		challengeData.isStreaming = false
-		challengeData.currentStreamingMessageId = null
-		challengeData.currentInteractionType = null
-		this.setCurrentStreamId(challengeId, null)
+		challenge.isStreaming = false
+		challenge.currentStreamingMessageId = null
+		challenge.currentInteractionType = null
+		challenge.currentStreamId = null
 	})
 
-	// Check if currently streaming for a challenge
-	public isStreaming(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isStreaming || false
+	// Stream ID management
+	public setChallengeStreamId = action((cqInformation: CareerIdChallengeId, streamId: string | null): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.currentStreamId = streamId
+	})
+
+	public getChallengeStreamId(cqInformation: CareerIdChallengeId): string | null {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.currentStreamId || null
 	}
 
-	// Check if waiting for response for a challenge
-	public isWaitingForResponse(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isWaitingForResponse || false
+	// ========================================
+	// STATE GETTERS
+	// ========================================
+
+	public isChallengeStreaming(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isStreaming || false
 	}
 
-	// Set waiting for response state
-	public setWaitingForResponse = action((challengeId: string, isWaiting: boolean): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.isWaitingForResponse = isWaiting
-	})
-
-	// Stream ID management methods
-	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {
-		this.currentStreamIds.set(challengeId, streamId)
-	})
-
-	public getCurrentStreamId(challengeId: string): string | null {
-		return this.currentStreamIds.get(challengeId) || null
+	public isChallengeWaitingForResponse(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isWaitingForResponse || false
 	}
 
-	// Initialize career data
-	public initializeCareer = action((careerId: string): void => {
-		if (this.careerData.has(careerId)) return
+	public isChallengeCompleted(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isCompleted || false
+	}
 
-		this.careerData.set(careerId, {
-			completedSectionIds: new Set<string>(),
-			unlockedSectionIds: new Set<string>() // Will be populated based on completed challenges
-		})
-	})
+	// ========================================
+	// PROGRESS TRACKING
+	// ========================================
 
-	// Check if a section is unlocked (can be viewed)
-	public isSectionUnlocked(careerId: string, sectionId: string, careerSections: CareerSection[]): boolean {
-		const careerInfo = this.careerData.get(careerId)
-		if (!careerInfo) return false
+	public getCompletedChallengesCount(careerId: CareerId): number {
+		const career = this.getCareer(careerId)
+		return career?.progress.completedChallengeIds.size || 0
+	}
 
-		// Find the section index
-		const sectionIndex = careerSections.findIndex(section => section.id === sectionId)
+	public getTotalChallengesCount(careerId: CareerId): number {
+		const career = this.getCareer(careerId)
+		return career?.challenges.size || 0
+	}
+
+	public isSectionUnlocked(careerId: CareerId, sectionId: ChallengeId): boolean {
+		const career = this.getCareer(careerId)
+		if (!career) return false
+
+		const careerSections = career.careerDefinition.sections
+		const sectionIndex = careerSections.findIndex(
+			section => section.type === "challenge" && section.challengeData.challengeId === sectionId)
 		if (sectionIndex === -1) return false
 
 		// First section is always unlocked
@@ -366,7 +390,7 @@ class CareerQuestClass {
 		for (let i = 0; i < sectionIndex; i++) {
 			const section = careerSections[i]
 			if (section.type === "challenge") {
-				const isCompleted = this.isChallengeCompleted(section.challengeData.id)
+				const isCompleted = this.isChallengeCompleted(section.challengeData)
 				if (!isCompleted) {
 					return false // Previous challenge not completed, section is locked
 				}
@@ -376,51 +400,182 @@ class CareerQuestClass {
 		return true
 	}
 
-	// Check if a challenge is completed (has a correct evaluation result)
-	public isChallengeCompleted(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		if (!challengeData) return false
+	// ========================================
+	// DATA MANAGEMENT
+	// ========================================
 
-		// Check if there's a correct evaluation result in the messages
-		return challengeData.messages.some(message =>
-			message.evaluationResult?.isCorrect === true
-		)
-	}
+	// Update setChallengeRetrievedData to include sandboxJson:
+	public setChallengeRetrievedData = action((
+		cqInformation: CareerIdChallengeId,
+		messages: CareerQuestChatMessage[],
+		sandboxJson: BlocklyJson | null,  // ADD THIS
+		isCompleted: boolean
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		const career = this.getCareer(cqInformation.careerId)
+		if (!challenge || !career) return
 
-	// Mark a section as completed
-	public markSectionComplete = action((careerId: string, sectionId: string): void => {
-		const careerInfo = this.careerData.get(careerId)
-		if (!careerInfo) return
+		challenge.messages = messages
+		challenge.hasRetrievedMessages = true
+		challenge.isRetrievingMessages = false
+		challenge.isCompleted = isCompleted
 
-		careerInfo.completedSectionIds.add(sectionId)
+		// Update blockly JSON if provided
+		if (sandboxJson) {
+			challenge.updatedBlocklyJson = sandboxJson
+		}
+
+		if (isCompleted) {
+			career.progress.completedChallengeIds.add(cqInformation.challengeId)
+		}
 	})
 
-	// Get completed sections count for a career
-	public getCompletedSectionsCount(careerSections: CareerSection[]): number {
-		// Count completed challenges (since they gate progression)
-		const challengeSections = careerSections.filter((section): section is ChallengeSection =>
-			section.type === "challenge"
-		)
-		return challengeSections.filter(section =>
-			this.isChallengeCompleted(section.challengeData.id)
-		).length
+	public setIsRetrievingChallengeMessages = action((
+		cqInformation: CareerIdChallengeId,
+		isRetrieving: boolean
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.isRetrievingMessages = isRetrieving
+	})
+
+	public hasRetrievedChallengeMessages(cqInformation: CareerIdChallengeId): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.hasRetrievedMessages || false
 	}
 
-	// Get total challenge count for a career
-	public getTotalChallengesCount(careerSections: CareerSection[]): number {
-		return careerSections.filter((section): section is ChallengeSection =>
-			section.type === "challenge"
-		).length
+	public isRetrievingChallengeMessages(cqInformation: CareerIdChallengeId): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.isRetrievingMessages || false
 	}
+	// ========================================
+	// CAREER-LEVEL CHAT MANAGEMENT
+	// ========================================
+
+	public getCareerMessages(careerId: CareerId): CareerQuestChatMessage[] {
+		const career = this.getCareer(careerId)
+		return career?.careerChat.messages || []
+	}
+
+	public addCareerUserMessage = action((careerId: CareerId, content: string): void => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+
+		career.careerChat.isWaitingForResponse = true
+
+		const message: CareerQuestChatMessage = {
+			id: `career-user-${Date.now()}`,
+			role: "user",
+			content,
+			timestamp: new Date()
+		}
+
+		career.careerChat.messages.push(message)
+	})
+
+	public startCareerStreaming = action((careerId: CareerId, interactionType: InteractionType): void => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+
+		career.careerChat.isWaitingForResponse = false
+
+		const streamingMessage: CareerQuestChatMessage = {
+			id: `career-streaming-${Date.now()}`,
+			role: "assistant",
+			content: "",
+			timestamp: new Date(),
+			isStreaming: true
+		}
+
+		career.careerChat.messages.push(streamingMessage)
+		career.careerChat.isStreaming = true
+		career.careerChat.currentStreamingMessageId = streamingMessage.id
+		career.careerChat.currentInteractionType = interactionType
+	})
+
+	public addCareerStreamingChunk = action((careerId: CareerId, content: string): void => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+
+		if (!career.careerChat.isStreaming || !career.careerChat.currentStreamingMessageId) {
+			console.warn("Received chunk but not streaming for career:", careerId)
+			return
+		}
+
+		const streamingMessage = career.careerChat.messages.find(
+			msg => msg.id === career.careerChat.currentStreamingMessageId
+		)
+
+		if (streamingMessage) {
+			streamingMessage.content += content
+		}
+	})
+
+	public completeCareerStreaming = action((careerId: CareerId): void => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+
+		if (!career.careerChat.isStreaming || !career.careerChat.currentStreamingMessageId) {
+			return
+		}
+
+		const streamingMessage = career.careerChat.messages.find(
+			msg => msg.id === career.careerChat.currentStreamingMessageId
+		)
+
+		if (streamingMessage) {
+			streamingMessage.isStreaming = false
+		}
+
+		// Reset streaming state
+		career.careerChat.isStreaming = false
+		career.careerChat.currentStreamingMessageId = null
+		career.careerChat.currentInteractionType = null
+		career.careerChat.currentStreamId = null
+	})
+
+	public isCareerStreaming(careerId: CareerId): boolean {
+		const career = this.getCareer(careerId)
+		return career?.careerChat.isStreaming || false
+	}
+
+	public isCareerWaitingForResponse(careerId: CareerId): boolean {
+		const career = this.getCareer(careerId)
+		return career?.careerChat.isWaitingForResponse || false
+	}
+
+	public setCareerStreamId = action((careerId: CareerId, streamId: string | null): void => {
+		const career = this.getCareer(careerId)
+		if (!career) return
+		career.careerChat.currentStreamId = streamId
+	})
+
+	public getCareerStreamId(careerId: CareerId): string | null {
+		const career = this.getCareer(careerId)
+		return career?.careerChat.currentStreamId || null
+	}
+
+	public getChallengeData(cqInformation: CareerIdChallengeId): CqChallengeData | undefined {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.challengeData
+	}
+
+	// Blockly JSON management
+	public getUpdatedBlocklyJson(cqInformation: CareerIdChallengeId): BlocklyJson | null {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson || null
+	}
+
+	public updateBlocklyJson = action((cqInformation: CareerIdChallengeId, newBlocklyJson: BlocklyJson): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.updatedBlocklyJson = newBlocklyJson
+	})
 
 	public logout(): void {
-		this.careerQuestChallengeData.clear()
-		this.currentStreamIds.clear()
-		this.careerData.clear()
-		this.challengeToCareerMap.clear()
+		this.careers.clear()
 	}
 }
 
 const careerQuestClass = new CareerQuestClass()
-
 export default careerQuestClass

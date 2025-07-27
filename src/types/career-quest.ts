@@ -1,5 +1,5 @@
-import { BinaryEvaluationResult, ChatMessageRole } from "@bluedotrobots/common-ts"
 import { LucideIcon } from "lucide-react"
+import { BinaryEvaluationResult, CareerId, ChallengeId, ChatMessageRole } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -50,6 +50,11 @@ declare global {
 		isHintRequest?: boolean
 		isHintResponse?: boolean
 		shouldShowHintButton?: boolean
+	}
+
+	interface CareerIdChallengeId {
+		careerId: CareerId
+		challengeId: ChallengeId
 	}
 }
 

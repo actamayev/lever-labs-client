@@ -6,20 +6,22 @@ import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function retrieveCareerQuestChallengeData(challengeId: string): Promise<void> {
+export default async function retrieveCareerQuestChallengeData(	careerIdChallengeId: CareerIdChallengeId): Promise<void> {
 	try {
 		// If we already have retrieved messages for this challenge, no need to fetch again
-		if (careerQuestClass.hasRetrievedMessages(challengeId)) return
+		if (careerQuestClass.hasRetrievedChallengeMessages(careerIdChallengeId)) return
 
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingMessages(challengeId)
+			careerQuestClass.isRetrievingChallengeMessages(careerIdChallengeId)
 		) return
 
 		// Set loading state
-		careerQuestClass.setIsRetrievingMessages(challengeId, true)
+		careerQuestClass.setIsRetrievingChallengeMessages(careerIdChallengeId, true)
 
-		const challengeResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerQuestChallengeData(challengeId)
+		const challengeResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerQuestChallengeData(
+			careerIdChallengeId.challengeId
+		)
 		if (!isEqual(challengeResponse.status, 200) || isErrorResponses(challengeResponse.data)) {
 			throw Error("Unable to retrieve challenge data")
 		}
@@ -77,9 +79,18 @@ export default async function retrieveCareerQuestChallengeData(challengeId: stri
 			}
 		})
 
-		careerQuestClass.setRetrievedData(challengeId, transformedMessages, challengeResponse.data.sandboxJson)
+		const isCompleted = transformedMessages.some(msg =>
+			msg.evaluationResult?.isCorrect === true
+		)
+
+		careerQuestClass.setChallengeRetrievedData(
+			careerIdChallengeId,
+			transformedMessages,
+			challengeResponse.data.sandboxJson,
+			isCompleted
+		)
 	} catch (error) {
 		console.error(error)
-		careerQuestClass.setIsRetrievingMessages(challengeId, false)
+		careerQuestClass.setIsRetrievingChallengeMessages(careerIdChallengeId, false)
 	}
 }
