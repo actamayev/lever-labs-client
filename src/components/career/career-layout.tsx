@@ -2,28 +2,16 @@
 
 import { useEffect, useState, useMemo, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy } from "lucide-react"
 import { observer } from "mobx-react"
 import { CareerQuestData } from "../../utils/career-quest/career-quest-data"
-import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import { CqChallengeData } from "@bluedotrobots/common-ts"
 import CqChatInterface from "./chat/cq-chat-interface"
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy
-}
-
-type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
-
-interface CareerLayoutProps {
-	careerData: CareerQuestData
-}
+import RightContent from "./right-content"
 
 // eslint-disable-next-line max-lines-per-function
-function CareerLayout({ careerData }: CareerLayoutProps) {
+function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
 		icon: careerData.initialImage
@@ -199,25 +187,6 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 		initializeCareer()
 	}, [careerData])
 
-	const RightContent = () => {
-		if (rightContent.type === "image") {
-			const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
-			return (
-				<div className="flex items-center justify-center h-full">
-					<IconComponent size={120} className="text-macaw" />
-				</div>
-			)
-		}
-
-		return (
-			<div className="h-full flex flex-col">
-				<ChallengeSection
-					challengeData={rightContent.challengeData}
-				/>
-			</div>
-		)
-	}
-
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
 		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
@@ -279,7 +248,7 @@ function CareerLayout({ careerData }: CareerLayoutProps) {
 						transition={{ duration: 0.3 }}
 						className="h-full"
 					>
-						<RightContent />
+						<RightContent rightContent={rightContent} />
 					</motion.div>
 				</AnimatePresence>
 			</div>

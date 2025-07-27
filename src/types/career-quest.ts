@@ -1,5 +1,5 @@
 import { LucideIcon } from "lucide-react"
-import { BinaryEvaluationResult, CareerId, ChallengeId, ChatMessageRole } from "@bluedotrobots/common-ts"
+import { BinaryEvaluationResult, CareerId, ChallengeId, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -56,6 +56,8 @@ declare global {
 		careerId: CareerId
 		challengeId: ChallengeId
 	}
+
+	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
 }
 
 export {}
