@@ -96,14 +96,14 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					</div>
 
 					{/* Vertical Separator */}
-					<Separator orientation="vertical" className="h-full w-0.5" />
+					<Separator orientation="vertical" className="h-full w-0.5 rounded-full" />
 
 					{/* Right Column - Before Running */}
 					<div className="flex-1 overflow-y-auto">
 						{challengeData.beforeRunningText ? (
 							<>
 								<h3 className="text-base font-semibold mb-2 text-questionText">
-									Before running code, make sure:
+									Before running code, make sure to:
 								</h3>
 								<p className="text-sm text-eel leading-relaxed">
 									{challengeData.beforeRunningText}
