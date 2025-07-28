@@ -30,7 +30,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 	const isHintRequest = message.isHintRequest
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
-	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeId && cppCode
+	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
 	// Don't render assistant messages that are streaming with no content yet

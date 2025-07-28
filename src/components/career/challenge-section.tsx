@@ -35,6 +35,7 @@ function getBlockCount(blocklyJson: BlocklyJson): number {
 // Helper function to check if JSON is valid and non-empty
 function isValidNonEmptyJson(blocklyJson: BlocklyJson): boolean {
 	// Check if it's truly empty or just has workspace metadata
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!blocklyJson || typeof blocklyJson !== "object") return false
 
 	// Must have blocks property
@@ -76,10 +77,10 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		// Set new timeout
 		saveTimeoutRef.current = setTimeout(() => {
 			console.log("  🌐 Debounced save to backend")
-			editCareerQuestSandboxProject(challengeData.challengeId, blocklyJson)
+			editCareerQuestSandboxProject(challengeData.challengeUUID, blocklyJson)
 			saveTimeoutRef.current = null
 		}, 300) // 300ms debounce delay
-	}, [challengeData.challengeId])
+	}, [challengeData.challengeUUID])
 
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
@@ -177,7 +178,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	// Reset flags when switching between challenges or when data is retrieved
 	useEffect(() => {
 		console.log("🔄 Resetting challenge flags", {
-			challengeId: challengeData.challengeId,
+			challengeUUID: challengeData.challengeUUID,
 			hasRetrievedData
 		})
 
@@ -204,10 +205,10 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				saveTimeoutRef.current = null
 			}
 		}
-	}, [challengeData.challengeId, hasRetrievedData]) // Only depend on primitives
+	}, [challengeData.challengeUUID, hasRetrievedData]) // Only depend on primitives
 
 	// Create a stable workspace key - only change when challenge changes
-	const workspaceKey = `${challengeData.challengeId}-${hasRetrievedData ? "retrieved" : "initial"}`
+	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}`
 	const foxColors = getDuolingoColors("fox")
 
 	return (
@@ -253,10 +254,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					<TactileButton
 						className="bg-beetle-2 text-white rounded-lg p-3 h-fit"
 						shadowColor="rgb(140, 80, 200)"
-						onClick={() => requestCareerQuestHint({
-							careerId: challengeData.careerId,
-							challengeId: challengeData.challengeId
-						}, cppCode)}
+						onClick={() => requestCareerQuestHint({ ...challengeData }, cppCode)}
 						disabled={isStreaming}
 					>
 						<CustomLightbulb className="w-5 h-5" />
@@ -289,10 +287,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						foxColors.bg
 					)}
 					shadowClass={foxColors.shadow2}
-					onClick={() => checkCareerQuestCode({
-						careerId: challengeData.careerId,
-						challengeId: challengeData.challengeId
-					}, cppCode)}
+					onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
 					disabled={isStreaming || isEmpty(cppCode)}
 				>
 					CHECK CODE

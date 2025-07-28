@@ -23,9 +23,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
-		careerQuestClass.getVisibleSections(careerData.careerId),
+		careerQuestClass.getVisibleSections(careerData.careerUUID),
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	[careerData.careerId, careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)]
+	[careerData.careerUUID, careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)]
 	)
 
 	const visibleSections = useMemo(() =>
@@ -34,7 +34,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	)
 
 	// Get completion count to trigger unlock detection
-	const completionCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)
+	const completionCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
 
 	// Initialize allowed sections for first time (all text sections before first challenge)
 	useEffect(() => {
@@ -51,7 +51,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const recalculateAllowedSections = useCallback((completedChallengeId: string) => {
 		const sections = careerData.sections
 		const challengeIndex = sections.findIndex(s =>
-			s.type === "challenge" && s.challengeData.challengeId === completedChallengeId
+			s.type === "challenge" && s.challengeData.challengeUUID === completedChallengeId
 		)
 
 		if (challengeIndex === -1) return
@@ -75,7 +75,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (lockedChallenge && careerQuestClass.isChallengeCompleted(lockedChallenge)) {
 			setLockedChallenge(null)
-			recalculateAllowedSections(lockedChallenge.challengeId)
+			recalculateAllowedSections(lockedChallenge.challengeUUID)
 		}
 	}, [lockedChallenge, completionCount, recalculateAllowedSections])
 
@@ -100,7 +100,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (lockedChallenge) {
 			// Only unlock if user scrolls completely away from the locked challenge
 			if (section.type === "challenge" &&
-        section.challengeData.challengeId === lockedChallenge.challengeId &&
+        section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
         intersectionRatio < 0.1) {
 				// Don't unlock here if challenge is completed - let the completion effect handle it
 				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
@@ -140,7 +140,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			}
 
 			if (newContent.type === "challenge" && prevContent.type === "challenge") {
-				return prevContent.challengeData.challengeId !== newContent.challengeData.challengeId ? newContent : prevContent
+				return prevContent.challengeData.challengeUUID !== newContent.challengeData.challengeUUID ? newContent : prevContent
 			}
 
 			return newContent
@@ -173,7 +173,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// Small delay to ensure DOM is fully rendered
 		const positioningTimeout = setTimeout(() => {
-			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerId)
+			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerUUID)
 
 			console.log("Initial positioning:", targetInfo)
 
@@ -198,7 +198,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}, 300) // Allow time for DOM rendering
 
 		return () => clearTimeout(positioningTimeout)
-	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerId, scrollToSection, careerData.sections])
+	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerUUID, scrollToSection, careerData.sections])
 
 	// Setup intersection observer (only after initial positioning is complete)
 	useEffect(() => {
@@ -243,10 +243,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Initialize career and retrieve data
 	useEffect(() => {
 		const initializeCareer = async () => {
-			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerId)
+			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerUUID)
 
 			// Check if all data has been retrieved
-			const hasAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerId)
+			const hasAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerUUID)
 			setHasRetrievedAllData(hasAllData)
 		}
 
@@ -307,7 +307,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					<motion.div
 						key={`${rightContent.type}-${rightContent.type === "image" ?
 							rightContent.icon :
-							rightContent.challengeData.challengeId}
+							rightContent.challengeData.challengeUUID}
             `}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}

@@ -8,24 +8,22 @@ import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function checkCareerQuestCode(
-	careerIdChallengeId: CareerIdChallengeId,
+	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
 	userCode: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		careerQuestClass.addChallengeCheckCodeRequestMessage(careerIdChallengeId)
-		careerQuestClass.resetChallengeStreamingState(careerIdChallengeId)
+		careerQuestClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
+		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 
 		const response = await blueDotApiClientClass.chatDataService.checkCareerQuestCode({
-			careerId: careerIdChallengeId.careerId,
-			challengeId: careerIdChallengeId.challengeId,
 			userCode,
-		})
+		}, careerUUIDChallengeUUID.challengeUUID)
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) return
 
-		careerQuestClass.addChallengeEvaluationResultMessage(careerIdChallengeId, {
+		careerQuestClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
 			isCorrect: response.data.isCorrect,
 			feedback: response.data.feedback
 		})

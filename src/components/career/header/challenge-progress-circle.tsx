@@ -7,8 +7,8 @@ import careerQuestClass from "../../../classes/career-quest-class"
 
 function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }) {
 	// Get progress data from career quest class
-	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)
-	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerId)
+	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
+	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerUUID)
 	const size = 64
 	const percentage = totalChallenges > 0 ? (completedChallenges / totalChallenges) * 100 : 0
 	const circumference = 2 * Math.PI * 20 // radius of 20

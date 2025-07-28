@@ -8,7 +8,7 @@ import { CqChallengeData } from "@bluedotrobots/common-ts"
 interface HintButtonProps {
 	cqChallengeData: CqChallengeData
 	cppCode: string
-	onHintRequest: (careerIdChallengeId: CareerIdChallengeId, cppCode: string) => Promise<void>
+	onHintRequest: (careerUUIDChallengeUUID: CareerUUIDChallengeUUID, cppCode: string) => Promise<void>
 }
 
 function HintButton({ cqChallengeData, cppCode, onHintRequest }: HintButtonProps) {

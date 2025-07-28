@@ -6,21 +6,21 @@ import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function retrieveCareerQuestChallengeData(careerIdChallengeId: CareerIdChallengeId): Promise<void> {
+export default async function retrieveCareerQuestChallengeData(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
 	try {
 		// If we already have retrieved messages for this challenge, no need to fetch again
-		if (careerQuestClass.hasRetrievedChallengeData(careerIdChallengeId)) return
+		if (careerQuestClass.hasRetrievedChallengeData(careerUUIDChallengeUUID)) return
 
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingChallengeData(careerIdChallengeId)
+			careerQuestClass.isRetrievingChallengeData(careerUUIDChallengeUUID)
 		) return
 
 		// Set loading state
-		careerQuestClass.setIsRetrievingChallengeData(careerIdChallengeId, true)
+		careerQuestClass.setIsRetrievingChallengeData(careerUUIDChallengeUUID, true)
 
 		const challengeResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerQuestChallengeData(
-			careerIdChallengeId.challengeId
+			careerUUIDChallengeUUID.challengeUUID
 		)
 		if (!isEqual(challengeResponse.status, 200) || isErrorResponses(challengeResponse.data)) {
 			throw Error("Unable to retrieve challenge data")
@@ -84,13 +84,13 @@ export default async function retrieveCareerQuestChallengeData(careerIdChallenge
 		)
 
 		careerQuestClass.setChallengeRetrievedData(
-			careerIdChallengeId,
+			careerUUIDChallengeUUID,
 			transformedMessages,
 			challengeResponse.data.sandboxJson,
 			isCompleted
 		)
 	} catch (error) {
 		console.error(error)
-		careerQuestClass.setIsRetrievingChallengeData(careerIdChallengeId, false)
+		careerQuestClass.setIsRetrievingChallengeData(careerUUIDChallengeUUID, false)
 	}
 }

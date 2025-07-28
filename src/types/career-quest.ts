@@ -1,5 +1,5 @@
 import { LucideIcon } from "lucide-react"
-import { BinaryEvaluationResult, CareerId, ChallengeId, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
+import { BinaryEvaluationResult, CareerUUID, ChallengeUUID, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -52,9 +52,9 @@ declare global {
 		shouldShowHintButton?: boolean
 	}
 
-	interface CareerIdChallengeId {
-		careerId: CareerId
-		challengeId: ChallengeId
+	interface CareerUUIDChallengeUUID {
+		careerUUID: CareerUUID
+		challengeUUID: ChallengeUUID
 	}
 
 	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
@@ -68,7 +68,7 @@ declare global {
 
 	interface ChallengeSection {
 		type: "challenge"
-		id: ChallengeId
+		id: ChallengeUUID
 		challengeData: CqChallengeData
 		// Challenge completion determines if next sections are unlocked
 	}
@@ -76,7 +76,7 @@ declare global {
 	type CareerSection = TextSection | ChallengeSection
 
 	interface CareerQuestData {
-		careerId: CareerId
+		careerUUID: CareerUUID
 		careerTitle: string
 		initialImage: string // Lucide icon name for the first image
 		careerColor: DuolingoColors

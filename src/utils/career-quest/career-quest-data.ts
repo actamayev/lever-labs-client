@@ -1,11 +1,11 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
-	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5, ChallengeId } from "@bluedotrobots/common-ts"
+import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
+	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 
 export const INTRODUCTION_CAREER: CareerQuestData = {
-	careerId: "introduction",
+	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
 	careerTitle: "Introduction",
 	initialImage: "Bot", // Lucide icon
 	careerColor: "humpback",
@@ -30,7 +30,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-001" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_1.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
 		}
 	]
@@ -38,7 +38,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 
 // Sample data for Obstacle Avoidance career
 export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
-	careerId: "obstacle-avoidance",
+	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	careerTitle: "Obstacle Avoidance",
 	initialImage: "Bot", // Lucide icon
 	careerColor: "macaw",
@@ -63,7 +63,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-001" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_1.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
 		},
 		{
@@ -80,7 +80,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-002" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_2.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_2
 		},
 		{
@@ -91,7 +91,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-003" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_3.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_3
 		},
 		{
@@ -102,7 +102,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-004" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_4.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_4
 		},
 		{
@@ -113,7 +113,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "challenge",
-			id: "obstacle-avoidance-005" as ChallengeId,
+			id: OBSTACLE_AVOIDANCE_CHALLENGE_5.challengeUUID,
 			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_5
 		},
 		{
@@ -126,6 +126,6 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 }
 
 export const CAREER_DEFINITIONS = {
-	[INTRODUCTION_CAREER.careerId]: INTRODUCTION_CAREER,
-	[OBSTACLE_AVOIDANCE_CAREER.careerId]: OBSTACLE_AVOIDANCE_CAREER
+	[INTRODUCTION_CAREER.careerUUID]: INTRODUCTION_CAREER,
+	[OBSTACLE_AVOIDANCE_CAREER.careerUUID]: OBSTACLE_AVOIDANCE_CAREER
 }

@@ -9,7 +9,7 @@ import {
 	CqChatbotStreamCompleteEvent,
 	BinaryEvaluationResult,
 	CqChallengeData,
-	CareerId,
+	CareerUUID,
 	BlocklyJson
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
@@ -49,8 +49,8 @@ interface CareerInstance {
 }
 
 class CareerQuestClass {
-	// Main data structure: careerId -> CareerInstance
-	public careers = observable.map<string, CareerInstance>()
+	// Main data structure: careerUUID -> CareerInstance
+	public careers = observable.map<CareerUUID, CareerInstance>()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -69,7 +69,7 @@ class CareerQuestClass {
 	})
 
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
-		if (this.careers.has(careerDefinition.careerId)) return
+		if (this.careers.has(careerDefinition.careerUUID)) return
 
 		// Extract challenge IDs from career definition
 		const challengeSections = careerDefinition.sections.filter(
@@ -79,7 +79,7 @@ class CareerQuestClass {
 		// Initialize challenge data
 		const challenges = new Map<string, ChallengeInstance>()
 		challengeSections.forEach(section => {
-			challenges.set(section.challengeData.challengeId, {
+			challenges.set(section.challengeData.challengeUUID, {
 				// Static challenge data
 				challengeData: section.challengeData,  // ADD THIS
 
@@ -109,20 +109,20 @@ class CareerQuestClass {
 			}
 		}
 
-		this.careers.set(careerDefinition.careerId, careerInstance)
+		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
 
 	// ========================================
 	// HELPER METHODS
 	// ========================================
 
-	private getCareer(careerId: CareerId): CareerInstance | undefined {
-		return this.careers.get(careerId)
+	private getCareer(careerUUID: CareerUUID): CareerInstance | undefined {
+		return this.careers.get(careerUUID)
 	}
 
-	private getChallenge(cqInformation: CareerIdChallengeId): ChallengeInstance | undefined {
-		const career = this.getCareer(cqInformation.careerId)
-		return career?.challenges.get(cqInformation.challengeId)
+	private getChallenge(cqInformation: CareerUUIDChallengeUUID): ChallengeInstance | undefined {
+		const career = this.getCareer(cqInformation.careerUUID)
+		return career?.challenges.get(cqInformation.challengeUUID)
 	}
 
 	// ========================================
@@ -130,12 +130,12 @@ class CareerQuestClass {
 	// ========================================
 
 	// Challenge messages
-	public getChallengeMessages(cqInformation: CareerIdChallengeId): CareerQuestChatMessage[] {
+	public getChallengeMessages(cqInformation: CareerUUIDChallengeUUID): CareerQuestChatMessage[] {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.messages || []
 	}
 
-	public addChallengeUserMessage = action((cqInformation: CareerIdChallengeId, content: string): void => {
+	public addChallengeUserMessage = action((cqInformation: CareerUUIDChallengeUUID, content: string): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -154,7 +154,7 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
-	public addChallengeHintRequestMessage = action((cqInformation: CareerIdChallengeId): void => {
+	public addChallengeHintRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -172,7 +172,7 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
-	public addChallengeCheckCodeRequestMessage = action((cqInformation: CareerIdChallengeId): void => {
+	public addChallengeCheckCodeRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -191,11 +191,11 @@ class CareerQuestClass {
 	})
 
 	public addChallengeEvaluationResultMessage = action((
-		cqInformation: CareerIdChallengeId,
+		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
-		const career = this.getCareer(cqInformation.careerId)
+		const career = this.getCareer(cqInformation.careerUUID)
 		if (!challenge || !career) return
 
 		challenge.isWaitingForResponse = false
@@ -214,11 +214,11 @@ class CareerQuestClass {
 		// Mark challenge as completed if correct
 		if (evaluationResult.isCorrect) {
 			challenge.isCompleted = true
-			career.progress.completedChallengeIds.add(cqInformation.challengeId)
+			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
 		}
 	})
 
-	public hideChallengeHintButtons = action((cqInformation: CareerIdChallengeId): void => {
+	public hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -229,7 +229,7 @@ class CareerQuestClass {
 		})
 	})
 
-	public clearChallengeMessages = action((cqInformation: CareerIdChallengeId): void => {
+	public clearChallengeMessages = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.messages = []
@@ -240,7 +240,7 @@ class CareerQuestClass {
 	// ========================================
 
 	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
-		// Note: You'll need to pass careerId in the event or determine it from challengeId
+		// Note: You'll need to pass careerUUUID in the event or determine it from challengeUUID
 		const challenge = this.getChallenge({ ...startEvent })
 		if (!challenge) return
 
@@ -266,7 +266,7 @@ class CareerQuestClass {
 		if (!challenge) return
 
 		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeId)
+			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeUUID)
 			return
 		}
 
@@ -302,7 +302,7 @@ class CareerQuestClass {
 		challenge.currentStreamId = null
 	})
 
-	public resetChallengeStreamingState = action((cqInformation: CareerIdChallengeId): void => {
+	public resetChallengeStreamingState = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -313,13 +313,13 @@ class CareerQuestClass {
 	})
 
 	// Stream ID management
-	public setChallengeStreamId = action((cqInformation: CareerIdChallengeId, streamId: string | null): void => {
+	public setChallengeStreamId = action((cqInformation: CareerUUIDChallengeUUID, streamId: string | null): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.currentStreamId = streamId
 	})
 
-	public getChallengeStreamId(cqInformation: CareerIdChallengeId): string | null {
+	public getChallengeStreamId(cqInformation: CareerUUIDChallengeUUID): string | null {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.currentStreamId || null
 	}
@@ -349,13 +349,13 @@ class CareerQuestClass {
 
 	// Update setChallengeRetrievedData to include sandboxJson:
 	public setChallengeRetrievedData = action((
-		cqInformation: CareerIdChallengeId,
+		cqInformation: CareerUUIDChallengeUUID,
 		messages: CareerQuestChatMessage[],
 		sandboxJson: BlocklyJson | null,  // ADD THIS
 		isCompleted: boolean
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
-		const career = this.getCareer(cqInformation.careerId)
+		const career = this.getCareer(cqInformation.careerUUID)
 		if (!challenge || !career) return
 
 		challenge.messages = messages
@@ -369,12 +369,12 @@ class CareerQuestClass {
 		}
 
 		if (isCompleted) {
-			career.progress.completedChallengeIds.add(cqInformation.challengeId)
+			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
 		}
 	})
 
 	public setIsRetrievingChallengeData = action((
-		cqInformation: CareerIdChallengeId,
+		cqInformation: CareerUUIDChallengeUUID,
 		isRetrieving: boolean
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
@@ -382,35 +382,35 @@ class CareerQuestClass {
 		challenge.isRetrievingData = isRetrieving
 	})
 
-	public hasRetrievedChallengeData(cqInformation: CareerIdChallengeId): boolean {
+	public hasRetrievedChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.hasRetrievedData || false
 	}
 
-	public isRetrievingChallengeData(cqInformation: CareerIdChallengeId): boolean {
+	public isRetrievingChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.isRetrievingData || false
 	}
 
-	public getChallengeData(cqInformation: CareerIdChallengeId): CqChallengeData | undefined {
+	public getChallengeData(cqInformation: CareerUUIDChallengeUUID): CqChallengeData | undefined {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.challengeData
 	}
 
 	// Blockly JSON management
-	public getUpdatedBlocklyJson(cqInformation: CareerIdChallengeId): BlocklyJson | null {
+	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson || null
 	}
 
-	public updateBlocklyJson = action((cqInformation: CareerIdChallengeId, newBlocklyJson: BlocklyJson): void => {
+	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.updatedBlocklyJson = newBlocklyJson
 	})
 
-	public getVisibleSections(careerId: CareerId): string[] {
-		const career = this.getCareer(careerId)
+	public getVisibleSections(careerUUID: CareerUUID): string[] {
+		const career = this.getCareer(careerUUID)
 		if (!career) return []
 
 		const visibleSectionIds: string[] = []
@@ -430,7 +430,7 @@ class CareerQuestClass {
 				visibleSectionIds.push(section.id)
 			} else {
 				// Always show the challenge section itself (so user can see it and potentially complete it)
-				visibleSectionIds.push(section.id)
+				visibleSectionIds.push(section.challengeData.challengeUUID)
 
 				// Check if this challenge is completed
 				const isCompleted = this.isChallengeCompleted(section.challengeData)
@@ -446,23 +446,23 @@ class CareerQuestClass {
 	}
 
 	// Enhanced progress methods for header
-	public getCompletedChallengesForProgress(careerId: CareerId): number {
-		const career = this.getCareer(careerId)
+	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
 		if (!career) return 0
 
 		return career.progress.completedChallengeIds.size
 	}
 
-	public getTotalChallengesForProgress(careerId: CareerId): number {
-		const career = this.getCareer(careerId)
+	public getTotalChallengesForProgress(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
 		if (!career) return 0
 
 		// Count only challenge sections
 		return career.careerDefinition.sections.filter(section => section.type === "challenge").length
 	}
 
-	public retrieveAllChallengeDataForCareer = action(async (careerId: CareerId): Promise<void> => {
-		const career = this.getCareer(careerId)
+	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
+		const career = this.getCareer(careerUUID)
 		if (!career) return
 
 		// Get all challenge sections from this career
@@ -478,7 +478,7 @@ class CareerQuestClass {
 		try {
 			await Promise.all(retrievalPromises)
 		} catch (error) {
-			console.error("Failed to retrieve challenge data for career:", careerId, error)
+			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
 		}
 	})
 
@@ -490,12 +490,12 @@ class CareerQuestClass {
  * Returns the section that should be shown on page load
  */
 	// eslint-disable-next-line complexity
-	public getInitialTargetSection(careerId: CareerId): {
+	public getInitialTargetSection(careerUUID: CareerUUID): {
 	sectionId: string | null,
 	shouldAutoScroll: boolean,
 	rightContent: RightContent | null
 	} {
-		const career = this.getCareer(careerId)
+		const career = this.getCareer(careerUUID)
 		if (!career) {
 			return { sectionId: null, shouldAutoScroll: false, rightContent: null }
 		}
@@ -523,7 +523,7 @@ class CareerQuestClass {
 			if (this.isChallengeCompleted(challengeSections[i].challengeData)) {
 			// Find this challenge's index in the full sections array
 				latestCompletedChallengeIndex = sections.findIndex(
-					s => s.type === "challenge" && s.id === challengeSections[i].id
+					s => s.type === "challenge" && s.challengeData.challengeUUID === challengeSections[i].challengeData.challengeUUID
 				)
 				break
 			}
@@ -557,7 +557,7 @@ class CareerQuestClass {
 				const challengeSection = sections[i] as ChallengeSection
 				if (!this.isChallengeCompleted(challengeSection.challengeData)) {
 					return {
-						sectionId: challengeSection.id,
+						sectionId: challengeSection.challengeData.challengeUUID,
 						shouldAutoScroll: true,
 						rightContent: { type: "challenge", challengeData: challengeSection.challengeData }
 					}
@@ -576,8 +576,8 @@ class CareerQuestClass {
 	/**
  * Check if all challenge data has been retrieved for a career
  */
-	public hasRetrievedAllChallengeData(careerId: CareerId): boolean {
-		const career = this.getCareer(careerId)
+	public hasRetrievedAllChallengeData(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
 		if (!career) return false
 
 		const challengeSections = career.careerDefinition.sections.filter(
