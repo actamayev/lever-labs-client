@@ -8,7 +8,8 @@ import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import CareerLoadingSkeleton from "./career-loading-skeleton"
+import CareerLoadingSkeletonLeft from "./career-loading-skeleton-left"
+import CareerLoadingSkeletonRight from "./career-loading-skeleton-right"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -295,7 +296,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					}, 200) // Give scroll time to complete
 				}, 100) // Give DOM time to render
 			} else {
-			// No scrolling needed, fade in after brief delay
+				// No scrolling needed, fade in after brief delay
 				setTimeout(() => {
 					setShowContent(true)
 				}, 50)
@@ -309,124 +310,158 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (!shouldEnableIntersectionObserver) return
 
-		// Your existing intersection observer logic...
+	// Your existing intersection observer logic...
 	}, [shouldEnableIntersectionObserver, /* other dependencies */])
 
 	// Show loading skeleton while data loads
 	// Show loading skeleton while data loads
 	if (isCareerLoading || !hasRetrievedAllData) {
 		return (
-			<motion.div
-				key="skeleton"
-				initial={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={{ duration: 0.3 }}
-			>
-				<CareerLoadingSkeleton />
-			</motion.div>
+			<div className="flex h-full">
+				{/* Left Panel - Always Present */}
+				<div
+					className="overflow-y-auto scrollbar-hide"
+					style={{
+						scrollbarWidth: "none",
+						msOverflowStyle: "none",
+						width: "45%"
+					}}
+				>
+					<motion.div
+						key="skeleton-left"
+						initial={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+					>
+						<CareerLoadingSkeletonLeft />
+					</motion.div>
+				</div>
+
+				{/* Right Panel - Always Present with Border */}
+				<div
+					className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
+					style={{ width: "55%" }}
+				>
+					<motion.div
+						key="skeleton-right"
+						initial={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3 }}
+					>
+						<CareerLoadingSkeletonRight />
+					</motion.div>
+				</div>
+			</div>
 		)
 	}
 
-	// Content is ready, render with proper visibility state
+	// Content is ready, render with persistent layout
 	return (
-		<AnimatePresence mode="wait">
-			{!showContent ? (
-			// Invisible content for positioning
-				<motion.div
-					key="positioning"
-					className="flex h-full opacity-0 pointer-events-none"
-					initial={{ opacity: 0 }}
-				>
-					<div
-						ref={leftScrollRef}
-						className="overflow-y-auto scrollbar-hide"
-						style={{
-							scrollbarWidth: "none",
-							msOverflowStyle: "none",
-							width: "45%"
-						}}
-					>
-						<div
-							className="py-8 space-y-8"
-							style={{
-								paddingLeft: "65px",
-								paddingRight: "55px"
-							}}
+		<div className="flex h-full">
+			{/* Left Panel - Always Present */}
+			<div
+				ref={leftScrollRef}
+				className="overflow-y-auto scrollbar-hide"
+				style={{
+					scrollbarWidth: "none",
+					msOverflowStyle: "none",
+					width: "45%"
+				}}
+			>
+				<AnimatePresence mode="wait">
+					{!showContent ? (
+					// Invisible content for positioning
+						<motion.div
+							key="positioning-left"
+							className="opacity-0 pointer-events-none"
+							initial={{ opacity: 0 }}
 						>
-							{visibleSections.map((section) => (
-								<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
-									{section.type === "text" ? (
-										<div className="prose prose-lg max-w-none text-3xl">
-											<p className="leading-relaxed text-questionText">{section.content}</p>
-										</div>
-									) : (
-										<div className="h-[calc(100vh-10rem)]">
-											<CqChatInterface
-												cppCode={getCppCodeForChallenge(section.challengeData)}
-												challengeData={section.challengeData}
-											/>
-										</div>
-									)}
-								</div>
-							))}
-						</div>
-					</div>
-
-					<div
-						className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
-						style={{ width: "55%" }}
-					>
-						<RightContent rightContent={rightContent} />
-					</div>
-				</motion.div>
-			) : (
-			// Visible content with fade-in
-				<motion.div
-					key="content"
-					className="flex h-full"
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					transition={{ duration: 0.5, ease: "easeOut" }}
-				>
-					<div
-						ref={leftScrollRef}
-						className="overflow-y-auto scrollbar-hide"
-						style={{
-							scrollbarWidth: "none",
-							msOverflowStyle: "none",
-							width: "45%"
-						}}
-					>
-						<div
-							className="py-8 space-y-8"
-							style={{
-								paddingLeft: "65px",
-								paddingRight: "55px"
-							}}
+							<div
+								className="py-8 space-y-8"
+								style={{
+									paddingLeft: "65px",
+									paddingRight: "55px"
+								}}
+							>
+								{visibleSections.map((section) => (
+									<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
+										{section.type === "text" ? (
+											<div className="prose prose-lg max-w-none text-3xl">
+												<p className="leading-relaxed text-questionText">{section.content}</p>
+											</div>
+										) : (
+											<div className="h-[calc(100vh-10rem)]">
+												<CqChatInterface
+													cppCode={getCppCodeForChallenge(section.challengeData)}
+													challengeData={section.challengeData}
+												/>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</motion.div>
+					) : (
+					// Visible content with fade-in
+						<motion.div
+							key="content-left"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							transition={{ duration: 0.5, ease: "easeOut" }}
 						>
-							{visibleSections.map((section) => (
-								<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
-									{section.type === "text" ? (
-										<div className="prose prose-lg max-w-none text-3xl">
-											<p className="leading-relaxed text-questionText">{section.content}</p>
-										</div>
-									) : (
-										<div className="h-[calc(100vh-10rem)]">
-											<CqChatInterface
-												cppCode={getCppCodeForChallenge(section.challengeData)}
-												challengeData={section.challengeData}
-											/>
-										</div>
-									)}
-								</div>
-							))}
-						</div>
-					</div>
+							<div
+								className="py-8 space-y-8"
+								style={{
+									paddingLeft: "65px",
+									paddingRight: "55px"
+								}}
+							>
+								{visibleSections.map((section) => (
+									<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
+										{section.type === "text" ? (
+											<div className="prose prose-lg max-w-none text-3xl">
+												<p className="leading-relaxed text-questionText">{section.content}</p>
+											</div>
+										) : (
+											<div className="h-[calc(100vh-10rem)]">
+												<CqChatInterface
+													cppCode={getCppCodeForChallenge(section.challengeData)}
+													challengeData={section.challengeData}
+												/>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</div>
 
-					<div
-						className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
-						style={{ width: "55%" }}
-					>
+			{/* Right Panel - Always Present with Border */}
+			<div
+				className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
+				style={{ width: "55%" }}
+			>
+				<AnimatePresence mode="wait">
+					{!showContent ? (
+					// Keep skeleton in right panel during positioning
+						<motion.div
+							key="skeleton-right-persistent"
+							initial={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.3 }}
+						>
+							<CareerLoadingSkeletonRight />
+						</motion.div>
+					) : (
+					// Right content with independent animation
+						// <motion.div
+						// 	key="content-right"
+						// 	initial={{ opacity: 0 }}
+						// 	animate={{ opacity: 1 }}
+						// 	transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }} // Slight delay for stagger
+						// >
 						<AnimatePresence mode="wait">
 							<motion.div
 								key={`${rightContent.type}-${rightContent.type === "image" ?
@@ -441,10 +476,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 								<RightContent rightContent={rightContent} />
 							</motion.div>
 						</AnimatePresence>
-					</div>
-				</motion.div>
-			)}
-		</AnimatePresence>
+						// </motion.div>
+					)}
+				</AnimatePresence>
+			</div>
+		</div>
 	)
 }
 

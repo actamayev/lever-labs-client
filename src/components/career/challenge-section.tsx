@@ -21,6 +21,7 @@ import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
+import CustomTooltip from "../custom-tooltip"
 
 // Helper function to check if JSON has meaningful blocks
 function hasBlocks(blocklyJson: BlocklyJson): boolean {
@@ -250,7 +251,21 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				</div>
 
 				{/* Standalone Hint Button */}
-				<div className="flex-shrink-0">
+				<div className="flex-shrink-0 flex flex-col gap-2">
+					{/* Challenge Number Indicator */}
+					<CustomTooltip
+						tooltipTrigger={
+							<div
+								className="w-8 h-8 rounded-full bg-macaw text-white flex items-center
+								justify-center text-sm font-semibold mx-auto cursor-default"
+							>
+								C{challengeData.challengeIndex}
+							</div>
+						}
+						tooltipContent={`Challenge ${challengeData.challengeIndex}: ${challengeData.title}`}
+					/>
+
+					{/* Hint Button */}
 					<TactileButton
 						className="bg-beetle-2 text-white rounded-lg p-3 h-fit"
 						shadowColor="rgb(140, 80, 200)"
