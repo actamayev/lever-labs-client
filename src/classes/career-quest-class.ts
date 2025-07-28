@@ -20,8 +20,8 @@ import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 interface ChatData {
 	messages: CareerQuestChatMessage[]
 	isWaitingForResponse: boolean
-	hasRetrievedMessages: boolean
-	isRetrievingMessages: boolean
+	hasRetrievedData: boolean
+	isRetrievingData: boolean
 }
 
 interface StreamingState {
@@ -89,8 +89,8 @@ class CareerQuestClass {
 				// Chat data
 				messages: [],
 				isWaitingForResponse: false,
-				hasRetrievedMessages: false,
-				isRetrievingMessages: false,
+				hasRetrievedData: false,
+				isRetrievingData: false,
 
 				// Streaming state
 				isStreaming: false,
@@ -110,8 +110,8 @@ class CareerQuestClass {
 				// Chat data
 				messages: [],
 				isWaitingForResponse: false,
-				hasRetrievedMessages: false,
-				isRetrievingMessages: false,
+				hasRetrievedData: false,
+				isRetrievingData: false,
 
 				// Streaming state
 				isStreaming: false,
@@ -375,8 +375,8 @@ class CareerQuestClass {
 		if (!challenge || !career) return
 
 		challenge.messages = messages
-		challenge.hasRetrievedMessages = true
-		challenge.isRetrievingMessages = false
+		challenge.hasRetrievedData = true
+		challenge.isRetrievingData = false
 		challenge.isCompleted = isCompleted
 
 		// Update blockly JSON if provided
@@ -389,23 +389,23 @@ class CareerQuestClass {
 		}
 	})
 
-	public setIsRetrievingChallengeMessages = action((
+	public setIsRetrievingChallengeData = action((
 		cqInformation: CareerIdChallengeId,
 		isRetrieving: boolean
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
-		challenge.isRetrievingMessages = isRetrieving
+		challenge.isRetrievingData = isRetrieving
 	})
 
-	public hasRetrievedChallengeMessages(cqInformation: CareerIdChallengeId): boolean {
+	public hasRetrievedChallengeData(cqInformation: CareerIdChallengeId): boolean {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.hasRetrievedMessages || false
+		return challenge?.hasRetrievedData || false
 	}
 
-	public isRetrievingChallengeMessages(cqInformation: CareerIdChallengeId): boolean {
+	public isRetrievingChallengeData(cqInformation: CareerIdChallengeId): boolean {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.isRetrievingMessages || false
+		return challenge?.isRetrievingData || false
 	}
 	// ========================================
 	// CAREER-LEVEL CHAT MANAGEMENT
@@ -603,6 +603,113 @@ class CareerQuestClass {
 			console.error("Failed to retrieve challenge data for career:", careerId, error)
 		}
 	})
+
+	// Add these methods to your existing career-quest-class.ts file
+	// Insert them near the end of the class, before the logout() method
+
+	/**
+ * Determines the initial section to display based on completion progress
+ * Returns the section that should be shown on page load
+ */
+	// eslint-disable-next-line complexity
+	public getInitialTargetSection(careerId: CareerId): {
+	sectionId: string | null,
+	shouldAutoScroll: boolean,
+	rightContent: RightContent | null
+	} {
+		const career = this.getCareer(careerId)
+		if (!career) {
+			return { sectionId: null, shouldAutoScroll: false, rightContent: null }
+		}
+
+		const sections = career.careerDefinition.sections
+		const challengeSections = sections.filter(s => s.type === "challenge") as ChallengeSection[]
+
+		// Check if all challenges are complete
+		const allChallengesComplete = challengeSections.every(section =>
+			this.isChallengeCompleted(section.challengeData)
+		)
+
+		// If all complete, start at top with no auto-scroll
+		if (allChallengesComplete) {
+			return {
+				sectionId: null,
+				shouldAutoScroll: false,
+				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+			}
+		}
+
+		// Find the latest completed challenge
+		let latestCompletedChallengeIndex = -1
+		for (let i = challengeSections.length - 1; i >= 0; i--) {
+			if (this.isChallengeCompleted(challengeSections[i].challengeData)) {
+			// Find this challenge's index in the full sections array
+				latestCompletedChallengeIndex = sections.findIndex(
+					s => s.type === "challenge" && s.id === challengeSections[i].id
+				)
+				break
+			}
+		}
+
+		// If no challenges are complete, start at the top
+		if (latestCompletedChallengeIndex === -1) {
+			return {
+				sectionId: null,
+				shouldAutoScroll: false,
+				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+			}
+		}
+
+		// Find the next text section after the latest completed challenge
+		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
+			if (sections[i].type === "text") {
+				const textSection = sections[i] as TextSection
+				return {
+					sectionId: textSection.id,
+					shouldAutoScroll: true,
+					rightContent: { type: "image", icon: textSection.triggerImage }
+				}
+			}
+		}
+
+		// If no text section found after latest completed challenge,
+		// find the next incomplete challenge
+		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
+			if (sections[i].type === "challenge") {
+				const challengeSection = sections[i] as ChallengeSection
+				if (!this.isChallengeCompleted(challengeSection.challengeData)) {
+					return {
+						sectionId: challengeSection.id,
+						shouldAutoScroll: true,
+						rightContent: { type: "challenge", challengeData: challengeSection.challengeData }
+					}
+				}
+			}
+		}
+
+		// Fallback to top if nothing found
+		return {
+			sectionId: null,
+			shouldAutoScroll: false,
+			rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+		}
+	}
+
+	/**
+ * Check if all challenge data has been retrieved for a career
+ */
+	public hasRetrievedAllChallengeData(careerId: CareerId): boolean {
+		const career = this.getCareer(careerId)
+		if (!career) return false
+
+		const challengeSections = career.careerDefinition.sections.filter(
+			s => s.type === "challenge"
+		) as ChallengeSection[]
+
+		return challengeSections.every(section =>
+			this.hasRetrievedChallengeData(section.challengeData)
+		)
+	}
 
 	public logout(): void {
 		this.careers.clear()

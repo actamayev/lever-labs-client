@@ -27,7 +27,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	// Get messages directly from career quest class
 	const messages = careerQuestClass.getChallengeMessages(challengeData)
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
-	const isRetrievingMessages = careerQuestClass.isRetrievingChallengeMessages(challengeData)
+	const isRetrievingData = careerQuestClass.isRetrievingChallengeData(challengeData)
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
@@ -84,7 +84,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	}, [challengeData, hasAnyMessages, isStreaming])
 
 	// Show loading state while retrieving messages
-	if (isRetrievingMessages) {
+	if (isRetrievingData) {
 		return (
 			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
 				<div className="flex-1 flex items-center justify-center">

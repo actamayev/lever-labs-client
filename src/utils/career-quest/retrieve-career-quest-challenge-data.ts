@@ -9,15 +9,15 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 export default async function retrieveCareerQuestChallengeData(careerIdChallengeId: CareerIdChallengeId): Promise<void> {
 	try {
 		// If we already have retrieved messages for this challenge, no need to fetch again
-		if (careerQuestClass.hasRetrievedChallengeMessages(careerIdChallengeId)) return
+		if (careerQuestClass.hasRetrievedChallengeData(careerIdChallengeId)) return
 
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingChallengeMessages(careerIdChallengeId)
+			careerQuestClass.isRetrievingChallengeData(careerIdChallengeId)
 		) return
 
 		// Set loading state
-		careerQuestClass.setIsRetrievingChallengeMessages(careerIdChallengeId, true)
+		careerQuestClass.setIsRetrievingChallengeData(careerIdChallengeId, true)
 
 		const challengeResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerQuestChallengeData(
 			careerIdChallengeId.challengeId
@@ -91,6 +91,6 @@ export default async function retrieveCareerQuestChallengeData(careerIdChallenge
 		)
 	} catch (error) {
 		console.error(error)
-		careerQuestClass.setIsRetrievingChallengeMessages(careerIdChallengeId, false)
+		careerQuestClass.setIsRetrievingChallengeData(careerIdChallengeId, false)
 	}
 }

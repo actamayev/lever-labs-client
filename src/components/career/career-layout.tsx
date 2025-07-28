@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { CqChallengeData } from "@bluedotrobots/common-ts"
-import { useEffect, useState, useMemo, useCallback } from "react"
+import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -17,6 +17,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	})
 	const [lockedChallenge, setLockedChallenge] = useState<CqChallengeData | null>(null)
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
+	const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
+	const [hasRetrievedAllData, setHasRetrievedAllData] = useState(false)
+	const leftScrollRef = useRef<HTMLDivElement>(null)
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
@@ -90,12 +93,15 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Enhanced intersection observer callback
 	const updateRightContent = useCallback((section: typeof visibleSections[0], intersectionRatio: number) => {
+		// Don't update content during initial positioning
+		if (!isInitialPositioningComplete) return
+
 		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
 		if (lockedChallenge) {
 			// Only unlock if user scrolls completely away from the locked challenge
 			if (section.type === "challenge" &&
-				section.challengeData.challengeId === lockedChallenge.challengeId &&
-				intersectionRatio < 0.1) {
+        section.challengeData.challengeId === lockedChallenge.challengeId &&
+        intersectionRatio < 0.1) {
 				// Don't unlock here if challenge is completed - let the completion effect handle it
 				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
 					setLockedChallenge(null)
@@ -139,9 +145,65 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 			return newContent
 		})
-	}, [lockedChallenge, shouldShowIcon])
+	}, [lockedChallenge, shouldShowIcon, isInitialPositioningComplete])
 
+	// Auto-scroll to target section
+	const scrollToSection = useCallback((sectionId: string) => {
+		const targetElement = document.querySelector(`[data-section-id="${sectionId}"]`)
+		const scrollContainer = leftScrollRef.current
+
+		if (targetElement && scrollContainer) {
+			const containerRect = scrollContainer.getBoundingClientRect()
+			const targetRect = targetElement.getBoundingClientRect()
+			const scrollTop = scrollContainer.scrollTop
+
+			// Calculate the position to scroll to (center the target in view)
+			const targetPosition = scrollTop + targetRect.top - containerRect.top - (containerRect.height / 2) + (targetRect.height / 2)
+
+			scrollContainer.scrollTo({
+				top: Math.max(0, targetPosition),
+				behavior: "instant"
+			})
+		}
+	}, [])
+
+	// Handle initial positioning after data is loaded
 	useEffect(() => {
+		if (!hasRetrievedAllData || isInitialPositioningComplete) return
+
+		// Small delay to ensure DOM is fully rendered
+		const positioningTimeout = setTimeout(() => {
+			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerId)
+
+			console.log("Initial positioning:", targetInfo)
+
+			// Set the right content
+			if (targetInfo.rightContent) {
+				setRightContent(targetInfo.rightContent)
+			}
+
+			// Handle auto-scrolling
+			if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
+				scrollToSection(targetInfo.sectionId)
+
+				// If scrolling to a challenge, set it as locked
+				const targetSection = careerData.sections.find(s => s.id === targetInfo.sectionId)
+				if (targetSection?.type === "challenge") {
+					setLockedChallenge(targetSection.challengeData)
+				}
+			}
+
+			// Mark initial positioning as complete
+			setIsInitialPositioningComplete(true)
+		}, 300) // Allow time for DOM rendering
+
+		return () => clearTimeout(positioningTimeout)
+	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerId, scrollToSection, careerData.sections])
+
+	// Setup intersection observer (only after initial positioning is complete)
+	useEffect(() => {
+		if (!isInitialPositioningComplete) return
+
 		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -176,12 +238,16 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			clearTimeout(timeoutId)
 			intersectionObserver.disconnect()
 		}
-	}, [visibleSectionIds, updateRightContent, visibleSections])
+	}, [isInitialPositioningComplete, visibleSectionIds, updateRightContent, visibleSections])
 
+	// Initialize career and retrieve data
 	useEffect(() => {
 		const initializeCareer = async () => {
-			// careerQuestClass.initializeCareer(careerData)
 			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerId)
+
+			// Check if all data has been retrieved
+			const hasAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerId)
+			setHasRetrievedAllData(hasAllData)
 		}
 
 		initializeCareer()
@@ -196,6 +262,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	return (
 		<div className="flex h-full">
 			<div
+				ref={leftScrollRef}
 				className="overflow-y-auto scrollbar-hide"
 				style={{
 					scrollbarWidth: "none",
@@ -241,7 +308,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 						key={`${rightContent.type}-${rightContent.type === "image" ?
 							rightContent.icon :
 							rightContent.challengeData.challengeId}
-						`}
+            `}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
