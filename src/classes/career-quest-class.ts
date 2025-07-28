@@ -31,8 +31,6 @@ interface StreamingState {
 	currentInteractionType: InteractionType | null
 }
 
-interface CareerChatData extends ChatData, StreamingState {}
-
 interface ChallengeInstance extends ChatData, StreamingState {
 	challengeData: CqChallengeData
 	isCompleted: boolean
@@ -46,7 +44,6 @@ interface CareerProgress {
 interface CareerInstance {
 	careerDefinition: CareerQuestData
 	// Dynamic data
-	careerChat: CareerChatData
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
 }
@@ -106,19 +103,6 @@ class CareerQuestClass {
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
-			careerChat: {
-				// Chat data
-				messages: [],
-				isWaitingForResponse: false,
-				hasRetrievedData: false,
-				isRetrievingData: false,
-
-				// Streaming state
-				isStreaming: false,
-				currentStreamingMessageId: null,
-				currentStreamId: null,
-				currentInteractionType: null
-			},
 			challenges,
 			progress: {
 				completedChallengeIds: new Set<string>()
@@ -297,11 +281,11 @@ class CareerQuestClass {
 
 	public completeChallengeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
 		const challenge = this.getChallenge({ ...completeEvent })
-		if (!challenge) return
-
-		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
-			return
-		}
+		if (
+			!challenge ||
+			!challenge.isStreaming ||
+			!challenge.currentStreamingMessageId
+		) return
 
 		const streamingMessage = challenge.messages.find(
 			msg => msg.id === challenge.currentStreamingMessageId
@@ -406,112 +390,6 @@ class CareerQuestClass {
 	public isRetrievingChallengeData(cqInformation: CareerIdChallengeId): boolean {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.isRetrievingData || false
-	}
-	// ========================================
-	// CAREER-LEVEL CHAT MANAGEMENT
-	// ========================================
-
-	public getCareerMessages(careerId: CareerId): CareerQuestChatMessage[] {
-		const career = this.getCareer(careerId)
-		return career?.careerChat.messages || []
-	}
-
-	public addCareerUserMessage = action((careerId: CareerId, content: string): void => {
-		const career = this.getCareer(careerId)
-		if (!career) return
-
-		career.careerChat.isWaitingForResponse = true
-
-		const message: CareerQuestChatMessage = {
-			id: `career-user-${Date.now()}`,
-			role: "user",
-			content,
-			timestamp: new Date()
-		}
-
-		career.careerChat.messages.push(message)
-	})
-
-	public startCareerStreaming = action((careerId: CareerId, interactionType: InteractionType): void => {
-		const career = this.getCareer(careerId)
-		if (!career) return
-
-		career.careerChat.isWaitingForResponse = false
-
-		const streamingMessage: CareerQuestChatMessage = {
-			id: `career-streaming-${Date.now()}`,
-			role: "assistant",
-			content: "",
-			timestamp: new Date(),
-			isStreaming: true
-		}
-
-		career.careerChat.messages.push(streamingMessage)
-		career.careerChat.isStreaming = true
-		career.careerChat.currentStreamingMessageId = streamingMessage.id
-		career.careerChat.currentInteractionType = interactionType
-	})
-
-	public addCareerStreamingChunk = action((careerId: CareerId, content: string): void => {
-		const career = this.getCareer(careerId)
-		if (!career) return
-
-		if (!career.careerChat.isStreaming || !career.careerChat.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for career:", careerId)
-			return
-		}
-
-		const streamingMessage = career.careerChat.messages.find(
-			msg => msg.id === career.careerChat.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.content += content
-		}
-	})
-
-	public completeCareerStreaming = action((careerId: CareerId): void => {
-		const career = this.getCareer(careerId)
-		if (!career) return
-
-		if (!career.careerChat.isStreaming || !career.careerChat.currentStreamingMessageId) {
-			return
-		}
-
-		const streamingMessage = career.careerChat.messages.find(
-			msg => msg.id === career.careerChat.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.isStreaming = false
-		}
-
-		// Reset streaming state
-		career.careerChat.isStreaming = false
-		career.careerChat.currentStreamingMessageId = null
-		career.careerChat.currentInteractionType = null
-		career.careerChat.currentStreamId = null
-	})
-
-	public isCareerStreaming(careerId: CareerId): boolean {
-		const career = this.getCareer(careerId)
-		return career?.careerChat.isStreaming || false
-	}
-
-	public isCareerWaitingForResponse(careerId: CareerId): boolean {
-		const career = this.getCareer(careerId)
-		return career?.careerChat.isWaitingForResponse || false
-	}
-
-	public setCareerStreamId = action((careerId: CareerId, streamId: string | null): void => {
-		const career = this.getCareer(careerId)
-		if (!career) return
-		career.careerChat.currentStreamId = streamId
-	})
-
-	public getCareerStreamId(careerId: CareerId): string | null {
-		const career = this.getCareer(careerId)
-		return career?.careerChat.currentStreamId || null
 	}
 
 	public getChallengeData(cqInformation: CareerIdChallengeId): CqChallengeData | undefined {
