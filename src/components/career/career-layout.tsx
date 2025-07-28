@@ -1,14 +1,13 @@
 "use client"
 
-import { useEffect, useState, useMemo, useCallback } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { observer } from "mobx-react"
-import { CareerQuestData } from "../../utils/career-quest/career-quest-data"
+import { motion, AnimatePresence } from "framer-motion"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { useEffect, useState, useMemo, useCallback } from "react"
+import RightContent from "./right-content"
+import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
-import CqChatInterface from "./chat/cq-chat-interface"
-import RightContent from "./right-content"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {

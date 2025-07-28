@@ -1,23 +1,12 @@
 "use client"
 
 import Link from "next/link"
-import { observer } from "mobx-react"
 import { ArrowLeft } from "lucide-react"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
-import careerQuestClass from "../../../classes/career-quest-class"
-import { CareerQuestData } from "../../../utils/career-quest/career-quest-data"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 
-interface CareerQuestActivityHeaderProps {
-	careerData: CareerQuestData
-}
-
-function CareerQuestActivityHeader({ careerData }: CareerQuestActivityHeaderProps) {
-	// Get progress data from career quest class
-	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)
-	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerId)
-
+export default function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
 	return (
 		<header className="h-20 flex items-center px-4 shadow-md fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
@@ -46,13 +35,8 @@ function CareerQuestActivityHeader({ careerData }: CareerQuestActivityHeaderProp
 
 			{/* Right section with progress circle */}
 			<div className="w-1/4 flex justify-end items-center pr-4">
-				<ChallengeProgressCircle
-					completed={completedChallenges}
-					total={totalChallenges}
-				/>
+				<ChallengeProgressCircle careerData={careerData} />
 			</div>
 		</header>
 	)
 }
-
-export default observer(CareerQuestActivityHeader)

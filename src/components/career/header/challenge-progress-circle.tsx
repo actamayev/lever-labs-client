@@ -1,17 +1,22 @@
 "use client"
 
+import { useMemo } from "react"
 import { observer } from "mobx-react"
+import { cn } from "../../../lib/shadcn/utils"
+import careerQuestClass from "../../../classes/career-quest-class"
 
-interface ChallengeProgressCircleProps {
-	completed: number
-	total: number
-	size?: number
-}
-
-function ChallengeProgressCircle({ completed, total, size = 64 }: ChallengeProgressCircleProps) {
-	const percentage = total > 0 ? (completed / total) * 100 : 0
+function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }) {
+	// Get progress data from career quest class
+	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerId)
+	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerId)
+	const size = 64
+	const percentage = totalChallenges > 0 ? (completedChallenges / totalChallenges) * 100 : 0
 	const circumference = 2 * Math.PI * 20 // radius of 20
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
+
+	const textColor = useMemo(() => {
+		return `text-${careerData.careerColor}`
+	}, [careerData.careerColor])
 
 	return (
 		<div className="relative inline-flex items-center justify-center">
@@ -40,14 +45,14 @@ function ChallengeProgressCircle({ completed, total, size = 64 }: ChallengeProgr
 					fill="transparent"
 					strokeDasharray={circumference}
 					strokeDashoffset={strokeDashoffset}
-					className="text-macaw transition-all duration-300 ease-in-out"
+					className={cn("transition-all duration-300 ease-in-out", textColor)}
 					strokeLinecap="round"
 				/>
 			</svg>
 			{/* Text overlay */}
 			<div className="absolute inset-0 flex items-center justify-center">
 				<span className="text-sm font-semibold text-questionText">
-					{completed}/{total}
+					{completedChallenges}/{totalChallenges}
 				</span>
 			</div>
 		</div>

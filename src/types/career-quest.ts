@@ -58,6 +58,30 @@ declare global {
 	}
 
 	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
+
+	interface TextSection {
+		type: "text"
+		id: string
+		content: string
+		triggerImage: string // Lucide icon name
+	}
+
+	interface ChallengeSection {
+		type: "challenge"
+		id: ChallengeId
+		challengeData: CqChallengeData
+		// Challenge completion determines if next sections are unlocked
+	}
+
+	type CareerSection = TextSection | ChallengeSection
+
+	interface CareerQuestData {
+		careerId: CareerId
+		careerTitle: string
+		initialImage: string // Lucide icon name for the first image
+		careerColor: DuolingoColors
+		sections: CareerSection[]
+	}
 }
 
 export {}

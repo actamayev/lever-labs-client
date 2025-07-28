@@ -14,7 +14,7 @@ import {
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
-import { CareerQuestData, ChallengeSection, CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 // Chat and streaming state interfaces
 interface ChatData {

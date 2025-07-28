@@ -1,37 +1,14 @@
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { CareerId, CqChallengeData, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
+import { OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5, ChallengeId } from "@bluedotrobots/common-ts"
-
-// Types for the new career quest structure
-export interface TextSection {
-	type: "text"
-	id: string
-	content: string
-	triggerImage: string // Lucide icon name
-}
-
-export interface ChallengeSection {
-	type: "challenge"
-	id: ChallengeId
-	challengeData: CqChallengeData
-	// Challenge completion determines if next sections are unlocked
-}
-
-export type CareerSection = TextSection | ChallengeSection
-
-export interface CareerQuestData {
-	careerId: CareerId
-	careerTitle: string
-	initialImage: string // Lucide icon name for the first image
-	sections: CareerSection[]
-}
 
 export const INTRODUCTION_CAREER: CareerQuestData = {
 	careerId: "introduction",
 	careerTitle: "Introduction",
 	initialImage: "Bot", // Lucide icon
+	careerColor: "humpback",
 	sections: [
 		{
 			type: "text",
@@ -64,6 +41,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	careerId: "obstacle-avoidance",
 	careerTitle: "Obstacle Avoidance",
 	initialImage: "Bot", // Lucide icon
+	careerColor: "macaw",
 	sections: [
 		{
 			type: "text",
