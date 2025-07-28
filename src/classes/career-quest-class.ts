@@ -10,7 +10,8 @@ import {
 	BinaryEvaluationResult,
 	CqChallengeData,
 	CareerUUID,
-	BlocklyJson
+	BlocklyJson,
+	ChallengeUUID
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
@@ -38,7 +39,7 @@ interface ChallengeInstance extends ChatData, StreamingState {
 }
 
 interface CareerProgress {
-	completedChallengeIds: Set<string>
+	completedChallengeIds: Set<ChallengeUUID>
 }
 
 interface CareerInstance {
@@ -46,6 +47,7 @@ interface CareerInstance {
 	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
+	isLoadingCareer: boolean
 }
 
 class CareerQuestClass {
@@ -105,8 +107,9 @@ class CareerQuestClass {
 			careerDefinition,
 			challenges,
 			progress: {
-				completedChallengeIds: new Set<string>()
-			}
+				completedChallengeIds: new Set<ChallengeUUID>()
+			},
+			isLoadingCareer: false  // ADD THIS
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -460,35 +463,46 @@ class CareerQuestClass {
 		// Count only challenge sections
 		return career.careerDefinition.sections.filter(section => section.type === "challenge").length
 	}
+	// Add this method
+	public isCareerLoading(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.isLoadingCareer || false
+	}
 
+	// Add this method
+	public setCareerLoadingState = action((careerUUID: CareerUUID, isLoading: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.isLoadingCareer = isLoading
+	})
+
+	// Modify the existing retrieveAllChallengeDataForCareer method
 	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
-		// Get all challenge sections from this career
+		// SET LOADING STATE AT START
+		this.setCareerLoadingState(careerUUID, true)
+
 		const challengeSections = career.careerDefinition.sections.filter(
 			(section): section is ChallengeSection => section.type === "challenge"
 		)
 
-		// Retrieve data for all challenges in parallel
 		const retrievalPromises = challengeSections.map(section =>
 			retrieveCareerQuestChallengeData(section.challengeData)
 		)
 
 		try {
 			await Promise.all(retrievalPromises)
+			// CLEAR LOADING STATE WHEN DONE
+			this.setCareerLoadingState(careerUUID, false)
 		} catch (error) {
 			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
+			// CLEAR LOADING STATE ON ERROR TOO
+			this.setCareerLoadingState(careerUUID, false)
 		}
 	})
 
-	// Add these methods to your existing career-quest-class.ts file
-	// Insert them near the end of the class, before the logout() method
-
-	/**
- * Determines the initial section to display based on completion progress
- * Returns the section that should be shown on page load
- */
 	// eslint-disable-next-line complexity
 	public getInitialTargetSection(careerUUID: CareerUUID): {
 	sectionId: string | null,

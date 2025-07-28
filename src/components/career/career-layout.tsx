@@ -8,9 +8,12 @@ import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
+import CareerLoadingSkeleton from "./career-loading-skeleton"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
+	const [isReady, setIsReady] = useState(false)
+	const [showContent, setShowContent] = useState(false)
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
 		icon: careerData.initialImage
@@ -18,8 +21,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [lockedChallenge, setLockedChallenge] = useState<CqChallengeData | null>(null)
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
 	const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
-	const [hasRetrievedAllData, setHasRetrievedAllData] = useState(false)
 	const leftScrollRef = useRef<HTMLDivElement>(null)
+
+	const isCareerLoading = careerQuestClass.isCareerLoading(careerData.careerUUID)
+	const hasRetrievedAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerUUID)
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
@@ -81,7 +86,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Check if a section should show icon
 	const shouldShowIcon = useCallback((sectionId: string, sectionType: string) => {
-		// Never show icons when challenge is locked
+	// Never show icons when challenge is locked
 		if (lockedChallenge) return false
 
 		// Only show icons for text sections
@@ -93,16 +98,16 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Enhanced intersection observer callback
 	const updateRightContent = useCallback((section: typeof visibleSections[0], intersectionRatio: number) => {
-		// Don't update content during initial positioning
+	// Don't update content during initial positioning
 		if (!isInitialPositioningComplete) return
 
 		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
 		if (lockedChallenge) {
-			// Only unlock if user scrolls completely away from the locked challenge
+		// Only unlock if user scrolls completely away from the locked challenge
 			if (section.type === "challenge" &&
-        section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
-        intersectionRatio < 0.1) {
-				// Don't unlock here if challenge is completed - let the completion effect handle it
+	section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
+	intersectionRatio < 0.1) {
+			// Don't unlock here if challenge is completed - let the completion effect handle it
 				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
 					setLockedChallenge(null)
 				}
@@ -115,7 +120,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			let newContent: RightContent
 
 			if (section.type === "text") {
-				// Only show icon if allowed
+			// Only show icon if allowed
 				if (shouldShowIcon(section.id, section.type)) {
 					newContent = { type: "image", icon: section.triggerImage }
 				} else {
@@ -149,6 +154,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Auto-scroll to target section
 	const scrollToSection = useCallback((sectionId: string) => {
+		console.log("🎯 Scrolling to section:", sectionId)
 		const targetElement = document.querySelector(`[data-section-id="${sectionId}"]`)
 		const scrollContainer = leftScrollRef.current
 
@@ -162,8 +168,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 			scrollContainer.scrollTo({
 				top: Math.max(0, targetPosition),
-				behavior: "instant"
+				behavior: "instant" // Keep instant to avoid visible scrolling
 			})
+
+			console.log("📍 Scrolled to position:", targetPosition)
+		} else {
+			console.warn("❌ Could not find target element or scroll container")
 		}
 	}, [])
 
@@ -225,7 +235,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// Small delay to ensure DOM is ready
 		const timeoutId = setTimeout(() => {
-			// Only observe visible sections
+		// Only observe visible sections
 			document.querySelectorAll("[data-section-id]").forEach((el) => {
 				const sectionId = el.getAttribute("data-section-id")
 				if (sectionId && visibleSectionIds.includes(sectionId)) {
@@ -244,10 +254,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		const initializeCareer = async () => {
 			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerUUID)
-
-			// Check if all data has been retrieved
-			const hasAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerUUID)
-			setHasRetrievedAllData(hasAllData)
 		}
 
 		initializeCareer()
@@ -259,67 +265,186 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return generateCppFromJson(currentBlocklyJson)
 	}, [])
 
-	return (
-		<div className="flex h-full">
-			<div
-				ref={leftScrollRef}
-				className="overflow-y-auto scrollbar-hide"
-				style={{
-					scrollbarWidth: "none",
-					msOverflowStyle: "none",
-					width: "45%"
-				}}
-			>
-				<div
-					className="py-8 space-y-8"
-					style={{
-						paddingLeft: "65px",
-						paddingRight: "55px"
-					}}
-				>
-					{/* Only render visible sections */}
-					{visibleSections.map((section) => (
-						<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
-							{section.type === "text" ? (
-								<div className="prose prose-lg max-w-none text-3xl">
-									<p className="leading-relaxed text-questionText">{section.content}</p>
-								</div>
-							) : (
-								<div className="h-[calc(100vh-10rem)]">
-									<CqChatInterface
-										cppCode={getCppCodeForChallenge(section.challengeData)}
-										challengeData={section.challengeData}
-									/>
-								</div>
-							)}
-						</div>
-					))}
-				</div>
-			</div>
+	useEffect(() => {
+		if (!isCareerLoading && hasRetrievedAllData && !isReady) {
+			console.log("🚀 Data loaded, preparing view...")
 
-			<div
-				className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
-				style={{
-					width: "55%"
-				}}
+			// Data is loaded, now prepare the view
+			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerUUID)
+
+			// Set the right content
+			if (targetInfo.rightContent) {
+				setRightContent(targetInfo.rightContent)
+			}
+
+			// Set ready but keep content invisible
+			setIsReady(true)
+
+			// Handle positioning while content is rendered but invisible
+			if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
+				console.log("📍 Auto-scrolling to:", targetInfo.sectionId)
+
+				// Wait for DOM to be ready, then scroll while invisible
+				setTimeout(() => {
+					scrollToSection(targetInfo.sectionId as string)
+
+					// Wait for scroll to complete, then fade in
+					setTimeout(() => {
+						console.log("✨ Fading in content")
+						setShowContent(true)
+					}, 200) // Give scroll time to complete
+				}, 100) // Give DOM time to render
+			} else {
+			// No scrolling needed, fade in after brief delay
+				setTimeout(() => {
+					setShowContent(true)
+				}, 50)
+			}
+		}
+	}, [isCareerLoading, hasRetrievedAllData, isReady, careerData.careerUUID, scrollToSection])
+
+	const shouldEnableIntersectionObserver = isReady && showContent
+
+	// Update your intersection observer useEffect to check this flag
+	useEffect(() => {
+		if (!shouldEnableIntersectionObserver) return
+
+		// Your existing intersection observer logic...
+	}, [shouldEnableIntersectionObserver, /* other dependencies */])
+
+	// Show loading skeleton while data loads
+	// Show loading skeleton while data loads
+	if (isCareerLoading || !hasRetrievedAllData) {
+		return (
+			<motion.div
+				key="skeleton"
+				initial={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.3 }}
 			>
-				<AnimatePresence mode="wait">
-					<motion.div
-						key={`${rightContent.type}-${rightContent.type === "image" ?
-							rightContent.icon :
-							rightContent.challengeData.challengeUUID}
-            `}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-						className="h-full"
+				<CareerLoadingSkeleton />
+			</motion.div>
+		)
+	}
+
+	// Content is ready, render with proper visibility state
+	return (
+		<AnimatePresence mode="wait">
+			{!showContent ? (
+			// Invisible content for positioning
+				<motion.div
+					key="positioning"
+					className="flex h-full opacity-0 pointer-events-none"
+					initial={{ opacity: 0 }}
+				>
+					<div
+						ref={leftScrollRef}
+						className="overflow-y-auto scrollbar-hide"
+						style={{
+							scrollbarWidth: "none",
+							msOverflowStyle: "none",
+							width: "45%"
+						}}
+					>
+						<div
+							className="py-8 space-y-8"
+							style={{
+								paddingLeft: "65px",
+								paddingRight: "55px"
+							}}
+						>
+							{visibleSections.map((section) => (
+								<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
+									{section.type === "text" ? (
+										<div className="prose prose-lg max-w-none text-3xl">
+											<p className="leading-relaxed text-questionText">{section.content}</p>
+										</div>
+									) : (
+										<div className="h-[calc(100vh-10rem)]">
+											<CqChatInterface
+												cppCode={getCppCodeForChallenge(section.challengeData)}
+												challengeData={section.challengeData}
+											/>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div
+						className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
+						style={{ width: "55%" }}
 					>
 						<RightContent rightContent={rightContent} />
-					</motion.div>
-				</AnimatePresence>
-			</div>
-		</div>
+					</div>
+				</motion.div>
+			) : (
+			// Visible content with fade-in
+				<motion.div
+					key="content"
+					className="flex h-full"
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					transition={{ duration: 0.5, ease: "easeOut" }}
+				>
+					<div
+						ref={leftScrollRef}
+						className="overflow-y-auto scrollbar-hide"
+						style={{
+							scrollbarWidth: "none",
+							msOverflowStyle: "none",
+							width: "45%"
+						}}
+					>
+						<div
+							className="py-8 space-y-8"
+							style={{
+								paddingLeft: "65px",
+								paddingRight: "55px"
+							}}
+						>
+							{visibleSections.map((section) => (
+								<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
+									{section.type === "text" ? (
+										<div className="prose prose-lg max-w-none text-3xl">
+											<p className="leading-relaxed text-questionText">{section.content}</p>
+										</div>
+									) : (
+										<div className="h-[calc(100vh-10rem)]">
+											<CqChatInterface
+												cppCode={getCppCodeForChallenge(section.challengeData)}
+												challengeData={section.challengeData}
+											/>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div
+						className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
+						style={{ width: "55%" }}
+					>
+						<AnimatePresence mode="wait">
+							<motion.div
+								key={`${rightContent.type}-${rightContent.type === "image" ?
+									rightContent.icon :
+									rightContent.challengeData.challengeUUID}`}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								transition={{ duration: 0.3 }}
+								className="h-full"
+							>
+								<RightContent rightContent={rightContent} />
+							</motion.div>
+						</AnimatePresence>
+					</div>
+				</motion.div>
+			)}
+		</AnimatePresence>
 	)
 }
 
