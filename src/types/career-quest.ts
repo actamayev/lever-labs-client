@@ -59,6 +59,12 @@ declare global {
 
 	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
 
+	interface TextParentSection {
+		type: "textParent"
+		id: string
+		children: TextSection[]
+	}
+
 	interface TextSection {
 		type: "text"
 		id: string
@@ -73,7 +79,7 @@ declare global {
 		// Challenge completion determines if next sections are unlocked
 	}
 
-	type CareerSection = TextSection | ChallengeSection
+	type CareerSection = ChallengeSection | TextParentSection
 
 	interface CareerQuestData {
 		careerUUID: CareerUUID

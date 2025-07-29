@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
 import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
@@ -32,23 +32,49 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	[careerData.careerUUID, careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)]
 	)
 
-	const visibleSections = useMemo(() =>
-		careerData.sections.filter(section => visibleSectionIds.includes(section.id)),
-	[careerData.sections, visibleSectionIds]
-	)
+	const visibleSections = useMemo(() => {
+		const sections: CareerSection[] = []
+
+		careerData.sections.forEach(section => {
+			if (section.type === "textParent") {
+				// Include TextParent if ANY of its children are visible
+				const hasVisibleChild = section.children.some(child =>
+					visibleSectionIds.includes(child.id)
+				)
+				if (hasVisibleChild) {
+					sections.push(section)
+				}
+			} else {
+				// Challenge section - include if its UUID is visible
+				if (visibleSectionIds.includes(section.challengeData.challengeUUID)) {
+					sections.push(section)
+				}
+			}
+		})
+
+		return sections
+	}, [careerData.sections, visibleSectionIds])
 
 	// Get completion count to trigger unlock detection
 	const completionCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
 
 	// Initialize allowed sections for first time (all text sections before first challenge)
 	useEffect(() => {
-		if (allowedIconSections.length === 0) {
-			const textSectionsBeforeFirstChallenge = careerData.sections
-				.slice(0, careerData.sections.findIndex(s => s.type === "challenge"))
-				.filter(s => s.type === "text")
-				.map(s => s.id)
-			setAllowedIconSections(textSectionsBeforeFirstChallenge)
+		if (allowedIconSections.length !== 0) return
+
+		const sections = careerData.sections
+		const firstChallengeIndex = sections.findIndex(s => s.type === "challenge")
+
+		// Get all text section IDs from TextParent sections before first challenge
+		const textSectionIds: string[] = []
+		for (let i = 0; i < firstChallengeIndex && i < sections.length; i++) {
+			const section = sections[i]
+			if (section.type === "textParent") {
+				textSectionIds.push(...section.children.map(child => child.id))
+			}
 		}
+
+		setAllowedIconSections(textSectionIds)
 	}, [careerData.sections, allowedIconSections.length])
 
 	// Recalculate allowed sections after challenge completion
@@ -65,14 +91,18 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			index > challengeIndex && s.type === "challenge"
 		)
 
-		// Get sections between completed challenge and next challenge (or end)
+		// Get text section IDs from TextParent sections between completed challenge and next challenge (or end)
 		const endIndex = nextChallengeIndex === -1 ? sections.length : nextChallengeIndex
-		const newAllowedSections = sections
-			.slice(challengeIndex + 1, endIndex)
-			.filter(s => s.type === "text")
-			.map(s => s.id)
+		const newAllowedSectionIds: string[] = []
 
-		setAllowedIconSections(newAllowedSections)
+		for (let i = challengeIndex + 1; i < endIndex; i++) {
+			const section = sections[i]
+			if (section.type === "textParent") {
+				newAllowedSectionIds.push(...section.children.map(child => child.id))
+			}
+		}
+
+		setAllowedIconSections(newAllowedSectionIds)
 	}, [careerData.sections])
 
 	// Detect challenge completion and unlock
@@ -84,31 +114,31 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [lockedChallenge, completionCount, recalculateAllowedSections])
 
 	// Check if a section should show icon
-	const shouldShowIcon = useCallback((sectionId: string, sectionType: string) => {
-	// Never show icons when challenge is locked
+	const shouldShowIcon = useCallback((sectionId: string) => {
+		// Never show icons when challenge is locked
 		if (lockedChallenge) return false
 
-		// Only show icons for text sections
-		if (sectionType !== "text") return false
+		// Check if this is a text section ID and if it's allowed
+		const isTextSection = careerQuestClass.isTextSectionId(careerData.careerUUID, sectionId)
+		if (!isTextSection) return false
 
 		// Check if this section is in allowed list
 		return allowedIconSections.includes(sectionId)
-	}, [lockedChallenge, allowedIconSections])
+	}, [lockedChallenge, allowedIconSections, careerData.careerUUID])
 
 	// Enhanced intersection observer callback
-	const updateRightContent = useCallback((section: typeof visibleSections[0], intersectionRatio: number) => {
-	// Don't update content during initial positioning
+	const updateRightContent = useCallback((sectionId: string, intersectionRatio: number) => {
+		// Don't update content during initial positioning
 		if (!isInitialPositioningComplete) return
 
 		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
 		if (lockedChallenge) {
-		// Only unlock if user scrolls completely away from the locked challenge
+			// Only unlock if user scrolls completely away from the locked challenge
 			if (
-				section.type === "challenge" &&
-				section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
+				sectionId === lockedChallenge.challengeUUID &&
 				intersectionRatio < 0.1
 			) {
-			// Don't unlock here if challenge is completed - let the completion effect handle it
+				// Don't unlock here if challenge is completed - let the completion effect handle it
 				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
 					setLockedChallenge(null)
 				}
@@ -120,19 +150,29 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setRightContent(prevContent => {
 			let newContent: RightContent
 
-			if (section.type === "text") {
-			// Only show icon if allowed
-				if (shouldShowIcon(section.id, section.type)) {
-					newContent = { type: "image", icon: section.triggerImage }
+			// Check if this is a text section ID
+			const textSection = careerQuestClass.getTextSectionById(careerData.careerUUID, sectionId)
+			if (textSection) {
+				// This is a text section
+				if (shouldShowIcon(sectionId)) {
+					newContent = { type: "image", icon: textSection.triggerImage }
 				} else {
 					return prevContent // Don't change content for disallowed sections
 				}
 			} else {
-				newContent = { type: "challenge", challengeData: section.challengeData }
+				// This must be a challenge UUID
+				const challengeData = careerQuestClass.getChallengeData({
+					careerUUID: careerData.careerUUID,
+					challengeUUID: sectionId as ChallengeUUID
+				})
+
+				if (!challengeData) return prevContent
+
+				newContent = { type: "challenge", challengeData }
 
 				// Lock the challenge if it comes fully into view (70% threshold)
 				if (intersectionRatio >= 0.7) {
-					setLockedChallenge(section.challengeData)
+					setLockedChallenge(challengeData)
 				}
 			}
 
@@ -151,7 +191,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 			return newContent
 		})
-	}, [lockedChallenge, shouldShowIcon, isInitialPositioningComplete])
+	}, [lockedChallenge, shouldShowIcon, isInitialPositioningComplete, careerData.careerUUID])
+
 
 	// Auto-scroll to target section
 	const scrollToSection = useCallback((sectionId: string) => {
@@ -197,10 +238,21 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
 				scrollToSection(targetInfo.sectionId)
 
-				// If scrolling to a challenge, set it as locked
-				const targetSection = careerData.sections.find(s => s.id === targetInfo.sectionId)
-				if (targetSection?.type === "challenge") {
-					setLockedChallenge(targetSection.challengeData)
+				// Handle auto-scrolling
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
+					scrollToSection(targetInfo.sectionId)
+
+					// If scrolling to a challenge, set it as locked
+					// Check if the sectionId is a challenge UUID
+					const challengeData = careerQuestClass.getChallengeData({
+						careerUUID: careerData.careerUUID,
+						challengeUUID: targetInfo.sectionId as ChallengeUUID
+					})
+
+					if (challengeData) {
+						setLockedChallenge(challengeData)
+					}
 				}
 			}
 
@@ -211,45 +263,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return () => clearTimeout(positioningTimeout)
 	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerUUID, scrollToSection, careerData.sections])
 
-	// Setup intersection observer (only after initial positioning is complete)
-	useEffect(() => {
-		if (!isInitialPositioningComplete) return
-
-		const intersectionObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						const sectionId = entry.target.getAttribute("data-section-id")
-						const section = visibleSections.find(s => s.id === sectionId)
-
-						if (section) {
-							updateRightContent(section, entry.intersectionRatio)
-						}
-					}
-				})
-			},
-			{
-				threshold: [0.1, 0.5, 0.7], // Multiple thresholds for different behaviors
-				rootMargin: "-20% 0px -20% 0px"
-			}
-		)
-
-		// Small delay to ensure DOM is ready
-		const timeoutId = setTimeout(() => {
-		// Only observe visible sections
-			document.querySelectorAll("[data-section-id]").forEach((el) => {
-				const sectionId = el.getAttribute("data-section-id")
-				if (sectionId && visibleSectionIds.includes(sectionId)) {
-					intersectionObserver.observe(el)
-				}
-			})
-		}, 100)
-
-		return () => {
-			clearTimeout(timeoutId)
-			intersectionObserver.disconnect()
-		}
-	}, [isInitialPositioningComplete, visibleSectionIds, updateRightContent, visibleSections])
+	const shouldEnableIntersectionObserver = isReady && showContent
 
 	// Initialize career and retrieve data
 	useEffect(() => {
@@ -304,10 +318,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [isCareerLoading, hasRetrievedAllData, isReady, careerData.careerUUID, scrollToSection])
 
-	const shouldEnableIntersectionObserver = isReady && showContent
-
 	// Update your intersection observer useEffect to check this flag
 	// Setup intersection observer (only after content is fully loaded and visible)
+	// KEEP THIS ONE (with correct updateRightContent signature)
 	useEffect(() => {
 		if (!shouldEnableIntersectionObserver) return
 
@@ -316,23 +329,19 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.getAttribute("data-section-id")
-						const section = visibleSections.find(s => s.id === sectionId)
-
-						if (section) {
-							updateRightContent(section, entry.intersectionRatio)
+						if (sectionId && visibleSectionIds.includes(sectionId)) {
+							updateRightContent(sectionId, entry.intersectionRatio) // ✅ Correct signature
 						}
 					}
 				})
 			},
 			{
-				threshold: [0.1, 0.5, 0.7], // Multiple thresholds for different behaviors
+				threshold: [0.1, 0.5, 0.7],
 				rootMargin: "-20% 0px -20% 0px"
 			}
 		)
 
-		// Small delay to ensure DOM is ready and content is visible
 		const timeoutId = setTimeout(() => {
-			// Only observe visible sections
 			document.querySelectorAll("[data-section-id]").forEach((el) => {
 				const sectionId = el.getAttribute("data-section-id")
 				if (sectionId && visibleSectionIds.includes(sectionId)) {
@@ -348,8 +357,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [
 		shouldEnableIntersectionObserver,
 		visibleSectionIds,
-		updateRightContent,
-		visibleSections
+		updateRightContent
 	])
 
 	// Content is ready, render with persistent layout
@@ -382,9 +390,19 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 							>
 								{visibleSections.map((section) => (
 									<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
-										{section.type === "text" ? (
-											<div className="prose prose-lg max-w-none text-3xl">
-												<p className="leading-relaxed text-questionText">{section.content}</p>
+										{section.type === "textParent" ? (
+											<div className="space-y-6">
+												{section.children.map((childSection) => (
+													<div
+														key={childSection.id}
+														data-section-id={childSection.id}
+														className="prose prose-lg max-w-none text-3xl"
+													>
+														<p className="leading-relaxed text-questionText">
+															{childSection.content}
+														</p>
+													</div>
+												))}
 											</div>
 										) : (
 											<div className="h-[calc(100vh-10rem)]">
@@ -408,19 +426,27 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 						>
 							<div className="py-8 space-y-8 px-[100px]">
 								{visibleSections.map((section) => (
-									<div
-										key={section.id}
-										data-section-id={section.id}
-										className="min-h-[50vh]"
-									>
-										{section.type === "text" ? (
+									<div key={section.id} className="min-h-[50vh]">
+										{section.type === "textParent" ? (
+										// Render TextParent as single grouped container
 											<div className="border-2 border-swan rounded-3xl bg-polar p-4">
-												<div className="prose prose-lg max-w-none text-3xl">
-													<p className="leading-relaxed text-questionText">{section.content}</p>
+												<div className="space-y-6">
+													{section.children.map((childSection) => (
+														<div
+															key={childSection.id}
+															data-section-id={childSection.id}
+															className="prose prose-lg max-w-none text-3xl"
+														>
+															<p className="leading-relaxed text-questionText">
+																{childSection.content}
+															</p>
+														</div>
+													))}
 												</div>
 											</div>
 										) : (
-											<div className="h-[calc(100vh-10rem)]">
+										// Render challenge section
+											<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
 												<CqChatInterface
 													cppCode={getCppCodeForChallenge(section.challengeData)}
 													challengeData={section.challengeData}

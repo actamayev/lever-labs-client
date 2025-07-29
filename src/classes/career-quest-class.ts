@@ -73,17 +73,15 @@ class CareerQuestClass {
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
 		if (this.careers.has(careerDefinition.careerUUID)) return
 
-		// Extract challenge IDs from career definition
-		const challengeSections = careerDefinition.sections.filter(
-			(section): section is ChallengeSection => section.type === "challenge"
-		)
+		// Extract challenge sections using helper
+		const challengeSections = this.getAllChallengeSections(careerDefinition.sections)
 
 		// Initialize challenge data
 		const challenges = new Map<string, ChallengeInstance>()
 		challengeSections.forEach(section => {
 			challenges.set(section.challengeData.challengeUUID, {
 				// Static challenge data
-				challengeData: section.challengeData,  // ADD THIS
+				challengeData: section.challengeData,
 
 				// Chat data
 				messages: [],
@@ -109,7 +107,7 @@ class CareerQuestClass {
 			progress: {
 				completedChallengeIds: new Set<ChallengeUUID>()
 			},
-			isLoadingCareer: false  // ADD THIS
+			isLoadingCareer: false
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -428,10 +426,13 @@ class CareerQuestClass {
 				break
 			}
 
-			if (section.type === "text") {
-				// Text sections are always visible if we haven't hit a blocking challenge
-				visibleSectionIds.push(section.id)
+			if (section.type === "textParent") {
+				// Add all children text section IDs (individual text sections)
+				section.children.forEach(child => {
+					visibleSectionIds.push(child.id)
+				})
 			} else {
+				// Challenge section
 				// Always show the challenge section itself (so user can see it and potentially complete it)
 				visibleSectionIds.push(section.challengeData.challengeUUID)
 
@@ -460,9 +461,10 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return 0
 
-		// Count only challenge sections
-		return career.careerDefinition.sections.filter(section => section.type === "challenge").length
+		// Use helper to count challenge sections
+		return this.getAllChallengeSections(career.careerDefinition.sections).length
 	}
+
 	// Add this method
 	public isCareerLoading(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
@@ -483,9 +485,8 @@ class CareerQuestClass {
 		// SET LOADING STATE AT START
 		this.setCareerLoadingState(careerUUID, true)
 
-		const challengeSections = career.careerDefinition.sections.filter(
-			(section): section is ChallengeSection => section.type === "challenge"
-		)
+		// Use helper to get challenge sections
+		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
 
 		const retrievalPromises = challengeSections.map(section =>
 			retrieveCareerQuestChallengeData(section.challengeData)
@@ -504,9 +505,9 @@ class CareerQuestClass {
 
 	// eslint-disable-next-line complexity
 	public getInitialTargetSection(careerUUID: CareerUUID): {
-	sectionId: string | null,
-	shouldAutoScroll: boolean,
-	rightContent: RightContent | null
+		sectionId: string | null,
+		shouldAutoScroll: boolean,
+		rightContent: RightContent | null
 	} {
 		const career = this.getCareer(careerUUID)
 		if (!career) {
@@ -514,7 +515,7 @@ class CareerQuestClass {
 		}
 
 		const sections = career.careerDefinition.sections
-		const challengeSections = sections.filter(s => s.type === "challenge") as ChallengeSection[]
+		const challengeSections = this.getAllChallengeSections(sections)
 
 		// Check if all challenges are complete
 		const allChallengesComplete = challengeSections.every(section =>
@@ -530,15 +531,16 @@ class CareerQuestClass {
 			}
 		}
 
-		// Find the latest completed challenge
+		// Find the latest completed challenge in the original sections array
 		let latestCompletedChallengeIndex = -1
-		for (let i = challengeSections.length - 1; i >= 0; i--) {
-			if (this.isChallengeCompleted(challengeSections[i].challengeData)) {
-			// Find this challenge's index in the full sections array
-				latestCompletedChallengeIndex = sections.findIndex(
-					s => s.type === "challenge" && s.challengeData.challengeUUID === challengeSections[i].challengeData.challengeUUID
-				)
-				break
+		for (let i = sections.length - 1; i >= 0; i--) {
+			const section = sections[i]
+			if (section.type === "challenge") {
+				const challengeSection = section as ChallengeSection
+				if (this.isChallengeCompleted(challengeSection.challengeData)) {
+					latestCompletedChallengeIndex = i
+					break
+				}
 			}
 		}
 
@@ -551,23 +553,24 @@ class CareerQuestClass {
 			}
 		}
 
-		// Find the next text section after the latest completed challenge
+		// Find the next section after the latest completed challenge
 		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
-			if (sections[i].type === "text") {
-				const textSection = sections[i] as TextSection
-				return {
-					sectionId: textSection.id,
-					shouldAutoScroll: true,
-					rightContent: { type: "image", icon: textSection.triggerImage }
-				}
-			}
-		}
+			const section = sections[i]
 
-		// If no text section found after latest completed challenge,
-		// find the next incomplete challenge
-		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
-			if (sections[i].type === "challenge") {
-				const challengeSection = sections[i] as ChallengeSection
+			if (section.type === "textParent") {
+				// Target the first child text section in the group
+				const firstChild = section.children[0]
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				if (firstChild) {
+					return {
+						sectionId: firstChild.id,
+						shouldAutoScroll: true,
+						rightContent: { type: "image", icon: firstChild.triggerImage }
+					}
+				}
+			} else {
+				// Challenge section - check if it's incomplete
+				const challengeSection = section as ChallengeSection
 				if (!this.isChallengeCompleted(challengeSection.challengeData)) {
 					return {
 						sectionId: challengeSection.challengeData.challengeUUID,
@@ -593,14 +596,54 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
 
-		const challengeSections = career.careerDefinition.sections.filter(
-			s => s.type === "challenge"
-		) as ChallengeSection[]
+		// Use helper to get challenge sections
+		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
 
 		return challengeSections.every(section =>
 			this.hasRetrievedChallengeData(section.challengeData)
 		)
 	}
+
+	/**
+	 * Get all challenge sections
+	 */
+	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
+	}
+
+	/**
+	 * Find a text section by ID across all TextParent sections
+	 */
+	private findTextSectionById(sections: CareerSection[], textSectionId: string): TextSection | null {
+		for (const section of sections) {
+			if (section.type === "textParent") {
+				const found = section.children.find(child => child.id === textSectionId)
+				if (found) return found
+			}
+		}
+		return null
+	}
+
+	/**
+ * Check if a section ID belongs to a text section (child of TextParent)
+ */
+	public isTextSectionId(careerUUID: CareerUUID, sectionId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		return this.findTextSectionById(career.careerDefinition.sections, sectionId) !== null
+	}
+
+	/**
+ * Get the text section by ID - useful for finding trigger images
+ */
+	public getTextSectionById(careerUUID: CareerUUID, sectionId: string): TextSection | null {
+		const career = this.getCareer(careerUUID)
+		if (!career) return null
+
+		return this.findTextSectionById(career.careerDefinition.sections, sectionId)
+	}
+
 
 	public logout(): void {
 		this.careers.clear()
