@@ -36,8 +36,6 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
 
-	// Check if there have been user messages
-	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
 
 	const handleSendMessage = useCallback(async () => {
@@ -142,10 +140,8 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				onStopStreaming={onStopStreaming}
 				inputValue={inputValue}
 				setInputValue={setInputValue}
-				hasUserMessages={hasUserMessages}
 				isStreaming={isStreaming}
 				handleHintClick={handleHintClick}
-				cqOrSandbox="cq"
 			/>
 		</ChatParentComponent>
 	)

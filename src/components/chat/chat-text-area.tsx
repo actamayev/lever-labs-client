@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Lightbulb, Send, Square } from "lucide-react"
-import { Dispatch, RefObject, SetStateAction, useCallback, useMemo } from "react"
+import { Dispatch, RefObject, SetStateAction, useCallback } from "react"
 import { Textarea } from "../shadcn/ui/textarea"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
@@ -14,15 +14,13 @@ interface Props {
 	onStopStreaming: () => Promise<void>
 	inputValue: string
 	setInputValue: Dispatch<SetStateAction<string>>
-	hasUserMessages: boolean
 	isStreaming: boolean
 	handleHintClick?: () => Promise<void>
-	cqOrSandbox: "cq" | "sandbox"
 }
 
 function ChatTextArea(props: Props) {
 	const { handleSendMessage, onStopStreaming, inputRef, inputValue,
-		setInputValue, hasUserMessages, isStreaming, handleHintClick, cqOrSandbox } = props
+		setInputValue, isStreaming, handleHintClick } = props
 
 	// Create the conditional logic inside the component
 	const onClickAction = useCallback(async () => {
