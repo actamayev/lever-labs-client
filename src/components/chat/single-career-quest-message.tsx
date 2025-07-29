@@ -60,7 +60,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
 			return "bg-cardinal text-white"
 		}
-		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+		return "bg-polar text-questionText"
 	}
 
 	// Determine message text for special user requests

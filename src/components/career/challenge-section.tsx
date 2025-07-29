@@ -211,7 +211,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	return (
 		<div className="flex flex-col h-full gap-4">
 			{/* Sandbox Section - Middle (flexible height) */}
-			<div className="h-full flex flex-col pt-5 pb-2 border-2 border-swan rounded-3xl">
+			<div className="h-full flex flex-col border-2 border-swan rounded-3xl bg-polar">
 				<div className="flex-1 min-h-0">
 					<InteractiveMiniSandbox
 						key={workspaceKey}
@@ -222,7 +222,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				</div>
 
 				{/* Action Buttons Section - Bottom */}
-				<div className="flex-shrink-0 flex gap-3 p-5 bg-polar">
+				<div className="flex-shrink-0 flex gap-3 p-5">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}

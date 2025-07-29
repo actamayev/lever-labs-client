@@ -52,7 +52,7 @@ function ChatTextArea(props: Props) {
 					onChange={(e) => setInputValue(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="Ask about the code or concepts"
-					className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan rounded-lg"
+					className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan rounded-xl"
 				/>
 				{(inputValue.trim() || hasUserMessages) && (
 					<TactileButton
@@ -61,7 +61,7 @@ function ChatTextArea(props: Props) {
 						shadowColor={cn(!isStreaming ? "rgb(0, 100, 200)" : undefined)}
 						shadowClass={cn(isStreaming ? "shadow-cardinal-2" : undefined)}
 						shadowHeight={4}
-						className={cn("absolute right-2 bottom-2 h-8 w-8 shrink-0 text-white font-semibold",
+						className={cn("absolute right-2 bottom-4 h-8 w-8 shrink-0 text-white font-semibold",
 							isStreaming ? "bg-cardinal" : "bg-iMessageBlue"
 						)}
 					>
@@ -78,7 +78,7 @@ function ChatTextArea(props: Props) {
 						disabled={isStreaming}
 						shadowColor="rgb(140, 80, 200)"
 						shadowHeight={4}
-						className="absolute right-12 bottom-2 h-8 w-8 shrink-0 bg-beetle-2 text-white font-semibold"
+						className="absolute right-12 bottom-4 h-8 w-8 shrink-0 bg-beetle-2 text-white font-semibold"
 					>
 						<Lightbulb className="w-4 h-4" />
 					</TactileButton>
