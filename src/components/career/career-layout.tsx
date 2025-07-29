@@ -8,7 +8,6 @@ import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import CareerLoadingSkeletonRight from "./career-loading-skeleton-right"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
