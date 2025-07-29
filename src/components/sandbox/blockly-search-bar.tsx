@@ -23,7 +23,7 @@ const BlocklySearchBar = forwardRef<HTMLInputElement, BlocklySearchBarProps>(
 					placeholder="Search for blocks"
 					value={searchTerm}
 					onChange={(e) => onSearchChange(e.target.value)}
-					className="w-full px-4 py-2 pl-10 pr-12 rounded-t-lg border-2 border-swan rounded-b-none"
+					className="w-full px-4 py-2 pl-10 pr-12 rounded-t-4xl border-2 border-swan rounded-b-none"
 				/>
 				{searchTerm && (
 					<Button

@@ -45,10 +45,7 @@ export default function RightContent({ rightContent, color }: RightContentProps)
 
 	return (
 		<div
-			className={cn(
-				"flex items-center justify-center h-full",
-				" my-8"
-			)}
+			className="flex items-center justify-center h-full my-8"
 			style={{ paddingRight: "100px" }}
 		>
 			<AnimatePresence mode="wait">

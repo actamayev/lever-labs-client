@@ -97,7 +97,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		setPendingBlocklyJson(null)
 	}, [pendingBlocklyJson, hasRetrievedData, challengeData, debouncedSave])
 
-	// Simplified handleJsonChange - no dependency on currentBlocklyJson
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
 	// Get current JSON from class for comparison, but don't depend on it
