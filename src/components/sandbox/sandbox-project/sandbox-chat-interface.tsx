@@ -120,6 +120,7 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				setInputValue={setInputValue}
 				hasUserMessages={hasUserMessages}
 				isStreaming={isStreaming}
+				cqOrSandbox="sandbox"
 			/>
 		</ChatParentComponent>
 	)

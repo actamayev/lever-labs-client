@@ -145,6 +145,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				hasUserMessages={hasUserMessages}
 				isStreaming={isStreaming}
 				handleHintClick={handleHintClick}
+				cqOrSandbox="cq"
 			/>
 		</ChatParentComponent>
 	)
