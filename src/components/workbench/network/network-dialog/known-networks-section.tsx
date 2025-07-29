@@ -21,7 +21,7 @@ function KnownNetworksSection() {
 			{serialMessageManagerClass.knownNetworks.map((network, index) => (
 				<div
 					key={`known-${network.ssid}-${index}`}
-					className="flex items-center justify-between p-3 border-b border-gray-100 last:border-b-0"
+					className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"
 				>
 					<div className="flex items-center gap-3">
 						<NetworkStrengthIcon rssi={network.rssi} />

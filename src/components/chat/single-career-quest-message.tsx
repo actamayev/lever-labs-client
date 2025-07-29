@@ -6,6 +6,7 @@ import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { BotMessageSquare, PartyPopper, X } from "lucide-react"
 import HintButton from "./hint-button"
 import { cn } from "../../lib/shadcn/utils"
@@ -14,22 +15,21 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 
 interface SingleCareerQuestMessageProps {
 	message: CareerQuestChatMessage
-	challengeId: string
+	cqChallengeData: CqChallengeData
 	cppCode: string
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCareerQuestMessageProps) {
+function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleCareerQuestMessageProps) {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
-	const shouldShowHintButton = message.shouldShowHintButton && challengeId && cppCode
+	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
 	// Don't render assistant messages that are streaming with no content yet
@@ -60,7 +60,7 @@ function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCaree
 			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
 			return "bg-cardinal text-white"
 		}
-		return "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+		return "bg-polar text-questionText"
 	}
 
 	// Determine message text for special user requests
@@ -138,11 +138,7 @@ function SingleCareerQuestMessage({ message, challengeId, cppCode }: SingleCaree
 						)}
 					</div>
 
-					<HintButton
-						challengeId={challengeId}
-						cppCode={cppCode}
-						onHintRequest={requestCareerQuestHint}
-					/>
+					<HintButton cqChallengeData={cqChallengeData} cppCode={cppCode} />
 				</div>
 			) : (
 				<div

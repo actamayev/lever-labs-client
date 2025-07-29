@@ -19,7 +19,7 @@ function PreviouslyConnectedSection() {
 			{serialMessageManagerClass.previouslyConnected.map((network) => (
 				<div
 					key={`previous-${network.index}`}
-					className="flex items-center justify-between p-3 border-b border-gray-100 dark:border-gray-800 last:border-b-0"
+					className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"
 				>
 					<span className="font-medium text-sm text-gray-600">{network.ssid}</span>
 					<span className="text-xs text-gray-400">Not in range</span>

@@ -128,7 +128,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 							<CollapsibleTrigger asChild>
 								<div
 									className="flex items-center justify-between p-4 bg-inherit hover:bg-gray-50
-								dark:hover:bg-gray-800 cursor-pointer border-b border-gray-100 dark:border-gray-800 last:border-b-0"
+								dark:hover:bg-gray-800 cursor-pointer border-b border-polar last:border-b-0"
 								>
 									<div className="flex items-center gap-3">
 										<NetworkStrengthIcon rssi={network.rssi} />
@@ -145,7 +145,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 							</CollapsibleTrigger>
 
 							<CollapsibleContent>
-								<div className="px-4 pb-4 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-800">
+								<div className="px-4 pb-4 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-polar">
 									{!network.encrypted ? (
 										<div className="space-y-3">
 											<div className="text-lg text-green-600 mb-2">
@@ -190,7 +190,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 														type="button"
 														variant="ghost"
 														size="sm"
-														className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1.5 hover:bg-gray-100"
+														className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1.5 hover:bg-polar"
 														onClick={() => setShowPassword(prevState => !prevState)}
 													>
 														{showPassword ? (
