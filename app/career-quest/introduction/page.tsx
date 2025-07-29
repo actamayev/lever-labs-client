@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import CqIntroduction from "../../../src/components/career/introduction/cq-introduction"
+import { INTRODUCTION_CAREER } from "../../../src/utils/career-quest/career-quest-data"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 
 export const metadata = createMetadata({
@@ -18,9 +18,7 @@ export const metadata = createMetadata({
 export default function CareerQuestIntroductionPage() {
 	return (
 		<AuthenticatedLayout>
-			<CareerActivityTemplate>
-				<CqIntroduction />
-			</CareerActivityTemplate>
+			<CareerActivityTemplate careerData={INTRODUCTION_CAREER} />
 		</AuthenticatedLayout>
 	)
 }

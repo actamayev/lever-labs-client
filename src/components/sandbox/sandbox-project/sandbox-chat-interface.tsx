@@ -29,8 +29,6 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 	const isStreaming = sandboxClass.isStreaming(projectUUID)
 	const isWaitingForResponse = sandboxClass.isWaitingForResponse(projectUUID)
 
-	// Check if there have been user messages
-	const hasUserMessages = messages.some(message => message.role === "user")
 	const hasAnyMessages = messages.length > 0
 
 	// Reset confirmation state when messages change (e.g., new message sent)
@@ -118,7 +116,6 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 				onStopStreaming={onStopStreaming}
 				inputValue={inputValue}
 				setInputValue={setInputValue}
-				hasUserMessages={hasUserMessages}
 				isStreaming={isStreaming}
 			/>
 		</ChatParentComponent>

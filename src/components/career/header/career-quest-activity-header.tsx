@@ -2,14 +2,14 @@
 
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
-import CustomTooltip from "../custom-tooltip"
-import CareerProgressBar from "../career-quest/career-progress-bar"
-import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
+import CustomTooltip from "../../custom-tooltip"
+import ChallengeProgressCircle from "./challenge-progress-circle"
+import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 
-export default function CareerQuestActivityHeader() {
+export default function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
 	return (
 		<header className="h-20 flex items-center px-4 shadow-md fixed top-0 left-0 right-0 bg-standardBackground z-10">
-			{/* Left section with X button */}
+			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
 				<CustomTooltip
 					tooltipTrigger={
@@ -26,13 +26,17 @@ export default function CareerQuestActivityHeader() {
 				/>
 			</div>
 
-			{/* Center section with progress bar - taking up 50% width */}
+			{/* Center section with career title */}
 			<div className="w-1/2 flex justify-center">
-				<CareerProgressBar />
+				<h1 className="text-xl font-semibold text-questionText text-center">
+					{careerData.careerTitle}
+				</h1>
 			</div>
 
-			{/* Empty right section for balance */}
-			<div className="w-1/4"></div>
+			{/* Right section with progress circle */}
+			<div className="w-1/4 flex justify-end items-center pr-4">
+				<ChallengeProgressCircle careerData={careerData} />
+			</div>
 		</header>
 	)
 }

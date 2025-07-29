@@ -67,9 +67,9 @@ class SocketClass {
 		if (!this._socket) return
 
 		// Career Quest chatbot events
-		this._socket.on("cq-chatbot-stream-start", careerQuestClass.startStreaming)
-		this._socket.on("cq-chatbot-stream-chunk", careerQuestClass.addStreamingChunk)
-		this._socket.on("cq-chatbot-stream-complete", careerQuestClass.completeStreaming)
+		this._socket.on("cq-chatbot-stream-start", careerQuestClass.startChallengeStreaming)
+		this._socket.on("cq-chatbot-stream-chunk", careerQuestClass.addChallengeStreamingChunk)
+		this._socket.on("cq-chatbot-stream-complete", careerQuestClass.completeChallengeStreaming)
 
 		// Sandbox chatbot events
 		this._socket.on("sandbox-chatbot-stream-start", sandboxClass.startStreaming)

@@ -1,137 +1,147 @@
+/* eslint-disable max-lines-per-function */
 "use client"
 
-import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,
 	CqChatbotStreamStartEvent,
 	CqChatbotStreamChunkEvent,
 	CqChatbotStreamCompleteEvent,
+	BinaryEvaluationResult,
+	CqChallengeData,
+	CareerUUID,
 	BlocklyJson,
-	ChallengeData,
-	BinaryEvaluationResult
+	ChallengeUUID
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
+import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
-interface ExtendedChallengeData extends ChallengeData {
+// Chat and streaming state interfaces
+interface ChatData {
 	messages: CareerQuestChatMessage[]
-	isStreaming: boolean
 	isWaitingForResponse: boolean
+	hasRetrievedData: boolean
+	isRetrievingData: boolean
+}
+
+interface StreamingState {
+	isStreaming: boolean
 	currentStreamingMessageId: string | null
+	currentStreamId: string | null
 	currentInteractionType: InteractionType | null
-	isRetrievingMessages: boolean
-	hasRetrievedMessages: boolean
+}
+
+interface ChallengeInstance extends ChatData, StreamingState {
+	challengeData: CqChallengeData
+	isCompleted: boolean
 	updatedBlocklyJson?: BlocklyJson
 }
 
+interface CareerProgress {
+	completedChallengeIds: Set<ChallengeUUID>
+}
+
+interface CareerInstance {
+	careerDefinition: CareerQuestData
+	// Dynamic data
+	challenges: Map<string, ChallengeInstance>
+	progress: CareerProgress
+}
+
 class CareerQuestClass {
-	// Map of challengeId -> ExtendedChallengeData
-	public careerQuestChallengeData = observable.map<string, ExtendedChallengeData>()
-	// Map of challengeId -> streamId for tracking concurrent streams
-	public currentStreamIds: Map<string, string | null> = new Map()
+	// Main data structure: careerUUID -> CareerInstance
+	public careers = observable.map<CareerUUID, CareerInstance>()
 
 	constructor() {
 		makeAutoObservable(this)
+
+		this.initializeAllCareers(CAREER_DEFINITIONS)
 	}
 
-	// Initialize challenge with static data
-	public initializeChallenge = action((staticChallengeData: ChallengeData): void => {
-		if (this.careerQuestChallengeData.has(staticChallengeData.id)) return
+	// ========================================
+	// CAREER INITIALIZATION
+	// ========================================
 
-		const extendedData: ExtendedChallengeData = {
-			...staticChallengeData,
-			messages: [],
-			isStreaming: false,
-			isWaitingForResponse: false,
-			currentStreamingMessageId: null,
-			currentInteractionType: null,
-			isRetrievingMessages: false,
-			hasRetrievedMessages: false,
-			updatedBlocklyJson: staticChallengeData.initialBlocklyJson
+	private initializeAllCareers = action((careerDefinitions: Record<string, CareerQuestData>): void => {
+		Object.values(careerDefinitions).forEach(careerDefinition => {
+			this.initializeCareer(careerDefinition)
+		})
+	})
+
+	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
+		if (this.careers.has(careerDefinition.careerUUID)) return
+
+		// Extract challenge sections using helper
+		const challengeSections = this.getAllChallengeSections(careerDefinition.sections)
+
+		// Initialize challenge data
+		const challenges = new Map<string, ChallengeInstance>()
+		challengeSections.forEach(section => {
+			challenges.set(section.challengeData.challengeUUID, {
+				// Static challenge data
+				challengeData: section.challengeData,
+
+				// Chat data
+				messages: [],
+				isWaitingForResponse: false,
+				hasRetrievedData: false,
+				isRetrievingData: false,
+
+				// Streaming state
+				isStreaming: false,
+				currentStreamingMessageId: null,
+				currentStreamId: null,
+				currentInteractionType: null,
+
+				// Completion
+				isCompleted: false
+			})
+		})
+
+		// Initialize career instance
+		const careerInstance: CareerInstance = {
+			careerDefinition,
+			challenges,
+			progress: {
+				completedChallengeIds: new Set<ChallengeUUID>()
+			}
 		}
 
-		this.careerQuestChallengeData.set(staticChallengeData.id, extendedData)
+		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
 
-	// Get challenge data for a challenge
-	private getChallengeData(challengeId: string): ExtendedChallengeData | undefined {
-		return this.careerQuestChallengeData.get(challengeId)
+	// ========================================
+	// HELPER METHODS
+	// ========================================
+
+	private getCareer(careerUUID: CareerUUID): CareerInstance | undefined {
+		return this.careers.get(careerUUID)
 	}
 
-	// Get messages for a challenge
-	public getMessages(challengeId: string): CareerQuestChatMessage[] {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.messages || []
+	private getChallenge(cqInformation: CareerUUIDChallengeUUID): ChallengeInstance | undefined {
+		const career = this.getCareer(cqInformation.careerUUID)
+		return career?.challenges.get(cqInformation.challengeUUID)
 	}
 
-	// Clear messages for a challenge
-	public clearMessages = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.messages = []
-	})
+	// ========================================
+	// MESSAGE MANAGEMENT
+	// ========================================
 
-	// Get updated blockly JSON for a challenge
-	public getUpdatedBlocklyJson(challengeId: string): BlocklyJson | null {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.updatedBlocklyJson || null
+	// Challenge messages
+	public getChallengeMessages(cqInformation: CareerUUIDChallengeUUID): CareerQuestChatMessage[] {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.messages || []
 	}
 
-	// Update blockly JSON for a challenge
-	public updateBlocklyJson = action((challengeId: string, newBlocklyJson: BlocklyJson): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.updatedBlocklyJson = newBlocklyJson
-	})
-
-	// Check if messages have been retrieved for a challenge
-	public hasRetrievedMessages(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.hasRetrievedMessages || false
-	}
-
-	// Check if currently retrieving messages for a challenge
-	public isRetrievingMessages(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isRetrievingMessages || false
-	}
-
-	// Set retrieving messages state
-	public setIsRetrievingMessages = action((challengeId: string, isRetrieving: boolean): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.isRetrievingMessages = isRetrieving
-	})
-
-	// Set retrieved data from backend (both messages and sandbox JSON)
-	public setRetrievedData = action((
-		challengeId: string,
-		messages: CareerQuestChatMessage[],
-		sandboxJson: BlocklyJson | null
-	): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.messages = messages
-		challengeData.hasRetrievedMessages = true
-		challengeData.isRetrievingMessages = false
-
-		// Update blockly JSON if we got data from backend
-		if (sandboxJson) {
-			const normalizedSandboxJson = normalizeSandboxJson(sandboxJson)
-			challengeData.updatedBlocklyJson = normalizedSandboxJson
-		}
-	})
-
-	// Add a user message
-	public addUserMessage = action((challengeId: string, content: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeUserMessage = action((cqInformation: CareerUUIDChallengeUUID, content: string): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
 		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
+		this.hideChallengeHintButtons(cqInformation)
 
-		// Set waiting for response when sending user message
-		challengeData.isWaitingForResponse = true
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `user-${Date.now()}`,
@@ -140,18 +150,15 @@ class CareerQuestClass {
 			timestamp: new Date()
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addHintRequestMessage = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeHintRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
-
-		// Set waiting for response when requesting hint
-		challengeData.isWaitingForResponse = true
+		this.hideChallengeHintButtons(cqInformation)
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `hint-request-${Date.now()}`,
@@ -161,18 +168,15 @@ class CareerQuestClass {
 			isHintRequest: true
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addCheckCodeRequestMessage = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeCheckCodeRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		// Hide hint button from all messages when a new message is added
-		this.hideHintButtonForAllMessages(challengeId)
-
-		// Set waiting for response when checking code
-		challengeData.isWaitingForResponse = true
+		this.hideChallengeHintButtons(cqInformation)
+		challenge.isWaitingForResponse = true
 
 		const message: CareerQuestChatMessage = {
 			id: `check-code-request-${Date.now()}`,
@@ -182,15 +186,18 @@ class CareerQuestClass {
 			isCheckCodeRequest: true
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
 	})
 
-	public addEvaluationResultMessage = action((challengeId: string, evaluationResult: BinaryEvaluationResult): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeEvaluationResultMessage = action((
+		cqInformation: CareerUUIDChallengeUUID,
+		evaluationResult: BinaryEvaluationResult
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		const career = this.getCareer(cqInformation.careerUUID)
+		if (!challenge || !career) return
 
-		// Set waiting for response to false when receiving evaluation result
-		challengeData.isWaitingForResponse = false
+		challenge.isWaitingForResponse = false
 
 		const message: CareerQuestChatMessage = {
 			id: `evaluation-result-${Date.now()}`,
@@ -198,33 +205,46 @@ class CareerQuestClass {
 			content: evaluationResult.feedback,
 			timestamp: new Date(),
 			evaluationResult,
-			shouldShowHintButton: !evaluationResult.isCorrect // Show hint button for incorrect results
+			shouldShowHintButton: !evaluationResult.isCorrect
 		}
 
-		challengeData.messages.push(message)
+		challenge.messages.push(message)
+
+		// Mark challenge as completed if correct
+		if (evaluationResult.isCorrect) {
+			challenge.isCompleted = true
+			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+		}
 	})
 
-	// Hide hint button from all messages in a challenge
-	public hideHintButtonForAllMessages = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		challengeData.messages.forEach(message => {
+		challenge.messages.forEach(message => {
 			if (message.shouldShowHintButton) {
 				message.shouldShowHintButton = false
 			}
 		})
 	})
 
-	// Start streaming for a challenge
-	public startStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
-		const challengeData = this.getChallengeData(startEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public clearChallengeMessages = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.messages = []
+	})
 
-		// Set waiting for response to false when streaming starts
-		challengeData.isWaitingForResponse = false
+	// ========================================
+	// STREAMING MANAGEMENT
+	// ========================================
 
-		// Create streaming message placeholder
+	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
+		// Note: You'll need to pass careerUUUID in the event or determine it from challengeUUID
+		const challenge = this.getChallenge({ ...startEvent })
+		if (!challenge) return
+
+		challenge.isWaitingForResponse = false
+
 		const streamingMessage: CareerQuestChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
@@ -234,24 +254,23 @@ class CareerQuestClass {
 			isHintResponse: startEvent.interactionType === "hint"
 		}
 
-		challengeData.messages.push(streamingMessage)
-		challengeData.isStreaming = true
-		challengeData.currentStreamingMessageId = streamingMessage.id
-		challengeData.currentInteractionType = startEvent.interactionType
+		challenge.messages.push(streamingMessage)
+		challenge.isStreaming = true
+		challenge.currentStreamingMessageId = streamingMessage.id
+		challenge.currentInteractionType = startEvent.interactionType
 	})
 
-	// Add chunk to streaming message
-	public addStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
-		const challengeData = this.getChallengeData(chunkEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public addChallengeStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
+		const challenge = this.getChallenge({ ...chunkEvent })
+		if (!challenge) return
 
-		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeId)
+		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
+			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeUUID)
 			return
 		}
 
-		const streamingMessage = challengeData.messages.find(
-			msg => msg.id === challengeData.currentStreamingMessageId
+		const streamingMessage = challenge.messages.find(
+			msg => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -259,17 +278,16 @@ class CareerQuestClass {
 		}
 	})
 
-	// Complete streaming
-	public completeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
-		const challengeData = this.getChallengeData(completeEvent.challengeId)
-		if (isUndefined(challengeData)) return
+	public completeChallengeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
+		const challenge = this.getChallenge({ ...completeEvent })
+		if (
+			!challenge ||
+			!challenge.isStreaming ||
+			!challenge.currentStreamingMessageId
+		) return
 
-		if (!challengeData.isStreaming || !challengeData.currentStreamingMessageId) {
-			return
-		}
-
-		const streamingMessage = challengeData.messages.find(
-			msg => msg.id === challengeData.currentStreamingMessageId
+		const streamingMessage = challenge.messages.find(
+			msg => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -277,57 +295,338 @@ class CareerQuestClass {
 		}
 
 		// Reset streaming state
-		challengeData.isStreaming = false
-		challengeData.currentStreamingMessageId = null
-		challengeData.currentInteractionType = null
-		this.setCurrentStreamId(completeEvent.challengeId, null)
+		challenge.isStreaming = false
+		challenge.currentStreamingMessageId = null
+		challenge.currentInteractionType = null
+		challenge.currentStreamId = null
 	})
 
-	// Reset chat state for a challenge
-	public resetChatStreamingState = action((challengeId: string): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
+	public resetChallengeStreamingState = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
 
-		challengeData.isStreaming = false
-		challengeData.currentStreamingMessageId = null
-		challengeData.currentInteractionType = null
-		this.setCurrentStreamId(challengeId, null)
+		challenge.isStreaming = false
+		challenge.currentStreamingMessageId = null
+		challenge.currentInteractionType = null
+		challenge.currentStreamId = null
 	})
 
-	// Check if currently streaming for a challenge
-	public isStreaming(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isStreaming || false
+	// Stream ID management
+	public setChallengeStreamId = action((cqInformation: CareerUUIDChallengeUUID, streamId: string | null): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.currentStreamId = streamId
+	})
+
+	public getChallengeStreamId(cqInformation: CareerUUIDChallengeUUID): string | null {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.currentStreamId || null
 	}
 
-	// Check if waiting for response for a challenge
-	public isWaitingForResponse(challengeId: string): boolean {
-		const challengeData = this.getChallengeData(challengeId)
-		return challengeData?.isWaitingForResponse || false
+	// ========================================
+	// STATE GETTERS
+	// ========================================
+
+	public isChallengeStreaming(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isStreaming || false
 	}
 
-	// Set waiting for response state
-	public setWaitingForResponse = action((challengeId: string, isWaiting: boolean): void => {
-		const challengeData = this.getChallengeData(challengeId)
-		if (isUndefined(challengeData)) return
-		challengeData.isWaitingForResponse = isWaiting
-	})
-
-	// Stream ID management methods
-	public setCurrentStreamId = action((challengeId: string, streamId: string | null): void => {
-		this.currentStreamIds.set(challengeId, streamId)
-	})
-
-	public getCurrentStreamId(challengeId: string): string | null {
-		return this.currentStreamIds.get(challengeId) || null
+	public isChallengeWaitingForResponse(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isWaitingForResponse || false
 	}
+
+	public isChallengeCompleted(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isCompleted || false
+	}
+
+	// ========================================
+	// DATA MANAGEMENT
+	// ========================================
+
+	// Update setChallengeRetrievedData to include sandboxJson:
+	public setChallengeRetrievedData = action((
+		cqInformation: CareerUUIDChallengeUUID,
+		messages: CareerQuestChatMessage[],
+		sandboxJson: BlocklyJson | null,  // ADD THIS
+		isCompleted: boolean
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		const career = this.getCareer(cqInformation.careerUUID)
+		if (!challenge || !career) return
+
+		challenge.messages = messages
+		challenge.hasRetrievedData = true
+		challenge.isRetrievingData = false
+		challenge.isCompleted = isCompleted
+
+		// Update blockly JSON if provided
+		if (sandboxJson) {
+			challenge.updatedBlocklyJson = normalizeSandboxJson(sandboxJson)
+		}
+
+		if (isCompleted) {
+			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+		}
+	})
+
+	public setIsRetrievingChallengeData = action((
+		cqInformation: CareerUUIDChallengeUUID,
+		isRetrieving: boolean
+	): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.isRetrievingData = isRetrieving
+	})
+
+	public hasRetrievedChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.hasRetrievedData || false
+	}
+
+	public isRetrievingChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.isRetrievingData || false
+	}
+
+	public getChallengeData(cqInformation: CareerUUIDChallengeUUID): CqChallengeData | undefined {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.challengeData
+	}
+
+	// Blockly JSON management
+	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson || null
+	}
+
+	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.updatedBlocklyJson = newBlocklyJson
+	})
+
+	public getVisibleSections(careerUUID: CareerUUID): string[] {
+		const career = this.getCareer(careerUUID)
+		if (!career) return []
+
+		const visibleSectionIds: string[] = []
+		const sections = career.careerDefinition.sections
+
+		// Track if we've encountered an incomplete challenge (blocking further progress)
+		let hasBlockingChallenge = false
+
+		for (const section of sections) {
+			// If we've already hit a blocking challenge, stop adding sections
+			if (hasBlockingChallenge) {
+				break
+			}
+
+			if (section.type === "textParent") {
+				// Add all children text section IDs (individual text sections)
+				section.children.forEach(child => {
+					visibleSectionIds.push(child.id)
+				})
+			} else {
+				// Challenge section
+				// Always show the challenge section itself (so user can see it and potentially complete it)
+				visibleSectionIds.push(section.challengeData.challengeUUID)
+
+				// Check if this challenge is completed
+				const isCompleted = this.isChallengeCompleted(section.challengeData)
+
+				// If this challenge is not completed, it becomes the blocking challenge
+				if (!isCompleted) {
+					hasBlockingChallenge = true
+				}
+			}
+		}
+
+		return visibleSectionIds
+	}
+
+	// Enhanced progress methods for header
+	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		if (!career) return 0
+
+		return career.progress.completedChallengeIds.size
+	}
+
+	public getTotalChallengesForProgress(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		if (!career) return 0
+
+		// Use helper to count challenge sections
+		return this.getAllChallengeSections(career.careerDefinition.sections).length
+	}
+
+	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Use helper to get challenge sections
+		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
+
+		const retrievalPromises = challengeSections.map(section =>
+			retrieveCareerQuestChallengeData(section.challengeData)
+		)
+
+		try {
+			await Promise.all(retrievalPromises)
+		} catch (error) {
+			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
+		}
+	})
+
+	// eslint-disable-next-line complexity
+	public getInitialTargetSection(careerUUID: CareerUUID): {
+		sectionId: string | null,
+		shouldAutoScroll: boolean,
+		rightContent: RightContent | null
+	} {
+		const career = this.getCareer(careerUUID)
+		if (!career) {
+			return { sectionId: null, shouldAutoScroll: false, rightContent: null }
+		}
+
+		const sections = career.careerDefinition.sections
+		const challengeSections = this.getAllChallengeSections(sections)
+
+		// Check if all challenges are complete
+		const allChallengesComplete = challengeSections.every(section =>
+			this.isChallengeCompleted(section.challengeData)
+		)
+
+		// If all complete, start at top with no auto-scroll
+		if (allChallengesComplete) {
+			return {
+				sectionId: null,
+				shouldAutoScroll: false,
+				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+			}
+		}
+
+		// Find the latest completed challenge in the original sections array
+		let latestCompletedChallengeIndex = -1
+		for (let i = sections.length - 1; i >= 0; i--) {
+			const section = sections[i]
+			if (section.type === "challenge") {
+				const challengeSection = section as ChallengeSection
+				if (this.isChallengeCompleted(challengeSection.challengeData)) {
+					latestCompletedChallengeIndex = i
+					break
+				}
+			}
+		}
+
+		// If no challenges are complete, start at the top
+		if (latestCompletedChallengeIndex === -1) {
+			return {
+				sectionId: null,
+				shouldAutoScroll: false,
+				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+			}
+		}
+
+		// Find the next section after the latest completed challenge
+		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
+			const section = sections[i]
+
+			if (section.type === "textParent") {
+				// Target the first child text section in the group
+				const firstChild = section.children[0]
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				if (firstChild) {
+					return {
+						sectionId: firstChild.id,
+						shouldAutoScroll: true,
+						rightContent: { type: "image", icon: firstChild.triggerImage }
+					}
+				}
+			} else {
+				// Challenge section - check if it's incomplete
+				const challengeSection = section as ChallengeSection
+				if (!this.isChallengeCompleted(challengeSection.challengeData)) {
+					return {
+						sectionId: challengeSection.challengeData.challengeUUID,
+						shouldAutoScroll: true,
+						rightContent: { type: "challenge", challengeData: challengeSection.challengeData }
+					}
+				}
+			}
+		}
+
+		// Fallback to top if nothing found
+		return {
+			sectionId: null,
+			shouldAutoScroll: false,
+			rightContent: { type: "image", icon: career.careerDefinition.initialImage }
+		}
+	}
+
+	/**
+ * Check if all challenge data has been retrieved for a career
+ */
+	public hasRetrievedAllChallengeData(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Use helper to get challenge sections
+		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
+
+		return challengeSections.every(section =>
+			this.hasRetrievedChallengeData(section.challengeData)
+		)
+	}
+
+	/**
+	 * Get all challenge sections
+	 */
+	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
+	}
+
+	/**
+	 * Find a text section by ID across all TextParent sections
+	 */
+	private findTextSectionById(sections: CareerSection[], textSectionId: string): TextSection | null {
+		for (const section of sections) {
+			if (section.type === "textParent") {
+				const found = section.children.find(child => child.id === textSectionId)
+				if (found) return found
+			}
+		}
+		return null
+	}
+
+	/**
+ * Check if a section ID belongs to a text section (child of TextParent)
+ */
+	public isTextSectionId(careerUUID: CareerUUID, sectionId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		return this.findTextSectionById(career.careerDefinition.sections, sectionId) !== null
+	}
+
+	/**
+ * Get the text section by ID - useful for finding trigger images
+ */
+	public getTextSectionById(careerUUID: CareerUUID, sectionId: string): TextSection | null {
+		const career = this.getCareer(careerUUID)
+		if (!career) return null
+
+		return this.findTextSectionById(career.careerDefinition.sections, sectionId)
+	}
+
 
 	public logout(): void {
-		this.careerQuestChallengeData.clear()
-		this.currentStreamIds.clear()
+		this.careers.clear()
 	}
 }
 
 const careerQuestClass = new CareerQuestClass()
-
 export default careerQuestClass

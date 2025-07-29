@@ -1,5 +1,5 @@
-import { BinaryEvaluationResult, ChatMessageRole } from "@bluedotrobots/common-ts"
 import { LucideIcon } from "lucide-react"
+import { BinaryEvaluationResult, CareerUUID, ChallengeUUID, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -50,6 +50,43 @@ declare global {
 		isHintRequest?: boolean
 		isHintResponse?: boolean
 		shouldShowHintButton?: boolean
+	}
+
+	interface CareerUUIDChallengeUUID {
+		careerUUID: CareerUUID
+		challengeUUID: ChallengeUUID
+	}
+
+	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
+
+	interface TextParentSection {
+		type: "textParent"
+		id: string
+		children: TextSection[]
+	}
+
+	interface TextSection {
+		type: "text"
+		id: string
+		content: string
+		triggerImage: string // Lucide icon name
+	}
+
+	interface ChallengeSection {
+		type: "challenge"
+		id: ChallengeUUID
+		challengeData: CqChallengeData
+		// Challenge completion determines if next sections are unlocked
+	}
+
+	type CareerSection = ChallengeSection | TextParentSection
+
+	interface CareerQuestData {
+		careerUUID: CareerUUID
+		careerTitle: string
+		initialImage: string // Lucide icon name for the first image
+		careerColor: DuolingoColors
+		sections: CareerSection[]
 	}
 }
 
