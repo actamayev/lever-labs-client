@@ -1,5 +1,5 @@
-import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import CareerQuest from "../../src/components/career-quest/career-quest"
+import AuthenticatedLayout from "../../src/components/authenticated-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
