@@ -79,31 +79,43 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}, 300) // 300ms debounce delay
 	}, [challengeData.challengeUUID])
 
+	// Add this ref to track the last processed JSON
+	const lastProcessedJsonRef = useRef<BlocklyJson | null>(null)
+
+	// Add this state to track the latest JSON that needs to be saved
+	const [pendingBlocklyJson, setPendingBlocklyJson] = useState<BlocklyJson | null>(null)
+
+	// Separate effect to handle class updates and backend saves
+	useEffect(() => {
+		if (!pendingBlocklyJson || !hasRetrievedData || !hasInitializedRef.current) return
+
+		// Update career quest class
+		careerQuestClass.updateBlocklyJson({ ...challengeData }, pendingBlocklyJson)
+
+		// Save to backend with debounce
+		debouncedSave(pendingBlocklyJson)
+
+		// Update the last processed JSON ref
+		lastProcessedJsonRef.current = pendingBlocklyJson
+
+		// Clear the pending update
+		setPendingBlocklyJson(null)
+	}, [pendingBlocklyJson, hasRetrievedData, challengeData, debouncedSave])
+
+	// Simplified handleJsonChange - no dependency on currentBlocklyJson
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
-		const expectedBlockCount = getBlockCount(currentBlocklyJson)
+	// Get current JSON from class for comparison, but don't depend on it
+		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
+		const expectedBlockCount = getBlockCount(currentJsonFromClass)
 		const actualBlockCount = getBlockCount(newBlocklyJson)
-
-		console.log("🔧 Challenge handleJsonChange called", {
-			isFirst: isFirstChangeAfterInitRef.current,
-			hasInitialized: hasInitializedRef.current,
-			hasSeenExpectedBlocks: hasSeenExpectedBlocksRef.current,
-			hasBlocks: hasBlocks(newBlocklyJson),
-			isValid: isValidNonEmptyJson(newBlocklyJson),
-			hasRetrievedData,
-			newJson: newBlocklyJson,
-			expectedBlockCount,
-			actualBlockCount
-		})
 
 		// Skip the first change event which happens during workspace initialization
 		if (isFirstChangeAfterInitRef.current) {
-			console.log("  ⏭️ Skipping first change (initialization)")
 			isFirstChangeAfterInitRef.current = false
 
 			// If we expect blocks but got wrong count, the workspace hasn't loaded yet
 			if (expectedBlockCount > 0 && actualBlockCount !== expectedBlockCount) {
-				console.log("  ⏳ Workspace not ready yet - expected", expectedBlockCount, "blocks, got", actualBlockCount)
 				isFirstChangeAfterInitRef.current = true // Keep skipping until workspace loads properly
 				return
 			}
@@ -111,83 +123,68 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 			// Mark that we've seen the expected blocks if they match
 			if (expectedBlockCount > 0 && actualBlockCount === expectedBlockCount) {
 				hasSeenExpectedBlocksRef.current = true
-				console.log("  ✅ Workspace properly initialized with expected blocks")
 			}
 
 			hasInitializedRef.current = true
+			lastProcessedJsonRef.current = newBlocklyJson // Set initial processed JSON
 			return
 		}
 
 		// Track when we've seen the expected blocks (even after initialization)
 		if (expectedBlockCount > 0 && actualBlockCount === expectedBlockCount && !hasSeenExpectedBlocksRef.current) {
 			hasSeenExpectedBlocksRef.current = true
-			console.log("  ✅ First time seeing expected blocks - now allowing empty saves")
 		}
 
 		// Only skip empty JSON if we haven't seen the expected blocks yet
 		if (!isValidNonEmptyJson(newBlocklyJson)) {
 			if (!hasSeenExpectedBlocksRef.current && expectedBlockCount > 0) {
-				console.log("  ⏭️ Skipping empty JSON - workspace still loading")
 				isFirstChangeAfterInitRef.current = true
 				hasInitializedRef.current = false
 				return
 			} else {
-				console.log("  🗑️ Allowing empty save - user deleted all blocks")
-				// Continue to save the empty workspace
+			// Continue to save the empty workspace
 			}
 		}
 
-		// Compare stripped versions to ignore position changes (unless it's an intentional empty save)
-		const currentJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
+		// Compare against last processed JSON instead of class JSON to prevent loops
 		const isEmptyWorkspace = !isValidNonEmptyJson(newBlocklyJson)
 		const isIntentionalEmpty = isEmptyWorkspace && hasSeenExpectedBlocksRef.current
 
-		if (!isIntentionalEmpty && currentJson && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(currentJson))) {
-			console.log("  ⏭️ No meaningful changes detected")
-			// Still update CPP if it's empty (first meaningful change)
-			if (isEmpty(cppCode)) {
-				setCppCode(generateCppFromJson(newBlocklyJson))
-			}
+		// Check if this is the same as what we last processed
+		// eslint-disable-next-line max-len
+		if (lastProcessedJsonRef.current && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(lastProcessedJsonRef.current))) {
 			return
 		}
 
-		if (isIntentionalEmpty) {
-			console.log("  🗑️ Processing intentional empty workspace")
-		} else {
-			console.log("  💾 Processing meaningful change")
+		// eslint-disable-next-line max-len
+		if (!isIntentionalEmpty && lastProcessedJsonRef.current && isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(lastProcessedJsonRef.current))) {
+			return
 		}
 
-		// Update local state with full JSON (including positions)
+		// Update local state
 		setCppCode(generateCppFromJson(newBlocklyJson))
 
-		// Update career quest class
-		careerQuestClass.updateBlocklyJson({ ...challengeData }, newBlocklyJson)
+		// Queue the JSON for class update and backend save (handled by separate effect)
+		setPendingBlocklyJson(newBlocklyJson)
 
-		// Only save to backend if we've retrieved data AND the workspace has initialized properly
-		if (hasRetrievedData && hasInitializedRef.current) {
-			console.log("  📤 Queuing debounced save")
-			debouncedSave(newBlocklyJson)
-		} else {
-			console.log("  ⏸️ Not saving - hasRetrievedData:", hasRetrievedData, "hasInitialized:", hasInitializedRef.current)
-		}
-	}, [currentBlocklyJson, hasRetrievedData, challengeData, cppCode, debouncedSave])
+	}, [hasRetrievedData, challengeData]) // REMOVED: currentBlocklyJson dependency
 
-	// Reset flags when switching between challenges or when data is retrieved
+	// Reset effects
 	useEffect(() => {
-		console.log("🔄 Resetting challenge flags", {
-			challengeUUID: challengeData.challengeUUID,
-			hasRetrievedData
-		})
-
 		// Clear any pending saves when switching challenges
 		if (saveTimeoutRef.current) {
 			clearTimeout(saveTimeoutRef.current)
 			saveTimeoutRef.current = null
 		}
 
+		// Clear any pending updates
+		setPendingBlocklyJson(null)
+
+		// Reset refs
 		isFirstChangeAfterInitRef.current = true
 		hasInitializedRef.current = false
-		hasSeenExpectedBlocksRef.current = false // Reset the "seen expected blocks" flag
+		hasSeenExpectedBlocksRef.current = false
+		lastProcessedJsonRef.current = null // Reset the last processed JSON
 
 		// Add a small delay to ensure workspace is fully ready before processing changes
 		const timer = setTimeout(() => {
@@ -202,7 +199,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				saveTimeoutRef.current = null
 			}
 		}
-	}, [challengeData.challengeUUID, hasRetrievedData]) // Only depend on primitives
+	}, [challengeData.challengeUUID, hasRetrievedData])
 
 	// Create a stable workspace key - only change when challenge changes
 	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}`
