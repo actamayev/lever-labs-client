@@ -326,7 +326,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			>
 				<AnimatePresence mode="wait">
 					<motion.div
-						key="content-left"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.5, ease: "easeOut" }}
@@ -334,8 +333,14 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 						<div className="py-8 space-y-8 px-[100px]">
 							{visibleSections.map((section) => (
 								<div key={section.id} className="min-h-[50vh]">
-									{section.type === "textParent" ? (
-										// Render TextParent as single grouped container
+									{section.type === "challenge" ? (
+										<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
+											<CqChatInterface
+												cppCode={getCppCodeForChallenge(section.challengeData)}
+												challengeData={section.challengeData}
+											/>
+										</div>
+									) : (
 										<div className="border-2 border-swan rounded-3xl bg-polar p-4">
 											<div className="space-y-6">
 												{section.children.map((childSection) => (
@@ -351,14 +356,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 												))}
 											</div>
 										</div>
-									) : (
-										// Render challenge section
-										<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
-											<CqChatInterface
-												cppCode={getCppCodeForChallenge(section.challengeData)}
-												challengeData={section.challengeData}
-											/>
-										</div>
 									)}
 								</div>
 							))}
@@ -368,7 +365,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			</div>
 
 			<div
-				className="sticky top-0 h-[calc(100vh-10rem)] bg-standardBackground"
+				className="sticky top-0 h-[calc(100vh-10rem)]"
 				style={{ width: "55%" }}
 			>
 				<RightContent rightContent={rightContent} color={careerData.careerColor} />
