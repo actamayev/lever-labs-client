@@ -19,7 +19,6 @@ interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	blocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
-	extraClasses?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -27,8 +26,7 @@ function InteractiveMiniSandbox(props: Props) {
 	const {
 		toolboxConfig,
 		blocklyJson,
-		onJsonChange,
-		extraClasses = "h-1/2",
+		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -124,7 +122,7 @@ function InteractiveMiniSandbox(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
+			className={cn("relative z-0 rounded-3xl overflow-hidden border-2 border-swan h-full")}
 		>
 			{/* Toggle Toolbox Button */}
 			<Button

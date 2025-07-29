@@ -209,7 +209,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const foxColors = getDuolingoColors("fox")
 
 	return (
-		<div className="flex flex-col h-full py-4 gap-4">
+		<div className="flex flex-col h-full gap-4">
 
 			{/* Sandbox Section - Middle (flexible height) */}
 			<div className="flex-1 min-h-0">
@@ -217,7 +217,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					key={workspaceKey}
 					toolboxConfig={challengeData.toolboxConfig}
 					blocklyJson={currentBlocklyJson}
-					extraClasses="h-full"
 					onJsonChange={handleJsonChange}
 				/>
 			</div>

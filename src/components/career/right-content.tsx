@@ -16,6 +16,7 @@ interface RightContentProps {
 
 export default function RightContent({ rightContent, color }: RightContentProps) {
 	const colors = getDuolingoColors(color)
+
 	if (rightContent.type === "image") {
 		const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
 		return (
@@ -26,38 +27,41 @@ export default function RightContent({ rightContent, color }: RightContentProps)
 				)}
 				style={{ marginRight: "100px" }}
 			>
-				<AnimatePresence mode="wait">
-					<motion.div
-						key={`${rightContent.type}-${rightContent.icon}`}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-						// className="h-full"
-						// style={{ paddingRight: "100px" }}
-					>
-						<IconComponent size={120} className={colors.text} />
-					</motion.div>
-				</AnimatePresence>
+				{/* <AnimatePresence mode="wait"> */}
+				<motion.div
+					key={`${rightContent.type}-${rightContent.icon}`}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.9 }}
+
+				>
+					<IconComponent size={120} className={colors.text} />
+				</motion.div>
+				{/* </AnimatePresence> */}
 			</div>
 		)
 	}
 
 	return (
-		<div className="h-full flex flex-col">
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
-					className="h-full"
-					style={{ paddingRight: "100px" }}
-				>
-					<ChallengeSection challengeData={rightContent.challengeData} />
-				</motion.div>
-			</AnimatePresence>
+		<div
+			className={cn(
+				"flex items-center justify-center h-full w-full my-8"
+			)}
+			style={{ paddingRight: "100px" }}
+		>
+			{/* <AnimatePresence mode="wait"> */}
+			<motion.div
+				key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.0 }}
+				className="h-full w-full"
+			>
+				<ChallengeSection challengeData={rightContent.challengeData} />
+			</motion.div>
+			{/* </AnimatePresence> */}
 		</div>
 	)
 }
