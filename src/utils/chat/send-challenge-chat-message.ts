@@ -7,27 +7,25 @@ import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function sendCareerQuestMessage(
-	careerQuestChallengeId: string,
+export default async function sendChallengeChatMessage(
+	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
 	userCode: string,
 	message: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		// Reset chat state for new conversation
-		careerQuestClass.resetChatStreamingState(careerQuestChallengeId)
+		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 
-		// Send request to backend - challengeId will be included in the WebSocket response
-		const response = await blueDotApiClientClass.chatDataService.sendCareerQuestMessage({
-			careerQuestChallengeId,
+		const response = await blueDotApiClientClass.chatDataService.sendChallengeChatMessage({
+			careerUUID: careerUUIDChallengeUUID.careerUUID,
 			userCode,
 			message,
-		})
+		}, careerUUIDChallengeUUID.challengeUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		careerQuestClass.setCurrentStreamId(careerQuestChallengeId, response.data.streamId)
+		careerQuestClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

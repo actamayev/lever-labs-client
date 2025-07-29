@@ -3,21 +3,19 @@
 import * as Blockly from "blockly"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
+import isEmpty from "lodash-es/isEmpty"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
-import isEmpty from "lodash-es/isEmpty"
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	extraClasses?: string
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
 	searchTerm?: string
@@ -28,7 +26,6 @@ interface Props {
 function BlocklyComponent(props: Props) {
 	const {
 		toolboxConfig,
-		extraClasses = "h-1/2",
 		initialBlocklyJson,
 		onJsonChange,
 		searchTerm = "",
@@ -160,7 +157,7 @@ function BlocklyComponent(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-b-lg overflow-hidden border-x-2 border-b-2 border-swan", extraClasses)}
+			className="relative z-0 rounded-b-3xl overflow-hidden border-swan border-b-2 flex-1"
 		>
 			<BlocklyWorkspace
 				key={searchTerm.trim() ? "search-mode" : "normal-mode"}

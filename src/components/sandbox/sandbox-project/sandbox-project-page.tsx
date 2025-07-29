@@ -182,36 +182,37 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
 					}}
 				>
-					<div className="flex-1 min-h-0 flex flex-col">
+					<div className="min-h-0 flex flex-col h-full">
 						<BlocklySearchBar
 							ref={searchBarRef}
 							searchTerm={searchTerm}
 							onSearchChange={handleSearchChange}
 						/>
-						<Suspense fallback={<BlocklyLoadingComponent extraClasses="flex-1" />}>
-							<BlocklyComponent
-								toolboxConfig={filteredToolboxConfig}
-								extraClasses="flex-1"
-								initialBlocklyJson={project.sandboxJson}
-								onJsonChange={handleJsonChange}
-								searchTerm={searchTerm}
-								isSwitchingMode={isSwitchingMode}
-							/>
-						</Suspense>
-						<div className="flex flex-row mt-2 h-[10%] w-full space-x-2 items-center justify-center">
-							<AnimatedStateButton
-								buttonText="SEND CODE"
-								isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-								onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-								className="duration-150 rounded-xl text-4xl"
-							/>
-							<TactileButton
-								className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
-								shadowColor="rgb(150, 50, 75)"
-								onClick={stopCurrentlyRunningCode}
-							>
+						<div className="h-full w-full border-b-2 border-x-2 border-swan rounded-b-3xl bg-polar min-h-0 flex flex-col">
+							<Suspense fallback={<BlocklyLoadingComponent />}>
+								<BlocklyComponent
+									toolboxConfig={filteredToolboxConfig}
+									initialBlocklyJson={project.sandboxJson}
+									onJsonChange={handleJsonChange}
+									searchTerm={searchTerm}
+									isSwitchingMode={isSwitchingMode}
+								/>
+							</Suspense>
+							<div className="flex gap-3 pt-3 pb-2 px-4">
+								<AnimatedStateButton
+									buttonText="SEND CODE"
+									isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+									onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+									className="duration-150 rounded-xl text-4xl"
+								/>
+								<TactileButton
+									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+									shadowColor="rgb(150, 50, 75)"
+									onClick={stopCurrentlyRunningCode}
+								>
 								STOP
-							</TactileButton>
+								</TactileButton>
+							</div>
 						</div>
 					</div>
 				</div>

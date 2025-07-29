@@ -84,7 +84,7 @@ function ScanNetworksSection() {
 				>
 					<CollapsibleTrigger asChild>
 						<div className="flex items-center justify-between p-3 bg-inherit hover:bg-gray-50 dark:hover:bg-gray-800
-						cursor-pointer border-b border-gray-100 dark:border-gray-800 last:border-b-0">
+						cursor-pointer border-b border-polar last:border-b-0">
 							<div className="flex items-center gap-3">
 								<NetworkStrengthIcon rssi={network.rssi} />
 								<span className="font-medium text-sm">{network.ssid}</span>
@@ -99,7 +99,7 @@ function ScanNetworksSection() {
 					</CollapsibleTrigger>
 
 					<CollapsibleContent>
-						<div className="px-3 pb-3 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-gray-100 dark:border-gray-800">
+						<div className="px-3 pb-3 pt-2 bg-gray-50 dark:bg-gray-800 border-b border-polar">
 							<div className="flex items-center gap-2">
 								{network.encrypted && (  // Add this condition
 									<div className="relative w-full">

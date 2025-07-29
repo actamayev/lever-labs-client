@@ -19,6 +19,7 @@ interface Props {
 	blocklyJson: BlocklyJson
 }
 
+// TODO 7/29/25: Figure out what to do with this component, same for view-only-sandbox.tsx
 // eslint-disable-next-line max-lines-per-function
 function SimpleSandbox(props: Props) {
 	const { blocklyJson } = props

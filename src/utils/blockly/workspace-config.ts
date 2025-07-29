@@ -19,7 +19,7 @@ const commonStyles: ITheme = {
 export const darkTheme = Blockly.Theme.defineTheme("dark", {
 	"componentStyles": {
 		"workspaceBackgroundColour": "#1f2937", // dark gray background
-		"toolboxBackgroundColour": "#141F23",
+		"toolboxBackgroundColour": "#202f36",
 		"toolboxForegroundColour": "#ffffff",
 		"flyoutBackgroundColour": "#374151",
 		"flyoutForegroundColour": "#ffffff",
@@ -36,7 +36,7 @@ export const darkTheme = Blockly.Theme.defineTheme("dark", {
 export const lightTheme = Blockly.Theme.defineTheme("light", {
 	"componentStyles": {
 		"workspaceBackgroundColour": "#ffffff",
-		"toolboxBackgroundColour": "#f3f4f6",
+		"toolboxBackgroundColour": "#f7f7f7",
 		"toolboxForegroundColour": "#1f2937",
 		"flyoutBackgroundColour": "#ffffff",
 		"flyoutForegroundColour": "#1f2937",

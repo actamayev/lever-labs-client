@@ -58,7 +58,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					isUser ? "bg-humpback text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
+					isUser ? "bg-iMessageBlue text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>

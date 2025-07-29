@@ -17,8 +17,7 @@ import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockl
 
 interface Props {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	extraClasses?: string
-	initialBlocklyJson: BlocklyJson
+	blocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
 }
 
@@ -26,8 +25,7 @@ interface Props {
 function InteractiveMiniSandbox(props: Props) {
 	const {
 		toolboxConfig,
-		extraClasses = "h-1/2",
-		initialBlocklyJson,
+		blocklyJson,
 		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -124,7 +122,7 @@ function InteractiveMiniSandbox(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-lg overflow-hidden border-2 border-swan", extraClasses)}
+			className={cn("relative z-0 rounded-3xl overflow-hidden border-b-2 border-swan h-full")}
 		>
 			{/* Toggle Toolbox Button */}
 			<Button
@@ -148,7 +146,7 @@ function InteractiveMiniSandbox(props: Props) {
 
 			<BlocklyWorkspace
 				toolboxConfiguration={toolboxConfig}
-				initialJson={initialBlocklyJson}
+				initialJson={blocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}
