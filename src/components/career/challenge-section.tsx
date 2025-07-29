@@ -19,11 +19,6 @@ import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
 
-// Helper function to check if JSON has meaningful blocks
-function hasBlocks(blocklyJson: BlocklyJson): boolean {
-	return !!(blocklyJson.blocks?.blocks && blocklyJson.blocks.blocks.length > 0)
-}
-
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
 	return blocklyJson.blocks.blocks.length
@@ -167,7 +162,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)
 
-	}, [hasRetrievedData, challengeData]) // REMOVED: currentBlocklyJson dependency
+	}, [challengeData]) // REMOVED: currentBlocklyJson dependency
 
 	// Reset effects
 	useEffect(() => {
