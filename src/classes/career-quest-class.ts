@@ -476,7 +476,6 @@ class CareerQuestClass {
 		career.isLoadingCareer = isLoading
 	})
 
-	// Modify the existing retrieveAllChallengeDataForCareer method
 	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return

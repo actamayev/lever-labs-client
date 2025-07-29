@@ -15,7 +15,6 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 
 interface SingleCareerQuestMessageProps {
 	message: CareerQuestChatMessage
@@ -139,11 +138,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 						)}
 					</div>
 
-					<HintButton
-						cqChallengeData={cqChallengeData}
-						cppCode={cppCode}
-						onHintRequest={requestCareerQuestHint}
-					/>
+					<HintButton cqChallengeData={cqChallengeData} cppCode={cppCode} />
 				</div>
 			) : (
 				<div

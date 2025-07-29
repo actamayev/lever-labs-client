@@ -8,7 +8,6 @@ import RightContent from "./right-content"
 import CqChatInterface from "./chat/cq-chat-interface"
 import careerQuestClass from "../../classes/career-quest-class"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
-import CareerLoadingSkeletonLeft from "./career-loading-skeleton-left"
 import CareerLoadingSkeletonRight from "./career-loading-skeleton-right"
 
 // eslint-disable-next-line max-lines-per-function
@@ -105,9 +104,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
 		if (lockedChallenge) {
 		// Only unlock if user scrolls completely away from the locked challenge
-			if (section.type === "challenge" &&
-	section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
-	intersectionRatio < 0.1) {
+			if (
+				section.type === "challenge" &&
+				section.challengeData.challengeUUID === lockedChallenge.challengeUUID &&
+				intersectionRatio < 0.1
+			) {
 			// Don't unlock here if challenge is completed - let the completion effect handle it
 				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
 					setLockedChallenge(null)
@@ -307,53 +308,50 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const shouldEnableIntersectionObserver = isReady && showContent
 
 	// Update your intersection observer useEffect to check this flag
+	// Setup intersection observer (only after content is fully loaded and visible)
 	useEffect(() => {
 		if (!shouldEnableIntersectionObserver) return
 
-	// Your existing intersection observer logic...
-	}, [shouldEnableIntersectionObserver, /* other dependencies */])
+		const intersectionObserver = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const sectionId = entry.target.getAttribute("data-section-id")
+						const section = visibleSections.find(s => s.id === sectionId)
 
-	// Show loading skeleton while data loads
-	// Show loading skeleton while data loads
-	if (isCareerLoading || !hasRetrievedAllData) {
-		return (
-			<div className="flex h-full">
-				{/* Left Panel - Always Present */}
-				<div
-					className="overflow-y-auto scrollbar-hide"
-					style={{
-						scrollbarWidth: "none",
-						msOverflowStyle: "none",
-						width: "45%"
-					}}
-				>
-					<motion.div
-						key="skeleton-left"
-						initial={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-					>
-						<CareerLoadingSkeletonLeft />
-					</motion.div>
-				</div>
-
-				{/* Right Panel - Always Present with Border */}
-				<div
-					className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
-					style={{ width: "55%" }}
-				>
-					<motion.div
-						key="skeleton-right"
-						initial={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-					>
-						<CareerLoadingSkeletonRight />
-					</motion.div>
-				</div>
-			</div>
+						if (section) {
+							updateRightContent(section, entry.intersectionRatio)
+						}
+					}
+				})
+			},
+			{
+				threshold: [0.1, 0.5, 0.7], // Multiple thresholds for different behaviors
+				rootMargin: "-20% 0px -20% 0px"
+			}
 		)
-	}
+
+		// Small delay to ensure DOM is ready and content is visible
+		const timeoutId = setTimeout(() => {
+			// Only observe visible sections
+			document.querySelectorAll("[data-section-id]").forEach((el) => {
+				const sectionId = el.getAttribute("data-section-id")
+				if (sectionId && visibleSectionIds.includes(sectionId)) {
+					intersectionObserver.observe(el)
+				}
+			})
+		}, 100)
+
+		return () => {
+			clearTimeout(timeoutId)
+			intersectionObserver.disconnect()
+		}
+	}, [
+		shouldEnableIntersectionObserver,
+		visibleSectionIds,
+		updateRightContent,
+		visibleSections
+	])
 
 	// Content is ready, render with persistent layout
 	return (
@@ -409,18 +407,18 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 							animate={{ opacity: 1 }}
 							transition={{ duration: 0.5, ease: "easeOut" }}
 						>
-							<div
-								className="py-8 space-y-8"
-								style={{
-									paddingLeft: "65px",
-									paddingRight: "55px"
-								}}
-							>
+							<div className="py-8 space-y-8 px-[100px]">
 								{visibleSections.map((section) => (
-									<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
+									<div
+										key={section.id}
+										data-section-id={section.id}
+										className="min-h-[50vh]"
+									>
 										{section.type === "text" ? (
-											<div className="prose prose-lg max-w-none text-3xl">
-												<p className="leading-relaxed text-questionText">{section.content}</p>
+											<div className="border-2 border-swan rounded-3xl bg-polar p-4">
+												<div className="prose prose-lg max-w-none text-3xl">
+													<p className="leading-relaxed text-questionText">{section.content}</p>
+												</div>
 											</div>
 										) : (
 											<div className="h-[calc(100vh-10rem)]">
@@ -438,12 +436,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				</AnimatePresence>
 			</div>
 
-			{/* Right Panel - Always Present with Border */}
 			<div
-				className="sticky top-0 h-[calc(100vh-5rem)] bg-standardBackground border-l-2 border-swan"
+				className="sticky top-0 h-[calc(100vh-10rem)] bg-standardBackground"
 				style={{ width: "55%" }}
 			>
-				<AnimatePresence mode="wait">
+				{/* <AnimatePresence mode="wait">
 					{!showContent ? (
 					// Keep skeleton in right panel during positioning
 						<motion.div
@@ -455,30 +452,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 							<CareerLoadingSkeletonRight />
 						</motion.div>
 					) : (
-					// Right content with independent animation
-						// <motion.div
-						// 	key="content-right"
-						// 	initial={{ opacity: 0 }}
-						// 	animate={{ opacity: 1 }}
-						// 	transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }} // Slight delay for stagger
-						// >
-						<AnimatePresence mode="wait">
-							<motion.div
-								key={`${rightContent.type}-${rightContent.type === "image" ?
-									rightContent.icon :
-									rightContent.challengeData.challengeUUID}`}
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{ duration: 0.3 }}
-								className="h-full"
-							>
-								<RightContent rightContent={rightContent} />
-							</motion.div>
-						</AnimatePresence>
-						// </motion.div>
 					)}
-				</AnimatePresence>
+				</AnimatePresence> */}
+				<RightContent rightContent={rightContent} color={careerData.careerColor} />
 			</div>
 		</div>
 	)

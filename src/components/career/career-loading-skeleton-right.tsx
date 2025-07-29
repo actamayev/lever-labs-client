@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+
 export default function CareerLoadingSkeletonRight() {
 	return (
 		<div className="flex items-center justify-center h-full">

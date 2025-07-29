@@ -7,21 +7,17 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, CqChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../lib/shadcn/utils"
 import pipClass from "../../classes/pip-class"
-import { Separator } from "../shadcn/ui/separator"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../classes/career-quest-class"
 import checkCareerQuestCode from "../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
-import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 import { stripBlockPositions } from "../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../utils/career-quest/edit-career-quest-sandbox-project"
-import CustomTooltip from "../custom-tooltip"
 
 // Helper function to check if JSON has meaningful blocks
 function hasBlocks(blocklyJson: BlocklyJson): boolean {
@@ -213,69 +209,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const foxColors = getDuolingoColors("fox")
 
 	return (
-		<div className="flex flex-col h-full p-4 gap-4">
-			{/* Description Section with Hint Button */}
-			<div className="flex-shrink-0 flex gap-4 max-h-[25%]">
-				{/* Two-column description card */}
-				<div className="flex-1 bg-standardBackground rounded-lg border-2 border-swan p-4 flex gap-4 overflow-hidden">
-					{/* Left Column - Description */}
-					<div className="flex-1 overflow-y-auto">
-						<h3 className="text-base font-semibold mb-2 text-questionText">
-							What this code does:
-						</h3>
-						<p className="text-sm text-eel leading-relaxed">
-							{challengeData.description}
-						</p>
-					</div>
-
-					{/* Vertical Separator */}
-					<Separator orientation="vertical" className="h-full w-0.5 rounded-full" />
-
-					{/* Right Column - Before Running */}
-					<div className="flex-1 overflow-y-auto">
-						{challengeData.beforeRunningText ? (
-							<>
-								<h3 className="text-base font-semibold mb-2 text-questionText">
-									Before running code, make sure to:
-								</h3>
-								<p className="text-sm text-eel leading-relaxed">
-									{challengeData.beforeRunningText}
-								</p>
-							</>
-						) : (
-							<div className="flex items-center justify-center h-full text-gray-400">
-								<p className="text-sm">No special instructions</p>
-							</div>
-						)}
-					</div>
-				</div>
-
-				{/* Standalone Hint Button */}
-				<div className="flex-shrink-0 flex flex-col gap-2">
-					{/* Challenge Number Indicator */}
-					<CustomTooltip
-						tooltipTrigger={
-							<div
-								className="w-8 h-8 rounded-full bg-macaw text-white flex items-center
-								justify-center text-sm font-semibold mx-auto cursor-default"
-							>
-								C{challengeData.challengeIndex}
-							</div>
-						}
-						tooltipContent={`Challenge ${challengeData.challengeIndex}: ${challengeData.title}`}
-					/>
-
-					{/* Hint Button */}
-					<TactileButton
-						className="bg-beetle-2 text-white rounded-lg p-3 h-fit"
-						shadowColor="rgb(140, 80, 200)"
-						onClick={() => requestCareerQuestHint({ ...challengeData }, cppCode)}
-						disabled={isStreaming}
-					>
-						<CustomLightbulb className="w-5 h-5" />
-					</TactileButton>
-				</div>
-			</div>
+		<div className="flex flex-col h-full py-4 gap-4">
 
 			{/* Sandbox Section - Middle (flexible height) */}
 			<div className="flex-1 min-h-0">

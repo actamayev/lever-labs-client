@@ -12,6 +12,7 @@ import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
+import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
 
 interface ChatInterfaceProps {
 	cppCode: string
@@ -83,6 +84,11 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 		await deleteCareerQuestChat(challengeData)
 	}, [challengeData, hasAnyMessages, isStreaming])
 
+	const handleHintClick = useCallback(async () => {
+		if (isStreaming) return
+		await requestCareerQuestHint(challengeData, cppCode)
+	}, [challengeData, cppCode, isStreaming])
+
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
 		return (
@@ -138,6 +144,7 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 				setInputValue={setInputValue}
 				hasUserMessages={hasUserMessages}
 				isStreaming={isStreaming}
+				handleHintClick={handleHintClick}
 			/>
 		</ChatParentComponent>
 	)
