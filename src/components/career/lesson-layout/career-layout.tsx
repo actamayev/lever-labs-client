@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
 import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import RightContent from "./right-content"
-import CqChatInterface from "./chat/cq-chat-interface"
-import careerQuestClass from "../../classes/career-quest-class"
-import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
+import CqChatInterface from "../chat/cq-chat-interface"
+import careerQuestClass from "../../../classes/career-quest-class"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {

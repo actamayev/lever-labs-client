@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../../lib/shadcn/utils"
 import ChallengeSection from "./challenge-section"
-import getDuolingoColors from "../../utils/get-duolingo-colors"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {

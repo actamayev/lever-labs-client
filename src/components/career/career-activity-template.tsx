@@ -1,6 +1,6 @@
 "use client"
 
-import CareerLayout from "./career-layout"
+import CareerLayout from "./lesson-layout/career-layout"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
 
 interface Props {
