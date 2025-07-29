@@ -55,7 +55,7 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 							<code
 								className={cn(
 									forceDarkMode
-										? "bg-gray-600 text-gray-100 px-1 py-0.5 rounded text-xs font-mono"
+										? "bg-gray-600 text-polar px-1 py-0.5 rounded text-xs font-mono"
 										: "bg-gray-200 dark:bg-gray-600 px-1 py-0.5 rounded text-xs font-mono",
 									className
 								)}
