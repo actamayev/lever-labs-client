@@ -47,7 +47,6 @@ interface CareerInstance {
 	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
-	isLoadingCareer: boolean
 }
 
 class CareerQuestClass {
@@ -106,8 +105,7 @@ class CareerQuestClass {
 			challenges,
 			progress: {
 				completedChallengeIds: new Set<ChallengeUUID>()
-			},
-			isLoadingCareer: false
+			}
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -465,25 +463,9 @@ class CareerQuestClass {
 		return this.getAllChallengeSections(career.careerDefinition.sections).length
 	}
 
-	// Add this method
-	public isCareerLoading(careerUUID: CareerUUID): boolean {
-		const career = this.getCareer(careerUUID)
-		return career?.isLoadingCareer || false
-	}
-
-	// Add this method
-	public setCareerLoadingState = action((careerUUID: CareerUUID, isLoading: boolean): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.isLoadingCareer = isLoading
-	})
-
 	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-
-		// SET LOADING STATE AT START
-		this.setCareerLoadingState(careerUUID, true)
 
 		// Use helper to get challenge sections
 		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
@@ -494,12 +476,8 @@ class CareerQuestClass {
 
 		try {
 			await Promise.all(retrievalPromises)
-			// CLEAR LOADING STATE WHEN DONE
-			this.setCareerLoadingState(careerUUID, false)
 		} catch (error) {
 			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
-			// CLEAR LOADING STATE ON ERROR TOO
-			this.setCareerLoadingState(careerUUID, false)
 		}
 	})
 

@@ -211,7 +211,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	return (
 		<div className="flex flex-col h-full gap-4">
 			{/* Sandbox Section - Middle (flexible height) */}
-			<div className="h-full flex flex-col border-2 border-swan rounded-3xl bg-polar">
+			<div className="h-full flex flex-col">
 				<div className="flex-1 min-h-0">
 					<InteractiveMiniSandbox
 						key={workspaceKey}

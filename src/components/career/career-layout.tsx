@@ -11,8 +11,6 @@ import generateCppFromJson from "../../utils/cpp/generate-cpp-from-json"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
-	const [isReady, setIsReady] = useState(false)
-	const [showContent, setShowContent] = useState(false)
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
 		icon: careerData.initialImage
@@ -22,7 +20,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
 	const leftScrollRef = useRef<HTMLDivElement>(null)
 
-	const isCareerLoading = careerQuestClass.isCareerLoading(careerData.careerUUID)
 	const hasRetrievedAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerUUID)
 
 	// Memoize visible sections to prevent unnecessary re-calculations
@@ -263,8 +260,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return () => clearTimeout(positioningTimeout)
 	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerUUID, scrollToSection, careerData.sections])
 
-	const shouldEnableIntersectionObserver = isReady && showContent
-
 	// Initialize career and retrieve data
 	useEffect(() => {
 		const initializeCareer = async () => {
@@ -281,49 +276,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [])
 
 	useEffect(() => {
-		if (!isCareerLoading && hasRetrievedAllData && !isReady) {
-			console.log("🚀 Data loaded, preparing view...")
-
-			// Data is loaded, now prepare the view
-			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerUUID)
-
-			// Set the right content
-			if (targetInfo.rightContent) {
-				setRightContent(targetInfo.rightContent)
-			}
-
-			// Set ready but keep content invisible
-			setIsReady(true)
-
-			// Handle positioning while content is rendered but invisible
-			if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
-				console.log("📍 Auto-scrolling to:", targetInfo.sectionId)
-
-				// Wait for DOM to be ready, then scroll while invisible
-				setTimeout(() => {
-					scrollToSection(targetInfo.sectionId as string)
-
-					// Wait for scroll to complete, then fade in
-					setTimeout(() => {
-						console.log("✨ Fading in content")
-						setShowContent(true)
-					}, 200) // Give scroll time to complete
-				}, 100) // Give DOM time to render
-			} else {
-				// No scrolling needed, fade in after brief delay
-				setTimeout(() => {
-					setShowContent(true)
-				}, 50)
-			}
-		}
-	}, [isCareerLoading, hasRetrievedAllData, isReady, careerData.careerUUID, scrollToSection])
-
-	// Update your intersection observer useEffect to check this flag
-	// Setup intersection observer (only after content is fully loaded and visible)
-	// KEEP THIS ONE (with correct updateRightContent signature)
-	useEffect(() => {
-		if (!shouldEnableIntersectionObserver) return
-
 		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -355,7 +307,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			intersectionObserver.disconnect()
 		}
 	}, [
-		shouldEnableIntersectionObserver,
 		visibleSectionIds,
 		updateRightContent
 	])
@@ -374,23 +325,18 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				}}
 			>
 				<AnimatePresence mode="wait">
-					{!showContent ? (
-					// Invisible content for positioning
-						<motion.div
-							key="positioning-left"
-							className="opacity-0 pointer-events-none"
-							initial={{ opacity: 0 }}
-						>
-							<div
-								className="py-8 space-y-8"
-								style={{
-									paddingLeft: "65px",
-									paddingRight: "55px"
-								}}
-							>
-								{visibleSections.map((section) => (
-									<div key={section.id} data-section-id={section.id} className="min-h-[50vh]">
-										{section.type === "textParent" ? (
+					<motion.div
+						key="content-left"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						transition={{ duration: 0.5, ease: "easeOut" }}
+					>
+						<div className="py-8 space-y-8 px-[100px]">
+							{visibleSections.map((section) => (
+								<div key={section.id} className="min-h-[50vh]">
+									{section.type === "textParent" ? (
+										// Render TextParent as single grouped container
+										<div className="border-2 border-swan rounded-3xl bg-polar p-4">
 											<div className="space-y-6">
 												{section.children.map((childSection) => (
 													<div
@@ -404,60 +350,20 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													</div>
 												))}
 											</div>
-										) : (
-											<div className="h-[calc(100vh-10rem)]">
-												<CqChatInterface
-													cppCode={getCppCodeForChallenge(section.challengeData)}
-													challengeData={section.challengeData}
-												/>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						</motion.div>
-					) : (
-					// Visible content with fade-in
-						<motion.div
-							key="content-left"
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							transition={{ duration: 0.5, ease: "easeOut" }}
-						>
-							<div className="py-8 space-y-8 px-[100px]">
-								{visibleSections.map((section) => (
-									<div key={section.id} className="min-h-[50vh]">
-										{section.type === "textParent" ? (
-										// Render TextParent as single grouped container
-											<div className="border-2 border-swan rounded-3xl bg-polar p-4">
-												<div className="space-y-6">
-													{section.children.map((childSection) => (
-														<div
-															key={childSection.id}
-															data-section-id={childSection.id}
-															className="prose prose-lg max-w-none text-3xl"
-														>
-															<p className="leading-relaxed text-questionText">
-																{childSection.content}
-															</p>
-														</div>
-													))}
-												</div>
-											</div>
-										) : (
+										</div>
+									) : (
 										// Render challenge section
-											<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
-												<CqChatInterface
-													cppCode={getCppCodeForChallenge(section.challengeData)}
-													challengeData={section.challengeData}
-												/>
-											</div>
-										)}
-									</div>
-								))}
-							</div>
-						</motion.div>
-					)}
+										<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
+											<CqChatInterface
+												cppCode={getCppCodeForChallenge(section.challengeData)}
+												challengeData={section.challengeData}
+											/>
+										</div>
+									)}
+								</div>
+							))}
+						</div>
+					</motion.div>
 				</AnimatePresence>
 			</div>
 
@@ -465,20 +371,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				className="sticky top-0 h-[calc(100vh-10rem)] bg-standardBackground"
 				style={{ width: "55%" }}
 			>
-				{/* <AnimatePresence mode="wait">
-					{!showContent ? (
-					// Keep skeleton in right panel during positioning
-						<motion.div
-							key="skeleton-right-persistent"
-							initial={{ opacity: 1 }}
-							exit={{ opacity: 0 }}
-							transition={{ duration: 0.3 }}
-						>
-							<CareerLoadingSkeletonRight />
-						</motion.div>
-					) : (
-					)}
-				</AnimatePresence> */}
 				<RightContent rightContent={rightContent} color={careerData.careerColor} />
 			</div>
 		</div>
