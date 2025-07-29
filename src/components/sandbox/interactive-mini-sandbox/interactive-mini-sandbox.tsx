@@ -122,7 +122,7 @@ function InteractiveMiniSandbox(props: Props) {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-3xl overflow-hidden border-2 border-swan h-full")}
+			className={cn("relative z-0 rounded-3xl overflow-hidden border-b-2 border-swan h-full")}
 		>
 			{/* Toggle Toolbox Button */}
 			<Button

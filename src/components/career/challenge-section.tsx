@@ -210,43 +210,44 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 	return (
 		<div className="flex flex-col h-full gap-4">
-
 			{/* Sandbox Section - Middle (flexible height) */}
-			<div className="flex-1 min-h-0">
-				<InteractiveMiniSandbox
-					key={workspaceKey}
-					toolboxConfig={challengeData.toolboxConfig}
-					blocklyJson={currentBlocklyJson}
-					onJsonChange={handleJsonChange}
-				/>
-			</div>
+			<div className="h-full flex flex-col pt-5 pb-2 border-2 border-swan rounded-3xl">
+				<div className="flex-1 min-h-0">
+					<InteractiveMiniSandbox
+						key={workspaceKey}
+						toolboxConfig={challengeData.toolboxConfig}
+						blocklyJson={currentBlocklyJson}
+						onJsonChange={handleJsonChange}
+					/>
+				</div>
 
-			{/* Action Buttons Section - Bottom */}
-			<div className="flex-shrink-0 flex gap-3">
-				<AnimatedStateButton
-					buttonText="SEND CODE"
-					isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-					onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-					className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
-				/>
-				<TactileButton
-					className={cn(
-						"flex-1 text-white flex items-center justify-center rounded-xl text-xl h-12 font-semibold",
-						foxColors.bg
-					)}
-					shadowClass={foxColors.shadow2}
-					onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
-					disabled={isStreaming || isEmpty(cppCode)}
-				>
+				{/* Action Buttons Section - Bottom */}
+				<div className="flex-shrink-0 flex gap-3 p-5 bg-polar">
+					<AnimatedStateButton
+						buttonText="SEND CODE"
+						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+						onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
+					/>
+					<TactileButton
+						className={cn(
+							"flex-1 text-white flex items-center justify-center rounded-xl text-xl h-12 font-semibold",
+							foxColors.bg
+						)}
+						shadowClass={foxColors.shadow2}
+						onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
+						disabled={isStreaming || isEmpty(cppCode)}
+					>
 					CHECK CODE
-				</TactileButton>
-				<TactileButton
-					className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
-					shadowColor="rgb(150, 50, 75)"
-					onClick={stopCurrentlyRunningCode}
-				>
+					</TactileButton>
+					<TactileButton
+						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
+						shadowColor="rgb(150, 50, 75)"
+						onClick={stopCurrentlyRunningCode}
+					>
 					STOP
-				</TactileButton>
+					</TactileButton>
+				</div>
 			</div>
 		</div>
 	)
