@@ -189,7 +189,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 							onSearchChange={handleSearchChange}
 						/>
 						<div className="h-full w-full border-b-2 border-x-2 border-swan rounded-b-3xl bg-polar min-h-0 flex flex-col">
-							<Suspense fallback={<BlocklyLoadingComponent extraClasses="flex-1" />}>
+							<Suspense fallback={<BlocklyLoadingComponent />}>
 								<BlocklyComponent
 									toolboxConfig={filteredToolboxConfig}
 									initialBlocklyJson={project.sandboxJson}
