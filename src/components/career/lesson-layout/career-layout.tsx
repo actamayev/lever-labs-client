@@ -6,9 +6,8 @@ import "swiper/css"
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
-import { useEffect, useState, useMemo, useCallback, useRef } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import RightContent from "./right-content"
-import { cn } from "../../../lib/shadcn/utils"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
@@ -17,13 +16,19 @@ import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 interface TextParentSliderProps {
 	section: TextParentSection
 	onSlideChange: (childId: string) => void
-	// onComplete: (textParentId: string) => void
+	onComplete: (textParentId: string) => void
+	onAllowMainNavigation: () => void
 }
 
-const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideChange }) => {
+const TextParentSlider: React.FC<TextParentSliderProps> = ({
+	section,
+	onSlideChange,
+	onComplete,
+	onAllowMainNavigation
+}) => {
 	const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
 	const [isAtLastSlide, setIsAtLastSlide] = useState(false)
-	const [allowScrollPassthrough, setAllowScrollPassthrough] = useState(false)
+	const [allowMainNavigation, setAllowMainNavigation] = useState(false)
 
 	const handleSlideChange = (swiper: SwiperType) => {
 		const currentIdx = swiper.activeIndex
@@ -38,10 +43,11 @@ const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideCha
 		setIsAtLastSlide(isLast)
 
 		if (isLast) {
-			// onComplete(section.id)
-			// Allow scroll passthrough after a brief delay
+			onComplete(section.id)
+			// Allow main navigation after completing text parent
 			setTimeout(() => {
-				setAllowScrollPassthrough(true)
+				setAllowMainNavigation(true)
+				onAllowMainNavigation()
 			}, 300)
 		}
 	}
@@ -49,36 +55,38 @@ const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideCha
 	const handleWheel = useCallback((e: WheelEvent) => {
 		if (!swiperInstance) return
 
-		// If we're at the last slide and scrolling down, allow passthrough
-		if (isAtLastSlide && allowScrollPassthrough && e.deltaY > 0) {
-			return // Don't prevent default, let outer scroll handle it
+		const isAtFirst = swiperInstance.activeIndex === 0
+		const isScrollingUp = e.deltaY < 0
+		const isScrollingDown = e.deltaY > 0
+
+		// Allow main navigation if at first slide and scrolling up
+		if (isAtFirst && isScrollingUp) {
+			return // Don't stop propagation, let main swiper handle
 		}
 
-		// If we're at the first slide and scrolling up, allow passthrough
-		if (swiperInstance.activeIndex === 0 && e.deltaY < 0) {
-			return
+		// Allow main navigation if at last slide, completed, and scrolling down
+		if (isAtLastSlide && allowMainNavigation && isScrollingDown) {
+			return // Don't stop propagation, let main swiper handle
 		}
 
-		// Otherwise, let Swiper handle the wheel event
+		// For all other cases, stop propagation to prevent main swiper from moving
+		// But don't prevent default - let this swiper handle the wheel event
 		e.stopPropagation()
-	}, [swiperInstance, isAtLastSlide, allowScrollPassthrough])
+	}, [swiperInstance, isAtLastSlide, allowMainNavigation])
 
 	useEffect(() => {
 		if (swiperInstance?.el) {
 			const swiperEl = swiperInstance.el
-			swiperEl.addEventListener("wheel", handleWheel, { passive: true })
+			swiperEl.addEventListener("wheel", handleWheel, { capture: true })
 
 			return () => {
 				swiperEl.removeEventListener("wheel", handleWheel)
 			}
 		}
-	}, [swiperInstance, isAtLastSlide, allowScrollPassthrough, handleWheel])
+	}, [swiperInstance, isAtLastSlide, allowMainNavigation, handleWheel])
 
 	return (
-		<div className={cn(
-			"border-2 border-swan rounded-3xl bg-polar",
-			"h-[calc(100vh-10rem)] flex flex-col"
-		)}>
+		<div className="border-2 border-swan rounded-3xl bg-polar h-full flex flex-col">
 			<Swiper
 				direction="vertical"
 				slidesPerView={1}
@@ -86,12 +94,13 @@ const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideCha
 				mousewheel={{
 					enabled: true,
 					forceToAxis: true,
-					releaseOnEdges: true
+					releaseOnEdges: true // We handle this manually
 				}}
 				keyboard={{
 					enabled: true,
 					onlyInViewport: true
 				}}
+				nested={true}
 				modules={[Mousewheel, Keyboard]}
 				onSwiper={setSwiperInstance}
 				onSlideChange={handleSlideChange}
@@ -125,7 +134,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		icon: careerData.initialImage
 	})
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
-	const leftScrollRef = useRef<HTMLDivElement>(null)
+	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
@@ -221,83 +230,73 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return generateCppFromJson(currentBlocklyJson)
 	}, [])
 
-	useEffect(() => {
-		const intersectionObserver = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						const sectionId = entry.target.getAttribute("data-section-id")
-						if (sectionId && visibleSectionIds.includes(sectionId)) {
-							updateRightContent(sectionId)
-						}
-					}
-				})
-			},
-			{
-				threshold: [0.1, 0.5, 0.7],
-				rootMargin: "-20% 0px -20% 0px"
-			}
-		)
-
-		const timeoutId = setTimeout(() => {
-			document.querySelectorAll("[data-section-id]").forEach((el) => {
-				const sectionId = el.getAttribute("data-section-id")
-				// Only observe challenge sections for outer scroll - text parent children are handled separately
-				// eslint-disable-next-line max-len
-				if (sectionId && visibleSectionIds.includes(sectionId) && !careerQuestClass.isTextSectionId(careerData.careerUUID, sectionId)) {
-					intersectionObserver.observe(el)
-				}
-			})
-		}, 100)
-
-		return () => {
-			clearTimeout(timeoutId)
-			intersectionObserver.disconnect()
-		}
-	}, [visibleSectionIds, updateRightContent, careerData.careerUUID])
-
-	// Content is ready, render with persistent layout
 	return (
 		<div className="flex h-full">
 			{/* Left Panel - Always Present */}
 			<div className="relative" style={{ width: "45%" }}>
 				<div className="px-[100px] py-8 h-full pointer-events-none">
-					<div
-						ref={leftScrollRef}
-						className="overflow-y-auto scrollbar-hide h-full pointer-events-auto"
-						style={{
-							scrollbarWidth: "none",
-							msOverflowStyle: "none"
-						}}
-					>
+					<div className="h-full pointer-events-auto">
 						<AnimatePresence mode="wait">
 							<motion.div
 								initial={{ opacity: 0 }}
 								animate={{ opacity: 1 }}
 								transition={{ duration: 0.5, ease: "easeOut" }}
+								className="h-full"
 							>
-								<div className="space-y-8">
+								<Swiper
+									direction="vertical"
+									slidesPerView={1}
+									spaceBetween={0}
+									mousewheel={{
+										enabled: true,
+										forceToAxis: true,
+										releaseOnEdges: true
+									}}
+									keyboard={{
+										enabled: true,
+										onlyInViewport: true
+									}}
+									allowSlideNext={false}
+									allowSlidePrev={true}
+									modules={[Mousewheel, Keyboard]}
+									onSwiper={setMainSwiperInstance}
+									onSlideChange={(swiper) => {
+										const currentSection = visibleSections[swiper.activeIndex]
+										if (currentSection?.type === "challenge") {
+											updateRightContent(currentSection.challengeData.challengeUUID)
+										} else if (currentSection?.type === "textParent") {
+											// Right content will be updated by nested slider
+										}
+									}}
+									className="h-full"
+								>
 									{visibleSections.map((section) => (
-										<div key={section.id} className="min-h-[50vh]">
-											{section.type === "challenge" ? (
-												<div
-													data-section-id={section.challengeData.challengeUUID}
-													className="h-[calc(100vh-10rem)]"
-												>
+										<SwiperSlide key={section.id} className="h-full">
+											<div className="h-[calc(100vh-10rem)]">
+												{section.type === "challenge" ? (
 													<CqChatInterface
 														cppCode={getCppCodeForChallenge(section.challengeData)}
 														challengeData={section.challengeData}
 													/>
-												</div>
-											) : (
-												<TextParentSlider
-													section={section}
-													onSlideChange={(childId) => updateRightContent(childId)}
-												/>
-											)}
-										</div>
+												) : (
+													<TextParentSlider
+														section={section}
+														onSlideChange={(childId) => updateRightContent(childId)}
+														onComplete={(textParentId) => {
+															console.log("Completed text parent:", textParentId)
+														}}
+														onAllowMainNavigation={() => {
+															// Enable main swiper navigation when text parent is completed
+															if (mainSwiperInstance) {
+																mainSwiperInstance.allowSlideNext = true
+															}
+														}}
+													/>
+												)}
+											</div>
+										</SwiperSlide>
 									))}
-								</div>
+								</Swiper>
 							</motion.div>
 						</AnimatePresence>
 					</div>
