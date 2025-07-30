@@ -390,7 +390,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													e.stopPropagation()
 												}}
 												style={{
-													padding: "50px"
+													padding: "75px"
 												}}
 											>
 												<div className="space-y-6">
@@ -398,7 +398,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 														<div
 															key={childSection.id}
 															data-child-id={childSection.id}
-															className="prose prose-lg max-w-none text-3xl min-h-[50vh]"
+															className="prose prose-lg max-w-none text-4xl min-h-[50vh]"
 														>
 															<p className="leading-relaxed text-questionText text-center">
 																{childSection.content}
