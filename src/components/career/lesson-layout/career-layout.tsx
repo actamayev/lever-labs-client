@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
 import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import RightContent from "./right-content"
+import { cn } from "../../../lib/shadcn/utils"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
-import { cn } from "../../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -16,9 +16,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		type: "image",
 		icon: careerData.initialImage
 	})
-	const [lockedChallenge, setLockedChallenge] = useState<CqChallengeData | null>(null)
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
-	// const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
 	const leftScrollRef = useRef<HTMLDivElement>(null)
 	// Add after existing useState declarations
 	const [activeTextParent, setActiveTextParent] = useState<string | null>(null)
@@ -55,9 +53,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return sections
 	}, [careerData.sections, visibleSectionIds])
 
-	// Get completion count to trigger unlock detection
-	const completionCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
-
 	// Initialize allowed sections for first time (all text sections before first challenge)
 	useEffect(() => {
 		if (allowedIconSections.length !== 0) return
@@ -77,76 +72,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setAllowedIconSections(textSectionIds)
 	}, [careerData.sections, allowedIconSections.length])
 
-	// Recalculate allowed sections after challenge completion
-	const recalculateAllowedSections = useCallback((completedChallengeId: string) => {
-		const sections = careerData.sections
-		const challengeIndex = sections.findIndex(s =>
-			s.type === "challenge" && s.challengeData.challengeUUID === completedChallengeId
-		)
-
-		if (challengeIndex === -1) return
-
-		// Find next challenge index to limit scope
-		const nextChallengeIndex = sections.findIndex((s, index) =>
-			index > challengeIndex && s.type === "challenge"
-		)
-
-		// Get text section IDs from TextParent sections between completed challenge and next challenge (or end)
-		const endIndex = nextChallengeIndex === -1 ? sections.length : nextChallengeIndex
-		const newAllowedSectionIds: string[] = []
-
-		for (let i = challengeIndex + 1; i < endIndex; i++) {
-			const section = sections[i]
-			if (section.type === "textParent") {
-				newAllowedSectionIds.push(...section.children.map(child => child.id))
-			}
-		}
-
-		setAllowedIconSections(newAllowedSectionIds)
-	}, [careerData.sections])
-
-	// Detect challenge completion and unlock
-	useEffect(() => {
-		if (lockedChallenge && careerQuestClass.isChallengeCompleted(lockedChallenge)) {
-			setLockedChallenge(null)
-			recalculateAllowedSections(lockedChallenge.challengeUUID)
-		}
-	}, [lockedChallenge, completionCount, recalculateAllowedSections])
-
-	// Check if a section should show icon
-	const shouldShowIcon = useCallback((sectionId: string) => {
-		// Never show icons when challenge is locked
-		if (lockedChallenge) return false
-
-		// Check if this is a text section ID and if it's allowed
-		const isTextSection = careerQuestClass.isTextSectionId(careerData.careerUUID, sectionId)
-		if (!isTextSection) return false
-
-		// Check if this section is in allowed list
-		return allowedIconSections.includes(sectionId)
-	}, [lockedChallenge, allowedIconSections, careerData.careerUUID])
-
 	// Enhanced intersection observer callback
-	const updateRightContent = useCallback((sectionId: string, intersectionRatio: number) => {
-		// Don't update content during initial positioning
-		// if (!isInitialPositioningComplete) return
-
-		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
-		if (lockedChallenge) {
-			// Only unlock if user scrolls completely away from the locked challenge
-			if (
-				sectionId === lockedChallenge.challengeUUID &&
-				intersectionRatio < 0.1
-			) {
-				// Don't unlock here if challenge is completed - let the completion effect handle it
-				if (!careerQuestClass.isChallengeCompleted(lockedChallenge)) {
-					setLockedChallenge(null)
-				}
-			}
-			return // Don't update content while locked
-		}
-
-		// eslint-disable-next-line complexity
+	const updateRightContent = useCallback((sectionId: string) => {
 		setRightContent(prevContent => {
 			let newContent: RightContent
 
@@ -154,11 +81,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			const textSection = careerQuestClass.getTextSectionById(careerData.careerUUID, sectionId)
 			if (textSection) {
 				// This is a text section
-				if (shouldShowIcon(sectionId)) {
-					newContent = { type: "image", icon: textSection.triggerImage }
-				} else {
-					return prevContent // Don't change content for disallowed sections
-				}
+				newContent = { type: "image", icon: textSection.triggerImage }
 			} else {
 				// This must be a challenge UUID
 				const challengeData = careerQuestClass.getChallengeData({
@@ -169,11 +92,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				if (!challengeData) return prevContent
 
 				newContent = { type: "challenge", challengeData }
-
-				// Lock the challenge if it comes fully into view (70% threshold)
-				if (intersectionRatio >= 0.7) {
-					setLockedChallenge(challengeData)
-				}
 			}
 
 			// Only update if content actually changed
@@ -191,7 +109,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 			return newContent
 		})
-	}, [lockedChallenge, shouldShowIcon, careerData.careerUUID])
+	}, [careerData.careerUUID])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -209,17 +127,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const { scrollTop, scrollHeight, clientHeight } = scrollElement
 		const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10 // 10px tolerance
 
-		console.log("📜 Text parent scroll:", {
-			textParentId,
-			scrollTop,
-			scrollHeight,
-			clientHeight,
-			isAtBottom,
-			completed: completedTextParents.has(textParentId)
-		})
-
 		if (isAtBottom && !completedTextParents.has(textParentId)) {
-			console.log("✅ Completing text parent:", textParentId)
 			handleTextParentScrollComplete(textParentId)
 		}
 	}, [completedTextParents, handleTextParentScrollComplete])
@@ -239,7 +147,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.getAttribute("data-section-id")
 						if (sectionId && visibleSectionIds.includes(sectionId)) {
-							updateRightContent(sectionId, entry.intersectionRatio)
+							updateRightContent(sectionId)
 						}
 					}
 				})
@@ -274,16 +182,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			const target = e.target as HTMLElement
 			const isScrollingWithinTextParent = target.closest("[data-text-parent]")
 
-			console.log("🚫 Outer scroll attempt:", {
-				activeTextParent,
-				completedTextParents: Array.from(completedTextParents),
-				target: target.tagName,
-				isScrollingWithinTextParent: !!isScrollingWithinTextParent
-			})
-
 			// Only block outer scroll if we're in an active text parent AND the scroll is not within that text parent
 			if (activeTextParent && !completedTextParents.has(activeTextParent) && !isScrollingWithinTextParent) {
-				console.log("❌ Blocking outer scroll for:", activeTextParent)
 				e.preventDefault()
 				e.stopPropagation()
 			}
@@ -318,7 +218,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 							if (entry.isIntersecting) {
 								const childId = entry.target.getAttribute("data-child-id")
 								if (childId) {
-									updateRightContent(childId, entry.intersectionRatio)
+									updateRightContent(childId)
 								}
 							}
 						})
@@ -385,15 +285,13 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													className={cn(
 														"border-2 border-swan rounded-3xl bg-polar",
 														"h-[calc(100vh-10rem)] flex flex-col"
-													)}
-												>
+													)}>
 													<div
 														ref={(el) => setTextParentRef(section.id, el)}
 														className="flex-1 overflow-y-auto scrollbar-hide"
 														data-text-parent={section.id}
 														onScroll={(e) => {
 															const target = e.target as HTMLDivElement
-															console.log("🎯 Setting active text parent:", section.id)
 															setActiveTextParent(section.id)
 															handleTextParentScroll(section.id, target)
 															// Prevent this scroll event from bubbling up to outer container

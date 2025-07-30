@@ -33,8 +33,7 @@ export default function RightContent({ rightContent, color }: RightContentProps)
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3 }}
-
+						transition={{ duration: 0.0 }}
 					>
 						<IconComponent size={120} className={colors.text} />
 					</motion.div>
@@ -54,7 +53,7 @@ export default function RightContent({ rightContent, color }: RightContentProps)
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					transition={{ duration: 0.0 }}
 					className="h-full w-full border-2 border-swan rounded-3xl bg-polar"
 				>
 					<ChallengeSection challengeData={rightContent.challengeData} />
