@@ -8,6 +8,7 @@ import RightContent from "./right-content"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import { cn } from "../../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -350,72 +351,82 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	return (
 		<div className="flex h-full">
 			{/* Left Panel - Always Present */}
-			<div
-				ref={leftScrollRef}
-				className="overflow-y-auto scrollbar-hide"
-				style={{
-					scrollbarWidth: "none",
-					msOverflowStyle: "none",
-					width: "45%"
-				}}
-			>
-				<AnimatePresence mode="wait">
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						transition={{ duration: 0.5, ease: "easeOut" }}
+			<div className="relative" style={{ width: "45%" }}>
+				<div className="px-[100px] py-8 h-full pointer-events-none">
+					<div
+						ref={leftScrollRef}
+						className="overflow-y-auto scrollbar-hide h-full pointer-events-auto"
+						style={{
+							scrollbarWidth: "none",
+							msOverflowStyle: "none"
+						}}
 					>
-						<div className="py-8 space-y-8 px-[100px]">
-							{visibleSections.map((section) => (
-								<div key={section.id} className="min-h-[50vh]">
-									{section.type === "challenge" ? (
-										<div data-section-id={section.challengeData.challengeUUID} className="h-[calc(100vh-10rem)]">
-											<CqChatInterface
-												cppCode={getCppCodeForChallenge(section.challengeData)}
-												challengeData={section.challengeData}
-											/>
-										</div>
-									) : (
-										<div className="border-2 border-swan rounded-3xl bg-polar h-[calc(100vh-10rem)] flex flex-col">
-											<div
-												ref={(el) => setTextParentRef(section.id, el)}
-												className="flex-1 overflow-y-auto scrollbar-hide"
-												data-text-parent={section.id}
-												onScroll={(e) => {
-													const target = e.target as HTMLDivElement
-													console.log("🎯 Setting active text parent:", section.id)
-													setActiveTextParent(section.id)
-													handleTextParentScroll(section.id, target)
-													// Prevent this scroll event from bubbling up to outer container
-													e.stopPropagation()
-												}}
-												style={{
-													padding: "75px"
-												}}
-											>
-												<div className="space-y-6">
-													{section.children.map((childSection) => (
-														<div
-															key={childSection.id}
-															data-child-id={childSection.id}
-															className="prose prose-lg max-w-none text-4xl min-h-[50vh]"
-														>
-															<p className="leading-relaxed text-questionText text-center">
-																{childSection.content}
-															</p>
-														</div>
-													))}
+						<AnimatePresence mode="wait">
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.5, ease: "easeOut" }}
+							>
+								<div className="space-y-8">
+									{visibleSections.map((section) => (
+										<div key={section.id} className="min-h-[50vh]">
+											{section.type === "challenge" ? (
+												<div
+													data-section-id={section.challengeData.challengeUUID}
+													className="h-[calc(100vh-10rem)]"
+												>
+													<CqChatInterface
+														cppCode={getCppCodeForChallenge(section.challengeData)}
+														challengeData={section.challengeData}
+													/>
 												</div>
-											</div>
+											) : (
+												<div
+													className={cn(
+														"border-2 border-swan rounded-3xl bg-polar",
+														"h-[calc(100vh-10rem)] flex flex-col"
+													)}
+												>
+													<div
+														ref={(el) => setTextParentRef(section.id, el)}
+														className="flex-1 overflow-y-auto scrollbar-hide"
+														data-text-parent={section.id}
+														onScroll={(e) => {
+															const target = e.target as HTMLDivElement
+															console.log("🎯 Setting active text parent:", section.id)
+															setActiveTextParent(section.id)
+															handleTextParentScroll(section.id, target)
+															// Prevent this scroll event from bubbling up to outer container
+															e.stopPropagation()
+														}}
+														style={{
+															padding: "75px"
+														}}
+													>
+														<div className="space-y-6">
+															{section.children.map((childSection) => (
+																<div
+																	key={childSection.id}
+																	data-child-id={childSection.id}
+																	className="prose prose-lg max-w-none text-4xl min-h-[50vh]"
+																>
+																	<p className="leading-relaxed text-questionText text-center">
+																		{childSection.content}
+																	</p>
+																</div>
+															))}
+														</div>
+													</div>
+												</div>
+											)}
 										</div>
-									)}
+									))}
 								</div>
-							))}
-						</div>
-					</motion.div>
-				</AnimatePresence>
+							</motion.div>
+						</AnimatePresence>
+					</div>
+				</div>
 			</div>
-
 			<div
 				className="sticky top-0 h-[calc(100vh-10rem)]"
 				style={{ width: "55%" }}
