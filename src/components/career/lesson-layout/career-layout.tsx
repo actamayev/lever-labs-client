@@ -45,7 +45,7 @@ const TextParentCard: React.FC<TextParentCardProps> = ({
 	const handleScroll = () => {
 		if (!scrollRef.current) return
 
-		const { scrollTop, scrollHeight, clientHeight } = scrollRef.current
+		const { scrollTop, clientHeight } = scrollRef.current
 		const childHeight = clientHeight
 		const newIndex = Math.round(scrollTop / childHeight)
 
@@ -91,7 +91,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
-	const [viewedTextSlides, setViewedTextSlides] = useState<Set<string>>(new Set())
 
 	// Flatten all sections into a single array of slides
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -122,6 +121,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (slideIndex >= mainSlides.length - 1) return false
 
 		const currentSlide = mainSlides[slideIndex]
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!currentSlide) return false
 
 		if (currentSlide.type === "textParent") {
@@ -154,26 +154,24 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setCurrentSlideIndex(newIndex)
 
 		const currentSlide = mainSlides[newIndex]
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!currentSlide) return
 
 		// Update right content
-		if (currentSlide.type === "textParent") {
-			setRightContent({ type: "image", icon: currentSlide.textParentData.children[0].triggerImage })
-
-			// Mark text slide as viewed
-			setViewedTextSlides(prev => new Set(prev).add(currentSlide.id))
-
-			// If this is the last slide in a text parent and user has viewed it,
-			// mark the text parent as completed
-			if (currentSlide.isCompleted) {
-				setCompletedTextParents(prev => {
-					const newSet = new Set(prev)
-					newSet.add(currentSlide.id)
-					return newSet
-				})
-			}
-		} else {
+		if (currentSlide.type !== "textParent") {
 			setRightContent({ type: "challenge", challengeData: currentSlide.challengeData })
+			return
+		}
+		setRightContent({ type: "image", icon: currentSlide.textParentData.children[0].triggerImage })
+
+		// If this is the last slide in a text parent and user has viewed it,
+		// mark the text parent as completed
+		if (currentSlide.isCompleted) {
+			setCompletedTextParents(prev => {
+				const newSet = new Set(prev)
+				newSet.add(currentSlide.id)
+				return newSet
+			})
 		}
 	}, [mainSlides])
 
