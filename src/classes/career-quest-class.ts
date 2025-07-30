@@ -572,6 +572,13 @@ class CareerQuestClass {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
+	public getChallengeSectionByChallengeUUID(careerUUID: CareerUUID): ChallengeSection[] {
+		const career = this.getCareer(careerUUID)
+		if (!career) return []
+
+		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
+	}
+
 	/**
 	 * Find a text section by ID across all TextParent sections
 	 */

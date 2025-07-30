@@ -2,6 +2,7 @@
 
 import CareerLayout from "./lesson-layout/career-layout"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
+import useRetrieveSingleChallengeDataUseEffect from "../../utils/career-quest/retrieve-single-challenge-use-effect"
 
 interface Props {
 	careerData: CareerQuestData
@@ -9,6 +10,7 @@ interface Props {
 
 export default function CareerActivityTemplate(props: Props) {
 	const { careerData } = props
+	useRetrieveSingleChallengeDataUseEffect(careerData.careerUUID)
 
 	return (
 		<div className="flex flex-col h-screen min-h-0">
