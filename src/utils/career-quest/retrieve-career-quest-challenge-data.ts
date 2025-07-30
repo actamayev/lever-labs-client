@@ -77,9 +77,7 @@ export default async function retrieveCareerQuestChallengeData(careerUUIDChallen
 			}
 		})
 
-		const isCompleted = transformedMessages.some(msg =>
-			msg.evaluationResult?.isCorrect === true
-		)
+		const isCompleted = challengeResponse.data.hasEverBeenCorrect
 
 		careerQuestClass.setChallengeRetrievedData(
 			careerUUIDChallengeUUID,
