@@ -260,15 +260,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return () => clearTimeout(positioningTimeout)
 	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerUUID, scrollToSection, careerData.sections])
 
-	// Initialize career and retrieve data
-	useEffect(() => {
-		const initializeCareer = async () => {
-			await careerQuestClass.retrieveAllChallengeDataForCareer(careerData.careerUUID)
-		}
-
-		initializeCareer()
-	}, [careerData])
-
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
 		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson

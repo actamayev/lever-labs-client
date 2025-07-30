@@ -14,7 +14,6 @@ import {
 	ChallengeUUID
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 // Chat and streaming state interfaces
@@ -52,6 +51,7 @@ interface CareerInstance {
 class CareerQuestClass {
 	// Main data structure: careerUUID -> CareerInstance
 	public careers = observable.map<CareerUUID, CareerInstance>()
+	public isDoneInitializing = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -67,6 +67,7 @@ class CareerQuestClass {
 		Object.values(careerDefinitions).forEach(careerDefinition => {
 			this.initializeCareer(careerDefinition)
 		})
+		this.isDoneInitializing = true
 	})
 
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
@@ -463,24 +464,6 @@ class CareerQuestClass {
 		return this.getAllChallengeSections(career.careerDefinition.sections).length
 	}
 
-	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-
-		// Use helper to get challenge sections
-		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
-
-		const retrievalPromises = challengeSections.map(section =>
-			retrieveCareerQuestChallengeData(section.challengeData)
-		)
-
-		try {
-			await Promise.all(retrievalPromises)
-		} catch (error) {
-			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
-		}
-	})
-
 	// eslint-disable-next-line complexity
 	public getInitialTargetSection(careerUUID: CareerUUID): {
 		sectionId: string | null,
@@ -585,7 +568,7 @@ class CareerQuestClass {
 	/**
 	 * Get all challenge sections
 	 */
-	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+	public getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
@@ -622,9 +605,9 @@ class CareerQuestClass {
 		return this.findTextSectionById(career.careerDefinition.sections, sectionId)
 	}
 
-
 	public logout(): void {
 		this.careers.clear()
+		this.isDoneInitializing = false
 	}
 }
 

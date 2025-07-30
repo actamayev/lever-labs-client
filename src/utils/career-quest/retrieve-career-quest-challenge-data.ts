@@ -8,12 +8,10 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveCareerQuestChallengeData(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
 	try {
-		// If we already have retrieved messages for this challenge, no need to fetch again
-		if (careerQuestClass.hasRetrievedChallengeData(careerUUIDChallengeUUID)) return
-
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingChallengeData(careerUUIDChallengeUUID)
+			careerQuestClass.isRetrievingChallengeData(careerUUIDChallengeUUID) ||
+			careerQuestClass.hasRetrievedChallengeData(careerUUIDChallengeUUID)
 		) return
 
 		// Set loading state
