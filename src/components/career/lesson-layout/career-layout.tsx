@@ -1,6 +1,6 @@
 "use client"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Mousewheel, Keyboard } from "swiper/modules"
+import { Mousewheel, Keyboard, FreeMode } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 import "swiper/css"
 import { observer } from "mobx-react"
@@ -39,6 +39,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
+	const [viewedTextSlides, setViewedTextSlides] = useState<Set<string>>(new Set())
 
 	// Flatten all sections into a single array of slides
 	const flattenedSlides = useMemo((): FlattenedSlide[] => {
@@ -139,6 +140,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (currentSlide.type === "text") {
 			setRightContent({ type: "image", icon: currentSlide.triggerImage })
 
+			// Mark text slide as viewed
+			setViewedTextSlides(prev => new Set(prev).add(currentSlide.id))
+
 			// If this is the last slide in a text parent and user has viewed it,
 			// mark the text parent as completed
 			if (currentSlide.isLastInTextParent) {
@@ -196,35 +200,53 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 								<Swiper
 									direction="vertical"
 									slidesPerView={1}
-									spaceBetween={0}
+									spaceBetween={0} // Add space between slides for peeking
 									mousewheel={{
 										enabled: true,
 										forceToAxis: true,
 										releaseOnEdges: true,
-										sensitivity: 1,
-										thresholdDelta: 50
+										sensitivity: 2,
+										thresholdDelta: 5, // Very low threshold for immediate response
+										thresholdTime: 300
 									}}
+									freeMode={{
+										enabled: true,
+										sticky: true, // Snaps to slides after scrolling
+										minimumVelocity: 0.1, // Low minimum velocity for gentle scrolling
+										momentum: true,
+										momentumRatio: 0.6, // Controls momentum decay
+										momentumBounce: true,
+										momentumBounceRatio: 0.3, // Spring back effect
+										momentumVelocityRatio: 0.8
+									}}
+									resistance={true}
+									resistanceRatio={0.85} // Elastic resistance at boundaries
 									keyboard={{
 										enabled: true,
 										onlyInViewport: true
 									}}
-									allowSlideNext={false} // Controlled programmatically
+									speed={400} // Transition speed
+									allowSlideNext={false} // Still controlled programmatically
 									allowSlidePrev={true}
-									modules={[Mousewheel, Keyboard]}
+									modules={[Mousewheel, Keyboard, FreeMode]}
 									onSwiper={setSwiperInstance}
 									onSlideChange={handleSlideChange}
 									className="h-full"
+									style={{
+										"--swiper-theme-color": "#000000",
+									} as React.CSSProperties}
 								>
 									{visibleSlides.map((slide, index) => (
 										<SwiperSlide key={slide.id} className="h-full">
-											<div className="h-[calc(100vh-10rem)]">
+											<div className="h-[calc(100vh-10rem-20px)]"> {/* Adjust for spaceBetween */}
 												{slide.type === "challenge" ? (
 													<CqChatInterface
 														cppCode={getCppCodeForChallenge(slide.challengeData)}
 														challengeData={slide.challengeData}
 													/>
 												) : (
-													<div className="border-2 border-swan rounded-3xl bg-polar h-full flex flex-col">
+													<div className="border-2 border-swan rounded-3xl bg-polar h-full \
+													flex flex-col transition-all duration-300 ease-out">
 														<div className="flex-1 flex items-center justify-center px-[75px]">
 															<div className="prose prose-lg max-w-none text-4xl">
 																<p className="leading-relaxed text-questionText text-center cursor-text">
