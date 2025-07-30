@@ -6,20 +6,18 @@ import "swiper/css"
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
-import { useEffect, useState, useMemo, useCallback } from "react"
+import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import RightContent from "./right-content"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 
 // Types for flattened slide structure
-interface TextSlide {
-	type: "text"
+interface TextParentSlide {
+	type: "textParent"
 	id: string
-	content: string
-	triggerImage: string
-	textParentId: string // To track which text parent this belongs to
-	isLastInTextParent: boolean // To know when text parent is completed
+	textParentData: TextParentSection
+	isCompleted: boolean
 }
 
 interface ChallengeSlide {
@@ -28,7 +26,61 @@ interface ChallengeSlide {
 	challengeData: CqChallengeData
 }
 
-type FlattenedSlide = TextSlide | ChallengeSlide
+type MainSlide = TextParentSlide | ChallengeSlide
+
+interface TextParentCardProps {
+	textParentData: TextParentSection
+	onComplete: () => void
+	onSlideChange: (triggerImage: string) => void
+}
+
+const TextParentCard: React.FC<TextParentCardProps> = ({
+	textParentData,
+	onComplete,
+	onSlideChange
+}) => {
+	const scrollRef = useRef<HTMLDivElement>(null)
+	const [currentChildIndex, setCurrentChildIndex] = useState(0)
+
+	const handleScroll = () => {
+		if (!scrollRef.current) return
+
+		const { scrollTop, scrollHeight, clientHeight } = scrollRef.current
+		const childHeight = clientHeight
+		const newIndex = Math.round(scrollTop / childHeight)
+
+		if (newIndex !== currentChildIndex && newIndex < textParentData.children.length) {
+			setCurrentChildIndex(newIndex)
+			onSlideChange(textParentData.children[newIndex].triggerImage)
+
+			// Complete when reaching last child
+			if (newIndex === textParentData.children.length - 1) {
+				onComplete()
+			}
+		}
+	}
+
+	return (
+		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
+			<div
+				ref={scrollRef}
+				className="h-full overflow-y-auto snap-y snap-mandatory"
+				onScroll={handleScroll}
+				style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+			>
+				{textParentData.children.map((child) => (
+					<div key={child.id} className="h-full snap-start flex items-center justify-center px-[75px]">
+						<div className="prose prose-lg max-w-none text-4xl">
+							<p className="leading-relaxed text-questionText text-center cursor-text">
+								{child.content}
+							</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	)
+}
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -42,23 +94,18 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [viewedTextSlides, setViewedTextSlides] = useState<Set<string>>(new Set())
 
 	// Flatten all sections into a single array of slides
-	const flattenedSlides = useMemo((): FlattenedSlide[] => {
-		const slides: FlattenedSlide[] = []
+	const mainSlides = useMemo((): MainSlide[] => {
+		const slides: MainSlide[] = []
 
 		careerData.sections.forEach(section => {
 			if (section.type === "textParent") {
-				section.children.forEach((child, index) => {
-					slides.push({
-						type: "text",
-						id: child.id,
-						content: child.content,
-						triggerImage: child.triggerImage,
-						textParentId: section.id,
-						isLastInTextParent: index === section.children.length - 1
-					})
+				slides.push({
+					type: "textParent",
+					id: section.id,
+					textParentData: section,
+					isCompleted: completedTextParents.has(section.id)
 				})
 			} else {
-				// Challenge section
 				slides.push({
 					type: "challenge",
 					id: section.challengeData.challengeUUID,
@@ -68,46 +115,19 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		})
 
 		return slides
-	}, [careerData.sections])
-
-	// Get visible slides based on progression rules
-	const visibleSlides = useMemo(() => {
-		const visible: FlattenedSlide[] = []
-		let hasBlockingElement = false
-
-		for (const slide of flattenedSlides) {
-			if (hasBlockingElement) break
-
-			visible.push(slide)
-
-			if (slide.type === "text") {
-				// Check if this text parent is completed
-				if (slide.isLastInTextParent && !completedTextParents.has(slide.textParentId)) {
-					hasBlockingElement = true
-				}
-			} else {
-				// Challenge slide
-				const isCompleted = careerQuestClass.isChallengeCompleted(slide.challengeData)
-				if (!isCompleted) {
-					hasBlockingElement = true
-				}
-			}
-		}
-
-		return visible
-	}, [flattenedSlides, completedTextParents])
+	}, [careerData.sections, completedTextParents])
 
 	// Check if user can advance to next slide
 	const canAdvanceToNext = useCallback((slideIndex: number): boolean => {
-		if (slideIndex >= visibleSlides.length - 1) return false
+		if (slideIndex >= mainSlides.length - 1) return false
 
-		const currentSlide = visibleSlides[slideIndex]
+		const currentSlide = mainSlides[slideIndex]
 		if (!currentSlide) return false
 
-		if (currentSlide.type === "text") {
+		if (currentSlide.type === "textParent") {
 			// For text slides, check if this completes a text parent
-			if (currentSlide.isLastInTextParent) {
-				return completedTextParents.has(currentSlide.textParentId)
+			if (currentSlide.isCompleted) {
+				return completedTextParents.has(currentSlide.id)
 			}
 			// For non-last text slides, can always advance within text parent
 			return true
@@ -115,7 +135,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			// For challenge slides, must be completed
 			return careerQuestClass.isChallengeCompleted(currentSlide.challengeData)
 		}
-	}, [visibleSlides, completedTextParents])
+	}, [mainSlides, completedTextParents])
 
 	// Update swiper navigation permissions
 	useEffect(() => {
@@ -133,29 +153,29 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const newIndex = swiper.activeIndex
 		setCurrentSlideIndex(newIndex)
 
-		const currentSlide = visibleSlides[newIndex]
+		const currentSlide = mainSlides[newIndex]
 		if (!currentSlide) return
 
 		// Update right content
-		if (currentSlide.type === "text") {
-			setRightContent({ type: "image", icon: currentSlide.triggerImage })
+		if (currentSlide.type === "textParent") {
+			setRightContent({ type: "image", icon: currentSlide.textParentData.children[0].triggerImage })
 
 			// Mark text slide as viewed
 			setViewedTextSlides(prev => new Set(prev).add(currentSlide.id))
 
 			// If this is the last slide in a text parent and user has viewed it,
 			// mark the text parent as completed
-			if (currentSlide.isLastInTextParent) {
+			if (currentSlide.isCompleted) {
 				setCompletedTextParents(prev => {
 					const newSet = new Set(prev)
-					newSet.add(currentSlide.textParentId)
+					newSet.add(currentSlide.id)
 					return newSet
 				})
 			}
 		} else {
 			setRightContent({ type: "challenge", challengeData: currentSlide.challengeData })
 		}
-	}, [visibleSlides])
+	}, [mainSlides])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -165,15 +185,15 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Set initial right content
 	useEffect(() => {
-		if (visibleSlides.length > 0) {
-			const firstSlide = visibleSlides[0]
-			if (firstSlide.type === "text") {
-				setRightContent({ type: "image", icon: firstSlide.triggerImage })
+		if (mainSlides.length > 0) {
+			const firstSlide = mainSlides[0]
+			if (firstSlide.type === "textParent") {
+				setRightContent({ type: "image", icon: firstSlide.textParentData.children[0].triggerImage })
 			} else {
 				setRightContent({ type: "challenge", challengeData: firstSlide.challengeData })
 			}
 		}
-	}, [visibleSlides])
+	}, [mainSlides])
 
 	// Update navigation permissions when completion states change
 	const completedChallengesCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
@@ -236,25 +256,24 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 										"--swiper-theme-color": "#000000",
 									} as React.CSSProperties}
 								>
-									{visibleSlides.map((slide, index) => (
+									{mainSlides.map((slide) => (
 										<SwiperSlide key={slide.id} className="h-full">
-											<div className="h-[calc(100vh-10rem-20px)]"> {/* Adjust for spaceBetween */}
+											<div className="h-[calc(100vh-10rem)]">
 												{slide.type === "challenge" ? (
 													<CqChatInterface
 														cppCode={getCppCodeForChallenge(slide.challengeData)}
 														challengeData={slide.challengeData}
 													/>
 												) : (
-													<div className="border-2 border-swan rounded-3xl bg-polar h-full \
-													flex flex-col transition-all duration-300 ease-out">
-														<div className="flex-1 flex items-center justify-center px-[75px]">
-															<div className="prose prose-lg max-w-none text-4xl">
-																<p className="leading-relaxed text-questionText text-center cursor-text">
-																	{slide.content}
-																</p>
-															</div>
-														</div>
-													</div>
+													<TextParentCard
+														textParentData={slide.textParentData}
+														onComplete={() => {
+															setCompletedTextParents(prev => new Set(prev).add(slide.id))
+														}}
+														onSlideChange={(triggerImage) => {
+															setRightContent({ type: "image", icon: triggerImage })
+														}}
+													/>
 												)}
 											</div>
 										</SwiperSlide>
