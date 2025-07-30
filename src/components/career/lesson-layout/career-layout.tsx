@@ -17,10 +17,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	})
 	const [lockedChallenge, setLockedChallenge] = useState<CqChallengeData | null>(null)
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
-	const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
+	// const [isInitialPositioningComplete, setIsInitialPositioningComplete] = useState(false)
 	const leftScrollRef = useRef<HTMLDivElement>(null)
-
-	const hasRetrievedAllData = careerQuestClass.hasRetrievedAllChallengeData(careerData.careerUUID)
+	// Add after existing useState declarations
+	const [activeTextParent, setActiveTextParent] = useState<string | null>(null)
+	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
+	const textParentScrollRefs = useRef<Map<string, HTMLDivElement>>(new Map())
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
@@ -126,7 +128,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Enhanced intersection observer callback
 	const updateRightContent = useCallback((sectionId: string, intersectionRatio: number) => {
 		// Don't update content during initial positioning
-		if (!isInitialPositioningComplete) return
+		// if (!isInitialPositioningComplete) return
 
 		// If we have a locked challenge, don't change content unless it's the locked challenge leaving view
 		if (lockedChallenge) {
@@ -188,82 +190,45 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 			return newContent
 		})
-	}, [lockedChallenge, shouldShowIcon, isInitialPositioningComplete, careerData.careerUUID])
-
-
-	// Auto-scroll to target section
-	const scrollToSection = useCallback((sectionId: string) => {
-		console.log("🎯 Scrolling to section:", sectionId)
-		const targetElement = document.querySelector(`[data-section-id="${sectionId}"]`)
-		const scrollContainer = leftScrollRef.current
-
-		if (targetElement && scrollContainer) {
-			const containerRect = scrollContainer.getBoundingClientRect()
-			const targetRect = targetElement.getBoundingClientRect()
-			const scrollTop = scrollContainer.scrollTop
-
-			// Calculate the position to scroll to (center the target in view)
-			const targetPosition = scrollTop + targetRect.top - containerRect.top - (containerRect.height / 2) + (targetRect.height / 2)
-
-			scrollContainer.scrollTo({
-				top: Math.max(0, targetPosition),
-				behavior: "instant" // Keep instant to avoid visible scrolling
-			})
-
-			console.log("📍 Scrolled to position:", targetPosition)
-		} else {
-			console.warn("❌ Could not find target element or scroll container")
-		}
-	}, [])
-
-	// Handle initial positioning after data is loaded
-	useEffect(() => {
-		if (!hasRetrievedAllData || isInitialPositioningComplete) return
-
-		// Small delay to ensure DOM is fully rendered
-		const positioningTimeout = setTimeout(() => {
-			const targetInfo = careerQuestClass.getInitialTargetSection(careerData.careerUUID)
-
-			console.log("Initial positioning:", targetInfo)
-
-			// Set the right content
-			if (targetInfo.rightContent) {
-				setRightContent(targetInfo.rightContent)
-			}
-
-			// Handle auto-scrolling
-			if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
-				scrollToSection(targetInfo.sectionId)
-
-				// Handle auto-scrolling
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				if (targetInfo.shouldAutoScroll && targetInfo.sectionId) {
-					scrollToSection(targetInfo.sectionId)
-
-					// If scrolling to a challenge, set it as locked
-					// Check if the sectionId is a challenge UUID
-					const challengeData = careerQuestClass.getChallengeData({
-						careerUUID: careerData.careerUUID,
-						challengeUUID: targetInfo.sectionId as ChallengeUUID
-					})
-
-					if (challengeData) {
-						setLockedChallenge(challengeData)
-					}
-				}
-			}
-
-			// Mark initial positioning as complete
-			setIsInitialPositioningComplete(true)
-		}, 300) // Allow time for DOM rendering
-
-		return () => clearTimeout(positioningTimeout)
-	}, [hasRetrievedAllData, isInitialPositioningComplete, careerData.careerUUID, scrollToSection, careerData.sections])
+	}, [lockedChallenge, shouldShowIcon, careerData.careerUUID])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
 		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
 		return generateCppFromJson(currentBlocklyJson)
+	}, [])
+
+	// Add after existing useCallback declarations
+	const handleTextParentScrollComplete = useCallback((textParentId: string) => {
+		setCompletedTextParents(prev => new Set([...prev, textParentId]))
+		setActiveTextParent(null)
+	}, [])
+
+	const handleTextParentScroll = useCallback((textParentId: string, scrollElement: HTMLDivElement) => {
+		const { scrollTop, scrollHeight, clientHeight } = scrollElement
+		const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10 // 10px tolerance
+
+		console.log("📜 Text parent scroll:", {
+			textParentId,
+			scrollTop,
+			scrollHeight,
+			clientHeight,
+			isAtBottom,
+			completed: completedTextParents.has(textParentId)
+		})
+
+		if (isAtBottom && !completedTextParents.has(textParentId)) {
+			console.log("✅ Completing text parent:", textParentId)
+			handleTextParentScrollComplete(textParentId)
+		}
+	}, [completedTextParents, handleTextParentScrollComplete])
+
+	const setTextParentRef = useCallback((textParentId: string, element: HTMLDivElement | null) => {
+		if (element) {
+			textParentScrollRefs.current.set(textParentId, element)
+		} else {
+			textParentScrollRefs.current.delete(textParentId)
+		}
 	}, [])
 
 	useEffect(() => {
@@ -273,7 +238,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					if (entry.isIntersecting) {
 						const sectionId = entry.target.getAttribute("data-section-id")
 						if (sectionId && visibleSectionIds.includes(sectionId)) {
-							updateRightContent(sectionId, entry.intersectionRatio) // ✅ Correct signature
+							updateRightContent(sectionId, entry.intersectionRatio)
 						}
 					}
 				})
@@ -287,7 +252,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const timeoutId = setTimeout(() => {
 			document.querySelectorAll("[data-section-id]").forEach((el) => {
 				const sectionId = el.getAttribute("data-section-id")
-				if (sectionId && visibleSectionIds.includes(sectionId)) {
+				// Only observe challenge sections for outer scroll - text parent children are handled separately
+				// eslint-disable-next-line max-len
+				if (sectionId && visibleSectionIds.includes(sectionId) && !careerQuestClass.isTextSectionId(careerData.careerUUID, sectionId)) {
 					intersectionObserver.observe(el)
 				}
 			})
@@ -297,10 +264,87 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			clearTimeout(timeoutId)
 			intersectionObserver.disconnect()
 		}
-	}, [
-		visibleSectionIds,
-		updateRightContent
-	])
+	}, [visibleSectionIds, updateRightContent, careerData.careerUUID])
+
+	// Add after existing intersection observer useEffect
+	useEffect(() => {
+		const handleOuterScroll = (e: Event) => {
+			// Only block if the scroll is NOT happening within an active text parent
+			const target = e.target as HTMLElement
+			const isScrollingWithinTextParent = target.closest("[data-text-parent]")
+
+			console.log("🚫 Outer scroll attempt:", {
+				activeTextParent,
+				completedTextParents: Array.from(completedTextParents),
+				target: target.tagName,
+				isScrollingWithinTextParent: !!isScrollingWithinTextParent
+			})
+
+			// Only block outer scroll if we're in an active text parent AND the scroll is not within that text parent
+			if (activeTextParent && !completedTextParents.has(activeTextParent) && !isScrollingWithinTextParent) {
+				console.log("❌ Blocking outer scroll for:", activeTextParent)
+				e.preventDefault()
+				e.stopPropagation()
+			}
+		}
+
+		const scrollContainer = leftScrollRef.current
+		if (scrollContainer) {
+			scrollContainer.addEventListener("scroll", handleOuterScroll, { passive: false })
+			scrollContainer.addEventListener("wheel", handleOuterScroll, { passive: false })
+			scrollContainer.addEventListener("touchmove", handleOuterScroll, { passive: false })
+		}
+
+		return () => {
+			if (scrollContainer) {
+				scrollContainer.removeEventListener("scroll", handleOuterScroll)
+				scrollContainer.removeEventListener("wheel", handleOuterScroll)
+				scrollContainer.removeEventListener("touchmove", handleOuterScroll)
+			}
+		}
+	}, [activeTextParent, completedTextParents])
+
+	// Add after scroll blocking useEffect
+	useEffect(() => {
+		const textParentObservers = new Map<string, IntersectionObserver>()
+
+		visibleSections.forEach(section => {
+			if (section.type === "textParent") {
+				// eslint-disable-next-line @typescript-eslint/no-shadow
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								const childId = entry.target.getAttribute("data-child-id")
+								if (childId) {
+									updateRightContent(childId, entry.intersectionRatio)
+								}
+							}
+						})
+					},
+					{
+						threshold: [0.1, 0.5, 0.7],
+						rootMargin: "-20% 0px -20% 0px",
+						root: textParentScrollRefs.current.get(section.id) || null
+					}
+				)
+
+				// Observe children within this text parent
+				setTimeout(() => {
+					document.querySelectorAll(`[data-text-parent="${section.id}"] [data-child-id]`).forEach((el) => {
+						observer.observe(el)
+					})
+				}, 100)
+
+				textParentObservers.set(section.id, observer)
+			}
+		})
+
+		return () => {
+			// eslint-disable-next-line @typescript-eslint/no-shadow
+			textParentObservers.forEach(observer => observer.disconnect())
+		}
+	}, [visibleSections, updateRightContent])
 
 	// Content is ready, render with persistent layout
 	return (
@@ -332,19 +376,33 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 											/>
 										</div>
 									) : (
-										<div className="border-2 border-swan rounded-3xl bg-polar p-4">
-											<div className="space-y-6">
-												{section.children.map((childSection) => (
-													<div
-														key={childSection.id}
-														data-section-id={childSection.id}
-														className="prose prose-lg max-w-none text-3xl"
-													>
-														<p className="leading-relaxed text-questionText">
-															{childSection.content}
-														</p>
-													</div>
-												))}
+										<div className="border-2 border-swan rounded-3xl bg-polar h-[calc(100vh-10rem)] flex flex-col">
+											<div
+												ref={(el) => setTextParentRef(section.id, el)}
+												className="flex-1 overflow-y-auto p-4 scrollbar-hide"
+												data-text-parent={section.id}
+												onScroll={(e) => {
+													const target = e.target as HTMLDivElement
+													console.log("🎯 Setting active text parent:", section.id)
+													setActiveTextParent(section.id)
+													handleTextParentScroll(section.id, target)
+													// Prevent this scroll event from bubbling up to outer container
+													e.stopPropagation()
+												}}
+											>
+												<div className="space-y-6">
+													{section.children.map((childSection) => (
+														<div
+															key={childSection.id}
+															data-child-id={childSection.id}
+															className="prose prose-lg max-w-none text-3xl min-h-[50vh]"
+														>
+															<p className="leading-relaxed text-questionText">
+																{childSection.content}
+															</p>
+														</div>
+													))}
+												</div>
 											</div>
 										</div>
 									)}

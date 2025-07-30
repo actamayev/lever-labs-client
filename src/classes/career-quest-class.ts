@@ -551,21 +551,6 @@ class CareerQuestClass {
 	}
 
 	/**
- * Check if all challenge data has been retrieved for a career
- */
-	public hasRetrievedAllChallengeData(careerUUID: CareerUUID): boolean {
-		const career = this.getCareer(careerUUID)
-		if (!career) return false
-
-		// Use helper to get challenge sections
-		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
-
-		return challengeSections.every(section =>
-			this.hasRetrievedChallengeData(section.challengeData)
-		)
-	}
-
-	/**
 	 * Get all challenge sections
 	 */
 	public getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
