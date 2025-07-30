@@ -1,5 +1,6 @@
 "use client"
-
+import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react"
+import "keen-slider/keen-slider.min.css"
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
@@ -9,6 +10,146 @@ import { cn } from "../../../lib/shadcn/utils"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+
+// Add this plugin before the CareerLayout component
+const WheelControls: KeenSliderPlugin = (slider) => {
+	let touchTimeout: ReturnType<typeof setTimeout>
+	let position: {
+		x: number
+		y: number
+	}
+	let wheelActive: boolean
+
+	function dispatch(e: WheelEvent, name: string) {
+		position.x -= e.deltaX
+		position.y -= e.deltaY
+		slider.container.dispatchEvent(
+			new CustomEvent(name, {
+				detail: {
+					x: position.x,
+					y: position.y,
+				},
+			})
+		)
+	}
+
+	function wheelStart(e: WheelEvent) {
+		position = {
+			x: e.pageX,
+			y: e.pageY,
+		}
+		dispatch(e, "ksDragStart")
+	}
+
+	function wheel(e: WheelEvent) {
+		dispatch(e, "ksDrag")
+	}
+
+	function wheelEnd(e: WheelEvent) {
+		dispatch(e, "ksDragEnd")
+	}
+
+	function eventWheel(e: WheelEvent) {
+		const currentSlide = slider.track.details.rel
+		const isAtLastSlide = currentSlide === slider.track.details.slides.length - 1
+		const isAtFirstSlide = currentSlide === 0
+		const isScrollingDown = e.deltaY > 0
+		const isScrollingUp = e.deltaY < 0
+
+		// Allow scroll to pass through if:
+		// - At last slide and scrolling down (to go to next section)
+		// - At first slide and scrolling up (to go to previous section)
+		if ((isAtLastSlide && isScrollingDown) || (isAtFirstSlide && isScrollingUp)) {
+			return // Don't prevent default, let the outer scroll handle it
+		}
+
+		e.preventDefault()
+		if (!wheelActive) {
+			wheelStart(e)
+			wheelActive = true
+		}
+		wheel(e)
+		clearTimeout(touchTimeout)
+		touchTimeout = setTimeout(() => {
+			wheelActive = false
+			wheelEnd(e)
+		}, 50)
+	}
+
+	slider.on("created", () => {
+		slider.container.addEventListener("wheel", eventWheel, {
+			passive: false,
+		})
+	})
+}
+
+// Add this component before CareerLayout
+interface TextParentSliderProps {
+	section: TextParentSection
+	onSlideChange: (childId: string) => void
+	onComplete: (textParentId: string) => void
+}
+
+const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideChange, onComplete }) => {
+	const [sliderRef] = useKeenSlider<HTMLDivElement>(
+		{
+			loop: false,
+			rubberband: false,
+			vertical: true,
+			slides: {
+				perView: 1,
+				spacing: 0,
+			},
+			slideChanged(slider) {
+				const currentIdx = slider.track.details.rel
+
+				// Update right content
+				const currentChild = section.children[currentIdx]
+				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+				if (currentChild) {
+					onSlideChange(currentChild.id)
+				}
+
+				// Check if we've reached the last slide
+				if (currentIdx === section.children.length - 1) {
+					onComplete(section.id)
+				}
+			},
+		},
+		[WheelControls]
+	)
+
+	return (
+		<div className={cn(
+			"border-2 border-swan rounded-3xl bg-polar",
+			"h-[calc(100vh-10rem)] flex flex-col"
+		)}>
+			<div
+				ref={sliderRef}
+				className="keen-slider flex-1"
+				data-text-parent={section.id}
+				style={{
+					paddingLeft: "75px",
+					paddingRight: "75px"
+				}}
+			>
+				{section.children.map((childSection) => (
+					<div
+						key={childSection.id}
+						data-child-id={childSection.id}
+						className="keen-slider__slide"
+					>
+						<div className="prose prose-lg max-w-none text-4xl h-full flex items-center justify-center">
+							<p className="leading-relaxed text-questionText text-center cursor-text">
+								{childSection.content}
+							</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	)
+}
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -115,29 +256,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
 		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
 		return generateCppFromJson(currentBlocklyJson)
-	}, [])
-
-	// Add after existing useCallback declarations
-	const handleTextParentScrollComplete = useCallback((textParentId: string) => {
-		setCompletedTextParents(prev => new Set([...prev, textParentId]))
-		setActiveTextParent(null)
-	}, [])
-
-	const handleTextParentScroll = useCallback((textParentId: string, scrollElement: HTMLDivElement) => {
-		const { scrollTop, scrollHeight, clientHeight } = scrollElement
-		const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10 // 10px tolerance
-
-		if (isAtBottom && !completedTextParents.has(textParentId)) {
-			handleTextParentScrollComplete(textParentId)
-		}
-	}, [completedTextParents, handleTextParentScrollComplete])
-
-	const setTextParentRef = useCallback((textParentId: string, element: HTMLDivElement | null) => {
-		if (element) {
-			textParentScrollRefs.current.set(textParentId, element)
-		} else {
-			textParentScrollRefs.current.delete(textParentId)
-		}
 	}, [])
 
 	useEffect(() => {
@@ -281,41 +399,14 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													/>
 												</div>
 											) : (
-												<div
-													className={cn(
-														"border-2 border-swan rounded-3xl bg-polar",
-														"h-[calc(100vh-10rem)] flex flex-col"
-													)}>
-													<div
-														ref={(el) => setTextParentRef(section.id, el)}
-														className="flex-1 overflow-y-auto scrollbar-hide"
-														data-text-parent={section.id}
-														onScroll={(e) => {
-															const target = e.target as HTMLDivElement
-															setActiveTextParent(section.id)
-															handleTextParentScroll(section.id, target)
-															// Prevent this scroll event from bubbling up to outer container
-															e.stopPropagation()
-														}}
-														style={{
-															padding: "75px"
-														}}
-													>
-														<div className="space-y-6">
-															{section.children.map((childSection) => (
-																<div
-																	key={childSection.id}
-																	data-child-id={childSection.id}
-																	className="prose prose-lg max-w-none text-4xl min-h-[50vh]"
-																>
-																	<p className="leading-relaxed text-questionText text-center">
-																		{childSection.content}
-																	</p>
-																</div>
-															))}
-														</div>
-													</div>
-												</div>
+												<TextParentSlider
+													section={section}
+													onSlideChange={(childId) => updateRightContent(childId)}
+													onComplete={(textParentId) => {
+														setCompletedTextParents(prev => new Set([...prev, textParentId]))
+														setActiveTextParent(null)
+													}}
+												/>
 											)}
 										</div>
 									))}
