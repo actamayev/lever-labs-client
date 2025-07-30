@@ -1,6 +1,8 @@
 "use client"
-import { useKeenSlider, KeenSliderPlugin } from "keen-slider/react"
-import "keen-slider/keen-slider.min.css"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { Mousewheel, Keyboard } from "swiper/modules"
+import type { Swiper as SwiperType } from "swiper"
+import "swiper/css"
 import { observer } from "mobx-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
@@ -11,142 +13,107 @@ import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 
-// Add this plugin before the CareerLayout component
-const WheelControls: KeenSliderPlugin = (slider) => {
-	let touchTimeout: ReturnType<typeof setTimeout>
-	let position: {
-		x: number
-		y: number
-	}
-	let wheelActive: boolean
-
-	function dispatch(e: WheelEvent, name: string) {
-		position.x -= e.deltaX
-		position.y -= e.deltaY
-		slider.container.dispatchEvent(
-			new CustomEvent(name, {
-				detail: {
-					x: position.x,
-					y: position.y,
-				},
-			})
-		)
-	}
-
-	function wheelStart(e: WheelEvent) {
-		position = {
-			x: e.pageX,
-			y: e.pageY,
-		}
-		dispatch(e, "ksDragStart")
-	}
-
-	function wheel(e: WheelEvent) {
-		dispatch(e, "ksDrag")
-	}
-
-	function wheelEnd(e: WheelEvent) {
-		dispatch(e, "ksDragEnd")
-	}
-
-	function eventWheel(e: WheelEvent) {
-		const currentSlide = slider.track.details.rel
-		const isAtLastSlide = currentSlide === slider.track.details.slides.length - 1
-		const isAtFirstSlide = currentSlide === 0
-		const isScrollingDown = e.deltaY > 0
-		const isScrollingUp = e.deltaY < 0
-
-		// Allow scroll to pass through if:
-		// - At last slide and scrolling down (to go to next section)
-		// - At first slide and scrolling up (to go to previous section)
-		if ((isAtLastSlide && isScrollingDown) || (isAtFirstSlide && isScrollingUp)) {
-			return // Don't prevent default, let the outer scroll handle it
-		}
-
-		e.preventDefault()
-		if (!wheelActive) {
-			wheelStart(e)
-			wheelActive = true
-		}
-		wheel(e)
-		clearTimeout(touchTimeout)
-		touchTimeout = setTimeout(() => {
-			wheelActive = false
-			wheelEnd(e)
-		}, 50)
-	}
-
-	slider.on("created", () => {
-		slider.container.addEventListener("wheel", eventWheel, {
-			passive: false,
-		})
-	})
-}
-
 // Add this component before CareerLayout
 interface TextParentSliderProps {
 	section: TextParentSection
 	onSlideChange: (childId: string) => void
-	onComplete: (textParentId: string) => void
+	// onComplete: (textParentId: string) => void
 }
 
-const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideChange, onComplete }) => {
-	const [sliderRef] = useKeenSlider<HTMLDivElement>(
-		{
-			loop: false,
-			rubberband: false,
-			vertical: true,
-			slides: {
-				perView: 1,
-				spacing: 0,
-			},
-			slideChanged(slider) {
-				const currentIdx = slider.track.details.rel
+const TextParentSlider: React.FC<TextParentSliderProps> = ({ section, onSlideChange }) => {
+	const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null)
+	const [isAtLastSlide, setIsAtLastSlide] = useState(false)
+	const [allowScrollPassthrough, setAllowScrollPassthrough] = useState(false)
 
-				// Update right content
-				const currentChild = section.children[currentIdx]
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				if (currentChild) {
-					onSlideChange(currentChild.id)
-				}
+	const handleSlideChange = (swiper: SwiperType) => {
+		const currentIdx = swiper.activeIndex
+		const currentChild = section.children[currentIdx]
 
-				// Check if we've reached the last slide
-				if (currentIdx === section.children.length - 1) {
-					onComplete(section.id)
-				}
-			},
-		},
-		[WheelControls]
-	)
+		if (currentChild) {
+			onSlideChange(currentChild.id)
+		}
+
+		// Check if we've reached the last slide
+		const isLast = currentIdx === section.children.length - 1
+		setIsAtLastSlide(isLast)
+
+		if (isLast) {
+			// onComplete(section.id)
+			// Allow scroll passthrough after a brief delay
+			setTimeout(() => {
+				setAllowScrollPassthrough(true)
+			}, 300)
+		}
+	}
+
+	const handleWheel = useCallback((e: WheelEvent) => {
+		if (!swiperInstance) return
+
+		// If we're at the last slide and scrolling down, allow passthrough
+		if (isAtLastSlide && allowScrollPassthrough && e.deltaY > 0) {
+			return // Don't prevent default, let outer scroll handle it
+		}
+
+		// If we're at the first slide and scrolling up, allow passthrough
+		if (swiperInstance.activeIndex === 0 && e.deltaY < 0) {
+			return
+		}
+
+		// Otherwise, let Swiper handle the wheel event
+		e.stopPropagation()
+	}, [swiperInstance, isAtLastSlide, allowScrollPassthrough])
+
+	useEffect(() => {
+		if (swiperInstance?.el) {
+			const swiperEl = swiperInstance.el
+			swiperEl.addEventListener("wheel", handleWheel, { passive: true })
+
+			return () => {
+				swiperEl.removeEventListener("wheel", handleWheel)
+			}
+		}
+	}, [swiperInstance, isAtLastSlide, allowScrollPassthrough, handleWheel])
 
 	return (
 		<div className={cn(
 			"border-2 border-swan rounded-3xl bg-polar",
 			"h-[calc(100vh-10rem)] flex flex-col"
 		)}>
-			<div
-				ref={sliderRef}
-				className="keen-slider flex-1"
-				data-text-parent={section.id}
+			<Swiper
+				direction="vertical"
+				slidesPerView={1}
+				spaceBetween={0}
+				mousewheel={{
+					enabled: true,
+					forceToAxis: true,
+					releaseOnEdges: true
+				}}
+				keyboard={{
+					enabled: true,
+					onlyInViewport: true
+				}}
+				modules={[Mousewheel, Keyboard]}
+				onSwiper={setSwiperInstance}
+				onSlideChange={handleSlideChange}
+				className="flex-1"
 				style={{
 					paddingLeft: "75px",
 					paddingRight: "75px"
 				}}
 			>
 				{section.children.map((childSection) => (
-					<div
+					<SwiperSlide
 						key={childSection.id}
 						data-child-id={childSection.id}
-						className="keen-slider__slide"
 					>
 						<div className="prose prose-lg max-w-none text-4xl h-full flex items-center justify-center">
 							<p className="leading-relaxed text-questionText text-center cursor-text">
 								{childSection.content}
 							</p>
 						</div>
-					</div>
+					</SwiperSlide>
 				))}
-			</div>
+			</Swiper>
 		</div>
 	)
 }
@@ -159,10 +126,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	})
 	const [allowedIconSections, setAllowedIconSections] = useState<string[]>([])
 	const leftScrollRef = useRef<HTMLDivElement>(null)
-	// Add after existing useState declarations
-	const [activeTextParent, setActiveTextParent] = useState<string | null>(null)
-	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
-	const textParentScrollRefs = useRef<Map<string, HTMLDivElement>>(new Map())
 
 	// Memoize visible sections to prevent unnecessary re-calculations
 	const visibleSectionIds = useMemo(() =>
@@ -293,78 +256,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [visibleSectionIds, updateRightContent, careerData.careerUUID])
 
-	// Add after existing intersection observer useEffect
-	useEffect(() => {
-		const handleOuterScroll = (e: Event) => {
-			// Only block if the scroll is NOT happening within an active text parent
-			const target = e.target as HTMLElement
-			const isScrollingWithinTextParent = target.closest("[data-text-parent]")
-
-			// Only block outer scroll if we're in an active text parent AND the scroll is not within that text parent
-			if (activeTextParent && !completedTextParents.has(activeTextParent) && !isScrollingWithinTextParent) {
-				e.preventDefault()
-				e.stopPropagation()
-			}
-		}
-
-		const scrollContainer = leftScrollRef.current
-		if (scrollContainer) {
-			scrollContainer.addEventListener("scroll", handleOuterScroll, { passive: false })
-			scrollContainer.addEventListener("wheel", handleOuterScroll, { passive: false })
-			scrollContainer.addEventListener("touchmove", handleOuterScroll, { passive: false })
-		}
-
-		return () => {
-			if (scrollContainer) {
-				scrollContainer.removeEventListener("scroll", handleOuterScroll)
-				scrollContainer.removeEventListener("wheel", handleOuterScroll)
-				scrollContainer.removeEventListener("touchmove", handleOuterScroll)
-			}
-		}
-	}, [activeTextParent, completedTextParents])
-
-	// Add after scroll blocking useEffect
-	useEffect(() => {
-		const textParentObservers = new Map<string, IntersectionObserver>()
-
-		visibleSections.forEach(section => {
-			if (section.type === "textParent") {
-				// eslint-disable-next-line @typescript-eslint/no-shadow
-				const observer = new IntersectionObserver(
-					(entries) => {
-						entries.forEach((entry) => {
-							if (entry.isIntersecting) {
-								const childId = entry.target.getAttribute("data-child-id")
-								if (childId) {
-									updateRightContent(childId)
-								}
-							}
-						})
-					},
-					{
-						threshold: [0.1, 0.5, 0.7],
-						rootMargin: "-20% 0px -20% 0px",
-						root: textParentScrollRefs.current.get(section.id) || null
-					}
-				)
-
-				// Observe children within this text parent
-				setTimeout(() => {
-					document.querySelectorAll(`[data-text-parent="${section.id}"] [data-child-id]`).forEach((el) => {
-						observer.observe(el)
-					})
-				}, 100)
-
-				textParentObservers.set(section.id, observer)
-			}
-		})
-
-		return () => {
-			// eslint-disable-next-line @typescript-eslint/no-shadow
-			textParentObservers.forEach(observer => observer.disconnect())
-		}
-	}, [visibleSections, updateRightContent])
-
 	// Content is ready, render with persistent layout
 	return (
 		<div className="flex h-full">
@@ -402,10 +293,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 												<TextParentSlider
 													section={section}
 													onSlideChange={(childId) => updateRightContent(childId)}
-													onComplete={(textParentId) => {
-														setCompletedTextParents(prev => new Set([...prev, textParentId]))
-														setActiveTextParent(null)
-													}}
 												/>
 											)}
 										</div>
