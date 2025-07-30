@@ -478,39 +478,6 @@ class CareerQuestClass {
 		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
-	/**
-	 * Find a text section by ID across all TextParent sections
-	 */
-	private findTextSectionById(sections: CareerSection[], textSectionId: string): TextSection | null {
-		for (const section of sections) {
-			if (section.type === "textParent") {
-				const found = section.children.find(child => child.id === textSectionId)
-				if (found) return found
-			}
-		}
-		return null
-	}
-
-	/**
- * Check if a section ID belongs to a text section (child of TextParent)
- */
-	public isTextSectionId(careerUUID: CareerUUID, sectionId: string): boolean {
-		const career = this.getCareer(careerUUID)
-		if (!career) return false
-
-		return this.findTextSectionById(career.careerDefinition.sections, sectionId) !== null
-	}
-
-	/**
- * Get the text section by ID - useful for finding trigger images
- */
-	public getTextSectionById(careerUUID: CareerUUID, sectionId: string): TextSection | null {
-		const career = this.getCareer(careerUUID)
-		if (!career) return null
-
-		return this.findTextSectionById(career.careerDefinition.sections, sectionId)
-	}
-
 	public logout(): void {
 		this.careers.clear()
 		this.isDoneInitializing = false
