@@ -4,8 +4,11 @@ import WorkbenchLayout from "../layouts/workbench-layout"
 import SingleCareerCard from "./career-card/single-career-card"
 import IntroductionCard from "./introduction-card/introduction-card"
 import { introductionData, careerData } from "../../utils/constants/career-quest/career-data"
+import useRetrieveAllChallengeDataUseEffect from "../../utils/career-quest/retrieve-all-challenge-data-use-effect"
 
 export default function CareerQuest() {
+	useRetrieveAllChallengeDataUseEffect()
+
 	return (
 		<WorkbenchLayout extraChildrenClasses="p-10">
 			<div className="flex flex-col">

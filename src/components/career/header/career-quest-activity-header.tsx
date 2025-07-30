@@ -8,7 +8,7 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 
 export default function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
 	return (
-		<header className="h-20 flex items-center px-4 shadow-md fixed top-0 left-0 right-0 bg-standardBackground z-10">
+		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
 				<CustomTooltip
