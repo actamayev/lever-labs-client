@@ -47,6 +47,7 @@
     "react-markdown": "^10.1.0",
     "react-toastify": "^11.0.2",
     "socket.io-client": "^4.8.1",
+    "swiper": "^11.2.10",
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

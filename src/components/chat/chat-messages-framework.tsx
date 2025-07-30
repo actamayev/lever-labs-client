@@ -123,7 +123,7 @@ function ChatMessagesFramework(props: Props) {
 			<div
 				ref={containerRef}
 				className={cn(
-					"h-full w-full overflow-x-hidden",
+					"h-full w-full overflow-x-hidden scrollbar-hide",
 					hasAnyMessages ? "overflow-y-auto p-4 space-y-4" : "overflow-hidden flex items-center justify-center"
 				)}
 				onScroll={handleScroll}

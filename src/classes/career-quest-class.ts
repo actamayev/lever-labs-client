@@ -14,7 +14,6 @@ import {
 	ChallengeUUID
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import retrieveCareerQuestChallengeData from "../utils/career-quest/retrieve-career-quest-challenge-data"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 // Chat and streaming state interfaces
@@ -52,6 +51,7 @@ interface CareerInstance {
 class CareerQuestClass {
 	// Main data structure: careerUUID -> CareerInstance
 	public careers = observable.map<CareerUUID, CareerInstance>()
+	public isDoneInitializing = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -67,6 +67,7 @@ class CareerQuestClass {
 		Object.values(careerDefinitions).forEach(careerDefinition => {
 			this.initializeCareer(careerDefinition)
 		})
+		this.isDoneInitializing = true
 	})
 
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
@@ -463,168 +464,23 @@ class CareerQuestClass {
 		return this.getAllChallengeSections(career.careerDefinition.sections).length
 	}
 
-	public retrieveAllChallengeDataForCareer = action(async (careerUUID: CareerUUID): Promise<void> => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-
-		// Use helper to get challenge sections
-		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
-
-		const retrievalPromises = challengeSections.map(section =>
-			retrieveCareerQuestChallengeData(section.challengeData)
-		)
-
-		try {
-			await Promise.all(retrievalPromises)
-		} catch (error) {
-			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
-		}
-	})
-
-	// eslint-disable-next-line complexity
-	public getInitialTargetSection(careerUUID: CareerUUID): {
-		sectionId: string | null,
-		shouldAutoScroll: boolean,
-		rightContent: RightContent | null
-	} {
-		const career = this.getCareer(careerUUID)
-		if (!career) {
-			return { sectionId: null, shouldAutoScroll: false, rightContent: null }
-		}
-
-		const sections = career.careerDefinition.sections
-		const challengeSections = this.getAllChallengeSections(sections)
-
-		// Check if all challenges are complete
-		const allChallengesComplete = challengeSections.every(section =>
-			this.isChallengeCompleted(section.challengeData)
-		)
-
-		// If all complete, start at top with no auto-scroll
-		if (allChallengesComplete) {
-			return {
-				sectionId: null,
-				shouldAutoScroll: false,
-				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
-			}
-		}
-
-		// Find the latest completed challenge in the original sections array
-		let latestCompletedChallengeIndex = -1
-		for (let i = sections.length - 1; i >= 0; i--) {
-			const section = sections[i]
-			if (section.type === "challenge") {
-				const challengeSection = section as ChallengeSection
-				if (this.isChallengeCompleted(challengeSection.challengeData)) {
-					latestCompletedChallengeIndex = i
-					break
-				}
-			}
-		}
-
-		// If no challenges are complete, start at the top
-		if (latestCompletedChallengeIndex === -1) {
-			return {
-				sectionId: null,
-				shouldAutoScroll: false,
-				rightContent: { type: "image", icon: career.careerDefinition.initialImage }
-			}
-		}
-
-		// Find the next section after the latest completed challenge
-		for (let i = latestCompletedChallengeIndex + 1; i < sections.length; i++) {
-			const section = sections[i]
-
-			if (section.type === "textParent") {
-				// Target the first child text section in the group
-				const firstChild = section.children[0]
-				// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-				if (firstChild) {
-					return {
-						sectionId: firstChild.id,
-						shouldAutoScroll: true,
-						rightContent: { type: "image", icon: firstChild.triggerImage }
-					}
-				}
-			} else {
-				// Challenge section - check if it's incomplete
-				const challengeSection = section as ChallengeSection
-				if (!this.isChallengeCompleted(challengeSection.challengeData)) {
-					return {
-						sectionId: challengeSection.challengeData.challengeUUID,
-						shouldAutoScroll: true,
-						rightContent: { type: "challenge", challengeData: challengeSection.challengeData }
-					}
-				}
-			}
-		}
-
-		// Fallback to top if nothing found
-		return {
-			sectionId: null,
-			shouldAutoScroll: false,
-			rightContent: { type: "image", icon: career.careerDefinition.initialImage }
-		}
-	}
-
-	/**
- * Check if all challenge data has been retrieved for a career
- */
-	public hasRetrievedAllChallengeData(careerUUID: CareerUUID): boolean {
-		const career = this.getCareer(careerUUID)
-		if (!career) return false
-
-		// Use helper to get challenge sections
-		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
-
-		return challengeSections.every(section =>
-			this.hasRetrievedChallengeData(section.challengeData)
-		)
-	}
-
 	/**
 	 * Get all challenge sections
 	 */
-	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+	public getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
-	/**
-	 * Find a text section by ID across all TextParent sections
-	 */
-	private findTextSectionById(sections: CareerSection[], textSectionId: string): TextSection | null {
-		for (const section of sections) {
-			if (section.type === "textParent") {
-				const found = section.children.find(child => child.id === textSectionId)
-				if (found) return found
-			}
-		}
-		return null
-	}
-
-	/**
- * Check if a section ID belongs to a text section (child of TextParent)
- */
-	public isTextSectionId(careerUUID: CareerUUID, sectionId: string): boolean {
+	public getChallengeSectionByChallengeUUID(careerUUID: CareerUUID): ChallengeSection[] {
 		const career = this.getCareer(careerUUID)
-		if (!career) return false
+		if (!career) return []
 
-		return this.findTextSectionById(career.careerDefinition.sections, sectionId) !== null
+		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
-
-	/**
- * Get the text section by ID - useful for finding trigger images
- */
-	public getTextSectionById(careerUUID: CareerUUID, sectionId: string): TextSection | null {
-		const career = this.getCareer(careerUUID)
-		if (!career) return null
-
-		return this.findTextSectionById(career.careerDefinition.sections, sectionId)
-	}
-
 
 	public logout(): void {
 		this.careers.clear()
+		this.isDoneInitializing = false
 	}
 }
 

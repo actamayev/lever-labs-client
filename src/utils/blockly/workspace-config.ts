@@ -88,7 +88,7 @@ const getWorkspaceConfig = (
 		zoom: {
 			controls: viewOnly ? false : !disableZoomAndScroll,
 			wheel: viewOnly ? false : !disableZoomAndScroll,
-			startScale: disableZoomAndScroll ? 0.8 : 1.0,
+			startScale: 1.0,
 			maxScale: 3,
 			minScale: 0.3,
 			scaleSpeed: 1.2,
