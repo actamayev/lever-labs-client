@@ -379,7 +379,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 										<div className="border-2 border-swan rounded-3xl bg-polar h-[calc(100vh-10rem)] flex flex-col">
 											<div
 												ref={(el) => setTextParentRef(section.id, el)}
-												className="flex-1 overflow-y-auto p-4 scrollbar-hide"
+												className="flex-1 overflow-y-auto scrollbar-hide"
 												data-text-parent={section.id}
 												onScroll={(e) => {
 													const target = e.target as HTMLDivElement
@@ -389,6 +389,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													// Prevent this scroll event from bubbling up to outer container
 													e.stopPropagation()
 												}}
+												style={{
+													padding: "50px"
+												}}
 											>
 												<div className="space-y-6">
 													{section.children.map((childSection) => (
@@ -397,7 +400,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 															data-child-id={childSection.id}
 															className="prose prose-lg max-w-none text-3xl min-h-[50vh]"
 														>
-															<p className="leading-relaxed text-questionText">
+															<p className="leading-relaxed text-questionText text-center">
 																{childSection.content}
 															</p>
 														</div>
