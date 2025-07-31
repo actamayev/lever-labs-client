@@ -20,7 +20,6 @@ function useKeyboardNavigation() {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			// Only process if key wasn't already down
 			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
-				console.log("handleKeyDown in Parent", e.key)
 				e.preventDefault()
 				keyDownRef.current = true
 				setKeyPressed(e.key)
@@ -29,7 +28,6 @@ function useKeyboardNavigation() {
 
 		const handleKeyUp = (e: KeyboardEvent) => {
 			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-				console.log("handleKeyUp in Parent", e.key)
 				keyDownRef.current = false
 				setKeyPressed(null)
 			}
@@ -75,9 +73,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const keyPressed = useKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 
-	// eslint-disable-next-line @typescript-eslint/naming-convention
 	const SLIDE_COOLDOWN = 400
-
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -252,6 +248,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 															setRightContent({ type: "image", icon: triggerImage })
 														}}
 														onTextSectionChange={() => {}}
+														isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
 													/>
 												)}
 											</div>

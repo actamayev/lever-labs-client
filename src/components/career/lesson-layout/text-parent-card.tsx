@@ -1,7 +1,9 @@
+// text-parent-card.tsx
 import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState, useRef } from "react"
 
+// Simplified hook without the unused parameter
 function useNestedKeyboardNavigation(enabled: boolean) {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
 	const keyDownRef = useRef(false)
@@ -11,9 +13,6 @@ function useNestedKeyboardNavigation(enabled: boolean) {
 
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
-				console.log("handleKeyDown", e.key)
-				e.preventDefault()
-				e.stopPropagation() // Prevent bubbling to parent
 				keyDownRef.current = true
 				setKeyPressed(e.key)
 			}
@@ -21,13 +20,12 @@ function useNestedKeyboardNavigation(enabled: boolean) {
 
 		const handleKeyUp = (e: KeyboardEvent) => {
 			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-				console.log("handleKeyUp", e.key)
 				keyDownRef.current = false
 				setKeyPressed(null)
 			}
 		}
 
-		window.addEventListener("keydown", handleKeyDown, true) // Use capture phase
+		window.addEventListener("keydown", handleKeyDown, true)
 		window.addEventListener("keyup", handleKeyUp, true)
 
 		return () => {
@@ -39,45 +37,67 @@ function useNestedKeyboardNavigation(enabled: boolean) {
 	return keyPressed
 }
 
-// Enhanced TextParentCard with nested Swiper
+// Enhanced TextParentCard with reset functionality
 interface TextParentCardProps {
-	textParentData: TextParentSection
-	onComplete: () => void
-	onSlideChange: (triggerImage: string) => void
-	onTextSectionChange: (index: number, isLastSection: boolean) => void
+    textParentData: TextParentSection
+    onComplete: () => void
+    onSlideChange: (triggerImage: string) => void
+    onTextSectionChange: (index: number, isLastSection: boolean) => void
+    isActive?: boolean  // Add this prop to know when this card is active
 }
 
 export default function TextParentCard(props: TextParentCardProps) {
-	const { textParentData, onComplete, onSlideChange, onTextSectionChange } = props
+	const { textParentData, onComplete, onSlideChange, onTextSectionChange, isActive = false } = props
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
 	const [currentTextIndex, setCurrentTextIndex] = useState(0)
 	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
-	const [isActive, setIsActive] = useState(true)
-	const keyPressed = useNestedKeyboardNavigation(isActive)
+	const keyPressed = useNestedKeyboardNavigation(true)
 	const lastKeyPressTime = useRef(0)
-	// eslint-disable-next-line @typescript-eslint/naming-convention
+	const wasActiveRef = useRef(isActive) // Track previous active state
 	const SLIDE_COOLDOWN = 300
 
-	// Handle nested swiper slide change
+	// Reset state only when transitioning from inactive to active
+	useEffect(() => {
+		if (isActive && !wasActiveRef.current && nestedSwiperInstance) {
+			// We just became active (was inactive before)
+			nestedSwiperInstance.slideTo(0, 0)
+			setCurrentTextIndex(0)
+			setHasCompletedAllText(false)
+
+			// Update the image for the first slide
+			const firstText = textParentData.children[0]
+			onSlideChange(firstText.triggerImage)
+		}
+		wasActiveRef.current = isActive
+	}, [isActive, nestedSwiperInstance, onSlideChange, textParentData.children])
+
+	// Handle keyboard navigation
 	useEffect(() => {
 		if (!keyPressed || !nestedSwiperInstance) return
 
 		const now = Date.now()
 		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
 
-		if (keyPressed === "ArrowDown" && currentTextIndex < textParentData.children.length - 1) {
-			lastKeyPressTime.current = now
-			nestedSwiperInstance.slideNext()
-			console.log("slideNext")
-		} else if (keyPressed === "ArrowUp" && currentTextIndex > 0) {
-			lastKeyPressTime.current = now
-			nestedSwiperInstance.slidePrev()
+		const isAtFirstSlide = currentTextIndex === 0
+		const isAtLastSlide = currentTextIndex === textParentData.children.length - 1
+
+		if (keyPressed === "ArrowDown") {
+			if (!isAtLastSlide) {
+				lastKeyPressTime.current = now
+				nestedSwiperInstance.slideNext()
+			}
+			// If at last slide, let the event bubble to parent naturally
+		} else if (keyPressed === "ArrowUp") {
+			if (!isAtFirstSlide) {
+				lastKeyPressTime.current = now
+				nestedSwiperInstance.slidePrev()
+			}
+			// If at first slide, let the event bubble to parent naturally
 		}
 	}, [keyPressed, nestedSwiperInstance, currentTextIndex, textParentData.children.length])
 
 	// Handle nested swiper slide change
 	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
-		console.log("handleNestedSlideChange", swiper)
 		const newIndex = swiper.activeIndex
 		setCurrentTextIndex(newIndex)
 
@@ -87,12 +107,9 @@ export default function TextParentCard(props: TextParentCardProps) {
 		const isLastSection = newIndex === textParentData.children.length - 1
 		onTextSectionChange(newIndex, isLastSection)
 
-		// Don't immediately complete - wait for user action
+		// Mark as completed but don't disable navigation
 		if (isLastSection && !hasCompletedAllText) {
 			setHasCompletedAllText(true)
-			// Disable nested keyboard navigation when at last slide
-			setIsActive(false)
-			// Delay completion to prevent auto-advance
 			setTimeout(() => {
 				onComplete()
 			}, 100)
@@ -105,7 +122,7 @@ export default function TextParentCard(props: TextParentCardProps) {
 				direction="vertical"
 				slidesPerView={1}
 				spaceBetween={0}
-				keyboard={false} // Disable built-in keyboard
+				keyboard={false}
 				speed={400}
 				allowSlideNext={true}
 				allowSlidePrev={true}
