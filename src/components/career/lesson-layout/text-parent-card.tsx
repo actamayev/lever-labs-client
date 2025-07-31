@@ -9,9 +9,12 @@ function useMousewheelNavigation(
 	maxIndex: number,
 	onNavigate: (direction: "next" | "prev") => void
 ) {
-	const [wheelPressed, setWheelPressed] = useState<"up" | "down" | null>(null)
 	const lastWheelTime = useRef(0)
-	const wheelCooldown = 300 // Slightly longer than keyboard for smoother feel
+	const gestureBlocked = useRef(false)
+	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
+
+	const wheelCooldown = 200 // Time to wait after gesture ends before allowing new gesture
+	const gestureEndDelay = 30 // Time to wait for gesture to "complete"
 
 	useEffect(() => {
 		if (!isActive) return
@@ -20,6 +23,24 @@ function useMousewheelNavigation(
 			e.preventDefault()
 
 			const now = Date.now()
+
+			// If gesture is blocked, ignore all wheel events
+			if (gestureBlocked.current) {
+				// Reset the gesture end timer since we're still getting events
+				if (gestureTimeout.current) {
+					clearTimeout(gestureTimeout.current)
+				}
+
+				// Set new timer to unblock after events stop
+				gestureTimeout.current = setTimeout(() => {
+					gestureBlocked.current = false
+					lastWheelTime.current = now
+				}, gestureEndDelay)
+
+				return
+			}
+
+			// Check cooldown from last completed gesture
 			if (now - lastWheelTime.current < wheelCooldown) return
 
 			const direction = e.deltaY > 0 ? "down" : "up"
@@ -28,21 +49,29 @@ function useMousewheelNavigation(
 			if (direction === "down" && currentIndex >= maxIndex) return
 			if (direction === "up" && currentIndex <= 0) return
 
-			lastWheelTime.current = now
-			setWheelPressed(direction)
+			// Block further gestures immediately
+			gestureBlocked.current = true
 
 			// Trigger navigation
 			onNavigate(direction === "down" ? "next" : "prev")
 
-			// Reset after animation
-			setTimeout(() => setWheelPressed(null), 150)
+			// Set timer to unblock after gesture ends
+			gestureTimeout.current = setTimeout(() => {
+				gestureBlocked.current = false
+				lastWheelTime.current = Date.now()
+			}, gestureEndDelay)
 		}
 
 		window.addEventListener("wheel", handleWheel, { passive: false })
-		return () => window.removeEventListener("wheel", handleWheel)
-	}, [isActive, currentIndex, maxIndex, onNavigate, wheelCooldown])
 
-	return wheelPressed
+		return () => {
+			window.removeEventListener("wheel", handleWheel)
+			if (gestureTimeout.current) {
+				clearTimeout(gestureTimeout.current)
+			}
+		}
+	}, [isActive, currentIndex, maxIndex, onNavigate, wheelCooldown, gestureEndDelay])
+
 }
 
 // Enhanced TextParentCard with external navigation control
@@ -82,12 +111,13 @@ export default function TextParentCard(props: TextParentCardProps) {
 		}
 	}, [nestedSwiperInstance])
 
-	const wheelDirection = useMousewheelNavigation(
+	useMousewheelNavigation(
 		isActive,
 		initialTextIndex,
 		textParentData.children.length - 1,
 		handleMousewheelNavigate
 	)
+
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
 		if (!nestedSwiperInstance || !isActive) return
