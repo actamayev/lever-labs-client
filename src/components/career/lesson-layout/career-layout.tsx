@@ -4,98 +4,47 @@ import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
-import { Keyboard } from "swiper/modules"
-import { useEffect, useState, useMemo, useCallback } from "react"
+import { useEffect, useState, useMemo, useCallback, useRef } from "react"
 import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
 import RightContent from "./right-content"
+import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 
-// Enhanced TextParentCard with nested Swiper
-interface TextParentCardProps {
-	textParentData: TextParentSection
-	onComplete: () => void
-	onSlideChange: (triggerImage: string) => void
-	onTextSectionChange: (index: number, isLastSection: boolean) => void
-}
+function useKeyboardNavigation() {
+	const [keyPressed, setKeyPressed] = useState<string | null>(null)
+	const keyDownRef = useRef(false)
 
-const TextParentCard: React.FC<TextParentCardProps> = ({
-	textParentData,
-	onComplete,
-	onSlideChange,
-	onTextSectionChange
-}) => {
-	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
-	const [currentTextIndex, setCurrentTextIndex] = useState(0)
-	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
-
-	// Handle nested swiper slide change
-	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
-		const newIndex = swiper.activeIndex
-		setCurrentTextIndex(newIndex)
-
-		const currentText = textParentData.children[newIndex]
-		onSlideChange(currentText.triggerImage)
-
-		// Check if this is the last text section
-		const isLastSection = newIndex === textParentData.children.length - 1
-		onTextSectionChange(newIndex, isLastSection)
-
-		// Mark as completed when reaching the last section
-		if (isLastSection && !hasCompletedAllText) {
-			setHasCompletedAllText(true)
-			onComplete()
-		}
-	}, [textParentData.children, onSlideChange, onTextSectionChange, onComplete, hasCompletedAllText])
-
-	// Update nested swiper navigation permissions
 	useEffect(() => {
-		if (!nestedSwiperInstance) return
+		const handleKeyDown = (e: KeyboardEvent) => {
+			// Only process if key wasn't already down
+			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+				console.log("handleKeyDown in Parent", e.key)
+				e.preventDefault()
+				keyDownRef.current = true
+				setKeyPressed(e.key)
+			}
+		}
 
-		// Always allow going back within text sections
-		nestedSwiperInstance.allowSlidePrev = currentTextIndex > 0
+		const handleKeyUp = (e: KeyboardEvent) => {
+			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+				console.log("handleKeyUp in Parent", e.key)
+				keyDownRef.current = false
+				setKeyPressed(null)
+			}
+		}
 
-		// Allow going forward within text sections
-		nestedSwiperInstance.allowSlideNext = currentTextIndex < textParentData.children.length - 1
-	}, [nestedSwiperInstance, currentTextIndex, textParentData.children.length])
+		window.addEventListener("keydown", handleKeyDown)
+		window.addEventListener("keyup", handleKeyUp)
 
-	return (
-		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
-			<Swiper
-				direction="vertical"
-				slidesPerView={1}
-				spaceBetween={0}
-				keyboard={{
-					enabled: true,
-					onlyInViewport: true
-				}}
-				speed={400}
-				allowSlideNext={true}
-				allowSlidePrev={true}
-				modules={[Keyboard]}
-				onSwiper={setNestedSwiperInstance}
-				onSlideChange={handleNestedSlideChange}
-				className="h-full"
-				nested={true} // Important: Enable nested mode
-				style={{
-					"--swiper-theme-color": "#000000",
-				} as React.CSSProperties}
-			>
-				{textParentData.children.map((child) => (
-					<SwiperSlide key={child.id} className="h-full">
-						<div className="h-full flex items-center justify-center px-[75px]">
-							<div className="prose prose-lg max-w-none text-4xl">
-								<p className="leading-relaxed text-questionText text-center cursor-text">
-									{child.content}
-								</p>
-							</div>
-						</div>
-					</SwiperSlide>
-				))}
-			</Swiper>
-		</div>
-	)
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown)
+			window.removeEventListener("keyup", handleKeyUp)
+		}
+	}, [])
+
+	return keyPressed
 }
 
 // Main slide types - no longer flattened
@@ -122,6 +71,13 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
+	const [isTransitioning, setIsTransitioning] = useState(false)
+	const keyPressed = useKeyboardNavigation()
+	const lastKeyPressTime = useRef(0)
+
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	const SLIDE_COOLDOWN = 400
+
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -172,6 +128,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
 		setCurrentMainSlideIndex(newIndex)
+		console.log("handleMainSlideChange", newIndex)
 
 		const currentSlide = mainSlides[newIndex]
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -185,15 +142,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
 		}
 	}, [mainSlides])
-
-	// Handle text parent completion
-	const handleTextParentComplete = useCallback((textParentId: string) => {
-		setCompletedTextParents(prev => {
-			const newSet = new Set(prev)
-			newSet.add(textParentId)
-			return newSet
-		})
-	}, [])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -223,6 +171,42 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
 
+	useEffect(() => {
+		if (!keyPressed || !mainSwiperInstance || isTransitioning) return
+
+		const now = Date.now()
+		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
+
+		if (keyPressed === "ArrowDown") {
+			// Check if we can go to next slide
+			if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+				lastKeyPressTime.current = now
+				setIsTransitioning(true)
+				mainSwiperInstance.slideNext()
+				setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+			}
+		} else if (keyPressed === "ArrowUp") {
+			// Always allow going back
+			if (currentMainSlideIndex > 0) {
+				lastKeyPressTime.current = now
+				setIsTransitioning(true)
+				mainSwiperInstance.slidePrev()
+				setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+			}
+		}
+	}, [keyPressed, mainSwiperInstance, currentMainSlideIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
+
+	const handleTextParentComplete = useCallback((textParentId: string) => {
+		// Add a small delay to ensure any keyboard events have finished
+		setTimeout(() => {
+			setCompletedTextParents(prev => {
+				const newSet = new Set(prev)
+				newSet.add(textParentId)
+				return newSet
+			})
+		}, 100)
+	}, [])
+
 	return (
 		<div className="flex h-full">
 			{/* Left Panel - Main Swiper */}
@@ -240,14 +224,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									direction="vertical"
 									slidesPerView={1}
 									spaceBetween={0}
-									keyboard={{
-										enabled: true,
-										onlyInViewport: true
-									}}
+									keyboard={false} // Disable built-in keyboard
 									speed={400}
-									allowSlideNext={false} // Controlled programmatically
+									allowSlideNext={true}
 									allowSlidePrev={true}
-									modules={[Keyboard]}
+									allowTouchMove={false} // Also disable touch/mouse
 									onSwiper={setMainSwiperInstance}
 									onSlideChange={handleMainSlideChange}
 									className="h-full"
