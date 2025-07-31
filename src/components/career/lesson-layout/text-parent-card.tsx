@@ -3,98 +3,66 @@ import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useCallback, useEffect, useState, useRef } from "react"
 
-// Simplified hook without the unused parameter
-function useNestedKeyboardNavigation(enabled: boolean) {
-	const [keyPressed, setKeyPressed] = useState<string | null>(null)
-	const keyDownRef = useRef(false)
-
-	useEffect(() => {
-		if (!enabled) return
-
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
-				keyDownRef.current = true
-				setKeyPressed(e.key)
-			}
-		}
-
-		const handleKeyUp = (e: KeyboardEvent) => {
-			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-				keyDownRef.current = false
-				setKeyPressed(null)
-			}
-		}
-
-		window.addEventListener("keydown", handleKeyDown, true)
-		window.addEventListener("keyup", handleKeyUp, true)
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown, true)
-			window.removeEventListener("keyup", handleKeyUp, true)
-		}
-	}, [enabled])
-
-	return keyPressed
-}
-
-// Enhanced TextParentCard with reset functionality
+// Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
     textParentData: TextParentSection
     onComplete: () => void
     onSlideChange: (triggerImage: string) => void
-    onTextSectionChange: (index: number, isLastSection: boolean) => void
-    isActive?: boolean  // Add this prop to know when this card is active
+    onTextSectionChange: (index: number) => void  // Simplified to just pass the index
+    isActive?: boolean
+    navigationCommand?: "next" | "prev" | null  // Commands from parent
+    initialTextIndex?: number  // Initial index when becoming active
 }
 
 export default function TextParentCard(props: TextParentCardProps) {
-	const { textParentData, onComplete, onSlideChange, onTextSectionChange, isActive = false } = props
-	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
-	const [currentTextIndex, setCurrentTextIndex] = useState(0)
-	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
-	const keyPressed = useNestedKeyboardNavigation(true)
-	const lastKeyPressTime = useRef(0)
-	const wasActiveRef = useRef(isActive) // Track previous active state
-	const SLIDE_COOLDOWN = 300
+	const {
+		textParentData,
+		onComplete,
+		onSlideChange,
+		onTextSectionChange,
+		isActive = false,
+		navigationCommand,
+		initialTextIndex = 0
+	} = props
 
-	// Reset state only when transitioning from inactive to active
+	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
+	const [currentTextIndex, setCurrentTextIndex] = useState(initialTextIndex)
+	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
+	const wasActiveRef = useRef(isActive) // Track previous active state
+
+	// Reset state when transitioning from inactive to active, or when initialTextIndex changes
 	useEffect(() => {
-		if (isActive && !wasActiveRef.current && nestedSwiperInstance) {
-			// We just became active (was inactive before)
-			nestedSwiperInstance.slideTo(0, 0)
-			setCurrentTextIndex(0)
+		if (isActive && (!wasActiveRef.current || currentTextIndex !== initialTextIndex) && nestedSwiperInstance) {
+			// We just became active or the initial index changed
+			nestedSwiperInstance.slideTo(initialTextIndex, 0)
+			setCurrentTextIndex(initialTextIndex)
 			setHasCompletedAllText(false)
 
-			// Update the image for the first slide
-			const firstText = textParentData.children[0]
-			onSlideChange(firstText.triggerImage)
+			// Update the image for the target slide
+			const targetText = textParentData.children[initialTextIndex]
+			if (targetText) {
+				onSlideChange(targetText.triggerImage)
+			}
 		}
 		wasActiveRef.current = isActive
-	}, [isActive, nestedSwiperInstance, onSlideChange, textParentData.children])
+	}, [isActive, initialTextIndex, nestedSwiperInstance, onSlideChange, textParentData.children])
 
-	// Handle keyboard navigation
+	// Handle navigation commands from parent
 	useEffect(() => {
-		if (!keyPressed || !nestedSwiperInstance) return
+		if (!navigationCommand || !nestedSwiperInstance || !isActive) return
 
-		const now = Date.now()
-		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
-
-		const isAtFirstSlide = currentTextIndex === 0
-		const isAtLastSlide = currentTextIndex === textParentData.children.length - 1
-
-		if (keyPressed === "ArrowDown") {
-			if (!isAtLastSlide) {
-				lastKeyPressTime.current = now
+		if (navigationCommand === "next") {
+			const canGoNext = currentTextIndex < textParentData.children.length - 1
+			if (canGoNext) {
 				nestedSwiperInstance.slideNext()
 			}
-			// If at last slide, let the event bubble to parent naturally
-		} else if (keyPressed === "ArrowUp") {
-			if (!isAtFirstSlide) {
-				lastKeyPressTime.current = now
+		} else if (navigationCommand === "prev") {
+			const canGoPrev = currentTextIndex > 0
+			if (canGoPrev) {
 				nestedSwiperInstance.slidePrev()
 			}
-			// If at first slide, let the event bubble to parent naturally
 		}
-	}, [keyPressed, nestedSwiperInstance, currentTextIndex, textParentData.children.length])
+	}, [navigationCommand, nestedSwiperInstance, isActive, currentTextIndex, textParentData.children.length])
 
 	// Handle nested swiper slide change
 	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
@@ -102,10 +70,14 @@ export default function TextParentCard(props: TextParentCardProps) {
 		setCurrentTextIndex(newIndex)
 
 		const currentText = textParentData.children[newIndex]
-		onSlideChange(currentText.triggerImage)
+		if (currentText) {
+			onSlideChange(currentText.triggerImage)
+		}
+
+		// Notify parent of the index change
+		onTextSectionChange(newIndex)
 
 		const isLastSection = newIndex === textParentData.children.length - 1
-		onTextSectionChange(newIndex, isLastSection)
 
 		// Mark as completed but don't disable navigation
 		if (isLastSection && !hasCompletedAllText) {
@@ -122,11 +94,11 @@ export default function TextParentCard(props: TextParentCardProps) {
 				direction="vertical"
 				slidesPerView={1}
 				spaceBetween={0}
-				keyboard={false}
+				keyboard={false}  // Completely disabled - parent handles all navigation
 				speed={400}
 				allowSlideNext={true}
 				allowSlidePrev={true}
-				allowTouchMove={false}
+				allowTouchMove={false}  // Also disable touch/mouse
 				onSwiper={setNestedSwiperInstance}
 				onSlideChange={handleNestedSlideChange}
 				className="h-full"

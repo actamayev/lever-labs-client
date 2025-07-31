@@ -69,7 +69,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
+	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0) // Track current text child
 	const [isTransitioning, setIsTransitioning] = useState(false)
+	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const keyPressed = useKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 
@@ -124,6 +126,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
 		setCurrentMainSlideIndex(newIndex)
+		setCurrentTextChildIndex(0) // Reset text child index when changing main slides
 		console.log("handleMainSlideChange", newIndex)
 
 		const currentSlide = mainSlides[newIndex]
@@ -167,30 +170,88 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
 
+	// Centralized keyboard navigation logic
 	useEffect(() => {
 		if (!keyPressed || !mainSwiperInstance || isTransitioning) return
 
 		const now = Date.now()
 		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
 
+		const currentSlide = mainSlides[currentMainSlideIndex]
+		if (!currentSlide) return
+
 		if (keyPressed === "ArrowDown") {
-			// Check if we can go to next slide
-			if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
-				lastKeyPressTime.current = now
-				setIsTransitioning(true)
-				mainSwiperInstance.slideNext()
-				setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+			if (currentSlide.type === "textParent") {
+				const totalTextChildren = currentSlide.data.children.length
+				const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
+				const hasOnlyOneChild = totalTextChildren === 1
+
+				if (hasOnlyOneChild || isAtLastTextChild) {
+					// Move to next main slide if possible
+					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+						lastKeyPressTime.current = now
+						setIsTransitioning(true)
+						mainSwiperInstance.slideNext()
+						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+					}
+				} else {
+					// Move to next text child
+					lastKeyPressTime.current = now
+					setNavigationCommand("next")
+					setTimeout(() => setNavigationCommand(null), 100)
+				}
+			} else {
+				// Challenge slide - try to move to next main slide
+				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+					lastKeyPressTime.current = now
+					setIsTransitioning(true)
+					mainSwiperInstance.slideNext()
+					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+				}
 			}
 		} else if (keyPressed === "ArrowUp") {
-			// Always allow going back
-			if (currentMainSlideIndex > 0) {
-				lastKeyPressTime.current = now
-				setIsTransitioning(true)
-				mainSwiperInstance.slidePrev()
-				setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+			if (currentSlide.type === "textParent") {
+				const isAtFirstTextChild = currentTextChildIndex === 0
+
+				if (isAtFirstTextChild) {
+					// Move to previous main slide if possible
+					if (currentMainSlideIndex > 0) {
+						lastKeyPressTime.current = now
+						setIsTransitioning(true)
+						mainSwiperInstance.slidePrev()
+
+						// Set the text child index to the last child of the previous text parent
+						const prevSlide = mainSlides[currentMainSlideIndex - 1]
+						if (prevSlide && prevSlide.type === "textParent") {
+							setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+						}
+
+						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+					}
+				} else {
+					// Move to previous text child
+					lastKeyPressTime.current = now
+					setNavigationCommand("prev")
+					setTimeout(() => setNavigationCommand(null), 100)
+				}
+			} else {
+				// Challenge slide - always go to previous main slide
+				if (currentMainSlideIndex > 0) {
+					lastKeyPressTime.current = now
+					setIsTransitioning(true)
+					mainSwiperInstance.slidePrev()
+
+					// Set the text child index to the last child of the previous text parent
+					const prevSlide = mainSlides[currentMainSlideIndex - 1]
+					if (prevSlide && prevSlide.type === "textParent") {
+						setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+					}
+
+					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+				}
 			}
 		}
-	}, [keyPressed, mainSwiperInstance, currentMainSlideIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
+	}, [keyPressed, mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
 
 	const handleTextParentComplete = useCallback((textParentId: string) => {
 		// Add a small delay to ensure any keyboard events have finished
@@ -201,6 +262,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				return newSet
 			})
 		}, 100)
+	}, [])
+
+	// Handle text child index changes from TextParentCard
+	const handleTextChildIndexChange = useCallback((newIndex: number) => {
+		setCurrentTextChildIndex(newIndex)
 	}, [])
 
 	return (
@@ -247,8 +313,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 														onSlideChange={(triggerImage) => {
 															setRightContent({ type: "image", icon: triggerImage })
 														}}
-														onTextSectionChange={() => {}}
+														onTextSectionChange={handleTextChildIndexChange}
 														isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
+														navigationCommand={navigationCommand}
+														initialTextIndex={currentTextChildIndex}
 													/>
 												)}
 											</div>
