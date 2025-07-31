@@ -56,19 +56,31 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "intro-1",
-					content: "Hello! Welcome to your first Career Quest! Today, you're going to show me how to navigate the world. I'm really clumsy and am used to bumping into things...",
+					content: "First",
+					triggerImage: "Navigation"
+				},
+				{
+					type: "text",
+					id: "intro-2",
+					content: "Second",
+					triggerImage: "Navigation"
+				},
+				{
+					type: "text",
+					id: "intro-3",
+					content: "Third",
 					triggerImage: "Navigation"
 				},
 				{
 					type: "text",
 					id: "breakdown-1",
-					content: "We'll break this career into two steps: 1. First, I'll use my distance sensors to 'see' 2. Then, I'll react to those distance measurements...",
+					content: "Fourth",
 					triggerImage: "Eye"
 				},
 				{
 					type: "text",
 					id: "sensors-intro",
-					content: "Lets start with my distance sensors. I have three distance sensors, or three 'eyes', that let me 'see' the world around me...",
+					content: "Fifth",
 					triggerImage: "Radar"
 				},
 			]
