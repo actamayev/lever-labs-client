@@ -68,7 +68,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 		// Set new timeout
 		saveTimeoutRef.current = setTimeout(() => {
-			console.log("  🌐 Debounced save to backend")
 			editCareerQuestSandboxProject(challengeData.challengeUUID, blocklyJson)
 			saveTimeoutRef.current = null
 		}, 300) // 300ms debounce delay
@@ -181,9 +180,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		lastProcessedJsonRef.current = null // Reset the last processed JSON
 
 		// Add a small delay to ensure workspace is fully ready before processing changes
-		const timer = setTimeout(() => {
-			console.log("⏰ Workspace should be ready now")
-		}, 100)
+		const timer = setTimeout(() => {}, 100)
 
 		return () => {
 			clearTimeout(timer)
