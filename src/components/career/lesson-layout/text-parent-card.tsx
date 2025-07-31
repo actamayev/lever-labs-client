@@ -1,19 +1,20 @@
 // text-parent-card.tsx
 import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useCallback, useEffect, useState, useRef } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 // Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
     textParentData: TextParentSection
     onComplete: () => void
     onSlideChange: (triggerImage: string) => void
-    onTextSectionChange: (index: number) => void  // Simplified to just pass the index
+    onTextSectionChange: (index: number) => void
     isActive?: boolean
-    navigationCommand?: "next" | "prev" | null  // Commands from parent
-    initialTextIndex?: number  // Initial index when becoming active
+    navigationCommand?: "next" | "prev" | null
+    initialTextIndex?: number  // This is now the current index from parent
 }
 
+// eslint-disable-next-line max-lines-per-function
 export default function TextParentCard(props: TextParentCardProps) {
 	const {
 		textParentData,
@@ -22,59 +23,64 @@ export default function TextParentCard(props: TextParentCardProps) {
 		onTextSectionChange,
 		isActive = false,
 		navigationCommand,
-		initialTextIndex = 0
+		initialTextIndex = 0  // This is the source of truth from parent
 	} = props
 
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
-	const [currentTextIndex, setCurrentTextIndex] = useState(initialTextIndex)
 	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
-	const wasActiveRef = useRef(isActive) // Track previous active state
 
-	// Reset state when transitioning from inactive to active, or when initialTextIndex changes
+	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
-		if (isActive && (!wasActiveRef.current || currentTextIndex !== initialTextIndex) && nestedSwiperInstance) {
-			// We just became active or the initial index changed
-			nestedSwiperInstance.slideTo(initialTextIndex, 0)
-			setCurrentTextIndex(initialTextIndex)
-			setHasCompletedAllText(false)
+		if (nestedSwiperInstance && isActive) {
+			// Only slide if the index is actually different
+			if (nestedSwiperInstance.activeIndex !== initialTextIndex) {
+				nestedSwiperInstance.slideTo(initialTextIndex, 0)
 
-			// Update the image for the target slide
-			const targetText = textParentData.children[initialTextIndex]
-			if (targetText) {
-				onSlideChange(targetText.triggerImage)
+				// Update the image for the target slide
+				const targetText = textParentData.children[initialTextIndex]
+				if (targetText) {
+					onSlideChange(targetText.triggerImage)
+				}
 			}
 		}
-		wasActiveRef.current = isActive
-	}, [isActive, initialTextIndex, nestedSwiperInstance, onSlideChange, textParentData.children])
+	}, [initialTextIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
+
+	// Reset completion state when becoming active
+	useEffect(() => {
+		if (isActive) {
+			setHasCompletedAllText(false)
+		}
+	}, [isActive])
 
 	// Handle navigation commands from parent
 	useEffect(() => {
 		if (!navigationCommand || !nestedSwiperInstance || !isActive) return
 
 		if (navigationCommand === "next") {
-			const canGoNext = currentTextIndex < textParentData.children.length - 1
+			const canGoNext = initialTextIndex < textParentData.children.length - 1
 			if (canGoNext) {
 				nestedSwiperInstance.slideNext()
 			}
 		} else if (navigationCommand === "prev") {
-			const canGoPrev = currentTextIndex > 0
+			const canGoPrev = initialTextIndex > 0
 			if (canGoPrev) {
 				nestedSwiperInstance.slidePrev()
 			}
 		}
-	}, [navigationCommand, nestedSwiperInstance, isActive, currentTextIndex, textParentData.children.length])
+		// DONT CHANGE THESE DEPENDENCIES
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [navigationCommand, nestedSwiperInstance, isActive])
 
 	// Handle nested swiper slide change
 	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
-		setCurrentTextIndex(newIndex)
 
 		const currentText = textParentData.children[newIndex]
 		if (currentText) {
 			onSlideChange(currentText.triggerImage)
 		}
 
-		// Notify parent of the index change
+		// Notify parent of the index change - parent is source of truth
 		onTextSectionChange(newIndex)
 
 		const isLastSection = newIndex === textParentData.children.length - 1
@@ -94,15 +100,16 @@ export default function TextParentCard(props: TextParentCardProps) {
 				direction="vertical"
 				slidesPerView={1}
 				spaceBetween={0}
-				keyboard={false}  // Completely disabled - parent handles all navigation
+				keyboard={false}  // Parent handles all navigation
 				speed={400}
 				allowSlideNext={true}
 				allowSlidePrev={true}
-				allowTouchMove={false}  // Also disable touch/mouse
+				allowTouchMove={false}
 				onSwiper={setNestedSwiperInstance}
 				onSlideChange={handleNestedSlideChange}
 				className="h-full"
 				nested={true}
+				initialSlide={initialTextIndex}  // Set initial slide
 				style={{
 					"--swiper-theme-color": "#000000",
 				} as React.CSSProperties}

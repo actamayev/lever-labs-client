@@ -1,3 +1,4 @@
+/* eslint-disable max-depth */
 "use client"
 import "swiper/css"
 import { observer } from "mobx-react"
@@ -75,7 +76,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const keyPressed = useKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 
-	const SLIDE_COOLDOWN = 400
+	const SLIDE_COOLDOWN = 200
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -127,7 +128,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const newIndex = swiper.activeIndex
 		setCurrentMainSlideIndex(newIndex)
 		setCurrentTextChildIndex(0) // Reset text child index when changing main slides
-		console.log("handleMainSlideChange", newIndex)
 
 		const currentSlide = mainSlides[newIndex]
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -171,6 +171,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
 
 	// Centralized keyboard navigation logic
+	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (!keyPressed || !mainSwiperInstance || isTransitioning) return
 
@@ -178,7 +179,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
 
 		const currentSlide = mainSlides[currentMainSlideIndex]
-		if (!currentSlide) return
 
 		if (keyPressed === "ArrowDown") {
 			if (currentSlide.type === "textParent") {
