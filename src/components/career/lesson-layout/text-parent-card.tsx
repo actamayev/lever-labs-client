@@ -7,58 +7,75 @@ function useMousewheelNavigation(
 	isActive: boolean,
 	currentIndex: number,
 	maxIndex: number,
-	onNavigate: (direction: "next" | "prev") => void
+	onNavigate: (direction: "next" | "prev") => void,
+	swiperInstance: SwiperType | null
 ) {
-	const lastWheelTime = useRef(0)
 	const gestureBlocked = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
+	const accumulatedDelta = useRef(0)
+	const baseTranslate = useRef(0)
 
-	const wheelCooldown = 200 // Time to wait after gesture ends before allowing new gesture
-	const gestureEndDelay = 30 // Time to wait for gesture to "complete"
+	const gestureEndDelay = 20
+	const commitThreshold = 0.1 // 30% of slide height to commit
+	const sensitivity = 1 // Adjust scroll sensitivity
 
 	useEffect(() => {
-		if (!isActive) return
+		if (!isActive || !swiperInstance) return
 
 		const handleWheel = (e: WheelEvent) => {
 			e.preventDefault()
 
-			const now = Date.now()
-
-			// If gesture is blocked, ignore all wheel events
-			if (gestureBlocked.current) {
-				// Reset the gesture end timer since we're still getting events
-				if (gestureTimeout.current) {
-					clearTimeout(gestureTimeout.current)
-				}
-
-				// Set new timer to unblock after events stop
-				gestureTimeout.current = setTimeout(() => {
-					gestureBlocked.current = false
-					lastWheelTime.current = now
-				}, gestureEndDelay)
-
-				return
+			// Start new gesture
+			if (!gestureBlocked.current) {
+				gestureBlocked.current = true
+				accumulatedDelta.current = 0
+				baseTranslate.current = swiperInstance.getTranslate()
 			}
 
-			// Check cooldown from last completed gesture
-			if (now - lastWheelTime.current < wheelCooldown) return
+			// Accumulate scroll delta
+			accumulatedDelta.current += e.deltaY * sensitivity
 
-			const direction = e.deltaY > 0 ? "down" : "up"
+			// Calculate new translate position
+			const slideHeight = swiperInstance.height
+			const maxTranslate = baseTranslate.current - (slideHeight * (maxIndex - currentIndex))
+			const minTranslate = baseTranslate.current + (slideHeight * currentIndex)
 
-			// Check boundaries
-			if (direction === "down" && currentIndex >= maxIndex) return
-			if (direction === "up" && currentIndex <= 0) return
+			const newTranslate = Math.max(maxTranslate, Math.min(minTranslate,
+				baseTranslate.current - accumulatedDelta.current))
 
-			// Block further gestures immediately
-			gestureBlocked.current = true
+			// Apply the translate
+			swiperInstance.setTranslate(newTranslate)
 
-			// Trigger navigation
-			onNavigate(direction === "down" ? "next" : "prev")
+			// Reset gesture end timer
+			if (gestureTimeout.current) {
+				clearTimeout(gestureTimeout.current)
+			}
 
-			// Set timer to unblock after gesture ends
+			// Set timer to end gesture
 			gestureTimeout.current = setTimeout(() => {
+				const innerSlideHeight = swiperInstance.height
+				const deltaSlides = accumulatedDelta.current / innerSlideHeight
+
+				// Check if we should commit to slide change
+				if (Math.abs(deltaSlides) >= commitThreshold) {
+					if (deltaSlides > 0 && currentIndex < maxIndex) {
+						// Scroll down - go to next
+						onNavigate("next")
+					} else if (deltaSlides < 0 && currentIndex > 0) {
+						// Scroll up - go to prev
+						onNavigate("prev")
+					} else {
+						// Hit boundary - snap back
+						swiperInstance.slideTo(currentIndex, 300)
+					}
+				} else {
+					// Didn't cross threshold - snap back
+					swiperInstance.slideTo(currentIndex, 300)
+				}
+
+				// Reset gesture state
 				gestureBlocked.current = false
-				lastWheelTime.current = Date.now()
+				accumulatedDelta.current = 0
 			}, gestureEndDelay)
 		}
 
@@ -70,8 +87,7 @@ function useMousewheelNavigation(
 				clearTimeout(gestureTimeout.current)
 			}
 		}
-	}, [isActive, currentIndex, maxIndex, onNavigate, wheelCooldown, gestureEndDelay])
-
+	}, [currentIndex, isActive, maxIndex, onNavigate, swiperInstance])
 }
 
 // Enhanced TextParentCard with external navigation control
@@ -115,7 +131,8 @@ export default function TextParentCard(props: TextParentCardProps) {
 		isActive,
 		initialTextIndex,
 		textParentData.children.length - 1,
-		handleMousewheelNavigate
+		handleMousewheelNavigate,
+		nestedSwiperInstance
 	)
 
 	// Sync swiper position with parent's index whenever it changes
