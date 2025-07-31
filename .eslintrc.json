@@ -89,7 +89,19 @@
             "error",
             {
                 "selector": "variable",
-                "format": ["camelCase", "PascalCase"]
+                "format": ["camelCase", "PascalCase"],
+                "filter": {
+                    "regex": "^SLIDE_COOLDOWN$",
+                    "match": false
+                }
+            },
+            {
+                "selector": "variable",
+                "format": null,
+                "filter": {
+                    "regex": "^SLIDE_COOLDOWN$",
+                    "match": true
+                }
             },
             {
                 "selector": "function",
