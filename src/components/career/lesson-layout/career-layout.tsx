@@ -1,12 +1,12 @@
 "use client"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Mousewheel, Keyboard, FreeMode } from "swiper/modules"
-import type { Swiper as SwiperType } from "swiper"
 import "swiper/css"
 import { observer } from "mobx-react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
+import { Keyboard } from "swiper/modules"
 import { useEffect, useState, useMemo, useCallback } from "react"
+import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
 import RightContent from "./right-content"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -66,26 +66,6 @@ const TextParentCard: React.FC<TextParentCardProps> = ({
 				direction="vertical"
 				slidesPerView={1}
 				spaceBetween={0}
-				mousewheel={{
-					enabled: true,
-					forceToAxis: true,
-					releaseOnEdges: true,
-					sensitivity: 2,
-					thresholdDelta: 5,
-					thresholdTime: 300
-				}}
-				freeMode={{
-					enabled: true,
-					sticky: true,
-					minimumVelocity: 0.1,
-					momentum: true,
-					momentumRatio: 0.6,
-					momentumBounce: true,
-					momentumBounceRatio: 0.3,
-					momentumVelocityRatio: 0.8
-				}}
-				resistance={true}
-				resistanceRatio={0.85}
 				keyboard={{
 					enabled: true,
 					onlyInViewport: true
@@ -93,7 +73,7 @@ const TextParentCard: React.FC<TextParentCardProps> = ({
 				speed={400}
 				allowSlideNext={true}
 				allowSlidePrev={true}
-				modules={[Mousewheel, Keyboard, FreeMode]}
+				modules={[Keyboard]}
 				onSwiper={setNestedSwiperInstance}
 				onSlideChange={handleNestedSlideChange}
 				className="h-full"
@@ -260,26 +240,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									direction="vertical"
 									slidesPerView={1}
 									spaceBetween={0}
-									mousewheel={{
-										enabled: true,
-										forceToAxis: true,
-										releaseOnEdges: true,
-										sensitivity: 2,
-										thresholdDelta: 5,
-										thresholdTime: 300
-									}}
-									freeMode={{
-										enabled: true,
-										sticky: true,
-										minimumVelocity: 0.1,
-										momentum: true,
-										momentumRatio: 0.6,
-										momentumBounce: true,
-										momentumBounceRatio: 0.3,
-										momentumVelocityRatio: 0.8
-									}}
-									resistance={true}
-									resistanceRatio={0.85}
 									keyboard={{
 										enabled: true,
 										onlyInViewport: true
@@ -287,7 +247,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									speed={400}
 									allowSlideNext={false} // Controlled programmatically
 									allowSlidePrev={true}
-									modules={[Mousewheel, Keyboard, FreeMode]}
+									modules={[Keyboard]}
 									onSwiper={setMainSwiperInstance}
 									onSlideChange={handleMainSlideChange}
 									className="h-full"
