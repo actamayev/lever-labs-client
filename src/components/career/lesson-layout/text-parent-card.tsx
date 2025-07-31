@@ -1,7 +1,49 @@
 // text-parent-card.tsx
 import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+
+function useMousewheelNavigation(
+	isActive: boolean,
+	currentIndex: number,
+	maxIndex: number,
+	onNavigate: (direction: "next" | "prev") => void
+) {
+	const [wheelPressed, setWheelPressed] = useState<"up" | "down" | null>(null)
+	const lastWheelTime = useRef(0)
+	const wheelCooldown = 300 // Slightly longer than keyboard for smoother feel
+
+	useEffect(() => {
+		if (!isActive) return
+
+		const handleWheel = (e: WheelEvent) => {
+			e.preventDefault()
+
+			const now = Date.now()
+			if (now - lastWheelTime.current < wheelCooldown) return
+
+			const direction = e.deltaY > 0 ? "down" : "up"
+
+			// Check boundaries
+			if (direction === "down" && currentIndex >= maxIndex) return
+			if (direction === "up" && currentIndex <= 0) return
+
+			lastWheelTime.current = now
+			setWheelPressed(direction)
+
+			// Trigger navigation
+			onNavigate(direction === "down" ? "next" : "prev")
+
+			// Reset after animation
+			setTimeout(() => setWheelPressed(null), 150)
+		}
+
+		window.addEventListener("wheel", handleWheel, { passive: false })
+		return () => window.removeEventListener("wheel", handleWheel)
+	}, [isActive, currentIndex, maxIndex, onNavigate, wheelCooldown])
+
+	return wheelPressed
+}
 
 // Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
@@ -23,12 +65,29 @@ export default function TextParentCard(props: TextParentCardProps) {
 		onTextSectionChange,
 		isActive = false,
 		navigationCommand,
-		initialTextIndex = 0  // This is the source of truth from parent
+		initialTextIndex = 0
 	} = props
 
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
 	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
 
+	// Add mousewheel navigation
+	const handleMousewheelNavigate = useCallback((direction: "next" | "prev") => {
+		if (!nestedSwiperInstance) return
+
+		if (direction === "next") {
+			nestedSwiperInstance.slideNext()
+		} else {
+			nestedSwiperInstance.slidePrev()
+		}
+	}, [nestedSwiperInstance])
+
+	const wheelDirection = useMousewheelNavigation(
+		isActive,
+		initialTextIndex,
+		textParentData.children.length - 1,
+		handleMousewheelNavigate
+	)
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
 		if (!nestedSwiperInstance || !isActive) return
