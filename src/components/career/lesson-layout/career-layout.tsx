@@ -222,7 +222,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 						// Set the text child index to the last child of the previous text parent
 						const prevSlide = mainSlides[currentMainSlideIndex - 1]
-						if (prevSlide && prevSlide.type === "textParent") {
+						if (prevSlide.type === "textParent") {
 							setCurrentTextChildIndex(prevSlide.data.children.length - 1)
 						}
 
@@ -243,7 +243,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 					// Set the text child index to the last child of the previous text parent
 					const prevSlide = mainSlides[currentMainSlideIndex - 1]
-					if (prevSlide && prevSlide.type === "textParent") {
+					if (prevSlide.type === "textParent") {
 						setCurrentTextChildIndex(prevSlide.data.children.length - 1)
 					}
 

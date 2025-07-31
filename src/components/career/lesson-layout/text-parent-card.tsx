@@ -31,25 +31,21 @@ export default function TextParentCard(props: TextParentCardProps) {
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
-		if (nestedSwiperInstance && isActive) {
-			// Only slide if the index is actually different
-			if (nestedSwiperInstance.activeIndex !== initialTextIndex) {
-				nestedSwiperInstance.slideTo(initialTextIndex, 0)
+		if (!nestedSwiperInstance || !isActive) return
+		// Only slide if the index is actually different
+		if (nestedSwiperInstance.activeIndex !== initialTextIndex) {
+			nestedSwiperInstance.slideTo(initialTextIndex, 0)
 
-				// Update the image for the target slide
-				const targetText = textParentData.children[initialTextIndex]
-				if (targetText) {
-					onSlideChange(targetText.triggerImage)
-				}
-			}
+			// Update the image for the target slide
+			const targetText = textParentData.children[initialTextIndex]
+			onSlideChange(targetText.triggerImage)
 		}
 	}, [initialTextIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
 
 	// Reset completion state when becoming active
 	useEffect(() => {
-		if (isActive) {
-			setHasCompletedAllText(false)
-		}
+		if (!isActive) return
+		setHasCompletedAllText(false)
 	}, [isActive])
 
 	// Handle navigation commands from parent
@@ -61,7 +57,7 @@ export default function TextParentCard(props: TextParentCardProps) {
 			if (canGoNext) {
 				nestedSwiperInstance.slideNext()
 			}
-		} else if (navigationCommand === "prev") {
+		} else {
 			const canGoPrev = initialTextIndex > 0
 			if (canGoPrev) {
 				nestedSwiperInstance.slidePrev()
@@ -76,9 +72,7 @@ export default function TextParentCard(props: TextParentCardProps) {
 		const newIndex = swiper.activeIndex
 
 		const currentText = textParentData.children[newIndex]
-		if (currentText) {
-			onSlideChange(currentText.triggerImage)
-		}
+		onSlideChange(currentText.triggerImage)
 
 		// Notify parent of the index change - parent is source of truth
 		onTextSectionChange(newIndex)
