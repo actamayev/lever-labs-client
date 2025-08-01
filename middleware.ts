@@ -12,17 +12,7 @@ interface JwtPayload {
 }
 
 // Pages that should redirect to /garage if user is fully authenticated
-const AUTH_PAGES = ["/login", "/register", "/"]
-
-// Open pages - accessible to everyone
-// const OPEN_PAGES = [
-// 	"/contact",
-// 	"/mission",
-// 	"/schools",
-// 	"/terms",
-// 	"/privacy",
-// 	"/community-guidelines"
-// ]
+const AUTH_PAGES = ["/login", "/register", "/register-google", "/"]
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
 	const { pathname } = request.nextUrl
