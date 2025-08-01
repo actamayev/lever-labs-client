@@ -40,7 +40,10 @@ export default async function registerSubmit(
 			setError("Unable to register. Please reload the page and try again")
 			return false
 		}
-		authClass.setAccessToken(response.data.accessToken)
+		authClass.setAuthState({
+			isAuthenticated: true,
+			hasCompletedSignup: true
+		})
 		personalInfoClass.setRegisteredValues(
 			registerCredentials.username,
 			registerCredentials.email,

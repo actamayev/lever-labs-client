@@ -10,7 +10,7 @@ export default class MiscDataService extends BaseDataService {
 
 	async subscribeForUpdates(email: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl("/subscribe-for-email-updates"), { email }, { headers: { "No-Auth-Required": "true" }}
+			this.buildUrl("/subscribe-for-email-updates"), { email }
 		)
 	}
 }

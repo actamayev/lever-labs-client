@@ -28,7 +28,10 @@ export default async function loginSubmit(
 			setError("Unable to log in. Please reload the page and try again")
 			return false
 		}
-		authClass.setAccessToken(response.data.accessToken)
+		authClass.setAuthState({
+			isAuthenticated: true,
+			hasCompletedSignup: true
+		})
 		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
 		teacherClass.setTeacherData(response.data.teacherData)
 		pipClass.setPipData(response.data.userPipData)

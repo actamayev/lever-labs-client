@@ -1,4 +1,5 @@
-import RegisterGoogleInfoWrapper from "./register-google-wrapper"
+
+import RegisterGoogleInfoComponent from "../../src/components/auth/register-google-info/register-google-info-component"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -9,5 +10,5 @@ export const metadata = createMetadata({
 })
 
 export default function RegisterGoogle() {
-	return <RegisterGoogleInfoWrapper />
+	return <RegisterGoogleInfoComponent />
 }
