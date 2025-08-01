@@ -14,6 +14,7 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import useKeyboardNavigation from "../../../hooks/career/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career/use-mouse-wheel-navigation"
+import { cn } from "../../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -224,7 +225,15 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				className="sticky top-0 h-[calc(100vh-10rem)]"
 				style={{ width: "55%" }}
 			>
-				<RightContent rightContent={rightContent} color={careerData.careerColor} />
+				<div
+					className={cn(
+						"flex items-center justify-center h-full",
+						"border-2 border-swan rounded-3xl bg-polar my-8"
+					)}
+					style={{ marginRight: "100px" }}
+				>
+					<RightContent rightContent={rightContent} color={careerData.careerColor} />
+				</div>
 			</div>
 		</div>
 	)

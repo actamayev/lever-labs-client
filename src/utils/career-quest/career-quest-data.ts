@@ -57,31 +57,31 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "intro-1",
 					content: "First First First First First First First First First  First First First  First First First  First First First  First First First First First First First First First First First First ",
-					triggerImage: "Navigation"
+					triggerImage: "Heading1"
 				},
 				{
 					type: "text",
 					id: "intro-2",
 					content: "Second Second Second Second Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second Se",
-					triggerImage: "Navigation"
+					triggerImage: "Heading2"
 				},
 				{
 					type: "text",
 					id: "intro-3",
 					content: "Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third ",
-					triggerImage: "Navigation"
+					triggerImage: "Heading3"
 				},
 				{
 					type: "text",
 					id: "intro-4",
 					content: "Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth",
-					triggerImage: "Eye"
+					triggerImage: "Heading4"
 				},
 				{
 					type: "text",
 					id: "intro-5",
 					content: "Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth",
-					triggerImage: "Eye"
+					triggerImage: "Heading5"
 				},
 			]
 		},
