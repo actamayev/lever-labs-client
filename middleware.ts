@@ -62,6 +62,10 @@ function handleUnauthenticated(_request: NextRequest, pathname: string): NextRes
 	response.headers.set("x-username", "")
 	response.headers.set("x-has-completed-signup", "false")
 
+	if (pathname === "/register-google") {
+		return NextResponse.redirect(new URL("/", _request.url))
+	}
+
 	// Check page type explicitly
 	const isPrivatePage = PrivatePageNames.some(page => pathname.startsWith(page))
 	// const isOpenPage = OPEN_PAGES.some(page => pathname.startsWith(page))
