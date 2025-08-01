@@ -7,7 +7,7 @@ import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
-import useGetBatteryColorClasses from "../../../hooks/workbench/get-battery-color-classes"
+import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
 function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)

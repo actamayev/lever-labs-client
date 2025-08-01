@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 
-export default function useSiteThemeListenerUseEffect(): void {
+export default function useEffectSiteThemeListener(): void {
 	const handleStorageChange = useCallback((event: StorageEvent): void => {
 		if (
 			event.key !== "defaultSiteTheme" ||

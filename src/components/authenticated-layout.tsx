@@ -1,19 +1,17 @@
-"use client"
+import { getAuthState } from "@/lib/auth-server"
+import AuthenticatedLayoutClient from "./authenticated-layout-client"
 
-import { observer } from "mobx-react"
-import authClass from "@/classes/auth-class"
-import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
-
-function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
-	if (authClass.isLoggedIn === false) {
-		return <ShowAuthToNullUser />
-	}
-
-	return (
-		<div className="text-questionText">
-			{children}
-		</div>
-	)
+interface AuthenticatedLayoutProps {
+  children: React.ReactNode
 }
 
-export default observer(AuthenticatedLayout)
+// Server component that gets auth state and passes to client (now async)
+export default async function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
+	const authState = await getAuthState() // ✅ Now awaiting the async function
+
+	return (
+		<AuthenticatedLayoutClient authState={authState}>
+			{children}
+		</AuthenticatedLayoutClient>
+	)
+}

@@ -3,13 +3,13 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { RegisterRequest, SiteThemes } from "@bluedotrobots/common-ts"
-import authClass from "../../classes/auth-class"
-import { isNonSuccessResponse } from "../type-checks"
-import confirmRegisterFields from "./confirm-register-fields"
-import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import setErrorAxiosResponse from "../error-handling/set-error-axios-response"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import authClass from "../../../classes/auth-class"
+import { isNonSuccessResponse } from "../../type-checks"
+import confirmRegisterFields from "../confirm-register-fields"
+import personalInfoClass from "../../../classes/personal-info-class"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 export default async function registerSubmit(
 	registerCredentials: RegisterFormValues,
@@ -40,7 +40,10 @@ export default async function registerSubmit(
 			setError("Unable to register. Please reload the page and try again")
 			return false
 		}
-		authClass.setAccessToken(response.data.accessToken)
+		authClass.setAuthState({
+			isAuthenticated: true,
+			hasCompletedSignup: true
+		})
 		personalInfoClass.setRegisteredValues(
 			registerCredentials.username,
 			registerCredentials.email,

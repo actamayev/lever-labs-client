@@ -2,16 +2,16 @@
 
 import isEqual from "lodash-es/isEqual"
 import { LoginRequest } from "@bluedotrobots/common-ts"
-import pipClass from "../../classes/pip-class"
-import authClass from "../../classes/auth-class"
-import studentClass from "../../classes/student-class"
-import teacherClass from "../../classes/teacher-class"
-import { isNonSuccessResponse } from "../../utils/type-checks"
-import personalInfoClass from "../../classes/personal-info-class"
-import confirmLoginFields from "../../utils/auth/confirm-login-fields"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import setErrorAxiosResponse from "../../utils/error-handling/set-error-axios-response"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import pipClass from "../../../classes/pip-class"
+import authClass from "../../../classes/auth-class"
+import studentClass from "../../../classes/student-class"
+import teacherClass from "../../../classes/teacher-class"
+import { isNonSuccessResponse } from "../../type-checks"
+import personalInfoClass from "../../../classes/personal-info-class"
+import confirmLoginFields from "../confirm-login-fields"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 export default async function loginSubmit(
 	loginInformation: LoginRequest,
@@ -28,7 +28,10 @@ export default async function loginSubmit(
 			setError("Unable to log in. Please reload the page and try again")
 			return false
 		}
-		authClass.setAccessToken(response.data.accessToken)
+		authClass.setAuthState({
+			isAuthenticated: true,
+			hasCompletedSignup: true
+		})
 		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
 		teacherClass.setTeacherData(response.data.teacherData)
 		pipClass.setPipData(response.data.userPipData)

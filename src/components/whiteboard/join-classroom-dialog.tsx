@@ -8,7 +8,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
 

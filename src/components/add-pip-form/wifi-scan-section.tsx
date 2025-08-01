@@ -9,7 +9,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import ScannedNetworkList from "./scanned-network-list"
 import ManualEntrySection from "./manual-entry-section"
-import useScanForNetworks from "../../hooks/scan-for-networks"
+import useScanForNetworks from "../../hooks/use-scan-for-networks"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 

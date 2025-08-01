@@ -30,9 +30,7 @@ class BlueDotApiClient {
 	constructor() {
 	}
 
-	public logout(): void {
-		this.httpClient.logout()
-	}
+	// No logout method needed: cookies are cleared by server endpoint
 }
 
 const blueDotApiClientClass = new BlueDotApiClient()

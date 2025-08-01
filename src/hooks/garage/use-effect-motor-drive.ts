@@ -6,7 +6,7 @@ import { motorKeyMappings } from "../../utils/constants/constants"
 import applyMotorControl from "../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../utils/garage/compute-motor-control"
 
-export default function useMotorDriveUseEffect(): void {
+export default function useEffectMotorDrive(): void {
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
 		const target = event.target as HTMLElement

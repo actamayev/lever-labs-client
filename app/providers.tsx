@@ -6,40 +6,43 @@ import { Slide, ToastContainer } from "react-toastify"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 
 // Custom hooks from your application
-import { observer } from "mobx-react"
+import authClass from "../src/classes/auth-class"
+import personalInfoClass from "../src/classes/personal-info-class"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
-import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
-import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-analytics"
-import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
-import useRedirectBackToRegisterGoogle from "@/hooks/redirects/redirect-back-to-register-google"
+import useEffectLogoutListener from "@/hooks/listeners/use-effect-logout-listener"
+import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
+import useEffectSiteThemeListener from "@/hooks/listeners/use-effect-site-theme-listener"
 
-function RedirectHandler() {
-	useRedirectBackToRegisterGoogle()
-	return null
-}
-
-const ObserverRedirectHandler = observer(RedirectHandler)
-
-const retrieveInfo = async () => {
-	await retrievePersonalInfo()
-	// We wait for the personal info to be retrieved, and then retrieve the pip info.
-	// We wait for the username to be retrieved to be certain that we should retrieve the pip info
-	void retrievePipInfo()
-	void retrieveClassrooms()
+const retrieveInfo = async (): Promise<void> => {
+	// Only retrieve if user is authenticated but we don't have personal info yet
+	// This handles page refreshes where middleware knows user is auth but client state is empty
+	if (!authClass.isLoggedIn || personalInfoClass.retrievedPersonalInfo) return
+	try {
+		await retrievePersonalInfo()
+		void retrievePipInfo()
+		void retrieveClassrooms()
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	} catch (error) {
+		// If this fails, user might not actually be authenticated
+		console.error("Data retrieval failed - user may not be authenticated")
+	}
 }
 
 export default function Providers({ children }: { children: ReactNode }) {
-	useLogoutListenerUseEffect()
-	useSiteThemeListenerUseEffect()
+	useEffectLogoutListener()
+	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
-	useEffect(() => void retrieveInfo(), [])
+
+	// Smart data retrieval - only if needed
+	useEffect(() => {
+		void retrieveInfo()
+	}, [])
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
-			<ObserverRedirectHandler />
 			<ConditionalLayout>
 				<AnimatePresence mode="wait">
 					{children}
