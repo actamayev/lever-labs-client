@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // text-parent-card.tsx
 import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
+// eslint-disable-next-line max-params
 function useMousewheelNavigation(
 	isActive: boolean,
 	currentIndex: number,
@@ -10,14 +12,12 @@ function useMousewheelNavigation(
 	onNavigate: (direction: "next" | "prev") => void,
 	swiperInstance: SwiperType | null
 ) {
-	const gestureBlocked = useRef(false)
+	const gestureActive = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
-	const accumulatedDelta = useRef(0)
-	const baseTranslate = useRef(0)
+	const hasNavigatedInGesture = useRef(false)
 
-	const gestureEndDelay = 20
-	const commitThreshold = 0.1 // 30% of slide height to commit
-	const sensitivity = 1 // Adjust scroll sensitivity
+	const GESTURE_END_DELAY = 40 // Time to wait after last wheel event to consider gesture ended
+	const MIN_DELTA_THRESHOLD = 5 // Minimum scroll amount to consider significant
 
 	useEffect(() => {
 		if (!isActive || !swiperInstance) return
@@ -25,64 +25,48 @@ function useMousewheelNavigation(
 		const handleWheel = (e: WheelEvent) => {
 			e.preventDefault()
 
-			// Start new gesture
-			if (!gestureBlocked.current) {
-				gestureBlocked.current = true
-				accumulatedDelta.current = 0
-				baseTranslate.current = swiperInstance.getTranslate()
+			// Ignore very small scroll movements (noise)
+			if (Math.abs(e.deltaY) < MIN_DELTA_THRESHOLD) {
+				return
 			}
 
-			// Accumulate scroll delta
-			accumulatedDelta.current += e.deltaY * sensitivity
+			// If this is the start of a new gesture
+			if (!gestureActive.current) {
+				gestureActive.current = true
+				hasNavigatedInGesture.current = false
+			}
 
-			// Calculate new translate position
-			const slideHeight = swiperInstance.height
-			const maxTranslate = baseTranslate.current - (slideHeight * (maxIndex - currentIndex))
-			const minTranslate = baseTranslate.current + (slideHeight * currentIndex)
+			// Only navigate if we haven't already navigated in this gesture
+			if (!hasNavigatedInGesture.current) {
+				if (e.deltaY > 0 && currentIndex < maxIndex) {
+					// Scroll down - next slide
+					onNavigate("next")
+					hasNavigatedInGesture.current = true
+				} else if (e.deltaY < 0 && currentIndex > 0) {
+					// Scroll up - previous slide
+					onNavigate("prev")
+					hasNavigatedInGesture.current = true
+				}
+			}
 
-			const newTranslate = Math.max(maxTranslate, Math.min(minTranslate,
-				baseTranslate.current - accumulatedDelta.current))
-
-			// Apply the translate
-			swiperInstance.setTranslate(newTranslate)
-
-			// Reset gesture end timer
+			// Clear any existing timeout and set a new one
 			if (gestureTimeout.current) {
 				clearTimeout(gestureTimeout.current)
 			}
 
-			// Set timer to end gesture
+			// Set timeout to detect end of gesture
 			gestureTimeout.current = setTimeout(() => {
-				const innerSlideHeight = swiperInstance.height
-				const deltaSlides = accumulatedDelta.current / innerSlideHeight
-
-				// Check if we should commit to slide change
-				if (Math.abs(deltaSlides) >= commitThreshold) {
-					if (deltaSlides > 0 && currentIndex < maxIndex) {
-						// Scroll down - go to next
-						onNavigate("next")
-					} else if (deltaSlides < 0 && currentIndex > 0) {
-						// Scroll up - go to prev
-						onNavigate("prev")
-					} else {
-						// Hit boundary - snap back
-						swiperInstance.slideTo(currentIndex, 300)
-					}
-				} else {
-					// Didn't cross threshold - snap back
-					swiperInstance.slideTo(currentIndex, 300)
-				}
-
-				// Reset gesture state
-				gestureBlocked.current = false
-				accumulatedDelta.current = 0
-			}, gestureEndDelay)
+				gestureActive.current = false
+				hasNavigatedInGesture.current = false
+			}, GESTURE_END_DELAY)
 		}
 
-		window.addEventListener("wheel", handleWheel, { passive: false })
+		// Add event listener to the swiper element specifically
+		const element = swiperInstance.el
+		element.addEventListener("wheel", handleWheel, { passive: false })
 
 		return () => {
-			window.removeEventListener("wheel", handleWheel)
+			element.removeEventListener("wheel", handleWheel)
 			if (gestureTimeout.current) {
 				clearTimeout(gestureTimeout.current)
 			}
