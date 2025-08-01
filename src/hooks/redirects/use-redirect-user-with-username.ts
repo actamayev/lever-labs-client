@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { useEffect } from "react"
 import authClass from "../../classes/auth-class"
-import useTypedNavigate from "../navigate/typed-navigate"
+import useTypedNavigate from "../navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 

@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 
 interface ClassroomPageProps {

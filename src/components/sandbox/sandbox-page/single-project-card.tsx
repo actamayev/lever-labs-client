@@ -14,7 +14,7 @@ import {
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import RenameProjectDialog from "./rename-project-dialog"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import relativeDateFormatter from "../../../utils/sandbox/date-formatting"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
 import deleteSandboxProject from "../../../utils/sandbox/delete-sandbox-project"

@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { ArrowLeft } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import studentClass from "../../classes/student-class"
 
 interface ClassroomPageProps {

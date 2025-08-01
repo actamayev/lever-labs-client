@@ -11,10 +11,10 @@ import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
-import useLogoutListenerUseEffect from "@/hooks/listeners/logout-listener-use-effect"
-import useInitializeGoogleAnalytics from "@/hooks/analytics/initialize-google-analytics"
-import useSiteThemeListenerUseEffect from "@/hooks/listeners/site-theme-listener-use-effect"
-import useRedirectBackToRegisterGoogle from "@/hooks/redirects/redirect-back-to-register-google"
+import useEffectLogoutListener from "@/hooks/listeners/use-effect-logout-listener"
+import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
+import useEffectSiteThemeListener from "@/hooks/listeners/use-effect-site-theme-listener"
+import useRedirectBackToRegisterGoogle from "@/hooks/redirects/use-redirect-back-to-register-google"
 
 function RedirectHandler() {
 	useRedirectBackToRegisterGoogle()
@@ -32,8 +32,8 @@ const retrieveInfo = async () => {
 }
 
 export default function Providers({ children }: { children: ReactNode }) {
-	useLogoutListenerUseEffect()
-	useSiteThemeListenerUseEffect()
+	useEffectLogoutListener()
+	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
 	useEffect(() => void retrieveInfo(), [])
 

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import isNull from "lodash-es/isNull"
 import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
-import useTypedNavigate from "../navigate/typed-navigate"
+import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 

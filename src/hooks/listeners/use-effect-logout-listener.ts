@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect } from "react"
 import logout from "../../utils/auth/logout"
-import useTypedNavigate from "../navigate/typed-navigate"
+import useTypedNavigate from "../navigate/use-typed-navigate"
 
-export default function useLogoutListenerUseEffect(): void {
+export default function useEffectLogoutListener(): void {
 	// not calling the api in handle logout here on purpose - just need to get the user out where they're connected to internet or not
 	const router = useRouter()
 	const navigate = useTypedNavigate()

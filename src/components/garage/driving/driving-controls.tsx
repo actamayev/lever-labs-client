@@ -5,11 +5,11 @@ import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
 import garageClass from "../../../classes/garage-class"
-import useMotorDriveUseEffect from "../../../hooks/garage/motor-drive-use-effect"
-import useGarageActionsUseEffect from "../../../hooks/garage/garage-actions-use-effect"
+import useEffectMotorDrive from "../../../hooks/garage/use-effect-motor-drive"
+import useGarageActionsUseEffect from "../../../hooks/garage/use-garage-actions-use-effect"
 
 function DrivingControls() {
-	useMotorDriveUseEffect()
+	useEffectMotorDrive()
 	useGarageActionsUseEffect()
 
 	return (

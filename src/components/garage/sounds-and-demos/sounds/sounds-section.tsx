@@ -3,10 +3,10 @@
 import { observer } from "mobx-react"
 import { FunSounds } from "@bluedotrobots/common-ts"
 import SoundActionButton from "./sound-action-button"
-import useGarageSoundsUseEffect from "../../../../hooks/garage/garage-sounds-use-effect"
+import useEffectGarageSounds from "../../../../hooks/garage/use-effect-garage-sounds"
 
 function SoundsSection() {
-	useGarageSoundsUseEffect()
+	useEffectGarageSounds()
 	const sounds: FunSounds[] = [
 		"Fart",
 		"Monkey",

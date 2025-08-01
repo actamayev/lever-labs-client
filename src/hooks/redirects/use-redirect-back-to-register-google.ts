@@ -4,7 +4,7 @@ import isNull from "lodash-es/isNull"
 import { useEffect } from "react"
 import { usePathname } from "next/navigation"
 import authClass from "../../classes/auth-class"
-import useTypedNavigate from "../navigate/typed-navigate"
+import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 
 // This hook exists to make sure that Google users who have not registered their username are unable to go to private pages

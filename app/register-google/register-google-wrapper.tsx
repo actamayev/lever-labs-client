@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import RegisterGoogleInfoComponent from "../../src/components/auth/register-google-info/register-google-info-component"
-import useRedirectUserWithUsername from "../../src/hooks/redirects/redirect-user-with-username"
+import useRedirectUserWithUsername from "../../src/hooks/redirects/use-redirect-user-with-username"
 
 function RegisterGoogleWrapper() {
 	useRedirectUserWithUsername()

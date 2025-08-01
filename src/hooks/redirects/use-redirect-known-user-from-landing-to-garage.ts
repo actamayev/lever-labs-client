@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import authClass from "../../classes/auth-class"
-import useTypedNavigate from "../navigate/typed-navigate"
+import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 
