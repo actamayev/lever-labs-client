@@ -12,23 +12,23 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 	sections: [
 		{
 			type: "textParent",
-			id: "intro-1",
+			id: "parent-1",
 			children: [
 				{
 					type: "text",
-					id: "intro-1",
+					id: "parent-1-1",
 					content: "Hello! Welcome to your first Career Quest! Today, you're going to show me how to navigate the world. I'm really clumsy and am used to bumping into things...",
 					triggerImage: "Navigation"
 				},
 				{
 					type: "text",
-					id: "breakdown-1",
+					id: "parent-1-2",
 					content: "We'll break this career into two steps: 1. First, I'll use my distance sensors to 'see' 2. Then, I'll react to those distance measurements...",
 					triggerImage: "Eye"
 				},
 				{
 					type: "text",
-					id: "sensors-intro",
+					id: "parent-1-3",
 					content: "Lets start with my distance sensors. I have three distance sensors, or three 'eyes', that let me 'see' the world around me...",
 					triggerImage: "Radar"
 				}
@@ -51,35 +51,35 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	sections: [
 		{
 			type: "textParent",
-			id: "intro-1",
+			id: "parent-1",
 			children: [
 				{
 					type: "text",
-					id: "intro-1",
+					id: "parent-1-1",
 					content: "First First First First First First First First First  First First First  First First First  First First First  First First First First First First First First First First First First ",
 					triggerImage: "Heading1"
 				},
 				{
 					type: "text",
-					id: "intro-2",
+					id: "parent-1-2",
 					content: "Second Second Second Second Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second Se",
 					triggerImage: "Heading2"
 				},
 				{
 					type: "text",
-					id: "intro-3",
+					id: "parent-1-3",
 					content: "Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third ",
 					triggerImage: "Heading3"
 				},
 				{
 					type: "text",
-					id: "intro-4",
+					id: "parent-1-4",
 					content: "Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth",
 					triggerImage: "Heading4"
 				},
 				{
 					type: "text",
-					id: "intro-5",
+					id: "parent-1-5",
 					content: "Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth",
 					triggerImage: "Heading5"
 				},
@@ -92,17 +92,17 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "led-explanation",
+			id: "parent-2",
 			children: [
 				{
 					type: "text",
-					id: "led-explanation",
+					id: "parent-2-1",
 					content: "Great job! Now, you might be wondering why I asked you to change the color of my LEDs to indicate if there's an object in front of me...",
 					triggerImage: "Lightbulb"
 				},
 				{
 					type: "text",
-					id: "motors-intro",
+					id: "parent-2-2",
 					content: "Now that we know that your LED solution works, lets try bringing the motors in, and I'll try some basic obstacle avoidance...",
 					triggerImage: "Cog"
 				},
@@ -119,7 +119,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 			children: [
 				{
 					type: "text",
-					id: "improvement-1",
+					id: "parent-3-1",
 					content: "Great! You've written a basic obstacle avoider program. As you saw, I keep driving forward until I sense something...",
 					triggerImage: "ArrowRight"
 				},
@@ -132,11 +132,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "side-sensors",
+			id: "parent-4-1",
 			children: [
 				{
 					type: "text",
-					id: "side-sensors",
+					id: "parent-4-1",
 					content: "Nice! Now I won't get stuck after detecting something directly in front of me! I'm already noticing that I'm a lot less clumsy...",
 					triggerImage: "ScanLine"
 				},
@@ -149,11 +149,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "final-challenge-intro",
+			id: "parent-5-1",
 			children: [
 				{
 					type: "text",
-					id: "final-challenge-intro",
+					id: "parent-5-1",
 					content: "Great job! Now, we have all the building blocks we need to make me perform obstacle avoidance...",
 					triggerImage: "Puzzle"
 				},
@@ -166,11 +166,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "completion",
+			id: "parent-6-1",
 			children: [
 				{
 					type: "text",
-					id: "completion",
+					id: "parent-6-1",
 					content: "Great job! Now I can avoid obstacles.",
 					triggerImage: "Trophy"
 				},
