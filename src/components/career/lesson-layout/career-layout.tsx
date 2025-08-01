@@ -1,65 +1,19 @@
-/* eslint-disable max-depth */
 "use client"
 import "swiper/css"
+import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
-import { useEffect, useState, useMemo, useCallback, useRef } from "react"
-import { ChallengeUUID, CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import RightContent from "./right-content"
 import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
-
-function useKeyboardNavigation() {
-	const [keyPressed, setKeyPressed] = useState<string | null>(null)
-	const keyDownRef = useRef(false)
-
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			// Only process if key wasn't already down
-			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
-				e.preventDefault()
-				keyDownRef.current = true
-				setKeyPressed(e.key)
-			}
-		}
-
-		const handleKeyUp = (e: KeyboardEvent) => {
-			if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-				keyDownRef.current = false
-				setKeyPressed(null)
-			}
-		}
-
-		window.addEventListener("keydown", handleKeyDown)
-		window.addEventListener("keyup", handleKeyUp)
-
-		return () => {
-			window.removeEventListener("keydown", handleKeyDown)
-			window.removeEventListener("keyup", handleKeyUp)
-		}
-	}, [])
-
-	return keyPressed
-}
-
-// Main slide types - no longer flattened
-interface TextParentMainSlide {
-	type: "textParent"
-	id: string
-	data: TextParentSection
-}
-
-interface ChallengeMainSlide {
-	type: "challenge"
-	id: ChallengeUUID
-	data: CqChallengeData
-}
-
-type MainSlide = TextParentMainSlide | ChallengeMainSlide
+import useKeyboardNavigation from "../../../hooks/career/use-keyboard-navigation"
+import useMousewheelNavigation from "../../../hooks/career/use-mouse-wheel-navigation"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -73,10 +27,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0) // Track current text child
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
-	const keyPressed = useKeyboardNavigation()
-	const lastKeyPressTime = useRef(0)
-
-	const SLIDE_COOLDOWN = 200
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -111,6 +61,30 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			return careerQuestClass.isChallengeCompleted(currentSlide.data)
 		}
 	}, [mainSlides, completedTextParents])
+
+	useMousewheelNavigation(
+		mainSwiperInstance,
+		currentMainSlideIndex,
+		currentTextChildIndex,
+		mainSlides,
+		canAdvanceToNextMain,
+		isTransitioning,
+		setIsTransitioning,
+		setNavigationCommand,
+		setCurrentTextChildIndex
+	)
+
+	useKeyboardNavigation(
+		mainSwiperInstance,
+		currentMainSlideIndex,
+		currentTextChildIndex,
+		mainSlides,
+		canAdvanceToNextMain,
+		isTransitioning,
+		setIsTransitioning,
+		setNavigationCommand,
+		setCurrentTextChildIndex
+	)
 
 	// Update main swiper navigation permissions
 	useEffect(() => {
@@ -150,14 +124,13 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Set initial right content
 	useEffect(() => {
-		if (mainSlides.length > 0) {
-			const firstSlide = mainSlides[0]
-			if (firstSlide.type === "textParent") {
-				const firstText = firstSlide.data.children[0]
-				setRightContent({ type: "image", icon: firstText.triggerImage })
-			} else {
-				setRightContent({ type: "challenge", challengeData: firstSlide.data })
-			}
+		if (isEmpty(mainSlides)) return
+		const firstSlide = mainSlides[0]
+		if (firstSlide.type === "textParent") {
+			const firstText = firstSlide.data.children[0]
+			setRightContent({ type: "image", icon: firstText.triggerImage })
+		} else {
+			setRightContent({ type: "challenge", challengeData: firstSlide.data })
 		}
 	}, [mainSlides])
 
@@ -169,89 +142,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			mainSwiperInstance.allowSlideNext = canAdvance
 		}
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
-
-	// Centralized keyboard navigation logic
-	// eslint-disable-next-line complexity
-	useEffect(() => {
-		if (!keyPressed || !mainSwiperInstance || isTransitioning) return
-
-		const now = Date.now()
-		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
-
-		const currentSlide = mainSlides[currentMainSlideIndex]
-
-		if (keyPressed === "ArrowDown") {
-			if (currentSlide.type === "textParent") {
-				const totalTextChildren = currentSlide.data.children.length
-				const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
-				const hasOnlyOneChild = totalTextChildren === 1
-
-				if (hasOnlyOneChild || isAtLastTextChild) {
-					// Move to next main slide if possible
-					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
-						lastKeyPressTime.current = now
-						setIsTransitioning(true)
-						mainSwiperInstance.slideNext()
-						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-					}
-				} else {
-					// Move to next text child
-					lastKeyPressTime.current = now
-					setNavigationCommand("next")
-					setTimeout(() => setNavigationCommand(null), 100)
-				}
-			} else {
-				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					mainSwiperInstance.slideNext()
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-				}
-			}
-		} else if (keyPressed === "ArrowUp") {
-			if (currentSlide.type === "textParent") {
-				const isAtFirstTextChild = currentTextChildIndex === 0
-
-				if (isAtFirstTextChild) {
-					// Move to previous main slide if possible
-					if (currentMainSlideIndex > 0) {
-						lastKeyPressTime.current = now
-						setIsTransitioning(true)
-						mainSwiperInstance.slidePrev()
-
-						// Set the text child index to the last child of the previous text parent
-						const prevSlide = mainSlides[currentMainSlideIndex - 1]
-						if (prevSlide.type === "textParent") {
-							setCurrentTextChildIndex(prevSlide.data.children.length - 1)
-						}
-
-						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-					}
-				} else {
-					// Move to previous text child
-					lastKeyPressTime.current = now
-					setNavigationCommand("prev")
-					setTimeout(() => setNavigationCommand(null), 100)
-				}
-			} else {
-				// Challenge slide - always go to previous main slide
-				if (currentMainSlideIndex > 0) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					mainSwiperInstance.slidePrev()
-
-					// Set the text child index to the last child of the previous text parent
-					const prevSlide = mainSlides[currentMainSlideIndex - 1]
-					if (prevSlide.type === "textParent") {
-						setCurrentTextChildIndex(prevSlide.data.children.length - 1)
-					}
-
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-				}
-			}
-		}
-	}, [keyPressed, mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
 
 	const handleTextParentComplete = useCallback((textParentId: string) => {
 		// Add a small delay to ensure any keyboard events have finished

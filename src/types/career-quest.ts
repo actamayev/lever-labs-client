@@ -88,6 +88,21 @@ declare global {
 		careerColor: DuolingoColors
 		sections: CareerSection[]
 	}
+
+	// Main slide types - no longer flattened
+	interface TextParentMainSlide {
+		type: "textParent"
+		id: string
+		data: TextParentSection
+	}
+
+	interface ChallengeMainSlide {
+		type: "challenge"
+		id: ChallengeUUID
+		data: CqChallengeData
+	}
+
+	type MainSlide = TextParentMainSlide | ChallengeMainSlide
 }
 
 export {}
