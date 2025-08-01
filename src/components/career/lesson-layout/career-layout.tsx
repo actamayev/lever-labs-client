@@ -61,7 +61,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			return careerQuestClass.isChallengeCompleted(currentSlide.data)
 		}
 	}, [mainSlides, completedTextParents])
-	// eslint-disable-next-line max-len
+
 	useMousewheelNavigation(
 		mainSwiperInstance,
 		currentMainSlideIndex,

@@ -8,9 +8,9 @@ interface TextParentCardProps {
     onComplete: () => void
     onSlideChange: (triggerImage: string) => void
     onTextSectionChange: (index: number) => void
-    isActive?: boolean
-    navigationCommand?: "next" | "prev" | null
-    initialTextIndex?: number  // This is now the current index from parent
+    isActive: boolean
+    navigationCommand: "next" | "prev" | null
+    initialTextIndex: number  // This is now the current index from parent
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,9 +20,9 @@ export default function TextParentCard(props: TextParentCardProps) {
 		onComplete,
 		onSlideChange,
 		onTextSectionChange,
-		isActive = false,
+		isActive,
 		navigationCommand,
-		initialTextIndex = 0
+		initialTextIndex
 	} = props
 
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
@@ -30,15 +30,15 @@ export default function TextParentCard(props: TextParentCardProps) {
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
-		if (!nestedSwiperInstance || !isActive) return
-		// Only slide if the index is actually different
-		if (nestedSwiperInstance.activeIndex !== initialTextIndex) {
-			nestedSwiperInstance.slideTo(initialTextIndex, 0)
+		if (
+			!nestedSwiperInstance ||
+			!isActive ||
+			initialTextIndex === nestedSwiperInstance.activeIndex
+		) return
 
-			// Update the image for the target slide
-			const targetText = textParentData.children[initialTextIndex]
-			onSlideChange(targetText.triggerImage)
-		}
+		nestedSwiperInstance.slideTo(initialTextIndex, 0)
+		const targetText = textParentData.children[initialTextIndex]
+		onSlideChange(targetText.triggerImage)
 	}, [initialTextIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
 
 	// Reset completion state when becoming active
