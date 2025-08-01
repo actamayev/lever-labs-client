@@ -7,7 +7,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 export default function JoinClassroom() {
 	const navigate = useTypedNavigate()

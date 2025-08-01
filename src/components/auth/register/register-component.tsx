@@ -13,11 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import registerSubmit from "../../../utils/auth/register-submit"
+import registerSubmit from "../../../utils/auth/submit/register-submit"
 import { registerSchema } from "../../../utils/auth/auth-schemas"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 
 export default function RegisterComponent() {
 	const [error, setError] = useState("")

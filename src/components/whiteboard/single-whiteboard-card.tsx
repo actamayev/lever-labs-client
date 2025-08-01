@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { StudentClassroomData } from "@bluedotrobots/common-ts"
 import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData }) {
 	const navigate = useTypedNavigate()

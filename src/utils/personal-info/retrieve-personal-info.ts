@@ -2,7 +2,6 @@
 
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
-import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import teacherClass from "../../classes/teacher-class"
 import personalInfoClass from "../../classes/personal-info-class"
@@ -12,7 +11,6 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 export default async function retrievePersonalInfo(): Promise<void> {
 	try {
 		if (
-			authClass.isLoggedIn === false || // NOTE: This is not authClass.isFinishedWithSignup on purpose.
 			// We need to retrieve the personal info wherever we are to confirm Google users have finished registering their usernames
 			personalInfoClass.isRetrievingPersonalInfo === true ||
 			personalInfoClass.retrievedPersonalInfo === true

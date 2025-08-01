@@ -3,7 +3,7 @@ import { BatteryCharging, BatteryFull, BatteryWarning, BatteryLow, BatteryMedium
 import { cn } from "../../../lib/shadcn/utils"
 import pipClass from "../../../classes/pip-class"
 import workbenchClass from "../../../classes/workbench-class"
-import useGetBatteryColorClasses from "../../../hooks/workbench/get-battery-color-classes"
+import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
 function BatteryWorkbenchIcon() {
 	const batteryColorClasses = useGetBatteryColorClasses()

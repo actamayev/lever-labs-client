@@ -18,13 +18,13 @@ import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
+import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
-import useSetSelectedPipFirstPipUseEffect from "../../../hooks/pip/set-selected-pip-first-pip-use-effect"
-import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
+import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
@@ -35,7 +35,7 @@ interface SandboxProjectPageProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
-	useSetSelectedPipFirstPipUseEffect()
+	useEffectSetSelectedPipFirstPip()
 	const [cppCode, setCppCode] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)

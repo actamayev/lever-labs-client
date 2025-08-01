@@ -12,7 +12,7 @@ export default class AuthDataService extends BaseDataService {
 
 	async login(loginInformation: LoginRequest): Promise<AxiosResponse<LoginSuccess | NonSuccessResponse>> {
 		return await this.httpClient.http.post<LoginSuccess | NonSuccessResponse>(
-			this.buildUrl("/login"), { loginInformation }, { headers: { "No-Auth-Required": "true" }}
+			this.buildUrl("/login"), { loginInformation }
 		)
 	}
 
@@ -24,7 +24,7 @@ export default class AuthDataService extends BaseDataService {
 
 	async register(registerInformation: RegisterRequest): Promise<AxiosResponse<RegisterSuccess | NonSuccessResponse>> {
 		return await this.httpClient.http.post<RegisterSuccess | NonSuccessResponse>(
-			this.buildUrl("/register"), { registerInformation }, { headers: { "No-Auth-Required": "true" }}
+			this.buildUrl("/register"), { registerInformation }
 		)
 	}
 
@@ -36,7 +36,7 @@ export default class AuthDataService extends BaseDataService {
 
 	async googleLoginCallback(idToken: string, siteTheme: SiteThemes): Promise<AxiosResponse<GoogleAuthSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<GoogleAuthSuccess | ErrorResponses>(
-			this.buildUrl("/google-auth/login-callback"), { idToken, siteTheme }, { headers: { "No-Auth-Required": "true" }}
+			this.buildUrl("/google-auth/login-callback"), { idToken, siteTheme }
 		)
 	}
 }

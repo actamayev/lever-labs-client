@@ -1,6 +1,5 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import { io, Socket } from "socket.io-client"
 import { action, makeAutoObservable } from "mobx"
 import {
@@ -25,12 +24,13 @@ class SocketClass {
 		makeAutoObservable(this)
 	}
 
-	public connect = action((accessToken: string): void => {
-		if (!isNull(this._socket)) return
+	// Updated to use cookies automatically - no need to pass token
+	public connect = action((): void => {
+		if (this._socket !== null) return
 
 		this._socket = io(process.env.NEXT_PUBLIC_BASE_URL as string, {
 			path: "/socketio",
-			auth: { token: accessToken },
+			withCredentials: true,
 			transports: ["websocket"]
 		})
 

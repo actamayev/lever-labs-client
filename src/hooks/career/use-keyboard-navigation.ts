@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import type { Swiper as SwiperType } from "swiper"
 
-function useKeyboardNavigation(): string | null {
+function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
 	const keyDownRef = useRef(false)
 
@@ -37,7 +37,7 @@ function useKeyboardNavigation(): string | null {
 
 
 // eslint-disable-next-line max-params
-export default function useKeyboardNavigationLogic(
+export default function useKeyboardNavigation(
 	mainSwiperInstance: SwiperType | null,
 	currentMainSlideIndex: number,
 	currentTextChildIndex: number,
@@ -48,7 +48,7 @@ export default function useKeyboardNavigationLogic(
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
 	setCurrentTextChildIndex: (index: number) => void
 ): void {
-	const keyPressed = useKeyboardNavigation()
+	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 
 	const SLIDE_COOLDOWN = 200

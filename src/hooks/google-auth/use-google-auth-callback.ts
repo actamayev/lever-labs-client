@@ -6,16 +6,16 @@ import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { SiteThemes } from "@bluedotrobots/common-ts"
 import { CredentialResponse } from "@react-oauth/google"
-import pipClass from "../../../classes/pip-class"
-import authClass from "../../../classes/auth-class"
-import useTypedNavigate from "../../navigate/typed-navigate"
-import { isErrorResponses } from "../../../utils/type-checks"
-import personalInfoClass from "../../../classes/personal-info-class"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
-import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
-import studentClass from "../../../classes/student-class"
-import teacherClass from "../../../classes/teacher-class"
+import pipClass from "../../classes/pip-class"
+import authClass from "../../classes/auth-class"
+import studentClass from "../../classes/student-class"
+import teacherClass from "../../classes/teacher-class"
+import { isErrorResponses } from "../../utils/type-checks"
+import useTypedNavigate from "../navigate/use-typed-navigate"
+import personalInfoClass from "../../classes/personal-info-class"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -24,6 +24,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 	// eslint-disable-next-line complexity
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
+			authClass.setAuthenticating(true)
 			if (
 				isUndefined(successResponse.credential) ||
 				isUndefined(successResponse.clientId) ||
@@ -37,24 +38,35 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			const googleCallbackResponse = await blueDotApiClientClass.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
+
 			if (!isEqual(googleCallbackResponse.status, 200) || isErrorResponses(googleCallbackResponse.data)) {
 				throw Error("Unable to log in")
 			}
-			authClass.setAccessToken(googleCallbackResponse.data.accessToken)
+
+			authClass.setAuthState({
+				isAuthenticated: true,
+				hasCompletedSignup: !googleCallbackResponse.data.isNewUser
+			})
+
 			if (googleCallbackResponse.data.isNewUser === true || isUndefined(googleCallbackResponse.data.personalInfo)) {
-				return navigate("/register-google")
+				return navigate("/register-google") // Smooth navigation, no refresh
 			}
+
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
 			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			studentClass.setRetrievedStudentData(googleCallbackResponse.data.studentClasses)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
-			if (
-				pathname === "/login" ||
-				pathname === "/register"
-			) navigate(PageToNavigateAfterLogin)
+
+			// ✅ Navigate smoothly if on auth pages (no refresh)
+			if (pathname === "/login" || pathname === "/register") {
+				navigate(PageToNavigateAfterLogin)
+			}
+			// If on other pages (like /garage), stay where you are - auth state update will show correct content
 		} catch (error) {
 			console.error(error)
+		} finally {
+			authClass.setAuthenticating(false)
 		}
 	}, [navigate, pathname])
 }

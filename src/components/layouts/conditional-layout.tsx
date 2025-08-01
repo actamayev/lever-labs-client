@@ -7,41 +7,24 @@ import ClassicLayout from "./classic-layout"
 import InternalPagesLayout from "./internal-pages-layout"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
+import authClass from "../../classes/auth-class"
 
 function ConditionalLayout({ children } : { children: React.ReactNode }) {
 	const pathname = usePathname()
+	const isPrivatePage = PrivatePageNames.some(path => pathname.startsWith(path))
+	const isOpenPage = OpenPages.some(path => pathname.startsWith(path))
 
-	const isPrivatePage = PrivatePageNames.some(privatePath =>
-		pathname.startsWith(privatePath)
-	)
+	const shouldShowInternalLayout = (
+		!isNull(personalInfoClass.username) ||
+		authClass.isLoggingOut ||      // ADD
+		authClass.isAuthenticating     // ADD
+	) && (isPrivatePage || isOpenPage)
 
-	const isOpenPage = OpenPages.some(openPath =>
-		pathname.startsWith(openPath)
-	)
-
-	// If user is logged in (has username) AND the page is either private or open
-	if (!isNull(personalInfoClass.username) && (isPrivatePage || isOpenPage)) {
-		return (
-			<InternalPagesLayout>
-				{children}
-			</InternalPagesLayout>
-		)
+	if (shouldShowInternalLayout) {
+		return <InternalPagesLayout>{children}</InternalPagesLayout>
 	}
 
-	// Otherwise use ClassicLayout (not logged in, or not a private/open page)
-	let extraClasses = undefined
-	if (
-		pathname === "/" ||
-		pathname === "/community-guidelines" ||
-		pathname === "/privacy" ||
-		pathname === "/terms"
-	) extraClasses = ""
-
-	return (
-		<ClassicLayout extraClasses={extraClasses}>
-			{children}
-		</ClassicLayout>
-	)
+	return <ClassicLayout>{children}</ClassicLayout>
 }
 
 export default observer(ConditionalLayout)

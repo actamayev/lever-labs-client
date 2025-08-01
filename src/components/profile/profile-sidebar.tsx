@@ -4,10 +4,9 @@ import Link from "next/link"
 import { useCallback } from "react"
 import { LogOut } from "lucide-react"
 import logout from "../../utils/auth/logout"
-import useTypedNavigate from "../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { BlackWhiteTactileButton } from "../buttons/tactile-buttons"
 import { Card, CardDescription, CardTitle } from "../shadcn/ui/card"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 interface SidebarSectionProps {
 	title: string
@@ -58,7 +57,6 @@ export default function ProfileSidebar() {
 	const navigate = useTypedNavigate()
 
 	const completeLogout = useCallback(async () => {
-		await blueDotApiClientClass.authDataService.logout()
 		await logout()
 		navigate("/")
 	}, [navigate])

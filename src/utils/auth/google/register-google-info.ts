@@ -37,6 +37,10 @@ export default async function registerGoogleInfo(
 			response.data.email,
 			siteTheme,
 		)
+		authClass.setAuthState({
+			isAuthenticated: true,
+			hasCompletedSignup: true
+		})
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		return true
 	} catch (error: unknown) {

@@ -7,10 +7,10 @@ import LightDotsSelector from "./light-dots-selector"
 import LightAnimationsList from "./light-animations-list"
 import LightBrightnessControl from "./light-brightness-control"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-import useSetDefaultColorsUseEffect from "../../../hooks/garage/set-dots-colors-use-effect"
+import useEffectSetDefaultColors from "../../../hooks/garage/use-effect-set-dots-colors"
 
 function LightSection() {
-	useSetDefaultColorsUseEffect()
+	useEffectSetDefaultColors()
 
 	return (
 		<div className="h-1/3 overflow-hidden border-b border-r" style={{ borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS}}>

@@ -1,7 +1,7 @@
 "use client"
 
 import { GoogleLogin } from "@react-oauth/google"
-import useGoogleAuthCallback from "../../../hooks/auth/google/google-auth-callback"
+import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
 
 export default function GoogleSignIn() {
 	const googleAuthCallback = useGoogleAuthCallback()

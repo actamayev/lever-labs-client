@@ -13,10 +13,10 @@ import GoogleSignIn from "../google/google-sign-in"
 import AuthButton from "../../buttons/generic-buttons"
 import ErrorMessage from "../../messages/error-message"
 import AuthTemplate from "../../templates/auth-template"
-import loginSubmit from "../../../hooks/auth/login-submit"
+import loginSubmit from "../../../utils/auth/submit/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
-import useTypedNavigate from "../../../hooks/navigate/typed-navigate"
+import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
 export default function LoginComponent() {
