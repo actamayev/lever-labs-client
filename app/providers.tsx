@@ -27,7 +27,7 @@ const retrieveInfo = async (): Promise<void> => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
 		// If this fails, user might not actually be authenticated
-		console.log("Data retrieval failed - user may not be authenticated")
+		console.error("Data retrieval failed - user may not be authenticated")
 	}
 }
 
