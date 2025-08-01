@@ -10,6 +10,7 @@ class AuthClass {
 	// Auth state is now managed by server middleware, but we keep these for UI state
 	private _isAuthenticated = false
 	private _hasCompletedSignup = false
+	public isLoggingOut = false  // NEW
 
 	constructor() {
 		makeAutoObservable(this)
@@ -45,6 +46,10 @@ class AuthClass {
 
 	public setShowLoginOrRegister = action((loginOrRegister: LoginOrRegister): void => {
 		this.showLoginOrRegister = loginOrRegister
+	})
+
+	public setLoggingOut = action((state: boolean): void => {
+		this.isLoggingOut = state
 	})
 
 	public logout = action((): void => {

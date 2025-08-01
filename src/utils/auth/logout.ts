@@ -15,6 +15,7 @@ import serialMessageManagerClass from "../../classes/serial-message-manager-clas
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function logout(): Promise<void> {
+	authClass.setLoggingOut(true) // ADD this first line
 	try {
 		await blueDotApiClientClass.authDataService.logout()
 		personalInfoClass.logout()
@@ -43,5 +44,7 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
+	} finally {
+		authClass.setLoggingOut(false)
 	}
 }

@@ -24,6 +24,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 	// eslint-disable-next-line complexity
 	return useCallback(async (successResponse: CredentialResponse) => {
 		try {
+			authClass.setAuthenticating(true)
 			if (
 				isUndefined(successResponse.credential) ||
 				isUndefined(successResponse.clientId) ||
@@ -64,6 +65,8 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			// If on other pages (like /garage), stay where you are - auth state update will show correct content
 		} catch (error) {
 			console.error(error)
+		} finally {
+			authClass.setAuthenticating(false)
 		}
 	}, [navigate, pathname])
 }
