@@ -28,6 +28,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0) // Track current text child
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
+	// Add these new state variables
+	const [reachedChallenges, setReachedChallenges] = useState<Set<string>>(new Set())
+	const [lockedChallengeData, setLockedChallengeData] = useState<CqChallengeData | null>(null)
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -98,24 +101,103 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
+	// Helper to find which challenge is associated with a text parent
+	const getAssociatedChallenge = useCallback((textParentId: string): CqChallengeData | null => {
+		const textParentIndex = careerData.sections.findIndex(section =>
+			section.type === "textParent" && section.id === textParentId
+		)
+
+		if (textParentIndex === -1) return null
+
+		// Look for the next challenge section after this text parent
+		for (let i = textParentIndex + 1; i < careerData.sections.length; i++) {
+			const section = careerData.sections[i]
+			if (section.type === "challenge") {
+				return section.challengeData
+			}
+		}
+
+		return null
+	}, [careerData.sections])
+
+	// Check if a text section has "graduated" (can no longer show images)
+	const hasTextSectionGraduated = useCallback((textParentId: string): boolean => {
+		const associatedChallenge = getAssociatedChallenge(textParentId)
+		if (!associatedChallenge) return false
+
+		const isReached = reachedChallenges.has(associatedChallenge.challengeUUID)
+		const isCompleted = careerQuestClass.isChallengeCompleted(associatedChallenge)
+
+		return isReached || isCompleted
+	}, [getAssociatedChallenge, reachedChallenges])
+
+	// Add this useEffect to initialize reached challenges for already completed ones
+	useEffect(() => {
+		const completedChallenges = new Set<string>()
+
+		// Mark all completed challenges as reached
+		careerData.sections.forEach(section => {
+			if (section.type === "challenge") {
+				if (careerQuestClass.isChallengeCompleted(section.challengeData)) {
+					completedChallenges.add(section.challengeData.challengeUUID)
+				}
+			}
+		})
+
+		setReachedChallenges(completedChallenges)
+
+		// Set initial locked challenge if any sections have graduated
+		if (completedChallenges.size > 0) {
+			const firstSlide = mainSlides[0]
+			if (firstSlide?.type === "textParent") {
+				const associatedChallenge = getAssociatedChallenge(firstSlide.id)
+				if (associatedChallenge && completedChallenges.has(associatedChallenge.challengeUUID)) {
+					setLockedChallengeData(associatedChallenge)
+				}
+			}
+		}
+	}, [careerData.sections, mainSlides, getAssociatedChallenge])
+
 	// Handle main slide change
+	// Replace the existing handleMainSlideChange function
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
 		setCurrentMainSlideIndex(newIndex)
-		setCurrentTextChildIndex(0) // Reset text child index when changing main slides
+		setCurrentTextChildIndex(0)
 
 		const currentSlide = mainSlides[newIndex]
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!currentSlide) return
 
-		// Update right content based on slide type
 		if (currentSlide.type === "challenge") {
+		// Mark this challenge as reached
+			setReachedChallenges(prev => {
+				const newSet = new Set(prev)
+				newSet.add(currentSlide.data.challengeUUID)
+				return newSet
+			})
+
+			// Lock this challenge and show it
+			setLockedChallengeData(currentSlide.data)
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
 		} else {
-			// For text parent, show the first text's trigger image initially
-			setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
+		// Text parent slide
+			if (hasTextSectionGraduated(currentSlide.id)) {
+			// Section has graduated - show locked challenge
+			// If no challenge is locked, lock the associated challenge
+				if (!lockedChallengeData) {
+					const associatedChallenge = getAssociatedChallenge(currentSlide.id)
+					if (associatedChallenge) {
+						setLockedChallengeData(associatedChallenge)
+						setRightContent({ type: "challenge", challengeData: associatedChallenge })
+					}
+				}
+			// Otherwise keep the current locked challenge on the right
+			} else {
+			// Section hasn't graduated - show images normally
+				setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
+			}
 		}
-	}, [mainSlides])
+	}, [mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -124,16 +206,35 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [])
 
 	// Set initial right content
+	// Replace the existing "Set initial right content" useEffect
 	useEffect(() => {
 		if (isEmpty(mainSlides)) return
+
 		const firstSlide = mainSlides[0]
 		if (firstSlide.type === "textParent") {
-			const firstText = firstSlide.data.children[0]
-			setRightContent({ type: "image", icon: firstText.triggerImage })
+			if (hasTextSectionGraduated(firstSlide.id)) {
+			// First section has graduated - show locked challenge
+				const associatedChallenge = getAssociatedChallenge(firstSlide.id)
+				if (associatedChallenge) {
+					setLockedChallengeData(associatedChallenge)
+					setRightContent({ type: "challenge", challengeData: associatedChallenge })
+				}
+			} else {
+			// Show first text's image normally
+				const firstText = firstSlide.data.children[0]
+				setRightContent({ type: "image", icon: firstText.triggerImage })
+			}
 		} else {
+		// First slide is a challenge
+			setReachedChallenges(prev => {
+				const newSet = new Set(prev)
+				newSet.add(firstSlide.data.challengeUUID)
+				return newSet
+			})
+			setLockedChallengeData(firstSlide.data)
 			setRightContent({ type: "challenge", challengeData: firstSlide.data })
 		}
-	}, [mainSlides])
+	}, [mainSlides, hasTextSectionGraduated, getAssociatedChallenge])
 
 	// Update main navigation when completion states change
 	const completedChallengesCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
@@ -201,8 +302,13 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													<TextParentCard
 														textParentData={slide.data}
 														onComplete={() => handleTextParentComplete(slide.id)}
+														// Update the TextParentCard onSlideChange prop
 														onSlideChange={(triggerImage) => {
-															setRightContent({ type: "image", icon: triggerImage })
+															// Only update right content if section hasn't graduated
+															const currentSlide = mainSlides[currentMainSlideIndex]
+															if (currentSlide?.type === "textParent" && !hasTextSectionGraduated(currentSlide.id)) {
+																setRightContent({ type: "image", icon: triggerImage })
+															}
 														}}
 														onTextSectionChange={handleTextChildIndexChange}
 														isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
