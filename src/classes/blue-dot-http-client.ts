@@ -8,7 +8,7 @@ export default class BlueDotHttpClient {
 	constructor() {
 		this.http = axios.create({
 			baseURL: process.env.NEXT_PUBLIC_BASE_URL as string,
-			withCredentials: true, // ✅ Automatically sends cookies
+			withCredentials: true,
 			headers: {
 				"Content-Type": "application/json"
 			}

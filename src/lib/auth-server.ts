@@ -17,6 +17,7 @@ export async function getAuthState(): Promise<AuthState> {
 	const hasCompletedSignup = headersList.get('x-has-completed-signup') === 'true'
 	const shouldShowAuthComponent = headersList.get('x-show-auth-component') === 'true'
 
+	console.log("username", username)
 	return {
 		isAuthenticated: authState === 'authenticated' || authState === 'authenticated-incomplete',
 		hasCompletedSignup,
