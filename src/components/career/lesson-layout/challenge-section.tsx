@@ -49,7 +49,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
-	const hasRetrievedData = careerQuestClass.hasRetrievedChallengeData(challengeData)
+	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
 
 	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
 

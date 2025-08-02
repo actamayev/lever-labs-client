@@ -66,13 +66,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (!isDataReady) return
 
-		const position = careerQuestClass.getInitialPosition(careerData.careerUUID)
-		setCurrentMainSlideIndex(position.mainSlideIndex)
-		setCurrentTextChildIndex(position.textChildIndex)
+		setCurrentMainSlideIndex(0)
+		setCurrentTextChildIndex(0)
 
 		// Update swiper position if it exists
-		if (mainSwiperInstance && !isEmpty(mainSlides) && position.mainSlideIndex > 0) {
-			mainSwiperInstance.slideTo(position.mainSlideIndex, 0)
+		if (mainSwiperInstance && !isEmpty(mainSlides)) {
+			mainSwiperInstance.slideTo(0, 0)
 		}
 	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID])
 

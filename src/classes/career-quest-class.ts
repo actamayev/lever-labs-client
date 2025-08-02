@@ -20,8 +20,6 @@ import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 interface ChatData {
 	messages: CareerQuestChatMessage[]
 	isWaitingForResponse: boolean
-	hasRetrievedData: boolean
-	isRetrievingData: boolean
 }
 
 interface StreamingState {
@@ -46,12 +44,9 @@ interface CareerInstance {
 	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
-	// ADD THIS:
-	initialPosition: {
-		mainSlideIndex: number
-		textChildIndex: number
-	}
+	currentChallengeUuidOrTextUuid: string
 	hasRetrievedAllChallenges: boolean
+	isRetrievingData: boolean
 }
 
 class CareerQuestClass {
@@ -92,8 +87,6 @@ class CareerQuestClass {
 				// Chat data
 				messages: [],
 				isWaitingForResponse: false,
-				hasRetrievedData: false,
-				isRetrievingData: false,
 
 				// Streaming state
 				isStreaming: false,
@@ -113,11 +106,9 @@ class CareerQuestClass {
 			progress: {
 				completedChallengeIds: new Set<ChallengeUUID>()
 			},
-			initialPosition: {
-				mainSlideIndex: 0,
-				textChildIndex: 0
-			},
-			hasRetrievedAllChallenges: false
+			currentChallengeUuidOrTextUuid: "",
+			hasRetrievedAllChallenges: false,
+			isRetrievingData: false
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -125,13 +116,7 @@ class CareerQuestClass {
 
 	public hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
-		if (!career) return false
-
-		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
-		return challengeSections.every(section => {
-			const challengeInfo = { careerUUID, challengeUUID: section.challengeData.challengeUUID }
-			return this.hasRetrievedChallengeData(challengeInfo)
-		})
+		return career?.hasRetrievedAllChallenges || false
 	}
 
 	// ========================================
@@ -238,8 +223,6 @@ class CareerQuestClass {
 		if (evaluationResult.isCorrect) {
 			challenge.isCompleted = true
 			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
-			// ADD THIS:
-			this.updateCachedInitialPosition(cqInformation.careerUUID)
 		}
 	})
 
@@ -384,8 +367,6 @@ class CareerQuestClass {
 		if (!challenge || !career) return
 
 		challenge.messages = messages
-		challenge.hasRetrievedData = true
-		challenge.isRetrievingData = false
 		challenge.isCompleted = isCompleted
 
 		// Update blockly JSON if provided
@@ -401,28 +382,8 @@ class CareerQuestClass {
 		const allRetrieved = this.hasRetrievedAllChallengesForCareer(cqInformation.careerUUID)
 		if (allRetrieved && !career.hasRetrievedAllChallenges) {
 			career.hasRetrievedAllChallenges = true
-			this.updateCachedInitialPosition(cqInformation.careerUUID)
 		}
 	})
-
-	public setIsRetrievingChallengeData = action((
-		cqInformation: CareerUUIDChallengeUUID,
-		isRetrieving: boolean
-	): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.isRetrievingData = isRetrieving
-	})
-
-	public hasRetrievedChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.hasRetrievedData || false
-	}
-
-	public isRetrievingChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.isRetrievingData || false
-	}
 
 	public getChallengeData(cqInformation: CareerUUIDChallengeUUID): CqChallengeData | undefined {
 		const challenge = this.getChallenge(cqInformation)
@@ -510,61 +471,27 @@ class CareerQuestClass {
 		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
-	// ADD: Compute initial position based on completion status
-	private computeInitialPosition = action((careerUUID: CareerUUID): { mainSlideIndex: number, textChildIndex: number } => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return { mainSlideIndex: 0, textChildIndex: 0 }
-
-		const sections = career.careerDefinition.sections
-
-		// Find the index of the furthest completed challenge
-		let furthestCompletedIndex = -1
-		for (let i = sections.length - 1; i >= 0; i--) {
-			if (sections[i].type === "challenge" && this.isChallengeCompleted((sections[i] as ChallengeSection).challengeData)) {
-				furthestCompletedIndex = i
-				break
-			}
-		}
-
-		// If none completed, start at beginning
-		if (furthestCompletedIndex === -1) {
-			return { mainSlideIndex: 0, textChildIndex: 0 }
-		}
-
-		// If all challenges completed, start at beginning
-		const challengeCount = sections.filter(s => s.type === "challenge").length
-		const completedChallengeCount = sections
-			.filter(s => s.type === "challenge")
-			.filter(s => this.isChallengeCompleted((s as ChallengeSection).challengeData))
-			.length
-
-		if (completedChallengeCount === challengeCount) {
-			return { mainSlideIndex: 0, textChildIndex: 0 }
-		}
-
-		// Look for text parent after furthest completed challenge
-		for (let i = furthestCompletedIndex + 1; i < sections.length; i++) {
-			if (sections[i].type === "textParent") {
-				return { mainSlideIndex: i, textChildIndex: 0 }
-			}
-		}
-
-		// No text parent found after furthest completed, start at beginning
-		return { mainSlideIndex: 0, textChildIndex: 0 }
-	})
-
-	// ADD: Update cached initial position
-	private updateCachedInitialPosition = action((careerUUID: CareerUUID): void => {
+	public setIsRetrievingCareerData = action((careerUUID: CareerUUID, isRetrieving: boolean): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-
-		career.initialPosition = this.computeInitialPosition(careerUUID)
+		career.isRetrievingData = isRetrieving
 	})
 
-	// ADD: Public getter for initial position
-	public getInitialPosition(careerUUID: CareerUUID): { mainSlideIndex: number, textChildIndex: number } {
+	public isRetrievingCareerData(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
-		return career?.initialPosition || { mainSlideIndex: 0, textChildIndex: 0 }
+		return career?.isRetrievingData || false
+	}
+
+	public setCurrentChallengeUuidOrTextUuid = action((careerUUID: CareerUUID, currentChallengeUuidOrTextUuid: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentChallengeUuidOrTextUuid = currentChallengeUuidOrTextUuid
+	})
+
+	// ADD getter method:
+	public getCurrentChallengeUuidOrTextUuid(careerUUID: CareerUUID): string {
+		const career = this.getCareer(careerUUID)
+		return career?.currentChallengeUuidOrTextUuid || ""
 	}
 
 	public logout(): void {
