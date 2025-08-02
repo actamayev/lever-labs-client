@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import careerQuestClass from "../../classes/career-quest-class"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
-export default function useRetrieveAllChallengeDataUseEffect(): void {
+export default function useEffectRetrieveAllCareersChallenges(): void {
 	useEffect(() => {
 		if (!careerQuestClass.isDoneInitializing) return
 		careerQuestClass.careers.forEach(career => {

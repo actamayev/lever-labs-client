@@ -3,7 +3,7 @@ import { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
-export default function useRetrieveSingleChallengeDataUseEffect(careerUUID: CareerUUID): void {
+export default function useEffectRetrieveSingleCareerChallenges(careerUUID: CareerUUID): void {
 	useEffect(() => {
 		if (!careerQuestClass.isDoneInitializing) return
 		const challengeSections = careerQuestClass.getChallengeSectionByChallengeUUID(careerUUID)

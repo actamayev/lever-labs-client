@@ -4,10 +4,10 @@ import WorkbenchLayout from "../layouts/workbench-layout"
 import SingleCareerCard from "./career-card/single-career-card"
 import IntroductionCard from "./introduction-card/introduction-card"
 import { introductionData, careerData } from "../../utils/constants/career-quest/career-data"
-import useRetrieveAllChallengeDataUseEffect from "../../hooks/career-quest/retrieve-all-challenge-data-use-effect"
+import useEffectRetrieveAllCareersChallenges from "../../hooks/career-quest/use-effect-retrieve-all-careers-challenges"
 
 export default function CareerQuest() {
-	useRetrieveAllChallengeDataUseEffect()
+	useEffectRetrieveAllCareersChallenges()
 
 	return (
 		<WorkbenchLayout extraChildrenClasses="p-10">

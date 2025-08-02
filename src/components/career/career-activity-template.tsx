@@ -2,7 +2,7 @@
 
 import CareerLayout from "./lesson-layout/career-layout"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
-import useRetrieveSingleChallengeDataUseEffect from "../../hooks/career-quest/retrieve-single-challenge-use-effect"
+import useEffectRetrieveSingleCareerChallenges from "../../hooks/career-quest/use-effect-retrieve-single-career-challenges"
 
 interface Props {
 	careerData: CareerQuestData
@@ -10,7 +10,7 @@ interface Props {
 
 export default function CareerActivityTemplate(props: Props) {
 	const { careerData } = props
-	useRetrieveSingleChallengeDataUseEffect(careerData.careerUUID)
+	useEffectRetrieveSingleCareerChallenges(careerData.careerUUID)
 
 	return (
 		<div className="flex flex-col h-screen min-h-0">
