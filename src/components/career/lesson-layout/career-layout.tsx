@@ -13,8 +13,8 @@ import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
-import useKeyboardNavigation from "../../../hooks/career/use-keyboard-navigation"
-import useMousewheelNavigation from "../../../hooks/career/use-mouse-wheel-navigation"
+import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
+import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
@@ -147,13 +147,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setReachedChallenges(completedChallenges)
 
 		// Set initial locked challenge if any sections have graduated
-		if (completedChallenges.size > 0) {
-			const firstSlide = mainSlides[0]
-			if (firstSlide?.type === "textParent") {
-				const associatedChallenge = getAssociatedChallenge(firstSlide.id)
-				if (associatedChallenge && completedChallenges.has(associatedChallenge.challengeUUID)) {
-					setLockedChallengeData(associatedChallenge)
-				}
+		if (completedChallenges.size === 0) return
+		const firstSlide = mainSlides[0]
+		if (firstSlide.type === "textParent") {
+			const associatedChallenge = getAssociatedChallenge(firstSlide.id)
+			if (associatedChallenge && completedChallenges.has(associatedChallenge.challengeUUID)) {
+				setLockedChallengeData(associatedChallenge)
 			}
 		}
 	}, [careerData.sections, mainSlides, getAssociatedChallenge])
@@ -184,16 +183,16 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const currentSlide = mainSlides[currentMainSlideIndex]
 
 		if (currentSlide.type === "challenge") {
-		// Always show the current challenge when on a challenge slide
+			// Always show the current challenge when on a challenge slide
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
 		} else {
-		// Text parent slide
+			// Text parent slide
 			if (hasTextSectionGraduated(currentSlide.id)) {
-			// Section has graduated - show locked challenge
+				// Section has graduated - show locked challenge
 				if (lockedChallengeData) {
 					setRightContent({ type: "challenge", challengeData: lockedChallengeData })
 				} else {
-				// Fallback: lock the associated challenge
+					// Fallback: lock the associated challenge
 					const associatedChallenge = getAssociatedChallenge(currentSlide.id)
 					// eslint-disable-next-line max-depth
 					if (associatedChallenge) {
@@ -202,11 +201,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					}
 				}
 			} else {
-			// Section hasn't graduated - show images normally
+				// Section hasn't graduated - show images normally
 				setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
 			}
 		}
 	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge])
+
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
 		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
@@ -216,10 +216,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Update main navigation when completion states change
 	const completedChallengesCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
 	useEffect(() => {
-		if (mainSwiperInstance) {
-			const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
-			mainSwiperInstance.allowSlideNext = canAdvance
-		}
+		if (!mainSwiperInstance) return
+		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
+		mainSwiperInstance.allowSlideNext = canAdvance
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
 
 	const handleTextParentComplete = useCallback((textParentId: string) => {
@@ -283,7 +282,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 														onSlideChange={(triggerImage) => {
 															// Only update right content if section hasn't graduated
 															const currentSlide = mainSlides[currentMainSlideIndex]
-															if (currentSlide?.type === "textParent" && !hasTextSectionGraduated(currentSlide.id)) {
+															// eslint-disable-next-line max-len
+															if (currentSlide.type === "textParent" && !hasTextSectionGraduated(currentSlide.id)) {
 																setRightContent({ type: "image", icon: triggerImage })
 															}
 														}}
