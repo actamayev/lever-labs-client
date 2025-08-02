@@ -23,20 +23,29 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 			throw Error("Unable to retrieve career data")
 		}
 
-		// Get challenge sections to map array indices to challenge UUIDs
-		const challengeSections = careerQuestClass.getChallengeSectionByChallengeUUID(careerUUID)
+		// Get challenge sections to create a lookup map
+		const challengeSections = careerQuestClass.getChallengeSectionByCareerUUID(careerUUID)
 
-		// Process each challenge's data
-		careerResponse.data.careerQuestChallengeData.forEach((challengeData, index) => {
-			// Map array index to specific challenge (assuming order matches)
-			const challengeSection = challengeSections[index]
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		// Create a map for quick lookup: challengeUUID -> challengeSection
+		const challengeMap = new Map(
+			challengeSections.map(section => [section.challengeData.challengeUUID, section])
+		)
+
+		// Process each challenge's data by matching challengeUUID
+		careerResponse.data.careerQuestChallengeData.forEach((challengeData) => {
+			// Find the matching challenge section by UUID
+			const challengeSection = challengeMap.get(challengeData.challengeUUID)
+
 			if (!challengeSection) {
-				console.warn(`No challenge section found for index ${index} in career ${careerUUID}`)
+				console.warn(`No challenge section found for challengeUUID ${challengeData.challengeUUID} in career ${careerUUID}`)
 				return
 			}
 
-			const careerUUIDChallengeUUID = challengeSection.challengeData
+			// Create the proper CareerUUIDChallengeUUID object
+			const careerUUIDChallengeUUID = {
+				careerUUID: careerUUID,
+				challengeUUID: challengeData.challengeUUID
+			}
 
 			// Transform backend messages to frontend format
 			const transformedMessages: CareerQuestChatMessage[] = []

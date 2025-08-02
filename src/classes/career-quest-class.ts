@@ -419,7 +419,7 @@ class CareerQuestClass {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
-	public getChallengeSectionByChallengeUUID(careerUUID: CareerUUID): ChallengeSection[] {
+	public getChallengeSectionByCareerUUID(careerUUID: CareerUUID): ChallengeSection[] {
 		const career = this.getCareer(careerUUID)
 		if (!career) return []
 
