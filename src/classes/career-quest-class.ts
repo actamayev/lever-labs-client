@@ -46,6 +46,12 @@ interface CareerInstance {
 	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
+	// ADD THIS:
+	initialPosition: {
+		mainSlideIndex: number
+		textChildIndex: number
+	}
+	hasRetrievedAllChallenges: boolean
 }
 
 class CareerQuestClass {
@@ -106,11 +112,27 @@ class CareerQuestClass {
 			challenges,
 			progress: {
 				completedChallengeIds: new Set<ChallengeUUID>()
-			}
+			},
+			initialPosition: {
+				mainSlideIndex: 0,
+				textChildIndex: 0
+			},
+			hasRetrievedAllChallenges: false
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
+
+	private hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const challengeSections = this.getAllChallengeSections(career.careerDefinition.sections)
+		return challengeSections.every(section => {
+			const challengeInfo = { careerUUID, challengeUUID: section.challengeData.challengeUUID }
+			return this.hasRetrievedChallengeData(challengeInfo)
+		})
+	}
 
 	// ========================================
 	// HELPER METHODS
@@ -190,6 +212,7 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
+	// UPDATE: Add position update when evaluation result changes completion
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
@@ -215,6 +238,8 @@ class CareerQuestClass {
 		if (evaluationResult.isCorrect) {
 			challenge.isCompleted = true
 			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+			// ADD THIS:
+			this.updateCachedInitialPosition(cqInformation.careerUUID)
 		}
 	})
 
@@ -347,11 +372,11 @@ class CareerQuestClass {
 	// DATA MANAGEMENT
 	// ========================================
 
-	// Update setChallengeRetrievedData to include sandboxJson:
+	// UPDATE: Add position update when retrieved data indicates completion
 	public setChallengeRetrievedData = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		messages: CareerQuestChatMessage[],
-		sandboxJson: BlocklyJson | null,  // ADD THIS
+		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
@@ -370,6 +395,13 @@ class CareerQuestClass {
 
 		if (isCompleted) {
 			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+		}
+
+		// UPDATE THIS: Only update position after all challenges are retrieved
+		const allRetrieved = this.hasRetrievedAllChallengesForCareer(cqInformation.careerUUID)
+		if (allRetrieved && !career.hasRetrievedAllChallenges) {
+			career.hasRetrievedAllChallenges = true
+			this.updateCachedInitialPosition(cqInformation.careerUUID)
 		}
 	})
 
@@ -476,6 +508,63 @@ class CareerQuestClass {
 		if (!career) return []
 
 		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
+	}
+
+	// ADD: Compute initial position based on completion status
+	private computeInitialPosition = action((careerUUID: CareerUUID): { mainSlideIndex: number, textChildIndex: number } => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return { mainSlideIndex: 0, textChildIndex: 0 }
+
+		const sections = career.careerDefinition.sections
+
+		// Find the index of the furthest completed challenge
+		let furthestCompletedIndex = -1
+		for (let i = sections.length - 1; i >= 0; i--) {
+			if (sections[i].type === "challenge" && this.isChallengeCompleted((sections[i] as ChallengeSection).challengeData)) {
+				furthestCompletedIndex = i
+				break
+			}
+		}
+
+		// If none completed, start at beginning
+		if (furthestCompletedIndex === -1) {
+			return { mainSlideIndex: 0, textChildIndex: 0 }
+		}
+
+		// If all challenges completed, start at beginning
+		const challengeCount = sections.filter(s => s.type === "challenge").length
+		const completedChallengeCount = sections
+			.filter(s => s.type === "challenge")
+			.filter(s => this.isChallengeCompleted((s as ChallengeSection).challengeData))
+			.length
+
+		if (completedChallengeCount === challengeCount) {
+			return { mainSlideIndex: 0, textChildIndex: 0 }
+		}
+
+		// Look for text parent after furthest completed challenge
+		for (let i = furthestCompletedIndex + 1; i < sections.length; i++) {
+			if (sections[i].type === "textParent") {
+				return { mainSlideIndex: i, textChildIndex: 0 }
+			}
+		}
+
+		// No text parent found after furthest completed, start at beginning
+		return { mainSlideIndex: 0, textChildIndex: 0 }
+	})
+
+	// ADD: Update cached initial position
+	private updateCachedInitialPosition = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.initialPosition = this.computeInitialPosition(careerUUID)
+	})
+
+	// ADD: Public getter for initial position
+	public getInitialPosition(careerUUID: CareerUUID): { mainSlideIndex: number, textChildIndex: number } {
+		const career = this.getCareer(careerUUID)
+		return career?.initialPosition || { mainSlideIndex: 0, textChildIndex: 0 }
 	}
 
 	public logout(): void {

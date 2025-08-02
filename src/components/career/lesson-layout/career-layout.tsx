@@ -22,10 +22,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		type: "image",
 		icon: careerData.initialImage
 	})
+	const initialPosition = careerQuestClass.getInitialPosition(careerData.careerUUID)
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
-	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0) // Track current text child
+	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0)
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	// Add these new state variables
@@ -50,6 +51,16 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			}
 		})
 	}, [careerData.sections])
+
+	useEffect(() => {
+		setCurrentMainSlideIndex(initialPosition.mainSlideIndex)
+		setCurrentTextChildIndex(initialPosition.textChildIndex)
+
+		// Update swiper position if it exists
+		if (mainSwiperInstance && !isEmpty(mainSlides) && initialPosition.mainSlideIndex > 0) {
+			mainSwiperInstance.slideTo(initialPosition.mainSlideIndex, 0)
+		}
+	}, [initialPosition, mainSwiperInstance, mainSlides])
 
 	// Check if user can advance to next main slide
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
