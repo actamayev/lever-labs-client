@@ -103,6 +103,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 		// Clear loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)
+		careerQuestClass.setHasRetrievedAllChallengesForCareer(careerUUID, true)
 	} catch (error) {
 		console.error(error)
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)

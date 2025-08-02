@@ -119,6 +119,12 @@ class CareerQuestClass {
 		return career?.hasRetrievedAllChallenges || false
 	}
 
+	public setHasRetrievedAllChallengesForCareer = action((careerUUID: CareerUUID, hasRetrievedAllChallenges: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
+	})
+
 	// ========================================
 	// HELPER METHODS
 	// ========================================
@@ -226,7 +232,7 @@ class CareerQuestClass {
 		}
 	})
 
-	public hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
+	private hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -377,18 +383,7 @@ class CareerQuestClass {
 		if (isCompleted) {
 			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
 		}
-
-		// UPDATE THIS: Only update position after all challenges are retrieved
-		const allRetrieved = this.hasRetrievedAllChallengesForCareer(cqInformation.careerUUID)
-		if (allRetrieved && !career.hasRetrievedAllChallenges) {
-			career.hasRetrievedAllChallenges = true
-		}
 	})
-
-	public getChallengeData(cqInformation: CareerUUIDChallengeUUID): CqChallengeData | undefined {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.challengeData
-	}
 
 	// Blockly JSON management
 	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
@@ -402,46 +397,6 @@ class CareerQuestClass {
 		challenge.updatedBlocklyJson = newBlocklyJson
 	})
 
-	public getVisibleSections(careerUUID: CareerUUID): string[] {
-		const career = this.getCareer(careerUUID)
-		if (!career) return []
-
-		const visibleSectionIds: string[] = []
-		const sections = career.careerDefinition.sections
-
-		// Track if we've encountered an incomplete challenge (blocking further progress)
-		let hasBlockingChallenge = false
-
-		for (const section of sections) {
-			// If we've already hit a blocking challenge, stop adding sections
-			if (hasBlockingChallenge) {
-				break
-			}
-
-			if (section.type === "textParent") {
-				// Add all children text section IDs (individual text sections)
-				section.children.forEach(child => {
-					visibleSectionIds.push(child.id)
-				})
-			} else {
-				// Challenge section
-				// Always show the challenge section itself (so user can see it and potentially complete it)
-				visibleSectionIds.push(section.challengeData.challengeUUID)
-
-				// Check if this challenge is completed
-				const isCompleted = this.isChallengeCompleted(section.challengeData)
-
-				// If this challenge is not completed, it becomes the blocking challenge
-				if (!isCompleted) {
-					hasBlockingChallenge = true
-				}
-			}
-		}
-
-		return visibleSectionIds
-	}
-
-	// Enhanced progress methods for header
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
 		const career = this.getCareer(careerUUID)
 		if (!career) return 0
@@ -480,18 +435,6 @@ class CareerQuestClass {
 	public isRetrievingCareerData(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		return career?.isRetrievingData || false
-	}
-
-	public setCurrentChallengeUuidOrTextUuid = action((careerUUID: CareerUUID, currentChallengeUuidOrTextUuid: string): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.currentChallengeUuidOrTextUuid = currentChallengeUuidOrTextUuid
-	})
-
-	// ADD getter method:
-	public getCurrentChallengeUuidOrTextUuid(careerUUID: CareerUUID): string {
-		const career = this.getCareer(careerUUID)
-		return career?.currentChallengeUuidOrTextUuid || ""
 	}
 
 	public logout(): void {
