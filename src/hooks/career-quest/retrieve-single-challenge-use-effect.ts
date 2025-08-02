@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
-import retrieveCareerQuestChallengeData from "./retrieve-career-quest-challenge-data"
+import retrieveCareerQuestChallengeData from "../../utils/career-quest/retrieve-career-quest-challenge-data"
 
 export default function useRetrieveSingleChallengeDataUseEffect(careerUUID: CareerUUID): void {
 	useEffect(() => {
