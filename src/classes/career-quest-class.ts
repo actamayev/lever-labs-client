@@ -123,7 +123,7 @@ class CareerQuestClass {
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
 
-	private hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
+	public hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
 

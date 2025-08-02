@@ -12,11 +12,17 @@ const ICON_MAP = {
 interface RightContentProps {
 	rightContent: RightContent
 	color: DuolingoColors
+	isDataReady: boolean
 }
 
-export default function RightContent({ rightContent, color }: RightContentProps) {
+export default function RightContent({ rightContent, color, isDataReady }: RightContentProps) {
 	const colors = getDuolingoColors(color)
 
+	if (!isDataReady) {
+		return (
+			<div className="h-full w-full flex items-center justify-center" />
+		)
+	}
 	if (rightContent.type === "image") {
 		const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
 		return (

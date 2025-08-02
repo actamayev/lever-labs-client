@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 "use client"
 import "swiper/css"
 import { isEmpty } from "lodash-es"
@@ -16,13 +17,22 @@ import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
 
+function EmptyTextParentCard() {
+	return (
+		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
+			<div className="h-full flex items-center justify-center">
+				{/* Empty - just the styled container */}
+			</div>
+		</div>
+	)
+}
+
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [rightContent, setRightContent] = useState<RightContent>({
 		type: "image",
 		icon: careerData.initialImage
 	})
-	const initialPosition = careerQuestClass.getInitialPosition(careerData.careerUUID)
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
@@ -32,6 +42,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Add these new state variables
 	const [reachedChallenges, setReachedChallenges] = useState<Set<string>>(new Set())
 	const [lockedChallengeData, setLockedChallengeData] = useState<CqChallengeData | null>(null)
+	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -53,14 +64,17 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [careerData.sections])
 
 	useEffect(() => {
-		setCurrentMainSlideIndex(initialPosition.mainSlideIndex)
-		setCurrentTextChildIndex(initialPosition.textChildIndex)
+		if (!isDataReady) return
+
+		const position = careerQuestClass.getInitialPosition(careerData.careerUUID)
+		setCurrentMainSlideIndex(position.mainSlideIndex)
+		setCurrentTextChildIndex(position.textChildIndex)
 
 		// Update swiper position if it exists
-		if (mainSwiperInstance && !isEmpty(mainSlides) && initialPosition.mainSlideIndex > 0) {
-			mainSwiperInstance.slideTo(initialPosition.mainSlideIndex, 0)
+		if (mainSwiperInstance && !isEmpty(mainSlides) && position.mainSlideIndex > 0) {
+			mainSwiperInstance.slideTo(position.mainSlideIndex, 0)
 		}
-	}, [initialPosition, mainSwiperInstance, mainSlides])
+	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID])
 
 	// Check if user can advance to next main slide
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
@@ -189,6 +203,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
+		if (!isDataReady) {
+			// Show initial image while loading
+			setRightContent({ type: "image", icon: careerData.initialImage })
+			return
+		}
 		if (isEmpty(mainSlides)) return
 
 		const currentSlide = mainSlides[currentMainSlideIndex]
@@ -216,7 +235,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
 			}
 		}
-	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge])
+	// eslint-disable-next-line max-len
+	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, isDataReady, careerData.initialImage])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -265,48 +285,54 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									direction="vertical"
 									slidesPerView={1}
 									spaceBetween={0}
-									keyboard={false} // Disable built-in keyboard
+									keyboard={false}
 									speed={400}
-									allowSlideNext={true}
-									allowSlidePrev={true}
-									allowTouchMove={false} // Also disable touch/mouse
+									allowSlideNext={isDataReady} // UPDATE: Only allow navigation when ready
+									allowSlidePrev={isDataReady} // UPDATE: Only allow navigation when ready
+									allowTouchMove={false}
 									onSwiper={setMainSwiperInstance}
-									onSlideChange={handleMainSlideChange}
+									onSlideChange={isDataReady ? handleMainSlideChange : undefined}
 									className="h-full"
 									style={{
 										"--swiper-theme-color": "#000000",
 									} as React.CSSProperties}
 								>
-									{mainSlides.map((slide) => (
-										<SwiperSlide key={slide.id} className="h-full">
+									{!isDataReady ? (
+										<SwiperSlide className="h-full">
 											<div className="h-[calc(100vh-10rem)]">
-												{slide.type === "challenge" ? (
-													<CqChatInterface
-														cppCode={getCppCodeForChallenge(slide.data)}
-														challengeData={slide.data}
-													/>
-												) : (
-													<TextParentCard
-														textParentData={slide.data}
-														onComplete={() => handleTextParentComplete(slide.id)}
-														// Update the TextParentCard onSlideChange prop
-														onSlideChange={(triggerImage) => {
-															// Only update right content if section hasn't graduated
-															const currentSlide = mainSlides[currentMainSlideIndex]
-															// eslint-disable-next-line max-len
-															if (currentSlide.type === "textParent" && !hasTextSectionGraduated(currentSlide.id)) {
-																setRightContent({ type: "image", icon: triggerImage })
-															}
-														}}
-														onTextSectionChange={handleTextChildIndexChange}
-														isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
-														navigationCommand={navigationCommand}
-														initialTextIndex={currentTextChildIndex}
-													/>
-												)}
+												<EmptyTextParentCard />
 											</div>
 										</SwiperSlide>
-									))}
+									) : (
+										// Show actual content when data is ready
+										mainSlides.map((slide) => (
+											<SwiperSlide key={slide.id} className="h-full">
+												<div className="h-[calc(100vh-10rem)]">
+													{slide.type === "challenge" ? (
+														<CqChatInterface
+															cppCode={getCppCodeForChallenge(slide.data)}
+															challengeData={slide.data}
+														/>
+													) : (
+														<TextParentCard
+															textParentData={slide.data}
+															onComplete={() => handleTextParentComplete(slide.id)}
+															onSlideChange={(triggerImage) => {
+																const currentSlide = mainSlides[currentMainSlideIndex]
+																if (currentSlide.type === "textParent" && !hasTextSectionGraduated(currentSlide.id)) {
+																	setRightContent({ type: "image", icon: triggerImage })
+																}
+															}}
+															onTextSectionChange={handleTextChildIndexChange}
+															isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
+															navigationCommand={navigationCommand}
+															initialTextIndex={currentTextChildIndex}
+														/>
+													)}
+												</div>
+											</SwiperSlide>
+										))
+									)}
 								</Swiper>
 							</motion.div>
 						</AnimatePresence>
@@ -326,7 +352,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					)}
 					style={{ marginRight: "100px" }}
 				>
-					<RightContent rightContent={rightContent} color={careerData.careerColor} />
+					<RightContent rightContent={rightContent} color={careerData.careerColor} isDataReady={isDataReady} />
 				</div>
 			</div>
 		</div>
