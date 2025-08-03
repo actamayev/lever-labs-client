@@ -2,19 +2,21 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useEffect, useRef } from "react"
 import type { Swiper as SwiperType } from "swiper"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../classes/career-quest-class"
 
 // eslint-disable-next-line max-len, max-params, max-lines-per-function
 export default function useMousewheelNavigation(
 	mainSwiperInstance: SwiperType | null,
-	currentMainSlideIndex: number,
-	currentTextChildIndex: number,
+	careerUUID: CareerUUID,
 	mainSlides: MainSlide[],
 	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
-	setCurrentTextChildIndex: (index: number) => void
 ): void {
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const gestureActive = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
@@ -99,7 +101,7 @@ export default function useMousewheelNavigation(
 								// Set the text child index to the last child of the previous text parent
 								const prevSlide = mainSlides[currentMainSlideIndex - 1]
 								if (prevSlide.type === "textParent") {
-									setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+									careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 								}
 
 								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
@@ -122,7 +124,7 @@ export default function useMousewheelNavigation(
 							// Set the text child index to the last child of the previous text parent
 							const prevSlide = mainSlides[currentMainSlideIndex - 1]
 							if (prevSlide.type === "textParent") {
-								setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+								careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 							}
 
 							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
@@ -153,5 +155,5 @@ export default function useMousewheelNavigation(
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, setCurrentTextChildIndex])
+	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID])
 }

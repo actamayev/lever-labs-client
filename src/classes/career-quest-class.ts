@@ -49,7 +49,9 @@ interface CareerInstance {
 	isRetrievingData: boolean
 	savedCurrentPosition: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
-	completedTextParents: Set<string> // ADD this line
+	completedTextParents: Set<string>
+	currentMainSlideIndex: number
+	currentTextChildIndex: number
 }
 
 class CareerQuestClass {
@@ -112,10 +114,11 @@ class CareerQuestClass {
 			currentChallengeUuidOrTextUuid: "",
 			hasRetrievedAllChallenges: false,
 			isRetrievingData: false,
-			// NEW: Initialize saved position state
 			savedCurrentPosition: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
-			completedTextParents: new Set<string>()
+			completedTextParents: new Set<string>(),
+			currentMainSlideIndex: 0,
+			currentTextChildIndex: 0
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -142,6 +145,67 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.completedTextParents.has(textParentId) || false
 	}
+
+	// ========================================
+	// NAVIGATION STATE MANAGEMENT
+	// ========================================
+
+	public getCurrentMainSlideIndex(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.currentMainSlideIndex || 0
+	}
+
+	public getCurrentTextChildIndex(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.currentTextChildIndex || 0
+	}
+
+	public setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentMainSlideIndex = index
+	})
+
+	public setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentTextChildIndex = index
+	})
+
+	public getNavigationIndices(careerUUID: CareerUUID): { mainSlideIndex: number; textChildIndex: number } {
+		const career = this.getCareer(careerUUID)
+		return {
+			mainSlideIndex: career?.currentMainSlideIndex || 0,
+			textChildIndex: career?.currentTextChildIndex || 0
+		}
+	}
+
+	public restoreNavigationFromSavedPosition = action((careerUUID: CareerUUID): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const savedData = this.getSavedPosition(careerUUID)
+		if (!savedData.position) {
+			// No saved position, start at beginning
+			career.currentMainSlideIndex = 0
+			career.currentTextChildIndex = 0
+			return true
+		}
+
+		// Try to find the saved position
+		const positionIndices = this.findPositionIndices(careerUUID, savedData.position)
+		if (!positionIndices) {
+			// Fallback to beginning if position not found
+			career.currentMainSlideIndex = 0
+			career.currentTextChildIndex = 0
+			return true
+		}
+
+		// Set navigation indices from saved position
+		career.currentMainSlideIndex = positionIndices.mainSlideIndex
+		career.currentTextChildIndex = positionIndices.textChildIndex
+		return true
+	})
 
 	// ========================================
 	// NEW: SAVED POSITION MANAGEMENT
@@ -350,7 +414,7 @@ class CareerQuestClass {
 	// ========================================
 
 	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
-		// Note: You'll need to pass careerUUUID in the event or determine it from challengeUUID
+		// Note: You'll need to pass careerUUID in the event or determine it from challengeUUID
 		const challenge = this.getChallenge({ ...startEvent })
 		if (!challenge) return
 

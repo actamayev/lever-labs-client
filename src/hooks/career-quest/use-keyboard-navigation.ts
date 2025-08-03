@@ -1,6 +1,8 @@
 /* eslint-disable max-depth */
 import { useEffect, useRef, useState } from "react"
 import type { Swiper as SwiperType } from "swiper"
+import careerQuestClass from "../../classes/career-quest-class"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
 
 function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
@@ -39,15 +41,15 @@ function useEffectKeyboardNavigation(): string | null {
 // eslint-disable-next-line max-params
 export default function useKeyboardNavigation(
 	mainSwiperInstance: SwiperType | null,
-	currentMainSlideIndex: number,
-	currentTextChildIndex: number,
+	careerUUID: CareerUUID,
 	mainSlides: MainSlide[],
 	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
-	setCurrentTextChildIndex: (index: number) => void
 ): void {
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 
@@ -105,7 +107,7 @@ export default function useKeyboardNavigation(
 						// Set the text child index to the last child of the previous text parent
 						const prevSlide = mainSlides[currentMainSlideIndex - 1]
 						if (prevSlide.type === "textParent") {
-							setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+							careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 						}
 
 						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
@@ -126,7 +128,7 @@ export default function useKeyboardNavigation(
 					// Set the text child index to the last child of the previous text parent
 					const prevSlide = mainSlides[currentMainSlideIndex - 1]
 					if (prevSlide.type === "textParent") {
-						setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+						careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 					}
 
 					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)

@@ -35,8 +35,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		icon: careerData.initialImage
 	})
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
-	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
-	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0)
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
@@ -64,46 +64,33 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (!isDataReady || !mainSwiperInstance || isEmpty(mainSlides)) return
 
-		const savedData = careerQuestClass.getSavedPosition(careerData.careerUUID) // No isLocked
+		// Use class method to restore navigation from saved position
+		const restored = careerQuestClass.restoreNavigationFromSavedPosition(careerData.careerUUID)
 
-		if (!savedData.position) {
-			// No saved position, start at beginning
-			setCurrentMainSlideIndex(0)
-			setCurrentTextChildIndex(0)
-			mainSwiperInstance.slideTo(0, 0)
-			return
-		}
+		if (restored) {
+			// Get the restored indices from class
+			const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
 
-		// Try to find the saved position
-		const positionIndices = careerQuestClass.findPositionIndices(careerData.careerUUID, savedData.position)
+			// Update swiper to match class state
+			mainSwiperInstance.slideTo(indices.mainSlideIndex, 0)
 
-		if (!positionIndices) {
-			// Fallback to beginning if position not found
-			setCurrentMainSlideIndex(0)
-			setCurrentTextChildIndex(0)
-			mainSwiperInstance.slideTo(0, 0)
-			return
-		}
+			// Handle right content based on current slide
+			const currentSlide = mainSlides[indices.mainSlideIndex]
 
-		setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
-		setCurrentTextChildIndex(positionIndices.textChildIndex)
-		mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
+			if (currentSlide.type === "challenge") {
+				setRightContent({ type: "challenge", challengeData: currentSlide.data })
+				return
+			}
 
-		// Handle right content based on current slide
-		const currentSlide = mainSlides[positionIndices.mainSlideIndex]
+			const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
+			const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
-		if (currentSlide.type === "challenge") {
-			setRightContent({ type: "challenge", challengeData: currentSlide.data })
-			return
-		}
-		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
-		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
-
-		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
-		} else {
-			const textChild = currentSlide.data.children[positionIndices.textChildIndex]
-			setRightContent({ type: "image", icon: textChild.triggerImage })
+			if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
+				setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+			} else {
+				const textChild = currentSlide.data.children[indices.textChildIndex]
+				setRightContent({ type: "image", icon: textChild.triggerImage })
+			}
 		}
 	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, careerData.sections])
 
@@ -123,26 +110,22 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	useMousewheelNavigation(
 		mainSwiperInstance,
-		currentMainSlideIndex,
-		currentTextChildIndex,
+		careerData.careerUUID,
 		mainSlides,
 		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
-		setNavigationCommand,
-		setCurrentTextChildIndex
+		setNavigationCommand
 	)
 
 	useKeyboardNavigation(
 		mainSwiperInstance,
-		currentMainSlideIndex,
-		currentTextChildIndex,
+		careerData.careerUUID,
 		mainSlides,
 		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
-		setNavigationCommand,
-		setCurrentTextChildIndex
+		setNavigationCommand
 	)
 
 	// Update main swiper navigation permissions
@@ -161,7 +144,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
 
-		setCurrentMainSlideIndex(newIndex)
+		// Update class state instead of component state
+		careerQuestClass.setCurrentMainSlideIndex(careerData.careerUUID, newIndex)
 
 		const currentSlide = mainSlides[newIndex]
 
@@ -169,19 +153,19 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			void careerQuestClass.markChallengeAsSeen(careerData.careerUUID, currentSlide.data.challengeUUID)
 			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID)
 
-			setCurrentTextChildIndex(0)
+			careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, 0)
 			return
 		}
 
-		// For text sections, only change textChildIndex if NOT restoring
+		// For text sections, determine textChildIndex
 		let textChildIndex: number
 		if (isGoingBackward) {
 			textChildIndex = currentSlide.data.children.length - 1
 		} else {
 			textChildIndex = 0
 		}
-		setCurrentTextChildIndex(textChildIndex)
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID])
+		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, textChildIndex)
+	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
@@ -223,19 +207,16 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}, 100)
 	}, [careerData.careerUUID])
 
-	// Handle text child index changes from TextParentCard
 	const handleTextChildIndexChange = useCallback((newIndex: number) => {
-		setCurrentTextChildIndex(newIndex)
+		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, newIndex)
 
 		// Save progress when text child changes
 		const currentSlide = mainSlides[currentMainSlideIndex]
 		if (currentSlide.type !== "textParent") return
 
 		const textChild = currentSlide.data.children[newIndex]
-
-		// SIMPLIFIED: No isLocked calculation needed
-		void saveCareerProgress(careerData.careerUUID, textChild.id) // Remove isLocked parameter
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID])
+		void saveCareerProgress(careerData.careerUUID, textChild.id)
+	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
 	return (
 		<div className="flex h-full">
