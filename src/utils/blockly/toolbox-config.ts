@@ -5,7 +5,7 @@ import { ledCategoryColour, motorsCategoryColour } from "../constants/constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
-import { BlocklyCategoryName, BlockNames, LED_BLOCK_TYPES, MOTOR_BLOCK_TYPES } from "@bluedotrobots/common-ts"
+import { LED_BLOCK_TYPES, MOTOR_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {
@@ -67,20 +67,4 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		// speakerCategory,
 		// buttonsCategory
 	]
-}
-
-export function createCustomCategory(
-	name: BlocklyCategoryName,
-	colour: HexColor,
-	blocks: BlockNames[]
-): CustomCategoryInfo {
-	return {
-		...baseCategory,
-		name,
-		colour,
-		contents: blocks.map(blockType => ({
-			kind: "block",
-			type: blockType
-		}))
-	}
 }

@@ -1,7 +1,7 @@
 "use client"
 import * as Blockly from "blockly/core"
 
-export class CppGenerator extends Blockly.Generator {
+class CppGenerator extends Blockly.Generator {
 	public areBlocksInitialized: boolean = false
 
 	constructor() {

@@ -110,10 +110,12 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 			)
 		})
 
-		// NEW: Set saved position from API response
+		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""
-		const savedIsLocked = careerResponse.data.isChallengeLocked || false
-		careerQuestClass.setSavedPosition(careerUUID, savedPosition, savedIsLocked)
+		const seenChallengeUUIDs = careerResponse.data.seenChallengeUUIDs
+
+		careerQuestClass.setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
+		careerQuestClass.setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
 
 		// Clear loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)

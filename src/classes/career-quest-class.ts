@@ -15,6 +15,7 @@ import {
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import blueDotApiClient from "../classes/blue-dot-api-client-class"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -41,15 +42,14 @@ interface CareerProgress {
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
-	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
 	progress: CareerProgress
 	currentChallengeUuidOrTextUuid: string
 	hasRetrievedAllChallenges: boolean
 	isRetrievingData: boolean
-	// NEW: Saved position state
 	savedCurrentPosition: string
-	savedIsChallengeLocked: boolean
+	seenChallengeUUIDs: Set<ChallengeUUID>
+	graduatedTextSectionIds: Set<string>
 }
 
 class CareerQuestClass {
@@ -114,7 +114,8 @@ class CareerQuestClass {
 			isRetrievingData: false,
 			// NEW: Initialize saved position state
 			savedCurrentPosition: "",
-			savedIsChallengeLocked: false
+			seenChallengeUUIDs: new Set<ChallengeUUID>(),
+			graduatedTextSectionIds: new Set<string>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -135,19 +136,80 @@ class CareerQuestClass {
 	// NEW: SAVED POSITION MANAGEMENT
 	// ========================================
 
-	public setSavedPosition = action((careerUUID: CareerUUID, position: string, isLocked: boolean): void => {
+	public setSavedPosition = action((careerUUID: CareerUUID, position: string): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.savedCurrentPosition = position
-		career.savedIsChallengeLocked = isLocked
 	})
 
-	public getSavedPosition(careerUUID: CareerUUID): { position: string; isLocked: boolean } {
+	// REPLACE getSavedPosition method (remove isLocked from return):
+	public getSavedPosition(careerUUID: CareerUUID): { position: string } {
 		const career = this.getCareer(careerUUID)
 		return {
-			position: career?.savedCurrentPosition || "",
-			isLocked: career?.savedIsChallengeLocked || false
+			position: career?.savedCurrentPosition || ""
 		}
+	}
+
+	// ADD new method to set seen challenges:
+	public setSeenChallenges = action((careerUUID: CareerUUID, seenChallengeUUIDs: ChallengeUUID[]): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.seenChallengeUUIDs = new Set(seenChallengeUUIDs)
+
+		// Recalculate graduated text sections based on seen challenges
+		this.recalculateGraduatedTextSections(careerUUID)
+	})
+
+	// ADD new method to mark challenge as seen:
+	public markChallengeAsSeen = action(async (careerUUID: CareerUUID, challengeUUID: ChallengeUUID): Promise<void> => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Only proceed if not already seen
+		if (career.seenChallengeUUIDs.has(challengeUUID)) return
+
+		// Optimistically update local state
+		career.seenChallengeUUIDs.add(challengeUUID)
+		this.recalculateGraduatedTextSections(careerUUID)
+
+		// Call API (fire and forget - no error handling for now)
+		try {
+			await blueDotApiClient.careerQuestDataService.markChallengeAsSeen(challengeUUID)
+		} catch (error) {
+			console.error("Failed to mark challenge as seen:", error)
+			// Could add retry logic here later
+		}
+	})
+
+	private recalculateGraduatedTextSections = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.graduatedTextSectionIds.clear()
+
+		// For each seen challenge, mark all previous text sections as graduated
+		career.seenChallengeUUIDs.forEach(seenChallengeUUID => {
+			const challengeIndex = career.careerDefinition.sections.findIndex(
+				section => section.type === "challenge" && section.challengeData.challengeUUID === seenChallengeUUID
+			)
+
+			if (challengeIndex === -1) return
+
+			// Mark all text parent sections before this challenge as graduated
+			for (let i = 0; i < challengeIndex; i++) {
+				const section = career.careerDefinition.sections[i]
+				if (section.type === "textParent") {
+					career.graduatedTextSectionIds.add(section.id)
+				}
+			}
+		})
+	})
+
+	// ADD helper method to check if text section is graduated:
+	public isTextSectionGraduated(careerUUID: CareerUUID, textSectionId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.graduatedTextSectionIds.has(textSectionId) || false
 	}
 
 	public findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
@@ -166,6 +228,7 @@ class CareerQuestClass {
 			} else {
 				// Check if this is a text child ID match
 				for (let childIndex = 0; childIndex < section.children.length; childIndex++) {
+					// eslint-disable-next-line max-depth
 					if (section.children[childIndex].id === savedPosition) {
 						return { mainSlideIndex: mainIndex, textChildIndex: childIndex }
 					}
@@ -466,7 +529,7 @@ class CareerQuestClass {
 	/**
 	 * Get all challenge sections
 	 */
-	public getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
