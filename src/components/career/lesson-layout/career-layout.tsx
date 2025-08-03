@@ -44,6 +44,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [reachedChallenges, setReachedChallenges] = useState<Set<string>>(new Set())
 	const [lockedChallengeData, setLockedChallengeData] = useState<CqChallengeData | null>(null)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const [isInitializing, setIsInitializing] = useState(true)
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -83,8 +84,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return null
 	}, [careerData.sections])
 
+	// Then modify the above useEffect to set this flag:
 	useEffect(() => {
 		if (!isDataReady || !mainSwiperInstance || isEmpty(mainSlides)) return
+
+		setIsInitializing(true) // Prevent other useEffects from interfering
 
 		const savedData = careerQuestClass.getSavedPosition(careerData.careerUUID)
 
@@ -93,6 +97,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setCurrentMainSlideIndex(0)
 			setCurrentTextChildIndex(0)
 			mainSwiperInstance.slideTo(0, 0)
+			setIsInitializing(false)
 			return
 		}
 
@@ -104,16 +109,36 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setCurrentMainSlideIndex(0)
 			setCurrentTextChildIndex(0)
 			mainSwiperInstance.slideTo(0, 0)
+			setIsInitializing(false)
 			return
 		}
 
-		// Apply locked state
-		const associatedChallenge = getAssociatedChallenge(mainSlides[positionIndices.mainSlideIndex].id)
-		if (!savedData.isLocked || !associatedChallenge) return
-		setLockedChallengeData(associatedChallenge)
+		// *** Apply the saved position ***
+		setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
+		setCurrentTextChildIndex(positionIndices.textChildIndex)
+		mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
+
+		// Handle right content based on lock state
+		const currentSlide = mainSlides[positionIndices.mainSlideIndex]
+
+		if (currentSlide.type === "challenge") {
+			setRightContent({ type: "challenge", challengeData: currentSlide.data })
+		} else {
+			if (savedData.isLocked) {
+				const associatedChallenge = getAssociatedChallenge(currentSlide.id)
+				if (associatedChallenge) {
+					setLockedChallengeData(associatedChallenge)
+					setRightContent({ type: "challenge", challengeData: associatedChallenge })
+				}
+			} else {
+				const textChild = currentSlide.data.children[positionIndices.textChildIndex]
+				setRightContent({ type: "image", icon: textChild.triggerImage })
+			}
+		}
+
+		setIsInitializing(false) // Allow other useEffects to work normally
 	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, getAssociatedChallenge])
 
-	// Check if user can advance to next main slide
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
 		if (slideIndex >= mainSlides.length - 1) return false
 
@@ -201,6 +226,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [careerData.sections, mainSlides, getAssociatedChallenge])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
+		if (isInitializing) return
 		const newIndex = swiper.activeIndex
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
@@ -249,6 +275,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
+		if (isInitializing) return // Don't override during initialization
 		if (!isDataReady) {
 			// Show initial image while loading
 			setRightContent({ type: "image", icon: careerData.initialImage })
@@ -282,7 +309,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setRightContent({ type: "challenge", challengeData: associatedChallenge })
 		}
 	// eslint-disable-next-line max-len
-	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, isDataReady, careerData.initialImage])
+	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, isDataReady, careerData.initialImage, isInitializing])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -317,9 +344,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const currentSlide = mainSlides[currentMainSlideIndex]
 		if (currentSlide.type !== "textParent") return
 		const textChild = currentSlide.data.children[newIndex]
-		const isLocked = hasTextSectionGraduated(currentSlide.id)
+		const isLocked = rightContent.type === "challenge"
 		void saveCareerProgress(careerData.careerUUID, textChild.id, isLocked)
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, hasTextSectionGraduated])
+	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, rightContent.type])
 
 	return (
 		<div className="flex h-full">
@@ -340,11 +367,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									spaceBetween={0}
 									keyboard={false}
 									speed={400}
-									allowSlideNext={isDataReady} // UPDATE: Only allow navigation when ready
-									allowSlidePrev={isDataReady} // UPDATE: Only allow navigation when ready
+									allowSlideNext={isDataReady}
+									allowSlidePrev={isDataReady}
 									allowTouchMove={false}
 									onSwiper={setMainSwiperInstance}
-									onSlideChange={isDataReady ? handleMainSlideChange : undefined}
+									onSlideChange={isDataReady && !isInitializing ? handleMainSlideChange : undefined} // Only attach when not initializing
 									className="h-full"
 									style={{
 										"--swiper-theme-color": "#000000",

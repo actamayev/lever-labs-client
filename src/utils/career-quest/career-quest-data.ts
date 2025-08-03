@@ -97,13 +97,13 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-2-1",
-					content: "Great job! Now, you might be wondering why I asked you to change the color of my LEDs to indicate if there's an object in front of me...",
+					content: "First First First First First First First First First First First First First First First First First First First First First ",
 					triggerImage: "Lightbulb"
 				},
 				{
 					type: "text",
 					id: "parent-2-2",
-					content: "Now that we know that your LED solution works, lets try bringing the motors in, and I'll try some basic obstacle avoidance...",
+					content: "Second Second Second Second Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second Se",
 					triggerImage: "Cog"
 				},
 			]
