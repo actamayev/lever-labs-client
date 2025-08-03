@@ -88,35 +88,29 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		const savedData = careerQuestClass.getSavedPosition(careerData.careerUUID)
 
-		if (savedData.position) {
-			// Try to find the saved position
-			const positionIndices = careerQuestClass.findPositionIndices(careerData.careerUUID, savedData.position)
-
-			if (positionIndices) {
-				// Apply saved position immediately (no animation)
-				setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
-				setCurrentTextChildIndex(positionIndices.textChildIndex)
-				mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
-
-				// Apply locked state
-				if (savedData.isLocked) {
-					const associatedChallenge = getAssociatedChallenge(mainSlides[positionIndices.mainSlideIndex].id)
-					if (associatedChallenge) {
-						setLockedChallengeData(associatedChallenge)
-					}
-				}
-			} else {
-				// Fallback to beginning if position not found
-				setCurrentMainSlideIndex(0)
-				setCurrentTextChildIndex(0)
-				mainSwiperInstance.slideTo(0, 0)
-			}
-		} else {
+		if (!savedData.position) {
 			// No saved position, start at beginning
 			setCurrentMainSlideIndex(0)
 			setCurrentTextChildIndex(0)
 			mainSwiperInstance.slideTo(0, 0)
+			return
 		}
+
+		// Try to find the saved position
+		const positionIndices = careerQuestClass.findPositionIndices(careerData.careerUUID, savedData.position)
+
+		if (!positionIndices) {
+			// Fallback to beginning if position not found
+			setCurrentMainSlideIndex(0)
+			setCurrentTextChildIndex(0)
+			mainSwiperInstance.slideTo(0, 0)
+			return
+		}
+
+		// Apply locked state
+		const associatedChallenge = getAssociatedChallenge(mainSlides[positionIndices.mainSlideIndex].id)
+		if (!savedData.isLocked || !associatedChallenge) return
+		setLockedChallengeData(associatedChallenge)
 	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, getAssociatedChallenge])
 
 	// Check if user can advance to next main slide
@@ -252,20 +246,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// Lock this challenge (right content will be handled by useEffect)
 		setLockedChallengeData(currentSlide.data)
 	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, rightContent.type])
-
-	// NEW: Save locked state when it changes
-	useEffect(() => {
-		if (!isDataReady || !lockedChallengeData) return
-
-		const currentSlide = mainSlides[currentMainSlideIndex]
-		let currentId: string
-		if (currentSlide.type === "challenge") {
-			currentId = currentSlide.data.challengeUUID
-		} else {
-			currentId = currentSlide.data.children[currentTextChildIndex].id
-		}
-		void saveCareerProgress(careerData.careerUUID, currentId, true)
-	}, [lockedChallengeData, isDataReady, mainSlides, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
