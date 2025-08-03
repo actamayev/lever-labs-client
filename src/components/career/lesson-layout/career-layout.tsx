@@ -226,7 +226,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [careerData.sections, mainSlides, getAssociatedChallenge])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
+		// Don't save during initialization
 		if (isInitializing) return
+
 		const newIndex = swiper.activeIndex
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
@@ -235,30 +237,25 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		const currentSlide = mainSlides[newIndex]
 
-		// NEW: Save progress when main slide changes
+		// Only save and set text index for CHALLENGE slides
 		if (currentSlide.type === "challenge") {
 			// Save challenge UUID
 			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID, true)
 			setCurrentTextChildIndex(0) // Reset for challenges
 		} else {
+			// For text parent slides, just set the text child index but DON'T save
+			// The saving will be handled by handleTextChildIndexChange
 			let textChildIndex: number
-			let textChildId: string
 
 			if (isGoingBackward) {
 				// Going backward: land on last text child
 				textChildIndex = currentSlide.data.children.length - 1
-				textChildId = currentSlide.data.children[textChildIndex].id
 			} else {
 				// Going forward: land on first text child
 				textChildIndex = 0
-				textChildId = currentSlide.data.children[0].id
 			}
 
 			setCurrentTextChildIndex(textChildIndex)
-
-			const isLocked = rightContent.type === "challenge"
-			console.log("saving text child ID", textChildId, isLocked, "direction:", isGoingBackward ? "backward" : "forward")
-			void saveCareerProgress(careerData.careerUUID, textChildId, isLocked)
 		}
 
 		if (currentSlide.type !== "challenge") return
@@ -271,11 +268,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// Lock this challenge (right content will be handled by useEffect)
 		setLockedChallengeData(currentSlide.data)
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, rightContent.type])
+	}, [isInitializing, currentMainSlideIndex, mainSlides, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
 		if (isInitializing) return // Don't override during initialization
+
 		if (!isDataReady) {
 			// Show initial image while loading
 			setRightContent({ type: "image", icon: careerData.initialImage })
@@ -290,26 +288,29 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
 			return
 		}
+
 		// Text parent slide
 		if (!hasTextSectionGraduated(currentSlide.id)) {
 			// Section hasn't graduated - show images normally
-			setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
+			// FIX: Use currentTextChildIndex instead of 0
+			const textChild = currentSlide.data.children[currentTextChildIndex]
+			setRightContent({ type: "image", icon: textChild.triggerImage })
 			return
 		}
+
 		// Section has graduated - show locked challenge
 		if (lockedChallengeData) {
 			setRightContent({ type: "challenge", challengeData: lockedChallengeData })
 			return
 		}
+
 		// Fallback: lock the associated challenge
 		const associatedChallenge = getAssociatedChallenge(currentSlide.id)
-		// eslint-disable-next-line max-depth
 		if (associatedChallenge) {
 			setLockedChallengeData(associatedChallenge)
 			setRightContent({ type: "challenge", challengeData: associatedChallenge })
 		}
-	// eslint-disable-next-line max-len
-	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, isDataReady, careerData.initialImage, isInitializing])
+	}, [isInitializing, isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, careerData.initialImage])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -340,13 +341,23 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const handleTextChildIndexChange = useCallback((newIndex: number) => {
 		setCurrentTextChildIndex(newIndex)
 
-		// NEW: Save progress when text child changes
+		// Don't save during initialization
+		if (isInitializing) return
+
+		// Save progress when text child changes
 		const currentSlide = mainSlides[currentMainSlideIndex]
 		if (currentSlide.type !== "textParent") return
+
 		const textChild = currentSlide.data.children[newIndex]
-		const isLocked = rightContent.type === "challenge"
+
+		// Calculate isLocked based on whether the text section has graduated
+		const hasGraduated = hasTextSectionGraduated(currentSlide.id)
+		const isLocked = hasGraduated && lockedChallengeData !== null
+
+		console.log("saving text child ID", textChild.id, "isLocked:", isLocked)
 		void saveCareerProgress(careerData.careerUUID, textChild.id, isLocked)
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, rightContent.type])
+	}, [isInitializing, currentMainSlideIndex, mainSlides, careerData.careerUUID, hasTextSectionGraduated, lockedChallengeData])
+
 
 	return (
 		<div className="flex h-full">
