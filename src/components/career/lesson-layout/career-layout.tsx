@@ -83,7 +83,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return null
 	}, [careerData.sections])
 
-	// NEW: Apply saved position when data becomes ready
 	useEffect(() => {
 		if (!isDataReady || !mainSwiperInstance || isEmpty(mainSlides)) return
 
@@ -209,8 +208,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
+		const previousIndex = currentMainSlideIndex
+		const isGoingBackward = newIndex < previousIndex
+
 		setCurrentMainSlideIndex(newIndex)
-		setCurrentTextChildIndex(0)
 
 		const currentSlide = mainSlides[newIndex]
 
@@ -218,11 +219,26 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (currentSlide.type === "challenge") {
 			// Save challenge UUID
 			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID, true)
+			setCurrentTextChildIndex(0) // Reset for challenges
 		} else {
-			// Save first text child ID of this text parent
-			const firstTextChildId = currentSlide.data.children[0].id
-			const isLocked = hasTextSectionGraduated(currentSlide.id)
-			void saveCareerProgress(careerData.careerUUID, firstTextChildId, isLocked)
+			let textChildIndex: number
+			let textChildId: string
+
+			if (isGoingBackward) {
+				// Going backward: land on last text child
+				textChildIndex = currentSlide.data.children.length - 1
+				textChildId = currentSlide.data.children[textChildIndex].id
+			} else {
+				// Going forward: land on first text child
+				textChildIndex = 0
+				textChildId = currentSlide.data.children[0].id
+			}
+
+			setCurrentTextChildIndex(textChildIndex)
+
+			const isLocked = rightContent.type === "challenge"
+			console.log("saving text child ID", textChildId, isLocked, "direction:", isGoingBackward ? "backward" : "forward")
+			void saveCareerProgress(careerData.careerUUID, textChildId, isLocked)
 		}
 
 		if (currentSlide.type !== "challenge") return
@@ -235,22 +251,20 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// Lock this challenge (right content will be handled by useEffect)
 		setLockedChallengeData(currentSlide.data)
-	}, [mainSlides, careerData.careerUUID, hasTextSectionGraduated])
+	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, rightContent.type])
 
 	// NEW: Save locked state when it changes
 	useEffect(() => {
 		if (!isDataReady || !lockedChallengeData) return
 
 		const currentSlide = mainSlides[currentMainSlideIndex]
-		if (currentSlide) {
-			let currentId: string
-			if (currentSlide.type === "challenge") {
-				currentId = currentSlide.data.challengeUUID
-			} else {
-				currentId = currentSlide.data.children[currentTextChildIndex].id
-			}
-			void saveCareerProgress(careerData.careerUUID, currentId, true)
+		let currentId: string
+		if (currentSlide.type === "challenge") {
+			currentId = currentSlide.data.challengeUUID
+		} else {
+			currentId = currentSlide.data.children[currentTextChildIndex].id
 		}
+		void saveCareerProgress(careerData.careerUUID, currentId, true)
 	}, [lockedChallengeData, isDataReady, mainSlides, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
@@ -267,25 +281,25 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (currentSlide.type === "challenge") {
 			// Always show the current challenge when on a challenge slide
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
-		} else {
-			// Text parent slide
-			if (hasTextSectionGraduated(currentSlide.id)) {
-				// Section has graduated - show locked challenge
-				if (lockedChallengeData) {
-					setRightContent({ type: "challenge", challengeData: lockedChallengeData })
-				} else {
-					// Fallback: lock the associated challenge
-					const associatedChallenge = getAssociatedChallenge(currentSlide.id)
-					// eslint-disable-next-line max-depth
-					if (associatedChallenge) {
-						setLockedChallengeData(associatedChallenge)
-						setRightContent({ type: "challenge", challengeData: associatedChallenge })
-					}
-				}
-			} else {
-				// Section hasn't graduated - show images normally
-				setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
-			}
+			return
+		}
+		// Text parent slide
+		if (!hasTextSectionGraduated(currentSlide.id)) {
+			// Section hasn't graduated - show images normally
+			setRightContent({ type: "image", icon: currentSlide.data.children[0].triggerImage })
+			return
+		}
+		// Section has graduated - show locked challenge
+		if (lockedChallengeData) {
+			setRightContent({ type: "challenge", challengeData: lockedChallengeData })
+			return
+		}
+		// Fallback: lock the associated challenge
+		const associatedChallenge = getAssociatedChallenge(currentSlide.id)
+		// eslint-disable-next-line max-depth
+		if (associatedChallenge) {
+			setLockedChallengeData(associatedChallenge)
+			setRightContent({ type: "challenge", challengeData: associatedChallenge })
 		}
 	// eslint-disable-next-line max-len
 	}, [currentMainSlideIndex, mainSlides, hasTextSectionGraduated, lockedChallengeData, getAssociatedChallenge, isDataReady, careerData.initialImage])
@@ -321,11 +335,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// NEW: Save progress when text child changes
 		const currentSlide = mainSlides[currentMainSlideIndex]
-		if (currentSlide.type === "textParent") {
-			const textChild = currentSlide.data.children[newIndex]
-			const isLocked = hasTextSectionGraduated(currentSlide.id)
-			void saveCareerProgress(careerData.careerUUID, textChild.id, isLocked)
-		}
+		if (currentSlide.type !== "textParent") return
+		const textChild = currentSlide.data.children[newIndex]
+		const isLocked = hasTextSectionGraduated(currentSlide.id)
+		void saveCareerProgress(careerData.careerUUID, textChild.id, isLocked)
 	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, hasTextSectionGraduated])
 
 	return (
