@@ -14,9 +14,9 @@ import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import saveCareerProgress from "../../../utils/career-quest/save-career-progress"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
-import saveCareerProgress from "../../../utils/career-quest/save-career-progress"
 
 function EmptyTextParentCard() {
 	return (
@@ -35,14 +35,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		icon: careerData.initialImage
 	})
 	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
-	const [completedTextParents, setCompletedTextParents] = useState<Set<string>>(new Set())
 	const [currentMainSlideIndex, setCurrentMainSlideIndex] = useState(0)
 	const [currentTextChildIndex, setCurrentTextChildIndex] = useState(0)
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
-	const [lockedChallengeData, setLockedChallengeData] = useState<CqChallengeData | null>(null)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
-	const [isRestoringPosition, setIsRestoringPosition] = useState(false)
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -88,32 +85,27 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			return
 		}
 
-		setIsRestoringPosition(true) // ADD this line
-		// Apply the saved position
 		setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
 		setCurrentTextChildIndex(positionIndices.textChildIndex)
 		mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
-		setTimeout(() => setIsRestoringPosition(false), 100) // ADD this
 
 		// Handle right content based on current slide
 		const currentSlide = mainSlides[positionIndices.mainSlideIndex]
 
 		if (currentSlide.type === "challenge") {
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
-			setLockedChallengeData(currentSlide.data)
-		} else {
-			const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
-			const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
-
-			if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-				setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
-				setLockedChallengeData(nextChallenge.challengeData)
-			} else {
-				const textChild = currentSlide.data.children[positionIndices.textChildIndex]
-				setRightContent({ type: "image", icon: textChild.triggerImage })
-			}
+			return
 		}
-	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, lockedChallengeData, careerData.sections])
+		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
+		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
+
+		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
+			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+		} else {
+			const textChild = currentSlide.data.children[positionIndices.textChildIndex]
+			setRightContent({ type: "image", icon: textChild.triggerImage })
+		}
+	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, careerData.sections])
 
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
 		if (slideIndex >= mainSlides.length - 1) return false
@@ -122,12 +114,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		if (currentSlide.type === "textParent") {
 			// For text parent slides, check if completed
-			return completedTextParents.has(currentSlide.id)
+			return careerQuestClass.hasCompletedTextParent(careerData.careerUUID, currentSlide.id)
 		} else {
 			// For challenge slides, must be completed
 			return careerQuestClass.isChallengeCompleted(currentSlide.data)
 		}
-	}, [mainSlides, completedTextParents])
+	}, [mainSlides, careerData.careerUUID]) // REMOVE completedTextParents from dependencies
 
 	useMousewheelNavigation(
 		mainSwiperInstance,
@@ -165,8 +157,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
-		if (isRestoringPosition) return // ADD this
-
 		const newIndex = swiper.activeIndex
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
@@ -176,27 +166,22 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const currentSlide = mainSlides[newIndex]
 
 		if (currentSlide.type === "challenge") {
-			// NEW: Mark challenge as seen when navigating to it
 			void careerQuestClass.markChallengeAsSeen(careerData.careerUUID, currentSlide.data.challengeUUID)
+			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID)
 
-			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID) // Remove isLocked parameter
 			setCurrentTextChildIndex(0)
-		} else {
-			let textChildIndex: number
-
-			if (isGoingBackward) {
-				textChildIndex = currentSlide.data.children.length - 1
-			} else {
-				textChildIndex = 0
-			}
-
-			setCurrentTextChildIndex(textChildIndex)
+			return
 		}
 
-		if (currentSlide.type !== "challenge") return
-
-		setLockedChallengeData(currentSlide.data)
-	}, [isRestoringPosition, currentMainSlideIndex, mainSlides, careerData.careerUUID])
+		// For text sections, only change textChildIndex if NOT restoring
+		let textChildIndex: number
+		if (isGoingBackward) {
+			textChildIndex = currentSlide.data.children.length - 1
+		} else {
+			textChildIndex = 0
+		}
+		setCurrentTextChildIndex(textChildIndex)
+	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
@@ -223,7 +208,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// Show the text image
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		setRightContent({ type: "image", icon: textChild.triggerImage })
-	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, lockedChallengeData, careerData.careerUUID, careerData.initialImage, careerData.sections])
+	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, careerData.careerUUID, careerData.initialImage, careerData.sections])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
@@ -231,24 +216,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		return generateCppFromJson(currentBlocklyJson)
 	}, [])
 
-	// Update main navigation when completion states change
-	const completedChallengesCount = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
-	useEffect(() => {
-		if (!mainSwiperInstance) return
-		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
-		mainSwiperInstance.allowSlideNext = canAdvance
-	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain, completedChallengesCount, completedTextParents])
-
 	const handleTextParentComplete = useCallback((textParentId: string) => {
 		// Add a small delay to ensure any keyboard events have finished
 		setTimeout(() => {
-			setCompletedTextParents(prev => {
-				const newSet = new Set(prev)
-				newSet.add(textParentId)
-				return newSet
-			})
+			careerQuestClass.addCompletedTextParent(careerData.careerUUID, textParentId)
 		}, 100)
-	}, [])
+	}, [careerData.careerUUID])
 
 	// Handle text child index changes from TextParentCard
 	const handleTextChildIndexChange = useCallback((newIndex: number) => {

@@ -49,6 +49,7 @@ interface CareerInstance {
 	isRetrievingData: boolean
 	savedCurrentPosition: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
+	completedTextParents: Set<string> // ADD this line
 }
 
 class CareerQuestClass {
@@ -113,7 +114,8 @@ class CareerQuestClass {
 			isRetrievingData: false,
 			// NEW: Initialize saved position state
 			savedCurrentPosition: "",
-			seenChallengeUUIDs: new Set<ChallengeUUID>()
+			seenChallengeUUIDs: new Set<ChallengeUUID>(),
+			completedTextParents: new Set<string>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -129,6 +131,17 @@ class CareerQuestClass {
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
 	})
+
+	public addCompletedTextParent = action((careerUUID: CareerUUID, textParentId: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.completedTextParents.add(textParentId)
+	})
+
+	public hasCompletedTextParent(careerUUID: CareerUUID, textParentId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.completedTextParents.has(textParentId) || false
+	}
 
 	// ========================================
 	// NEW: SAVED POSITION MANAGEMENT
