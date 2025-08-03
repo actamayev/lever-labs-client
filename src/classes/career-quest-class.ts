@@ -49,7 +49,6 @@ interface CareerInstance {
 	isRetrievingData: boolean
 	savedCurrentPosition: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
-	graduatedTextSectionIds: Set<string>
 }
 
 class CareerQuestClass {
@@ -114,8 +113,7 @@ class CareerQuestClass {
 			isRetrievingData: false,
 			// NEW: Initialize saved position state
 			savedCurrentPosition: "",
-			seenChallengeUUIDs: new Set<ChallengeUUID>(),
-			graduatedTextSectionIds: new Set<string>()
+			seenChallengeUUIDs: new Set<ChallengeUUID>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -156,9 +154,6 @@ class CareerQuestClass {
 		if (!career) return
 
 		career.seenChallengeUUIDs = new Set(seenChallengeUUIDs)
-
-		// Recalculate graduated text sections based on seen challenges
-		this.recalculateGraduatedTextSections(careerUUID)
 	})
 
 	// ADD new method to mark challenge as seen:
@@ -171,7 +166,6 @@ class CareerQuestClass {
 
 		// Optimistically update local state
 		career.seenChallengeUUIDs.add(challengeUUID)
-		this.recalculateGraduatedTextSections(careerUUID)
 
 		// Call API (fire and forget - no error handling for now)
 		try {
@@ -182,34 +176,9 @@ class CareerQuestClass {
 		}
 	})
 
-	private recalculateGraduatedTextSections = action((careerUUID: CareerUUID): void => {
+	public hasChallengeBeenSeen(careerUUID: CareerUUID, challengeUUID: ChallengeUUID): boolean {
 		const career = this.getCareer(careerUUID)
-		if (!career) return
-
-		career.graduatedTextSectionIds.clear()
-
-		// For each seen challenge, mark all previous text sections as graduated
-		career.seenChallengeUUIDs.forEach(seenChallengeUUID => {
-			const challengeIndex = career.careerDefinition.sections.findIndex(
-				section => section.type === "challenge" && section.challengeData.challengeUUID === seenChallengeUUID
-			)
-
-			if (challengeIndex === -1) return
-
-			// Mark all text parent sections before this challenge as graduated
-			for (let i = 0; i < challengeIndex; i++) {
-				const section = career.careerDefinition.sections[i]
-				if (section.type === "textParent") {
-					career.graduatedTextSectionIds.add(section.id)
-				}
-			}
-		})
-	})
-
-	// ADD helper method to check if text section is graduated:
-	public isTextSectionGraduated(careerUUID: CareerUUID, textSectionId: string): boolean {
-		const career = this.getCareer(careerUUID)
-		return career?.graduatedTextSectionIds.has(textSectionId) || false
+		return career?.seenChallengeUUIDs.has(challengeUUID) || false
 	}
 
 	public findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {

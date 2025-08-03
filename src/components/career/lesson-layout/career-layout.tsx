@@ -42,6 +42,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const [lockedChallengeData, setLockedChallengeData] = useState<CqChallengeData | null>(null)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const [isRestoringPosition, setIsRestoringPosition] = useState(false)
 
 	// Create main slides directly from sections (no flattening)
 	const mainSlides = useMemo((): MainSlide[] => {
@@ -87,10 +88,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			return
 		}
 
+		setIsRestoringPosition(true) // ADD this line
 		// Apply the saved position
 		setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
 		setCurrentTextChildIndex(positionIndices.textChildIndex)
 		mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
+		setTimeout(() => setIsRestoringPosition(false), 100) // ADD this
 
 		// Handle right content based on current slide
 		const currentSlide = mainSlides[positionIndices.mainSlideIndex]
@@ -99,17 +102,18 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			setRightContent({ type: "challenge", challengeData: currentSlide.data })
 			setLockedChallengeData(currentSlide.data)
 		} else {
-			// Check if this text section is graduated
-			const isGraduated = careerQuestClass.isTextSectionGraduated(careerData.careerUUID, currentSlide.id)
+			const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
+			const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
-			if (isGraduated && lockedChallengeData) {
-				setRightContent({ type: "challenge", challengeData: lockedChallengeData })
+			if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
+				setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+				setLockedChallengeData(nextChallenge.challengeData)
 			} else {
 				const textChild = currentSlide.data.children[positionIndices.textChildIndex]
 				setRightContent({ type: "image", icon: textChild.triggerImage })
 			}
 		}
-	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, lockedChallengeData])
+	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, lockedChallengeData, careerData.sections])
 
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
 		if (slideIndex >= mainSlides.length - 1) return false
@@ -161,6 +165,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
+		if (isRestoringPosition) return // ADD this
+
 		const newIndex = swiper.activeIndex
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
@@ -190,7 +196,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (currentSlide.type !== "challenge") return
 
 		setLockedChallengeData(currentSlide.data)
-	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID])
+	}, [isRestoringPosition, currentMainSlideIndex, mainSlides, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
@@ -207,19 +213,17 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			return
 		}
 
-		// Text parent slide - check if graduated
-		const isGraduated = careerQuestClass.isTextSectionGraduated(careerData.careerUUID, currentSlide.id)
+		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
+		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
-		if (isGraduated && lockedChallengeData) {
-			setRightContent({ type: "challenge", challengeData: lockedChallengeData })
+		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
+			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
 			return
 		}
-
 		// Show the text image
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		setRightContent({ type: "image", icon: textChild.triggerImage })
-	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, lockedChallengeData, careerData.careerUUID, careerData.initialImage])
-
+	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, lockedChallengeData, careerData.careerUUID, careerData.initialImage, careerData.sections])
 
 	// Helper function to get current cpp code for a specific challenge
 	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
