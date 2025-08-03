@@ -47,6 +47,9 @@ interface CareerInstance {
 	currentChallengeUuidOrTextUuid: string
 	hasRetrievedAllChallenges: boolean
 	isRetrievingData: boolean
+	// NEW: Saved position state
+	savedCurrentPosition: string
+	savedIsChallengeLocked: boolean
 }
 
 class CareerQuestClass {
@@ -108,7 +111,10 @@ class CareerQuestClass {
 			},
 			currentChallengeUuidOrTextUuid: "",
 			hasRetrievedAllChallenges: false,
-			isRetrievingData: false
+			isRetrievingData: false,
+			// NEW: Initialize saved position state
+			savedCurrentPosition: "",
+			savedIsChallengeLocked: false
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -124,6 +130,51 @@ class CareerQuestClass {
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
 	})
+
+	// ========================================
+	// NEW: SAVED POSITION MANAGEMENT
+	// ========================================
+
+	public setSavedPosition = action((careerUUID: CareerUUID, position: string, isLocked: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.savedCurrentPosition = position
+		career.savedIsChallengeLocked = isLocked
+	})
+
+	public getSavedPosition(careerUUID: CareerUUID): { position: string; isLocked: boolean } {
+		const career = this.getCareer(careerUUID)
+		return {
+			position: career?.savedCurrentPosition || "",
+			isLocked: career?.savedIsChallengeLocked || false
+		}
+	}
+
+	public findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
+		const career = this.getCareer(careerUUID)
+		if (!career || !savedPosition) return null
+
+		// Search through sections to find the position
+		for (let mainIndex = 0; mainIndex < career.careerDefinition.sections.length; mainIndex++) {
+			const section = career.careerDefinition.sections[mainIndex]
+
+			if (section.type === "challenge") {
+				// Check if this is a challenge UUID match
+				if (section.challengeData.challengeUUID === savedPosition) {
+					return { mainSlideIndex: mainIndex, textChildIndex: 0 }
+				}
+			} else {
+				// Check if this is a text child ID match
+				for (let childIndex = 0; childIndex < section.children.length; childIndex++) {
+					if (section.children[childIndex].id === savedPosition) {
+						return { mainSlideIndex: mainIndex, textChildIndex: childIndex }
+					}
+				}
+			}
+		}
+
+		return null // Position not found
+	}
 
 	// ========================================
 	// HELPER METHODS
@@ -419,7 +470,7 @@ class CareerQuestClass {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
-	public getChallengeSectionByCareerUUID(careerUUID: CareerUUID): ChallengeSection[] {
+	public getChallengeSectionByChallengeUUID(careerUUID: CareerUUID): ChallengeSection[] {
 		const career = this.getCareer(careerUUID)
 		if (!career) return []
 

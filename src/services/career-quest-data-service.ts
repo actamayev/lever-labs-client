@@ -24,9 +24,14 @@ export default class CareerQuestDataService extends BaseDataService {
 		)
 	}
 
-	async updateCareerQuestUserProgress(cqUUID: string, careerUUID: CareerUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+	async updateCareerQuestUserProgress(
+		currentId: string,
+		careerUUID: CareerUUID,
+		isLocked: boolean
+	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl("/update-career-quest-user-progress"), { cqUUID, careerUUID }
+			this.buildUrl("/update-career-quest-user-progress"),
+			{ currentId, careerUUID, isLocked }
 		)
 	}
 }

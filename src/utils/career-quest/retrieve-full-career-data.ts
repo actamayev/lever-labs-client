@@ -24,7 +24,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		}
 
 		// Get challenge sections to create a lookup map
-		const challengeSections = careerQuestClass.getChallengeSectionByCareerUUID(careerUUID)
+		const challengeSections = careerQuestClass.getChallengeSectionByChallengeUUID(careerUUID)
 
 		// Create a map for quick lookup: challengeUUID -> challengeSection
 		const challengeMap = new Map(
@@ -109,6 +109,11 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 				isCompleted
 			)
 		})
+
+		// NEW: Set saved position from API response
+		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""
+		const savedIsLocked = careerResponse.data.isChallengeLocked || false
+		careerQuestClass.setSavedPosition(careerUUID, savedPosition, savedIsLocked)
 
 		// Clear loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)

@@ -16,6 +16,7 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
+import saveCareerProgress from "../../../utils/career-quest/save-career-progress"
 
 function EmptyTextParentCard() {
 	return (
@@ -63,17 +64,61 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		})
 	}, [careerData.sections])
 
+	// Helper to find which challenge is associated with a text parent
+	const getAssociatedChallenge = useCallback((textParentId: string): CqChallengeData | null => {
+		const textParentIndex = careerData.sections.findIndex(section =>
+			section.type === "textParent" && section.id === textParentId
+		)
+
+		if (textParentIndex === -1) return null
+
+		// Look for the next challenge section after this text parent
+		for (let i = textParentIndex + 1; i < careerData.sections.length; i++) {
+			const section = careerData.sections[i]
+			if (section.type === "challenge") {
+				return section.challengeData
+			}
+		}
+
+		return null
+	}, [careerData.sections])
+
+	// NEW: Apply saved position when data becomes ready
 	useEffect(() => {
-		if (!isDataReady) return
+		if (!isDataReady || !mainSwiperInstance || isEmpty(mainSlides)) return
 
-		setCurrentMainSlideIndex(0)
-		setCurrentTextChildIndex(0)
+		const savedData = careerQuestClass.getSavedPosition(careerData.careerUUID)
 
-		// Update swiper position if it exists
-		if (mainSwiperInstance && !isEmpty(mainSlides)) {
+		if (savedData.position) {
+			// Try to find the saved position
+			const positionIndices = careerQuestClass.findPositionIndices(careerData.careerUUID, savedData.position)
+
+			if (positionIndices) {
+				// Apply saved position immediately (no animation)
+				setCurrentMainSlideIndex(positionIndices.mainSlideIndex)
+				setCurrentTextChildIndex(positionIndices.textChildIndex)
+				mainSwiperInstance.slideTo(positionIndices.mainSlideIndex, 0)
+
+				// Apply locked state
+				if (savedData.isLocked) {
+					const associatedChallenge = getAssociatedChallenge(mainSlides[positionIndices.mainSlideIndex].id)
+					if (associatedChallenge) {
+						setLockedChallengeData(associatedChallenge)
+					}
+				}
+			} else {
+				// Fallback to beginning if position not found
+				setCurrentMainSlideIndex(0)
+				setCurrentTextChildIndex(0)
+				mainSwiperInstance.slideTo(0, 0)
+			}
+		} else {
+			// No saved position, start at beginning
+			setCurrentMainSlideIndex(0)
+			setCurrentTextChildIndex(0)
 			mainSwiperInstance.slideTo(0, 0)
 		}
-	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID])
+	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, getAssociatedChallenge])
 
 	// Check if user can advance to next main slide
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
@@ -125,25 +170,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
-	// Helper to find which challenge is associated with a text parent
-	const getAssociatedChallenge = useCallback((textParentId: string): CqChallengeData | null => {
-		const textParentIndex = careerData.sections.findIndex(section =>
-			section.type === "textParent" && section.id === textParentId
-		)
-
-		if (textParentIndex === -1) return null
-
-		// Look for the next challenge section after this text parent
-		for (let i = textParentIndex + 1; i < careerData.sections.length; i++) {
-			const section = careerData.sections[i]
-			if (section.type === "challenge") {
-				return section.challengeData
-			}
-		}
-
-		return null
-	}, [careerData.sections])
-
 	// Check if a text section has "graduated" (can no longer show images)
 	const hasTextSectionGraduated = useCallback((textParentId: string): boolean => {
 		const associatedChallenge = getAssociatedChallenge(textParentId)
@@ -188,6 +214,17 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		const currentSlide = mainSlides[newIndex]
 
+		// NEW: Save progress when main slide changes
+		if (currentSlide.type === "challenge") {
+			// Save challenge UUID
+			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID, true)
+		} else {
+			// Save first text child ID of this text parent
+			const firstTextChildId = currentSlide.data.children[0].id
+			const isLocked = hasTextSectionGraduated(currentSlide.id)
+			void saveCareerProgress(careerData.careerUUID, firstTextChildId, isLocked)
+		}
+
 		if (currentSlide.type !== "challenge") return
 		// Mark this challenge as reached
 		setReachedChallenges(prev => {
@@ -198,7 +235,23 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		// Lock this challenge (right content will be handled by useEffect)
 		setLockedChallengeData(currentSlide.data)
-	}, [mainSlides])
+	}, [mainSlides, careerData.careerUUID, hasTextSectionGraduated])
+
+	// NEW: Save locked state when it changes
+	useEffect(() => {
+		if (!isDataReady || !lockedChallengeData) return
+
+		const currentSlide = mainSlides[currentMainSlideIndex]
+		if (currentSlide) {
+			let currentId: string
+			if (currentSlide.type === "challenge") {
+				currentId = currentSlide.data.challengeUUID
+			} else {
+				currentId = currentSlide.data.children[currentTextChildIndex].id
+			}
+			void saveCareerProgress(careerData.careerUUID, currentId, true)
+		}
+	}, [lockedChallengeData, isDataReady, mainSlides, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID])
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
@@ -265,7 +318,15 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Handle text child index changes from TextParentCard
 	const handleTextChildIndexChange = useCallback((newIndex: number) => {
 		setCurrentTextChildIndex(newIndex)
-	}, [])
+
+		// NEW: Save progress when text child changes
+		const currentSlide = mainSlides[currentMainSlideIndex]
+		if (currentSlide.type === "textParent") {
+			const textChild = currentSlide.data.children[newIndex]
+			const isLocked = hasTextSectionGraduated(currentSlide.id)
+			void saveCareerProgress(careerData.careerUUID, textChild.id, isLocked)
+		}
+	}, [currentMainSlideIndex, mainSlides, careerData.careerUUID, hasTextSectionGraduated])
 
 	return (
 		<div className="flex h-full">
