@@ -9,7 +9,6 @@ import careerQuestClass from "../../classes/career-quest-class"
 export default function useMousewheelNavigation(
 	mainSwiperInstance: SwiperType | null,
 	careerUUID: CareerUUID,
-	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
@@ -21,6 +20,7 @@ export default function useMousewheelNavigation(
 	const hasNavigatedInGesture = useRef(false)
 	const lastWheelTime = useRef(0)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
@@ -108,7 +108,7 @@ export default function useMousewheelNavigation(
 
 						if (hasOnlyOneChild || isAtLastTextChild) {
 							// Move to next main slide if possible
-							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 								lastWheelTime.current = now
 								setIsTransitioning(true)
 								mainSwiperInstance.slideNext()
@@ -124,7 +124,7 @@ export default function useMousewheelNavigation(
 						}
 					} else {
 						// Challenge slide - try to move to next main slide
-						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 							lastWheelTime.current = now
 							setIsTransitioning(true)
 							mainSwiperInstance.slideNext()

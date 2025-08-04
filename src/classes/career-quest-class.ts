@@ -45,7 +45,6 @@ interface CareerInstance {
 	isRetrievingData: boolean
 	savedCurrentPosition: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
-	completedTextParents: Set<string>
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
 	mainSlides: MainSlide[]
@@ -128,7 +127,6 @@ class CareerQuestClass {
 			isRetrievingData: false,
 			savedCurrentPosition: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
-			completedTextParents: new Set<string>(),
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
 			mainSlides
@@ -156,17 +154,6 @@ class CareerQuestClass {
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
 	})
-
-	public addCompletedTextParent = action((careerUUID: CareerUUID, textParentId: string): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.completedTextParents.add(textParentId)
-	})
-
-	public hasCompletedTextParent(careerUUID: CareerUUID, textParentId: string): boolean {
-		const career = this.getCareer(careerUUID)
-		return career?.completedTextParents.has(textParentId) || false
-	}
 
 	// ========================================
 	// NAVIGATION STATE MANAGEMENT
@@ -629,6 +616,23 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.isRetrievingData || false
 	}
+
+	public canAdvanceToNextMain = action((careerUUID: CareerUUID, slideIndex: number): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const mainSlides = career.mainSlides
+
+		if (slideIndex >= mainSlides.length - 1) return false
+
+		const currentSlide = mainSlides[slideIndex]
+
+		if (currentSlide.type === "textParent") {
+			return true
+		}
+		// For challenge slides, must be completed
+		return this.isChallengeCompleted(currentSlide.data)
+	})
 
 	public logout(): void {
 		this.careers.clear()

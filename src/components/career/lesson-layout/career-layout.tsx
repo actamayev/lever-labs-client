@@ -75,24 +75,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [isDataReady, mainSwiperInstance, careerData.careerUUID, mainSlides, careerData.sections])
 
-	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
-		if (slideIndex >= mainSlides.length - 1) return false
-
-		const currentSlide = mainSlides[slideIndex]
-
-		if (currentSlide.type === "textParent") {
-			// For text parent slides, check if completed
-			return careerQuestClass.hasCompletedTextParent(careerData.careerUUID, currentSlide.id)
-		} else {
-			// For challenge slides, must be completed
-			return careerQuestClass.isChallengeCompleted(currentSlide.data)
-		}
-	}, [careerData.careerUUID, mainSlides]) // REMOVE completedTextParents from dependencies
-
 	useMousewheelNavigation(
 		mainSwiperInstance,
 		careerData.careerUUID,
-		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
 		setNavigationCommand
@@ -101,7 +86,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useKeyboardNavigation(
 		mainSwiperInstance,
 		careerData.careerUUID,
-		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
 		setNavigationCommand
@@ -111,12 +95,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (!mainSwiperInstance) return
 
-		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
+		const canAdvance = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
 		mainSwiperInstance.allowSlideNext = canAdvance
 
 		// Always allow going back
 		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
-	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
+	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
@@ -173,13 +157,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setRightContent({ type: "image", icon: textChild.triggerImage })
 	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
 
-	const handleTextParentComplete = useCallback((textParentId: string) => {
-		// Add a small delay to ensure any keyboard events have finished
-		setTimeout(() => {
-			careerQuestClass.addCompletedTextParent(careerData.careerUUID, textParentId)
-		}, 100)
-	}, [careerData.careerUUID])
-
 	const handleTextChildIndexChange = useCallback((newIndex: number) => {
 		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, newIndex)
 
@@ -194,12 +171,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const handleGoToNextSection = useCallback(() => {
 		if (!mainSwiperInstance) return
 
-		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
+		const canAdvance = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
 		if (!canAdvance) return
 		setIsTransitioning(true)
 		mainSwiperInstance.slideNext()
 		setTimeout(() => setIsTransitioning(false), 400)
-	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
+	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID])
 
 	return (
 		<div className="flex h-full">
@@ -249,7 +226,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													) : (
 														<TextParentCard
 															textParentData={slide.data}
-															onComplete={() => handleTextParentComplete(slide.id)}
 															onSlideChange={(triggerImage) => {
 																const currentSlide = mainSlides[currentMainSlideIndex]
 																if (currentSlide.type === "textParent") {

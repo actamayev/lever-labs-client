@@ -42,7 +42,6 @@ function useEffectKeyboardNavigation(): string | null {
 export default function useKeyboardNavigation(
 	mainSwiperInstance: SwiperType | null,
 	careerUUID: CareerUUID,
-	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
@@ -52,7 +51,7 @@ export default function useKeyboardNavigation(
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
-
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const SLIDE_COOLDOWN = 200
 
 	// eslint-disable-next-line complexity
@@ -72,7 +71,7 @@ export default function useKeyboardNavigation(
 
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
-					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 						lastKeyPressTime.current = now
 						setIsTransitioning(true)
 						mainSwiperInstance.slideNext()
@@ -86,7 +85,7 @@ export default function useKeyboardNavigation(
 				}
 			} else {
 				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 					lastKeyPressTime.current = now
 					setIsTransitioning(true)
 					mainSwiperInstance.slideNext()
