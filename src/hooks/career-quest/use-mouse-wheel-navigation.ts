@@ -26,10 +26,55 @@ export default function useMousewheelNavigation(
 	const MIN_DELTA_THRESHOLD = 5
 	const WHEEL_COOLDOWN = 200 // Same as keyboard cooldown
 
+	// Helper function to check if the mouse is over a chat component
+	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
+		const target = event.target as Element
+		if (!target) return false
+
+		// Check if the target or any of its parents is a chat component
+		let element: Element | null = target
+		while (element) {
+			// Check for chat-related classes or data attributes
+			if (
+				element.classList.contains("chat-parent-component") ||
+				element.classList.contains("chat-messages-framework") ||
+				element.classList.contains("cq-chat-interface") ||
+				element.closest("[data-chat-component=\"true\"]") ||
+				element.closest(".overflow-y-auto") // Chat messages container
+			) {
+				return true
+			}
+			element = element.parentElement
+		}
+		return false
+	}
+
+	// Helper function to check if we should allow normal scrolling in chat
+	const shouldAllowChatScrolling = (): boolean => {
+		// Get the current slide to check if it's a challenge
+		const currentSlide = mainSlides[currentMainSlideIndex]
+		if (currentSlide.type !== "challenge") return false
+
+		// Get messages for the current challenge
+		const messages = careerQuestClass.getChallengeMessages(currentSlide.data)
+
+		// Only allow normal scrolling if there are messages (length > 0)
+		return messages.length > 0
+	}
+
 	// eslint-disable-next-line max-lines-per-function
 	useEffect(() => {
 		// eslint-disable-next-line complexity
 		const handleWheel = (e: WheelEvent): void => {
+			// Check if mouse is over chat component - if so, check message length
+			if (isMouseOverChatComponent(e)) {
+				// Only allow normal scrolling if there are messages
+				if (shouldAllowChatScrolling()) {
+					return // Don't prevent default, allow normal scrolling
+				}
+				// If no messages, continue with swiper navigation
+			}
+
 			e.preventDefault()
 
 			// Ignore very small scroll movements (noise)

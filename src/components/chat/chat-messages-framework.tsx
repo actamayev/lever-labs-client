@@ -119,7 +119,7 @@ function ChatMessagesFramework(props: Props) {
 	const showScrollButton = !isAtBottom && hasAnyMessages
 
 	return (
-		<div className="relative flex-1 min-h-0 max-h-full w-full">
+		<div className="relative flex-1 min-h-0 max-h-full w-full chat-messages-framework" data-chat-component="true">
 			<div
 				ref={containerRef}
 				className={cn(

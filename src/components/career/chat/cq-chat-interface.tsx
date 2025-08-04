@@ -147,7 +147,7 @@ function CqChatInterface({ challengeData, onGoToNextSection }: ChatInterfaceProp
 
 	return (
 		<>
-			<div className="flex flex-col h-full">
+			<div className="flex flex-col h-full cq-chat-interface" data-chat-component="true">
 				<div className={isCodeCorrect ? "h-[90%]" : "h-full"}>
 					<ChatParentComponent>
 						{/* existing content - no changes needed */}
