@@ -18,6 +18,7 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../../utils/career-quest/edit-career-quest-sandbox-project"
+import ChallengeHeader from "./challenge-header"
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
@@ -47,9 +48,10 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 
+
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
-	const hasRetrievedData = careerQuestClass.hasRetrievedChallengeData(challengeData)
+	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
 
 	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
 
@@ -197,7 +199,10 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const foxColors = getDuolingoColors("fox")
 
 	return (
-		<div className="flex flex-col h-full gap-4">
+		<div className="flex flex-col h-full">
+			{/* Challenge Header */}
+			<ChallengeHeader challengeData={challengeData} />
+
 			{/* Sandbox Section - Middle (flexible height) */}
 			<div className="h-full flex flex-col">
 				<div className="flex-1 min-h-0">
@@ -210,7 +215,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				</div>
 
 				{/* Action Buttons Section - Bottom */}
-				<div className="flex-shrink-0 flex gap-3 p-5">
+				<div className="flex-shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
@@ -226,14 +231,14 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
 						disabled={isStreaming || isEmpty(cppCode)}
 					>
-					CHECK CODE
+						CHECK CODE
 					</TactileButton>
 					<TactileButton
 						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
 						shadowColor="rgb(150, 50, 75)"
 						onClick={stopCurrentlyRunningCode}
 					>
-					STOP
+						STOP
 					</TactileButton>
 				</div>
 			</div>

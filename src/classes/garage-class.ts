@@ -47,6 +47,10 @@ class GarageClass {
 	public textOnBuffer: string = ""
 	public designOnBuffer: PreDefinedDesignName = "No design"
 
+	constructor() {
+		makeAutoObservable(this)
+	}
+
 	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
 		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
 			const newBuffer = this.pixelBuffer.map((row: boolean[]) => [...row])
@@ -103,10 +107,6 @@ class GarageClass {
 	public setTextInput = action((value: string): void => {
 		this.textInput = value
 	})
-
-	constructor() {
-		makeAutoObservable(this)
-	}
 
 	get realColor(): RgbaColor {
 		return {

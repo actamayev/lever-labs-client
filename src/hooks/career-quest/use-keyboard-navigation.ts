@@ -1,6 +1,7 @@
 /* eslint-disable max-depth */
 import { useEffect, useRef, useState } from "react"
-import type { Swiper as SwiperType } from "swiper"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../classes/career-quest-class"
 
 function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
@@ -38,24 +39,23 @@ function useEffectKeyboardNavigation(): string | null {
 
 // eslint-disable-next-line max-params
 export default function useKeyboardNavigation(
-	mainSwiperInstance: SwiperType | null,
-	currentMainSlideIndex: number,
-	currentTextChildIndex: number,
-	mainSlides: MainSlide[],
-	canAdvanceToNextMain: (slideIndex: number) => boolean,
+	careerUUID: CareerUUID,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
-	setCurrentTextChildIndex: (index: number) => void
 ): void {
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
-
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const SLIDE_COOLDOWN = 200
+	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 
 	// eslint-disable-next-line complexity
 	useEffect(() => {
-		if (!keyPressed || !mainSwiperInstance || isTransitioning) return
+		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		const now = Date.now()
 		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
@@ -70,10 +70,10 @@ export default function useKeyboardNavigation(
 
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
-					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 						lastKeyPressTime.current = now
 						setIsTransitioning(true)
-						mainSwiperInstance.slideNext()
+						swiperInstance.slideNext()
 						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
 					}
 				} else {
@@ -84,10 +84,10 @@ export default function useKeyboardNavigation(
 				}
 			} else {
 				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 					lastKeyPressTime.current = now
 					setIsTransitioning(true)
-					mainSwiperInstance.slideNext()
+					swiperInstance.slideNext()
 					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
 				}
 			}
@@ -100,12 +100,12 @@ export default function useKeyboardNavigation(
 					if (currentMainSlideIndex > 0) {
 						lastKeyPressTime.current = now
 						setIsTransitioning(true)
-						mainSwiperInstance.slidePrev()
+						swiperInstance.slidePrev()
 
 						// Set the text child index to the last child of the previous text parent
 						const prevSlide = mainSlides[currentMainSlideIndex - 1]
 						if (prevSlide.type === "textParent") {
-							setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+							careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 						}
 
 						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
@@ -121,12 +121,12 @@ export default function useKeyboardNavigation(
 				if (currentMainSlideIndex > 0) {
 					lastKeyPressTime.current = now
 					setIsTransitioning(true)
-					mainSwiperInstance.slidePrev()
+					swiperInstance.slidePrev()
 
 					// Set the text child index to the last child of the previous text parent
 					const prevSlide = mainSlides[currentMainSlideIndex - 1]
 					if (prevSlide.type === "textParent") {
-						setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+						careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 					}
 
 					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
@@ -134,5 +134,5 @@ export default function useKeyboardNavigation(
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [keyPressed, mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
+	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
 }

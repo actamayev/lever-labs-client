@@ -1,33 +1,80 @@
 /* eslint-disable max-depth */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useEffect, useRef } from "react"
-import type { Swiper as SwiperType } from "swiper"
+import { useCallback, useEffect, useRef } from "react"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../classes/career-quest-class"
 
 // eslint-disable-next-line max-len, max-params, max-lines-per-function
 export default function useMousewheelNavigation(
-	mainSwiperInstance: SwiperType | null,
-	currentMainSlideIndex: number,
-	currentTextChildIndex: number,
-	mainSlides: MainSlide[],
-	canAdvanceToNextMain: (slideIndex: number) => boolean,
+	careerUUID: CareerUUID,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
-	setCurrentTextChildIndex: (index: number) => void
 ): void {
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const gestureActive = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
 	const lastWheelTime = useRef(0)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
+	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
 	const WHEEL_COOLDOWN = 200 // Same as keyboard cooldown
 
+	// Helper function to check if the mouse is over a chat component
+	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
+		const target = event.target as Element
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		if (!target) return false
+
+		// Check if the target or any of its parents is a chat component
+		let element: Element | null = target
+		while (element) {
+			// Check for chat-related classes or data attributes
+			if (
+				element.classList.contains("chat-parent-component") ||
+				element.classList.contains("chat-messages-framework") ||
+				element.classList.contains("cq-chat-interface") ||
+				element.closest("[data-chat-component=\"true\"]") ||
+				element.closest(".overflow-y-auto") // Chat messages container
+			) {
+				return true
+			}
+			element = element.parentElement
+		}
+		return false
+	}
+
+	// Helper function to check if we should allow normal scrolling in chat
+	const shouldAllowChatScrolling = useCallback((): boolean => {
+		// Get the current slide to check if it's a challenge
+		const currentSlide = mainSlides[currentMainSlideIndex]
+		if (currentSlide.type !== "challenge") return false
+
+		// Get messages for the current challenge
+		const messages = careerQuestClass.getChallengeMessages(currentSlide.data)
+
+		// Only allow normal scrolling if there are messages (length > 0)
+		return messages.length > 0
+	}, [currentMainSlideIndex, mainSlides])
+
 	// eslint-disable-next-line max-lines-per-function
 	useEffect(() => {
-		// eslint-disable-next-line complexity
+		// eslint-disable-next-line complexity, max-lines-per-function
 		const handleWheel = (e: WheelEvent): void => {
+			// Check if mouse is over chat component - if so, check message length
+			if (isMouseOverChatComponent(e)) {
+				// Only allow normal scrolling if there are messages
+				if (shouldAllowChatScrolling()) {
+					return // Don't prevent default, allow normal scrolling
+				}
+				// If no messages, continue with swiper navigation
+			}
+
 			e.preventDefault()
 
 			// Ignore very small scroll movements (noise)
@@ -37,7 +84,7 @@ export default function useMousewheelNavigation(
 
 			// Respect cooldown and transitioning state
 			const now = Date.now()
-			if (now - lastWheelTime.current < WHEEL_COOLDOWN || isTransitioning || !mainSwiperInstance) {
+			if (now - lastWheelTime.current < WHEEL_COOLDOWN || isTransitioning || !swiperInstance) {
 				return
 			}
 
@@ -60,10 +107,10 @@ export default function useMousewheelNavigation(
 
 						if (hasOnlyOneChild || isAtLastTextChild) {
 							// Move to next main slide if possible
-							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 								lastWheelTime.current = now
 								setIsTransitioning(true)
-								mainSwiperInstance.slideNext()
+								swiperInstance.slideNext()
 								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
 								hasNavigatedInGesture.current = true
 							}
@@ -76,10 +123,10 @@ export default function useMousewheelNavigation(
 						}
 					} else {
 						// Challenge slide - try to move to next main slide
-						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain(currentMainSlideIndex)) {
+						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 							lastWheelTime.current = now
 							setIsTransitioning(true)
-							mainSwiperInstance.slideNext()
+							swiperInstance.slideNext()
 							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
 							hasNavigatedInGesture.current = true
 						}
@@ -94,12 +141,12 @@ export default function useMousewheelNavigation(
 							if (currentMainSlideIndex > 0) {
 								lastWheelTime.current = now
 								setIsTransitioning(true)
-								mainSwiperInstance.slidePrev()
+								swiperInstance.slidePrev()
 
 								// Set the text child index to the last child of the previous text parent
 								const prevSlide = mainSlides[currentMainSlideIndex - 1]
 								if (prevSlide.type === "textParent") {
-									setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+									careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 								}
 
 								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
@@ -117,12 +164,12 @@ export default function useMousewheelNavigation(
 						if (currentMainSlideIndex > 0) {
 							lastWheelTime.current = now
 							setIsTransitioning(true)
-							mainSwiperInstance.slidePrev()
+							swiperInstance.slidePrev()
 
 							// Set the text child index to the last child of the previous text parent
 							const prevSlide = mainSlides[currentMainSlideIndex - 1]
 							if (prevSlide.type === "textParent") {
-								setCurrentTextChildIndex(prevSlide.data.children.length - 1)
+								careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 							}
 
 							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
@@ -153,5 +200,5 @@ export default function useMousewheelNavigation(
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, setCurrentTextChildIndex])
+	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling, swiperInstance])
 }
