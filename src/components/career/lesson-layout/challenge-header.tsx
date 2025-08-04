@@ -12,7 +12,7 @@ interface ChallengeHeaderProps {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
+export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true)
 
 	return (
@@ -135,5 +135,3 @@ function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
 		</div>
 	)
 }
-
-export default ChallengeHeader
