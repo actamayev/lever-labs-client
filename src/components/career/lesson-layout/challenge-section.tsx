@@ -226,14 +226,14 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
 						disabled={isStreaming || isEmpty(cppCode)}
 					>
-					CHECK CODE
+						CHECK CODE
 					</TactileButton>
 					<TactileButton
 						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
 						shadowColor="rgb(150, 50, 75)"
 						onClick={stopCurrentlyRunningCode}
 					>
-					STOP
+						STOP
 					</TactileButton>
 				</div>
 			</div>

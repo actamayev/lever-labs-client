@@ -6,14 +6,12 @@ import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { useEffect, useState, useMemo, useCallback } from "react"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import saveCareerProgress from "../../../utils/career-quest/save-career-progress"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
@@ -194,12 +192,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setRightContent({ type: "image", icon: textChild.triggerImage })
 	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, careerData.careerUUID, careerData.initialImage, careerData.sections])
 
-	// Helper function to get current cpp code for a specific challenge
-	const getCppCodeForChallenge = useCallback((challengeData: CqChallengeData) => {
-		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
-		return generateCppFromJson(currentBlocklyJson)
-	}, [])
-
 	const handleTextParentComplete = useCallback((textParentId: string) => {
 		// Add a small delay to ensure any keyboard events have finished
 		setTimeout(() => {
@@ -217,6 +209,17 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const textChild = currentSlide.data.children[newIndex]
 		void saveCareerProgress(careerData.careerUUID, textChild.id)
 	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
+
+	const handleGoToNextSection = useCallback(() => {
+		if (!mainSwiperInstance) return
+
+		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
+		if (canAdvance) {
+			setIsTransitioning(true)
+			mainSwiperInstance.slideNext()
+			setTimeout(() => setIsTransitioning(false), 400)
+		}
+	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
 	return (
 		<div className="flex h-full">
@@ -260,8 +263,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 												<div className="h-[calc(100vh-10rem)]">
 													{slide.type === "challenge" ? (
 														<CqChatInterface
-															cppCode={getCppCodeForChallenge(slide.data)}
 															challengeData={slide.data}
+															onGoToNextSection={handleGoToNextSection}
 														/>
 													) : (
 														<TextParentCard

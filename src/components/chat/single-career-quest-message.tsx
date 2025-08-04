@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
+import { useMemo } from "react"
 
 interface SingleCareerQuestMessageProps {
 	message: CareerQuestChatMessage
@@ -32,6 +33,18 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
+	const getMessageBubbleStyles = useMemo(() => {
+		if (isCheckCodeRequest) return "bg-fox text-white"
+		if (isHintRequest) return "bg-beetle-2 text-white"
+		if (isHintResponse) return "bg-beetle-2 text-white"
+		if (isUser) return "bg-iMessageBlue text-white ml-auto"
+		if (isEvaluationResult) {
+			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
+			return "bg-cardinal text-white"
+		}
+		return "bg-polar text-questionText"
+	}, [isCheckCodeRequest, isHintRequest, isHintResponse, isUser, isEvaluationResult, message.evaluationResult?.isCorrect])
+
 	// Don't render assistant messages that are streaming with no content yet
 	if (!isUser && isStreamingWithNoContent) {
 		return (
@@ -48,19 +61,6 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 				</div>
 			</div>
 		)
-	}
-
-	// Determine message bubble styles
-	const getMessageBubbleStyles = () => {
-		if (isCheckCodeRequest) return "bg-fox text-white"
-		if (isHintRequest) return "bg-beetle-2 text-white"
-		if (isHintResponse) return "bg-beetle-2 text-white"
-		if (isUser) return "bg-iMessageBlue text-white ml-auto"
-		if (isEvaluationResult) {
-			if (message.evaluationResult?.isCorrect) return "bg-chargingGreen text-white"
-			return "bg-cardinal text-white"
-		}
-		return "bg-polar text-questionText"
 	}
 
 	// Determine message text for special user requests
@@ -116,10 +116,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 			{shouldShowHintButton ? (
 				<div className="flex flex-col flex-1">
 					<div
-						className={cn(
-							"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-							getMessageBubbleStyles()
-						)}
+						className={cn( "max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}
 						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 					>
 						{isUser ? (
@@ -142,10 +139,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 				</div>
 			) : (
 				<div
-					className={cn(
-						"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-						getMessageBubbleStyles()
-					)}
+					className={cn("max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}
 					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 				>
 					{isUser ? (

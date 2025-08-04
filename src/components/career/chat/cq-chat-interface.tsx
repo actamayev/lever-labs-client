@@ -1,8 +1,10 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { motion } from "framer-motion"
+import { ArrowDown } from "lucide-react"
 import { CqChallengeData } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -13,14 +15,45 @@ import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
 import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import { cn } from "../../../lib/shadcn/utils"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+
+function NextSectionButton({ onClick }: { onClick: () => void }) {
+	return (
+		<div className="h-[10%] flex items-center px-4">
+			<TactileButton
+				onClick={onClick}
+				className={cn(
+					"w-full flex items-center justify-center gap-2 py-3 bg-green-500",
+					"text-white font-medium transition-colors rounded-2xl h-3/4 text-3xl"
+				)}
+				shadowColor="rgb(0, 140, 0)"
+				shadowHeight={4}
+			>
+				<span>NEXT SECTION</span>
+				<motion.div
+					animate={{ y: [0, -2, 0] }}
+					transition={{
+						duration: 1,
+						repeat: Infinity,
+						ease: "easeInOut"
+					}}
+				>
+					<ArrowDown className="!size-6" strokeWidth={2.5} />
+				</motion.div>
+			</TactileButton>
+		</div>
+	)
+}
 
 interface ChatInterfaceProps {
-	cppCode: string
 	challengeData: CqChallengeData
+	onGoToNextSection: () => void
 }
 
 // eslint-disable-next-line max-lines-per-function
-function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
+function CqChatInterface({ challengeData, onGoToNextSection }: ChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -30,6 +63,13 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
+
+	const cppCode = useMemo(() => {
+		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
+		return generateCppFromJson(currentBlocklyJson)
+	}, [challengeData])
+
+	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
@@ -106,44 +146,54 @@ function CqChatInterface({ cppCode, challengeData }: ChatInterfaceProps) {
 	}
 
 	return (
-		<ChatParentComponent>
-			{/* Chat Header with Delete Button */}
-			{hasAnyMessages && (
-				<ClearChatHistoryHeader
-					showDeleteConfirmation={showDeleteConfirmation}
-					handleDeleteClick={handleDeleteClick}
-					handleConfirmDelete={handleConfirmDelete}
-					handleCancelDelete={handleCancelDelete}
-					isStreaming={isStreaming}
-				/>
-			)}
+		<>
+			<div className="flex flex-col h-full">
+				<div className={isCodeCorrect ? "h-[90%]" : "h-full"}>
+					<ChatParentComponent>
+						{/* existing content - no changes needed */}
+						{hasAnyMessages && (
+							<ClearChatHistoryHeader
+								showDeleteConfirmation={showDeleteConfirmation}
+								handleDeleteClick={handleDeleteClick}
+								handleConfirmDelete={handleConfirmDelete}
+								handleCancelDelete={handleCancelDelete}
+								isStreaming={isStreaming}
+							/>
+						)}
 
-			<ChatMessagesFramework
-				hasAnyMessages={hasAnyMessages}
-				isWaitingForResponse={isWaitingForResponse}
-				isStreaming={isStreaming}
-				messageLength={messages.length}
-			>
-				{messages.map((message) => (
-					<SingleCareerQuestMessage
-						key={message.id}
-						message={message}
-						cqChallengeData={challengeData}
-						cppCode={cppCode}
-					/>
-				))}
-			</ChatMessagesFramework>
+						<ChatMessagesFramework
+							hasAnyMessages={hasAnyMessages}
+							isWaitingForResponse={isWaitingForResponse}
+							isStreaming={isStreaming}
+							messageLength={messages.length}
+						>
+							{messages.map((message) => (
+								<SingleCareerQuestMessage
+									key={message.id}
+									message={message}
+									cqChallengeData={challengeData}
+									cppCode={cppCode}
+								/>
+							))}
+						</ChatMessagesFramework>
 
-			<ChatTextArea
-				inputRef={inputRef}
-				handleSendMessage={handleSendMessage}
-				onStopStreaming={onStopStreaming}
-				inputValue={inputValue}
-				setInputValue={setInputValue}
-				isStreaming={isStreaming}
-				handleHintClick={handleHintClick}
-			/>
-		</ChatParentComponent>
+						<ChatTextArea
+							inputRef={inputRef}
+							handleSendMessage={handleSendMessage}
+							onStopStreaming={onStopStreaming}
+							inputValue={inputValue}
+							setInputValue={setInputValue}
+							isStreaming={isStreaming}
+							handleHintClick={handleHintClick}
+						/>
+					</ChatParentComponent>
+				</div>
+
+				{isCodeCorrect && (
+					<NextSectionButton onClick={onGoToNextSection} />
+				)}
+			</div>
+		</>
 	)
 }
 

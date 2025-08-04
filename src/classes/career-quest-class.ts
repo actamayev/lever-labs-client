@@ -392,6 +392,12 @@ class CareerQuestClass {
 		}
 	})
 
+	public isCodeCorrect(cqInformation: CareerUUIDChallengeUUID): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return false
+		return challenge.isCompleted
+	}
+
 	private hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
