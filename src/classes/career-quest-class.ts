@@ -36,14 +36,10 @@ interface ChallengeInstance extends ChatData, StreamingState {
 	updatedBlocklyJson?: BlocklyJson
 }
 
-interface CareerProgress {
-	completedChallengeIds: Set<ChallengeUUID>
-}
-
 interface CareerInstance {
 	careerDefinition: CareerQuestData
 	challenges: Map<string, ChallengeInstance>
-	progress: CareerProgress
+	completedChallengeIds: Set<ChallengeUUID>
 	currentChallengeUuidOrTextUuid: string
 	hasRetrievedAllChallenges: boolean
 	isRetrievingData: boolean
@@ -108,9 +104,7 @@ class CareerQuestClass {
 		const careerInstance: CareerInstance = {
 			careerDefinition,
 			challenges,
-			progress: {
-				completedChallengeIds: new Set<ChallengeUUID>()
-			},
+			completedChallengeIds: new Set<ChallengeUUID>(),
 			currentChallengeUuidOrTextUuid: "",
 			hasRetrievedAllChallenges: false,
 			isRetrievingData: false,
@@ -267,7 +261,7 @@ class CareerQuestClass {
 		return career?.seenChallengeUUIDs.has(challengeUUID) || false
 	}
 
-	public findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
+	private findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
 		const career = this.getCareer(careerUUID)
 		if (!career || !savedPosition) return null
 
@@ -397,7 +391,7 @@ class CareerQuestClass {
 		// Mark challenge as completed if correct
 		if (evaluationResult.isCorrect) {
 			challenge.isCompleted = true
-			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+			career.completedChallengeIds.add(cqInformation.challengeUUID)
 		}
 	})
 
@@ -556,7 +550,7 @@ class CareerQuestClass {
 		}
 
 		if (isCompleted) {
-			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+			career.completedChallengeIds.add(cqInformation.challengeUUID)
 		}
 	})
 
@@ -576,7 +570,7 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return 0
 
-		return career.progress.completedChallengeIds.size
+		return career.completedChallengeIds.size
 	}
 
 	public getTotalChallengesForProgress(careerUUID: CareerUUID): number {
