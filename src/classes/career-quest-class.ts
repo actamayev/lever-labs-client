@@ -124,6 +124,15 @@ class CareerQuestClass {
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
 
+	public reinitialize = action((): void => {
+		// Clear existing data
+		this.careers.clear()
+		this.isDoneInitializing = false
+
+		// Re-initialize with fresh data
+		this.initializeAllCareers(CAREER_DEFINITIONS)
+	})
+
 	public hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		return career?.hasRetrievedAllChallenges || false
