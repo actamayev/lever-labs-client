@@ -100,7 +100,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 		mainSwiperInstance.allowSlideNext = canAdvanceToNextMain
 
-
 		// Always allow going back
 		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
 	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID, canAdvanceToNextMain])
