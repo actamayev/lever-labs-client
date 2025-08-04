@@ -1,3 +1,4 @@
+import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5 } from "lucide-react"
@@ -15,7 +16,7 @@ interface RightContentProps {
 	isDataReady: boolean
 }
 
-export default function RightContent({ rightContent, color, isDataReady }: RightContentProps) {
+function RightContent({ rightContent, color, isDataReady }: RightContentProps) {
 	const colors = getDuolingoColors(color)
 
 	if (!isDataReady) {
@@ -55,3 +56,5 @@ export default function RightContent({ rightContent, color, isDataReady }: Right
 		</AnimatePresence>
 	)
 }
+
+export default observer(RightContent)

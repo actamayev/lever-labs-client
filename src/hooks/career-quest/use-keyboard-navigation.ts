@@ -1,8 +1,7 @@
 /* eslint-disable max-depth */
 import { useEffect, useRef, useState } from "react"
-import type { Swiper as SwiperType } from "swiper"
-import careerQuestClass from "../../classes/career-quest-class"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../classes/career-quest-class"
 
 function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
@@ -53,6 +52,7 @@ export default function useKeyboardNavigation(
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const SLIDE_COOLDOWN = 200
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
+
 	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return

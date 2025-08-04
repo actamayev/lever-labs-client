@@ -34,6 +34,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	})
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
+	//TODO 8/4/25: Move these states to the class:
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
