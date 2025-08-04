@@ -532,11 +532,6 @@ class CareerQuestClass {
 		return challenge?.isWaitingForResponse || false
 	}
 
-	public isChallengeCompleted(cqChallengeData: CqChallengeData): boolean {
-		const challenge = this.getChallenge({ ...cqChallengeData })
-		return challenge?.isCompleted || false
-	}
-
 	// ========================================
 	// DATA MANAGEMENT
 	// ========================================
@@ -631,7 +626,7 @@ class CareerQuestClass {
 			return true
 		}
 		// For challenge slides, must be completed
-		return this.isChallengeCompleted(currentSlide.data)
+		return this.isCodeCorrect(currentSlide.data)
 	})
 
 	public logout(): void {

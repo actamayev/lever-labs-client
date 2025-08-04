@@ -39,6 +39,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
+	// Add reactive computed value for canAdvanceToNextMain
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
+
 	// Get main slides from career instance
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
@@ -95,12 +98,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useEffect(() => {
 		if (!mainSwiperInstance) return
 
-		const canAdvance = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
-		mainSwiperInstance.allowSlideNext = canAdvance
+		mainSwiperInstance.allowSlideNext = canAdvanceToNextMain
+
 
 		// Always allow going back
 		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
-	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID])
+	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID, canAdvanceToNextMain])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
