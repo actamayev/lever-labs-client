@@ -65,30 +65,29 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// Use class method to restore navigation from saved position
 		const restored = careerQuestClass.restoreNavigationFromSavedPosition(careerData.careerUUID)
 
-		if (restored) {
-			// Get the restored indices from class
-			const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
+		if (!restored) return
+		// Get the restored indices from class
+		const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
 
-			// Update swiper to match class state
-			mainSwiperInstance.slideTo(indices.mainSlideIndex, 0)
+		// Update swiper to match class state
+		mainSwiperInstance.slideTo(indices.mainSlideIndex, 0)
 
-			// Handle right content based on current slide
-			const currentSlide = mainSlides[indices.mainSlideIndex]
+		// Handle right content based on current slide
+		const currentSlide = mainSlides[indices.mainSlideIndex]
 
-			if (currentSlide.type === "challenge") {
-				setRightContent({ type: "challenge", challengeData: currentSlide.data })
-				return
-			}
+		if (currentSlide.type === "challenge") {
+			setRightContent({ type: "challenge", challengeData: currentSlide.data })
+			return
+		}
 
-			const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
-			const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
+		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
+		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
-			if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-				setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
-			} else {
-				const textChild = currentSlide.data.children[indices.textChildIndex]
-				setRightContent({ type: "image", icon: textChild.triggerImage })
-			}
+		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
+			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+		} else {
+			const textChild = currentSlide.data.children[indices.textChildIndex]
+			setRightContent({ type: "image", icon: textChild.triggerImage })
 		}
 	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, careerData.sections])
 
@@ -214,11 +213,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		if (!mainSwiperInstance) return
 
 		const canAdvance = canAdvanceToNextMain(currentMainSlideIndex)
-		if (canAdvance) {
-			setIsTransitioning(true)
-			mainSwiperInstance.slideNext()
-			setTimeout(() => setIsTransitioning(false), 400)
-		}
+		if (!canAdvance) return
+		setIsTransitioning(true)
+		mainSwiperInstance.slideNext()
+		setTimeout(() => setIsTransitioning(false), 400)
 	}, [mainSwiperInstance, currentMainSlideIndex, canAdvanceToNextMain])
 
 	return (
