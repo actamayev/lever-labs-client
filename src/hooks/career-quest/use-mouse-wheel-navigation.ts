@@ -9,7 +9,6 @@ import careerQuestClass from "../../classes/career-quest-class"
 export default function useMousewheelNavigation(
 	mainSwiperInstance: SwiperType | null,
 	careerUUID: CareerUUID,
-	mainSlides: MainSlide[],
 	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
@@ -21,6 +20,7 @@ export default function useMousewheelNavigation(
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
 	const lastWheelTime = useRef(0)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5

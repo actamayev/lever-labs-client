@@ -6,7 +6,7 @@ import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
-import { useEffect, useState, useMemo, useCallback } from "react"
+import { useEffect, useState, useCallback } from "react"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
@@ -39,24 +39,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
-	// Create main slides directly from sections (no flattening)
-	const mainSlides = useMemo((): MainSlide[] => {
-		return careerData.sections.map(section => {
-			if (section.type === "textParent") {
-				return {
-					type: "textParent",
-					id: section.id,
-					data: section
-				}
-			} else {
-				return {
-					type: "challenge",
-					id: section.challengeData.challengeUUID,
-					data: section.challengeData
-				}
-			}
-		})
-	}, [careerData.sections])
+	// Get main slides from career instance
+	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
 	// Then modify the above useEffect to set this flag:
 	useEffect(() => {
@@ -89,7 +73,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			const textChild = currentSlide.data.children[indices.textChildIndex]
 			setRightContent({ type: "image", icon: textChild.triggerImage })
 		}
-	}, [isDataReady, mainSwiperInstance, mainSlides, careerData.careerUUID, careerData.sections])
+	}, [isDataReady, mainSwiperInstance, careerData.careerUUID, mainSlides, careerData.sections])
 
 	const canAdvanceToNextMain = useCallback((slideIndex: number): boolean => {
 		if (slideIndex >= mainSlides.length - 1) return false
@@ -103,12 +87,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			// For challenge slides, must be completed
 			return careerQuestClass.isChallengeCompleted(currentSlide.data)
 		}
-	}, [mainSlides, careerData.careerUUID]) // REMOVE completedTextParents from dependencies
+	}, [careerData.careerUUID, mainSlides]) // REMOVE completedTextParents from dependencies
 
 	useMousewheelNavigation(
 		mainSwiperInstance,
 		careerData.careerUUID,
-		mainSlides,
 		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
@@ -118,7 +101,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	useKeyboardNavigation(
 		mainSwiperInstance,
 		careerData.careerUUID,
-		mainSlides,
 		canAdvanceToNextMain,
 		isTransitioning,
 		setIsTransitioning,
@@ -189,7 +171,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// Show the text image
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		setRightContent({ type: "image", icon: textChild.triggerImage })
-	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, mainSlides, careerData.careerUUID, careerData.initialImage, careerData.sections])
+	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
 
 	const handleTextParentComplete = useCallback((textParentId: string) => {
 		// Add a small delay to ensure any keyboard events have finished

@@ -42,7 +42,6 @@ function useEffectKeyboardNavigation(): string | null {
 export default function useKeyboardNavigation(
 	mainSwiperInstance: SwiperType | null,
 	careerUUID: CareerUUID,
-	mainSlides: MainSlide[],
 	canAdvanceToNextMain: (slideIndex: number) => boolean,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
@@ -50,6 +49,7 @@ export default function useKeyboardNavigation(
 ): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 

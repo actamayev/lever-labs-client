@@ -48,6 +48,7 @@ interface CareerInstance {
 	completedTextParents: Set<string>
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
+	mainSlides: MainSlide[]
 }
 
 class CareerQuestClass {
@@ -100,6 +101,23 @@ class CareerQuestClass {
 			})
 		})
 
+		// Create main slides from sections
+		const mainSlides: MainSlide[] = careerDefinition.sections.map(section => {
+			if (section.type === "textParent") {
+				return {
+					type: "textParent",
+					id: section.id,
+					data: section
+				}
+			} else {
+				return {
+					type: "challenge",
+					id: section.challengeData.challengeUUID,
+					data: section.challengeData
+				}
+			}
+		})
+
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
@@ -112,7 +130,8 @@ class CareerQuestClass {
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			completedTextParents: new Set<string>(),
 			currentMainSlideIndex: 0,
-			currentTextChildIndex: 0
+			currentTextChildIndex: 0,
+			mainSlides
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -181,6 +200,11 @@ class CareerQuestClass {
 			mainSlideIndex: career?.currentMainSlideIndex || 0,
 			textChildIndex: career?.currentTextChildIndex || 0
 		}
+	}
+
+	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
+		const career = this.getCareer(careerUUID)
+		return career?.mainSlides || []
 	}
 
 	public restoreNavigationFromSavedPosition = action((careerUUID: CareerUUID): boolean => {
