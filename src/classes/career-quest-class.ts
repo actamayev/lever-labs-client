@@ -15,13 +15,13 @@ import {
 } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import blueDotApiClient from "../classes/blue-dot-api-client-class"
+import type { Swiper as SwiperType } from "swiper"
 
 // Chat and streaming state interfaces
 interface ChatData {
 	messages: CareerQuestChatMessage[]
 	isWaitingForResponse: boolean
-	hasRetrievedData: boolean
-	isRetrievingData: boolean
 }
 
 interface StreamingState {
@@ -37,15 +37,19 @@ interface ChallengeInstance extends ChatData, StreamingState {
 	updatedBlocklyJson?: BlocklyJson
 }
 
-interface CareerProgress {
-	completedChallengeIds: Set<ChallengeUUID>
-}
-
 interface CareerInstance {
 	careerDefinition: CareerQuestData
-	// Dynamic data
 	challenges: Map<string, ChallengeInstance>
-	progress: CareerProgress
+	completedChallengeIds: Set<ChallengeUUID>
+	currentChallengeUuidOrTextUuid: string
+	hasRetrievedAllChallenges: boolean
+	isRetrievingData: boolean
+	savedCurrentPosition: string
+	seenChallengeUUIDs: Set<ChallengeUUID>
+	currentMainSlideIndex: number
+	currentTextChildIndex: number
+	mainSlides: MainSlide[]
+	swiperInstance: SwiperType | null  // ADD THIS LINE
 }
 
 class CareerQuestClass {
@@ -86,8 +90,6 @@ class CareerQuestClass {
 				// Chat data
 				messages: [],
 				isWaitingForResponse: false,
-				hasRetrievedData: false,
-				isRetrievingData: false,
 
 				// Streaming state
 				isStreaming: false,
@@ -100,17 +102,238 @@ class CareerQuestClass {
 			})
 		})
 
+		// Create main slides from sections
+		const mainSlides: MainSlide[] = careerDefinition.sections.map(section => {
+			if (section.type === "textParent") {
+				return {
+					type: "textParent",
+					id: section.id,
+					data: section
+				}
+			} else {
+				return {
+					type: "challenge",
+					id: section.challengeData.challengeUUID,
+					data: section.challengeData
+				}
+			}
+		})
+
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
 			challenges,
-			progress: {
-				completedChallengeIds: new Set<ChallengeUUID>()
-			}
+			completedChallengeIds: new Set<ChallengeUUID>(),
+			currentChallengeUuidOrTextUuid: "",
+			hasRetrievedAllChallenges: false,
+			isRetrievingData: false,
+			savedCurrentPosition: "",
+			seenChallengeUUIDs: new Set<ChallengeUUID>(),
+			currentMainSlideIndex: 0,
+			currentTextChildIndex: 0,
+			mainSlides,
+			swiperInstance: null
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
 	})
+
+	public reinitialize = action((): void => {
+		// Clear existing data
+		this.careers.clear()
+		this.isDoneInitializing = false
+
+		// Re-initialize with fresh data
+		this.initializeAllCareers(CAREER_DEFINITIONS)
+	})
+
+	// ADD THESE METHODS to CareerQuestClass:
+
+	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = swiperInstance
+
+		// Update navigation immediately when swiper is set
+		this.updateSwiperNavigation(careerUUID)
+	})
+
+	public removeSwiperInstance = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = null
+	})
+
+	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career?.swiperInstance) return
+
+		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
+		const canGoBack = career.currentMainSlideIndex > 0
+
+		career.swiperInstance.allowSlideNext = canAdvance
+		career.swiperInstance.allowSlidePrev = canGoBack
+	})
+
+	public getSwiperInstance(careerUUID: CareerUUID): SwiperType | null {
+		const career = this.getCareer(careerUUID)
+		return career?.swiperInstance || null
+	}
+
+	public hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.hasRetrievedAllChallenges || false
+	}
+
+	public setHasRetrievedAllChallengesForCareer = action((careerUUID: CareerUUID, hasRetrievedAllChallenges: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
+	})
+
+	// ========================================
+	// NAVIGATION STATE MANAGEMENT
+	// ========================================
+
+	public getCurrentMainSlideIndex(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.currentMainSlideIndex || 0
+	}
+
+	public getCurrentTextChildIndex(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.currentTextChildIndex || 0
+	}
+
+	public setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentMainSlideIndex = index
+	})
+
+	public setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentTextChildIndex = index
+	})
+
+	public getNavigationIndices(careerUUID: CareerUUID): { mainSlideIndex: number; textChildIndex: number } {
+		const career = this.getCareer(careerUUID)
+		return {
+			mainSlideIndex: career?.currentMainSlideIndex || 0,
+			textChildIndex: career?.currentTextChildIndex || 0
+		}
+	}
+
+	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
+		const career = this.getCareer(careerUUID)
+		return career?.mainSlides || []
+	}
+
+	public restoreNavigationFromSavedPosition = action((careerUUID: CareerUUID): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const savedData = this.getSavedPosition(careerUUID)
+		if (!savedData.position) {
+			// No saved position, start at beginning
+			career.currentMainSlideIndex = 0
+			career.currentTextChildIndex = 0
+			return true
+		}
+
+		// Try to find the saved position
+		const positionIndices = this.findPositionIndices(careerUUID, savedData.position)
+		if (!positionIndices) {
+			// Fallback to beginning if position not found
+			career.currentMainSlideIndex = 0
+			career.currentTextChildIndex = 0
+			return true
+		}
+
+		// Set navigation indices from saved position
+		career.currentMainSlideIndex = positionIndices.mainSlideIndex
+		career.currentTextChildIndex = positionIndices.textChildIndex
+		return true
+	})
+
+	// ========================================
+	// NEW: SAVED POSITION MANAGEMENT
+	// ========================================
+
+	public setSavedPosition = action((careerUUID: CareerUUID, position: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.savedCurrentPosition = position
+	})
+
+	// REPLACE getSavedPosition method (remove isLocked from return):
+	public getSavedPosition(careerUUID: CareerUUID): { position: string } {
+		const career = this.getCareer(careerUUID)
+		return {
+			position: career?.savedCurrentPosition || ""
+		}
+	}
+
+	// ADD new method to set seen challenges:
+	public setSeenChallenges = action((careerUUID: CareerUUID, seenChallengeUUIDs: ChallengeUUID[]): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.seenChallengeUUIDs = new Set(seenChallengeUUIDs)
+	})
+
+	// ADD new method to mark challenge as seen:
+	public markChallengeAsSeen = action(async (careerUUID: CareerUUID, challengeUUID: ChallengeUUID): Promise<void> => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Only proceed if not already seen
+		if (career.seenChallengeUUIDs.has(challengeUUID)) return
+
+		// Optimistically update local state
+		career.seenChallengeUUIDs.add(challengeUUID)
+
+		// Call API (fire and forget - no error handling for now)
+		try {
+			await blueDotApiClient.careerQuestDataService.markChallengeAsSeen(challengeUUID)
+		} catch (error) {
+			console.error("Failed to mark challenge as seen:", error)
+			// Could add retry logic here later
+		}
+	})
+
+	public hasChallengeBeenSeen(careerUUID: CareerUUID, challengeUUID: ChallengeUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.seenChallengeUUIDs.has(challengeUUID) || false
+	}
+
+	private findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
+		const career = this.getCareer(careerUUID)
+		if (!career || !savedPosition) return null
+
+		// Search through sections to find the position
+		for (let mainIndex = 0; mainIndex < career.careerDefinition.sections.length; mainIndex++) {
+			const section = career.careerDefinition.sections[mainIndex]
+
+			if (section.type === "challenge") {
+				// Check if this is a challenge UUID match
+				if (section.challengeData.challengeUUID === savedPosition) {
+					return { mainSlideIndex: mainIndex, textChildIndex: 0 }
+				}
+			} else {
+				// Check if this is a text child ID match
+				for (let childIndex = 0; childIndex < section.children.length; childIndex++) {
+					// eslint-disable-next-line max-depth
+					if (section.children[childIndex].id === savedPosition) {
+						return { mainSlideIndex: mainIndex, textChildIndex: childIndex }
+					}
+				}
+			}
+		}
+
+		return null // Position not found
+	}
 
 	// ========================================
 	// HELPER METHODS
@@ -190,6 +413,8 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
+	// UPDATE: Add position update when evaluation result changes completion
+	// UPDATE this existing method in career-quest-class.ts:
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
@@ -212,13 +437,21 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 
 		// Mark challenge as completed if correct
-		if (evaluationResult.isCorrect) {
-			challenge.isCompleted = true
-			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
-		}
+		if (!evaluationResult.isCorrect) return
+		challenge.isCompleted = true
+		career.completedChallengeIds.add(cqInformation.challengeUUID)
+
+		// ADD THIS LINE - Update swiper navigation immediately
+		this.updateSwiperNavigation(cqInformation.careerUUID)
 	})
 
-	public hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
+	public isCodeCorrect(cqInformation: CareerUUIDChallengeUUID): boolean {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return false
+		return challenge.isCompleted
+	}
+
+	private hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
@@ -240,7 +473,7 @@ class CareerQuestClass {
 	// ========================================
 
 	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
-		// Note: You'll need to pass careerUUUID in the event or determine it from challengeUUID
+		// Note: You'll need to pass careerUUID in the event or determine it from challengeUUID
 		const challenge = this.getChallenge({ ...startEvent })
 		if (!challenge) return
 
@@ -338,20 +571,16 @@ class CareerQuestClass {
 		return challenge?.isWaitingForResponse || false
 	}
 
-	public isChallengeCompleted(cqChallengeData: CqChallengeData): boolean {
-		const challenge = this.getChallenge({ ...cqChallengeData })
-		return challenge?.isCompleted || false
-	}
-
 	// ========================================
 	// DATA MANAGEMENT
 	// ========================================
 
-	// Update setChallengeRetrievedData to include sandboxJson:
+	// UPDATE: Add position update when retrieved data indicates completion
+	// UPDATE this existing method to trigger swiper updates:
 	public setChallengeRetrievedData = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		messages: CareerQuestChatMessage[],
-		sandboxJson: BlocklyJson | null,  // ADD THIS
+		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
 	): void => {
 		const challenge = this.getChallenge(cqInformation)
@@ -359,8 +588,6 @@ class CareerQuestClass {
 		if (!challenge || !career) return
 
 		challenge.messages = messages
-		challenge.hasRetrievedData = true
-		challenge.isRetrievingData = false
 		challenge.isCompleted = isCompleted
 
 		// Update blockly JSON if provided
@@ -369,33 +596,11 @@ class CareerQuestClass {
 		}
 
 		if (isCompleted) {
-			career.progress.completedChallengeIds.add(cqInformation.challengeUUID)
+			career.completedChallengeIds.add(cqInformation.challengeUUID)
+			// ADD THIS LINE:
+			this.updateSwiperNavigation(cqInformation.careerUUID)
 		}
 	})
-
-	public setIsRetrievingChallengeData = action((
-		cqInformation: CareerUUIDChallengeUUID,
-		isRetrieving: boolean
-	): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.isRetrievingData = isRetrieving
-	})
-
-	public hasRetrievedChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.hasRetrievedData || false
-	}
-
-	public isRetrievingChallengeData(cqInformation: CareerUUIDChallengeUUID): boolean {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.isRetrievingData || false
-	}
-
-	public getChallengeData(cqInformation: CareerUUIDChallengeUUID): CqChallengeData | undefined {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.challengeData
-	}
 
 	// Blockly JSON management
 	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
@@ -409,51 +614,11 @@ class CareerQuestClass {
 		challenge.updatedBlocklyJson = newBlocklyJson
 	})
 
-	public getVisibleSections(careerUUID: CareerUUID): string[] {
-		const career = this.getCareer(careerUUID)
-		if (!career) return []
-
-		const visibleSectionIds: string[] = []
-		const sections = career.careerDefinition.sections
-
-		// Track if we've encountered an incomplete challenge (blocking further progress)
-		let hasBlockingChallenge = false
-
-		for (const section of sections) {
-			// If we've already hit a blocking challenge, stop adding sections
-			if (hasBlockingChallenge) {
-				break
-			}
-
-			if (section.type === "textParent") {
-				// Add all children text section IDs (individual text sections)
-				section.children.forEach(child => {
-					visibleSectionIds.push(child.id)
-				})
-			} else {
-				// Challenge section
-				// Always show the challenge section itself (so user can see it and potentially complete it)
-				visibleSectionIds.push(section.challengeData.challengeUUID)
-
-				// Check if this challenge is completed
-				const isCompleted = this.isChallengeCompleted(section.challengeData)
-
-				// If this challenge is not completed, it becomes the blocking challenge
-				if (!isCompleted) {
-					hasBlockingChallenge = true
-				}
-			}
-		}
-
-		return visibleSectionIds
-	}
-
-	// Enhanced progress methods for header
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
 		const career = this.getCareer(careerUUID)
 		if (!career) return 0
 
-		return career.progress.completedChallengeIds.size
+		return career.completedChallengeIds.size
 	}
 
 	public getTotalChallengesForProgress(careerUUID: CareerUUID): number {
@@ -467,7 +632,7 @@ class CareerQuestClass {
 	/**
 	 * Get all challenge sections
 	 */
-	public getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
+	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
 		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
 
@@ -477,6 +642,34 @@ class CareerQuestClass {
 
 		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
 	}
+
+	public setIsRetrievingCareerData = action((careerUUID: CareerUUID, isRetrieving: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.isRetrievingData = isRetrieving
+	})
+
+	public isRetrievingCareerData(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.isRetrievingData || false
+	}
+
+	public canAdvanceToNextMain = action((careerUUID: CareerUUID, slideIndex: number): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const mainSlides = career.mainSlides
+
+		if (slideIndex >= mainSlides.length - 1) return false
+
+		const currentSlide = mainSlides[slideIndex]
+
+		if (currentSlide.type === "textParent") {
+			return true
+		}
+		// For challenge slides, must be completed
+		return this.isCodeCorrect(currentSlide.data)
+	})
 
 	public logout(): void {
 		this.careers.clear()

@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from "react"
 // Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
     textParentData: TextParentSection
-    onComplete: () => void
     onSlideChange: (triggerImage: string) => void
     onTextSectionChange: (index: number) => void
     isActive: boolean
@@ -17,7 +16,6 @@ interface TextParentCardProps {
 export default function TextParentCard(props: TextParentCardProps) {
 	const {
 		textParentData,
-		onComplete,
 		onSlideChange,
 		onTextSectionChange,
 		isActive,
@@ -26,7 +24,6 @@ export default function TextParentCard(props: TextParentCardProps) {
 	} = props
 
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
-	const [hasCompletedAllText, setHasCompletedAllText] = useState(false)
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
@@ -40,12 +37,6 @@ export default function TextParentCard(props: TextParentCardProps) {
 		const targetText = textParentData.children[initialTextIndex]
 		onSlideChange(targetText.triggerImage)
 	}, [initialTextIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
-
-	// Reset completion state when becoming active
-	useEffect(() => {
-		if (!isActive) return
-		setHasCompletedAllText(false)
-	}, [isActive])
 
 	// Handle navigation commands from parent
 	useEffect(() => {
@@ -75,17 +66,7 @@ export default function TextParentCard(props: TextParentCardProps) {
 
 		// Notify parent of the index change - parent is source of truth
 		onTextSectionChange(newIndex)
-
-		const isLastSection = newIndex === textParentData.children.length - 1
-
-		// Mark as completed but don't disable navigation
-		if (isLastSection && !hasCompletedAllText) {
-			setHasCompletedAllText(true)
-			setTimeout(() => {
-				onComplete()
-			}, 100)
-		}
-	}, [textParentData.children, onSlideChange, onTextSectionChange, onComplete, hasCompletedAllText])
+	}, [textParentData.children, onSlideChange, onTextSectionChange])
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">

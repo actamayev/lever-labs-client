@@ -12,7 +12,7 @@ export interface Point {
 
 export type PreDefinedDesignName = "No design" | "Happy Eyes" | "Sad Eyes" | "Heart" | "Smiley Face"
 
-export interface PreDefinedDesign {
+interface PreDefinedDesign {
 	name: PreDefinedDesignName
 	pixels: Point[]
 }

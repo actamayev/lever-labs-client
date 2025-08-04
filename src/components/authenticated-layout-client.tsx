@@ -5,6 +5,7 @@ import { observer } from "mobx-react"
 import authClass from "@/classes/auth-class"
 import { AuthState } from "@/lib/auth-server"
 import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
+import careerQuestClass from "../classes/career-quest-class"
 
 interface AuthenticatedLayoutClientProps {
 	children: React.ReactNode
@@ -25,6 +26,9 @@ function AuthenticatedLayoutClient({
 				isAuthenticated: authState.isAuthenticated,
 				hasCompletedSignup: authState.hasCompletedSignup
 			})
+			// Re-initialize career quest data for the new user
+			// (if this isn't here, the careers won't be initialized (since init is in the constructor))
+			careerQuestClass.reinitialize()
 		}
 	}, [authState])
 

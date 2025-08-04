@@ -15,7 +15,7 @@ interface AssistantMessageMarkdownProps {
 // eslint-disable-next-line max-lines-per-function
 function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: AssistantMessageMarkdownProps) {
 	return (
-		<div className="text-sm prose prose-sm max-w-none dark:prose-invert">
+		<div className="text-sm prose prose-sm max-w-none dark:prose-invert font-medium">
 			<ReactMarkdown
 				components={{
 					// Code blocks with syntax highlighting
