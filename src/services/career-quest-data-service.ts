@@ -18,9 +18,9 @@ export default class CareerQuestDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveCareerQuestChallengeData(careerUUID: CareerUUID): Promise<AxiosResponse<CareerProgressData | ErrorResponses>> {
+	async retrieveCareerChallengeData(careerUUID: CareerUUID): Promise<AxiosResponse<CareerProgressData | ErrorResponses>> {
 		return await this.httpClient.http.get<CareerProgressData | ErrorResponses>(
-			this.buildUrl(`/get-career-quest-challenge-data/${careerUUID}`)
+			this.buildUrl(`/get-career-challenge-data/${careerUUID}`)
 		)
 	}
 

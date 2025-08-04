@@ -17,7 +17,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// Set loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerQuestChallengeData(careerUUID)
+		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerChallengeData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")
