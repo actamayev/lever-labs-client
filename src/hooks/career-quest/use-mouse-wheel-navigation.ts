@@ -1,13 +1,11 @@
 /* eslint-disable max-depth */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { useCallback, useEffect, useRef } from "react"
-import type { Swiper as SwiperType } from "swiper"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 
 // eslint-disable-next-line max-len, max-params, max-lines-per-function
 export default function useMousewheelNavigation(
-	mainSwiperInstance: SwiperType | null,
 	careerUUID: CareerUUID,
 	isTransitioning: boolean,
 	setIsTransitioning: (isTransitioning: boolean) => void,
@@ -21,6 +19,7 @@ export default function useMousewheelNavigation(
 	const lastWheelTime = useRef(0)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
+	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
@@ -85,7 +84,7 @@ export default function useMousewheelNavigation(
 
 			// Respect cooldown and transitioning state
 			const now = Date.now()
-			if (now - lastWheelTime.current < WHEEL_COOLDOWN || isTransitioning || !mainSwiperInstance) {
+			if (now - lastWheelTime.current < WHEEL_COOLDOWN || isTransitioning || !swiperInstance) {
 				return
 			}
 
@@ -111,7 +110,7 @@ export default function useMousewheelNavigation(
 							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 								lastWheelTime.current = now
 								setIsTransitioning(true)
-								mainSwiperInstance.slideNext()
+								swiperInstance.slideNext()
 								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
 								hasNavigatedInGesture.current = true
 							}
@@ -127,7 +126,7 @@ export default function useMousewheelNavigation(
 						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 							lastWheelTime.current = now
 							setIsTransitioning(true)
-							mainSwiperInstance.slideNext()
+							swiperInstance.slideNext()
 							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
 							hasNavigatedInGesture.current = true
 						}
@@ -142,7 +141,7 @@ export default function useMousewheelNavigation(
 							if (currentMainSlideIndex > 0) {
 								lastWheelTime.current = now
 								setIsTransitioning(true)
-								mainSwiperInstance.slidePrev()
+								swiperInstance.slidePrev()
 
 								// Set the text child index to the last child of the previous text parent
 								const prevSlide = mainSlides[currentMainSlideIndex - 1]
@@ -165,7 +164,7 @@ export default function useMousewheelNavigation(
 						if (currentMainSlideIndex > 0) {
 							lastWheelTime.current = now
 							setIsTransitioning(true)
-							mainSwiperInstance.slidePrev()
+							swiperInstance.slidePrev()
 
 							// Set the text child index to the last child of the previous text parent
 							const prevSlide = mainSlides[currentMainSlideIndex - 1]
@@ -201,5 +200,5 @@ export default function useMousewheelNavigation(
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling])
+	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling, swiperInstance])
 }

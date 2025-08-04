@@ -16,6 +16,7 @@ import {
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
+import type { Swiper as SwiperType } from "swiper"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -48,6 +49,7 @@ interface CareerInstance {
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
 	mainSlides: MainSlide[]
+	swiperInstance: SwiperType | null  // ADD THIS LINE
 }
 
 class CareerQuestClass {
@@ -129,7 +131,8 @@ class CareerQuestClass {
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
-			mainSlides
+			mainSlides,
+			swiperInstance: null
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -143,6 +146,39 @@ class CareerQuestClass {
 		// Re-initialize with fresh data
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
+
+	// ADD THESE METHODS to CareerQuestClass:
+
+	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = swiperInstance
+
+		// Update navigation immediately when swiper is set
+		this.updateSwiperNavigation(careerUUID)
+	})
+
+	public removeSwiperInstance = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = null
+	})
+
+	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career?.swiperInstance) return
+
+		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
+		const canGoBack = career.currentMainSlideIndex > 0
+
+		career.swiperInstance.allowSlideNext = canAdvance
+		career.swiperInstance.allowSlidePrev = canGoBack
+	})
+
+	public getSwiperInstance(careerUUID: CareerUUID): SwiperType | null {
+		const career = this.getCareer(careerUUID)
+		return career?.swiperInstance || null
+	}
 
 	public hasRetrievedAllChallengesForCareer(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
@@ -378,6 +414,7 @@ class CareerQuestClass {
 	})
 
 	// UPDATE: Add position update when evaluation result changes completion
+	// UPDATE this existing method in career-quest-class.ts:
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
@@ -400,10 +437,12 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 
 		// Mark challenge as completed if correct
-		if (evaluationResult.isCorrect) {
-			challenge.isCompleted = true
-			career.completedChallengeIds.add(cqInformation.challengeUUID)
-		}
+		if (!evaluationResult.isCorrect) return
+		challenge.isCompleted = true
+		career.completedChallengeIds.add(cqInformation.challengeUUID)
+
+		// ADD THIS LINE - Update swiper navigation immediately
+		this.updateSwiperNavigation(cqInformation.careerUUID)
 	})
 
 	public isCodeCorrect(cqInformation: CareerUUIDChallengeUUID): boolean {
@@ -537,6 +576,7 @@ class CareerQuestClass {
 	// ========================================
 
 	// UPDATE: Add position update when retrieved data indicates completion
+	// UPDATE this existing method to trigger swiper updates:
 	public setChallengeRetrievedData = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		messages: CareerQuestChatMessage[],
@@ -557,6 +597,8 @@ class CareerQuestClass {
 
 		if (isCompleted) {
 			career.completedChallengeIds.add(cqInformation.challengeUUID)
+			// ADD THIS LINE:
+			this.updateSwiperNavigation(cqInformation.careerUUID)
 		}
 	})
 

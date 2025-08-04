@@ -32,32 +32,27 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		type: "image",
 		icon: careerData.initialImage
 	})
-	const [mainSwiperInstance, setMainSwiperInstance] = useState<SwiperType | null>(null)
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
 	const [isTransitioning, setIsTransitioning] = useState(false)
 	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
-	// Add reactive computed value for canAdvanceToNextMain
-	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
-
 	// Get main slides from career instance
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
 	// Then modify the above useEffect to set this flag:
 	useEffect(() => {
-		if (!isDataReady || !mainSwiperInstance || isEmpty(mainSlides)) return
+		if (!isDataReady || isEmpty(mainSlides)) return
 
-		// Use class method to restore navigation from saved position
 		const restored = careerQuestClass.restoreNavigationFromSavedPosition(careerData.careerUUID)
-
 		if (!restored) return
-		// Get the restored indices from class
-		const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
 
-		// Update swiper to match class state
-		mainSwiperInstance.slideTo(indices.mainSlideIndex, 0)
+		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
+		if (!swiperInstance) return
+
+		const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
+		swiperInstance.slideTo(indices.mainSlideIndex, 0)
 
 		// Handle right content based on current slide
 		const currentSlide = mainSlides[indices.mainSlideIndex]
@@ -76,10 +71,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			const textChild = currentSlide.data.children[indices.textChildIndex]
 			setRightContent({ type: "image", icon: textChild.triggerImage })
 		}
-	}, [isDataReady, mainSwiperInstance, careerData.careerUUID, mainSlides, careerData.sections])
+	}, [isDataReady, careerData.careerUUID, mainSlides, careerData.sections])
 
 	useMousewheelNavigation(
-		mainSwiperInstance,
 		careerData.careerUUID,
 		isTransitioning,
 		setIsTransitioning,
@@ -87,22 +81,11 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	)
 
 	useKeyboardNavigation(
-		mainSwiperInstance,
 		careerData.careerUUID,
 		isTransitioning,
 		setIsTransitioning,
 		setNavigationCommand
 	)
-
-	// Update main swiper navigation permissions
-	useEffect(() => {
-		if (!mainSwiperInstance) return
-
-		mainSwiperInstance.allowSlideNext = canAdvanceToNextMain
-
-		// Always allow going back
-		mainSwiperInstance.allowSlidePrev = currentMainSlideIndex > 0
-	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID, canAdvanceToNextMain])
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
@@ -170,15 +153,26 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		void saveCareerProgress(careerData.careerUUID, textChild.id)
 	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
+	// UPDATE this callback:
 	const handleGoToNextSection = useCallback(() => {
-		if (!mainSwiperInstance) return
+		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
+		if (!swiperInstance) return
 
 		const canAdvance = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
 		if (!canAdvance) return
+
 		setIsTransitioning(true)
-		mainSwiperInstance.slideNext()
+		swiperInstance.slideNext()
 		setTimeout(() => setIsTransitioning(false), 400)
-	}, [mainSwiperInstance, currentMainSlideIndex, careerData.careerUUID])
+	}, [currentMainSlideIndex, careerData.careerUUID])
+
+	// ADD this useEffect for cleanup:
+	useEffect(() => {
+		return () => {
+		// Cleanup swiper instance when component unmounts
+			careerQuestClass.removeSwiperInstance(careerData.careerUUID)
+		}
+	}, [careerData.careerUUID])
 
 	return (
 		<div className="flex h-full">
@@ -202,7 +196,9 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									allowSlideNext={isDataReady}
 									allowSlidePrev={isDataReady}
 									allowTouchMove={false}
-									onSwiper={setMainSwiperInstance}
+									onSwiper={(swiper) => {
+										careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
+									}}
 									onSlideChange={isDataReady ? handleMainSlideChange : undefined} // Remove isInitializing check
 									className="h-full"
 									style={{
