@@ -122,7 +122,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 						{isUser ? (
 							// For user messages, check if it's a special request type
 							<p
-								className="text-sm whitespace-pre-wrap"
+								className="text-sm whitespace-pre-wrap font-medium"
 								style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 							>
 								{getMessageText()}
@@ -145,7 +145,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 					{isUser ? (
 						// For user messages, check if it's a special request type
 						<p
-							className="text-sm whitespace-pre-wrap"
+							className="text-sm whitespace-pre-wrap font-medium"
 							style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 						>
 							{getMessageText()}

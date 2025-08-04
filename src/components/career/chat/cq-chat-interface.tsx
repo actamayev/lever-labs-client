@@ -21,7 +21,7 @@ import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 function NextSectionButton({ onClick }: { onClick: () => void }) {
 	return (
-		<div className="h-[10%] flex items-center px-4">
+		<div className="h-[10%] flex items-center">
 			<TactileButton
 				onClick={onClick}
 				className={cn(
