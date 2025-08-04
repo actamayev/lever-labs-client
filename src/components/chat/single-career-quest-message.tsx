@@ -23,6 +23,37 @@ interface SingleCareerQuestMessageProps {
 	cppCode: string
 }
 
+interface MessageBubbleProps {
+	message: CareerQuestChatMessage
+	isUser: boolean
+	getMessageText: () => string
+	getMessageBubbleStyles: string
+	isHintResponse: boolean
+}
+
+function MessageBubble({ message, isUser, getMessageText, getMessageBubbleStyles, isHintResponse }: MessageBubbleProps) {
+	return (
+		<div
+			className={cn("max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}
+			style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+		>
+			{isUser ? (
+				<p
+					className="text-sm whitespace-pre-wrap font-medium"
+					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
+				>
+					{getMessageText()}
+				</p>
+			) : (
+				<AssistantMessageMarkdown
+					messageContent={message.content}
+					forceDarkMode={isHintResponse}
+				/>
+			)}
+		</div>
+	)
+}
+
 // eslint-disable-next-line max-lines-per-function, complexity
 function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleCareerQuestMessageProps) {
 	const isUser = message.role === "user"
@@ -115,48 +146,23 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 
 			{shouldShowHintButton ? (
 				<div className="flex flex-col flex-1">
-					<div
-						className={cn( "max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}
-						style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-					>
-						{isUser ? (
-							// For user messages, check if it's a special request type
-							<p
-								className="text-sm whitespace-pre-wrap font-medium"
-								style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-							>
-								{getMessageText()}
-							</p>
-						) : (
-							<AssistantMessageMarkdown
-								messageContent={message.content}
-								forceDarkMode={isHintResponse}
-							/>
-						)}
-					</div>
-
+					<MessageBubble
+						message={message}
+						isUser={isUser}
+						getMessageText={getMessageText}
+						getMessageBubbleStyles={getMessageBubbleStyles}
+						isHintResponse={isHintResponse || false}
+					/>
 					<HintButton cqChallengeData={cqChallengeData} cppCode={cppCode} />
 				</div>
 			) : (
-				<div
-					className={cn("max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}
-					style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-				>
-					{isUser ? (
-						// For user messages, check if it's a special request type
-						<p
-							className="text-sm whitespace-pre-wrap font-medium"
-							style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
-						>
-							{getMessageText()}
-						</p>
-					) : (
-						<AssistantMessageMarkdown
-							messageContent={message.content}
-							forceDarkMode={isHintResponse}
-						/>
-					)}
-				</div>
+				<MessageBubble
+					message={message}
+					isUser={isUser}
+					getMessageText={getMessageText}
+					getMessageBubbleStyles={getMessageBubbleStyles}
+					isHintResponse={isHintResponse || false}
+				/>
 			)}
 
 			{isUser && (
