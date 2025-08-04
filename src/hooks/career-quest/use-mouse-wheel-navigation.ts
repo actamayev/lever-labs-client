@@ -1,6 +1,6 @@
 /* eslint-disable max-depth */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import type { Swiper as SwiperType } from "swiper"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -29,6 +29,7 @@ export default function useMousewheelNavigation(
 	// Helper function to check if the mouse is over a chat component
 	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
 		const target = event.target as Element
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (!target) return false
 
 		// Check if the target or any of its parents is a chat component
@@ -50,7 +51,7 @@ export default function useMousewheelNavigation(
 	}
 
 	// Helper function to check if we should allow normal scrolling in chat
-	const shouldAllowChatScrolling = (): boolean => {
+	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
 		const currentSlide = mainSlides[currentMainSlideIndex]
 		if (currentSlide.type !== "challenge") return false
@@ -60,11 +61,11 @@ export default function useMousewheelNavigation(
 
 		// Only allow normal scrolling if there are messages (length > 0)
 		return messages.length > 0
-	}
+	}, [currentMainSlideIndex, mainSlides])
 
 	// eslint-disable-next-line max-lines-per-function
 	useEffect(() => {
-		// eslint-disable-next-line complexity
+		// eslint-disable-next-line complexity, max-lines-per-function
 		const handleWheel = (e: WheelEvent): void => {
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {
@@ -200,5 +201,5 @@ export default function useMousewheelNavigation(
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID])
+	}, [mainSwiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling])
 }
