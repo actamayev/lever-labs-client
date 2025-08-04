@@ -5,11 +5,13 @@ import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { ChevronDown, RotateCcw, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
+import CustomTooltip from "../../custom-tooltip"
 
 interface ChallengeHeaderProps {
 	challengeData: CqChallengeData
 }
 
+// eslint-disable-next-line max-lines-per-function
 function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true)
 
@@ -53,22 +55,32 @@ function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
 
 								{/* Third column - Action Buttons (10%) */}
 								<div className="w-[10%] flex flex-col gap-2">
-									<TactileButton
-										className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-10"
-										shadowClass="shadow-beakInner-2"
-										onClick={() => setIsDescriptionExpanded(false)}
-									>
-										<X className="w-4 h-4" />
-									</TactileButton>
-									<TactileButton
-										className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-10"
-										shadowClass="shadow-bee-2"
-										onClick={() => {
-											// TODO: Implement reset functionality
-										}}
-									>
-										<RotateCcw className="w-4 h-4" />
-									</TactileButton>
+									<CustomTooltip
+										tooltipTrigger={
+											<TactileButton
+												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-10"
+												shadowClass="shadow-beakInner-2"
+												onClick={() => setIsDescriptionExpanded(false)}
+											>
+												<X className="w-4 h-4" />
+											</TactileButton>
+										}
+										tooltipContent="CLOSE"
+									/>
+									<CustomTooltip
+										tooltipTrigger={
+											<TactileButton
+												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-10"
+												shadowClass="shadow-bee-2"
+												onClick={() => {
+													// TODO: Implement reset functionality
+												}}
+											>
+												<RotateCcw className="w-4 h-4" />
+											</TactileButton>
+										}
+										tooltipContent="RESET"
+									/>
 								</div>
 							</div>
 						</div>
@@ -87,13 +99,34 @@ function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
 								<h3 className="text-lg font-semibold text-foreground">
 									{challengeData.title}
 								</h3>
-								<TactileButton
-									className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
-									shadowClass="shadow-beakInner-2"
-									onClick={() => setIsDescriptionExpanded(true)}
-								>
-									<ChevronDown className="w-4 h-4" />
-								</TactileButton>
+								<div className="flex gap-2">
+									<CustomTooltip
+										tooltipTrigger={
+											<TactileButton
+												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
+												shadowClass="shadow-bee-2"
+												onClick={() => {
+													// TODO: Implement reset functionality
+												}}
+											>
+												<RotateCcw className="w-4 h-4" />
+											</TactileButton>
+										}
+										tooltipContent="RESET"
+									/>
+									<CustomTooltip
+										tooltipTrigger={
+											<TactileButton
+												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
+												shadowClass="shadow-beakInner-2"
+												onClick={() => setIsDescriptionExpanded(true)}
+											>
+												<ChevronDown className="w-4 h-4" />
+											</TactileButton>
+										}
+										tooltipContent="EXPAND"
+									/>
+								</div>
 							</div>
 						</div>
 					</motion.div>
