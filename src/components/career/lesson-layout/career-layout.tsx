@@ -114,6 +114,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			textChildIndex = 0
 		}
 		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, textChildIndex)
+
+		// Save progress when transitioning to text sections
+		if (currentSlide.type === "textParent") {
+			const textChild = currentSlide.data.children[textChildIndex]
+			void saveCareerProgress(careerData.careerUUID, textChild.id)
+		}
 	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
 	// Handle right content updates based on current slide and lock state
@@ -154,7 +160,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		void saveCareerProgress(careerData.careerUUID, textChild.id)
 	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
-	// UPDATE this callback:
 	const handleGoToNextSection = useCallback(() => {
 		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
 		if (!swiperInstance) return
@@ -167,10 +172,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setTimeout(() => setIsTransitioning(false), 400)
 	}, [currentMainSlideIndex, careerData.careerUUID])
 
-	// ADD this useEffect for cleanup:
 	useEffect(() => {
 		return () => {
-		// Cleanup swiper instance when component unmounts
 			careerQuestClass.removeSwiperInstance(careerData.careerUUID)
 		}
 	}, [careerData.careerUUID])
