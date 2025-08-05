@@ -26,7 +26,7 @@ function NextSectionButton({ onClick }: { onClick: () => void }) {
 				onClick={onClick}
 				className={cn(
 					"w-full flex items-center justify-center gap-2 py-3 bg-green-500",
-					"text-white font-medium transition-colors rounded-2xl h-3/4 text-3xl"
+					"text-white font-medium rounded-2xl h-3/4 text-3xl"
 				)}
 				shadowColor="rgb(0, 140, 0)"
 				shadowHeight={4}
