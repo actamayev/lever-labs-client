@@ -1,6 +1,7 @@
 /* eslint-disable max-lines-per-function */
 "use client"
 
+import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,
@@ -16,7 +17,6 @@ import {
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
-import type { Swiper as SwiperType } from "swiper"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -170,6 +170,8 @@ class CareerQuestClass {
 
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		const canGoBack = career.currentMainSlideIndex > 0
+		console.log("canAdvance", canAdvance)
+		console.log("canGoBack", canGoBack)
 
 		career.swiperInstance.allowSlideNext = canAdvance
 		career.swiperInstance.allowSlidePrev = canGoBack

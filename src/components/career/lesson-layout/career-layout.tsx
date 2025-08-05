@@ -89,6 +89,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	)
 
 	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
+		console.log("handleMainSlideChange", swiper.activeIndex)
 		const newIndex = swiper.activeIndex
 		const previousIndex = currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex

@@ -63,7 +63,15 @@ export default function useKeyboardNavigation(
 		const currentSlide = mainSlides[currentMainSlideIndex]
 
 		if (keyPressed === "ArrowDown") {
-			if (currentSlide.type === "textParent") {
+			if (currentSlide.type === "challenge") {
+				// Challenge slide - try to move to next main slide
+				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
+					lastKeyPressTime.current = now
+					setIsTransitioning(true)
+					swiperInstance.slideNext()
+					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+				}
+			} else {
 				const totalTextChildren = currentSlide.data.children.length
 				const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
 				const hasOnlyOneChild = totalTextChildren === 1
@@ -82,20 +90,17 @@ export default function useKeyboardNavigation(
 					setNavigationCommand("next")
 					setTimeout(() => setNavigationCommand(null), 100)
 				}
-			} else {
-				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					swiperInstance.slideNext()
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-				}
 			}
 		} else if (keyPressed === "ArrowUp") {
 			if (currentSlide.type === "textParent") {
 				const isAtFirstTextChild = currentTextChildIndex === 0
 
-				if (isAtFirstTextChild) {
+				if (!isAtFirstTextChild) {
+					// Move to previous text child
+					lastKeyPressTime.current = now
+					setNavigationCommand("prev")
+					setTimeout(() => setNavigationCommand(null), 100)
+				} else {
 					// Move to previous main slide if possible
 					if (currentMainSlideIndex > 0) {
 						lastKeyPressTime.current = now
@@ -110,27 +115,24 @@ export default function useKeyboardNavigation(
 
 						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
 					}
-				} else {
-					// Move to previous text child
-					lastKeyPressTime.current = now
-					setNavigationCommand("prev")
-					setTimeout(() => setNavigationCommand(null), 100)
 				}
 			} else {
 				// Challenge slide - always go to previous main slide
-				if (currentMainSlideIndex > 0) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					swiperInstance.slidePrev()
+				if (currentMainSlideIndex <= 0) return
+				console.log("ArrowUp", currentMainSlideIndex)
+				console.log("swiperInstance", swiperInstance.allowSlidePrev)
+				lastKeyPressTime.current = now
+				setIsTransitioning(true)
+				swiperInstance.slidePrev()
 
-					// Set the text child index to the last child of the previous text parent
-					const prevSlide = mainSlides[currentMainSlideIndex - 1]
-					if (prevSlide.type === "textParent") {
-						careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
-					}
-
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+				// Set the text child index to the last child of the previous text parent
+				const prevSlide = mainSlides[currentMainSlideIndex - 1]
+				console.log(prevSlide)
+				if (prevSlide.type === "textParent") {
+					careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 				}
+
+				setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
