@@ -39,13 +39,9 @@ function useEffectKeyboardNavigation(): string | null {
 export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
-	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
-	// const lastKeyPressTime = useRef(0)
-	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
-	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 
 	// eslint-disable-next-line complexity
 	useEffect(() => {
@@ -54,14 +50,12 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 		const now = Date.now()
 		if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
 
-		const currentSlide = mainSlides[currentMainSlideIndex]
+		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
 
 		if (keyPressed === "ArrowDown") {
 			if (currentSlide.type === "challenge") {
 				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-					careerQuestClass.handleGoToNextMainSection(careerUUID)
-				}
+				careerQuestClass.handleGoToNextMainSection(careerUUID)
 			} else {
 				const totalTextChildren = currentSlide.data.children.length
 				const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
@@ -69,16 +63,17 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
-					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-						careerQuestClass.handleGoToNextMainSection(careerUUID)
-					}
+					careerQuestClass.handleGoToNextMainSection(careerUUID)
 				} else {
 					// Move to next text child
 					careerQuestClass.handleGoToNextTextChild(careerUUID)
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
-			if (currentSlide.type === "textParent") {
+			if (currentSlide.type === "challenge") {
+				// Challenge slide - always go to previous main slide
+				careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+			} else {
 				const isAtFirstTextChild = currentTextChildIndex === 0
 
 				if (!isAtFirstTextChild) {
@@ -87,11 +82,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				} else {
 					careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 				}
-			} else {
-				// Challenge slide - always go to previous main slide
-				careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 			}
 		}
-	// eslint-disable-next-line max-len
-	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, textParentSwiperInstance])
+	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, isTransitioning, careerUUID])
 }

@@ -46,7 +46,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	// Helper function to check if we should allow normal scrolling in chat
 	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
-		const currentSlide = mainSlides[currentMainSlideIndex]
+		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "challenge") return false
 
 		// Get messages for the current challenge
@@ -54,11 +54,12 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 
 		// Only allow normal scrolling if there are messages (length > 0)
 		return messages.length > 0
-	}, [currentMainSlideIndex, mainSlides])
+	}, [careerUUID])
 
-	// eslint-disable-next-line max-lines-per-function
 	useEffect(() => {
-		// eslint-disable-next-line complexity, max-lines-per-function
+		if (!swiperInstance || isTransitioning) return
+
+		// eslint-disable-next-line complexity
 		const handleWheel = (e: WheelEvent): void => {
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {
@@ -76,11 +77,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 
 			// Respect cooldown and transitioning state
 			const now = Date.now()
-			if (
-				now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN ||
-				isTransitioning ||
-				!swiperInstance
-			) return
+			if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
 
 			// If this is the start of a new gesture
 			if (!gestureActive.current) {
@@ -90,52 +87,44 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 
 			// Only navigate if we haven't already navigated in this gesture
 			if (!hasNavigatedInGesture.current) {
-				const currentSlide = mainSlides[currentMainSlideIndex]
+				const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
 				if (e.deltaY > 0) {
 					// Scroll down - same logic as ArrowDown
-					if (currentSlide.type === "textParent") {
+					if (currentSlide.type === "challenge") {
+						// Challenge slide - try to move to next main slide
+						careerQuestClass.handleGoToNextMainSection(careerUUID)
+						hasNavigatedInGesture.current = true
+					} else {
 						const totalTextChildren = currentSlide.data.children.length
 						const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
 						const hasOnlyOneChild = totalTextChildren === 1
 
 						if (hasOnlyOneChild || isAtLastTextChild) {
 							// Move to next main slide if possible
-							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-								careerQuestClass.handleGoToNextMainSection(careerUUID)
-								hasNavigatedInGesture.current = true
-							}
+							careerQuestClass.handleGoToNextMainSection(careerUUID)
+							hasNavigatedInGesture.current = true
 						} else {
 							// Move to next text child
 							careerQuestClass.handleGoToNextTextChild(careerUUID)
 							hasNavigatedInGesture.current = true
 						}
-					} else {
-						// Challenge slide - try to move to next main slide
-						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-							careerQuestClass.handleGoToNextMainSection(careerUUID)
-							hasNavigatedInGesture.current = true
-						}
 					}
 				} else if (e.deltaY < 0) {
 					// Scroll up - same logic as ArrowUp
-					if (currentSlide.type === "textParent") {
+					if (currentSlide.type === "challenge") {
+						// Challenge slide - always go to previous main slide
+						careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+						hasNavigatedInGesture.current = true
+					} else {
 						const isAtFirstTextChild = currentTextChildIndex === 0
 
 						if (isAtFirstTextChild) {
 							// Move to previous main slide if possible
-							if (currentMainSlideIndex > 0) {
-								careerQuestClass.handleGoToPreviousMainSection(careerUUID)
-								hasNavigatedInGesture.current = true
-							}
+							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+							hasNavigatedInGesture.current = true
 						} else {
 							// Move to previous text child
 							careerQuestClass.handleGoToPreviousTextChild(careerUUID)
-							hasNavigatedInGesture.current = true
-						}
-					} else {
-						// Challenge slide - always go to previous main slide
-						if (currentMainSlideIndex > 0) {
-							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 							hasNavigatedInGesture.current = true
 						}
 					}

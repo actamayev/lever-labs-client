@@ -73,9 +73,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: careerData.initialImage })
 			return
 		}
-		if (isEmpty(mainSlides)) return
 
-		const currentSlide = mainSlides[currentMainSlideIndex]
+		const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
 
 		if (currentSlide.type === "challenge") {
 			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
@@ -92,7 +91,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		// Show the text image
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
-	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
+	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, careerData.sections])
 
 	useEffect(() => {
 		return () => {

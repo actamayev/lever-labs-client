@@ -803,15 +803,10 @@ class CareerQuestClass {
 	public onTextSlideChange = action((careerUUID: CareerUUID, triggerImage: string): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 		this.setRightContent(careerUUID, { type: "image", icon: triggerImage })
 	})
-
-	public logout(): void {
-		this.careers.clear()
-		this.isDoneInitializing = false
-	}
 
 	public getLastSlideChangeTime(careerUUID: CareerUUID): number {
 		const career = this.getCareer(careerUUID)
@@ -822,7 +817,7 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
 		const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
@@ -840,7 +835,7 @@ class CareerQuestClass {
 	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
@@ -875,6 +870,17 @@ class CareerQuestClass {
 			career.lastSlideChangeTime = timestamp
 		}
 	})
+
+	public getCurrentMainSlide(careerUUID: CareerUUID): MainSlide {
+		const mainSlides = this.getMainSlides(careerUUID)
+		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
+		return mainSlides[currentMainSlideIndex]
+	}
+
+	public logout(): void {
+		this.careers.clear()
+		this.isDoneInitializing = false
+	}
 }
 
 const careerQuestClass = new CareerQuestClass()
