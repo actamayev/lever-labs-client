@@ -53,6 +53,7 @@ interface CareerInstance {
 	textParentSwipers: Map<string, SwiperType | null>
 	isTransitioning: boolean
 	rightContent: RightContent
+	lastSlideChangeTime: number
 }
 
 class CareerQuestClass {
@@ -138,7 +139,7 @@ class CareerQuestClass {
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
-			// navigationCommand: null,
+			lastSlideChangeTime: 0,
 			rightContent: { type: "image", icon: careerDefinition.initialImage },
 			textParentSwipers: new Map<string, SwiperType | null>()
 		}
@@ -700,11 +701,8 @@ class CareerQuestClass {
 		}
 		careerQuestClass.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
-		// Save progress when transitioning to text sections
-		if (currentSlide.type === "textParent") {
-			const textChild = currentSlide.data.children[textChildIndex]
-			void saveCareerProgress(careerUUID, textChild.id)
-		}
+		const textChild = currentSlide.data.children[textChildIndex]
+		void saveCareerProgress(careerUUID, textChild.id)
 	})
 
 	public handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
@@ -813,6 +811,18 @@ class CareerQuestClass {
 		this.careers.clear()
 		this.isDoneInitializing = false
 	}
+
+	public getLastSlideChangeTime(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.lastSlideChangeTime ?? 0
+	}
+
+	public setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (career) {
+			career.lastSlideChangeTime = timestamp
+		}
+	})
 }
 
 const careerQuestClass = new CareerQuestClass()

@@ -41,7 +41,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
-	const lastKeyPressTime = useRef(0)
+	// const lastKeyPressTime = useRef(0)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
@@ -52,7 +52,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		const now = Date.now()
-		if (now - lastKeyPressTime.current < careerQuestClass.SLIDE_COOLDOWN) return
+		if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
 
 		const currentSlide = mainSlides[currentMainSlideIndex]
 
@@ -60,7 +60,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 			if (currentSlide.type === "challenge") {
 				// Challenge slide - try to move to next main slide
 				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-					lastKeyPressTime.current = now
+					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 					careerQuestClass.handleGoToNextSection(careerUUID)
 				}
 			} else {
@@ -71,12 +71,12 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
 					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-						lastKeyPressTime.current = now
+						careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 						careerQuestClass.handleGoToNextSection(careerUUID)
 					}
 				} else {
 					// Move to next text child
-					lastKeyPressTime.current = now
+					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 					const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
 					if (canGoNext && textParentSwiperInstance) {
 						textParentSwiperInstance.slideNext()
@@ -89,7 +89,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 
 				if (!isAtFirstTextChild) {
 					// Move to previous text child
-					lastKeyPressTime.current = now
+					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 					const canGoPrev = currentTextChildIndex > 0
 					if (canGoPrev && textParentSwiperInstance) {
 						textParentSwiperInstance.slidePrev()
@@ -97,7 +97,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				} else {
 					// Move to previous main slide if possible
 					if (currentMainSlideIndex > 0) {
-						lastKeyPressTime.current = now
+						careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 						careerQuestClass.setIsTransitioning(careerUUID, true)
 						swiperInstance.slidePrev()
 
@@ -113,7 +113,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 			} else {
 				// Challenge slide - always go to previous main slide
 				if (currentMainSlideIndex <= 0) return
-				lastKeyPressTime.current = now
+				careerQuestClass.setLastSlideChangeTime(careerUUID, now)
 				careerQuestClass.setIsTransitioning(careerUUID, true)
 				swiperInstance.slidePrev()
 
