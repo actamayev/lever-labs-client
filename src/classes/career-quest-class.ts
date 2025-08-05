@@ -904,6 +904,13 @@ class CareerQuestClass {
 		return challenge?.challengeData.toolboxConfig as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
+	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.updatedBlocklyJson = challenge.challengeData.initialBlocklyJson
+		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+	})
+
 	public logout(): void {
 		this.careers.clear()
 		this.isDoneInitializing = false

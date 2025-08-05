@@ -151,7 +151,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)
-
 	}, [challengeData])
 
 	// Reset effects
