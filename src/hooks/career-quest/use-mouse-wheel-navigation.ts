@@ -7,8 +7,6 @@ import careerQuestClass from "../../classes/career-quest-class"
 // eslint-disable-next-line max-len, max-params, max-lines-per-function
 export default function useMousewheelNavigation(
 	careerUUID: CareerUUID,
-	isTransitioning: boolean,
-	setIsTransitioning: (isTransitioning: boolean) => void,
 	setNavigationCommand: (command: "next" | "prev" | null) => void,
 ): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
@@ -24,6 +22,7 @@ export default function useMousewheelNavigation(
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
 	const WHEEL_COOLDOWN = 200 // Same as keyboard cooldown
+	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
 
 	// Helper function to check if the mouse is over a chat component
 	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
@@ -109,9 +108,9 @@ export default function useMousewheelNavigation(
 							// Move to next main slide if possible
 							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 								lastWheelTime.current = now
-								setIsTransitioning(true)
+								careerQuestClass.setIsTransitioning(careerUUID, true)
 								swiperInstance.slideNext()
-								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
+								setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
 								hasNavigatedInGesture.current = true
 							}
 						} else {
@@ -125,9 +124,9 @@ export default function useMousewheelNavigation(
 						// Challenge slide - try to move to next main slide
 						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 							lastWheelTime.current = now
-							setIsTransitioning(true)
+							careerQuestClass.setIsTransitioning(careerUUID, true)
 							swiperInstance.slideNext()
-							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
+							setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
 							hasNavigatedInGesture.current = true
 						}
 					}
@@ -140,7 +139,7 @@ export default function useMousewheelNavigation(
 							// Move to previous main slide if possible
 							if (currentMainSlideIndex > 0) {
 								lastWheelTime.current = now
-								setIsTransitioning(true)
+								careerQuestClass.setIsTransitioning(careerUUID, true)
 								swiperInstance.slidePrev()
 
 								// Set the text child index to the last child of the previous text parent
@@ -149,7 +148,7 @@ export default function useMousewheelNavigation(
 									careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 								}
 
-								setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
+								setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
 								hasNavigatedInGesture.current = true
 							}
 						} else {
@@ -163,7 +162,7 @@ export default function useMousewheelNavigation(
 						// Challenge slide - always go to previous main slide
 						if (currentMainSlideIndex > 0) {
 							lastWheelTime.current = now
-							setIsTransitioning(true)
+							careerQuestClass.setIsTransitioning(careerUUID, true)
 							swiperInstance.slidePrev()
 
 							// Set the text child index to the last child of the previous text parent
@@ -172,7 +171,7 @@ export default function useMousewheelNavigation(
 								careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 							}
 
-							setTimeout(() => setIsTransitioning(false), WHEEL_COOLDOWN)
+							setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
 							hasNavigatedInGesture.current = true
 						}
 					}
@@ -200,5 +199,5 @@ export default function useMousewheelNavigation(
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setIsTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling, swiperInstance])
+	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, setNavigationCommand, careerUUID, shouldAllowChatScrolling, swiperInstance])
 }
