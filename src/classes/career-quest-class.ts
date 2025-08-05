@@ -208,7 +208,7 @@ class CareerQuestClass {
 		return career?.currentTextChildIndex || 0
 	}
 
-	public setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
+	private setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.currentMainSlideIndex = index
@@ -734,10 +734,10 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, false)
 	})
 
-	public getIsTransitioning = action((careerUUID: CareerUUID): boolean => {
+	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
 		const career = this.getCareer(careerUUID)
 		return career?.isTransitioning || false
-	})
+	}
 
 	public setIsTransitioning = action((careerUUID: CareerUUID, isTransitioning: boolean): void => {
 		const career = this.getCareer(careerUUID)
@@ -745,10 +745,10 @@ class CareerQuestClass {
 		career.isTransitioning = isTransitioning
 	})
 
-	public getRightContent = action((careerUUID: CareerUUID): RightContent => {
+	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
 		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage || "" }
-	})
+	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
 		const career = this.getCareer(careerUUID)
