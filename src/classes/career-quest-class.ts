@@ -854,7 +854,7 @@ class CareerQuestClass {
 		this.handleMainSlideChange(careerUUID)
 	})
 
-	public setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
+	private setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.lastSlideChangeTime = timestamp

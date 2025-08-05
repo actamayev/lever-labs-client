@@ -31,6 +31,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
+	useMousewheelNavigation(careerData.careerUUID)
+	useKeyboardNavigation(careerData.careerUUID)
+
+	// TODO: 8/5/25: Try to remove these useEffects (they seem super complex)
 	useEffect(() => {
 		if (!isDataReady || isEmpty(mainSlides)) return
 
@@ -61,9 +65,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
 		}
 	}, [isDataReady, careerData.careerUUID, mainSlides, careerData.sections])
-
-	useMousewheelNavigation(careerData.careerUUID)
-	useKeyboardNavigation(careerData.careerUUID)
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
