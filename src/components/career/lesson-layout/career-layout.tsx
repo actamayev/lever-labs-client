@@ -30,9 +30,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
-	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 
-	// Then modify the above useEffect to set this flag:
 	useEffect(() => {
 		if (!isDataReady || isEmpty(mainSlides)) return
 
@@ -172,7 +170,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					)}
 					style={{ marginRight: "100px" }}
 				>
-					<RightContent rightContent={rightContent} color={careerData.careerColor} isDataReady={isDataReady} />
+					<RightContent careerData={careerData} />
 				</div>
 			</div>
 		</div>
