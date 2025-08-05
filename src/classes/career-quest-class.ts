@@ -862,6 +862,7 @@ class CareerQuestClass {
 			return slide.data.challengeUUID === challengeUUID
 		})
 		if (index === -1) return
+		if (index === career.currentMainSlideIndex) return
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		career.swiperInstance.slideTo(index)
