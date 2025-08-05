@@ -241,8 +241,8 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
 
-		const savedData = this.getSavedPosition(careerUUID)
-		if (!savedData.position) {
+		const savedPosition = this.getSavedPosition(careerUUID)
+		if (!savedPosition) {
 			// No saved position, start at beginning
 			career.currentMainSlideIndex = 0
 			career.currentTextChildIndex = 0
@@ -250,7 +250,7 @@ class CareerQuestClass {
 		}
 
 		// Try to find the saved position
-		const positionIndices = this.findPositionIndices(careerUUID, savedData.position)
+		const positionIndices = this.findPositionIndices(careerUUID, savedPosition)
 		if (!positionIndices) {
 			// Fallback to beginning if position not found
 			career.currentMainSlideIndex = 0
@@ -274,12 +274,9 @@ class CareerQuestClass {
 		career.savedCurrentPosition = position
 	})
 
-	// REPLACE getSavedPosition method (remove isLocked from return):
-	public getSavedPosition(careerUUID: CareerUUID): { position: string } {
+	private getSavedPosition(careerUUID: CareerUUID): string | undefined {
 		const career = this.getCareer(careerUUID)
-		return {
-			position: career?.savedCurrentPosition || ""
-		}
+		return career?.savedCurrentPosition
 	}
 
 	// ADD new method to set seen challenges:
@@ -730,6 +727,19 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[newIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
+	})
+
+	public handleGoToNextSection = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!career || !swiperInstance) return
+
+		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
+		if (!canAdvance) return
+
+		this.setIsTransitioning(careerUUID, true)
+		swiperInstance.slideNext()
+		setTimeout(() => this.setIsTransitioning(careerUUID, false), 400)
 	})
 
 	public getIsTransitioning = action((careerUUID: CareerUUID): boolean => {

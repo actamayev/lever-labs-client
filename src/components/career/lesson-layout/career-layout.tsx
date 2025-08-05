@@ -3,9 +3,9 @@
 import "swiper/css"
 import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
+import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { motion, AnimatePresence } from "framer-motion"
-import { useEffect, useState, useCallback } from "react"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
@@ -34,8 +34,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
 	const navigationCommand = careerQuestClass.getNavigationCommand(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
-
-	// Get main slides from career instance
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
 	// Then modify the above useEffect to set this flag:
@@ -100,18 +98,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setRightContent({ type: "image", icon: textChild.triggerImage })
 	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
 
-	const handleGoToNextSection = useCallback(() => {
-		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
-		if (!swiperInstance) return
-
-		const canAdvance = careerQuestClass.canAdvanceToNextMain(careerData.careerUUID, currentMainSlideIndex)
-		if (!canAdvance) return
-
-		careerQuestClass.setIsTransitioning(careerData.careerUUID, true)
-		swiperInstance.slideNext()
-		setTimeout(() => careerQuestClass.setIsTransitioning(careerData.careerUUID, false), 400)
-	}, [currentMainSlideIndex, careerData.careerUUID])
-
 	useEffect(() => {
 		return () => {
 			careerQuestClass.removeSwiperInstance(careerData.careerUUID)
@@ -163,7 +149,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 													{slide.type === "challenge" ? (
 														<CqChatInterface
 															challengeData={slide.data}
-															onGoToNextSection={handleGoToNextSection}
+															onGoToNextSection={() => careerQuestClass.handleGoToNextSection(careerData.careerUUID)}
 														/>
 													) : (
 														<TextParentCard
