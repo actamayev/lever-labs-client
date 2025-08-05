@@ -4,7 +4,6 @@ import "swiper/css"
 import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import type { Swiper as SwiperType } from "swiper"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState, useCallback } from "react"
 import RightContent from "./right-content"
@@ -12,7 +11,6 @@ import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
 import CqChatInterface from "../chat/cq-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
-import saveCareerProgress from "../../../utils/career-quest/save-career-progress"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
 
@@ -88,41 +86,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		setNavigationCommand
 	)
 
-	const handleMainSlideChange = useCallback((swiper: SwiperType) => {
-		console.log("handleMainSlideChange", swiper.activeIndex)
-		const newIndex = swiper.activeIndex
-		const previousIndex = currentMainSlideIndex
-		const isGoingBackward = newIndex < previousIndex
-
-		// Update class state instead of component state
-		careerQuestClass.setCurrentMainSlideIndex(careerData.careerUUID, newIndex)
-
-		const currentSlide = mainSlides[newIndex]
-
-		if (currentSlide.type === "challenge") {
-			void careerQuestClass.markChallengeAsSeen(careerData.careerUUID, currentSlide.data.challengeUUID)
-			void saveCareerProgress(careerData.careerUUID, currentSlide.data.challengeUUID)
-
-			careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, 0)
-			return
-		}
-
-		// For text sections, determine textChildIndex
-		let textChildIndex: number
-		if (isGoingBackward) {
-			textChildIndex = currentSlide.data.children.length - 1
-		} else {
-			textChildIndex = 0
-		}
-		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, textChildIndex)
-
-		// Save progress when transitioning to text sections
-		if (currentSlide.type === "textParent") {
-			const textChild = currentSlide.data.children[textChildIndex]
-			void saveCareerProgress(careerData.careerUUID, textChild.id)
-		}
-	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
-
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
 		if (!isDataReady) {
@@ -149,17 +112,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		setRightContent({ type: "image", icon: textChild.triggerImage })
 	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
-
-	const handleTextChildIndexChange = useCallback((newIndex: number) => {
-		careerQuestClass.setCurrentTextChildIndex(careerData.careerUUID, newIndex)
-
-		// Save progress when text child changes
-		const currentSlide = mainSlides[currentMainSlideIndex]
-		if (currentSlide.type !== "textParent") return
-
-		const textChild = currentSlide.data.children[newIndex]
-		void saveCareerProgress(careerData.careerUUID, textChild.id)
-	}, [careerData.careerUUID, currentMainSlideIndex, mainSlides])
 
 	const handleGoToNextSection = useCallback(() => {
 		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
@@ -204,7 +156,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									onSwiper={(swiper) => {
 										careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 									}}
-									onSlideChange={isDataReady ? handleMainSlideChange : undefined} // Remove isInitializing check
+									onSlideChange={(_swiper) => careerQuestClass.handleMainSlideChange(careerData.careerUUID)} // Remove isInitializing check
 									className="h-full"
 									style={{
 										"--swiper-theme-color": "#000000",
@@ -235,7 +187,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 																	setRightContent({ type: "image", icon: triggerImage })
 																}
 															}}
-															onTextSectionChange={handleTextChildIndexChange}
+															onTextSectionChange={(newIndex) => careerQuestClass.handleTextChildIndexChange(careerData.careerUUID, newIndex)}
 															isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
 															navigationCommand={navigationCommand}
 															initialTextIndex={currentTextChildIndex}

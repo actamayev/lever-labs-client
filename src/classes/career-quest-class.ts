@@ -17,6 +17,7 @@ import {
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
+import saveCareerProgress from "../utils/career-quest/save-career-progress"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -671,6 +672,60 @@ class CareerQuestClass {
 		}
 		// For challenge slides, must be completed
 		return this.isCodeCorrect(currentSlide.data)
+	})
+
+	public handleMainSlideChange = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		const swiper = this.getSwiperInstance(careerUUID)
+		if (!career || !isDataReady || !swiper) return
+
+		const newIndex = swiper.activeIndex
+		const previousIndex = career.currentMainSlideIndex
+		const isGoingBackward = newIndex < previousIndex
+
+		// Update class state instead of component state
+		careerQuestClass.setCurrentMainSlideIndex(careerUUID, newIndex)
+
+		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
+
+		if (currentSlide.type === "challenge") {
+			void careerQuestClass.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
+			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
+
+			careerQuestClass.setCurrentTextChildIndex(careerUUID, 0)
+			return
+		}
+
+		// For text sections, determine textChildIndex
+		let textChildIndex: number
+		if (isGoingBackward) {
+			textChildIndex = currentSlide.data.children.length - 1
+		} else {
+			textChildIndex = 0
+		}
+		careerQuestClass.setCurrentTextChildIndex(careerUUID, textChildIndex)
+
+		// Save progress when transitioning to text sections
+		if (currentSlide.type === "textParent") {
+			const textChild = currentSlide.data.children[textChildIndex]
+			void saveCareerProgress(careerUUID, textChild.id)
+		}
+	})
+
+	public handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
+		const career = this.getCareer(careerUUID)
+		const swiper = this.getSwiperInstance(careerUUID)
+		if (!career || !swiper) return
+
+		careerQuestClass.setCurrentTextChildIndex(careerUUID, newIndex)
+
+		// Save progress when text child changes
+		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
+		if (currentSlide.type !== "textParent") return
+
+		const textChild = currentSlide.data.children[newIndex]
+		void saveCareerProgress(careerUUID, textChild.id)
 	})
 
 	public logout(): void {
