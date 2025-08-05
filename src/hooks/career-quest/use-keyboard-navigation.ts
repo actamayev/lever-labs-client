@@ -74,11 +74,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 					}
 				} else {
 					// Move to next text child
-					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-					const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
-					if (canGoNext && textParentSwiperInstance) {
-						textParentSwiperInstance.slideNext()
-					}
+					careerQuestClass.handleGoToNextTextChild(careerUUID)
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
@@ -87,41 +83,13 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 
 				if (!isAtFirstTextChild) {
 					// Move to previous text child
-					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-					const canGoPrev = currentTextChildIndex > 0
-					if (canGoPrev && textParentSwiperInstance) {
-						textParentSwiperInstance.slidePrev()
-					}
+					careerQuestClass.handleGoToPreviousTextChild(careerUUID)
 				} else {
-					// Move to previous main slide if possible
-					if (currentMainSlideIndex > 0) {
-						careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-						careerQuestClass.setIsTransitioning(careerUUID, true)
-						swiperInstance.slidePrev()
-
-						// Set the text child index to the last child of the previous text parent
-						const prevSlide = mainSlides[currentMainSlideIndex - 1]
-						if (prevSlide.type === "textParent") {
-							careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
-						}
-
-						careerQuestClass.setIsTransitioning(careerUUID, false)
-					}
+					careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 				}
 			} else {
 				// Challenge slide - always go to previous main slide
-				if (currentMainSlideIndex <= 0) return
-				careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-				careerQuestClass.setIsTransitioning(careerUUID, true)
-				swiperInstance.slidePrev()
-
-				// Set the text child index to the last child of the previous text parent
-				const prevSlide = mainSlides[currentMainSlideIndex - 1]
-				if (prevSlide.type === "textParent") {
-					careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
-				}
-
-				careerQuestClass.setIsTransitioning(careerUUID, false)
+				careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 			}
 		}
 	// eslint-disable-next-line max-len

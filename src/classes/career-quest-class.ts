@@ -214,7 +214,7 @@ class CareerQuestClass {
 		career.currentMainSlideIndex = index
 	})
 
-	public setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
+	private setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.currentTextChildIndex = index
@@ -817,6 +817,57 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.lastSlideChangeTime ?? 0
 	}
+
+	public handleGoToNextTextChild = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		if (currentSlide.type !== "textParent") return
+
+		const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
+		const mainSlides = this.getMainSlides(careerUUID)
+		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
+		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+		if (!canGoNext || !textParentSwiperInstance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		textParentSwiperInstance.slideNext()
+		this.setIsTransitioning(careerUUID, false)
+	})
+
+	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		if (currentSlide.type !== "textParent") return
+
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const canGoPrev = currentTextChildIndex > 0
+		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
+		if (!canGoPrev || !textParentSwiperInstance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		textParentSwiperInstance.slidePrev()
+		this.setIsTransitioning(careerUUID, false)
+	})
+
+	public handleGoToPreviousMainSection = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!swiperInstance) return
+
+		const canGoPrev = career.currentMainSlideIndex > 0
+		if (!canGoPrev) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		swiperInstance.slidePrev()
+		this.setIsTransitioning(careerUUID, false)
+	})
 
 	public setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
 		const career = this.getCareer(careerUUID)
