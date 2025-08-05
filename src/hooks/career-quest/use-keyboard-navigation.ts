@@ -120,14 +120,13 @@ export default function useKeyboardNavigation(
 				// Challenge slide - always go to previous main slide
 				if (currentMainSlideIndex <= 0) return
 				console.log("ArrowUp", currentMainSlideIndex)
-				console.log("swiperInstance", swiperInstance.allowSlidePrev)
+				console.log("swiperInstance.allowSlidePrev", swiperInstance.allowSlidePrev)
 				lastKeyPressTime.current = now
 				setIsTransitioning(true)
 				swiperInstance.slidePrev()
 
 				// Set the text child index to the last child of the previous text parent
 				const prevSlide = mainSlides[currentMainSlideIndex - 1]
-				console.log(prevSlide)
 				if (prevSlide.type === "textParent") {
 					careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 				}
