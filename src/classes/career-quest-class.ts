@@ -52,6 +52,7 @@ interface CareerInstance {
 	mainSlides: MainSlide[]
 	swiperInstance: SwiperType | null  // ADD THIS LINE
 	isTransitioning: boolean
+	navigationCommand: "next" | "prev" | null
 }
 
 class CareerQuestClass {
@@ -135,7 +136,8 @@ class CareerQuestClass {
 			currentTextChildIndex: 0,
 			mainSlides,
 			swiperInstance: null,
-			isTransitioning: false
+			isTransitioning: false,
+			navigationCommand: null
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -739,6 +741,17 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.isTransitioning = isTransitioning
+	})
+
+	public getNavigationCommand = action((careerUUID: CareerUUID): "next" | "prev" | null => {
+		const career = this.getCareer(careerUUID)
+		return career?.navigationCommand || null
+	})
+
+	public setNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: "next" | "prev" | null): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.navigationCommand = navigationCommand
 	})
 
 	public logout(): void {

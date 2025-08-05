@@ -32,8 +32,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	})
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
-	//TODO 8/4/25: Move these states to the class:
-	const [navigationCommand, setNavigationCommand] = useState<"next" | "prev" | null>(null) // Command for text parent
+	const navigationCommand = careerQuestClass.getNavigationCommand(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
 	// Get main slides from career instance
@@ -71,15 +70,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		}
 	}, [isDataReady, careerData.careerUUID, mainSlides, careerData.sections])
 
-	useMousewheelNavigation(
-		careerData.careerUUID,
-		setNavigationCommand
-	)
-
-	useKeyboardNavigation(
-		careerData.careerUUID,
-		setNavigationCommand
-	)
+	useMousewheelNavigation(careerData.careerUUID)
+	useKeyboardNavigation(careerData.careerUUID)
 
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {

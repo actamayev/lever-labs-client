@@ -40,7 +40,6 @@ function useEffectKeyboardNavigation(): string | null {
 // eslint-disable-next-line max-params
 export default function useKeyboardNavigation(
 	careerUUID: CareerUUID,
-	setNavigationCommand: (command: "next" | "prev" | null) => void,
 ): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
@@ -51,6 +50,7 @@ export default function useKeyboardNavigation(
 	const SLIDE_COOLDOWN = 200
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
+	const navigationCommand = careerQuestClass.getNavigationCommand(careerUUID)
 	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
@@ -85,8 +85,8 @@ export default function useKeyboardNavigation(
 				} else {
 					// Move to next text child
 					lastKeyPressTime.current = now
-					setNavigationCommand("next")
-					setTimeout(() => setNavigationCommand(null), 100)
+					careerQuestClass.setNavigationCommand(careerUUID, "next")
+					setTimeout(() => careerQuestClass.setNavigationCommand(careerUUID, null), 100)
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
@@ -96,8 +96,8 @@ export default function useKeyboardNavigation(
 				if (!isAtFirstTextChild) {
 					// Move to previous text child
 					lastKeyPressTime.current = now
-					setNavigationCommand("prev")
-					setTimeout(() => setNavigationCommand(null), 100)
+					careerQuestClass.setNavigationCommand(careerUUID, "prev")
+					setTimeout(() => careerQuestClass.setNavigationCommand(careerUUID, null), 100)
 				} else {
 					// Move to previous main slide if possible
 					if (currentMainSlideIndex > 0) {
@@ -130,6 +130,6 @@ export default function useKeyboardNavigation(
 				setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
+	// eslint-disable-next-line react-hooks/exhaustive-deps, max-len
+	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, navigationCommand])
 }
