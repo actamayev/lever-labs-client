@@ -119,8 +119,6 @@ export default function useKeyboardNavigation(
 			} else {
 				// Challenge slide - always go to previous main slide
 				if (currentMainSlideIndex <= 0) return
-				console.log("ArrowUp", currentMainSlideIndex)
-				console.log("swiperInstance.allowSlidePrev", swiperInstance.allowSlidePrev)
 				lastKeyPressTime.current = now
 				setIsTransitioning(true)
 				swiperInstance.slidePrev()
