@@ -853,10 +853,8 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		const swiperInstance = this.getSwiperInstance(careerUUID)
-		if (!swiperInstance) return
-
 		const canGoPrev = career.currentMainSlideIndex > 0
-		if (!canGoPrev) return
+		if (!swiperInstance || !canGoPrev) return
 
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
@@ -866,9 +864,8 @@ class CareerQuestClass {
 
 	public setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
 		const career = this.getCareer(careerUUID)
-		if (career) {
-			career.lastSlideChangeTime = timestamp
-		}
+		if (!career) return
+		career.lastSlideChangeTime = timestamp
 	})
 
 	public getCurrentMainSlide(careerUUID: CareerUUID): MainSlide {
