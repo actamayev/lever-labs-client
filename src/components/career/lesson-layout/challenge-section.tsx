@@ -47,18 +47,9 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const hasSeenExpectedBlocksRef = useRef(false) // NEW: Track if we've seen the initial blocks load
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
-
-	// Get the current blockly JSON (either initial or updated from backend)
-	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
 	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
 
-	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
-
-	// Update CPP code when blockly JSON changes
-	useEffect(() => {
-		const newCppCode = generateCppFromJson(currentBlocklyJson)
-		setCppCode(newCppCode)
-	}, [currentBlocklyJson])
+	const cppCode = careerQuestClass.getCppCode({ ...challengeData })
 
 	// Debounced save function to prevent multiple rapid saves
 	const debouncedSave = useCallback((blocklyJson: BlocklyJson) => {
@@ -100,7 +91,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
 	// Get current JSON from class for comparison, but don't depend on it
-		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
+		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
 		const expectedBlockCount = getBlockCount(currentJsonFromClass)
 		const actualBlockCount = getBlockCount(newBlocklyJson)
 
@@ -156,12 +147,12 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}
 
 		// Update local state
-		setCppCode(generateCppFromJson(newBlocklyJson))
+		careerQuestClass.setCppCode({ ...challengeData }, generateCppFromJson(newBlocklyJson))
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)
 
-	}, [challengeData]) // REMOVED: currentBlocklyJson dependency
+	}, [challengeData])
 
 	// Reset effects
 	useEffect(() => {
@@ -207,8 +198,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				<div className="flex-1 min-h-0">
 					<InteractiveMiniSandbox
 						key={workspaceKey}
-						toolboxConfig={challengeData.toolboxConfig}
-						blocklyJson={currentBlocklyJson}
+						careerUUIDChallengeUUID={{ ...challengeData }}
 						onJsonChange={handleJsonChange}
 					/>
 				</div>
@@ -228,7 +218,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						)}
 						shadowClass={foxColors.shadow2}
 						onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
-						disabled={isStreaming || isEmpty(cppCode)}
+						disabled={isStreaming || isEmpty(careerQuestClass.getCppCode({ ...challengeData }))}
 					>
 						CHECK CODE
 					</TactileButton>

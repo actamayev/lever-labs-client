@@ -1,5 +1,6 @@
 "use client"
 
+import * as Blockly from "blockly"
 import {
 	InteractionType,
 	CqChatbotStreamStartEvent,
@@ -17,6 +18,7 @@ import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -35,6 +37,7 @@ interface ChallengeInstance extends ChatData, StreamingState {
 	challengeData: CqChallengeData
 	isCompleted: boolean
 	updatedBlocklyJson?: BlocklyJson
+	cppCode: string
 }
 
 interface CareerInstance {
@@ -103,7 +106,10 @@ class CareerQuestClass {
 				currentInteractionType: null,
 
 				// Completion
-				isCompleted: false
+				isCompleted: false,
+
+				// Code
+				cppCode: ""
 			})
 		})
 
@@ -591,6 +597,7 @@ class CareerQuestClass {
 		// Update blockly JSON if provided
 		if (sandboxJson) {
 			challenge.updatedBlocklyJson = normalizeSandboxJson(sandboxJson)
+			challenge.cppCode = generateCppFromJson(challenge.updatedBlocklyJson)
 		}
 
 		if (isCompleted) {
@@ -600,15 +607,16 @@ class CareerQuestClass {
 	})
 
 	// Blockly JSON management
-	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
+	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson || null
+		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson as BlocklyJson
 	}
 
 	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.updatedBlocklyJson = newBlocklyJson
+		challenge.cppCode = generateCppFromJson(newBlocklyJson)
 	})
 
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
@@ -878,6 +886,22 @@ class CareerQuestClass {
 		const mainSlides = this.getMainSlides(careerUUID)
 		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
 		return mainSlides[currentMainSlideIndex]
+	}
+
+	public getCppCode(cqInformation: CareerUUIDChallengeUUID): string {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.cppCode || ""
+	}
+
+	public setCppCode = action((cqInformation: CareerUUIDChallengeUUID, cppCode: string): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.cppCode = cppCode
+	})
+
+	public getToolboxConfig(cqInformation: CareerUUIDChallengeUUID): Blockly.utils.toolbox.ToolboxDefinition {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.challengeData.toolboxConfig as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
 	public logout(): void {

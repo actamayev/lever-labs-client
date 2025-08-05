@@ -14,24 +14,25 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
+import careerQuestClass from "../../../classes/career-quest-class"
 
 interface Props {
-	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
-	blocklyJson: BlocklyJson
+	careerUUIDChallengeUUID: CareerUUIDChallengeUUID
 	onJsonChange: (json: BlocklyJson) => void
 }
 
 // eslint-disable-next-line max-lines-per-function
 function InteractiveMiniSandbox(props: Props) {
 	const {
-		toolboxConfig,
-		blocklyJson,
+		careerUUIDChallengeUUID,
 		onJsonChange
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
+	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
+	const blocklyJson = careerQuestClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 	useSensorPollingUseEffect()
 
 	const workspaceConfiguration = useMemo(() => {
