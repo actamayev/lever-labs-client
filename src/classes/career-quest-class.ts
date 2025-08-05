@@ -705,16 +705,15 @@ class CareerQuestClass {
 		void saveCareerProgress(careerUUID, textChild.id)
 	})
 
-	public handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
+	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
 		const career = this.getCareer(careerUUID)
 		const swiper = this.getSwiperInstance(careerUUID)
 		if (!career || !swiper) return
 
-		this.setCurrentTextChildIndex(careerUUID, newIndex)
-
 		// Save progress when text child changes
 		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
 		if (currentSlide.type !== "textParent") return
+		this.setCurrentTextChildIndex(careerUUID, newIndex)
 
 		const textChild = currentSlide.data.children[newIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
@@ -830,6 +829,9 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, true)
 		textParentSwiperInstance.slideNext()
 		this.setIsTransitioning(careerUUID, false)
+		const newIndex = textParentSwiperInstance.activeIndex
+		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
 	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
@@ -847,6 +849,9 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, true)
 		textParentSwiperInstance.slidePrev()
 		this.setIsTransitioning(careerUUID, false)
+		const newIndex = textParentSwiperInstance.activeIndex
+		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
 	public handleGoToPreviousMainSection = action((careerUUID: CareerUUID): void => {

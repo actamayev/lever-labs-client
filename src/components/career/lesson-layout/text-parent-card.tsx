@@ -1,6 +1,5 @@
+import { useEffect } from "react"
 import { observer } from "mobx-react"
-import { useCallback, useEffect } from "react"
-import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -34,17 +33,6 @@ function TextParentCard(props: TextParentCardProps) {
 		careerQuestClass.onTextSlideChange(careerUUID, targetText.triggerImage)
 	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, careerUUID])
 
-	// Handle nested swiper slide change
-	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
-		const newIndex = swiper.activeIndex
-
-		const currentText = textParentData.children[newIndex]
-		careerQuestClass.onTextSlideChange(careerUUID, currentText.triggerImage)
-
-		// Notify parent of the index change - parent is source of truth
-		careerQuestClass.handleTextChildIndexChange(careerUUID, newIndex)
-	}, [textParentData.children, careerUUID])
-
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
 			<Swiper
@@ -59,7 +47,6 @@ function TextParentCard(props: TextParentCardProps) {
 				onSwiper={(swiper) => {
 					careerQuestClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
 				}}
-				onSlideChange={handleNestedSlideChange}
 				className="h-full"
 				nested={true}
 				initialSlide={currentTextChildIndex}  // Set initial slide
