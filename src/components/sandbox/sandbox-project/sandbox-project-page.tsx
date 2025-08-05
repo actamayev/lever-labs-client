@@ -169,7 +169,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 		)
 	}
 
-	// 4/23/25: TODO Fix the stop button icon from jittering on hover
+	// TODO: 4/23/25: Fix the stop button icon from jittering on hover
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			{/* Header with back button, project name, and code toggle */}

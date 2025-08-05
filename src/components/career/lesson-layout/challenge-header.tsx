@@ -73,7 +73,7 @@ export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps)
 												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-10"
 												shadowClass="shadow-bee-2"
 												onClick={() => {
-													// TODO: Implement reset functionality
+													// TODO 8/5/25: Implement reset functionality
 												}}
 											>
 												<RotateCcw className="w-4 h-4" />
@@ -106,7 +106,7 @@ export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps)
 												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
 												shadowClass="shadow-bee-2"
 												onClick={() => {
-													// TODO: Implement reset functionality
+													// TODO 8/5/25: Implement reset functionality
 												}}
 											>
 												<RotateCcw className="w-4 h-4" />
