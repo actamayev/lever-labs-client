@@ -595,7 +595,6 @@ class CareerQuestClass {
 
 		if (isCompleted) {
 			career.completedChallengeIds.add(cqInformation.challengeUUID)
-			// ADD THIS LINE:
 			this.updateSwiperNavigation(cqInformation.careerUUID)
 		}
 	})
@@ -861,8 +860,7 @@ class CareerQuestClass {
 			if (slide.type === "textParent") return false
 			return slide.data.challengeUUID === challengeUUID
 		})
-		if (index === -1) return
-		if (index === career.currentMainSlideIndex) return
+		if (index === -1 || index === career.currentMainSlideIndex) return
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		career.swiperInstance.slideTo(index)

@@ -48,7 +48,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 
-
 	// Get the current blockly JSON (either initial or updated from backend)
 	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
 	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
