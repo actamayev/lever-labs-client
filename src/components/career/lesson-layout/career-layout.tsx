@@ -116,13 +116,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									spaceBetween={0}
 									keyboard={false}
 									speed={400}
-									allowSlideNext={isDataReady}
-									allowSlidePrev={isDataReady}
+									allowSlideNext={false}
+									allowSlidePrev={true}
 									allowTouchMove={false}
 									onSwiper={(swiper) => {
 										careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 									}}
-									onSlideChange={(_swiper) => careerQuestClass.handleMainSlideChange(careerData.careerUUID)} // Remove isInitializing check
 									className="h-full"
 								>
 									{!isDataReady ? (

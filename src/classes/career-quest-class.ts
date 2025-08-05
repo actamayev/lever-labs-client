@@ -669,7 +669,7 @@ class CareerQuestClass {
 		return this.isCodeCorrect(currentSlide.data)
 	})
 
-	public handleMainSlideChange = action((careerUUID: CareerUUID): void => {
+	private handleMainSlideChange = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		const swiper = this.getSwiperInstance(careerUUID)
@@ -719,26 +719,12 @@ class CareerQuestClass {
 		void saveCareerProgress(careerUUID, textChild.id)
 	})
 
-	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {
-		const career = this.getCareer(careerUUID)
-		const swiperInstance = this.getSwiperInstance(careerUUID)
-		if (!career || !swiperInstance) return
-
-		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
-		if (!canAdvance) return
-
-		this.setLastSlideChangeTime(careerUUID, Date.now())
-		this.setIsTransitioning(careerUUID, true)
-		swiperInstance.slideNext()
-		this.setIsTransitioning(careerUUID, false)
-	})
-
 	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
 		const career = this.getCareer(careerUUID)
 		return career?.isTransitioning || false
 	}
 
-	public setIsTransitioning = action((careerUUID: CareerUUID, isTransitioning: boolean): void => {
+	private setIsTransitioning = action((careerUUID: CareerUUID, isTransitioning: boolean): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.isTransitioning = isTransitioning
@@ -769,15 +755,6 @@ class CareerQuestClass {
 		career.textParentSwipers.set(textParentId, swiperInstance)
 	})
 
-	public removeTextParentSwiperInstance = action((
-		careerUUID: CareerUUID,
-		textParentId: string
-	): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.textParentSwipers.delete(textParentId)
-	})
-
 	public getTextParentSwiperInstance(
 		careerUUID: CareerUUID,
 		textParentId: string
@@ -785,12 +762,6 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.textParentSwipers.get(textParentId) || null
 	}
-
-	public removeAllTextParentSwipers = action((careerUUID: CareerUUID): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.textParentSwipers.clear()
-	})
 
 	public cleanupAllSwipers = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
@@ -854,6 +825,21 @@ class CareerQuestClass {
 		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
+	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!career || !swiperInstance) return
+
+		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
+		if (!canAdvance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		swiperInstance.slideNext()
+		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
+	})
+
 	public handleGoToPreviousMainSection = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
@@ -865,6 +851,7 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, true)
 		swiperInstance.slidePrev()
 		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
 	})
 
 	public setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
