@@ -854,6 +854,21 @@ class CareerQuestClass {
 		this.handleMainSlideChange(careerUUID)
 	})
 
+	public changeMainSlideToCqChat = action((careerUUID: CareerUUID, challengeUUID: ChallengeUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career || !career.swiperInstance) return
+		const index = career.mainSlides.findIndex(slide => {
+			if (slide.type === "textParent") return false
+			return slide.data.challengeUUID === challengeUUID
+		})
+		if (index === -1) return
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		career.swiperInstance.slideTo(index)
+		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
+	})
+
 	private setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
