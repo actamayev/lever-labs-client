@@ -61,6 +61,7 @@ class CareerQuestClass {
 	// Main data structure: careerUUID -> CareerInstance
 	public careers = observable.map<CareerUUID, CareerInstance>()
 	public isDoneInitializing = false
+	public readonly SLIDE_COOLDOWN = 200 // ms
 
 	constructor() {
 		makeAutoObservable(this)

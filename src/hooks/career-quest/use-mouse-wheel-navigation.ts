@@ -4,10 +4,8 @@ import { useCallback, useEffect, useRef } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 
-// eslint-disable-next-line max-len, max-params, max-lines-per-function
-export default function useMousewheelNavigation(
-	careerUUID: CareerUUID,
-): void {
+// eslint-disable-next-line max-lines-per-function
+export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const gestureActive = useRef(false)
@@ -20,7 +18,6 @@ export default function useMousewheelNavigation(
 	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
-	const WHEEL_COOLDOWN = 200 // Same as keyboard cooldown
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
 
 	// Helper function to check if the mouse is over a chat component
@@ -82,7 +79,7 @@ export default function useMousewheelNavigation(
 
 			// Respect cooldown and transitioning state
 			const now = Date.now()
-			if (now - lastWheelTime.current < WHEEL_COOLDOWN || isTransitioning || !swiperInstance) {
+			if (now - lastWheelTime.current < careerQuestClass.SLIDE_COOLDOWN || isTransitioning || !swiperInstance) {
 				return
 			}
 

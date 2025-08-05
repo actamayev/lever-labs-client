@@ -36,18 +36,13 @@ function useEffectKeyboardNavigation(): string | null {
 	return keyPressed
 }
 
-
-// eslint-disable-next-line max-params
-export default function useKeyboardNavigation(
-	careerUUID: CareerUUID,
-): void {
+export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const lastKeyPressTime = useRef(0)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
-	const SLIDE_COOLDOWN = 200
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
 	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
@@ -57,7 +52,7 @@ export default function useKeyboardNavigation(
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		const now = Date.now()
-		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
+		if (now - lastKeyPressTime.current < careerQuestClass.SLIDE_COOLDOWN) return
 
 		const currentSlide = mainSlides[currentMainSlideIndex]
 
