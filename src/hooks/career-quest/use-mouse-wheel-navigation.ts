@@ -103,9 +103,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 							// Move to next main slide if possible
 							if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 								lastWheelTime.current = now
-								careerQuestClass.setIsTransitioning(careerUUID, true)
-								swiperInstance.slideNext()
-								careerQuestClass.setIsTransitioning(careerUUID, false)
+								careerQuestClass.handleGoToNextSection(careerUUID)
 								hasNavigatedInGesture.current = true
 							}
 						} else {
@@ -121,9 +119,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 						// Challenge slide - try to move to next main slide
 						if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 							lastWheelTime.current = now
-							careerQuestClass.setIsTransitioning(careerUUID, true)
-							swiperInstance.slideNext()
-							careerQuestClass.setIsTransitioning(careerUUID, false)
+							careerQuestClass.handleGoToNextSection(careerUUID)
 							hasNavigatedInGesture.current = true
 						}
 					}

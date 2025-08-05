@@ -18,15 +18,8 @@ function TextParentCard(props: TextParentCardProps) {
 	const textParentData = slide.data
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
-	const currentSlide = mainSlides[currentMainSlideIndex]
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
-
-	const onSlideChange = useCallback((triggerImage: string) => {
-		if (currentSlide.type === "textParent") {
-			careerQuestClass.setRightContent(careerUUID, { type: "image", icon: triggerImage })
-		}
-	}, [currentSlide, careerUUID])
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
@@ -38,19 +31,19 @@ function TextParentCard(props: TextParentCardProps) {
 
 		nestedSwiperInstance.slideTo(currentTextChildIndex, 0)
 		const targetText = textParentData.children[currentTextChildIndex]
-		onSlideChange(targetText.triggerImage)
-	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
+		careerQuestClass.onTextSlideChange(careerUUID, targetText.triggerImage)
+	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, careerUUID])
 
 	// Handle nested swiper slide change
 	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
 		const newIndex = swiper.activeIndex
 
 		const currentText = textParentData.children[newIndex]
-		onSlideChange(currentText.triggerImage)
+		careerQuestClass.onTextSlideChange(careerUUID, currentText.triggerImage)
 
 		// Notify parent of the index change - parent is source of truth
 		careerQuestClass.handleTextChildIndexChange(careerUUID, newIndex)
-	}, [textParentData.children, onSlideChange, careerUUID])
+	}, [textParentData.children, careerUUID])
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">

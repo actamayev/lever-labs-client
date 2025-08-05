@@ -61,9 +61,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				// Challenge slide - try to move to next main slide
 				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 					lastKeyPressTime.current = now
-					careerQuestClass.setIsTransitioning(careerUUID, true)
-					swiperInstance.slideNext()
-					careerQuestClass.setIsTransitioning(careerUUID, false)
+					careerQuestClass.handleGoToNextSection(careerUUID)
 				}
 			} else {
 				const totalTextChildren = currentSlide.data.children.length

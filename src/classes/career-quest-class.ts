@@ -1,8 +1,5 @@
-/* eslint-disable max-lines-per-function */
 "use client"
 
-import type { Swiper as SwiperType } from "swiper"
-import { action, makeAutoObservable, observable } from "mobx"
 import {
 	InteractionType,
 	CqChatbotStreamStartEvent,
@@ -14,10 +11,12 @@ import {
 	BlocklyJson,
 	ChallengeUUID
 } from "@bluedotrobots/common-ts"
-import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import type { Swiper as SwiperType } from "swiper"
+import { action, makeAutoObservable, observable } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
+import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -53,7 +52,6 @@ interface CareerInstance {
 	swiperInstance: SwiperType | null
 	textParentSwipers: Map<string, SwiperType | null>
 	isTransitioning: boolean
-	// navigationCommand: "next" | "prev" | null
 	rightContent: RightContent
 }
 
@@ -414,8 +412,6 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
-	// UPDATE: Add position update when evaluation result changes completion
-	// UPDATE this existing method in career-quest-class.ts:
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
@@ -803,6 +799,14 @@ class CareerQuestClass {
 		if (!career) return
 		career.swiperInstance = null
 		career.textParentSwipers.clear()
+	})
+
+	public onTextSlideChange = action((careerUUID: CareerUUID, triggerImage: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		if (currentSlide.type !== "textParent") return
+		this.setRightContent(careerUUID, { type: "image", icon: triggerImage })
 	})
 
 	public logout(): void {
