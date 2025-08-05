@@ -749,17 +749,6 @@ class CareerQuestClass {
 		career.isTransitioning = isTransitioning
 	})
 
-	// public getNavigationCommand = action((careerUUID: CareerUUID): "next" | "prev" | null => {
-	// 	const career = this.getCareer(careerUUID)
-	// 	return career?.navigationCommand || null
-	// })
-
-	// public setNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: "next" | "prev" | null): void => {
-	// 	const career = this.getCareer(careerUUID)
-	// 	if (!career) return
-	// 	career.navigationCommand = navigationCommand
-	// })
-
 	public getRightContent = action((careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
 		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage || "" }

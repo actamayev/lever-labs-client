@@ -108,7 +108,7 @@ export default function useMousewheelNavigation(
 								lastWheelTime.current = now
 								careerQuestClass.setIsTransitioning(careerUUID, true)
 								swiperInstance.slideNext()
-								setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
+								careerQuestClass.setIsTransitioning(careerUUID, false)
 								hasNavigatedInGesture.current = true
 							}
 						} else {
@@ -126,7 +126,7 @@ export default function useMousewheelNavigation(
 							lastWheelTime.current = now
 							careerQuestClass.setIsTransitioning(careerUUID, true)
 							swiperInstance.slideNext()
-							setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
+							careerQuestClass.setIsTransitioning(careerUUID, false)
 							hasNavigatedInGesture.current = true
 						}
 					}
@@ -148,7 +148,7 @@ export default function useMousewheelNavigation(
 									careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 								}
 
-								setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
+								careerQuestClass.setIsTransitioning(careerUUID, false)
 								hasNavigatedInGesture.current = true
 							}
 						} else {
@@ -173,7 +173,7 @@ export default function useMousewheelNavigation(
 								careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 							}
 
-							setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), WHEEL_COOLDOWN)
+							careerQuestClass.setIsTransitioning(careerUUID, false)
 							hasNavigatedInGesture.current = true
 						}
 					}

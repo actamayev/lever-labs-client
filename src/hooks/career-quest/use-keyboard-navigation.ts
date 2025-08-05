@@ -68,7 +68,7 @@ export default function useKeyboardNavigation(
 					lastKeyPressTime.current = now
 					careerQuestClass.setIsTransitioning(careerUUID, true)
 					swiperInstance.slideNext()
-					setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
+					careerQuestClass.setIsTransitioning(careerUUID, false)
 				}
 			} else {
 				const totalTextChildren = currentSlide.data.children.length
@@ -81,7 +81,7 @@ export default function useKeyboardNavigation(
 						lastKeyPressTime.current = now
 						careerQuestClass.setIsTransitioning(careerUUID, true)
 						swiperInstance.slideNext()
-						setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
+						careerQuestClass.setIsTransitioning(careerUUID, false)
 					}
 				} else {
 					// Move to next text child
@@ -116,7 +116,7 @@ export default function useKeyboardNavigation(
 							careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 						}
 
-						setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
+						careerQuestClass.setIsTransitioning(careerUUID, false)
 					}
 				}
 			} else {
@@ -132,7 +132,7 @@ export default function useKeyboardNavigation(
 					careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
 				}
 
-				setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
+				careerQuestClass.setIsTransitioning(careerUUID, false)
 			}
 		}
 	// eslint-disable-next-line max-len
