@@ -72,9 +72,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 					// Move to next main slide if possible
 					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
 						lastKeyPressTime.current = now
-						careerQuestClass.setIsTransitioning(careerUUID, true)
-						swiperInstance.slideNext()
-						careerQuestClass.setIsTransitioning(careerUUID, false)
+						careerQuestClass.handleGoToNextSection(careerUUID)
 					}
 				} else {
 					// Move to next text child
