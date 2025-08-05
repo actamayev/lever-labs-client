@@ -143,10 +143,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 											<SwiperSlide key={slide.id} className="h-full">
 												<div className="h-[calc(100vh-10rem)]">
 													{slide.type === "challenge" ? (
-														<CqChatInterface
-															challengeData={slide.data}
-															onGoToNextSection={() => careerQuestClass.handleGoToNextSection(careerData.careerUUID)}
-														/>
+														<CqChatInterface challengeData={slide.data} />
 													) : (
 														<TextParentCard
 															slide={slide}

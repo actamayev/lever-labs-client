@@ -680,15 +680,15 @@ class CareerQuestClass {
 		const isGoingBackward = newIndex < previousIndex
 
 		// Update class state instead of component state
-		careerQuestClass.setCurrentMainSlideIndex(careerUUID, newIndex)
+		this.setCurrentMainSlideIndex(careerUUID, newIndex)
 
 		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
 
 		if (currentSlide.type === "challenge") {
-			void careerQuestClass.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
+			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
 			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
 
-			careerQuestClass.setCurrentTextChildIndex(careerUUID, 0)
+			this.setCurrentTextChildIndex(careerUUID, 0)
 			return
 		}
 
@@ -699,7 +699,7 @@ class CareerQuestClass {
 		} else {
 			textChildIndex = 0
 		}
-		careerQuestClass.setCurrentTextChildIndex(careerUUID, textChildIndex)
+		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
@@ -710,7 +710,7 @@ class CareerQuestClass {
 		const swiper = this.getSwiperInstance(careerUUID)
 		if (!career || !swiper) return
 
-		careerQuestClass.setCurrentTextChildIndex(careerUUID, newIndex)
+		this.setCurrentTextChildIndex(careerUUID, newIndex)
 
 		// Save progress when text child changes
 		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
@@ -720,7 +720,7 @@ class CareerQuestClass {
 		void saveCareerProgress(careerUUID, textChild.id)
 	})
 
-	public handleGoToNextSection = action((careerUUID: CareerUUID): void => {
+	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		if (!career || !swiperInstance) return
@@ -728,6 +728,7 @@ class CareerQuestClass {
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		if (!canAdvance) return
 
+		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		swiperInstance.slideNext()
 		this.setIsTransitioning(careerUUID, false)

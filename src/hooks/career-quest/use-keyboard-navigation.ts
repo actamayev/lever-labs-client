@@ -60,8 +60,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 			if (currentSlide.type === "challenge") {
 				// Challenge slide - try to move to next main slide
 				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-					careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-					careerQuestClass.handleGoToNextSection(careerUUID)
+					careerQuestClass.handleGoToNextMainSection(careerUUID)
 				}
 			} else {
 				const totalTextChildren = currentSlide.data.children.length
@@ -71,8 +70,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
 					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-						careerQuestClass.setLastSlideChangeTime(careerUUID, now)
-						careerQuestClass.handleGoToNextSection(careerUUID)
+						careerQuestClass.handleGoToNextMainSection(careerUUID)
 					}
 				} else {
 					// Move to next text child
