@@ -1,29 +1,33 @@
+import { observer } from "mobx-react"
 import type { Swiper as SwiperType } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { useCallback, useEffect, useState } from "react"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../../classes/career-quest-class"
 
-// Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
-    textParentData: TextParentSection
-    onSlideChange: (triggerImage: string) => void
-    onTextSectionChange: (index: number) => void
-    isActive: boolean
-    navigationCommand: "next" | "prev" | null
-    initialTextIndex: number  // This is now the current index from parent
+	slide: TextParentMainSlide
+	careerUUID: CareerUUID
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function TextParentCard(props: TextParentCardProps) {
-	const {
-		textParentData,
-		onSlideChange,
-		onTextSectionChange,
-		isActive,
-		navigationCommand,
-		initialTextIndex
-	} = props
-
+function TextParentCard(props: TextParentCardProps) {
+	const { slide, careerUUID} = props
+	// Move nested swiper into the class
 	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
+	const navigationCommand = careerQuestClass.getNavigationCommand(careerUUID)
+	const textParentData = slide.data
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const currentSlide = mainSlides[currentMainSlideIndex]
+	const initialTextIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
+
+	const onSlideChange = useCallback((triggerImage: string) => {
+		if (currentSlide.type === "textParent") {
+			careerQuestClass.setRightContent(careerUUID, { type: "image", icon: triggerImage })
+		}
+	}, [currentSlide, careerUUID])
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
@@ -65,8 +69,8 @@ export default function TextParentCard(props: TextParentCardProps) {
 		onSlideChange(currentText.triggerImage)
 
 		// Notify parent of the index change - parent is source of truth
-		onTextSectionChange(newIndex)
-	}, [textParentData.children, onSlideChange, onTextSectionChange])
+		careerQuestClass.handleTextChildIndexChange(careerUUID, newIndex)
+	}, [textParentData.children, onSlideChange, careerUUID])
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
@@ -103,3 +107,6 @@ export default function TextParentCard(props: TextParentCardProps) {
 		</div>
 	)
 }
+
+
+export default observer(TextParentCard)

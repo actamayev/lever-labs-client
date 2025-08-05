@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 "use client"
 import "swiper/css"
+import { useEffect } from "react"
 import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
-import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { motion, AnimatePresence } from "framer-motion"
 import RightContent from "./right-content"
@@ -26,15 +26,11 @@ function EmptyTextParentCard() {
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
-	const [rightContent, setRightContent] = useState<RightContent>({
-		type: "image",
-		icon: careerData.initialImage
-	})
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
-	const navigationCommand = careerQuestClass.getNavigationCommand(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
+	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 
 	// Then modify the above useEffect to set this flag:
 	useEffect(() => {
@@ -53,7 +49,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const currentSlide = mainSlides[indices.mainSlideIndex]
 
 		if (currentSlide.type === "challenge") {
-			setRightContent({ type: "challenge", challengeData: currentSlide.data })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
 			return
 		}
 
@@ -61,10 +57,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
 		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
 		} else {
 			const textChild = currentSlide.data.children[indices.textChildIndex]
-			setRightContent({ type: "image", icon: textChild.triggerImage })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
 		}
 	}, [isDataReady, careerData.careerUUID, mainSlides, careerData.sections])
 
@@ -74,7 +70,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 	// Handle right content updates based on current slide and lock state
 	useEffect(() => {
 		if (!isDataReady) {
-			setRightContent({ type: "image", icon: careerData.initialImage })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: careerData.initialImage })
 			return
 		}
 		if (isEmpty(mainSlides)) return
@@ -82,7 +78,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const currentSlide = mainSlides[currentMainSlideIndex]
 
 		if (currentSlide.type === "challenge") {
-			setRightContent({ type: "challenge", challengeData: currentSlide.data })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
 			return
 		}
 
@@ -90,12 +86,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
 
 		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			setRightContent({ type: "challenge", challengeData: nextChallenge.challengeData })
+			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
 			return
 		}
 		// Show the text image
 		const textChild = currentSlide.data.children[currentTextChildIndex]
-		setRightContent({ type: "image", icon: textChild.triggerImage })
+		careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
 	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, mainSlides, careerData.sections])
 
 	useEffect(() => {
@@ -153,17 +149,8 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 														/>
 													) : (
 														<TextParentCard
-															textParentData={slide.data}
-															onSlideChange={(triggerImage) => {
-																const currentSlide = mainSlides[currentMainSlideIndex]
-																if (currentSlide.type === "textParent") {
-																	setRightContent({ type: "image", icon: triggerImage })
-																}
-															}}
-															onTextSectionChange={(newIndex) => careerQuestClass.handleTextChildIndexChange(careerData.careerUUID, newIndex)}
-															isActive={currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)}
-															navigationCommand={navigationCommand}
-															initialTextIndex={currentTextChildIndex}
+															slide={slide}
+															careerUUID={careerData.careerUUID}
 														/>
 													)}
 												</div>

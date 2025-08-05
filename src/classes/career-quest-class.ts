@@ -53,6 +53,7 @@ interface CareerInstance {
 	swiperInstance: SwiperType | null  // ADD THIS LINE
 	isTransitioning: boolean
 	navigationCommand: "next" | "prev" | null
+	rightContent: RightContent
 }
 
 class CareerQuestClass {
@@ -137,7 +138,8 @@ class CareerQuestClass {
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
-			navigationCommand: null
+			navigationCommand: null,
+			rightContent: { type: "image", icon: careerDefinition.initialImage }
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -175,8 +177,6 @@ class CareerQuestClass {
 
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		const canGoBack = career.currentMainSlideIndex > 0
-		console.log("canAdvance", canAdvance)
-		console.log("canGoBack", canGoBack)
 
 		career.swiperInstance.allowSlideNext = canAdvance
 		career.swiperInstance.allowSlidePrev = canGoBack
@@ -739,7 +739,7 @@ class CareerQuestClass {
 
 		this.setIsTransitioning(careerUUID, true)
 		swiperInstance.slideNext()
-		setTimeout(() => this.setIsTransitioning(careerUUID, false), 400)
+		this.setIsTransitioning(careerUUID, false)
 	})
 
 	public getIsTransitioning = action((careerUUID: CareerUUID): boolean => {
@@ -762,6 +762,17 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.navigationCommand = navigationCommand
+	})
+
+	public getRightContent = action((careerUUID: CareerUUID): RightContent => {
+		const career = this.getCareer(careerUUID)
+		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage || "" }
+	})
+
+	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.rightContent = rightContent
 	})
 
 	public logout(): void {

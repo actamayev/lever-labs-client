@@ -96,7 +96,6 @@ export default function useMousewheelNavigation(
 			// Only navigate if we haven't already navigated in this gesture
 			if (!hasNavigatedInGesture.current) {
 				const currentSlide = mainSlides[currentMainSlideIndex]
-
 				if (e.deltaY > 0) {
 					// Scroll down - same logic as ArrowDown
 					if (currentSlide.type === "textParent") {
