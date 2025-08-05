@@ -50,7 +50,8 @@ export default function useKeyboardNavigation(
 	const SLIDE_COOLDOWN = 200
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
-	const navigationCommand = careerQuestClass.getNavigationCommand(careerUUID)
+	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+
 	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
@@ -85,8 +86,10 @@ export default function useKeyboardNavigation(
 				} else {
 					// Move to next text child
 					lastKeyPressTime.current = now
-					careerQuestClass.setNavigationCommand(careerUUID, "next")
-					setTimeout(() => careerQuestClass.setNavigationCommand(careerUUID, null), 100)
+					const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
+					if (canGoNext && textParentSwiperInstance) {
+						textParentSwiperInstance.slideNext()
+					}
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
@@ -96,8 +99,10 @@ export default function useKeyboardNavigation(
 				if (!isAtFirstTextChild) {
 					// Move to previous text child
 					lastKeyPressTime.current = now
-					careerQuestClass.setNavigationCommand(careerUUID, "prev")
-					setTimeout(() => careerQuestClass.setNavigationCommand(careerUUID, null), 100)
+					const canGoPrev = currentTextChildIndex > 0
+					if (canGoPrev && textParentSwiperInstance) {
+						textParentSwiperInstance.slidePrev()
+					}
 				} else {
 					// Move to previous main slide if possible
 					if (currentMainSlideIndex > 0) {
@@ -130,6 +135,6 @@ export default function useKeyboardNavigation(
 				setTimeout(() => careerQuestClass.setIsTransitioning(careerUUID, false), SLIDE_COOLDOWN)
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps, max-len
-	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, navigationCommand])
+	// eslint-disable-next-line max-len
+	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, textParentSwiperInstance])
 }

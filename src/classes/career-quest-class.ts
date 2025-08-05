@@ -50,9 +50,10 @@ interface CareerInstance {
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
 	mainSlides: MainSlide[]
-	swiperInstance: SwiperType | null  // ADD THIS LINE
+	swiperInstance: SwiperType | null
+	textParentSwipers: Map<string, SwiperType | null>
 	isTransitioning: boolean
-	navigationCommand: "next" | "prev" | null
+	// navigationCommand: "next" | "prev" | null
 	rightContent: RightContent
 }
 
@@ -138,8 +139,9 @@ class CareerQuestClass {
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
-			navigationCommand: null,
-			rightContent: { type: "image", icon: careerDefinition.initialImage }
+			// navigationCommand: null,
+			rightContent: { type: "image", icon: careerDefinition.initialImage },
+			textParentSwipers: new Map<string, SwiperType | null>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -163,12 +165,6 @@ class CareerQuestClass {
 
 		// Update navigation immediately when swiper is set
 		this.updateSwiperNavigation(careerUUID)
-	})
-
-	public removeSwiperInstance = action((careerUUID: CareerUUID): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.swiperInstance = null
 	})
 
 	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
@@ -753,16 +749,16 @@ class CareerQuestClass {
 		career.isTransitioning = isTransitioning
 	})
 
-	public getNavigationCommand = action((careerUUID: CareerUUID): "next" | "prev" | null => {
-		const career = this.getCareer(careerUUID)
-		return career?.navigationCommand || null
-	})
+	// public getNavigationCommand = action((careerUUID: CareerUUID): "next" | "prev" | null => {
+	// 	const career = this.getCareer(careerUUID)
+	// 	return career?.navigationCommand || null
+	// })
 
-	public setNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: "next" | "prev" | null): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.navigationCommand = navigationCommand
-	})
+	// public setNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: "next" | "prev" | null): void => {
+	// 	const career = this.getCareer(careerUUID)
+	// 	if (!career) return
+	// 	career.navigationCommand = navigationCommand
+	// })
 
 	public getRightContent = action((careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
@@ -773,6 +769,50 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.rightContent = rightContent
+	})
+
+	// ========================================
+	// TEXT PARENT SWIPER MANAGEMENT
+	// ========================================
+
+	public setTextParentSwiperInstance = action((
+		careerUUID: CareerUUID,
+		textParentId: string,
+		swiperInstance: SwiperType
+	): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.textParentSwipers.set(textParentId, swiperInstance)
+	})
+
+	public removeTextParentSwiperInstance = action((
+		careerUUID: CareerUUID,
+		textParentId: string
+	): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.textParentSwipers.delete(textParentId)
+	})
+
+	public getTextParentSwiperInstance(
+		careerUUID: CareerUUID,
+		textParentId: string
+	): SwiperType | null {
+		const career = this.getCareer(careerUUID)
+		return career?.textParentSwipers.get(textParentId) || null
+	}
+
+	public removeAllTextParentSwipers = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.textParentSwipers.clear()
+	})
+
+	public cleanupAllSwipers = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = null
+		career.textParentSwipers.clear()
 	})
 
 	public logout(): void {

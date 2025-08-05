@@ -96,7 +96,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 
 	useEffect(() => {
 		return () => {
-			careerQuestClass.removeSwiperInstance(careerData.careerUUID)
+			careerQuestClass.cleanupAllSwipers(careerData.careerUUID)
 		}
 	}, [careerData.careerUUID])
 
