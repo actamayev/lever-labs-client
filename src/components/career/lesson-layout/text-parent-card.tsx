@@ -50,9 +50,6 @@ function TextParentCard(props: TextParentCardProps) {
 				className="h-full"
 				nested={true}
 				initialSlide={currentTextChildIndex}  // Set initial slide
-				style={{
-					"--swiper-theme-color": "#000000",
-				} as React.CSSProperties}
 			>
 				{textParentData.children.map((child) => (
 					<SwiperSlide key={child.id} className="h-full">

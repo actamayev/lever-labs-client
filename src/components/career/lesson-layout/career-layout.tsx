@@ -124,9 +124,6 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 									}}
 									onSlideChange={(_swiper) => careerQuestClass.handleMainSlideChange(careerData.careerUUID)} // Remove isInitializing check
 									className="h-full"
-									style={{
-										"--swiper-theme-color": "#000000",
-									} as React.CSSProperties}
 								>
 									{!isDataReady ? (
 										<SwiperSlide className="h-full">
