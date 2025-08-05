@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData, CareerUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useCallback, useMemo } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import ChatTextArea from "../../chat/chat-text-area"
@@ -19,7 +19,11 @@ import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
 import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 
-function NextSectionButton({ onClick }: { onClick: () => void }) {
+const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
+	const onClick = () => {
+		careerQuestClass.handleGoToNextMainSection(careerUUID)
+	}
+
 	return (
 		<div className="h-[10%] flex items-center">
 			<TactileButton
@@ -45,7 +49,7 @@ function NextSectionButton({ onClick }: { onClick: () => void }) {
 			</TactileButton>
 		</div>
 	)
-}
+})
 
 // eslint-disable-next-line max-lines-per-function
 function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
@@ -185,7 +189,7 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 				</div>
 
 				{isCodeCorrect && (
-					<NextSectionButton onClick={() => careerQuestClass.handleGoToNextMainSection(challengeData.careerUUID)} />
+					<NextSectionButton careerUUID={challengeData.careerUUID} />
 				)}
 			</div>
 		</>
