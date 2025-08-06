@@ -1,10 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 export default function ChallengeProgressCircle({ careerData }: { careerData: CareerData }) {
 	const { lessonsComplete, totalLessons, backgroundColor } = careerData
+	const [isHovered, setIsHovered] = useState(false)
 	const size = 64
 
 	const colors = getDuolingoColors(backgroundColor)
@@ -14,21 +16,25 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
 	return (
-		<div className="relative inline-flex items-center justify-center">
+		<div
+			className={cn("relative inline-flex items-center justify-center cursor-default")}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
 			<svg
 				width={size}
 				height={size}
 				className="transform -rotate-90"
 			>
-				{/* Background circle */}
+				{/* Background circle with hover fill */}
 				<circle
 					cx={size / 2}
 					cy={size / 2}
 					r={radius}
 					stroke="currentColor"
 					strokeWidth="4"
-					fill="transparent"
-					className={cn(colors.text)}
+					fill={isHovered ? "currentColor" : "transparent"}
+					className={cn(isHovered ? colors.text : colors.text)}
 				/>
 				{/* Progress circle */}
 				<circle
@@ -40,7 +46,7 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 					fill="transparent"
 					strokeDasharray={circumference}
 					strokeDashoffset={strokeDashoffset}
-					className={cn("ease-in-out", colors.border)}
+					className={colors.border}
 					strokeLinecap="round"
 				/>
 			</svg>
