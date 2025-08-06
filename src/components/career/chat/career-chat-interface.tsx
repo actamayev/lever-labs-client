@@ -1,74 +1,29 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { motion } from "framer-motion"
-import { ArrowDown } from "lucide-react"
-import { CqChallengeData, CareerUUID } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useCallback, useMemo } from "react"
-import { cn } from "../../../lib/shadcn/utils"
+import { useState, useRef, useEffect, useCallback } from "react"
+import { CareerUUID } from "@bluedotrobots/common-ts"
 import ChatTextArea from "../../chat/chat-text-area"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import careerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
-import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
-import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
-import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
-import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
-
-const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
-	const onClick = () => {
-		careerQuestClass.handleGoToNextMainSection(careerUUID)
-	}
-
-	return (
-		<div className="h-[10%] flex items-center">
-			<TactileButton
-				onClick={onClick}
-				className={cn(
-					"w-full flex items-center justify-center gap-2 py-3 bg-green-500",
-					"text-white font-medium rounded-2xl h-3/4 text-3xl"
-				)}
-				shadowColor="rgb(0, 140, 0)"
-				shadowHeight={4}
-			>
-				<span>NEXT SECTION</span>
-				<motion.div
-					animate={{ y: [0, -2, 0] }}
-					transition={{
-						duration: 1,
-						repeat: Infinity,
-						ease: "easeInOut"
-					}}
-				>
-					<ArrowDown className="!size-6" strokeWidth={2.5} />
-				</motion.div>
-			</TactileButton>
-		</div>
-	)
-})
+import deleteCareerChat from "../../../utils/chat/delete-career-chat"
+import SingleSandboxMessage from "../../chat/single-sandbox-message"
+import sendCareerMessage from "../../../utils/chat/send-career-message"
 
 // eslint-disable-next-line max-lines-per-function
-function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
+function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = careerQuestClass.getChallengeMessages(challengeData)
-	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
-	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
-	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
-
-	const cppCode = useMemo(() => {
-		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData)
-		return generateCppFromJson(currentBlocklyJson)
-	}, [challengeData])
-
-	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
+	const messages = careerQuestClass.getCareerChatMessages(careerUUID)
+	const isStreaming = careerQuestClass.isCareerStreaming(careerUUID)
+	const isRetrievingData = careerQuestClass.isRetrievingCareerData(careerUUID)
+	const isWaitingForResponse = careerQuestClass.isCareerWaitingForResponse(careerUUID)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect(() => {
@@ -83,24 +38,29 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 		setInputValue("")
 
 		// Add user message to career quest class
-		careerQuestClass.addChallengeUserMessage(challengeData, inputValue)
+		careerQuestClass.addCareerUserMessage(careerUUID, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout(() => {
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendChallengeChatMessage(challengeData, cppCode, inputValue)
-	}, [challengeData, cppCode, inputValue, isStreaming])
+		await sendCareerMessage(careerUUID, {
+			message: inputValue,
+			whatUserSees: "You",
+			careerName: "Career",
+			careerDescription: "Career Description"
+		})
+	}, [careerUUID, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = careerQuestClass.getChallengeStreamId(challengeData)
-		careerQuestClass.resetChallengeStreamingState(challengeData)
+		const streamId = careerQuestClass.getCareerStreamId(careerUUID)
+		careerQuestClass.resetCareerStreamingState(careerUUID)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId
-	}, [challengeData])
+	}, [careerUUID])
 
 	const onStopStreaming = useCallback(async () => {
 		return await stopChatStream(chatReset)
@@ -118,13 +78,8 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 	const handleConfirmDelete = useCallback(async () => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
-		await deleteCareerQuestChat(challengeData)
-	}, [challengeData, hasAnyMessages, isStreaming])
-
-	const handleHintClick = useCallback(async () => {
-		if (isStreaming) return
-		await requestCareerQuestHint(challengeData, cppCode)
-	}, [challengeData, cppCode, isStreaming])
+		await deleteCareerChat(careerUUID)
+	}, [careerUUID, hasAnyMessages, isStreaming])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
@@ -146,8 +101,8 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 
 	return (
 		<>
-			<div className="flex flex-col h-full cq-chat-interface" data-chat-component="true">
-				<div className={isCodeCorrect ? "h-[90%]" : "h-full"}>
+			<div className="flex flex-col h-full" data-chat-component="true">
+				<div className="h-full">
 					<ChatParentComponent>
 						{/* existing content - no changes needed */}
 						{hasAnyMessages && (
@@ -167,11 +122,9 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 							messageLength={messages.length}
 						>
 							{messages.map((message) => (
-								<SingleCareerQuestMessage
+								<SingleSandboxMessage
 									key={message.id}
 									message={message}
-									cqChallengeData={challengeData}
-									cppCode={cppCode}
 								/>
 							))}
 						</ChatMessagesFramework>
@@ -183,17 +136,12 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 							inputValue={inputValue}
 							setInputValue={setInputValue}
 							isStreaming={isStreaming}
-							handleHintClick={handleHintClick}
 						/>
 					</ChatParentComponent>
 				</div>
-
-				{isCodeCorrect && (
-					<NextSectionButton careerUUID={challengeData.careerUUID} />
-				)}
 			</div>
 		</>
 	)
 }
 
-export default observer(CqChatInterface)
+export default observer(CareerChatInterface)

@@ -8,7 +8,7 @@ import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { CareerUUID, OutgoingCareerMessage } from "@bluedotrobots/common-ts"
 
-export default async function sendCareerMessage(careerData: OutgoingCareerMessage, careerUUID: CareerUUID): Promise<void> {
+export default async function sendCareerMessage(careerUUID: CareerUUID, careerData: OutgoingCareerMessage): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 

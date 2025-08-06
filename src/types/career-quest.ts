@@ -21,6 +21,7 @@ declare global {
 
 	// Existing interface for challenge cards
 	interface CareerData {
+		careerUUID: CareerUUID
 		careerName: string
 		careerDescription: string
 		totalLessons: number
@@ -58,7 +59,10 @@ declare global {
 		challengeUUID: ChallengeUUID
 	}
 
-	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
+	type RightContent =
+	| { type: "image", icon: string }
+	| { type: "challenge", challengeData: CqChallengeData }
+	| { type: "chat" }
 
 	interface TextParentSection {
 		type: "textParent"
@@ -109,6 +113,12 @@ declare global {
 		id: string
 		isStreaming?: boolean
 
+	}
+
+	interface CareerDataForMessage {
+		careerName: string
+		careerDescription: string
+		whatUserSees: string
 	}
 }
 

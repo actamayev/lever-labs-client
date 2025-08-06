@@ -23,6 +23,7 @@ import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
+import { careerData } from "../utils/constants/career-quest/career-data"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -497,6 +498,41 @@ class CareerQuestClass {
 		challenge.messages = []
 	})
 
+	// Career chat messages
+	public getCareerChatMessages(careerUUID: CareerUUID): CareerChatMessage[] {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.messages || []
+	}
+
+	public addCareerUserMessage = action((careerUUID: CareerUUID, content: string): void => {
+		const careerChat = this.getCareerChat(careerUUID)
+		if (!careerChat) return
+		careerChat.isWaitingForResponse = true
+
+		const message: CareerChatMessage = {
+			id: `user-${Date.now()}`,
+			role: "user",
+			content,
+			timestamp: new Date()
+		}
+
+		careerChat.messages.push(message)
+	})
+
+	public getCareerDataForMessage = action((careerUUID: CareerUUID): CareerDataForMessage | null => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return null
+		const careerDefinition = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
+		if (!careerDefinition) return null
+		const whatUserSees = career.completedChallengeIds.size === careerDefinition.totalLessons ? "You" : "Pip"
+		//TODO this should be the text in left content
+		return {
+			careerName: careerDefinition.careerName,
+			careerDescription: careerDefinition.careerDescription,
+			whatUserSees
+		}
+	})
+
 	public clearCareerChatMessages = action((careerUUID: CareerUUID): void => {
 		const careerChat = this.getCareerChat(careerUUID)
 		if (!careerChat) return
@@ -685,6 +721,16 @@ class CareerQuestClass {
 	public isChallengeWaitingForResponse(cqChallengeData: CqChallengeData): boolean {
 		const challenge = this.getChallenge({ ...cqChallengeData })
 		return challenge?.isWaitingForResponse || false
+	}
+
+	public isCareerStreaming(careerUUID: CareerUUID): boolean {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.isStreaming || false
+	}
+
+	public isCareerWaitingForResponse(careerUUID: CareerUUID): boolean {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.isWaitingForResponse || false
 	}
 
 	// ========================================

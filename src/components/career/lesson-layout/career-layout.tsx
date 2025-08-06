@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
-import CqChatInterface from "../chat/cq-chat-interface"
+import ChallengeChatInterface from "../chat/challenge-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
@@ -137,7 +137,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 											<SwiperSlide key={slide.id} className="h-full">
 												<div className="h-[calc(100vh-10rem)]">
 													{slide.type === "challenge" ? (
-														<CqChatInterface challengeData={slide.data} />
+														<ChallengeChatInterface challengeData={slide.data} />
 													) : (
 														<TextParentCard
 															slide={slide}

@@ -32,7 +32,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			if (
 				element.classList.contains("chat-parent-component") ||
 				element.classList.contains("chat-messages-framework") ||
-				element.classList.contains("cq-chat-interface") ||
+				element.classList.contains("challenge-chat-interface") ||
 				element.closest("[data-chat-component=\"true\"]") ||
 				element.closest(".overflow-y-auto") // Chat messages container
 			) {

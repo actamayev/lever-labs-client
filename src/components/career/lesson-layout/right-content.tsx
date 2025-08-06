@@ -5,6 +5,7 @@ import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzz
 import ChallengeSection from "./challenge-section"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
+import CareerChatInterface from "../chat/career-chat-interface"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
@@ -17,11 +18,24 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
 	if (!isDataReady) {
-		return (
-			<div className="h-full w-full flex items-center justify-center" />
-		)
+		return <div className="h-full w-full flex items-center justify-center" />
 	}
-	if (rightContent.type === "image") {
+
+	if (rightContent.type === "chat") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${careerData.careerUUID}`}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+				>
+					<CareerChatInterface careerUUID={careerData.careerUUID} />
+				</motion.div>
+			</AnimatePresence>
+		)
+	} else if (rightContent.type === "image") {
 		const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
 		return (
 			<AnimatePresence mode="wait">
