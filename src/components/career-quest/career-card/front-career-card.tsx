@@ -31,8 +31,8 @@ export default function FrontCareerCard(props: Props) {
 		>
 			{/* Icon/Image Section */}
 			<div
-				className={cn("flex-1 flex items-center justify-center px-4 py-2 h-3/5", colors.bg)}
-				style={{ borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS }}
+				className={cn("flex-1 flex items-center justify-center px-4 py-2", colors.bg)}
+				style={{ borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS, height: "55%" }}
 			>
 				<Icon
 					size="120"
@@ -40,13 +40,14 @@ export default function FrontCareerCard(props: Props) {
 				/>
 			</div>
 			<div
-				className={cn("h-2/5", colors.bg2)}
+				className={colors.bg2}
 				style={{
 					borderBottomLeftRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
-					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
+					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
+					height: "45%"
 				}}
 			>
-				<div style={{ height: "35%" }} className="flex items-center">
+				<div style={{ height: "30%" }} className="flex items-center">
 					<h3
 						className="font-bold text-white ml-7"
 						style={{
@@ -58,8 +59,8 @@ export default function FrontCareerCard(props: Props) {
 						{careerName}
 					</h3>
 				</div>
-				<div style={{ height: "30%" }} className="items-start flex">
-					<div className="flex flex-wrap gap-1.5 ml-7">
+				<div style={{ height: "40%" }} className="items-start flex">
+					<div className="grid grid-cols-2 gap-1.5 ml-7">
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
 								key={component.componentName}
@@ -69,7 +70,7 @@ export default function FrontCareerCard(props: Props) {
 						))}
 					</div>
 				</div>
-				<div style={{ height: "35%" }}>
+				<div style={{ height: "30%" }}>
 					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
 						<StartButton
 							baseColor={backgroundColor}
