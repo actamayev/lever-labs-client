@@ -49,7 +49,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 			}
 
 			// Transform backend messages to frontend format
-			const transformedMessages: CareerQuestChatMessage[] = []
+			const transformedMessages: ChallengeChatMessage[] = []
 
 			challengeData.messages.forEach(msg => {
 				const timestamp = new Date(msg.timestamp)

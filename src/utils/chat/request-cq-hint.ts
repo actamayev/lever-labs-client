@@ -17,7 +17,7 @@ export default async function requestCareerQuestHint(
 		careerQuestClass.addChallengeHintRequestMessage(careerUUIDChallengeUUID)
 		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 
-		const response = await blueDotApiClientClass.chatDataService.requestCareerQuestHint({
+		const response = await blueDotApiClientClass.chatDataService.requestChallengeHint({
 			careerUUID: careerUUIDChallengeUUID.careerUUID,
 			userCode,
 		}, careerUUIDChallengeUUID.challengeUUID)

@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react"
-import { BinaryEvaluationResult, CareerUUID, ChallengeUUID, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
+import { BinaryEvaluationResult, CareerUUID, ChallengeUUID,
+	ChatMessageRole, CqChallengeData, SandboxChatMessage } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -39,7 +40,7 @@ declare global {
 	| "Functions"
 	| "Boolean Logic"
 
-	interface CareerQuestChatMessage {
+	interface ChallengeChatMessage {
 		id: string
 		role: ChatMessageRole
 		content: string
@@ -103,6 +104,12 @@ declare global {
 	}
 
 	type MainSlide = TextParentMainSlide | ChallengeMainSlide
+
+	interface CareerChatMessage extends SandboxChatMessage {
+		id: string
+		isStreaming?: boolean
+
+	}
 }
 
 export {}

@@ -64,7 +64,7 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
 
 	const cppCode = useMemo(() => {
-		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
+		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData)
 		return generateCppFromJson(currentBlocklyJson)
 	}, [challengeData])
 

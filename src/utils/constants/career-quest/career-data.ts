@@ -75,7 +75,7 @@ export const careerData: CareerData[] = [
 	},
 	{
 		careerName: "Obstacle Avoidance",
-		careerDescription: "Use the forward-facing 8x8 ToF sensor and side ToF sensors to detect obstacles and navigate around them while staying within a defined course.",
+		careerDescription: "Use the forward-facing multizone ToF sensor and side ToF sensors to detect obstacles and navigate around them while staying within a defined course.",
 		totalLessons: 8,
 		lessonsComplete: 0,
 		careerUrl: "/career-quest/obstacle-avoidance",

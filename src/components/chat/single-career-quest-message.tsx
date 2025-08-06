@@ -18,13 +18,13 @@ import AssistantMessageMarkdown from "./assistant-message-markdown"
 import { useMemo } from "react"
 
 interface SingleCareerQuestMessageProps {
-	message: CareerQuestChatMessage
+	message: ChallengeChatMessage
 	cqChallengeData: CqChallengeData
 	cppCode: string
 }
 
 interface MessageBubbleProps {
-	message: CareerQuestChatMessage
+	message: ChallengeChatMessage
 	isUser: boolean
 	getMessageText: () => string
 	getMessageBubbleStyles: string
