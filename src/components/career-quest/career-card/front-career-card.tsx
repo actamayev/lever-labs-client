@@ -7,6 +7,7 @@ import SingleComponentUsed from "../single-component-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import StartButton from "../start-button"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
+import ChallengeProgressCircle from "./challenge-progress-indicator"
 
 interface Props {
 	careerData: CareerData
@@ -47,7 +48,7 @@ export default function FrontCareerCard(props: Props) {
 					height: "45%"
 				}}
 			>
-				<div style={{ height: "30%" }} className="flex items-center">
+				<div style={{ height: "25%" }} className="flex items-center">
 					<h3
 						className="font-bold text-white ml-7"
 						style={{
@@ -59,8 +60,9 @@ export default function FrontCareerCard(props: Props) {
 						{careerName}
 					</h3>
 				</div>
-				<div style={{ height: "40%" }} className="items-start flex">
-					<div className="grid grid-cols-2 gap-1.5 ml-7">
+				<div style={{ height: "45%" }} className="flex justify-between px-7 items-center">
+					{/* Components Grid */}
+					<div className="grid grid-cols-2 gap-1.5">
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
 								key={component.componentName}
@@ -68,6 +70,11 @@ export default function FrontCareerCard(props: Props) {
 								baseColor={backgroundColor}
 							/>
 						))}
+					</div>
+
+					{/* Progress Circle */}
+					<div className="flex-1 flex justify-end">
+						<ChallengeProgressCircle careerData={careerData} />
 					</div>
 				</div>
 				<div style={{ height: "30%" }}>
