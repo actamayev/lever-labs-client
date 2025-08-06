@@ -19,6 +19,8 @@ import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
+import isEqual from "lodash-es/isEqual"
+import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -904,11 +906,19 @@ class CareerQuestClass {
 		return challenge?.challengeData.toolboxConfig as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
-	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): void => {
+	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): boolean => {
 		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
+		if (
+			!challenge ||
+			isEqual(
+				stripBlockPositions(challenge.updatedBlocklyJson || {}),
+				stripBlockPositions(challenge.challengeData.initialBlocklyJson)
+			)
+		) return false
+
 		challenge.updatedBlocklyJson = challenge.challengeData.initialBlocklyJson
 		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+		return true
 	})
 
 	public logout(): void {

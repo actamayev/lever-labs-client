@@ -6,6 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, CqChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../../lib/shadcn/utils"
+import ChallengeHeader from "./challenge-header"
 import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
@@ -18,7 +19,6 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../../utils/career-quest/edit-career-quest-sandbox-project"
-import ChallengeHeader from "./challenge-header"
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
@@ -48,8 +48,15 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
+	const [resetCounter, setResetCounter] = useState(0) // NEW: Track reset count
 
 	const cppCode = careerQuestClass.getCppCode({ ...challengeData })
+
+	const handleReset = useCallback(() => {
+		const didReset = careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
+		if (!didReset) return
+		setResetCounter(prev => prev + 1) // Increment reset counter to force remount
+	}, [challengeData])
 
 	// Debounced save function to prevent multiple rapid saves
 	const debouncedSave = useCallback((blocklyJson: BlocklyJson) => {
@@ -184,13 +191,13 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [challengeData.challengeUUID, hasRetrievedData])
 
 	// Create a stable workspace key - only change when challenge changes
-	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}`
+	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}-${resetCounter}`
 	const foxColors = getDuolingoColors("fox")
 
 	return (
 		<div className="flex flex-col h-full">
 			{/* Challenge Header */}
-			<ChallengeHeader challengeData={challengeData} />
+			<ChallengeHeader challengeData={challengeData} onReset={handleReset} />
 
 			{/* Sandbox Section - Middle (flexible height) */}
 			<div className="h-full flex flex-col">
