@@ -62,7 +62,7 @@ export default function FrontCareerCard(props: Props) {
 				</div>
 				<div style={{ height: "45%" }} className="flex justify-between px-7 items-center">
 					{/* Components Grid */}
-					<div className="grid grid-cols-2 gap-1.5">
+					<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
 								key={component.componentName}

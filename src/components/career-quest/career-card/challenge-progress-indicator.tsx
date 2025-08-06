@@ -40,7 +40,7 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 					fill="transparent"
 					strokeDasharray={circumference}
 					strokeDashoffset={strokeDashoffset}
-					className={cn("transition-all duration-300 ease-in-out", colors.border)}
+					className={cn("ease-in-out", colors.border)}
 					strokeLinecap="round"
 				/>
 			</svg>
