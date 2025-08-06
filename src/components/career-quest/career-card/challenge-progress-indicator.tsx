@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import CustomTooltip from "../../custom-tooltip"
 
 export default function ChallengeProgressCircle({ careerData }: { careerData: CareerData }) {
 	const { lessonsComplete, totalLessons, backgroundColor } = careerData
@@ -15,27 +16,29 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 	const circumference = 2 * Math.PI * radius
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
-	const handleMouseEnter = () => setIsHovered(true)
-	const handleMouseLeave = () => setIsHovered(false)
-
 	return (
-		<div className={cn("relative inline-flex items-center justify-center cursor-default")}>
+		<div className={cn("relative inline-flex items-center justify-center")}>
 			<svg
 				width={size}
 				height={size}
 				className="transform -rotate-90"
 			>
 				{/* Background circle with hover fill */}
-				<circle
-					cx={size / 2}
-					cy={size / 2}
-					r={radius}
-					stroke="currentColor"
-					strokeWidth="4"
-					fill={isHovered ? "currentColor" : "transparent"}
-					className={isHovered ? colors.text1 : colors.text}
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
+				<CustomTooltip
+					tooltipTrigger={
+						<circle
+							cx={size / 2}
+							cy={size / 2}
+							r={radius}
+							stroke="currentColor"
+							strokeWidth="4"
+							fill={isHovered ? "currentColor" : "transparent"}
+							className={cn("duration-0 cursor-default", colors.text)}
+							onMouseEnter={() => setIsHovered(true)}
+							onMouseLeave={() => setIsHovered(false)}
+						/>
+					}
+					tooltipContent={`${lessonsComplete}/${totalLessons} lessons complete`}
 				/>
 				{/* Progress circle */}
 				<circle
@@ -47,16 +50,14 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 					fill="transparent"
 					strokeDasharray={circumference}
 					strokeDashoffset={strokeDashoffset}
-					className={colors.border}
+					className={cn("duration-0 pointer-events-none", colors.border)}
 					strokeLinecap="round"
-					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
 				/>
 			</svg>
 			{/* Text overlay */}
 			<div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 				<span className="text-sm font-semibold text-white">
-					{lessonsComplete}/{totalLessons}
+					{percentage.toFixed(0)}%
 				</span>
 			</div>
 		</div>
