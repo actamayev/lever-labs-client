@@ -1,7 +1,6 @@
-/* eslint-disable max-lines-per-function */
 "use client"
 
-import { action, makeAutoObservable, observable } from "mobx"
+import * as Blockly from "blockly"
 import {
 	InteractionType,
 	CqChatbotStreamStartEvent,
@@ -13,10 +12,15 @@ import {
 	BlocklyJson,
 	ChallengeUUID
 } from "@bluedotrobots/common-ts"
-import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
-import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import type { Swiper as SwiperType } from "swiper"
+import { action, makeAutoObservable, observable } from "mobx"
+import blueDotApiClient from "../classes/blue-dot-api-client-class"
+import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
+import saveCareerProgress from "../utils/career-quest/save-career-progress"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
+import isEqual from "lodash-es/isEqual"
+import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -34,7 +38,8 @@ interface StreamingState {
 interface ChallengeInstance extends ChatData, StreamingState {
 	challengeData: CqChallengeData
 	isCompleted: boolean
-	updatedBlocklyJson?: BlocklyJson
+	blocklyJson: BlocklyJson
+	cppCode: string
 }
 
 interface CareerInstance {
@@ -49,13 +54,18 @@ interface CareerInstance {
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
 	mainSlides: MainSlide[]
-	swiperInstance: SwiperType | null  // ADD THIS LINE
+	swiperInstance: SwiperType | null
+	textParentSwipers: Map<string, SwiperType | null>
+	isTransitioning: boolean
+	rightContent: RightContent
+	lastSlideChangeTime: number
 }
 
 class CareerQuestClass {
 	// Main data structure: careerUUID -> CareerInstance
 	public careers = observable.map<CareerUUID, CareerInstance>()
 	public isDoneInitializing = false
+	public readonly SLIDE_COOLDOWN = 200 // ms
 
 	constructor() {
 		makeAutoObservable(this)
@@ -98,7 +108,11 @@ class CareerQuestClass {
 				currentInteractionType: null,
 
 				// Completion
-				isCompleted: false
+				isCompleted: false,
+
+				// Code
+				blocklyJson: section.challengeData.initialBlocklyJson,
+				cppCode: ""
 			})
 		})
 
@@ -132,7 +146,11 @@ class CareerQuestClass {
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
 			mainSlides,
-			swiperInstance: null
+			swiperInstance: null,
+			isTransitioning: false,
+			lastSlideChangeTime: 0,
+			rightContent: { type: "image", icon: careerDefinition.initialImage },
+			textParentSwipers: new Map<string, SwiperType | null>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -156,12 +174,6 @@ class CareerQuestClass {
 
 		// Update navigation immediately when swiper is set
 		this.updateSwiperNavigation(careerUUID)
-	})
-
-	public removeSwiperInstance = action((careerUUID: CareerUUID): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-		career.swiperInstance = null
 	})
 
 	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
@@ -205,13 +217,13 @@ class CareerQuestClass {
 		return career?.currentTextChildIndex || 0
 	}
 
-	public setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
+	private setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.currentMainSlideIndex = index
 	})
 
-	public setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
+	private setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.currentTextChildIndex = index
@@ -234,8 +246,8 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
 
-		const savedData = this.getSavedPosition(careerUUID)
-		if (!savedData.position) {
+		const savedPosition = this.getSavedPosition(careerUUID)
+		if (!savedPosition) {
 			// No saved position, start at beginning
 			career.currentMainSlideIndex = 0
 			career.currentTextChildIndex = 0
@@ -243,7 +255,7 @@ class CareerQuestClass {
 		}
 
 		// Try to find the saved position
-		const positionIndices = this.findPositionIndices(careerUUID, savedData.position)
+		const positionIndices = this.findPositionIndices(careerUUID, savedPosition)
 		if (!positionIndices) {
 			// Fallback to beginning if position not found
 			career.currentMainSlideIndex = 0
@@ -267,12 +279,9 @@ class CareerQuestClass {
 		career.savedCurrentPosition = position
 	})
 
-	// REPLACE getSavedPosition method (remove isLocked from return):
-	public getSavedPosition(careerUUID: CareerUUID): { position: string } {
+	private getSavedPosition(careerUUID: CareerUUID): string | undefined {
 		const career = this.getCareer(careerUUID)
-		return {
-			position: career?.savedCurrentPosition || ""
-		}
+		return career?.savedCurrentPosition
 	}
 
 	// ADD new method to set seen challenges:
@@ -413,8 +422,6 @@ class CareerQuestClass {
 		challenge.messages.push(message)
 	})
 
-	// UPDATE: Add position update when evaluation result changes completion
-	// UPDATE this existing method in career-quest-class.ts:
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
@@ -592,26 +599,27 @@ class CareerQuestClass {
 
 		// Update blockly JSON if provided
 		if (sandboxJson) {
-			challenge.updatedBlocklyJson = normalizeSandboxJson(sandboxJson)
+			challenge.blocklyJson = normalizeSandboxJson(sandboxJson)
+			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
 		}
 
 		if (isCompleted) {
 			career.completedChallengeIds.add(cqInformation.challengeUUID)
-			// ADD THIS LINE:
 			this.updateSwiperNavigation(cqInformation.careerUUID)
 		}
 	})
 
 	// Blockly JSON management
-	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson | null {
+	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson || null
+		return challenge?.blocklyJson || challenge?.challengeData.initialBlocklyJson || {}
 	}
 
 	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
-		challenge.updatedBlocklyJson = newBlocklyJson
+		challenge.blocklyJson = newBlocklyJson
+		challenge.cppCode = generateCppFromJson(newBlocklyJson)
 	})
 
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
@@ -669,6 +677,249 @@ class CareerQuestClass {
 		}
 		// For challenge slides, must be completed
 		return this.isCodeCorrect(currentSlide.data)
+	})
+
+	private handleMainSlideChange = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		const swiper = this.getSwiperInstance(careerUUID)
+		if (!career || !isDataReady || !swiper) return
+
+		const newIndex = swiper.activeIndex
+		const previousIndex = career.currentMainSlideIndex
+		const isGoingBackward = newIndex < previousIndex
+
+		// Update class state instead of component state
+		this.setCurrentMainSlideIndex(careerUUID, newIndex)
+
+		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
+
+		if (currentSlide.type === "challenge") {
+			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
+			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
+
+			this.setCurrentTextChildIndex(careerUUID, 0)
+			return
+		}
+
+		// For text sections, determine textChildIndex
+		let textChildIndex: number
+		if (isGoingBackward) {
+			textChildIndex = currentSlide.data.children.length - 1
+		} else {
+			textChildIndex = 0
+		}
+		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
+
+		const textChild = currentSlide.data.children[textChildIndex]
+		void saveCareerProgress(careerUUID, textChild.id)
+	})
+
+	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
+		const career = this.getCareer(careerUUID)
+		const swiper = this.getSwiperInstance(careerUUID)
+		if (!career || !swiper) return
+
+		// Save progress when text child changes
+		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
+		if (currentSlide.type !== "textParent") return
+		this.setCurrentTextChildIndex(careerUUID, newIndex)
+
+		const textChild = currentSlide.data.children[newIndex]
+		void saveCareerProgress(careerUUID, textChild.id)
+	})
+
+	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
+		const career = this.getCareer(careerUUID)
+		return career?.isTransitioning || false
+	}
+
+	private setIsTransitioning = action((careerUUID: CareerUUID, isTransitioning: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.isTransitioning = isTransitioning
+	})
+
+	public getRightContent = (careerUUID: CareerUUID): RightContent => {
+		const career = this.getCareer(careerUUID)
+		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage || "" }
+	}
+
+	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.rightContent = rightContent
+	})
+
+	// ========================================
+	// TEXT PARENT SWIPER MANAGEMENT
+	// ========================================
+
+	public setTextParentSwiperInstance = action((
+		careerUUID: CareerUUID,
+		textParentId: string,
+		swiperInstance: SwiperType
+	): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.textParentSwipers.set(textParentId, swiperInstance)
+	})
+
+	public getTextParentSwiperInstance(
+		careerUUID: CareerUUID,
+		textParentId: string
+	): SwiperType | null {
+		const career = this.getCareer(careerUUID)
+		return career?.textParentSwipers.get(textParentId) || null
+	}
+
+	public cleanupAllSwipers = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.swiperInstance = null
+		career.textParentSwipers.clear()
+	})
+
+	public onTextSlideChange = action((careerUUID: CareerUUID, triggerImage: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return
+		this.setRightContent(careerUUID, { type: "image", icon: triggerImage })
+	})
+
+	public getLastSlideChangeTime(careerUUID: CareerUUID): number {
+		const career = this.getCareer(careerUUID)
+		return career?.lastSlideChangeTime ?? 0
+	}
+
+	public handleGoToNextTextChild = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return
+
+		const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
+		const mainSlides = this.getMainSlides(careerUUID)
+		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
+		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+		if (!canGoNext || !textParentSwiperInstance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		textParentSwiperInstance.slideNext()
+		this.setIsTransitioning(careerUUID, false)
+		const newIndex = textParentSwiperInstance.activeIndex
+		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.handleTextChildIndexChange(careerUUID, newIndex)
+	})
+
+	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return
+
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const canGoPrev = currentTextChildIndex > 0
+		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
+		if (!canGoPrev || !textParentSwiperInstance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		textParentSwiperInstance.slidePrev()
+		this.setIsTransitioning(careerUUID, false)
+		const newIndex = textParentSwiperInstance.activeIndex
+		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.handleTextChildIndexChange(careerUUID, newIndex)
+	})
+
+	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!career || !swiperInstance) return
+
+		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
+		if (!canAdvance) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		swiperInstance.slideNext()
+		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
+	})
+
+	public handleGoToPreviousMainSection = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		const canGoPrev = career.currentMainSlideIndex > 0
+		if (!swiperInstance || !canGoPrev) return
+
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		swiperInstance.slidePrev()
+		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
+	})
+
+	public changeMainSlideToCqChat = action((careerUUID: CareerUUID, challengeUUID: ChallengeUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career || !career.swiperInstance) return
+		const index = career.mainSlides.findIndex(slide => {
+			if (slide.type === "textParent") return false
+			return slide.data.challengeUUID === challengeUUID
+		})
+		if (index === -1 || index === career.currentMainSlideIndex) return
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setIsTransitioning(careerUUID, true)
+		career.swiperInstance.slideTo(index)
+		this.setIsTransitioning(careerUUID, false)
+		this.handleMainSlideChange(careerUUID)
+	})
+
+	private setLastSlideChangeTime = action((careerUUID: CareerUUID, timestamp: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.lastSlideChangeTime = timestamp
+	})
+
+	public getCurrentMainSlide(careerUUID: CareerUUID): MainSlide {
+		const mainSlides = this.getMainSlides(careerUUID)
+		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
+		return mainSlides[currentMainSlideIndex]
+	}
+
+	public getCppCode(cqInformation: CareerUUIDChallengeUUID): string {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.cppCode || ""
+	}
+
+	public setCppCode = action((cqInformation: CareerUUIDChallengeUUID, cppCode: string): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.cppCode = cppCode
+	})
+
+	public getToolboxConfig(cqInformation: CareerUUIDChallengeUUID): Blockly.utils.toolbox.ToolboxDefinition {
+		const challenge = this.getChallenge(cqInformation)
+		return challenge?.challengeData.toolboxConfig as Blockly.utils.toolbox.ToolboxDefinition
+	}
+
+	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): boolean => {
+		const challenge = this.getChallenge(cqInformation)
+		if (
+			!challenge ||
+			isEqual(
+				stripBlockPositions(challenge.blocklyJson),
+				stripBlockPositions(challenge.challengeData.initialBlocklyJson)
+			)
+		) return false
+
+		challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
+		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+		return true
 	})
 
 	public logout(): void {

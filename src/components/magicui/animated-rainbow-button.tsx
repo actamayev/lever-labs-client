@@ -63,8 +63,6 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (isDisabled) return
-		// setIsClicked(true)
-		// setTimeout(() => setIsClicked(false), 100)
 
 		// Call the original onClick handler if provided
 		if (onClick) onClick(event)

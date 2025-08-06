@@ -6,6 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BlocklyJson, CqChallengeData } from "@bluedotrobots/common-ts"
 import { cn } from "../../../lib/shadcn/utils"
+import ChallengeHeader from "./challenge-header"
 import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
@@ -18,7 +19,6 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../../utils/career-quest/edit-career-quest-sandbox-project"
-import ChallengeHeader from "./challenge-header"
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
@@ -47,19 +47,16 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const hasSeenExpectedBlocksRef = useRef(false) // NEW: Track if we've seen the initial blocks load
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
-
-
-	// Get the current blockly JSON (either initial or updated from backend)
-	const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
 	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
+	const [resetCounter, setResetCounter] = useState(0) // NEW: Track reset count
 
-	const [cppCode, setCppCode] = useState(generateCppFromJson(currentBlocklyJson))
+	const cppCode = careerQuestClass.getCppCode({ ...challengeData })
 
-	// Update CPP code when blockly JSON changes
-	useEffect(() => {
-		const newCppCode = generateCppFromJson(currentBlocklyJson)
-		setCppCode(newCppCode)
-	}, [currentBlocklyJson])
+	const handleReset = useCallback(() => {
+		const didReset = careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
+		if (!didReset) return
+		setResetCounter(prev => prev + 1) // Increment reset counter to force remount
+	}, [challengeData])
 
 	// Debounced save function to prevent multiple rapid saves
 	const debouncedSave = useCallback((blocklyJson: BlocklyJson) => {
@@ -101,7 +98,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
 	// Get current JSON from class for comparison, but don't depend on it
-		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData }) || challengeData.initialBlocklyJson
+		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
 		const expectedBlockCount = getBlockCount(currentJsonFromClass)
 		const actualBlockCount = getBlockCount(newBlocklyJson)
 
@@ -157,12 +154,11 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}
 
 		// Update local state
-		setCppCode(generateCppFromJson(newBlocklyJson))
+		careerQuestClass.setCppCode({ ...challengeData }, generateCppFromJson(newBlocklyJson))
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)
-
-	}, [challengeData]) // REMOVED: currentBlocklyJson dependency
+	}, [challengeData])
 
 	// Reset effects
 	useEffect(() => {
@@ -195,21 +191,20 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [challengeData.challengeUUID, hasRetrievedData])
 
 	// Create a stable workspace key - only change when challenge changes
-	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}`
+	const workspaceKey = `${challengeData.challengeUUID}-${hasRetrievedData ? "retrieved" : "initial"}-${resetCounter}`
 	const foxColors = getDuolingoColors("fox")
 
 	return (
 		<div className="flex flex-col h-full">
 			{/* Challenge Header */}
-			<ChallengeHeader challengeData={challengeData} />
+			<ChallengeHeader challengeData={challengeData} onReset={handleReset} />
 
 			{/* Sandbox Section - Middle (flexible height) */}
 			<div className="h-full flex flex-col">
 				<div className="flex-1 min-h-0">
 					<InteractiveMiniSandbox
 						key={workspaceKey}
-						toolboxConfig={challengeData.toolboxConfig}
-						blocklyJson={currentBlocklyJson}
+						careerUUIDChallengeUUID={{ ...challengeData }}
 						onJsonChange={handleJsonChange}
 					/>
 				</div>
@@ -229,7 +224,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						)}
 						shadowClass={foxColors.shadow2}
 						onClick={() => checkCareerQuestCode({ ...challengeData }, cppCode)}
-						disabled={isStreaming || isEmpty(cppCode)}
+						disabled={isStreaming || isEmpty(careerQuestClass.getCppCode({ ...challengeData }))}
 					>
 						CHECK CODE
 					</TactileButton>

@@ -1,18 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { ChevronDown, RotateCcw, X } from "lucide-react"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { motion, AnimatePresence } from "framer-motion"
 import CustomTooltip from "../../custom-tooltip"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
 
 interface ChallengeHeaderProps {
 	challengeData: CqChallengeData
+	onReset: () => void
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps) {
+export default function ChallengeHeader({ challengeData, onReset }: ChallengeHeaderProps) {
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true)
 
 	return (
@@ -72,9 +73,7 @@ export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps)
 											<TactileButton
 												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-10"
 												shadowClass="shadow-bee-2"
-												onClick={() => {
-													// TODO: Implement reset functionality
-												}}
+												onClick={onReset}
 											>
 												<RotateCcw className="w-4 h-4" />
 											</TactileButton>
@@ -105,9 +104,7 @@ export default function ChallengeHeader({ challengeData }: ChallengeHeaderProps)
 											<TactileButton
 												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
 												shadowClass="shadow-bee-2"
-												onClick={() => {
-													// TODO: Implement reset functionality
-												}}
+												onClick={onReset}
 											>
 												<RotateCcw className="w-4 h-4" />
 											</TactileButton>

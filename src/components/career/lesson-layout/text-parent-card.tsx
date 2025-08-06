@@ -1,72 +1,37 @@
-import type { Swiper as SwiperType } from "swiper"
+import { useEffect } from "react"
+import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { useCallback, useEffect, useState } from "react"
+import type { CareerUUID } from "@bluedotrobots/common-ts"
+import careerQuestClass from "../../../classes/career-quest-class"
 
-// Enhanced TextParentCard with external navigation control
 interface TextParentCardProps {
-    textParentData: TextParentSection
-    onSlideChange: (triggerImage: string) => void
-    onTextSectionChange: (index: number) => void
-    isActive: boolean
-    navigationCommand: "next" | "prev" | null
-    initialTextIndex: number  // This is now the current index from parent
+	slide: TextParentMainSlide
+	careerUUID: CareerUUID
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function TextParentCard(props: TextParentCardProps) {
-	const {
-		textParentData,
-		onSlideChange,
-		onTextSectionChange,
-		isActive,
-		navigationCommand,
-		initialTextIndex
-	} = props
-
-	const [nestedSwiperInstance, setNestedSwiperInstance] = useState<SwiperType | null>(null)
+function TextParentCard(props: TextParentCardProps) {
+	const { slide, careerUUID } = props
+	// Move nested swiper into the class
+	const nestedSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, slide.id)
+	const textParentData = slide.data
+	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
+	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
 
 	// Sync swiper position with parent's index whenever it changes
 	useEffect(() => {
 		if (
 			!nestedSwiperInstance ||
 			!isActive ||
-			initialTextIndex === nestedSwiperInstance.activeIndex
+			currentTextChildIndex === nestedSwiperInstance.activeIndex
 		) return
 
-		nestedSwiperInstance.slideTo(initialTextIndex, 0)
-		const targetText = textParentData.children[initialTextIndex]
-		onSlideChange(targetText.triggerImage)
-	}, [initialTextIndex, nestedSwiperInstance, isActive, textParentData.children, onSlideChange])
-
-	// Handle navigation commands from parent
-	useEffect(() => {
-		if (!navigationCommand || !nestedSwiperInstance || !isActive) return
-
-		if (navigationCommand === "next") {
-			const canGoNext = initialTextIndex < textParentData.children.length - 1
-			if (canGoNext) {
-				nestedSwiperInstance.slideNext()
-			}
-		} else {
-			const canGoPrev = initialTextIndex > 0
-			if (canGoPrev) {
-				nestedSwiperInstance.slidePrev()
-			}
-		}
-		// DONT CHANGE THESE DEPENDENCIES
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [navigationCommand, nestedSwiperInstance, isActive])
-
-	// Handle nested swiper slide change
-	const handleNestedSlideChange = useCallback((swiper: SwiperType) => {
-		const newIndex = swiper.activeIndex
-
-		const currentText = textParentData.children[newIndex]
-		onSlideChange(currentText.triggerImage)
-
-		// Notify parent of the index change - parent is source of truth
-		onTextSectionChange(newIndex)
-	}, [textParentData.children, onSlideChange, onTextSectionChange])
+		nestedSwiperInstance.slideTo(currentTextChildIndex)
+		const targetText = textParentData.children[currentTextChildIndex]
+		careerQuestClass.onTextSlideChange(careerUUID, targetText.triggerImage)
+	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, careerUUID])
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
@@ -79,14 +44,12 @@ export default function TextParentCard(props: TextParentCardProps) {
 				allowSlideNext={true}
 				allowSlidePrev={true}
 				allowTouchMove={false}
-				onSwiper={setNestedSwiperInstance}
-				onSlideChange={handleNestedSlideChange}
+				onSwiper={(swiper) => {
+					careerQuestClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
+				}}
 				className="h-full"
 				nested={true}
-				initialSlide={initialTextIndex}  // Set initial slide
-				style={{
-					"--swiper-theme-color": "#000000",
-				} as React.CSSProperties}
+				initialSlide={currentTextChildIndex}  // Set initial slide
 			>
 				{textParentData.children.map((child) => (
 					<SwiperSlide key={child.id} className="h-full">
@@ -103,3 +66,6 @@ export default function TextParentCard(props: TextParentCardProps) {
 		</div>
 	)
 }
+
+
+export default observer(TextParentCard)
