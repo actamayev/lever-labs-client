@@ -16,6 +16,7 @@ export default async function checkCareerQuestCode(
 
 		careerQuestClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
 		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		careerQuestClass.changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
 
 		const response = await blueDotApiClientClass.chatDataService.checkCareerQuestCode({
 			userCode,

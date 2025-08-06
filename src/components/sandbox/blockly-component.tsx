@@ -149,7 +149,7 @@ function BlocklyComponent(props: Props) {
 	useEffect(() => {
 		initializeBlocks()
 		setupToolbox()
-		// 12/1/25 TODO: Fix, not working
+		// TODO 12/1/24: Fix, not working
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
 	}, [setupToolbox])

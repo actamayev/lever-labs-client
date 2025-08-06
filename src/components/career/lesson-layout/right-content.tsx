@@ -4,20 +4,17 @@ import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzz
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5 } from "lucide-react"
 import ChallengeSection from "./challenge-section"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import careerQuestClass from "../../../classes/career-quest-class"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
 	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5
 }
 
-interface RightContentProps {
-	rightContent: RightContent
-	color: DuolingoColors
-	isDataReady: boolean
-}
-
-function RightContent({ rightContent, color, isDataReady }: RightContentProps) {
-	const colors = getDuolingoColors(color)
+function RightContent({ careerData } : { careerData: CareerQuestData }) {
+	const colors = getDuolingoColors(careerData.careerColor)
+	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
+	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 
 	if (!isDataReady) {
 		return (

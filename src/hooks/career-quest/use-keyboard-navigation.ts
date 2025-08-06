@@ -36,103 +36,53 @@ function useEffectKeyboardNavigation(): string | null {
 	return keyPressed
 }
 
-
-// eslint-disable-next-line max-params
-export default function useKeyboardNavigation(
-	careerUUID: CareerUUID,
-	isTransitioning: boolean,
-	setIsTransitioning: (isTransitioning: boolean) => void,
-	setNavigationCommand: (command: "next" | "prev" | null) => void,
-): void {
+export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
-	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
-	const lastKeyPressTime = useRef(0)
-	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
-	const SLIDE_COOLDOWN = 200
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
+	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
 
 	// eslint-disable-next-line complexity
 	useEffect(() => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		const now = Date.now()
-		if (now - lastKeyPressTime.current < SLIDE_COOLDOWN) return
+		if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
 
-		const currentSlide = mainSlides[currentMainSlideIndex]
+		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
 
 		if (keyPressed === "ArrowDown") {
-			if (currentSlide.type === "textParent") {
+			if (currentSlide.type === "challenge") {
+				// Challenge slide - try to move to next main slide
+				careerQuestClass.handleGoToNextMainSection(careerUUID)
+			} else {
 				const totalTextChildren = currentSlide.data.children.length
 				const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
 				const hasOnlyOneChild = totalTextChildren === 1
 
 				if (hasOnlyOneChild || isAtLastTextChild) {
 					// Move to next main slide if possible
-					if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-						lastKeyPressTime.current = now
-						setIsTransitioning(true)
-						swiperInstance.slideNext()
-						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-					}
+					careerQuestClass.handleGoToNextMainSection(careerUUID)
 				} else {
 					// Move to next text child
-					lastKeyPressTime.current = now
-					setNavigationCommand("next")
-					setTimeout(() => setNavigationCommand(null), 100)
-				}
-			} else {
-				// Challenge slide - try to move to next main slide
-				if (currentMainSlideIndex < mainSlides.length - 1 && canAdvanceToNextMain) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					swiperInstance.slideNext()
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+					careerQuestClass.handleGoToNextTextChild(careerUUID)
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
-			if (currentSlide.type === "textParent") {
+			if (currentSlide.type === "challenge") {
+				// Challenge slide - always go to previous main slide
+				careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+			} else {
 				const isAtFirstTextChild = currentTextChildIndex === 0
 
-				if (isAtFirstTextChild) {
-					// Move to previous main slide if possible
-					if (currentMainSlideIndex > 0) {
-						lastKeyPressTime.current = now
-						setIsTransitioning(true)
-						swiperInstance.slidePrev()
-
-						// Set the text child index to the last child of the previous text parent
-						const prevSlide = mainSlides[currentMainSlideIndex - 1]
-						if (prevSlide.type === "textParent") {
-							careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
-						}
-
-						setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
-					}
-				} else {
+				if (!isAtFirstTextChild) {
 					// Move to previous text child
-					lastKeyPressTime.current = now
-					setNavigationCommand("prev")
-					setTimeout(() => setNavigationCommand(null), 100)
-				}
-			} else {
-				// Challenge slide - always go to previous main slide
-				if (currentMainSlideIndex > 0) {
-					lastKeyPressTime.current = now
-					setIsTransitioning(true)
-					swiperInstance.slidePrev()
-
-					// Set the text child index to the last child of the previous text parent
-					const prevSlide = mainSlides[currentMainSlideIndex - 1]
-					if (prevSlide.type === "textParent") {
-						careerQuestClass.setCurrentTextChildIndex(careerUUID, prevSlide.data.children.length - 1)
-					}
-
-					setTimeout(() => setIsTransitioning(false), SLIDE_COOLDOWN)
+					careerQuestClass.handleGoToPreviousTextChild(careerUUID)
+				} else {
+					careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 				}
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning])
+	}, [keyPressed, swiperInstance, currentMainSlideIndex, currentTextChildIndex, isTransitioning, careerUUID])
 }

@@ -3,30 +3,34 @@
 import { observer } from "mobx-react"
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData, CareerUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useCallback, useMemo } from "react"
-import ChatTextArea from "../../chat/chat-text-area"
-import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
-import careerQuestClass from "../../../classes/career-quest-class"
-import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
-import ChatParentComponent from "../../chat/chat-parent-component"
-import stopChatStream from "../../../utils/chat/stop-chat-stream"
-import ChatMessagesFramework from "../../chat/chat-messages-framework"
-import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
-import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
-import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import { cn } from "../../../lib/shadcn/utils"
+import ChatTextArea from "../../chat/chat-text-area"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import stopChatStream from "../../../utils/chat/stop-chat-stream"
+import careerQuestClass from "../../../classes/career-quest-class"
+import ChatParentComponent from "../../chat/chat-parent-component"
+import ChatMessagesFramework from "../../chat/chat-messages-framework"
+import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
+import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
+import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
+import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
+import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 
-function NextSectionButton({ onClick }: { onClick: () => void }) {
+const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
+	const onClick = () => {
+		careerQuestClass.handleGoToNextMainSection(careerUUID)
+	}
+
 	return (
 		<div className="h-[10%] flex items-center">
 			<TactileButton
 				onClick={onClick}
 				className={cn(
 					"w-full flex items-center justify-center gap-2 py-3 bg-green-500",
-					"text-white font-medium transition-colors rounded-2xl h-3/4 text-3xl"
+					"text-white font-medium rounded-2xl h-3/4 text-3xl"
 				)}
 				shadowColor="rgb(0, 140, 0)"
 				shadowHeight={4}
@@ -45,15 +49,10 @@ function NextSectionButton({ onClick }: { onClick: () => void }) {
 			</TactileButton>
 		</div>
 	)
-}
-
-interface ChatInterfaceProps {
-	challengeData: CqChallengeData
-	onGoToNextSection: () => void
-}
+})
 
 // eslint-disable-next-line max-lines-per-function
-function CqChatInterface({ challengeData, onGoToNextSection }: ChatInterfaceProps) {
+function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -190,7 +189,7 @@ function CqChatInterface({ challengeData, onGoToNextSection }: ChatInterfaceProp
 				</div>
 
 				{isCodeCorrect && (
-					<NextSectionButton onClick={onGoToNextSection} />
+					<NextSectionButton careerUUID={challengeData.careerUUID} />
 				)}
 			</div>
 		</>

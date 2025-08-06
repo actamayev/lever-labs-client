@@ -11,7 +11,8 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 	try {
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingCareerData(careerUUID)
+			careerQuestClass.isRetrievingCareerData(careerUUID) ||
+			careerQuestClass.hasRetrievedAllChallengesForCareer(careerUUID)
 		) return
 
 		// Set loading state for entire career

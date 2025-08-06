@@ -18,7 +18,7 @@ function SoundsSection() {
 		"Robot"
 	]
 
-	// 4/22/25 TODO: Make the top button hug the top border and the bottom border hug the bottom border
+	// TODO 4/22/25: Make the top button hug the top border and the bottom border hug the bottom border
 	return (
 		<div className="flex flex-row gap-8">
 			<div className="grid grid-cols-4 gap-[21px]">
