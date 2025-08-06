@@ -34,6 +34,7 @@ function InteractiveMiniSandbox(props: Props) {
 	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
 	const blocklyJson = careerQuestClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 	useSensorPollingUseEffect()
+	// TODO: 8/5/25: Initial blockly json is not being set correctly (blockly is set to initial when we do reset, but not on page load/initial render)
 
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, false, true)

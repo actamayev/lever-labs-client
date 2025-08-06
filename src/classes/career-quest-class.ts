@@ -38,7 +38,7 @@ interface StreamingState {
 interface ChallengeInstance extends ChatData, StreamingState {
 	challengeData: CqChallengeData
 	isCompleted: boolean
-	updatedBlocklyJson?: BlocklyJson
+	blocklyJson: BlocklyJson
 	cppCode: string
 }
 
@@ -111,6 +111,7 @@ class CareerQuestClass {
 				isCompleted: false,
 
 				// Code
+				blocklyJson: section.challengeData.initialBlocklyJson,
 				cppCode: ""
 			})
 		})
@@ -598,8 +599,8 @@ class CareerQuestClass {
 
 		// Update blockly JSON if provided
 		if (sandboxJson) {
-			challenge.updatedBlocklyJson = normalizeSandboxJson(sandboxJson)
-			challenge.cppCode = generateCppFromJson(challenge.updatedBlocklyJson)
+			challenge.blocklyJson = normalizeSandboxJson(sandboxJson)
+			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
 		}
 
 		if (isCompleted) {
@@ -611,13 +612,13 @@ class CareerQuestClass {
 	// Blockly JSON management
 	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.updatedBlocklyJson || challenge?.challengeData.initialBlocklyJson as BlocklyJson
+		return challenge?.blocklyJson || challenge?.challengeData.initialBlocklyJson || {}
 	}
 
 	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
-		challenge.updatedBlocklyJson = newBlocklyJson
+		challenge.blocklyJson = newBlocklyJson
 		challenge.cppCode = generateCppFromJson(newBlocklyJson)
 	})
 
@@ -911,12 +912,12 @@ class CareerQuestClass {
 		if (
 			!challenge ||
 			isEqual(
-				stripBlockPositions(challenge.updatedBlocklyJson || {}),
+				stripBlockPositions(challenge.blocklyJson),
 				stripBlockPositions(challenge.challengeData.initialBlocklyJson)
 			)
 		) return false
 
-		challenge.updatedBlocklyJson = challenge.challengeData.initialBlocklyJson
+		challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
 		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
 		return true
 	})
