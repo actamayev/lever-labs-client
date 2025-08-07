@@ -84,7 +84,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
 		return (
-			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
+			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg overflow-hidden">
 				<div className="flex-1 flex items-center justify-center">
 					<div className="text-center">
 						<div className="flex space-x-1 justify-center mb-4">
@@ -103,7 +103,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 		<>
 			<div className="flex flex-col h-full" data-chat-component="true">
 				<div className="h-full">
-					<ChatParentComponent>
+					<ChatParentComponent extraClasses="border-0">
 						{/* existing content - no changes needed */}
 						{hasAnyMessages && (
 							<ClearChatHistoryHeader

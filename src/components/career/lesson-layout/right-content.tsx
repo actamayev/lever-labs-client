@@ -30,6 +30,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					transition={{ duration: 0.3 }}
+					className="h-full w-full"
 				>
 					<CareerChatInterface careerUUID={careerData.careerUUID} />
 				</motion.div>

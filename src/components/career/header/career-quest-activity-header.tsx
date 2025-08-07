@@ -1,12 +1,25 @@
+/* eslint-disable no-nested-ternary */
+// In career-quest-activity-header.tsx:
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle import
+import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
+import careerQuestClass from "../../../classes/career-quest-class" // Add import
 
-export default function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
+function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
+	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+	const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
+	const isOnChallengeSection = currentSlide?.type === "challenge"
+
+	const handleChatToggle = () => {
+		if (isOnChallengeSection) return
+		careerQuestClass.toggleCareerChat(careerData.careerUUID)
+	}
+
 	return (
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
@@ -33,10 +46,34 @@ export default function CareerQuestActivityHeader({ careerData }: { careerData: 
 				</h1>
 			</div>
 
-			{/* Right section with progress circle */}
-			<div className="w-1/4 flex justify-end items-center pr-4">
+			{/* Right section with chat button and progress circle */}
+			<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
+				<CustomTooltip
+					tooltipTrigger={
+						<button
+							onClick={handleChatToggle}
+							disabled={isOnChallengeSection}
+							className={`flex items-center p-2 rounded-lg transition-colors ${
+								isOnChallengeSection
+									? "text-gray-400 cursor-not-allowed opacity-50"
+									: isChatToggled
+										? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+										: "text-questionText hover:bg-polar"
+							}`}
+						>
+							<MessageCircle size={24} />
+						</button>
+					}
+					tooltipContent={
+						isOnChallengeSection
+							? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
+							: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
+					}
+				/>
 				<ChallengeProgressCircle careerData={careerData} />
 			</div>
 		</header>
 	)
 }
+
+export default observer(CareerQuestActivityHeader) // Wrap with observer
