@@ -854,12 +854,18 @@ class CareerQuestClass {
 		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
 
 		if (currentSlide.type === "challenge") {
+			// Turn off chat toggle when navigating to a challenge section
+			if (career.isCareerChatToggled) {
+				career.isCareerChatToggled = false
+				career.previousRightContent = null // Clear since we're going to a challenge
+			}
+
 			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
 			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
+
 			this.setCurrentTextChildIndex(careerUUID, 0)
 			return
 		}
-		this.handleNavigationFromChallenge(careerUUID)
 
 		// For text sections, determine textChildIndex
 		let textChildIndex: number
@@ -908,20 +914,20 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
-		// If chat is toggled and we're trying to set non-challenge content,
-		// update the previousRightContent instead
-		if (career.isCareerChatToggled && rightContent.type !== "challenge") {
-			career.previousRightContent = rightContent
-			return // Keep chat active
-		}
-
-		// If chat is toggled and this is a challenge, temporarily override with challenge
-		if (career.isCareerChatToggled && rightContent.type === "challenge") {
+		// If we're setting a challenge, it always takes priority (even over chat)
+		if (rightContent.type === "challenge") {
 			career.rightContent = rightContent
 			return
 		}
 
-		// Normal case - no chat toggle or chat is off
+		// If chat is toggled and we're trying to set non-challenge content,
+		// update the previousRightContent instead (so it's there when chat is turned off)
+		if (career.isCareerChatToggled) {
+			career.previousRightContent = rightContent
+			return
+		}
+
+		// Normal case - set the content
 		career.rightContent = rightContent
 	})
 
@@ -1107,29 +1113,18 @@ class CareerQuestClass {
 				career.rightContent = career.previousRightContent
 				career.previousRightContent = null
 			}
-		} else {
-		// Turn on chat - store current content and switch to chat
-			career.isCareerChatToggled = true
-			career.previousRightContent = career.rightContent
-			career.rightContent = { type: "chat" }
+			return
 		}
+		// Turn on chat - store current content and switch to chat
+		career.isCareerChatToggled = true
+		career.previousRightContent = career.rightContent
+		career.rightContent = { type: "chat" }
 	})
 
 	public isCareerChatToggled(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		return career?.isCareerChatToggled || false
 	}
-
-	private handleNavigationFromChallenge = action((careerUUID: CareerUUID): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-
-		// If chat was toggled and we're navigating away from a challenge,
-		// restore chat
-		if (career.isCareerChatToggled && career.rightContent.type === "challenge") {
-			career.rightContent = { type: "chat" }
-		}
-	})
 
 	public logout(): void {
 		this.careers.clear()

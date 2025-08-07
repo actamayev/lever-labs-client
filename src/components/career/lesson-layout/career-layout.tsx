@@ -79,6 +79,10 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
 			return
 		}
+		const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+
+		// If chat is toggled and we're on a text section, don't override the chat
+		if (isChatToggled) return
 
 		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
 		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
