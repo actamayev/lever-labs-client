@@ -12,7 +12,6 @@ import ChallengeChatInterface from "../chat/challenge-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
-import { AnimatePresence, motion } from "framer-motion"
 
 function EmptyTextParentCard() {
 	return (
