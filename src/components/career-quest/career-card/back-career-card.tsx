@@ -23,10 +23,7 @@ export default function BackCareerCard(props: Props) {
 
 	return (
 		<motion.div
-			className={cn(
-				"absolute w-full h-full backface-hidden flex flex-col",
-				colors.bg
-			)}
+			className={cn("absolute w-full h-full backface-hidden flex flex-col cursor-default", colors.bg)}
 			style={{
 				backfaceVisibility: "hidden",
 				borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
