@@ -12,6 +12,7 @@ import ChallengeChatInterface from "../chat/challenge-chat-interface"
 import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
+import { AnimatePresence, motion } from "framer-motion"
 
 function EmptyTextParentCard() {
 	return (
@@ -107,44 +108,53 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 			<div className="relative" style={{ width: "45%" }}>
 				<div className="px-[100px] py-8 h-full pointer-events-none">
 					<div className="h-full pointer-events-auto">
-						<Swiper
-							direction="vertical"
-							slidesPerView={1}
-							spaceBetween={0}
-							keyboard={false}
-							speed={400}
-							allowSlideNext={false}
-							allowSlidePrev={true}
-							allowTouchMove={false}
-							onSwiper={(swiper) => {
-								careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
-							}}
-							className="h-full"
-						>
-							{!isDataReady ? (
-								<SwiperSlide className="h-full">
-									<div className="h-[calc(100vh-10rem)]">
-										<EmptyTextParentCard />
-									</div>
-								</SwiperSlide>
-							) : (
-							// Show actual content when data is ready
-								mainSlides.map((slide) => (
-									<SwiperSlide key={slide.id} className="h-full">
-										<div className="h-[calc(100vh-10rem)]">
-											{slide.type === "challenge" ? (
-												<ChallengeChatInterface challengeData={slide.data} />
-											) : (
-												<TextParentCard
-													slide={slide}
-													careerUUID={careerData.careerUUID}
-												/>
-											)}
-										</div>
-									</SwiperSlide>
-								))
-							)}
-						</Swiper>
+						<AnimatePresence mode="wait">
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ duration: 0.5, ease: "easeOut" }}
+								className="h-full"
+							>
+								<Swiper
+									direction="vertical"
+									slidesPerView={1}
+									spaceBetween={0}
+									keyboard={false}
+									speed={400}
+									allowSlideNext={false}
+									allowSlidePrev={true}
+									allowTouchMove={false}
+									onSwiper={(swiper) => {
+										careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
+									}}
+									className="h-full"
+								>
+									{!isDataReady ? (
+										<SwiperSlide className="h-full">
+											<div className="h-[calc(100vh-10rem)]">
+												<EmptyTextParentCard />
+											</div>
+										</SwiperSlide>
+									) : (
+									// Show actual content when data is ready
+										mainSlides.map((slide) => (
+											<SwiperSlide key={slide.id} className="h-full">
+												<div className="h-[calc(100vh-10rem)]">
+													{slide.type === "challenge" ? (
+														<ChallengeChatInterface challengeData={slide.data} />
+													) : (
+														<TextParentCard
+															slide={slide}
+															careerUUID={careerData.careerUUID}
+														/>
+													)}
+												</div>
+											</SwiperSlide>
+										))
+									)}
+								</Swiper>
+							</motion.div>
+						</AnimatePresence>
 					</div>
 				</div>
 			</div>
