@@ -9,7 +9,6 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function checkCareerQuestCode(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
-	userCode: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
@@ -17,6 +16,8 @@ export default async function checkCareerQuestCode(
 		careerQuestClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
 		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 		careerQuestClass.changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
+
+		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
 
 		const response = await blueDotApiClientClass.chatDataService.checkChallengeCode({
 			userCode,

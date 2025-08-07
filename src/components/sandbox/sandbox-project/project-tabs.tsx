@@ -3,20 +3,16 @@
 import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
 import { useRef, useEffect, useState } from "react"
-import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
+import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
+import sandboxClass from "../../../classes/sandbox-class"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
-import sandboxClass from "../../../classes/sandbox-class"
 
-interface ProjectTabsProps {
-	project: SandboxProject
-	cppCode: string
-}
-
-function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
+function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+	const cppCode = sandboxClass.getCppCode(projectUUID)
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
@@ -56,9 +52,9 @@ function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 
 	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const newNotes = e.target.value
-		sandboxClass.updateProjectNotes(project.projectUUID, newNotes)
+		sandboxClass.updateProjectNotes(projectUUID, newNotes)
 		setHasUnsavedChanges(true) // Set unsaved changes flag when user types
-		debouncedSaveNotes(project.projectUUID, newNotes)
+		debouncedSaveNotes(projectUUID, newNotes)
 	}
 
 	return (
@@ -79,16 +75,13 @@ function ProjectTabs({ project, cppCode }: ProjectTabsProps) {
 				<Textarea
 					placeholder="Add notes about your project here..."
 					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
-					value={project.projectNotes || ""}
+					value={sandboxClass.getProjectNotes(projectUUID) || ""}
 					onChange={handleNotesChange}
 				/>
 			</TabsContent>
 
 			<TabsContent value="chat" className="flex-1 min-h-0" data-chat-section="true">
-				<SandboxChatInterface
-					projectUUID={project.projectUUID}
-					cppCode={cppCode}
-				/>
+				<SandboxChatInterface projectUUID={projectUUID} />
 			</TabsContent>
 		</Tabs>
 	)

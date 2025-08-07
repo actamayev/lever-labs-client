@@ -5,12 +5,14 @@ import { action, makeAutoObservable } from "mobx"
 import { BlocklyJson, ProjectUUID, SandboxProject, SandboxChatMessage,
 	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
+import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 
 // Extended interface for internal state management
 interface SandboxProjectWithStreaming extends SandboxProject {
 	isStreaming: boolean
 	isWaitingForResponse: boolean
 	currentStreamingMessageId: string | null
+	cppCode: string
 }
 
 class SandboxClass {
@@ -47,7 +49,8 @@ class SandboxClass {
 			sandboxJson: normalizedSandboxJson,
 			isStreaming: false,
 			isWaitingForResponse: false,
-			currentStreamingMessageId: null
+			currentStreamingMessageId: null,
+			cppCode: generateCppFromJson(normalizedSandboxJson)
 		}
 		this.sandboxProjects.set(sandboxProject.projectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.projectUUID, false)
@@ -94,10 +97,29 @@ class SandboxClass {
 		if (isUndefined(project)) return
 
 		project.sandboxJson = newJson
+		project.cppCode = generateCppFromJson(newJson)
+	})
+
+	public getCppCode = action((projectUUID: ProjectUUID): string => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return ""
+		return project.cppCode
+	})
+
+	public setCppCode = action((projectUUID: ProjectUUID, cppCode: string): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+		project.cppCode = cppCode
 	})
 
 	public deleteSandboxProject = action((projectUUID: ProjectUUID): void => {
 		this.sandboxProjects.delete(projectUUID)
+	})
+
+	public getProjectNotes = action((projectUUID: ProjectUUID): string => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return ""
+		return project.projectNotes || ""
 	})
 
 	// Chat-related methods
