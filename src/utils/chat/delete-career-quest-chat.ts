@@ -19,7 +19,6 @@ export default async function deleteCareerQuestChat(careerUUIDChallengeUUID: Car
 		}
 
 		careerQuestClass.clearChallengeMessages(careerUUIDChallengeUUID)
-		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 		return
 	} catch (error) {
 		console.error(error)

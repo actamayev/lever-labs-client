@@ -20,7 +20,6 @@ export default async function deleteCareerChat(careerUUID: CareerUUID): Promise<
 		}
 
 		careerQuestClass.clearCareerChatMessages(careerUUID)
-		careerQuestClass.resetCareerStreamingState(careerUUID)
 		return
 	} catch (error) {
 		console.error(error)

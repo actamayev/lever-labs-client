@@ -500,6 +500,7 @@ class CareerQuestClass {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.messages = []
+		this.resetChallengeStreamingState(cqInformation)
 	})
 
 	// Career chat messages
@@ -542,6 +543,7 @@ class CareerQuestClass {
 		const careerChat = this.getCareerChat(careerUUID)
 		if (!careerChat) return
 		careerChat.messages = []
+		this.resetCareerStreamingState(careerUUID)
 	})
 
 	// ========================================

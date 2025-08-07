@@ -21,9 +21,6 @@ export default async function deleteSandboxChat(projectUUID: ProjectUUID): Promi
 
 		// Clear the chat messages from the sandbox class
 		sandboxClass.clearChatMessages(projectUUID)
-
-		// Reset chat streaming state
-		sandboxClass.resetChatStreamingState(projectUUID)
 		return
 	} catch (error) {
 		console.error(error)

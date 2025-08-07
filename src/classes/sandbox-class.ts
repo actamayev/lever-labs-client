@@ -168,8 +168,8 @@ class SandboxClass {
 	public clearChatMessages = action((projectUUID: ProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
-
 		project.sandboxChatMessages = []
+		this.resetChatStreamingState(projectUUID)
 	})
 
 	// Update the resetChatStreamingState method to also clear stream ID:
