@@ -187,10 +187,10 @@ class CareerQuestClass {
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 
-	// ADD THESE METHODS to CareerQuestClass:
-
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
 		const career = this.getCareer(careerUUID)
+		console.error("setting swiper instance", careerUUID)
+		console.log("career", career)
 		if (!career) return
 		career.swiperInstance = swiperInstance
 
@@ -204,6 +204,8 @@ class CareerQuestClass {
 
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		const canGoBack = career.currentMainSlideIndex > 0
+		console.error("canAdvance", canAdvance)
+		console.error("canGoBack", canGoBack)
 
 		career.swiperInstance.allowSlideNext = canAdvance
 		career.swiperInstance.allowSlidePrev = canGoBack
