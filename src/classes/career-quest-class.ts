@@ -190,8 +190,9 @@ class CareerQuestClass {
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
 		const career = this.getCareer(careerUUID)
 		console.error("setting swiper instance", careerUUID)
-		console.log("career", career)
+		console.error("career", career)
 		if (!career) return
+		console.error("setting swiper instance", swiperInstance)
 		career.swiperInstance = swiperInstance
 
 		// Update navigation immediately when swiper is set
