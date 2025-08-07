@@ -43,7 +43,7 @@ function FrontCareerCard(props: Props) {
 				/>
 			</div>
 			<div
-				className={colors.bg2}
+				className={cn("px-7", colors.bg2)}
 				style={{
 					borderBottomLeftRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
 					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
@@ -52,7 +52,7 @@ function FrontCareerCard(props: Props) {
 			>
 				<div style={{ height: "25%" }} className="flex items-end">
 					<h3
-						className="font-bold text-white ml-7"
+						className="font-bold text-white"
 						style={{
 							fontSize: "27px",
 							lineHeight: "34px",
@@ -62,7 +62,7 @@ function FrontCareerCard(props: Props) {
 						{careerName}
 					</h3>
 				</div>
-				<div style={{ height: "45%" }} className="flex justify-between px-7 items-center">
+				<div style={{ height: "45%" }} className="flex justify-between items-center">
 					{/* Components Grid */}
 					<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
 						{componentsUsed.slice(0, 4).map((component) => (
@@ -80,7 +80,7 @@ function FrontCareerCard(props: Props) {
 					</div>
 				</div>
 				<div style={{ height: "30%" }}>
-					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
+					<div className="pb-4 flex flex-row items-center gap-3">
 						<Link href={careerData.careerUrl} className="flex-1">
 							<TactileButton
 								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
@@ -94,7 +94,6 @@ function FrontCareerCard(props: Props) {
 						<BackFlipButton
 							onFlip={flipCard}
 							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-							style={{ marginRight: "30px" }}
 						/>
 					</div>
 				</div>

@@ -40,7 +40,7 @@ export default function BackCareerCard(props: Props) {
 						{careerName}
 					</h3>
 
-					<div className="text-base text-white leading-relaxed mt-10 font-medium" style={{ height: "75%" }}>
+					<div className="text-base text-white leading-relaxed mt-10 font-medium text-center" style={{ height: "75%" }}>
 						{careerDescription}
 					</div>
 				</div>
@@ -100,7 +100,7 @@ export default function BackCareerCard(props: Props) {
 							<BackFlipButton
 								onFlip={flipCard}
 								extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-								style={{ marginRight: "30px" }}
+								// style={{ marginRight: "30px" }}
 							/>
 						</div>
 					</div>
