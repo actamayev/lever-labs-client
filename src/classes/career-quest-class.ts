@@ -189,10 +189,7 @@ class CareerQuestClass {
 
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
 		const career = this.getCareer(careerUUID)
-		// console.error("setting swiper instance", careerUUID)
-		// console.error("career", career)
 		if (!career) return
-		// console.error("setting swiper instance", swiperInstance)
 		career.swiperInstance = swiperInstance
 
 		// Update navigation immediately when swiper is set
@@ -208,8 +205,6 @@ class CareerQuestClass {
 
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		const canGoBack = career.currentMainSlideIndex > 0
-		// console.error("canAdvance", canAdvance)
-		// console.error("canGoBack", canGoBack)
 
 		career.swiperInstance.allowSlideNext = canAdvance
 		career.swiperInstance.allowSlidePrev = canGoBack
@@ -286,7 +281,6 @@ class CareerQuestClass {
 			career.currentTextChildIndex = 0
 			return true
 		}
-		console.log("savedPosition", savedPosition)
 
 		// Try to find the saved position
 		const positionIndices = this.findPositionIndices(careerUUID, savedPosition)
@@ -296,7 +290,6 @@ class CareerQuestClass {
 			career.currentTextChildIndex = 0
 			return true
 		}
-		console.log("positionIndices", positionIndices)
 
 		// Set navigation indices from saved position
 		career.currentMainSlideIndex = positionIndices.mainSlideIndex
@@ -1042,7 +1035,6 @@ class CareerQuestClass {
 		if (currentSlide.type !== "textParent") return
 
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-		// console.error("currentTextChildIndex", currentTextChildIndex)
 		const canGoPrev = currentTextChildIndex > 0
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (!canGoPrev || !textParentSwiperInstance) return
