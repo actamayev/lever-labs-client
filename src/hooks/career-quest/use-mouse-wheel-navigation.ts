@@ -1,5 +1,6 @@
 /* eslint-disable max-depth */
 /* eslint-disable @typescript-eslint/naming-convention */
+import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -33,6 +34,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 				element.classList.contains("chat-parent-component") ||
 				element.classList.contains("chat-messages-framework") ||
 				element.classList.contains("challenge-chat-interface") ||
+				element.classList.contains("career-chat-interface") ||
 				element.closest("[data-chat-component=\"true\"]") ||
 				element.closest(".overflow-y-auto") // Chat messages container
 			) {
@@ -47,13 +49,18 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
 		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
-		if (currentSlide.type !== "challenge") return false
+		if (
+			currentSlide.type !== "challenge" &&
+			!careerQuestClass.isCareerChatToggled(careerUUID)
+		) return false
 
-		// Get messages for the current challenge
-		const messages = careerQuestClass.getChallengeMessages(currentSlide.data)
-
-		// Only allow normal scrolling if there are messages (length > 0)
-		return messages.length > 0
+		if (currentSlide.type === "challenge") {
+			const challengeMessages = careerQuestClass.getChallengeMessages(currentSlide.data)
+			// Only allow normal scrolling if there are messages (length > 0)
+			return !isEmpty(challengeMessages)
+		}
+		const careerMessages = careerQuestClass.getCareerChatMessages(careerUUID)
+		return !isEmpty(careerMessages)
 	}, [careerUUID])
 
 	useEffect(() => {

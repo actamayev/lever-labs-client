@@ -45,11 +45,12 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 			inputRef.current?.focus()
 		}, 0)
 
+		const careerDataForMessage = careerQuestClass.getCareerDataForMessage(careerUUID)
+		if (!careerDataForMessage) return
+
 		await sendCareerMessage(careerUUID, {
 			message: inputValue,
-			whatUserSees: "You",
-			careerName: "Career",
-			careerDescription: "Career Description"
+			...careerDataForMessage
 		})
 	}, [careerUUID, inputValue, isStreaming])
 
@@ -100,47 +101,45 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 	}
 
 	return (
-		<>
-			<div className="flex flex-col h-full" data-chat-component="true">
-				<div className="h-full">
-					<ChatParentComponent extraClasses="border-0">
-						{/* existing content - no changes needed */}
-						{hasAnyMessages && (
-							<ClearChatHistoryHeader
-								showDeleteConfirmation={showDeleteConfirmation}
-								handleDeleteClick={handleDeleteClick}
-								handleConfirmDelete={handleConfirmDelete}
-								handleCancelDelete={handleCancelDelete}
-								isStreaming={isStreaming}
-							/>
-						)}
-
-						<ChatMessagesFramework
-							hasAnyMessages={hasAnyMessages}
-							isWaitingForResponse={isWaitingForResponse}
-							isStreaming={isStreaming}
-							messageLength={messages.length}
-						>
-							{messages.map((message) => (
-								<SingleSandboxMessage
-									key={message.id}
-									message={message}
-								/>
-							))}
-						</ChatMessagesFramework>
-
-						<ChatTextArea
-							inputRef={inputRef}
-							handleSendMessage={handleSendMessage}
-							onStopStreaming={onStopStreaming}
-							inputValue={inputValue}
-							setInputValue={setInputValue}
+		<div className="flex flex-col h-full career-chat-interface" data-chat-component="true">
+			<div className="h-full">
+				<ChatParentComponent extraClasses="border-0">
+					{/* existing content - no changes needed */}
+					{hasAnyMessages && (
+						<ClearChatHistoryHeader
+							showDeleteConfirmation={showDeleteConfirmation}
+							handleDeleteClick={handleDeleteClick}
+							handleConfirmDelete={handleConfirmDelete}
+							handleCancelDelete={handleCancelDelete}
 							isStreaming={isStreaming}
 						/>
-					</ChatParentComponent>
-				</div>
+					)}
+
+					<ChatMessagesFramework
+						hasAnyMessages={hasAnyMessages}
+						isWaitingForResponse={isWaitingForResponse}
+						isStreaming={isStreaming}
+						messageLength={messages.length}
+					>
+						{messages.map((message) => (
+							<SingleSandboxMessage
+								key={message.id}
+								message={message}
+							/>
+						))}
+					</ChatMessagesFramework>
+
+					<ChatTextArea
+						inputRef={inputRef}
+						handleSendMessage={handleSendMessage}
+						onStopStreaming={onStopStreaming}
+						inputValue={inputValue}
+						setInputValue={setInputValue}
+						isStreaming={isStreaming}
+					/>
+				</ChatParentComponent>
 			</div>
-		</>
+		</div>
 	)
 }
 

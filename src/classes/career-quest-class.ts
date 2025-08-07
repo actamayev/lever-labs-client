@@ -528,8 +528,9 @@ class CareerQuestClass {
 		if (!career) return null
 		const careerDefinition = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
 		if (!careerDefinition) return null
-		const whatUserSees = career.completedChallengeIds.size === careerDefinition.totalLessons ? "You" : "Pip"
-		//TODO this should be the text in left content
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		if (currentSlide.type === "challenge") return null
+		const whatUserSees = currentSlide.data.children[career.currentTextChildIndex].content
 		return {
 			careerName: careerDefinition.careerName,
 			careerDescription: careerDefinition.careerDescription,
