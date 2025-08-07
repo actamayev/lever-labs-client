@@ -48,7 +48,7 @@ export default function FrontCareerCard(props: Props) {
 					height: "45%"
 				}}
 			>
-				<div style={{ height: "25%" }} className="flex items-center">
+				<div style={{ height: "25%" }} className="flex items-end">
 					<h3
 						className="font-bold text-white ml-7"
 						style={{
