@@ -9,11 +9,11 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function requestCareerQuestHint(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
-	userCode: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
+		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
 		careerQuestClass.addChallengeHintRequestMessage(careerUUIDChallengeUUID)
 		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 

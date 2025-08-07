@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 import { CqChallengeData, CareerUUID } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useCallback, useMemo } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
@@ -14,7 +14,6 @@ import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import SingleCareerQuestMessage from "../../chat/single-challenge-message"
 import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
@@ -63,11 +62,6 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
 
-	const cppCode = useMemo(() => {
-		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData)
-		return generateCppFromJson(currentBlocklyJson)
-	}, [challengeData])
-
 	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
@@ -90,8 +84,8 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendChallengeChatMessage(challengeData, cppCode, inputValue)
-	}, [challengeData, cppCode, inputValue, isStreaming])
+		await sendChallengeChatMessage(challengeData, inputValue)
+	}, [challengeData, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
@@ -123,8 +117,8 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 
 	const handleHintClick = useCallback(async () => {
 		if (isStreaming) return
-		await requestCareerQuestHint(challengeData, cppCode)
-	}, [challengeData, cppCode, isStreaming])
+		await requestCareerQuestHint(challengeData)
+	}, [challengeData, isStreaming])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
@@ -171,7 +165,6 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 									key={message.id}
 									message={message}
 									cqChallengeData={challengeData}
-									cppCode={cppCode}
 								/>
 							))}
 						</ChatMessagesFramework>
