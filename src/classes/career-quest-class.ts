@@ -1005,7 +1005,7 @@ class CareerQuestClass {
 		if (currentSlide.type !== "textParent") return
 
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-		console.log("currentTextChildIndex", currentTextChildIndex)
+		console.error("currentTextChildIndex", currentTextChildIndex)
 		const canGoPrev = currentTextChildIndex > 0
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (!canGoPrev || !textParentSwiperInstance) return
