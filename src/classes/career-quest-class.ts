@@ -1126,6 +1126,21 @@ class CareerQuestClass {
 		return career?.isCareerChatToggled || false
 	}
 
+	// Add this method to your CareerQuestClass
+	public setCareerChatRetrievedData = action((careerUUID: CareerUUID, messages: CareerChatMessage[]): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Set the retrieved messages in the career chat data
+		career.careerChatData.messages = messages
+
+		// Reset any streaming states since these are retrieved messages
+		career.careerChatData.isWaitingForResponse = false
+		career.careerChatData.isStreaming = false
+		career.careerChatData.currentStreamingMessageId = null
+		career.careerChatData.currentStreamId = null
+	})
+
 	public logout(): void {
 		this.careers.clear()
 		this.isDoneInitializing = false

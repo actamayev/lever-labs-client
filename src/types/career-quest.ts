@@ -112,7 +112,6 @@ declare global {
 	interface CareerChatMessage extends SandboxChatMessage {
 		id: string
 		isStreaming?: boolean
-
 	}
 
 	interface CareerDataForMessage {
