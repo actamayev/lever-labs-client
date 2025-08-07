@@ -7,7 +7,7 @@ import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function deleteCareerQuestChat(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
+export default async function deleteChallengeChat(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
@@ -15,7 +15,7 @@ export default async function deleteCareerQuestChat(careerUUIDChallengeUUID: Car
 		const response = await blueDotApiClientClass.chatDataService.deleteChallengeChat(careerUUIDChallengeUUID.challengeUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
-			throw new Error("Unable to delete chat")
+			throw new Error("Unable to delete challenge chat")
 		}
 
 		careerQuestClass.clearChallengeMessages(careerUUIDChallengeUUID)
@@ -23,7 +23,7 @@ export default async function deleteCareerQuestChat(careerUUIDChallengeUUID: Car
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
-			title: "Unable to delete chat",
+			title: "Unable to delete challenge chat",
 			description: "Please reload the page and try again"
 		})
 	}

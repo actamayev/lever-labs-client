@@ -16,7 +16,7 @@ import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import SingleCareerQuestMessage from "../../chat/single-challenge-message"
-import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
+import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 
 const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
@@ -118,7 +118,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const handleConfirmDelete = useCallback(async () => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
-		await deleteCareerQuestChat(challengeData)
+		await deleteChallengeChat(challengeData)
 	}, [challengeData, hasAnyMessages, isStreaming])
 
 	const handleHintClick = useCallback(async () => {
