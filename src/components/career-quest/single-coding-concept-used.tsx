@@ -17,10 +17,11 @@ const codingConceptIcons: Record<CodingConceptName, React.ReactNode> = {
 interface Props {
 	codingConcept: CodingConceptName
 	baseColor: DuolingoColors
+	extraClasses?: string
 }
 
 export default function SingleCodingConceptUsed(props: Props) {
-	const { codingConcept, baseColor } = props
+	const { codingConcept, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)
 
@@ -30,9 +31,10 @@ export default function SingleCodingConceptUsed(props: Props) {
 				<div
 					key={codingConcept}
 					className={cn(
-						"w-10 h-10 rounded-2xl flex items-center justify-center",
+						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0 border-2 border-white",
 						colors.bg1,        // Base background (bg-baseColor-2)
-						colors.hoverBg2    // Hover background (hover:bg-baseColor-3)
+						colors.hoverBg2,    // Hover background (hover:bg-baseColor-3)
+						extraClasses
 					)}
 					title={codingConcept}
 				>

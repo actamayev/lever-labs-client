@@ -15,6 +15,7 @@ interface Props {
 	flipCard: () => void
 }
 
+// eslint-disable-next-line max-lines-per-function
 export default function BackCareerCard(props: Props) {
 	const { careerData, flipCard } = props
 	const { careerName, careerDescription, backgroundColor, expectedCompletionTime, componentsUsed, codingConcepts } = careerData
@@ -40,7 +41,10 @@ export default function BackCareerCard(props: Props) {
 						{careerName}
 					</h3>
 
-					<div className="text-base text-white leading-relaxed mt-10 font-medium text-center" style={{ height: "75%" }}>
+					<div
+						className={cn("text-base text-white leading-relaxed mt-10 font-medium text-center p-4 rounded-3xl", colors.bg2)}
+						style={{ height: "75%", lineHeight: "24px" }}
+					>
 						{careerDescription}
 					</div>
 				</div>
@@ -54,6 +58,7 @@ export default function BackCareerCard(props: Props) {
 									key={component.componentName}
 									component={component}
 									baseColor={backgroundColor}
+									extraClasses={cn(colors.border2, colors.bg, colors.hoverBg2)}
 								/>
 							))}
 							{componentsUsed.length > 4 && (
@@ -73,7 +78,12 @@ export default function BackCareerCard(props: Props) {
 						{/* Coding concepts */}
 						<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
 							{codingConcepts.slice(0, 4).map((concept) => (
-								<SingleCodingConceptUsed key={concept} codingConcept={concept} baseColor={backgroundColor} />
+								<SingleCodingConceptUsed
+									key={concept}
+									codingConcept={concept}
+									baseColor={backgroundColor}
+									extraClasses={cn(colors.border1, colors.bg, colors.hoverBg1)}
+								/>
 							))}
 							{codingConcepts.length > 4 && (
 								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center text-white", colors.bg2)}>
