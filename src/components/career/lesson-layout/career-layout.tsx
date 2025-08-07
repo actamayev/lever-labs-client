@@ -2,7 +2,6 @@
 "use client"
 import "swiper/css"
 import { useEffect } from "react"
-import { isEmpty } from "lodash-es"
 import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import RightContent from "./right-content"
@@ -25,75 +24,11 @@ function EmptyTextParentCard() {
 
 // eslint-disable-next-line max-lines-per-function
 function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
-	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)
-	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
 	useMousewheelNavigation(careerData.careerUUID)
 	useKeyboardNavigation(careerData.careerUUID)
-
-	// TODO: 8/5/25: Try to remove these useEffects (they seem super complex)
-	useEffect(() => {
-		if (!isDataReady || isEmpty(mainSlides)) return
-
-		const restored = careerQuestClass.restoreNavigationFromSavedPosition(careerData.careerUUID)
-		if (!restored) return
-
-		const swiperInstance = careerQuestClass.getSwiperInstance(careerData.careerUUID)
-		if (!swiperInstance) return
-
-		const indices = careerQuestClass.getNavigationIndices(careerData.careerUUID)
-		swiperInstance.slideTo(indices.mainSlideIndex, 0)
-
-		// Handle right content based on current slide
-		const currentSlide = mainSlides[indices.mainSlideIndex]
-
-		if (currentSlide.type === "challenge") {
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
-			return
-		}
-
-		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
-		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
-
-		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
-		} else {
-			const textChild = currentSlide.data.children[indices.textChildIndex]
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
-		}
-	}, [isDataReady, careerData.careerUUID, mainSlides, careerData.sections])
-
-	// Handle right content updates based on current slide and lock state
-	useEffect(() => {
-		if (!isDataReady) {
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: careerData.initialImage })
-			return
-		}
-
-		const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
-
-		if (currentSlide.type === "challenge") {
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: currentSlide.data })
-			return
-		}
-		const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
-
-		// If chat is toggled and we're on a text section, don't override the chat
-		if (isChatToggled) return
-
-		const currentSectionIndex = careerData.sections.findIndex(section => section.id === currentSlide.id)
-		const nextChallenge = careerData.sections.slice(currentSectionIndex + 1).find(section => section.type === "challenge") as ChallengeSection | undefined
-
-		if (nextChallenge && careerQuestClass.hasChallengeBeenSeen(careerData.careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			careerQuestClass.setRightContent(careerData.careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
-			return
-		}
-		// Show the text image
-		const textChild = currentSlide.data.children[currentTextChildIndex]
-		careerQuestClass.setRightContent(careerData.careerUUID, { type: "image", icon: textChild.triggerImage })
-	}, [isDataReady, currentMainSlideIndex, currentTextChildIndex, careerData.careerUUID, careerData.initialImage, careerData.sections])
 
 	useEffect(() => {
 		return () => {
@@ -108,6 +43,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 				<div className="px-[100px] py-8 h-full pointer-events-none">
 					<div className="h-full pointer-events-auto">
 						<Swiper
+							key={isDataReady ? "ready" : "loading"}
 							direction="vertical"
 							slidesPerView={1}
 							spaceBetween={0}
@@ -116,6 +52,7 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 							allowSlideNext={false}
 							allowSlidePrev={true}
 							allowTouchMove={false}
+							initialSlide={careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)}
 							onSwiper={(swiper) => {
 								careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 							}}

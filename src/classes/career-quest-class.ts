@@ -189,14 +189,17 @@ class CareerQuestClass {
 
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
 		const career = this.getCareer(careerUUID)
-		console.error("setting swiper instance", careerUUID)
-		console.error("career", career)
+		// console.error("setting swiper instance", careerUUID)
+		// console.error("career", career)
 		if (!career) return
-		console.error("setting swiper instance", swiperInstance)
+		// console.error("setting swiper instance", swiperInstance)
 		career.swiperInstance = swiperInstance
 
 		// Update navigation immediately when swiper is set
 		this.updateSwiperNavigation(careerUUID)
+
+		// Try to restore saved position and sync right content once swiper exists
+		this.attemptRestoreAndSyncRightContent(careerUUID)
 	})
 
 	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
@@ -205,8 +208,8 @@ class CareerQuestClass {
 
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		const canGoBack = career.currentMainSlideIndex > 0
-		console.error("canAdvance", canAdvance)
-		console.error("canGoBack", canGoBack)
+		// console.error("canAdvance", canAdvance)
+		// console.error("canGoBack", canGoBack)
 
 		career.swiperInstance.allowSlideNext = canAdvance
 		career.swiperInstance.allowSlidePrev = canGoBack
@@ -226,6 +229,11 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
+
+		// When data becomes ready, try to restore and sync UI state
+		if (hasRetrievedAllChallenges) {
+			this.attemptRestoreAndSyncRightContent(careerUUID)
+		}
 	})
 
 	// ========================================
@@ -278,6 +286,7 @@ class CareerQuestClass {
 			career.currentTextChildIndex = 0
 			return true
 		}
+		console.log("savedPosition", savedPosition)
 
 		// Try to find the saved position
 		const positionIndices = this.findPositionIndices(careerUUID, savedPosition)
@@ -287,11 +296,27 @@ class CareerQuestClass {
 			career.currentTextChildIndex = 0
 			return true
 		}
+		console.log("positionIndices", positionIndices)
 
 		// Set navigation indices from saved position
 		career.currentMainSlideIndex = positionIndices.mainSlideIndex
 		career.currentTextChildIndex = positionIndices.textChildIndex
 		return true
+	})
+
+	// Attempt to restore saved position (if any), sync the Swiper to it, and update right content
+	private attemptRestoreAndSyncRightContent = action((careerUUID: CareerUUID): void => {
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!isDataReady || !swiperInstance) return
+
+		const restored = this.restoreNavigationFromSavedPosition(careerUUID)
+		if (!restored) return
+
+		const indices = this.getNavigationIndices(careerUUID)
+		swiperInstance.slideTo(indices.mainSlideIndex, 0)
+
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	// ========================================
@@ -870,6 +895,8 @@ class CareerQuestClass {
 			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
 
 			this.setCurrentTextChildIndex(careerUUID, 0)
+			// Update right content for challenge slide
+			this.updateRightContentForCurrentState(careerUUID)
 			return
 		}
 
@@ -884,6 +911,9 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[textChildIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
+
+		// Update right content for text slide
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
@@ -898,6 +928,9 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[newIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
+
+		// Update right content for text child change
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
@@ -966,12 +999,13 @@ class CareerQuestClass {
 		career.textParentSwipers.clear()
 	})
 
-	public onTextSlideChange = action((careerUUID: CareerUUID, triggerImage: string): void => {
+	public onTextSlideChange = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
-		this.setRightContent(careerUUID, { type: "image", icon: triggerImage })
+		// Centralize right content update logic
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	public getLastSlideChangeTime(careerUUID: CareerUUID): number {
@@ -997,7 +1031,7 @@ class CareerQuestClass {
 		textParentSwiperInstance.slideNext()
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
-		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
@@ -1008,7 +1042,7 @@ class CareerQuestClass {
 		if (currentSlide.type !== "textParent") return
 
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-		console.error("currentTextChildIndex", currentTextChildIndex)
+		// console.error("currentTextChildIndex", currentTextChildIndex)
 		const canGoPrev = currentTextChildIndex > 0
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (!canGoPrev || !textParentSwiperInstance) return
@@ -1018,7 +1052,7 @@ class CareerQuestClass {
 		textParentSwiperInstance.slidePrev()
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
-		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
@@ -1132,6 +1166,46 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.isCareerChatToggled || false
 	}
+
+	// ========================================
+	// RIGHT CONTENT SELECTION LOGIC
+	// ========================================
+
+	private updateRightContentForCurrentState = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		if (!isDataReady) {
+			this.setRightContent(careerUUID, { type: "image", icon: career.careerDefinition.initialImage })
+			return
+		}
+
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+
+		if (currentSlide.type === "challenge") {
+			this.setRightContent(careerUUID, { type: "challenge", challengeData: currentSlide.data })
+			return
+		}
+
+		// If chat is toggled, avoid overriding UI with non-challenge content
+		if (career.isCareerChatToggled) return
+
+		// Determine if the next challenge has been seen
+		const currentSectionIndex = career.careerDefinition.sections.findIndex(section => section.id === currentSlide.id)
+		const nextChallenge = career.careerDefinition.sections
+			.slice(currentSectionIndex + 1)
+			.find(section => section.type === "challenge") as ChallengeSection | undefined
+
+		if (nextChallenge && this.hasChallengeBeenSeen(careerUUID, nextChallenge.challengeData.challengeUUID)) {
+			this.setRightContent(careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
+			return
+		}
+
+		// Otherwise use the current text child's trigger image
+		const textChild = currentSlide.data.children[career.currentTextChildIndex]
+		this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })
+	})
 
 	// Add this method to your CareerQuestClass
 	public setCareerChatRetrievedData = action((careerUUID: CareerUUID, messages: CareerChatMessage[]): void => {
