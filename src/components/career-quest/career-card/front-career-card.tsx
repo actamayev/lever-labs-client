@@ -1,13 +1,16 @@
 "use client"
 
+import Link from "next/link"
 import { motion } from "framer-motion"
+import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import careerQuestClass from "../../../classes/career-quest-class"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import StartButton from "../start-button"
-import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import ChallengeProgressCircle from "./challenge-progress-indicator"
+import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {
 	careerData: CareerData
@@ -15,10 +18,9 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function FrontCareerCard(props: Props) {
+function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
-		lessonsComplete, backgroundColor } = careerData
+	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -74,16 +76,20 @@ export default function FrontCareerCard(props: Props) {
 
 					{/* Progress Circle */}
 					<div className="flex-1 flex justify-end">
-						<ChallengeProgressCircle careerData={careerData} />
+						<ChallengeProgressCircle careerUUID={careerUUID} />
 					</div>
 				</div>
 				<div style={{ height: "30%" }}>
 					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
-						<StartButton
-							baseColor={backgroundColor}
-							lessonsComplete={lessonsComplete}
-							careerUrl={careerUrl}
-						/>
+						<Link href={careerData.careerUrl} className="flex-1">
+							<TactileButton
+								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+								shadowClass={colors.shadow}
+								shadowHeight={4}
+							>
+								{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+							</TactileButton>
+						</Link>
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}
@@ -98,3 +104,5 @@ export default function FrontCareerCard(props: Props) {
 		</motion.div>
 	)
 }
+
+export default observer(FrontCareerCard)

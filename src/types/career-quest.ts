@@ -24,8 +24,6 @@ declare global {
 		careerUUID: CareerUUID
 		careerName: string
 		careerDescription: string
-		totalLessons: number
-		lessonsComplete: number
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]

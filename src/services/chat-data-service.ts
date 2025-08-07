@@ -13,7 +13,7 @@ export default class ChatDataService extends BaseDataService {
 
 	async stopChatStream(streamId: string): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl("/stop-chat-stream"), { streamId }
+			this.buildUrl(`/stop-chat-stream/${streamId}`)
 		)
 	}
 

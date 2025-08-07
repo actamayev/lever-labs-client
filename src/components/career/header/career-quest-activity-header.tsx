@@ -13,7 +13,7 @@ import careerQuestClass from "../../../classes/career-quest-class" // Add import
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
 	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
 	const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
-	const isOnChallengeSection = currentSlide?.type === "challenge"
+	const isOnChallengeSection = currentSlide.type === "challenge"
 
 	const handleChatToggle = () => {
 		if (isOnChallengeSection) return

@@ -1,18 +1,25 @@
 "use client"
 
 import { useState } from "react"
+import { observer } from "mobx-react"
+import { CareerUUID } from "@bluedotrobots/common-ts"
 import { cn } from "../../../lib/shadcn/utils"
-import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import CustomTooltip from "../../custom-tooltip"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import careerQuestClass from "../../../classes/career-quest-class"
+import { careerData } from "../../../utils/constants/career-quest/career-data"
 
-export default function ChallengeProgressCircle({ careerData }: { careerData: CareerData }) {
-	const { lessonsComplete, totalLessons, backgroundColor } = careerData
+function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }) {
 	const [isHovered, setIsHovered] = useState(false)
+	const career = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
+	if (!career) return null
+	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerUUID)
+	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerUUID)
 	const size = 64
 
-	const colors = getDuolingoColors(backgroundColor)
+	const colors = getDuolingoColors(career.backgroundColor)
 	const radius = 30
-	const percentage = totalLessons > 0 ? (lessonsComplete / totalLessons) * 100 : 0
+	const percentage = totalChallenges > 0 ? (completedChallenges / totalChallenges) * 100 : 0
 	const circumference = 2 * Math.PI * radius
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
@@ -38,7 +45,7 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 							onMouseLeave={() => setIsHovered(false)}
 						/>
 					}
-					tooltipContent={`${lessonsComplete}/${totalLessons} lessons complete`}
+					tooltipContent={`${completedChallenges}/${totalChallenges} lessons complete`}
 				/>
 				{/* Progress circle */}
 				<circle
@@ -63,3 +70,5 @@ export default function ChallengeProgressCircle({ careerData }: { careerData: Ca
 		</div>
 	)
 }
+
+export default observer(ChallengeProgressCircle)
