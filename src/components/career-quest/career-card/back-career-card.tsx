@@ -89,7 +89,7 @@ export default function BackCareerCard(props: Props) {
 							<div className="flex-1">
 								<div
 									className={cn(
-										"bg-white h-10 rounded-full text-base w-full flex items-center justify-center py-2",
+										"bg-white h-10 rounded-full text-base w-full flex items-center justify-center",
 										colors.text2
 									)}
 								>
