@@ -3,14 +3,16 @@
 import * as Blockly from "blockly"
 import {
 	InteractionType,
-	CqChatbotStreamStartEvent,
-	CqChatbotStreamChunkEvent,
-	CqChatbotStreamCompleteEvent,
+	ChallengeChatbotStreamStartEvent,
+	ChallengeChatbotStreamChunkEvent,
+	ChallengeChatbotStreamCompleteEvent,
 	BinaryEvaluationResult,
 	CqChallengeData,
 	CareerUUID,
 	BlocklyJson,
-	ChallengeUUID
+	ChallengeUUID,
+	CareerChatbotStreamStartOrCompleteEvent,
+	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
@@ -21,10 +23,11 @@ import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
+import { careerData } from "../utils/constants/career-quest/career-data"
 
 // Chat and streaming state interfaces
 interface ChatData {
-	messages: CareerQuestChatMessage[]
+	messages: ChallengeChatMessage[]
 	isWaitingForResponse: boolean
 }
 
@@ -40,6 +43,12 @@ interface ChallengeInstance extends ChatData, StreamingState {
 	isCompleted: boolean
 	blocklyJson: BlocklyJson
 	cppCode: string
+}
+
+// omit interactionType:
+interface CareerChatData extends Omit<StreamingState, "interactionType"> {
+	messages: CareerChatMessage[]
+	isWaitingForResponse: boolean
 }
 
 interface CareerInstance {
@@ -59,6 +68,9 @@ interface CareerInstance {
 	isTransitioning: boolean
 	rightContent: RightContent
 	lastSlideChangeTime: number
+	careerChatData: CareerChatData
+	isCareerChatToggled: boolean
+	previousRightContent: RightContent | null
 }
 
 class CareerQuestClass {
@@ -150,7 +162,17 @@ class CareerQuestClass {
 			isTransitioning: false,
 			lastSlideChangeTime: 0,
 			rightContent: { type: "image", icon: careerDefinition.initialImage },
-			textParentSwipers: new Map<string, SwiperType | null>()
+			textParentSwipers: new Map<string, SwiperType | null>(),
+			careerChatData: {
+				messages: [],
+				isWaitingForResponse: false,
+				isStreaming: false,
+				currentStreamingMessageId: null,
+				currentStreamId: null,
+				currentInteractionType: null
+			},
+			isCareerChatToggled: false,
+			previousRightContent: null
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -165,8 +187,6 @@ class CareerQuestClass {
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 
-	// ADD THESE METHODS to CareerQuestClass:
-
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
@@ -174,6 +194,9 @@ class CareerQuestClass {
 
 		// Update navigation immediately when swiper is set
 		this.updateSwiperNavigation(careerUUID)
+
+		// Try to restore saved position and sync right content once swiper exists
+		this.attemptRestoreAndSyncRightContent(careerUUID)
 	})
 
 	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
@@ -201,6 +224,11 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
+
+		// When data becomes ready, try to restore and sync UI state
+		if (hasRetrievedAllChallenges) {
+			this.attemptRestoreAndSyncRightContent(careerUUID)
+		}
 	})
 
 	// ========================================
@@ -267,6 +295,21 @@ class CareerQuestClass {
 		career.currentMainSlideIndex = positionIndices.mainSlideIndex
 		career.currentTextChildIndex = positionIndices.textChildIndex
 		return true
+	})
+
+	// Attempt to restore saved position (if any), sync the Swiper to it, and update right content
+	private attemptRestoreAndSyncRightContent = action((careerUUID: CareerUUID): void => {
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (!isDataReady || !swiperInstance) return
+
+		const restored = this.restoreNavigationFromSavedPosition(careerUUID)
+		if (!restored) return
+
+		const indices = this.getNavigationIndices(careerUUID)
+		swiperInstance.slideTo(indices.mainSlideIndex, 0)
+
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	// ========================================
@@ -357,12 +400,17 @@ class CareerQuestClass {
 		return career?.challenges.get(cqInformation.challengeUUID)
 	}
 
+	private getCareerChat(careerUUID: CareerUUID): CareerChatData | undefined {
+		const career = this.getCareer(careerUUID)
+		return career?.careerChatData
+	}
+
 	// ========================================
 	// MESSAGE MANAGEMENT
 	// ========================================
 
 	// Challenge messages
-	public getChallengeMessages(cqInformation: CareerUUIDChallengeUUID): CareerQuestChatMessage[] {
+	public getChallengeMessages(cqInformation: CareerUUIDChallengeUUID): ChallengeChatMessage[] {
 		const challenge = this.getChallenge(cqInformation)
 		return challenge?.messages || []
 	}
@@ -376,7 +424,7 @@ class CareerQuestClass {
 
 		challenge.isWaitingForResponse = true
 
-		const message: CareerQuestChatMessage = {
+		const message: ChallengeChatMessage = {
 			id: `user-${Date.now()}`,
 			role: "user",
 			content,
@@ -393,7 +441,7 @@ class CareerQuestClass {
 		this.hideChallengeHintButtons(cqInformation)
 		challenge.isWaitingForResponse = true
 
-		const message: CareerQuestChatMessage = {
+		const message: ChallengeChatMessage = {
 			id: `hint-request-${Date.now()}`,
 			role: "user",
 			content: "?",
@@ -411,7 +459,7 @@ class CareerQuestClass {
 		this.hideChallengeHintButtons(cqInformation)
 		challenge.isWaitingForResponse = true
 
-		const message: CareerQuestChatMessage = {
+		const message: ChallengeChatMessage = {
 			id: `check-code-request-${Date.now()}`,
 			role: "user",
 			content: "?",
@@ -432,7 +480,7 @@ class CareerQuestClass {
 
 		challenge.isWaitingForResponse = false
 
-		const message: CareerQuestChatMessage = {
+		const message: ChallengeChatMessage = {
 			id: `evaluation-result-${Date.now()}`,
 			role: "assistant",
 			content: evaluationResult.feedback,
@@ -473,20 +521,64 @@ class CareerQuestClass {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 		challenge.messages = []
+		this.resetChallengeStreamingState(cqInformation)
+	})
+
+	// Career chat messages
+	public getCareerChatMessages(careerUUID: CareerUUID): CareerChatMessage[] {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.messages || []
+	}
+
+	public addCareerUserMessage = action((careerUUID: CareerUUID, content: string): void => {
+		const careerChat = this.getCareerChat(careerUUID)
+		if (!careerChat) return
+		careerChat.isWaitingForResponse = true
+
+		const message: CareerChatMessage = {
+			id: `user-${Date.now()}`,
+			role: "user",
+			content,
+			timestamp: new Date()
+		}
+
+		careerChat.messages.push(message)
+	})
+
+	public getCareerDataForMessage = action((careerUUID: CareerUUID): CareerDataForMessage | null => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return null
+		const careerDefinition = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
+		if (!careerDefinition) return null
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+		if (currentSlide.type === "challenge") return null
+		const whatUserSees = currentSlide.data.children[career.currentTextChildIndex].content
+		return {
+			careerName: careerDefinition.careerName,
+			careerDescription: careerDefinition.careerDescription,
+			whatUserSees
+		}
+	})
+
+	public clearCareerChatMessages = action((careerUUID: CareerUUID): void => {
+		const careerChat = this.getCareerChat(careerUUID)
+		if (!careerChat) return
+		careerChat.messages = []
+		this.resetCareerStreamingState(careerUUID)
 	})
 
 	// ========================================
 	// STREAMING MANAGEMENT
 	// ========================================
 
-	public startChallengeStreaming = action((startEvent: CqChatbotStreamStartEvent): void => {
+	public startChallengeStreaming = action((startEvent: ChallengeChatbotStreamStartEvent): void => {
 		// Note: You'll need to pass careerUUID in the event or determine it from challengeUUID
 		const challenge = this.getChallenge({ ...startEvent })
 		if (!challenge) return
 
 		challenge.isWaitingForResponse = false
 
-		const streamingMessage: CareerQuestChatMessage = {
+		const streamingMessage: ChallengeChatMessage = {
 			id: `streaming-${Date.now()}`,
 			role: "assistant",
 			content: "",
@@ -501,7 +593,7 @@ class CareerQuestClass {
 		challenge.currentInteractionType = startEvent.interactionType
 	})
 
-	public addChallengeStreamingChunk = action((chunkEvent: CqChatbotStreamChunkEvent): void => {
+	public addChallengeStreamingChunk = action((chunkEvent: ChallengeChatbotStreamChunkEvent): void => {
 		const challenge = this.getChallenge({ ...chunkEvent })
 		if (!challenge) return
 
@@ -519,7 +611,7 @@ class CareerQuestClass {
 		}
 	})
 
-	public completeChallengeStreaming = action((completeEvent: CqChatbotStreamCompleteEvent): void => {
+	public completeChallengeStreaming = action((completeEvent: ChallengeChatbotStreamCompleteEvent): void => {
 		const challenge = this.getChallenge({ ...completeEvent })
 		if (
 			!challenge ||
@@ -564,6 +656,87 @@ class CareerQuestClass {
 		return challenge?.currentStreamId || null
 	}
 
+	//Career Chat
+	public startCareerStreaming = action((startEvent: CareerChatbotStreamStartOrCompleteEvent): void => {
+		const careerChat = this.getCareerChat(startEvent.careerUUID)
+		if (!careerChat) return
+
+		careerChat.isWaitingForResponse = false
+
+		const streamingMessage: CareerChatMessage = {
+			id: `streaming-${Date.now()}`,
+			role: "assistant",
+			content: "",
+			timestamp: new Date(),
+			isStreaming: true
+		}
+
+		careerChat.messages.push(streamingMessage)
+		careerChat.isStreaming = true
+		careerChat.currentStreamingMessageId = streamingMessage.id
+	})
+
+	public addCareerStreamingChunk = action((chunkEvent: CareerChatbotChunkEvent): void => {
+		const careerChat = this.getCareerChat(chunkEvent.careerUUID)
+		if (!careerChat) return
+
+		if (!careerChat.isStreaming || !careerChat.currentStreamingMessageId) {
+			console.warn("Received chunk but not streaming for career:", chunkEvent.careerUUID)
+			return
+		}
+
+		const streamingMessage = careerChat.messages.find(
+			msg => msg.id === careerChat.currentStreamingMessageId
+		)
+
+		if (streamingMessage) {
+			streamingMessage.content += chunkEvent.content
+		}
+	})
+
+	public completeCareerStreaming = action((completeEvent: CareerChatbotStreamStartOrCompleteEvent): void => {
+		const careerChat = this.getCareerChat(completeEvent.careerUUID)
+		if (
+			!careerChat ||
+			!careerChat.isStreaming ||
+			!careerChat.currentStreamingMessageId
+		) return
+
+		const streamingMessage = careerChat.messages.find(
+			msg => msg.id === careerChat.currentStreamingMessageId
+		)
+
+		if (streamingMessage) {
+			streamingMessage.isStreaming = false
+		}
+
+		careerChat.isStreaming = false
+		careerChat.currentStreamingMessageId = null
+		careerChat.currentInteractionType = null
+		careerChat.currentStreamId = null
+	})
+
+	public resetCareerStreamingState = action((careerUUID: CareerUUID): void => {
+		const careerChat = this.getCareerChat(careerUUID)
+		if (!careerChat) return
+
+		careerChat.isStreaming = false
+		careerChat.currentStreamingMessageId = null
+		careerChat.currentInteractionType = null
+		careerChat.currentStreamId = null
+	})
+
+	public setCareerStreamId = action((careerUUID: CareerUUID, streamId: string | null): void => {
+		const careerChat = this.getCareerChat(careerUUID)
+		if (!careerChat) return
+		careerChat.currentStreamId = streamId
+	})
+
+	public getCareerStreamId(careerUUID: CareerUUID): string | null {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.currentStreamId || null
+	}
+
 	// ========================================
 	// STATE GETTERS
 	// ========================================
@@ -578,6 +751,16 @@ class CareerQuestClass {
 		return challenge?.isWaitingForResponse || false
 	}
 
+	public isCareerStreaming(careerUUID: CareerUUID): boolean {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.isStreaming || false
+	}
+
+	public isCareerWaitingForResponse(careerUUID: CareerUUID): boolean {
+		const careerChat = this.getCareerChat(careerUUID)
+		return careerChat?.isWaitingForResponse || false
+	}
+
 	// ========================================
 	// DATA MANAGEMENT
 	// ========================================
@@ -586,7 +769,7 @@ class CareerQuestClass {
 	// UPDATE this existing method to trigger swiper updates:
 	public setChallengeRetrievedData = action((
 		cqInformation: CareerUUIDChallengeUUID,
-		messages: CareerQuestChatMessage[],
+		messages: ChallengeChatMessage[],
 		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
 	): void => {
@@ -695,10 +878,18 @@ class CareerQuestClass {
 		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
 
 		if (currentSlide.type === "challenge") {
+			// Turn off chat toggle when navigating to a challenge section
+			if (career.isCareerChatToggled) {
+				career.isCareerChatToggled = false
+				career.previousRightContent = null // Clear since we're going to a challenge
+			}
+
 			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
 			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
 
 			this.setCurrentTextChildIndex(careerUUID, 0)
+			// Update right content for challenge slide
+			this.updateRightContentForCurrentState(careerUUID)
 			return
 		}
 
@@ -713,6 +904,9 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[textChildIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
+
+		// Update right content for text slide
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
@@ -727,6 +921,9 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[newIndex]
 		void saveCareerProgress(careerUUID, textChild.id)
+
+		// Update right content for text child change
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
@@ -748,6 +945,21 @@ class CareerQuestClass {
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
+
+		// If we're setting a challenge, it always takes priority (even over chat)
+		if (rightContent.type === "challenge") {
+			career.rightContent = rightContent
+			return
+		}
+
+		// If chat is toggled and we're trying to set non-challenge content,
+		// update the previousRightContent instead (so it's there when chat is turned off)
+		if (career.isCareerChatToggled) {
+			career.previousRightContent = rightContent
+			return
+		}
+
+		// Normal case - set the content
 		career.rightContent = rightContent
 	})
 
@@ -780,12 +992,13 @@ class CareerQuestClass {
 		career.textParentSwipers.clear()
 	})
 
-	public onTextSlideChange = action((careerUUID: CareerUUID, triggerImage: string): void => {
+	public onTextSlideChange = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
-		this.setRightContent(careerUUID, { type: "image", icon: triggerImage })
+		// Centralize right content update logic
+		this.updateRightContentForCurrentState(careerUUID)
 	})
 
 	public getLastSlideChangeTime(careerUUID: CareerUUID): number {
@@ -811,7 +1024,7 @@ class CareerQuestClass {
 		textParentSwiperInstance.slideNext()
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
-		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
@@ -831,7 +1044,7 @@ class CareerQuestClass {
 		textParentSwiperInstance.slidePrev()
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
-		this.onTextSlideChange(careerUUID, currentSlide.data.children[newIndex].triggerImage)
+		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex)
 	})
 
@@ -920,6 +1133,85 @@ class CareerQuestClass {
 		challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
 		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
 		return true
+	})
+
+	public toggleCareerChat = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		if (career.isCareerChatToggled) {
+		// Turn off chat - restore previous content
+			career.isCareerChatToggled = false
+			if (career.previousRightContent) {
+				career.rightContent = career.previousRightContent
+				career.previousRightContent = null
+			}
+			return
+		}
+		// Turn on chat - store current content and switch to chat
+		career.isCareerChatToggled = true
+		career.previousRightContent = career.rightContent
+		career.rightContent = { type: "chat" }
+	})
+
+	public isCareerChatToggled(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.isCareerChatToggled || false
+	}
+
+	// ========================================
+	// RIGHT CONTENT SELECTION LOGIC
+	// ========================================
+
+	private updateRightContentForCurrentState = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
+		if (!isDataReady) {
+			this.setRightContent(careerUUID, { type: "image", icon: career.careerDefinition.initialImage })
+			return
+		}
+
+		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
+
+		if (currentSlide.type === "challenge") {
+			this.setRightContent(careerUUID, { type: "challenge", challengeData: currentSlide.data })
+			return
+		}
+
+		// If chat is toggled, avoid overriding UI with non-challenge content
+		if (career.isCareerChatToggled) return
+
+		// Determine if the next challenge has been seen
+		const currentSectionIndex = career.careerDefinition.sections.findIndex(section => section.id === currentSlide.id)
+		const nextChallenge = career.careerDefinition.sections
+			.slice(currentSectionIndex + 1)
+			.find(section => section.type === "challenge") as ChallengeSection | undefined
+
+		if (nextChallenge && this.hasChallengeBeenSeen(careerUUID, nextChallenge.challengeData.challengeUUID)) {
+			this.setRightContent(careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
+			return
+		}
+
+		// Otherwise use the current text child's trigger image
+		const textChild = currentSlide.data.children[career.currentTextChildIndex]
+		this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })
+	})
+
+	// Add this method to your CareerQuestClass
+	public setCareerChatRetrievedData = action((careerUUID: CareerUUID, messages: CareerChatMessage[]): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Set the retrieved messages in the career chat data
+		career.careerChatData.messages = messages
+
+		// Reset any streaming states since these are retrieved messages
+		career.careerChatData.isWaitingForResponse = false
+		career.careerChatData.isStreaming = false
+		career.careerChatData.currentStreamingMessageId = null
+		career.careerChatData.currentStreamId = null
 	})
 
 	public logout(): void {

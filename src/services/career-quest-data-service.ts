@@ -13,7 +13,7 @@ export default class CareerQuestDataService extends BaseDataService {
 		newBlocklyJson: BlocklyJson
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/edit-career-quest-sandbox-project/${challengeUUID}`),
+			this.buildUrl(`/edit-challenge-sandbox-project/${challengeUUID}`),
 			{ newBlocklyJson }
 		)
 	}

@@ -10,7 +10,6 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function sendSandboxMessage(
 	projectUUID: ProjectUUID,
-	userCode: string,
 	message: string
 ): Promise<void> {
 	try {
@@ -18,6 +17,7 @@ export default async function sendSandboxMessage(
 
 		// Reset chat streaming state for new conversation
 		sandboxClass.resetChatStreamingState(projectUUID)
+		const userCode = sandboxClass.getCppCode(projectUUID)
 
 		// Send request to backend - projectUUID will be included in the WebSocket response
 		const response = await blueDotApiClientClass.chatDataService.sendSandboxMessage(

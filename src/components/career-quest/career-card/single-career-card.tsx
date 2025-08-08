@@ -13,7 +13,7 @@ export default function SingleCareerCard({ careerData }: { careerData: CareerDat
 	}, [])
 
 	return (
-		<div className={"relative overflow-hidden text-white w-full aspect-[5/7]"}>
+		<div className="relative overflow-hidden text-white w-full aspect-[5/7.5]">
 			{/* Card container */}
 			<motion.div
 				className="w-full h-full relative preserve-3d"

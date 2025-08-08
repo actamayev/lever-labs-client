@@ -1,26 +1,25 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
-import { isNonSuccessResponse } from "../type-checks"
+import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function deleteSandboxChat(projectUUID: ProjectUUID): Promise<void> {
+export default async function deleteCareerChat(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Call the delete endpoint
-		const response = await blueDotApiClientClass.chatDataService.deleteSandboxChat(projectUUID)
+		const response = await blueDotApiClientClass.chatDataService.deleteCareerChat(careerUUID)
 
-		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
+		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
 			throw new Error("Unable to delete chat")
 		}
 
-		// Clear the chat messages from the sandbox class
-		sandboxClass.clearChatMessages(projectUUID)
+		careerQuestClass.clearCareerChatMessages(careerUUID)
 		return
 	} catch (error) {
 		console.error(error)

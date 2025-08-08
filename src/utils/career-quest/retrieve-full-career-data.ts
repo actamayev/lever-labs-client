@@ -7,6 +7,7 @@ import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
+// eslint-disable-next-line max-lines-per-function
 export default async function retrieveFullCareerData(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (
@@ -49,7 +50,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 			}
 
 			// Transform backend messages to frontend format
-			const transformedMessages: CareerQuestChatMessage[] = []
+			const transformedMessages: ChallengeChatMessage[] = []
 
 			challengeData.messages.forEach(msg => {
 				const timestamp = new Date(msg.timestamp)
@@ -110,6 +111,22 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 				isCompleted
 			)
 		})
+
+		// NEW: Process and set career chat messages
+		const transformedCareerChatMessages: CareerChatMessage[] = careerResponse.data.careerChatMessages.map(msg => {
+			// Convert timestamp string back to Date object
+			const timestamp = new Date(msg.timestamp)
+
+			return {
+				...msg, // Spread SandboxChatMessage properties (content, role, timestamp)
+				timestamp, // Use the converted Date object
+				id: `${msg.role.toLowerCase()}-${timestamp.getTime()}`, // Generate unique ID
+				isStreaming: false // Default to not streaming for retrieved messages
+			}
+		})
+
+		// Set the career chat messages in the career quest class
+		careerQuestClass.setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
 
 		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""

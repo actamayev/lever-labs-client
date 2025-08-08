@@ -2,6 +2,7 @@
 "use client"
 
 import Image from "next/image"
+import { useMemo } from "react"
 import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
@@ -15,16 +16,15 @@ import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import { useMemo } from "react"
+import careerQuestClass from "../../classes/career-quest-class"
 
 interface SingleCareerQuestMessageProps {
-	message: CareerQuestChatMessage
+	message: ChallengeChatMessage
 	cqChallengeData: CqChallengeData
-	cppCode: string
 }
 
 interface MessageBubbleProps {
-	message: CareerQuestChatMessage
+	message: ChallengeChatMessage
 	isUser: boolean
 	getMessageText: () => string
 	getMessageBubbleStyles: string
@@ -55,12 +55,13 @@ function MessageBubble({ message, isUser, getMessageText, getMessageBubbleStyles
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleCareerQuestMessageProps) {
+function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQuestMessageProps) {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
+	const cppCode = careerQuestClass.getCppCode(cqChallengeData)
 	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
@@ -153,7 +154,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData, cppCode }: SingleC
 						getMessageBubbleStyles={getMessageBubbleStyles}
 						isHintResponse={isHintResponse || false}
 					/>
-					<HintButton cqChallengeData={cqChallengeData} cppCode={cppCode} />
+					<HintButton cqChallengeData={cqChallengeData} />
 				</div>
 			) : (
 				<MessageBubble

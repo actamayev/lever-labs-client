@@ -6,11 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import FrontIntroductionCard from "./front-introduction-card"
 import BackIntroductionCard from "./back-introduction-card"
 
-interface IntroCardProps {
-	introData: CareerData
-}
-
-export default function IntroductionCard({ introData }: IntroCardProps) {
+export default function IntroductionCard() {
 	const [flipped, setFlipped] = useState(false)
 
 	const flipCard = useCallback(() => {
@@ -25,15 +21,9 @@ export default function IntroductionCard({ introData }: IntroCardProps) {
 				transition={{ duration: 0.7 }}
 				style={{ transformStyle: "preserve-3d" }}
 			>
-				<FrontIntroductionCard
-					introData={introData}
-					flipCard={flipCard}
-				/>
+				<FrontIntroductionCard flipCard={flipCard} />
 
-				<BackIntroductionCard
-					introData={introData}
-					flipCard={flipCard}
-				/>
+				<BackIntroductionCard flipCard={flipCard} />
 			</motion.div>
 		</div>
 	)

@@ -5,18 +5,15 @@ import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import StartButton from "../start-button"
+import { introductionData } from "../../../utils/constants/career-quest/career-data"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
+import Link from "next/link"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import careerQuestClass from "../../../classes/career-quest-class"
+import { observer } from "mobx-react"
 
-interface Props {
-	introData: CareerData
-	flipCard: () => void
-}
-
-// eslint-disable-next-line max-lines-per-function
-export default function FrontIntroductionCard(props: Props) {
-	const { introData, flipCard } = props
-	const { careerName, lessonsComplete, careerUrl, careerIcon: Icon, componentsUsed, backgroundColor } = introData
+function FrontIntroductionCard({ flipCard } : {flipCard: () => void}) {
+	const { careerName, careerIcon: Icon, componentsUsed, backgroundColor, careerUUID } = introductionData
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -28,7 +25,6 @@ export default function FrontIntroductionCard(props: Props) {
 				borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
 			}}
 		>
-
 			<div
 				className={cn("flex items-center justify-center", colors.bg)}
 				style={{
@@ -80,11 +76,15 @@ export default function FrontIntroductionCard(props: Props) {
 
 				{/* Continue Button */}
 				<div className="flex flex-row items-center mb-6 w-full gap-3">
-					<StartButton
-						baseColor={backgroundColor}
-						lessonsComplete={lessonsComplete}
-						careerUrl={careerUrl}
-					/>
+					<Link href={introductionData.careerUrl} className="flex-1">
+						<TactileButton
+							className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+							shadowClass={colors.shadow}
+							shadowHeight={4}
+						>
+							{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+						</TactileButton>
+					</Link>
 					<BackFlipButton
 						onFlip={flipCard}
 						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
@@ -95,3 +95,5 @@ export default function FrontIntroductionCard(props: Props) {
 		</motion.div>
 	)
 }
+
+export default observer(FrontIntroductionCard)

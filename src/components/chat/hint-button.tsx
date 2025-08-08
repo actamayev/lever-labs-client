@@ -1,17 +1,12 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { CqChallengeData } from "@bluedotrobots/common-ts"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 
-interface HintButtonProps {
-	cqChallengeData: CqChallengeData
-	cppCode: string
-}
-
-function HintButton({ cqChallengeData, cppCode }: HintButtonProps) {
+function HintButton({ cqChallengeData }: { cqChallengeData: CqChallengeData}) {
 	const [isVisible, setIsVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -29,11 +24,11 @@ function HintButton({ cqChallengeData, cppCode }: HintButtonProps) {
 
 		setIsLoading(true)
 		try {
-			await requestCareerQuestHint(cqChallengeData, cppCode)
+			await requestCareerQuestHint(cqChallengeData)
 		} finally {
 			setIsLoading(false)
 		}
-	}, [cqChallengeData, cppCode, isLoading])
+	}, [cqChallengeData, isLoading])
 
 	return (
 		<div

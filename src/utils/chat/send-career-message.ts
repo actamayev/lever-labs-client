@@ -6,30 +6,23 @@ import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import { CareerUUID, OutgoingCareerMessage } from "@bluedotrobots/common-ts"
 
-export default async function sendChallengeChatMessage(
-	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
-	message: string
-): Promise<void> {
+export default async function sendCareerMessage(careerUUID: CareerUUID, careerData: OutgoingCareerMessage): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
-		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
 
-		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		careerQuestClass.resetCareerStreamingState(careerUUID)
 
-		const response = await blueDotApiClientClass.chatDataService.sendChallengeMessage({
-			careerUUID: careerUUIDChallengeUUID.careerUUID,
-			message,
-			userCode,
-		}, careerUUIDChallengeUUID.challengeUUID)
+		const response = await blueDotApiClientClass.chatDataService.sendCareerMessage(careerData, careerUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		careerQuestClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
+		careerQuestClass.setCareerStreamId(careerUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
-			title: "Unable to send message",
+			title: "Unable to send career message",
 			description: "Please reload the page and try again"
 		})
 	}

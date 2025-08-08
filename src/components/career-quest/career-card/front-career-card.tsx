@@ -1,11 +1,15 @@
 "use client"
 
+import Link from "next/link"
 import { motion } from "framer-motion"
+import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import careerQuestClass from "../../../classes/career-quest-class"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import StartButton from "../start-button"
+import ChallengeProgressCircle from "./challenge-progress-indicator"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 interface Props {
@@ -14,10 +18,9 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function FrontCareerCard(props: Props) {
+function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
-	const { careerName, componentsUsed, careerUrl, careerIcon: Icon,
-		lessonsComplete, backgroundColor } = careerData
+	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -31,8 +34,8 @@ export default function FrontCareerCard(props: Props) {
 		>
 			{/* Icon/Image Section */}
 			<div
-				className={cn("flex-1 flex items-center justify-center px-4 py-2 h-3/5", colors.bg)}
-				style={{ borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS }}
+				className={cn("flex-1 flex items-center justify-center px-4 py-2", colors.bg)}
+				style={{ borderRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS, height: "55%" }}
 			>
 				<Icon
 					size="120"
@@ -40,15 +43,16 @@ export default function FrontCareerCard(props: Props) {
 				/>
 			</div>
 			<div
-				className={cn("h-2/5", colors.bg2)}
+				className={cn("px-7", colors.bg2)}
 				style={{
 					borderBottomLeftRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
-					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS
+					borderBottomRightRadius: CAREER_QUEST_CARD_ROUNDING_RADIUS,
+					height: "45%"
 				}}
 			>
-				<div style={{ height: "35%" }} className="flex items-center">
+				<div style={{ height: "25%" }} className="flex items-end">
 					<h3
-						className="font-bold text-white ml-7"
+						className="font-bold text-white"
 						style={{
 							fontSize: "27px",
 							lineHeight: "34px",
@@ -58,8 +62,9 @@ export default function FrontCareerCard(props: Props) {
 						{careerName}
 					</h3>
 				</div>
-				<div style={{ height: "30%" }} className="items-start flex">
-					<div className="flex flex-wrap gap-1.5 ml-7">
+				<div style={{ height: "45%" }} className="flex justify-between items-center">
+					{/* Components Grid */}
+					<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
 						{componentsUsed.slice(0, 4).map((component) => (
 							<SingleComponentUsed
 								key={component.componentName}
@@ -68,21 +73,27 @@ export default function FrontCareerCard(props: Props) {
 							/>
 						))}
 					</div>
+
+					{/* Progress Circle */}
+					<div className="flex-1 flex justify-end">
+						<ChallengeProgressCircle careerUUID={careerUUID} />
+					</div>
 				</div>
-				<div style={{ height: "35%" }}>
-					<div className="pl-7 pb-4 flex flex-row items-center gap-3">
-						<StartButton
-							baseColor={backgroundColor}
-							lessonsComplete={lessonsComplete}
-							careerUrl={careerUrl}
-						/>
+				<div style={{ height: "30%" }}>
+					<div className="pb-4 flex flex-row items-center gap-3">
+						<Link href={careerData.careerUrl} className="flex-1">
+							<TactileButton
+								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+								shadowClass={colors.shadow}
+								shadowHeight={4}
+							>
+								{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+							</TactileButton>
+						</Link>
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}
 							extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-							style={{
-								marginRight: "30px"
-							}}
 						/>
 					</div>
 				</div>
@@ -90,3 +101,5 @@ export default function FrontCareerCard(props: Props) {
 		</motion.div>
 	)
 }
+
+export default observer(FrontCareerCard)

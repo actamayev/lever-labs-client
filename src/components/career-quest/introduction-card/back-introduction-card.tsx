@@ -9,14 +9,9 @@ import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
+import { introductionData } from "../../../utils/constants/career-quest/career-data"
 
-interface Props {
-	introData: CareerData
-	flipCard: () => void
-}
-
-export default function BackIntroductionCard(props: Props) {
-	const { introData, flipCard } = props
+export default function BackIntroductionCard({ flipCard } : {flipCard: () => void}) {
 	const {
 		careerName,
 		careerDescription,
@@ -24,7 +19,7 @@ export default function BackIntroductionCard(props: Props) {
 		componentsUsed,
 		codingConcepts,
 		expectedCompletionTime
-	} = introData
+	} = introductionData
 
 	// Generate color classes
 	const colors = getDuolingoColors(backgroundColor)
