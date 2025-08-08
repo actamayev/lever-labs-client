@@ -15,11 +15,10 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 
 interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
-	cppCode: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProps) {
+function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -50,8 +49,8 @@ function SandboxChatInterface({ projectUUID, cppCode }: SandboxChatInterfaceProp
 		}, 0)
 
 		// Send sandbox message
-		await sendSandboxMessage(projectUUID, cppCode, inputValue)
-	}, [projectUUID, cppCode, inputValue, isStreaming])
+		await sendSandboxMessage(projectUUID, inputValue)
+	}, [projectUUID, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness

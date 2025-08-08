@@ -29,8 +29,7 @@ function TextParentCard(props: TextParentCardProps) {
 		) return
 
 		nestedSwiperInstance.slideTo(currentTextChildIndex)
-		const targetText = textParentData.children[currentTextChildIndex]
-		careerQuestClass.onTextSlideChange(careerUUID, targetText.triggerImage)
+		careerQuestClass.onTextSlideChange(careerUUID)
 	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, careerUUID])
 
 	return (

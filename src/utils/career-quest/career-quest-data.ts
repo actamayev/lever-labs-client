@@ -56,31 +56,31 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-1",
-					content: "First First First First First First First First First  First First First  First First First  First First First  First First First First First First First First First First First First ",
+					content: "Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1",
 					triggerImage: "Heading1"
 				},
 				{
 					type: "text",
 					id: "parent-1-2",
-					content: "Second Second Second Second Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second Se",
+					content: "Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2",
 					triggerImage: "Heading2"
 				},
 				{
 					type: "text",
 					id: "parent-1-3",
-					content: "Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third Third ",
+					content: "Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3",
 					triggerImage: "Heading3"
 				},
 				{
 					type: "text",
 					id: "parent-1-4",
-					content: "Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth Fourth",
+					content: "Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4",
 					triggerImage: "Heading4"
 				},
 				{
 					type: "text",
 					id: "parent-1-5",
-					content: "Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth Fifth",
+					content: "Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5",
 					triggerImage: "Heading5"
 				},
 			]
@@ -97,13 +97,13 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-2-1",
-					content: "First First First First First First First First First First First First First First First First First First First First First ",
+					content: "Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1",
 					triggerImage: "Lightbulb"
 				},
 				{
 					type: "text",
 					id: "parent-2-2",
-					content: "Second Second Second Second Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second SecondSecond Second Se",
+					content: "Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2",
 					triggerImage: "Cog"
 				},
 			]
@@ -120,7 +120,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-3-1",
-					content: "Great! You've written a basic obstacle avoider program. As you saw, I keep driving forward until I sense something...",
+					content: "Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1",
 					triggerImage: "ArrowRight"
 				},
 			]
@@ -137,7 +137,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-4-1",
-					content: "Nice! Now I won't get stuck after detecting something directly in front of me! I'm already noticing that I'm a lot less clumsy...",
+					content: "Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1",
 					triggerImage: "ScanLine"
 				},
 			]
@@ -154,7 +154,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-5-1",
-					content: "Great job! Now, we have all the building blocks we need to make me perform obstacle avoidance...",
+					content: "Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1",
 					triggerImage: "Puzzle"
 				},
 			]
@@ -171,7 +171,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-6-1",
-					content: "Great job! Now I can avoid obstacles.",
+					content: "Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1",
 					triggerImage: "Trophy"
 				},
 			]

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 import { CqChallengeData, CareerUUID } from "@bluedotrobots/common-ts"
-import { useState, useRef, useEffect, useCallback, useMemo } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
@@ -14,9 +14,8 @@ import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
-import SingleCareerQuestMessage from "../../chat/single-career-quest-message"
-import deleteCareerQuestChat from "../../../utils/chat/delete-career-quest-chat"
+import SingleCareerQuestMessage from "../../chat/single-challenge-message"
+import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 
 const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
@@ -52,7 +51,7 @@ const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) 
 })
 
 // eslint-disable-next-line max-lines-per-function
-function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
+function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -62,11 +61,6 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
-
-	const cppCode = useMemo(() => {
-		const currentBlocklyJson = careerQuestClass.getUpdatedBlocklyJson(challengeData) || challengeData.initialBlocklyJson
-		return generateCppFromJson(currentBlocklyJson)
-	}, [challengeData])
 
 	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
 
@@ -90,8 +84,8 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 			inputRef.current?.focus()
 		}, 0)
 
-		await sendChallengeChatMessage(challengeData, cppCode, inputValue)
-	}, [challengeData, cppCode, inputValue, isStreaming])
+		await sendChallengeChatMessage(challengeData, inputValue)
+	}, [challengeData, inputValue, isStreaming])
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
@@ -118,13 +112,13 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 	const handleConfirmDelete = useCallback(async () => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
-		await deleteCareerQuestChat(challengeData)
+		await deleteChallengeChat(challengeData)
 	}, [challengeData, hasAnyMessages, isStreaming])
 
 	const handleHintClick = useCallback(async () => {
 		if (isStreaming) return
-		await requestCareerQuestHint(challengeData, cppCode)
-	}, [challengeData, cppCode, isStreaming])
+		await requestCareerQuestHint(challengeData)
+	}, [challengeData, isStreaming])
 
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
@@ -146,7 +140,7 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 
 	return (
 		<>
-			<div className="flex flex-col h-full cq-chat-interface" data-chat-component="true">
+			<div className="flex flex-col h-full challenge-chat-interface" data-chat-component="true">
 				<div className={isCodeCorrect ? "h-[90%]" : "h-full"}>
 					<ChatParentComponent>
 						{/* existing content - no changes needed */}
@@ -171,7 +165,6 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 									key={message.id}
 									message={message}
 									cqChallengeData={challengeData}
-									cppCode={cppCode}
 								/>
 							))}
 						</ChatMessagesFramework>
@@ -196,4 +189,4 @@ function CqChatInterface({ challengeData }: { challengeData: CqChallengeData }) 
 	)
 }
 
-export default observer(CqChatInterface)
+export default observer(ChallengeChatInterface)

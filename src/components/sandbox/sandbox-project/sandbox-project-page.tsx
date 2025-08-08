@@ -28,15 +28,10 @@ import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-s
 
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
-interface SandboxProjectPageProps {
-	projectUUID: ProjectUUID
-}
-
 // eslint-disable-next-line max-lines-per-function, complexity
-function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
+function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useEffectSetSelectedPipFirstPip()
-	const [cppCode, setCppCode] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)
@@ -88,16 +83,16 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 		}
 
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
-			if (isEmpty(cppCode)) {
-				setCppCode(generateCppFromJson(newBlocklyJson))
+			if (isEmpty(project.cppCode)) {
+				sandboxClass.setCppCode(projectUUID, generateCppFromJson(newBlocklyJson))
 			}
 			return
 		}
 
-		setCppCode(generateCppFromJson(newBlocklyJson))
+		sandboxClass.setCppCode(projectUUID, generateCppFromJson(newBlocklyJson))
 		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
-	}, [project, isLoading, projectUUID, cppCode])
+	}, [project, isLoading, projectUUID])
 
 	// Reset the flag when navigating to a different project
 	useEffect(() => {
@@ -201,8 +196,8 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 							<div className="flex gap-3 pt-3 pb-2 px-4">
 								<AnimatedStateButton
 									buttonText="SEND CODE"
-									isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-									onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+									isDisabled={isEmpty(project.cppCode) || pipClass.isSendingCppToPip}
+									onClick={(event) => sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())}
 									className="duration-150 rounded-xl text-4xl"
 								/>
 								<TactileButton
@@ -229,10 +224,7 @@ function SandboxProjectPage({ projectUUID }: SandboxProjectPageProps) {
 					}}
 				>
 					{personalInfoClass.sandboxNotesOpen && (
-						<ProjectTabs
-							project={project}
-							cppCode={cppCode}
-						/>
+						<ProjectTabs projectUUID={projectUUID} />
 					)}
 				</div>
 			</div>

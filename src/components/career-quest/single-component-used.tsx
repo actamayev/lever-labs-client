@@ -28,10 +28,11 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 interface Props {
 	component: ComponentsUsedCareerData
 	baseColor: DuolingoColors
+	extraClasses?: string
 }
 
 export default function SingleComponentUsed(props: Props) {
-	const { component, baseColor } = props
+	const { component, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)
 
@@ -44,7 +45,8 @@ export default function SingleComponentUsed(props: Props) {
 						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0 border-2 border-white",
 						colors.bg2,        // Base background (bg-baseColor-2)
 						colors.hoverBg,    // Hover background (hover:bg-baseColor-3)
-						colors.border
+						colors.border,
+						extraClasses
 					)}
 					title={component.componentName}
 				>

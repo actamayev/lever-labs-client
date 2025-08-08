@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react"
-import { BinaryEvaluationResult, CareerUUID, ChallengeUUID, ChatMessageRole, CqChallengeData } from "@bluedotrobots/common-ts"
+import { BinaryEvaluationResult, CareerUUID, ChallengeUUID,
+	ChatMessageRole, CqChallengeData, SandboxChatMessage } from "@bluedotrobots/common-ts"
 
 declare global {
 	type ComponentName =
@@ -20,10 +21,9 @@ declare global {
 
 	// Existing interface for challenge cards
 	interface CareerData {
+		careerUUID: CareerUUID
 		careerName: string
 		careerDescription: string
-		totalLessons: number
-		lessonsComplete: number
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
 		componentsUsed: ComponentsUsedCareerData[]
@@ -39,7 +39,7 @@ declare global {
 	| "Functions"
 	| "Boolean Logic"
 
-	interface CareerQuestChatMessage {
+	interface ChallengeChatMessage {
 		id: string
 		role: ChatMessageRole
 		content: string
@@ -57,7 +57,10 @@ declare global {
 		challengeUUID: ChallengeUUID
 	}
 
-	type RightContent = { type: "image", icon: string } | { type: "challenge", challengeData: CqChallengeData }
+	type RightContent =
+	| { type: "image", icon: string }
+	| { type: "challenge", challengeData: CqChallengeData }
+	| { type: "chat" }
 
 	interface TextParentSection {
 		type: "textParent"
@@ -103,6 +106,17 @@ declare global {
 	}
 
 	type MainSlide = TextParentMainSlide | ChallengeMainSlide
+
+	interface CareerChatMessage extends SandboxChatMessage {
+		id: string
+		isStreaming?: boolean
+	}
+
+	interface CareerDataForMessage {
+		careerName: string
+		careerDescription: string
+		whatUserSees: string
+	}
 }
 
 export {}
