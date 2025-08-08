@@ -784,6 +784,9 @@ class CareerQuestClass {
 		if (sandboxJson) {
 			challenge.blocklyJson = normalizeSandboxJson(sandboxJson)
 			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
+		} else {
+			challenge.blocklyJson = normalizeSandboxJson({})
+			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
 		}
 
 		if (isCompleted) {
