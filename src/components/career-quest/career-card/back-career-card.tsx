@@ -110,7 +110,6 @@ export default function BackCareerCard(props: Props) {
 							<BackFlipButton
 								onFlip={flipCard}
 								extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
-								// style={{ marginRight: "30px" }}
 							/>
 						</div>
 					</div>
