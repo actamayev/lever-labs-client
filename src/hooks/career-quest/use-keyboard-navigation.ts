@@ -45,14 +45,10 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 
 	// eslint-disable-next-line complexity
 	useEffect(() => {
-		// console.error("keyPressed", keyPressed)
-		// console.error("swiperInstance", swiperInstance)
-		// console.error("isTransitioning", isTransitioning)
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		const now = Date.now()
 		if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
-		// console.error("now", now)
 
 		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
 
@@ -74,13 +70,11 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 				}
 			}
 		} else if (keyPressed === "ArrowUp") {
-			// console.error("currentSlide", currentSlide)
 			if (currentSlide.type === "challenge") {
 				// Challenge slide - always go to previous main slide
 				careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 			} else {
 				const isAtFirstTextChild = currentTextChildIndex === 0
-				// console.error("isAtFirstTextChild", isAtFirstTextChild)
 
 				if (!isAtFirstTextChild) {
 					// Move to previous text child
