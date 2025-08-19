@@ -1,7 +1,7 @@
 "use client"
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
@@ -12,14 +12,40 @@ import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-
 function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
-	const getTimeText = useMemo(() => {
+
+	function GetTimeText() {
 		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
-			return `Estimated time to full charge: ${workbenchClass.batteryData.estimatedTimeToFull} minutes`
+			const timeToFull = workbenchClass.batteryData.estimatedTimeToFull
+			// Time to full is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
+			// If hours is 0, we don't need to show it.
+			const hours = Math.floor(timeToFull)
+			const minutes = Math.round((timeToFull - hours) * 60)
+			return (
+				<>
+					Estimated time to full charge:{" "}
+					<span className="font-semibold">
+						{hours > 0 ? `${hours} hour${hours > 1 ? "s" : ""}` : ""}
+						{minutes > 0 ? `${minutes} minute${minutes > 1 ? "s" : ""}` : ""}
+					</span>
+				</>
+			)
 		}
-		return ""
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [workbenchClass.batteryData?.isCharging])
+		const timeToEmpty = workbenchClass.batteryData.estimatedTimeToEmpty
+		// Time to empty is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
+		// If hours is 0, we don't need to show it.
+		const hours = Math.floor(timeToEmpty)
+		const minutes = Math.round((timeToEmpty - hours) * 60)
+		return (
+			<>
+				Estimated time to empty:{" "}
+				<span className="font-semibold">
+					{hours > 0 ? `${hours} hour${hours > 1 ? "s" : ""}` : ""}
+					{minutes > 0 ? `${minutes} minute${minutes > 1 ? "s" : ""}` : ""}
+				</span>
+			</>
+		)
+	}	
 
 	return (
 		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>
@@ -64,8 +90,15 @@ function BatteryWorkbench() {
 							</div>
 						)}
 
+						{workbenchClass.batteryData?.isDischarging && (
+							<div className="flex items-center gap-2 text-cardinal">
+								<span className="text-lg">⚡</span>
+								<span className="text-sm font-medium">Discharging</span>
+							</div>
+						)}
+
 						<div className="text-sm text-eel/70">
-							{getTimeText}
+							<GetTimeText />
 						</div>
 					</div>
 				</div>
