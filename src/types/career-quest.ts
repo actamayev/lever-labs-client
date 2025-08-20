@@ -72,7 +72,7 @@ declare global {
 	interface TextSection {
 		type: "text"
 		id: string
-		content: (() => ReactNode) | string
+		content: (() => ReactNode)
 		triggerImage: string // Lucide icon name
 	}
 

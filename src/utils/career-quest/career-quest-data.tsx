@@ -108,25 +108,41 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-2",
-					content: "Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading2"
 				},
 				{
 					type: "text",
 					id: "parent-1-3",
-					content: "Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading3"
 				},
 				{
 					type: "text",
 					id: "parent-1-4",
-					content: "Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading4"
 				},
 				{
 					type: "text",
 					id: "parent-1-5",
-					content: "Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading5"
 				},
 			]
@@ -143,13 +159,21 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-2-1",
-					content: "Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Lightbulb"
 				},
 				{
 					type: "text",
 					id: "parent-2-2",
-					content: "Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Cog"
 				},
 			]
@@ -166,7 +190,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-3-1",
-					content: "Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "ArrowRight"
 				},
 			]
@@ -183,7 +211,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-4-1",
-					content: "Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "ScanLine"
 				},
 			]
@@ -200,7 +232,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-5-1",
-					content: "Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Puzzle"
 				},
 			]
@@ -217,7 +253,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-6-1",
-					content: "Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Trophy"
 				},
 			]
