@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
-import { useRef, useEffect, useState } from "react"
+import { useRef, useEffect, useState, useMemo } from "react"
 import { ProjectUUID } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
@@ -12,7 +12,9 @@ import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project
 
 function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-	const cppCode = sandboxClass.getCppCode(projectUUID)
+	const cppCode = useMemo(() => {
+		return sandboxClass.getCppCode(projectUUID)
+	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.cppCode])
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(

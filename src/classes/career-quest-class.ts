@@ -552,7 +552,8 @@ class CareerQuestClass {
 		if (!careerDefinition) return null
 		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
 		if (currentSlide.type === "challenge") return null
-		const whatUserSees = currentSlide.data.children[career.currentTextChildIndex].content
+		const content = currentSlide.data.children[career.currentTextChildIndex].content
+		const whatUserSees = typeof content === "function" ? content() : content
 		return {
 			careerName: careerDefinition.careerName,
 			careerDescription: careerDefinition.careerDescription,

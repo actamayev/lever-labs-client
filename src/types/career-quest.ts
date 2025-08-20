@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import { LucideIcon } from "lucide-react"
 import { BinaryEvaluationResult, CareerUUID, ChallengeUUID,
 	ChatMessageRole, CqChallengeData, SandboxChatMessage } from "@bluedotrobots/common-ts"
@@ -71,7 +72,7 @@ declare global {
 	interface TextSection {
 		type: "text"
 		id: string
-		content: string
+		content: (() => ReactNode)
 		triggerImage: string // Lucide icon name
 	}
 
@@ -115,7 +116,7 @@ declare global {
 	interface CareerDataForMessage {
 		careerName: string
 		careerDescription: string
-		whatUserSees: string
+		whatUserSees: ReactNode
 	}
 }
 
