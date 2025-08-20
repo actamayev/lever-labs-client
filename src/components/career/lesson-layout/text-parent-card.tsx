@@ -56,7 +56,7 @@ function TextParentCard(props: TextParentCardProps) {
 						<div className="h-full flex items-center justify-center px-[75px]">
 							<div className="prose prose-lg max-w-none text-4xl">
 								<div className="leading-relaxed text-questionText text-center cursor-text">
-									{child.content}
+									{typeof child.content === "function" ? child.content() : child.content}
 								</div>
 							</div>
 						</div>

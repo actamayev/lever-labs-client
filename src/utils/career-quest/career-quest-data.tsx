@@ -8,7 +8,11 @@ import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENG
 import { ReactNode } from "react"
 
 // Utility function to convert ReactNode to string
-export function reactNodeToString(node: ReactNode): string {
+export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
+	// Handle function case
+	if (typeof node === "function") {
+		return reactNodeToString(node())
+	}
 	if (typeof node === "string") {
 		return node
 	}
@@ -48,7 +52,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-1",
-					content: (
+					content: () => (
 						<div className="text-red-500">
 							Test
 						</div>
@@ -58,7 +62,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-2",
-					content: (
+					content: () => (
 						<div className="text-red-500">
 							Test
 						</div>
@@ -68,7 +72,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-3",
-					content: (
+					content: () => (
 						<div className="text-red-500">
 							Test
 						</div>
@@ -76,11 +80,6 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					triggerImage: "Radar"
 				}
 			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_1.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
 		}
 	]
 }
@@ -99,7 +98,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-1",
-					content: "Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading1"
 				},
 				{
