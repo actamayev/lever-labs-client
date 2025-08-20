@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { observer } from "mobx-react"
+import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -50,13 +51,13 @@ function TextParentCard(props: TextParentCardProps) {
 				nested={true}
 				initialSlide={currentTextChildIndex}  // Set initial slide
 			>
-				{textParentData.children.map((child) => (
+				{toJS(textParentData.children).map((child) => (
 					<SwiperSlide key={child.id} className="h-full">
 						<div className="h-full flex items-center justify-center px-[75px]">
 							<div className="prose prose-lg max-w-none text-4xl">
-								<p className="leading-relaxed text-questionText text-center cursor-text">
+								<div className="leading-relaxed text-questionText text-center cursor-text">
 									{child.content}
-								</p>
+								</div>
 							</div>
 						</div>
 					</SwiperSlide>

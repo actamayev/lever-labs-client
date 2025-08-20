@@ -45,7 +45,7 @@ function BatteryWorkbench() {
 				</span>
 			</>
 		)
-	}	
+	}
 
 	return (
 		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>

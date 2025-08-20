@@ -12,6 +12,7 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import deleteCareerChat from "../../../utils/chat/delete-career-chat"
 import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import sendCareerMessage from "../../../utils/chat/send-career-message"
+import { reactNodeToString } from "../../../utils/career-quest/career-quest-data"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
@@ -50,7 +51,9 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 
 		await sendCareerMessage(careerUUID, {
 			message: inputValue,
-			...careerDataForMessage
+			whatUserSees: reactNodeToString(careerDataForMessage.whatUserSees),
+			careerName: careerDataForMessage.careerName,
+			careerDescription: careerDataForMessage.careerDescription
 		})
 	}, [careerUUID, inputValue, isStreaming])
 
