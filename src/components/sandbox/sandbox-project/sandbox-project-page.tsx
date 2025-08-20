@@ -205,7 +205,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 									shadowColor="rgb(150, 50, 75)"
 									onClick={stopCurrentlyRunningCode}
 								>
-								STOP
+									STOP
 								</TactileButton>
 							</div>
 						</div>

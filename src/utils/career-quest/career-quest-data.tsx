@@ -1,8 +1,43 @@
+"use client"
+
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
+import { ReactNode } from "react"
+
+// Utility function to convert ReactNode to string
+export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
+	// Handle function case
+	if (typeof node === "function") {
+		return reactNodeToString(node())
+	}
+	if (typeof node === "string") {
+		return node
+	}
+	if (typeof node === "number") {
+		return node.toString()
+	}
+	if (typeof node === "boolean") {
+		return node.toString()
+	}
+	if (node === null || node === undefined) {
+		return ""
+	}
+	if (Array.isArray(node)) {
+		return node.map(reactNodeToString).join("")
+	}
+	if (typeof node === "object" && "props" in node) {
+		// Handle React elements
+		const { children, ...props } = node.props || {}
+		if (children) {
+			return reactNodeToString(children)
+		}
+		return ""
+	}
+	return ""
+}
 
 export const INTRODUCTION_CAREER: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
@@ -17,27 +52,34 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-1",
-					content: "Hello! Welcome to your first Career Quest! Today, you're going to show me how to navigate the world. I'm really clumsy and am used to bumping into things...",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Navigation"
 				},
 				{
 					type: "text",
 					id: "parent-1-2",
-					content: "We'll break this career into two steps: 1. First, I'll use my distance sensors to 'see' 2. Then, I'll react to those distance measurements...",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Eye"
 				},
 				{
 					type: "text",
 					id: "parent-1-3",
-					content: "Lets start with my distance sensors. I have three distance sensors, or three 'eyes', that let me 'see' the world around me...",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Radar"
 				}
 			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_1.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
 		}
 	]
 }
@@ -56,31 +98,51 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-1-1",
-					content: "Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1 Parent-1-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading1"
 				},
 				{
 					type: "text",
 					id: "parent-1-2",
-					content: "Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2 Parent-1-2",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading2"
 				},
 				{
 					type: "text",
 					id: "parent-1-3",
-					content: "Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3 Parent-1-3",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading3"
 				},
 				{
 					type: "text",
 					id: "parent-1-4",
-					content: "Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4 Parent-1-4",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading4"
 				},
 				{
 					type: "text",
 					id: "parent-1-5",
-					content: "Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5 Parent-1-5",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Heading5"
 				},
 			]
@@ -97,13 +159,21 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-2-1",
-					content: "Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1 Parent-2-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Lightbulb"
 				},
 				{
 					type: "text",
 					id: "parent-2-2",
-					content: "Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2 Parent-2-2",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Cog"
 				},
 			]
@@ -120,7 +190,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-3-1",
-					content: "Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1 Parent-3-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "ArrowRight"
 				},
 			]
@@ -137,7 +211,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-4-1",
-					content: "Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1 Parent-4-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "ScanLine"
 				},
 			]
@@ -154,7 +232,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-5-1",
-					content: "Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1 Parent-5-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Puzzle"
 				},
 			]
@@ -171,7 +253,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				{
 					type: "text",
 					id: "parent-6-1",
-					content: "Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1 Parent-6-1",
+					content: () => (
+						<div className="text-red-500">
+							Test
+						</div>
+					),
 					triggerImage: "Trophy"
 				},
 			]
