@@ -12,9 +12,16 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
+import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
+
+	const leaveSandbox = () => {
+		void stopCurrentlyRunningCode()
+		void stopPollingSensors()
+	}
+
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
 			<div className="flex flex-row items-center justify-center">
@@ -23,7 +30,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 						<Link href="/sandbox">
 							<button
 								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={() => void stopCurrentlyRunningCode()}
+								onClick={leaveSandbox}
 							>
 								<ArrowLeft size={30} className="mr-1" />
 							</button>
