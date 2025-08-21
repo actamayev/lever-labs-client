@@ -12,7 +12,6 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
-import useSensorPollingUseEffect from "../../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
 import careerQuestClass from "../../../classes/career-quest-class"
 
@@ -33,7 +32,6 @@ function InteractiveMiniSandbox(props: Props) {
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
 	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
 	const blocklyJson = careerQuestClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
-	useSensorPollingUseEffect()
 	// TODO: 8/5/25: Initial blockly json is not being set correctly (blockly is set to initial when we do reset, but not on page load/initial render)
 
 	const workspaceConfiguration = useMemo(() => {
