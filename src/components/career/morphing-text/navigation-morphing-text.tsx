@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useEffect } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { cn } from "@/lib/shadcn/utils"
 
 interface NavigationMorphingTextProps {
@@ -10,27 +10,10 @@ interface NavigationMorphingTextProps {
   currentIndex: number
 }
 
-const SvgFilters: React.FC = () => (
-	<svg
-		id="nav-morphing-filters"
-		className="fixed h-0 w-0"
-		preserveAspectRatio="xMidYMid slice"
-	>
-		<defs>
-			<filter id="nav-threshold">
-				<feColorMatrix
-					in="SourceGraphic"
-					type="matrix"
-					values="1 0 0 0 0
-                  0 1 0 0 0
-                  0 0 1 0 0
-                  0 0 0 255 -140"
-				/>
-			</filter>
-		</defs>
-	</svg>
-)
+const morphTime = 1.5  // Match original timing
+const cooldownTime = 0.5
 
+// eslint-disable-next-line max-lines-per-function
 export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	staticText,
 	morphingTexts,
@@ -39,82 +22,102 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 }) => {
 	const text1Ref = useRef<HTMLSpanElement>(null)
 	const text2Ref = useRef<HTMLSpanElement>(null)
-	const isTransitioningRef = useRef(false)
-	const prevIndexRef = useRef(currentIndex)
+	const morphRef = useRef(0)
+	const cooldownRef = useRef(cooldownTime)
+	const timeRef = useRef(new Date())
+	const targetIndexRef = useRef(currentIndex)
+	const currentDisplayIndexRef = useRef(currentIndex)
+	const isAnimatingRef = useRef(false)
 
-	const setMorphStyles = useCallback((fraction: number, fromIndex: number, toIndex: number) => {
+	const setStyles = useCallback((fraction: number, fromIndex: number, toIndex: number) => {
 		const [current1, current2] = [text1Ref.current, text2Ref.current]
 		if (!current1 || !current2) return
 
-		// current2 fades in (shows toIndex text)
+		// Match original blur and opacity calculations exactly
 		current2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`
 		current2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`
 
-		// current1 fades out (shows fromIndex text)
 		const invertedFraction = 1 - fraction
 		current1.style.filter = `blur(${Math.min(8 / invertedFraction - 8, 100)}px)`
 		current1.style.opacity = `${Math.pow(invertedFraction, 0.4) * 100}%`
 
-		// Set the text content
 		current1.textContent = morphingTexts[fromIndex % morphingTexts.length] || ""
 		current2.textContent = morphingTexts[toIndex % morphingTexts.length] || ""
 	}, [morphingTexts])
 
-	const setStaticStyles = useCallback((index: number) => {
+	const doMorph = useCallback(() => {
+		morphRef.current += 0.016 // Approximate frame time for smooth animation
+		cooldownRef.current = 0
+
+		let fraction = morphRef.current / morphTime
+
+		if (fraction > 1) {
+			cooldownRef.current = cooldownTime
+			fraction = 1
+		}
+
+		const fromIndex = currentDisplayIndexRef.current
+		const toIndex = targetIndexRef.current
+		setStyles(fraction, fromIndex, toIndex)
+
+		if (fraction === 1) {
+			currentDisplayIndexRef.current = targetIndexRef.current
+			isAnimatingRef.current = false
+		}
+	}, [setStyles])
+
+	const doCooldown = useCallback(() => {
+		morphRef.current = 0
 		const [current1, current2] = [text1Ref.current, text2Ref.current]
-		if (!current1 || !current2) return
+		if (current1 && current2) {
+			current2.style.filter = "none"
+			current2.style.opacity = "100%"
+			current1.style.filter = "none"
+			current1.style.opacity = "0%"
 
-		// Show current text in current2, hide current1
-		current1.style.filter = "none"
-		current1.style.opacity = "0%"
-		current2.style.filter = "none"
-		current2.style.opacity = "100%"
-
-		current2.textContent = morphingTexts[index % morphingTexts.length] || ""
-		current1.textContent = ""
+			// Show current text
+			current2.textContent = morphingTexts[currentDisplayIndexRef.current % morphingTexts.length] || ""
+			current1.textContent = ""
+		}
 	}, [morphingTexts])
 
-	// Handle index changes with morphing animation
+	// Trigger animation when currentIndex changes
 	useEffect(() => {
-		if (currentIndex === prevIndexRef.current || isTransitioningRef.current) return
+		if (currentIndex !== targetIndexRef.current && !isAnimatingRef.current) {
+			targetIndexRef.current = currentIndex
+			isAnimatingRef.current = true
+			morphRef.current = 0
+			cooldownRef.current = 0
+		}
+	}, [currentIndex])
 
-		isTransitioningRef.current = true
-		const fromIndex = prevIndexRef.current
-		const toIndex = currentIndex
+	useEffect(() => {
+		let animationFrameId: number
 
-		let startTime: number | null = null
-		const morphDuration = 800 // ms
+		const animate = () => {
+			animationFrameId = requestAnimationFrame(animate)
 
-		const animate = (timestamp: number) => {
-			if (!startTime) startTime = timestamp
-			const elapsed = timestamp - startTime
-			const fraction = Math.min(elapsed / morphDuration, 1)
+			const newTime = new Date()
+			const dt = (newTime.getTime() - timeRef.current.getTime()) / 1000
+			timeRef.current = newTime
 
-			// Use easing for smoother transition
-			const easedFraction = fraction < 0.5
-				? 2 * fraction * fraction
-				: 1 - Math.pow(-2 * fraction + 2, 2) / 2
-
-			setMorphStyles(easedFraction, fromIndex, toIndex)
-
-			if (fraction < 1) {
-				requestAnimationFrame(animate)
+			if (isAnimatingRef.current) {
+				cooldownRef.current -= dt
+				if (cooldownRef.current <= 0) {
+					doMorph()
+				} else {
+					doCooldown()
+				}
 			} else {
-				// Animation complete
-				setStaticStyles(toIndex)
-				isTransitioningRef.current = false
-				prevIndexRef.current = currentIndex
+				doCooldown()
 			}
 		}
 
-		requestAnimationFrame(animate)
-	}, [currentIndex, setMorphStyles, setStaticStyles])
-
-	// Initial setup
-	useEffect(() => {
-		setStaticStyles(currentIndex)
-		prevIndexRef.current = currentIndex
-	}, [setStaticStyles, currentIndex, morphingTexts])
+		animate()
+		return () => {
+			cancelAnimationFrame(animationFrameId)
+		}
+	}, [doMorph, doCooldown])
 
 	return (
 		<div className={cn("leading-relaxed text-questionText text-center cursor-text", className)}>
@@ -122,7 +125,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 				{staticText}
 			</div>
 			<div
-				className="relative [filter:url(#nav-threshold)_blur(0.6px)]"
+				className="relative [filter:url(#nav-threshold)]"
 				style={{ minHeight: "1.5em" }}
 			>
 				<span
@@ -134,7 +137,6 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 					ref={text2Ref}
 				/>
 			</div>
-			<SvgFilters />
 		</div>
 	)
 }
