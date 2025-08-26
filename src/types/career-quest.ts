@@ -63,6 +63,7 @@ declare global {
 	| { type: "component", component: (() => ReactNode) }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
+	| { type: "null" }
 
 	// Morphing text variant for navigation-controlled morphing
 	interface MorphingVariant {

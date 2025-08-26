@@ -103,7 +103,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						{
 							id: "variant-0",
 							text: "",
-							rightContent: { type: "image", icon: "Heading4" }
+							rightContent: { type: "null" }
 						},
 						{
 							id: "variant-1",

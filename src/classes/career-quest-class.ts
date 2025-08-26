@@ -1081,6 +1081,11 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
+		// If the type is "null", keep the current right content unchanged
+		if (rightContent.type === "null") {
+			return
+		}
+
 		// If we're setting a challenge, it always takes priority (even over chat)
 		if (rightContent.type === "challenge") {
 			career.rightContent = rightContent
