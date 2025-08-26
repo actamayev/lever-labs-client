@@ -1,6 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
+import { ReactNode } from "react"
 import {
 	InteractionType,
 	ChallengeChatbotStreamStartEvent,
@@ -62,6 +63,7 @@ interface CareerInstance {
 	seenChallengeUUIDs: Set<ChallengeUUID>
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
+	morphingTextIndices: Map<string, number> // morphingTextId -> currentVariantIndex
 	mainSlides: MainSlide[]
 	swiperInstance: SwiperType | null
 	textParentSwipers: Map<string, SwiperType | null>
@@ -145,6 +147,18 @@ class CareerQuestClass {
 			}
 		})
 
+		// Initialize morphing text indices
+		const morphingTextIndices = new Map<string, number>()
+		careerDefinition.sections.forEach(section => {
+			if (section.type === "textParent") {
+				section.children.forEach(child => {
+					if (child.type === "morphingText") {
+						morphingTextIndices.set(child.id, 0)
+					}
+				})
+			}
+		})
+
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
@@ -157,6 +171,7 @@ class CareerQuestClass {
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
+			morphingTextIndices,
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
@@ -268,6 +283,72 @@ class CareerQuestClass {
 	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
 		const career = this.getCareer(careerUUID)
 		return career?.mainSlides || []
+	}
+
+	// ========================================
+	// MORPHING TEXT MANAGEMENT
+	// ========================================
+
+	public getCurrentMorphingIndex(careerUUID: CareerUUID, morphingTextId: string): number {
+		const career = this.getCareer(careerUUID)
+		return career?.morphingTextIndices.get(morphingTextId) || 0
+	}
+
+	public setMorphingIndex = action((careerUUID: CareerUUID, morphingTextId: string, index: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.morphingTextIndices.set(morphingTextId, index)
+
+		// Update right content when morphing index changes
+		this.updateRightContentForCurrentState(careerUUID)
+	})
+
+	public canAdvanceMorphingText(careerUUID: CareerUUID, morphingTextId: string): boolean {
+		const morphingSection = this.findMorphingTextSection(careerUUID, morphingTextId)
+		if (!morphingSection) return false
+
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		const maxIndex = morphingSection.morphingVariants.length - 1
+		return currentIndex < maxIndex
+	}
+
+	public canGoBackMorphingText(careerUUID: CareerUUID, morphingTextId: string): boolean {
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		return currentIndex > 0
+	}
+
+	public advanceMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
+		if (!this.canAdvanceMorphingText(careerUUID, morphingTextId)) return
+
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		const nextIndex = currentIndex + 1
+
+		this.setMorphingIndex(careerUUID, morphingTextId, nextIndex)
+	})
+
+	public goBackMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
+		if (!this.canGoBackMorphingText(careerUUID, morphingTextId)) return
+
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		const prevIndex = currentIndex - 1
+
+		this.setMorphingIndex(careerUUID, morphingTextId, prevIndex)
+	})
+
+	private findMorphingTextSection(careerUUID: CareerUUID, morphingTextId: string): MorphingTextSection | null {
+		const career = this.getCareer(careerUUID)
+		if (!career) return null
+
+		for (const section of career.careerDefinition.sections) {
+			if (section.type === "textParent") {
+				for (const child of section.children) {
+					if (child.type === "morphingText" && child.id === morphingTextId) {
+						return child
+					}
+				}
+			}
+		}
+		return null
 	}
 
 	public restoreNavigationFromSavedPosition = action((careerUUID: CareerUUID): boolean => {
@@ -552,8 +633,17 @@ class CareerQuestClass {
 		if (!careerDefinition) return null
 		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
 		if (currentSlide.type === "challenge") return null
-		const content = currentSlide.data.children[career.currentTextChildIndex].content
-		const whatUserSees = typeof content === "function" ? content() : content
+		const child = currentSlide.data.children[career.currentTextChildIndex]
+
+		let whatUserSees: ReactNode
+		if (child.type === "morphingText") {
+			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, child.id)
+			const currentVariant = child.morphingVariants[morphingIndex]
+			whatUserSees = `${child.staticText} ${currentVariant?.text || ""}`
+		} else {
+			const content = child.content
+			whatUserSees = typeof content === "function" ? content() : content
+		}
 		return {
 			careerName: careerDefinition.careerName,
 			careerDescription: careerDefinition.careerDescription,
@@ -1198,9 +1288,19 @@ class CareerQuestClass {
 			return
 		}
 
-		// Otherwise use the current text child's trigger image
+		// Otherwise use the current text child's right content
 		const textChild = currentSlide.data.children[career.currentTextChildIndex]
-		this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })
+		if (textChild.type === "morphingText") {
+			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, textChild.id)
+			const currentVariant = textChild.morphingVariants[morphingIndex]
+			if (currentVariant) {
+				this.setRightContent(careerUUID, currentVariant.rightContent)
+			} else {
+				this.setRightContent(careerUUID, { type: "image", icon: career.careerDefinition.initialImage })
+			}
+		} else {
+			this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })
+		}
 	})
 
 	// Add this method to your CareerQuestClass

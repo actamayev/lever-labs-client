@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5 } from "lucide-react"
+	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heart } from "lucide-react"
 import ChallengeSection from "./challenge-section"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -9,7 +9,7 @@ import CareerChatInterface from "../chat/career-chat-interface"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5
+	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heart
 }
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
@@ -48,6 +48,21 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 					transition={{ duration: 0.3 }}
 				>
 					<IconComponent size={120} className={colors.text} />
+				</motion.div>
+			</AnimatePresence>
+		)
+	} else if (rightContent.type === "component") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${Date.now()}`}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+					className="h-full w-full flex items-center justify-center"
+				>
+					{typeof rightContent.component === "function" ? rightContent.component() : rightContent.component}
 				</motion.div>
 			</AnimatePresence>
 		)

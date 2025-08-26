@@ -8,6 +8,7 @@ import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENG
 import { ReactNode } from "react"
 
 // Utility function to convert ReactNode to string
+// eslint-disable-next-line complexity
 export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
 	// Handle function case
 	if (typeof node === "function") {
@@ -50,34 +51,33 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 			id: "parent-1",
 			children: [
 				{
-					type: "text",
-					id: "parent-1-1",
-					content: () => (
-						<div className="text-red-500">
-							Test
-						</div>
-					),
-					triggerImage: "Navigation"
-				},
-				{
-					type: "text",
-					id: "parent-1-2",
-					content: () => (
-						<div className="text-red-500">
-							Test
-						</div>
-					),
-					triggerImage: "Eye"
-				},
-				{
-					type: "text",
-					id: "parent-1-3",
-					content: () => (
-						<div className="text-red-500">
-							Test
-						</div>
-					),
-					triggerImage: "Radar"
+					type: "morphingText",
+					id: "intro-morphing-1",
+					staticText: "I don't know what my very first job will be… maybe I'll",
+					morphingVariants: [
+						{
+							id: "variant-1",
+							text: "deliver meals through a busy city,",
+							rightContent: { type: "image", icon: "Navigation" }
+						},
+						{
+							id: "variant-2",
+							text: "lend a hand in a hospital,",
+							rightContent: { type: "image", icon: "Heart" }
+						},
+						{
+							id: "variant-3",
+							text: "even travel with explorers among the stars.",
+							rightContent: {
+								type: "component",
+								component: () => (
+									<div className="text-6xl">
+										🌟✨💫
+									</div>
+								)
+							}
+						}
+					]
 				}
 			]
 		}

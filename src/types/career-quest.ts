@@ -60,13 +60,21 @@ declare global {
 
 	type RightContent =
 	| { type: "image", icon: string }
+	| { type: "component", component: (() => ReactNode) }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
+
+	// Morphing text variant for navigation-controlled morphing
+	interface MorphingVariant {
+		id: string
+		text: string
+		rightContent: RightContent
+	}
 
 	interface TextParentSection {
 		type: "textParent"
 		id: string
-		children: TextSection[]
+		children: (TextSection | MorphingTextSection)[]
 	}
 
 	interface TextSection {
@@ -74,6 +82,14 @@ declare global {
 		id: string
 		content: (() => ReactNode)
 		triggerImage: string // Lucide icon name
+	}
+
+	// New morphing text section type
+	interface MorphingTextSection {
+		type: "morphingText"
+		id: string
+		staticText: string // Text that stays at the top
+		morphingVariants: MorphingVariant[] // Array of morphing text options
 	}
 
 	interface ChallengeSection {
