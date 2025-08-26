@@ -8,10 +8,10 @@ interface NavigationMorphingTextProps {
   staticText: string
   morphingTexts: string[]
   currentIndex: number
+  onAnimationStateChange?: (isAnimating: boolean) => void
 }
 
 const morphTime = 1.5  // Match original timing
-const cooldownTime = 0.5
 
 // eslint-disable-next-line max-lines-per-function
 export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
@@ -19,11 +19,12 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	morphingTexts,
 	currentIndex,
 	className,
+	onAnimationStateChange,
 }) => {
 	const text1Ref = useRef<HTMLSpanElement>(null)
 	const text2Ref = useRef<HTMLSpanElement>(null)
 	const morphRef = useRef(0)
-	const cooldownRef = useRef(cooldownTime)
+	const cooldownRef = useRef(0)
 	const timeRef = useRef(new Date())
 	const targetIndexRef = useRef(currentIndex)
 	const currentDisplayIndexRef = useRef(currentIndex)
@@ -52,7 +53,6 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		let fraction = morphRef.current / morphTime
 
 		if (fraction > 1) {
-			cooldownRef.current = cooldownTime
 			fraction = 1
 		}
 
@@ -63,8 +63,9 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		if (fraction === 1) {
 			currentDisplayIndexRef.current = targetIndexRef.current
 			isAnimatingRef.current = false
+			onAnimationStateChange?.(false)
 		}
-	}, [setStyles])
+	}, [setStyles, onAnimationStateChange])
 
 	const doCooldown = useCallback(() => {
 		morphRef.current = 0
@@ -83,13 +84,14 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 
 	// Trigger animation when currentIndex changes
 	useEffect(() => {
-		if (currentIndex !== targetIndexRef.current && !isAnimatingRef.current) {
+		if (currentIndex !== targetIndexRef.current) {
 			targetIndexRef.current = currentIndex
 			isAnimatingRef.current = true
 			morphRef.current = 0
 			cooldownRef.current = 0
+			onAnimationStateChange?.(true)
 		}
-	}, [currentIndex])
+	}, [currentIndex, onAnimationStateChange])
 
 	useEffect(() => {
 		let animationFrameId: number

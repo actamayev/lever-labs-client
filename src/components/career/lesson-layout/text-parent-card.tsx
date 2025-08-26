@@ -61,6 +61,9 @@ function TextParentCard(props: TextParentCardProps) {
 										staticText={child.staticText}
 										morphingTexts={child.morphingVariants.map(variant => variant.text)}
 										currentIndex={careerQuestClass.getCurrentMorphingIndex(careerUUID, child.id)}
+										onAnimationStateChange={(isAnimating) =>
+											careerQuestClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
+										}
 									/>
 								) : (
 									<div className="leading-relaxed text-questionText text-center cursor-text">

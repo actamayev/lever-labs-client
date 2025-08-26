@@ -64,6 +64,7 @@ interface CareerInstance {
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
 	morphingTextIndices: Map<string, number> // morphingTextId -> currentVariantIndex
+	morphingAnimationStates: Map<string, boolean> // morphingTextId -> isAnimating
 	mainSlides: MainSlide[]
 	swiperInstance: SwiperType | null
 	textParentSwipers: Map<string, SwiperType | null>
@@ -147,13 +148,15 @@ class CareerQuestClass {
 			}
 		})
 
-		// Initialize morphing text indices
+		// Initialize morphing text indices and animation states
 		const morphingTextIndices = new Map<string, number>()
+		const morphingAnimationStates = new Map<string, boolean>()
 		careerDefinition.sections.forEach(section => {
 			if (section.type === "textParent") {
 				section.children.forEach(child => {
 					if (child.type === "morphingText") {
 						morphingTextIndices.set(child.id, 0)
+						morphingAnimationStates.set(child.id, false)
 					}
 				})
 			}
@@ -172,6 +175,7 @@ class CareerQuestClass {
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
 			morphingTextIndices,
+			morphingAnimationStates,
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
@@ -304,6 +308,13 @@ class CareerQuestClass {
 	})
 
 	public canAdvanceMorphingText(careerUUID: CareerUUID, morphingTextId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if animation is in progress
+		const isAnimating = career.morphingAnimationStates.get(morphingTextId) || false
+		if (isAnimating) return false
+
 		const morphingSection = this.findMorphingTextSection(careerUUID, morphingTextId)
 		if (!morphingSection) return false
 
@@ -313,9 +324,22 @@ class CareerQuestClass {
 	}
 
 	public canGoBackMorphingText(careerUUID: CareerUUID, morphingTextId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if animation is in progress
+		const isAnimating = career.morphingAnimationStates.get(morphingTextId) || false
+		if (isAnimating) return false
+
 		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
 		return currentIndex > 0
 	}
+
+	public setMorphingAnimationState = action((careerUUID: CareerUUID, morphingTextId: string, isAnimating: boolean): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.morphingAnimationStates.set(morphingTextId, isAnimating)
+	})
 
 	public advanceMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
 		if (!this.canAdvanceMorphingText(careerUUID, morphingTextId)) return

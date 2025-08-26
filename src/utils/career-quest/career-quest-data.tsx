@@ -31,7 +31,8 @@ export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
 	}
 	if (typeof node === "object" && "props" in node) {
 		// Handle React elements
-		const { children, ...props } = node.props || {}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const { children, ..._props } = node.props || {}
 		if (children) {
 			return reactNodeToString(children)
 		}
