@@ -52,8 +52,58 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 			id: "parent-1",
 			children: [
 				{
+					type: "text",
+					id: "parent-1-1",
+					content: () => (
+						<div>
+							Hey there!<br />
+							I was starting to think no one would show up… but you’re here. And I’m so glad.
+						</div>
+					),
+					triggerImage: "Heading1"
+				},
+				{
+					type: "text",
+					id: "parent-2-1",
+					content: () => (
+						<div>
+							My name is Pip. I don’t know what I was made for, but I’m excited to find out.
+						</div>
+					),
+					triggerImage: "Heading2"
+				},
+				{
+					type: "text",
+					id: "parent-1-2",
+					content: () => (
+						<div>
+							Everything has a purpose. Clocks keep time. Books tell stories.
+							<br />
+							And robots? I think our purpose is to help people. That’s what I want to do.
+						</div>
+					),
+					triggerImage: "Heading3"
+				},
+				{
+					type: "text",
+					id: "parent-4-1",
+					content: () => (
+						<div>
+							We learn by trying, failing, and trying again.<br />
+							Every job, every adventure, is a chance to learn who we are.
+						</div>
+					),
+					triggerImage: "Heading4"
+				}
+			]
+		},
+		{
+			type: "textParent",
+			id: "parent-5",
+			children: [
+				{
 					type: "morphingText",
-					id: "intro-morphing-1",
+					id: "parent-5-1",
 					staticText: "I don't know what my very first job will be… maybe I'll",
 					morphingVariants: [
 						{
@@ -100,7 +150,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -110,7 +160,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-2",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -120,7 +170,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-3",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -130,7 +180,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-4",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -140,7 +190,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-5",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -161,7 +211,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-2-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -171,7 +221,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-2-2",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -192,7 +242,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-3-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -213,7 +263,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-4-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -234,7 +284,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-5-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
@@ -255,7 +305,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-6-1",
 					content: () => (
-						<div className="text-red-500">
+						<div>
 							Test
 						</div>
 					),
