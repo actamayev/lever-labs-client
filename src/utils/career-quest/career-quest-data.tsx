@@ -64,7 +64,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-2-1",
+					id: "parent-1-2",
 					content: () => (
 						<div>
 							My name is Pip. I don’t know what I was made for, but I’m excited to find out.
@@ -74,7 +74,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-2",
+					id: "parent-1-3",
 					content: () => (
 						<div>
 							Everything has a purpose. Clocks keep time. Books tell stories.
@@ -86,7 +86,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-4-1",
+					id: "parent-1-4",
 					content: () => (
 						<div>
 							We learn by trying, failing, and trying again.<br />
@@ -94,16 +94,10 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						</div>
 					),
 					triggerImage: "Heading4"
-				}
-			]
-		},
-		{
-			type: "textParent",
-			id: "parent-5",
-			children: [
+				},
 				{
 					type: "morphingText",
-					id: "parent-5-1",
+					id: "parent-1-5",
 					staticText: "I don't know what my very first job will be… maybe I'll",
 					morphingVariants: [
 						{
