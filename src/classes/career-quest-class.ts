@@ -341,6 +341,23 @@ class CareerQuestClass {
 		career.morphingAnimationStates.set(morphingTextId, isAnimating)
 	})
 
+	public isAnyMorphingTextAnimating(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if any morphing text in the current slide is animating
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return false
+
+		for (const child of currentSlide.data.children) {
+			if (child.type === "morphingText") {
+				const isAnimating = career.morphingAnimationStates.get(child.id) || false
+				if (isAnimating) return true
+			}
+		}
+		return false
+	}
+
 	public advanceMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
 		if (!this.canAdvanceMorphingText(careerUUID, morphingTextId)) return
 

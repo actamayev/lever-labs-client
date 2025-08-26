@@ -101,6 +101,11 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					staticText: "I don't know what my very first job will be… maybe I'll",
 					morphingVariants: [
 						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "image", icon: "Heading4" }
+						},
+						{
 							id: "variant-1",
 							text: "deliver meals through a busy city,",
 							rightContent: { type: "image", icon: "Navigation" }
