@@ -67,7 +67,9 @@ function TextParentCard(props: TextParentCardProps) {
 									/>
 								) : (
 									<div className="leading-relaxed text-questionText text-center cursor-text">
-										{typeof child.content === "function" ? child.content() : child.content}
+										{typeof child.content === "function" ? child.content(() => {
+											careerQuestClass.handleButtonClickAdvance(careerUUID)
+										}) : child.content}
 									</div>
 								)}
 							</div>

@@ -1294,7 +1294,6 @@ class CareerQuestClass {
 	public handleGoToNextTextChild = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 

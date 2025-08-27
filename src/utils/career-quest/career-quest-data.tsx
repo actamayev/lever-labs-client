@@ -9,9 +9,8 @@ import { ReactNode } from "react"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import { Highlighter } from "../../components/magicui/highlighter"
 import fireConfetti from "../fire-confetti"
-import careerQuestClass from "../../classes/career-quest-class"
-// Lazy import to avoid circular dependency
-// import introductionTrigger from "./career-quest-pip-triggers/introduction-trigger"
+// Removed careerQuestClass import to avoid circular dependency
+// The button click handler will be passed as a parameter instead
 
 // Utility function to convert ReactNode to string
 // eslint-disable-next-line complexity
@@ -55,11 +54,11 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 	sections: [
 		{
 			type: "textParent",
-			id: "parent-1",
+			id: "introduction-1",
 			children: [
 				{
 					type: "text",
-					id: "parent-1-1",
+					id: "introduction-1-1",
 					content: () => (
 						<div>
 							Hey there!<br />
@@ -70,7 +69,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-2",
+					id: "introduction-1-2",
 					content: () => (
 						<div>
 							My name is
@@ -82,7 +81,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-3",
+					id: "introduction-1-3",
 					content: () => (
 						<div>
 							Everything has a purpose. Clocks keep time. Books tell stories.
@@ -94,7 +93,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-4",
+					id: "introduction-1-4",
 					content: () => (
 						<div>
 							We learn by trying, failing, and trying again.<br />
@@ -105,7 +104,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "morphingText",
-					id: "parent-1-5",
+					id: "introduction-1-5",
 					staticText: "I don't know what my very first job will be… maybe I'll",
 					morphingVariants: [
 						{
@@ -139,8 +138,8 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-6",
-					content: () => (
+					id: "introduction-1-6",
+					content: (onAdvance?: () => void) => (
 						<div className="flex-shrink-0 flex flex-col gap-4">
 							Exploration is better with a friend. Will you join me?
 							<AnimatedStateButton
@@ -152,12 +151,10 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 										({ particleCount: 300, startVelocity: 30 })
 									)
 
-									// Import and call the career quest class to advance
-									// Note: This will be handled by the component that renders this content
-									// The component should call careerQuestClass.handleButtonClickAdvance(careerUUID)
-									careerQuestClass.handleButtonClickAdvance(
-										"3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID
-									)
+									// Call the advance callback if provided
+									if (onAdvance) {
+										onAdvance()
+									}
 								}}
 								className="duration-150 rounded-xl text-4xl h-12"
 							/>
@@ -167,7 +164,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-7",
+					id: "introduction-1-7",
 					content: () => (
 						<div>
 							I’m so glad you said yes!
@@ -181,11 +178,11 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "parent-2",
+			id: "introduction-2",
 			children: [
 				{
 					type: "text",
-					id: "parent-2-1",
+					id: "introduction-2-1",
 					content: () => (
 						<div>
 							Test
@@ -193,6 +190,42 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					),
 					triggerImage: "Heading2"
 				},
+				{
+					type: "text",
+					id: "introduction-2-2",
+					content: () => (
+						<div>
+							Test
+						</div>
+					),
+					triggerImage: "Heading3"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-3",
+			children: [
+				{
+					type: "text",
+					id: "introduction-3-1",
+					content: () => (
+						<div>
+							Test
+						</div>
+					),
+					triggerImage: "Heading4"
+				},
+				{
+					type: "text",
+					id: "introduction-3-2",
+					content: () => (
+						<div>
+							Test
+						</div>
+					),
+					triggerImage: "Heading5"
+				}
 			]
 		}
 	]
@@ -207,11 +240,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	sections: [
 		{
 			type: "textParent",
-			id: "parent-1",
+			id: "obstacle-avoidance-1",
 			children: [
 				{
 					type: "text",
-					id: "parent-1-1",
+					id: "obstacle-avoidance-1-1",
 					content: () => (
 						<div>
 							Test
@@ -221,7 +254,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-2",
+					id: "obstacle-avoidance-1-2",
 					content: () => (
 						<div>
 							Test
@@ -231,7 +264,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-3",
+					id: "obstacle-avoidance-1-3",
 					content: () => (
 						<div>
 							Test
@@ -241,7 +274,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-4",
+					id: "obstacle-avoidance-1-4",
 					content: () => (
 						<div>
 							Test
@@ -251,7 +284,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-1-5",
+					id: "obstacle-avoidance-1-5",
 					content: () => (
 						<div>
 							Test
@@ -268,11 +301,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "parent-2",
+			id: "obstacle-avoidance-2",
 			children: [
 				{
 					type: "text",
-					id: "parent-2-1",
+					id: "obstacle-avoidance-2-1",
 					content: () => (
 						<div>
 							Test
@@ -282,7 +315,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "parent-2-2",
+					id: "obstacle-avoidance-2-2",
 					content: () => (
 						<div>
 							Test
@@ -299,11 +332,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "improvement-1",
+			id: "obstacle-avoidance-3",
 			children: [
 				{
 					type: "text",
-					id: "parent-3-1",
+					id: "obstacle-avoidance-3-1",
 					content: () => (
 						<div>
 							Test
@@ -320,11 +353,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "parent-4-1",
+			id: "obstacle-avoidance-4",
 			children: [
 				{
 					type: "text",
-					id: "parent-4-1",
+					id: "obstacle-avoidance-4-1",
 					content: () => (
 						<div>
 							Test
@@ -341,11 +374,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "parent-5-1",
+			id: "obstacle-avoidance-5",
 			children: [
 				{
 					type: "text",
-					id: "parent-5-1",
+					id: "obstacle-avoidance-5-1",
 					content: () => (
 						<div>
 							Test
@@ -362,11 +395,11 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 		},
 		{
 			type: "textParent",
-			id: "parent-6-1",
+			id: "obstacle-avoidance-6",
 			children: [
 				{
 					type: "text",
-					id: "parent-6-1",
+					id: "obstacle-avoidance-6-1",
 					content: () => (
 						<div>
 							Test

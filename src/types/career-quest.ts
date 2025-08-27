@@ -81,7 +81,7 @@ declare global {
 	interface TextSection {
 		type: "text"
 		id: string
-		content: (() => ReactNode)
+		content: ((onAdvance?: () => void) => ReactNode)
 		triggerImage: string // Lucide icon name
 	}
 
