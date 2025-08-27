@@ -19,7 +19,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// Set loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerChallengeData(careerUUID)
+		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")
@@ -131,9 +131,11 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""
 		const seenChallengeUUIDs = careerResponse.data.seenChallengeUUIDs
+		const furthestSeenPosition = careerResponse.data.furthestSeenChallengeUuidOrTextUuid || ""
 
 		careerQuestClass.setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
 		careerQuestClass.setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
+		careerQuestClass.setFurthestSeenPosition(careerUUID, furthestSeenPosition) // NEW: Set furthest seen position
 
 		// Clear loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)

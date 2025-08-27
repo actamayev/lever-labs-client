@@ -18,19 +18,20 @@ export default class CareerQuestDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveCareerChallengeData(careerUUID: CareerUUID): Promise<AxiosResponse<CareerProgressData | ErrorResponses>> {
+	async retrieveCareerProgressData(careerUUID: CareerUUID): Promise<AxiosResponse<CareerProgressData | ErrorResponses>> {
 		return await this.httpClient.http.get<CareerProgressData | ErrorResponses>(
-			this.buildUrl(`/get-career-challenge-data/${careerUUID}`)
+			this.buildUrl(`/get-career-progress-data/${careerUUID}`)
 		)
 	}
 
 	async updateCareerQuestUserProgress(
 		currentId: string,
-		careerUUID: CareerUUID
+		careerUUID: CareerUUID,
+		isFurthestSeen: boolean
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
 			this.buildUrl("/update-career-quest-user-progress"),
-			{ currentId, careerUUID }
+			{ currentId, careerUUID, isFurthestSeen }
 		)
 	}
 

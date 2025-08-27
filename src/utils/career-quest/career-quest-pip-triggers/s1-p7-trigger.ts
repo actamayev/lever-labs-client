@@ -7,8 +7,8 @@ import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import pipClass from "../../../classes/pip-class"
 import toastClass from "../../../classes/toast-class"
-import fireConfetti from "../../../utils/fire-confetti"
-import { isNonSuccessResponse } from "../../../utils/type-checks"
+import fireConfetti from "../../fire-confetti"
+import { isNonSuccessResponse } from "../../type-checks"
 
 export default async function introductionTrigger(rect: DOMRect) : Promise<void> {
 	try {

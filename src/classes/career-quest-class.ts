@@ -60,6 +60,7 @@ interface CareerInstance {
 	hasRetrievedAllChallenges: boolean
 	isRetrievingData: boolean
 	savedCurrentPosition: string
+	furthestSeenChallengeUuidOrTextUuid: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
@@ -171,6 +172,7 @@ class CareerQuestClass {
 			hasRetrievedAllChallenges: false,
 			isRetrievingData: false,
 			savedCurrentPosition: "",
+			furthestSeenChallengeUuidOrTextUuid: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			currentMainSlideIndex: 0,
 			currentTextChildIndex: 0,
@@ -482,6 +484,52 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		return career?.seenChallengeUUIDs.has(challengeUUID) || false
 	}
+
+	// NEW: Set furthest seen position
+	public setFurthestSeenPosition = action((careerUUID: CareerUUID, position: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.furthestSeenChallengeUuidOrTextUuid = position
+	})
+
+	// NEW: Get furthest seen position
+	private getFurthestSeenPosition(careerUUID: CareerUUID): string {
+		const career = this.getCareer(careerUUID)
+		return career?.furthestSeenChallengeUuidOrTextUuid || ""
+	}
+
+	// NEW: Determine if a position is the furthest seen
+	public isPositionFurthestSeen(careerUUID: CareerUUID, currentPosition: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const furthestSeen = this.getFurthestSeenPosition(careerUUID)
+		if (!furthestSeen) return true // If no furthest seen, this is the first position
+
+		// Get position indices for comparison
+		const currentIndices = this.findPositionIndices(careerUUID, currentPosition)
+		const furthestIndices = this.findPositionIndices(careerUUID, furthestSeen)
+
+		if (!currentIndices || !furthestIndices) return false
+
+		// Compare main slide indices first
+		if (currentIndices.mainSlideIndex > furthestIndices.mainSlideIndex) {
+			return true
+		}
+		if (currentIndices.mainSlideIndex < furthestIndices.mainSlideIndex) {
+			return false
+		}
+
+		// If same main slide, compare text child indices
+		return currentIndices.textChildIndex > furthestIndices.textChildIndex
+	}
+
+	// NEW: Update furthest seen position if current position is further
+	public updateFurthestSeenIfNeeded = action((careerUUID: CareerUUID, currentPosition: string): void => {
+		if (this.isPositionFurthestSeen(careerUUID, currentPosition)) {
+			this.setFurthestSeenPosition(careerUUID, currentPosition)
+		}
+	})
 
 	private findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
 		const career = this.getCareer(careerUUID)
@@ -1021,7 +1069,9 @@ class CareerQuestClass {
 			}
 
 			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
-			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID)
+			const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, currentSlide.data.challengeUUID)
+			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID, isFurthestSeen)
+			this.updateFurthestSeenIfNeeded(careerUUID, currentSlide.data.challengeUUID)
 
 			this.setCurrentTextChildIndex(careerUUID, 0)
 			// Update right content for challenge slide
@@ -1040,7 +1090,9 @@ class CareerQuestClass {
 		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
-		void saveCareerProgress(careerUUID, textChild.id)
+		const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, textChild.id)
+		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen)
+		this.updateFurthestSeenIfNeeded(careerUUID, textChild.id)
 
 		// Update right content for text slide
 		this.updateRightContentForCurrentState(careerUUID)
@@ -1064,7 +1116,9 @@ class CareerQuestClass {
 			this.setMorphingIndex(careerUUID, textChild.id, lastVariantIndex)
 		}
 
-		void saveCareerProgress(careerUUID, textChild.id)
+		const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, textChild.id)
+		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen)
+		this.updateFurthestSeenIfNeeded(careerUUID, textChild.id)
 
 		// Update right content for text child change
 		this.updateRightContentForCurrentState(careerUUID)

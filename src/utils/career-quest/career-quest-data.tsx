@@ -8,6 +8,7 @@ import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENG
 import { ReactNode } from "react"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import { Highlighter } from "../../components/magicui/highlighter"
+import fireConfetti from "../fire-confetti"
 // Lazy import to avoid circular dependency
 // import introductionTrigger from "./career-quest-pip-triggers/introduction-trigger"
 
@@ -139,15 +140,15 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "parent-1-6",
 					content: () => (
-						<div className="flex flex-col gap-4">
+						<div className="flex-shrink-0 flex flex-col gap-4">
 							Exploration is better with a friend. Will you join me?
 							<AnimatedStateButton
 								buttonText="YES"
-								onClick={async (event) => {
-									const { default: introductionTrigger } = await import("./career-quest-pip-triggers/introduction-trigger")
-									await introductionTrigger(event.currentTarget.getBoundingClientRect())
-								}}
-								className="duration-150 rounded-xl text-4xl"
+								onClick={(event) => fireConfetti(
+									event.currentTarget.getBoundingClientRect(),
+									({ particleCount: 300, startVelocity: 30 })
+								)}
+								className="duration-150 rounded-xl text-4xl h-12"
 							/>
 						</div>
 					),
@@ -158,7 +159,9 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "parent-1-7",
 					content: () => (
 						<div>
-							Test
+							I’m so glad you said yes!
+							<br />
+							Before we set off, I want to show you what I can do.
 						</div>
 					),
 					triggerImage: "Heading6"
