@@ -4,13 +4,16 @@ import CareerLayout from "./lesson-layout/career-layout"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
 import useEffectRetrieveSingleCareerChallenges from "../../hooks/career-quest/use-effect-retrieve-single-career-challenges"
 import { Particles } from "../magicui/particles"
+import { observer } from "mobx-react"
+import personalInfoClass from "../../classes/personal-info-class"
 
 interface Props {
 	careerData: CareerQuestData
 }
 
-export default function CareerActivityTemplate(props: Props) {
+function CareerActivityTemplate(props: Props) {
 	const { careerData } = props
+	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	useEffectRetrieveSingleCareerChallenges(careerData.careerUUID)
 
 	return (
@@ -22,7 +25,7 @@ export default function CareerActivityTemplate(props: Props) {
 					className="absolute inset-0 z-0"
 					quantity={100}
 					ease={80}
-					color="#000000"
+					color={isDarkMode ? "#ffffff" : "#000000"}
 					refresh
 				/>
 				<div className="relative z-10">
@@ -32,3 +35,5 @@ export default function CareerActivityTemplate(props: Props) {
 		</div>
 	)
 }
+
+export default observer(CareerActivityTemplate)
