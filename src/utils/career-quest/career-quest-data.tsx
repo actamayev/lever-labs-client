@@ -6,6 +6,8 @@
 import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 import { ReactNode } from "react"
+import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
+import introductionTrigger from "./career-quest-pip-triggers/introduction-trigger"
 
 // Utility function to convert ReactNode to string
 // eslint-disable-next-line complexity
@@ -128,7 +130,32 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							}
 						}
 					]
-				}
+				},
+				{
+					type: "text",
+					id: "parent-1-6",
+					content: () => (
+						<div className="flex flex-col gap-4">
+							Exploration is better with a friend. Will you join me?
+							<AnimatedStateButton
+								buttonText="YES"
+								onClick={(event) => introductionTrigger(event.currentTarget.getBoundingClientRect())}
+								className="duration-150 rounded-xl text-4xl"
+							/>
+						</div>
+					),
+					triggerImage: "Heading5"
+				},
+				{
+					type: "text",
+					id: "parent-1-7",
+					content: () => (
+						<div>
+							Test
+						</div>
+					),
+					triggerImage: "Heading6"
+				},
 			]
 		}
 	]

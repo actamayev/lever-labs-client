@@ -9,7 +9,8 @@ import CareerChatInterface from "../chat/career-chat-interface"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heart
+	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight,
+	ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heart
 }
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
@@ -66,22 +67,26 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 				</motion.div>
 			</AnimatePresence>
 		)
+	} else if (rightContent.type === "challenge") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{ duration: 0.3 }}
+					className="h-full w-full"
+				>
+					<ChallengeSection challengeData={rightContent.challengeData} />
+				</motion.div>
+			</AnimatePresence>
+		)
 	}
 
-	return (
-		<AnimatePresence mode="wait">
-			<motion.div
-				key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={{ duration: 0.3 }}
-				className="h-full w-full"
-			>
-				<ChallengeSection challengeData={rightContent.challengeData} />
-			</motion.div>
-		</AnimatePresence>
-	)
+	// This should never happen since "null" type is handled in setRightContent
+	// But we need this for TypeScript completeness
+	return <div className="h-full w-full flex items-center justify-center" />
 }
 
 export default observer(RightContent)

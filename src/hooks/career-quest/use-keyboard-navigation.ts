@@ -117,7 +117,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 						careerQuestClass.goBackMorphingText(careerUUID, currentChild.id)
 						return
 					}
-					// If we can't go back in morphing text and we're not at first text child, 
+					// If we can't go back in morphing text and we're not at first text child,
 					// allow navigation to previous text child
 					const isAtFirstTextChild = currentTextChildIndex === 0
 					if (!isAtFirstTextChild) {

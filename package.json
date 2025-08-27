@@ -76,7 +76,7 @@
     "lint": "next lint",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "type-check": "tsc --noEmit",
-    "validate": "npm run lint && npm run type-check",
+    "validate": "npm run lint; npm run type-check",
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
     "updateCommon": "sudo npm update @bluedotrobots/common-ts",

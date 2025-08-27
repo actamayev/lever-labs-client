@@ -11,7 +11,7 @@ interface NavigationMorphingTextProps {
   onAnimationStateChange?: (isAnimating: boolean) => void
 }
 
-const morphTime = 1.5  // Match original timing
+const morphTime = 0.5  // Match original timing
 
 // eslint-disable-next-line max-lines-per-function
 export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({

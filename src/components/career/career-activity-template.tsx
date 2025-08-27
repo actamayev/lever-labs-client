@@ -16,7 +16,7 @@ export default function CareerActivityTemplate(props: Props) {
 		<div className="flex flex-col h-screen min-h-0">
 			<CareerQuestActivityHeader careerData={careerData} />
 
-			<div className="flex-1 min-h-0 pt-20">
+			<div className="flex-1 min-h-0 pt-20 bg-black">
 				<CareerLayout careerData={careerData} />
 			</div>
 		</div>

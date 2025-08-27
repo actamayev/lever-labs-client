@@ -25,12 +25,12 @@ export default async function createDisplayMessage(buffer: Uint8Array): Promise<
 			pipClass.selectedPip.pipConnectionStatus === "offline"
 		) return
 
-		const stopScriptResponse = await blueDotApiClientClass.garageDataService.createDisplayBuffer(
+		const displayBufferResponse = await blueDotApiClientClass.garageDataService.createDisplayBuffer(
 			buffer,
 			pipClass.selectedPip.pipUUID
 		)
 
-		if (!isEqual(stopScriptResponse.status, 200) || isNonSuccessResponse(stopScriptResponse.data)) {
+		if (!isEqual(displayBufferResponse.status, 200) || isNonSuccessResponse(displayBufferResponse.data)) {
 			throw new Error("Failed to send display buffer to Pip")
 		}
 	} catch (error) {

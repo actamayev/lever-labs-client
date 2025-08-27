@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { BlocklyJson, CareerProgressData, CareerUUID, ChallengeUUID, ErrorResponses, SuccessResponse } from "@bluedotrobots/common-ts"
-import { BaseDataService } from "./base-data-service"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { BaseDataService } from "../base-data-service"
+import BlueDotHttpClient from "../../classes/blue-dot-http-client"
 
 export default class CareerQuestDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
