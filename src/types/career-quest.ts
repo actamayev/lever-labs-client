@@ -72,10 +72,17 @@ declare global {
 		rightContent: RightContent
 	}
 
+	interface TextTransition {
+		type: "fade"
+		duration: number // milliseconds, e.g. 800
+		color: "black" // Always black for consistency
+	}
+
 	interface TextParentSection {
 		type: "textParent"
 		id: string
 		children: (TextSection | MorphingTextSection)[]
+		transition?: TextTransition // Optional transition when navigating away from this section
 	}
 
 	interface TextSection {

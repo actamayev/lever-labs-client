@@ -62,3 +62,5 @@ export const PIP_ROBOT_USB_ID = {
 	usbVendorId: 0x303a,
 	usbProductId: 0x1001  // ESP32-S3 DevKit
 }
+
+export const DEFAULT_TRANSITION_DURATION = 1500

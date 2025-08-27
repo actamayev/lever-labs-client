@@ -9,6 +9,7 @@ import { ReactNode } from "react"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import { Highlighter } from "../../components/magicui/highlighter"
 import fireConfetti from "../fire-confetti"
+import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 // Removed careerQuestClass import to avoid circular dependency
 // The button click handler will be passed as a parameter instead
 
@@ -55,6 +56,11 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 		{
 			type: "textParent",
 			id: "introduction-1",
+			transition: {
+				type: "fade",
+				duration: DEFAULT_TRANSITION_DURATION,
+				color: "black"
+			},
 			children: [
 				{
 					type: "text",
@@ -169,7 +175,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-1-7",
 					content: () => (
 						<div>
-							I’m so glad you said yes!
+							I'm so glad you said yes!
 							<br />
 							Before we set off, I want to show you what I can do.
 						</div>
@@ -219,6 +225,16 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						</div>
 					),
 					triggerImage: "Heading4"
+				},
+				{
+					type: "text",
+					id: "introduction-2-4",
+					content: () => (
+						<div>
+							Nice choice. I think it suits me. Want to see what I can do with all my lights together?
+						</div>
+					),
+					triggerImage: "Heading5"
 				}
 			]
 		},

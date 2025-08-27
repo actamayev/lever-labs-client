@@ -8,6 +8,7 @@ import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TextParentCard from "./text-parent-card"
 import ChallengeChatInterface from "../chat/challenge-chat-interface"
+import TransitionOverlay from "../transition/transition-overlay"
 import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
@@ -101,6 +102,12 @@ function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
 					<RightContent careerData={careerData} />
 				</div>
 			</div>
+
+			{/* Transition Overlay */}
+			<TransitionOverlay
+				isTransitioning={careerQuestClass.getIsTransitioning(careerData.careerUUID)}
+				duration={careerQuestClass.getCurrentTransitionDuration(careerData.careerUUID)}
+			/>
 		</div>
 	)
 }

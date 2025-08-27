@@ -25,6 +25,7 @@ import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
+import { DEFAULT_TRANSITION_DURATION } from "../utils/constants/constants"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -70,6 +71,7 @@ interface CareerInstance {
 	swiperInstance: SwiperType | null
 	textParentSwipers: Map<string, SwiperType | null>
 	isTransitioning: boolean
+	currentTransitionDuration: number
 	rightContent: RightContent
 	lastSlideChangeTime: number
 	careerChatData: CareerChatData
@@ -181,6 +183,7 @@ class CareerQuestClass {
 			mainSlides,
 			swiperInstance: null,
 			isTransitioning: false,
+			currentTransitionDuration: DEFAULT_TRANSITION_DURATION,
 			lastSlideChangeTime: 0,
 			rightContent: { type: "image", icon: careerDefinition.initialImage },
 			textParentSwipers: new Map<string, SwiperType | null>(),
@@ -1311,6 +1314,7 @@ class CareerQuestClass {
 		// Check if we can advance to the next text child
 		if (!this.canAdvanceToNextTextChild(careerUUID)) return
 
+		// Normal navigation (existing code)
 		const mainSlides = this.getMainSlides(careerUUID)
 		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
@@ -1345,7 +1349,7 @@ class CareerQuestClass {
 		this.handleTextChildIndexChange(careerUUID, newIndex, true)
 	})
 
-	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {
+	public handleGoToNextMainSection = action(async (careerUUID: CareerUUID): Promise<void> => {
 		const career = this.getCareer(careerUUID)
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		if (!career || !swiperInstance) return
@@ -1353,6 +1357,25 @@ class CareerQuestClass {
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		if (!canAdvance) return
 
+		// Get current section and check for transition
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type === "textParent" && currentSlide.data.transition) {
+			console.log("🌟 Main slide transition detected!", {
+				sectionId: currentSlide.data.id,
+				transition: currentSlide.data.transition,
+				currentIndex: career.currentMainSlideIndex,
+				targetIndex: career.currentMainSlideIndex + 1
+			})
+
+			await this.handleMainSlideTransitionNavigation(
+				careerUUID,
+				career.currentMainSlideIndex + 1,
+				currentSlide.data.transition
+			)
+			return
+		}
+
+		// Normal navigation
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		swiperInstance.slideNext()
@@ -1589,6 +1612,60 @@ class CareerQuestClass {
 			this.handleTextChildIndexChange(careerUUID, nextTextChildIndex, false)
 		}
 	})
+
+	private handleMainSlideTransitionNavigation = action(async (
+		careerUUID: CareerUUID,
+		targetMainSlideIndex: number,
+		transition: TextTransition
+	): Promise<void> => {
+		console.log("🎬 Starting main slide transition navigation", {
+			careerUUID,
+			targetMainSlideIndex,
+			transition
+		})
+
+		// 1. Set transitioning state (shows black overlay) and store duration
+		this.setLastSlideChangeTime(careerUUID, Date.now())
+		this.setCurrentTransitionDuration(careerUUID, transition.duration)
+		this.setIsTransitioning(careerUUID, true)
+
+		console.log("🎬 Transition state set to true, starting fade-out...")
+
+		// 2. Wait for fade-out
+		await this.sleep(transition.duration / 2)
+
+		console.log("🎬 Fade-out complete, performing main slide change...")
+
+		// 3. Perform instant slide change
+		const swiperInstance = this.getSwiperInstance(careerUUID)
+		if (swiperInstance) {
+			swiperInstance.slideTo(targetMainSlideIndex, 0) // Instant
+			this.handleMainSlideChange(careerUUID)
+		}
+
+		console.log("🎬 Main slide change complete, starting fade-in...")
+
+		// 4. Brief pause, then fade-in
+		await this.sleep(50)
+		this.setIsTransitioning(careerUUID, false)
+
+		console.log("🎬 Main slide transition complete!")
+	})
+
+	private setCurrentTransitionDuration = action((careerUUID: CareerUUID, duration: number): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+		career.currentTransitionDuration = duration
+	})
+
+	public getCurrentTransitionDuration = (careerUUID: CareerUUID): number => {
+		const career = this.getCareer(careerUUID)
+		return career?.currentTransitionDuration || DEFAULT_TRANSITION_DURATION
+	}
+
+	private sleep(ms: number): Promise<void> {
+		return new Promise(resolve => setTimeout(resolve, ms))
+	}
 }
 
 const careerQuestClass = new CareerQuestClass()
