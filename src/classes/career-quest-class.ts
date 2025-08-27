@@ -383,6 +383,7 @@ class CareerQuestClass {
 		for (const section of career.careerDefinition.sections) {
 			if (section.type === "textParent") {
 				for (const child of section.children) {
+					// eslint-disable-next-line max-depth
 					if (child.type === "morphingText" && child.id === morphingTextId) {
 						return child
 					}
@@ -1039,13 +1040,6 @@ class CareerQuestClass {
 		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
-
-		// If going backward and the text child is morphing text, set it to the last variant
-		if (isGoingBackward && textChild.type === "morphingText") {
-			const lastVariantIndex = textChild.morphingVariants.length - 1
-			this.setMorphingIndex(careerUUID, textChild.id, lastVariantIndex)
-		}
-
 		void saveCareerProgress(careerUUID, textChild.id)
 
 		// Update right content for text slide
@@ -1354,6 +1348,7 @@ class CareerQuestClass {
 		if (textChild.type === "morphingText") {
 			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, textChild.id)
 			const currentVariant = textChild.morphingVariants[morphingIndex]
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
