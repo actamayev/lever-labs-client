@@ -17,6 +17,27 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 	const colors = getDuolingoColors(careerData.careerColor)
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
+
+	// Helper function to get transition props
+	const getTransitionProps = () => {
+		if (isTransitioning) {
+			// During transitions, skip animations entirely
+			return {
+				initial: { opacity: 1 },
+				animate: { opacity: 1 },
+				exit: { opacity: 1 },
+				transition: { duration: 0 }
+			}
+		}
+		// Normal animations
+		return {
+			initial: { opacity: 0 },
+			animate: { opacity: 1 },
+			exit: { opacity: 0 },
+			transition: { duration: 0.3 }
+		}
+	}
 
 	if (!isDataReady) {
 		return <div className="h-full w-full flex items-center justify-center" />
@@ -27,10 +48,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${careerData.careerUUID}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 					className="h-full w-full"
 				>
 					<CareerChatInterface careerUUID={careerData.careerUUID} />
@@ -43,10 +61,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${rightContent.icon}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 				>
 					<IconComponent size={120} className={colors.text} />
 				</motion.div>
@@ -57,10 +72,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${Date.now()}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
 					{typeof rightContent.component === "function" ? rightContent.component() : rightContent.component}
@@ -72,10 +84,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 					className="h-full w-full"
 				>
 					<ChallengeSection challengeData={rightContent.challengeData} />
