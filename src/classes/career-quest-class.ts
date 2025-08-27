@@ -1383,13 +1383,34 @@ class CareerQuestClass {
 		this.handleMainSlideChange(careerUUID)
 	})
 
-	public handleGoToPreviousMainSection = action((careerUUID: CareerUUID): void => {
+	public handleGoToPreviousMainSection = action(async (careerUUID: CareerUUID): Promise<void> => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		const canGoPrev = career.currentMainSlideIndex > 0
 		if (!swiperInstance || !canGoPrev) return
 
+		// Check if the target (previous) section has a transition
+		const targetMainSlideIndex = career.currentMainSlideIndex - 1
+		const targetSlide = this.getMainSlides(careerUUID)[targetMainSlideIndex]
+		
+		if (targetSlide.type === "textParent" && targetSlide.data.transition) {
+			console.log("🌟 Backward main slide transition detected!", {
+				sectionId: targetSlide.data.id,
+				transition: targetSlide.data.transition,
+				currentIndex: career.currentMainSlideIndex,
+				targetIndex: targetMainSlideIndex
+			})
+
+			await this.handleMainSlideTransitionNavigation(
+				careerUUID,
+				targetMainSlideIndex,
+				targetSlide.data.transition
+			)
+			return
+		}
+
+		// Normal navigation
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		swiperInstance.slidePrev()
