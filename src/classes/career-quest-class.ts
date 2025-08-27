@@ -506,6 +506,9 @@ class CareerQuestClass {
 		const furthestSeen = this.getFurthestSeenPosition(careerUUID)
 		if (!furthestSeen) return true // If no furthest seen, this is the first position
 
+		// If the current position is the same as the furthest seen, it is the furthest seen
+		if (currentPosition === furthestSeen) return true
+
 		// Get position indices for comparison
 		const currentIndices = this.findPositionIndices(careerUUID, currentPosition)
 		const furthestIndices = this.findPositionIndices(careerUUID, furthestSeen)
@@ -521,7 +524,7 @@ class CareerQuestClass {
 		}
 
 		// If same main slide, compare text child indices
-		return currentIndices.textChildIndex > furthestIndices.textChildIndex
+		return currentIndices.textChildIndex >= furthestIndices.textChildIndex
 	}
 
 	// NEW: Update furthest seen position if current position is further
@@ -530,6 +533,41 @@ class CareerQuestClass {
 			this.setFurthestSeenPosition(careerUUID, currentPosition)
 		}
 	})
+
+	// NEW: Check if a text child requires button interaction
+	public requiresButtonInteraction(careerUUID: CareerUUID, textChildId: string): boolean {
+		// For now, we'll hardcode the specific text child that requires button interaction
+		// In the future, this could be made configurable in the career data
+		return textChildId === "parent-1-6"
+	}
+
+	// NEW: Check if user can advance past a text child that requires button interaction
+	public canAdvancePastTextChild(careerUUID: CareerUUID, textChildId: string): boolean {
+		if (!this.requiresButtonInteraction(careerUUID, textChildId)) {
+			return true // No button interaction required, allow advancement
+		}
+
+		// Check if the user has seen past this text child
+		const furthestSeen = this.getFurthestSeenPosition(careerUUID)
+		if (!furthestSeen) return false // No furthest seen, haven't progressed past this point
+
+		// Get position indices for comparison
+		const currentIndices = this.findPositionIndices(careerUUID, textChildId)
+		const furthestIndices = this.findPositionIndices(careerUUID, furthestSeen)
+
+		if (!currentIndices || !furthestIndices) return false
+
+		// Check if furthest seen is after the current text child
+		if (furthestIndices.mainSlideIndex > currentIndices.mainSlideIndex) {
+			return true
+		}
+		if (furthestIndices.mainSlideIndex < currentIndices.mainSlideIndex) {
+			return false
+		}
+
+		// If same main slide, check if furthest seen text child index is greater
+		return furthestIndices.textChildIndex > currentIndices.textChildIndex
+	}
 
 	private findPositionIndices(careerUUID: CareerUUID, savedPosition: string): { mainSlideIndex: number; textChildIndex: number } | null {
 		const career = this.getCareer(careerUUID)
@@ -1216,11 +1254,13 @@ class CareerQuestClass {
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
-		const canGoNext = currentTextChildIndex < currentSlide.data.children.length - 1
+		// Check if we can advance to the next text child
+		if (!this.canAdvanceToNextTextChild(careerUUID)) return
+
 		const mainSlides = this.getMainSlides(careerUUID)
 		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
-		if (!canGoNext || !textParentSwiperInstance) return
+		if (!textParentSwiperInstance) return
 
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
@@ -1432,6 +1472,69 @@ class CareerQuestClass {
 		this.careers.clear()
 		this.isDoneInitializing = false
 	}
+
+	// NEW: Check if user can advance to next text child
+	public canAdvanceToNextTextChild(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return false
+
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+
+		// Check if we can advance past the current text child
+		if (!this.canAdvancePastTextChild(careerUUID, currentTextChild.id)) {
+			return false
+		}
+
+		// Check if there's a next text child
+		return currentTextChildIndex < currentSlide.data.children.length - 1
+	}
+
+	// NEW: Handle button click to advance to next text child
+	public handleButtonClickAdvance = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return
+
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+
+		// Check if this text child requires button interaction
+		if (!this.requiresButtonInteraction(careerUUID, currentTextChild.id)) {
+			return
+		}
+
+		// Check if there's a next text child
+		if (currentTextChildIndex >= currentSlide.data.children.length - 1) {
+			return
+		}
+
+		// Advance to the next text child
+		const nextTextChildIndex = currentTextChildIndex + 1
+		const nextTextChild = currentSlide.data.children[nextTextChildIndex]
+
+		// Update the furthest seen position to include the next text child
+		this.setFurthestSeenPosition(careerUUID, nextTextChild.id)
+
+		// Save progress with isFurthestSeen: true since we just advanced to a new position
+		void saveCareerProgress(careerUUID, nextTextChild.id, true)
+
+		// Navigate to the next text child
+		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
+		if (textParentSwiperInstance) {
+			this.setLastSlideChangeTime(careerUUID, Date.now())
+			this.setIsTransitioning(careerUUID, true)
+			textParentSwiperInstance.slideTo(nextTextChildIndex, 300) // Smooth transition
+			this.setIsTransitioning(careerUUID, false)
+			this.onTextSlideChange(careerUUID)
+			this.handleTextChildIndexChange(careerUUID, nextTextChildIndex, false)
+		}
+	})
 }
 
 const careerQuestClass = new CareerQuestClass()

@@ -9,6 +9,7 @@ import { ReactNode } from "react"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import { Highlighter } from "../../components/magicui/highlighter"
 import fireConfetti from "../fire-confetti"
+import careerQuestClass from "../../classes/career-quest-class"
 // Lazy import to avoid circular dependency
 // import introductionTrigger from "./career-quest-pip-triggers/introduction-trigger"
 
@@ -144,10 +145,20 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Exploration is better with a friend. Will you join me?
 							<AnimatedStateButton
 								buttonText="YES"
-								onClick={(event) => fireConfetti(
-									event.currentTarget.getBoundingClientRect(),
-									({ particleCount: 300, startVelocity: 30 })
-								)}
+								onClick={(event) => {
+									// Fire confetti for visual feedback
+									fireConfetti(
+										event.currentTarget.getBoundingClientRect(),
+										({ particleCount: 300, startVelocity: 30 })
+									)
+
+									// Import and call the career quest class to advance
+									// Note: This will be handled by the component that renders this content
+									// The component should call careerQuestClass.handleButtonClickAdvance(careerUUID)
+									careerQuestClass.handleButtonClickAdvance(
+										"3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID
+									)
+								}}
 								className="duration-150 rounded-xl text-4xl h-12"
 							/>
 						</div>
