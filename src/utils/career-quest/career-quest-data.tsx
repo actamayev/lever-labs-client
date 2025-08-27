@@ -7,6 +7,7 @@ import { CareerUUID, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENG
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 import { ReactNode } from "react"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
+import { Highlighter } from "../../components/magicui/highlighter"
 // Lazy import to avoid circular dependency
 // import introductionTrigger from "./career-quest-pip-triggers/introduction-trigger"
 
@@ -70,7 +71,9 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "parent-1-2",
 					content: () => (
 						<div>
-							My name is Pip. I don’t know what I was made for, but I’m excited to find out.
+							My name is
+							<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>
+							I don't know what I was made for, but I'm excited to find out.
 						</div>
 					),
 					triggerImage: "Heading2"
