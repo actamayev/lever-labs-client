@@ -16,7 +16,7 @@ import {
 	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
-import { action, makeAutoObservable, observable } from "mobx"
+import { action, makeAutoObservable, observable, toJS } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
@@ -566,7 +566,7 @@ class CareerQuestClass {
 		// For now, we'll check known text child IDs that contain buttons
 		// In the future, this could be made more sophisticated by analyzing the JSX structure
 		const buttonTextChildIds = [
-			"parent-1-6", // The YES button in the introduction
+			"introduction-1-6", // The YES button in the introduction
 			// Add more button text child IDs here as needed
 		]
 
