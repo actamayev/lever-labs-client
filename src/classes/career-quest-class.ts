@@ -535,10 +535,42 @@ class CareerQuestClass {
 	})
 
 	// NEW: Check if a text child requires button interaction
-	public requiresButtonInteraction(careerUUID: CareerUUID, textChildId: string): boolean {
-		// For now, we'll hardcode the specific text child that requires button interaction
-		// In the future, this could be made configurable in the career data
-		return textChildId === "parent-1-6"
+	private requiresButtonInteraction(careerUUID: CareerUUID, textChildId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Find the text child in the career definition
+		for (const section of career.careerDefinition.sections) {
+			if (section.type === "textParent") {
+				for (const child of section.children) {
+					// eslint-disable-next-line max-depth
+					if (child.id === textChildId) {
+						// Check if the content contains an AnimatedStateButton
+						// We'll do this by checking if the content function returns JSX that includes the button
+						// eslint-disable-next-line max-depth
+						if (child.type === "text" && typeof child.content === "function") {
+							// For now, we'll check if the text child ID matches known button IDs
+							// In the future, this could be made more sophisticated by analyzing the JSX
+							return this.hasAnimatedStateButton(child)
+						}
+						return false
+					}
+				}
+			}
+		}
+		return false
+	}
+
+	// NEW: Check if a text child has an AnimatedStateButton
+	private hasAnimatedStateButton(textChild: TextSection): boolean {
+		// For now, we'll check known text child IDs that contain buttons
+		// In the future, this could be made more sophisticated by analyzing the JSX structure
+		const buttonTextChildIds = [
+			"parent-1-6", // The YES button in the introduction
+			// Add more button text child IDs here as needed
+		]
+
+		return buttonTextChildIds.includes(textChild.id)
 	}
 
 	// NEW: Check if user can advance past a text child that requires button interaction
@@ -1078,7 +1110,12 @@ class CareerQuestClass {
 		const currentSlide = mainSlides[slideIndex]
 
 		if (currentSlide.type === "textParent") {
-			return true
+			// For text parent sections, check if we're at the last text child
+			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+			const isAtLastTextChild = currentTextChildIndex >= currentSlide.data.children.length - 1
+
+			// Only allow advancing to next main section if we're at the last text child
+			return isAtLastTextChild
 		}
 		// For challenge slides, must be completed
 		return this.isCodeCorrect(currentSlide.data)
@@ -1093,6 +1130,8 @@ class CareerQuestClass {
 		const newIndex = swiper.activeIndex
 		const previousIndex = career.currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
+
+
 
 		// Update class state instead of component state
 		this.setCurrentMainSlideIndex(careerUUID, newIndex)
@@ -1119,7 +1158,6 @@ class CareerQuestClass {
 
 		// For text sections, determine textChildIndex
 		let textChildIndex: number
-		console.log(`isGoingBackward: ${isGoingBackward}`)
 		if (isGoingBackward) {
 			textChildIndex = currentSlide.data.children.length - 1
 		} else {
@@ -1134,6 +1172,9 @@ class CareerQuestClass {
 
 		// Update right content for text slide
 		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation when main slide changes
+		this.updateSwiperNavigation(careerUUID)
 	})
 
 	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number, isGoingBackward?: boolean): void => {
@@ -1160,6 +1201,9 @@ class CareerQuestClass {
 
 		// Update right content for text child change
 		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation when text child changes
+		this.updateSwiperNavigation(careerUUID)
 	})
 
 	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {

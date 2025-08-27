@@ -178,6 +178,22 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					triggerImage: "Heading6"
 				},
 			]
+		},
+		{
+			type: "textParent",
+			id: "parent-2",
+			children: [
+				{
+					type: "text",
+					id: "parent-2-1",
+					content: () => (
+						<div>
+							Test
+						</div>
+					),
+					triggerImage: "Heading2"
+				},
+			]
 		}
 	]
 }
