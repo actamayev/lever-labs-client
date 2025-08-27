@@ -16,7 +16,7 @@ import {
 	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
-import { action, makeAutoObservable, observable, toJS } from "mobx"
+import { action, makeAutoObservable, observable } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
@@ -1286,7 +1286,7 @@ class CareerQuestClass {
 		// Get the current text child and call its trigger function if it exists
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
-		if (currentTextChild?.triggerFunction) {
+		if (currentTextChild.triggerFunction) {
 			// Call trigger function asynchronously without blocking the UI
 			currentTextChild.triggerFunction().catch((error) => {
 				console.error("Error executing trigger function:", error)
