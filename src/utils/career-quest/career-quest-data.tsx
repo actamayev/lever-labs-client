@@ -151,10 +151,12 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 										({ particleCount: 300, startVelocity: 30 })
 									)
 
-									// Call the advance callback if provided
-									if (onAdvance) {
-										onAdvance()
-									}
+									// Wait 1 second before advancing to the next section
+									setTimeout(() => {
+										if (onAdvance) {
+											onAdvance()
+										}
+									}, 500)
 								}}
 								className="duration-150 rounded-xl text-4xl h-12"
 							/>
@@ -185,7 +187,13 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-2-1",
 					content: () => (
 						<div>
-							Test
+							I have 8
+							<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+								LED lights
+							</Highlighter>
+							, each able to glow any color.
+							<br />
+							I can control them one at a time or all at once.
 						</div>
 					),
 					triggerImage: "Heading2"
@@ -195,11 +203,23 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-2-2",
 					content: () => (
 						<div>
-							Test
+							Robots often use lights to show charging, waiting, or warnings.
+							<br />
+							I can do that too, but I can also use my lights to connect with you in ways beyond words.
 						</div>
 					),
 					triggerImage: "Heading3"
 				},
+				{
+					type: "text",
+					id: "introduction-2-3",
+					content: () => (
+						<div>
+							Go ahead, pick a color, and I’ll show you I’m listening.
+						</div>
+					),
+					triggerImage: "Heading4"
+				}
 			]
 		},
 		{

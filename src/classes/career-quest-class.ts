@@ -1282,6 +1282,17 @@ class CareerQuestClass {
 		if (!career) return
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
+		
+		// Get the current text child and call its trigger function if it exists
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+		if (currentTextChild?.triggerFunction) {
+			// Call trigger function asynchronously without blocking the UI
+			currentTextChild.triggerFunction().catch((error) => {
+				console.error("Error executing trigger function:", error)
+			})
+		}
+		
 		// Centralize right content update logic
 		this.updateRightContentForCurrentState(careerUUID)
 	})
