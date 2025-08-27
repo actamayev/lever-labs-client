@@ -13,6 +13,7 @@ function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
+	// eslint-disable-next-line complexity
 	function GetTimeText() {
 		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
