@@ -1393,7 +1393,7 @@ class CareerQuestClass {
 		// Check if the target (previous) section has a transition
 		const targetMainSlideIndex = career.currentMainSlideIndex - 1
 		const targetSlide = this.getMainSlides(careerUUID)[targetMainSlideIndex]
-		
+
 		if (targetSlide.type === "textParent" && targetSlide.data.transition) {
 			console.log("🌟 Backward main slide transition detected!", {
 				sectionId: targetSlide.data.id,
