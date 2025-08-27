@@ -1030,6 +1030,7 @@ class CareerQuestClass {
 
 		// For text sections, determine textChildIndex
 		let textChildIndex: number
+		console.log(`isGoingBackward: ${isGoingBackward}`)
 		if (isGoingBackward) {
 			textChildIndex = currentSlide.data.children.length - 1
 		} else {
@@ -1038,13 +1039,20 @@ class CareerQuestClass {
 		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
+
+		// If going backward and the text child is morphing text, set it to the last variant
+		if (isGoingBackward && textChild.type === "morphingText") {
+			const lastVariantIndex = textChild.morphingVariants.length - 1
+			this.setMorphingIndex(careerUUID, textChild.id, lastVariantIndex)
+		}
+
 		void saveCareerProgress(careerUUID, textChild.id)
 
 		// Update right content for text slide
 		this.updateRightContentForCurrentState(careerUUID)
 	})
 
-	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number): void => {
+	private handleTextChildIndexChange = action((careerUUID: CareerUUID, newIndex: number, isGoingBackward?: boolean): void => {
 		const career = this.getCareer(careerUUID)
 		const swiper = this.getSwiperInstance(careerUUID)
 		if (!career || !swiper) return
@@ -1055,6 +1063,13 @@ class CareerQuestClass {
 		this.setCurrentTextChildIndex(careerUUID, newIndex)
 
 		const textChild = currentSlide.data.children[newIndex]
+
+		// If going backward and the text child is morphing text, set it to the last variant
+		if (isGoingBackward && textChild.type === "morphingText") {
+			const lastVariantIndex = textChild.morphingVariants.length - 1
+			this.setMorphingIndex(careerUUID, textChild.id, lastVariantIndex)
+		}
+
 		void saveCareerProgress(careerUUID, textChild.id)
 
 		// Update right content for text child change
@@ -1165,7 +1180,7 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
 		this.onTextSlideChange(careerUUID)
-		this.handleTextChildIndexChange(careerUUID, newIndex)
+		this.handleTextChildIndexChange(careerUUID, newIndex, false)
 	})
 
 	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
@@ -1185,7 +1200,7 @@ class CareerQuestClass {
 		this.setIsTransitioning(careerUUID, false)
 		const newIndex = textParentSwiperInstance.activeIndex
 		this.onTextSlideChange(careerUUID)
-		this.handleTextChildIndexChange(careerUUID, newIndex)
+		this.handleTextChildIndexChange(careerUUID, newIndex, true)
 	})
 
 	public handleGoToNextMainSection = action((careerUUID: CareerUUID): void => {

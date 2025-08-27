@@ -63,10 +63,11 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		return !isEmpty(careerMessages)
 	}, [careerUUID])
 
+	// eslint-disable-next-line max-lines-per-function
 	useEffect(() => {
 		if (!swiperInstance || isTransitioning) return
 
-		// eslint-disable-next-line complexity
+		// eslint-disable-next-line complexity, max-lines-per-function
 		const handleWheel = (e: WheelEvent): void => {
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {
@@ -102,6 +103,38 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 						careerQuestClass.handleGoToNextMainSection(careerUUID)
 						hasNavigatedInGesture.current = true
 					} else {
+						// Block all navigation if any morphing text is animating
+						if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
+							return
+						}
+
+						// Check if current child is morphing text
+						const currentChild = currentSlide.data.children[currentTextChildIndex]
+						if (currentChild.type === "morphingText") {
+							// Try to advance morphing variant first
+							const canAdvance = careerQuestClass.canAdvanceMorphingText(careerUUID, currentChild.id)
+							if (canAdvance) {
+								careerQuestClass.advanceMorphingText(careerUUID, currentChild.id)
+								hasNavigatedInGesture.current = true
+								return
+							}
+							// If we can't advance in morphing text, allow normal text navigation
+							const totalTextChildren = currentSlide.data.children.length
+							const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
+							const hasOnlyOneChild = totalTextChildren === 1
+
+							if (hasOnlyOneChild || isAtLastTextChild) {
+								// Move to next main slide if possible
+								careerQuestClass.handleGoToNextMainSection(careerUUID)
+								hasNavigatedInGesture.current = true
+							} else {
+								// Move to next text child
+								careerQuestClass.handleGoToNextTextChild(careerUUID)
+								hasNavigatedInGesture.current = true
+							}
+							return
+						}
+
 						const totalTextChildren = currentSlide.data.children.length
 						const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
 						const hasOnlyOneChild = totalTextChildren === 1
@@ -123,15 +156,42 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 						careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 						hasNavigatedInGesture.current = true
 					} else {
-						const isAtFirstTextChild = currentTextChildIndex === 0
+						// Block all navigation if any morphing text is animating
+						if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
+							return
+						}
 
-						if (isAtFirstTextChild) {
-							// Move to previous main slide if possible
+						// Check if current child is morphing text
+						const currentChild = currentSlide.data.children[currentTextChildIndex]
+						if (currentChild.type === "morphingText") {
+							// Try to move to previous morphing variant
+							const canGoBack = careerQuestClass.canGoBackMorphingText(careerUUID, currentChild.id)
+							if (canGoBack) {
+								careerQuestClass.goBackMorphingText(careerUUID, currentChild.id)
+								hasNavigatedInGesture.current = true
+								return
+							}
+							// If we can't go back in morphing text and we're not at first text child,
+							// allow navigation to previous text child
+							const isAtFirstTextChild = currentTextChildIndex === 0
+							if (!isAtFirstTextChild) {
+								careerQuestClass.handleGoToPreviousTextChild(careerUUID)
+								hasNavigatedInGesture.current = true
+								return
+							}
+							// If we're at first text child, allow navigation to previous main section
 							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 							hasNavigatedInGesture.current = true
-						} else {
+							return
+						}
+
+						const isAtFirstTextChild = currentTextChildIndex === 0
+						if (!isAtFirstTextChild) {
 							// Move to previous text child
 							careerQuestClass.handleGoToPreviousTextChild(careerUUID)
+							hasNavigatedInGesture.current = true
+						} else {
+							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
 							hasNavigatedInGesture.current = true
 						}
 					}
