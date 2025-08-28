@@ -16,7 +16,7 @@ import {
 	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
-import { action, makeAutoObservable, observable } from "mobx"
+import { action, makeAutoObservable, observable, toJS } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
@@ -1357,6 +1357,11 @@ class CareerQuestClass {
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		if (!canAdvance) return
 
+		// IMPORTANT: Ensure navigation is allowed before attempting to navigate
+		const canGoPrev = career.currentMainSlideIndex > 0
+		swiperInstance.allowSlidePrev = canGoPrev
+		swiperInstance.allowSlideNext = canAdvance
+
 		// Get current section and check for transition
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type === "textParent" && currentSlide.data.transition) {
@@ -1382,6 +1387,10 @@ class CareerQuestClass {
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		const canGoPrev = career.currentMainSlideIndex > 0
 		if (!swiperInstance || !canGoPrev) return
+
+		// IMPORTANT: Ensure navigation is allowed before attempting to navigate
+		swiperInstance.allowSlidePrev = canGoPrev
+		swiperInstance.allowSlideNext = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 
 		// Check if the target (previous) section has a transition
 		const targetMainSlideIndex = career.currentMainSlideIndex - 1
@@ -1412,6 +1421,11 @@ class CareerQuestClass {
 			return slide.data.challengeUUID === challengeUUID
 		})
 		if (index === -1 || index === career.currentMainSlideIndex) return
+
+		// IMPORTANT: Enable navigation in both directions before attempting to navigate
+		career.swiperInstance.allowSlideNext = true
+		career.swiperInstance.allowSlidePrev = true
+
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
 		career.swiperInstance.slideTo(index)
