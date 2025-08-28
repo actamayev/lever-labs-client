@@ -802,7 +802,7 @@ class CareerQuestClass {
 		if (child.type === "morphingText") {
 			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, child.id)
 			const currentVariant = child.morphingVariants[morphingIndex]
-			whatUserSees = `${child.staticText} ${currentVariant?.text || ""}`
+			whatUserSees = `${child.staticText} ${currentVariant.text}`
 		} else {
 			const content = child.content
 			whatUserSees = typeof content === "function" ? content() : content
