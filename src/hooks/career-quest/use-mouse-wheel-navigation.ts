@@ -4,6 +4,7 @@ import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
+import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
@@ -84,8 +85,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			if (Math.abs(e.deltaY) < MIN_DELTA_THRESHOLD) return
 
 			// Respect cooldown and transitioning state
-			const now = Date.now()
-			if (now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN) return
+			if (shouldBlockNavigation(careerUUID)) return
 
 			// If this is the start of a new gesture
 			if (!gestureActive.current) {
@@ -95,106 +95,20 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 
 			// Only navigate if we haven't already navigated in this gesture
 			if (!hasNavigatedInGesture.current) {
-				const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
+				const navigationContext = {
+					careerUUID,
+					currentMainSlideIndex,
+					currentTextChildIndex
+				}
+
 				if (e.deltaY > 0) {
 					// Scroll down - same logic as ArrowDown
-					if (currentSlide.type === "challenge") {
-						// Challenge slide - try to move to next main slide
-						careerQuestClass.handleGoToNextMainSection(careerUUID)
-						hasNavigatedInGesture.current = true
-					} else {
-						// Block all navigation if any morphing text is animating
-						if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
-							return
-						}
-
-						// Check if current child is morphing text
-						const currentChild = currentSlide.data.children[currentTextChildIndex]
-						if (currentChild.type === "morphingText") {
-							// Try to advance morphing variant first
-							const canAdvance = careerQuestClass.canAdvanceMorphingText(careerUUID, currentChild.id)
-							if (canAdvance) {
-								careerQuestClass.advanceMorphingText(careerUUID, currentChild.id)
-								hasNavigatedInGesture.current = true
-								return
-							}
-							// If we can't advance in morphing text, allow normal text navigation
-							const totalTextChildren = currentSlide.data.children.length
-							const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
-							const hasOnlyOneChild = totalTextChildren === 1
-
-							if (hasOnlyOneChild || isAtLastTextChild) {
-								// Move to next main slide if possible
-								careerQuestClass.handleGoToNextMainSection(careerUUID)
-								hasNavigatedInGesture.current = true
-							} else {
-								// Move to next text child
-								careerQuestClass.handleGoToNextTextChild(careerUUID)
-								hasNavigatedInGesture.current = true
-							}
-							return
-						}
-
-						const totalTextChildren = currentSlide.data.children.length
-						const isAtLastTextChild = currentTextChildIndex === totalTextChildren - 1
-						const hasOnlyOneChild = totalTextChildren === 1
-
-						if (hasOnlyOneChild || isAtLastTextChild) {
-							// Move to next main slide if possible
-							careerQuestClass.handleGoToNextMainSection(careerUUID)
-							hasNavigatedInGesture.current = true
-						} else {
-							// Move to next text child
-							careerQuestClass.handleGoToNextTextChild(careerUUID)
-							hasNavigatedInGesture.current = true
-						}
-					}
+					handleForwardNavigation(navigationContext)
+					hasNavigatedInGesture.current = true
 				} else if (e.deltaY < 0) {
 					// Scroll up - same logic as ArrowUp
-					if (currentSlide.type === "challenge") {
-						// Challenge slide - always go to previous main slide
-						careerQuestClass.handleGoToPreviousMainSection(careerUUID)
-						hasNavigatedInGesture.current = true
-					} else {
-						// Block all navigation if any morphing text is animating
-						if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
-							return
-						}
-
-						// Check if current child is morphing text
-						const currentChild = currentSlide.data.children[currentTextChildIndex]
-						if (currentChild.type === "morphingText") {
-							// Try to move to previous morphing variant
-							const canGoBack = careerQuestClass.canGoBackMorphingText(careerUUID, currentChild.id)
-							if (canGoBack) {
-								careerQuestClass.goBackMorphingText(careerUUID, currentChild.id)
-								hasNavigatedInGesture.current = true
-								return
-							}
-							// If we can't go back in morphing text and we're not at first text child,
-							// allow navigation to previous text child
-							const isAtFirstTextChild = currentTextChildIndex === 0
-							if (!isAtFirstTextChild) {
-								careerQuestClass.handleGoToPreviousTextChild(careerUUID)
-								hasNavigatedInGesture.current = true
-								return
-							}
-							// If we're at first text child, allow navigation to previous main section
-							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
-							hasNavigatedInGesture.current = true
-							return
-						}
-
-						const isAtFirstTextChild = currentTextChildIndex === 0
-						if (!isAtFirstTextChild) {
-							// Move to previous text child
-							careerQuestClass.handleGoToPreviousTextChild(careerUUID)
-							hasNavigatedInGesture.current = true
-						} else {
-							careerQuestClass.handleGoToPreviousMainSection(careerUUID)
-							hasNavigatedInGesture.current = true
-						}
-					}
+					handleBackwardNavigation(navigationContext)
+					hasNavigatedInGesture.current = true
 				}
 			}
 
