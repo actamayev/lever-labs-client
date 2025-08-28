@@ -1039,7 +1039,7 @@ class CareerQuestClass {
 			challenge.blocklyJson = normalizeSandboxJson(sandboxJson)
 			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
 		} else {
-			challenge.blocklyJson = normalizeSandboxJson({})
+			challenge.blocklyJson = normalizeSandboxJson(challenge.challengeData.initialBlocklyJson)
 			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
 		}
 
@@ -1052,7 +1052,8 @@ class CareerQuestClass {
 	// Blockly JSON management
 	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson {
 		const challenge = this.getChallenge(cqInformation)
-		return challenge?.blocklyJson || challenge?.challengeData.initialBlocklyJson || {}
+		if (!challenge) return {}
+		return challenge.blocklyJson
 	}
 
 	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
