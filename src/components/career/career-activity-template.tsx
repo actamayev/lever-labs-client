@@ -20,22 +20,16 @@ function CareerActivityTemplate(props: Props) {
 		<div className="flex flex-col h-screen min-h-0">
 			<CareerQuestActivityHeader careerData={careerData} />
 
-			<div className="flex-1 min-h-0 pt-20 bg-black">
+			<div className="relative flex-1 min-h-0 pt-20 overflow-hidden">
+				<Particles
+					className="absolute inset-0"
+					quantity={100}
+					ease={80}
+					color={isDarkMode ? "#ffffff" : "#000000"}
+					refresh
+				/>
 				<CareerLayout careerData={careerData} />
 			</div>
-
-			{/* // <div className="relative flex-1 min-h-0 pt-20 overflow-hidden">
-			// 	<Particles
-			// 		className="absolute inset-0 z-0"
-			// 		quantity={100}
-			// 		ease={80}
-			// 		color={isDarkMode ? "#ffffff" : "#000000"}
-			// 		refresh
-			// 	/>
-			// 	<div className="relative z-10">
-			// 		<CareerLayout careerData={careerData} />
-			// 	</div>
-			// </div> */}
 		</div>
 	)
 }

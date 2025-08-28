@@ -195,9 +195,9 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						<div>
 							I have 8
 							<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-								LED lights
+								LED lights,
 							</Highlighter>
-							, each able to glow any color.
+							{" "}each able to glow any color.
 							<br />
 							I can control them one at a time or all at once.
 						</div>
