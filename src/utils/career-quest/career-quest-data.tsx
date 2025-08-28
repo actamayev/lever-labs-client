@@ -283,7 +283,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-1-1",
 					content: () => (
 						<div>
-							Test
+							Test 1
 						</div>
 					),
 					triggerImage: "Heading1"
@@ -293,7 +293,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-1-2",
 					content: () => (
 						<div>
-							Test
+							Test 2
 						</div>
 					),
 					triggerImage: "Heading2"
@@ -303,7 +303,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-1-3",
 					content: () => (
 						<div>
-							Test
+							Test 3
 						</div>
 					),
 					triggerImage: "Heading3"
@@ -313,7 +313,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-1-4",
 					content: () => (
 						<div>
-							Test
+							Test 4
 						</div>
 					),
 					triggerImage: "Heading4"
@@ -323,7 +323,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-1-5",
 					content: () => (
 						<div>
-							Test
+							Test 5
 						</div>
 					),
 					triggerImage: "Heading5"
@@ -344,7 +344,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-2-1",
 					content: () => (
 						<div>
-							Test
+							Test 6
 						</div>
 					),
 					triggerImage: "Lightbulb"
@@ -354,7 +354,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-2-2",
 					content: () => (
 						<div>
-							Test
+							Test 7
 						</div>
 					),
 					triggerImage: "Cog"
@@ -375,7 +375,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-3-1",
 					content: () => (
 						<div>
-							Test
+							Test 8
 						</div>
 					),
 					triggerImage: "ArrowRight"
@@ -396,7 +396,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-4-1",
 					content: () => (
 						<div>
-							Test
+							Test 9
 						</div>
 					),
 					triggerImage: "ScanLine"
@@ -417,7 +417,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-5-1",
 					content: () => (
 						<div>
-							Test
+							Test 10
 						</div>
 					),
 					triggerImage: "Puzzle"
@@ -438,7 +438,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					id: "obstacle-avoidance-6-1",
 					content: () => (
 						<div>
-							Test
+							Test 11
 						</div>
 					),
 					triggerImage: "Trophy"
