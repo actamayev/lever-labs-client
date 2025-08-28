@@ -19,7 +19,6 @@ class SerialConnectionManagerClass {
 	public detectedDevices: DetectedDevice[] = []
 	public isScanning: boolean = false
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
-	public hasUserActivity = false
 
 	// Web Worker for background keepalives
 	private keepaliveWorker: Worker | null = null
@@ -477,20 +476,6 @@ class SerialConnectionManagerClass {
 		})
 
 		console.info("Connection cleanup complete")
-	}
-
-	public markUserActivity = (): void => {
-		runInAction(() => {
-			this.hasUserActivity = true
-		})
-	}
-
-	public checkAndResetUserActivity = (): boolean => {
-		const hadActivity = this.hasUserActivity
-		runInAction(() => {
-			this.hasUserActivity = false
-		})
-		return hadActivity
 	}
 
 	public async logout(): Promise<void> {

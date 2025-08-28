@@ -58,9 +58,9 @@ export const soundMappings: SoundMapping = {
 export const WORKBENCH_ROUNDING_RADIUS = "48px"
 export const CAREER_QUEST_CARD_ROUNDING_RADIUS = "48px"
 
-export const SENSOR_POLLING_INTERVAL = 30000 // 30 seconds
-
 export const PIP_ROBOT_USB_ID = {
 	usbVendorId: 0x303a,
 	usbProductId: 0x1001  // ESP32-S3 DevKit
 }
+
+export const DEFAULT_TRANSITION_DURATION = 1500

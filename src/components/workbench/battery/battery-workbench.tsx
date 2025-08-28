@@ -13,6 +13,7 @@ function BatteryWorkbench() {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
+	// eslint-disable-next-line complexity
 	function GetTimeText() {
 		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
@@ -26,6 +27,7 @@ function BatteryWorkbench() {
 					Estimated time to full charge:{" "}
 					<span className="font-semibold">
 						{hours > 0 ? `${hours} hour${hours > 1 ? "s" : ""}` : ""}
+						{hours > 0 && minutes > 0 ? " " : ""}
 						{minutes > 0 ? `${minutes} minute${minutes > 1 ? "s" : ""}` : ""}
 					</span>
 				</>
