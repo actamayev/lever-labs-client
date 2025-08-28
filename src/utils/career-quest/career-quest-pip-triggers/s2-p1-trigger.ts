@@ -7,7 +7,7 @@ import serialConnectionManagerClass from "../../../classes/serial-connection-man
 import pipClass from "../../../classes/pip-class"
 import toastClass from "../../../classes/toast-class"
 
-export default async function introductionTrigger() : Promise<void> {
+export default async function s1P1Trigger() : Promise<void> {
 	try {
 		if (serialConnectionManagerClass.pipTurnedOn) {
 			const introS1P7Message = MessageBuilder.createIntroS1P7Message()
