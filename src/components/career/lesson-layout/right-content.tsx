@@ -1,7 +1,7 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5 } from "lucide-react"
+	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import ChallengeSection from "./challenge-section"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -9,13 +9,35 @@ import CareerChatInterface from "../chat/career-chat-interface"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5
+	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight,
+	ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart
 }
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
 	const colors = getDuolingoColors(careerData.careerColor)
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
+
+	// Helper function to get transition props
+	const getTransitionProps = () => {
+		if (isTransitioning) {
+			// During transitions, skip animations entirely
+			return {
+				initial: { opacity: 1 },
+				animate: { opacity: 1 },
+				exit: { opacity: 1 },
+				transition: { duration: 0 }
+			}
+		}
+		// Normal animations
+		return {
+			initial: { opacity: 0 },
+			animate: { opacity: 1 },
+			exit: { opacity: 0 },
+			transition: { duration: 0.3 }
+		}
+	}
 
 	if (!isDataReady) {
 		return <div className="h-full w-full flex items-center justify-center" />
@@ -26,10 +48,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${careerData.careerUUID}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 					className="h-full w-full"
 				>
 					<CareerChatInterface careerUUID={careerData.careerUUID} />
@@ -42,31 +61,41 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${rightContent.icon}`}
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-					transition={{ duration: 0.3 }}
+					{...getTransitionProps()}
 				>
 					<IconComponent size={120} className={colors.text} />
 				</motion.div>
 			</AnimatePresence>
 		)
+	} else if (rightContent.type === "component") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${Date.now()}`}
+					{...getTransitionProps()}
+					className="h-full w-full flex items-center justify-center"
+				>
+					{typeof rightContent.component === "function" ? rightContent.component() : rightContent.component}
+				</motion.div>
+			</AnimatePresence>
+		)
+	} else if (rightContent.type === "challenge") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
+					{...getTransitionProps()}
+					className="h-full w-full"
+				>
+					<ChallengeSection challengeData={rightContent.challengeData} />
+				</motion.div>
+			</AnimatePresence>
+		)
 	}
 
-	return (
-		<AnimatePresence mode="wait">
-			<motion.div
-				key={`${rightContent.type}-${rightContent.challengeData.challengeUUID}`}
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				exit={{ opacity: 0 }}
-				transition={{ duration: 0.3 }}
-				className="h-full w-full"
-			>
-				<ChallengeSection challengeData={rightContent.challengeData} />
-			</motion.div>
-		</AnimatePresence>
-	)
+	// This should never happen since "null" type is handled in setRightContent
+	// But we need this for TypeScript completeness
+	return <div className="h-full w-full flex items-center justify-center" />
 }
 
 export default observer(RightContent)

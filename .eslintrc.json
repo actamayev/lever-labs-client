@@ -160,7 +160,7 @@
             }
         },
         {
-            "files": ["src/components/shadcn/ui/**/*", "src/lib/**/*", "src/hooks/shadcn/**/*"],
+            "files": ["src/components/shadcn/ui/**/*", "src/lib/**/*", "src/hooks/shadcn/**/*", "src/components/magicui/**/*"],
             "rules": {
                 "indent": "off",
                 "linebreak-style": "off",

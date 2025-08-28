@@ -14,6 +14,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 	const cppCode = useMemo(() => {
 		return sandboxClass.getCppCode(projectUUID)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.cppCode])
 
 	// Create debounced save function - 500ms delay

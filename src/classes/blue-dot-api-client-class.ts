@@ -11,12 +11,16 @@ import StudentDataService from "../services/student-data-service"
 import TeacherDataService from "../services/teacher-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
-import CareerQuestDataService from "../services/career-quest-data-service"
+import CareerQuestDataService from "../services/career-quest/career-quest-data-service"
+import CareerQuestTriggersDataService from "../services/career-quest/career-quest-triggers-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
 	public careerQuestDataService: CareerQuestDataService = new CareerQuestDataService(this.httpClient, "/career-quest")
+	public careerQuestTriggersDataService: CareerQuestTriggersDataService = new CareerQuestTriggersDataService(
+		this.httpClient, "/career-quest/triggers"
+	)
 	public chatDataService: ChatDataService = new ChatDataService(this.httpClient, "/chat")
 	public miscDataService: MiscDataService = new MiscDataService(this.httpClient, "/misc")
 	public garageDataService: GarageDataService = new GarageDataService(this.httpClient, "/garage")

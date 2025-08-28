@@ -4,6 +4,7 @@ import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../../classes/career-quest-class"
+import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 
 interface TextParentCardProps {
 	slide: TextParentMainSlide
@@ -55,9 +56,22 @@ function TextParentCard(props: TextParentCardProps) {
 					<SwiperSlide key={child.id} className="h-full">
 						<div className="h-full flex items-center justify-center px-[75px]">
 							<div className="prose prose-lg max-w-none text-4xl">
-								<div className="leading-relaxed text-questionText text-center cursor-text">
-									{typeof child.content === "function" ? child.content() : child.content}
-								</div>
+								{child.type === "morphingText" ? (
+									<NavigationMorphingText
+										staticText={child.staticText}
+										morphingTexts={child.morphingVariants.map(variant => variant.text)}
+										currentIndex={careerQuestClass.getCurrentMorphingIndex(careerUUID, child.id)}
+										onAnimationStateChange={(isAnimating) =>
+											careerQuestClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
+										}
+									/>
+								) : (
+									<div className="leading-relaxed text-questionText text-center cursor-text">
+										{typeof child.content === "function" ? child.content(() => {
+											careerQuestClass.handleButtonClickAdvance(careerUUID)
+										}) : child.content}
+									</div>
+								)}
 							</div>
 						</div>
 					</SwiperSlide>

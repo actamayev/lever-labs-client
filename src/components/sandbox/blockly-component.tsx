@@ -11,7 +11,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
-import useSensorPollingUseEffect from "../../utils/sandbox/sensor-polling-use-effect"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 interface Props {
@@ -36,7 +35,6 @@ function BlocklyComponent(props: Props) {
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
-	useSensorPollingUseEffect()
 	const [isCentering, setIsCentering] = useState(false)
 	const workspaceConfiguration = useMemo(() => {
 		return getWorkspaceConfig(isDarkMode, false)
