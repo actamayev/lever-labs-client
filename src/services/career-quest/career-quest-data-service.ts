@@ -30,8 +30,8 @@ export default class CareerQuestDataService extends BaseDataService {
 		isFurthestSeen: boolean
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl("/update-career-quest-user-progress"),
-			{ currentId, careerUUID, isFurthestSeen }
+			this.buildUrl(`/update-career-quest-user-progress/${careerUUID}`),
+			{ currentId, isFurthestSeen }
 		)
 	}
 

@@ -1360,13 +1360,6 @@ class CareerQuestClass {
 		// Get current section and check for transition
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type === "textParent" && currentSlide.data.transition) {
-			console.log("🌟 Main slide transition detected!", {
-				sectionId: currentSlide.data.id,
-				transition: currentSlide.data.transition,
-				currentIndex: career.currentMainSlideIndex,
-				targetIndex: career.currentMainSlideIndex + 1
-			})
-
 			await this.handleMainSlideTransitionNavigation(
 				careerUUID,
 				career.currentMainSlideIndex + 1,
@@ -1395,13 +1388,6 @@ class CareerQuestClass {
 		const targetSlide = this.getMainSlides(careerUUID)[targetMainSlideIndex]
 
 		if (targetSlide.type === "textParent" && targetSlide.data.transition) {
-			console.log("🌟 Backward main slide transition detected!", {
-				sectionId: targetSlide.data.id,
-				transition: targetSlide.data.transition,
-				currentIndex: career.currentMainSlideIndex,
-				targetIndex: targetMainSlideIndex
-			})
-
 			await this.handleMainSlideTransitionNavigation(
 				careerUUID,
 				targetMainSlideIndex,
@@ -1639,23 +1625,13 @@ class CareerQuestClass {
 		targetMainSlideIndex: number,
 		transition: TextTransition
 	): Promise<void> => {
-		console.log("🎬 Starting main slide transition navigation", {
-			careerUUID,
-			targetMainSlideIndex,
-			transition
-		})
-
 		// 1. Set transitioning state (shows black overlay) and store duration
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setCurrentTransitionDuration(careerUUID, transition.duration)
 		this.setIsTransitioning(careerUUID, true)
 
-		console.log("🎬 Transition state set to true, starting fade-out...")
-
 		// 2. Wait for fade-out
 		await this.sleep(transition.duration / 2)
-
-		console.log("🎬 Fade-out complete, performing main slide change...")
 
 		// 3. Perform instant slide change
 		const swiperInstance = this.getSwiperInstance(careerUUID)
@@ -1664,13 +1640,9 @@ class CareerQuestClass {
 			this.handleMainSlideChange(careerUUID)
 		}
 
-		console.log("🎬 Main slide change complete, starting fade-in...")
-
 		// 4. Brief pause, then fade-in
 		await this.sleep(50)
 		this.setIsTransitioning(careerUUID, false)
-
-		console.log("🎬 Main slide transition complete!")
 	})
 
 	private setCurrentTransitionDuration = action((careerUUID: CareerUUID, duration: number): void => {

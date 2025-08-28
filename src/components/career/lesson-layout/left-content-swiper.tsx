@@ -47,7 +47,6 @@ function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }) {
 			allowTouchMove={false}
 			initialSlide={careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)}
 			onSwiper={(swiper) => {
-				console.log("swiper", swiper)
 				careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 			}}
 			className="h-full"
