@@ -90,7 +90,8 @@ declare global {
 		id: string
 		content: ((onAdvance?: () => void) => ReactNode)
 		triggerImage: string // Lucide icon name
-		triggerFunction?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}
 
 	// New morphing text section type
@@ -99,7 +100,8 @@ declare global {
 		id: string
 		staticText: string // Text that stays at the top
 		morphingVariants: MorphingVariant[] // Array of morphing text options
-		triggerFunction?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}
 
 	interface ChallengeSection {

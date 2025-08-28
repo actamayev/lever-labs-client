@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios"
-import { BlocklyJson, CareerProgressData, CareerUUID, ChallengeUUID, ErrorResponses, SuccessResponse } from "@bluedotrobots/common-ts"
+import { BlocklyJson, CareerProgressData, CareerUUID, ChallengeUUID,
+	ErrorResponses, SuccessResponse, PipUUID, CareerType, ValidTriggerMessageType } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "../base-data-service"
 import BlueDotHttpClient from "../../classes/blue-dot-http-client"
 
@@ -38,6 +39,17 @@ export default class CareerQuestDataService extends BaseDataService {
 	async markChallengeAsSeen(challengeUUID: ChallengeUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
 			this.buildUrl(`/mark-challenge-as-seen/${challengeUUID}`)
+		)
+	}
+
+	async careerTrigger<T extends CareerType>(
+		careerType: T,
+		triggerMessageType: ValidTriggerMessageType<T>,
+		pipUUID: PipUUID
+	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			this.buildUrl(`career-trigger/${pipUUID}`),
+			{ careerType, triggerMessageType }
 		)
 	}
 }
