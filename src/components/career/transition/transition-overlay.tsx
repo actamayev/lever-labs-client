@@ -2,14 +2,12 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { observer } from "mobx-react"
-import { DEFAULT_TRANSITION_DURATION } from "../../../utils/constants/constants"
+import careerQuestClass from "../../../classes/career-quest-class"
 
-interface TransitionOverlayProps {
-	isTransitioning: boolean
-	duration?: number
-}
+function TransitionOverlay({ careerData }: { careerData: CareerQuestData }) {
+	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
+	const duration = careerQuestClass.getCurrentTransitionDuration(careerData.careerUUID)
 
-function TransitionOverlay({ isTransitioning, duration = DEFAULT_TRANSITION_DURATION }: TransitionOverlayProps) {
 	return (
 		<AnimatePresence>
 			{isTransitioning && (
