@@ -458,6 +458,8 @@ class CareerQuestClass {
 		const currentSlide = this.getMainSlides(careerUUID)[positionIndices.mainSlideIndex]
 		if (currentSlide.type === "textParent") {
 			career.textChildIndices.set(currentSlide.id, positionIndices.textChildIndex)
+			// Sync the text parent swiper to the restored position
+			this.syncTextParentSwiper(careerUUID, currentSlide.id, positionIndices.textChildIndex)
 		}
 		return true
 	})
@@ -1191,11 +1193,10 @@ class CareerQuestClass {
 			this.updateFurthestSeenIfNeeded(careerUUID, currentSlide.data.challengeUUID)
 
 			// For challenge slides, reset all text parent indices to 0
-			if (career) {
-				career.textChildIndices.forEach((_, textParentId) => {
-					career.textChildIndices.set(textParentId, 0)
-				})
-			}
+			career.textChildIndices.forEach((_, textParentId) => {
+				career.textChildIndices.set(textParentId, 0)
+			})
+
 			// Update right content for challenge slide
 			this.updateRightContentForCurrentState(careerUUID)
 			return
