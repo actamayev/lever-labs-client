@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 "use client"
 
 import { ReactNode } from "react"
@@ -278,7 +279,10 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				ToF,
 			</Highlighter>
-			{" "}or Time-of-Flight sensors.
+			{" "}or
+			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+				Time-of-Flight sensors.
+			</Highlighter>
 		</div>
 	),
 	"introduction-6-2": () => (
