@@ -89,7 +89,7 @@ declare global {
 		type: "text"
 		id: string
 		content: ((onAdvance?: () => void) => ReactNode)
-		triggerImage: string // Trigger component key
+		triggerContent: string // Trigger component key
 		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
 		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}

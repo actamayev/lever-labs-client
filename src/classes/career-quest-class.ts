@@ -190,7 +190,7 @@ class CareerQuestClass {
 				icon:
 					(careerDefinition.sections[0].type === "textParent" &&
 						careerDefinition.sections[0].children[0].type !== "morphingText" &&
-						careerDefinition.sections[0].children[0].triggerImage) ||
+						careerDefinition.sections[0].children[0].triggerContent) ||
 					"null"
 			},
 			textParentSwipers: new Map<string, SwiperType | null>(),
@@ -1542,7 +1542,7 @@ class CareerQuestClass {
 					icon:
 						(career.careerDefinition.sections[0].type === "textParent" &&
 							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].triggerImage) ||
+							career.careerDefinition.sections[0].children[0].triggerContent) ||
 						"null"
 				})
 			return
@@ -1583,12 +1583,12 @@ class CareerQuestClass {
 					icon:
 						(career.careerDefinition.sections[0].type === "textParent" &&
 							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].triggerImage) ||
+							career.careerDefinition.sections[0].children[0].triggerContent) ||
 						"null"
 				})
 			}
 		} else {
-			this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })
+			this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerContent })
 		}
 	})
 

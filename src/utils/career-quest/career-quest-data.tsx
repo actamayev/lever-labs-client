@@ -71,7 +71,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I was starting to think no one would show up… but you're here. And I'm so glad.
 						</div>
 					),
-					triggerImage: "heading1-humpback"
+					triggerContent: "heading1-humpback"
 				},
 				{
 					type: "text",
@@ -83,7 +83,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I don't know what I was made for, but I'm excited to find out.
 						</div>
 					),
-					triggerImage: "heading2-humpback"
+					triggerContent: "heading2-humpback"
 				},
 				{
 					type: "text",
@@ -95,7 +95,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							And robots? I think our purpose is to help people. That’s what I want to do.
 						</div>
 					),
-					triggerImage: "heading3-humpback"
+					triggerContent: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -107,7 +107,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Every job, every adventure, is a chance to learn who we are.
 						</div>
 					),
-					triggerImage: "heading4-humpback"
+					triggerContent: "heading4-humpback"
 				},
 				{
 					type: "morphingText",
@@ -169,7 +169,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							/>
 						</div>
 					),
-					triggerImage: "heading5-humpback"
+					triggerContent: "heading5-humpback"
 				},
 				{
 					type: "text",
@@ -181,7 +181,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Before we set off, I want to show you what I can do.
 						</div>
 					),
-					triggerImage: "heading6-humpback"
+					triggerContent: "heading6-humpback"
 				},
 			]
 		},
@@ -203,7 +203,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I can control them one at a time or all at once.
 						</div>
 					),
-					triggerImage: "heading2-humpback",
+					triggerContent: "heading2-humpback",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
 				},
@@ -217,7 +217,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I can do that too, but I can also use my lights to connect with you in ways beyond words.
 						</div>
 					),
-					triggerImage: "heading3-humpback"
+					triggerContent: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -227,7 +227,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Go ahead, pick a color, and I’ll show you I’m listening.
 						</div>
 					),
-					triggerImage: "heading4-humpback"
+					triggerContent: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -237,7 +237,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Nice choice. I think it suits me. Want to see what I can do with all my lights together?
 						</div>
 					),
-					triggerImage: "heading5-humpback"
+					triggerContent: "heading5-humpback"
 				}
 			]
 		},
@@ -253,7 +253,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Test
 						</div>
 					),
-					triggerImage: "heading4-humpback"
+					triggerContent: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -263,7 +263,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Test
 						</div>
 					),
-					triggerImage: "heading5-humpback"
+					triggerContent: "heading5-humpback"
 				}
 			]
 		}
@@ -288,7 +288,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 1
 						</div>
 					),
-					triggerImage: "heading1-macaw"
+					triggerContent: "heading1-macaw"
 				},
 				{
 					type: "text",
@@ -298,7 +298,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 2
 						</div>
 					),
-					triggerImage: "heading2-humpback"
+					triggerContent: "heading2-humpback"
 				},
 				{
 					type: "text",
@@ -308,7 +308,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 3
 						</div>
 					),
-					triggerImage: "heading3-humpback"
+					triggerContent: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -318,7 +318,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 4
 						</div>
 					),
-					triggerImage: "heading4-humpback"
+					triggerContent: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -328,7 +328,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 5
 						</div>
 					),
-					triggerImage: "heading5-humpback"
+					triggerContent: "heading5-humpback"
 				},
 			]
 		},
@@ -349,7 +349,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 6
 						</div>
 					),
-					triggerImage: "lightbulb-macaw"
+					triggerContent: "lightbulb-macaw"
 				},
 				{
 					type: "text",
@@ -359,7 +359,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 7
 						</div>
 					),
-					triggerImage: "cog-macaw"
+					triggerContent: "cog-macaw"
 				},
 			]
 		},
@@ -380,7 +380,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 8
 						</div>
 					),
-					triggerImage: "arrow-right-macaw"
+					triggerContent: "arrow-right-macaw"
 				},
 			]
 		},
@@ -401,7 +401,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 9
 						</div>
 					),
-					triggerImage: "scan-line-macaw"
+					triggerContent: "scan-line-macaw"
 				},
 			]
 		},
@@ -422,7 +422,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 10
 						</div>
 					),
-					triggerImage: "puzzle-macaw"
+					triggerContent: "puzzle-macaw"
 				},
 			]
 		},
@@ -443,7 +443,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 11
 						</div>
 					),
-					triggerImage: "trophy-macaw"
+					triggerContent: "trophy-macaw"
 				},
 			]
 		}
