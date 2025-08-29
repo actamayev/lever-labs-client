@@ -1223,7 +1223,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage || "" }
+		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {

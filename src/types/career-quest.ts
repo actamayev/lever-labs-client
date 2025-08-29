@@ -59,7 +59,7 @@ declare global {
 	}
 
 	type RightContent =
-	| { type: "image", icon: string }
+	| { type: "image", icon: ReactNode }
 	| { type: "component", component: (() => ReactNode) }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
@@ -89,7 +89,7 @@ declare global {
 		type: "text"
 		id: string
 		content: ((onAdvance?: () => void) => ReactNode)
-		triggerImage: string // Lucide icon name
+		triggerImage: ReactNode // Lucide icon name
 		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
 		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}
@@ -116,7 +116,7 @@ declare global {
 	interface CareerQuestData {
 		careerUUID: CareerUUID
 		careerTitle: string
-		initialImage: string // Lucide icon name for the first image
+		initialImage: ReactNode // JSX component for the initial image
 		careerColor: DuolingoColors
 		sections: CareerSection[]
 	}

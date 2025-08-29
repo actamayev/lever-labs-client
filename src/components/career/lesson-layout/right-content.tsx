@@ -1,20 +1,10 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import ChallengeSection from "./challenge-section"
-import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight,
-	ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart
-}
-
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
-	const colors = getDuolingoColors(careerData.careerColor)
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
@@ -56,14 +46,13 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			</AnimatePresence>
 		)
 	} else if (rightContent.type === "image") {
-		const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
-					key={`${rightContent.type}-${rightContent.icon}`}
+					key={`${rightContent.type}-${Date.now()}`}
 					{...getTransitionProps()}
 				>
-					<IconComponent size={120} className={colors.text} />
+					{rightContent.icon}
 				</motion.div>
 			</AnimatePresence>
 		)
