@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { observer } from "mobx-react"
 import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -14,25 +13,11 @@ interface TextParentCardProps {
 // eslint-disable-next-line max-lines-per-function
 function TextParentCard(props: TextParentCardProps) {
 	const { slide, careerUUID } = props
-	// Move nested swiper into the class
-	const nestedSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, slide.id)
 	const textParentData = slide.data
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
-
-	// Sync swiper position with parent's index whenever it changes
-	useEffect(() => {
-		if (
-			!nestedSwiperInstance ||
-			!isActive ||
-			currentTextChildIndex === nestedSwiperInstance.activeIndex
-		) return
-
-		nestedSwiperInstance.slideTo(currentTextChildIndex)
-		careerQuestClass.onTextSlideChange(careerUUID)
-	}, [currentTextChildIndex, nestedSwiperInstance, isActive, textParentData.children, careerUUID])
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
@@ -47,10 +32,15 @@ function TextParentCard(props: TextParentCardProps) {
 				allowTouchMove={false}
 				onSwiper={(swiper) => {
 					careerQuestClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
+					// If this slide is currently active, immediately sync to the correct index
+					if (isActive) {
+						swiper.slideTo(currentTextChildIndex, 0) // Instant slide with no animation
+						careerQuestClass.onTextSlideChange(careerUUID)
+					}
 				}}
 				className="h-full"
 				nested={true}
-				initialSlide={currentTextChildIndex}  // Set initial slide
+				initialSlide={0}
 			>
 				{toJS(textParentData.children).map((child) => (
 					<SwiperSlide key={child.id} className="h-full">

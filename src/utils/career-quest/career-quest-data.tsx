@@ -229,44 +229,44 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					),
 					triggerContent: "s2-p3-color-picker"
 				},
-				{
-					type: "text",
-					id: "introduction-2-4",
-					content: () => (
-						<div>
-							Nice choice. I think it suits me. Want to see what I can do with all my lights together?
-						</div>
-					),
-					triggerContent: "heading5-humpback"
-				}
+				// {
+				// 	type: "text",
+				// 	id: "introduction-2-4",
+				// 	content: () => (
+				// 		<div>
+				// 			Nice choice. I think it suits me. Want to see what I can do with all my lights together?
+				// 		</div>
+				// 	),
+				// 	triggerContent: "heading5-humpback"
+				// }
 			]
 		},
-		{
-			type: "textParent",
-			id: "introduction-3",
-			children: [
-				{
-					type: "text",
-					id: "introduction-3-1",
-					content: () => (
-						<div>
-							Test
-						</div>
-					),
-					triggerContent: "heading4-humpback"
-				},
-				{
-					type: "text",
-					id: "introduction-3-2",
-					content: () => (
-						<div>
-							Test
-						</div>
-					),
-					triggerContent: "heading5-humpback"
-				}
-			]
-		}
+		// {
+		// 	type: "textParent",
+		// 	id: "introduction-3",
+		// 	children: [
+		// 		{
+		// 			type: "text",
+		// 			id: "introduction-3-1",
+		// 			content: () => (
+		// 				<div>
+		// 					Test
+		// 				</div>
+		// 			),
+		// 			triggerContent: "heading4-humpback"
+		// 		},
+		// 		{
+		// 			type: "text",
+		// 			id: "introduction-3-2",
+		// 			content: () => (
+		// 				<div>
+		// 					Test
+		// 				</div>
+		// 			),
+		// 			triggerContent: "heading5-humpback"
+		// 		}
+		// 	]
+		// }
 	]
 }
 

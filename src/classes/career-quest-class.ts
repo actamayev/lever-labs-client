@@ -1142,8 +1142,6 @@ class CareerQuestClass {
 		const previousIndex = career.currentMainSlideIndex
 		const isGoingBackward = newIndex < previousIndex
 
-
-
 		// Update class state instead of component state
 		this.setCurrentMainSlideIndex(careerUUID, newIndex)
 
@@ -1174,6 +1172,7 @@ class CareerQuestClass {
 		} else {
 			textChildIndex = 0
 		}
+
 		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
@@ -1183,6 +1182,9 @@ class CareerQuestClass {
 
 		// Update right content for text slide
 		this.updateRightContentForCurrentState(careerUUID)
+
+		// Sync the text parent swiper to the correct position
+		this.syncTextParentSwiper(careerUUID, currentSlide.id, textChildIndex)
 
 		// Update swiper navigation when main slide changes
 		this.updateSwiperNavigation(careerUUID)
@@ -1286,6 +1288,19 @@ class CareerQuestClass {
 		if (!career) return
 		career.swiperInstance = null
 		career.textParentSwipers.clear()
+	})
+
+	private syncTextParentSwiper = action((careerUUID: CareerUUID, textParentId: string, targetIndex: number): void => {
+		const textParentSwiper = this.getTextParentSwiperInstance(careerUUID, textParentId)
+		if (!textParentSwiper) return
+
+		// Only sync if not already at the correct position
+		if (textParentSwiper.activeIndex !== targetIndex) {
+			textParentSwiper.slideTo(targetIndex, 0) // Instant, no animation
+		}
+
+		// Call the slide change handler
+		this.onTextSlideChange(careerUUID)
 	})
 
 	public onTextSlideChange = action((careerUUID: CareerUUID): void => {
