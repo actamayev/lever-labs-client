@@ -1351,6 +1351,7 @@ class CareerQuestClass {
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionEnter) {
+			console.log("Calling enter trigger function for", currentTextChild.id)
 			// Call enter trigger function asynchronously without blocking the UI
 			currentTextChild.triggerFunctionEnter().catch((error) => {
 				console.error("Error executing enter trigger function:", error)
@@ -1379,6 +1380,7 @@ class CareerQuestClass {
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
+			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error) => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1413,6 +1415,7 @@ class CareerQuestClass {
 		// Call exit trigger function before leaving current slide
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
+			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error) => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1435,13 +1438,25 @@ class CareerQuestClass {
 		const canAdvance = this.canAdvanceToNextMain(careerUUID, career.currentMainSlideIndex)
 		if (!canAdvance) return
 
+		// Call exit trigger function before leaving current slide if it's a text parent
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type === "textParent") {
+			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+			if (currentTextChild.triggerFunctionExit) {
+				console.log("Calling exit trigger function for", currentTextChild.id)
+				currentTextChild.triggerFunctionExit().catch((error) => {
+					console.error("Error executing exit trigger function:", error)
+				})
+			}
+		}
+
 		// IMPORTANT: Ensure navigation is allowed before attempting to navigate
 		const canGoPrev = career.currentMainSlideIndex > 0
 		swiperInstance.allowSlidePrev = canGoPrev
 		swiperInstance.allowSlideNext = canAdvance
 
-		// Get current section and check for transition
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		// Check for transition on current section
 		if (currentSlide.type === "textParent" && currentSlide.data.transition) {
 			await this.handleMainSlideTransitionNavigation(
 				careerUUID,
@@ -1465,6 +1480,19 @@ class CareerQuestClass {
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		const canGoPrev = career.currentMainSlideIndex > 0
 		if (!swiperInstance || !canGoPrev) return
+
+		// Call exit trigger function before leaving current slide if it's a text parent
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type === "textParent") {
+			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+			if (currentTextChild.triggerFunctionExit) {
+				console.log("Calling exit trigger function for", currentTextChild.id)
+				currentTextChild.triggerFunctionExit().catch((error) => {
+					console.error("Error executing exit trigger function:", error)
+				})
+			}
+		}
 
 		// IMPORTANT: Ensure navigation is allowed before attempting to navigate
 		swiperInstance.allowSlidePrev = canGoPrev
