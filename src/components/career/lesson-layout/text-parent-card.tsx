@@ -1,9 +1,11 @@
+/* eslint-disable no-nested-ternary */
 import { observer } from "mobx-react"
 import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
+import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 
 interface TextParentCardProps {
 	slide: TextParentMainSlide
@@ -59,6 +61,8 @@ function TextParentCard(props: TextParentCardProps) {
 								) : (
 									<div className="leading-relaxed text-questionText text-center cursor-text">
 										{typeof child.content === "function" ? child.content(() => {
+											careerQuestClass.handleButtonClickAdvance(careerUUID)
+										}) : typeof child.content === "string" ? getContentComponent(child.content, () => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
 										}) : child.content}
 									</div>

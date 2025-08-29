@@ -21,6 +21,7 @@ import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import { getContentComponent } from "../utils/career-quest/career-quest-content"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
@@ -588,9 +589,9 @@ class CareerQuestClass {
 					// eslint-disable-next-line max-depth
 					if (child.id === textChildId) {
 						// Check if the content contains an AnimatedStateButton
-						// We'll do this by checking if the content function returns JSX that includes the button
+						// We'll do this by checking if the text child ID matches known button IDs
 						// eslint-disable-next-line max-depth
-						if (child.type === "text" && typeof child.content === "function") {
+						if (child.type === "text") {
 							// For now, we'll check if the text child ID matches known button IDs
 							// In the future, this could be made more sophisticated by analyzing the JSX
 							return this.hasAnimatedStateButton(child)
@@ -608,7 +609,7 @@ class CareerQuestClass {
 		// For now, we'll check known text child IDs that contain buttons
 		// In the future, this could be made more sophisticated by analyzing the JSX structure
 		const buttonTextChildIds = [
-			"introduction-1-5", // The YES button in the introduction
+			"introduction-1-6", // The YES button in the introduction
 			// Add more button text child IDs here as needed
 		]
 
@@ -845,7 +846,13 @@ class CareerQuestClass {
 			whatUserSees = `${child.staticText} ${currentVariant.text}`
 		} else {
 			const content = child.content
-			whatUserSees = typeof content === "function" ? content() : content
+			if (typeof content === "function") {
+				whatUserSees = content()
+			} else if (typeof content === "string") {
+				whatUserSees = getContentComponent(content)
+			} else {
+				whatUserSees = content
+			}
 		}
 		return {
 			careerName: careerDefinition.careerName,
