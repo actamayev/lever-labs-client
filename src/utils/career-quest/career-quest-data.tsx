@@ -106,11 +106,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							text: "or even travel with explorers among the stars.",
 							rightContent: {
 								type: "component",
-								component: () => (
-									<div className="text-6xl">
-										🌟✨💫
-									</div>
-								)
+								component: "morphing-stars-component"
 							}
 						}
 					]

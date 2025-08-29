@@ -148,6 +148,13 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			Test 11
 		</div>
 	),
+
+	// Morphing text components
+	"morphing-stars-component": () => (
+		<div className="text-6xl">
+			🌟✨💫
+		</div>
+	),
 }
 
 // Helper function to get a content component by key

@@ -60,7 +60,7 @@ declare global {
 
 	type RightContent =
 	| { type: "image", icon: string }
-	| { type: "component", component: (() => ReactNode) }
+	| { type: "component", component: (() => ReactNode) | string }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
 	| { type: "null" }

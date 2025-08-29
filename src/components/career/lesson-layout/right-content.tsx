@@ -1,9 +1,11 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
+import { ReactNode } from "react"
 import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
 import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
+import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
@@ -58,6 +60,15 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			</AnimatePresence>
 		)
 	} else if (rightContent.type === "component") {
+		let componentContent: ReactNode
+		if (typeof rightContent.component === "function") {
+			componentContent = rightContent.component()
+		} else if (typeof rightContent.component === "string") {
+			componentContent = getContentComponent(rightContent.component)
+		} else {
+			componentContent = rightContent.component
+		}
+
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
@@ -65,7 +76,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
-					{typeof rightContent.component === "function" ? rightContent.component() : rightContent.component}
+					{componentContent}
 				</motion.div>
 			</AnimatePresence>
 		)
