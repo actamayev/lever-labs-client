@@ -16,7 +16,7 @@ import {
 	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
-import { action, makeAutoObservable, observable, toJS } from "mobx"
+import { action, makeAutoObservable, observable } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"

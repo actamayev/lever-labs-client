@@ -3,13 +3,13 @@
 import { isEqual } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { CareerType, MessageBuilder, ValidTriggerMessageType } from "@bluedotrobots/common-ts"
-import pipClass from "../../../classes/pip-class"
-import toastClass from "../../../classes/toast-class"
-import { isNonSuccessResponse } from "../../type-checks"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
+import pipClass from "../../classes/pip-class"
+import toastClass from "../../classes/toast-class"
+import { isNonSuccessResponse } from "../type-checks"
+import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-export default async function triggerCareerMessage(
+export default async function careerQuestTrigger(
 	careerType: CareerType,
 	triggerMessageType: ValidTriggerMessageType<CareerType>
 ) : Promise<void> {

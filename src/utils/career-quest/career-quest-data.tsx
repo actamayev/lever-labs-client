@@ -10,7 +10,7 @@ import AnimatedStateButton from "../../components/magicui/animated-rainbow-butto
 import { Highlighter } from "../../components/magicui/highlighter"
 import fireConfetti from "../fire-confetti"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
-import triggerCareerMessage from "./career-quest-pip-triggers/s2-p1-trigger"
+import careerQuestTrigger from "./career-quest-trigger"
 // Removed careerQuestClass import to avoid circular dependency
 // The button click handler will be passed as a parameter instead
 
@@ -103,7 +103,8 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-1-4",
 					content: () => (
 						<div>
-							We learn by trying, failing, and trying again.<br />
+							We learn by trying, failing, and trying again.
+							<br />
 							Every job, every adventure, is a chance to learn who we are.
 						</div>
 					),
@@ -126,12 +127,12 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						},
 						{
 							id: "variant-2",
-							text: "lend a hand in a hospital,",
+							text: "or lend a hand in a hospital,",
 							rightContent: { type: "image", icon: "Heart" }
 						},
 						{
 							id: "variant-3",
-							text: "even travel with explorers among the stars.",
+							text: "or even travel with explorers among the stars.",
 							rightContent: {
 								type: "component",
 								component: () => (
@@ -204,8 +205,8 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						</div>
 					),
 					triggerImage: "Heading2",
-					triggerFunctionEnter: () => triggerCareerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
-					triggerFunctionExit: () => triggerCareerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
 				},
 				{
 					type: "text",
