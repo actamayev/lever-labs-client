@@ -185,7 +185,14 @@ class CareerQuestClass {
 			isTransitioning: false,
 			currentTransitionDuration: DEFAULT_TRANSITION_DURATION,
 			lastSlideChangeTime: 0,
-			rightContent: { type: "image", icon: careerDefinition.initialImage },
+			rightContent: {
+				type: "image",
+				icon:
+					(careerDefinition.sections[0].type === "textParent" &&
+						careerDefinition.sections[0].children[0].type !== "morphingText" &&
+						careerDefinition.sections[0].children[0].triggerImage) ||
+					"null"
+			},
 			textParentSwipers: new Map<string, SwiperType | null>(),
 			careerChatData: {
 				messages: [],
@@ -1223,7 +1230,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "image", icon: career?.careerDefinition.initialImage }
+		return career?.rightContent || { type: "image", icon: "bot-humpback" }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
@@ -1522,13 +1529,22 @@ class CareerQuestClass {
 	// RIGHT CONTENT SELECTION LOGIC
 	// ========================================
 
+	// eslint-disable-next-line complexity
 	private updateRightContentForCurrentState = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		if (!isDataReady) {
-			this.setRightContent(careerUUID, { type: "image", icon: career.careerDefinition.initialImage })
+			this.setRightContent(careerUUID,
+				{
+					type: "image",
+					icon:
+						(career.careerDefinition.sections[0].type === "textParent" &&
+							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
+							career.careerDefinition.sections[0].children[0].triggerImage) ||
+						"null"
+				})
 			return
 		}
 
@@ -1562,7 +1578,14 @@ class CareerQuestClass {
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
-				this.setRightContent(careerUUID, { type: "image", icon: career.careerDefinition.initialImage })
+				this.setRightContent(careerUUID, {
+					type: "image",
+					icon:
+						(career.careerDefinition.sections[0].type === "textParent" &&
+							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
+							career.careerDefinition.sections[0].children[0].triggerImage) ||
+						"null"
+				})
 			}
 		} else {
 			this.setRightContent(careerUUID, { type: "image", icon: textChild.triggerImage })

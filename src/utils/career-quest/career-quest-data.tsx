@@ -6,8 +6,6 @@
 import { CareerType, CareerUUID, IntroductionTriggerType, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 import { ReactNode } from "react"
-import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import fireConfetti from "../fire-confetti"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
@@ -53,7 +51,6 @@ export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
 export const INTRODUCTION_CAREER: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
 	careerTitle: "Introduction",
-	initialImage: <Bot size={120} className="text-humpback-700" />,
 	careerColor: "humpback",
 	sections: [
 		{
@@ -74,7 +71,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I was starting to think no one would show up… but you're here. And I'm so glad.
 						</div>
 					),
-					triggerImage: <Heading1 size={120} className="text-humpback-700" />
+					triggerImage: "heading1-humpback"
 				},
 				{
 					type: "text",
@@ -86,7 +83,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I don't know what I was made for, but I'm excited to find out.
 						</div>
 					),
-					triggerImage: <Heading2 size={120} className="text-humpback-700" />
+					triggerImage: "heading2-humpback"
 				},
 				{
 					type: "text",
@@ -98,7 +95,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							And robots? I think our purpose is to help people. That’s what I want to do.
 						</div>
 					),
-					triggerImage: <Heading3 size={120} className="text-humpback-700" />
+					triggerImage: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -110,7 +107,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Every job, every adventure, is a chance to learn who we are.
 						</div>
 					),
-					triggerImage: <Heading4 size={120} className="text-humpback-700" />
+					triggerImage: "heading4-humpback"
 				},
 				{
 					type: "morphingText",
@@ -125,12 +122,12 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						{
 							id: "variant-1",
 							text: "deliver meals through a busy city,",
-							rightContent: { type: "image", icon: "Navigation" }
+							rightContent: { type: "image", icon: "navigation-humpback" }
 						},
 						{
 							id: "variant-2",
 							text: "or lend a hand in a hospital,",
-							rightContent: { type: "image", icon: "Heart" }
+							rightContent: { type: "image", icon: "heart-humpback" }
 						},
 						{
 							id: "variant-3",
@@ -172,7 +169,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							/>
 						</div>
 					),
-					triggerImage: <Heading5 size={120} className="text-humpback-700" />
+					triggerImage: "heading5-humpback"
 				},
 				{
 					type: "text",
@@ -184,7 +181,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Before we set off, I want to show you what I can do.
 						</div>
 					),
-					triggerImage: <Heading6 size={120} className="text-humpback-700" />
+					triggerImage: "heading6-humpback"
 				},
 			]
 		},
@@ -206,7 +203,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I can control them one at a time or all at once.
 						</div>
 					),
-					triggerImage: <Heading2 size={120} className="text-humpback-700" />,
+					triggerImage: "heading2-humpback",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
 				},
@@ -220,7 +217,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							I can do that too, but I can also use my lights to connect with you in ways beyond words.
 						</div>
 					),
-					triggerImage: <Heading3 size={120} className="text-humpback-700" />
+					triggerImage: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -230,7 +227,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Go ahead, pick a color, and I’ll show you I’m listening.
 						</div>
 					),
-					triggerImage: <Heading4 size={120} className="text-humpback-700" />
+					triggerImage: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -240,7 +237,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Nice choice. I think it suits me. Want to see what I can do with all my lights together?
 						</div>
 					),
-					triggerImage: <Heading5 size={120} className="text-humpback-700" />
+					triggerImage: "heading5-humpback"
 				}
 			]
 		},
@@ -256,7 +253,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Test
 						</div>
 					),
-					triggerImage: <Heading4 size={120} className="text-humpback-700" />
+					triggerImage: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -266,7 +263,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Test
 						</div>
 					),
-					triggerImage: <Heading5 size={120} className="text-humpback-700" />
+					triggerImage: "heading5-humpback"
 				}
 			]
 		}
@@ -277,7 +274,6 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	careerTitle: "Obstacle Avoidance",
-	initialImage: <Bot size={120} className="text-macaw-700" />,
 	careerColor: "macaw",
 	sections: [
 		{
@@ -292,7 +288,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 1
 						</div>
 					),
-					triggerImage: <Heading1 size={120} className="text-macaw-700" />
+					triggerImage: "heading1-macaw"
 				},
 				{
 					type: "text",
@@ -302,7 +298,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 2
 						</div>
 					),
-					triggerImage: <Heading2 size={120} className="text-humpback-700" />
+					triggerImage: "heading2-humpback"
 				},
 				{
 					type: "text",
@@ -312,7 +308,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 3
 						</div>
 					),
-					triggerImage: <Heading3 size={120} className="text-humpback-700" />
+					triggerImage: "heading3-humpback"
 				},
 				{
 					type: "text",
@@ -322,7 +318,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 4
 						</div>
 					),
-					triggerImage: <Heading4 size={120} className="text-humpback-700" />
+					triggerImage: "heading4-humpback"
 				},
 				{
 					type: "text",
@@ -332,7 +328,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 5
 						</div>
 					),
-					triggerImage: <Heading5 size={120} className="text-humpback-700" />
+					triggerImage: "heading5-humpback"
 				},
 			]
 		},
@@ -353,7 +349,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 6
 						</div>
 					),
-					triggerImage: <Lightbulb size={120} className="text-macaw-700" />
+					triggerImage: "lightbulb-macaw"
 				},
 				{
 					type: "text",
@@ -363,7 +359,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 7
 						</div>
 					),
-					triggerImage: <Cog size={120} className="text-macaw-700" />
+					triggerImage: "cog-macaw"
 				},
 			]
 		},
@@ -384,7 +380,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 8
 						</div>
 					),
-					triggerImage: <ArrowRight size={120} className="text-macaw-700" />
+					triggerImage: "arrow-right-macaw"
 				},
 			]
 		},
@@ -405,7 +401,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 9
 						</div>
 					),
-					triggerImage: <ScanLine size={120} className="text-macaw-700" />
+					triggerImage: "scan-line-macaw"
 				},
 			]
 		},
@@ -426,7 +422,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 10
 						</div>
 					),
-					triggerImage: <Puzzle size={120} className="text-macaw-700" />
+					triggerImage: "puzzle-macaw"
 				},
 			]
 		},
@@ -447,7 +443,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 							Test 11
 						</div>
 					),
-					triggerImage: <Trophy size={120} className="text-macaw-700" />
+					triggerImage: "trophy-macaw"
 				},
 			]
 		}

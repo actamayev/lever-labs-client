@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
+import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
@@ -49,10 +50,10 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
-					key={`${rightContent.type}-${Date.now()}`}
+					key={`${rightContent.type}-${rightContent.icon}`}
 					{...getTransitionProps()}
 				>
-					{rightContent.icon}
+					{getTriggerComponent(rightContent.icon)}
 				</motion.div>
 			</AnimatePresence>
 		)
