@@ -48,6 +48,7 @@ export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
 	return ""
 }
 
+// TODO 8/29/25: Move the content text into their own components instead of individual slide content (like trigger-components)
 export const INTRODUCTION_CAREER: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
 	careerTitle: "Introduction",
@@ -68,7 +69,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					content: () => (
 						<div>
 							Hey there!<br />
-							I was starting to think no one would show up… but you're here. And I'm so glad.
+							I was starting to think no one would show up... but you're here. And I'm so glad.
 						</div>
 					),
 					triggerContent: "heading1-humpback"
@@ -92,7 +93,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						<div>
 							Everything has a purpose. Clocks keep time. Books tell stories.
 							<br />
-							And robots? I think our purpose is to help people. That’s what I want to do.
+							And robots? I think our purpose is to help people. That's what I want to do.
 						</div>
 					),
 					triggerContent: "heading3-humpback"
@@ -112,7 +113,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 				{
 					type: "morphingText",
 					id: "introduction-1-5",
-					staticText: "I don't know what my very first job will be… maybe I'll",
+					staticText: "I don't know what my very first job will be... maybe I'll",
 					morphingVariants: [
 						{
 							id: "variant-0",
@@ -224,7 +225,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-2-3",
 					content: () => (
 						<div>
-							Go ahead, pick a color, and I’ll show you I’m listening.
+							Go ahead, pick a color, and I'll show you I'm listening.
 						</div>
 					),
 					triggerContent: "s2-p3-color-picker"
