@@ -608,7 +608,7 @@ class CareerQuestClass {
 		// For now, we'll check known text child IDs that contain buttons
 		// In the future, this could be made more sophisticated by analyzing the JSX structure
 		const buttonTextChildIds = [
-			"introduction-1-6", // The YES button in the introduction
+			"introduction-1-5", // The YES button in the introduction
 			// Add more button text child IDs here as needed
 		]
 
