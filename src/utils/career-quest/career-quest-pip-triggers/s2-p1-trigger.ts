@@ -1,11 +1,13 @@
 "use client"
 
+import { isEqual } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { CareerType, MessageBuilder, ValidTriggerMessageType } from "@bluedotrobots/common-ts"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
-import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import pipClass from "../../../classes/pip-class"
 import toastClass from "../../../classes/toast-class"
+import { isNonSuccessResponse } from "../../type-checks"
+import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 export default async function triggerCareerMessage(
 	careerType: CareerType,
@@ -24,7 +26,12 @@ export default async function triggerCareerMessage(
 			pipClass.selectedPip.pipConnectionStatus === "offline"
 		) return
 
-		await blueDotApiClientClass.careerQuestDataService.careerTrigger(careerType, triggerMessageType, pipClass.selectedPip.pipUUID)
+		const response = await blueDotApiClientClass.careerQuestDataService.careerTrigger(
+			careerType, triggerMessageType, pipClass.selectedPip.pipUUID
+		)
+		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
+			throw new Error("Unable to trigger career message at this time")
+		}
 	} catch (error) {
 		console.error(error)
 		return toastClass.negative({

@@ -11,7 +11,7 @@ import StudentDataService from "../services/student-data-service"
 import TeacherDataService from "../services/teacher-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
-import CareerQuestDataService from "../services/career-quest/career-quest-data-service"
+import CareerQuestDataService from "../services/career-quest-data-service"
 
 class BlueDotApiClient {
 	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()

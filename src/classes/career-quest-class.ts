@@ -1287,13 +1287,13 @@ class CareerQuestClass {
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
-		// Get the current text child and call its trigger function if it exists
+		// Get the current text child and call its enter trigger function if it exists
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
-		if (currentTextChild.triggerFunction) {
-			// Call trigger function asynchronously without blocking the UI
-			currentTextChild.triggerFunction().catch((error) => {
-				console.error("Error executing trigger function:", error)
+		if (currentTextChild.triggerFunctionEnter) {
+			// Call enter trigger function asynchronously without blocking the UI
+			currentTextChild.triggerFunctionEnter().catch((error) => {
+				console.error("Error executing enter trigger function:", error)
 			})
 		}
 
@@ -1314,6 +1314,15 @@ class CareerQuestClass {
 
 		// Check if we can advance to the next text child
 		if (!this.canAdvanceToNextTextChild(careerUUID)) return
+
+		// Call exit trigger function before leaving current slide
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+		if (currentTextChild.triggerFunctionExit) {
+			currentTextChild.triggerFunctionExit().catch((error) => {
+				console.error("Error executing exit trigger function:", error)
+			})
+		}
 
 		// Normal navigation (existing code)
 		const mainSlides = this.getMainSlides(careerUUID)
@@ -1340,6 +1349,14 @@ class CareerQuestClass {
 		const canGoPrev = currentTextChildIndex > 0
 		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (!canGoPrev || !textParentSwiperInstance) return
+
+		// Call exit trigger function before leaving current slide
+		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
+		if (currentTextChild.triggerFunctionExit) {
+			currentTextChild.triggerFunctionExit().catch((error) => {
+				console.error("Error executing exit trigger function:", error)
+			})
+		}
 
 		this.setLastSlideChangeTime(careerUUID, Date.now())
 		this.setIsTransitioning(careerUUID, true)
