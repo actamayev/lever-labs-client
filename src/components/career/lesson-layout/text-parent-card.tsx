@@ -16,8 +16,9 @@ function TextParentCard(props: TextParentCardProps) {
 	const textParentData = slide.data
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
-	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
 	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
+	// Get the text child index specific to this slide
+	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID, slide.id)
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">

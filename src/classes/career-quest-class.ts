@@ -64,7 +64,7 @@ interface CareerInstance {
 	furthestSeenChallengeUuidOrTextUuid: string
 	seenChallengeUUIDs: Set<ChallengeUUID>
 	currentMainSlideIndex: number
-	currentTextChildIndex: number
+	textChildIndices: Map<string, number> // textParentId -> currentTextChildIndex
 	morphingTextIndices: Map<string, number> // morphingTextId -> currentVariantIndex
 	morphingAnimationStates: Map<string, boolean> // morphingTextId -> isAnimating
 	mainSlides: MainSlide[]
@@ -151,11 +151,15 @@ class CareerQuestClass {
 			}
 		})
 
+		// Initialize text child indices for each text parent section
+		const textChildIndices = new Map<string, number>()
+
 		// Initialize morphing text indices and animation states
 		const morphingTextIndices = new Map<string, number>()
 		const morphingAnimationStates = new Map<string, boolean>()
 		careerDefinition.sections.forEach(section => {
 			if (section.type === "textParent") {
+				textChildIndices.set(section.id, 0)
 				section.children.forEach(child => {
 					if (child.type === "morphingText") {
 						morphingTextIndices.set(child.id, 0)
@@ -177,7 +181,7 @@ class CareerQuestClass {
 			furthestSeenChallengeUuidOrTextUuid: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			currentMainSlideIndex: 0,
-			currentTextChildIndex: 0,
+			textChildIndices,
 			morphingTextIndices,
 			morphingAnimationStates,
 			mainSlides,
@@ -271,9 +275,20 @@ class CareerQuestClass {
 		return career?.currentMainSlideIndex || 0
 	}
 
-	public getCurrentTextChildIndex(careerUUID: CareerUUID): number {
+	public getCurrentTextChildIndex(careerUUID: CareerUUID, textParentId?: string): number {
 		const career = this.getCareer(careerUUID)
-		return career?.currentTextChildIndex || 0
+		if (!career) return 0
+
+		// If textParentId is provided, return the index for that specific text parent
+		if (textParentId) {
+			return career.textChildIndices.get(textParentId) || 0
+		}
+
+		// If no textParentId provided, return the index for the current active text parent
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return 0
+
+		return career.textChildIndices.get(currentSlide.id) || 0
 	}
 
 	private setCurrentMainSlideIndex = action((careerUUID: CareerUUID, index: number): void => {
@@ -282,18 +297,23 @@ class CareerQuestClass {
 		career.currentMainSlideIndex = index
 	})
 
-	private setCurrentTextChildIndex = action((careerUUID: CareerUUID, index: number): void => {
+	private setCurrentTextChildIndex = action((careerUUID: CareerUUID, textParentId: string, index: number): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		career.currentTextChildIndex = index
+		career.textChildIndices.set(textParentId, index)
 	})
 
 	public getNavigationIndices(careerUUID: CareerUUID): { mainSlideIndex: number; textChildIndex: number } {
 		const career = this.getCareer(careerUUID)
-		return {
-			mainSlideIndex: career?.currentMainSlideIndex || 0,
-			textChildIndex: career?.currentTextChildIndex || 0
-		}
+		const mainSlideIndex = career?.currentMainSlideIndex || 0
+
+		// Get text child index for the current main slide
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const textChildIndex = currentSlide.type === "textParent"
+			? career?.textChildIndices.get(currentSlide.id) || 0
+			: 0
+
+		return { mainSlideIndex, textChildIndex }
 	}
 
 	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
@@ -413,7 +433,10 @@ class CareerQuestClass {
 		if (!savedPosition) {
 			// No saved position, start at beginning
 			career.currentMainSlideIndex = 0
-			career.currentTextChildIndex = 0
+			// Reset all text parent indices to 0
+			career.textChildIndices.forEach((_, textParentId) => {
+				career.textChildIndices.set(textParentId, 0)
+			})
 			return true
 		}
 
@@ -422,13 +445,20 @@ class CareerQuestClass {
 		if (!positionIndices) {
 			// Fallback to beginning if position not found
 			career.currentMainSlideIndex = 0
-			career.currentTextChildIndex = 0
+			// Reset all text parent indices to 0
+			career.textChildIndices.forEach((_, textParentId) => {
+				career.textChildIndices.set(textParentId, 0)
+			})
 			return true
 		}
 
 		// Set navigation indices from saved position
 		career.currentMainSlideIndex = positionIndices.mainSlideIndex
-		career.currentTextChildIndex = positionIndices.textChildIndex
+		// Set the text child index for the specific text parent that contains this position
+		const currentSlide = this.getMainSlides(careerUUID)[positionIndices.mainSlideIndex]
+		if (currentSlide.type === "textParent") {
+			career.textChildIndices.set(currentSlide.id, positionIndices.textChildIndex)
+		}
 		return true
 	})
 
@@ -803,7 +833,8 @@ class CareerQuestClass {
 		if (!careerDefinition) return null
 		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
 		if (currentSlide.type === "challenge") return null
-		const child = currentSlide.data.children[career.currentTextChildIndex]
+		const currentTextChildIndex = career.textChildIndices.get(currentSlide.id) || 0
+		const child = currentSlide.data.children[currentTextChildIndex]
 
 		let whatUserSees: ReactNode
 		if (child.type === "morphingText") {
@@ -1159,7 +1190,12 @@ class CareerQuestClass {
 			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID, isFurthestSeen)
 			this.updateFurthestSeenIfNeeded(careerUUID, currentSlide.data.challengeUUID)
 
-			this.setCurrentTextChildIndex(careerUUID, 0)
+			// For challenge slides, reset all text parent indices to 0
+			if (career) {
+				career.textChildIndices.forEach((_, textParentId) => {
+					career.textChildIndices.set(textParentId, 0)
+				})
+			}
 			// Update right content for challenge slide
 			this.updateRightContentForCurrentState(careerUUID)
 			return
@@ -1173,7 +1209,7 @@ class CareerQuestClass {
 			textChildIndex = 0
 		}
 
-		this.setCurrentTextChildIndex(careerUUID, textChildIndex)
+		this.setCurrentTextChildIndex(careerUUID, currentSlide.id, textChildIndex)
 
 		const textChild = currentSlide.data.children[textChildIndex]
 		const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, textChild.id)
@@ -1198,7 +1234,8 @@ class CareerQuestClass {
 		// Save progress when text child changes
 		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
 		if (currentSlide.type !== "textParent") return
-		this.setCurrentTextChildIndex(careerUUID, newIndex)
+
+		this.setCurrentTextChildIndex(careerUUID, currentSlide.id, newIndex)
 
 		const textChild = currentSlide.data.children[newIndex]
 
@@ -1585,7 +1622,8 @@ class CareerQuestClass {
 		}
 
 		// Otherwise use the current text child's right content
-		const textChild = currentSlide.data.children[career.currentTextChildIndex]
+		const currentTextChildIndex = career.textChildIndices.get(currentSlide.id) || 0
+		const textChild = currentSlide.data.children[currentTextChildIndex]
 		if (textChild.type === "morphingText") {
 			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, textChild.id)
 			const currentVariant = textChild.morphingVariants[morphingIndex]
