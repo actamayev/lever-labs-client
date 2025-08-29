@@ -6,11 +6,11 @@
 import { CareerType, CareerUUID, IntroductionTriggerType, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 import { ReactNode } from "react"
-import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
-import { Highlighter } from "../../components/magicui/highlighter"
 import fireConfetti from "../fire-confetti"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
+import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
+import { Highlighter } from "../../components/magicui/highlighter"
 // Removed careerQuestClass import to avoid circular dependency
 // The button click handler will be passed as a parameter instead
 
