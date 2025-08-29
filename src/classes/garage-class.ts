@@ -9,7 +9,7 @@ import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 
 class GarageClass {
-	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
+	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
 	public selectedColorShade: number = 1
 	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
 	public dotColors: { [key: number]: RgbaColor } = {
@@ -212,7 +212,7 @@ class GarageClass {
 	})
 
 	public logout(): void {
-		this.setSelectedColorRgba({ r: 0 , g: 255, b: 0, a: 1 })
+		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
 		this.dotColors = {
 			0: { r: 0 , g: 255, b: 0, a: 1 },

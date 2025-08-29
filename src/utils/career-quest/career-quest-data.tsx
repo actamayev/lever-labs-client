@@ -227,7 +227,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 							Go ahead, pick a color, and I’ll show you I’m listening.
 						</div>
 					),
-					triggerContent: "heading4-humpback"
+					triggerContent: "s2-p3-color-picker"
 				},
 				{
 					type: "text",
