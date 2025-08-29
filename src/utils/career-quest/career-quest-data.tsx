@@ -204,7 +204,8 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 						</div>
 					),
 					triggerImage: "Heading2",
-					triggerFunctionEnter: () => triggerCareerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER)
+					triggerFunctionEnter: () => triggerCareerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
+					triggerFunctionExit: () => triggerCareerMessage(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
 				},
 				{
 					type: "text",
