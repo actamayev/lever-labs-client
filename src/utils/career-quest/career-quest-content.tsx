@@ -37,7 +37,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			Every job, every adventure, is a chance to learn who we are.
 		</div>
 	),
-	// morphing text section needs to be here
+	// introduction-1-5 is morphing text
 	"introduction-1-6": (onAdvance?: () => void) => (
 		<div className="flex-shrink-0 flex flex-col gap-4">
 			Exploration is better with a friend. Will you join me?
@@ -63,7 +63,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-1-7": () => (
 		<div>
-			I'm so glad you said yes!
+			Wonderful!
 			<br />
 			Before we set off, I want to show you what I can do.
 		</div>
@@ -91,6 +91,57 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			Go ahead, pick a color, and I'll show you I'm listening.
 		</div>
 	),
+	"introduction-2-4": () => (
+		<div>
+			Nice choice. I think it suits me. Want to see what I can do with all my lights together?
+		</div>
+	),
+	"introduction-2-5": () => (
+		<div>
+			That was fun!
+			<br />
+			My lights are just one way I can communicate, but there's more I want to show you.
+		</div>
+	),
+	"introduction-3-1": () => (
+		<div>
+			My
+			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+				screen
+			</Highlighter>
+			<br />
+			is another way I can communicate with you. Robots often use screens to share what people need to know
+		</div>
+	),
+	"introduction-3-2": () => (
+		<div>
+			Factory robots show their status, medical robots display patient data, and delivery bots show where they’re headed.
+		</div>
+	),
+	"introduction-3-3": () => (
+		<div>
+			My screen may be small, but it lets me show words, symbols, even animations.
+		</div>
+	),
+	"introduction-3-4": () => (
+		<div>
+			Wait… I’m showing you all the things I can do, but I don’t even know your name.
+			<br />
+			What is it? I’ll put it on my screen so I never forget.”
+		</div>
+	),
+	"introduction-3-5": () => (
+		<div>
+			Thanks, [User name]. Now it really feels like we’re partners.
+		</div>
+	),
+	"introduction-3-6": () => (
+		<div>
+			“Now that I know your name, let's move on.
+			<br />
+			I want to show you something else.
+		</div>
+	)
 
 	// Obstacle Avoidance career content
 	"obstacle-avoidance-1-1": () => (
