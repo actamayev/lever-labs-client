@@ -1223,6 +1223,14 @@ class CareerQuestClass {
 		// Sync the text parent swiper to the correct position
 		this.syncTextParentSwiper(careerUUID, currentSlide.id, textChildIndex)
 
+		// Call enter trigger function for the new text child
+		if (textChild.triggerFunctionEnter) {
+			console.log("Calling enter trigger function for", textChild.id)
+			textChild.triggerFunctionEnter().catch((error) => {
+				console.error("Error executing enter trigger function:", error)
+			})
+		}
+
 		// Update swiper navigation when main slide changes
 		this.updateSwiperNavigation(careerUUID)
 	})
@@ -1344,19 +1352,6 @@ class CareerQuestClass {
 	public onTextSlideChange = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
-		if (currentSlide.type !== "textParent") return
-
-		// Get the current text child and call its enter trigger function if it exists
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
-		if (currentTextChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", currentTextChild.id)
-			// Call enter trigger function asynchronously without blocking the UI
-			currentTextChild.triggerFunctionEnter().catch((error) => {
-				console.error("Error executing enter trigger function:", error)
-			})
-		}
 
 		// Centralize right content update logic
 		this.updateRightContentForCurrentState(careerUUID)
@@ -1399,6 +1394,15 @@ class CareerQuestClass {
 		const newIndex = textParentSwiperInstance.activeIndex
 		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex, false)
+
+		// Call enter trigger function after arriving at new slide
+		const newTextChild = currentSlide.data.children[newIndex]
+		if (newTextChild.triggerFunctionEnter) {
+			console.log("Calling enter trigger function for", newTextChild.id)
+			newTextChild.triggerFunctionEnter().catch((error) => {
+				console.error("Error executing enter trigger function:", error)
+			})
+		}
 	})
 
 	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
@@ -1428,6 +1432,15 @@ class CareerQuestClass {
 		const newIndex = textParentSwiperInstance.activeIndex
 		this.onTextSlideChange(careerUUID)
 		this.handleTextChildIndexChange(careerUUID, newIndex, true)
+
+		// Call enter trigger function after arriving at new slide
+		const newTextChild = currentSlide.data.children[newIndex]
+		if (newTextChild.triggerFunctionEnter) {
+			console.log("Calling enter trigger function for", newTextChild.id)
+			newTextChild.triggerFunctionEnter().catch((error) => {
+				console.error("Error executing enter trigger function:", error)
+			})
+		}
 	})
 
 	public handleGoToNextMainSection = action(async (careerUUID: CareerUUID): Promise<void> => {
