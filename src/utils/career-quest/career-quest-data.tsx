@@ -231,7 +231,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-4-4",
 					content: "introduction-4-4",
-					triggerContent: "heading4-humpback"
+					triggerContent: "s4-p4-speaker"
 				},
 				{
 					type: "text",
