@@ -56,6 +56,7 @@ export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 // Helper function to get a trigger component by key
 export function getTriggerComponent(key: string): ReactNode {
 	const component = TRIGGER_COMPONENTS[key]
+	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 	if (!component) {
 		console.warn(`Trigger component "${key}" not found in registry`)
 		return <Bot size={120} className="text-questionText" /> // fallback
