@@ -1,10 +1,12 @@
 "use client"
 
+import { observer } from "mobx-react"
 import RenderDisplay from "./render-display"
 import DisplayControls from "./display-controls"
+import garageClass from "../../../classes/garage-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
-export default function DisplaySection() {
+function DisplaySection() {
 	return (
 		<div
 			className="h-1/3 overflow-hidden border-t border-r border-b"
@@ -15,8 +17,10 @@ export default function DisplaySection() {
 		>
 			<div className="w-full grid grid-cols-2 pt-10 ml-[18px]">
 				<DisplayControls />
-				<RenderDisplay />
+				<RenderDisplay pixelBuffer={garageClass.pixelBuffer} />
 			</div>
 		</div>
 	)
 }
+
+export default observer(DisplaySection)

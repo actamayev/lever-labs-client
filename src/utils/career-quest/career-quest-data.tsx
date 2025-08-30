@@ -149,6 +149,384 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					content: "introduction-2-3",
 					triggerContent: "s2-p3-color-picker"
 				},
+				{
+					type: "text",
+					id: "introduction-2-4",
+					content: "introduction-2-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-2-5",
+					content: "introduction-2-5",
+					triggerContent: "heading5-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-3",
+			children: [
+				{
+					type: "text",
+					id: "introduction-3-1",
+					content: "introduction-3-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-3-2",
+					content: "introduction-3-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-3-3",
+					content: "introduction-3-3",
+					triggerContent: "s3-p3-display"
+				},
+				{
+					type: "text",
+					id: "introduction-3-4",
+					content: "introduction-3-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-3-5",
+					content: "introduction-3-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-3-6",
+					content: "introduction-3-6",
+					triggerContent: "heading6-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-4",
+			children: [
+				{
+					type: "text",
+					id: "introduction-4-1",
+					content: "introduction-4-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-4-2",
+					content: "introduction-4-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-4-3",
+					content: "introduction-4-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-4-4",
+					content: "introduction-4-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-4-5",
+					content: "introduction-4-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-4-6",
+					content: "introduction-4-6",
+					triggerContent: "heading6-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-5",
+			children: [
+				{
+					type: "text",
+					id: "introduction-5-1",
+					content: "introduction-5-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-2",
+					content: "introduction-5-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-3",
+					content: "introduction-5-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-4",
+					content: "introduction-5-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-5",
+					content: "introduction-5-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-6",
+					content: "introduction-5-6",
+					triggerContent: "heading6-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-5-7",
+					content: "introduction-5-7",
+					triggerContent: "heading7-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-6",
+			children: [
+				{
+					type: "text",
+					id: "introduction-6-1",
+					content: "introduction-6-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-2",
+					content: "introduction-6-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-3",
+					content: "introduction-6-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-4",
+					content: "introduction-6-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-5",
+					content: "introduction-6-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-6",
+					content: "introduction-6-6",
+					triggerContent: "heading6-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-7",
+					content: "introduction-6-7",
+					triggerContent: "heading7-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-6-8",
+					content: "introduction-6-8",
+					triggerContent: "heading8-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-7",
+			children: [
+				{
+					type: "text",
+					id: "introduction-7-1",
+					content: "introduction-7-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-2",
+					content: "introduction-7-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-3",
+					content: "introduction-7-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-4",
+					content: "introduction-7-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-5",
+					content: "introduction-7-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-6",
+					content: "introduction-7-6",
+					triggerContent: "heading6-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-7-7",
+					content: "introduction-7-7",
+					triggerContent: "heading7-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-8",
+			children: [
+				{
+					type: "text",
+					id: "introduction-8-1",
+					content: "introduction-8-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-8-2",
+					content: "introduction-8-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-8-3",
+					content: "introduction-8-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-8-4",
+					content: "introduction-8-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-8-5",
+					content: "introduction-8-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-8-6",
+					content: "introduction-8-6",
+					triggerContent: "heading6-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-9",
+			children: [
+				{
+					type: "text",
+					id: "introduction-9-1",
+					content: "introduction-9-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-2",
+					content: "introduction-9-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-3",
+					content: "introduction-9-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-4",
+					content: "introduction-9-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-5",
+					content: "introduction-9-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-6",
+					content: "introduction-9-6",
+					triggerContent: "heading6-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-9-7",
+					content: "introduction-9-7",
+					triggerContent: "heading7-humpback"
+				},
+			]
+		},
+		{
+			type: "textParent",
+			id: "introduction-10",
+			children: [
+				{
+					type: "text",
+					id: "introduction-10-1",
+					content: "introduction-10-1",
+					triggerContent: "heading1-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-10-2",
+					content: "introduction-10-2",
+					triggerContent: "heading2-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-10-3",
+					content: "introduction-10-3",
+					triggerContent: "heading3-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-10-4",
+					content: "introduction-10-4",
+					triggerContent: "heading4-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-10-5",
+					content: "introduction-10-5",
+					triggerContent: "heading5-humpback"
+				},
+				{
+					type: "text",
+					id: "introduction-10-6",
+					content: "introduction-10-6",
+					triggerContent: "heading6-humpback"
+				},
 			]
 		},
 	]

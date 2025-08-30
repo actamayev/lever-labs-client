@@ -1,4 +1,4 @@
-import { DISPLAY_HEIGHT } from "../constants/display-constants"
+import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA } from "../constants/display-constants"
 import garageClass from "../../classes/garage-class"
 import createDisplayMessage from "./create-display-message"
 
@@ -27,5 +27,25 @@ export default async function exportDisplay(): Promise<void> {
 		await createDisplayMessage(buffer)
 	} catch (error) {
 		console.error("Failed to send display buffer:", error)
+	}
+}
+
+export function applyTextToBuffer(text: string, setPixelInBuffer: (x: number, y: number, state: boolean) => void): void {
+	let x = 8 // Starting X position
+	const y = 28 // Starting Y position
+	for (const char of text.toUpperCase()) {
+		const fontData = FONT_DATA[char]
+		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+		if (!fontData) continue
+		for (let col = 0; col < 5; col++) {
+			for (let row = 0; row < 8; row++) {
+				// eslint-disable-next-line max-depth
+				if (fontData[col] & (1 << row)) {
+					setPixelInBuffer(x + col, y + row, true)
+				}
+			}
+		}
+		x += 6 // 5 pixels + 1 space
+		if (x >= DISPLAY_WIDTH - 5) break
 	}
 }

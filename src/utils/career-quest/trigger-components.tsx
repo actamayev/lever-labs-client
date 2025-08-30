@@ -4,6 +4,7 @@ import { ReactNode } from "react"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-content/introduction-s2-p3-color-picker"
+import IntroductionS3P3Display from "../../components/career-quest/trigger-content/introduction-s3-p3-display"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -11,6 +12,7 @@ import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-c
 export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": () => <IntroductionS2P3ColorPicker />,
+	"s3-p3-display": () => <IntroductionS3P3Display />,
 	"bot-humpback": () => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": () => <Bot size={120} className="text-macaw" />,
 
