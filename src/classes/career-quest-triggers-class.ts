@@ -2,7 +2,7 @@
 
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import exportDisplay, { applyTextToBuffer } from "../utils/garage/export-display"
+import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../utils/constants/display-constants"
 
 class CareerQuestTriggersClass {
@@ -41,7 +41,7 @@ class CareerQuestTriggersClass {
 		if (text.trim()) {
 			applyTextToBuffer(text, this.setPixelInBuffer)
 		}
-		exportDisplay()
+		exportDisplay(this.pixelBuffer)
 	})
 
 	public logout(): void {

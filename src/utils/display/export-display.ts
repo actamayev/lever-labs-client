@@ -1,8 +1,7 @@
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA } from "../constants/display-constants"
-import garageClass from "../../classes/garage-class"
-import createDisplayMessage from "./create-display-message"
+import createDisplayMessage from "../garage/create-display-message"
 
-export default async function exportDisplay(): Promise<void> {
+export default async function exportDisplay(pixelBuffer: PixelBuffer): Promise<void> {
 	// SSD1306 uses 1 bit per pixel, organized in pages of 8 vertical pixels
 	// Buffer size: 128 columns × 8 pages = 1024 bytes
 	const buffer = new Uint8Array(128 * 8)
@@ -13,7 +12,7 @@ export default async function exportDisplay(): Promise<void> {
 			for (let bit = 0; bit < 8; bit++) {
 				const y = page * 8 + bit
 				// eslint-disable-next-line max-depth
-				if (y < DISPLAY_HEIGHT && garageClass.pixelBuffer[y] && garageClass.pixelBuffer[y][col]) {
+				if (y < DISPLAY_HEIGHT && pixelBuffer[y] && pixelBuffer[y][col]) {
 					byte |= (1 << bit)
 				}
 			}

@@ -4,7 +4,7 @@ import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
-import exportDisplay, { applyTextToBuffer } from "../utils/garage/export-display"
+import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 
@@ -72,7 +72,7 @@ class GarageClass {
 		})
 		this.designOnBuffer = designName
 		this.textOnBuffer = ""
-		exportDisplay()
+		exportDisplay(this.pixelBuffer)
 	})
 
 	public applyTextToBuffer = action((): void => {
@@ -81,7 +81,7 @@ class GarageClass {
 		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
 		this.textOnBuffer = this.textInput
 		this.designOnBuffer = "No design"
-		exportDisplay()
+		exportDisplay(this.pixelBuffer)
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
