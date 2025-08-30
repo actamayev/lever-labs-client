@@ -40,7 +40,9 @@ class CareerQuestTriggersClass {
 	public setTextInput = action((text: string): void => {
 		this.textInput = text
 		this.clearBuffer()
-		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
+		if (text.trim()) {
+			applyTextToBuffer(text, this.setPixelInBuffer)
+		}
 		exportDisplay()
 	})
 
