@@ -128,7 +128,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			Wait… I’m showing you all the things I can do, but I don’t even know your name.
 			<br />
-			What is it? I’ll put it on my screen so I never forget.”
+			What is it? I’ll put it on my screen so I never forget.
 		</div>
 	),
 	"introduction-3-5": () => (
