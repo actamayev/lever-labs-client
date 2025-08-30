@@ -183,13 +183,13 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-3-3",
 					content: "introduction-3-3",
-					triggerContent: "s3-p3-display"
+					triggerContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-3-4",
 					content: "introduction-3-4",
-					triggerContent: "heading4-humpback"
+					triggerContent: "s3-p4-display"
 				},
 				{
 					type: "text",

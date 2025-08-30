@@ -6,7 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import RenderDisplay from "../../garage/display/render-display"
 
-function IntroductionS3P3Display() {
+function IntroductionS3P4Display() {
 	return (
 		<div className="space-y-8">
 			{/* Display */}
@@ -32,4 +32,4 @@ function IntroductionS3P3Display() {
 	)
 }
 
-export default observer(IntroductionS3P3Display)
+export default observer(IntroductionS3P4Display)

@@ -4,7 +4,7 @@ import { ReactNode } from "react"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sounds-section"
-import IntroductionS3P3Display from "../../components/career-quest/trigger-content/introduction-s3-p3-display"
+import IntroductionS3P4Display from "../../components/career-quest/trigger-content/introduction-s3-p4-display"
 import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-content/introduction-s2-p3-color-picker"
 
 // Component registry for trigger images
@@ -13,7 +13,7 @@ import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-c
 export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": () => <IntroductionS2P3ColorPicker />,
-	"s3-p3-display": () => <IntroductionS3P3Display />,
+	"s3-p4-display": () => <IntroductionS3P4Display />,
 	"s4-p4-speaker": () => <SoundsSection />,
 	"bot-humpback": () => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": () => <Bot size={120} className="text-macaw" />,
