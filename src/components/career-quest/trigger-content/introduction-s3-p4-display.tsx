@@ -5,8 +5,15 @@ import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import RenderDisplay from "../../garage/display/render-display"
+import personalInfoClass from "../../../classes/personal-info-class"
+import editName from "../../../utils/personal-info/edit-name"
 
 function IntroductionS3P4Display() {
+	const setTextInput = (text: string) => {
+		careerQuestTriggersClass.setTextInput(text)
+		void editName(text)
+	}
+
 	return (
 		<div className="space-y-8">
 			{/* Display */}
@@ -18,8 +25,8 @@ function IntroductionS3P4Display() {
 			<div className="flex justify-center">
 				<Input
 					placeholder="Enter text..."
-					value={careerQuestTriggersClass.textInput}
-					onChange={(e) => careerQuestTriggersClass.setTextInput(e.target.value)}
+					value={personalInfoClass.name || ""}
+					onChange={(e) => setTextInput(e.target.value)}
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-center bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",

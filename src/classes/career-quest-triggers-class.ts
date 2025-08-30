@@ -6,9 +6,8 @@ import exportDisplay, { applyTextToBuffer } from "../utils/garage/export-display
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../utils/constants/display-constants"
 
 class CareerQuestTriggersClass {
-	public selectedColorRgba: RgbaColor = { r: 255 , g: 255, b: 255, a: 1 }
+	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
-	public textInput: string = ""
 
 	constructor() {
 		makeAutoObservable(this)
@@ -38,7 +37,6 @@ class CareerQuestTriggersClass {
 	})
 
 	public setTextInput = action((text: string): void => {
-		this.textInput = text
 		this.clearBuffer()
 		if (text.trim()) {
 			applyTextToBuffer(text, this.setPixelInBuffer)
@@ -47,7 +45,7 @@ class CareerQuestTriggersClass {
 	})
 
 	public logout(): void {
-		this.setSelectedColorRgba({ r: 255 , g: 255, b: 255, a: 1 })
+		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.setTextInput("")
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	}
