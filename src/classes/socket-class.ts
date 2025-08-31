@@ -65,7 +65,7 @@ class SocketClass {
 		if (!this._socket) return
 		Object.entries(listenersMap).forEach(([event, handler]) => {
 			try {
-				this.setupTypedListener(event as SocketEvents, handler)
+				this.setupTypedListener(event as SocketEvents, handler as (payload: SocketEventPayloadMap[SocketEvents]) => void)
 			} catch (error) {
 				console.error(`Error in ${event} listener:`, error)
 			}
