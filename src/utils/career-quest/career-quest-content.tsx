@@ -20,7 +20,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-1-2": () => (
 		<div>
-			My name is
+			My name is {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>
 			I don't know what I was made for, but I'm excited to find out.
 		</div>
@@ -72,7 +72,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-2-1": () => (
 		<div>
-			I have 8
+			I have 8 {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				LED lights,
 			</Highlighter>
@@ -107,12 +107,12 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-3-1": () => (
 		<div>
-			My
+			My {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				screen
 			</Highlighter>
 			<br />
-			is another way I can communicate with you. Robots often use screens to share what people need to know
+			is another way I can communicate with you. Robots often use screens to share what people need to know.
 		</div>
 	),
 	"introduction-3-2": () => (
@@ -139,7 +139,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-3-6": () => (
 		<div>
-			"Now that I know your name, let's move on.
+			Now that I know your name, let's move on.
 			<br />
 			I want to show you something else.
 		</div>
@@ -150,10 +150,10 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			I don't just use lights or screens.
 			<br />
-			Using my
+			Using my {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				speaker,
-			</Highlighter>
+				speaker
+			</Highlighter>,
 			{" "}I can use sound to share signals too.
 		</div>
 	),
@@ -211,11 +211,11 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-5-2": () => (
 		<div>
-			This sensor is called an
+			This sensor is called an {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				IMU,
-			</Highlighter>
-			{" "}which means
+				IMU
+			</Highlighter>,
+			{" "}which means {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				Inertial Measurement Unit.
 			</Highlighter>
@@ -276,11 +276,11 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			To stay aware, I need to sense not only motion but also distance.
 			<br />
-			That's why I use
+			That's why I use {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				ToF,
-			</Highlighter>
-			{" "}or
+				ToF
+			</Highlighter>,
+			{" "}or {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				Time-of-Flight sensors.
 			</Highlighter>
@@ -337,7 +337,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			<br />
 			but I still need your input.
 			<br />
-			That's why I have
+			That's why I have {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				buttons.
 			</Highlighter>
@@ -399,10 +399,10 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			I can also sense colors beneath me
 			<br />
-			using a downward-facing
+			using a downward-facing {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				color sensor.
-			</Highlighter>
+				color sensor
+			</Highlighter>.
 		</div>
 	),
 	"introduction-8-2": () => (
@@ -427,10 +427,10 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			Alongside my color sensor,
 			<br />
-			I also have
+			I also have {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				line-following sensors.
-			</Highlighter>
+				line-following sensors
+			</Highlighter>.
 			<br />
 			They let me detect the difference between
 			<br />
@@ -466,7 +466,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-9-2": () => (
 		<div>
-			My
+			My {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				motors
 			</Highlighter>
@@ -482,10 +482,10 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 		<div>
 			To keep track of my movement,
 			<br />
-			each wheel has a sensor called an
+			each wheel has a sensor called an {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				encoder.
-			</Highlighter>
+				encoder
+			</Highlighter>.
 			<br />
 			Encoders measure the wheels speed and direction.
 		</div>
