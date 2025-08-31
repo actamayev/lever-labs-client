@@ -1,5 +1,6 @@
 import { action, makeAutoObservable } from "mobx"
 import { SensorPayload } from "@bluedotrobots/common-ts"
+import { isNil } from "lodash-es"
 
 class SensorDataClass {
 	public leftWheelRPM: number[] = []
@@ -38,10 +39,10 @@ class SensorDataClass {
 			}
 		})
 		// Handle IR sensor data separately if it exists
-		if (sensorData.irSensorData) {
+		if (!isNil(sensorData.irSensorData)) {
 			this.addIrSensorData(sensorData.irSensorData)
 		}
-		if (sensorData.distanceGrid) {
+		if (!isNil(sensorData.distanceGrid)) {
 			this.addMultizoneTofData(sensorData.distanceGrid)
 		}
 	})
