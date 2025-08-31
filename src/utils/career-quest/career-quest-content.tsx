@@ -339,8 +339,8 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			<br />
 			That's why I have {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				buttons.
-			</Highlighter>
+				buttons
+			</Highlighter>.
 		</div>
 	),
 	"introduction-7-2": () => (

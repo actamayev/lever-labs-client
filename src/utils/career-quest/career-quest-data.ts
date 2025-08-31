@@ -386,7 +386,9 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-7-4",
 					content: "introduction-7-4",
-					rightSideContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S7_P4_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S7_P4_EXIT)
 				},
 				{
 					type: "text",

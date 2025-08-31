@@ -11,10 +11,10 @@ function IntroductionS6P4MzViz() {
 	const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number; value: number } | null>(null)
 
 	// Canvas configuration
-	const canvasSize = 400
+	const canvasSize = 450
 	const gridSize = 8
 	const cellSize = canvasSize / gridSize
-	const padding = 20
+	const padding = 15
 
 	// Color configuration
 	const minDistance = 0 // mm
@@ -179,7 +179,7 @@ function IntroductionS6P4MzViz() {
 								transform: "translateX(-50%)"
 							}}
 						>
-							Cell ({hoveredCell.row}, {hoveredCell.col}): {hoveredCell.value}mm
+							Cell ({hoveredCell.row + 1}, {hoveredCell.col + 1}): {hoveredCell.value}mm
 						</div>
 					)}
 				</div>
