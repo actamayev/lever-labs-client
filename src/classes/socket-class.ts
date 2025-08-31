@@ -3,11 +3,6 @@
 import { io, Socket } from "socket.io-client"
 import { action, makeAutoObservable } from "mobx"
 import {
-	HeadlightData,
-	HornData,
-	LedControlData,
-	MotorControlData,
-	PlayFunSoundPayload,
 	SocketEventPayloadMap,
 	SocketEvents,
 	ClientSocketEvents,
@@ -72,37 +67,14 @@ class SocketClass {
 		})
 	})
 
-	private emitToServer<E extends ClientSocketEvents>(
+	public emitToServer<E extends ClientSocketEvents>(
 		event: E,
 		payload: ClientSocketEventPayloadMap[E]
 	): void {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit(event, payload)
+		this.emitToServer(event, payload)
 	}
 
 	// TODO 7/12/25: Setup student and teacher specific events
-	public emitMotorControl = action((motorControlData: MotorControlData): void => {
-		this.emitToServer("motor-control", motorControlData)
-	})
-
-	public emitLedColorControl = action((ledControlDataToSend: LedControlData): void => {
-		this.emitToServer("new-led-colors", ledControlDataToSend)
-	})
-
-	public emitHornSound = action((hornControlDataToSend: HornData): void => {
-		this.emitToServer("horn-sound-update", hornControlDataToSend)
-	})
-
-	public emitHeadLightStatus = action((headlightDataToSend: HeadlightData): void => {
-		this.emitToServer("headlight-update", headlightDataToSend)
-	})
-
-	public emitFunSound = action((funSoundDataToSend: PlayFunSoundPayload): void => {
-		this.emitToServer("play-fun-sound", funSoundDataToSend)
-	})
 
 	public logout = action((): void => {
 		if (this._socket) {

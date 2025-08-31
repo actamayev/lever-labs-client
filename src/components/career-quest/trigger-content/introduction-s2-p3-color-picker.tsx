@@ -48,7 +48,7 @@ function IntroductionS2P3ColorPicker() {
 			|| isEmpty(garageClass.selectedDots)
 		) return
 
-		socketClass.emitLedColorControl({
+		socketClass.emitToServer("new-led-colors", {
 			topLeftColor: colorResult.rgba,
 			topRightColor: colorResult.rgba,
 			middleLeftColor: colorResult.rgba,
