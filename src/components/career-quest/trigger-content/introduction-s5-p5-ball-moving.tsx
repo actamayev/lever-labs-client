@@ -14,7 +14,7 @@ function IntroductionS5P5BallMoving() {
 	// Physics constants
 	const ballRadius = 15
 	const friction = 0.98
-	const sensitivity = 0.5
+	const sensitivity = 0.1
 	const boundaryPadding = 20
 	const canvasWidth = 400
 	const canvasHeight = 300
