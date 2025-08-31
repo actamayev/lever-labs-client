@@ -8,13 +8,16 @@ import {
 	LedControlData,
 	MotorControlData,
 	PlayFunSoundPayload,
-	BatteryMonitorDataFull,
+	SocketEventPayloadMap,
+	SocketEvents,
+	ClientSocketEvents,
+	ClientSocketEventPayloadMap,
 } from "@bluedotrobots/common-ts"
 import sandboxClass from "./sandbox-class"
 import careerQuestClass from "./career-quest-class"
-import garageClass from "./garage-class"
 import workbenchClass from "./workbench-class"
 import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
+import sensorDataClass from "./sensor-data-class"
 
 class SocketClass {
 	private _socket: Socket | null = null
@@ -37,6 +40,7 @@ class SocketClass {
 		this.setupConnectionEvents()
 		this.setupPipEvents()
 		this.setupChatbotEvents()
+		this.setupSensorDataEvents()
 	})
 
 	private setupConnectionEvents = action((): void => {
@@ -55,72 +59,86 @@ class SocketClass {
 		})
 	})
 
+	private setupTypedListener<E extends SocketEvents>(
+		event: E,
+		handler: (payload: SocketEventPayloadMap[E]) => void
+	): void {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		this._socket?.on(event, handler as any)
+	}
+
 	private setupPipEvents = action((): void => {
 		// This is for receiving socket events from the backend.
 		if (!this._socket) return
-		this._socket.on("pip-connection-status-update", handlePipStatusUpdate)
-		this._socket.on("sensor-data", garageClass.setSensorData)
-		this._socket.on("battery-monitor-data", (data: BatteryMonitorDataFull) => workbenchClass.setBatteryData(data))
+		this.setupTypedListener("pip-connection-status-update", handlePipStatusUpdate)
+		this.setupTypedListener("battery-monitor-data", workbenchClass.setBatteryData)
+	})
+
+	private setupSensorDataEvents = action((): void => {
+		if (!this._socket) return
+		this.setupTypedListener("general-sensor-data", (payload) => {
+			// Handle the full sensor payload by processing each field
+			Object.entries(payload).forEach(([key, value]) => {
+				if (key !== "irSensorData" && typeof value === "number") {
+					sensorDataClass.addGeneralSensorData(key as keyof Omit<typeof payload, "irSensorData">, value)
+				}
+			})
+			// Handle IR sensor data separately if it exists
+			if (payload.irSensorData) {
+				sensorDataClass.addIrSensorData(payload.irSensorData)
+			}
+		})
 	})
 
 	private setupChatbotEvents = action((): void => {
 		if (!this._socket) return
 
 		// Career Quest chatbot events
-		this._socket.on("challenge-chatbot-stream-start", careerQuestClass.startChallengeStreaming)
-		this._socket.on("challenge-chatbot-stream-chunk", careerQuestClass.addChallengeStreamingChunk)
-		this._socket.on("challenge-chatbot-stream-complete", careerQuestClass.completeChallengeStreaming)
+		this.setupTypedListener("challenge-chatbot-stream-start", careerQuestClass.startChallengeStreaming)
+		this.setupTypedListener("challenge-chatbot-stream-chunk", careerQuestClass.addChallengeStreamingChunk)
+		this.setupTypedListener("challenge-chatbot-stream-complete", careerQuestClass.completeChallengeStreaming)
 
 		// Career chatbot events
-		this._socket.on("career-chatbot-stream-start", careerQuestClass.startCareerStreaming)
-		this._socket.on("career-chatbot-stream-chunk", careerQuestClass.addCareerStreamingChunk)
-		this._socket.on("career-chatbot-stream-complete", careerQuestClass.completeCareerStreaming)
+		this.setupTypedListener("career-chatbot-stream-start", careerQuestClass.startCareerStreaming)
+		this.setupTypedListener("career-chatbot-stream-chunk", careerQuestClass.addCareerStreamingChunk)
+		this.setupTypedListener("career-chatbot-stream-complete", careerQuestClass.completeCareerStreaming)
 
 		// Sandbox chatbot events
-		this._socket.on("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
-		this._socket.on("sandbox-chatbot-stream-chunk", sandboxClass.addStreamingChunk)
-		this._socket.on("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
+		this.setupTypedListener("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
+		this.setupTypedListener("sandbox-chatbot-stream-chunk", sandboxClass.addStreamingChunk)
+		this.setupTypedListener("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
 	})
+
+	private emitToServer<E extends ClientSocketEvents>(
+		event: E,
+		payload: ClientSocketEventPayloadMap[E]
+	): void {
+		// This is for sending socket messages to the backend
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected")
+		}
+		this._socket.emit(event, payload)
+	}
 
 	// TODO 7/12/25: Setup student and teacher specific events
 	public emitMotorControl = action((motorControlData: MotorControlData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("motor-control", motorControlData)
+		this.emitToServer("motor-control", motorControlData)
 	})
 
 	public emitLedColorControl = action((ledControlDataToSend: LedControlData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("new-led-colors", ledControlDataToSend)
+		this.emitToServer("new-led-colors", ledControlDataToSend)
 	})
 
 	public emitHornSound = action((hornControlDataToSend: HornData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("horn-sound-update", hornControlDataToSend)
+		this.emitToServer("horn-sound-update", hornControlDataToSend)
 	})
 
 	public emitHeadLightStatus = action((headlightDataToSend: HeadlightData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("headlight-update", headlightDataToSend)
+		this.emitToServer("headlight-update", headlightDataToSend)
 	})
 
 	public emitFunSound = action((funSoundDataToSend: PlayFunSoundPayload): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("play-fun-sound", funSoundDataToSend)
+		this.emitToServer("play-fun-sound", funSoundDataToSend)
 	})
 
 	public logout = action((): void => {

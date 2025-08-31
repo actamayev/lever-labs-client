@@ -14,6 +14,7 @@ import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
+import sensorDataClass from "../../classes/sensor-data-class"
 
 export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true) // ADD this first line
@@ -28,6 +29,7 @@ export default async function logout(): Promise<void> {
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()
+		sensorDataClass.logout()
 		serialMessageManagerClass.logout()
 		studentClass.logout()
 		teacherClass.logout()
@@ -43,6 +45,7 @@ export default async function logout(): Promise<void> {
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()
+		sensorDataClass.logout()
 		serialMessageManagerClass.logout()
 		studentClass.logout()
 		teacherClass.logout()
