@@ -24,6 +24,7 @@ class SensorDataClass {
 	public leftSideTofCounts: number[] = []
 	public rightSideTofCounts: number[] = []
 	public distanceGrid: (number[] & { length: 64 })[] = [] // This is an array of arrays of 64 numbers
+	public dataVersion = 0 // Add this for reactivity
 
 	constructor() {
 		makeAutoObservable(this)
@@ -54,6 +55,7 @@ class SensorDataClass {
 		if (this[key].length >= 100) {
 			this[key].shift()
 		}
+		this.dataVersion++ // Increment version for reactivity
 	})
 
 	private addIrSensorData = action((value: number[] & { length: 5 }): void => {

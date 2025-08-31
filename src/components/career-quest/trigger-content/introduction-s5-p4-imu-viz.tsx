@@ -28,7 +28,7 @@ function IntroductionS5P4ImuViz() {
 			}
 		})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.aX, sensorDataClass.aY, sensorDataClass.aZ])
+	}, [sensorDataClass.aX, sensorDataClass.aY, sensorDataClass.aZ, sensorDataClass.dataVersion])
 
 	// Format data for yaw, pitch, roll charts
 	const yawData = useMemo(() => {
@@ -37,7 +37,7 @@ function IntroductionS5P4ImuViz() {
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.yaw])
+	}, [sensorDataClass.yaw, sensorDataClass.dataVersion])
 
 	const pitchData = useMemo(() => {
 		return sensorDataClass.pitch.map((value, index) => ({
@@ -45,7 +45,7 @@ function IntroductionS5P4ImuViz() {
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.pitch])
+	}, [sensorDataClass.pitch, sensorDataClass.dataVersion])
 
 	const rollData = useMemo(() => {
 		return sensorDataClass.roll.map((value, index) => ({
@@ -53,7 +53,7 @@ function IntroductionS5P4ImuViz() {
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.roll])
+	}, [sensorDataClass.roll, sensorDataClass.dataVersion])
 
 	// Chart configuration
 	const chartConfig = {
