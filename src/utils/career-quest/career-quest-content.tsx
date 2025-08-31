@@ -5,6 +5,7 @@ import { ReactNode } from "react"
 import fireConfetti from "../fire-confetti"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import { Highlighter } from "../../components/magicui/highlighter"
+import personalInfoClass from "../../classes/personal-info-class"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -133,7 +134,7 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 	),
 	"introduction-3-5": () => (
 		<div>
-			Thanks, [User name]. Now it really feels like we’re partners.
+			Thanks, {personalInfoClass.name || "friend"}. Now it really feels like we're partners.
 		</div>
 	),
 	"introduction-3-6": () => (
