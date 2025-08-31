@@ -22,22 +22,6 @@ export const listenersMap: {
 	"sandbox-chatbot-stream-complete": sandboxClass.completeStreaming,
 	"pip-connection-status-update": handlePipStatusUpdate,
 	"battery-monitor-data": workbenchClass.setBatteryData,
-	"general-sensor-data": (payload) => {
-		Object.entries(payload).forEach(([key, value]) => {
-			if (key !== "irSensorData" && typeof value === "number" && key !== "distanceGrid") {
-				sensorDataClass.addGeneralSensorData(
-					key as keyof Omit<typeof payload.sensorPayload, "irSensorData" | "distanceGrid">,
-					value
-				)
-			}
-		})
-		// Handle IR sensor data separately if it exists
-		if (payload.sensorPayload.irSensorData) {
-			sensorDataClass.addIrSensorData(payload.sensorPayload.irSensorData)
-		}
-		if (payload.sensorPayload.distanceGrid) {
-			sensorDataClass.addMultizoneTofData(payload.sensorPayload.distanceGrid)
-		}
-	},
+	"general-sensor-data": sensorDataClass.addSensorData,
 	"student-invite-join-class": studentClass.addPendingInvite,
 } as const

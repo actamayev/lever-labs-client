@@ -3,11 +3,12 @@
 import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload,
-	WiFiConnectionStatus, BatteryMonitorDataItem } from "@bluedotrobots/common-ts"
+	WiFiConnectionStatus, BatteryMonitorDataItem, SensorPayload } from "@bluedotrobots/common-ts"
 import toastClass from "./toast-class"
 import workbenchClass from "./workbench-class"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
 import pipClass from "./pip-class"
+import sensorDataClass from "./sensor-data-class"
 
 interface MessageSentData {
 	content: string
@@ -222,6 +223,13 @@ class SerialMessageManagerClass {
 		}
 		case "/battery-monitor-data-complete": {
 			workbenchClass.setBatteryDataLastUpdated()
+			break
+		}
+		case "/sensor-data": {
+			const sensorData = message.payload as SensorPayload
+			runInAction(() => {
+				sensorDataClass.addSensorData(sensorData)
+			})
 			break
 		}
 		default:

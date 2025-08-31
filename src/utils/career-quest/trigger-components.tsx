@@ -11,6 +11,8 @@ import IntroductionS5P4ImuViz from "../../components/career-quest/trigger-conten
 import IntroductionS5P5BallMoving from "../../components/career-quest/trigger-content/introduction-s5-p5-ball-moving"
 import IntroductionS6P4MzViz from "../../components/career-quest/trigger-content/introduction-s6-p4-mz-viz"
 import IntroductionS6P6TofsViz from "../../components/career-quest/trigger-content/introduction-s6-p6-tofs-viz"
+import IntroductionS9P6EncoderViz from "../../components/career-quest/trigger-content/introduction-s9-p6-encoder-viz"
+import IntroductionS8P3ColorViz from "../../components/career-quest/trigger-content/introduction-s8-p3-color-viz"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -25,6 +27,8 @@ export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	"s5-p5-ball-moving": () => <IntroductionS5P5BallMoving />,
 	"s6-p4-mz-viz": () => <IntroductionS6P4MzViz />,
 	"s6-p6-tofs-viz": () => <IntroductionS6P6TofsViz />,
+	"s9-p6-encoder-viz": () => <IntroductionS9P6EncoderViz />,
+	"s8-p3-color-viz": () => <IntroductionS8P3ColorViz />,
 	"bot-humpback": () => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": () => <Bot size={120} className="text-macaw" />,
 

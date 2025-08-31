@@ -114,6 +114,7 @@ function IntroductionS6P4MzViz() {
 						ctx.strokeRect(x, y, cellSize, cellSize)
 
 						// Highlight hovered cell
+						// eslint-disable-next-line max-depth
 						if (hoveredCell && hoveredCell.row === row && hoveredCell.col === col) {
 							ctx.strokeStyle = "#FFFFFF"
 							ctx.lineWidth = 3

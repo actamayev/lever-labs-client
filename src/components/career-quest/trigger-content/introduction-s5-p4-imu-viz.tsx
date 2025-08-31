@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { observer } from "mobx-react"
 import {
 	LineChart,
@@ -12,7 +13,6 @@ import {
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
-import { useMemo } from "react"
 
 // eslint-disable-next-line max-lines-per-function
 function IntroductionS5P4ImuViz() {

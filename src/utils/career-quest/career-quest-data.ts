@@ -428,7 +428,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-8-3",
 					content: "introduction-8-3",
-					rightSideContent: "heading3-humpback",
+					rightSideContent: "s8-p3-color-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S8_P3_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S8_P3_EXIT)
 				},
@@ -490,7 +490,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-9-6",
 					content: "introduction-9-6",
-					rightSideContent: "heading6-humpback",
+					rightSideContent: "s9-p6-encoder-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S9_P6_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S9_P6_EXIT)
 				},

@@ -28,8 +28,26 @@ class SensorDataClass {
 		makeAutoObservable(this)
 	}
 
+	public addSensorData = action((sensorData: SensorPayload): void => {
+		Object.entries(sensorData).forEach(([key, value]) => {
+			if (key !== "irSensorData" && typeof value === "number" && key !== "distanceGrid") {
+				this.addGeneralSensorData(
+					key as keyof Omit<typeof sensorData, "irSensorData" | "distanceGrid">,
+					value
+				)
+			}
+		})
+		// Handle IR sensor data separately if it exists
+		if (sensorData.irSensorData) {
+			this.addIrSensorData(sensorData.irSensorData)
+		}
+		if (sensorData.distanceGrid) {
+			this.addMultizoneTofData(sensorData.distanceGrid)
+		}
+	})
+
 	// Add a method that takes in a key and automatiaclly adds the value to the array, ommiting the key if it is irSensorData
-	public addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData" | "distanceGrid">, value: number): void => {
+	private addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData" | "distanceGrid">, value: number): void => {
 		this[key].push(value)
 		// limit to 100 (first in, first out)
 		if (this[key].length >= 100) {
@@ -37,7 +55,7 @@ class SensorDataClass {
 		}
 	})
 
-	public addIrSensorData = action((value: number[] & { length: 5 }): void => {
+	private addIrSensorData = action((value: number[] & { length: 5 }): void => {
 		this.irSensorData.push(value)
 		// limit to 100 (first in, first out)
 		if (this.irSensorData.length >= 100) {
@@ -45,7 +63,7 @@ class SensorDataClass {
 		}
 	})
 
-	public addMultizoneTofData = action((value: number[] & { length: 64 }): void => {
+	private addMultizoneTofData = action((value: number[] & { length: 64 }): void => {
 		this.distanceGrid.push(value)
 		// limit to 100 (first in, first out)
 		if (this.distanceGrid.length >= 100) {
