@@ -33,7 +33,7 @@ TextSection {
   type: "text"
   id: string
   content: (() => ReactNode)
-  triggerContent: string (Lucide icon)
+  rightSideContent: string (Lucide icon)
   triggerFunction?: (() => Promise<void>) (optional async function)
 }
 
@@ -132,7 +132,7 @@ The right column content changes based on complex state logic:
    - If career chat is toggled: Show career chat
    - If next challenge has been seen: Show that challenge (locked preview)
    - For morphing text: Show the current variant's `rightContent`
-   - For regular text: Show the text child's `triggerContent`
+   - For regular text: Show the text child's `rightSideContent`
 
 ### Career Chat Toggle System
 - User can toggle career chat on/off via UI control

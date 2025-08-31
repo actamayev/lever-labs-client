@@ -6,6 +6,7 @@ import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzz
 import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sounds-section"
 import IntroductionS3P4Display from "../../components/career-quest/trigger-content/introduction-s3-p4-display"
 import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-content/introduction-s2-p3-color-picker"
+import IntroductionS2P4LightShow from "../../components/career-quest/trigger-content/introduction-s2-p4-light-show"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -13,6 +14,7 @@ import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-c
 export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": () => <IntroductionS2P3ColorPicker />,
+	"s2-p4-light-show": () => <IntroductionS2P4LightShow />,
 	"s3-p4-display": () => <IntroductionS3P4Display />,
 	"s4-p4-speaker": () => <SoundsSection />,
 	"bot-humpback": () => <Bot size={120} className="text-humpback" />,

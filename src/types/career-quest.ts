@@ -89,7 +89,7 @@ declare global {
 		type: "text"
 		id: string
 		content: string | ((onAdvance?: () => void) => ReactNode)
-		triggerContent: string // Trigger component key
+		rightSideContent: string // Trigger component key
 		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
 		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}

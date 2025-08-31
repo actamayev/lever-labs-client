@@ -61,25 +61,25 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-1-1",
 					content: "introduction-1-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-1-2",
 					content: "introduction-1-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-1-3",
 					content: "introduction-1-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-1-4",
 					content: "introduction-1-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "morphingText",
@@ -115,13 +115,13 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-1-6",
 					content: "introduction-1-6",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-1-7",
 					content: "introduction-1-7",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 			]
 		},
@@ -133,7 +133,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-2-1",
 					content: "introduction-2-1",
-					triggerContent: "heading2-humpback",
+					rightSideContent: "heading2-humpback",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P1_EXIT)
 				},
@@ -141,25 +141,26 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-2-2",
 					content: "introduction-2-2",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-2-3",
 					content: "introduction-2-3",
-					triggerContent: "s2-p3-color-picker"
+					rightSideContent: "s2-p3-color-picker"
 				},
 				{
 					type: "text",
 					id: "introduction-2-4",
 					content: "introduction-2-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "s2-p4-light-show",
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S2_P4_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-2-5",
 					content: "introduction-2-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 			]
 		},
@@ -171,37 +172,39 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-3-1",
 					content: "introduction-3-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-3-2",
 					content: "introduction-3-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-3-3",
 					content: "introduction-3-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S3_P3_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S3_P3_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-3-4",
 					content: "introduction-3-4",
-					triggerContent: "s3-p4-display"
+					rightSideContent: "s3-p4-display"
 				},
 				{
 					type: "text",
 					id: "introduction-3-5",
 					content: "introduction-3-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-3-6",
 					content: "introduction-3-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 			]
 		},
@@ -213,37 +216,37 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-4-1",
 					content: "introduction-4-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-4-2",
 					content: "introduction-4-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-4-3",
 					content: "introduction-4-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-4-4",
 					content: "introduction-4-4",
-					triggerContent: "s4-p4-speaker"
+					rightSideContent: "s4-p4-speaker"
 				},
 				{
 					type: "text",
 					id: "introduction-4-5",
 					content: "introduction-4-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-4-6",
 					content: "introduction-4-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 			]
 		},
@@ -255,43 +258,47 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-5-1",
 					content: "introduction-5-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-5-2",
 					content: "introduction-5-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-5-3",
 					content: "introduction-5-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-5-4",
 					content: "introduction-5-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P4_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P4_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-5-5",
 					content: "introduction-5-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P5_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P5_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-5-6",
 					content: "introduction-5-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-5-7",
 					content: "introduction-5-7",
-					triggerContent: "heading7-humpback"
+					rightSideContent: "heading7-humpback"
 				},
 			]
 		},
@@ -303,49 +310,53 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-6-1",
 					content: "introduction-6-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-6-2",
 					content: "introduction-6-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-6-3",
 					content: "introduction-6-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-6-4",
 					content: "introduction-6-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P4_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P4_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-6-5",
 					content: "introduction-6-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-6-6",
 					content: "introduction-6-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P6_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P6_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-6-7",
 					content: "introduction-6-7",
-					triggerContent: "heading7-humpback"
+					rightSideContent: "heading7-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-6-8",
 					content: "introduction-6-8",
-					triggerContent: "heading8-humpback"
+					rightSideContent: "heading8-humpback"
 				},
 			]
 		},
@@ -357,43 +368,43 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-7-1",
 					content: "introduction-7-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-2",
 					content: "introduction-7-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-3",
 					content: "introduction-7-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-4",
 					content: "introduction-7-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-5",
 					content: "introduction-7-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-6",
 					content: "introduction-7-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-7-7",
 					content: "introduction-7-7",
-					triggerContent: "heading7-humpback"
+					rightSideContent: "heading7-humpback"
 				},
 			]
 		},
@@ -405,37 +416,39 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-8-1",
 					content: "introduction-8-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-8-2",
 					content: "introduction-8-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-8-3",
 					content: "introduction-8-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S8_P3_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S8_P3_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-8-4",
 					content: "introduction-8-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-8-5",
 					content: "introduction-8-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-8-6",
 					content: "introduction-8-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 			]
 		},
@@ -447,43 +460,45 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-9-1",
 					content: "introduction-9-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-9-2",
 					content: "introduction-9-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-9-3",
 					content: "introduction-9-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-9-4",
 					content: "introduction-9-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-9-5",
 					content: "introduction-9-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-9-6",
 					content: "introduction-9-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S9_P6_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S9_P6_EXIT)
 				},
 				{
 					type: "text",
 					id: "introduction-9-7",
 					content: "introduction-9-7",
-					triggerContent: "heading7-humpback"
+					rightSideContent: "heading7-humpback"
 				},
 			]
 		},
@@ -495,37 +510,37 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-10-1",
 					content: "introduction-10-1",
-					triggerContent: "heading1-humpback"
+					rightSideContent: "heading1-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-10-2",
 					content: "introduction-10-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-10-3",
 					content: "introduction-10-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-10-4",
 					content: "introduction-10-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-10-5",
 					content: "introduction-10-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",
 					id: "introduction-10-6",
 					content: "introduction-10-6",
-					triggerContent: "heading6-humpback"
+					rightSideContent: "heading6-humpback"
 				},
 			]
 		},
@@ -546,31 +561,31 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-1-1",
 					content: "obstacle-avoidance-1-1",
-					triggerContent: "heading1-macaw"
+					rightSideContent: "heading1-macaw"
 				},
 				{
 					type: "text",
 					id: "obstacle-avoidance-1-2",
 					content: "obstacle-avoidance-1-2",
-					triggerContent: "heading2-humpback"
+					rightSideContent: "heading2-humpback"
 				},
 				{
 					type: "text",
 					id: "obstacle-avoidance-1-3",
 					content: "obstacle-avoidance-1-3",
-					triggerContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback"
 				},
 				{
 					type: "text",
 					id: "obstacle-avoidance-1-4",
 					content: "obstacle-avoidance-1-4",
-					triggerContent: "heading4-humpback"
+					rightSideContent: "heading4-humpback"
 				},
 				{
 					type: "text",
 					id: "obstacle-avoidance-1-5",
 					content: "obstacle-avoidance-1-5",
-					triggerContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback"
 				},
 			]
 		},
@@ -587,13 +602,13 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-2-1",
 					content: "obstacle-avoidance-2-1",
-					triggerContent: "lightbulb-macaw"
+					rightSideContent: "lightbulb-macaw"
 				},
 				{
 					type: "text",
 					id: "obstacle-avoidance-2-2",
 					content: "obstacle-avoidance-2-2",
-					triggerContent: "cog-macaw"
+					rightSideContent: "cog-macaw"
 				},
 			]
 		},
@@ -610,7 +625,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-3-1",
 					content: "obstacle-avoidance-3-1",
-					triggerContent: "arrow-right-macaw"
+					rightSideContent: "arrow-right-macaw"
 				},
 			]
 		},
@@ -627,7 +642,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-4-1",
 					content: "obstacle-avoidance-4-1",
-					triggerContent: "scan-line-macaw"
+					rightSideContent: "scan-line-macaw"
 				},
 			]
 		},
@@ -644,7 +659,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-5-1",
 					content: "obstacle-avoidance-5-1",
-					triggerContent: "puzzle-macaw"
+					rightSideContent: "puzzle-macaw"
 				},
 			]
 		},
@@ -661,7 +676,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 					type: "text",
 					id: "obstacle-avoidance-6-1",
 					content: "obstacle-avoidance-6-1",
-					triggerContent: "trophy-macaw"
+					rightSideContent: "trophy-macaw"
 				},
 			]
 		}
