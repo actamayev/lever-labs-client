@@ -11,6 +11,10 @@ function IntroductionS5P5BallMoving() {
 	const [ballPosition, setBallPosition] = useState({ x: 200, y: 150 })
 	const [ballVelocity, setBallVelocity] = useState({ x: 0, y: 0 })
 
+	// Use refs to track current values in the animation loop
+	const currentPositionRef = useRef({ x: 200, y: 150 })
+	const currentVelocityRef = useRef({ x: 0, y: 0 })
+
 	// Physics constants
 	const ballRadius = 15
 	const friction = 0.98
@@ -37,42 +41,45 @@ function IntroductionS5P5BallMoving() {
 			const rollVelocity = (latestRoll / 90) * sensitivity // Normalize to -1 to 1 range
 			const pitchVelocity = (latestPitch / 90) * sensitivity
 
-			// Update velocity based on IMU data
-			setBallVelocity(prev => ({
-				x: prev.x * friction + rollVelocity,
-				y: prev.y * friction + pitchVelocity
-			}))
+			// Update velocity using refs to avoid stale closures
+			const newVelocity = {
+				x: currentVelocityRef.current.x * friction + rollVelocity,
+				y: currentVelocityRef.current.y * friction + pitchVelocity
+			}
+			currentVelocityRef.current = newVelocity
 
-			// Update position
-			setBallPosition(prev => {
-				let newX = prev.x + ballVelocity.x
-				let newY = prev.y + ballVelocity.y
+			// Update position using refs
+			let newX = currentPositionRef.current.x + newVelocity.x
+			let newY = currentPositionRef.current.y + newVelocity.y
 
-				// Boundary collision detection
-				const minX = boundaryPadding + ballRadius
-				const maxX = canvasWidth - boundaryPadding - ballRadius
-				const minY = boundaryPadding + ballRadius
-				const maxY = canvasHeight - boundaryPadding - ballRadius
+			// Boundary collision detection
+			const minX = boundaryPadding + ballRadius
+			const maxX = canvasWidth - boundaryPadding - ballRadius
+			const minY = boundaryPadding + ballRadius
+			const maxY = canvasHeight - boundaryPadding - ballRadius
 
-				// Bounce off walls
-				if (newX < minX) {
-					newX = minX
-					setBallVelocity(current => ({ ...current, x: -current.x * 0.8 }))
-				} else if (newX > maxX) {
-					newX = maxX
-					setBallVelocity(current => ({ ...current, x: -current.x * 0.8 }))
-				}
+			// Bounce off walls
+			if (newX < minX) {
+				newX = minX
+				newVelocity.x = -newVelocity.x * 0.8
+			} else if (newX > maxX) {
+				newX = maxX
+				newVelocity.x = -newVelocity.x * 0.8
+			}
 
-				if (newY < minY) {
-					newY = minY
-					setBallVelocity(current => ({ ...current, y: -current.y * 0.8 }))
-				} else if (newY > maxY) {
-					newY = maxY
-					setBallVelocity(current => ({ ...current, y: -current.y * 0.8 }))
-				}
+			if (newY < minY) {
+				newY = minY
+				newVelocity.y = -newVelocity.y * 0.8
+			} else if (newY > maxY) {
+				newY = maxY
+				newVelocity.y = -newVelocity.y * 0.8
+			}
 
-				return { x: newX, y: newY }
-			})
+			currentPositionRef.current = { x: newX, y: newY }
+
+			// Update state for UI display (this will trigger re-render for the display values)
+			setBallPosition({ x: newX, y: newY })
+			setBallVelocity(newVelocity)
 
 			// Clear canvas
 			ctx.clearRect(0, 0, canvasWidth, canvasHeight)
@@ -87,13 +94,13 @@ function IntroductionS5P5BallMoving() {
 				canvasHeight - 2 * boundaryPadding
 			)
 
-			// Draw ball with gradient
+			// Draw ball with gradient using current position from ref
 			const gradient = ctx.createRadialGradient(
-				ballPosition.x - 5,
-				ballPosition.y - 5,
+				newX - 5,
+				newY - 5,
 				0,
-				ballPosition.x,
-				ballPosition.y,
+				newX,
+				newY,
 				ballRadius
 			)
 			gradient.addColorStop(0, "#60A5FA") // Light blue
@@ -101,25 +108,25 @@ function IntroductionS5P5BallMoving() {
 
 			ctx.fillStyle = gradient
 			ctx.beginPath()
-			ctx.arc(ballPosition.x, ballPosition.y, ballRadius, 0, 2 * Math.PI)
+			ctx.arc(newX, newY, ballRadius, 0, 2 * Math.PI)
 			ctx.fill()
 
 			// Add highlight to ball
 			ctx.fillStyle = "rgba(255, 255, 255, 0.3)"
 			ctx.beginPath()
-			ctx.arc(ballPosition.x - 3, ballPosition.y - 3, ballRadius / 3, 0, 2 * Math.PI)
+			ctx.arc(newX - 3, newY - 3, ballRadius / 3, 0, 2 * Math.PI)
 			ctx.fill()
 
 			// Draw velocity indicator
-			const velocityMagnitude = Math.sqrt(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y)
+			const velocityMagnitude = Math.sqrt(newVelocity.x * newVelocity.x + newVelocity.y * newVelocity.y)
 			if (velocityMagnitude > 0.1) {
 				ctx.strokeStyle = "#EF4444"
 				ctx.lineWidth = 2
 				ctx.beginPath()
-				ctx.moveTo(ballPosition.x, ballPosition.y)
+				ctx.moveTo(newX, newY)
 				ctx.lineTo(
-					ballPosition.x + ballVelocity.x * 20,
-					ballPosition.y + ballVelocity.y * 20
+					newX + newVelocity.x * 20,
+					newY + newVelocity.y * 20
 				)
 				ctx.stroke()
 			}
@@ -134,8 +141,7 @@ function IntroductionS5P5BallMoving() {
 				cancelAnimationFrame(animationRef.current)
 			}
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [ballVelocity])
+	}, []) // Remove ballVelocity from dependencies
 
 	return (
 		<div className="space-y-6">
