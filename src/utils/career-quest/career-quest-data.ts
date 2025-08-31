@@ -276,7 +276,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-5-4",
 					content: "introduction-5-4",
-					rightSideContent: "heading4-humpback",
+					rightSideContent: "s5-p4-imu-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P4_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P4_EXIT)
 				},
@@ -284,7 +284,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-5-5",
 					content: "introduction-5-5",
-					rightSideContent: "heading5-humpback",
+					rightSideContent: "s5-p5-ball-moving",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P5_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S5_P5_EXIT)
 				},
@@ -328,7 +328,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-6-4",
 					content: "introduction-6-4",
-					rightSideContent: "heading4-humpback",
+					rightSideContent: "s6-p4-mz-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P4_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P4_EXIT)
 				},
@@ -342,7 +342,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-6-6",
 					content: "introduction-6-6",
-					rightSideContent: "heading6-humpback",
+					rightSideContent: "s6-p6-tofs-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P6_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S6_P6_EXIT)
 				},

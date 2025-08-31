@@ -20,13 +20,16 @@ class SensorDataClass {
 	public mX: number[] = []
 	public mY: number[] = []
 	public mZ: number[] = []
+	public leftSideTofCounts: number[] = []
+	public rightSideTofCounts: number[] = []
+	public distanceGrid: (number[] & { length: 64 })[] = [] // This is an array of arrays of 64 numbers
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
 	// Add a method that takes in a key and automatiaclly adds the value to the array, ommiting the key if it is irSensorData
-	public addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData">, value: number): void => {
+	public addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData" | "distanceGrid">, value: number): void => {
 		this[key].push(value)
 		// limit to 100 (first in, first out)
 		if (this[key].length >= 100) {
@@ -39,6 +42,14 @@ class SensorDataClass {
 		// limit to 100 (first in, first out)
 		if (this.irSensorData.length >= 100) {
 			this.irSensorData.shift()
+		}
+	})
+
+	public addMultizoneTofData = action((value: number[] & { length: 64 }): void => {
+		this.distanceGrid.push(value)
+		// limit to 100 (first in, first out)
+		if (this.distanceGrid.length >= 100) {
+			this.distanceGrid.shift()
 		}
 	})
 
@@ -67,6 +78,9 @@ class SensorDataClass {
 		this.mX = []
 		this.mY = []
 		this.mZ = []
+		this.leftSideTofCounts = []
+		this.rightSideTofCounts = []
+		this.distanceGrid = []
 	}
 }
 

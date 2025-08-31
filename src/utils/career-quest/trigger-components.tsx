@@ -7,6 +7,10 @@ import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sound
 import IntroductionS3P4Display from "../../components/career-quest/trigger-content/introduction-s3-p4-display"
 import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-content/introduction-s2-p3-color-picker"
 import IntroductionS2P4LightShow from "../../components/career-quest/trigger-content/introduction-s2-p4-light-show"
+import IntroductionS5P4ImuViz from "../../components/career-quest/trigger-content/introduction-s5-p4-imu-viz"
+import IntroductionS5P5BallMoving from "../../components/career-quest/trigger-content/introduction-s5-p5-ball-moving"
+import IntroductionS6P4MzViz from "../../components/career-quest/trigger-content/introduction-s6-p4-mz-viz"
+import IntroductionS6P6TofsViz from "../../components/career-quest/trigger-content/introduction-s6-p6-tofs-viz"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -17,6 +21,10 @@ export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	"s2-p4-light-show": () => <IntroductionS2P4LightShow />,
 	"s3-p4-display": () => <IntroductionS3P4Display />,
 	"s4-p4-speaker": () => <SoundsSection />,
+	"s5-p4-imu-viz": () => <IntroductionS5P4ImuViz />,
+	"s5-p5-ball-moving": () => <IntroductionS5P5BallMoving />,
+	"s6-p4-mz-viz": () => <IntroductionS6P4MzViz />,
+	"s6-p6-tofs-viz": () => <IntroductionS6P6TofsViz />,
 	"bot-humpback": () => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": () => <Bot size={120} className="text-macaw" />,
 
