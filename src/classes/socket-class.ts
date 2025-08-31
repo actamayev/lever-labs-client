@@ -13,11 +13,7 @@ import {
 	ClientSocketEvents,
 	ClientSocketEventPayloadMap,
 } from "@bluedotrobots/common-ts"
-import sandboxClass from "./sandbox-class"
-import careerQuestClass from "./career-quest-class"
-import workbenchClass from "./workbench-class"
-import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
-import sensorDataClass from "./sensor-data-class"
+import { listenersMap } from "../utils/constants/listeners-map"
 
 class SocketClass {
 	private _socket: Socket | null = null
@@ -38,9 +34,7 @@ class SocketClass {
 		})
 
 		this.setupConnectionEvents()
-		this.setupPipEvents()
-		this.setupChatbotEvents()
-		this.setupSensorDataEvents()
+		this.setupAllListeners()
 	})
 
 	private setupConnectionEvents = action((): void => {
@@ -67,46 +61,15 @@ class SocketClass {
 		this._socket?.on(event, handler as any)
 	}
 
-	private setupPipEvents = action((): void => {
-		// This is for receiving socket events from the backend.
+	private setupAllListeners = action((): void => {
 		if (!this._socket) return
-		this.setupTypedListener("pip-connection-status-update", handlePipStatusUpdate)
-		this.setupTypedListener("battery-monitor-data", workbenchClass.setBatteryData)
-	})
-
-	private setupSensorDataEvents = action((): void => {
-		if (!this._socket) return
-		this.setupTypedListener("general-sensor-data", (payload) => {
-			// Handle the full sensor payload by processing each field
-			Object.entries(payload).forEach(([key, value]) => {
-				if (key !== "irSensorData" && typeof value === "number") {
-					sensorDataClass.addGeneralSensorData(key as keyof Omit<typeof payload, "irSensorData">, value)
-				}
-			})
-			// Handle IR sensor data separately if it exists
-			if (payload.irSensorData) {
-				sensorDataClass.addIrSensorData(payload.irSensorData)
+		Object.entries(listenersMap).forEach(([event, handler]) => {
+			try {
+				this.setupTypedListener(event as SocketEvents, handler)
+			} catch (error) {
+				console.error(`Error in ${event} listener:`, error)
 			}
 		})
-	})
-
-	private setupChatbotEvents = action((): void => {
-		if (!this._socket) return
-
-		// Career Quest chatbot events
-		this.setupTypedListener("challenge-chatbot-stream-start", careerQuestClass.startChallengeStreaming)
-		this.setupTypedListener("challenge-chatbot-stream-chunk", careerQuestClass.addChallengeStreamingChunk)
-		this.setupTypedListener("challenge-chatbot-stream-complete", careerQuestClass.completeChallengeStreaming)
-
-		// Career chatbot events
-		this.setupTypedListener("career-chatbot-stream-start", careerQuestClass.startCareerStreaming)
-		this.setupTypedListener("career-chatbot-stream-chunk", careerQuestClass.addCareerStreamingChunk)
-		this.setupTypedListener("career-chatbot-stream-complete", careerQuestClass.completeCareerStreaming)
-
-		// Sandbox chatbot events
-		this.setupTypedListener("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
-		this.setupTypedListener("sandbox-chatbot-stream-chunk", sandboxClass.addStreamingChunk)
-		this.setupTypedListener("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
 	})
 
 	private emitToServer<E extends ClientSocketEvents>(
