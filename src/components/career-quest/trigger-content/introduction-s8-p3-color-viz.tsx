@@ -11,21 +11,21 @@ function IntroductionS8P3ColorViz() {
 			? sensorDataClass.redValue[sensorDataClass.redValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.redValue])
+	}, [sensorDataClass.redValue, sensorDataClass.dataVersion])
 
 	const latestGreen = useMemo(() => {
 		return sensorDataClass.greenValue.length > 0
 			? sensorDataClass.greenValue[sensorDataClass.greenValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.greenValue])
+	}, [sensorDataClass.greenValue, sensorDataClass.dataVersion])
 
 	const latestBlue = useMemo(() => {
 		return sensorDataClass.blueValue.length > 0
 			? sensorDataClass.blueValue[sensorDataClass.blueValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.blueValue])
+	}, [sensorDataClass.blueValue, sensorDataClass.dataVersion])
 
 	// Create RGB color string
 	const rgbColor = `rgb(${latestRed}, ${latestGreen}, ${latestBlue})`

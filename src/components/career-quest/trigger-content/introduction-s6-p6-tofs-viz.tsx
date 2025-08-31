@@ -22,14 +22,14 @@ function IntroductionS6P6TofsViz() {
 			? sensorDataClass.leftSideTofCounts[sensorDataClass.leftSideTofCounts.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.leftSideTofCounts])
+	}, [sensorDataClass.leftSideTofCounts, sensorDataClass.dataVersion])
 
 	const rightTofCount = useMemo(() => {
 		return sensorDataClass.rightSideTofCounts.length > 0
 			? sensorDataClass.rightSideTofCounts[sensorDataClass.rightSideTofCounts.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.rightSideTofCounts])
+	}, [sensorDataClass.rightSideTofCounts, sensorDataClass.dataVersion])
 
 	// Format data for charts
 	const leftTofData = useMemo(() => [
@@ -67,7 +67,7 @@ function IntroductionS6P6TofsViz() {
 									tick={false}
 								/>
 								<YAxis
-									domain={[0, 30000]}
+									domain={[0, 4000]}
 									className="text-xs"
 									label={{ value: "Count", angle: -90, position: "insideLeft" }}
 								/>
@@ -100,7 +100,7 @@ function IntroductionS6P6TofsViz() {
 									tick={false}
 								/>
 								<YAxis
-									domain={[0, 30000]}
+									domain={[0, 2600]}
 									className="text-xs"
 									label={{ value: "Count", angle: -90, position: "insideLeft" }}
 								/>
