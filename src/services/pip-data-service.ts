@@ -28,8 +28,8 @@ export default class PipDataService extends BaseDataService {
 	}
 
 	async retrievePipUUIDStatus(pipUUID: PipUUID): Promise<AxiosResponse<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>> {
-		return await this.httpClient.http.get<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>(
-			this.buildUrl(`/retrieve-pip-uuid-status/${pipUUID}`)
+		return await this.httpClient.http.post<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>(
+			this.buildUrl("/retrieve-pip-uuid-status"), { pipUUID }
 		)
 	}
 
