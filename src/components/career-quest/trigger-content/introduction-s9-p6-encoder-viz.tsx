@@ -163,7 +163,7 @@ function IntroductionS9P6EncoderViz() {
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [sensorDataClass.leftWheelRPM, sensorDataClass.rightWheelRPM, sensorDataClass.dataVersion])
 
 	// Get latest RPM values for display
 	const latestLeftRPM = sensorDataClass.leftWheelRPM[sensorDataClass.leftWheelRPM.length - 1] || 0
