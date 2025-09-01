@@ -71,7 +71,10 @@ class SocketClass {
 		event: E,
 		payload: ClientSocketEventPayloadMap[E]
 	): void {
-		this.emitToServer(event, payload)
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected, unable to emit event", event)
+		}
+		this._socket.emit(event, payload)
 	}
 
 	// TODO 7/12/25: Setup student and teacher specific events

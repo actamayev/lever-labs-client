@@ -48,7 +48,7 @@ export default class CareerQuestDataService extends BaseDataService {
 		pipUUID: PipUUID
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`career-trigger/${pipUUID}`),
+			this.buildUrl(`/career-trigger/${pipUUID}`),
 			{ careerType, triggerMessageType }
 		)
 	}
