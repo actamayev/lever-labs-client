@@ -231,7 +231,8 @@ function IntroductionS5P4ImuViz() {
 				</div>
 				<div className="text-center p-4 bg-purple-50 rounded-lg">
 					<div className="text-2xl font-bold text-purple-600">
-						{linearAccelerationData.length > 0 ? linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
+						{linearAccelerationData.length > 0 ?
+							linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
 					</div>
 					<div className="text-sm text-gray-600">Current Acceleration</div>
 				</div>

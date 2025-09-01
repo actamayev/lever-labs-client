@@ -23,5 +23,6 @@ export const listenersMap: {
 	"pip-connection-status-update": handlePipStatusUpdate,
 	"battery-monitor-data": workbenchClass.setBatteryData,
 	"general-sensor-data": sensorDataClass.addSensorData,
+	"general-sensor-data-mz": sensorDataClass.addMultizoneTofData,
 	"student-invite-join-class": studentClass.addPendingInvite,
 } as const

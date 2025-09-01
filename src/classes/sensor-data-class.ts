@@ -1,6 +1,6 @@
-import { action, makeAutoObservable } from "mobx"
-import { SensorPayload } from "@bluedotrobots/common-ts"
 import { isNil } from "lodash-es"
+import { action, makeAutoObservable } from "mobx"
+import { SensorPayload, SensorPayloadMZ } from "@bluedotrobots/common-ts"
 
 class SensorDataClass {
 	public leftWheelRPM: number[] = []
@@ -23,7 +23,7 @@ class SensorDataClass {
 	public mZ: number[] = []
 	public leftSideTofCounts: number[] = []
 	public rightSideTofCounts: number[] = []
-	public distanceGrid: (number[] & { length: 64 })[] = [] // This is an array of arrays of 64 numbers
+	public distanceGrid: number[][] = Array.from({ length: 8 }, () => Array(8).fill(0))
 	public dataVersion = 0 // Add this for reactivity
 
 	constructor() {
@@ -32,9 +32,9 @@ class SensorDataClass {
 
 	public addSensorData = action((sensorData: SensorPayload): void => {
 		Object.entries(sensorData).forEach(([key, value]) => {
-			if (key !== "irSensorData" && typeof value === "number" && key !== "distanceGrid") {
+			if (key !== "irSensorData" && typeof value === "number") {
 				this.addGeneralSensorData(
-					key as keyof Omit<typeof sensorData, "irSensorData" | "distanceGrid">,
+					key as keyof Omit<typeof sensorData, "irSensorData">,
 					value
 				)
 			}
@@ -43,13 +43,10 @@ class SensorDataClass {
 		if (!isNil(sensorData.irSensorData)) {
 			this.addIrSensorData(sensorData.irSensorData)
 		}
-		if (!isNil(sensorData.distanceGrid)) {
-			this.addMultizoneTofData(sensorData.distanceGrid)
-		}
 	})
 
 	// Add a method that takes in a key and automatiaclly adds the value to the array, ommiting the key if it is irSensorData
-	private addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData" | "distanceGrid">, value: number): void => {
+	private addGeneralSensorData = action((key: keyof Omit<SensorPayload, "irSensorData">, value: number): void => {
 		this[key].push(value)
 		// limit to 100 (first in, first out)
 		if (this[key].length >= 100) {
@@ -66,12 +63,9 @@ class SensorDataClass {
 		}
 	})
 
-	private addMultizoneTofData = action((value: number[] & { length: 64 }): void => {
-		this.distanceGrid.push(value)
-		// limit to 100 (first in, first out)
-		if (this.distanceGrid.length >= 100) {
-			this.distanceGrid.shift()
-		}
+	public addMultizoneTofData = action((value: SensorPayloadMZ): void => {
+		this.distanceGrid[value.row] = value.distances || []
+		this.dataVersion++ // Increment version for reactivity
 	})
 
 	public logout(): void {
@@ -101,7 +95,7 @@ class SensorDataClass {
 		this.mZ = []
 		this.leftSideTofCounts = []
 		this.rightSideTofCounts = []
-		this.distanceGrid = []
+		this.distanceGrid = Array.from({ length: 8 }, () => Array(8).fill(0))
 	}
 }
 

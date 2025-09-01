@@ -3,7 +3,7 @@
 import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
 	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload,
-	WiFiConnectionStatus, BatteryMonitorDataItem, SensorPayload } from "@bluedotrobots/common-ts"
+	WiFiConnectionStatus, BatteryMonitorDataItem, SensorPayload, SensorPayloadMZ } from "@bluedotrobots/common-ts"
 import toastClass from "./toast-class"
 import workbenchClass from "./workbench-class"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
@@ -228,7 +228,16 @@ class SerialMessageManagerClass {
 		case "/sensor-data": {
 			const sensorData = message.payload as SensorPayload
 			runInAction(() => {
+				console.log("handleSensorData")
 				sensorDataClass.addSensorData(sensorData)
+			})
+			break
+		}
+
+		case "/sensor-data-mz": {
+			const sensorData = message.payload as SensorPayloadMZ
+			runInAction(() => {
+				sensorDataClass.addMultizoneTofData(sensorData)
 			})
 			break
 		}

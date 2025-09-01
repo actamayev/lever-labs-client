@@ -63,6 +63,7 @@ function IntroductionS6P4MzViz() {
 		const cell = getCellFromMouse(event.clientX, event.clientY)
 		if (cell) {
 			const latestData = sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (latestData && latestData.length === 64) {
 				const index = cell.row * gridSize + cell.col
 				const value = latestData[index] || 0
@@ -92,6 +93,7 @@ function IntroductionS6P4MzViz() {
 			// Get latest distance grid data
 			const latestData = sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]
 
+			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 			if (latestData && latestData.length === 64) {
 				// Draw grid cells
 				for (let row = 0; row < gridSize; row++) {
@@ -201,7 +203,10 @@ function IntroductionS6P4MzViz() {
 
 			{/* Data Summary */}
 			<div className="text-center text-sm text-gray-600">
-				<div>Latest Data Points: {sensorDataClass.distanceGrid.length > 0 ? sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]?.length || 0 : 0}/64</div>
+				<div>Latest Data Points:
+					{sensorDataClass.distanceGrid.length > 0 ?
+						// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+						sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]?.length || 0 : 0}/64</div>
 				<div>Data History: {sensorDataClass.distanceGrid.length} samples</div>
 			</div>
 		</div>

@@ -282,8 +282,8 @@ export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Reac
 			</Highlighter>,
 			{" "}or {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
-				Time-of-Flight sensors.
-			</Highlighter>
+				Time-of-Flight sensors
+			</Highlighter>.
 		</div>
 	),
 	"introduction-6-2": () => (

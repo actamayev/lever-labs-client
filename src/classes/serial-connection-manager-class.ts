@@ -371,6 +371,7 @@ class SerialConnectionManagerClass {
 				if (lines.length > 1) {
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
+						console.log("line", line)
 						if (line) {
 							serialMessageManagerClass.handleRawMessage(line)
 						}
