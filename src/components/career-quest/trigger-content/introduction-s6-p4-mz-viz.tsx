@@ -14,7 +14,7 @@ function IntroductionS6P4MzViz() {
 	const canvasSize = 450
 	const gridSize = 8
 	const cellSize = canvasSize / gridSize
-	const padding = 15
+	const padding = 0
 
 	// Color configuration
 	const minDistance = 0 // mm
