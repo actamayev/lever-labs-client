@@ -15,10 +15,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS5P4ImuViz() {
+function MeetPipS5P4ImuViz(): React.ReactNode {
 	// Calculate linear acceleration magnitude from aX, aY, aZ
-	const linearAccelerationData = useMemo(() => {
-		return sensorDataClass.aX.map((ax, index) => {
+	const linearAccelerationData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.aX.map((ax, index): { index: number, value: number } => {
 			const ay = sensorDataClass.aY[index] || 0
 			const az = sensorDataClass.aZ[index] || 0
 			const magnitude = Math.sqrt(ax * ax + ay * ay + az * az)
@@ -31,24 +31,24 @@ function IntroductionS5P4ImuViz() {
 	}, [sensorDataClass.aX, sensorDataClass.aY, sensorDataClass.aZ, sensorDataClass.dataVersion])
 
 	// Format data for yaw, pitch, roll charts
-	const yawData = useMemo(() => {
-		return sensorDataClass.yaw.map((value, index) => ({
+	const yawData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.yaw.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.yaw, sensorDataClass.dataVersion])
 
-	const pitchData = useMemo(() => {
-		return sensorDataClass.pitch.map((value, index) => ({
+	const pitchData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.pitch.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.pitch, sensorDataClass.dataVersion])
 
-	const rollData = useMemo(() => {
-		return sensorDataClass.roll.map((value, index) => ({
+	const rollData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.roll.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
@@ -76,7 +76,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={yawData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -87,8 +87,8 @@ function IntroductionS5P4ImuViz() {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Yaw"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -111,7 +111,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={pitchData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -122,8 +122,8 @@ function IntroductionS5P4ImuViz() {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Pitch"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -146,7 +146,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={rollData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -157,8 +157,8 @@ function IntroductionS5P4ImuViz() {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Roll"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -181,7 +181,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={linearAccelerationData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -192,8 +192,8 @@ function IntroductionS5P4ImuViz() {
 									label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -212,33 +212,33 @@ function IntroductionS5P4ImuViz() {
 			{/* Data Summary */}
 			<div className="grid grid-cols-4 gap-4 mt-6">
 				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-blue-600">
+					<div className="text-2xl font-bold text-macaw">
 						{sensorDataClass.yaw.length > 0 ? sensorDataClass.yaw[sensorDataClass.yaw.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Yaw</div>
+					<div className="text-sm text-eel">Current Yaw</div>
 				</div>
 				<div className="text-center p-4 bg-red-50 rounded-lg">
-					<div className="text-2xl font-bold text-red-600">
+					<div className="text-2xl font-bold text-cardinal">
 						{sensorDataClass.pitch.length > 0 ? sensorDataClass.pitch[sensorDataClass.pitch.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Pitch</div>
+					<div className="text-sm text-eel">Current Pitch</div>
 				</div>
 				<div className="text-center p-4 bg-green-50 rounded-lg">
-					<div className="text-2xl font-bold text-green-600">
+					<div className="text-2xl font-bold text-chargingGreen">
 						{sensorDataClass.roll.length > 0 ? sensorDataClass.roll[sensorDataClass.roll.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Roll</div>
+					<div className="text-sm text-eel">Current Roll</div>
 				</div>
 				<div className="text-center p-4 bg-purple-50 rounded-lg">
-					<div className="text-2xl font-bold text-purple-600">
+					<div className="text-2xl font-bold text-beetle">
 						{linearAccelerationData.length > 0 ?
 							linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
 					</div>
-					<div className="text-sm text-gray-600">Current Acceleration</div>
+					<div className="text-sm text-eel">Current Acceleration</div>
 				</div>
 			</div>
 		</div>
 	)
 }
 
-export default observer(IntroductionS5P4ImuViz)
+export default observer(MeetPipS5P4ImuViz)

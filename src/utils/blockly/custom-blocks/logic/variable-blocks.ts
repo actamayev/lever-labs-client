@@ -10,7 +10,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// Float variables (original implementation)
 	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_FLOAT]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Create float variable")
 					.appendField(new Blockly.FieldTextInput("myFloat"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -35,7 +35,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	},
 	[VARIABLE_BLOCK_TYPES.VARIABLE_ASSIGN]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Set variable")
 					.appendField(new Blockly.FieldTextInput("myVar"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -60,7 +60,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	},
 	[VARIABLE_BLOCK_TYPES.VARIABLE_GET_FLOAT]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Get variable")
 					.appendField(new Blockly.FieldTextInput("myVar"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -80,7 +80,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// New int variable blocks
 	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_INT]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Create int variable")
 					.appendField(new Blockly.FieldTextInput("myInt"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -105,7 +105,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	},
 	[VARIABLE_BLOCK_TYPES.VARIABLE_GET_INT]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Get int variable")
 					.appendField(new Blockly.FieldTextInput("myInt"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -125,7 +125,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// New bool variable blocks
 	[VARIABLE_BLOCK_TYPES.VARIABLE_DECLARE_BOOL]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Create bool variable")
 					.appendField(new Blockly.FieldTextInput("myBool"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)
@@ -149,7 +149,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	},
 	[VARIABLE_BLOCK_TYPES.VARIABLE_GET_BOOL]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Get bool variable")
 					.appendField(new Blockly.FieldTextInput("myBool"), VARIABLE_FIELD_VALUES.VARIABLE_NAME)

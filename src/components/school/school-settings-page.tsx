@@ -4,7 +4,7 @@ import JoinClassroom from "./join-classroom"
 import ProfileLayout from "../profile/profile-layout"
 import RequestTeacherAccess from "./request-teacher-access"
 
-function SchoolSettingsPage() {
+function SchoolSettingsPage(): React.ReactNode {
 	return (
 		<ProfileLayout>
 			<div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 mt-5 max-w-full">

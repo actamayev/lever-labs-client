@@ -7,14 +7,6 @@ import { BlocklyJson, ProjectUUID, SandboxProject, SandboxChatMessage,
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 
-// Extended interface for internal state management
-interface SandboxProjectWithStreaming extends SandboxProject {
-	isStreaming: boolean
-	isWaitingForResponse: boolean
-	currentStreamingMessageId: string | null
-	cppCode: string
-}
-
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
 	public hasRetrievedAllSandboxProjects = false
@@ -35,7 +27,7 @@ class SandboxClass {
 	})
 
 	public setSandboxProjects = action((sandboxProjects: SandboxProject[]): void => {
-		sandboxProjects.forEach(sandboxProject => this.addSandboxProject(sandboxProject))
+		sandboxProjects.forEach((sandboxProject): void => this.addSandboxProject(sandboxProject))
 		this.setHasRetrievedAllSandboxProjects(true)
 		this.setIsRetrievingAllSandboxProjects(false)
 	})
@@ -172,7 +164,7 @@ class SandboxClass {
 
 		// Find the last message (which should be the streaming one)
 		const lastMessage = project.sandboxChatMessages[project.sandboxChatMessages.length - 1]
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (lastMessage && lastMessage.role === "assistant") {
 			lastMessage.content += event.content
 		}

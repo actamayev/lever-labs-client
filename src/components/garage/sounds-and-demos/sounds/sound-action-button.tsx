@@ -2,8 +2,8 @@
 
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
+import { useRef, useEffect } from "react"
 import { FunSounds } from "@bluedotrobots/common-ts"
-import { ReactNode, useRef, useEffect } from "react"
 import { cn } from "../../../../lib/shadcn/utils"
 import pipClass from "../../../../classes/pip-class"
 import { CustomUfo } from "../../../icons/custom-ufo"
@@ -18,36 +18,36 @@ import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 
-function SoundActionButton({ sound, index } : { sound: FunSounds, index: number }) {
+function SoundActionButton({ sound, index } : { sound: FunSounds, index: number }): React.ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 
 	// Map direction to the correct icon
-	const getSoundIcon = (): ReactNode => {
+	const getSoundIcon = (): React.ReactNode => {
 		switch (sound) {
-		case "Fart":
-			return <CustomFart className="!size-10" />
-		case "Monkey":
-			if (garageClass.soundPlaying === "Monkey") {
-				return <CustomHearNoEvilMonkey className="!size-10" />
-			}
-			return <CustomSpeakNoEvilMonkey className="!size-10" />
-		case "Elephant":
-			return <CustomElephant className="!size-10" />
-		case "Party":
-			return <CustomPartyPopper className="!size-10" />
-		case "UFO":
-			return <CustomUfo className="!size-10" />
-		case "Countdown":
-			return <CustomCountdown className="!size-10" />
-		case "Robot":
-			return <Bot className="!size-10" />
-		case "Engine":
-			return <CustomEngine className="!size-10" />
+			case "Fart":
+				return <CustomFart className="!size-10" />
+			case "Monkey":
+				if (garageClass.soundPlaying === "Monkey") {
+					return <CustomHearNoEvilMonkey className="!size-10" />
+				}
+				return <CustomSpeakNoEvilMonkey className="!size-10" />
+			case "Elephant":
+				return <CustomElephant className="!size-10" />
+			case "Party":
+				return <CustomPartyPopper className="!size-10" />
+			case "UFO":
+				return <CustomUfo className="!size-10" />
+			case "Countdown":
+				return <CustomCountdown className="!size-10" />
+			case "Robot":
+				return <Bot className="!size-10" />
+			case "Engine":
+				return <CustomEngine className="!size-10" />
 		}
 	}
 
 	// Update button styling directly when isPressed changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!buttonRef.current) return
 
 		const buttonElement = buttonRef.current
@@ -65,13 +65,13 @@ function SoundActionButton({ sound, index } : { sound: FunSounds, index: number 
 	}, [garageClass.soundPlaying, sound])
 
 	// Handle button click for action buttons
-	const handleButtonDown = () => {
+	const handleButtonDown = (): void => {
 		if (!pipClass.selectedPip) return
 		playFunSound(sound)
 	}
 
 	// Handle button release for action buttons
-	const handleButtonUp = () => {
+	const handleButtonUp = (): void => {
 		// Reset the sound playing state when button is released
 		if (garageClass.soundPlaying === sound) {
 			garageClass.setSoundPlaying(null)

@@ -12,10 +12,11 @@ import serialMessageManagerClass from "../../classes/serial-message-manager-clas
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 interface ManualEntrySectionProps {
-    control: Control<IncompletePipData>
+	control: Control<IncompletePipData>
 }
 
-function ManualEntrySection({ control }: ManualEntrySectionProps) {
+function ManualEntrySection(props: ManualEntrySectionProps): React.ReactNode {
+	const { control } = props
 	// Watch the manual form fields for real-time updates
 	const watchedManualNetworkName = useWatch({
 		control,
@@ -29,7 +30,7 @@ function ManualEntrySection({ control }: ManualEntrySectionProps) {
 		defaultValue: ""
 	})
 
-	const handleManualConnect = useCallback(async () => {
+	const handleManualConnect = useCallback(async (): Promise<void> => {
 		if (
 			serialMessageManagerClass.isTestingWiFiConnection ||
 			!watchedManualNetworkName ||

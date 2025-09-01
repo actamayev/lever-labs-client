@@ -36,7 +36,7 @@ class GarageClass {
 	public lastThrottlePercent: number = 100
 	public soundPlaying: FunSounds | null = null
 
-	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
+	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map((): boolean[] => Array(DISPLAY_WIDTH).fill(false))
 	public textInput: string = ""
 	public selectedDesign: PreDefinedDesignName = "No design"
 	public textOnBuffer: string = ""
@@ -48,21 +48,21 @@ class GarageClass {
 
 	public setPixelInBuffer = action((x: number, y: number, state: boolean): void => {
 		if (x >= 0 && x < DISPLAY_WIDTH && y >= 0 && y < DISPLAY_HEIGHT) {
-			const newBuffer = this.pixelBuffer.map((row: boolean[]) => [...row])
+			const newBuffer = this.pixelBuffer.map((row: boolean[]): boolean[] => [...row])
 			newBuffer[y][x] = state
 			this.pixelBuffer = newBuffer
 		}
 	})
 
 	private clearBuffer = action((): void => {
-		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
+		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map((): boolean[] => Array(DISPLAY_WIDTH).fill(false))
 	})
 
 	public applyDesignToBuffer = action(async (designName: PreDefinedDesignName): Promise<void> => {
-		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
+		const design = PRE_DEFINED_DESIGNS.find((d): boolean => d.name === designName)
 		if (!design) return
 		this.clearBuffer()
-		design.pixels.forEach((pixel: Point) => {
+		design.pixels.forEach((pixel: Point): void => {
 			this.setPixelInBuffer(pixel.x, pixel.y, true)
 		})
 		this.designOnBuffer = designName
@@ -109,14 +109,14 @@ class GarageClass {
 
 	public toggleDot = action((dotIndex: number): void => {
 		if (this.selectedDots.includes(dotIndex)) {
-			this.selectedDots = this.selectedDots.filter((i) => i !== dotIndex)
+			this.selectedDots = this.selectedDots.filter((i): boolean => i !== dotIndex)
 		} else {
 			this.selectedDots = [...this.selectedDots, dotIndex]
 		}
 	})
 
 	public updateDotColor = action((dotIndices: number[], color: RgbaColor): void => {
-		dotIndices.forEach((index) => {
+		dotIndices.forEach((index): void => {
 			this.dotColors[index] = color
 		})
 	})

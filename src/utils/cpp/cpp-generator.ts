@@ -31,7 +31,7 @@ class CppGenerator extends Blockly.Generator {
 	}
 
 	public override workspaceToCode(workspace: Blockly.WorkspaceSvg): string {
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (!workspace) return ""
 
 		let code = ""

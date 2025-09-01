@@ -7,7 +7,7 @@ import { START_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 export const startBlocks: Record<START_BLOCK_TYPES, CustomBlock> = {
 	[START_BLOCK_TYPES.BUTTON_PRESS_START]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Start program when button is pressed")
 				this.setNextStatement(true, null)

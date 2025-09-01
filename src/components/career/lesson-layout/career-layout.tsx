@@ -1,11 +1,11 @@
-/* eslint-disable max-len */
+
 "use client"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"
 import TransitionOverlay from "../transition/transition-overlay"
 import LeftContentSwiper from "./left-content-swiper"
 
-export default function CareerLayout({ careerData }: { careerData: CareerQuestData }) {
+export default function CareerLayout({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	return (
 		<div className="flex h-full">
 			{/* Left Panel - Main Swiper */}

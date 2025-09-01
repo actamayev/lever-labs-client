@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["robot dashboard", "sensor monitoring", "robot settings"]
 })
 
-export default function TheGarage() {
+export default function TheGarage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<TheGaragePage />

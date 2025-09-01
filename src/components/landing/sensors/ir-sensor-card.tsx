@@ -3,7 +3,7 @@
 import SensorsSkeleton from "./sensors-skeleton"
 import IRSensorAnimation from "../../icon-animations/ir-sensor-animation"
 
-export default function IRSensorCard() {
+export default function IRSensorCard(): React.ReactNode {
 	return (
 		<SensorsSkeleton
 			title="IR Sensors"

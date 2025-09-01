@@ -20,7 +20,7 @@ interface Props {
 	extraClasses?: string
 }
 
-export default function SingleCodingConceptUsed(props: Props) {
+export default function SingleCodingConceptUsed(props: Props): React.ReactNode {
 	const { codingConcept, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)

@@ -5,7 +5,7 @@ import toUpper from "lodash-es/toUpper"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
 
-export function SupportBorder() {
+export function SupportBorder(): React.ReactNode {
 	return (
 		<div className="container mx-auto w-full">
 			<div className="border-b-2 border-swan rounded-xl"></div>
@@ -13,7 +13,7 @@ export function SupportBorder() {
 	)
 }
 
-function SupportLink({ page } : { page: "mission" | "contact" }) {
+function SupportLink({ page } : { page: "mission" | "contact" }): React.ReactNode {
 	const pathname = usePathname()
 	const active = pathname === `/${page}`
 
@@ -38,7 +38,7 @@ function SupportLink({ page } : { page: "mission" | "contact" }) {
 	)
 }
 
-export default function SupportHeader () {
+export default function SupportHeader (): React.ReactNode {
 	return (
 		<header className="py-6">
 			<nav className="container">

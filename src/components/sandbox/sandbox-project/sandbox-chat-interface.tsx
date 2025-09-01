@@ -17,8 +17,8 @@ interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
 }
 
-// eslint-disable-next-line max-lines-per-function
-function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
+
+function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps): React.ReactNode {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -31,11 +31,11 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 	const hasAnyMessages = messages.length > 0
 
 	// Reset confirmation state when messages change (e.g., new message sent)
-	useEffect(() => {
+	useEffect((): void => {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
 
-	const handleSendMessage = useCallback(async () => {
+	const handleSendMessage = useCallback(async (): Promise<void> => {
 		if (!inputValue.trim() || isStreaming) return
 
 		setInputValue("")
@@ -44,7 +44,7 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 		sandboxClass.addUserMessage(projectUUID, inputValue)
 
 		// Keep focus on input after sending
-		setTimeout(() => {
+		setTimeout((): void => {
 			inputRef.current?.focus()
 		}, 0)
 
@@ -61,20 +61,20 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 		return currentStreamId
 	}, [projectUUID])
 
-	const onStopStreaming = useCallback(async () => {
+	const onStopStreaming = useCallback(async (): Promise<void> => {
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
-	const handleDeleteClick = useCallback(() => {
+	const handleDeleteClick = useCallback((): void => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(true)
 	}, [hasAnyMessages, isStreaming])
 
-	const handleCancelDelete = useCallback(() => {
+	const handleCancelDelete = useCallback((): void => {
 		setShowDeleteConfirmation(false)
 	}, [])
 
-	const handleConfirmDelete = useCallback(async () => {
+	const handleConfirmDelete = useCallback(async (): Promise<void> => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
 		await deleteSandboxChat(projectUUID)
@@ -100,7 +100,7 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 				isStreaming={isStreaming}
 				messageLength={messages.length}
 			>
-				{messages.map((message, index) => (
+				{messages.map((message, index): React.ReactNode => (
 					<SingleSandboxMessage
 						key={`${projectUUID}-${index}`}
 						message={message}

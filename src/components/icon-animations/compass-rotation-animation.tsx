@@ -16,7 +16,7 @@ const animationStyles = `
   }
 `
 
-export default function CompassRotationAnimation({ iconSize } : { iconSize: number }) {
+export default function CompassRotationAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	const [isAnimating, setIsAnimating] = useState(false)
 
 	return (
@@ -24,8 +24,8 @@ export default function CompassRotationAnimation({ iconSize } : { iconSize: numb
 			<style>{animationStyles}</style>
 			<div
 				className="w-fit group"
-				onMouseEnter={() => setIsAnimating(true)}
-				onMouseLeave={() => setIsAnimating(false)}
+				onMouseEnter={(): void => setIsAnimating(true)}
+				onMouseLeave={(): void => setIsAnimating(false)}
 			>
 				<CustomCompass
 					className={cn(

@@ -18,7 +18,7 @@ export default function useEffectLogoutListener(): void {
 		router.refresh()
 	}, [navigate, router])
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		window.addEventListener("storage", handleStorageChange)
 
 		return (): void => {

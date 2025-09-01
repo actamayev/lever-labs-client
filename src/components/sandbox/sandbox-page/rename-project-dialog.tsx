@@ -24,23 +24,23 @@ interface Props {
 	setNewProjectName: Dispatch<SetStateAction<string>>
 }
 
-export default function RenameProjectDialog(props: Props) {
+export default function RenameProjectDialog(props: Props): React.ReactNode {
 	const { project, isRenameDialogOpen, setIsRenameDialogOpen, newProjectName, setNewProjectName } = props
 
 	const colors = getDuolingoColors("humpback")
 
-	const handleCancelRename = useCallback(() => {
+	const handleCancelRename = useCallback((): void => {
 		setIsRenameDialogOpen(false)
 	}, [setIsRenameDialogOpen])
 
-	const handleSaveRename = useCallback(async () => {
+	const handleSaveRename = useCallback(async (): Promise<void> => {
 		await editSandboxProjectName(project.projectUUID, newProjectName)
 		setIsRenameDialogOpen(false)
 	}, [project.projectUUID, newProjectName, setIsRenameDialogOpen])
 
 	return (
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-			<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
+			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Rename</DialogTitle>
 					<DialogClose />
@@ -48,10 +48,10 @@ export default function RenameProjectDialog(props: Props) {
 				<div>
 					<Input
 						value={newProjectName}
-						onChange={(e) => setNewProjectName(e.target.value)}
+						onChange={(e): void => setNewProjectName(e.target.value)}
 						placeholder="Project name"
 						className="w-full !text-xl h-10"
-						onKeyDown={(e) => {
+						onKeyDown={(e): void => {
 							if (e.key === "Escape") {
 								handleCancelRename()
 							} else if (e.key === "Enter") {

@@ -11,10 +11,10 @@ interface Props {
 	email: string
 }
 
-function ContactItemInCard(props: Props) {
+function ContactItemInCard(props: Props): React.ReactNode {
 	const { name, email } = props
 
-	const copyToClipboard = useCallback(async () => {
+	const copyToClipboard = useCallback(async (): Promise<void> => {
 		try {
 			await navigator.clipboard.writeText(email)
 			return toastClass.neutral({

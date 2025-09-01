@@ -5,7 +5,7 @@ import Login from "./login/login-component"
 import Register from "./register/register-component"
 import authClass from "../../classes/auth-class"
 
-function ShowAuthToNullUser() {
+function ShowAuthToNullUser(): React.ReactNode {
 	if (authClass.showLoginOrRegister === "Register") {
 		return <Register />
 	}

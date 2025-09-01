@@ -9,8 +9,8 @@ import CharacterCounter from "../character-counter"
 import { FormControl, FormField, FormItem } from "../shadcn/ui/form"
 import { useCallback } from "react"
 
-export default function EnterPipName({ control }: { control: Control<IncompletePipData> }) {
-	const getTooltipMessage = useCallback((pipName: string) => {
+export default function EnterPipName({ control }: { control: Control<IncompletePipData> }): React.ReactNode {
+	const getTooltipMessage = useCallback((pipName: string): string => {
 		if (!pipName) return "What would you like to name your Pip?"
 		if (pipName.length < 3) return "Let's make the name a bit longer - at least 3 characters"
 		if (pipName.length > 20) return "That's a bit long! Could you shorten it to 20 characters?"
@@ -21,7 +21,7 @@ export default function EnterPipName({ control }: { control: Control<IncompleteP
 		<FormField
 			control={control}
 			name="pipName"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem>
 					<FormControl>
 						<div className="relative">

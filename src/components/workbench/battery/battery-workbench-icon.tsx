@@ -5,7 +5,7 @@ import pipClass from "../../../classes/pip-class"
 import workbenchClass from "../../../classes/workbench-class"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
-function BatteryWorkbenchIcon() {
+function BatteryWorkbenchIcon(): React.ReactNode {
 	const batteryColorClasses = useGetBatteryColorClasses()
 	const baseClasses = "!h-14 !w-14"
 	const strokeWidth = 2.5

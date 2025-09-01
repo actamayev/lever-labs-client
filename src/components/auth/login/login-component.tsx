@@ -19,7 +19,7 @@ import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
-export default function LoginComponent() {
+export default function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 	const pathname = usePathname()
@@ -32,7 +32,7 @@ export default function LoginComponent() {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: LoginRequest) => {
+	const onSubmit = useCallback(async (values: LoginRequest): Promise<void> => {
 		const success = await loginSubmit(values, setError)
 		if (success === false) return
 		if (pathname === "/login") navigate(PageToNavigateAfterLogin)

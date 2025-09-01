@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function GridPattern() {
+export default function GridPattern(): React.ReactNode {
   // State for responsive values
   const [margins, setMargins] = useState({ left: 230, right: 230 });
   const [showGrid, setShowGrid] = useState(true);

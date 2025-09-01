@@ -9,18 +9,18 @@ import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 
-function ProfileImage() {
+function ProfileImage(): React.ReactNode {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const [isHovered, setIsHovered] = useState(false)
 
-	const handleMouseEnter = useCallback(() => setIsHovered(true), [])
-	const handleMouseLeave = useCallback(() => setIsHovered(false), [])
+	const handleMouseEnter = useCallback((): void => setIsHovered(true), [])
+	const handleMouseLeave = useCallback((): void => setIsHovered(false), [])
 
-	const handleOpenDialog = useCallback(() => {
+	const handleOpenDialog = useCallback((): void => {
 		setIsDialogOpen(true)
 	}, [])
 
-	const handleCloseDialog = useCallback(() => {
+	const handleCloseDialog = useCallback((): void => {
 		setIsDialogOpen(false)
 	}, [])
 

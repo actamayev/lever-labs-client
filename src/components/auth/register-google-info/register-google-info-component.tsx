@@ -14,7 +14,7 @@ import { registerUsernameSchema } from "../../../utils/auth/auth-schemas"
 import registerGoogleInfo from "../../../utils/auth/google/register-google-info"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
-export default function RegisterGoogleInfoComponent() {
+export default function RegisterGoogleInfoComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 
@@ -26,7 +26,7 @@ export default function RegisterGoogleInfoComponent() {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues) => {
+	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues): Promise<void> => {
 		const success = await registerGoogleInfo(values, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)

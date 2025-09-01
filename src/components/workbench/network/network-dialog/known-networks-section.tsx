@@ -6,19 +6,19 @@ import { Check } from "lucide-react"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import NetworkStrengthIcon from "../../../network-strength-icon"
 
-function KnownNetworksSection() {
+function KnownNetworksSection(): React.ReactNode {
 	if (isEmpty(serialMessageManagerClass.knownNetworks)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
-                No known networks nearby
+				No known networks nearby
 			</div>
 		)
 	}
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{serialMessageManagerClass.knownNetworks.map((network, index) => (
+			{serialMessageManagerClass.knownNetworks.map((network, index): React.ReactNode => (
 				<div
 					key={`known-${network.ssid}-${index}`}
 					className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"

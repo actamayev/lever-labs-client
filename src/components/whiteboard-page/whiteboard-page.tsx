@@ -12,16 +12,16 @@ interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
-function SingleWhiteboardPage({ classCode }: ClassroomPageProps) {
+function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 
 	const classroomData = studentClass.getClassroomData(classCode)
 
-	useEffect(() => {
+	useEffect((): void => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
 	}, [classroomData?.classroomName])
 
-	const handleBackClick = () => navigate("/whiteboard")
+	const handleBackClick = (): void => navigate("/whiteboard")
 
 	if (studentClass.isRetrievingStudentData) {
 		return (

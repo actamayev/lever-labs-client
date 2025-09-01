@@ -8,6 +8,6 @@ export const metadata = createMetadata({
 	keywords: ["terms of service", "blue dot robots", "terms and conditions"]
 })
 
-export default function Terms() {
+export default function Terms(): React.ReactNode {
 	return <TermsPage />
 }

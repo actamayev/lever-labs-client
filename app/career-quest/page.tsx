@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["robotics adventure", "coding challenges", "purpose discovery"]
 })
 
-export default function CareerQuestPage() {
+export default function CareerQuestPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<CareerQuest />

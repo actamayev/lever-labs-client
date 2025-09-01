@@ -9,10 +9,10 @@ import ConnectDisconnectSerial from "./connect-serial-button"
 import AddPipSidebarButton from "./add-pip/add-pip-sidebar-button"
 import { PrivatePageNames, OpenPages } from "../../../utils/constants/page-constants"
 
-export default function PrimarySidebar() {
+export default function PrimarySidebar(): React.ReactNode {
 	const pathname = usePathname()
 
-	const isPrivatePage = PrivatePageNames.some(privatePage => {
+	const isPrivatePage = PrivatePageNames.some((privatePage): boolean => {
 		// Exact match for most pages
 		if (pathname === privatePage) return true
 
@@ -27,7 +27,7 @@ export default function PrimarySidebar() {
 		return false
 	})
 
-	const isOpenPage = OpenPages.some(openPath =>
+	const isOpenPage = OpenPages.some((openPath): boolean =>
 		pathname.startsWith(openPath)
 	)
 

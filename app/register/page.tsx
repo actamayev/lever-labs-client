@@ -9,6 +9,6 @@ export const metadata = createMetadata({
 	keywords: ["register", "learning platform signup", "robot programming"]
 })
 
-export default function Register() {
+export default function Register(): React.ReactNode {
 	return <RegisterComponent />
 }

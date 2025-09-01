@@ -33,7 +33,7 @@ export default function useGarageSoundsUseEffect(): void {
 	}
 
 	// Set up key event listeners
-	useEffect(() => {
+	useEffect((): () => void => {
 		window.addEventListener("keydown", handleKeyDown)
 		window.addEventListener("keyup", handleKeyUp)
 

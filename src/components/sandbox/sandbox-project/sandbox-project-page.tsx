@@ -1,5 +1,6 @@
 "use client"
 
+import * as Blockly from "blockly"
 import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
@@ -26,11 +27,12 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
-	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
+function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }): React.ReactNode {
+	useEffect((): void => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
@@ -38,18 +40,18 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	const previousSearchingRef = useRef(false)
 	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
-	const project = useMemo(() => {
+	const project = useMemo((): SandboxProjectWithStreaming | undefined => {
 		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
-	const filteredToolboxConfig = useMemo(() => {
+	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
 	}, [searchTerm])
 
 	const isFirstChangeAfterInitRef = useRef(true)
 
-	const handleSearchChange = useCallback((newSearchTerm: string) => {
+	const handleSearchChange = useCallback((newSearchTerm: string): void => {
 		const wasSearching = previousSearchingRef.current
 		const isSearching = newSearchTerm.trim().length > 0
 
@@ -63,17 +65,17 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	}, [])
 
 	// Reset switching mode after a delay
-	useEffect(() => {
-		if (!isSwitchingMode) return
+	useEffect((): () => void => {
+		if (!isSwitchingMode) return (): void => {}
 
-		const timer = setTimeout(() => {
+		const timer = setTimeout((): void => {
 			setIsSwitchingMode(false)
 		}, 200)
 
-		return () => clearTimeout(timer)
+		return (): void => clearTimeout(timer)
 	}, [isSwitchingMode])
 
-	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
+	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson): void => {
 		if (!project || isLoading) return
 
 		// Skip the first change event which happens during workspace initialization
@@ -95,7 +97,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	}, [project, isLoading, projectUUID])
 
 	// Reset the flag when navigating to a different project
-	useEffect(() => {
+	useEffect((): void => {
 		isFirstChangeAfterInitRef.current = true
 		setIsSwitchingMode(false)
 		setSearchTerm("")
@@ -103,9 +105,9 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	}, [projectUUID])
 
 	// Handle '/' key to focus search bar and 'Escape' key to unfocus it
-	useEffect(() => {
+	useEffect((): () => void => {
 		// eslint-disable-next-line complexity
-		const handleKeyDown = (event: KeyboardEvent) => {
+		const handleKeyDown = (event: KeyboardEvent): void => {
 			// Handle '/' key to focus search bar
 			if (event.key !== "/" && event.key !== "Escape") return
 
@@ -128,7 +130,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 				// Focus the search bar
 				searchBarRef.current?.focus()
 				return
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			} else if (event.key === "Escape") {
 				const activeElement = document.activeElement
 
@@ -142,7 +144,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 		}
 
 		document.addEventListener("keydown", handleKeyDown)
-		return () => document.removeEventListener("keydown", handleKeyDown)
+		return (): void => document.removeEventListener("keydown", handleKeyDown)
 	}, [])
 
 	if (!project || isLoading) {
@@ -197,7 +199,9 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 								<AnimatedStateButton
 									buttonText="SEND CODE"
 									isDisabled={isEmpty(project.cppCode) || pipClass.isSendingCppToPip}
-									onClick={(event) => sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())}
+									onClick={async (event): Promise<void> => {
+										return await sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())
+									}}
 									className="duration-150 rounded-xl text-4xl"
 								/>
 								<TactileButton

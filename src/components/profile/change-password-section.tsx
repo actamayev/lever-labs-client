@@ -13,14 +13,14 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
-function ChangePasswordSection() {
+function ChangePasswordSection(): React.ReactNode {
 	const [currentPassword, setCurrentPassword] = useState("")
 	const [newPassword, setNewPassword] = useState("")
 	const [showCurrentPassword, setShowCurrentPassword] = useState(false)
 	const [showNewPassword, setShowNewPassword] = useState(false)
 	const [passwordError, setPasswordError] = useState("")
 
-	const handleCurrentPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleCurrentPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setCurrentPassword(e.target.value)
 		// Clear error message when user starts typing
 		if (passwordError) {
@@ -28,7 +28,7 @@ function ChangePasswordSection() {
 		}
 	}, [passwordError])
 
-	const handleNewPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleNewPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setNewPassword(e.target.value)
 		// Clear error message when user starts typing
 		if (passwordError) {
@@ -36,7 +36,7 @@ function ChangePasswordSection() {
 		}
 	}, [passwordError])
 
-	const savePassword = useCallback(async () => {
+	const savePassword = useCallback(async (): Promise<void> => {
 		const errorMessage = await changePassword(currentPassword, newPassword)
 		if (errorMessage) {
 			setPasswordError(errorMessage)
@@ -65,7 +65,7 @@ function ChangePasswordSection() {
 						htmlFor="current-password"
 						className="text-base md:text-lg font-medium text-eel mb-2 block"
 					>
-							Current Password
+						Current Password
 					</Label>
 					<div className="relative w-full">
 						<Input
@@ -81,7 +81,7 @@ function ChangePasswordSection() {
 							variant="ghost"
 							size="sm"
 							className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-swan"
-							onClick={() => setShowCurrentPassword(prevState => !prevState)}
+							onClick={(): void => setShowCurrentPassword((prevState): boolean => !prevState)}
 						>
 							{showCurrentPassword ? (
 								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
@@ -114,7 +114,7 @@ function ChangePasswordSection() {
 							variant="ghost"
 							size="sm"
 							className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-swan"
-							onClick={() => setShowNewPassword(prevState => !prevState)}
+							onClick={(): void => setShowNewPassword((prevState): boolean => !prevState)}
 						>
 							{showNewPassword ? (
 								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />

@@ -10,7 +10,7 @@ interface LinkAuthHeaderProps {
 	linkTo: PageNames
 }
 
-export function LinkAuthHeaderButton(props: LinkAuthHeaderProps) {
+export function LinkAuthHeaderButton(props: LinkAuthHeaderProps): React.ReactNode {
 	const { title, linkTo } = props
 
 	return (
@@ -27,13 +27,13 @@ interface SetLoginOrRegisterAuthHeaderProps {
 	setShowLoginOrRegister: LoginOrRegister
 }
 
-function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderProps) {
+function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderProps): React.ReactNode {
 	const { title, setShowLoginOrRegister } = props
 
 	return (
 		<BlueTactileButton
 			className="text-sm font-normal"
-			onClick={() => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
+			onClick={(): void => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}
 		</BlueTactileButton>

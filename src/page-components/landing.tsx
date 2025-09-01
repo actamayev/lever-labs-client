@@ -16,7 +16,7 @@ import SimpleSetup from "../components/landing/simple-setup"
 import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
 
-function Landing() {
+function Landing(): React.ReactNode {
 	return (
 		<>
 			<div className="min-h-screen w-full relative">

@@ -10,7 +10,7 @@ import { CONDITIONAL_BLOCK_TYPES, CONDITIONAL_FIELD_VALUES } from "@bluedotrobot
 export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 	[CONDITIONAL_BLOCK_TYPES.IF]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(CONDITIONAL_FIELD_VALUES.IF_CONDITION)
 					.setCheck("Boolean")
 					.appendField("if")
@@ -34,7 +34,7 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 
 	[CONDITIONAL_BLOCK_TYPES.IF_ELSE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(CONDITIONAL_FIELD_VALUES.IF1_CONDITION)
 					.setCheck("Boolean")
 					.appendField("if")
@@ -60,7 +60,7 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 
 	[CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(CONDITIONAL_FIELD_VALUES.IF1_CONDITION)
 					.setCheck("Boolean")
 					.appendField("if")
@@ -93,7 +93,7 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 
 	[CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(CONDITIONAL_FIELD_VALUES.IF1_CONDITION)
 					.setCheck("Boolean")
 					.appendField("if")

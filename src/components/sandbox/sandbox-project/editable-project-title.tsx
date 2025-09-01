@@ -5,7 +5,7 @@ import { Input } from "../../shadcn/ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function
-export default function EditableProjectTitle({ project }: { project: SandboxProject }) {
+export default function EditableProjectTitle({ project }: { project: SandboxProject }): React.ReactNode {
 	const [isEditing, setIsEditing] = useState(false)
 	const [isHovering, setIsHovering] = useState(false)
 	const [projectName, setProjectName] = useState(project.projectName || "Untitled Project")
@@ -14,7 +14,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	const measureRef = useRef<HTMLSpanElement>(null)
 
 	// Adjust input width based on content
-	const adjustInputWidth = () => {
+	const adjustInputWidth = (): void => {
 		if (inputRef.current && measureRef.current) {
 			const width = measureRef.current.getBoundingClientRect().width
 			inputRef.current.style.width = `${Math.max(width + 20)}px` // Add padding
@@ -22,7 +22,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	}
 
 	// Focus and adjust width when editing starts
-	useEffect(() => {
+	useEffect((): void => {
 		if (!isEditing || !inputRef.current) return
 
 		// When entering edit mode, set the temporary editing state
@@ -30,7 +30,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 
 		// Use a small timeout to ensure the input is ready before focusing and selecting
 		// This helps ensure consistent selection behavior, especially with the default name
-		setTimeout(() => {
+		setTimeout((): void => {
 			if (inputRef.current) {
 				inputRef.current.focus()
 				inputRef.current.select()
@@ -40,14 +40,14 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	}, [isEditing, projectName])
 
 	// Adjust width when editing value changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!isEditing) return
 		adjustInputWidth()
 	}, [editingName, isEditing])
 
 	// Handle beforeunload warning - only show if user is still editing
-	useEffect(() => {
-		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+	useEffect((): () => void => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent): void => {
 			if (isEditing) {
 				e.preventDefault()
 				e.returnValue = "Changes you made may not be saved."
@@ -58,29 +58,29 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 			window.addEventListener("beforeunload", handleBeforeUnload)
 		}
 
-		return () => {
+		return (): void => {
 			window.removeEventListener("beforeunload", handleBeforeUnload)
 		}
 	}, [isEditing])
 
 	// Update document title whenever projectName changes (not during editing)
-	useEffect(() => {
+	useEffect((): void => {
 		document.title = `${projectName} | Blue Dot Robots`
 	}, [projectName])
 
 	// Update local state when project prop changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (project.projectName) {
 			setProjectName(project.projectName)
 		}
 	}, [project.projectName])
 
-	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		// Only update the temporary editing state
 		setEditingName(e.target.value)
 	}
 
-	const saveChanges = (newName: string) => {
+	const saveChanges = (newName: string): void => {
 		// Only save if the name is not empty and has changed
 		if (newName.trim() && newName !== projectName) {
 			setProjectName(newName) // Update the displayed name
@@ -91,7 +91,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		}
 	}
 
-	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+	const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
 		if (e.key === "Enter") {
 			setIsEditing(false)
 			saveChanges(editingName)
@@ -103,7 +103,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		}
 	}
 
-	const handleBlur = () => {
+	const handleBlur = (): void => {
 		setIsEditing(false)
 		saveChanges(editingName)
 	}
@@ -114,8 +114,8 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	return (
 		<div
 			className="relative inline-flex items-center mr-2"
-			onMouseEnter={() => setIsHovering(true)}
-			onMouseLeave={() => setIsHovering(false)}
+			onMouseEnter={(): void => setIsHovering(true)}
+			onMouseLeave={(): void => setIsHovering(false)}
 		>
 			{/* Hidden span to measure text width */}
 			<span
@@ -143,7 +143,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 					className={`${commonStyles} flex items-center cursor-pointer ${
 						isHovering ? "border-eel" : "border-transparent"
 					}`}
-					onClick={() => setIsEditing(true)}
+					onClick={(): void => setIsEditing(true)}
 					title="Click to edit project name"
 				>
 					{projectName}

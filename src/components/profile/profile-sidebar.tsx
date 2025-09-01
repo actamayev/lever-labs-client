@@ -13,7 +13,7 @@ interface SidebarSectionProps {
 	children: React.ReactNode
 }
 
-const SidebarSection = ({ title, children }: SidebarSectionProps) => {
+const SidebarSection = ({ title, children }: SidebarSectionProps): React.ReactNode => {
 	return (
 		<Card className="mb-8 pb-6">
 			<CardTitle className="text-wolf text-xl mb-5 pt-6 pl-10">
@@ -31,7 +31,7 @@ interface SidebarLinkProps {
 	children: React.ReactNode
 }
 
-const SidebarLink = ({ href, children }: SidebarLinkProps) => {
+const SidebarLink = ({ href, children }: SidebarLinkProps): React.ReactNode => {
 	return (
 		<Link
 			href={href}
@@ -42,7 +42,7 @@ const SidebarLink = ({ href, children }: SidebarLinkProps) => {
 	)
 }
 
-const BelowSidebarLink = ({ href, children }: SidebarLinkProps) => {
+const BelowSidebarLink = ({ href, children }: SidebarLinkProps): React.ReactNode => {
 	return (
 		<Link
 			href={href}
@@ -52,11 +52,10 @@ const BelowSidebarLink = ({ href, children }: SidebarLinkProps) => {
 		</Link>
 	)
 }
-
-export default function ProfileSidebar() {
+export default function ProfileSidebar(): React.ReactNode {
 	const navigate = useTypedNavigate()
 
-	const completeLogout = useCallback(async () => {
+	const completeLogout = useCallback(async (): Promise<void> => {
 		await logout()
 		navigate("/")
 	}, [navigate])

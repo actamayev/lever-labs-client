@@ -5,14 +5,14 @@ import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
 import Wheel from "@uiw/react-color-wheel"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
-import { ColorResult, rgbaToHsva } from "@uiw/color-convert"
+import { ColorResult, HsvaColor, rgbaToHsva } from "@uiw/color-convert"
 import pipClass from "../../../classes/pip-class"
 import socketClass from "../../../classes/socket-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
-function IntroductionS2P3ColorPicker() {
-	const colorToShow = useMemo(() => {
+function MeetPipS2P3ColorPicker(): React.ReactNode {
+	const colorToShow = useMemo((): HsvaColor => {
 		// This is done to ensure the shade of the color wheel stays constant
 		const hsva = rgbaToHsva(careerQuestTriggersClass.selectedColorRgba)
 		hsva.v = 100
@@ -70,4 +70,4 @@ function IntroductionS2P3ColorPicker() {
 	)
 }
 
-export default observer(IntroductionS2P3ColorPicker)
+export default observer(MeetPipS2P3ColorPicker)

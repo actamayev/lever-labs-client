@@ -17,7 +17,7 @@ class ToastClass {
 		title: string,
 		description: string | undefined,
 		action: React.ReactNode | undefined
-	) => (
+	): React.ReactNode => (
 		<div className="flex flex-col w-full">
 			<div className="flex justify-between items-center w-full">
 				<div className="flex flex-col gap-1">
@@ -34,7 +34,7 @@ class ToastClass {
 		toastFn: (content: React.ReactNode, options?: ReactToastifyOptions<TData>) => Id,
 		content: React.ReactNode,
 		options: ReactToastifyOptions<TData>
-	) => {
+	): void => {
 		// If a toast is already active, don't create a new one
 		if (this.isToastActive) return
 
@@ -44,18 +44,16 @@ class ToastClass {
 		// Create the toast with the provided function and options
 		toastFn(content, {
 			...options,
-			onClose: () => {
+			onClose: (): void => {
 				// When toast closes, reset the active flag
 				this.isToastActive = false
 				// Call the original onClose if provided
 				if (options.onClose) options.onClose()
 			}
 		})
-
-		return
 	}
 
-	public superPositive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+	public superPositive = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
@@ -69,7 +67,7 @@ class ToastClass {
 		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	public positive = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+	public positive = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
@@ -83,7 +81,7 @@ class ToastClass {
 		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	public neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+	public neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
@@ -96,7 +94,7 @@ class ToastClass {
 		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	public negative = ({ title, description, action, duration = 5000 }: CustomToastOptions) => {
+	public negative = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,

@@ -18,12 +18,12 @@ export function generateStatementCode(
 			if (Array.isArray(code)) {
 				// Add additional indentation for each line
 				bodyCode += code[0].split("\n")
-					.map(line => line ? cppGenerator.INDENT + line : line)
+					.map((line): string => line ? cppGenerator.INDENT + line : line)
 					.join("\n") + "\n"
 			} else if (code) {
 				// Add additional indentation for each line
 				bodyCode += code.split("\n")
-					.map(line => line ? cppGenerator.INDENT + line : line)
+					.map((line): string => line ? cppGenerator.INDENT + line : line)
 					.join("\n")
 			}
 			currentBlock = currentBlock.getNextBlock()

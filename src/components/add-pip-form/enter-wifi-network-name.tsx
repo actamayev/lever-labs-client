@@ -6,12 +6,13 @@ import LockIconAndTooltip from "../lock-icon-and-tooltip"
 import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form"
 
 interface EnterWifiNetworkNameProps {
-    control: Control<IncompletePipData>
-    onSubmit?: () => void // Add optional submit handler
+	control: Control<IncompletePipData>
+	onSubmit?: () => void // Add optional submit handler
 }
 
-export default function EnterWifiNetworkName({ control, onSubmit }: EnterWifiNetworkNameProps) {
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+export default function EnterWifiNetworkName(props: EnterWifiNetworkNameProps): React.ReactNode {
+	const { control, onSubmit } = props
+	const handleKeyDown = (e: React.KeyboardEvent): void => {
 		if (e.key !== "Enter" || !onSubmit) return
 		e.preventDefault()
 		onSubmit()
@@ -21,7 +22,7 @@ export default function EnterWifiNetworkName({ control, onSubmit }: EnterWifiNet
 		<FormField
 			control={control}
 			name="manualWiFiNetworkName"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem>
 					<FormControl>
 						<div className="relative">

@@ -44,7 +44,7 @@ class TeacherClass {
 	}
 
 	public editClassroomName(classCode: ClassCode, newClassroomName: string): void {
-		const classroom = this.classroomData.find((foundClassroom) => foundClassroom.classCode === classCode)
+		const classroom = this.classroomData.find((foundClassroom): boolean => foundClassroom.classCode === classCode)
 		if (!classroom) return
 		classroom.classroomName = newClassroomName
 	}

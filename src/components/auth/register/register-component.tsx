@@ -19,7 +19,7 @@ import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constant
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 
-export default function RegisterComponent() {
+export default function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 
@@ -33,7 +33,7 @@ export default function RegisterComponent() {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: RegisterFormValues) => {
+	const onSubmit = useCallback(async (values: RegisterFormValues): Promise<void> => {
 		const success = await registerSubmit(values, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)

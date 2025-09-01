@@ -5,14 +5,14 @@ import { useState } from "react"
 import { CustomInfinity } from "../icons/custom-infinity"
 import { InfinityIcon } from "lucide-react"
 
-export default function ModuleAnimation({ iconSize } : { iconSize: number }) {
+export default function ModuleAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 
 	return (
 		<div
 			className="pointer-events-auto w-fit relative"
-			onMouseEnter={() => setIsHovered(true)}
-			onMouseLeave={() => setIsHovered(false)}
+			onMouseEnter={(): void => setIsHovered(true)}
+			onMouseLeave={(): void => setIsHovered(false)}
 		>
 			{/* Static infinity icon */}
 			<CustomInfinity

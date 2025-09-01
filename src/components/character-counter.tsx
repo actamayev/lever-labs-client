@@ -9,7 +9,7 @@ interface Props {
 	extraClasses?: string
 }
 
-export default function CharacterCounter(props: Props) {
+export default function CharacterCounter(props: Props): React.ReactNode {
 	const { value, characterLimit, extraClasses = ""} = props
 
 	if (isUndefined(value)) return null

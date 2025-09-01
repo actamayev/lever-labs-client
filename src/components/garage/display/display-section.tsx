@@ -6,7 +6,7 @@ import DisplayControls from "./display-controls"
 import garageClass from "../../../classes/garage-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
-function DisplaySection() {
+function DisplaySection(): React.ReactNode {
 	return (
 		<div
 			className="h-1/3 overflow-hidden border-t border-r border-b"

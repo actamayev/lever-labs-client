@@ -22,7 +22,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 	const pathname = usePathname()
 
 	// eslint-disable-next-line complexity
-	return useCallback(async (successResponse: CredentialResponse) => {
+	return useCallback(async (successResponse: CredentialResponse): Promise<void> => {
 		try {
 			authClass.setAuthenticating(true)
 			if (

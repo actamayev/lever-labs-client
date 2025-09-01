@@ -11,12 +11,12 @@ import CharacterCounter from "../character-counter"
 import personalInfoClass from "../../classes/personal-info-class"
 import editUsername from "../../utils/personal-info/edit-username"
 
-function ChangeUsernameSection() {
+function ChangeUsernameSection(): React.ReactNode {
 	const [username, setUsername] = useState(personalInfoClass.username || "")
 	const [isUsernameChanged, setIsUsernameChanged] = useState(false)
 	const [usernameError, setUsernameError] = useState("")
 
-	const handleUsernameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleUsernameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		const newUsername = e.target.value
 		setUsername(newUsername)
 		setIsUsernameChanged(newUsername !== personalInfoClass.username)
@@ -28,7 +28,7 @@ function ChangeUsernameSection() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [usernameError, personalInfoClass.username])
 
-	const saveUsername = useCallback(async () => {
+	const saveUsername = useCallback(async (): Promise<void> => {
 		const errorMessage = await editUsername(username)
 		if (errorMessage) {
 			setUsernameError(errorMessage)
@@ -76,7 +76,7 @@ function ChangeUsernameSection() {
 			{username.length > 0 && (
 				username.length < 3 ? (
 					<p className="text-sm text-cardinal mt-1">
-							Username must be at least 3 characters.
+						Username must be at least 3 characters.
 					</p>
 				) : (
 					<p className="text-sm text-cardinal mt-1">

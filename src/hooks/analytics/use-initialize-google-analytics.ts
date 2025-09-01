@@ -8,7 +8,7 @@ export default function useInitializeGoogleAnalytics(): void {
 	const [analyticsInitialized, setAnalyticsInitialized] = useState(false)
 
 	// Initialize GA only once when component mounts
-	useEffect(() => {
+	useEffect((): void => {
 		const initializeGA = async (): Promise<void> => {
 			try {
 				// Dynamically import ReactGA only when needed
@@ -24,7 +24,7 @@ export default function useInitializeGoogleAnalytics(): void {
 	}, [])
 
 	// Send pageview only after GA is initialized
-	useEffect(() => {
+	useEffect((): void => {
 		if (!analyticsInitialized) return
 
 		const sendPageView = async (): Promise<void> => {

@@ -10,6 +10,6 @@ export const metadata = createMetadata({
 	noIndex: true
 })
 
-export default function NotFoundPage() {
+export default function NotFoundPage(): React.ReactNode {
 	return <Missing />
 }

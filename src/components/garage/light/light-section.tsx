@@ -9,7 +9,7 @@ import LightBrightnessControl from "./light-brightness-control"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import useEffectSetDefaultColors from "../../../hooks/garage/use-effect-set-dots-colors"
 
-function LightSection() {
+function LightSection(): React.ReactNode {
 	useEffectSetDefaultColors()
 
 	return (

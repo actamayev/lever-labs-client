@@ -9,7 +9,7 @@ import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 
-function ProfileSidebarButton() {
+function ProfileSidebarButton(): React.ReactNode {
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">

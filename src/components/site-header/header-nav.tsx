@@ -5,16 +5,16 @@ import { cn } from "../../lib/shadcn/utils"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 
-export default function HeaderNav() {
+export default function HeaderNav(): React.ReactNode {
 	const [isScrolled, setIsScrolled] = useState(false)
 
-	useEffect(() => {
-		const handleScroll = () => {
+	useEffect((): () => void => {
+		const handleScroll = (): void => {
 			setIsScrolled(window.scrollY > 0)
 		}
 
 		window.addEventListener("scroll", handleScroll)
-		return () => window.removeEventListener("scroll", handleScroll)
+		return (): void => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
 	return (

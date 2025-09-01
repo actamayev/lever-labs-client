@@ -42,14 +42,14 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	const currentDirections = garageClass.pressedDirections
 
 	// Stop directions that are no longer active
-	currentDirections.forEach(dir => {
+	currentDirections.forEach((dir): void => {
 		if (!newDirections.has(dir)) {
 			garageClass.stopDriving(dir)
 		}
 	})
 
 	// Start directions that are newly active
-	newDirections.forEach(dir => {
+	newDirections.forEach((dir): void => {
 		if (!currentDirections.has(dir)) {
 			garageClass.drive(dir)
 		}

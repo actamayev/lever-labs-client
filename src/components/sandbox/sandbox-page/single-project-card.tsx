@@ -20,39 +20,39 @@ import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
 import deleteSandboxProject from "../../../utils/sandbox/delete-sandbox-project"
 
 // eslint-disable-next-line max-lines-per-function
-function SingleProjectCard({ project } : { project: SandboxProject }) {
+function SingleProjectCard({ project } : { project: SandboxProject }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [isDeleteMode, setIsDeleteMode] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [newProjectName, setNewProjectName] = useState(project.projectName || "")
 
-	const handleProjectClick = useCallback((projectUUID: ProjectUUID) => {
+	const handleProjectClick = useCallback((projectUUID: ProjectUUID): void => {
 		if (isDeleteMode) return
 		navigate(`/sandbox/${projectUUID}`)
 	}, [navigate, isDeleteMode])
 
-	const handleDeleteClick = useCallback((e: React.MouseEvent) => {
+	const handleDeleteClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
 		setIsDeleteMode(true)
 	}, [])
 
-	const handleStarClick = useCallback((e: React.MouseEvent) => {
+	const handleStarClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
 		starSandboxProject(project.projectUUID)
 	}, [project.projectUUID])
 
-	const handleRenameClick = useCallback((e: React.MouseEvent) => {
+	const handleRenameClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
 		setNewProjectName(project.projectName || "")
 		setIsRenameDialogOpen(true)
 	}, [project.projectName])
 
-	const handleCancelDelete = useCallback((e: React.MouseEvent) => {
+	const handleCancelDelete = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
 		setIsDeleteMode(false)
 	}, [])
 
-	const handleConfirmDelete = useCallback(async (e: React.MouseEvent) => {
+	const handleConfirmDelete = useCallback(async (e: React.MouseEvent): Promise<void> => {
 		e.stopPropagation()
 		await deleteSandboxProject(project.projectUUID)
 		setIsDeleteMode(false)
@@ -66,8 +66,8 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 					"border-2 rounded-xl p-4 cursor-pointer transition-none border-swan min-h-32",
 					isDeleteMode ? "bg-cardinal border-cardinal" : "hover:bg-polar"
 				)}
-				onClick={() => handleProjectClick(project.projectUUID)}
-				onDoubleClick={() => !isDeleteMode && handleProjectClick(project.projectUUID)}
+				onClick={(): void => handleProjectClick(project.projectUUID)}
+				onDoubleClick={(): void => { if (!isDeleteMode) handleProjectClick(project.projectUUID) }}
 			>
 				{isDeleteMode ? (
 					<div className="flex flex-col items-center text-white">
@@ -99,7 +99,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }) {
 								{project.projectName || "Untitled Project"}
 							</div>
 							<DropdownMenu>
-								<DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+								<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()}>
 									<div className="p-1 transition-none rounded hover:bg-swan">
 										<EllipsisVertical
 											className="text-wolf cursor-pointer"

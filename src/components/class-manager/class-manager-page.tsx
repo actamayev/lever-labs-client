@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { Plus } from "lucide-react"
@@ -14,8 +14,7 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 import SingleClassCard from "./single-class-card"
 
-// eslint-disable-next-line max-lines-per-function
-function ClassManagerPage() {
+function ClassManagerPage(): React.ReactNode {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [selectedClassroom, setSelectedClassroom] = useState<BasicTeacherClassroomData | null>(null)
@@ -24,15 +23,15 @@ function ClassManagerPage() {
 	const colors = getDuolingoColors("humpback")
 
 	// Fetch classroom data on component mount
-	useEffect(() => {
+	useEffect((): void => {
 		retrieveTeacherClassrooms()
 	}, [])
 
-	const handleCreateClick = useCallback(() => {
+	const handleCreateClick = useCallback((): void => {
 		setIsCreateDialogOpen(true)
 	}, [])
 
-	const handleRenameClick = useCallback((e: React.MouseEvent, classroom: BasicTeacherClassroomData) => {
+	const handleRenameClick = useCallback((e: React.MouseEvent, classroom: BasicTeacherClassroomData): void => {
 		e.stopPropagation()
 		setSelectedClassroom(classroom)
 		setNewClassroomName(classroom.classroomName)
@@ -70,7 +69,7 @@ function ClassManagerPage() {
 			) : (
 				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{teacherClass.classroomData.map((classroom) => (
+						{teacherClass.classroomData.map((classroom): React.ReactNode => (
 							<SingleClassCard
 								key={classroom.classCode}
 								classroom={classroom}

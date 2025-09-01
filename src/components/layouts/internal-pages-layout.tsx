@@ -3,7 +3,7 @@
 import { SidebarInset, SidebarProvider } from "@/components/shadcn/ui/sidebar"
 import PrimarySidebar from "../shadcn/sidebar/primary-sidebar"
 
-export default function InternalPagesLayout({ children } : { children: React.ReactNode }) {
+export default function InternalPagesLayout({ children } : { children: React.ReactNode }): React.ReactNode {
 	return (
 		<SidebarProvider>
 			<PrimarySidebar />

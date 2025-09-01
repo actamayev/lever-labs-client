@@ -9,6 +9,6 @@ export const metadata = createMetadata({
 	keywords: ["community guidelines", "blue dot robots", "contribute to community"]
 })
 
-export default function CommunityGuidelinesPage() {
+export default function CommunityGuidelinesPage(): React.ReactNode {
 	return <CommunityGuidelines />
 }

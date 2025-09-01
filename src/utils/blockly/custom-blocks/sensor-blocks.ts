@@ -16,13 +16,13 @@ import { sensorsCategoryColour } from "../../constants/constants"
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Read IMU")
 					.appendField(
 						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.IMU).map(([key, value]) =>
-                                [key.toLowerCase(), value] as [string, string]
+							Object.entries(SENSOR_TYPES.IMU).map(([key, value]): [string, string] =>
+								[key.toLowerCase(), value] as [string, string]
 							)
 						),
 						SENSORS_FIELD_VALUES.IMU_READ
@@ -43,12 +43,12 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	},
 	[SENSORS_BLOCK_TYPES.SIDE_TOF_READ]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Is object near side")
 					.appendField(
 						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]) =>
+							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]): [string, string] =>
 								[key.toLowerCase(), value] as [string, string]
 							)
 						),
@@ -67,7 +67,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	},
 	[SENSORS_BLOCK_TYPES.CENTER_TOF_READ]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Is object in front")
 				this.setOutput(true, "Boolean")
@@ -82,12 +82,12 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	},
 	// [SENSORS_BLOCK_TYPES.IR_READ]: {
 	// 	definition: {
-	// 		init: function(this: Blockly.Block) {
+	// 		init: function(this: Blockly.Block): void {
 	// 			this.appendDummyInput()
 	// 				.appendField("Read IR sensor")
 	// 				.appendField(
 	// 					new Blockly.FieldDropdown(
-	// 						Object.entries(SENSOR_TYPES.IR).map(([key, value]) =>
+	// 						Object.entries(SENSOR_TYPES.IR).map(([key, value]): [string, string] =>
 	//                             [key.toLowerCase(), value] as [string, string]
 	// 						)
 	// 					),
@@ -105,7 +105,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	// },
 	// [SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
 	// 	definition: {
-	// 		init: function(this: Blockly.Block) {
+	// 		init: function(this: Blockly.Block): void {
 	// 			this.appendDummyInput()
 	// 				.appendField("Read Color Sensor")
 	// 			this.setOutput(true, "String")

@@ -28,7 +28,7 @@ function getBlockCount(blocklyJson: BlocklyJson): number {
 // Helper function to check if JSON is valid and non-empty
 function isValidNonEmptyJson(blocklyJson: BlocklyJson): boolean {
 	// Check if it's truly empty or just has workspace metadata
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 	if (!blocklyJson || typeof blocklyJson !== "object") return false
 
 	// Must have blocks property
@@ -41,7 +41,7 @@ function isValidNonEmptyJson(blocklyJson: BlocklyJson): boolean {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }) {
+function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }): React.ReactNode {
 	const isFirstChangeAfterInitRef = useRef(true)
 	const hasInitializedRef = useRef(false)
 	const hasSeenExpectedBlocksRef = useRef(false) // NEW: Track if we've seen the initial blocks load
@@ -52,21 +52,21 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 
 	const cppCode = careerQuestClass.getCppCode({ ...challengeData })
 
-	const handleReset = useCallback(() => {
+	const handleReset = useCallback((): void => {
 		const didReset = careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
 		if (!didReset) return
-		setResetCounter(prev => prev + 1) // Increment reset counter to force remount
+		setResetCounter((prev): number => prev + 1) // Increment reset counter to force remount
 	}, [challengeData])
 
 	// Debounced save function to prevent multiple rapid saves
-	const debouncedSave = useCallback((blocklyJson: BlocklyJson) => {
+	const debouncedSave = useCallback((blocklyJson: BlocklyJson): void => {
 		// Clear any existing timeout
 		if (saveTimeoutRef.current) {
 			clearTimeout(saveTimeoutRef.current)
 		}
 
 		// Set new timeout
-		saveTimeoutRef.current = setTimeout(() => {
+		saveTimeoutRef.current = setTimeout((): void => {
 			editCareerQuestSandboxProject(challengeData.challengeUUID, blocklyJson)
 			saveTimeoutRef.current = null
 		}, 300) // 300ms debounce delay
@@ -79,7 +79,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const [pendingBlocklyJson, setPendingBlocklyJson] = useState<BlocklyJson | null>(null)
 
 	// Separate effect to handle class updates and backend saves
-	useEffect(() => {
+	useEffect((): void => {
 		if (!pendingBlocklyJson || !hasRetrievedData || !hasInitializedRef.current) return
 
 		// Update career quest class
@@ -96,7 +96,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [pendingBlocklyJson, hasRetrievedData, challengeData, debouncedSave])
 
 	// eslint-disable-next-line complexity
-	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
+	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson): void => {
 	// Get current JSON from class for comparison, but don't depend on it
 		const currentJsonFromClass = careerQuestClass.getUpdatedBlocklyJson({ ...challengeData })
 		const expectedBlockCount = getBlockCount(currentJsonFromClass)
@@ -161,7 +161,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [challengeData])
 
 	// Reset effects
-	useEffect(() => {
+	useEffect((): () => void => {
 		// Clear any pending saves when switching challenges
 		if (saveTimeoutRef.current) {
 			clearTimeout(saveTimeoutRef.current)
@@ -178,9 +178,9 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		lastProcessedJsonRef.current = null // Reset the last processed JSON
 
 		// Add a small delay to ensure workspace is fully ready before processing changes
-		const timer = setTimeout(() => {}, 100)
+		const timer = setTimeout((): void => {}, 100)
 
-		return () => {
+		return (): void => {
 			clearTimeout(timer)
 			// Clear save timeout on cleanup
 			if (saveTimeoutRef.current) {
@@ -214,7 +214,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-						onClick={(event) => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
 						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
 					/>
 					<TactileButton
@@ -223,7 +223,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 							foxColors.bg
 						)}
 						shadowClass={foxColors.shadow2}
-						onClick={() => checkCareerQuestCode({ ...challengeData })}
+						onClick={(): Promise<void> => checkCareerQuestCode({ ...challengeData })}
 						disabled={isStreaming || isEmpty(cppCode)}
 					>
 						CHECK CODE

@@ -16,7 +16,7 @@ const animationStyles = `
 	}
 `
 
-export default function MotorSpinAnimation({ iconSize } : { iconSize: number }) {
+export default function MotorSpinAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	const [isSpinning, setIsSpinning] = useState(false)
 
 	return (
@@ -24,8 +24,8 @@ export default function MotorSpinAnimation({ iconSize } : { iconSize: number }) 
 			<style>{animationStyles}</style>
 			<div
 				className="pointer-events-auto w-fit"
-				onMouseEnter={() => setIsSpinning(true)}
-				onMouseLeave={() => setIsSpinning(false)}
+				onMouseEnter={(): void => setIsSpinning(true)}
+				onMouseLeave={(): void => setIsSpinning(false)}
 			>
 				<CustomWheel
 					className={cn(

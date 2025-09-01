@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-/* eslint-disable filenames/match-regex */
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette")
 
@@ -304,13 +303,13 @@ module.exports = {
 		}
 	},
 	plugins: [
-		// eslint-disable-next-line @typescript-eslint/no-require-imports
+
 		require("tailwindcss-animate"),
 		addVariablesForColors
 	]
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function addVariablesForColors({ addBase, theme }: any): void {
 	const allColors = flattenColorPalette(theme("colors"))
 	const excludeKeys = [
@@ -326,8 +325,8 @@ function addVariablesForColors({ addBase, theme }: any): void {
 	]
 	const newVars = Object.fromEntries(
 		Object.entries(allColors)
-			.filter(([key]) => !excludeKeys.includes(key))
-			.map(([key, val]) => [`--${key}`, val])
+			.filter(([key]): boolean => !excludeKeys.includes(key))
+			.map(([key, val]): [string, string] => [`--${key}`, val as string])
 	)
 
 	addBase({

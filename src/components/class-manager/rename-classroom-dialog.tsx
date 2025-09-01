@@ -24,24 +24,24 @@ interface Props {
 	setNewClassroomName: Dispatch<SetStateAction<string>>
 }
 
-export default function RenameClassroomDialog(props: Props) {
+export default function RenameClassroomDialog(props: Props): React.ReactNode {
 	const { classCode, isRenameDialogOpen, setIsRenameDialogOpen, newClassroomName, setNewClassroomName } = props
 	const [error, setError] = useState("")
 
 	const colors = getDuolingoColors("humpback")
 
-	const handleCancelRename = useCallback(() => {
+	const handleCancelRename = useCallback((): void => {
 		setIsRenameDialogOpen(false)
 	}, [setIsRenameDialogOpen])
 
-	const handleSaveRename = useCallback(async () => {
+	const handleSaveRename = useCallback(async (): Promise<void> => {
 		await editClassroomName(classCode, newClassroomName, setError)
 		setIsRenameDialogOpen(false)
 	}, [classCode, newClassroomName, setError, setIsRenameDialogOpen])
 
 	return (
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-			<DialogContent className="w-96 border-none" onClick={(e) => e.stopPropagation()}>
+			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Rename Class</DialogTitle>
 					<DialogClose />
@@ -49,10 +49,10 @@ export default function RenameClassroomDialog(props: Props) {
 				<div>
 					<Input
 						value={newClassroomName}
-						onChange={(e) => setNewClassroomName(e.target.value)}
+						onChange={(e): void => setNewClassroomName(e.target.value)}
 						placeholder="Class name"
 						className="w-full !text-xl h-10"
-						onKeyDown={(e) => {
+						onKeyDown={(e): void => {
 							if (e.key === "Escape") {
 								handleCancelRename()
 							} else if (e.key === "Enter") {

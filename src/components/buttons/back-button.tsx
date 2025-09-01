@@ -5,10 +5,10 @@ import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/shadcn/ui/button"
 
-export default function BackButton () {
+export default function BackButton(): React.ReactNode {
 	const router = useRouter()
 
-	const handleBack = useCallback(() => router.back(), [router])
+	const handleBack = useCallback((): void => router.back(), [router])
 
 	return (
 		<Button

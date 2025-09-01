@@ -17,7 +17,7 @@ import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function RequestTeacherAccess() {
+function RequestTeacherAccess(): React.ReactNode {
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [schoolName, setSchoolName] = useState("")
@@ -30,34 +30,34 @@ function RequestTeacherAccess() {
 	const colors = getDuolingoColors("humpback")
 
 	// Pre-populate form with existing data
-	useEffect(() => {
+	useEffect((): void => {
 		if (!hasExistingData) return
 		setFirstName(teacherData.teacherFirstName)
 		setLastName(teacherData.teacherLastName)
 		setSchoolName(teacherData.schoolName)
 	}, [hasExistingData, teacherData])
 
-	const clearErrorAndSuccess = useCallback(() => {
+	const clearErrorAndSuccess = useCallback((): void => {
 		setError("")
 		setSuccess("")
 	}, [])
 
-	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setFirstName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setLastName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setSchoolName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const submitRequest = useCallback(async () => {
+	const submitRequest = useCallback(async (): Promise<void> => {
 		setIsSubmitting(true)
 		clearErrorAndSuccess()
 
@@ -92,7 +92,7 @@ function RequestTeacherAccess() {
 		: firstName.trim().length > 0 && lastName.trim().length > 0 && schoolName.trim().length > 0
 
 	// Get status message based on teacher data
-	const getStatusMessage = () => {
+	const getStatusMessage = (): React.ReactNode | null => {
 		if (!hasExistingData) return null
 
 		if (teacherData.isApproved === true) {
@@ -109,7 +109,7 @@ function RequestTeacherAccess() {
 					<span>Your teacher application is being reviewed. You can update your information below.</span>
 				</div>
 			)
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		} else if (teacherData.isApproved === false) {
 			return (
 				<div className="flex items-center mb-4 text-cardinal text-sm font-medium">
@@ -129,7 +129,7 @@ function RequestTeacherAccess() {
 	const isFormDisabled = hasExistingData && teacherData.isApproved === false
 
 	// Get button text based on state
-	const getButtonText = () => {
+	const getButtonText = (): string => {
 		if (isSubmitting) {
 			return hasExistingData ? "UPDATING..." : "SUBMITTING..."
 		}
@@ -163,7 +163,7 @@ function RequestTeacherAccess() {
 							htmlFor="teacher-first-name"
 							className="text-base md:text-lg font-medium text-eel mb-2 block"
 						>
-						First Name
+							First Name
 						</Label>
 						<Input
 							id="teacher-first-name"
@@ -181,7 +181,7 @@ function RequestTeacherAccess() {
 							htmlFor="teacher-last-name"
 							className="text-base md:text-lg font-medium text-eel mb-2 block"
 						>
-						Last Name
+							Last Name
 						</Label>
 						<Input
 							id="teacher-last-name"
@@ -200,7 +200,7 @@ function RequestTeacherAccess() {
 								htmlFor="school-name"
 								className="text-base md:text-lg font-medium text-eel mb-2 block"
 							>
-							School Name
+								School Name
 							</Label>
 							{hasExistingData && (
 								<CustomTooltip

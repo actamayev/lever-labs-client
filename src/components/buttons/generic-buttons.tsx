@@ -9,7 +9,7 @@ interface Props {
 	title: string
 }
 
-function AuthButton(props: Props) {
+function AuthButton(props: Props): React.ReactNode {
 	const { loading, title } = props
 
 	return (

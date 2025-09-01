@@ -13,7 +13,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
-interface Props {
+export interface BlocklyComponentProps {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
@@ -22,7 +22,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function BlocklyComponent(props: Props) {
+function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const {
 		toolboxConfig,
 		initialBlocklyJson,
@@ -36,15 +36,15 @@ function BlocklyComponent(props: Props) {
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
 	const [isCentering, setIsCentering] = useState(false)
-	const workspaceConfiguration = useMemo(() => {
+	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
 
-	const filteredToolboxConfig = useMemo(() => {
+	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
 	}, [toolboxConfig, searchTerm])
 
-	const centerWorkspace = useCallback(() => {
+	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
 		const workspace = workspaceRef.current
 		if (!workspace) return
@@ -57,7 +57,7 @@ function BlocklyComponent(props: Props) {
 		setIsCentering(false)
 	}, [workspaceConfiguration.zoom?.startScale])
 
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
@@ -74,21 +74,21 @@ function BlocklyComponent(props: Props) {
 
 	// Handle centering when switching modes
 	// @ts-expect-error - Not all code paths return a value, but this is intentional
-	useEffect(() => {
+	useEffect((): () => void => {
 		if (isSwitchingMode) {
 			// Force re-centering when switching modes
 			setIsCentered(false)
 		} else {
 			// After switching is complete, center the workspace
-			const timer = setTimeout(() => {
+			const timer = setTimeout((): void => {
 				centerWorkspace()
 			}, 100)
 
-			return () => clearTimeout(timer)
+			return (): void => clearTimeout(timer)
 		}
 	}, [isSwitchingMode, centerWorkspace])
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (isEmpty(searchTerm)) {
 			setIsCentered(false)
 			centerWorkspace()
@@ -96,24 +96,24 @@ function BlocklyComponent(props: Props) {
 	}, [isSwitchingMode, searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
-	useEffect(() => {
+	useEffect((): void => {
 		setIsCentered(false)
 	}, [pathname])
 
 	// Add effect to center workspace after it's initialized and when blocks change
-	useEffect(() => {
-		if (isCentered || isCentering) return
-		const timer = setTimeout(() => {
+	useEffect((): () => void => {
+		if (isCentered || isCentering) return (): void => {}
+		const timer = setTimeout((): void => {
 			centerWorkspace()
 		}, 100) // Small delay to ensure workspace is fully rendered
 
-		return () => clearTimeout(timer)
+		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, initialBlocklyJson, isCentered, isCentering, pathname])
 
-	useEffect(() => {
-		if (!containerRef.current) return
+	useEffect((): () => void => {
+		if (!containerRef.current) return (): void => {}
 
-		const resizeObserver = new ResizeObserver(() => {
+		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
 			}
@@ -121,19 +121,19 @@ function BlocklyComponent(props: Props) {
 
 		resizeObserver.observe(containerRef.current)
 
-		return () => {
+		return (): void => {
 			resizeObserver.disconnect()
 		}
 	}, [])
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (workspaceRef.current) {
 			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
 		}
 	}, [isDarkMode])
 
 	// This keeps the category from having a blue border when clicked
-	const setupToolbox = useCallback(() => {
+	const setupToolbox = useCallback((): void => {
 		if (!workspaceRef.current) return
 
 		const toolbox = workspaceRef.current.getToolbox()
@@ -144,11 +144,11 @@ function BlocklyComponent(props: Props) {
 		flyout.autoClose = false
 	}, [])
 
-	useEffect(() => {
+	useEffect((): void => {
 		initializeBlocks()
 		setupToolbox()
 		// TODO 12/1/24: Fix, not working
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
 	}, [setupToolbox])
 

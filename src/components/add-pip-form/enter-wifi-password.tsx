@@ -9,14 +9,15 @@ import LockIconAndTooltip from "../lock-icon-and-tooltip"
 import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form"
 
 interface EnterWifiPasswordProps {
-    control: Control<IncompletePipData>
-    onSubmit?: () => void // Add optional submit handler
+	control: Control<IncompletePipData>
+	onSubmit?: () => void // Add optional submit handler
 }
 
-export default function EnterWifiPassword({ control, onSubmit }: EnterWifiPasswordProps) {
+export default function EnterWifiPassword(props: EnterWifiPasswordProps): React.ReactNode {
+	const { control, onSubmit } = props
 	const [showPassword, setShowPassword] = useState(false)
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+	const handleKeyDown = (e: React.KeyboardEvent): void => {
 		if (e.key !== "Enter" || !onSubmit) return
 		e.preventDefault()
 		onSubmit()
@@ -26,7 +27,7 @@ export default function EnterWifiPassword({ control, onSubmit }: EnterWifiPasswo
 		<FormField
 			control={control}
 			name="manualWiFiPassword"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="mt-2">
 					<FormControl>
 						<div className="relative">
@@ -46,7 +47,7 @@ export default function EnterWifiPassword({ control, onSubmit }: EnterWifiPasswo
 								variant="ghost"
 								size="sm"
 								className="absolute right-9 top-1/2 -translate-y-1/2 h-auto p-1.5 mr-4 hover:bg-swan"
-								onClick={() => setShowPassword(prev => !prev)}
+								onClick={(): void => setShowPassword((prev): boolean => !prev)}
 							>
 								{showPassword ? (
 									<EyeOff className="!h-7 !w-7" />

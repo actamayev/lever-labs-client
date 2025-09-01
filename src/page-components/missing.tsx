@@ -8,7 +8,7 @@ import { CustomGarage } from "../components/icons/custom-garage"
 import { PageToNavigateAfterLogin } from "../utils/constants/page-constants"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
-function Missing() {
+function Missing(): React.ReactNode {
 	const destination = authClass.isFinishedWithSignup ? PageToNavigateAfterLogin : "/"
 
 	return (

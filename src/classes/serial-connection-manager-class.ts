@@ -34,20 +34,20 @@ class SerialConnectionManagerClass {
 		this.initializeKeepaliveWorker()
 
 		// Listen for USB device connections (when devices are plugged in)
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (navigator.serial) {
-			navigator.serial.addEventListener("connect", (event) => {
+			navigator.serial.addEventListener("connect", (event): void => {
 				console.info("USB device connected:", event)
 				this.handleDevicePluggedIn(event.target as SerialPort)
 			})
 
-			navigator.serial.addEventListener("disconnect", (event) => {
+			navigator.serial.addEventListener("disconnect", (event): void => {
 				console.info("USB device disconnected:", event)
 				this.handleDeviceUnplugged(event.target as SerialPort)
 			})
 		}
 
-		window.addEventListener("beforeunload", () => {
+		window.addEventListener("beforeunload", (): void => {
 			if (this.connected && this.writer) {
 				try {
 					const disconnectMsg = MessageBuilder.createSerialEndMessage()
@@ -101,7 +101,7 @@ class SerialConnectionManagerClass {
 			clearInterval(this.keepAliveInterval)
 		}
 
-		this.keepAliveInterval = setInterval(async () => {
+		this.keepAliveInterval = setInterval(async (): Promise<void> => {
 			if (this.pipTurnedOn && this.writer) {
 				try {
 					const keepaliveMsg = MessageBuilder.createSerialKeepaliveMessage()
@@ -117,7 +117,7 @@ class SerialConnectionManagerClass {
 	// Try to auto-reconnect to previously authorized devices
 	async tryAutoReconnect(): Promise<boolean> {
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (!navigator.serial) return false
 
 			const ports = await navigator.serial.getPorts()
@@ -216,7 +216,7 @@ class SerialConnectionManagerClass {
 			const reader = port.readable.getReader()
 			const writer = port.writable.getWriter()
 
-			runInAction(() => {
+			runInAction((): void => {
 				this.port = port
 				this.reader = reader
 				this.writer = writer
@@ -250,7 +250,7 @@ class SerialConnectionManagerClass {
 		if (this.pipTurnedOn) return
 
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (!navigator.serial) {
 				throw new Error("Web Serial API not supported in this browser")
 			}
@@ -341,7 +341,7 @@ class SerialConnectionManagerClass {
 			if (this.writer) {
 				const disconnectMsg = MessageBuilder.createSerialEndMessage()
 				await this.writer.write(new Uint8Array(disconnectMsg))
-				await new Promise(resolve => setTimeout(resolve, 50))
+				await new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, 50))
 			}
 
 			// Directly call the message manager's disconnected handler
@@ -412,7 +412,7 @@ class SerialConnectionManagerClass {
 	private formatBinaryForDisplay(buffer: ArrayBuffer): string {
 		const array = new Uint8Array(buffer)
 		return Array.from(array)
-			.map(byte => byte.toString(16).padStart(2, "0"))
+			.map((byte): string => byte.toString(16).padStart(2, "0"))
 			.join(" ")
 	}
 
@@ -465,7 +465,7 @@ class SerialConnectionManagerClass {
 		}
 
 		// Reset state
-		runInAction(() => {
+		runInAction((): void => {
 			this.port = null
 			this.reader = null
 			this.writer = null

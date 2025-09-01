@@ -1,4 +1,4 @@
-/* eslint-disable max-depth */
+
 import { useEffect, useRef, useState } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -8,7 +8,7 @@ function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
 	const keyDownRef = useRef(false)
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		const handleKeyDown = (e: KeyboardEvent): void => {
 			// Only process if key wasn't already down
 			if (!keyDownRef.current && (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "ArrowRight" || e.key === "ArrowLeft")) {
@@ -44,7 +44,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
 		if (shouldBlockNavigation(careerUUID)) return

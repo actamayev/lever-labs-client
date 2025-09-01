@@ -9,9 +9,9 @@ import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { careerData } from "../../../utils/constants/career-quest/career-data"
 
-function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }) {
+function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
-	const career = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
+	const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 	if (!career) return null
 	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerUUID)
 	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerUUID)
@@ -41,8 +41,8 @@ function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }) {
 							strokeWidth="4"
 							fill={isHovered ? "currentColor" : "transparent"}
 							className={cn("duration-0 cursor-default", colors.text)}
-							onMouseEnter={() => setIsHovered(true)}
-							onMouseLeave={() => setIsHovered(false)}
+							onMouseEnter={(): void => setIsHovered(true)}
+							onMouseLeave={(): void => setIsHovered(false)}
 						/>
 					}
 					tooltipContent={`${completedChallenges}/${totalChallenges} lessons complete`}
