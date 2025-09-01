@@ -58,7 +58,7 @@ class GarageClass {
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	})
 
-	public applyDesignToBuffer = action((designName: PreDefinedDesignName): void => {
+	public applyDesignToBuffer = action(async (designName: PreDefinedDesignName): Promise<void> => {
 		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
 		if (!design) return
 		this.clearBuffer()
@@ -67,16 +67,16 @@ class GarageClass {
 		})
 		this.designOnBuffer = designName
 		this.textOnBuffer = ""
-		exportDisplay(this.pixelBuffer)
+		await exportDisplay(this.pixelBuffer)
 	})
 
-	public applyTextToBuffer = action((): void => {
+	public applyTextToBuffer = action(async (): Promise<void> => {
 		if (!this.textInput.trim()) return
 		this.clearBuffer()
 		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
 		this.textOnBuffer = this.textInput
 		this.designOnBuffer = "No design"
-		exportDisplay(this.pixelBuffer)
+		await exportDisplay(this.pixelBuffer)
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {

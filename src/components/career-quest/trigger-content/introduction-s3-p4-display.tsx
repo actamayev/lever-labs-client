@@ -9,8 +9,8 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import editName from "../../../utils/personal-info/edit-name"
 
 function IntroductionS3P4Display() {
-	const setTextInput = (text: string) => {
-		careerQuestTriggersClass.setTextInput(text)
+	const setTextInput = async (text: string) => {
+		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
 	}
 

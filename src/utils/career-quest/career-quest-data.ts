@@ -8,6 +8,7 @@ import { CareerType, CareerUUID, IntroductionTriggerType, OBSTACLE_AVOIDANCE_CHA
 import { ReactNode } from "react"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
+import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 
 // Utility function to convert ReactNode to string
 // eslint-disable-next-line complexity
@@ -193,7 +194,7 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					id: "introduction-3-4",
 					content: "introduction-3-4",
 					rightSideContent: "s3-p4-display",
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S3_P4_ENTER),
+					triggerFunctionEnter: () => careerQuestTriggersClass.exportDisplayTrigger(),
 				},
 				{
 					type: "text",
