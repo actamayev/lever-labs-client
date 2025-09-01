@@ -18,13 +18,13 @@ interface WiFiScanSectionProps {
 	setValue: UseFormSetValue<IncompletePipData>
 }
 
-function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
+function WiFiScanSection({ control, setValue }: WiFiScanSectionProps): React.ReactNode {
 	const [showManualEntry, setShowManualEntry] = useState(false)
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const { scanForNetworks } = useScanForNetworks()
 
 	//Trigger a soft scan on load
-	useEffect(() => {
+	useEffect((): void => {
 		scanForNetworks("soft")
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
@@ -41,7 +41,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 				<div className="flex gap-4 mb-4">
 					<Button
 						type="button"
-						onClick={() => scanForNetworks("hard")}
+						onClick={async(): Promise<void> => await scanForNetworks("hard")}
 						disabled={serialMessageManagerClass.isScanning || !serialConnectionManagerClass.pipTurnedOn}
 						className={cn(
 							"flex items-center gap-2",
@@ -55,7 +55,7 @@ function WiFiScanSection({ control, setValue }: WiFiScanSectionProps) {
 
 					<Button
 						type="button"
-						onClick={() => setShowManualEntry(!showManualEntry)}
+						onClick={(): void => setShowManualEntry(!showManualEntry)}
 						variant="outline"
 						className="cursor-pointer"
 					>

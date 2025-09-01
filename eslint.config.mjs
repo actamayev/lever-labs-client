@@ -28,8 +28,6 @@ const eslintConfig = [
 			"src/components/magicui/**/*",
 			// Ignore the problematic JS files that are causing issues
 			"add-use-client.js",
-			"keepalive-worker.js",
-			"postcss.config.js",
 			// Ignore ESLint config file itself
 			"eslint.config.mjs",
 		],
@@ -79,7 +77,16 @@ const eslintConfig = [
 			"no-trailing-spaces": "error",
 			"prefer-const": "error",
 			"max-len": ["warn", { "code": 140 }],
-			"@typescript-eslint/explicit-function-return-type": "warn",
+			"@typescript-eslint/explicit-function-return-type": [
+				"warn",
+				{
+					"allowExpressions": false,
+					"allowTypedFunctionExpressions": false,
+					"allowHigherOrderFunctions": false,
+					"allowDirectConstAssertionInArrowFunctions": false,
+					"allowConciseArrowFunctionExpressionsStartingWithVoid": false
+				}
+			],
 			"require-await": "error",
 			"@typescript-eslint/no-explicit-any": "error",
 			"@typescript-eslint/prefer-as-const": "error",

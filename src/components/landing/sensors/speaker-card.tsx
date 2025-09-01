@@ -10,13 +10,13 @@ export default function SpeakerCard(): React.ReactNode {
 	const [volumeLevel, setVolumeLevel] = useState(2) // Start with Volume2
 	const speakerRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		let interval: NodeJS.Timeout | null = null
 
 		if (isHovered) {
 			// Start cycling through volume levels
-			interval = setInterval(() => {
-				setVolumeLevel((prev) => (prev % 3) + 1) // Cycle through 1, 2, 3
+			interval = setInterval((): void => {
+				setVolumeLevel((prev): number => (prev % 3) + 1) // Cycle through 1, 2, 3
 			}, 333)
 		} else {
 			// Reset to Volume2 when not hovered

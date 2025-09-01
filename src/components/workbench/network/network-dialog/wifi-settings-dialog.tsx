@@ -15,11 +15,11 @@ import serialMessageManagerClass from "../../../../classes/serial-message-manage
 import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
 import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
 
-function WiFiSettingsDialog() {
+function WiFiSettingsDialog(): React.ReactNode {
 	// Use the custom hook
 	const { scanForNetworks } = useScanForNetworks()
 
-	const requestSavedNetworksAndWiFiScan = useCallback(async () => {
+	const requestSavedNetworksAndWiFiScan = useCallback(async (): Promise<void> => {
 		if (!serialConnectionManagerClass.pipTurnedOn) return
 
 		serialMessageManagerClass.setIsLoadingSavedNetworks(true)
@@ -36,7 +36,7 @@ function WiFiSettingsDialog() {
 	}, [serialConnectionManagerClass.pipTurnedOn])
 
 	// Request saved networks when dialog opens
-	useEffect(() => {
+	useEffect((): void => {
 		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.pipTurnedOn) {
 			void requestSavedNetworksAndWiFiScan()
 		}
@@ -84,7 +84,7 @@ function WiFiSettingsDialog() {
 
 									</h3>
 									<Button
-										onClick={() => scanForNetworks("hard")}
+										onClick={async(): Promise<void> => await scanForNetworks("hard")}
 										disabled={serialMessageManagerClass.isScanning}
 										className="flex items-center gap-2"
 										variant="outline"

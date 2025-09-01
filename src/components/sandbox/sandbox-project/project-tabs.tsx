@@ -10,16 +10,16 @@ import sandboxClass from "../../../classes/sandbox-class"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
 
-function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
+function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }): React.ReactNode {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
-	const cppCode = useMemo(() => {
+	const cppCode = useMemo((): string => {
 		return sandboxClass.getCppCode(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.cppCode])
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
-		debounce(async (uuid: ProjectUUID, newNotes: string) => {
+		debounce(async (uuid: ProjectUUID, newNotes: string): Promise<void> => {
 			try {
 				await editSandboxProjectNotes(uuid, newNotes)
 				setHasUnsavedChanges(false) // Clear unsaved changes flag on successful save
@@ -31,13 +31,13 @@ function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
 	).current
 
 	// Clean up debounce on unmount
-	useEffect(() => {
-		return () => debouncedSaveNotes.cancel()
+	useEffect((): () => void => {
+		return (): void => debouncedSaveNotes.cancel()
 	}, [debouncedSaveNotes])
 
 	// Handle beforeunload warning
-	useEffect(() => {
-		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+	useEffect((): () => void => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent): void => {
 			if (hasUnsavedChanges) {
 				e.preventDefault()
 				e.returnValue = "Changes you made may not be saved."
@@ -48,12 +48,12 @@ function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }) {
 			window.addEventListener("beforeunload", handleBeforeUnload)
 		}
 
-		return () => {
+		return (): void => {
 			window.removeEventListener("beforeunload", handleBeforeUnload)
 		}
 	}, [hasUnsavedChanges])
 
-	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
 		const newNotes = e.target.value
 		sandboxClass.updateProjectNotes(projectUUID, newNotes)
 		setHasUnsavedChanges(true) // Set unsaved changes flag when user types

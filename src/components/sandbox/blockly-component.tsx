@@ -13,7 +13,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
-interface Props {
+export interface BlocklyComponentProps {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
@@ -22,7 +22,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function BlocklyComponent(props: Props): React.ReactNode {
+function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const {
 		toolboxConfig,
 		initialBlocklyJson,
@@ -36,11 +36,11 @@ function BlocklyComponent(props: Props): React.ReactNode {
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
 	const [isCentering, setIsCentering] = useState(false)
-	const workspaceConfiguration = useMemo(() => {
+	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
 
-	const filteredToolboxConfig = useMemo(() => {
+	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
 	}, [toolboxConfig, searchTerm])
 
@@ -74,7 +74,7 @@ function BlocklyComponent(props: Props): React.ReactNode {
 
 	// Handle centering when switching modes
 	// @ts-expect-error - Not all code paths return a value, but this is intentional
-	useEffect(() => {
+	useEffect((): () => void => {
 		if (isSwitchingMode) {
 			// Force re-centering when switching modes
 			setIsCentered(false)
@@ -88,7 +88,7 @@ function BlocklyComponent(props: Props): React.ReactNode {
 		}
 	}, [isSwitchingMode, centerWorkspace])
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (isEmpty(searchTerm)) {
 			setIsCentered(false)
 			centerWorkspace()
@@ -96,13 +96,13 @@ function BlocklyComponent(props: Props): React.ReactNode {
 	}, [isSwitchingMode, searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
-	useEffect(() => {
+	useEffect((): void => {
 		setIsCentered(false)
 	}, [pathname])
 
 	// Add effect to center workspace after it's initialized and when blocks change
-	useEffect(() => {
-		if (isCentered || isCentering) return
+	useEffect((): () => void => {
+		if (isCentered || isCentering) return (): void => {}
 		const timer = setTimeout((): void => {
 			centerWorkspace()
 		}, 100) // Small delay to ensure workspace is fully rendered
@@ -110,10 +110,10 @@ function BlocklyComponent(props: Props): React.ReactNode {
 		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, initialBlocklyJson, isCentered, isCentering, pathname])
 
-	useEffect(() => {
-		if (!containerRef.current) return
+	useEffect((): () => void => {
+		if (!containerRef.current) return (): void => {}
 
-		const resizeObserver = new ResizeObserver(() => {
+		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
 			}
@@ -126,7 +126,7 @@ function BlocklyComponent(props: Props): React.ReactNode {
 		}
 	}, [])
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (workspaceRef.current) {
 			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
 		}
@@ -144,7 +144,7 @@ function BlocklyComponent(props: Props): React.ReactNode {
 		flyout.autoClose = false
 	}, [])
 
-	useEffect(() => {
+	useEffect((): void => {
 		initializeBlocks()
 		setupToolbox()
 		// TODO 12/1/24: Fix, not working

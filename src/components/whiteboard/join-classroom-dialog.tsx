@@ -18,7 +18,7 @@ interface CreateClassroomDialogProps {
 }
 
 
-export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps) {
+export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps): React.ReactNode {
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
@@ -26,12 +26,12 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 	const colors = getDuolingoColors("humpback")
 
-	const clearErrorAndSuccess = useCallback(() => {
+	const clearErrorAndSuccess = useCallback((): void => {
 		setError("")
 		setSuccess("")
 	}, [])
 
-	const handleSubmit = useCallback(async () => {
+	const handleSubmit = useCallback(async (): Promise<void> => {
 		if (!isValidClassCode(classCode)) return
 		clearErrorAndSuccess()
 		const joinedClassroom = await joinClassroom(classCode, setError, setSuccess)
@@ -39,7 +39,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 		navigate(`/whiteboard/${classCode}`)
 	}, [classCode, clearErrorAndSuccess, navigate])
 
-	const handleClose = useCallback(() => {
+	const handleClose = useCallback((): void => {
 		setClassCode("")
 		clearErrorAndSuccess()
 		onOpenChange(false)
@@ -47,7 +47,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 	const isFormValid = isValidClassCode(classCode)
 
-	const borderColor = useMemo(() => {
+	const borderColor = useMemo((): string => {
 		if (error) return "border-cardinal"
 		if (success) return "border-chargingGreen"
 		return "border-swan"
@@ -69,7 +69,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 						id="class-code"
 						type="text"
 						value={classCode}
-						onChange={(e) => {
+						onChange={(e): void => {
 							setClassCode(e.target.value)
 							clearErrorAndSuccess()
 						}}
@@ -98,7 +98,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 				<DialogFooter className="flex justify-end gap-2">
 					<TactileButton
-						onClick={handleClose}
+						onClick={(): void => handleClose()}
 						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel dark:bg-swan"
 						shadowHeight={4}
 						shadowClass="shadow-hare"
@@ -106,7 +106,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 						CANCEL
 					</TactileButton>
 					<TactileButton
-						onClick={handleSubmit}
+						onClick={(): void => void handleSubmit()}
 						disabled={!isFormValid}
 						className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
 						shadowHeight={4}
