@@ -2,7 +2,7 @@
 
 import { BlueTactileButton } from "../../buttons/tactile-buttons"
 
-export default function DemosSection() {
+export default function DemosSection(): React.ReactNode {
 	return (
 		<div className="h-full flex flex-col items-center justify-between w-full my-10">
 			{/* Add your demo content here */}

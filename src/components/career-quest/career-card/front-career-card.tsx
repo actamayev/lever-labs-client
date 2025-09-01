@@ -17,7 +17,7 @@ interface Props {
 	flipCard: () => void
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function FrontCareerCard(props: Props) {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData

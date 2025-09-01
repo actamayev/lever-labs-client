@@ -12,7 +12,7 @@ interface TextParentCardProps {
 	careerUUID: CareerUUID
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function TextParentCard(props: TextParentCardProps) {
 	const { slide, careerUUID } = props
 	const textParentData = slide.data

@@ -17,7 +17,7 @@ function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
 	)
 }
 
-export default function BridgingTwoWorlds() {
+export default function BridgingTwoWorlds(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="right"

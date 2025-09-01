@@ -5,7 +5,7 @@ import { TvMinimal } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 
-export default function ScreenCard() {
+export default function ScreenCard(): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 
 	const ScreenIcon = () => {

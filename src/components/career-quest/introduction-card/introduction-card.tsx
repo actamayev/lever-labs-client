@@ -6,7 +6,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import FrontIntroductionCard from "./front-introduction-card"
 import BackIntroductionCard from "./back-introduction-card"
 
-export default function IntroductionCard() {
+export default function IntroductionCard(): React.ReactNode {
 	const [flipped, setFlipped] = useState(false)
 
 	const flipCard = useCallback(() => {

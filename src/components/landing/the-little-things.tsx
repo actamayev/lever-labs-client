@@ -112,7 +112,7 @@ function FeatureItem({ feature }: FeatureItemProps) {
 	)
 }
 
-export default function TheLittleThings() {
+export default function TheLittleThings(): React.ReactNode {
 	return (
 		<div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
 			{/* Title */}

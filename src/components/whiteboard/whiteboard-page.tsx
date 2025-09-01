@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { Plus } from "lucide-react"
@@ -11,7 +11,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import SingleWhiteboardCard from "./single-whiteboard-card"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
-// eslint-disable-next-line max-lines-per-function
+
 function WhiteboardPage() {
 	const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
 

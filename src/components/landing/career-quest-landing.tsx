@@ -8,7 +8,7 @@ import { LandingCTAButton } from "../buttons/tactile-buttons"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"
 
-export default function CareerQuestLanding() {
+export default function CareerQuestLanding(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="left"

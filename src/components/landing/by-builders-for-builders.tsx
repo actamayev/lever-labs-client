@@ -7,7 +7,7 @@ import { landingParagraph } from "../../utils/text-styles"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { LandingCTAButton } from "../buttons/tactile-buttons"
 
-export default function ByBuildersForBuilders() {
+export default function ByBuildersForBuilders(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="left"

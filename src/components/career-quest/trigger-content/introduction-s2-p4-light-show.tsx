@@ -2,7 +2,7 @@ import { TactileButton } from "@/components/shadcn/ui/tactile-button"
 import careerQuestTrigger from "../../../utils/career-quest/career-quest-trigger"
 import { CareerType, IntroductionTriggerType } from "@bluedotrobots/common-ts"
 
-export default function IntroductionS2P4LightShow() {
+export default function IntroductionS2P4LightShow(): React.ReactNode {
 	return (
 		<div>
 			<TactileButton

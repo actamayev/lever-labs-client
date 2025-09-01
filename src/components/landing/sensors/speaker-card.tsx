@@ -5,7 +5,7 @@ import { Volume1, Volume2, Volume } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 
-export default function SpeakerCard() {
+export default function SpeakerCard(): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 	const [volumeLevel, setVolumeLevel] = useState(2) // Start with Volume2
 	const speakerRef = useRef<HTMLDivElement>(null)
@@ -23,7 +23,7 @@ export default function SpeakerCard() {
 			setVolumeLevel(2)
 
 			// Clear the interval
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (interval) {
 				clearInterval(interval)
 			}

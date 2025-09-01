@@ -1,6 +1,6 @@
 "use client"
 
-export default function BlueDot() {
+export default function BlueDot(): React.ReactNode {
 	return (
 		<div className="flex justify-center">
 			<div

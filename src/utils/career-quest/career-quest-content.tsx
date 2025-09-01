@@ -638,7 +638,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 // Helper function to get a content component by key
 export function getContentComponent(key: string, onAdvance?: () => void): ReactNode {
 	const component = CONTENT_COMPONENTS[key]
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 	if (!component) {
 		console.warn(`Content component "${key}" not found in registry`)
 		return <div>Content not found</div> // fallback

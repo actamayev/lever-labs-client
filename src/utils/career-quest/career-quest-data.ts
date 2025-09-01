@@ -1,6 +1,6 @@
 "use client"
 
-/* eslint-disable max-len */
+
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { CareerType, CareerUUID, IntroductionTriggerType, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,

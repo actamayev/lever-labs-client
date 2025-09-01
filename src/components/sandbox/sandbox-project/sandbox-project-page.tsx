@@ -128,7 +128,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 				// Focus the search bar
 				searchBarRef.current?.focus()
 				return
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			} else if (event.key === "Escape") {
 				const activeElement = document.activeElement
 

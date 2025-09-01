@@ -6,7 +6,7 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 import LandingSectionSplit from "./landing-section-split"
 // import { LandingCTAButton } from "../buttons/tactile-buttons"
 
-export default function SmallRobotBigPossibilities() {
+export default function SmallRobotBigPossibilities(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="right"

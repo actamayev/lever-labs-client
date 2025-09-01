@@ -10,6 +10,6 @@ export const metadata = createMetadata({
 	needsBlueDotSuffix: false
 })
 
-export default function Home() {
+export default function Home(): React.ReactNode {
 	return <Landing />
 }

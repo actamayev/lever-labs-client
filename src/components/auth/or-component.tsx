@@ -1,6 +1,6 @@
 "use client"
 
-export default function OrComponent() {
+export default function OrComponent(): React.ReactNode {
 	return (
 		<div className="relative">
 			<div className="absolute inset-0 flex items-center">

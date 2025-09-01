@@ -8,6 +8,6 @@ export const metadata = createMetadata({
 	keywords: ["privacy", "blue dot robots", "privacy policy"]
 })
 
-export default function Privacy() {
+export default function Privacy(): React.ReactNode {
 	return <PrivacyPage />
 }

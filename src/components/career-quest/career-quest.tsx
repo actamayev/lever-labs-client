@@ -6,7 +6,7 @@ import IntroductionCard from "./introduction-card/introduction-card"
 import { careerData } from "../../utils/constants/career-quest/career-data"
 import useEffectRetrieveAllCareersChallenges from "../../hooks/career-quest/use-effect-retrieve-all-careers-challenges"
 
-export default function CareerQuest() {
+export default function CareerQuest(): React.ReactNode {
 	useEffectRetrieveAllCareersChallenges()
 
 	return (

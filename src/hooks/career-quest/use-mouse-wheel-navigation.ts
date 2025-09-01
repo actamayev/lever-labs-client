@@ -1,4 +1,4 @@
-/* eslint-disable max-depth */
+
 /* eslint-disable @typescript-eslint/naming-convention */
 import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
@@ -24,7 +24,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	// Helper function to check if the mouse is over a chat component
 	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
 		const target = event.target as Element
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (!target) return false
 
 		// Check if the target or any of its parents is a chat component
@@ -64,11 +64,11 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		return !isEmpty(careerMessages)
 	}, [careerUUID])
 
-	// eslint-disable-next-line max-lines-per-function
+
 	useEffect(() => {
 		if (!swiperInstance || isTransitioning) return
 
-		// eslint-disable-next-line complexity, max-lines-per-function
+
 		const handleWheel = (e: WheelEvent): void => {
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {

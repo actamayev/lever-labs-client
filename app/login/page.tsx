@@ -10,6 +10,6 @@ export const metadata = createMetadata({
 })
 
 // Simplified - no wrapper needed, middleware handles redirects
-export default function Login() {
+export default function Login(): React.ReactNode {
 	return <LoginComponent />
 }

@@ -8,7 +8,7 @@ import ProfileLayout from "../components/profile/profile-layout"
 import SupportSectionContainer from "../components/support/support-section-container"
 
 // eslint-disable-next-line max-lines-per-function
-export default function TermsPage() {
+export default function TermsPage(): React.ReactNode {
 	return (
 		<ProfileLayout>
 			<SupportSectionContainer title="Terms and Conditions of Service">

@@ -8,7 +8,7 @@ import ProfileLayout from "../components/profile/profile-layout"
 import SupportSectionContainer from "../components/support/support-section-container"
 
 // eslint-disable-next-line max-lines-per-function
-export default function PrivacyPage() {
+export default function PrivacyPage(): React.ReactNode {
 	return (
 		<ProfileLayout>
 			<SupportSectionContainer title="Privacy Policy">

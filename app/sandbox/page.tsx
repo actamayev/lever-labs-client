@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["open robotics playground", "creative coding", "experimental learning"]
 })
 
-export default function SandboxPage() {
+export default function SandboxPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<TheSandboxPage />

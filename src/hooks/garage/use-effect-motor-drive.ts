@@ -56,7 +56,7 @@ export default function useEffectMotorDrive(): void {
 			// Clear any active motor control when unmounting
 			applyMotorControl({ vertical: 0, horizontal: 0 })
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+
 	}, [])
 
 	// Watch for changes in motorThrottlePercent and emit updates

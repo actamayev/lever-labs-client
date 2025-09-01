@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { Plus } from "lucide-react"
@@ -14,7 +14,7 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 import SingleClassCard from "./single-class-card"
 
-// eslint-disable-next-line max-lines-per-function
+
 function ClassManagerPage() {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)

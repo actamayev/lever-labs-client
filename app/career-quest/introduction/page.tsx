@@ -5,7 +5,6 @@ import CareerActivityTemplate from "../../../src/components/career/career-activi
 
 export const metadata = createMetadata({
 	title: "Career Quest Introduction",
-	// eslint-disable-next-line max-len
 	description: "Guide Pip through line-following to discover its purpose in a robotics adventure.",
 	path: "/career-quest/introduction",
 	keywords: [
@@ -15,7 +14,7 @@ export const metadata = createMetadata({
 	]
 })
 
-export default function CareerQuestIntroductionPage() {
+export default function CareerQuestIntroductionPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<CareerActivityTemplate careerData={INTRODUCTION_CAREER} />

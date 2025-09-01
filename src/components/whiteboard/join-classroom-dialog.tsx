@@ -17,7 +17,7 @@ interface CreateClassroomDialogProps {
 	onOpenChange: (open: boolean) => void
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps) {
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")

@@ -1,4 +1,4 @@
-/* eslint-disable max-depth */
+
 import { useEffect, useRef, useState } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"

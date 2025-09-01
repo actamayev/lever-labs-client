@@ -53,7 +53,7 @@ const BelowSidebarLink = ({ href, children }: SidebarLinkProps) => {
 	)
 }
 
-export default function ProfileSidebar() {
+export default function ProfileSidebar(): React.ReactNode {
 	const navigate = useTypedNavigate()
 
 	const completeLogout = useCallback(async () => {

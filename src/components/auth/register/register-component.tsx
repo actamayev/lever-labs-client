@@ -19,7 +19,7 @@ import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constant
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 
-export default function RegisterComponent() {
+export default function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 

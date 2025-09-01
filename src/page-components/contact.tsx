@@ -7,7 +7,7 @@ import ContactItemInCard from "../components/contact/contact-item-in-card"
 import FooterSocialSection from "../components/footer/footer-social-section"
 import SupportSectionContainer from "../components/support/support-section-container"
 
-export default function Contact() {
+export default function Contact(): React.ReactNode {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])

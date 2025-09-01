@@ -1676,7 +1676,7 @@ class CareerQuestClass {
 		if (textChild.type === "morphingText") {
 			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, textChild.id)
 			const currentVariant = textChild.morphingVariants[morphingIndex]
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {

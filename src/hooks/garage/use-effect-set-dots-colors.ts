@@ -1,6 +1,6 @@
 "use client"
 
-/* eslint-disable max-len */
+
 import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
@@ -11,7 +11,7 @@ import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-// eslint-disable-next-line max-lines-per-function
+
 export default function useEffectSetDefaultColors(): void {
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps

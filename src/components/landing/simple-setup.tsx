@@ -7,7 +7,7 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"
 import RightArrow from "../right-arrow"
 
-export default function SimpleSetup() {
+export default function SimpleSetup(): React.ReactNode {
 	return (
 		<div className="w-full">
 			{/* Switch to horizontal layout at xl (1280px) instead of lg (1024px) to prevent overlap */}

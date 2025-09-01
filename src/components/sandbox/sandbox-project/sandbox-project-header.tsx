@@ -14,7 +14,7 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
 import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 
-// eslint-disable-next-line max-lines-per-function, complexity
+
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 	const leaveSandbox = () => {
 		void stopCurrentlyRunningCode()

@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 import "swiper/css"
 import { useEffect } from "react"
@@ -20,7 +20,7 @@ function EmptyTextParentCard() {
 	)
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }) {
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)

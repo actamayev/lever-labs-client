@@ -12,7 +12,7 @@ import { CustomWizardHat } from "../components/icons/custom-wizard-hat"
 import ContactItemInCard from "../components/contact/contact-item-in-card"
 import SupportSectionContainer from "../components/support/support-section-container"
 
-export default function SchoolsPage() {
+export default function SchoolsPage(): React.ReactNode {
 	useEffect(() => {
 		window.scrollTo(0, 0)
 	}, [])

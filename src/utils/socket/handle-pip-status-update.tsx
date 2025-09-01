@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 "use client"
 
 import { PipStatusUpdate } from "@bluedotrobots/common-ts"

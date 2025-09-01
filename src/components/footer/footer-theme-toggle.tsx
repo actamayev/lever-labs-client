@@ -4,7 +4,7 @@ import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/shadcn/ui/button"
 import setDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
 
-export default function FooterThemeToggle() {
+export default function FooterThemeToggle(): React.ReactNode {
 	return (
 		<Button
 			variant="ghost"

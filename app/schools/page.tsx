@@ -9,6 +9,6 @@ export const metadata = createMetadata({
 	keywords: ["classroom robotics", "robotics curriculum", "progress tracking"]
 })
 
-export default function Schools() {
+export default function Schools(): React.ReactNode {
 	return <SchoolsPage />
 }

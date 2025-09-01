@@ -4,7 +4,7 @@ import { Lock } from "lucide-react"
 import { Button } from "./shadcn/ui/button"
 import CustomTooltip from "./custom-tooltip"
 
-export default function LockIconAndTooltip() {
+export default function LockIconAndTooltip(): React.ReactNode {
 	return (
 		<CustomTooltip
 			tooltipTrigger={

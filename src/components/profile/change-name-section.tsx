@@ -10,7 +10,7 @@ import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"
 
-// eslint-disable-next-line max-lines-per-function, complexity
+
 function ChangeNameSection() {
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)

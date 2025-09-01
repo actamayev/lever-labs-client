@@ -14,7 +14,7 @@ interface ArrowKeyButtonProps {
 	isPressed: boolean
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function DrivingActionButton({
 	action,
 	isPressed,

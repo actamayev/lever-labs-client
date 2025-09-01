@@ -8,6 +8,6 @@ export const metadata = createMetadata({
 	keywords: ["robotics support", "educational robot help", "contact"]
 })
 
-export default function ContactPage() {
+export default function ContactPage(): React.ReactNode {
 	return <Contact />
 }

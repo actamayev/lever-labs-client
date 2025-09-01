@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 import RightContent from "./right-content"
 import { cn } from "../../../lib/shadcn/utils"

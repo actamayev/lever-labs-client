@@ -17,7 +17,7 @@ interface SandboxChatInterfaceProps {
 	projectUUID: ProjectUUID
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps) {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)

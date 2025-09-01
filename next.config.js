@@ -57,7 +57,7 @@ const nextConfig = {
 	},
 
 	// Security headers
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, require-await
+	// eslint-disable-next-line require-await
 	async headers() {
 		return [
 			{
@@ -84,7 +84,7 @@ const nextConfig = {
 		]
 	},
 
-	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+
 	webpack: (config, { dev, isServer }) => {
 		// Fallbacks for Node.js modules
 		config.resolve.fallback = {

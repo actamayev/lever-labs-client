@@ -3,7 +3,7 @@
 import { GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
 
-export default function GoogleSignIn() {
+export default function GoogleSignIn(): React.ReactNode {
 	const googleAuthCallback = useGoogleAuthCallback()
 
 	return (

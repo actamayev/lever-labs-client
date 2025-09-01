@@ -2,7 +2,7 @@
 
 import { CustomX } from "../icons/custom-x"
 
-export default function XLink() {
+export default function XLink(): React.ReactNode {
 	return (
 		<a
 			href="https://x.com/bluedotrobots"

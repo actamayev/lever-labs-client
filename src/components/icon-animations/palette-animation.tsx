@@ -4,7 +4,7 @@ import { useCallback, useState } from "react"
 import { CustomPalette } from "../icons/custom-palette"
 import { observer } from "mobx-react"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const COLORS = [
 	"rgb(255, 0, 0)",    // Red
 	"rgb(0, 255, 0)",    // Green

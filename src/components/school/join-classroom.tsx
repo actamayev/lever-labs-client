@@ -9,7 +9,7 @@ import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
-export default function JoinClassroom() {
+export default function JoinClassroom(): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")

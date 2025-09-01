@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["robot setup", "connect educational robot", "pip configuration"]
 })
 
-export default function AddPipPage() {
+export default function AddPipPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<AddPipForm />

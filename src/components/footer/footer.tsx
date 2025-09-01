@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import Link from "next/link"
@@ -9,7 +9,7 @@ import FooterThemeToggle from "./footer-theme-toggle"
 import FooterSocialSection from "./footer-social-section"
 
 // eslint-disable-next-line max-lines-per-function
-export default function Footer() {
+export default function Footer(): React.ReactNode {
 	const pathname = usePathname()
 	if (
 		pathname !== "/" &&

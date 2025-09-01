@@ -109,7 +109,7 @@ function RequestTeacherAccess() {
 					<span>Your teacher application is being reviewed. You can update your information below.</span>
 				</div>
 			)
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		} else if (teacherData.isApproved === false) {
 			return (
 				<div className="flex items-center mb-4 text-cardinal text-sm font-medium">

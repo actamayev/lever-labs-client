@@ -42,5 +42,5 @@
     "./tailwind.config.ts",
     "next.config.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "eslint.config.mjs"]
 }

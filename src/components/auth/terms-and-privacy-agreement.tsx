@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-export default function TermsAndPrivacyAgreement() {
+export default function TermsAndPrivacyAgreement(): React.ReactNode {
 	return (
 		<div className="text-xs font-normal mt-10 text-center text-hare">
 			<p>

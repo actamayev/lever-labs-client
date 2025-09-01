@@ -4,7 +4,7 @@ import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 import PaletteAnimation from "../../icon-animations/palette-animation"
 
-export default function ColorSensorCard() {
+export default function ColorSensorCard(): React.ReactNode {
 	return (
 		<SensorsSkeleton
 			title="Color Sensor"

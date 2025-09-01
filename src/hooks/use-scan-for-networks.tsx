@@ -5,7 +5,7 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import serialMessageManagerClass from "../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
-export default function useScanForNetworks(): {
+export default function useScanForNetworks(): React.ReactNode: {
 	scanForNetworks: (softOrHard: "soft" | "hard") => Promise<void>
 	} {
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -36,7 +36,7 @@ export default function useScanForNetworks(): {
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManagerClass.setIsScanning(false)
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (scanTimeoutRef.current) {
 				clearTimeout(scanTimeoutRef.current)
 				scanTimeoutRef.current = null

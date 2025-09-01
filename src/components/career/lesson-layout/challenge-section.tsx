@@ -28,7 +28,7 @@ function getBlockCount(blocklyJson: BlocklyJson): number {
 // Helper function to check if JSON is valid and non-empty
 function isValidNonEmptyJson(blocklyJson: BlocklyJson): boolean {
 	// Check if it's truly empty or just has workspace metadata
-	// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 	if (!blocklyJson || typeof blocklyJson !== "object") return false
 
 	// Must have blocks property

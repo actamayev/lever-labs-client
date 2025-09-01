@@ -34,7 +34,7 @@ class SerialConnectionManagerClass {
 		this.initializeKeepaliveWorker()
 
 		// Listen for USB device connections (when devices are plugged in)
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (navigator.serial) {
 			navigator.serial.addEventListener("connect", (event) => {
 				console.info("USB device connected:", event)
@@ -117,7 +117,7 @@ class SerialConnectionManagerClass {
 	// Try to auto-reconnect to previously authorized devices
 	async tryAutoReconnect(): Promise<boolean> {
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (!navigator.serial) return false
 
 			const ports = await navigator.serial.getPorts()
@@ -250,7 +250,7 @@ class SerialConnectionManagerClass {
 		if (this.pipTurnedOn) return
 
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (!navigator.serial) {
 				throw new Error("Web Serial API not supported in this browser")
 			}

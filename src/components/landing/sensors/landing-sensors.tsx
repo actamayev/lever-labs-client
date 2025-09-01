@@ -28,7 +28,7 @@ const features: React.ReactNode[] = [
 	<ModuleCard key="Module" />
 ]
 
-export default function LandingSensors() {
+export default function LandingSensors(): React.ReactNode {
 	return (
 		<div className="w-full">
 			<LandingSectionHeaderText text="Pip's sensor suite" />

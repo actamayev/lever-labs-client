@@ -7,7 +7,7 @@ import ProfileLayout from "../components/profile/profile-layout"
 import SupportSectionContainer from "../components/support/support-section-container"
 import { ComplianceParagraph, ComplianceSectionHeader } from "../components/compliance"
 
-export default function CommunityGuidelines() {
+export default function CommunityGuidelines(): React.ReactNode {
 	return (
 		<ProfileLayout>
 			<SupportSectionContainer title="Community Guidelines">

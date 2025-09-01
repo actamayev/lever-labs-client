@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["account settings", "profile management", "user preferences"]
 })
 
-export default function TheProfile() {
+export default function TheProfile(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<TheProfilePage />

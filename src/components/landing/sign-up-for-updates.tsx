@@ -11,7 +11,7 @@ import subscribeForUpdates from "../../utils/subscribe-for-updates"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
-export default function SignUpForUpdates() {
+export default function SignUpForUpdates(): React.ReactNode {
 	const [isLoading, setIsLoading] = useState(false)
 
 	const onSubmit = useCallback(async (values: EmailUpdatesRequest) => {

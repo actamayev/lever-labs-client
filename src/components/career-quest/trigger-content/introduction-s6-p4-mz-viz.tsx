@@ -63,7 +63,7 @@ function IntroductionS6P4MzViz() {
 		const cell = getCellFromMouse(event.clientX, event.clientY)
 		if (cell) {
 			const rowData = sensorDataClass.distanceGrid[cell.row]
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (rowData && rowData.length === 8) {
 				const value = rowData[cell.col] || 0
 				setHoveredCell({ ...cell, value })

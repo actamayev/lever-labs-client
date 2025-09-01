@@ -111,7 +111,7 @@ export default class BlocklySearchFilter {
 		// Check if it's a category toolbox
 		if (
 			typeof toolboxConfig === "object" &&
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			toolboxConfig !== null &&
 			"kind" in toolboxConfig &&
 			toolboxConfig.kind === "categoryToolbox" &&

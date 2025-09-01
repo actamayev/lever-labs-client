@@ -19,7 +19,7 @@ import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
-export default function LoginComponent() {
+export default function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 	const pathname = usePathname()

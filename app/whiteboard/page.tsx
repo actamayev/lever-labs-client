@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["classroom", "student dashboard", "whiteboard"]
 })
 
-export default function WhiteboardPageRoute() {
+export default function WhiteboardPageRoute(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<WhiteboardPage />

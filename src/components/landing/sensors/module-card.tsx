@@ -5,7 +5,7 @@ import { bentoIconSize } from "../../../utils/constants/constants"
 import ModuleAnimation from "../../icon-animations/module-animation"
 import { landingSensorCardHeaderText, landingSensorCardText } from "../../../utils/text-styles"
 
-export default function ModuleCard() {
+export default function ModuleCard(): React.ReactNode {
 	return (
 		<div className={cn(
 			"group relative flex flex-col justify-between overflow-hidden rounded-xl",
