@@ -74,11 +74,4 @@ export default class SandboxDataService extends BaseDataService {
 			{ pipUUID }
 		)
 	}
-
-	async pollSensors(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl("/poll-sensors"),
-			{ pipUUID }
-		)
-	}
 }
