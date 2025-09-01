@@ -16,7 +16,6 @@ import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectHeader({ project } : { project: SandboxProject }) {
-
 	const leaveSandbox = () => {
 		void stopCurrentlyRunningCode()
 		void stopPollingSensors()

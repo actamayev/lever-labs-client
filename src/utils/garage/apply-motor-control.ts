@@ -68,7 +68,7 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	}
 
 	// Emit motor control via socket
-	socketClass.emitMotorControl({
+	socketClass.emitToServer("motor-control", {
 		motorControl,
 		pipUUID: pipClass.selectedPip.pipUUID,
 		motorThrottlePercent: garageClass.motorThrottlePercent

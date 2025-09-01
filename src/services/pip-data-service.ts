@@ -28,8 +28,8 @@ export default class PipDataService extends BaseDataService {
 	}
 
 	async retrievePipUUIDStatus(pipUUID: PipUUID): Promise<AxiosResponse<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>> {
-		return await this.httpClient.http.get<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>(
-			this.buildUrl(`/retrieve-pip-uuid-status/${pipUUID}`)
+		return await this.httpClient.http.post<RetrieveIsPipUUIDValidResponse | NonSuccessResponse>(
+			this.buildUrl("/retrieve-pip-uuid-status"), { pipUUID }
 		)
 	}
 
@@ -41,7 +41,7 @@ export default class PipDataService extends BaseDataService {
 
 	async stopSensorPolling(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/stop-sensor-polling/${pipUUID}`)
+			this.buildUrl("/stop-sensor-polling"), { pipUUID }
 		)
 	}
 }

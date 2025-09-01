@@ -92,6 +92,9 @@ body {
     --color-4: 195 100% 63%;
     --color-5: 90 100% 63%;
   }
+  .theme {
+    --animate-meteor: meteor 5s linear infinite;
+  }
 }
 
 @layer base {
@@ -175,4 +178,20 @@ html, body {
 
 * {
   -webkit-overflow-scrolling: auto !important;
+}
+
+@theme inline {
+  @keyframes meteor {
+  0% {
+    transform: rotate(var(--angle)) translateX(0);
+    opacity: 1;
+    }
+  70% {
+    opacity: 1;
+    }
+  100% {
+    transform: rotate(var(--angle)) translateX(-500px);
+    opacity: 0;
+    }
+  }
 }

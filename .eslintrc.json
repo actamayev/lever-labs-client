@@ -79,7 +79,7 @@
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
-        "filenames/match-regex": ["error", "^[a-z-]+$", true],
+        "filenames/match-regex": ["error", "^[a-z0-9-]+$", true],
         "react/react-in-jsx-scope": "off",
         "react/jsx-uses-react": "off",
         "react/prop-types": "off",

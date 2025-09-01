@@ -65,7 +65,7 @@ function DisplayControls () {
 					onChange={(e) => garageClass.setTextInput(e.target.value)}
 					onKeyDown={(e) => {
 						if (e.key === "Enter" && garageClass.textInput.trim()) {
-							garageClass.applyTextToBuffer()
+							void garageClass.applyTextToBuffer()
 						}
 					}}
 					className={cn(
@@ -77,7 +77,7 @@ function DisplayControls () {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => garageClass.applyTextToBuffer()}
+						applyToBuffer={() => void garageClass.applyTextToBuffer()}
 						isEmpty={!garageClass.textInput.trim()}
 						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 					/>

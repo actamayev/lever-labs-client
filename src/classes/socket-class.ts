@@ -3,18 +3,12 @@
 import { io, Socket } from "socket.io-client"
 import { action, makeAutoObservable } from "mobx"
 import {
-	HeadlightData,
-	HornData,
-	LedControlData,
-	MotorControlData,
-	PlayFunSoundPayload,
-	BatteryMonitorDataFull,
+	SocketEventPayloadMap,
+	SocketEvents,
+	ClientSocketEvents,
+	ClientSocketEventPayloadMap,
 } from "@bluedotrobots/common-ts"
-import sandboxClass from "./sandbox-class"
-import careerQuestClass from "./career-quest-class"
-import garageClass from "./garage-class"
-import workbenchClass from "./workbench-class"
-import handlePipStatusUpdate from "../utils/socket/handle-pip-status-update"
+import { listenersMap } from "../utils/constants/listeners-map"
 
 class SocketClass {
 	private _socket: Socket | null = null
@@ -35,8 +29,7 @@ class SocketClass {
 		})
 
 		this.setupConnectionEvents()
-		this.setupPipEvents()
-		this.setupChatbotEvents()
+		this.setupAllListeners()
 	})
 
 	private setupConnectionEvents = action((): void => {
@@ -55,73 +48,37 @@ class SocketClass {
 		})
 	})
 
-	private setupPipEvents = action((): void => {
-		// This is for receiving socket events from the backend.
+	private setupTypedListener<E extends SocketEvents>(
+		event: E,
+		handler: (payload: SocketEventPayloadMap[E]) => void
+	): void {
 		if (!this._socket) return
-		this._socket.on("pip-connection-status-update", handlePipStatusUpdate)
-		this._socket.on("sensor-data", garageClass.setSensorData)
-		this._socket.on("battery-monitor-data", (data: BatteryMonitorDataFull) => workbenchClass.setBatteryData(data))
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		this._socket.on(event, handler as any)
+	}
+
+	private setupAllListeners = action((): void => {
+		if (!this._socket) return
+		Object.entries(listenersMap).forEach(([event, handler]) => {
+			try {
+				this.setupTypedListener(event as SocketEvents, handler as (payload: SocketEventPayloadMap[SocketEvents]) => void)
+			} catch (error) {
+				console.error(`Error in ${event} listener:`, error)
+			}
+		})
 	})
 
-	private setupChatbotEvents = action((): void => {
-		if (!this._socket) return
-
-		// Career Quest chatbot events
-		this._socket.on("challenge-chatbot-stream-start", careerQuestClass.startChallengeStreaming)
-		this._socket.on("challenge-chatbot-stream-chunk", careerQuestClass.addChallengeStreamingChunk)
-		this._socket.on("challenge-chatbot-stream-complete", careerQuestClass.completeChallengeStreaming)
-
-		// Career chatbot events
-		this._socket.on("career-chatbot-stream-start", careerQuestClass.startCareerStreaming)
-		this._socket.on("career-chatbot-stream-chunk", careerQuestClass.addCareerStreamingChunk)
-		this._socket.on("career-chatbot-stream-complete", careerQuestClass.completeCareerStreaming)
-
-		// Sandbox chatbot events
-		this._socket.on("sandbox-chatbot-stream-start", sandboxClass.startStreaming)
-		this._socket.on("sandbox-chatbot-stream-chunk", sandboxClass.addStreamingChunk)
-		this._socket.on("sandbox-chatbot-stream-complete", sandboxClass.completeStreaming)
-	})
+	public emitToServer<E extends ClientSocketEvents>(
+		event: E,
+		payload: ClientSocketEventPayloadMap[E]
+	): void {
+		if (!this._socket || !this.isConnected) {
+			return console.error("Socket not connected, unable to emit event", event)
+		}
+		this._socket.emit(event, payload)
+	}
 
 	// TODO 7/12/25: Setup student and teacher specific events
-	public emitMotorControl = action((motorControlData: MotorControlData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("motor-control", motorControlData)
-	})
-
-	public emitLedColorControl = action((ledControlDataToSend: LedControlData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("new-led-colors", ledControlDataToSend)
-	})
-
-	public emitHornSound = action((hornControlDataToSend: HornData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("horn-sound-update", hornControlDataToSend)
-	})
-
-	public emitHeadLightStatus = action((headlightDataToSend: HeadlightData): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("headlight-update", headlightDataToSend)
-	})
-
-	public emitFunSound = action((funSoundDataToSend: PlayFunSoundPayload): void => {
-		// This is for sending socket messages to the backend
-		if (!this._socket || !this.isConnected) {
-			return console.error("Socket not connected")
-		}
-		this._socket.emit("play-fun-sound", funSoundDataToSend)
-	})
 
 	public logout = action((): void => {
 		if (this._socket) {

@@ -1,20 +1,13 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, motion } from "framer-motion"
-import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
+import { ReactNode } from "react"
 import ChallengeSection from "./challenge-section"
-import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const ICON_MAP = {
-	Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight,
-	ScanLine, Puzzle, Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart
-}
+import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
+import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 
 function RightContent({ careerData } : { careerData: CareerQuestData }) {
-	const colors = getDuolingoColors(careerData.careerColor)
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
@@ -56,18 +49,26 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 			</AnimatePresence>
 		)
 	} else if (rightContent.type === "image") {
-		const IconComponent = ICON_MAP[rightContent.icon as keyof typeof ICON_MAP]
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
 					key={`${rightContent.type}-${rightContent.icon}`}
 					{...getTransitionProps()}
 				>
-					<IconComponent size={120} className={colors.text} />
+					{getTriggerComponent(rightContent.icon)}
 				</motion.div>
 			</AnimatePresence>
 		)
 	} else if (rightContent.type === "component") {
+		let componentContent: ReactNode
+		if (typeof rightContent.component === "function") {
+			componentContent = rightContent.component()
+		} else if (typeof rightContent.component === "string") {
+			componentContent = getContentComponent(rightContent.component)
+		} else {
+			componentContent = rightContent.component
+		}
+
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
@@ -75,7 +76,7 @@ function RightContent({ careerData } : { careerData: CareerQuestData }) {
 					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
-					{typeof rightContent.component === "function" ? rightContent.component() : rightContent.component}
+					{componentContent}
 				</motion.div>
 			</AnimatePresence>
 		)

@@ -60,7 +60,7 @@ declare global {
 
 	type RightContent =
 	| { type: "image", icon: string }
-	| { type: "component", component: (() => ReactNode) }
+	| { type: "component", component: (() => ReactNode) | string }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
 	| { type: "null" }
@@ -88,9 +88,10 @@ declare global {
 	interface TextSection {
 		type: "text"
 		id: string
-		content: ((onAdvance?: () => void) => ReactNode)
-		triggerImage: string // Lucide icon name
-		triggerFunction?: (() => Promise<void>) // Optional function to run when navigating to this section
+		content: string | ((onAdvance?: () => void) => ReactNode)
+		rightSideContent: string // Trigger component key
+		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}
 
 	// New morphing text section type
@@ -99,7 +100,8 @@ declare global {
 		id: string
 		staticText: string // Text that stays at the top
 		morphingVariants: MorphingVariant[] // Array of morphing text options
-		triggerFunction?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
+		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
 	}
 
 	interface ChallengeSection {
@@ -114,7 +116,6 @@ declare global {
 	interface CareerQuestData {
 		careerUUID: CareerUUID
 		careerTitle: string
-		initialImage: string // Lucide icon name for the first image
 		careerColor: DuolingoColors
 		sections: CareerSection[]
 	}

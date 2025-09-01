@@ -25,7 +25,7 @@ export default function garageActions(): {
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
-			socketClass.emitHeadLightStatus({
+			socketClass.emitToServer("headlight-update", {
 				pipUUID: pipClass.selectedPip.pipUUID,
 				areHeadlightsOn: true
 			})
@@ -44,7 +44,7 @@ export default function garageActions(): {
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
-			socketClass.emitHornSound({
+			socketClass.emitToServer("horn-sound-update", {
 				pipUUID: pipClass.selectedPip.pipUUID,
 				hornStatus: true
 			})
@@ -70,7 +70,7 @@ export default function garageActions(): {
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
-			socketClass.emitHeadLightStatus({
+			socketClass.emitToServer("headlight-update", {
 				pipUUID: pipClass.selectedPip.pipUUID,
 				areHeadlightsOn: false
 			})
@@ -88,7 +88,7 @@ export default function garageActions(): {
 				!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
 			) return
-			socketClass.emitHornSound({
+			socketClass.emitToServer("horn-sound-update", {
 				pipUUID: pipClass.selectedPip.pipUUID,
 				hornStatus: false
 			})
