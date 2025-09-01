@@ -189,18 +189,14 @@ class SerialMessageManagerClass {
 		case "/scan-result-item": {
 			// Handle individual scan result item
 			const networkItem = message.payload as ScannedWiFiNetworkItem
-			runInAction(() => {
-				this.scannedNetworks.push(networkItem)
-			})
+			this.scannedNetworks.push(networkItem)
 			break
 		}
 
 		case "/scan-complete": {
 			// Handle scan completion
 			const scanComplete = message.payload as ScanCompletePayload
-			runInAction(() => {
-				this.isScanning = false
-			})
+			this.isScanning = false
 			console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
 			break
 		}
@@ -216,9 +212,7 @@ class SerialMessageManagerClass {
 		}
 		case "/battery-monitor-data-item": {
 			const batteryDataItem = message.payload as BatteryMonitorDataItem
-			runInAction(() => {
-				workbenchClass.setBatteryDataItem(batteryDataItem)
-			})
+			workbenchClass.setBatteryDataItem(batteryDataItem)
 			break
 		}
 		case "/battery-monitor-data-complete": {
@@ -227,18 +221,13 @@ class SerialMessageManagerClass {
 		}
 		case "/sensor-data": {
 			const sensorData = message.payload as SensorPayload
-			runInAction(() => {
-				console.log("handleSensorData")
-				sensorDataClass.addSensorData(sensorData)
-			})
+			sensorDataClass.addSensorData(sensorData)
 			break
 		}
 
 		case "/sensor-data-mz": {
 			const sensorData = message.payload as SensorPayloadMZ
-			runInAction(() => {
-				sensorDataClass.addMultizoneTofData(sensorData)
-			})
+			sensorDataClass.addMultizoneTofData(sensorData)
 			break
 		}
 		default:

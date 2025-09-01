@@ -14,13 +14,6 @@ class CareerQuestTriggersClass {
 		makeAutoObservable(this)
 	}
 
-	public updateSelectedColorByField<K extends keyof RgbaColor>(
-		field: K,
-		value: number
-	): void {
-		this.selectedColorRgba[field] = value
-	}
-
 	public setSelectedColorRgba = action((color: RgbaColor): void => {
 		this.selectedColorRgba = color
 	})
@@ -33,7 +26,7 @@ class CareerQuestTriggersClass {
 		}
 	})
 
-	public clearBuffer = action((): void => {
+	private clearBuffer = action((): void => {
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	})
 

@@ -54,7 +54,7 @@ class GarageClass {
 		}
 	})
 
-	public clearBuffer = action((): void => {
+	private clearBuffer = action((): void => {
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	})
 

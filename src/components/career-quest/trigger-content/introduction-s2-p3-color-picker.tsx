@@ -3,12 +3,10 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
-import isEmpty from "lodash-es/isEmpty"
 import Wheel from "@uiw/react-color-wheel"
 import { MessageBuilder } from "@bluedotrobots/common-ts"
 import { ColorResult, rgbaToHsva } from "@uiw/color-convert"
 import pipClass from "../../../classes/pip-class"
-import garageClass from "../../../classes/garage-class"
 import socketClass from "../../../classes/socket-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
@@ -45,7 +43,6 @@ function IntroductionS2P3ColorPicker() {
 		if (
 			isNull(pipClass.selectedPip)
 			|| pipClass.selectedPip.pipConnectionStatus === "offline"
-			|| isEmpty(garageClass.selectedDots)
 		) return
 
 		socketClass.emitToServer("new-led-colors", {
