@@ -8,7 +8,7 @@ import RenderDisplay from "../../garage/display/render-display"
 import personalInfoClass from "../../../classes/personal-info-class"
 import editName from "../../../utils/personal-info/edit-name"
 
-function IntroductionS3P4Display(): React.ReactNode {
+function MeetPipS3P4Display(): React.ReactNode {
 	const setTextInput = async (text: string): Promise<void> => {
 		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
@@ -39,4 +39,4 @@ function IntroductionS3P4Display(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS3P4Display)
+export default observer(MeetPipS3P4Display)

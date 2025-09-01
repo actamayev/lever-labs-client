@@ -4,31 +4,31 @@ import { ReactNode } from "react"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
 import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sounds-section"
-import IntroductionS3P4Display from "../../components/career-quest/trigger-content/introduction-s3-p4-display"
-import IntroductionS2P3ColorPicker from "../../components/career-quest/trigger-content/introduction-s2-p3-color-picker"
-import IntroductionS2P4LightShow from "../../components/career-quest/trigger-content/introduction-s2-p4-light-show"
-import IntroductionS5P4ImuViz from "../../components/career-quest/trigger-content/introduction-s5-p4-imu-viz"
-import IntroductionS5P5BallMoving from "../../components/career-quest/trigger-content/introduction-s5-p5-ball-moving"
-import IntroductionS6P4MzViz from "../../components/career-quest/trigger-content/introduction-s6-p4-mz-viz"
-import IntroductionS6P6TofsViz from "../../components/career-quest/trigger-content/introduction-s6-p6-tofs-viz"
-import IntroductionS9P6EncoderViz from "../../components/career-quest/trigger-content/introduction-s9-p6-encoder-viz"
-import IntroductionS8P3ColorViz from "../../components/career-quest/trigger-content/introduction-s8-p3-color-viz"
+import MeetPipS3P4Display from "../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
+import MeetPipS2P3ColorPicker from "../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
+import MeetPipS2P4LightShow from "../../components/career-quest/trigger-content/meet-pip-s2-p4-light-show"
+import MeetPipS5P4ImuViz from "../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
+import MeetPipS5P5BallMoving from "../../components/career-quest/trigger-content/meet-pip-s5-p5-ball-moving"
+import MeetPipS6P4MzViz from "../../components/career-quest/trigger-content/meet-pip-s6-p4-mz-viz"
+import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/meet-pip-s6-p6-tofs-viz"
+import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
+import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
-	"s2-p3-color-picker": (): ReactNode => <IntroductionS2P3ColorPicker />,
-	"s2-p4-light-show": (): ReactNode => <IntroductionS2P4LightShow />,
-	"s3-p4-display": (): ReactNode => <IntroductionS3P4Display />,
+	"s2-p3-color-picker": (): ReactNode => <MeetPipS2P3ColorPicker />,
+	"s2-p4-light-show": (): ReactNode => <MeetPipS2P4LightShow />,
+	"s3-p4-display": (): ReactNode => <MeetPipS3P4Display />,
 	"s4-p4-speaker": (): ReactNode => <SoundsSection />,
-	"s5-p4-imu-viz": (): ReactNode => <IntroductionS5P4ImuViz />,
-	"s5-p5-ball-moving": (): ReactNode => <IntroductionS5P5BallMoving />,
-	"s6-p4-mz-viz": (): ReactNode => <IntroductionS6P4MzViz />,
-	"s6-p6-tofs-viz": (): ReactNode => <IntroductionS6P6TofsViz />,
-	"s9-p6-encoder-viz": (): ReactNode => <IntroductionS9P6EncoderViz />,
-	"s8-p3-color-viz": (): ReactNode => <IntroductionS8P3ColorViz />,
+	"s5-p4-imu-viz": (): ReactNode => <MeetPipS5P4ImuViz />,
+	"s5-p5-ball-moving": (): ReactNode => <MeetPipS5P5BallMoving />,
+	"s6-p4-mz-viz": (): ReactNode => <MeetPipS6P4MzViz />,
+	"s6-p6-tofs-viz": (): ReactNode => <MeetPipS6P6TofsViz />,
+	"s9-p6-encoder-viz": (): ReactNode => <MeetPipS9P6EncoderViz />,
+	"s8-p3-color-viz": (): ReactNode => <MeetPipS8P3ColorViz />,
 	"bot-humpback": (): ReactNode => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": (): ReactNode => <Bot size={120} className="text-macaw" />,
 

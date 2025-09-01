@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS9P6EncoderViz(): React.ReactNode {
+function MeetPipS9P6EncoderViz(): React.ReactNode {
 	const leftWheelRef = useRef<HTMLCanvasElement>(null)
 	const rightWheelRef = useRef<HTMLCanvasElement>(null)
 	const leftAnimationRef = useRef<number>()
@@ -224,4 +224,4 @@ function IntroductionS9P6EncoderViz(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS9P6EncoderViz)
+export default observer(MeetPipS9P6EncoderViz)

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS6P4MzViz(): React.ReactNode {
+function MeetPipS6P4MzViz(): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const animationRef = useRef<number>()
 	const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number; value: number } | null>(null)
@@ -207,4 +207,4 @@ function IntroductionS6P4MzViz(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS6P4MzViz)
+export default observer(MeetPipS6P4MzViz)

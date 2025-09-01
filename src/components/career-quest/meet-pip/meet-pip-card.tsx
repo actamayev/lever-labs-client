@@ -3,10 +3,10 @@
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
-import FrontIntroductionCard from "./front-introduction-card"
-import BackIntroductionCard from "./back-introduction-card"
+import FrontMeetPipCard from "./front-meet-pip-card"
+import BackMeetPipCard from "./back-meet-pip-card"
 
-export default function IntroductionCard(): React.ReactNode {
+export default function MeetPipCard(): React.ReactNode {
 	const [flipped, setFlipped] = useState(false)
 
 	const flipCard = useCallback((): void => {
@@ -21,9 +21,9 @@ export default function IntroductionCard(): React.ReactNode {
 				transition={{ duration: 0.7 }}
 				style={{ transformStyle: "preserve-3d" }}
 			>
-				<FrontIntroductionCard flipCard={flipCard} />
+				<FrontMeetPipCard flipCard={flipCard} />
 
-				<BackIntroductionCard flipCard={flipCard} />
+				<BackMeetPipCard flipCard={flipCard} />
 			</motion.div>
 		</div>
 	)

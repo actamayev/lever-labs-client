@@ -2,7 +2,7 @@
 
 import WorkbenchLayout from "../layouts/workbench-layout"
 import SingleCareerCard from "./career-card/single-career-card"
-import IntroductionCard from "./introduction-card/introduction-card"
+import MeetPipCard from "./meet-pip/meet-pip-card"
 import { careerData } from "../../utils/constants/career-quest/career-data"
 import useEffectRetrieveAllCareersChallenges from "../../hooks/career-quest/use-effect-retrieve-all-careers-challenges"
 
@@ -12,7 +12,7 @@ export default function CareerQuest(): React.ReactNode {
 	return (
 		<WorkbenchLayout extraChildrenClasses="p-10">
 			<div className="flex flex-col">
-				<IntroductionCard />
+				<MeetPipCard />
 			</div>
 
 			<h2 className="text-3xl font-bold text-center my-4">Careers</h2>

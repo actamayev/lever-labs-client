@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS5P5BallMoving(): React.ReactNode {
+function MeetPipS5P5BallMoving(): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const animationRef = useRef<number>()
 	const [ballPosition, setBallPosition] = useState({ x: 200, y: 150 })
@@ -188,4 +188,4 @@ function IntroductionS5P5BallMoving(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS5P5BallMoving)
+export default observer(MeetPipS5P5BallMoving)

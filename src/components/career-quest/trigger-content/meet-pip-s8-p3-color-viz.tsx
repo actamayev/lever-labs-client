@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { useMemo } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
-function IntroductionS8P3ColorViz(): React.ReactNode {
+function MeetPipS8P3ColorViz(): React.ReactNode {
 	// Get latest RGB values
 	const latestRed = useMemo((): number => {
 		return sensorDataClass.redValue.length > 0
@@ -89,4 +89,4 @@ function IntroductionS8P3ColorViz(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS8P3ColorViz)
+export default observer(MeetPipS8P3ColorViz)

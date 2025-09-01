@@ -11,7 +11,7 @@ import socketClass from "../../../classes/socket-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
-function IntroductionS2P3ColorPicker(): React.ReactNode {
+function MeetPipS2P3ColorPicker(): React.ReactNode {
 	const colorToShow = useMemo((): HsvaColor => {
 		// This is done to ensure the shade of the color wheel stays constant
 		const hsva = rgbaToHsva(careerQuestTriggersClass.selectedColorRgba)
@@ -70,4 +70,4 @@ function IntroductionS2P3ColorPicker(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS2P3ColorPicker)
+export default observer(MeetPipS2P3ColorPicker)

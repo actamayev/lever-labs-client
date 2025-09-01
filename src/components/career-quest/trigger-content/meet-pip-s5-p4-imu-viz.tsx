@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS5P4ImuViz(): React.ReactNode {
+function MeetPipS5P4ImuViz(): React.ReactNode {
 	// Calculate linear acceleration magnitude from aX, aY, aZ
 	const linearAccelerationData = useMemo((): { index: number, value: number }[] => {
 		return sensorDataClass.aX.map((ax, index): { index: number, value: number } => {
@@ -241,4 +241,4 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS5P4ImuViz)
+export default observer(MeetPipS5P4ImuViz)

@@ -5,15 +5,15 @@ import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import { introductionData } from "../../../utils/constants/career-quest/career-data"
+import { meetPipData } from "../../../utils/constants/career-quest/career-data"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import Link from "next/link"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { observer } from "mobx-react"
 
-function FrontIntroductionCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
-	const { careerName, careerIcon: Icon, componentsUsed, backgroundColor, careerUUID } = introductionData
+function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
+	const { careerName, careerIcon: Icon, componentsUsed, backgroundColor, careerUUID } = meetPipData
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -76,7 +76,7 @@ function FrontIntroductionCard({ flipCard } : {flipCard: () => void}): React.Rea
 
 				{/* Continue Button */}
 				<div className="flex flex-row items-center mb-6 w-full gap-3">
-					<Link href={introductionData.careerUrl} className="flex-1">
+					<Link href={meetPipData.careerUrl} className="flex-1">
 						<TactileButton
 							className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
 							shadowClass={colors.shadow}
@@ -96,4 +96,4 @@ function FrontIntroductionCard({ flipCard } : {flipCard: () => void}): React.Rea
 	)
 }
 
-export default observer(FrontIntroductionCard)
+export default observer(FrontMeetPipCard)

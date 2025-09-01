@@ -15,7 +15,7 @@ import sensorDataClass from "../../../classes/sensor-data-class"
 import { useMemo } from "react"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS6P6TofsViz(): React.ReactNode {
+function MeetPipS6P6TofsViz(): React.ReactNode {
 	// Get latest TOF count values
 	const leftTofCount = useMemo((): number => {
 		return sensorDataClass.leftSideTofCounts.length > 0
@@ -149,4 +149,4 @@ function IntroductionS6P6TofsViz(): React.ReactNode {
 	)
 }
 
-export default observer(IntroductionS6P6TofsViz)
+export default observer(MeetPipS6P6TofsViz)

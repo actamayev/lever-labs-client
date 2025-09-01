@@ -6,20 +6,18 @@ import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import { Separator } from "../../shadcn/ui/separator"
 import SingleComponentUsed from "../single-component-used"
-import SingleCodingConceptUsed from "../single-coding-concept-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-import { introductionData } from "../../../utils/constants/career-quest/career-data"
+import { meetPipData } from "../../../utils/constants/career-quest/career-data"
 
-export default function BackIntroductionCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
+export default function BackMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
 	const {
 		careerName,
 		careerDescription,
 		backgroundColor,  // This is now a DuolingoColors type
 		componentsUsed,
-		codingConcepts,
 		expectedCompletionTime
-	} = introductionData
+	} = meetPipData
 
 	// Generate color classes
 	const colors = getDuolingoColors(backgroundColor)
@@ -57,28 +55,6 @@ export default function BackIntroductionCard({ flipCard } : {flipCard: () => voi
 							{componentsUsed.length > 5 && (
 								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", colors.bg2)}>
 									<span className="font-bold text-white">+{componentsUsed.length - 5}</span>
-								</div>
-							)}
-						</div>
-					</div>
-
-					<Separator orientation="vertical" className="bg-white rounded-2xl h-auto w-[2px]"/>
-
-					<div className="flex flex-col items-center w-1/3 px-2">
-						<h3 className="text-base font-medium text-center mb-3 text-white">
-							Coding Concepts
-						</h3>
-						<div className="grid grid-cols-3 gap-2 w-full justify-items-center">
-							{codingConcepts.slice(0, 5).map((codingConcept): React.ReactNode => (
-								<SingleCodingConceptUsed
-									key={codingConcept}
-									codingConcept={codingConcept}
-									baseColor={backgroundColor}
-								/>
-							))}
-							{codingConcepts.length > 5 && (
-								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", colors.bg1)}>
-									<span className="font-bold text-white">+{codingConcepts.length - 5}</span>
 								</div>
 							)}
 						</div>
