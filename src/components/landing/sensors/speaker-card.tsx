@@ -30,14 +30,14 @@ export default function SpeakerCard(): React.ReactNode {
 		}
 
 		// Add global click/touch handler to detect interactions outside component
-		const handleGlobalClick = (e: MouseEvent | TouchEvent) => {
+		const handleGlobalClick = (e: MouseEvent | TouchEvent): void => {
 			if (speakerRef.current && !speakerRef.current.contains(e.target as Node)) {
 				setIsHovered(false)
 			}
 		}
 
 		// Add scroll handler to stop animation when scrolling
-		const handleScroll = () => {
+		const handleScroll = (): void => {
 			setIsHovered(false)
 		}
 
@@ -47,7 +47,7 @@ export default function SpeakerCard(): React.ReactNode {
 		window.addEventListener("scroll", handleScroll)
 
 		// Clean up event listeners
-		return () => {
+		return (): void => {
 			if (interval) {
 				clearInterval(interval)
 			}
@@ -57,7 +57,7 @@ export default function SpeakerCard(): React.ReactNode {
 		}
 	}, [isHovered])
 
-	const SpeakerIcon = () => {
+	const SpeakerIcon = (): React.ReactNode => {
 		return (
 			<div
 				ref={speakerRef}

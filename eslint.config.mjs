@@ -26,9 +26,10 @@ const eslintConfig = [
 			"src/lib/**/*", 
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
-			// Ignore the problematic JS file that's causing issues
+			// Ignore the problematic JS files that are causing issues
 			"add-use-client.js",
 			"keepalive-worker.js",
+			"postcss.config.js",
 			// Ignore ESLint config file itself
 			"eslint.config.mjs",
 		],
@@ -151,14 +152,6 @@ const eslintConfig = [
 		},
 		rules: {
 			"@stylistic/indent": ["error", "tab"],
-		},
-	},
-
-	// Override for JSX/TSX files - disable explicit return types
-	{
-		files: ["**/*.jsx", "**/*.tsx"],
-		rules: {
-			"@typescript-eslint/explicit-function-return-type": "off",
 		},
 	},
 

@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS5P5BallMoving() {
+function IntroductionS5P5BallMoving(): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const animationRef = useRef<number>()
 	const [ballPosition, setBallPosition] = useState({ x: 200, y: 150 })
@@ -30,7 +30,7 @@ function IntroductionS5P5BallMoving() {
 		const ctx = canvas.getContext("2d")
 		if (!ctx) return
 
-		const animate = () => {
+		const animate = (): void => {
 			// Get latest IMU data
 			const latestRoll = sensorDataClass.roll[sensorDataClass.roll.length - 1] || 0
 			const latestPitch = sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0
@@ -136,7 +136,7 @@ function IntroductionS5P5BallMoving() {
 
 		animate()
 
-		return () => {
+		return (): void => {
 			if (animationRef.current) {
 				cancelAnimationFrame(animationRef.current)
 			}
@@ -153,7 +153,7 @@ function IntroductionS5P5BallMoving() {
 						ref={canvasRef}
 						width={canvasWidth}
 						height={canvasHeight}
-						className="border-2 border-gray-300 rounded-lg bg-gray-50"
+						className="border-2 border-swan rounded-lg bg-polar"
 					/>
 
 					{/* Instructions overlay */}
@@ -166,21 +166,21 @@ function IntroductionS5P5BallMoving() {
 			{/* IMU Data Display */}
 			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
 				<div className="text-center p-3 bg-blue-50 rounded-lg">
-					<div className="text-lg font-semibold text-blue-600">
+					<div className="text-lg font-semibold text-macaw">
 						Roll: {(sensorDataClass.roll[sensorDataClass.roll.length - 1] || 0).toFixed(1)}°
 					</div>
-					<div className="text-xs text-gray-600">Controls X movement</div>
+					<div className="text-xs text-eel">Controls X movement</div>
 				</div>
 				<div className="text-center p-3 bg-green-50 rounded-lg">
-					<div className="text-lg font-semibold text-green-600">
+					<div className="text-lg font-semibold text-chargingGreen">
 						Pitch: {(sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0).toFixed(1)}°
 					</div>
-					<div className="text-xs text-gray-600">Controls Y movement</div>
+					<div className="text-xs text-eel">Controls Y movement</div>
 				</div>
 			</div>
 
 			{/* Ball Physics Info */}
-			<div className="text-center text-sm text-gray-600">
+			<div className="text-center text-sm text-eel">
 				<div>Velocity: {Math.sqrt(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y).toFixed(2)}</div>
 				<div>Position: ({ballPosition.x.toFixed(0)}, {ballPosition.y.toFixed(0)})</div>
 			</div>

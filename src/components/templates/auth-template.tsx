@@ -12,7 +12,7 @@ interface Props {
 	children: React.ReactNode
 }
 
-export default function AuthTemplate(props: Props) {
+export default function AuthTemplate(props: Props): React.ReactNode {
 	const { title, children } = props
 
 	return (

@@ -12,7 +12,7 @@ const measureStyles = `
   }
 `
 
-export default function RulerExpansionAnimation({ iconSize }: { iconSize: number }) {
+export default function RulerExpansionAnimation({ iconSize }: { iconSize: number }): React.ReactNode {
 	const [isAnimating, setIsAnimating] = useState(false)
 
 	const handleClick = useCallback(() => {

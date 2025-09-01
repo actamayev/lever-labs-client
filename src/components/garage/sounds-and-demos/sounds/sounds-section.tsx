@@ -5,7 +5,7 @@ import { FunSounds } from "@bluedotrobots/common-ts"
 import SoundActionButton from "./sound-action-button"
 import useEffectGarageSounds from "../../../../hooks/garage/use-effect-garage-sounds"
 
-function SoundsSection() {
+function SoundsSection(): React.ReactNode {
 	useEffectGarageSounds()
 	const sounds: FunSounds[] = [
 		"Fart",

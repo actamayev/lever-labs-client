@@ -3,6 +3,7 @@ import { ClassCode } from "@bluedotrobots/common-ts"
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SingleWhiteboardPage from "../../../src/components/whiteboard-page/whiteboard-page"
+import { Metadata } from "next"
 
 interface ClassroomPageProps {
 	params: Promise<{
@@ -10,7 +11,7 @@ interface ClassroomPageProps {
 	}>
 }
 
-export async function generateMetadata({ params }: ClassroomPageProps) {
+export async function generateMetadata({ params }: ClassroomPageProps): Promise<Metadata> {
 	const { classCode } = await params
 
 	return createMetadata({
@@ -21,7 +22,7 @@ export async function generateMetadata({ params }: ClassroomPageProps) {
 	})
 }
 
-export default async function WhiteboardRoutePage({ params }: ClassroomPageProps) {
+export default async function WhiteboardRoutePage({ params }: ClassroomPageProps): Promise<React.ReactNode> {
 	const { classCode } = await params
 
 	// Basic validation for class code format (5 uppercase letters)

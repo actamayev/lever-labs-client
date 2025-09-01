@@ -9,7 +9,7 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import editName from "../../../utils/personal-info/edit-name"
 
 function IntroductionS3P4Display() {
-	const setTextInput = async (text: string) => {
+	const setTextInput = async (text: string): Promise<void> => {
 		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
 	}

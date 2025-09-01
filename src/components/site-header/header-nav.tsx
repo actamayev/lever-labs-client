@@ -9,12 +9,12 @@ export default function HeaderNav(): React.ReactNode {
 	const [isScrolled, setIsScrolled] = useState(false)
 
 	useEffect(() => {
-		const handleScroll = () => {
+		const handleScroll = (): void => {
 			setIsScrolled(window.scrollY > 0)
 		}
 
 		window.addEventListener("scroll", handleScroll)
-		return () => window.removeEventListener("scroll", handleScroll)
+		return (): void => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
 	return (

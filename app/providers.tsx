@@ -31,7 +31,7 @@ const retrieveInfo = async (): Promise<void> => {
 	}
 }
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default function Providers({ children }: { children: ReactNode }): React.ReactNode {
 	useEffectLogoutListener()
 	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()

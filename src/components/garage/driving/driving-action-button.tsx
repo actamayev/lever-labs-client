@@ -18,7 +18,7 @@ interface ArrowKeyButtonProps {
 function DrivingActionButton({
 	action,
 	isPressed,
-}: ArrowKeyButtonProps) {
+}: ArrowKeyButtonProps): React.ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 	const { activateAction, deactivateAction } = garageActions()
@@ -51,12 +51,12 @@ function DrivingActionButton({
 	}, [isPressed])
 
 	// Handle button click for action buttons
-	const handleButtonDown = () => {
+	const handleButtonDown = (): void => {
 		activateAction(action)
 	}
 
 	// Handle button release for action buttons
-	const handleButtonUp = () => {
+	const handleButtonUp = (): void => {
 		deactivateAction(action)
 	}
 

@@ -7,7 +7,7 @@ interface Props {
 	extraButtonClasses?: string
 }
 
-export default function WorkbenchIconTemplate(props: Props) {
+export default function WorkbenchIconTemplate(props: Props): React.ReactNode {
 	const { children, extraButtonClasses = "" } = props
 
 	return (

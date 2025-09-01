@@ -10,8 +10,7 @@ import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"
 
-
-function ChangeNameSection() {
+function ChangeNameSection(): React.ReactNode {
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
 

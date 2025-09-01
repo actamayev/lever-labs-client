@@ -40,7 +40,7 @@ const baseNavData: SidebarNavData[] = [
 	},
 ]
 
-function MappedNavData() {
+function MappedNavData(): React.ReactNode {
 	const pathname = usePathname()
 
 	const isActive = useCallback((itemUrl: PageNames) => {

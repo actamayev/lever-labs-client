@@ -5,10 +5,10 @@ import { StudentClassroomData } from "@bluedotrobots/common-ts"
 import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
-function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData }) {
+function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData }): React.ReactNode {
 	const navigate = useTypedNavigate()
 
-	const handleClassroomClick = () => {
+	const handleClassroomClick = (): void => {
 		navigate(`/whiteboard/${classroom.classCode}`)
 	}
 

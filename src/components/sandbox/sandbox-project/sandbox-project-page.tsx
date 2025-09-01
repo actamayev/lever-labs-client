@@ -29,7 +29,7 @@ import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-s
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
+function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }): React.ReactNode {
 	useEffect(() => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")
@@ -70,7 +70,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 			setIsSwitchingMode(false)
 		}, 200)
 
-		return () => clearTimeout(timer)
+		return (): void => clearTimeout(timer)
 	}, [isSwitchingMode])
 
 	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson) => {
@@ -105,7 +105,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 	// Handle '/' key to focus search bar and 'Escape' key to unfocus it
 	useEffect(() => {
 		// eslint-disable-next-line complexity
-		const handleKeyDown = (event: KeyboardEvent) => {
+		const handleKeyDown = (event: KeyboardEvent): void => {
 			// Handle '/' key to focus search bar
 			if (event.key !== "/" && event.key !== "Escape") return
 
@@ -142,7 +142,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }) {
 		}
 
 		document.addEventListener("keydown", handleKeyDown)
-		return () => document.removeEventListener("keydown", handleKeyDown)
+		return (): void => document.removeEventListener("keydown", handleKeyDown)
 	}, [])
 
 	if (!project || isLoading) {

@@ -9,7 +9,7 @@ import requestToConnectToPip from "../../../utils/pip/request-to-connect-to-pip"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
-function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }) {
+function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }): React.ReactNode {
 	const selectedPip = pipClass.selectedPip
 	if (pipClass.pipPluggedInSerial) {
 		return (

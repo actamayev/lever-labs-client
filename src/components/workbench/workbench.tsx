@@ -8,7 +8,7 @@ import workbenchClass from "../../classes/workbench-class"
 import DrivingControls from "../garage/driving/driving-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
-function Workbench() {
+function Workbench(): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement | null>(null)
 	const pathname = usePathname()
 
@@ -16,7 +16,7 @@ function Workbench() {
 	const isGaragePage = pathname === "/garage" || pathname.startsWith("/garage/")
 
 	useEffect(() => {
-		const updateDimensions = () => {
+		const updateDimensions = (): void => {
 			if (containerRef.current) {
 				workbenchClass.setFixedWidth((containerRef.current.offsetWidth))
 			}
@@ -25,7 +25,7 @@ function Workbench() {
 
 		updateDimensions()
 		window.addEventListener("resize", updateDimensions)
-		return () => window.removeEventListener("resize", updateDimensions)
+		return (): void => window.removeEventListener("resize", updateDimensions)
 	}, [])
 
 	// Calculate section heights

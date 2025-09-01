@@ -17,7 +17,7 @@ import requestBecomeTeacher from "../../utils/teacher/request-become-teacher"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function RequestTeacherAccess() {
+function RequestTeacherAccess(): React.ReactNode {
 	const [firstName, setFirstName] = useState("")
 	const [lastName, setLastName] = useState("")
 	const [schoolName, setSchoolName] = useState("")
@@ -92,7 +92,7 @@ function RequestTeacherAccess() {
 		: firstName.trim().length > 0 && lastName.trim().length > 0 && schoolName.trim().length > 0
 
 	// Get status message based on teacher data
-	const getStatusMessage = () => {
+	const getStatusMessage = (): React.ReactNode | null => {
 		if (!hasExistingData) return null
 
 		if (teacherData.isApproved === true) {
@@ -129,7 +129,7 @@ function RequestTeacherAccess() {
 	const isFormDisabled = hasExistingData && teacherData.isApproved === false
 
 	// Get button text based on state
-	const getButtonText = () => {
+	const getButtonText = (): string => {
 		if (isSubmitting) {
 			return hasExistingData ? "UPDATING..." : "SUBMITTING..."
 		}

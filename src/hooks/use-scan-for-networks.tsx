@@ -56,7 +56,7 @@ export default function useScanForNetworks(): {
 
 	// Cleanup on unmount
 	useEffect(() => {
-		return () => {
+		return (): void => {
 			if (scanTimeoutRef.current) {
 				clearTimeout(scanTimeoutRef.current)
 			}

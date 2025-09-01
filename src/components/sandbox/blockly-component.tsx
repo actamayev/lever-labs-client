@@ -22,7 +22,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function BlocklyComponent(props: Props) {
+function BlocklyComponent(props: Props): React.ReactNode {
 	const {
 		toolboxConfig,
 		initialBlocklyJson,
@@ -44,7 +44,7 @@ function BlocklyComponent(props: Props) {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
 	}, [toolboxConfig, searchTerm])
 
-	const centerWorkspace = useCallback(() => {
+	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
 		const workspace = workspaceRef.current
 		if (!workspace) return
@@ -57,7 +57,7 @@ function BlocklyComponent(props: Props) {
 		setIsCentering(false)
 	}, [workspaceConfiguration.zoom?.startScale])
 
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
@@ -80,11 +80,11 @@ function BlocklyComponent(props: Props) {
 			setIsCentered(false)
 		} else {
 			// After switching is complete, center the workspace
-			const timer = setTimeout(() => {
+			const timer = setTimeout((): void => {
 				centerWorkspace()
 			}, 100)
 
-			return () => clearTimeout(timer)
+			return (): void => clearTimeout(timer)
 		}
 	}, [isSwitchingMode, centerWorkspace])
 
@@ -103,11 +103,11 @@ function BlocklyComponent(props: Props) {
 	// Add effect to center workspace after it's initialized and when blocks change
 	useEffect(() => {
 		if (isCentered || isCentering) return
-		const timer = setTimeout(() => {
+		const timer = setTimeout((): void => {
 			centerWorkspace()
 		}, 100) // Small delay to ensure workspace is fully rendered
 
-		return () => clearTimeout(timer)
+		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, initialBlocklyJson, isCentered, isCentering, pathname])
 
 	useEffect(() => {
@@ -121,7 +121,7 @@ function BlocklyComponent(props: Props) {
 
 		resizeObserver.observe(containerRef.current)
 
-		return () => {
+		return (): void => {
 			resizeObserver.disconnect()
 		}
 	}, [])
@@ -133,7 +133,7 @@ function BlocklyComponent(props: Props) {
 	}, [isDarkMode])
 
 	// This keeps the category from having a blue border when clicked
-	const setupToolbox = useCallback(() => {
+	const setupToolbox = useCallback((): void => {
 		if (!workspaceRef.current) return
 
 		const toolbox = workspaceRef.current.getToolbox()

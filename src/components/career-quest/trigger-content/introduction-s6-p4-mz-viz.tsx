@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS6P4MzViz() {
+function IntroductionS6P4MzViz(): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const animationRef = useRef<number>()
 	const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number; value: number } | null>(null)
@@ -60,7 +60,7 @@ function IntroductionS6P4MzViz() {
 	}
 
 	// Handle mouse move for tooltips
-	const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
+	const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>): void => {
 		const cell = getCellFromMouse(event.clientX, event.clientY)
 		if (cell) {
 			const rowData = sensorDataClass.distanceGrid[cell.row]
@@ -75,7 +75,7 @@ function IntroductionS6P4MzViz() {
 	}
 
 	// Handle mouse leave
-	const handleMouseLeave = () => {
+	const handleMouseLeave = (): void => {
 		setHoveredCell(null)
 	}
 
@@ -87,7 +87,7 @@ function IntroductionS6P4MzViz() {
 		if (!ctx) return
 
 		// eslint-disable-next-line complexity
-		const animate = () => {
+		const animate = (): void => {
 			// Clear canvas
 			ctx.clearRect(0, 0, canvasSize, canvasSize)
 
@@ -152,7 +152,7 @@ function IntroductionS6P4MzViz() {
 
 		animate()
 
-		return () => {
+		return (): void => {
 			if (animationRef.current) {
 				cancelAnimationFrame(animationRef.current)
 			}
@@ -170,7 +170,7 @@ function IntroductionS6P4MzViz() {
 						ref={canvasRef}
 						width={canvasSize}
 						height={canvasSize}
-						className="border-2 border-gray-300 rounded-lg bg-gray-50 cursor-crosshair"
+						className="border-2 border-swan rounded-lg bg-polar cursor-crosshair"
 						onMouseMove={handleMouseMove}
 						onMouseLeave={handleMouseLeave}
 					/>
@@ -194,11 +194,11 @@ function IntroductionS6P4MzViz() {
 			<div className="flex justify-center">
 				<div className="flex items-center space-x-4">
 					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-cardinal rounded"></div>
+						<div className="w-4 h-4 bg-cardinal rounded"/>
 						<span className="text-sm">Close ({minDistance}mm)</span>
 					</div>
 					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-macaw rounded"></div>
+						<div className="w-4 h-4 bg-macaw rounded"/>
 						<span className="text-sm">Far ({maxDistance}mm)</span>
 					</div>
 				</div>

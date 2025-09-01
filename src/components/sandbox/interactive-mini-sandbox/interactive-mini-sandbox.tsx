@@ -21,7 +21,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function InteractiveMiniSandbox(props: Props) {
+function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const {
 		careerUUIDChallengeUUID,
 		onJsonChange
@@ -37,7 +37,7 @@ function InteractiveMiniSandbox(props: Props) {
 		return getWorkspaceConfig(isDarkMode, false, true)
 	}, [isDarkMode])
 
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 		onJsonChange(newJson)
@@ -70,7 +70,7 @@ function InteractiveMiniSandbox(props: Props) {
 		`
 		document.head.appendChild(style)
 
-		return () => {
+		return (): void => {
 			if (document.head.contains(style)) {
 				document.head.removeChild(style)
 			}
@@ -105,7 +105,7 @@ function InteractiveMiniSandbox(props: Props) {
 
 		resizeObserver.observe(containerRef.current)
 
-		return () => {
+		return (): void => {
 			resizeObserver.disconnect()
 		}
 	}, [])

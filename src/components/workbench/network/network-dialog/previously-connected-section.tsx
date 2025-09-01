@@ -4,7 +4,7 @@ import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 
-function PreviouslyConnectedSection() {
+function PreviouslyConnectedSection(): React.ReactNode {
 	if (isEmpty(serialMessageManagerClass.previouslyConnected)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed

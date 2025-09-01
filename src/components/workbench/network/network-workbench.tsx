@@ -11,10 +11,10 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
-function NetworkWorkbench() {
+function NetworkWorkbench(): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
-	const getStatusText = () => {
+	const getStatusText = (): string => {
 		if (pipClass.pipPluggedInSerial) return "Connected to USB"
 		if (isNull(pipClass.selectedPip)) return "No device selected"
 
@@ -34,7 +34,7 @@ function NetworkWorkbench() {
 		}
 	}
 
-	const getStatusColor = () => {
+	const getStatusColor = (): string => {
 		if (pipClass.pipPluggedInSerial) return "text-green-500"
 		if (isNull(pipClass.selectedPip)) return "text-wolf"
 

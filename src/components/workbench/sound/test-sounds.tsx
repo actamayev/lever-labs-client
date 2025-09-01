@@ -22,7 +22,7 @@ interface Props {
 	setIsDropdownOpen: Dispatch<SetStateAction<boolean>>
 }
 
-function TestSounds(props: Props) {
+function TestSounds(props: Props): React.ReactNode {
 	const { isDropdownOpen, setIsDropdownOpen } = props
 	const testSounds: TuneToPlay[] = ["Chime", "Chirp", "Drop", "Pop"]
 

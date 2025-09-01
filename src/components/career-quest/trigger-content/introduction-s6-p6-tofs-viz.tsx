@@ -15,7 +15,7 @@ import sensorDataClass from "../../../classes/sensor-data-class"
 import { useMemo } from "react"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS6P6TofsViz() {
+function IntroductionS6P6TofsViz(): React.ReactNode {
 	// Get latest TOF count values
 	const leftTofCount = useMemo(() => {
 		return sensorDataClass.leftSideTofCounts.length > 0
@@ -44,7 +44,7 @@ function IntroductionS6P6TofsViz() {
 	const chartConfig = {
 		margin: { top: 20, right: 20, left: 20, bottom: 20 },
 		barSize: 60,
-		fill: "#2563EB", // Blue color for both charts
+		fill: "#1CB0F6", // Macaw color for both charts
 	}
 
 	return (
@@ -63,7 +63,7 @@ function IntroductionS6P6TofsViz() {
 								data={leftTofData}
 								margin={chartConfig.margin}
 							>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
 									className="text-xs"
@@ -97,7 +97,7 @@ function IntroductionS6P6TofsViz() {
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
 							<BarChart data={rightTofData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
 									className="text-xs"
@@ -127,21 +127,21 @@ function IntroductionS6P6TofsViz() {
 			{/* Current Values Display */}
 			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
 				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-blue-600">
+					<div className="text-2xl font-bold text-macaw">
 						{leftTofCount.toLocaleString()}
 					</div>
-					<div className="text-sm text-gray-600">Left TOF Count</div>
+					<div className="text-sm text-eel">Left TOF Count</div>
 				</div>
 				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-blue-600">
+					<div className="text-2xl font-bold text-macaw">
 						{rightTofCount.toLocaleString()}
 					</div>
-					<div className="text-sm text-gray-600">Right TOF Count</div>
+					<div className="text-sm text-eel">Right TOF Count</div>
 				</div>
 			</div>
 
 			{/* Data Summary */}
-			<div className="text-center text-sm text-gray-600">
+			<div className="text-center text-sm text-eel">
 				<div>Range: 0 - 30,000 counts</div>
 				<div>Higher counts = more light absorption</div>
 			</div>

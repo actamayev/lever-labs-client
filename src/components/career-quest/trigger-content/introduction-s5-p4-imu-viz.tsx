@@ -15,7 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS5P4ImuViz() {
+function IntroductionS5P4ImuViz(): React.ReactNode {
 	// Calculate linear acceleration magnitude from aX, aY, aZ
 	const linearAccelerationData = useMemo(() => {
 		return sensorDataClass.aX.map((ax, index) => {
@@ -76,7 +76,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={yawData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -111,7 +111,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={pitchData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -146,7 +146,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={rollData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -181,7 +181,7 @@ function IntroductionS5P4ImuViz() {
 					<CardContent className="h-48">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart data={linearAccelerationData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
 									className="text-xs"
@@ -212,29 +212,29 @@ function IntroductionS5P4ImuViz() {
 			{/* Data Summary */}
 			<div className="grid grid-cols-4 gap-4 mt-6">
 				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-blue-600">
+					<div className="text-2xl font-bold text-macaw">
 						{sensorDataClass.yaw.length > 0 ? sensorDataClass.yaw[sensorDataClass.yaw.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Yaw</div>
+					<div className="text-sm text-eel">Current Yaw</div>
 				</div>
 				<div className="text-center p-4 bg-red-50 rounded-lg">
-					<div className="text-2xl font-bold text-red-600">
+					<div className="text-2xl font-bold text-cardinal">
 						{sensorDataClass.pitch.length > 0 ? sensorDataClass.pitch[sensorDataClass.pitch.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Pitch</div>
+					<div className="text-sm text-eel">Current Pitch</div>
 				</div>
 				<div className="text-center p-4 bg-green-50 rounded-lg">
-					<div className="text-2xl font-bold text-green-600">
+					<div className="text-2xl font-bold text-chargingGreen">
 						{sensorDataClass.roll.length > 0 ? sensorDataClass.roll[sensorDataClass.roll.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-gray-600">Current Roll</div>
+					<div className="text-sm text-eel">Current Roll</div>
 				</div>
 				<div className="text-center p-4 bg-purple-50 rounded-lg">
-					<div className="text-2xl font-bold text-purple-600">
+					<div className="text-2xl font-bold text-beetle">
 						{linearAccelerationData.length > 0 ?
 							linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
 					</div>
-					<div className="text-sm text-gray-600">Current Acceleration</div>
+					<div className="text-sm text-eel">Current Acceleration</div>
 				</div>
 			</div>
 		</div>
