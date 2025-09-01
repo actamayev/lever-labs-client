@@ -24,25 +24,25 @@ function SoundActionButton({ sound, index } : { sound: FunSounds, index: number 
 	// Map direction to the correct icon
 	const getSoundIcon = (): ReactNode => {
 		switch (sound) {
-		case "Fart":
-			return <CustomFart className="!size-10" />
-		case "Monkey":
-			if (garageClass.soundPlaying === "Monkey") {
-				return <CustomHearNoEvilMonkey className="!size-10" />
-			}
-			return <CustomSpeakNoEvilMonkey className="!size-10" />
-		case "Elephant":
-			return <CustomElephant className="!size-10" />
-		case "Party":
-			return <CustomPartyPopper className="!size-10" />
-		case "UFO":
-			return <CustomUfo className="!size-10" />
-		case "Countdown":
-			return <CustomCountdown className="!size-10" />
-		case "Robot":
-			return <Bot className="!size-10" />
-		case "Engine":
-			return <CustomEngine className="!size-10" />
+			case "Fart":
+				return <CustomFart className="!size-10" />
+			case "Monkey":
+				if (garageClass.soundPlaying === "Monkey") {
+					return <CustomHearNoEvilMonkey className="!size-10" />
+				}
+				return <CustomSpeakNoEvilMonkey className="!size-10" />
+			case "Elephant":
+				return <CustomElephant className="!size-10" />
+			case "Party":
+				return <CustomPartyPopper className="!size-10" />
+			case "UFO":
+				return <CustomUfo className="!size-10" />
+			case "Countdown":
+				return <CustomCountdown className="!size-10" />
+			case "Robot":
+				return <Bot className="!size-10" />
+			case "Engine":
+				return <CustomEngine className="!size-10" />
 		}
 	}
 

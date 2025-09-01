@@ -11,7 +11,7 @@ function KnownNetworksSection() {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
-                No known networks nearby
+				No known networks nearby
 			</div>
 		)
 	}

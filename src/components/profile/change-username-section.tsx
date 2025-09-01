@@ -76,7 +76,7 @@ function ChangeUsernameSection() {
 			{username.length > 0 && (
 				username.length < 3 ? (
 					<p className="text-sm text-cardinal mt-1">
-							Username must be at least 3 characters.
+						Username must be at least 3 characters.
 					</p>
 				) : (
 					<p className="text-sm text-cardinal mt-1">

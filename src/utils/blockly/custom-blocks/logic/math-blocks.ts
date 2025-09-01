@@ -193,32 +193,32 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 			const arg = cppGenerator.valueToCode(block, "NUM", Order.NONE) || "0"
 
 			switch (operator) {
-			case "NEG":
-				return [`-${arg}`, Order.UNARY_MINUS]
-			case "ABS":
-				return [`abs(${arg})`, Order.FUNCTION_CALL]
-			case "ROOT":
-				return [`sqrt(${arg})`, Order.FUNCTION_CALL]
-			case "LN":
-				return [`log(${arg})`, Order.FUNCTION_CALL]
-			case "EXP":
-				return [`exp(${arg})`, Order.FUNCTION_CALL]
-			case "POW10":
-				return [`pow(10, ${arg})`, Order.FUNCTION_CALL]
-			case "ROUND":
-				return [`round(${arg})`, Order.FUNCTION_CALL]
-			case "ROUNDUP":
-				return [`ceil(${arg})`, Order.FUNCTION_CALL]
-			case "ROUNDDOWN":
-				return [`floor(${arg})`, Order.FUNCTION_CALL]
-			case "SIN":
-				return [`sin(${arg})`, Order.FUNCTION_CALL]
-			case "COS":
-				return [`cos(${arg})`, Order.FUNCTION_CALL]
-			case "TAN":
-				return [`tan(${arg})`, Order.FUNCTION_CALL]
-			default:
-				throw new Error("Unknown math operator: " + operator)
+				case "NEG":
+					return [`-${arg}`, Order.UNARY_MINUS]
+				case "ABS":
+					return [`abs(${arg})`, Order.FUNCTION_CALL]
+				case "ROOT":
+					return [`sqrt(${arg})`, Order.FUNCTION_CALL]
+				case "LN":
+					return [`log(${arg})`, Order.FUNCTION_CALL]
+				case "EXP":
+					return [`exp(${arg})`, Order.FUNCTION_CALL]
+				case "POW10":
+					return [`pow(10, ${arg})`, Order.FUNCTION_CALL]
+				case "ROUND":
+					return [`round(${arg})`, Order.FUNCTION_CALL]
+				case "ROUNDUP":
+					return [`ceil(${arg})`, Order.FUNCTION_CALL]
+				case "ROUNDDOWN":
+					return [`floor(${arg})`, Order.FUNCTION_CALL]
+				case "SIN":
+					return [`sin(${arg})`, Order.FUNCTION_CALL]
+				case "COS":
+					return [`cos(${arg})`, Order.FUNCTION_CALL]
+				case "TAN":
+					return [`tan(${arg})`, Order.FUNCTION_CALL]
+				default:
+					throw new Error("Unknown math operator: " + operator)
 			}
 		}
 	},

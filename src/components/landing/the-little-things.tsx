@@ -60,7 +60,7 @@ const features: Feature[] = [
 		description: (
 			<>
 				Start with drag-and-drop blocks and advance to text-based coding when you're ready.
-					Your pace, your journey.
+				Your pace, your journey.
 			</>
 		)
 	},
@@ -70,7 +70,7 @@ const features: Feature[] = [
 		description: (
 			<>
 				Watch your skills evolve with
-					progress tracking
+				progress tracking
 				that celebrates every milestone, from basic movements to advanced robotics.
 			</>
 		)
@@ -118,7 +118,7 @@ export default function TheLittleThings(): React.ReactNode {
 			{/* Title */}
 			<p className="text-center text-3xl sm:text-3xl md:text-5xl lg:text-6xl
 			font-medium text-white dark:text-eel px-4 md:px-0">
-                It's the little things that count
+				It's the little things that count
 			</p>
 
 			{/* Features Grid */}

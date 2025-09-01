@@ -163,7 +163,7 @@ function RequestTeacherAccess() {
 							htmlFor="teacher-first-name"
 							className="text-base md:text-lg font-medium text-eel mb-2 block"
 						>
-						First Name
+							First Name
 						</Label>
 						<Input
 							id="teacher-first-name"
@@ -181,7 +181,7 @@ function RequestTeacherAccess() {
 							htmlFor="teacher-last-name"
 							className="text-base md:text-lg font-medium text-eel mb-2 block"
 						>
-						Last Name
+							Last Name
 						</Label>
 						<Input
 							id="teacher-last-name"
@@ -200,7 +200,7 @@ function RequestTeacherAccess() {
 								htmlFor="school-name"
 								className="text-base md:text-lg font-medium text-eel mb-2 block"
 							>
-							School Name
+								School Name
 							</Label>
 							{hasExistingData && (
 								<CustomTooltip

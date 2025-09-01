@@ -63,7 +63,7 @@ export default function BackCareerCard(props: Props) {
 							))}
 							{componentsUsed.length > 4 && (
 								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center text-white", colors.bg2)}>
-                                +{componentsUsed.length - 4}
+									+{componentsUsed.length - 4}
 								</div>
 							)}
 						</div>
@@ -87,7 +87,7 @@ export default function BackCareerCard(props: Props) {
 							))}
 							{codingConcepts.length > 4 && (
 								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center text-white", colors.bg2)}>
-                                +{codingConcepts.length - 4}
+									+{codingConcepts.length - 4}
 								</div>
 							)}
 						</div>

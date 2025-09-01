@@ -19,18 +19,18 @@ function NetworkWorkbench() {
 		if (isNull(pipClass.selectedPip)) return "No device selected"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "offline":
-			return "Offline"
-		case "online":
-			return "Online"
-		case "connected to other user":
-			return "Connected to other user"
-		case "connected":
-			return "Connected"
-		case "connected to serial":
-			return "Connected to USB"
-		default:
-			return "Unknown status"
+			case "offline":
+				return "Offline"
+			case "online":
+				return "Online"
+			case "connected to other user":
+				return "Connected to other user"
+			case "connected":
+				return "Connected"
+			case "connected to serial":
+				return "Connected to USB"
+			default:
+				return "Unknown status"
 		}
 	}
 
@@ -39,18 +39,18 @@ function NetworkWorkbench() {
 		if (isNull(pipClass.selectedPip)) return "text-wolf"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "offline":
-			return "text-cardinal"
-		case "online":
-			return "text-macaw"
-		case "connected to other user":
-			return "text-beetle"
-		case "connected":
-			return "text-green-500"
-		case "connected to serial":
-			return "text-green-500"
-		default:
-			return "text-wolf"
+			case "offline":
+				return "text-cardinal"
+			case "online":
+				return "text-macaw"
+			case "connected to other user":
+				return "text-beetle"
+			case "connected":
+				return "text-green-500"
+			case "connected to serial":
+				return "text-green-500"
+			default:
+				return "text-wolf"
 		}
 	}
 

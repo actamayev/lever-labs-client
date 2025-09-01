@@ -37,6 +37,7 @@ function IntroductionS6P4MzViz() {
 	}
 
 	// Get cell from mouse position
+	// eslint-disable-next-line complexity
 	const getCellFromMouse = (mouseX: number, mouseY: number): { row: number; col: number } | null => {
 		const rect = canvasRef.current?.getBoundingClientRect()
 		if (!rect) return null

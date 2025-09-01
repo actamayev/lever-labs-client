@@ -9,7 +9,7 @@ function PreviouslyConnectedSection() {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
-                No previously connected networks
+				No previously connected networks
 			</div>
 		)
 	}

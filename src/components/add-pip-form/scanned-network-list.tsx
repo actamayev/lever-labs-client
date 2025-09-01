@@ -149,7 +149,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 									{!network.encrypted ? (
 										<div className="space-y-3">
 											<div className="text-lg text-green-600 mb-2">
-											✓ Open network - no password required
+												✓ Open network - no password required
 											</div>
 											<Button
 												onClick={async () => {

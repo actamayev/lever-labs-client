@@ -71,7 +71,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 				<div className="space-y-2">
 					<Label htmlFor="class-name" className="text-base font-medium text-eel">
-							Class Name
+						Class Name
 					</Label>
 					<Input
 						id="class-name"

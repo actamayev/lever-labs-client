@@ -17,14 +17,14 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	// Map direction to the correct icon
 	const getMotorDirectionIcon = (): ReactNode => {
 		switch (direction) {
-		case "up":
-			return <ArrowUp className="!size-12" strokeWidth={2.5}/>
-		case "down":
-			return <ArrowDown className="!size-12" strokeWidth={2.5}/>
-		case "left":
-			return <ArrowLeft className="!size-12" strokeWidth={2.5}/>
-		case "right":
-			return <ArrowRight className="!size-12" strokeWidth={2.5}/>
+			case "up":
+				return <ArrowUp className="!size-12" strokeWidth={2.5}/>
+			case "down":
+				return <ArrowDown className="!size-12" strokeWidth={2.5}/>
+			case "left":
+				return <ArrowLeft className="!size-12" strokeWidth={2.5}/>
+			case "right":
+				return <ArrowRight className="!size-12" strokeWidth={2.5}/>
 		}
 	}
 

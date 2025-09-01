@@ -41,7 +41,7 @@ export default function Footer(): React.ReactNode {
 								height={32}
 							/>
 							<span className="ml-2 inline">
-            Blue Dot Robots
+								Blue Dot Robots
 							</span>
 						</Link>
 						<FooterSocialSection />

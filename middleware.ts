@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { PrivatePageNames } from "./src/utils/constants/page-constants"
 
 interface JwtPayload {
-  userId: number
-  username: string | null
-  isActive?: boolean
-  iat?: number
-  exp?: number
+	userId: number
+	username: string | null
+	isActive?: boolean
+	iat?: number
+	exp?: number
 }
 
 // Pages that should redirect to /garage if user is fully authenticated

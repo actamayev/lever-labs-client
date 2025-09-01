@@ -131,108 +131,108 @@ class SerialMessageManagerClass {
 	// eslint-disable-next-line complexity, max-lines-per-function
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
-		case "/pip-id": {
-			runInAction(() => {
-				this.pipId = (message.payload as PipIDPayload).pipId
-				this.showWiFiSection = true
-				serialConnectionManagerClass.pipTurnedOn = true
-				workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
-				pipClass.setPipPluggedInSerial(true)
-			})
-			break
-		}
-		case "/wifi-connection-result": {
-			const status = (message.payload as WiFiConnectionResultPayload).status
-
-			// Convert to enum
-			let enumStatus: WiFiConnectionStatus
-			switch (status) {
-			case "success":
-				enumStatus = WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
+			case "/pip-id": {
 				runInAction(() => {
-					this.wiFiTestCompleted = true
-					this.showNameSection = true
-					this.isReadyToDisconnect = true
-					this.showWiFiSection = false
+					this.pipId = (message.payload as PipIDPayload).pipId
+					this.showWiFiSection = true
+					serialConnectionManagerClass.pipTurnedOn = true
+					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
+					pipClass.setPipPluggedInSerial(true)
 				})
 				break
-			case "wifi_only":
-				enumStatus = WiFiConnectionStatus.WIFI_ONLY
+			}
+			case "/wifi-connection-result": {
+				const status = (message.payload as WiFiConnectionResultPayload).status
+
+				// Convert to enum
+				let enumStatus: WiFiConnectionStatus
+				switch (status) {
+					case "success":
+						enumStatus = WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
+						runInAction(() => {
+							this.wiFiTestCompleted = true
+							this.showNameSection = true
+							this.isReadyToDisconnect = true
+							this.showWiFiSection = false
+						})
+						break
+					case "wifi_only":
+						enumStatus = WiFiConnectionStatus.WIFI_ONLY
+						break
+					case "failed":
+						enumStatus = WiFiConnectionStatus.FAILED
+						break
+					default:
+						enumStatus = WiFiConnectionStatus.FAILED
+				}
+
+				this.onWiFiConnectionResult?.(enumStatus)
 				break
-			case "failed":
-				enumStatus = WiFiConnectionStatus.FAILED
+			}
+			case "/saved-networks": {
+			// Handle saved networks response
+				runInAction(() => {
+					this.isLoadingSavedNetworks = false
+					this.savedNetworks = message.payload as SavedWiFiNetwork[]
+				})
 				break
-			default:
-				enumStatus = WiFiConnectionStatus.FAILED
 			}
 
-			this.onWiFiConnectionResult?.(enumStatus)
-			break
-		}
-		case "/saved-networks": {
-			// Handle saved networks response
-			runInAction(() => {
-				this.isLoadingSavedNetworks = false
-				this.savedNetworks = message.payload as SavedWiFiNetwork[]
-			})
-			break
-		}
+			case "/scan-started": {
+				runInAction(() => {
+					this.isScanning = true
+					this.scannedNetworks = [] // Clear previous results
+				})
+				break
+			}
 
-		case "/scan-started": {
-			runInAction(() => {
-				this.isScanning = true
-				this.scannedNetworks = [] // Clear previous results
-			})
-			break
-		}
-
-		case "/scan-result-item": {
+			case "/scan-result-item": {
 			// Handle individual scan result item
-			const networkItem = message.payload as ScannedWiFiNetworkItem
-			this.scannedNetworks.push(networkItem)
-			break
-		}
+				const networkItem = message.payload as ScannedWiFiNetworkItem
+				this.scannedNetworks.push(networkItem)
+				break
+			}
 
-		case "/scan-complete": {
+			case "/scan-complete": {
 			// Handle scan completion
-			const scanComplete = message.payload as ScanCompletePayload
-			this.isScanning = false
-			console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
-			break
-		}
+				const scanComplete = message.payload as ScanCompletePayload
+				this.isScanning = false
+				console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+				break
+			}
 
-		case "/motors-disabled-usb": {
-			toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
-			break
-		}
+			case "/motors-disabled-usb": {
+				toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
+				break
+			}
 
-		case "/program-paused-usb": {
-			toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
-			break
-		}
-		case "/battery-monitor-data-item": {
-			const batteryDataItem = message.payload as BatteryMonitorDataItem
-			workbenchClass.setBatteryDataItem(batteryDataItem)
-			break
-		}
-		case "/battery-monitor-data-complete": {
-			workbenchClass.setBatteryDataLastUpdated()
-			break
-		}
-		case "/sensor-data": {
-			const sensorData = message.payload as SensorPayload
-			sensorDataClass.addSensorData(sensorData)
-			break
-		}
+			case "/program-paused-usb": {
+				toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
+				break
+			}
+			case "/battery-monitor-data-item": {
+				const batteryDataItem = message.payload as BatteryMonitorDataItem
+				workbenchClass.setBatteryDataItem(batteryDataItem)
+				break
+			}
+			case "/battery-monitor-data-complete": {
+				workbenchClass.setBatteryDataLastUpdated()
+				break
+			}
+			case "/sensor-data": {
+				const sensorData = message.payload as SensorPayload
+				sensorDataClass.addSensorData(sensorData)
+				break
+			}
 
-		case "/sensor-data-mz": {
-			const sensorData = message.payload as SensorPayloadMZ
-			sensorDataClass.addMultizoneTofData(sensorData)
-			break
-		}
-		default:
-			console.info("Unknown message route:", message.route)
-			break
+			case "/sensor-data-mz": {
+				const sensorData = message.payload as SensorPayloadMZ
+				sensorDataClass.addMultizoneTofData(sensorData)
+				break
+			}
+			default:
+				console.info("Unknown message route:", message.route)
+				break
 		}
 	}
 

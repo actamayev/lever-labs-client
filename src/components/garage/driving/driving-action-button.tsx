@@ -26,10 +26,10 @@ function DrivingActionButton({
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {
 		switch (action) {
-		case "headlights":
-			return <CustomHeadlights className="!size-10" />
-		case "horn":
-			return <CustomHorn className="!size-10" />
+			case "headlights":
+				return <CustomHeadlights className="!size-10" />
+			case "horn":
+				return <CustomHorn className="!size-10" />
 		}
 	}
 

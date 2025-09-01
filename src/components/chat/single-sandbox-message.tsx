@@ -18,6 +18,7 @@ interface SingleSandboxMessageProps {
 	isStreaming?: boolean
 }
 
+// eslint-disable-next-line complexity
 function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps) {
 	const isUser = message.role === "user"
 	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())

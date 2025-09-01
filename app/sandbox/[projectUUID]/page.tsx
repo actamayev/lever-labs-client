@@ -6,9 +6,9 @@ import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project/sandbox-project-page"
 
 interface SandboxProjectPageProps {
-    params: Promise<{
-        projectUUID: ProjectUUID
-    }>
+	params: Promise<{
+		projectUUID: ProjectUUID
+	}>
 }
 
 export async function generateMetadata({ params }: SandboxProjectPageProps): Promise<Metadata> {

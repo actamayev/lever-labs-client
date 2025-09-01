@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { Oval } from "react-loader-spinner"
 import personalInfoClass from "../classes/personal-info-class"
 
-function LoadingOval() {
+function LoadingOval(): React.ReactNode {
 	return (
 		<Oval
 			height="22"

@@ -81,7 +81,7 @@ export default function JoinClassroom(): React.ReactNode {
 					shadowClass={colors.shadow2}
 					disabled={!isValidClassCode(classCode)}
 				>
-						SUBMIT
+					SUBMIT
 				</TactileButton>
 			</div>
 		</>

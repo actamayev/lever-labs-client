@@ -4,11 +4,11 @@ import { useCallback, useEffect, useRef } from "react"
 import { cn } from "@/lib/shadcn/utils"
 
 interface NavigationMorphingTextProps {
-  className?: string
-  staticText: string
-  morphingTexts: string[]
-  currentIndex: number
-  onAnimationStateChange?: (isAnimating: boolean) => void
+	className?: string
+	staticText: string
+	morphingTexts: string[]
+	currentIndex: number
+	onAnimationStateChange?: (isAnimating: boolean) => void
 }
 
 const morphTime = 0.5  // Match original timing

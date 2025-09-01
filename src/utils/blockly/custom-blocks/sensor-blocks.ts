@@ -22,7 +22,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.IMU).map(([key, value]) =>
-                                [key.toLowerCase(), value] as [string, string]
+								[key.toLowerCase(), value] as [string, string]
 							)
 						),
 						SENSORS_FIELD_VALUES.IMU_READ

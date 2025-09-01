@@ -65,7 +65,7 @@ function ChangePasswordSection() {
 						htmlFor="current-password"
 						className="text-base md:text-lg font-medium text-eel mb-2 block"
 					>
-							Current Password
+						Current Password
 					</Label>
 					<div className="relative w-full">
 						<Input

@@ -12,7 +12,7 @@ import serialMessageManagerClass from "../../classes/serial-message-manager-clas
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 interface ManualEntrySectionProps {
-    control: Control<IncompletePipData>
+	control: Control<IncompletePipData>
 }
 
 function ManualEntrySection({ control }: ManualEntrySectionProps) {

@@ -5,9 +5,9 @@ import { MessageBuilder } from "@bluedotrobots/common-ts"
 import serialMessageManagerClass from "../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
-export default function useScanForNetworks(): React.ReactNode: {
+export default function useScanForNetworks(): {
 	scanForNetworks: (softOrHard: "soft" | "hard") => Promise<void>
-	} {
+} {
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
 	const scanForNetworks = useCallback(async (softOrHard: "soft" | "hard") => {

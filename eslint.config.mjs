@@ -2,6 +2,7 @@ import { dirname } from "path"
 import { fileURLToPath } from "url"
 import { FlatCompat } from "@eslint/eslintrc"
 import js from "@eslint/js"
+import stylistic from "@stylistic/eslint-plugin"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -22,11 +23,14 @@ const eslintConfig = [
 			"next-env.d.ts",
 			// Ignore shadcn and other third-party components
 			"src/components/shadcn/ui/**/*",
-			"src/lib/**/*",
+			"src/lib/**/*", 
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
 			// Ignore the problematic JS file that's causing issues
 			"add-use-client.js",
+			"keepalive-worker.js",
+			// Ignore ESLint config file itself
+			"eslint.config.mjs",
 		],
 	},
 
@@ -64,7 +68,7 @@ const eslintConfig = [
 			"eol-last": ["error", "always"],
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": [
-				"warn",
+				"warn", 
 				{ "argsIgnorePattern": "^_" }
 			],
 			"eqeqeq": "error",
@@ -96,7 +100,7 @@ const eslintConfig = [
 			"react/prop-types": "off",
 			"max-params": ["warn", 4],
 			"max-lines-per-function": [
-				"warn",
+				"warn", 
 				{"max": 90, "skipBlankLines": true, "skipComments": true}
 			],
 			"@typescript-eslint/naming-convention": [
@@ -140,9 +144,19 @@ const eslintConfig = [
 		},
 	}),
 
+	// Stylistic rules (including indent with tabs)
+	{
+		plugins: {
+			"@stylistic": stylistic,
+		},
+		rules: {
+			"@stylistic/indent": ["error", "tab"],
+		},
+	},
+
 	// Override for JSX/TSX files - disable explicit return types
 	{
-		files: ["*.jsx", "*.tsx"],
+		files: ["**/*.jsx", "**/*.tsx"],
 		rules: {
 			"@typescript-eslint/explicit-function-return-type": "off",
 		},
@@ -150,7 +164,7 @@ const eslintConfig = [
 
 	// Override for TSX files - disable floating promises check
 	{
-		files: ["*.tsx"],
+		files: ["**/*.tsx"],
 		rules: {
 			"@typescript-eslint/no-floating-promises": "off",
 		},

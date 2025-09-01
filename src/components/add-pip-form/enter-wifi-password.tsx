@@ -9,8 +9,8 @@ import LockIconAndTooltip from "../lock-icon-and-tooltip"
 import { FormControl, FormField, FormItem, FormMessage } from "../shadcn/ui/form"
 
 interface EnterWifiPasswordProps {
-    control: Control<IncompletePipData>
-    onSubmit?: () => void // Add optional submit handler
+	control: Control<IncompletePipData>
+	onSubmit?: () => void // Add optional submit handler
 }
 
 export default function EnterWifiPassword({ control, onSubmit }: EnterWifiPasswordProps) {

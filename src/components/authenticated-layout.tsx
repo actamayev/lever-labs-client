@@ -2,7 +2,7 @@ import { getAuthState } from "@/lib/auth-server"
 import AuthenticatedLayoutClient from "./authenticated-layout-client"
 
 interface AuthenticatedLayoutProps {
-  children: React.ReactNode
+	children: React.ReactNode
 }
 
 // Server component that gets auth state and passes to client (now async)
