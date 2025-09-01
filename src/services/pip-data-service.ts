@@ -41,7 +41,7 @@ export default class PipDataService extends BaseDataService {
 
 	async stopSensorPolling(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/stop-sensor-polling/${pipUUID}`)
+			this.buildUrl("/stop-sensor-polling"), { pipUUID }
 		)
 	}
 }
