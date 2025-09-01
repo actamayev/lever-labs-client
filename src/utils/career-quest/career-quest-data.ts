@@ -192,7 +192,8 @@ export const INTRODUCTION_CAREER: CareerQuestData = {
 					type: "text",
 					id: "introduction-3-4",
 					content: "introduction-3-4",
-					rightSideContent: "s3-p4-display"
+					rightSideContent: "s3-p4-display",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.INTRODUCTION, IntroductionTriggerType.S3_P4_ENTER),
 				},
 				{
 					type: "text",
