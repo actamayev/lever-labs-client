@@ -46,6 +46,7 @@ const miscRoutes: RouteConfig[] = [
 
 // Helper function to convert routes to sitemap entries
 function routesToSitemapEntries(routes: RouteConfig[]): MetadataRoute.Sitemap {
+	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 	return routes.map(route => ({
 		url: `${BASE_URL}${route.path}`,
 		lastModified: currentDate,

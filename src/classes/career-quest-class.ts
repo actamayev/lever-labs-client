@@ -97,7 +97,7 @@ class CareerQuestClass {
 	// ========================================
 
 	private initializeAllCareers = action((careerDefinitions: Record<string, CareerQuestData>): void => {
-		Object.values(careerDefinitions).forEach(careerDefinition => {
+		Object.values(careerDefinitions).forEach((careerDefinition): void => {
 			this.initializeCareer(careerDefinition)
 		})
 		this.isDoneInitializing = true
@@ -111,7 +111,7 @@ class CareerQuestClass {
 
 		// Initialize challenge data
 		const challenges = new Map<string, ChallengeInstance>()
-		challengeSections.forEach(section => {
+		challengeSections.forEach((section): void => {
 			challenges.set(section.challengeData.challengeUUID, {
 				// Static challenge data
 				challengeData: section.challengeData,
@@ -136,7 +136,7 @@ class CareerQuestClass {
 		})
 
 		// Create main slides from sections
-		const mainSlides: MainSlide[] = careerDefinition.sections.map(section => {
+		const mainSlides: MainSlide[] = careerDefinition.sections.map((section): MainSlide => {
 			if (section.type === "textParent") {
 				return {
 					type: "textParent",
@@ -158,10 +158,10 @@ class CareerQuestClass {
 		// Initialize morphing text indices and animation states
 		const morphingTextIndices = new Map<string, number>()
 		const morphingAnimationStates = new Map<string, boolean>()
-		careerDefinition.sections.forEach(section => {
+		careerDefinition.sections.forEach((section): void => {
 			if (section.type === "textParent") {
 				textChildIndices.set(section.id, 0)
-				section.children.forEach(child => {
+				section.children.forEach((child): void => {
 					if (child.type === "morphingText") {
 						morphingTextIndices.set(child.id, 0)
 						morphingAnimationStates.set(child.id, false)
@@ -435,7 +435,7 @@ class CareerQuestClass {
 			// No saved position, start at beginning
 			career.currentMainSlideIndex = 0
 			// Reset all text parent indices to 0
-			career.textChildIndices.forEach((_, textParentId) => {
+			career.textChildIndices.forEach((_, textParentId): void => {
 				career.textChildIndices.set(textParentId, 0)
 			})
 			return true
@@ -447,7 +447,7 @@ class CareerQuestClass {
 			// Fallback to beginning if position not found
 			career.currentMainSlideIndex = 0
 			// Reset all text parent indices to 0
-			career.textChildIndices.forEach((_, textParentId) => {
+			career.textChildIndices.forEach((_, textParentId): void => {
 				career.textChildIndices.set(textParentId, 0)
 			})
 			return true
@@ -609,7 +609,7 @@ class CareerQuestClass {
 		// For now, we'll check known text child IDs that contain buttons
 		// In the future, this could be made more sophisticated by analyzing the JSX structure
 		const buttonTextChildIds = [
-			"introduction-1-6", // The YES button in the introduction
+			"meet-pip-1-6", // The YES button in the meet-pip
 			// Add more button text child IDs here as needed
 		]
 
@@ -794,7 +794,7 @@ class CareerQuestClass {
 		const challenge = this.getChallenge(cqInformation)
 		if (!challenge) return
 
-		challenge.messages.forEach(message => {
+		challenge.messages.forEach((message): void => {
 			if (message.shouldShowHintButton) {
 				message.shouldShowHintButton = false
 			}
@@ -832,7 +832,7 @@ class CareerQuestClass {
 	public getCareerDataForMessage = action((careerUUID: CareerUUID): CareerDataForMessage | null => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return null
-		const careerDefinition = careerData.find(singleCareerData => singleCareerData.careerUUID === careerUUID)
+		const careerDefinition = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (!careerDefinition) return null
 		const currentSlide = this.getMainSlides(careerUUID)[career.currentMainSlideIndex]
 		if (currentSlide.type === "challenge") return null
@@ -904,7 +904,7 @@ class CareerQuestClass {
 		}
 
 		const streamingMessage = challenge.messages.find(
-			msg => msg.id === challenge.currentStreamingMessageId
+			(msg): boolean => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -921,7 +921,7 @@ class CareerQuestClass {
 		) return
 
 		const streamingMessage = challenge.messages.find(
-			msg => msg.id === challenge.currentStreamingMessageId
+			(msg): boolean => msg.id === challenge.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -987,7 +987,7 @@ class CareerQuestClass {
 		}
 
 		const streamingMessage = careerChat.messages.find(
-			msg => msg.id === careerChat.currentStreamingMessageId
+			(msg): boolean => msg.id === careerChat.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -1004,7 +1004,7 @@ class CareerQuestClass {
 		) return
 
 		const streamingMessage = careerChat.messages.find(
-			msg => msg.id === careerChat.currentStreamingMessageId
+			(msg): boolean => msg.id === careerChat.currentStreamingMessageId
 		)
 
 		if (streamingMessage) {
@@ -1129,14 +1129,14 @@ class CareerQuestClass {
 	 * Get all challenge sections
 	 */
 	private getAllChallengeSections(sections: CareerSection[]): ChallengeSection[] {
-		return sections.filter(section => section.type === "challenge") as ChallengeSection[]
+		return sections.filter((section): boolean => section.type === "challenge") as ChallengeSection[]
 	}
 
 	public getChallengeSectionByChallengeUUID(careerUUID: CareerUUID): ChallengeSection[] {
 		const career = this.getCareer(careerUUID)
 		if (!career) return []
 
-		return career.careerDefinition.sections.filter(section => section.type === "challenge") as ChallengeSection[]
+		return career.careerDefinition.sections.filter((section): boolean => section.type === "challenge") as ChallengeSection[]
 	}
 
 	public setIsRetrievingCareerData = action((careerUUID: CareerUUID, isRetrieving: boolean): void => {
@@ -1200,7 +1200,7 @@ class CareerQuestClass {
 			this.updateFurthestSeenIfNeeded(careerUUID, currentSlide.data.challengeUUID)
 
 			// For challenge slides, reset all text parent indices to 0
-			career.textChildIndices.forEach((_, textParentId) => {
+			career.textChildIndices.forEach((_, textParentId): void => {
 				career.textChildIndices.set(textParentId, 0)
 			})
 
@@ -1233,7 +1233,7 @@ class CareerQuestClass {
 		// Call enter trigger function for the new text child
 		if (textChild.triggerFunctionEnter) {
 			console.log("Calling enter trigger function for", textChild.id)
-			textChild.triggerFunctionEnter().catch((error) => {
+			textChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
 		}
@@ -1383,7 +1383,7 @@ class CareerQuestClass {
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
 			console.log("Calling exit trigger function for", currentTextChild.id)
-			currentTextChild.triggerFunctionExit().catch((error) => {
+			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
 		}
@@ -1406,7 +1406,7 @@ class CareerQuestClass {
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
 			console.log("Calling enter trigger function for", newTextChild.id)
-			newTextChild.triggerFunctionEnter().catch((error) => {
+			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
 		}
@@ -1427,7 +1427,7 @@ class CareerQuestClass {
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
 			console.log("Calling exit trigger function for", currentTextChild.id)
-			currentTextChild.triggerFunctionExit().catch((error) => {
+			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
 		}
@@ -1444,7 +1444,7 @@ class CareerQuestClass {
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
 			console.log("Calling enter trigger function for", newTextChild.id)
-			newTextChild.triggerFunctionEnter().catch((error) => {
+			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
 		}
@@ -1465,7 +1465,7 @@ class CareerQuestClass {
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
 				console.log("Calling exit trigger function for", currentTextChild.id)
-				currentTextChild.triggerFunctionExit().catch((error) => {
+				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})
 			}
@@ -1508,7 +1508,7 @@ class CareerQuestClass {
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
 				console.log("Calling exit trigger function for", currentTextChild.id)
-				currentTextChild.triggerFunctionExit().catch((error) => {
+				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})
 			}
@@ -1542,7 +1542,7 @@ class CareerQuestClass {
 	public changeMainSlideToCqChat = action((careerUUID: CareerUUID, challengeUUID: ChallengeUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career || !career.swiperInstance) return
-		const index = career.mainSlides.findIndex(slide => {
+		const index = career.mainSlides.findIndex((slide): boolean => {
 			if (slide.type === "textParent") return false
 			return slide.data.challengeUUID === challengeUUID
 		})
@@ -1660,10 +1660,10 @@ class CareerQuestClass {
 		if (career.isCareerChatToggled) return
 
 		// Determine if the next challenge has been seen
-		const currentSectionIndex = career.careerDefinition.sections.findIndex(section => section.id === currentSlide.id)
+		const currentSectionIndex = career.careerDefinition.sections.findIndex((section): boolean => section.id === currentSlide.id)
 		const nextChallenge = career.careerDefinition.sections
 			.slice(currentSectionIndex + 1)
-			.find(section => section.type === "challenge") as ChallengeSection | undefined
+			.find((section): boolean => section.type === "challenge") as ChallengeSection | undefined
 
 		if (nextChallenge && this.hasChallengeBeenSeen(careerUUID, nextChallenge.challengeData.challengeUUID)) {
 			this.setRightContent(careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
@@ -1676,7 +1676,7 @@ class CareerQuestClass {
 		if (textChild.type === "morphingText") {
 			const morphingIndex = this.getCurrentMorphingIndex(careerUUID, textChild.id)
 			const currentVariant = textChild.morphingVariants[morphingIndex]
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
@@ -1814,7 +1814,7 @@ class CareerQuestClass {
 	}
 
 	private sleep(ms: number): Promise<void> {
-		return new Promise(resolve => setTimeout(resolve, ms))
+		return new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, ms))
 	}
 }
 

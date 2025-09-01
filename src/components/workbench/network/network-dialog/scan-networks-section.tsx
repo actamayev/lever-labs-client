@@ -13,13 +13,13 @@ import serialMessageManagerClass from "../../../../classes/serial-message-manage
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function
-function ScanNetworksSection() {
+function ScanNetworksSection(): React.ReactNode {
 	const [selectedNetworkIndex, setSelectedNetworkIndex] = useState<number | null>(null)
 	const [password, setPassword] = useState("")
 	const [isConnecting, setIsConnecting] = useState(false)
 	const [showPassword, setShowPassword] = useState(false)
 
-	const handleConnectToNetwork = useCallback(async (network: ScannedWiFiNetworkItem) => {
+	const handleConnectToNetwork = useCallback(async (network: ScannedWiFiNetworkItem): Promise<void> => {
 		if (
 			!serialConnectionManagerClass.pipTurnedOn ||
 			(network.encrypted && !password.trim())
@@ -68,11 +68,11 @@ function ScanNetworksSection() {
 
 	return (
 		<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-inherit">
-			{serialMessageManagerClass.otherNetworks.map((network, index) => (
+			{serialMessageManagerClass.otherNetworks.map((network, index): React.ReactNode => (
 				<Collapsible
 					key={`${network.ssid}-${index}`}
 					open={selectedNetworkIndex === index}
-					onOpenChange={(open) => {
+					onOpenChange={(open): void => {
 						if (open) {
 							setSelectedNetworkIndex(index)
 							setPassword("")
@@ -107,10 +107,10 @@ function ScanNetworksSection() {
 											type={showPassword ? "text" : "password"}
 											placeholder="Enter password"
 											value={password}
-											onChange={(e) => setPassword(e.target.value)}
+											onChange={(e): void => setPassword(e.target.value)}
 											className="flex-1 h-8 text-sm"
 											disabled={isConnecting}
-											onKeyDown={(e) => {
+											onKeyDown={(e): void => {
 												if (e.key === "Enter" && password.trim()) {
 													handleConnectToNetwork(network)
 												}
@@ -121,7 +121,7 @@ function ScanNetworksSection() {
 											variant="ghost"
 											size="sm"
 											className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-swan"
-											onClick={() => setShowPassword(prevState => !prevState)}
+											onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 										>
 											{showPassword ? (
 												<EyeOff className="h-4 w-4 md:!h-4 md:!w-4" />
@@ -132,7 +132,7 @@ function ScanNetworksSection() {
 									</div>
 								)}
 								<Button
-									onClick={(e) => {
+									onClick={(e): void => {
 										e.stopPropagation() // Add this to prevent event bubbling
 										handleConnectToNetwork(network)
 									}}

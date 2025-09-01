@@ -8,7 +8,7 @@ import garageClass from "../../../classes/garage-class"
 import useEffectMotorDrive from "../../../hooks/garage/use-effect-motor-drive"
 import useGarageActionsUseEffect from "../../../hooks/garage/use-garage-actions-use-effect"
 
-function DrivingControls() {
+function DrivingControls(): React.ReactNode {
 	useEffectMotorDrive()
 	useGarageActionsUseEffect()
 

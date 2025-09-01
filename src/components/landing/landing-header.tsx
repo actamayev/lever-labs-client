@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 
-export default function LandingHeader() {
+export default function LandingHeader(): React.ReactNode {
 	return (
 		<div className="flex flex-col md:flex-row justify-between w-full gap-4 sm:gap-8">
 			{/* Right side with Pip image */}

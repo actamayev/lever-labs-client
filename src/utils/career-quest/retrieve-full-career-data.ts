@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -30,11 +30,11 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 		// Create a map for quick lookup: challengeUUID -> challengeSection
 		const challengeMap = new Map(
-			challengeSections.map(section => [section.challengeData.challengeUUID, section])
+			challengeSections.map((section): [ChallengeUUID, ChallengeSection] => [section.challengeData.challengeUUID, section])
 		)
 
 		// Process each challenge's data by matching challengeUUID
-		careerResponse.data.careerQuestChallengeData.forEach((challengeData) => {
+		careerResponse.data.careerQuestChallengeData.forEach((challengeData): void => {
 			// Find the matching challenge section by UUID
 			const challengeSection = challengeMap.get(challengeData.challengeUUID)
 
@@ -52,7 +52,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 			// Transform backend messages to frontend format
 			const transformedMessages: ChallengeChatMessage[] = []
 
-			challengeData.messages.forEach(msg => {
+			challengeData.messages.forEach((msg): void => {
 				const timestamp = new Date(msg.timestamp)
 
 				// If this is a code submission, create two messages: the user request and the model's feedback
@@ -113,7 +113,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		})
 
 		// NEW: Process and set career chat messages
-		const transformedCareerChatMessages: CareerChatMessage[] = careerResponse.data.careerChatMessages.map(msg => {
+		const transformedCareerChatMessages: CareerChatMessage[] = careerResponse.data.careerChatMessages.map((msg): CareerChatMessage => {
 			// Convert timestamp string back to Date object
 			const timestamp = new Date(msg.timestamp)
 

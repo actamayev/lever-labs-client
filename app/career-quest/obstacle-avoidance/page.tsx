@@ -5,7 +5,6 @@ import { OBSTACLE_AVOIDANCE_CAREER } from "../../../src/utils/career-quest/caree
 
 export const metadata = createMetadata({
 	title: "Obstacle Avoidance",
-	// eslint-disable-next-line max-len
 	description: "Guide Pip through smart navigation challenges as it learns to detect and avoid obstacles in its robotics adventure.",
 	path: "/career-quest/obstacle-avoidance",
 	keywords: [
@@ -15,7 +14,7 @@ export const metadata = createMetadata({
 	]
 })
 
-export default function ObstacleAvoidancePage() {
+export default function ObstacleAvoidancePage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<CareerActivityTemplate careerData={OBSTACLE_AVOIDANCE_CAREER} />

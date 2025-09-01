@@ -9,7 +9,7 @@ export const metadata = createMetadata({
 	keywords: ["join class", "teacher request", "class code"]
 })
 
-export default function SchoolsSettings() {
+export default function SchoolsSettings(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<SchoolSettingsPage />

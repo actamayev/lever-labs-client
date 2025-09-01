@@ -11,46 +11,46 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
-function NetworkWorkbench() {
+function NetworkWorkbench(): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
-	const getStatusText = () => {
+	const getStatusText = (): string => {
 		if (pipClass.pipPluggedInSerial) return "Connected to USB"
 		if (isNull(pipClass.selectedPip)) return "No device selected"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "offline":
-			return "Offline"
-		case "online":
-			return "Online"
-		case "connected to other user":
-			return "Connected to other user"
-		case "connected":
-			return "Connected"
-		case "connected to serial":
-			return "Connected to USB"
-		default:
-			return "Unknown status"
+			case "offline":
+				return "Offline"
+			case "online":
+				return "Online"
+			case "connected to other user":
+				return "Connected to other user"
+			case "connected":
+				return "Connected"
+			case "connected to serial":
+				return "Connected to USB"
+			default:
+				return "Unknown status"
 		}
 	}
 
-	const getStatusColor = () => {
+	const getStatusColor = (): string => {
 		if (pipClass.pipPluggedInSerial) return "text-green-500"
 		if (isNull(pipClass.selectedPip)) return "text-wolf"
 
 		switch (pipClass.selectedPip.pipConnectionStatus) {
-		case "offline":
-			return "text-cardinal"
-		case "online":
-			return "text-macaw"
-		case "connected to other user":
-			return "text-beetle"
-		case "connected":
-			return "text-green-500"
-		case "connected to serial":
-			return "text-green-500"
-		default:
-			return "text-wolf"
+			case "offline":
+				return "text-cardinal"
+			case "online":
+				return "text-macaw"
+			case "connected to other user":
+				return "text-beetle"
+			case "connected":
+				return "text-green-500"
+			case "connected to serial":
+				return "text-green-500"
+			default:
+				return "text-wolf"
 		}
 	}
 

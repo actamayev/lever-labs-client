@@ -9,7 +9,7 @@ interface Props {
 	title?: string
 }
 
-function SupportSectionContainer(props: Props) {
+function SupportSectionContainer(props: Props): React.ReactNode {
 	const { children, title = "About Us"} = props
 
 	let parentClasses = "px-8 sm:px-8 md:px-16 lg:px-72 mt-12"

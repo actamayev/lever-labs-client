@@ -4,7 +4,7 @@ import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingParagraph, landingTableHeader, landingTableText } from "../../utils/text-styles"
 
-export default function LearnByDoing() {
+export default function LearnByDoing(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="right"

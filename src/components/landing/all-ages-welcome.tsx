@@ -7,7 +7,7 @@ import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"
 
-export default function AllAgesWelcome() {
+export default function AllAgesWelcome(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="left"

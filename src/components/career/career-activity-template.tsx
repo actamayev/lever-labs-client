@@ -12,7 +12,7 @@ interface Props {
 	careerData: CareerQuestData
 }
 
-function CareerActivityTemplate(props: Props) {
+function CareerActivityTemplate(props: Props): React.ReactNode {
 	const { careerData } = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	useEffectRetrieveSingleCareerChallenges(careerData.careerUUID)

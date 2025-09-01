@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import Image from "next/image"
@@ -18,7 +18,8 @@ interface SingleSandboxMessageProps {
 	isStreaming?: boolean
 }
 
-function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps) {
+// eslint-disable-next-line complexity
+function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps): React.ReactNode {
 	const isUser = message.role === "user"
 	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
 

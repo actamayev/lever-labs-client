@@ -4,7 +4,7 @@ import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import DemosSection from "./demos-section"
 import SoundsSection from "./sounds/sounds-section"
 
-export default function SoundsAndDemosSection() {
+export default function SoundsAndDemosSection(): React.ReactNode {
 	return (
 		<div className="h-1/3 flex flex-row overflow-hidden">
 			<div

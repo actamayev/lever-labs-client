@@ -14,11 +14,11 @@ interface ArrowKeyButtonProps {
 	isPressed: boolean
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function DrivingActionButton({
 	action,
 	isPressed,
-}: ArrowKeyButtonProps) {
+}: ArrowKeyButtonProps): React.ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 	const { activateAction, deactivateAction } = garageActions()
@@ -26,15 +26,15 @@ function DrivingActionButton({
 	// Map direction to the correct icon
 	const getActionIcon = (): ReactNode => {
 		switch (action) {
-		case "headlights":
-			return <CustomHeadlights className="!size-10" />
-		case "horn":
-			return <CustomHorn className="!size-10" />
+			case "headlights":
+				return <CustomHeadlights className="!size-10" />
+			case "horn":
+				return <CustomHorn className="!size-10" />
 		}
 	}
 
 	// Update button styling directly when isPressed changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!buttonRef.current) return
 
 		const buttonElement = buttonRef.current
@@ -51,12 +51,12 @@ function DrivingActionButton({
 	}, [isPressed])
 
 	// Handle button click for action buttons
-	const handleButtonDown = () => {
+	const handleButtonDown = (): void => {
 		activateAction(action)
 	}
 
 	// Handle button release for action buttons
-	const handleButtonUp = () => {
+	const handleButtonUp = (): void => {
 		deactivateAction(action)
 	}
 

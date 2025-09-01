@@ -4,7 +4,7 @@ import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 import LEDColorChangeAnimation from "../../icon-animations/led-color-change-animation"
 
-export default function LEDCard() {
+export default function LEDCard(): React.ReactNode {
 	return (
 		<SensorsSkeleton
 			title="8 RGB LEDs"

@@ -7,17 +7,17 @@ import serialConnectionManagerClass from "../classes/serial-connection-manager-c
 
 export default function useScanForNetworks(): {
 	scanForNetworks: (softOrHard: "soft" | "hard") => Promise<void>
-	} {
+} {
 	const scanTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-	const scanForNetworks = useCallback(async (softOrHard: "soft" | "hard") => {
+	const scanForNetworks = useCallback(async (softOrHard: "soft" | "hard"): Promise<void> => {
 		if (!serialConnectionManagerClass.pipTurnedOn || serialMessageManagerClass.isScanning) return
 
 		serialMessageManagerClass.setIsScanning(true)
 		serialMessageManagerClass.clearScannedNetworks()
 
 		// Set 10-second timeout
-		scanTimeoutRef.current = setTimeout(() => {
+		scanTimeoutRef.current = setTimeout((): void => {
 			if (serialMessageManagerClass.isScanning) {
 				serialMessageManagerClass.setIsScanning(false)
 				console.error("Wi-Fi scan timed out after 10 seconds")
@@ -36,7 +36,7 @@ export default function useScanForNetworks(): {
 		} catch (error) {
 			console.error("Failed to scan for networks:", error)
 			serialMessageManagerClass.setIsScanning(false)
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (scanTimeoutRef.current) {
 				clearTimeout(scanTimeoutRef.current)
 				scanTimeoutRef.current = null
@@ -46,7 +46,7 @@ export default function useScanForNetworks(): {
 	}, [serialConnectionManagerClass.pipTurnedOn, serialMessageManagerClass.isScanning])
 
 	// Clear timeout when scanning completes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!serialMessageManagerClass.isScanning && scanTimeoutRef.current) {
 			clearTimeout(scanTimeoutRef.current)
 			scanTimeoutRef.current = null
@@ -55,8 +55,8 @@ export default function useScanForNetworks(): {
 	}, [serialMessageManagerClass.isScanning])
 
 	// Cleanup on unmount
-	useEffect(() => {
-		return () => {
+	useEffect((): () => void => {
+		return (): void => {
 			if (scanTimeoutRef.current) {
 				clearTimeout(scanTimeoutRef.current)
 			}

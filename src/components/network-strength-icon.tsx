@@ -2,7 +2,7 @@
 
 import { Wifi, WifiHigh, WifiLow } from "lucide-react"
 
-export default function NetworkStrengthIcon ({ rssi} : {rssi: number}) {
+export default function NetworkStrengthIcon ({ rssi} : {rssi: number}): React.ReactNode {
 	if (rssi > -70) {
 		return <Wifi className="h-4 w-4 text-gray-700" />
 	} else if (rssi > -80) {

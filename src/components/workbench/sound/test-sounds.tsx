@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { Dispatch, SetStateAction } from "react"
@@ -22,7 +22,7 @@ interface Props {
 	setIsDropdownOpen: Dispatch<SetStateAction<boolean>>
 }
 
-function TestSounds(props: Props) {
+function TestSounds(props: Props): React.ReactNode {
 	const { isDropdownOpen, setIsDropdownOpen } = props
 	const testSounds: TuneToPlay[] = ["Chime", "Chirp", "Drop", "Pop"]
 
@@ -62,10 +62,10 @@ function TestSounds(props: Props) {
 							className="rounded-xl bg-standardBackground border-swan shadow-none"
 							align="end"
 						>
-							{testSounds.map((sound) => (
+							{testSounds.map((sound): React.ReactNode => (
 								<DropdownMenuItem
 									key={sound}
-									onClick={() => {
+									onClick={(): void => {
 										workbenchClass.setSelectedSound(sound)
 										setIsDropdownOpen(false)
 									}}

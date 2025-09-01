@@ -9,6 +9,6 @@ export const metadata = createMetadata({
 	keywords: ["username creation", "account setup", "personalized learning"]
 })
 
-export default function RegisterGoogle() {
+export default function RegisterGoogle(): React.ReactNode {
 	return <RegisterGoogleInfoComponent />
 }

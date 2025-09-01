@@ -34,7 +34,7 @@ export function applyTextToBuffer(text: string, setPixelInBuffer: (x: number, y:
 	const y = 28 // Starting Y position
 	for (const char of text.toUpperCase()) {
 		const fontData = FONT_DATA[char]
-		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 		if (!fontData) continue
 		for (let col = 0; col < 5; col++) {
 			for (let row = 0; row < 8; row++) {

@@ -18,8 +18,8 @@ import SingleCareerQuestMessage from "../../chat/single-challenge-message"
 import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
 
-const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) => {
-	const onClick = () => {
+const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode => {
+	const onClick = (): void => {
 		careerQuestClass.handleGoToNextMainSection(careerUUID)
 	}
 
@@ -51,7 +51,7 @@ const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }) 
 })
 
 // eslint-disable-next-line max-lines-per-function
-function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeData }) {
+function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeData }): React.ReactNode {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -65,13 +65,13 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
-	useEffect(() => {
+	useEffect((): void => {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
 
 	const hasAnyMessages = messages.length > 0
 
-	const handleSendMessage = useCallback(async () => {
+	const handleSendMessage = useCallback(async (): Promise<void> => {
 		if (!inputValue.trim() || isStreaming) return
 
 		setInputValue("")
@@ -80,7 +80,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 		careerQuestClass.addChallengeUserMessage(challengeData, inputValue)
 
 		// Keep focus on input after sending
-		setTimeout(() => {
+		setTimeout((): void => {
 			inputRef.current?.focus()
 		}, 0)
 
@@ -96,26 +96,26 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 		return streamId
 	}, [challengeData])
 
-	const onStopStreaming = useCallback(async () => {
+	const onStopStreaming = useCallback(async (): Promise<void> => {
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
-	const handleDeleteClick = useCallback(() => {
+	const handleDeleteClick = useCallback((): void => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(true)
 	}, [hasAnyMessages, isStreaming])
 
-	const handleCancelDelete = useCallback(() => {
+	const handleCancelDelete = useCallback((): void => {
 		setShowDeleteConfirmation(false)
 	}, [])
 
-	const handleConfirmDelete = useCallback(async () => {
+	const handleConfirmDelete = useCallback(async (): Promise<void> => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
 		await deleteChallengeChat(challengeData)
 	}, [challengeData, hasAnyMessages, isStreaming])
 
-	const handleHintClick = useCallback(async () => {
+	const handleHintClick = useCallback(async (): Promise<void> => {
 		if (isStreaming) return
 		await requestCareerQuestHint(challengeData)
 	}, [challengeData, isStreaming])
@@ -160,7 +160,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 							isStreaming={isStreaming}
 							messageLength={messages.length}
 						>
-							{messages.map((message) => (
+							{messages.map((message): React.ReactNode => (
 								<SingleCareerQuestMessage
 									key={message.id}
 									message={message}

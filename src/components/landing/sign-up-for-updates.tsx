@@ -11,10 +11,10 @@ import subscribeForUpdates from "../../utils/subscribe-for-updates"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
 
-export default function SignUpForUpdates() {
+export default function SignUpForUpdates(): React.ReactNode {
 	const [isLoading, setIsLoading] = useState(false)
 
-	const onSubmit = useCallback(async (values: EmailUpdatesRequest) => {
+	const onSubmit = useCallback(async (values: EmailUpdatesRequest): Promise<void> => {
 		if (isLoading) return
 		await subscribeForUpdates(values, setIsLoading )
 	}, [isLoading])
@@ -27,7 +27,7 @@ export default function SignUpForUpdates() {
 	})
 
 	const formValues = form.watch()
-	const isEmailValidMemo = useMemo(() => {
+	const isEmailValidMemo = useMemo((): boolean => {
 		return isEmailValid(formValues.email) === "Email"
 	}, [formValues.email])
 
@@ -48,7 +48,7 @@ export default function SignUpForUpdates() {
 							<FormField
 								control={form.control}
 								name="email"
-								render={({ field }) => (
+								render={({ field }): React.ReactElement => (
 									<FormItem className="w-full md:w-auto">
 										<FormControl>
 											<Input

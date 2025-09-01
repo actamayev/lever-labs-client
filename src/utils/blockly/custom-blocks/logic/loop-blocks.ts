@@ -42,7 +42,7 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 
 	[LOOP_BLOCK_TYPES.REPEAT]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("repeat")
 
@@ -71,7 +71,7 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	},
 	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Delay")
 					.appendField(
@@ -93,7 +93,7 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	},
 	[LOOP_BLOCK_TYPES.ESP32_LOOP]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Repeat forever")
 				this.appendStatementInput("LOOP_BODY")

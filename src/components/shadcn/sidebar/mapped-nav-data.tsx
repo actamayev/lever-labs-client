@@ -40,19 +40,19 @@ const baseNavData: SidebarNavData[] = [
 	},
 ]
 
-function MappedNavData() {
+function MappedNavData(): React.ReactNode {
 	const pathname = usePathname()
 
-	const isActive = useCallback((itemUrl: PageNames) => {
+	const isActive = useCallback((itemUrl: PageNames): boolean => {
 		return pathname.startsWith(itemUrl)
 	}, [pathname])
 
-	const { hasActiveClasses, hasPendingInvites } = useMemo(() => {
+	const { hasActiveClasses, hasPendingInvites } = useMemo((): { hasActiveClasses: boolean, hasPendingInvites: boolean } => {
 		const activeClasses = studentClass.classroomData.filter(
-			classroom => classroom.invitationStatus === "PENDING" || classroom.invitationStatus === "ACCEPTED"
+			(classroom): boolean => classroom.invitationStatus === "PENDING" || classroom.invitationStatus === "ACCEPTED"
 		)
 		const pendingInvites = studentClass.classroomData.some(
-			classroom => classroom.invitationStatus === "PENDING"
+			(classroom): boolean => classroom.invitationStatus === "PENDING"
 		)
 
 		return {
@@ -96,7 +96,7 @@ function MappedNavData() {
 		<SidebarGroup>
 			<SidebarGroupContent className="px-1.5">
 				<SidebarMenu>
-					{navData.map((item) => {
+					{navData.map((item): React.ReactNode => {
 						const active = isActive(item.url)
 						const isWhiteboardItem = item.url === "/whiteboard"
 

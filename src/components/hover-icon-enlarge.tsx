@@ -30,7 +30,7 @@ export function HoverIconEnlarge({
 	subtitle,
 	orbitingIcons,
 	className,
-}: HoverIconEnlargeProps) {
+}: HoverIconEnlargeProps): React.ReactNode {
 
 	return (
 		<div

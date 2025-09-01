@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { observer } from "mobx-react"
@@ -13,13 +13,13 @@ interface AssistantMessageMarkdownProps {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: AssistantMessageMarkdownProps) {
+function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: AssistantMessageMarkdownProps): React.ReactNode {
 	return (
 		<div className="text-sm prose prose-sm max-w-none dark:prose-invert font-medium">
 			<ReactMarkdown
 				components={{
 					// Code blocks with syntax highlighting
-					code({ node: _node, className, children, ...props }) {
+					code({ node: _node, className, children, ...props }): React.ReactNode {
 						const match = /language-(\w+)/.exec(className || "")
 						const isInline = !match
 						const shouldUseDarkTheme = forceDarkMode || personalInfoClass.defaultSiteTheme === "dark"
@@ -36,14 +36,14 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 								code={String(children).replace(/\n$/, "")}
 								language={language}
 							>
-								{({ className: _className, style, tokens, getLineProps, getTokenProps }) => (
+								{({ className: _className, style, tokens, getLineProps, getTokenProps }): React.ReactElement => (
 									<pre
 										className={cn(className, "rounded-md !mt-2 !mb-2 p-4 overflow-x-auto")}
 										style={style}
 									>
-										{tokens.map((line, i) => (
+										{tokens.map((line, i): React.ReactNode => (
 											<div key={i} {...getLineProps({ line })}>
-												{line.map((token, key) => (
+												{line.map((token, key): React.ReactNode => (
 													<span key={key} {...getTokenProps({ token })} />
 												))}
 											</div>
@@ -66,39 +66,39 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 						)
 					},
 					// ... rest of your components (same as before)
-					p: ({ children }) => (
+					p: ({ children }): React.ReactNode => (
 						<p className="mb-2 last:mb-0 leading-relaxed">{children}</p>
 					),
-					strong: ({ children }) => (
+					strong: ({ children }): React.ReactNode => (
 						<strong className="font-semibold">{children}</strong>
 					),
-					em: ({ children }) => (
+					em: ({ children }): React.ReactNode => (
 						<em className="italic">{children}</em>
 					),
-					ul: ({ children }) => (
+					ul: ({ children }): React.ReactNode => (
 						<ul className="list-disc list-inside mb-2 space-y-1 pl-2">{children}</ul>
 					),
-					ol: ({ children }) => (
+					ol: ({ children }): React.ReactNode => (
 						<ol className="list-decimal list-inside mb-2 space-y-1 pl-2">{children}</ol>
 					),
-					li: ({ children }) => (
+					li: ({ children }): React.ReactNode => (
 						<li className="leading-relaxed">{children}</li>
 					),
-					h1: ({ children }) => (
+					h1: ({ children }): React.ReactNode => (
 						<h1 className="text-lg font-bold mb-2 mt-3 first:mt-0">{children}</h1>
 					),
-					h2: ({ children }) => (
+					h2: ({ children }): React.ReactNode => (
 						<h2 className="text-base font-bold mb-2 mt-3 first:mt-0">{children}</h2>
 					),
-					h3: ({ children }) => (
+					h3: ({ children }): React.ReactNode => (
 						<h3 className="text-sm font-bold mb-2 mt-2 first:mt-0">{children}</h3>
 					),
-					blockquote: ({ children }) => (
+					blockquote: ({ children }): React.ReactNode => (
 						<blockquote className="border-l-4 border-gray-300 dark:border-gray-600 pl-3 italic mb-2">
 							{children}
 						</blockquote>
 					),
-					a: ({ children, href }) => (
+					a: ({ children, href }): React.ReactNode => (
 						<a
 							href={href}
 							className="text-blue-600 dark:text-blue-400 underline hover:no-underline"
@@ -108,7 +108,7 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 							{children}
 						</a>
 					),
-					hr: () => (
+					hr: (): React.ReactNode => (
 						<hr className="border-gray-300 dark:border-gray-600 my-3" />
 					)
 				}}

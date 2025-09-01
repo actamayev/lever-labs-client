@@ -13,21 +13,21 @@ interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
-function ClassroomPage({ classCode }: ClassroomPageProps) {
+function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 
 	// Fetch detailed classroom data on component mount
-	useEffect(() => {
+	useEffect((): void => {
 		retrieveDetailedClassroomInfo(classCode)
 	}, [classCode])
 
 	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 
-	useEffect(() => {
+	useEffect((): void => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
 	}, [classroomData?.classroomName])
 
-	const handleBackClick = () => navigate("/class-manager")
+	const handleBackClick = (): void => navigate("/class-manager")
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (

@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { useCallback } from "react"
@@ -27,22 +27,22 @@ const ANIMATIONS: Animation[] = [
 	{
 		name: "No animation",
 		description: "Slowly fades in and out",
-		icon: (color: string) => <Circle className="h-4 w-4" color={color} fill={color} />
+		icon: (color: string): React.ReactNode => <Circle className="h-4 w-4" color={color} fill={color} />
 	},
 	{
 		name: "Breathing",
 		description: "Slowly fades in and out",
-		icon: (color: string) => <CustomYoga className="h-4 w-4" color={color} fill={color} />
+		icon: (color: string): React.ReactNode => <CustomYoga className="h-4 w-4" color={color} fill={color} />
 	},
 	{
 		name: "Rainbow",
 		description: "Cycles through colors",
-		icon: () => <Rainbow className="h-4 w-4" />
+		icon: (): React.ReactNode => <Rainbow className="h-4 w-4" />
 	},
 	{
 		name: "Strobe",
 		description: "Strobe light",
-		icon: (color: string) => <Siren className="h-4 w-4" color={color} fill={color} />
+		icon: (color: string): React.ReactNode => <Siren className="h-4 w-4" color={color} fill={color} />
 	},
 	// {
 	// 	name: "Snake",
@@ -51,7 +51,7 @@ const ANIMATIONS: Animation[] = [
 	// },
 ]
 
-function LightAnimationsList() {
+function LightAnimationsList(): React.ReactNode {
 	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`
 	const optimizedLightsAnimation = useCallback(lightsAnimation, [])
 
@@ -70,7 +70,7 @@ function LightAnimationsList() {
 				>
 					<span className="flex items-center gap-2">
 						<div style={{ color: rgbColor, fill: rgbColor }}>
-							{ANIMATIONS.find(anim => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
+							{ANIMATIONS.find((anim): boolean => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
 						</div>
 						{garageClass.selectedAnimation}
 					</span>
@@ -78,10 +78,10 @@ function LightAnimationsList() {
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">
-				{ANIMATIONS.map((animation) => (
+				{ANIMATIONS.map((animation): React.ReactNode => (
 					<DropdownMenuItem
 						key={animation.name}
-						onClick={() => optimizedLightsAnimation(animation.name)}
+						onClick={(): Promise<void> => optimizedLightsAnimation(animation.name)}
 						className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
 					>
 						<div className="flex-shrink-0">

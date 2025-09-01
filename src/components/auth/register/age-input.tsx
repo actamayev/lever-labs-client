@@ -12,13 +12,13 @@ interface Props<T extends { age: number | null }> {
 
 export default function AgeInput<T extends { age: number | null }>({
 	control,
-}: Props<T>) {
+}: Props<T>): React.ReactNode {
 	// TODO: 6/9/25: Fix the placeholder text color (dark mode) to reflect Duolingo.
 	return (
 		<FormField
 			control={control}
 			name={"age" as FieldPath<T>}
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<Input
@@ -27,7 +27,7 @@ export default function AgeInput<T extends { age: number | null }>({
 							placeholder="Age"
 							{...field}
 							value={field.value?.toString() || ""}
-							onChange={(event) => {
+							onChange={(event): void => {
 								const sanitizedValue = handleTypeAge(event)
 								// Convert to number or null
 								const numericValue = sanitizedValue === "" ? null : parseInt(sanitizedValue, 10)

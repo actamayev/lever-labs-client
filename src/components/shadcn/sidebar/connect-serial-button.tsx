@@ -7,8 +7,8 @@ import { cn } from "../../../lib/shadcn/utils"
 import { CustomUsb } from "../../icons/custom-usb"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
-function ConnectSerialButton() {
-	const handleConnect = useCallback(async () => {
+function ConnectSerialButton(): React.ReactNode {
+	const handleConnect = useCallback(async (): Promise<void> => {
 		if (serialConnectionManagerClass.pipTurnedOn) return // If already connected, do nothing
 		await serialConnectionManagerClass.connectToDevice()
 	// eslint-disable-next-line react-hooks/exhaustive-deps

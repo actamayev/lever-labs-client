@@ -31,7 +31,7 @@ interface Props {
 	extraClasses?: string
 }
 
-export default function SingleComponentUsed(props: Props) {
+export default function SingleComponentUsed(props: Props): React.ReactNode {
 	const { component, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)

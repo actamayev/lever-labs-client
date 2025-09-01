@@ -8,7 +8,7 @@ import SoundWorkbench from "./sound/sound-workbench"
 import workbenchClass from "../../classes/workbench-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
-function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }) {
+function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }): React.ReactNode {
 	const pathname = usePathname()
 
 	// Check if we're on the garage page

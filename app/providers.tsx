@@ -31,13 +31,13 @@ const retrieveInfo = async (): Promise<void> => {
 	}
 }
 
-export default function Providers({ children }: { children: ReactNode }) {
+export default function Providers({ children }: { children: ReactNode }): React.ReactNode {
 	useEffectLogoutListener()
 	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
 
 	// Smart data retrieval - only if needed
-	useEffect(() => {
+	useEffect((): void => {
 		void retrieveInfo()
 	}, [])
 

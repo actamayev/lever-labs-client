@@ -9,13 +9,13 @@ import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
-export default function JoinClassroom() {
+export default function JoinClassroom(): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
 
-	const submit = useCallback(async () => {
+	const submit = useCallback(async (): Promise<void> => {
 		if (!isValidClassCode(classCode)) return
 		setError("")
 		setSuccess("")
@@ -41,7 +41,7 @@ export default function JoinClassroom() {
 				<Input
 					id="class-code"
 					value={classCode}
-					onChange={(e) => {
+					onChange={(e): void => {
 						setClassCode(e.target.value)
 						setError("")
 						setSuccess("")
@@ -81,7 +81,7 @@ export default function JoinClassroom() {
 					shadowClass={colors.shadow2}
 					disabled={!isValidClassCode(classCode)}
 				>
-						SUBMIT
+					SUBMIT
 				</TactileButton>
 			</div>
 		</>

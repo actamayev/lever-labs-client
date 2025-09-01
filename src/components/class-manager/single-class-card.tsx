@@ -12,11 +12,11 @@ interface Props {
 	handleRenameClick: (e: React.MouseEvent, classroom: BasicTeacherClassroomData) => void
 }
 
-function SingleClassCard(props: Props) {
+function SingleClassCard(props: Props): React.ReactNode {
 	const { classroom, handleRenameClick } = props
 	const navigate = useTypedNavigate()
 
-	const handleClassroomClick = () => {
+	const handleClassroomClick = (): void => {
 		navigate(`/class-manager/${classroom.classCode}`)
 	}
 
@@ -34,7 +34,7 @@ function SingleClassCard(props: Props) {
 						</CardTitle>
 					</div>
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
+						<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()}>
 							<div className="p-1 transition-none rounded hover:bg-swan">
 								<EllipsisVertical
 									className="text-wolf cursor-pointer"
@@ -44,7 +44,7 @@ function SingleClassCard(props: Props) {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent className="w-40 bg-standardBackground shadow-none">
 							<DropdownMenuItem
-								onClick={(e) => handleRenameClick(e, classroom)}
+								onClick={(e): void => handleRenameClick(e, classroom)}
 								className="cursor-pointer text-lg hover:!bg-polar"
 							>
 								<Edit className="mr-2 !size-5" strokeWidth={2.5}/>

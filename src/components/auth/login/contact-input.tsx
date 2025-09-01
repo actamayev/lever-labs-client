@@ -5,12 +5,12 @@ import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 import { LoginRequest } from "@bluedotrobots/common-ts"
 
-export default function ContactInput ({ control } : { control: Control<LoginRequest>}) {
+export default function ContactInput ({ control } : { control: Control<LoginRequest>}): React.ReactNode {
 	return (
 		<FormField
 			control={control}
 			name="contact"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<Input

@@ -10,7 +10,7 @@ export function stripBlockPositions(blocklyJson: BlocklyJson): BlocklyJson {
 	const cloned = cloneDeep(blocklyJson)
 
 	if (cloned.blocks?.blocks) {
-		cloned.blocks.blocks = cloned.blocks.blocks.map((block: { [x: string]: any; x: any; y: any }) => {
+		cloned.blocks.blocks = cloned.blocks.blocks.map((block: { [x: string]: any; x: any; y: any }): { [x: string]: any } => {
 			const { x, y, ...blockWithoutPosition } = block
 			return blockWithoutPosition
 		})

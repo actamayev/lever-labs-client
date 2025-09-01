@@ -8,7 +8,7 @@ import pipClass from "../../classes/pip-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-// eslint-disable-next-line complexity
+
 export default async function playFunSound(sound: FunSounds): Promise<void> {
 	try {
 		garageClass.setSoundPlaying(sound)

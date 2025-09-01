@@ -10,19 +10,18 @@ import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"
 
-// eslint-disable-next-line max-lines-per-function, complexity
-function ChangeNameSection() {
+function ChangeNameSection(): React.ReactNode {
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
 
 	// Name handling
-	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setName(e.target.value)
 		setIsNameChanged(e.target.value !== personalInfoClass.name)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [personalInfoClass.name])
 
-	const saveName = useCallback(async () => {
+	const saveName = useCallback(async (): Promise<void> => {
 		await editName(name)
 		setIsNameChanged(false)
 	}, [name])

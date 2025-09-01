@@ -6,8 +6,8 @@ import CustomTooltip from "./custom-tooltip"
 import { CustomUsb } from "./icons/custom-usb"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
-function EnhancedConnectUsbButton() {
-	const handleConnect = useCallback(async () => {
+function EnhancedConnectUsbButton(): React.ReactNode {
+	const handleConnect = useCallback(async (): Promise<void> => {
 		if (serialConnectionManagerClass.pipTurnedOn) return
 
 		// First try auto-reconnect
@@ -19,7 +19,7 @@ function EnhancedConnectUsbButton() {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serialConnectionManagerClass.pipTurnedOn])
 
-	const getButtonState = () => {
+	const getButtonState = (): { text: string, className: string, disabled: boolean } => {
 		if (serialConnectionManagerClass.pipTurnedOn) {
 			return {
 				text: "CONNECTED",

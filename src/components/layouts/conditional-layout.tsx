@@ -9,14 +9,14 @@ import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
 import authClass from "../../classes/auth-class"
 
-function ConditionalLayout({ children } : { children: React.ReactNode }) {
+function ConditionalLayout({ children } : { children: React.ReactNode }): React.ReactNode {
 	const pathname = usePathname()
-	const isPrivatePage = PrivatePageNames.some(path => pathname.startsWith(path))
-	const isOpenPage = OpenPages.some(path => pathname.startsWith(path))
+	const isPrivatePage = PrivatePageNames.some((path): boolean => pathname.startsWith(path))
+	const isOpenPage = OpenPages.some((path): boolean => pathname.startsWith(path))
 
 	const shouldShowInternalLayout = (
 		!isNull(personalInfoClass.username) ||
-		authClass.isLoggingOut ||      // ADD
+		authClass.isLoggingOut ||
 		authClass.isAuthenticating     // ADD
 	) && (isPrivatePage || isOpenPage)
 

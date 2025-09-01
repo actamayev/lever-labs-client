@@ -60,7 +60,7 @@ const features: Feature[] = [
 		description: (
 			<>
 				Start with drag-and-drop blocks and advance to text-based coding when you're ready.
-					Your pace, your journey.
+				Your pace, your journey.
 			</>
 		)
 	},
@@ -70,7 +70,7 @@ const features: Feature[] = [
 		description: (
 			<>
 				Watch your skills evolve with
-					progress tracking
+				progress tracking
 				that celebrates every milestone, from basic movements to advanced robotics.
 			</>
 		)
@@ -81,7 +81,7 @@ interface FeatureItemProps {
 	feature: Feature
 }
 
-function FeatureItem({ feature }: FeatureItemProps) {
+function FeatureItem({ feature }: FeatureItemProps): React.ReactNode {
 	const { icon: Icon, title, description } = feature
 
 	return (
@@ -112,18 +112,18 @@ function FeatureItem({ feature }: FeatureItemProps) {
 	)
 }
 
-export default function TheLittleThings() {
+export default function TheLittleThings(): React.ReactNode {
 	return (
 		<div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
 			{/* Title */}
 			<p className="text-center text-3xl sm:text-3xl md:text-5xl lg:text-6xl
 			font-medium text-white dark:text-eel px-4 md:px-0">
-                It's the little things that count
+				It's the little things that count
 			</p>
 
 			{/* Features Grid */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 px-4 md:px-0">
-				{features.map((feature, index) => (
+				{features.map((feature, index): React.ReactNode => (
 					<FeatureItem key={index} feature={feature} />
 				))}
 			</div>

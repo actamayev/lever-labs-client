@@ -4,19 +4,19 @@ import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 
-function PreviouslyConnectedSection() {
+function PreviouslyConnectedSection(): React.ReactNode {
 	if (isEmpty(serialMessageManagerClass.previouslyConnected)) {
 		return (
 			<div className="text-sm text-muted-foreground py-4 border border-dashed
 			border-gray-300 dark:border-gray-700 rounded-lg text-center">
-                No previously connected networks
+				No previously connected networks
 			</div>
 		)
 	}
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{serialMessageManagerClass.previouslyConnected.map((network) => (
+			{serialMessageManagerClass.previouslyConnected.map((network): React.ReactNode => (
 				<div
 					key={`previous-${network.index}`}
 					className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"

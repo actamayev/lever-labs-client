@@ -6,7 +6,7 @@ interface Props {
 	imagePosition: "left" | "right"
 }
 
-export default function LandingSectionSplit(props: Props) {
+export default function LandingSectionSplit(props: Props): React.ReactNode {
 	const { leftContent, rightContent, imagePosition } = props
 
 	// Determine which content is the image and which is the text

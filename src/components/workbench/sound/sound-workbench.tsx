@@ -16,11 +16,11 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/h
 import handleVolumeChange from "../../../utils/workbench/handle-volume-change"
 
 // eslint-disable-next-line max-lines-per-function
-function SoundWorkbench() {
+function SoundWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-	const SpeakerIconToShow = () => {
+	const SpeakerIconToShow = (): React.ReactNode => {
 		const baseClasses = "!h-11 !w-11"
 		const strokeWidth = 2.5
 		if (workbenchClass.isMuted) {
@@ -36,7 +36,7 @@ function SoundWorkbench() {
 		}
 	}
 
-	const handleKeyDown = (event: React.KeyboardEvent) => {
+	const handleKeyDown = (event: React.KeyboardEvent): void => {
 		// Prevent arrow keys from changing slider value
 		if (
 			event.key === "ArrowUp" ||
@@ -51,7 +51,7 @@ function SoundWorkbench() {
 	return (
 		<HoverCard
 			open={isOpen}
-			onOpenChange={(open) => {
+			onOpenChange={(open): void => {
 				// Don't close if dropdown is open
 				if (!open && isDropdownOpen) return
 				setIsOpen(open)
@@ -95,7 +95,7 @@ function SoundWorkbench() {
 						</div>
 						<div
 							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-							onClick={() => changeAudibleStatus(!workbenchClass.isMuted)}
+							onClick={(): Promise<void> => changeAudibleStatus(!workbenchClass.isMuted)}
 						>
 							<div className="text-sm font-medium">MUTE</div>
 							<Checkbox checked={workbenchClass.isMuted} />

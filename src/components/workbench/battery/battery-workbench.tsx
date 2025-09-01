@@ -9,12 +9,12 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
-function BatteryWorkbench() {
+function BatteryWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
 	// eslint-disable-next-line complexity
-	function GetTimeText() {
+	function GetTimeText(): React.ReactNode	{
 		if (!workbenchClass.batteryData) return "OFFLINE"
 		if (workbenchClass.batteryData.isCharging) {
 			const timeToFull = workbenchClass.batteryData.estimatedTimeToFull

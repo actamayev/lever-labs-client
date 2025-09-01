@@ -10,12 +10,12 @@ import ChallengeProgressCircle from "./challenge-progress-circle"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import careerQuestClass from "../../../classes/career-quest-class" // Add import
 
-function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }) {
+function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
 	const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
-	const handleChatToggle = () => {
+	const handleChatToggle = (): void => {
 		if (isOnChallengeSection) return
 		careerQuestClass.toggleCareerChat(careerData.careerUUID)
 	}
@@ -29,7 +29,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						<Link href="/career-quest">
 							<button
 								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={() => void stopCurrentlyRunningCode()}
+								onClick={(): Promise<void> => stopCurrentlyRunningCode()}
 							>
 								<ArrowLeft size={30} className="mr-1" />
 							</button>

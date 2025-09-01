@@ -5,11 +5,11 @@ import { useCallback, useState } from "react"
 import BackCareerCard from "./back-career-card"
 import FrontCareerCard from "./front-career-card"
 
-export default function SingleCareerCard({ careerData }: { careerData: CareerData }) {
+export default function SingleCareerCard({ careerData }: { careerData: CareerData }): React.ReactNode {
 	const [flipped, setFlipped] = useState(false)
 
-	const flipCard = useCallback(() => {
-		setFlipped(prev => !prev)
+	const flipCard = useCallback((): void => {
+		setFlipped((prev): boolean => !prev)
 	}, [])
 
 	return (

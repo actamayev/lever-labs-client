@@ -7,7 +7,7 @@ interface Props {
 	error: string
 }
 
-export default function ErrorMessage(props: Props) {
+export default function ErrorMessage(props: Props): React.ReactNode {
 	const { error } = props
 
 	return (

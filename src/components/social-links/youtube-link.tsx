@@ -2,7 +2,7 @@
 
 import { CustomYoutube } from "../icons/custom-youtube"
 
-export default function YouTubeLink() {
+export default function YouTubeLink(): React.ReactNode {
 	return (
 		<a
 			href="https://www.youtube.com/@BlueDotRobots"

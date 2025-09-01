@@ -1,24 +1,23 @@
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import { INTRODUCTION_CAREER } from "../../../src/utils/career-quest/career-quest-data"
+import { MEET_PIP } from "../../../src/utils/career-quest/career-quest-data"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 
 export const metadata = createMetadata({
-	title: "Career Quest Introduction",
-	// eslint-disable-next-line max-len
+	title: "Meet",
 	description: "Guide Pip through line-following to discover its purpose in a robotics adventure.",
-	path: "/career-quest/introduction",
+	path: "/career-quest/meet-pip",
 	keywords: [
 		"robotics adventure",
-		"coding challenges",
+		"meet pip",
 		"introduction to robotics"
 	]
 })
 
-export default function CareerQuestIntroductionPage() {
+export default function CareerQuestMeetPipPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
-			<CareerActivityTemplate careerData={INTRODUCTION_CAREER} />
+			<CareerActivityTemplate careerData={MEET_PIP} />
 		</AuthenticatedLayout>
 	)
 }

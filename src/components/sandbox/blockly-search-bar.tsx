@@ -11,7 +11,7 @@ interface BlocklySearchBarProps {
 }
 
 const BlocklySearchBar = forwardRef<HTMLInputElement, BlocklySearchBarProps>(
-	({ searchTerm, onSearchChange }, ref) => {
+	({ searchTerm, onSearchChange }, ref): React.ReactNode => {
 		return (
 			<div className="relative">
 				<div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-eel">
@@ -22,14 +22,14 @@ const BlocklySearchBar = forwardRef<HTMLInputElement, BlocklySearchBarProps>(
 					type="text"
 					placeholder="Search for blocks"
 					value={searchTerm}
-					onChange={(e) => onSearchChange(e.target.value)}
+					onChange={(e): void => onSearchChange(e.target.value)}
 					className="w-full px-4 py-2 pl-10 pr-12 rounded-t-xl border-2 border-swan rounded-b-none"
 				/>
 				{searchTerm && (
 					<Button
 						variant="ghost"
 						size="sm"
-						onClick={() => onSearchChange("")}
+						onClick={(): void => onSearchChange("")}
 						className="absolute right-1 top-1/2 transform -translate-y-1/2 size-6 p-0 hover:bg-swan"
 					>
 						<X size={16} />

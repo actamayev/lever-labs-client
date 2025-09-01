@@ -3,10 +3,10 @@
 import { observer } from "mobx-react"
 import { FunSounds } from "@bluedotrobots/common-ts"
 import SoundActionButton from "./sound-action-button"
-import useEffectGarageSounds from "../../../../hooks/garage/use-effect-garage-sounds"
+import useGarageSoundsUseEffect from "../../../../hooks/garage/use-effect-garage-sounds"
 
-function SoundsSection() {
-	useEffectGarageSounds()
+function SoundsSection(): React.ReactNode {
+	useGarageSoundsUseEffect()
 	const sounds: FunSounds[] = [
 		"Fart",
 		"Monkey",
@@ -22,7 +22,7 @@ function SoundsSection() {
 	return (
 		<div className="flex flex-row gap-8">
 			<div className="grid grid-cols-4 gap-[21px]">
-				{sounds.map((sound, index) => (
+				{sounds.map((sound, index): React.ReactNode => (
 					<div key={sound}>
 						<SoundActionButton sound={sound} index={index + 1} />
 					</div>

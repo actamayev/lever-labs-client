@@ -8,7 +8,7 @@ interface Props {
 	extraClasses?: string
 }
 
-export default function SupportSection(props: Props) {
+export default function SupportSection(props: Props): React.ReactNode {
 	const { sectionTitle, children, extraClasses = "" } = props
 
 	return (

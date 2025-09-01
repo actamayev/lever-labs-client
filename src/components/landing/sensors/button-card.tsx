@@ -4,7 +4,7 @@ import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 import ButtonSpringAnimation from "../../icon-animations/button-spring-animation"
 
-export default function ButtonCard() {
+export default function ButtonCard(): React.ReactNode {
 	return (
 		<SensorsSkeleton
 			title="2 Buttons"

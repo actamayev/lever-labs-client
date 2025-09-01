@@ -7,7 +7,7 @@ import {
 } from "@/components/shadcn/ui/sidebar"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 
-export default function SidebarLogo() {
+export default function SidebarLogo(): React.ReactNode {
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">

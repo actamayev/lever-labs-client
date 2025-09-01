@@ -9,7 +9,7 @@ interface Props {
 	extraClasses?: string
 }
 
-export default function FooterLink(props: Props) {
+export default function FooterLink(props: Props): React.ReactNode {
 	const { linkTo, linkTitle, extraClasses } = props
 
 	return (

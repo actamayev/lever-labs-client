@@ -7,7 +7,7 @@ interface ChatParentComponentProps {
 	extraClasses?: string
 }
 
-export default function ChatParentComponent({ children, extraClasses }: ChatParentComponentProps) {
+export default function ChatParentComponent({ children, extraClasses }: ChatParentComponentProps): React.ReactNode {
 	return (
 		<div
 			className={cn(

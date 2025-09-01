@@ -23,7 +23,7 @@ class SensorDataClass {
 	public mZ: number[] = []
 	public leftSideTofCounts: number[] = []
 	public rightSideTofCounts: number[] = []
-	public distanceGrid: number[][] = Array.from({ length: 8 }, () => Array(8).fill(0))
+	public distanceGrid: number[][] = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
 	public dataVersion = 0 // Add this for reactivity
 
 	constructor() {
@@ -31,7 +31,7 @@ class SensorDataClass {
 	}
 
 	public addSensorData = action((sensorData: SensorPayload): void => {
-		Object.entries(sensorData).forEach(([key, value]) => {
+		Object.entries(sensorData).forEach(([key, value]): void => {
 			if (key !== "irSensorData" && typeof value === "number") {
 				this.addGeneralSensorData(
 					key as keyof Omit<typeof sensorData, "irSensorData">,
@@ -95,7 +95,7 @@ class SensorDataClass {
 		this.mZ = []
 		this.leftSideTofCounts = []
 		this.rightSideTofCounts = []
-		this.distanceGrid = Array.from({ length: 8 }, () => Array(8).fill(0))
+		this.distanceGrid = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
 	}
 }
 

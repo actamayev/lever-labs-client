@@ -17,8 +17,7 @@ interface Props {
 	flipCard: () => void
 }
 
-// eslint-disable-next-line max-lines-per-function
-function FrontCareerCard(props: Props) {
+function FrontCareerCard(props: Props): React.ReactNode {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData
 
@@ -65,7 +64,7 @@ function FrontCareerCard(props: Props) {
 				<div style={{ height: "45%" }} className="flex justify-between items-center">
 					{/* Components Grid */}
 					<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
-						{componentsUsed.slice(0, 4).map((component) => (
+						{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
 							<SingleComponentUsed
 								key={component.componentName}
 								component={component}

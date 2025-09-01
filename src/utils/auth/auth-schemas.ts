@@ -21,7 +21,7 @@ export const registerUsernameSchema = z.object({
 	})
 		.max(120, "Please enter a valid age")
 		.nullable()
-		.refine((val) => val !== null, {
+		.refine((val): boolean => val !== null, {
 			message: "Please enter your age",
 		}),
 })
@@ -40,7 +40,7 @@ export const registerSchema = z.object({
 	})
 		.max(120, "Please enter a valid age")
 		.nullable()
-		.refine((val) => val !== null, {
+		.refine((val): boolean => val !== null, {
 			message: "Please enter your age",
 		}),
 	email: z.string()

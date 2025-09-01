@@ -10,7 +10,7 @@ interface Props {
 	outerDivStyles: string
 }
 
-export default function SensorsSkeleton(props: Props) {
+export default function SensorsSkeleton(props: Props): React.ReactNode {
 	const { title, description, icon: Icon, outerDivStyles } = props
 
 	return (

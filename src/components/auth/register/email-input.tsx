@@ -4,7 +4,7 @@ import { Control, useWatch } from "react-hook-form"
 import { Input } from "../../shadcn/ui/input"
 import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
 
-export default function EmailInput({ control }: { control: Control<RegisterFormValues> }) {
+export default function EmailInput({ control }: { control: Control<RegisterFormValues> }): React.ReactNode {
 	// Watch the age field to determine placeholder text
 	const ageValue = useWatch({
 		control,
@@ -12,7 +12,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 	})
 
 	// Determine placeholder based on age
-	const getPlaceholder = () => {
+	const getPlaceholder = (): string => {
 		if (ageValue && ageValue < 13) {
 			return "Parent's email"
 		}
@@ -23,7 +23,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 		<FormField
 			control={control}
 			name="email"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<Input

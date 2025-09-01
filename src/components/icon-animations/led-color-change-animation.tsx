@@ -3,17 +3,17 @@
 import { useCallback, useState } from "react"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 
-export default function LEDColorChangeAnimation({ iconSize }: { iconSize: number }) {
+export default function LEDColorChangeAnimation({ iconSize }: { iconSize: number }): React.ReactNode {
 	const [ledColor, setLedColor] = useState<string | null>(null)
 
-	const getRandomRGBColor = useCallback(() => {
+	const getRandomRGBColor = useCallback((): string => {
 		const r = Math.floor(Math.random() * 256)
 		const g = Math.floor(Math.random() * 256)
 		const b = Math.floor(Math.random() * 256)
 		return `rgb(${r}, ${g}, ${b})`
 	}, [])
 
-	const handleIconClick = useCallback((e: React.MouseEvent) => {
+	const handleIconClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
 		setLedColor(getRandomRGBColor())
 	}, [getRandomRGBColor])

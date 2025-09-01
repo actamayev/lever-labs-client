@@ -5,39 +5,39 @@ import { Volume1, Volume2, Volume } from "lucide-react"
 import SensorsSkeleton from "./sensors-skeleton"
 import { bentoIconSize } from "../../../utils/constants/constants"
 
-export default function SpeakerCard() {
+export default function SpeakerCard(): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 	const [volumeLevel, setVolumeLevel] = useState(2) // Start with Volume2
 	const speakerRef = useRef<HTMLDivElement>(null)
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		let interval: NodeJS.Timeout | null = null
 
 		if (isHovered) {
 			// Start cycling through volume levels
-			interval = setInterval(() => {
-				setVolumeLevel((prev) => (prev % 3) + 1) // Cycle through 1, 2, 3
+			interval = setInterval((): void => {
+				setVolumeLevel((prev): number => (prev % 3) + 1) // Cycle through 1, 2, 3
 			}, 333)
 		} else {
 			// Reset to Volume2 when not hovered
 			setVolumeLevel(2)
 
 			// Clear the interval
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+
 			if (interval) {
 				clearInterval(interval)
 			}
 		}
 
 		// Add global click/touch handler to detect interactions outside component
-		const handleGlobalClick = (e: MouseEvent | TouchEvent) => {
+		const handleGlobalClick = (e: MouseEvent | TouchEvent): void => {
 			if (speakerRef.current && !speakerRef.current.contains(e.target as Node)) {
 				setIsHovered(false)
 			}
 		}
 
 		// Add scroll handler to stop animation when scrolling
-		const handleScroll = () => {
+		const handleScroll = (): void => {
 			setIsHovered(false)
 		}
 
@@ -47,7 +47,7 @@ export default function SpeakerCard() {
 		window.addEventListener("scroll", handleScroll)
 
 		// Clean up event listeners
-		return () => {
+		return (): void => {
 			if (interval) {
 				clearInterval(interval)
 			}
@@ -57,14 +57,14 @@ export default function SpeakerCard() {
 		}
 	}, [isHovered])
 
-	const SpeakerIcon = () => {
+	const SpeakerIcon = (): React.ReactNode => {
 		return (
 			<div
 				ref={speakerRef}
 				className="relative text-questionText"
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-				onClick={() => setIsHovered(!isHovered)} // Toggle for mobile
+				onMouseEnter={(): void => setIsHovered(true)}
+				onMouseLeave={(): void => setIsHovered(false)}
+				onClick={(): void => setIsHovered(!isHovered)} // Toggle for mobile
 			>
 				{volumeLevel === 1 && (
 					<Volume1

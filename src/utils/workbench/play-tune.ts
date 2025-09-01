@@ -10,7 +10,7 @@ import workbenchClass from "../../classes/workbench-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-// eslint-disable-next-line complexity
+
 export default async function playTune(): Promise<void> {
 	try {
 		if (serialConnectionManagerClass.pipTurnedOn) {

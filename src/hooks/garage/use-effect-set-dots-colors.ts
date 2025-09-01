@@ -1,6 +1,6 @@
 "use client"
 
-/* eslint-disable max-len */
+
 import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
@@ -11,12 +11,12 @@ import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-// eslint-disable-next-line max-lines-per-function
+
 export default function useEffectSetDefaultColors(): void {
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
-		debounce(() => {
+		debounce((): void => {
 			if (isEmpty(garageClass.selectedDots)) return
 
 			const selectedColorShade = garageClass.selectedColorShade
@@ -75,7 +75,7 @@ export default function useEffectSetDefaultColors(): void {
 	)
 
 	// This use
-	useEffect(() => {
+	useEffect((): () => void => {
 		debouncedEmitLedColors()
 
 		return (): void => {
@@ -84,7 +84,7 @@ export default function useEffectSetDefaultColors(): void {
 	}, [debouncedEmitLedColors])
 
 	// This use effect updates the dot color with no delay, when the selected dots change, or color shade, or selected color change
-	useEffect(() => {
+	useEffect((): void => {
 		garageClass.updateDotColor(garageClass.selectedDots,
 			{
 				r: garageClass.selectedColorRgba.r * garageClass.selectedColorShade,

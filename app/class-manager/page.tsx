@@ -10,7 +10,7 @@ export const metadata = createMetadata({
 	keywords: ["teacher dashboard", "classroom management", "student tracking"]
 })
 
-export default function ClassManagerPage() {
+export default function ClassManagerPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
 			<ClassManager />

@@ -18,12 +18,12 @@ interface Props {
 	handleHintClick?: () => Promise<void>
 }
 
-function ChatTextArea(props: Props) {
+function ChatTextArea(props: Props): React.ReactNode {
 	const { handleSendMessage, onStopStreaming, inputRef, inputValue,
 		setInputValue, isStreaming, handleHintClick } = props
 
 	// Create the conditional logic inside the component
-	const onClickAction = useCallback(async () => {
+	const onClickAction = useCallback(async (): Promise<void> => {
 		if (isStreaming) {
 			await onStopStreaming()
 		} else {
@@ -31,7 +31,7 @@ function ChatTextArea(props: Props) {
 		}
 	}, [isStreaming, onStopStreaming, handleSendMessage])
 
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+	const handleKeyDown = (e: React.KeyboardEvent): void => {
 		if (e.key === "Enter" && !e.shiftKey) {
 			e.preventDefault()
 			handleSendMessage()
@@ -49,7 +49,7 @@ function ChatTextArea(props: Props) {
 				<Textarea
 					ref={inputRef}
 					value={inputValue}
-					onChange={(e) => setInputValue(e.target.value)}
+					onChange={(e): void => setInputValue(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="Ask about the code or concepts"
 					className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan rounded-xl"

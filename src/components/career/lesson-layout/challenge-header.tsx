@@ -13,7 +13,7 @@ interface ChallengeHeaderProps {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function ChallengeHeader({ challengeData, onReset }: ChallengeHeaderProps) {
+export default function ChallengeHeader({ challengeData, onReset }: ChallengeHeaderProps): React.ReactNode {
 	const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(true)
 
 	return (
@@ -61,7 +61,7 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 											<TactileButton
 												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-10"
 												shadowClass="shadow-beakInner-2"
-												onClick={() => setIsDescriptionExpanded(false)}
+												onClick={(): void => setIsDescriptionExpanded(false)}
 											>
 												<X className="w-4 h-4" />
 											</TactileButton>
@@ -116,7 +116,7 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 											<TactileButton
 												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
 												shadowClass="shadow-beakInner-2"
-												onClick={() => setIsDescriptionExpanded(true)}
+												onClick={(): void => setIsDescriptionExpanded(true)}
 											>
 												<ChevronDown className="w-4 h-4" />
 											</TactileButton>

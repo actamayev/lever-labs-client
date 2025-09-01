@@ -16,19 +16,19 @@ export default async function requestToConnectToPip(
 	try {
 		if (!foundPip) return
 		switch (foundPip.pipConnectionStatus) {
-		case "connected": return
-		case "connected to other user": {
-			return toastClass.negative({
-				title: "Unable to connect",
-				description: "Someone is already connected to this Pip"
-			})
-		}
-		case "offline": {
-			return toastClass.negative({
-				title: "Unable to connect",
-				description: `Please turn ${foundPip.pipName} on and connect it to the internet`
-			})
-		}
+			case "connected": return
+			case "connected to other user": {
+				return toastClass.negative({
+					title: "Unable to connect",
+					description: "Someone is already connected to this Pip"
+				})
+			}
+			case "offline": {
+				return toastClass.negative({
+					title: "Unable to connect",
+					description: `Please turn ${foundPip.pipName} on and connect it to the internet`
+				})
+			}
 		}
 		const connectToPipResponse = await blueDotApiClientClass.pipDataService.requestToConnectToPip(foundPip.pipUUID)
 

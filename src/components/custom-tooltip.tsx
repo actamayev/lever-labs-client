@@ -13,7 +13,7 @@ interface Props {
 	contentSide?: "bottom" | "top" | "right" | "left" | undefined
 }
 
-export default function CustomTooltip(props: Props) {
+export default function CustomTooltip(props: Props): React.ReactNode {
 	const { tooltipTrigger, tooltipContent, contentSide } = props
 
 	return (

@@ -5,9 +5,9 @@ import isUndefined from "lodash-es/isUndefined"
 import { Button } from "../shadcn/ui/button"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
-function AddPipButton({ getFormValues }: { getFormValues: () => IncompletePipData }) {
+function AddPipButton({ getFormValues }: { getFormValues: () => IncompletePipData }): React.ReactNode {
 	// Show add button when all conditions are met
-	const isReadyToAdd = () => {
+	const isReadyToAdd = (): boolean => {
 		const formValues = getFormValues()
 		return (
 			serialMessageManagerClass.isReadyToDisconnect &&

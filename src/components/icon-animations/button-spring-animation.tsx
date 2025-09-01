@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { CustomButton } from "../icons/custom-button"
 
-export default function ButtonSpringAnimation({ iconSize } : { iconSize: number }) {
+export default function ButtonSpringAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	return (
 		<div className="pointer-events-auto w-fit">
 			<motion.div

@@ -7,15 +7,15 @@ import { Input } from "../../shadcn/ui/input"
 import { Label } from "../../shadcn/ui/label"
 import garageClass from "../../../classes/garage-class"
 
-function RGBInput() {
+function RGBInput(): React.ReactNode {
 	// Function to enforce RGB range (0-255)
-	const enforceRGBRange = useCallback((value: string) => {
+	const enforceRGBRange = useCallback((value: string): number => {
 		const numValue = parseInt(value || "0")
 		return Math.min(Math.max(numValue, 0), 255)
 	}, [])
 
 	// Handle input event to prevent leading zeros
-	const handleInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+	const handleInput = useCallback((e: React.FormEvent<HTMLInputElement>): void => {
 		const input = e.currentTarget // use currentTarget which is properly typed
 		const value = input.value
 
@@ -34,7 +34,7 @@ function RGBInput() {
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.r * garageClass.selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e) => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
+					onChange={(e): void => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-red-300 dark:border-red-700 rounded-xl !text-xl text-center bg-red-300 dark:bg-red-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
@@ -48,7 +48,7 @@ function RGBInput() {
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.g * garageClass.selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e) => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
+					onChange={(e): void => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-green-300 dark:border-green-700 rounded-xl !text-xl text-center bg-green-300 dark:bg-green-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
@@ -62,7 +62,7 @@ function RGBInput() {
 					type="number"
 					value={Math.round(garageClass.selectedColorRgba.b * garageClass.selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e) => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
+					onChange={(e): void => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-blue-200 dark:border-blue-800 rounded-xl !text-xl text-center bg-blue-200 dark:bg-blue-800 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"

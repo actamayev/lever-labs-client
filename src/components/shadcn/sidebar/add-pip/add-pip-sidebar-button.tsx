@@ -7,7 +7,7 @@ import pipClass from "../../../../classes/pip-class"
 import CustomSidebarButton from "../custom-sidebar-button"
 import useEffectSetSelectedPipFirstPip from "../../../../hooks/pip/use-effect-set-selected-pip-first-pip"
 
-function AddPipSidebarButton() {
+function AddPipSidebarButton(): React.ReactNode {
 	useEffectSetSelectedPipFirstPip()
 
 	if (pipClass.selectedPip) return null

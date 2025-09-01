@@ -35,16 +35,16 @@ class SocketClass {
 	private setupConnectionEvents = action((): void => {
 		if (!this._socket) return
 
-		this._socket.on("connect", () => {
+		this._socket.on("connect", (): void => {
 			this.isConnected = true
 		})
 
-		this._socket.on("disconnect", (_reason: Socket.DisconnectReason) => {
+		this._socket.on("disconnect", (_reason: Socket.DisconnectReason): void => {
 			this.isConnected = false
 		})
 
 		// Handle reconnection attempts
-		this._socket.on("reconnect_attempt", (_attempt) => {
+		this._socket.on("reconnect_attempt", (_attempt): void => {
 		})
 	})
 
@@ -59,7 +59,7 @@ class SocketClass {
 
 	private setupAllListeners = action((): void => {
 		if (!this._socket) return
-		Object.entries(listenersMap).forEach(([event, handler]) => {
+		Object.entries(listenersMap).forEach(([event, handler]): void => {
 			try {
 				this.setupTypedListener(event as SocketEvents, handler as (payload: SocketEventPayloadMap[SocketEvents]) => void)
 			} catch (error) {

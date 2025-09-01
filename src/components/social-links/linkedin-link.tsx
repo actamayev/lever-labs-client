@@ -2,7 +2,7 @@
 
 import { CustomLinkedin } from "../icons/custom-linkedin"
 
-export default function LinkedinLink() {
+export default function LinkedinLink(): React.ReactNode {
 	return (
 		<a
 			href="https://www.linkedin.com/company/blue-dot-robots"

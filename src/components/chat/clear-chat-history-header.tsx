@@ -11,13 +11,8 @@ interface ClearChatHistoryHeaderProps {
 	isStreaming: boolean
 }
 
-export default function ClearChatHistoryHeader({
-	showDeleteConfirmation,
-	handleDeleteClick,
-	handleConfirmDelete,
-	handleCancelDelete,
-	isStreaming
-}: ClearChatHistoryHeaderProps) {
+export default function ClearChatHistoryHeader(props: ClearChatHistoryHeaderProps): React.ReactNode {
+	const { showDeleteConfirmation, handleDeleteClick, handleConfirmDelete, handleCancelDelete, isStreaming } = props
 	const redColors = getDuolingoColors("cardinal")
 	const blueColors = getDuolingoColors("humpback")
 

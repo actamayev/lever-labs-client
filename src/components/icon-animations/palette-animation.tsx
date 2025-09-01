@@ -4,7 +4,7 @@ import { useCallback, useState } from "react"
 import { CustomPalette } from "../icons/custom-palette"
 import { observer } from "mobx-react"
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 const COLORS = [
 	"rgb(255, 0, 0)",    // Red
 	"rgb(0, 255, 0)",    // Green
@@ -12,11 +12,11 @@ const COLORS = [
 	"default"            // Default color (will use Tailwind class)
 ]
 
-function PaletteAnimation({ iconSize } : { iconSize: number }) {
+function PaletteAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	const [colorIndex, setColorIndex] = useState(-1) // -1 for initial state
 
-	const handleClick = useCallback(() => {
-		setColorIndex((prevIndex) => (prevIndex + 1) % COLORS.length)
+	const handleClick = useCallback((): void => {
+		setColorIndex((prevIndex): number => (prevIndex + 1) % COLORS.length)
 	}, [])
 
 	// Check if we should use the default color (Tailwind class)

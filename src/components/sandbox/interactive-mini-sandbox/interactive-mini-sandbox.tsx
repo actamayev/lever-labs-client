@@ -21,7 +21,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function InteractiveMiniSandbox(props: Props) {
+function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const {
 		careerUUIDChallengeUUID,
 		onJsonChange
@@ -33,18 +33,18 @@ function InteractiveMiniSandbox(props: Props) {
 	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
 	const blocklyJson = careerQuestClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 
-	const workspaceConfiguration = useMemo(() => {
+	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false, true)
 	}, [isDarkMode])
 
-	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg) => {
+	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 		onJsonChange(newJson)
 	}, [onJsonChange])
 
 	// Additional CSS-based fix
-	useEffect(() => {
+	useEffect((): () => void => {
 		// Add CSS to prevent widget div from affecting layout
 		const style = document.createElement("style")
 		style.textContent = `
@@ -70,14 +70,14 @@ function InteractiveMiniSandbox(props: Props) {
 		`
 		document.head.appendChild(style)
 
-		return () => {
+		return (): void => {
 			if (document.head.contains(style)) {
 				document.head.removeChild(style)
 			}
 		}
 	}, [])
 
-	const toggleToolbox = useCallback(() => {
+	const toggleToolbox = useCallback((): void => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
@@ -89,15 +89,15 @@ function InteractiveMiniSandbox(props: Props) {
 			setIsToolboxVisible(newVisibility)
 		}
 
-		setTimeout(() => {
+		setTimeout((): void => {
 			Blockly.svgResize(workspace)
 		}, 100)
 	}, [isToolboxVisible])
 
-	useEffect(() => {
-		if (!containerRef.current) return
+	useEffect((): () => void => {
+		if (!containerRef.current) return (): void => {}
 
-		const resizeObserver = new ResizeObserver(() => {
+		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
 			}
@@ -105,18 +105,18 @@ function InteractiveMiniSandbox(props: Props) {
 
 		resizeObserver.observe(containerRef.current)
 
-		return () => {
+		return (): void => {
 			resizeObserver.disconnect()
 		}
 	}, [])
 
-	useEffect(() => {
+	useEffect((): void => {
 		if (workspaceRef.current) {
 			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
 		}
 	}, [isDarkMode])
 
-	useEffect(() => initializeBlocks(), [])
+	useEffect((): void => initializeBlocks(), [])
 
 	return (
 		<div

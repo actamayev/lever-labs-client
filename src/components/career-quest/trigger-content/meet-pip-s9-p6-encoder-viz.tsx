@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
-function IntroductionS9P6EncoderViz() {
+function MeetPipS9P6EncoderViz(): React.ReactNode {
 	const leftWheelRef = useRef<HTMLCanvasElement>(null)
 	const rightWheelRef = useRef<HTMLCanvasElement>(null)
 	const leftAnimationRef = useRef<number>()
@@ -20,7 +20,7 @@ function IntroductionS9P6EncoderViz() {
 	const wheelRadius = 50
 
 	// Animation function for left wheel
-	const animateLeftWheel = () => {
+	const animateLeftWheel = (): void => {
 		const canvas = leftWheelRef.current
 		if (!canvas) return
 
@@ -35,7 +35,7 @@ function IntroductionS9P6EncoderViz() {
 		const degreesPerFrame = (latestRPM * 360) / (60 * 60) // RPM * 360° / (60fps * 60s)
 
 		// Update rotation
-		setLeftRotation(prev => prev + degreesPerFrame)
+		setLeftRotation((prev): number => prev + degreesPerFrame)
 
 		// Clear canvas
 		ctx.clearRect(0, 0, wheelSize, wheelSize)
@@ -85,7 +85,7 @@ function IntroductionS9P6EncoderViz() {
 	}
 
 	// Animation function for right wheel
-	const animateRightWheel = () => {
+	const animateRightWheel = (): void => {
 		const canvas = rightWheelRef.current
 		if (!canvas) return
 
@@ -99,7 +99,7 @@ function IntroductionS9P6EncoderViz() {
 		const degreesPerFrame = (latestRPM * 360) / (60 * 60)
 
 		// Update rotation
-		setRightRotation(prev => prev + degreesPerFrame)
+		setRightRotation((prev): number => prev + degreesPerFrame)
 
 		// Clear canvas
 		ctx.clearRect(0, 0, wheelSize, wheelSize)
@@ -148,12 +148,12 @@ function IntroductionS9P6EncoderViz() {
 		rightAnimationRef.current = requestAnimationFrame(animateRightWheel)
 	}
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		// Start animations
 		animateLeftWheel()
 		animateRightWheel()
 
-		return () => {
+		return (): void => {
 			// Cleanup animations
 			if (leftAnimationRef.current) {
 				cancelAnimationFrame(leftAnimationRef.current)
@@ -181,17 +181,17 @@ function IntroductionS9P6EncoderViz() {
 							ref={leftWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="border-2 border-gray-300 rounded-full bg-gray-50"
+							className="border-2 border-swan rounded-full bg-polar"
 						/>
 
 						{/* Speed indicator */}
 						<div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-red-100 px-3 py-1 rounded-full">
-							<span className="text-sm font-semibold text-red-600">
+							<span className="text-sm font-semibold text-cardinal">
 								{latestLeftRPM.toFixed(1)} RPM
 							</span>
 						</div>
 					</div>
-					<div className="mt-12 text-sm font-medium text-gray-600">Left Wheel</div>
+					<div className="mt-12 text-sm font-medium text-eel">Left Wheel</div>
 				</div>
 
 				{/* Right Wheel */}
@@ -201,22 +201,22 @@ function IntroductionS9P6EncoderViz() {
 							ref={rightWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="border-2 border-gray-300 rounded-full bg-gray-50"
+							className="border-2 border-swan rounded-full bg-polar"
 						/>
 
 						{/* Speed indicator */}
 						<div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-green-100 px-3 py-1 rounded-full">
-							<span className="text-sm font-semibold text-green-600">
+							<span className="text-sm font-semibold text-chargingGreen">
 								{latestRightRPM.toFixed(1)} RPM
 							</span>
 						</div>
 					</div>
-					<div className="mt-12 text-sm font-medium text-gray-600">Right Wheel</div>
+					<div className="mt-12 text-sm font-medium text-eel">Right Wheel</div>
 				</div>
 			</div>
 
 			{/* Instructions */}
-			<div className="text-center text-sm text-gray-500 mt-8">
+			<div className="text-center text-sm text-wolf mt-8">
 				<div>Wheels spin at actual RPM speed from encoder data</div>
 				<div>Red dot shows rotation direction</div>
 			</div>
@@ -224,4 +224,4 @@ function IntroductionS9P6EncoderViz() {
 	)
 }
 
-export default observer(IntroductionS9P6EncoderViz)
+export default observer(MeetPipS9P6EncoderViz)

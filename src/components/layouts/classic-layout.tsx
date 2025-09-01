@@ -9,7 +9,7 @@ interface Props {
 	children: React.ReactNode
 }
 
-export default function ClassicLayout(props: Props) {
+export default function ClassicLayout(props: Props): React.ReactNode {
 	const { extraClasses = "px-14", children } = props
 
 	return (

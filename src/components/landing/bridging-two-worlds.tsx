@@ -7,7 +7,7 @@ import { landingBulletTextParagraph, landingParagraph } from "../../utils/text-s
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
+function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }): React.ReactNode {
 	return (
 		<div className="flex-shrink-0">
 			<div className="bg-green-500 dark:bg-green-700 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-white">
@@ -17,7 +17,7 @@ function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }) {
 	)
 }
 
-export default function BridgingTwoWorlds() {
+export default function BridgingTwoWorlds(): React.ReactNode {
 	return (
 		<LandingSectionSplit
 			imagePosition="right"

@@ -16,12 +16,12 @@ import {
 } from "lucide-react"
 import { CareerUUID } from "@bluedotrobots/common-ts"
 
-// Introduction data
-export const introductionData: CareerData = {
+// Meet Pip data
+export const meetPipData: CareerData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
-	careerName: "Introduction to Robotics",
+	careerName: "Meet Pip",
 	careerDescription: "Start your robotics journey! Learn the basics of programming, sensors, and robotics concepts. In this introductory section, you'll get familiar with the fundamental building blocks that power all robotics challenges.",
-	careerUrl: "/career-quest/introduction",
+	careerUrl: "/career-quest/meet-pip",
 	careerIcon: Bot,
 	backgroundColor: "humpback",
 	expectedCompletionTime: "1 HOUR",
@@ -39,11 +39,7 @@ export const introductionData: CareerData = {
 			componentDifficulty: 1,
 		}
 	],
-	codingConcepts: [
-		"Loops",
-		"Conditional Statements",
-		"Boolean Logic",
-	]
+	codingConcepts: [ ]
 }
 
 // Career data

@@ -9,46 +9,46 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 export default function garageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
-	} {
+} {
 	const activateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
-		case "headlights":
-			garageClass.setAreHeadlightsOn(true)
+			case "headlights":
+				garageClass.setAreHeadlightsOn(true)
 
-			if (serialConnectionManagerClass.pipTurnedOn) {
-				const buffer = MessageBuilder.createHeadlightMessage(true)
-				await serialConnectionManagerClass.sendBinaryMessage(buffer)
-				return
-			}
+				if (serialConnectionManagerClass.pipTurnedOn) {
+					const buffer = MessageBuilder.createHeadlightMessage(true)
+					await serialConnectionManagerClass.sendBinaryMessage(buffer)
+					return
+				}
 
-			if (
-				!pipClass.selectedPip ||
+				if (
+					!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
-			) return
-			socketClass.emitToServer("headlight-update", {
-				pipUUID: pipClass.selectedPip.pipUUID,
-				areHeadlightsOn: true
-			})
-			return
-
-		case "horn":
-			garageClass.setIsHornPressed(true)
-
-			if (serialConnectionManagerClass.pipTurnedOn) {
-				const buffer = MessageBuilder.createHornSoundMessage(true)
-				await serialConnectionManagerClass.sendBinaryMessage(buffer)
+				) return
+				socketClass.emitToServer("headlight-update", {
+					pipUUID: pipClass.selectedPip.pipUUID,
+					areHeadlightsOn: true
+				})
 				return
-			}
 
-			if (
-				!pipClass.selectedPip ||
+			case "horn":
+				garageClass.setIsHornPressed(true)
+
+				if (serialConnectionManagerClass.pipTurnedOn) {
+					const buffer = MessageBuilder.createHornSoundMessage(true)
+					await serialConnectionManagerClass.sendBinaryMessage(buffer)
+					return
+				}
+
+				if (
+					!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
-			) return
-			socketClass.emitToServer("horn-sound-update", {
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: true
-			})
-			return
+				) return
+				socketClass.emitToServer("horn-sound-update", {
+					pipUUID: pipClass.selectedPip.pipUUID,
+					hornStatus: true
+				})
+				return
 		}
 	}
 
@@ -57,42 +57,42 @@ export default function garageActions(): {
    */
 	const deactivateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
-		case "headlights":
-			garageClass.setAreHeadlightsOn(false)
+			case "headlights":
+				garageClass.setAreHeadlightsOn(false)
 
-			if (serialConnectionManagerClass.pipTurnedOn) {
-				const buffer = MessageBuilder.createHeadlightMessage(false)
-				await serialConnectionManagerClass.sendBinaryMessage(buffer)
-				return
-			}
+				if (serialConnectionManagerClass.pipTurnedOn) {
+					const buffer = MessageBuilder.createHeadlightMessage(false)
+					await serialConnectionManagerClass.sendBinaryMessage(buffer)
+					return
+				}
 
-			if (
-				!pipClass.selectedPip ||
+				if (
+					!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
-			) return
-			socketClass.emitToServer("headlight-update", {
-				pipUUID: pipClass.selectedPip.pipUUID,
-				areHeadlightsOn: false
-			})
-			return
-
-		case "horn":
-			garageClass.setIsHornPressed(false)
-
-			if (serialConnectionManagerClass.pipTurnedOn) {
-				const buffer = MessageBuilder.createHornSoundMessage(false)
-				await serialConnectionManagerClass.sendBinaryMessage(buffer)
+				) return
+				socketClass.emitToServer("headlight-update", {
+					pipUUID: pipClass.selectedPip.pipUUID,
+					areHeadlightsOn: false
+				})
 				return
-			}
-			if (
-				!pipClass.selectedPip ||
+
+			case "horn":
+				garageClass.setIsHornPressed(false)
+
+				if (serialConnectionManagerClass.pipTurnedOn) {
+					const buffer = MessageBuilder.createHornSoundMessage(false)
+					await serialConnectionManagerClass.sendBinaryMessage(buffer)
+					return
+				}
+				if (
+					!pipClass.selectedPip ||
 				pipClass.selectedPip.pipConnectionStatus === "offline"
-			) return
-			socketClass.emitToServer("horn-sound-update", {
-				pipUUID: pipClass.selectedPip.pipUUID,
-				hornStatus: false
-			})
-			return
+				) return
+				socketClass.emitToServer("horn-sound-update", {
+					pipUUID: pipClass.selectedPip.pipUUID,
+					hornStatus: false
+				})
+				return
 		}
 	}
 
