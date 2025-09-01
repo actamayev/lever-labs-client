@@ -85,6 +85,7 @@ function IntroductionS6P4MzViz() {
 		const ctx = canvas.getContext("2d")
 		if (!ctx) return
 
+		// eslint-disable-next-line complexity
 		const animate = () => {
 			// Clear canvas
 			ctx.clearRect(0, 0, canvasSize, canvasSize)
@@ -98,14 +99,14 @@ function IntroductionS6P4MzViz() {
 				for (let row = 0; row < gridSize; row++) {
 					for (let col = 0; col < gridSize; col++) {
 						const distance = sensorDataClass.distanceGrid[row][col] || 0
-						const color = getColorForDistance(distance)
+						const isInvalid = distance === -1
 
 						// Calculate cell position
 						const x = padding + col * cellSize
 						const y = padding + row * cellSize
 
 						// Draw cell
-						ctx.fillStyle = color
+						ctx.fillStyle = isInvalid ? "#000000" : getColorForDistance(distance)
 						ctx.fillRect(x, y, cellSize, cellSize)
 
 						// Draw cell border
@@ -121,16 +122,19 @@ function IntroductionS6P4MzViz() {
 							ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2)
 						}
 
-						// Draw distance value (small text)
-						ctx.fillStyle = distance < maxDistance / 2 ? "#FFFFFF" : "#000000"
-						ctx.font = "10px Arial"
-						ctx.textAlign = "center"
-						ctx.textBaseline = "middle"
-						ctx.fillText(
-							`${distance}`,
-							x + cellSize / 2,
-							y + cellSize / 2
-						)
+						// Draw distance value (small text) - skip for invalid readings
+						// eslint-disable-next-line max-depth
+						if (!isInvalid) {
+							ctx.fillStyle = distance < maxDistance / 2 ? "#FFFFFF" : "#000000"
+							ctx.font = "10px Arial"
+							ctx.textAlign = "center"
+							ctx.textBaseline = "middle"
+							ctx.fillText(
+								`${distance}`,
+								x + cellSize / 2,
+								y + cellSize / 2
+							)
+						}
 					}
 				}
 			} else {
