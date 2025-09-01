@@ -1709,11 +1709,6 @@ class CareerQuestClass {
 		career.careerChatData.currentStreamId = null
 	})
 
-	public logout(): void {
-		this.careers.clear()
-		this.isDoneInitializing = false
-	}
-
 	// NEW: Check if user can advance to next text child
 	public canAdvanceToNextTextChild(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
@@ -1815,6 +1810,11 @@ class CareerQuestClass {
 
 	private sleep(ms: number): Promise<void> {
 		return new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, ms))
+	}
+
+	public logout(): void {
+		this.careers.clear()
+		this.isDoneInitializing = false
 	}
 }
 
