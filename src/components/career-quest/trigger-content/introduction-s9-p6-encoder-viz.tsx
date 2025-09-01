@@ -220,12 +220,6 @@ function IntroductionS9P6EncoderViz() {
 				<div>Wheels spin at actual RPM speed from encoder data</div>
 				<div>Red dot shows rotation direction</div>
 			</div>
-
-			{/* Data Summary */}
-			<div className="text-center text-sm text-gray-600">
-				<div>Data Points: {Math.max(sensorDataClass.leftWheelRPM.length, sensorDataClass.rightWheelRPM.length)}</div>
-				<div>Real-time wheel speed animation</div>
-			</div>
 		</div>
 	)
 }

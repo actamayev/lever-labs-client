@@ -59,7 +59,10 @@ function IntroductionS6P6TofsViz() {
 					</CardHeader>
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
-							<BarChart data={leftTofData} margin={chartConfig.margin}>
+							<BarChart
+								data={leftTofData}
+								margin={chartConfig.margin}
+							>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-gray-200" />
 								<XAxis
 									dataKey="sensor"
@@ -79,6 +82,7 @@ function IntroductionS6P6TofsViz() {
 									dataKey="count"
 									fill={chartConfig.fill}
 									radius={[4, 4, 0, 0]}
+									animationDuration={0} // faster animation
 								/>
 							</BarChart>
 						</ResponsiveContainer>
@@ -112,6 +116,7 @@ function IntroductionS6P6TofsViz() {
 									dataKey="count"
 									fill={chartConfig.fill}
 									radius={[4, 4, 0, 0]}
+									animationDuration={0} // faster animation
 								/>
 							</BarChart>
 						</ResponsiveContainer>

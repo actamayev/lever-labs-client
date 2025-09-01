@@ -62,11 +62,10 @@ function IntroductionS6P4MzViz() {
 	const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
 		const cell = getCellFromMouse(event.clientX, event.clientY)
 		if (cell) {
-			const latestData = sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]
+			const rowData = sensorDataClass.distanceGrid[cell.row]
 			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-			if (latestData && latestData.length === 64) {
-				const index = cell.row * gridSize + cell.col
-				const value = latestData[index] || 0
+			if (rowData && rowData.length === 8) {
+				const value = rowData[cell.col] || 0
 				setHoveredCell({ ...cell, value })
 			}
 		} else {
@@ -90,16 +89,15 @@ function IntroductionS6P4MzViz() {
 			// Clear canvas
 			ctx.clearRect(0, 0, canvasSize, canvasSize)
 
-			// Get latest distance grid data
-			const latestData = sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]
+			// Check if we have valid grid data
+			const hasValidData = sensorDataClass.distanceGrid.length === 8 &&
+				sensorDataClass.distanceGrid.every(row => row.length === 8)
 
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-			if (latestData && latestData.length === 64) {
+			if (hasValidData) {
 				// Draw grid cells
 				for (let row = 0; row < gridSize; row++) {
 					for (let col = 0; col < gridSize; col++) {
-						const index = row * gridSize + col
-						const distance = latestData[index] || 0
+						const distance = sensorDataClass.distanceGrid[row][col] || 0
 						const color = getColorForDistance(distance)
 
 						// Calculate cell position
@@ -199,15 +197,6 @@ function IntroductionS6P4MzViz() {
 						<span className="text-sm">Far ({maxDistance}mm)</span>
 					</div>
 				</div>
-			</div>
-
-			{/* Data Summary */}
-			<div className="text-center text-sm text-gray-600">
-				<div>Latest Data Points:
-					{sensorDataClass.distanceGrid.length > 0 ?
-						// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-						sensorDataClass.distanceGrid[sensorDataClass.distanceGrid.length - 1]?.length || 0 : 0}/64</div>
-				<div>Data History: {sensorDataClass.distanceGrid.length} samples</div>
 			</div>
 		</div>
 	)

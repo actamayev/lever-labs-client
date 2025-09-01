@@ -85,18 +85,6 @@ function IntroductionS8P3ColorViz() {
 					<div className="text-sm font-medium text-macaw-3">Blue: {latestBlue}</div>
 				</div>
 			</div>
-
-			{/* Data Summary */}
-			<div className="text-center text-sm text-gray-600">
-				<div>
-					Data Points: {Math.max(
-						sensorDataClass.redValue.length,
-						sensorDataClass.greenValue.length,
-						sensorDataClass.blueValue.length
-					)}
-				</div>
-				<div>Real-time color detection</div>
-			</div>
 		</div>
 	)
 }
