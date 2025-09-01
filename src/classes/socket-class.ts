@@ -52,8 +52,9 @@ class SocketClass {
 		event: E,
 		handler: (payload: SocketEventPayloadMap[E]) => void
 	): void {
+		if (!this._socket) return
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		this._socket?.on(event, handler as any)
+		this._socket.on(event, handler as any)
 	}
 
 	private setupAllListeners = action((): void => {

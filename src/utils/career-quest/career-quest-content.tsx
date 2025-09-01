@@ -10,7 +10,7 @@ import personalInfoClass from "../../classes/personal-info-class"
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
+const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
 	// Introduction career content
 	"introduction-1-1": () => (
 		<div>

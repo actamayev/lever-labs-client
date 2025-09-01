@@ -17,7 +17,7 @@ import IntroductionS8P3ColorViz from "../../components/career-quest/trigger-cont
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
+const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": () => <IntroductionS2P3ColorPicker />,
 	"s2-p4-light-show": () => <IntroductionS2P4LightShow />,
