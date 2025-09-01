@@ -193,11 +193,11 @@ function IntroductionS6P4MzViz() {
 			<div className="flex justify-center">
 				<div className="flex items-center space-x-4">
 					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-red-500 rounded"></div>
+						<div className="w-4 h-4 bg-cardinal rounded"></div>
 						<span className="text-sm">Close ({minDistance}mm)</span>
 					</div>
 					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-blue-500 rounded"></div>
+						<div className="w-4 h-4 bg-macaw rounded"></div>
 						<span className="text-sm">Far ({maxDistance}mm)</span>
 					</div>
 				</div>
