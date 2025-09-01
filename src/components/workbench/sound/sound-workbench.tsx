@@ -95,7 +95,7 @@ function SoundWorkbench(): React.ReactNode {
 						</div>
 						<div
 							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-							onClick={() => changeAudibleStatus(!workbenchClass.isMuted)}
+							onClick={(): Promise<void> => changeAudibleStatus(!workbenchClass.isMuted)}
 						>
 							<div className="text-sm font-medium">MUTE</div>
 							<Checkbox checked={workbenchClass.isMuted} />

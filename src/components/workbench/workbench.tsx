@@ -15,7 +15,7 @@ function Workbench(): React.ReactNode {
 	// Check if we're on the garage page
 	const isGaragePage = pathname === "/garage" || pathname.startsWith("/garage/")
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		const updateDimensions = (): void => {
 			if (containerRef.current) {
 				workbenchClass.setFixedWidth((containerRef.current.offsetWidth))

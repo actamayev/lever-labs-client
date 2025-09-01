@@ -11,13 +11,12 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import SingleWhiteboardCard from "./single-whiteboard-card"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
-
-function WhiteboardPage() {
+function WhiteboardPage(): React.ReactNode {
 	const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
 
 	const colors = getDuolingoColors("humpback")
 
-	const handleJoinClick = useCallback(() => {
+	const handleJoinClick = useCallback((): void => {
 		setIsJoinDialogOpen(true)
 	}, [])
 
@@ -52,7 +51,7 @@ function WhiteboardPage() {
 			) : (
 				<>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{studentClass.classroomData.map((classroom) => (
+						{studentClass.classroomData.map((classroom): React.ReactNode => (
 							<SingleWhiteboardCard
 								key={classroom.classCode}
 								classroom={classroom}

@@ -36,7 +36,7 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 								code={String(children).replace(/\n$/, "")}
 								language={language}
 							>
-								{({ className: _className, style, tokens, getLineProps, getTokenProps }) => (
+								{({ className: _className, style, tokens, getLineProps, getTokenProps }): React.ReactElement => (
 									<pre
 										className={cn(className, "rounded-md !mt-2 !mb-2 p-4 overflow-x-auto")}
 										style={style}

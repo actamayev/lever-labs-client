@@ -16,7 +16,7 @@ export default function useEffectSetDefaultColors(): void {
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
-		debounce(() => {
+		debounce((): void => {
 			if (isEmpty(garageClass.selectedDots)) return
 
 			const selectedColorShade = garageClass.selectedColorShade

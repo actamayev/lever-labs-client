@@ -30,6 +30,10 @@ const eslintConfig = [
 			"add-use-client.js",
 			// Ignore ESLint config file itself
 			"eslint.config.mjs",
+			// Add these to fix the parsing errors
+			"next.config.js",
+			"postcss.config.js",
+			"public/keepalive-worker.js",
 		],
 	},
 

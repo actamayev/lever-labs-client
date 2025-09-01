@@ -13,9 +13,8 @@ import ContactItemInCard from "../components/contact/contact-item-in-card"
 import SupportSectionContainer from "../components/support/support-section-container"
 
 export default function SchoolsPage(): React.ReactNode {
-	useEffect(() => {
-		window.scrollTo(0, 0)
-	}, [])
+	useEffect((): void => window.scrollTo(0, 0), [])
+
 	return (
 		<ProfileLayout>
 			<SupportSectionContainer title="Pip for Schools">
