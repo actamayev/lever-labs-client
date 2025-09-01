@@ -8,12 +8,12 @@ import { bentoIconSize } from "../../../utils/constants/constants"
 export default function ScreenCard(): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 
-	const ScreenIcon = () => {
+	const ScreenIcon = (): React.ReactNode => {
 		return (
 			<div
 				className="relative text-questionText"
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
+				onMouseEnter={(): void => setIsHovered(true)}
+				onMouseLeave={(): void => setIsHovered(false)}
 			>
 				<TvMinimal size={bentoIconSize} />
 

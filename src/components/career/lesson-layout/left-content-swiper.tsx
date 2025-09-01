@@ -10,7 +10,7 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
 
-function EmptyTextParentCard() {
+function EmptyTextParentCard(): React.ReactNode {
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
 			<div className="h-full flex items-center justify-center">
@@ -21,15 +21,15 @@ function EmptyTextParentCard() {
 }
 
 
-function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }) {
+function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerData.careerUUID)
 
 	useMousewheelNavigation(careerData.careerUUID)
 	useKeyboardNavigation(careerData.careerUUID)
 
-	useEffect(() => {
-		return () => {
+	useEffect((): () => void => {
+		return (): void => {
 			careerQuestClass.cleanupAllSwipers(careerData.careerUUID)
 		}
 	}, [careerData.careerUUID])
@@ -46,7 +46,7 @@ function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }) {
 			allowSlidePrev={true}
 			allowTouchMove={false}
 			initialSlide={careerQuestClass.getCurrentMainSlideIndex(careerData.careerUUID)}
-			onSwiper={(swiper) => {
+			onSwiper={(swiper): void => {
 				careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 			}}
 			className="h-full"
@@ -59,7 +59,7 @@ function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }) {
 				</SwiperSlide>
 			) : (
 			// Show actual content when data is ready
-				mainSlides.map((slide) => (
+				mainSlides.map((slide): React.ReactNode => (
 					<SwiperSlide key={slide.id} className="h-full">
 						<div className="h-[calc(100vh-10rem)]">
 							{slide.type === "challenge" ? (

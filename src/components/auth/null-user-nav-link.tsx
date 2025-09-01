@@ -7,7 +7,7 @@ import authClass from "../../classes/auth-class"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
 // eslint-disable-next-line complexity
-function NullUserNavLink() {
+function NullUserNavLink(): React.ReactNode {
 	const pathname = usePathname()
 
 	if (

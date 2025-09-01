@@ -9,7 +9,7 @@ import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@bluedotrobots/common-ts"
 export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 	[MATH_BLOCK_TYPES.COMPARE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(MATH_FIELD_VALUES.COMPARE_A)
 					.setCheck(["Number", "String"])
 
@@ -51,7 +51,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 
 	[MATH_BLOCK_TYPES.OPERATION]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(MATH_FIELD_VALUES.OPERATION_A)
 					.setCheck("Boolean")
 
@@ -81,7 +81,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 
 	[MATH_BLOCK_TYPES.NEGATE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(MATH_FIELD_VALUES.NEGATE_BOOL)
 					.setCheck("Boolean")
 					.appendField("not")
@@ -100,7 +100,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 
 	[MATH_BLOCK_TYPES.NUMBER]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField(new Blockly.FieldNumber(0), MATH_FIELD_VALUES.NUMBER_NUM)
 				this.setOutput(true, "Number")
@@ -117,7 +117,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 
 	[MATH_BLOCK_TYPES.ARITHMETIC]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendValueInput(MATH_FIELD_VALUES.ARITHMETIC_A)
 					.setCheck("Number")
 
@@ -161,7 +161,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MATH_BLOCK_TYPES.MATH_SINGLE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				const OPERATORS: [string, string][] = [
 					["-", "NEG"],
 					["abs", "ABS"],

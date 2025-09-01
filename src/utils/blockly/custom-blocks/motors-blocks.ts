@@ -7,7 +7,7 @@ import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "@bluedot
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.GO_FORWARD]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go forward at")
 
@@ -31,7 +31,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_BACKWARD]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go backward at")
 
@@ -55,7 +55,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_FORWARD_TIME]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go forward for")
 
@@ -86,7 +86,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go backward for")
 
@@ -117,7 +117,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go forward")
 
@@ -148,7 +148,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Go backward")
 
@@ -179,7 +179,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.TURN]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Turn")
 					.appendField(
@@ -215,7 +215,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Stop")
 				this.setPreviousStatement(true, null)

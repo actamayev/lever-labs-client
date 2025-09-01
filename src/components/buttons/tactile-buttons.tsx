@@ -14,7 +14,7 @@ type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 }
 
 export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
-	({ className, shadowHeight = 4, isPressed, ...props }, ref) => {
+	({ className, shadowHeight = 4, isPressed, ...props }, ref): React.ReactNode => {
 		return (
 			<TactileButton
 				ref={ref}
@@ -38,7 +38,7 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 ))
 
 export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonElement, ColoredTactileButtonProps>(
-	({ className, shadowHeight = 4, ...props }, ref) => {
+	({ className, shadowHeight = 4, ...props }, ref): React.ReactNode => {
 		return (
 			<TactileButton
 				ref={ref}
@@ -60,12 +60,12 @@ type LandingCTAProps = ColoredTactileButtonProps & {
 }
 
 export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
-	({ children, navigateTo, ...props }, ref) => { // Add ref parameter here
+	({ children, navigateTo, ...props }, ref): React.ReactNode => { // Add ref parameter here
 		const navigate = useTypedNavigate()
 		return (
 			<TactileButton
 				ref={ref} // Add this line to pass the ref to TactileButton
-				onClick={() => navigate(navigateTo)}
+				onClick={(): void => navigate(navigateTo)}
 				className={cn(
 					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl duration-150",
 					"rounded-xl sm:rounded-2xl border-2 w-full md:w-2/3",

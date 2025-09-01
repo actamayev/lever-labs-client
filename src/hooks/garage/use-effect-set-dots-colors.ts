@@ -75,7 +75,7 @@ export default function useEffectSetDefaultColors(): void {
 	)
 
 	// This use
-	useEffect(() => {
+	useEffect((): () => void => {
 		debouncedEmitLedColors()
 
 		return (): void => {
@@ -84,7 +84,7 @@ export default function useEffectSetDefaultColors(): void {
 	}, [debouncedEmitLedColors])
 
 	// This use effect updates the dot color with no delay, when the selected dots change, or color shade, or selected color change
-	useEffect(() => {
+	useEffect((): void => {
 		garageClass.updateDotColor(garageClass.selectedDots,
 			{
 				r: garageClass.selectedColorRgba.r * garageClass.selectedColorShade,

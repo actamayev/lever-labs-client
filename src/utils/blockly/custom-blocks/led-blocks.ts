@@ -7,12 +7,12 @@ import { LEDSensorType, SENSOR_TYPES, LED_BLOCK_TYPES } from "@bluedotrobots/com
 export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 	[LED_BLOCK_TYPES.ESP32_LED_CONTROL]: {
 		definition: {
-			init: function(this: Blockly.Block) {
+			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Turn LED")
 					.appendField(
 						new Blockly.FieldDropdown(
-							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]) =>
+							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]): [string, string] =>
 								[key.toLowerCase(), value]
 							)
 						),

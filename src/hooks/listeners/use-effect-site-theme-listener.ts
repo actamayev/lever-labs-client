@@ -12,7 +12,7 @@ export default function useEffectSiteThemeListener(): void {
 		personalInfoClass.setDefaultSiteTheme(event.newValue, false)
 	}, [])
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		window.addEventListener("storage", handleStorageChange)
 
 		return (): void => {

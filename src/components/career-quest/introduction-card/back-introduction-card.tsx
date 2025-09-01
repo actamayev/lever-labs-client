@@ -11,7 +11,7 @@ import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import { introductionData } from "../../../utils/constants/career-quest/career-data"
 
-export default function BackIntroductionCard({ flipCard } : {flipCard: () => void}) {
+export default function BackIntroductionCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
 	const {
 		careerName,
 		careerDescription,
@@ -47,7 +47,7 @@ export default function BackIntroductionCard({ flipCard } : {flipCard: () => voi
 							Components
 						</h3>
 						<div className="grid grid-cols-3 gap-2 w-full">
-							{componentsUsed.slice(0, 5).map((component) => (
+							{componentsUsed.slice(0, 5).map((component): React.ReactNode => (
 								<SingleComponentUsed
 									key={component.componentName}
 									component={component}
@@ -69,7 +69,7 @@ export default function BackIntroductionCard({ flipCard } : {flipCard: () => voi
 							Coding Concepts
 						</h3>
 						<div className="grid grid-cols-3 gap-2 w-full justify-items-center">
-							{codingConcepts.slice(0, 5).map((codingConcept) => (
+							{codingConcepts.slice(0, 5).map((codingConcept): React.ReactNode => (
 								<SingleCodingConceptUsed
 									key={codingConcept}
 									codingConcept={codingConcept}

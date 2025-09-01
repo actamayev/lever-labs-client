@@ -6,20 +6,20 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 
-function HintButton({ cqChallengeData }: { cqChallengeData: CqChallengeData}) {
+function HintButton({ cqChallengeData }: { cqChallengeData: CqChallengeData}): React.ReactNode {
 	const [isVisible, setIsVisible] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 
 	// Fade in after 1 second
-	useEffect(() => {
-		const timer = setTimeout(() => {
+	useEffect((): () => void => {
+		const timer = setTimeout((): void => {
 			setIsVisible(true)
 		}, 1000)
 
-		return () => clearTimeout(timer)
+		return (): void => clearTimeout(timer)
 	}, [])
 
-	const handleHintClick = useCallback(async () => {
+	const handleHintClick = useCallback(async (): Promise<void> => {
 		if (isLoading) return
 
 		setIsLoading(true)

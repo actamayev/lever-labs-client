@@ -10,8 +10,9 @@ interface EnterWifiNetworkNameProps {
 	onSubmit?: () => void // Add optional submit handler
 }
 
-export default function EnterWifiNetworkName({ control, onSubmit }: EnterWifiNetworkNameProps) {
-	const handleKeyDown = (e: React.KeyboardEvent) => {
+export default function EnterWifiNetworkName(props: EnterWifiNetworkNameProps): React.ReactNode {
+	const { control, onSubmit } = props
+	const handleKeyDown = (e: React.KeyboardEvent): void => {
 		if (e.key !== "Enter" || !onSubmit) return
 		e.preventDefault()
 		onSubmit()
@@ -21,7 +22,7 @@ export default function EnterWifiNetworkName({ control, onSubmit }: EnterWifiNet
 		<FormField
 			control={control}
 			name="manualWiFiNetworkName"
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem>
 					<FormControl>
 						<div className="relative">

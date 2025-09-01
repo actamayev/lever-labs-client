@@ -20,7 +20,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	currentIndex,
 	className,
 	onAnimationStateChange,
-}) => {
+}): React.ReactNode => {
 	const text1Ref = useRef<HTMLSpanElement>(null)
 	const text2Ref = useRef<HTMLSpanElement>(null)
 	const morphRef = useRef(0)
@@ -30,7 +30,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	const currentDisplayIndexRef = useRef(currentIndex)
 	const isAnimatingRef = useRef(false)
 
-	const setStyles = useCallback((fraction: number, fromIndex: number, toIndex: number) => {
+	const setStyles = useCallback((fraction: number, fromIndex: number, toIndex: number): void => {
 		const [current1, current2] = [text1Ref.current, text2Ref.current]
 		if (!current1 || !current2) return
 
@@ -46,7 +46,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		current2.textContent = morphingTexts[toIndex % morphingTexts.length] || ""
 	}, [morphingTexts])
 
-	const doMorph = useCallback(() => {
+	const doMorph = useCallback((): void => {
 		morphRef.current += 0.016 // Approximate frame time for smooth animation
 		cooldownRef.current = 0
 
@@ -67,7 +67,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		}
 	}, [setStyles, onAnimationStateChange])
 
-	const doCooldown = useCallback(() => {
+	const doCooldown = useCallback((): void => {
 		morphRef.current = 0
 		const [current1, current2] = [text1Ref.current, text2Ref.current]
 		if (current1 && current2) {
@@ -83,7 +83,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	}, [morphingTexts])
 
 	// Trigger animation when currentIndex changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (currentIndex !== targetIndexRef.current) {
 			targetIndexRef.current = currentIndex
 			isAnimatingRef.current = true
@@ -93,10 +93,10 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		}
 	}, [currentIndex, onAnimationStateChange])
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		let animationFrameId: number
 
-		const animate = () => {
+		const animate = (): void => {
 			animationFrameId = requestAnimationFrame(animate)
 
 			const newTime = new Date()
@@ -116,7 +116,7 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 		}
 
 		animate()
-		return () => {
+		return (): void => {
 			cancelAnimationFrame(animationFrameId)
 		}
 	}, [doMorph, doCooldown])

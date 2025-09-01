@@ -5,48 +5,13 @@
 
 import { CareerType, CareerUUID, IntroductionTriggerType, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
 	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
-import { ReactNode } from "react"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 
-// Utility function to convert ReactNode to string
-// eslint-disable-next-line complexity
-export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
-	// Handle function case
-	if (typeof node === "function") {
-		return reactNodeToString(node())
-	}
-	if (typeof node === "string") {
-		return node
-	}
-	if (typeof node === "number") {
-		return node.toString()
-	}
-	if (typeof node === "boolean") {
-		return node.toString()
-	}
-	if (node === null || node === undefined) {
-		return ""
-	}
-	if (Array.isArray(node)) {
-		return node.map(reactNodeToString).join("")
-	}
-	if (typeof node === "object" && "props" in node) {
-		// Handle React elements
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { children, ..._props } = node.props || {}
-		if (children) {
-			return reactNodeToString(children)
-		}
-		return ""
-	}
-	return ""
-}
-
-export const INTRODUCTION_CAREER: CareerQuestData = {
+export const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
-	careerTitle: "Introduction",
+	careerTitle: "Meet Pip",
 	careerColor: "humpback",
 	sections: [
 		{
@@ -688,6 +653,6 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 }
 
 export const CAREER_DEFINITIONS = {
-	[INTRODUCTION_CAREER.careerUUID]: INTRODUCTION_CAREER,
+	[MEET_PIP.careerUUID]: MEET_PIP,
 	[OBSTACLE_AVOIDANCE_CAREER.careerUUID]: OBSTACLE_AVOIDANCE_CAREER
 }

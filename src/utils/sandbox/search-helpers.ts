@@ -128,7 +128,7 @@ export default class BlocklySearchFilter {
 			}
 
 			// Filter blocks that match the search term
-			const matchingBlocks = allBlocks.filter((block) =>
+			const matchingBlocks = allBlocks.filter((block): boolean =>
 				this.blockMatchesSearch(block, searchLower)
 			)
 

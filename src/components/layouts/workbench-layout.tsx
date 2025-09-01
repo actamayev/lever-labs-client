@@ -10,7 +10,7 @@ interface WorkbenchLayoutProps {
 	preventElasticScroll?: boolean
 }
 
-export default function WorkbenchLayout(props: WorkbenchLayoutProps) {
+export default function WorkbenchLayout(props: WorkbenchLayoutProps): React.ReactNode {
 	const {
 		children,
 		extraChildrenClasses = "",

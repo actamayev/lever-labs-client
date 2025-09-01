@@ -4,13 +4,13 @@ import { observer } from "mobx-react"
 import { Slider } from "../../shadcn/ui/slider"
 import garageClass from "../../../classes/garage-class"
 
-function AdjustMaxDrivingSpeed() {
-	const handleValueChange = (value: number[]) => {
+function AdjustMaxDrivingSpeed(): React.ReactNode {
+	const handleValueChange = (value: number[]): void => {
 		const newMaxSpeed = value[0]
 		garageClass.setMotorThrottlePercent(newMaxSpeed)
 	}
 
-	const handleKeyDown = (event: React.KeyboardEvent) => {
+	const handleKeyDown = (event: React.KeyboardEvent): void => {
 		if (
 			event.key === "ArrowUp" ||
 			event.key === "ArrowDown" ||

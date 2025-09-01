@@ -16,7 +16,7 @@ interface Props {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function BackCareerCard(props: Props) {
+export default function BackCareerCard(props: Props): React.ReactNode {
 	const { careerData, flipCard } = props
 	const { careerName, careerDescription, backgroundColor, expectedCompletionTime, componentsUsed, codingConcepts } = careerData
 
@@ -53,7 +53,7 @@ export default function BackCareerCard(props: Props) {
 					<div className="flex items-center justify-between" style={{ height: "70%" }}>
 						{/* Components grid (2x2 like front card) */}
 						<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
-							{componentsUsed.slice(0, 4).map((component) => (
+							{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
 								<SingleComponentUsed
 									key={component.componentName}
 									component={component}
@@ -77,7 +77,7 @@ export default function BackCareerCard(props: Props) {
 
 						{/* Coding concepts */}
 						<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
-							{codingConcepts.slice(0, 4).map((concept) => (
+							{codingConcepts.slice(0, 4).map((concept): React.ReactNode => (
 								<SingleCodingConceptUsed
 									key={concept}
 									codingConcept={concept}

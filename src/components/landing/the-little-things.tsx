@@ -81,7 +81,7 @@ interface FeatureItemProps {
 	feature: Feature
 }
 
-function FeatureItem({ feature }: FeatureItemProps) {
+function FeatureItem({ feature }: FeatureItemProps): React.ReactNode {
 	const { icon: Icon, title, description } = feature
 
 	return (
@@ -123,7 +123,7 @@ export default function TheLittleThings(): React.ReactNode {
 
 			{/* Features Grid */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 px-4 md:px-0">
-				{features.map((feature, index) => (
+				{features.map((feature, index): React.ReactNode => (
 					<FeatureItem key={index} feature={feature} />
 				))}
 			</div>

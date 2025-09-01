@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import NullUserNavLink from "./null-user-nav-link"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function LoginLogoutHeaderItem() {
+function LoginLogoutHeaderItem(): React.ReactNode {
 	const pathname = usePathname()
 
 	if (

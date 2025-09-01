@@ -17,14 +17,14 @@ import { useMemo } from "react"
 // eslint-disable-next-line max-lines-per-function
 function IntroductionS6P6TofsViz(): React.ReactNode {
 	// Get latest TOF count values
-	const leftTofCount = useMemo(() => {
+	const leftTofCount = useMemo((): number => {
 		return sensorDataClass.leftSideTofCounts.length > 0
 			? sensorDataClass.leftSideTofCounts[sensorDataClass.leftSideTofCounts.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.leftSideTofCounts, sensorDataClass.dataVersion])
 
-	const rightTofCount = useMemo(() => {
+	const rightTofCount = useMemo((): number => {
 		return sensorDataClass.rightSideTofCounts.length > 0
 			? sensorDataClass.rightSideTofCounts[sensorDataClass.rightSideTofCounts.length - 1]
 			: 0
@@ -32,11 +32,11 @@ function IntroductionS6P6TofsViz(): React.ReactNode {
 	}, [sensorDataClass.rightSideTofCounts, sensorDataClass.dataVersion])
 
 	// Format data for charts
-	const leftTofData = useMemo(() => [
+	const leftTofData = useMemo((): { sensor: string, count: number }[] => [
 		{ sensor: "Left TOF", count: leftTofCount }
 	], [leftTofCount])
 
-	const rightTofData = useMemo(() => [
+	const rightTofData = useMemo((): { sensor: string, count: number }[] => [
 		{ sensor: "Right TOF", count: rightTofCount }
 	], [rightTofCount])
 
@@ -75,8 +75,8 @@ function IntroductionS6P6TofsViz(): React.ReactNode {
 									label={{ value: "Count", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toLocaleString()}`, "Count"]}
-									labelFormatter={() => "Left TOF"}
+									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Count"]}
+									labelFormatter={(): string => "Left TOF"}
 								/>
 								<Bar
 									dataKey="count"
@@ -109,8 +109,8 @@ function IntroductionS6P6TofsViz(): React.ReactNode {
 									label={{ value: "Count", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toLocaleString()}`, "Count"]}
-									labelFormatter={() => "Right TOF"}
+									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Count"]}
+									labelFormatter={(): string => "Right TOF"}
 								/>
 								<Bar
 									dataKey="count"

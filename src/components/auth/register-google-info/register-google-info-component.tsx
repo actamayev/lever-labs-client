@@ -26,7 +26,7 @@ export default function RegisterGoogleInfoComponent(): React.ReactNode {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues) => {
+	const onSubmit = useCallback(async (values: NewGoogleInfoFormValues): Promise<void> => {
 		const success = await registerGoogleInfo(values, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)

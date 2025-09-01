@@ -18,7 +18,7 @@ export default function CareerQuest(): React.ReactNode {
 			<h2 className="text-3xl font-bold text-center my-4">Careers</h2>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
-				{careerData.map(singleCareerData => (
+				{careerData.map((singleCareerData): React.ReactNode => (
 					<div key={singleCareerData.careerName}>
 						<SingleCareerCard careerData={singleCareerData} />
 					</div>

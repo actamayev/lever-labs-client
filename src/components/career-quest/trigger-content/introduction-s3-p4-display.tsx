@@ -8,7 +8,7 @@ import RenderDisplay from "../../garage/display/render-display"
 import personalInfoClass from "../../../classes/personal-info-class"
 import editName from "../../../utils/personal-info/edit-name"
 
-function IntroductionS3P4Display() {
+function IntroductionS3P4Display(): React.ReactNode {
 	const setTextInput = async (text: string): Promise<void> => {
 		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
@@ -26,7 +26,7 @@ function IntroductionS3P4Display() {
 				<Input
 					placeholder="Enter text..."
 					value={personalInfoClass.name || ""}
-					onChange={(e) => setTextInput(e.target.value)}
+					onChange={(e): Promise<void> => setTextInput(e.target.value)}
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-center bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",

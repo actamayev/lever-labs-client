@@ -237,7 +237,7 @@ CareerInstance {
 - **Progress Tracking**: Uses `furthestSeenChallengeUuidOrTextUuid` to track highest reached position
 - **Button Advancement**: `handleButtonClickAdvance()` allows progression when button is clicked
 - **Validation**: `canAdvancePastTextChild()` checks if user can advance past interactive content
-- **Known Interactive Elements**: Currently tracks text children with specific IDs (e.g., "introduction-1-6")
+- **Known Interactive Elements**: Currently tracks text children with specific IDs (e.g., "meet-pip-1-6")
 
 ## Data Loading & Initialization
 

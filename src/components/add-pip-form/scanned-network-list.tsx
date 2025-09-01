@@ -22,7 +22,8 @@ interface ScannedNetworksListProps {
 	setSelectedNetworkIndex: (index: number | null) => void
 }
 
-function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelectedNetworkIndex }: ScannedNetworksListProps) {
+function ScannedNetworksList(props: ScannedNetworksListProps): React.ReactNode {
+	const { control, setValue, selectedNetworkIndex, setSelectedNetworkIndex } = props
 	const [showPassword, setShowPassword] = useState(false)
 
 	// Watch the password field for real-time updates
@@ -33,18 +34,18 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 	})
 
 	// Listen for WiFi connection results
-	useEffect(() => {
-		serialMessageManagerClass.onWiFiConnectionResult = (status: WiFiConnectionStatus) => {
+	useEffect((): () => void => {
+		serialMessageManagerClass.onWiFiConnectionResult = (status: WiFiConnectionStatus): void => {
 			serialMessageManagerClass.setIsTestingWiFiConnection(false)
 			serialMessageManagerClass.setWiFiConnectionStatus(status)
 		}
 
-		return () => {
+		return (): void => {
 			serialMessageManagerClass.onWiFiConnectionResult = null
 		}
 	}, [])
 
-	const handleNetworkSelect = useCallback((network: ScannedWiFiNetworkItem, index: number) => {
+	const handleNetworkSelect = useCallback((network: ScannedWiFiNetworkItem, index: number): void => {
 		if (!network.ssid) return
 
 		// Set the form values when a network is selected
@@ -56,7 +57,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 	}, [setSelectedNetworkIndex, setValue])
 
 	// Upload credentials function
-	const uploadCredentials = useCallback(async (network: ScannedWiFiNetworkItem, networkPassword: string) => {
+	const uploadCredentials = useCallback(async (network: ScannedWiFiNetworkItem, networkPassword: string): Promise<void> => {
 		if (!network.ssid) return
 
 		serialMessageManagerClass.setIsTestingWiFiConnection(true)
@@ -73,7 +74,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 		}
 	}, [])
 
-	const handlePasswordSubmit = useCallback(async (network: ScannedWiFiNetworkItem) => {
+	const handlePasswordSubmit = useCallback(async (network: ScannedWiFiNetworkItem): Promise<void> => {
 		if (!network.ssid) return
 
 		// Upload credentials using the watched password value
@@ -110,12 +111,13 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 			</h4>
 			<div className="max-h-80 overflow-y-auto border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900">
 				{serialMessageManagerClass.scannedNetworksByRssiStrength
+					// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 					.filter(network => network.ssid) // Fix: Filter out networks with undefined ssid
-					.map((network, index) => (
+					.map((network, index): React.ReactNode => (
 						<Collapsible
 							key={`${network.ssid}-${index}`}
 							open={selectedNetworkIndex === index}
-							onOpenChange={(open) => {
+							onOpenChange={(open): void => {
 								if (open) {
 									handleNetworkSelect(network, index)
 								} else {
@@ -152,7 +154,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 												✓ Open network - no password required
 											</div>
 											<Button
-												onClick={async () => {
+												onClick={async (): Promise<void> => {
 												// Fix: Guard against undefined ssid
 													if (!network.ssid) return
 
@@ -178,9 +180,9 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 														type={showPassword ? "text" : "password"}
 														placeholder="Enter WiFi password"
 														value={watchedPassword || ""}
-														onChange={(e) => setValue("selectedWiFiPassword", e.target.value)}
+														onChange={(e): void => setValue("selectedWiFiPassword", e.target.value)}
 														className="h-12 !text-xl pr-12"
-														onKeyDown={(e) => {
+														onKeyDown={(e): void => {
 															if (e.key === "Enter" && watchedPassword) {
 																handlePasswordSubmit(network)
 															}
@@ -191,7 +193,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 														variant="ghost"
 														size="sm"
 														className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1.5 hover:bg-polar"
-														onClick={() => setShowPassword(prevState => !prevState)}
+														onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 													>
 														{showPassword ? (
 															<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
@@ -201,7 +203,7 @@ function ScannedNetworksList({ control, setValue, selectedNetworkIndex, setSelec
 													</Button>
 												</div>
 												<Button
-													onClick={() => handlePasswordSubmit(network)}
+													onClick={(): Promise<void> => handlePasswordSubmit(network)}
 													disabled={!watchedPassword || serialMessageManagerClass.isTestingWiFiConnection}
 													className="h-12 px-6 text-lg"
 													size="lg"

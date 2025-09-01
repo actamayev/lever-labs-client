@@ -9,8 +9,8 @@ import BackIntroductionCard from "./back-introduction-card"
 export default function IntroductionCard(): React.ReactNode {
 	const [flipped, setFlipped] = useState(false)
 
-	const flipCard = useCallback(() => {
-		setFlipped(prev => !prev)
+	const flipCard = useCallback((): void => {
+		setFlipped((prev): boolean => !prev)
 	}, [])
 
 	return (

@@ -79,12 +79,12 @@ function IntroductionS6P4MzViz(): React.ReactNode {
 		setHoveredCell(null)
 	}
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		const canvas = canvasRef.current
-		if (!canvas) return
+		if (!canvas) return (): void => {}
 
 		const ctx = canvas.getContext("2d")
-		if (!ctx) return
+		if (!ctx) return (): void => {}
 
 		// eslint-disable-next-line complexity
 		const animate = (): void => {
@@ -93,7 +93,7 @@ function IntroductionS6P4MzViz(): React.ReactNode {
 
 			// Check if we have valid grid data
 			const hasValidData = sensorDataClass.distanceGrid.length === 8 &&
-				sensorDataClass.distanceGrid.every(row => row.length === 8)
+				sensorDataClass.distanceGrid.every((row): boolean => row.length === 8)
 
 			if (hasValidData) {
 				// Draw grid cells

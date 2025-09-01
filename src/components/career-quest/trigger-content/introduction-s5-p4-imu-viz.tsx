@@ -17,8 +17,8 @@ import sensorDataClass from "../../../classes/sensor-data-class"
 // eslint-disable-next-line max-lines-per-function
 function IntroductionS5P4ImuViz(): React.ReactNode {
 	// Calculate linear acceleration magnitude from aX, aY, aZ
-	const linearAccelerationData = useMemo(() => {
-		return sensorDataClass.aX.map((ax, index) => {
+	const linearAccelerationData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.aX.map((ax, index): { index: number, value: number } => {
 			const ay = sensorDataClass.aY[index] || 0
 			const az = sensorDataClass.aZ[index] || 0
 			const magnitude = Math.sqrt(ax * ax + ay * ay + az * az)
@@ -31,24 +31,24 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 	}, [sensorDataClass.aX, sensorDataClass.aY, sensorDataClass.aZ, sensorDataClass.dataVersion])
 
 	// Format data for yaw, pitch, roll charts
-	const yawData = useMemo(() => {
-		return sensorDataClass.yaw.map((value, index) => ({
+	const yawData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.yaw.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.yaw, sensorDataClass.dataVersion])
 
-	const pitchData = useMemo(() => {
-		return sensorDataClass.pitch.map((value, index) => ({
+	const pitchData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.pitch.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.pitch, sensorDataClass.dataVersion])
 
-	const rollData = useMemo(() => {
-		return sensorDataClass.roll.map((value, index) => ({
+	const rollData = useMemo((): { index: number, value: number }[] => {
+		return sensorDataClass.roll.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
@@ -87,8 +87,8 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Yaw"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -122,8 +122,8 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Pitch"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -157,8 +157,8 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(1)}°`, "Roll"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"
@@ -192,8 +192,8 @@ function IntroductionS5P4ImuViz(): React.ReactNode {
 									label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
 								/>
 								<Tooltip
-									formatter={(value: number) => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
-									labelFormatter={() => "Sample"}
+									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
+									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
 									type="monotone"

@@ -201,7 +201,7 @@ const eslintConfig = [
 
 	// Override for icon components - disable explicit function return type
 	{
-		files: ["src/components/icons/**/*"],
+		files: ["src/components/icons/**/*", "src/utils/career-quest/career-quest-data.ts"],
 		rules: {
 			"@typescript-eslint/explicit-function-return-type": "off",
 		},

@@ -17,12 +17,12 @@ interface Props<T extends FormWithUsername> {
 
 export default function UsernameInput<T extends FormWithUsername>({
 	control,
-}: Props<T>) {
+}: Props<T>): React.ReactNode {
 	return (
 		<FormField
 			control={control}
 			name={"username" as FieldPath<T>}
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<div className="relative">
@@ -30,7 +30,7 @@ export default function UsernameInput<T extends FormWithUsername>({
 								placeholder="Username"
 								{...field}
 								value={field.value.toString() || ""}
-								onChange={(event) => {
+								onChange={(event): void => {
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
 								}}

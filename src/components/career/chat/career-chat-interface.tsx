@@ -12,10 +12,10 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import deleteCareerChat from "../../../utils/chat/delete-career-chat"
 import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import sendCareerMessage from "../../../utils/chat/send-career-message"
-import { reactNodeToString } from "../../../utils/career-quest/career-quest-data"
+import { reactNodeToString } from "../../../utils/career-quest/react-node-to-string"
 
 // eslint-disable-next-line max-lines-per-function
-function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
+function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode {
 	const [inputValue, setInputValue] = useState("")
 	const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
 	const inputRef = useRef<HTMLTextAreaElement>(null)
@@ -27,13 +27,13 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 	const isWaitingForResponse = careerQuestClass.isCareerWaitingForResponse(careerUUID)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
-	useEffect(() => {
+	useEffect((): void => {
 		setShowDeleteConfirmation(false)
 	}, [messages.length])
 
 	const hasAnyMessages = messages.length > 0
 
-	const handleSendMessage = useCallback(async () => {
+	const handleSendMessage = useCallback(async (): Promise<void> => {
 		if (!inputValue.trim() || isStreaming) return
 
 		setInputValue("")
@@ -42,7 +42,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 		careerQuestClass.addCareerUserMessage(careerUUID, inputValue)
 
 		// Keep focus on input after sending
-		setTimeout(() => {
+		setTimeout((): void => {
 			inputRef.current?.focus()
 		}, 0)
 
@@ -66,20 +66,20 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 		return streamId
 	}, [careerUUID])
 
-	const onStopStreaming = useCallback(async () => {
+	const onStopStreaming = useCallback(async (): Promise<void> => {
 		return await stopChatStream(chatReset)
 	}, [chatReset])
 
-	const handleDeleteClick = useCallback(() => {
+	const handleDeleteClick = useCallback((): void => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(true)
 	}, [hasAnyMessages, isStreaming])
 
-	const handleCancelDelete = useCallback(() => {
+	const handleCancelDelete = useCallback((): void => {
 		setShowDeleteConfirmation(false)
 	}, [])
 
-	const handleConfirmDelete = useCallback(async () => {
+	const handleConfirmDelete = useCallback(async (): Promise<void> => {
 		if (!hasAnyMessages || isStreaming) return
 		setShowDeleteConfirmation(false)
 		await deleteCareerChat(careerUUID)
@@ -124,7 +124,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }) {
 						isStreaming={isStreaming}
 						messageLength={messages.length}
 					>
-						{messages.map((message) => (
+						{messages.map((message): React.ReactNode => (
 							<SingleSandboxMessage
 								key={message.id}
 								message={message}

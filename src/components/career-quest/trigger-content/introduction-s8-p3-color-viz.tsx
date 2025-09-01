@@ -6,21 +6,21 @@ import sensorDataClass from "../../../classes/sensor-data-class"
 
 function IntroductionS8P3ColorViz(): React.ReactNode {
 	// Get latest RGB values
-	const latestRed = useMemo(() => {
+	const latestRed = useMemo((): number => {
 		return sensorDataClass.redValue.length > 0
 			? sensorDataClass.redValue[sensorDataClass.redValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.redValue, sensorDataClass.dataVersion])
 
-	const latestGreen = useMemo(() => {
+	const latestGreen = useMemo((): number => {
 		return sensorDataClass.greenValue.length > 0
 			? sensorDataClass.greenValue[sensorDataClass.greenValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sensorDataClass.greenValue, sensorDataClass.dataVersion])
 
-	const latestBlue = useMemo(() => {
+	const latestBlue = useMemo((): number => {
 		return sensorDataClass.blueValue.length > 0
 			? sensorDataClass.blueValue[sensorDataClass.blueValue.length - 1]
 			: 0

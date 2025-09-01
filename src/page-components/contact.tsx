@@ -8,9 +8,8 @@ import FooterSocialSection from "../components/footer/footer-social-section"
 import SupportSectionContainer from "../components/support/support-section-container"
 
 export default function Contact(): React.ReactNode {
-	useEffect(() => {
-		window.scrollTo(0, 0)
-	}, [])
+	useEffect((): void => window.scrollTo(0, 0), [])
+
 	return (
 		<ProfileLayout>
 			<SupportSectionContainer>

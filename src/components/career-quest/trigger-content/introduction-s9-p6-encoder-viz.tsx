@@ -35,7 +35,7 @@ function IntroductionS9P6EncoderViz(): React.ReactNode {
 		const degreesPerFrame = (latestRPM * 360) / (60 * 60) // RPM * 360° / (60fps * 60s)
 
 		// Update rotation
-		setLeftRotation(prev => prev + degreesPerFrame)
+		setLeftRotation((prev): number => prev + degreesPerFrame)
 
 		// Clear canvas
 		ctx.clearRect(0, 0, wheelSize, wheelSize)
@@ -99,7 +99,7 @@ function IntroductionS9P6EncoderViz(): React.ReactNode {
 		const degreesPerFrame = (latestRPM * 360) / (60 * 60)
 
 		// Update rotation
-		setRightRotation(prev => prev + degreesPerFrame)
+		setRightRotation((prev): number => prev + degreesPerFrame)
 
 		// Clear canvas
 		ctx.clearRect(0, 0, wheelSize, wheelSize)
@@ -148,7 +148,7 @@ function IntroductionS9P6EncoderViz(): React.ReactNode {
 		rightAnimationRef.current = requestAnimationFrame(animateRightWheel)
 	}
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		// Start animations
 		animateLeftWheel()
 		animateRightWheel()

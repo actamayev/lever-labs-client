@@ -65,8 +65,8 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	}, [careerUUID])
 
 
-	useEffect(() => {
-		if (!swiperInstance || isTransitioning) return
+	useEffect((): () => void => {
+		if (!swiperInstance || isTransitioning) return (): void => {}
 
 
 		const handleWheel = (e: WheelEvent): void => {
@@ -118,7 +118,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			}
 
 			// Set timeout to detect end of gesture
-			gestureTimeout.current = setTimeout(() => {
+			gestureTimeout.current = setTimeout((): void => {
 				gestureActive.current = false
 				hasNavigatedInGesture.current = false
 			}, GESTURE_END_DELAY)

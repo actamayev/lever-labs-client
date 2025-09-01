@@ -10,7 +10,7 @@ export default function GoogleSignIn(): React.ReactNode {
 		<div className="flex justify-center">
 			<GoogleLogin
 				onSuccess={googleAuthCallback}
-				onError={() => console.error("Login Failed")}
+				onError={(): void => console.error("Login Failed")}
 				shape="pill"
 				width={300}
 				text="continue_with"

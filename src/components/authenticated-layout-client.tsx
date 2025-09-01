@@ -15,10 +15,10 @@ interface AuthenticatedLayoutClientProps {
 function AuthenticatedLayoutClient({
 	children,
 	authState
-}: AuthenticatedLayoutClientProps) {
+}: AuthenticatedLayoutClientProps): React.ReactNode {
 
 	// Sync server auth state with client auth state on mount (but don't override if client has newer state)
-	useEffect(() => {
+	useEffect((): void => {
 		// Only update from server state if client doesn't have auth state yet
 		// This handles page refreshes where middleware has auth state but client state is empty
 		if (!authClass.isLoggedIn && authState.isAuthenticated) {

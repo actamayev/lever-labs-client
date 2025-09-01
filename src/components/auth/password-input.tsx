@@ -18,7 +18,7 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 	control,
 	name,
 	placeholder = "Password"
-}: PasswordFieldProps<T>) {
+}: PasswordFieldProps<T>): React.ReactNode {
 	const [showPassword, setShowPassword] = useState(false)
 
 	// TODO 6/9/25: Add showForgotPassword to handle forgot password functionality
@@ -26,7 +26,7 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 		<FormField
 			control={control}
 			name={name}
-			render={({ field }) => (
+			render={({ field }): React.ReactElement => (
 				<FormItem className="grid gap-2">
 					<FormControl>
 						<div className="relative">
@@ -43,7 +43,7 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 								variant="ghost"
 								size="sm"
 								className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1 hover:bg-polar"
-								onClick={() => setShowPassword(prevState => !prevState)}
+								onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 							>
 								{showPassword ? (
 									<EyeOff className="!h-6 !w-6" />

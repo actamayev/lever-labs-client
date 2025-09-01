@@ -36,7 +36,7 @@ export const staticPages = [
 	"/settings/schools",
 
 	"/career-quest",
-	"/career-quest/introduction",
+	"/career-quest/meet-pip",
 	"/career-quest/obstacle-avoidance",
 
 	// Open:
@@ -51,7 +51,7 @@ export const staticPages = [
 
 export const careerQuestPages = [
 	"/career-quest",
-	"/career-quest/introduction",
+	"/career-quest/meet-pip",
 	"/career-quest/obstacle-avoidance",
 ] as const
 

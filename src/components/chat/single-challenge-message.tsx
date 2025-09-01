@@ -55,7 +55,7 @@ function MessageBubble({ message, isUser, getMessageText, getMessageBubbleStyles
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQuestMessageProps) {
+function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQuestMessageProps): React.ReactNode {
 	const isUser = message.role === "user"
 	const isCheckCodeRequest = message.isCheckCodeRequest
 	const isHintRequest = message.isHintRequest
@@ -65,7 +65,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
-	const getMessageBubbleStyles = useMemo(() => {
+	const getMessageBubbleStyles = useMemo((): string => {
 		if (isCheckCodeRequest) return "bg-fox text-white"
 		if (isHintRequest) return "bg-beetle-2 text-white"
 		if (isHintResponse) return "bg-beetle-2 text-white"
@@ -96,13 +96,13 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 	}
 
 	// Determine message text for special user requests
-	const getMessageText = () => {
+	const getMessageText = (): string => {
 		if (isCheckCodeRequest) return "Is my code correct?"
 		if (isHintRequest) return "Can you please give me a hint?"
 		return message.content
 	}
 
-	function AssistantAvatar() {
+	function AssistantAvatar(): React.ReactNode {
 		if (isHintResponse) {
 			return (
 				<AvatarFallback className="bg-beetle-2 text-white">

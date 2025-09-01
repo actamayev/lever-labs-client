@@ -3,9 +3,9 @@
 import { PipStatusUpdate } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
+import workbenchClass from "../../classes/workbench-class"
 import requestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
-import workbenchClass from "../../classes/workbench-class"
 
 export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 	const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
@@ -14,7 +14,7 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 	switch (newConnectionStatus) {
 		case "online":
 			const actionElement = (
-				<BlackWhiteTactileButton onClick={() => requestToConnectToPip(data.pipUUID)}>
+				<BlackWhiteTactileButton onClick={async (): Promise<void> => await requestToConnectToPip(data.pipUUID)}>
 					{previousPipConnectionStatus === "connected" ? "Reconnect" : "Connect"}
 				</BlackWhiteTactileButton>
 			)

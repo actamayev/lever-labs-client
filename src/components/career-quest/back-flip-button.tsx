@@ -9,7 +9,7 @@ interface Props {
 	style?: React.CSSProperties
 }
 
-export default function BackFlipButton(props: Props) {
+export default function BackFlipButton(props: Props): React.ReactNode {
 	const { onFlip, extraClasses, style } = props
 
 	return (

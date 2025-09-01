@@ -37,7 +37,7 @@ export default function LandingSensors(): React.ReactNode {
 			<div className="block sm:hidden">
 				<div className="w-full h-full pt-4 px-3">
 					<div className="flex flex-col gap-3">
-						{features.map((feature, index) => (
+						{features.map((feature, index): React.ReactNode => (
 							<div key={index}>{feature}</div>
 						))}
 					</div>
@@ -51,7 +51,7 @@ export default function LandingSensors(): React.ReactNode {
 						<div className="w-full">
 							<div className="w-full h-full">
 								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-									{features.map((feature, index) => (
+									{features.map((feature, index): React.ReactNode => (
 										<React.Fragment key={index}>{feature}</React.Fragment>
 									))}
 								</div>

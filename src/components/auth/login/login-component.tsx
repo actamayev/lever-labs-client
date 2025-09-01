@@ -32,7 +32,7 @@ export default function LoginComponent(): React.ReactNode {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: LoginRequest) => {
+	const onSubmit = useCallback(async (values: LoginRequest): Promise<void> => {
 		const success = await loginSubmit(values, setError)
 		if (success === false) return
 		if (pathname === "/login") navigate(PageToNavigateAfterLogin)

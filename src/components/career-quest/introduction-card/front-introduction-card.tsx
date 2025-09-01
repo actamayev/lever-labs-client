@@ -12,7 +12,7 @@ import { TactileButton } from "../../shadcn/ui/tactile-button"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { observer } from "mobx-react"
 
-function FrontIntroductionCard({ flipCard } : {flipCard: () => void}) {
+function FrontIntroductionCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
 	const { careerName, careerIcon: Icon, componentsUsed, backgroundColor, careerUUID } = introductionData
 
 	const colors = getDuolingoColors(backgroundColor)
@@ -60,7 +60,7 @@ function FrontIntroductionCard({ flipCard } : {flipCard: () => void}) {
 
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 mb-auto">
-					{componentsUsed.slice(0, 4).map((component) => (
+					{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
 						<SingleComponentUsed
 							key={component.componentName}
 							component={component}

@@ -8,7 +8,7 @@ import SupportHeader, { SupportBorder } from "../components/support/support-head
 import SupportSectionContainer from "../components/support/support-section-container"
 
 export default function Mission(): React.ReactNode {
-	useEffect(() => {
+	useEffect((): void => {
 		window.scrollTo(0, 0)
 	}, [])
 	return (

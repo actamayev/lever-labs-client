@@ -13,12 +13,12 @@ interface TextParentCardProps {
 }
 
 
-function TextParentCard(props: TextParentCardProps) {
+function TextParentCard(props: TextParentCardProps): React.ReactNode {
 	const { slide, careerUUID } = props
 	const textParentData = slide.data
 	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
-	const isActive = currentMainSlideIndex === mainSlides.findIndex(s => s.id === slide.id)
+	const isActive = currentMainSlideIndex === mainSlides.findIndex((s): boolean => s.id === slide.id)
 	// Get the text child index specific to this slide
 	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID, slide.id)
 
@@ -33,7 +33,7 @@ function TextParentCard(props: TextParentCardProps) {
 				allowSlideNext={true}
 				allowSlidePrev={true}
 				allowTouchMove={false}
-				onSwiper={(swiper) => {
+				onSwiper={(swiper): void => {
 					careerQuestClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
 					// If this slide is currently active, immediately sync to the correct index
 					if (isActive) {
@@ -45,24 +45,24 @@ function TextParentCard(props: TextParentCardProps) {
 				nested={true}
 				initialSlide={0}
 			>
-				{toJS(textParentData.children).map((child) => (
+				{toJS(textParentData.children).map((child): React.ReactNode => (
 					<SwiperSlide key={child.id} className="h-full">
 						<div className="h-full flex items-center justify-center px-[75px]">
 							<div className="prose prose-lg max-w-none text-4xl">
 								{child.type === "morphingText" ? (
 									<NavigationMorphingText
 										staticText={child.staticText}
-										morphingTexts={child.morphingVariants.map(variant => variant.text)}
+										morphingTexts={child.morphingVariants.map((variant): string => variant.text)}
 										currentIndex={careerQuestClass.getCurrentMorphingIndex(careerUUID, child.id)}
-										onAnimationStateChange={(isAnimating) =>
+										onAnimationStateChange={(isAnimating): void =>
 											careerQuestClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
 										}
 									/>
 								) : (
 									<div className="leading-relaxed text-questionText text-center cursor-text">
-										{typeof child.content === "function" ? child.content(() => {
+										{typeof child.content === "function" ? child.content((): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
-										}) : typeof child.content === "string" ? getContentComponent(child.content, () => {
+										}) : typeof child.content === "string" ? getContentComponent(child.content, (): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
 										}) : child.content}
 									</div>

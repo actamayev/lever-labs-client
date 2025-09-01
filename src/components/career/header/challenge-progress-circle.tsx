@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 
-function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }) {
+function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }): React.ReactNode {
 	// Get progress data from career quest class
 	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
 	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerUUID)
@@ -14,7 +14,7 @@ function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData 
 	const circumference = 2 * Math.PI * 20 // radius of 20
 	const strokeDashoffset = circumference - (percentage / 100) * circumference
 
-	const textColor = useMemo(() => {
+	const textColor = useMemo((): string => {
 		return `text-${careerData.careerColor}`
 	}, [careerData.careerColor])
 
