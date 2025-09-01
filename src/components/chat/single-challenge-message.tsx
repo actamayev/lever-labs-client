@@ -31,7 +31,8 @@ interface MessageBubbleProps {
 	isHintResponse: boolean
 }
 
-function MessageBubble({ message, isUser, getMessageText, getMessageBubbleStyles, isHintResponse }: MessageBubbleProps) {
+function MessageBubble(props: MessageBubbleProps): React.ReactNode {
+	const { message, isUser, getMessageText, getMessageBubbleStyles, isHintResponse } = props
 	return (
 		<div
 			className={cn("max-w-[80%] min-w-0 rounded-lg px-3 py-2", getMessageBubbleStyles)}

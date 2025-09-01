@@ -10,10 +10,10 @@ import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}) {
+function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.ReactNode {
 	const pathname = usePathname()
 
-	const whereToNavigate = useMemo(() => {
+	const whereToNavigate = useMemo((): PageNames => {
 		if (
 			pathname === "/register-google" ||
 			(authClass.isLoggedIn && isNull(personalInfoClass.username))

@@ -37,7 +37,7 @@ export default function Providers({ children }: { children: ReactNode }): React.
 	useInitializeGoogleAnalytics()
 
 	// Smart data retrieval - only if needed
-	useEffect(() => {
+	useEffect((): void => {
 		void retrieveInfo()
 	}, [])
 

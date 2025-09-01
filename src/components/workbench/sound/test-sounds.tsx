@@ -62,10 +62,10 @@ function TestSounds(props: Props): React.ReactNode {
 							className="rounded-xl bg-standardBackground border-swan shadow-none"
 							align="end"
 						>
-							{testSounds.map((sound) => (
+							{testSounds.map((sound): React.ReactNode => (
 								<DropdownMenuItem
 									key={sound}
-									onClick={() => {
+									onClick={(): void => {
 										workbenchClass.setSelectedSound(sound)
 										setIsDropdownOpen(false)
 									}}

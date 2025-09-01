@@ -39,22 +39,22 @@ class SerialMessageManagerClass {
 	}
 
 	get knownNetworks(): ScannedWiFiNetworkItem[] {
-		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
-		return this.scannedNetworks.filter(network => savedSSIDs.includes(network.ssid))
+		const savedSSIDs = this.savedNetworks.map((network): string => network.ssid)
+		return this.scannedNetworks.filter((network): boolean => savedSSIDs.includes(network.ssid))
 	}
 
 	get otherNetworks(): ScannedWiFiNetworkItem[] {
-		const savedSSIDs = this.savedNetworks.map(network => network.ssid)
-		return this.scannedNetworks.filter(network => !savedSSIDs.includes(network.ssid))
+		const savedSSIDs = this.savedNetworks.map((network): string => network.ssid)
+		return this.scannedNetworks.filter((network): boolean => !savedSSIDs.includes(network.ssid))
 	}
 
 	get previouslyConnected(): SavedWiFiNetwork[] {
-		const scannedSSIDs = this.scannedNetworks.map(network => network.ssid)
-		return this.savedNetworks.filter(network => !scannedSSIDs.includes(network.ssid))
+		const scannedSSIDs = this.scannedNetworks.map((network): string => network.ssid)
+		return this.savedNetworks.filter((network): boolean => !scannedSSIDs.includes(network.ssid))
 	}
 
 	get scannedNetworksByRssiStrength(): ScannedWiFiNetworkItem[] {
-		return this.scannedNetworks.slice().sort((a, b) => b.rssi - a.rssi)
+		return this.scannedNetworks.slice().sort((a, b): number => b.rssi - a.rssi)
 	}
 
 	public handleRawMessage (line: string): void {
@@ -67,7 +67,7 @@ class SerialMessageManagerClass {
 				// This is a structured message, handle it
 				this.handleStructuredMessage(jsonMessage)
 				// Still add to messages for debugging
-				runInAction(() => {
+				runInAction((): void => {
 					this.messages.push({
 						content: line,
 						direction: "received",
@@ -77,7 +77,7 @@ class SerialMessageManagerClass {
 				})
 			} else {
 				// Regular log message
-				runInAction(() => {
+				runInAction((): void => {
 					this.messages.push({
 						content: line,
 						direction: "received",
@@ -87,7 +87,7 @@ class SerialMessageManagerClass {
 			}
 		} catch {
 			// Not JSON, treat as regular log message
-			runInAction(() => {
+			runInAction((): void => {
 				this.messages.push({
 					content: line,
 					direction: "received",
@@ -102,7 +102,7 @@ class SerialMessageManagerClass {
 	})
 
 	public handleDisconnected (): void {
-		runInAction(() => {
+		runInAction((): void => {
 			this.hasBeenDisconnected = true
 			this.pipId = null
 			this.showWiFiSection = false
@@ -118,7 +118,7 @@ class SerialMessageManagerClass {
 	}
 
 	public handleMessageSent (messageData: MessageSentData): void {
-		runInAction(() => {
+		runInAction((): void => {
 			this.messages.push({
 				content: messageData.content,
 				direction: "sent",
@@ -132,7 +132,7 @@ class SerialMessageManagerClass {
 	private handleStructuredMessage(message: ESPMessage): void {
 		switch (message.route) {
 			case "/pip-id": {
-				runInAction(() => {
+				runInAction((): void => {
 					this.pipId = (message.payload as PipIDPayload).pipId
 					this.showWiFiSection = true
 					serialConnectionManagerClass.pipTurnedOn = true
@@ -149,7 +149,7 @@ class SerialMessageManagerClass {
 				switch (status) {
 					case "success":
 						enumStatus = WiFiConnectionStatus.WIFI_AND_WEBSOCKET_SUCCESS
-						runInAction(() => {
+						runInAction((): void => {
 							this.wiFiTestCompleted = true
 							this.showNameSection = true
 							this.isReadyToDisconnect = true
@@ -171,7 +171,7 @@ class SerialMessageManagerClass {
 			}
 			case "/saved-networks": {
 			// Handle saved networks response
-				runInAction(() => {
+				runInAction((): void => {
 					this.isLoadingSavedNetworks = false
 					this.savedNetworks = message.payload as SavedWiFiNetwork[]
 				})
@@ -179,7 +179,7 @@ class SerialMessageManagerClass {
 			}
 
 			case "/scan-started": {
-				runInAction(() => {
+				runInAction((): void => {
 					this.isScanning = true
 					this.scannedNetworks = [] // Clear previous results
 				})
@@ -237,7 +237,7 @@ class SerialMessageManagerClass {
 	}
 
 	// Reset flow state
-	public resetFlowState = action(() => {
+	public resetFlowState = action((): void => {
 		this.pipId = null
 		this.showWiFiSection = false
 		this.showNameSection = false
@@ -250,29 +250,29 @@ class SerialMessageManagerClass {
 		this.isScanning = false
 	})
 
-	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null) => {
+	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null): void => {
 		this.wiFiConnectionStatus = status
 	})
 
-	public setIsTestingWiFiConnection = action((isTesting: boolean) => {
+	public setIsTestingWiFiConnection = action((isTesting: boolean): void => {
 		this.isTestingWiFiConnection = isTesting
 	})
 
-	public setIsLoadingSavedNetworks = action((isLoading: boolean) => {
+	public setIsLoadingSavedNetworks = action((isLoading: boolean): void => {
 		this.isLoadingSavedNetworks = isLoading
 	})
 
-	public setIsScanning = action((isScanning: boolean) => {
+	public setIsScanning = action((isScanning: boolean): void => {
 		this.isScanning = isScanning
 	})
 
-	public clearScannedNetworks = action(() => {
+	public clearScannedNetworks = action((): void => {
 		this.scannedNetworks = []
 	})
 
-	public addSavedNetwork = action((network: SavedWiFiNetwork) => {
+	public addSavedNetwork = action((network: SavedWiFiNetwork): void => {
 		// Only add if not already present
-		if (!this.savedNetworks.find(n => n.ssid === network.ssid)) {
+		if (!this.savedNetworks.find((n): boolean => n.ssid === network.ssid)) {
 			this.savedNetworks.push(network)
 		}
 	})

@@ -33,7 +33,7 @@ export default function RegisterComponent(): React.ReactNode {
 		}
 	})
 
-	const onSubmit = useCallback(async (values: RegisterFormValues) => {
+	const onSubmit = useCallback(async (values: RegisterFormValues): Promise<void> => {
 		const success = await registerSubmit(values, setError)
 		if (success === false) return
 		navigate(PageToNavigateAfterLogin)

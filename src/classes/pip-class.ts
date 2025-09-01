@@ -19,11 +19,11 @@ class PipClass {
 	}
 
 	public checkIfUUIDAlreadyExists(pipUUID: PipUUID): boolean {
-		return this.pipData.some(data => data.pipUUID === pipUUID)
+		return this.pipData.some((data): boolean => data.pipUUID === pipUUID)
 	}
 
 	public setPipData(pipData: PipData[]): void {
-		pipData.map(singlePipData => this.addNewPip(singlePipData))
+		pipData.map((singlePipData): void => this.addNewPip(singlePipData))
 		this.setRetrievedPipData(true)
 		this.setIsRetrievingPipData(false)
 	}
@@ -34,7 +34,7 @@ class PipClass {
 	}
 
 	public updatePipConnectionStatus(data: PipStatusUpdate): void {
-		const pipToUpdate = this.pipData.find((pip) => pip.pipUUID === data.pipUUID)
+		const pipToUpdate = this.pipData.find((pip): boolean => pip.pipUUID === data.pipUUID)
 		if (!pipToUpdate) return
 
 		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
@@ -42,12 +42,12 @@ class PipClass {
 
 	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
 		return this.pipData.some(
-			data => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
+			(data): boolean => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
 		)
 	}
 
 	public findPipFromUUID(pipUUID: PipUUID): PipData | undefined {
-		return this.pipData.find(pipInfo => pipInfo.pipUUID === pipUUID)
+		return this.pipData.find((pipInfo): boolean => pipInfo.pipUUID === pipUUID)
 	}
 
 	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {

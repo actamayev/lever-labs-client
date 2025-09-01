@@ -11,7 +11,7 @@ interface SidebarLayoutProps {
 	children: ReactNode
 }
 
-function ProfileLayout({ children }: SidebarLayoutProps) {
+function ProfileLayout({ children }: SidebarLayoutProps): React.ReactNode {
 	const isLoggedIn = (
 		!isNull(personalInfoClass.username) ||
 		authClass.isLoggingOut  // ADD

@@ -14,9 +14,8 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
 import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 
-
-function SandboxProjectHeader({ project } : { project: SandboxProject }) {
-	const leaveSandbox = () => {
+function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
+	const leaveSandbox = (): void => {
 		void stopCurrentlyRunningCode()
 		void stopPollingSensors()
 	}
@@ -42,7 +41,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }) {
 				<CustomTooltip
 					tooltipTrigger={
 						<button
-							onClick={() => starSandboxProject(project.projectUUID)}
+							onClick={(): Promise<void> => starSandboxProject(project.projectUUID)}
 							className={cn(
 								"p-2 rounded-md transition-none hover:bg-polar",
 								project.isStarred ? "text-bee" : ""

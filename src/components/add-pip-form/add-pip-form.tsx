@@ -25,7 +25,7 @@ import serialMessageManagerClass from "../../classes/serial-message-manager-clas
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
-function AddPipForm() {
+function AddPipForm(): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const form = useForm<IncompletePipData>({
 		resolver: zodResolver(addPipSchema),
@@ -39,7 +39,7 @@ function AddPipForm() {
 		}
 	})
 
-	const resetAddPipVars = useCallback(() => {
+	const resetAddPipVars = useCallback((): void => {
 		form.reset({
 			selectedWiFiNetworkName: "",
 			selectedWiFiPassword: "",
@@ -61,14 +61,14 @@ function AddPipForm() {
 	}, [form, serialConnectionManagerClass.pipTurnedOn])
 
 	// Update pipUUID when pipId is received
-	useEffect(() => {
+	useEffect((): void => {
 		if (isNull(serialMessageManagerClass.pipId)) return
 		form.setValue("pipUUID", serialMessageManagerClass.pipId)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [serialMessageManagerClass.pipId, form])
 
-	const addPipCallback = useCallback(async() => {
-		const addPipResponse = await addPip(() => form.getValues())
+	const addPipCallback = useCallback(async(): Promise<void> => {
+		const addPipResponse = await addPip((): IncompletePipData => form.getValues())
 		if (addPipResponse === false) return
 		resetAddPipVars()
 		navigate(PageToNavigateAfterLogin)
@@ -91,7 +91,7 @@ function AddPipForm() {
 					<Form {...form}>
 						<form
 							onSubmit={form.handleSubmit(addPipCallback)}
-							onKeyDown={(e) => {
+							onKeyDown={(e): void => {
 								if (e.key === "Enter") e.preventDefault()
 							}}
 						>
@@ -125,7 +125,7 @@ function AddPipForm() {
 											<p className="font-bold">Step 4:&nbsp;</p>
 											<p>Unplug your Pip from USB and click Add to Account</p>
 										</div>
-										<AddPipButton getFormValues={() => form.getValues()} />
+										<AddPipButton getFormValues={(): IncompletePipData => form.getValues()} />
 									</>
 								)}
 							</div>

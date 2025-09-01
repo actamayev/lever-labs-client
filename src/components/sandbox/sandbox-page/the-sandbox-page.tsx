@@ -17,15 +17,15 @@ import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
-function TheSandboxPage() {
-	useEffect(() => void retrieveAllSandboxProjects(), [])
+function TheSandboxPage(): React.ReactNode {
+	useEffect((): void => void retrieveAllSandboxProjects(), [])
 	const navigate = useTypedNavigate()
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")
 
 	const colors = getDuolingoColors("humpback")
 	// Handle create new project
-	const handleCreateProject = useCallback(async () => {
+	const handleCreateProject = useCallback(async (): Promise<void> => {
 		setIsCreating(true)
 		try {
 			const projectUUID = await createSandboxProject()
@@ -37,23 +37,23 @@ function TheSandboxPage() {
 	}, [navigate])
 
 	// Filter projects based on search query
-	const filterProjects = useCallback((projects: SandboxProject[]) => {
+	const filterProjects = useCallback((projects: SandboxProject[]): SandboxProject[] => {
 		if (!searchQuery.trim()) return projects
 
-		return projects.filter(project =>
-			project.projectName?.toLowerCase().includes(searchQuery.toLowerCase())
+		return projects.filter((project): boolean =>
+			project.projectName?.toLowerCase().includes(searchQuery.toLowerCase()) || false
 		)
 	}, [searchQuery])
 
 	// Get all projects and sort by updated date
 	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
-		.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+		.sort((a, b): number => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
 	// Filter all projects based on search query
 	const filteredAllProjects = filterProjects(allProjects)
 
 	// Filter starred projects
-	const starredProjects = allProjects.filter(project => project.isStarred)
+	const starredProjects = allProjects.filter((project): boolean => project.isStarred)
 
 	// Filter starred projects based on search query
 	const filteredStarredProjects = filterProjects(starredProjects)
@@ -72,7 +72,7 @@ function TheSandboxPage() {
 							h-12 rounded-2xl focus:ring-0 shadow-none"
 							placeholder="Search in Sandbox"
 							value={searchQuery}
-							onChange={(e) => setSearchQuery(e.target.value)}
+							onChange={(e): void => setSearchQuery(e.target.value)}
 						/>
 					</div>
 				</div>
@@ -107,7 +107,7 @@ function TheSandboxPage() {
 								<h2 className="text-3xl font-semibold">Starred Projects</h2>
 							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{filteredStarredProjects.map(project => (
+								{filteredStarredProjects.map((project): React.ReactNode => (
 									<SingleProjectCard key={project.projectUUID} project={project} />
 								))}
 							</div>
@@ -130,7 +130,7 @@ function TheSandboxPage() {
 						</div>
 						{filteredAllProjects.length > 0 ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{filteredAllProjects.map(project => (
+								{filteredAllProjects.map((project): React.ReactNode => (
 									<SingleProjectCard key={project.projectUUID} project={project} />
 								))}
 							</div>
@@ -142,13 +142,13 @@ function TheSandboxPage() {
 									) : (
 										<>
 											<p className="text-hare mb-4">You don't have any projects yet</p>
-											<button
+											<TactileButton
 												className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
 												onClick={handleCreateProject}
 												disabled={isCreating}
 											>
 												Create your first project
-											</button>
+											</TactileButton>
 										</>
 									)}
 								</div>

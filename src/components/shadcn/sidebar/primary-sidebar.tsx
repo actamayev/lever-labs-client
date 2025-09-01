@@ -12,7 +12,7 @@ import { PrivatePageNames, OpenPages } from "../../../utils/constants/page-const
 export default function PrimarySidebar(): React.ReactNode {
 	const pathname = usePathname()
 
-	const isPrivatePage = PrivatePageNames.some(privatePage => {
+	const isPrivatePage = PrivatePageNames.some((privatePage): boolean => {
 		// Exact match for most pages
 		if (pathname === privatePage) return true
 
@@ -27,7 +27,7 @@ export default function PrimarySidebar(): React.ReactNode {
 		return false
 	})
 
-	const isOpenPage = OpenPages.some(openPath =>
+	const isOpenPage = OpenPages.some((openPath): boolean =>
 		pathname.startsWith(openPath)
 	)
 

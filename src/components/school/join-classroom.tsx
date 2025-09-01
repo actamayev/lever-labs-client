@@ -15,7 +15,7 @@ export default function JoinClassroom(): React.ReactNode {
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
 
-	const submit = useCallback(async () => {
+	const submit = useCallback(async (): Promise<void> => {
 		if (!isValidClassCode(classCode)) return
 		setError("")
 		setSuccess("")
@@ -41,7 +41,7 @@ export default function JoinClassroom(): React.ReactNode {
 				<Input
 					id="class-code"
 					value={classCode}
-					onChange={(e) => {
+					onChange={(e): void => {
 						setClassCode(e.target.value)
 						setError("")
 						setSuccess("")

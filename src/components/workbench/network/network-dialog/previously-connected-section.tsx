@@ -16,7 +16,7 @@ function PreviouslyConnectedSection(): React.ReactNode {
 
 	return (
 		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
-			{serialMessageManagerClass.previouslyConnected.map((network) => (
+			{serialMessageManagerClass.previouslyConnected.map((network): React.ReactNode => (
 				<div
 					key={`previous-${network.index}`}
 					className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"

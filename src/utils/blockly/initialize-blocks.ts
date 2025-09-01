@@ -8,7 +8,7 @@ export default function initializeBlocks(): void {
 	if (cppGenerator.areBlocksInitialized) return
 	const blocks = createAllBlocks().kinds
 
-	Object.entries(blocks).forEach(([blockName, blockData]) => {
+	Object.entries(blocks).forEach(([blockName, blockData]): void => {
 		Blockly.Blocks[blockName] = {
 			init: function(): void {
 				if (typeof blockData.definition.init === "function") {

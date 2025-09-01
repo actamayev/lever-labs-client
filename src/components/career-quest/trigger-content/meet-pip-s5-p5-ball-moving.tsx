@@ -23,12 +23,12 @@ function MeetPipS5P5BallMoving(): React.ReactNode {
 	const canvasWidth = 400
 	const canvasHeight = 300
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		const canvas = canvasRef.current
-		if (!canvas) return
+		if (!canvas) return (): void => {}
 
 		const ctx = canvas.getContext("2d")
-		if (!ctx) return
+		if (!ctx) return (): void => {}
 
 		const animate = (): void => {
 			// Get latest IMU data

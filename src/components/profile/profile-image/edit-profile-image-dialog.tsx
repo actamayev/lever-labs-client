@@ -30,7 +30,7 @@ interface EditProfileImageDialogProps {
 }
 
 // eslint-disable-next-line max-lines-per-function
-function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps) {
+function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps): React.ReactNode {
 	const fileInputRef = useRef<HTMLInputElement>(null)
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 	const [selectedImage, setSelectedImage] = useState<File | null>(null)
@@ -38,12 +38,12 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	const [pendingDelete, setPendingDelete] = useState(false)
 
 	const [isHovered, setIsHovered] = useState(false)
-	const handleMouseEnter = useCallback(() => setIsHovered(true), [])
-	const handleMouseLeave = useCallback(() => setIsHovered(false), [])
+	const handleMouseEnter = useCallback((): void => setIsHovered(true), [])
+	const handleMouseLeave = useCallback((): void => setIsHovered(false), [])
 
 	const imageStyle = isHovered ? { opacity: 0.8 } : { opacity: 1 }
 
-	const handleOpenFileSelector = useCallback(() => {
+	const handleOpenFileSelector = useCallback((): void => {
 		// If pending delete, cancel it when selecting a new image
 		if (pendingDelete) {
 			setPendingDelete(false)
@@ -80,7 +80,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 		}
 	}, [])
 
-	const handleSave = useCallback(async () => {
+	const handleSave = useCallback(async (): Promise<void> => {
 		if (isLoading) return
 
 		// Handle pending deletion
@@ -108,7 +108,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 		onClose()
 	}, [isLoading, pendingDelete, selectedImage, previewUrl, onClose])
 
-	const handleDelete = useCallback(() => {
+	const handleDelete = useCallback((): void => {
 		// If we have a preview but no saved profile picture, just clear the preview without marking for deletion
 		if (previewUrl && !personalInfoClass.profilePictureUrl) {
 			URL.revokeObjectURL(previewUrl)
@@ -141,7 +141,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 	return (
 		<Dialog
 			open={isOpen}
-			onOpenChange={(open) => {
+			onOpenChange={(open): void => {
 				if (open) return
 				// Clean up when dialog closes
 				if (previewUrl) {

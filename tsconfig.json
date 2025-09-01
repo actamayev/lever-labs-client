@@ -40,7 +40,12 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "./tailwind.config.ts",
-    "next.config.js",
   ],
-  "exclude": ["node_modules", "eslint.config.mjs", "postcss.config.js", "next.config.js", "keepalive-worker.js"]
+  "exclude": [
+    "node_modules",
+    "eslint.config.mjs",
+    "postcss.config.js",
+    "next.config.js",
+    "keepalive-worker.js"
+  ]
 }

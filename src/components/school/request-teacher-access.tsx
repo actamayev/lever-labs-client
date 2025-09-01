@@ -30,34 +30,34 @@ function RequestTeacherAccess(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
 	// Pre-populate form with existing data
-	useEffect(() => {
+	useEffect((): void => {
 		if (!hasExistingData) return
 		setFirstName(teacherData.teacherFirstName)
 		setLastName(teacherData.teacherLastName)
 		setSchoolName(teacherData.schoolName)
 	}, [hasExistingData, teacherData])
 
-	const clearErrorAndSuccess = useCallback(() => {
+	const clearErrorAndSuccess = useCallback((): void => {
 		setError("")
 		setSuccess("")
 	}, [])
 
-	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleFirstNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setFirstName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleLastNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setLastName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleSchoolNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setSchoolName(e.target.value)
 		clearErrorAndSuccess()
 	}, [clearErrorAndSuccess])
 
-	const submitRequest = useCallback(async () => {
+	const submitRequest = useCallback(async (): Promise<void> => {
 		setIsSubmitting(true)
 		clearErrorAndSuccess()
 

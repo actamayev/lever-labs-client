@@ -14,7 +14,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 	if (pipClass.pipPluggedInSerial) {
 		return (
 			<Button
-				onClick={(e) => {
+				onClick={(e): void => {
 					e.stopPropagation()
 					workbenchClass.setIsWiFiDialogOpen(true)
 					setIsHoverCardOpen(false) // Close hover card when opening dialog
@@ -44,7 +44,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 						Please connect {selectedPip.pipName} to the internet
 					</div>
 					<Button
-						onClick={(e) => {
+						onClick={(e): void => {
 							e.stopPropagation()
 							workbenchClass.setIsWiFiDialogOpen(true)
 							setIsHoverCardOpen(false) // Close hover card when opening dialog
@@ -65,7 +65,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 						{selectedPip.pipName} is ready to connect
 					</div>
 					<Button
-						onClick={() => {
+						onClick={(): void => {
 							requestToConnectToPip(selectedPip.pipUUID)
 							setIsHoverCardOpen(false)
 						}}
@@ -84,7 +84,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 						Connected to {selectedPip.pipName}
 					</div>
 					<Button
-						onClick={() => {
+						onClick={(): void => {
 							disconnectFromPip(selectedPip)
 							setIsHoverCardOpen(false)
 						}}
@@ -97,7 +97,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 		case "connected to serial":
 			return (
 				<Button
-					onClick={(e) => {
+					onClick={(e): void => {
 						e.stopPropagation()
 						workbenchClass.setIsWiFiDialogOpen(true)
 						setIsHoverCardOpen(false) // Close hover card when opening dialog

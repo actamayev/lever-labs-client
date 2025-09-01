@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
-function UploadWiFiCredentials() {
+function UploadWiFiCredentials(): React.ReactNode {
 	// Only show if there are connection issues
 	if (
 		serialMessageManagerClass.wiFiConnectionStatus !== WiFiConnectionStatus.WIFI_ONLY &&

@@ -22,7 +22,7 @@ export default function CustomSidebarButton({
 	goTo,
 	iconClassName,
 	customStyles,
-}: CustomSidebarButtonProps) {
+}: CustomSidebarButtonProps): React.ReactNode {
 	const pathname = usePathname()
 	if (isUndefined(isActive)) {
 		isActive = goTo === pathname

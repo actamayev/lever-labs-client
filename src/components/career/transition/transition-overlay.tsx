@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { observer } from "mobx-react"
 import careerQuestClass from "../../../classes/career-quest-class"
 
-function TransitionOverlay({ careerData }: { careerData: CareerQuestData }) {
+function TransitionOverlay({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
 	const duration = careerQuestClass.getCurrentTransitionDuration(careerData.careerUUID)
 

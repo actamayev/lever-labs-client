@@ -8,7 +8,7 @@ import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 export default function HeaderNav(): React.ReactNode {
 	const [isScrolled, setIsScrolled] = useState(false)
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		const handleScroll = (): void => {
 			setIsScrolled(window.scrollY > 0)
 		}

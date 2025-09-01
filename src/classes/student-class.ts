@@ -36,7 +36,7 @@ class StudentClass {
 	})
 
 	public getClassroomData = (classCode: ClassCode): StudentClassroomData | undefined => {
-		return this.classroomData.find((classroom) => classroom.classCode === classCode)
+		return this.classroomData.find((classroom): boolean => classroom.classCode === classCode)
 	}
 
 	public addPendingInvite = action((pendingInvite: StudentInviteJoinClass): void => {

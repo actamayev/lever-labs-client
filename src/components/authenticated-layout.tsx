@@ -6,6 +6,7 @@ interface AuthenticatedLayoutProps {
 }
 
 // Server component that gets auth state and passes to client (now async)
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default async function AuthenticatedLayout({ children }: AuthenticatedLayoutProps) {
 	const authState = await getAuthState() // ✅ Now awaiting the async function
 

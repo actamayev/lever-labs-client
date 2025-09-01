@@ -55,7 +55,7 @@ const BelowSidebarLink = ({ href, children }: SidebarLinkProps): React.ReactNode
 export default function ProfileSidebar(): React.ReactNode {
 	const navigate = useTypedNavigate()
 
-	const completeLogout = useCallback(async () => {
+	const completeLogout = useCallback(async (): Promise<void> => {
 		await logout()
 		navigate("/")
 	}, [navigate])
