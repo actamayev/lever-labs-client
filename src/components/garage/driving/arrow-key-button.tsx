@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { ReactNode, useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import garageClass from "../../../classes/garage-class"
@@ -10,12 +10,12 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import applyMotorControl from "../../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../../utils/garage/compute-motor-control"
 
-function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
+function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 
 	// Map direction to the correct icon
-	const getMotorDirectionIcon = (): ReactNode => {
+	const getMotorDirectionIcon = (): React.ReactNode => {
 		switch (direction) {
 			case "up":
 				return <ArrowUp className="!size-12" strokeWidth={2.5}/>
@@ -29,7 +29,7 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	}
 
 	// Update button styling directly when isPressed changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!buttonRef.current) return
 
 		const buttonElement = buttonRef.current
@@ -46,14 +46,14 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [direction, garageClass.pressedMotorKeys.size])
 
-	const handleButtonDown = () => {
+	const handleButtonDown = (): void => {
 		garageClass.setPressedKey(direction, Date.now())
 
 		const motorControl = computeMotorControl()
 		applyMotorControl(motorControl)
 	}
 
-	const handleButtonUp = () => {
+	const handleButtonUp = (): void => {
 		garageClass.removePressedKey(direction)
 
 		const motorControl = computeMotorControl()

@@ -45,7 +45,7 @@ export default function useEffectMotorDrive(): void {
 	}
 
 	// Set up key event listeners
-	useEffect(() => {
+	useEffect((): () => void => {
 		window.addEventListener("keydown", handleKeyDown)
 		window.addEventListener("keyup", handleKeyUp)
 
@@ -60,7 +60,7 @@ export default function useEffectMotorDrive(): void {
 	}, [])
 
 	// Watch for changes in motorThrottlePercent and emit updates
-	useEffect(() => {
+	useEffect((): void => {
 		// If throttle changes, re-emit the current motor state
 		if (garageClass.lastThrottlePercent !== garageClass.motorThrottlePercent) {
 			applyMotorControl(garageClass.motorState, true)

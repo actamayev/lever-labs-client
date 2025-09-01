@@ -18,7 +18,7 @@ interface CreateClassroomDialogProps {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps) {
+export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateClassroomDialogProps): React.ReactNode {
 	const [classroomName, setClassroomName] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
@@ -27,12 +27,12 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 	const colors = getDuolingoColors("humpback")
 
-	const clearErrorAndSuccess = useCallback(() => {
+	const clearErrorAndSuccess = useCallback((): void => {
 		setError("")
 		setSuccess("")
 	}, [])
 
-	const handleSubmit = useCallback(async () => {
+	const handleSubmit = useCallback(async (): Promise<void> => {
 		if (!classroomName.trim()) {
 			setError("Classroom name is required")
 			return
@@ -44,7 +44,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 			classroomName.trim(),
 			setError,
 			setSuccess,
-			(classCode: ClassCode) => {
+			(classCode: ClassCode): void => {
 				onOpenChange(false)
 				navigate(`/class-manager/${classCode}`)
 			}
@@ -53,7 +53,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 		setIsSubmitting(false)
 	}, [classroomName, onOpenChange, navigate])
 
-	const handleClose = useCallback(() => {
+	const handleClose = useCallback((): void => {
 		setClassroomName("")
 		clearErrorAndSuccess()
 		onOpenChange(false)
@@ -77,7 +77,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 						id="class-name"
 						type="text"
 						value={classroomName}
-						onChange={(e) => {
+						onChange={(e): void => {
 							setClassroomName(e.target.value)
 							clearErrorAndSuccess()
 						}}

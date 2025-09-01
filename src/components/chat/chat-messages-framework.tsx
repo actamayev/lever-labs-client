@@ -16,7 +16,7 @@ interface Props {
 
 // TODO 7/17/25: Fix auto-scroll behavior when streaming (should scroll with the socket updates)
 // eslint-disable-next-line max-lines-per-function
-function ChatMessagesFramework(props: Props) {
+function ChatMessagesFramework(props: Props): React.ReactNode {
 	const { hasAnyMessages, children, isWaitingForResponse, isStreaming, messageLength } = props
 	const containerRef = useRef<HTMLDivElement>(null)
 	const [isAtBottom, setIsAtBottom] = useState(true)
@@ -26,7 +26,7 @@ function ChatMessagesFramework(props: Props) {
 	const messagesEndRef = useRef<HTMLDivElement>(null)
 
 	// Check if user is at bottom of chat
-	const checkIfAtBottom = useCallback(() => {
+	const checkIfAtBottom = useCallback((): boolean => {
 		if (!containerRef.current) return false
 
 		const container = containerRef.current
@@ -38,7 +38,7 @@ function ChatMessagesFramework(props: Props) {
 	}, [])
 
 	// Smooth scroll to bottom
-	const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
+	const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth"): void => {
 		if (!containerRef.current) return
 
 		isScrollingProgrammatically.current = true
@@ -48,14 +48,14 @@ function ChatMessagesFramework(props: Props) {
 		})
 
 		// Reset the flag after scroll completes
-		setTimeout(() => {
+		setTimeout((): void => {
 			isScrollingProgrammatically.current = false
 			checkIfAtBottom()
 		}, behavior === "smooth" ? 300 : 50)
 	}, [checkIfAtBottom])
 
 	// Handle scroll events
-	const handleScroll = useCallback(() => {
+	const handleScroll = useCallback((): void => {
 		if (!containerRef.current || isScrollingProgrammatically.current) return
 
 		const atBottom = checkIfAtBottom()
@@ -80,7 +80,7 @@ function ChatMessagesFramework(props: Props) {
 	}, [isStreaming, checkIfAtBottom])
 
 	// Auto-scroll when new content arrives
-	useEffect(() => {
+	useEffect((): void => {
 		if (!containerRef.current || !hasAnyMessages) return
 
 		// Only auto-scroll if enabled and either not streaming or user hasn't manually scrolled
@@ -90,25 +90,24 @@ function ChatMessagesFramework(props: Props) {
 	}, [messageLength, autoScrollEnabled, isStreaming, scrollToBottom, hasAnyMessages])
 
 	// Reset when streaming ends
-	useEffect(() => {
-		if (!isStreaming) {
-			userScrolledDuringStream.current = false
-			// If user is at bottom when streaming ends, ensure auto-scroll is enabled
-			if (isAtBottom) {
-				setAutoScrollEnabled(true)
-			}
+	useEffect((): void => {
+		if (isStreaming) return
+		userScrolledDuringStream.current = false
+		// If user is at bottom when streaming ends, ensure auto-scroll is enabled
+		if (isAtBottom) {
+			setAutoScrollEnabled(true)
 		}
 	}, [isStreaming, isAtBottom])
 
 	// Handle scroll to bottom button click
-	const handleScrollToBottomClick = useCallback(() => {
+	const handleScrollToBottomClick = useCallback((): void => {
 		setAutoScrollEnabled(true)
 		userScrolledDuringStream.current = false
 		scrollToBottom("smooth")
 	}, [scrollToBottom])
 
 	// Check bottom position when messages change
-	useEffect(() => {
+	useEffect((): void => {
 		if (containerRef.current && hasAnyMessages) {
 			// Small delay to ensure DOM has updated
 			setTimeout(checkIfAtBottom, 10)

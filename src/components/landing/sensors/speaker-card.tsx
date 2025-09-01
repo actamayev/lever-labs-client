@@ -62,9 +62,9 @@ export default function SpeakerCard(): React.ReactNode {
 			<div
 				ref={speakerRef}
 				className="relative text-questionText"
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-				onClick={() => setIsHovered(!isHovered)} // Toggle for mobile
+				onMouseEnter={(): void => setIsHovered(true)}
+				onMouseLeave={(): void => setIsHovered(false)}
+				onClick={(): void => setIsHovered(!isHovered)} // Toggle for mobile
 			>
 				{volumeLevel === 1 && (
 					<Volume1

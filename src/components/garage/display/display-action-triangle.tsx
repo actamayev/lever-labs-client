@@ -8,10 +8,10 @@ interface DisplayActionTriangleProps {
 	isActive: boolean
 }
 
-export default function DisplayActionTriangle(props: DisplayActionTriangleProps) {
+export default function DisplayActionTriangle(props: DisplayActionTriangleProps): React.ReactNode {
 	const { applyToBuffer, isEmpty, isActive } = props
 
-	const triangleStyles = useMemo(() => {
+	const triangleStyles = useMemo((): string => {
 		if (isActive) {
 			return "text-chargingGreen fill-chargingGreen"
 		}

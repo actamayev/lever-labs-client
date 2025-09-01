@@ -16,15 +16,15 @@ const DOT_POSITIONS = [
 	{ bottom: "76px", right: "79px" }        // Bottom Right
 ]
 
-function LightDotsSelector() {
+function LightDotsSelector(): React.ReactNode {
 	return (
 		<div className="flex items-start justify-end">
 			<div className="relative w-full h-full px-5">
 				<CustomPip size={200}/>
-				{DOT_POSITIONS.map((position, index) => (
+				{DOT_POSITIONS.map((position, index): React.ReactNode => (
 					<button
 						key={index}
-						onClick={() => garageClass.toggleDot(index)}
+						onClick={(): void => garageClass.toggleDot(index)}
 						className={cn(
 							"absolute w-5 h-5 rounded-sm",
 							"transition-all duration-1000",

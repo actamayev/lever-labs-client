@@ -19,7 +19,7 @@ interface SingleSandboxMessageProps {
 }
 
 // eslint-disable-next-line complexity
-function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps) {
+function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps): React.ReactNode {
 	const isUser = message.role === "user"
 	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
 

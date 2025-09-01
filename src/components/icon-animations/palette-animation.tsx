@@ -12,11 +12,11 @@ const COLORS = [
 	"default"            // Default color (will use Tailwind class)
 ]
 
-function PaletteAnimation({ iconSize } : { iconSize: number }) {
+function PaletteAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	const [colorIndex, setColorIndex] = useState(-1) // -1 for initial state
 
-	const handleClick = useCallback(() => {
-		setColorIndex((prevIndex) => (prevIndex + 1) % COLORS.length)
+	const handleClick = useCallback((): void => {
+		setColorIndex((prevIndex): number => (prevIndex + 1) % COLORS.length)
 	}, [])
 
 	// Check if we should use the default color (Tailwind class)

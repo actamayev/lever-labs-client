@@ -198,6 +198,14 @@ const eslintConfig = [
 			"no-shadow": "error",
 		},
 	},
+
+	// Override for icon components - disable explicit function return type
+	{
+		files: ["src/components/icons/**/*"],
+		rules: {
+			"@typescript-eslint/explicit-function-return-type": "off",
+		},
+	},
 ]
 
 export default eslintConfig

@@ -9,7 +9,7 @@ import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
 
-function LightBrightnessControl() {
+function LightBrightnessControl(): React.ReactNode {
 	const [isDecreasing, setIsDecreasing] = useState(false)
 	const [isIncreasing, setIsIncreasing] = useState(false)
 	const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -17,22 +17,22 @@ function LightBrightnessControl() {
 	// Calculate the current brightness percentage
 	const brightnessPercent = Math.round(rgbaToHsva(garageClass.realColor).v)
 
-	const decreaseBrightness = useCallback(() => {
+	const decreaseBrightness = useCallback((): void => {
 		const newValue = Math.max(0, brightnessPercent - 5)
 		garageClass.setColorShade(newValue / 100)
 	}, [brightnessPercent])
 
-	const increaseBrightness = useCallback(() => {
+	const increaseBrightness = useCallback((): void => {
 		const newValue = Math.min(100, brightnessPercent + 5)
 		garageClass.setColorShade(newValue / 100)
 	}, [brightnessPercent])
 
-	const enforceRGBRange = useCallback((value: string) => {
+	const enforceRGBRange = useCallback((value: string): number => {
 		const numValue = parseInt(value || "0")
 		return clamp(numValue, 0, 100)
 	}, [])
 
-	useEffect(() => {
+	useEffect((): () => void => {
 		if (isDecreasing && brightnessPercent > 0) {
 			intervalRef.current = setInterval(decreaseBrightness, 200)
 		} else if (isIncreasing && brightnessPercent < 100) {
@@ -43,7 +43,7 @@ function LightBrightnessControl() {
 			}
 		}
 
-		return () => {
+		return (): void => {
 			if (intervalRef.current) {
 				clearInterval(intervalRef.current)
 			}
@@ -57,11 +57,11 @@ function LightBrightnessControl() {
 				size="icon"
 				onClick={decreaseBrightness}
 				disabled={brightnessPercent <= 0}
-				onMouseDown={() => setIsDecreasing(true)}
-				onMouseUp={() => setIsDecreasing(false)}
-				onMouseLeave={() => setIsDecreasing(false)}
-				onTouchStart={() => setIsDecreasing(true)}
-				onTouchEnd={() => setIsDecreasing(false)}
+				onMouseDown={(): void => setIsDecreasing(true)}
+				onMouseUp={(): void => setIsDecreasing(false)}
+				onMouseLeave={(): void => setIsDecreasing(false)}
+				onTouchStart={(): void => setIsDecreasing(true)}
+				onTouchEnd={(): void => setIsDecreasing(false)}
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>
@@ -73,7 +73,7 @@ function LightBrightnessControl() {
 					<Input
 						type="number"
 						value={brightnessPercent}
-						onChange={(e) => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
+						onChange={(e): void => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
 						min="0"
 						max="100"
 						// eslint-disable-next-line max-len
@@ -94,11 +94,11 @@ function LightBrightnessControl() {
 				size="icon"
 				onClick={increaseBrightness}
 				disabled={brightnessPercent >= 100}
-				onMouseDown={() => setIsIncreasing(true)}
-				onMouseUp={() => setIsIncreasing(false)}
-				onMouseLeave={() => setIsIncreasing(false)}
-				onTouchStart={() => setIsIncreasing(true)}
-				onTouchEnd={() => setIsIncreasing(false)}
+				onMouseDown={(): void => setIsIncreasing(true)}
+				onMouseUp={(): void => setIsIncreasing(false)}
+				onMouseLeave={(): void => setIsIncreasing(false)}
+				onTouchStart={(): void => setIsIncreasing(true)}
+				onTouchEnd={(): void => setIsIncreasing(false)}
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>

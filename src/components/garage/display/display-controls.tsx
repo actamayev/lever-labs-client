@@ -10,7 +10,7 @@ import DisplayActionTriangle from "./display-action-triangle"
 import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 
-function DisplayControls () {
+function DisplayControls(): React.ReactNode {
 	return (
 		<div className="space-y-8">
 			{/* Pre-defined designs dropdown */}
@@ -37,10 +37,10 @@ function DisplayControls () {
 					<DropdownMenuContent
 						className="rounded-xl bg-standardBackground mt-1 w-56 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
 					>
-						{PRE_DEFINED_DESIGNS.map((design) => (
+						{PRE_DEFINED_DESIGNS.map((design): React.ReactNode => (
 							<DropdownMenuItem
 								key={design.name}
-								onClick={() => garageClass.setSelectedDesign(design.name)}
+								onClick={(): void => garageClass.setSelectedDesign(design.name)}
 								className="cursor-pointer transition-none hover:!bg-polar rounded-lg text-xl"
 							>
 								{design.name}
@@ -50,7 +50,7 @@ function DisplayControls () {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
+						applyToBuffer={(): void => void garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
 						isEmpty={garageClass.selectedDesign === "No design"}
 						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
 					/>
@@ -62,8 +62,8 @@ function DisplayControls () {
 				<Input
 					placeholder="Enter text..."
 					value={garageClass.textInput}
-					onChange={(e) => garageClass.setTextInput(e.target.value)}
-					onKeyDown={(e) => {
+					onChange={(e): void => garageClass.setTextInput(e.target.value)}
+					onKeyDown={(e): void => {
 						if (e.key === "Enter" && garageClass.textInput.trim()) {
 							void garageClass.applyTextToBuffer()
 						}
@@ -77,7 +77,7 @@ function DisplayControls () {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={() => void garageClass.applyTextToBuffer()}
+						applyToBuffer={(): void => void garageClass.applyTextToBuffer()}
 						isEmpty={!garageClass.textInput.trim()}
 						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 					/>

@@ -47,7 +47,7 @@ function SoundActionButton({ sound, index } : { sound: FunSounds, index: number 
 	}
 
 	// Update button styling directly when isPressed changes
-	useEffect(() => {
+	useEffect((): void => {
 		if (!buttonRef.current) return
 
 		const buttonElement = buttonRef.current

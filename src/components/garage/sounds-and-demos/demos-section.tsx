@@ -8,7 +8,7 @@ export default function DemosSection(): React.ReactNode {
 			{/* Add your demo content here */}
 			<BlueTactileButton
 				className="w-[80%] h-10 text-2xl duration-150"
-				onClick={() => {
+				onClick={(): void => {
 					alert("Demo button clicked!")
 				}}
 			>
@@ -16,7 +16,7 @@ export default function DemosSection(): React.ReactNode {
 			</BlueTactileButton>
 			<BlueTactileButton
 				className="w-[80%] h-10 text-2xl duration-150"
-				onClick={() => {
+				onClick={(): void => {
 					alert("Another demo button clicked!")
 				}}
 			>
@@ -24,7 +24,7 @@ export default function DemosSection(): React.ReactNode {
 			</BlueTactileButton>
 			<BlueTactileButton
 				className="w-[80%] h-10 text-2xl duration-150"
-				onClick={() => {
+				onClick={(): void => {
 					alert("Yet another demo button clicked!")
 				}}
 			>

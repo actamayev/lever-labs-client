@@ -5,7 +5,7 @@ interface Props {
 	pixelBuffer: PixelBuffer
 }
 
-export default function RenderDisplay (props: Props) {
+export default function RenderDisplay (props: Props): React.ReactNode {
 	const { pixelBuffer } = props
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -16,7 +16,7 @@ export default function RenderDisplay (props: Props) {
 	}, [])
 
 	// Render the canvas based on pixel buffer
-	const renderCanvas = useCallback(() => {
+	const renderCanvas = useCallback((): void => {
 		const ctx = getContext()
 		if (!ctx) return
 
@@ -52,7 +52,7 @@ export default function RenderDisplay (props: Props) {
 	}, [getContext, pixelBuffer])
 
 	// Update canvas when pixel buffer changes
-	useEffect(() => {
+	useEffect((): void => {
 		renderCanvas()
 	}, [renderCanvas])
 
