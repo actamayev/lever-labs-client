@@ -1,15 +1,14 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { IncomingSensorData, LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
-import exportDisplay from "../utils/garage/export-display"
-import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA,
+import { LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
+import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
+import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 
 class GarageClass {
-	public selectedColorRgba: RgbaColor = { r: 0 , g: 255, b: 0, a: 1 }
+	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
 	public selectedColorShade: number = 1
 	public selectedDots: number[] = [0, 1, 2, 3, 4, 5]
 	public dotColors: { [key: number]: RgbaColor } = {
@@ -26,10 +25,6 @@ class GarageClass {
 	public isDriving: boolean = false
 	public driveDirections: Set<DriveDirection> = new Set()
 	public motorThrottlePercent: number = 100
-
-	// Sensor Data:
-	public sensorData: IncomingSensorData | null = null
-	public pitchData: number[] = []
 
 	//Horn and headlights
 	public isHornPressed: boolean = false
@@ -59,11 +54,11 @@ class GarageClass {
 		}
 	})
 
-	public clearBuffer = action((): void => {
+	private clearBuffer = action((): void => {
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map(() => Array(DISPLAY_WIDTH).fill(false))
 	})
 
-	public applyDesignToBuffer = action((designName: PreDefinedDesignName): void => {
+	public applyDesignToBuffer = action(async (designName: PreDefinedDesignName): Promise<void> => {
 		const design = PRE_DEFINED_DESIGNS.find(d => d.name === designName)
 		if (!design) return
 		this.clearBuffer()
@@ -72,32 +67,16 @@ class GarageClass {
 		})
 		this.designOnBuffer = designName
 		this.textOnBuffer = ""
-		exportDisplay()
+		await exportDisplay(this.pixelBuffer)
 	})
 
-	public applyTextToBuffer = action((): void => {
+	public applyTextToBuffer = action(async (): Promise<void> => {
 		if (!this.textInput.trim()) return
 		this.clearBuffer()
-		let x = 8 // Starting X position
-		const y = 28 // Starting Y position
-		for (const char of this.textInput.toUpperCase()) {
-			const fontData = FONT_DATA[char]
-			// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-			if (!fontData) continue
-			for (let col = 0; col < 5; col++) {
-				for (let row = 0; row < 8; row++) {
-					// eslint-disable-next-line max-depth
-					if (fontData[col] & (1 << row)) {
-						this.setPixelInBuffer(x + col, y + row, true)
-					}
-				}
-			}
-			x += 6 // 5 pixels + 1 space
-			if (x >= DISPLAY_WIDTH - 5) break
-		}
+		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
 		this.textOnBuffer = this.textInput
 		this.designOnBuffer = "No design"
-		exportDisplay()
+		await exportDisplay(this.pixelBuffer)
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
@@ -164,20 +143,6 @@ class GarageClass {
 		this.motorThrottlePercent = newMotorThrottlePercent
 	})
 
-	public setSensorData = action((incomingSensorData: IncomingSensorData | null): void => {
-		this.sensorData = incomingSensorData
-		if (isNull(incomingSensorData)) return
-		this.addPitchData(incomingSensorData)
-	})
-
-	public addPitchData = action((incomingSensorData: IncomingSensorData): void => {
-		this.pitchData.push(incomingSensorData.sensorPayload.pitch)
-	})
-
-	public resetPitchData = action((): void => {
-		this.pitchData = []
-	})
-
 	public setIsHornPressed = action((newHornState: boolean): void => {
 		this.isHornPressed = newHornState
 	})
@@ -212,7 +177,7 @@ class GarageClass {
 	})
 
 	public logout(): void {
-		this.setSelectedColorRgba({ r: 0 , g: 255, b: 0, a: 1 })
+		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
 		this.dotColors = {
 			0: { r: 0 , g: 255, b: 0, a: 1 },
@@ -226,8 +191,6 @@ class GarageClass {
 		this.isDriving = false
 		this.driveDirections.clear()
 		this.setMotorThrottlePercent(100)
-		this.setSensorData(null)
-		this.resetPitchData()
 
 		this.pressedMotorKeys.clear()
 		this.pressedDirections.clear()

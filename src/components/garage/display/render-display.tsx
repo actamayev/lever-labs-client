@@ -1,9 +1,12 @@
-import { observer } from "mobx-react"
 import { useRef, useEffect, useCallback } from "react"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
-import garageClass from "../../../classes/garage-class"
 
-function RenderDisplay () {
+interface Props {
+	pixelBuffer: PixelBuffer
+}
+
+export default function RenderDisplay (props: Props) {
+	const { pixelBuffer } = props
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 
 	// Get canvas context
@@ -24,7 +27,7 @@ function RenderDisplay () {
 		// Draw all pixels
 		for (let y = 0; y < DISPLAY_HEIGHT; y++) {
 			for (let x = 0; x < DISPLAY_WIDTH; x++) {
-				if (garageClass.pixelBuffer[y] && garageClass.pixelBuffer[y][x]) {
+				if (pixelBuffer[y] && pixelBuffer[y][x]) {
 					ctx.fillStyle = "#ffffff"
 					ctx.fillRect(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE)
 				}
@@ -46,8 +49,7 @@ function RenderDisplay () {
 			ctx.lineTo(CANVAS_WIDTH, y * PIXEL_SIZE)
 			ctx.stroke()
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getContext, garageClass.pixelBuffer])
+	}, [getContext, pixelBuffer])
 
 	// Update canvas when pixel buffer changes
 	useEffect(() => {
@@ -68,5 +70,3 @@ function RenderDisplay () {
 		</div>
 	)
 }
-
-export default observer(RenderDisplay)

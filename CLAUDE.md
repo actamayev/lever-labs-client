@@ -77,10 +77,7 @@ import { careerQuestDataService } from "@/services/career-quest-data-service"
 npm run dev --turbo    # Start dev server with Turbo
 
 # Code Quality  
-npm run lint           # ESLint check
-npm run lint:fix       # Auto-fix ESLint issues
 npm run type-check     # TypeScript check
-npm run validate       # Run both lint + type-check
 
 # Build
 npm run build          # Production build

@@ -1,12 +1,13 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { ClassCode, StudentClassroomData } from "@bluedotrobots/common-ts"
+import { ClassCode, StudentClassroomData, StudentInviteJoinClass } from "@bluedotrobots/common-ts"
 
 class StudentClass {
 	public isRetrievingStudentData = false
 	public retrievedStudentData = false
 	public classroomData: StudentClassroomData[] = []
+	public pendingInvites: StudentInviteJoinClass[] = []
 
 	constructor() {
 		makeAutoObservable(this)
@@ -37,6 +38,10 @@ class StudentClass {
 	public getClassroomData = (classCode: ClassCode): StudentClassroomData | undefined => {
 		return this.classroomData.find((classroom) => classroom.classCode === classCode)
 	}
+
+	public addPendingInvite = action((pendingInvite: StudentInviteJoinClass): void => {
+		this.pendingInvites.push(pendingInvite)
+	})
 
 	public logout(): void {
 		this.setClassroomData([])

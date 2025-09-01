@@ -66,7 +66,7 @@ export default function useEffectSetDefaultColors(): void {
 				|| isEmpty(garageClass.selectedDots)
 			) return
 
-			socketClass.emitLedColorControl({...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
+			socketClass.emitToServer("new-led-colors", {...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
 		}, 10),
 		[garageClass.selectedColorRgba.r,
 			garageClass.selectedColorRgba.g,

@@ -28,7 +28,7 @@ export default async function playFunSound(sound: FunSounds): Promise<void> {
 				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
 			})
 		}
-		socketClass.emitFunSound({
+		socketClass.emitToServer("play-fun-sound", {
 			pipUUID: pipClass.selectedPip.pipUUID,
 			sound
 		})

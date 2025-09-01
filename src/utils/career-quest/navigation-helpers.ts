@@ -1,7 +1,7 @@
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 
-export interface NavigationContext {
+interface NavigationContext {
 	careerUUID: CareerUUID
 	currentMainSlideIndex: number
 	currentTextChildIndex: number
