@@ -31,9 +31,7 @@ function MeetPipS3P4Display(): React.ReactNode {
 
 	const setTextInput = async (text: string): Promise<void> => {
 		const currentText = personalInfoClass.name || ""
-		if (containsProfanity(text, currentText)) {
-			return
-		}
+		if (containsProfanity(text, currentText)) return
 		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
 	}
