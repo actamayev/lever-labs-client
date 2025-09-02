@@ -478,14 +478,6 @@ class CareerQuestClass {
 		swiperInstance.slideTo(indices.mainSlideIndex, 0)
 
 		this.updateRightContentForCurrentState(careerUUID)
-		// Call triggerFunctionEnter for the current position since we just synced to it
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
-		if (currentSlide.type !== "textParent") return
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
-		const textChild = currentSlide.data.children[currentTextChildIndex]
-		if (textChild.triggerFunctionEnter) {
-			textChild.triggerFunctionEnter()
-		}
 	})
 
 	// ========================================
