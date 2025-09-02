@@ -198,34 +198,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</Card>
 			</div>
 
-			{/* Data Summary */}
-			<div className="grid grid-cols-4 gap-4 mt-6">
-				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-macaw">
-						{sensorDataClass.yaw.length > 0 ? sensorDataClass.yaw[sensorDataClass.yaw.length - 1].toFixed(1) : "0.0"}°
-					</div>
-					<div className="text-sm text-eel">Yaw</div>
-				</div>
-				<div className="text-center p-4 bg-red-50 rounded-lg">
-					<div className="text-2xl font-bold text-cardinal">
-						{sensorDataClass.pitch.length > 0 ? sensorDataClass.pitch[sensorDataClass.pitch.length - 1].toFixed(1) : "0.0"}°
-					</div>
-					<div className="text-sm text-eel">Pitch</div>
-				</div>
-				<div className="text-center p-4 bg-green-50 rounded-lg">
-					<div className="text-2xl font-bold text-chargingGreen">
-						{sensorDataClass.roll.length > 0 ? sensorDataClass.roll[sensorDataClass.roll.length - 1].toFixed(1) : "0.0"}°
-					</div>
-					<div className="text-sm text-eel">Roll</div>
-				</div>
-				<div className="text-center p-4 bg-purple-50 rounded-lg">
-					<div className="text-2xl font-bold text-beetle">
-						{linearAccelerationData.length > 0 ?
-							linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
-					</div>
-					<div className="text-sm text-eel">Acceleration</div>
-				</div>
-			</div>
+			{/* </div> */}
 		</div>
 	)
 }
