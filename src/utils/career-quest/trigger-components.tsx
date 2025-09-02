@@ -13,6 +13,7 @@ import MeetPipS6P4MzViz from "../../components/career-quest/trigger-content/meet
 import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/meet-pip-s6-p6-tofs-viz"
 import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
 import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
+import MeetPipS4P5FunSound from "../../components/career-quest/trigger-content/meet-pip-s4-p5-fun-sound"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -23,6 +24,7 @@ const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	"s2-p4-light-show": (): ReactNode => <MeetPipS2P4LightShow />,
 	"s3-p4-display": (): ReactNode => <MeetPipS3P4Display />,
 	"s4-p4-speaker": (): ReactNode => <SoundsSection />,
+	"s4-p5-speaker": (): ReactNode => <MeetPipS4P5FunSound />,
 	"s5-p4-imu-viz": (): ReactNode => <MeetPipS5P4ImuViz />,
 	"s5-p5-ball-moving": (): ReactNode => <MeetPipS5P5BallMoving />,
 	"s6-p4-mz-viz": (): ReactNode => <MeetPipS6P4MzViz />,
