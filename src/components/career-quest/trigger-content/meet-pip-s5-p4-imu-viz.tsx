@@ -23,7 +23,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 			const magnitude = Math.sqrt(ax * ax + ay * ay + az * az)
 			return {
 				index,
-				value: magnitude,
+				value: magnitude - 9.81,
 			}
 		})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,7 +185,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
 							/>
 							<Tooltip
-								formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
+								formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Shake"]}
 								labelFormatter={(): string => "Sample"}
 							/>
 							<Line
