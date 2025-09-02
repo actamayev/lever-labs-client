@@ -17,14 +17,19 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 	const padding = 0
 
 	// Color configuration
-	const minDistance = 0 // mm
+	const minDistance = 15 // mm - minimum distance for positive values
 	const maxDistance = 1000 // mm
 	const closeColor = { r: 255, g: 0, b: 0 } // Red for close objects
 	const farColor = { r: 0, g: 0, b: 255 } // Blue for far objects
 
 	// Get color for distance value
 	const getColorForDistance = (distance: number): string => {
-		// Clamp distance to valid range
+		// Keep -1 values as black (invalid)
+		if (distance === -1) {
+			return "#000000"
+		}
+
+		// Clamp distance to valid range, but allow values below minDistance to be treated as minDistance
 		const clampedDistance = Math.max(minDistance, Math.min(maxDistance, distance))
 		const normalizedDistance = (clampedDistance - minDistance) / (maxDistance - minDistance)
 
@@ -86,7 +91,7 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 		const ctx = canvas.getContext("2d")
 		if (!ctx) return (): void => {}
 
-		// eslint-disable-next-line complexity
+
 		const animate = (): void => {
 			// Clear canvas
 			ctx.clearRect(0, 0, canvasSize, canvasSize)
@@ -123,19 +128,7 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 							ctx.strokeRect(x + 1, y + 1, cellSize - 2, cellSize - 2)
 						}
 
-						// Draw distance value (small text) - skip for invalid readings
-						// eslint-disable-next-line max-depth
-						if (!isInvalid) {
-							ctx.fillStyle = distance < maxDistance / 2 ? "#FFFFFF" : "#000000"
-							ctx.font = "10px Arial"
-							ctx.textAlign = "center"
-							ctx.textBaseline = "middle"
-							ctx.fillText(
-								`${distance}`,
-								x + cellSize / 2,
-								y + cellSize / 2
-							)
-						}
+						// Distance text removed - cells now show only the gradient color
 					}
 				}
 			} else {
@@ -190,16 +183,15 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 				</div>
 			</div>
 
-			{/* Legend */}
+			{/* Gradient Legend */}
 			<div className="flex justify-center">
-				<div className="flex items-center space-x-4">
-					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-cardinal rounded"/>
-						<span className="text-sm">Close ({minDistance}mm)</span>
-					</div>
-					<div className="flex items-center space-x-2">
-						<div className="w-4 h-4 bg-macaw rounded"/>
-						<span className="text-sm">Far ({maxDistance}mm)</span>
+				<div className="flex flex-col items-center space-y-2">
+					<div className="w-48 h-6 rounded" style={{
+						background: `linear-gradient(to right, rgb(${closeColor.r}, ${closeColor.g}, ${closeColor.b}), rgb(${farColor.r}, ${farColor.g}, ${farColor.b}))`
+					}}/>
+					<div className="flex items-center justify-between w-48 text-xs text-gray-600">
+						<span>Close</span>
+						<span>Far</span>
 					</div>
 				</div>
 			</div>
