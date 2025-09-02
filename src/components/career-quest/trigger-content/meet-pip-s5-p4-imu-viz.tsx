@@ -9,7 +9,6 @@ import {
 	YAxis,
 	CartesianGrid,
 	Tooltip,
-	ResponsiveContainer,
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
@@ -74,32 +73,30 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 						<CardTitle className="text-lg">Yaw (Heading)</CardTitle>
 					</CardHeader>
 					<CardContent className="h-48">
-						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={yawData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-								<XAxis
-									dataKey="index"
-									className="text-xs"
-									tick={false}
-								/>
-								<YAxis
-									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								/>
-								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
-									labelFormatter={(): string => "Sample"}
-								/>
-								<Line
-									type="monotone"
-									dataKey="value"
-									stroke="#2563EB"
-									strokeWidth={chartConfig.strokeWidth}
-									dot={chartConfig.dot}
-									isAnimationActive={chartConfig.isAnimationActive}
-								/>
-							</LineChart>
-						</ResponsiveContainer>
+						<LineChart data={yawData} margin={chartConfig.margin} width={280} height={192}>
+							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+							<XAxis
+								dataKey="index"
+								className="text-xs"
+								tick={false}
+							/>
+							<YAxis
+								className="text-xs"
+								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+							/>
+							<Tooltip
+								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
+								labelFormatter={(): string => "Sample"}
+							/>
+							<Line
+								type="monotone"
+								dataKey="value"
+								stroke="#2563EB"
+								strokeWidth={chartConfig.strokeWidth}
+								dot={chartConfig.dot}
+								isAnimationActive={chartConfig.isAnimationActive}
+							/>
+						</LineChart>
 					</CardContent>
 				</Card>
 
@@ -109,32 +106,30 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 						<CardTitle className="text-lg">Pitch (Forward/Backward)</CardTitle>
 					</CardHeader>
 					<CardContent className="h-48">
-						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={pitchData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-								<XAxis
-									dataKey="index"
-									className="text-xs"
-									tick={false}
-								/>
-								<YAxis
-									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								/>
-								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
-									labelFormatter={(): string => "Sample"}
-								/>
-								<Line
-									type="monotone"
-									dataKey="value"
-									stroke="#DC2626"
-									strokeWidth={chartConfig.strokeWidth}
-									dot={chartConfig.dot}
-									isAnimationActive={chartConfig.isAnimationActive}
-								/>
-							</LineChart>
-						</ResponsiveContainer>
+						<LineChart data={pitchData} margin={chartConfig.margin} width={280} height={192}>
+							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+							<XAxis
+								dataKey="index"
+								className="text-xs"
+								tick={false}
+							/>
+							<YAxis
+								className="text-xs"
+								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+							/>
+							<Tooltip
+								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
+								labelFormatter={(): string => "Sample"}
+							/>
+							<Line
+								type="monotone"
+								dataKey="value"
+								stroke="#DC2626"
+								strokeWidth={chartConfig.strokeWidth}
+								dot={chartConfig.dot}
+								isAnimationActive={chartConfig.isAnimationActive}
+							/>
+						</LineChart>
 					</CardContent>
 				</Card>
 
@@ -144,32 +139,30 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 						<CardTitle className="text-lg">Roll (Left/Right)</CardTitle>
 					</CardHeader>
 					<CardContent className="h-48">
-						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={rollData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-								<XAxis
-									dataKey="index"
-									className="text-xs"
-									tick={false}
-								/>
-								<YAxis
-									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								/>
-								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
-									labelFormatter={(): string => "Sample"}
-								/>
-								<Line
-									type="monotone"
-									dataKey="value"
-									stroke="#059669"
-									strokeWidth={chartConfig.strokeWidth}
-									dot={chartConfig.dot}
-									isAnimationActive={chartConfig.isAnimationActive}
-								/>
-							</LineChart>
-						</ResponsiveContainer>
+						<LineChart data={rollData} margin={chartConfig.margin} width={280} height={192}>
+							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+							<XAxis
+								dataKey="index"
+								className="text-xs"
+								tick={false}
+							/>
+							<YAxis
+								className="text-xs"
+								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+							/>
+							<Tooltip
+								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
+								labelFormatter={(): string => "Sample"}
+							/>
+							<Line
+								type="monotone"
+								dataKey="value"
+								stroke="#059669"
+								strokeWidth={chartConfig.strokeWidth}
+								dot={chartConfig.dot}
+								isAnimationActive={chartConfig.isAnimationActive}
+							/>
+						</LineChart>
 					</CardContent>
 				</Card>
 
@@ -179,32 +172,30 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 						<CardTitle className="text-lg">Linear Acceleration</CardTitle>
 					</CardHeader>
 					<CardContent className="h-48">
-						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={linearAccelerationData} margin={chartConfig.margin}>
-								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-								<XAxis
-									dataKey="index"
-									className="text-xs"
-									tick={false}
-								/>
-								<YAxis
-									className="text-xs"
-									label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
-								/>
-								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
-									labelFormatter={(): string => "Sample"}
-								/>
-								<Line
-									type="monotone"
-									dataKey="value"
-									stroke="#7C3AED"
-									strokeWidth={chartConfig.strokeWidth}
-									dot={chartConfig.dot}
-									isAnimationActive={chartConfig.isAnimationActive}
-								/>
-							</LineChart>
-						</ResponsiveContainer>
+						<LineChart data={linearAccelerationData} margin={chartConfig.margin} width={280} height={192}>
+							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+							<XAxis
+								dataKey="index"
+								className="text-xs"
+								tick={false}
+							/>
+							<YAxis
+								className="text-xs"
+								label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
+							/>
+							<Tooltip
+								formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Acceleration"]}
+								labelFormatter={(): string => "Sample"}
+							/>
+							<Line
+								type="monotone"
+								dataKey="value"
+								stroke="#7C3AED"
+								strokeWidth={chartConfig.strokeWidth}
+								dot={chartConfig.dot}
+								isAnimationActive={chartConfig.isAnimationActive}
+							/>
+						</LineChart>
 					</CardContent>
 				</Card>
 			</div>
@@ -215,26 +206,26 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 					<div className="text-2xl font-bold text-macaw">
 						{sensorDataClass.yaw.length > 0 ? sensorDataClass.yaw[sensorDataClass.yaw.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-eel">Current Yaw</div>
+					<div className="text-sm text-eel">Yaw</div>
 				</div>
 				<div className="text-center p-4 bg-red-50 rounded-lg">
 					<div className="text-2xl font-bold text-cardinal">
 						{sensorDataClass.pitch.length > 0 ? sensorDataClass.pitch[sensorDataClass.pitch.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-eel">Current Pitch</div>
+					<div className="text-sm text-eel">Pitch</div>
 				</div>
 				<div className="text-center p-4 bg-green-50 rounded-lg">
 					<div className="text-2xl font-bold text-chargingGreen">
 						{sensorDataClass.roll.length > 0 ? sensorDataClass.roll[sensorDataClass.roll.length - 1].toFixed(1) : "0.0"}°
 					</div>
-					<div className="text-sm text-eel">Current Roll</div>
+					<div className="text-sm text-eel">Roll</div>
 				</div>
 				<div className="text-center p-4 bg-purple-50 rounded-lg">
 					<div className="text-2xl font-bold text-beetle">
 						{linearAccelerationData.length > 0 ?
 							linearAccelerationData[linearAccelerationData.length - 1].value.toFixed(2) : "0.00"} m/s²
 					</div>
-					<div className="text-sm text-eel">Current Acceleration</div>
+					<div className="text-sm text-eel">Acceleration</div>
 				</div>
 			</div>
 		</div>

@@ -9,7 +9,7 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import editName from "../../../utils/personal-info/edit-name"
 
 function MeetPipS3P4Display(): React.ReactNode {
-	const profanityWords = [
+	const profanityWords: string[] = [
 		"fuck", "shit", "damn", "ass", "bitch", "bastard", "crap",
 		"piss", "cock", "dick", "pussy", "whore", "slut", "fag", "nigger",
 		"retard", "gay", "stupid", "idiot", "moron", "dumb"
