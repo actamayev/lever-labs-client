@@ -155,7 +155,7 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">Multizone Sensor Heat Map</h2>
+			<h2 className="text-2xl font-bold text-center mb-6">Time of Flight Sensor View</h2>
 
 			<div className="flex justify-center">
 				<div className="relative">
@@ -185,14 +185,17 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 
 			{/* Gradient Legend */}
 			<div className="flex justify-center">
-				<div className="flex flex-col items-center space-y-2">
-					<div className="w-48 h-6 rounded" style={{
-						background: `linear-gradient(to right, rgb(${closeColor.r}, ${closeColor.g}, ${closeColor.b}), rgb(${farColor.r}, ${farColor.g}, ${farColor.b}))`
-					}}/>
-					<div className="flex items-center justify-between w-48 text-xs text-gray-600">
-						<span>Close</span>
-						<span>Far</span>
-					</div>
+				<div className="flex flex-row items-center justify-center space-x-2" style={{ width: canvasSize }}>
+					<div className="text-sm text-center"style={{ width: canvasSize / 10 }}>Close</div>
+					<div
+						className="h-6 rounded-lg"
+						style={{
+							width: canvasSize - (canvasSize / 10) * 2,
+							// eslint-disable-next-line max-len
+							background: `linear-gradient(to right, rgb(${closeColor.r}, ${closeColor.g}, ${closeColor.b}), rgb(${farColor.r}, ${farColor.g}, ${farColor.b}))`
+						}}
+					/>
+					<div className="text-sm text-center" style={{ width: canvasSize / 10 }}>Far</div>
 				</div>
 			</div>
 		</div>
