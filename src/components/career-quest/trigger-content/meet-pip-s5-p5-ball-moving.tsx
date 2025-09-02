@@ -34,8 +34,8 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 	const friction = 0.96         // slightly lower => keeps velocity longer
 	const sensitivity = 0.14      // increased sensitivity for faster response
 	const boundaryPadding = 20
-	const canvasWidth = 400
-	const canvasHeight = 300
+	const canvasWidth = 600
+	const canvasHeight = 450
 
 	// Utility: clamp a value
 	const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v))
@@ -181,7 +181,7 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 			ctx.clearRect(0, 0, canvasWidth, canvasHeight)
 
 			// Draw boundary
-			ctx.strokeStyle = "#374151"
+			ctx.strokeStyle = "#000000"
 			ctx.lineWidth = 3
 			ctx.strokeRect(
 				boundaryPadding,
