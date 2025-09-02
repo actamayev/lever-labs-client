@@ -63,6 +63,7 @@ class SensorDataClass {
 		}
 	})
 
+	// TODO 9/2/25: Figure out why data is flipped (could be the sensor, or the way we're sending the data)
 	public addMultizoneTofData = action((value: SensorPayloadMZ): void => {
 		// Flip the row index (Y direction)
 		const flippedRow = 7 - value.row
