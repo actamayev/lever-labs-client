@@ -7,8 +7,8 @@ import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle imp
 import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import careerQuestClass from "../../../classes/career-quest-class" // Add import
+import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
@@ -29,7 +29,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						<Link href="/career-quest">
 							<button
 								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={(): Promise<void> => stopCurrentlyRunningCode()}
+								onClick={(): Promise<void> => stopCareerTrigger()}
 							>
 								<ArrowLeft size={30} className="mr-1" />
 							</button>

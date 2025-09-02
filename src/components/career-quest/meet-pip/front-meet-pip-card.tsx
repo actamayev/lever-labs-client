@@ -7,15 +7,24 @@ import SingleComponentUsed from "../single-component-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { meetPipData } from "../../../utils/constants/career-quest/career-data"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-import Link from "next/link"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { observer } from "mobx-react"
+import { useCallback } from "react"
+import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
+import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts"
+import careerQuestTrigger from "../../../utils/career-quest/career-quest-trigger"
 
 function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNode {
 	const { careerName, careerIcon: Icon, componentsUsed, backgroundColor, careerUUID } = meetPipData
+	const navigate = useTypedNavigate()
 
 	const colors = getDuolingoColors(backgroundColor)
+
+	const enterCareerOnClick = useCallback((): void => {
+		navigate(meetPipData.careerUrl)
+		careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.ENTER_CAREER)
+	}, [navigate])
 
 	return (
 		<motion.div
@@ -76,15 +85,14 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 
 				{/* Continue Button */}
 				<div className="flex flex-row items-center mb-6 w-full gap-3">
-					<Link href={meetPipData.careerUrl} className="flex-1">
-						<TactileButton
-							className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
-							shadowClass={colors.shadow}
-							shadowHeight={4}
-						>
-							{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
-						</TactileButton>
-					</Link>
+					<TactileButton
+						className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+						shadowClass={colors.shadow}
+						shadowHeight={4}
+						onClick={enterCareerOnClick}
+					>
+						{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+					</TactileButton>
 					<BackFlipButton
 						onFlip={flipCard}
 						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
