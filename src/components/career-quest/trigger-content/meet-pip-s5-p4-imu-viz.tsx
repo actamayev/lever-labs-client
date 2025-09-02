@@ -81,6 +81,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 							<YAxis
 								className="text-xs"
 								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+								domain={[-180, 180]}
 							/>
 							<Tooltip
 								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
@@ -114,6 +115,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 							<YAxis
 								className="text-xs"
 								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+								domain={[-180, 180]}
 							/>
 							<Tooltip
 								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
@@ -147,6 +149,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 							<YAxis
 								className="text-xs"
 								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+								domain={[-180, 180]}
 							/>
 							<Tooltip
 								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
@@ -167,7 +170,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				{/* Linear Acceleration Chart */}
 				<Card className="h-64">
 					<CardHeader className="pb-2">
-						<CardTitle className="text-lg">Linear Acceleration</CardTitle>
+						<CardTitle className="text-lg">Shake</CardTitle>
 					</CardHeader>
 					<CardContent className="h-48">
 						<LineChart data={linearAccelerationData} margin={chartConfig.margin} width={280} height={192}>
@@ -197,8 +200,6 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 					</CardContent>
 				</Card>
 			</div>
-
-			{/* </div> */}
 		</div>
 	)
 }
