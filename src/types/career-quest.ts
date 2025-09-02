@@ -59,7 +59,9 @@ declare global {
 	}
 
 	type RightContent =
-	| { type: "image", icon: string }
+	| { type: "icon", iconKey: string } // Renamed from "image" to avoid confusion
+	| { type: "image", src: string, alt: string, width: number, height: number }
+	| { type: "video", src: string, poster?: string, autoplay?: boolean, loop?: boolean, muted?: boolean }
 	| { type: "component", component: (() => ReactNode) | string }
 	| { type: "challenge", challengeData: CqChallengeData }
 	| { type: "chat" }
@@ -89,9 +91,27 @@ declare global {
 		type: "text"
 		id: string
 		content: string | ((onAdvance?: () => void) => ReactNode)
-		rightSideContent: string // Trigger component key
-		triggerFunctionEnter?: (() => Promise<void>) // Optional function to run when navigating to this section
-		triggerFunctionExit?: (() => Promise<void>) // Optional function to run when navigating away from this section
+		rightSideContent: string | RightContent // Updated to support both
+		triggerFunctionEnter?: (() => Promise<void>)
+		triggerFunctionExit?: (() => Promise<void>)
+	}
+
+	interface ImageContent {
+		type: "image"
+		src: string  // e.g., "/images/career-quest/pip-intro.jpg"
+		alt?: string
+		width?: number
+		height?: number
+	}
+
+	// Helper type for creating video content easily
+	interface VideoContent {
+		type: "video"
+		src: string  // e.g., "/videos/career-quest/pip-demo.mp4"
+		poster?: string // Optional poster image path
+		autoplay?: boolean
+		loop?: boolean
+		muted?: boolean
 	}
 
 	// New morphing text section type

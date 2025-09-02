@@ -8,6 +8,7 @@ import { CareerType, CareerUUID, MeetPipTriggerType, OBSTACLE_AVOIDANCE_CHALLENG
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
+import { createImage } from "./create-media-helpers"
 
 export const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
@@ -33,7 +34,9 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-1-2",
 					content: "meet-pip-1-2",
-					rightSideContent: "heading2-humpback"
+					rightSideContent: createImage("logo512.png", "meet-pip", {
+						alt: "Meet Pip robot introduction",
+					})
 				},
 				{
 					type: "text",
@@ -60,12 +63,16 @@ export const MEET_PIP: CareerQuestData = {
 						{
 							id: "variant-1",
 							text: "deliver meals through a busy city,",
-							rightContent: { type: "image", icon: "navigation-humpback" }
+							rightContent: createImage("pip_right.png", "meet-pip", {
+								alt: "Meet Pip robot introduction",
+							})
 						},
 						{
 							id: "variant-2",
 							text: "or lend a hand in a hospital,",
-							rightContent: { type: "image", icon: "heart-humpback" }
+							rightContent: createImage("pip_right.png", "meet-pip", {
+								alt: "Meet Pip robot introduction",
+							})
 						},
 						{
 							id: "variant-3",

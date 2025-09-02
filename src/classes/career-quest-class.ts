@@ -103,6 +103,7 @@ class CareerQuestClass {
 		this.isDoneInitializing = true
 	})
 
+
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
 		if (this.careers.has(careerDefinition.careerUUID)) return
 
@@ -191,12 +192,8 @@ class CareerQuestClass {
 			currentTransitionDuration: DEFAULT_TRANSITION_DURATION,
 			lastSlideChangeTime: 0,
 			rightContent: {
-				type: "image",
-				icon:
-					(careerDefinition.sections[0].type === "textParent" &&
-						careerDefinition.sections[0].children[0].type !== "morphingText" &&
-						careerDefinition.sections[0].children[0].rightSideContent) ||
-					"null"
+				type: "icon",
+				iconKey: "bot-humpback"
 			},
 			textParentSwipers: new Map<string, SwiperType | null>(),
 			careerChatData: {
@@ -1293,7 +1290,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "image", icon: "bot-humpback" }
+		return career?.rightContent || { type: "icon", iconKey: "bot-humpback" }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
@@ -1638,7 +1635,7 @@ class CareerQuestClass {
 	// RIGHT CONTENT SELECTION LOGIC
 	// ========================================
 
-	// eslint-disable-next-line complexity
+
 	private updateRightContentForCurrentState = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
@@ -1647,12 +1644,8 @@ class CareerQuestClass {
 		if (!isDataReady) {
 			this.setRightContent(careerUUID,
 				{
-					type: "image",
-					icon:
-						(career.careerDefinition.sections[0].type === "textParent" &&
-							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].rightSideContent) ||
-						"null"
+					type: "icon",
+					iconKey: "bot-humpback"
 				})
 			return
 		}
@@ -1689,16 +1682,13 @@ class CareerQuestClass {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
 				this.setRightContent(careerUUID, {
-					type: "image",
-					icon:
-						(career.careerDefinition.sections[0].type === "textParent" &&
-							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].rightSideContent) ||
-						"null"
+					type: "icon",
+					iconKey: "bot-humpback"
 				})
 			}
 		} else {
-			this.setRightContent(careerUUID, { type: "image", icon: textChild.rightSideContent })
+			const resolvedContent = this.resolveRightSideContent(textChild.rightSideContent)
+			this.setRightContent(careerUUID, resolvedContent)
 		}
 	})
 
@@ -1818,6 +1808,16 @@ class CareerQuestClass {
 
 	private sleep(ms: number): Promise<void> {
 		return new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, ms))
+	}
+
+	private resolveRightSideContent(rightSideContent: string | RightContent): RightContent {
+		// If it's already a RightContent object, return as-is
+		if (typeof rightSideContent === "object") {
+			return rightSideContent
+		}
+
+		// If it's a string, treat it as an icon (backward compatibility)
+		return { type: "icon", iconKey: rightSideContent }
 	}
 
 	public logout(): void {

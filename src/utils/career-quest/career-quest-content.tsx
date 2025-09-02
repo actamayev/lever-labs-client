@@ -21,7 +21,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	"meet-pip-1-2": (): ReactNode => (
 		<div>
 			My name is {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>
+			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>.
 			I don't know what I was made for, but I'm excited to find out.
 		</div>
 	),

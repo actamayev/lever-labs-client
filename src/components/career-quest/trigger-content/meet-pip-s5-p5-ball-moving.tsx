@@ -38,10 +38,10 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 	const canvasHeight = 450
 
 	// Utility: clamp a value
-	const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v))
+	const clamp = (v: number, a: number, b: number): number => Math.max(a, Math.min(b, v))
 
 	// Spawn / respawn logic: picks non-overlapping ball + hole positions
-	const respawn = (ctx?: CanvasRenderingContext2D | null) => {
+	const respawn = (ctx?: CanvasRenderingContext2D | null): void => {
 		const minX = boundaryPadding + ballRadius
 		const maxX = canvasWidth - boundaryPadding - ballRadius
 		const minY = boundaryPadding + ballRadius
