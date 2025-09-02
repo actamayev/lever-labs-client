@@ -261,8 +261,11 @@ class CareerQuestClass {
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
 
-		// When data becomes ready, try to restore and sync UI state
+		// When data becomes ready, immediately restore navigation indices
 		if (hasRetrievedAllChallenges) {
+			// Restore navigation indices immediately (regardless of swiper instance)
+			this.restoreNavigationFromSavedPosition(careerUUID)
+			// Try to sync swiper and right content if swiper instance exists
 			this.attemptRestoreAndSyncRightContent(careerUUID)
 		}
 	})
@@ -465,20 +468,17 @@ class CareerQuestClass {
 		return true
 	})
 
-	// Attempt to restore saved position (if any), sync the Swiper to it, and update right content
+	// Sync swiper to current navigation indices and update right content
 	private attemptRestoreAndSyncRightContent = action((careerUUID: CareerUUID): void => {
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		if (!isDataReady || !swiperInstance) return
 
-		const restored = this.restoreNavigationFromSavedPosition(careerUUID)
-		if (!restored) return
-
 		const indices = this.getNavigationIndices(careerUUID)
 		swiperInstance.slideTo(indices.mainSlideIndex, 0)
 
 		this.updateRightContentForCurrentState(careerUUID)
-		// Call triggerFunctionEnter for the current position since we just restored to it
+		// Call triggerFunctionEnter for the current position since we just synced to it
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
