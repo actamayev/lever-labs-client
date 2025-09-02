@@ -3,9 +3,9 @@
 
 import { ReactNode } from "react"
 import fireConfetti from "../fire-confetti"
-import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
-import { Highlighter } from "../../components/magicui/highlighter"
 import personalInfoClass from "../../classes/personal-info-class"
+import { Highlighter } from "../../components/magicui/highlighter"
+import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components

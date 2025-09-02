@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { isEqual } from "lodash-es"
 import { AxiosResponse } from "axios"
 import isNull from "lodash-es/isNull"
@@ -13,6 +14,7 @@ interface SendDataOptions {
 	errorTitle: string
 	errorDescription?: string
 	skipOfflineCheck?: boolean
+	failSilently?: boolean
 }
 // TODO 9/2/25: Continue going through the utils and replacing the code with this
 export default async function sendDataToSerialOrApiTemplate(options: SendDataOptions): Promise<void> {
@@ -21,10 +23,20 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 		dataServiceEndpoint,
 		errorTitle,
 		errorDescription = "Please reload the page and try again",
-		skipOfflineCheck = false
+		skipOfflineCheck = false,
+		failSilently = false
 	} = options
 
 	try {
+		if (
+			failSilently &&
+			(
+				isNull(pipClass.selectedPip) ||
+				pipClass.selectedPip.pipConnectionStatus === "offline"
+			) &&
+			!serialConnectionManagerClass.pipTurnedOn
+		) return
+
 		if (serialConnectionManagerClass.pipTurnedOn) {
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return

@@ -214,12 +214,6 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 					<div className="mt-12 text-sm font-medium text-eel">Right Wheel</div>
 				</div>
 			</div>
-
-			{/* Instructions */}
-			<div className="text-center text-sm text-wolf mt-8">
-				<div>Wheels spin at actual RPM speed from encoder data</div>
-				<div>Red dot shows rotation direction</div>
-			</div>
 		</div>
 	)
 }

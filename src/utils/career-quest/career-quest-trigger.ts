@@ -23,6 +23,7 @@ export default async function careerQuestTrigger(
 			)
 		},
 		errorTitle: "Unable to trigger career message at this time",
-		skipOfflineCheck: true
+		skipOfflineCheck: true,
+		failSilently: true
 	})
 }
