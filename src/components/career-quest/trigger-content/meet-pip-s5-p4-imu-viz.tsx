@@ -64,8 +64,6 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">IMU Sensor Data Visualization</h2>
-
 			<div className="grid grid-cols-2 gap-6">
 				{/* Yaw Chart */}
 				<Card className="h-64">
