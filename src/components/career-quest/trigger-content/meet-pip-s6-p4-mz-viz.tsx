@@ -186,16 +186,16 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 			{/* Gradient Legend */}
 			<div className="flex justify-center">
 				<div className="flex flex-row items-center justify-center space-x-2" style={{ width: canvasSize }}>
-					<div className="text-sm text-center"style={{ width: canvasSize / 10 }}>Close</div>
+					<div className="text-base text-center">Close</div>
 					<div
-						className="h-6 rounded-lg"
+						className="h-6 rounded-lg w-full"
 						style={{
-							width: canvasSize - (canvasSize / 10) * 2,
+							// width: canvasSize - (canvasSize / 10) * 2,
 							// eslint-disable-next-line max-len
 							background: `linear-gradient(to right, rgb(${closeColor.r}, ${closeColor.g}, ${closeColor.b}), rgb(${farColor.r}, ${farColor.g}, ${farColor.b}))`
 						}}
 					/>
-					<div className="text-sm text-center" style={{ width: canvasSize / 10 }}>Far</div>
+					<div className="text-base text-center">Far</div>
 				</div>
 			</div>
 		</div>
