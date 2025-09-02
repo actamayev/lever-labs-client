@@ -195,10 +195,10 @@ export default function TermsPage(): React.ReactNode {
 					<ComplianceParagraph>
 						<strong>Parental Notifications for Users Under 13:</strong> When a user under the age of thirteen (13) creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13. This email will include information about how parents can access, modify, or delete their child's account and data at any time by contacting us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Account%20Modification%20Request"
+							href="mailto:hello@bluedotrobots.com?subject=Account%20Modification%20Request"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>.
 					</ComplianceParagraph>
 					<ComplianceParagraph>
@@ -326,10 +326,10 @@ export default function TermsPage(): React.ReactNode {
 					<ComplianceParagraph>
 						<strong>Opt-Out:</strong> Individual consumers may opt out of this arbitration agreement by emailing {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Arbitration%20Opt-Out%20Request"
+							href="mailto:hello@bluedotrobots.com?subject=Arbitration%20Opt-Out%20Request"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link> {""}
 						within 30 days of first using the Service, including your name and a clear opt-out statement.
 					</ComplianceParagraph>
