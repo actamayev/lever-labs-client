@@ -255,8 +255,6 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">Tilt-Controlled Ball</h2>
-
 			<div className="flex justify-center">
 				<div className="relative">
 					<canvas
@@ -287,15 +285,6 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 					</div>
 					<div className="text-xs text-eel">Controls Y movement</div>
 				</div>
-			</div>
-
-			{/* Ball Physics Info */}
-			<div className="text-center text-sm text-eel">
-				<div>
-					Velocity: {Math.sqrt(ballVelocity.x * ballVelocity.x + ballVelocity.y * ballVelocity.y).toFixed(2)}
-				</div>
-				<div>Position: ({ballPosition.x.toFixed(0)}, {ballPosition.y.toFixed(0)})</div>
-				<div>Hole: ({holePosition.x.toFixed(0)}, {holePosition.y.toFixed(0)})</div>
 			</div>
 		</div>
 	)
