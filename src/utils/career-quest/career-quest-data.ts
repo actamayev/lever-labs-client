@@ -42,7 +42,9 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-1-3",
 					content: "meet-pip-1-3",
-					rightSideContent: "heading3-humpback"
+					rightSideContent: createImage("pip_bookcase.jpeg", "meet-pip", {
+						alt: "Meet Pip robot introduction",
+					})
 				},
 				{
 					type: "text",

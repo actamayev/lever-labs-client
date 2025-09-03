@@ -20,8 +20,8 @@ export function createImage(
 		type: "image",
 		src: path,
 		alt: options?.alt || `Career quest image: ${filename}`,
-		width: options?.width || 400,
-		height: options?.height || 300
+		width: options?.width || 800,
+		height: options?.height || 600
 	}
 }
 

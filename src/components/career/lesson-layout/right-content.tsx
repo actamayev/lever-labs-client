@@ -66,7 +66,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 				<motion.div
 					key={`${rightContent.type}-${rightContent.src}`}
 					{...getTransitionProps()}
-					className="h-full w-full flex items-center justify-center p-4"
+					className="h-full w-full flex items-center justify-center p-8"
 				>
 					<div className="relative max-w-full max-h-full">
 						<Image
@@ -74,8 +74,12 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 							alt={rightContent.alt}
 							width={rightContent.width}
 							height={rightContent.height}
-							className="object-contain rounded-lg"
-							priority={true} // Since these are part of the main content flow
+							className="object-contain rounded-3xl"
+							// style={{
+							// 	mask: "radial-gradient(ellipse 55% 55% at center, black 70%, transparent 100%)",
+							// 	WebkitMask: "radial-gradient(ellipse 70% 60% at center, black 40%, transparent 100%)"
+							// }}
+							priority={true}
 						/>
 					</div>
 				</motion.div>
