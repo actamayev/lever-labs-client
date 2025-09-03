@@ -216,7 +216,8 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-4-5",
 					content: "meet-pip-4-5",
-					rightSideContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback",
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P5_EXIT)
 				},
 				{
 					type: "text",
@@ -452,7 +453,8 @@ export const MEET_PIP: CareerQuestData = {
 					id: "meet-pip-9-3",
 					content: "meet-pip-9-3",
 					rightSideContent: "heading3-humpback",
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER)
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER),
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_EXIT)
 				},
 				{
 					type: "text",
