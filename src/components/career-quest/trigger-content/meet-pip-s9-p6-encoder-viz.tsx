@@ -207,7 +207,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 						/>
 
 						{/* Enhanced Speed indicator with defined width */}
-						<div className="mt-4 flex justify-center">
+						<div className="mt-8 flex justify-center">
 							<div className="w-3/4 bg-cardinal px-4 py-2 rounded-full">
 								<span className="text-sm font-bold text-white">
 									{latestLeftRPM.toFixed(1)} RPM
@@ -215,7 +215,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							</div>
 						</div>
 					</div>
-					<div className="mt-4 text-lg font-semibold text-eel bg-gradient-to-r from-red-100 to-red-200 px-4 py-2 rounded-full">
+					<div className="mt-8 text-lg font-semibold text-eel bg-gradient-to-r from-red-100 to-red-200 px-4 py-2 rounded-full">
 						Left Wheel
 					</div>
 				</div>
@@ -230,7 +230,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 						/>
 
 						{/* Enhanced Speed indicator with defined width */}
-						<div className="mt-4 flex justify-center">
+						<div className="mt-8 flex justify-center">
 							<div className="w-3/4 bg-chargingGreen px-4 py-2 rounded-full">
 								<span className="text-sm font-bold text-white">
 									{latestRightRPM.toFixed(1)} RPM
@@ -238,7 +238,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							</div>
 						</div>
 					</div>
-					<div className="mt-4 text-lg font-semibold text-eel bg-gradient-to-r from-green-100 to-green-200 px-4 py-2 rounded-full">
+					<div className="mt-8 text-lg font-semibold text-eel bg-gradient-to-r from-green-100 to-green-200 px-4 py-2 rounded-full">
 						Right Wheel
 					</div>
 				</div>
