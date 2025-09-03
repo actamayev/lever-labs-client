@@ -443,9 +443,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		<div>
 			Let's play a quick game using my buttons.
 			<br />
-			Press the button when my light flashes
-			<br />
-			and see how fast you are.
+			Press the button to jump and help the dino avoid obstacles.
 		</div>
 	),
 	"meet-pip-7-7": (): React.ReactNode => (

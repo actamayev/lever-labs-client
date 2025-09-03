@@ -7,12 +7,12 @@ import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../icons/custom-motor"
 import { CustomRuler } from "../icons/custom-ruler"
 import { CustomRemote } from "../icons/custom-remote"
+import { CustomButton } from "../icons/custom-button"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
-import { CustomButton } from "../icons/custom-button"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Motors + Encoders": <CustomMotor />,
