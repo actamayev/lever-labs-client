@@ -42,11 +42,11 @@ function DinoLeaderboard(): React.ReactNode {
 				<h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
 					🦖 Dino Game Leaderboard
 				</h1>
-				<p className="text-gray-600 text-lg">Track your progress and beat your best scores!</p>
+				<p className="text-eel text-lg">Track your progress and beat your best scores!</p>
 			</div>
 
 			{/* Leaderboard Table */}
-			<div className="bg-white rounded-xl shadow-lg overflow-hidden">
+			<div className="bg-standardBackground rounded-xl shadow-lg overflow-hidden">
 				<div className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
 					<h2 className="text-xl font-bold text-white">🏆 Score Rankings</h2>
 				</div>
@@ -54,29 +54,29 @@ function DinoLeaderboard(): React.ReactNode {
 				{sortedScores.length === 0 ? (
 					<div className="p-8 text-center">
 						<div className="text-6xl mb-4">🦖</div>
-						<h3 className="text-xl font-semibold text-gray-600 mb-2">No scores yet!</h3>
-						<p className="text-gray-500">Play your first game to see your scores here.</p>
+						<h3 className="text-xl font-semibold text-eel mb-2">No scores yet!</h3>
+						<p className="text-wolf">Play your first game to see your scores here.</p>
 					</div>
 				) : (
 					<div className="overflow-x-auto">
 						<table className="w-full">
-							<thead className="bg-gray-50">
+							<thead className="bg-swan">
 								<tr>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
 										Rank
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
 										Score
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
 										When
 									</th>
-									<th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
 										Performance
 									</th>
 								</tr>
 							</thead>
-							<tbody className="bg-white divide-y divide-gray-200">
+							<tbody className="bg-standardBackground divide-y divide-swan">
 								{sortedScores.map((scoreData, index) => (
 									<tr
 										key={`${scoreData.score}-${scoreData.timestamp.getTime()}`}
@@ -90,7 +90,7 @@ function DinoLeaderboard(): React.ReactNode {
 													index < 3 ? (
 														<span className="text-2xl mr-3">{getRankIcon(index)}</span>
 													) : (
-														<span className="text-2xl font-bold text-gray-700 bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center mr-3">
+														<span className="text-2xl font-bold text-eel bg-swan rounded-full w-8 h-8 flex items-center justify-center mr-3">
 															{index + 1}
 														</span>
 													)
@@ -102,17 +102,17 @@ function DinoLeaderboard(): React.ReactNode {
 												{scoreData.score}
 											</span>
 											{scoreData.score === highScore && (
-												<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+												<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-bee text-beakInner-2">
 													🏆 High Score!
 												</span>
 											)}
 										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-wolf">
 											{formatTimestamp(scoreData.timestamp)}
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
 											<div className="flex items-center">
-												<div className="w-16 bg-gray-200 rounded-full h-2 mr-3">
+												<div className="w-16 bg-swan rounded-full h-2 mr-3">
 													<div
 														className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-300"
 														style={{
@@ -120,7 +120,7 @@ function DinoLeaderboard(): React.ReactNode {
 														}}
 													></div>
 												</div>
-												<span className="text-xs text-gray-500">
+												<span className="text-xs text-wolf">
 													{Math.round((scoreData.score / highScore) * 100)}%
 												</span>
 											</div>
