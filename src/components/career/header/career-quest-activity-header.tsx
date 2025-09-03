@@ -6,7 +6,7 @@ import Link from "next/link"
 import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
-import ChallengeProgressCircle from "./challenge-progress-circle"
+// import ChallengeProgressCircle from "./challenge-progress-circle"
 // import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 
@@ -70,7 +70,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 							: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
 					}
 				/> */}
-				<ChallengeProgressCircle careerData={careerData} />
+				{/* <ChallengeProgressCircle careerData={careerData} /> */}
 			</div>
 		</header>
 	)
