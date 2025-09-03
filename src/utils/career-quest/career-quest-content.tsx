@@ -630,8 +630,8 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-10-6": (): React.ReactNode => (
 		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
-			This is where our
-			<Highlighter action="highlight" color="#FFFF00" strokeWidth={2} isView={true}>
+			This is where our {" "}
+			<Highlighter action="highlight" color="#FFDE00" strokeWidth={2} isView={true}>
 				Career Quest
 			</Highlighter> {" "}
 			begins.
