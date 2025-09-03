@@ -51,7 +51,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 		<div className="space-y-6">
 			<h2 className="text-2xl font-bold text-center mb-6">TOF Sensor Readings</h2>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 				{/* Left TOF Chart */}
 				<Card className="h-80">
 					<CardHeader className="pb-2">
@@ -59,10 +59,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</CardHeader>
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
-							<BarChart
-								data={leftTofData}
-								margin={chartConfig.margin}
-							>
+							<BarChart data={leftTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
@@ -72,7 +69,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 								<YAxis
 									domain={[0, 4000]}
 									className="text-xs"
-									label={{ value: "Value", angle: -90, position: "insideLeft" }}
+									tick={false}
 								/>
 								<Tooltip
 									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
@@ -96,7 +93,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</CardHeader>
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
-							<BarChart data={rightTofData} margin={chartConfig.margin}>
+							<BarChart data={rightTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
@@ -106,7 +103,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 								<YAxis
 									domain={[0, 2600]}
 									className="text-xs"
-									label={{ value: "Value", angle: -90, position: "insideLeft" }}
+									tick={false}
 								/>
 								<Tooltip
 									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
@@ -125,7 +122,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 			</div>
 
 			{/* Current Values Display */}
-			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
+			{/* <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
 				<div className="text-center p-4 bg-blue-50 rounded-lg">
 					<div className="text-2xl font-bold text-macaw">
 						{leftTofCount.toLocaleString()}
@@ -138,7 +135,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</div>
 					<div className="text-sm text-eel">Right TOF Value</div>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	)
 }

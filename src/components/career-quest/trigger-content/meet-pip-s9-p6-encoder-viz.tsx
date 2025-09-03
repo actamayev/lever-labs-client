@@ -72,12 +72,6 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 			ctx.stroke()
 		}
 
-		// Draw direction indicator (red dot)
-		ctx.fillStyle = "#DC2626"
-		ctx.beginPath()
-		ctx.arc(wheelRadius - 5, 0, 4, 0, 2 * Math.PI)
-		ctx.fill()
-
 		// Restore context
 		ctx.restore()
 
@@ -135,12 +129,6 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 			)
 			ctx.stroke()
 		}
-
-		// Draw direction indicator (red dot)
-		ctx.fillStyle = "#DC2626"
-		ctx.beginPath()
-		ctx.arc(wheelRadius - 5, 0, 4, 0, 2 * Math.PI)
-		ctx.fill()
 
 		// Restore context
 		ctx.restore()
