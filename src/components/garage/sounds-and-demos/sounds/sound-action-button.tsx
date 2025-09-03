@@ -25,35 +25,37 @@ interface SoundActionButtonProps {
 		buttonClasses: string
 		shadowColor: string
 		iconClasses: string
+		iconSize: string
 	}
 }
 
 function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 	const { sound, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
+	const iconSize = extraClasses?.iconSize || "!size-10"
 
 	// Map direction to the correct icon
 	const getSoundIcon = (): React.ReactNode => {
 		switch (sound) {
 			case "Fart":
-				return <CustomFart className="!size-10" />
+				return <CustomFart className={iconSize} />
 			case "Monkey":
 				if (garageClass.soundPlaying === "Monkey") {
-					return <CustomHearNoEvilMonkey className="!size-10" />
+					return <CustomHearNoEvilMonkey className={iconSize} />
 				}
-				return <CustomSpeakNoEvilMonkey className="!size-10" />
+				return <CustomSpeakNoEvilMonkey className={iconSize} />
 			case "Elephant":
-				return <CustomElephant className="!size-10" />
+				return <CustomElephant className={iconSize} />
 			case "Party":
-				return <CustomPartyPopper className="!size-10" />
+				return <CustomPartyPopper className={iconSize} />
 			case "UFO":
-				return <CustomUfo className="!size-10" />
+				return <CustomUfo className={iconSize} />
 			case "Countdown":
-				return <CustomCountdown className="!size-10" />
+				return <CustomCountdown className={iconSize} />
 			case "Robot":
-				return <Bot className="!size-10" />
+				return <Bot className={iconSize} />
 			case "Engine":
-				return <CustomEngine className="!size-10" />
+				return <CustomEngine className={iconSize} />
 		}
 	}
 
