@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import {
 	BarChart,
 	Bar,
@@ -10,9 +9,10 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import sensorDataClass from "../../../classes/sensor-data-class"
 import { useMemo } from "react"
+import { observer } from "mobx-react"
+import sensorDataClass from "../../../classes/sensor-data-class"
+import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P6TofsViz(): React.ReactNode {
@@ -70,6 +70,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									domain={[0, 4000]}
 									className="text-xs"
 									tick={false}
+									mirror={true}
 								/>
 								<Tooltip
 									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
@@ -101,9 +102,10 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									tick={false}
 								/>
 								<YAxis
-									domain={[0, 2600]}
+									domain={[0, 2000]}
 									className="text-xs"
 									tick={false}
+									mirror={true}
 								/>
 								<Tooltip
 									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
