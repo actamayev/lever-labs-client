@@ -453,7 +453,8 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-9-3",
 					content: "meet-pip-9-3",
-					rightSideContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER)
 				},
 				{
 					type: "text",

@@ -103,7 +103,6 @@ class CareerQuestClass {
 		this.isDoneInitializing = true
 	})
 
-
 	private initializeCareer = action((careerDefinition: CareerQuestData): void => {
 		if (this.careers.has(careerDefinition.careerUUID)) return
 

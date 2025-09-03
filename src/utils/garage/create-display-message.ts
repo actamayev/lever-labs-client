@@ -28,6 +28,7 @@ export default async function createDisplayMessage(buffer: Uint8Array): Promise<
 			)
 		},
 		errorTitle: "Unable to send display buffer to Pip at this time",
-		skipOfflineCheck: true
+		skipOfflineCheck: true,
+		failSilently: true
 	})
 }
