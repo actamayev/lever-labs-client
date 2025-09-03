@@ -41,7 +41,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 
 			{/* Center section with career title */}
 			<div className="w-1/2 flex justify-center">
-				<h1 className="text-xl font-semibold text-questionText text-center">
+				<h1 className="text-5xl font-medium text-questionText text-center">
 					{careerData.careerTitle}
 				</h1>
 			</div>
