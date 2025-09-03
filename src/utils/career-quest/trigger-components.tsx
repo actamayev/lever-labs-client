@@ -12,7 +12,7 @@ import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/me
 import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
 import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
 import DinoLeaderboard from "../../components/career-quest/trigger-content/dino-leaderboard"
-import MeetPipS4P4 from "../../components/career-quest/trigger-content/meet-pip-s4-p4"
+import MeetPipS4P4 from "../../components/career-quest/trigger-content/meet-pip-s4-p4-speaker"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
