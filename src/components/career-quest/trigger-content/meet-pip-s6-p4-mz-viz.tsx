@@ -155,8 +155,6 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">Time of Flight Sensor View</h2>
-
 			<div className="flex justify-center">
 				<div className="relative">
 					<canvas

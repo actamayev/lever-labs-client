@@ -192,10 +192,6 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-8">
-			<h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-				Wheel Speed Visualization
-			</h2>
-
 			<div className="flex justify-center space-x-16">
 				{/* Left Wheel */}
 				<div className="text-center">

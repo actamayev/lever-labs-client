@@ -263,11 +263,6 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 						height={canvasHeight}
 						className="border-2 border-swan rounded-lg bg-polar"
 					/>
-
-					{/* Instructions overlay */}
-					<div className="absolute top-2 left-2 bg-black bg-opacity-75 text-white px-3 py-1 rounded text-sm">
-						Tilt to move ball
-					</div>
 				</div>
 			</div>
 

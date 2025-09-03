@@ -49,8 +49,6 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">TOF Sensor Readings</h2>
-
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 				{/* Left TOF Chart */}
 				<Card className="h-80">
@@ -122,22 +120,6 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</CardContent>
 				</Card>
 			</div>
-
-			{/* Current Values Display */}
-			{/* <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-macaw">
-						{leftTofCount.toLocaleString()}
-					</div>
-					<div className="text-sm text-eel">Left TOF Value</div>
-				</div>
-				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-macaw">
-						{rightTofCount.toLocaleString()}
-					</div>
-					<div className="text-sm text-eel">Right TOF Value</div>
-				</div>
-			</div> */}
 		</div>
 	)
 }
