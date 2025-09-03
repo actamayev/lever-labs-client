@@ -540,6 +540,12 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	"meet-pip-9-3": (): React.ReactNode => (
 		<div>
 			I've been working on my dance moves, and I want you to see.
+			<AnimatedStateButton
+				buttonText="DANCE"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+
+			/>
 		</div>
 	),
 	"meet-pip-9-4": (): React.ReactNode => (
