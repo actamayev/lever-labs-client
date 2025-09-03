@@ -431,6 +431,11 @@ export const MEET_PIP: CareerQuestData = {
 		{
 			type: "textParent",
 			id: "meet-pip-9",
+			transition: {
+				type: "fade",
+				duration: DEFAULT_TRANSITION_DURATION,
+				color: "black"
+			},
 			children: [
 				{
 					type: "text",
