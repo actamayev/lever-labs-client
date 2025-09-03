@@ -56,7 +56,7 @@ function WhiteboardPage(): React.ReactNode {
 						<div className="text-3xl font-bold text-wolf">
 							{totalClasses}
 						</div>
-						<p className="text-sm text-eel mt-1">classrooms joined</p>
+						<p className="text-sm text-eel mt-1">classroom{totalClasses === 1 ? "" : "s"} joined</p>
 					</CardContent>
 				</Card>
 
