@@ -28,16 +28,6 @@ class GamesClass {
 		return Math.max(...this.dinoScore.map(score => score.score))
 	}
 
-	public get totalGames(): number {
-		return this.dinoScore.length
-	}
-
-	public get averageScore(): number {
-		if (this.dinoScore.length === 0) return 0
-		const total = this.dinoScore.reduce((sum, score) => sum + score.score, 0)
-		return Math.round(total / this.dinoScore.length)
-	}
-
 	public logout(): void {
 		this.dinoScore = []
 	}
