@@ -36,21 +36,11 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 		rimGradient.addColorStop(0.7, "#4b5563") // Lighter
 		rimGradient.addColorStop(1, "#6b7280") // Light edge
 
-		// Draw outer wheel rim with shadow
-		ctx.shadowColor = "rgba(0, 0, 0, 0.3)"
-		ctx.shadowBlur = 8
-		ctx.shadowOffsetX = 2
-		ctx.shadowOffsetY = 2
+		// Draw outer wheel rim without external shadow
 		ctx.fillStyle = rimGradient
 		ctx.beginPath()
 		ctx.arc(0, 0, wheelRadius, 0, 2 * Math.PI)
 		ctx.fill()
-
-		// Reset shadow for inner elements
-		ctx.shadowColor = "transparent"
-		ctx.shadowBlur = 0
-		ctx.shadowOffsetX = 0
-		ctx.shadowOffsetY = 0
 
 		// Draw inner wheel rim (tire)
 		const tireGradient = ctx.createRadialGradient(0, 0, wheelRadius * 0.7, 0, 0, wheelRadius)
@@ -214,19 +204,18 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							ref={leftWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="drop-shadow-2xl"
 						/>
 
-						{/* Enhanced Speed indicator */}
-						<div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-							<div className="bg-cardinal px-4 py-2 rounded-full shadow-lg border border-red-400">
+						{/* Enhanced Speed indicator with defined width */}
+						<div className="mt-4 flex justify-center">
+							<div className="w-3/4 bg-cardinal px-4 py-2 rounded-full border border-red-400">
 								<span className="text-sm font-bold text-white">
 									{latestLeftRPM.toFixed(1)} RPM
 								</span>
 							</div>
 						</div>
 					</div>
-					<div className="mt-16 text-lg font-semibold text-eel bg-gradient-to-r from-red-100 to-red-200 px-4 py-2 rounded-full">
+					<div className="mt-4 text-lg font-semibold text-eel bg-gradient-to-r from-red-100 to-red-200 px-4 py-2 rounded-full">
 						Left Wheel
 					</div>
 				</div>
@@ -238,19 +227,18 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							ref={rightWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="drop-shadow-2xl"
 						/>
 
-						{/* Enhanced Speed indicator */}
-						<div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
-							<div className="bg-chargingGreen px-4 py-2 rounded-full shadow-lg border border-green-400">
+						{/* Enhanced Speed indicator with defined width */}
+						<div className="mt-4 flex justify-center">
+							<div className="w-3/4 bg-chargingGreen px-4 py-2 rounded-full border border-green-400">
 								<span className="text-sm font-bold text-white">
 									{latestRightRPM.toFixed(1)} RPM
 								</span>
 							</div>
 						</div>
 					</div>
-					<div className="mt-16 text-lg font-semibold text-eel bg-gradient-to-r from-green-100 to-green-200 px-4 py-2 rounded-full">
+					<div className="mt-4 text-lg font-semibold text-eel bg-gradient-to-r from-green-100 to-green-200 px-4 py-2 rounded-full">
 						Right Wheel
 					</div>
 				</div>
