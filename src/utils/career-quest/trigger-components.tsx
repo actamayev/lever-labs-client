@@ -3,7 +3,6 @@
 import { ReactNode } from "react"
 import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
 	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
-import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sounds-section"
 import MeetPipS3P4Display from "../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
 import MeetPipS2P3ColorPicker from "../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
 import MeetPipS5P4ImuViz from "../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
@@ -13,6 +12,7 @@ import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/me
 import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
 import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
 import DinoLeaderboard from "../../components/career-quest/trigger-content/dino-leaderboard"
+import MeetPipS4P4 from "../../components/career-quest/trigger-content/meet-pip-s4-p4"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -21,7 +21,7 @@ const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": (): ReactNode => <MeetPipS2P3ColorPicker />,
 	"s3-p4-display": (): ReactNode => <MeetPipS3P4Display />,
-	"s4-p4-speaker": (): ReactNode => <SoundsSection />,
+	"s4-p4-speaker": (): ReactNode => <MeetPipS4P4 />,
 	"s5-p4-imu-viz": (): ReactNode => <MeetPipS5P4ImuViz />,
 	"s5-p5-ball-moving": (): ReactNode => <MeetPipS5P5BallMoving />,
 	"s6-p4-mz-viz": (): ReactNode => <MeetPipS6P4MzViz />,
