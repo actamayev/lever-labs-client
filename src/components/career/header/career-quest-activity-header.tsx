@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+
 // In career-quest-activity-header.tsx:
 "use client"
 
@@ -7,18 +7,18 @@ import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle imp
 import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
-import careerQuestClass from "../../../classes/career-quest-class" // Add import
+// import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
-	const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
-	const isOnChallengeSection = currentSlide.type === "challenge"
+	// const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+	// const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
+	// const isOnChallengeSection = currentSlide.type === "challenge"
 
-	const handleChatToggle = (): void => {
-		if (isOnChallengeSection) return
-		careerQuestClass.toggleCareerChat(careerData.careerUUID)
-	}
+	// const handleChatToggle = (): void => {
+	// 	if (isOnChallengeSection) return
+	// 	careerQuestClass.toggleCareerChat(careerData.careerUUID)
+	// }
 
 	return (
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
@@ -48,7 +48,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 
 			{/* Right section with chat button and progress circle */}
 			<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
-				<CustomTooltip
+				{/* <CustomTooltip
 					tooltipTrigger={
 						<button
 							onClick={handleChatToggle}
@@ -69,7 +69,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 							? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
 							: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
 					}
-				/>
+				/> */}
 				<ChallengeProgressCircle careerData={careerData} />
 			</div>
 		</header>

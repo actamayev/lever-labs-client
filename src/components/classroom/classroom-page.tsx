@@ -1,20 +1,27 @@
 "use client"
 
-import { useEffect } from "react"
 import { observer } from "mobx-react"
-import { ArrowLeft } from "lucide-react"
+import { useEffect, useState } from "react"
+import { ArrowLeft, Users, Hash, Calendar, BookOpen, Plus } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
-import teacherClass from "../../classes/teacher-class"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import InviteStudentDialog from "./invite-student-dialog"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import teacherClass from "../../classes/teacher-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
+import { cn } from "../../lib/shadcn/utils"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
+// eslint-disable-next-line max-lines-per-function, complexity
 function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
+	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
 
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
@@ -28,6 +35,27 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/class-manager")
+	const colors = getDuolingoColors("humpback")
+
+	const handleInviteStudent = (): void => {
+		setIsInviteDialogOpen(true)
+	}
+
+	const getStatusBadge = (didAccept: boolean) => {
+		if (didAccept) {
+			return (
+				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+					Accepted
+				</span>
+			)
+		} else {
+			return (
+				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+					Pending
+				</span>
+			)
+		}
+	}
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
@@ -51,7 +79,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	}
 
 	return (
-		<div className="p-6">
+		<div className="p-6 max-w-7xl mx-auto">
 			{/* Header with back button */}
 			<div className="flex items-center gap-4 mb-8">
 				<TactileButton
@@ -65,36 +93,166 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 				</TactileButton>
 			</div>
 
-			{/* Classroom Info */}
-			<div className="max-w-2xl">
-				<h1 className="text-3xl font-bold text-wolf mb-4">
+			{/* Page Title */}
+			<div className="mb-8">
+				<h1 className="text-4xl font-bold text-wolf mb-2">
 					{classroomData?.classroomName || "Classroom"}
 				</h1>
-
-				<div className="bg-polar border border-swan rounded-xl p-6 mb-6">
-					<h2 className="text-xl font-semibold text-eel mb-4">Classroom Details</h2>
-					<div className="space-y-3">
-						<div>
-							<span className="text-wolf font-medium">Class Code: </span>
-							<span className="font-mono text-lg bg-white px-3 py-1 rounded border">
-								{classCode}
-							</span>
-						</div>
-
-						{classroomData?.students && (
-							<div>
-								<span className="text-wolf font-medium">Students: </span>
-								<span className="text-eel">{classroomData.students.length}</span>
-							</div>
-						)}
-					</div>
-				</div>
-
-				{/* Placeholder for future features */}
-				<div className="text-eel font-light">
-					More classroom management features coming soon...
-				</div>
+				<p className="text-eel text-lg">Manage your classroom and view student information</p>
 			</div>
+
+			{/* Stats Cards */}
+			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardHeader className="pb-3">
+						<CardTitle className="flex items-center gap-2 text-lg">
+							<Hash className="h-5 w-5 text-pipTheme" />
+							Class Code
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-2xl font-mono font-bold text-wolf bg-polar px-4 py-2 rounded-lg border border-swan">
+							{classCode}
+						</div>
+					</CardContent>
+				</Card>
+
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardHeader className="pb-3">
+						<CardTitle className="flex items-center gap-2 text-lg">
+							<Users className="h-5 w-5 text-pipTheme" />
+							Total Students
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-3xl font-bold text-wolf">
+							{classroomData?.students?.length || 0}
+						</div>
+						<div className="text-sm text-eel mt-2 space-y-1">
+							{(() => {
+								const students = classroomData?.students || []
+								const accepted = students.filter(s => s.didAccept).length
+								const pending = students.filter(s => !s.didAccept).length
+								return (
+									<>
+										<div className="flex items-center gap-2">
+											<span className="w-2 h-2 bg-green-500 rounded-full"></span>
+											{accepted} accepted
+										</div>
+										<div className="flex items-center gap-2">
+											<span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
+											{pending} pending
+										</div>
+									</>
+								)
+							})()}
+						</div>
+					</CardContent>
+				</Card>
+
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardHeader className="pb-3">
+						<CardTitle className="flex items-center gap-2 text-lg">
+							<BookOpen className="h-5 w-5 text-pipTheme" />
+							Class Status
+						</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-2xl font-bold text-green-600">
+							Active
+						</div>
+						<p className="text-sm text-eel mt-1">class is currently running</p>
+					</CardContent>
+				</Card>
+			</div>
+
+			{/* Students Table */}
+			<Card className="border-2 border-swan bg-standardBackground">
+				<CardHeader>
+					<div className="flex items-center justify-between">
+						<div>
+							<CardTitle className="flex items-center gap-2">
+								<Users className="h-5 w-5 text-pipTheme" />
+								Students
+							</CardTitle>
+							<CardDescription>
+								View all students enrolled in this classroom
+							</CardDescription>
+						</div>
+						<TactileButton
+							onClick={handleInviteStudent}
+							className={cn("text-white", colors.bg)}
+							shadowHeight={4}
+							shadowClass={colors.shadow2}
+						>
+							<Plus className="h-4 w-4" />
+							Invite Student
+						</TactileButton>
+					</div>
+				</CardHeader>
+				<CardContent>
+					{classroomData?.students && classroomData.students.length > 0 ? (
+						<Table>
+							<TableHeader>
+								<TableRow className="border-swan">
+									<TableHead className="text-wolf font-semibold">#</TableHead>
+									<TableHead className="text-wolf font-semibold">Username</TableHead>
+									<TableHead className="text-wolf font-semibold">Status</TableHead>
+									<TableHead className="text-wolf font-semibold">Actions</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								{classroomData.students.map((student, index) => (
+									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
+										<TableCell className="font-medium text-wolf">
+											{index + 1}
+										</TableCell>
+										<TableCell className="font-medium text-wolf">
+											{student.username || "Unknown"}
+										</TableCell>
+										<TableCell>
+											{getStatusBadge(student.didAccept)}
+										</TableCell>
+										<TableCell>
+											<TactileButton
+												className="h-8 px-3 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
+												shadowHeight={2}
+												shadowClass="shadow-gray-300"
+											>
+												View Profile
+											</TactileButton>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					) : (
+						<div className="text-center py-12">
+							<Users className="h-12 w-12 text-eel mx-auto mb-4 opacity-50" />
+							<h3 className="text-lg font-medium text-wolf mb-2">No students yet</h3>
+							<p className="text-eel mb-4">
+								Students will appear here once they join your class using the class code.
+							</p>
+							<TactileButton
+								onClick={handleInviteStudent}
+								className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
+								shadowHeight={4}
+								shadowClass={colors.shadow2}
+							>
+								<Plus className="h-4 w-4" />
+								Invite Students
+							</TactileButton>
+						</div>
+					)}
+				</CardContent>
+			</Card>
+
+			{/* Invite Student Dialog */}
+			<InviteStudentDialog
+				classCode={classCode}
+				isInviteDialogOpen={isInviteDialogOpen}
+				setIsInviteDialogOpen={setIsInviteDialogOpen}
+			/>
 		</div>
 	)
 }
