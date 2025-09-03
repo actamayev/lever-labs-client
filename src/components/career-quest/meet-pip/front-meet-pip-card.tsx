@@ -69,10 +69,10 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 mb-auto">
-					{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
+					{componentsUsed.slice(0, 4).map((componentName): React.ReactNode => (
 						<SingleComponentUsed
-							key={component.componentName}
-							component={component}
+							key={componentName}
+							componentName={componentName}
 							baseColor={backgroundColor}  // Pass base color
 						/>
 					))}

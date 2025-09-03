@@ -15,11 +15,6 @@ declare global {
 	| "Color Sensor"
 	| "Screen"
 
-	interface ComponentsUsedCareerData {
-		componentName: ComponentName
-		componentDifficulty: 1 | 2 | 3
-	}
-
 	// Existing interface for challenge cards
 	interface CareerData {
 		careerUUID: CareerUUID
@@ -27,7 +22,7 @@ declare global {
 		careerDescription: string
 		careerUrl: CareerQuestPages
 		careerIcon: LucideIcon
-		componentsUsed: ComponentsUsedCareerData[]
+		componentsUsed: ComponentName[]
 		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
 		expectedCompletionTime: string

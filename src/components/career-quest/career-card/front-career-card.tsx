@@ -64,10 +64,10 @@ function FrontCareerCard(props: Props): React.ReactNode {
 				<div style={{ height: "45%" }} className="flex justify-between items-center">
 					{/* Components Grid */}
 					<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
-						{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
+						{componentsUsed.slice(0, 4).map((componentName): React.ReactNode => (
 							<SingleComponentUsed
-								key={component.componentName}
-								component={component}
+								key={componentName}
+								componentName={componentName}
 								baseColor={backgroundColor}
 							/>
 						))}

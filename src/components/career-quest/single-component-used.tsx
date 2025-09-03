@@ -26,13 +26,13 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 }
 
 interface Props {
-	component: ComponentsUsedCareerData
+	componentName: ComponentName
 	baseColor: DuolingoColors
 	extraClasses?: string
 }
 
 export default function SingleComponentUsed(props: Props): React.ReactNode {
-	const { component, baseColor, extraClasses } = props
+	const { componentName, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)
 
@@ -40,7 +40,7 @@ export default function SingleComponentUsed(props: Props): React.ReactNode {
 		<CustomTooltip
 			tooltipTrigger={
 				<div
-					key={component.componentName}
+					key={componentName}
 					className={cn(
 						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0 border-2 border-white",
 						colors.bg2,        // Base background (bg-baseColor-2)
@@ -48,12 +48,12 @@ export default function SingleComponentUsed(props: Props): React.ReactNode {
 						colors.border,
 						extraClasses
 					)}
-					title={component.componentName}
+					title={componentName}
 				>
-					{componentIcons[component.componentName]}
+					{componentIcons[componentName]}
 				</div>
 			}
-			tooltipContent={component.componentName}
+			tooltipContent={componentName}
 		/>
 	)
 }

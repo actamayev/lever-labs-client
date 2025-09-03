@@ -45,10 +45,10 @@ export default function BackMeetPipCard({ flipCard } : {flipCard: () => void}): 
 							Components
 						</h3>
 						<div className="grid grid-cols-3 gap-2 w-full">
-							{componentsUsed.slice(0, 5).map((component): React.ReactNode => (
+							{componentsUsed.slice(0, 5).map((componentName): React.ReactNode => (
 								<SingleComponentUsed
-									key={component.componentName}
-									component={component}
+									key={componentName}
+									componentName={componentName}
 									baseColor={backgroundColor}
 								/>
 							))}
