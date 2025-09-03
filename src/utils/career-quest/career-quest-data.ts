@@ -128,7 +128,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-2-4",
 					content: "meet-pip-2-4",
-					rightSideContent: "s2-p4-light-show",
+					rightSideContent: "heading4-humpback",
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S2_P4_EXIT)
 				},
 				{
@@ -216,7 +216,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-4-5",
 					content: "meet-pip-4-5",
-					rightSideContent: "s4-p5-speaker"
+					rightSideContent: "heading5-humpback"
 				},
 				{
 					type: "text",

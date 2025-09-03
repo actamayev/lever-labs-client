@@ -6,6 +6,8 @@ import fireConfetti from "../fire-confetti"
 import personalInfoClass from "../../classes/personal-info-class"
 import { Highlighter } from "../../components/magicui/highlighter"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
+import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts"
+import careerQuestTrigger from "./career-quest-trigger"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -119,12 +121,17 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-2-4": (): ReactNode => (
-		<div>
+		<div className="flex flex-col gap-4">
 			Nice choice.
 			<br />
 			I think it suits me.
 			<br />
 			Want to see what I can do with all my lights together?
+			<AnimatedStateButton
+				buttonText="YES"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S2_P4_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+			/>
 		</div>
 	),
 	"meet-pip-2-5": (): ReactNode => (
@@ -228,6 +235,12 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			for more than alerts.
 			<br />
 			Want to hear something fun?
+			<AnimatedStateButton
+				buttonText="YES"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P5_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+
+			/>
 		</div>
 	),
 	"meet-pip-4-6": (): React.ReactNode => (

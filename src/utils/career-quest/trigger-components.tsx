@@ -6,14 +6,12 @@ import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzz
 import SoundsSection from "../../components/garage/sounds-and-demos/sounds/sounds-section"
 import MeetPipS3P4Display from "../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
 import MeetPipS2P3ColorPicker from "../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
-import MeetPipS2P4LightShow from "../../components/career-quest/trigger-content/meet-pip-s2-p4-light-show"
 import MeetPipS5P4ImuViz from "../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
 import MeetPipS5P5BallMoving from "../../components/career-quest/trigger-content/meet-pip-s5-p5-ball-moving"
 import MeetPipS6P4MzViz from "../../components/career-quest/trigger-content/meet-pip-s6-p4-mz-viz"
 import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/meet-pip-s6-p6-tofs-viz"
 import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
 import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
-import MeetPipS4P5FunSound from "../../components/career-quest/trigger-content/meet-pip-s4-p5-fun-sound"
 import DinoLeaderboard from "../../components/career-quest/trigger-content/dino-leaderboard"
 
 // Component registry for trigger images
@@ -22,10 +20,8 @@ import DinoLeaderboard from "../../components/career-quest/trigger-content/dino-
 const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	// Bot icons for different themes
 	"s2-p3-color-picker": (): ReactNode => <MeetPipS2P3ColorPicker />,
-	"s2-p4-light-show": (): ReactNode => <MeetPipS2P4LightShow />,
 	"s3-p4-display": (): ReactNode => <MeetPipS3P4Display />,
 	"s4-p4-speaker": (): ReactNode => <SoundsSection />,
-	"s4-p5-speaker": (): ReactNode => <MeetPipS4P5FunSound />,
 	"s5-p4-imu-viz": (): ReactNode => <MeetPipS5P4ImuViz />,
 	"s5-p5-ball-moving": (): ReactNode => <MeetPipS5P5BallMoving />,
 	"s6-p4-mz-viz": (): ReactNode => <MeetPipS6P4MzViz />,
