@@ -374,7 +374,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-7-6",
 					content: "meet-pip-7-6",
-					rightSideContent: "heading6-humpback",
+					rightSideContent: "dino-leaderboard",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_EXIT)
 				},

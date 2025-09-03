@@ -238,7 +238,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							</div>
 						</div>
 					</div>
-					<div className="mt-8 text-lg font-semibold text-eel bg-gradient-to-r from-green-100 to-green-200 px-4 py-2 rounded-full">
+					<div className="mt-8 text-lg font-semibold text-eel bg-gradient-to-r \
+					from-green-100 to-green-200 px-4 py-2 rounded-full">
 						Right Wheel
 					</div>
 				</div>

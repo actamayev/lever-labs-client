@@ -14,6 +14,7 @@ import MeetPipS6P6TofsViz from "../../components/career-quest/trigger-content/me
 import MeetPipS9P6EncoderViz from "../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
 import MeetPipS8P3ColorViz from "../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
 import MeetPipS4P5FunSound from "../../components/career-quest/trigger-content/meet-pip-s4-p5-fun-sound"
+import DinoLeaderboard from "../../components/career-quest/trigger-content/dino-leaderboard"
 
 // Component registry for trigger images
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -29,8 +30,9 @@ const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	"s5-p5-ball-moving": (): ReactNode => <MeetPipS5P5BallMoving />,
 	"s6-p4-mz-viz": (): ReactNode => <MeetPipS6P4MzViz />,
 	"s6-p6-tofs-viz": (): ReactNode => <MeetPipS6P6TofsViz />,
-	"s9-p6-encoder-viz": (): ReactNode => <MeetPipS9P6EncoderViz />,
 	"s8-p3-color-viz": (): ReactNode => <MeetPipS8P3ColorViz />,
+	"s9-p6-encoder-viz": (): ReactNode => <MeetPipS9P6EncoderViz />,
+	"dino-leaderboard": (): ReactNode => <DinoLeaderboard />,
 	"bot-humpback": (): ReactNode => <Bot size={120} className="text-humpback" />,
 	"bot-macaw": (): ReactNode => <Bot size={120} className="text-macaw" />,
 
