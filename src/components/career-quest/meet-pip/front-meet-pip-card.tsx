@@ -69,18 +69,15 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 
 				{/* Component Icons */}
 				<div className="flex flex-wrap gap-2 mb-auto">
-					{componentsUsed.slice(0, 4).map((componentName): React.ReactNode => (
-						<SingleComponentUsed
-							key={componentName}
-							componentName={componentName}
-							baseColor={backgroundColor}  // Pass base color
-						/>
-					))}
-					{componentsUsed.length > 4 && (
-						<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", colors.bg2)}>
-							<span className="font-bold">+{componentsUsed.length - 4}</span>
-						</div>
-					)}
+					<div className="grid grid-cols-5 gap-2 w-3/4">
+						{componentsUsed.map((componentName): React.ReactNode => (
+							<SingleComponentUsed
+								key={componentName}
+								componentName={componentName}
+								baseColor={backgroundColor}  // Pass base color
+							/>
+						))}
+					</div>
 				</div>
 
 				{/* Continue Button */}

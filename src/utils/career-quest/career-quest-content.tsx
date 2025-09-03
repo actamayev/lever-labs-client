@@ -412,10 +412,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			In robotics,
 			<br />
 			buttons give people reliable control.
-		</div>
-	),
-	"meet-pip-7-3": (): React.ReactNode => (
-		<div>
+			{/* TODO: Make this morphing text */}
 			From starting robotic arms in factories,
 			<br />
 			to launching or landing drones,
@@ -423,6 +420,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			to setting new tasks for warehouse robots.
 		</div>
 	),
+	// Not including meet-pip-7-3 on purpose
 	"meet-pip-7-4": (): React.ReactNode => (
 		<div>
 			I have two buttons on top.

@@ -354,12 +354,6 @@ export const MEET_PIP: CareerQuestData = {
 				},
 				{
 					type: "text",
-					id: "meet-pip-7-3",
-					content: "meet-pip-7-3",
-					rightSideContent: "heading3-humpback"
-				},
-				{
-					type: "text",
 					id: "meet-pip-7-4",
 					content: "meet-pip-7-4",
 					rightSideContent: "heading4-humpback",

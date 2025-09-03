@@ -12,6 +12,7 @@ import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { CustomMultizoneDistanceSensor } from "../icons/custom-multizone-distance-sensor"
+import { CustomButton } from "../icons/custom-button"
 
 const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Motors + Encoders": <CustomMotor />,
@@ -22,7 +23,8 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Speaker": <Volume2 />,
 	"IR Sensors": <CustomRemote />,
 	"Color Sensor": <CustomPalette />,
-	"Screen": <TvMinimal />
+	"Screen": <TvMinimal />,
+	"Buttons": <CustomButton />
 }
 
 interface Props {

@@ -14,6 +14,7 @@ declare global {
 	| "IR Sensors"
 	| "Color Sensor"
 	| "Screen"
+	| "Buttons"
 
 	// Existing interface for challenge cards
 	interface CareerData {
