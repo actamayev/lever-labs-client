@@ -70,7 +70,7 @@ function Workbench(): React.ReactNode {
 							width={300}
 							height={300}
 							className="max-w-full max-h-full object-contain"
-							priority={false}
+							priority
 						/>
 					</div>
 				</div>

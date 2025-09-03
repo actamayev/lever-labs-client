@@ -20,7 +20,13 @@ class SocketClass {
 
 	// Updated to use cookies automatically - no need to pass token
 	public connect = action((): void => {
-		if (this._socket !== null) return
+		if (this._socket !== null && this._socket.connected) return
+
+		// Clean up any existing disconnected socket
+		if (this._socket !== null) {
+			this._socket.disconnect()
+			this._socket = null
+		}
 
 		this._socket = io(process.env.NEXT_PUBLIC_BASE_URL as string, {
 			path: "/socketio",
@@ -77,8 +83,6 @@ class SocketClass {
 		}
 		this._socket.emit(event, payload)
 	}
-
-	// TODO 7/12/25: Setup student and teacher specific events
 
 	public logout = action((): void => {
 		if (this._socket) {
