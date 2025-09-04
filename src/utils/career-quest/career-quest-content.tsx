@@ -277,17 +277,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			It tells me when I tilt left or right, tip forward or backward, or turn in a circle.
 		</div>
 	),
-	"meet-pip-5-3": (): React.ReactNode => (
-		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
-			IMUs are found in many machines you already know:
-			<br />
-			• Drones use them to stay level in the air
-			<br />
-			• Phones use them to flip the screen
-			<br />
-			• Robots use them to turn and move precisely
-		</div>
-	),
+	// meet-pip-5-3 is morphing text
 	"meet-pip-5-4": (): React.ReactNode => (
 		<div>
 			Want to try?
@@ -407,19 +397,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			</Highlighter>.
 		</div>
 	),
-	"meet-pip-7-2": (): React.ReactNode => (
-		<div>
-			In robotics,
-			<br />
-			buttons give people reliable control.
-			{/* TODO: Make this morphing text */}
-			From starting robotic arms in factories,
-			<br />
-			to launching or landing drones,
-			<br />
-			to setting new tasks for warehouse robots.
-		</div>
-	),
+	// meet-pip-7-2 is morphing text
 	// Not including meet-pip-7-3 on purpose
 	"meet-pip-7-4": (): React.ReactNode => (
 		<div>
@@ -560,17 +538,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			Encoders measure the wheels speed and direction.
 		</div>
 	),
-	"meet-pip-9-5": (): React.ReactNode => (
-		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
-			Robots use wheels and encoders for precise movement:
-			<br />
-			• Delivery robots measure distance to reach their stops
-			<br />
-			• Warehouse robots count wheel turns to follow routes
-			<br />
-			• Exploration rovers track their motion across rough terrain
-		</div>
-	),
+	// meet-pip-9-5 is morphing text
 	"meet-pip-9-6": (): React.ReactNode => (
 		<div>
 			Give one of my wheels a spin.

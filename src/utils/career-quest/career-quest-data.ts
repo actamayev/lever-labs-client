@@ -244,10 +244,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading2-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-5-3",
-					content: "meet-pip-5-3",
-					rightSideContent: "heading3-humpback"
+					staticText: "IMUs are found in many machines you already know:",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "Drones use them to stay level in the air",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "Phones use them to flip the screen",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "Robots use them to turn and move precisely",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",
@@ -348,10 +369,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading1-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-7-2",
-					content: "meet-pip-7-2",
-					rightSideContent: "heading2-humpback"
+					staticText: "In robotics, buttons give people reliable control.",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "From starting robotic arms in factories,",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "to launching or landing drones,",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "to setting new tasks for warehouse robots.",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",
@@ -462,10 +504,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading4-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-9-5",
-					content: "meet-pip-9-5",
-					rightSideContent: "heading5-humpback"
+					staticText: "Robots use wheels and encoders for precise movement:",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "Delivery robots measure distance to reach their stops",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "Warehouse robots count wheel turns to follow routes",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "Exploration rovers track their motion across rough terrain",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",
