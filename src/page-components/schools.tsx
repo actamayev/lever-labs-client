@@ -82,7 +82,7 @@ export default function SchoolsPage(): React.ReactNode {
 						className="border-2 border-swan rounded-lg py-1
 							px-0.5 mx-auto bg-standardBackground w-80 my-5"
 					>
-						<ContactItemInCard name="Levi" email="bluedotrobots@gmail.com" />
+						<ContactItemInCard email="hello@bluedotrobots.com" />
 					</div>
 				</SupportSection>
 			</SupportSectionContainer>

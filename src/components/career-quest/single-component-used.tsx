@@ -7,6 +7,7 @@ import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../icons/custom-motor"
 import { CustomRuler } from "../icons/custom-ruler"
 import { CustomRemote } from "../icons/custom-remote"
+import { CustomButton } from "../icons/custom-button"
 import { CustomCompass } from "../icons/custom-compass"
 import { CustomPalette } from "../icons/custom-palette"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
@@ -22,17 +23,18 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"Speaker": <Volume2 />,
 	"IR Sensors": <CustomRemote />,
 	"Color Sensor": <CustomPalette />,
-	"Screen": <TvMinimal />
+	"Screen": <TvMinimal />,
+	"Buttons": <CustomButton />
 }
 
 interface Props {
-	component: ComponentsUsedCareerData
+	componentName: ComponentName
 	baseColor: DuolingoColors
 	extraClasses?: string
 }
 
 export default function SingleComponentUsed(props: Props): React.ReactNode {
-	const { component, baseColor, extraClasses } = props
+	const { componentName, baseColor, extraClasses } = props
 
 	const colors = getDuolingoColors(baseColor)
 
@@ -40,7 +42,7 @@ export default function SingleComponentUsed(props: Props): React.ReactNode {
 		<CustomTooltip
 			tooltipTrigger={
 				<div
-					key={component.componentName}
+					key={componentName}
 					className={cn(
 						"w-10 h-10 rounded-2xl flex items-center justify-center duration-0 border-2 border-white",
 						colors.bg2,        // Base background (bg-baseColor-2)
@@ -48,12 +50,12 @@ export default function SingleComponentUsed(props: Props): React.ReactNode {
 						colors.border,
 						extraClasses
 					)}
-					title={component.componentName}
+					title={componentName}
 				>
-					{componentIcons[component.componentName]}
+					{componentIcons[componentName]}
 				</div>
 			}
-			tooltipContent={component.componentName}
+			tooltipContent={componentName}
 		/>
 	)
 }

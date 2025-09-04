@@ -39,24 +39,17 @@ export default function BackMeetPipCard({ flipCard } : {flipCard: () => void}): 
 				<div className="text-base my-4 text-white">
 					{careerDescription}
 				</div>
-				<div className="flex flex-row justify-between">
-					<div className="flex flex-col items-center w-1/3 px-2">
-						<h3 className="text-base font-medium text-center mb-3 text-white">
-							Components
-						</h3>
-						<div className="grid grid-cols-3 gap-2 w-full">
-							{componentsUsed.slice(0, 5).map((component): React.ReactNode => (
+				<div className="flex flex-row gap-2">
+					<div className="flex flex-col items-center w-2/3 px-2">
+						<div className="grid grid-cols-5 w-full gap-2">
+							{componentsUsed.map((componentName): React.ReactNode => (
 								<SingleComponentUsed
-									key={component.componentName}
-									component={component}
+									key={componentName}
+									componentName={componentName}
 									baseColor={backgroundColor}
+									extraClasses={cn(colors.border2, colors.bg, colors.hoverBg2)}
 								/>
 							))}
-							{componentsUsed.length > 5 && (
-								<div className={cn("w-10 h-10 rounded-2xl flex items-center justify-center", colors.bg2)}>
-									<span className="font-bold text-white">+{componentsUsed.length - 5}</span>
-								</div>
-							)}
 						</div>
 					</div>
 

@@ -63,8 +63,13 @@ class SensorDataClass {
 		}
 	})
 
+	// TODO 9/2/25: Figure out why data is flipped (could be the sensor, or the way we're sending the data)
 	public addMultizoneTofData = action((value: SensorPayloadMZ): void => {
-		this.distanceGrid[value.row] = value.distances || []
+		// Flip the row index (Y direction)
+		const flippedRow = 7 - value.row
+		// Reverse the distances array (X direction)
+		const reversedDistances = (value.distances || []).slice().reverse()
+		this.distanceGrid[flippedRow] = reversedDistances
 		this.dataVersion++ // Increment version for reactivity
 	})
 

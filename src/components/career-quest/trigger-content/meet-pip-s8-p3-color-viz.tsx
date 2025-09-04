@@ -35,13 +35,11 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">Color Sensor Visualization</h2>
-
 			<div className="flex justify-center">
 				<div className="text-center">
 					{/* Color Circle */}
 					<div
-						className="rounded-full border-4 border-gray-300 shadow-lg"
+						className="rounded-full border-4 border-hare"
 						style={{
 							width: circleSize,
 							height: circleSize,
@@ -53,9 +51,6 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 					<div className="mt-6 space-y-2">
 						<div className="text-lg font-semibold text-eel">
 							RGB: ({latestRed}, {latestGreen}, {latestBlue})
-						</div>
-						<div className="text-sm text-wolf">
-							Live color from sensor
 						</div>
 					</div>
 				</div>

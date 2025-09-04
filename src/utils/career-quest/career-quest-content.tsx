@@ -3,9 +3,11 @@
 
 import { ReactNode } from "react"
 import fireConfetti from "../fire-confetti"
-import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
-import { Highlighter } from "../../components/magicui/highlighter"
 import personalInfoClass from "../../classes/personal-info-class"
+import { Highlighter } from "../../components/magicui/highlighter"
+import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
+import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts"
+import careerQuestTrigger from "./career-quest-trigger"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components
@@ -13,27 +15,44 @@ import personalInfoClass from "../../classes/personal-info-class"
 const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
 	// Meet Pip career content
 	"meet-pip-1-1": (): ReactNode => (
-		<div>
+		<div className="text-4xl" style={{ lineHeight: "1.5" }}>
 			Hey there!<br />
-			I was starting to think no one would show up... but you're here. And I'm so glad.
+			I was starting to think no one
+			<br />
+			would show up...
+			<br />
+			but you're here.
+			<br />
+			And I'm so glad.
 		</div>
 	),
 	"meet-pip-1-2": (): ReactNode => (
 		<div>
 			My name is {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>
-			I don't know what I was made for, but I'm excited to find out.
+			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>.
+			<br />
+			I don't know what I was made for,
+			<br />
+			but I'm excited to find out.
 		</div>
 	),
 	"meet-pip-1-3": (): ReactNode => (
-		<div>
-			Everything has a purpose. Clocks keep time. Books tell stories.
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			Everything has a purpose.
 			<br />
-			And robots? I think our purpose is to help people. That's what I want to do.
+			Clocks keep time.
+			<br />
+			Books tell stories.
+			<br />
+			And robots?
+			<br />
+			I think our purpose is to help people.
+			<br />
+			That's what I want to do.
 		</div>
 	),
 	"meet-pip-1-4": (): ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			We learn by trying, failing, and trying again.
 			<br />
 			Every job, every adventure, is a chance to learn who we are.
@@ -42,7 +61,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	// meet-pip-1-5 is morphing text
 	"meet-pip-1-6": (onAdvance?: () => void): ReactNode => (
 		<div className="flex-shrink-0 flex flex-col gap-4">
-			Exploration is better with a friend. Will you join me?
+			Exploration is better with a friend.
+			<br />
+			Will you join me?
 			<AnimatedStateButton
 				buttonText="YES"
 				onClick={(event): void => {
@@ -67,7 +88,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		<div>
 			Wonderful!
 			<br />
-			Before we set off, I want to show you what I can do.
+			Before we set off,
+			<br />
+			I want to show you what I can do.
 		</div>
 	),
 	"meet-pip-2-1": (): ReactNode => (
@@ -82,7 +105,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-2-2": (): ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			Robots often use lights to show charging, waiting, or warnings.
 			<br />
 			I can do that too, but I can also use my lights to connect with you in ways beyond words.
@@ -90,19 +113,36 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-2-3": (): ReactNode => (
 		<div>
-			Go ahead, pick a color, and I'll show you I'm listening.
+			Go ahead,
+			<br />
+			pick a color,
+			<br />
+			and I'll show you I'm listening.
 		</div>
 	),
 	"meet-pip-2-4": (): ReactNode => (
-		<div>
-			Nice choice. I think it suits me. Want to see what I can do with all my lights together?
+		<div className="flex flex-col gap-4">
+			Nice choice.
+			<br />
+			I think it suits me.
+			<br />
+			Want to see what I can do with all my lights together?
+			<AnimatedStateButton
+				buttonText="YES"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S2_P4_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+			/>
 		</div>
 	),
 	"meet-pip-2-5": (): ReactNode => (
 		<div>
 			That was fun!
 			<br />
-			My lights are just one way I can communicate, but there's more I want to show you.
+			My lights are just one way I can communicate,
+			<br />
+			but there's more
+			<br />
+			I want to show you.
 		</div>
 	),
 	"meet-pip-3-1": (): ReactNode => (
@@ -122,7 +162,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-3-3": (): ReactNode => (
 		<div>
-			My screen may be small, but it lets me show words, symbols, even animations.
+			My screen may be small,
+			<br />
+			but it lets me show words, symbols, even animations.
 		</div>
 	),
 	"meet-pip-3-4": (): ReactNode => (
@@ -139,7 +181,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-3-6": (): ReactNode => (
 		<div>
-			Now that I know your name, let's move on.
+			Now that I know your name,
+			<br />
+			let's move on.
 			<br />
 			I want to show you something else.
 		</div>
@@ -184,11 +228,19 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-4-5": (): React.ReactNode => (
 		<div>
-			I can also use my speaker
+			I can also use
+			<br />
+			my speaker
 			<br />
 			for more than alerts.
 			<br />
 			Want to hear something fun?
+			<AnimatedStateButton
+				buttonText="YES"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P5_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+
+			/>
 		</div>
 	),
 	"meet-pip-4-6": (): React.ReactNode => (
@@ -197,7 +249,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			<br />
 			let me communicate with you.
 			<br />
-			Now I want to show you how
+			Now I want to
+			<br />
+			show you how
 			<br />
 			I sense the world around me.
 		</div>
@@ -210,7 +264,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-5-2": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			This sensor is called an {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
 				IMU
@@ -223,17 +277,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			It tells me when I tilt left or right, tip forward or backward, or turn in a circle.
 		</div>
 	),
-	"meet-pip-5-3": (): React.ReactNode => (
-		<div>
-			IMUs are found in many machines you already know:
-			<br />
-			• Drones use them to stay level in the air
-			<br />
-			• Phones use them to flip the screen
-			<br />
-			• Robots use them to turn and move precisely
-		</div>
-	),
+	// meet-pip-5-3 is morphing text
 	"meet-pip-5-4": (): React.ReactNode => (
 		<div>
 			Want to try?
@@ -251,7 +295,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			<br />
 			Tilt me and see if you can roll the ball
 			<br />
-			into the hole on my screen.
+			into the hole on
+			<br />
+			the screen.
 		</div>
 	),
 	"meet-pip-5-6": (): React.ReactNode => (
@@ -260,9 +306,11 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			<br />
 			into signals on the screen,
 			<br />
-			the same signals I'll use
+			the same signals
 			<br />
-			to guide my movements.
+			I'll use to guide
+			<br />
+			my movements.
 		</div>
 	),
 	"meet-pip-5-7": (): React.ReactNode => (
@@ -273,8 +321,10 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 
 	// Sequence #6 [TOF]
 	"meet-pip-6-1": (): React.ReactNode => (
-		<div>
-			To stay aware, I need to sense not only motion but also distance.
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			To stay aware,
+			<br />
+			I need to sense not only motion but also distance.
 			<br />
 			That's why I use {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
@@ -298,12 +348,16 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-6-4": (): React.ReactNode => (
 		<div>
-			Want to see what it looks like? Hold your hand in front of me and move it closer or farther.
+			Want to see what it looks like?
+			<br />
+			Hold your hand in front of me and move it closer or farther.
 		</div>
 	),
 	"meet-pip-6-5": (): React.ReactNode => (
 		<div>
-			I also have single-beam sensors on my sides.
+			I also have single-beam sensors
+			<br />
+			on my sides.
 			<br />
 			They check left and right so I know what's beside me.
 		</div>
@@ -314,7 +368,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-6-7": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			With my ToF sensors,
 			<br />
 			I can notice obstacles, understand spaces,
@@ -343,22 +397,8 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			</Highlighter>.
 		</div>
 	),
-	"meet-pip-7-2": (): React.ReactNode => (
-		<div>
-			In robotics,
-			<br />
-			buttons give people reliable control.
-		</div>
-	),
-	"meet-pip-7-3": (): React.ReactNode => (
-		<div>
-			From starting robotic arms in factories,
-			<br />
-			to launching or landing drones,
-			<br />
-			to setting new tasks for warehouse robots.
-		</div>
-	),
+	// meet-pip-7-2 is morphing text
+	// Not including meet-pip-7-3 on purpose
 	"meet-pip-7-4": (): React.ReactNode => (
 		<div>
 			I have two buttons on top.
@@ -381,9 +421,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		<div>
 			Let's play a quick game using my buttons.
 			<br />
-			Press the button when my light flashes
-			<br />
-			and see how fast you are.
+			Press the button to jump and help the dino avoid obstacles.
 		</div>
 	),
 	"meet-pip-7-7": (): React.ReactNode => (
@@ -409,7 +447,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		<div>
 			Robots often use color sensors
 			<br />
-			to sort objects, read labels,
+			to sort objects,
+			<br />
+			read labels,
 			<br />
 			or detect signals marked on the ground.
 		</div>
@@ -424,8 +464,10 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-8-4": (): React.ReactNode => (
-		<div>
-			Alongside my color sensor,
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			Alongside my
+			<br />
+			color sensor,
 			<br />
 			I also have {" "}
 			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
@@ -476,6 +518,12 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	"meet-pip-9-3": (): React.ReactNode => (
 		<div>
 			I've been working on my dance moves, and I want you to see.
+			<AnimatedStateButton
+				buttonText="DANCE"
+				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER)}
+				className="duration-150 rounded-xl text-4xl h-12"
+
+			/>
 		</div>
 	),
 	"meet-pip-9-4": (): React.ReactNode => (
@@ -490,17 +538,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			Encoders measure the wheels speed and direction.
 		</div>
 	),
-	"meet-pip-9-5": (): React.ReactNode => (
-		<div>
-			Robots use wheels and encoders for precise movement:
-			<br />
-			• Delivery robots measure distance to reach their stops
-			<br />
-			• Warehouse robots count wheel turns to follow routes
-			<br />
-			• Exploration rovers track their motion across rough terrain
-		</div>
-	),
+	// meet-pip-9-5 is morphing text
 	"meet-pip-9-6": (): React.ReactNode => (
 		<div>
 			Give one of my wheels a spin.
@@ -519,9 +557,13 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	// Sequence #10 [Conclusion]
 	"meet-pip-10-1": (): React.ReactNode => (
 		<div>
-			When we first met, I told you
+			When we first met,
 			<br />
-			I didn't know what I was made for.
+			I told you
+			<br />
+			I didn't know
+			<br />
+			what I was made for.
 		</div>
 	),
 	"meet-pip-10-2": (): React.ReactNode => (
@@ -534,7 +576,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-10-3": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			Robots in the world carry supplies,
 			<br />
 			assist in hospitals, explore oceans, and travel into space.
@@ -546,7 +588,9 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		<div>
 			I will try jobs one at a time, each an adventure
 			<br />
-			that teaches me more about who I can be.
+			that teaches me more about who
+			<br />
+			I can be.
 		</div>
 	),
 	"meet-pip-10-5": (): React.ReactNode => (
@@ -559,12 +603,20 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 		</div>
 	),
 	"meet-pip-10-6": (): React.ReactNode => (
-		<div>
-			This is where our Career Quest begins.
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			This is where our {" "}
+			<Highlighter action="highlight" color="#FFDE00" strokeWidth={2} isView={true}>
+				Career Quest
+			</Highlighter> {" "}
+			begins.
 			<br />
-			The world is waiting with jobs to try, challenges to face,
+			The world is waiting
 			<br />
-			and discoveries to uncover.
+			with jobs to try,
+			<br />
+			challenges to face, and
+			<br />
+			discoveries to uncover.
 			<br />
 			The first step of our journey starts now.
 		</div>

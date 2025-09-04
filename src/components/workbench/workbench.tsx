@@ -2,6 +2,7 @@
 import { observer } from "mobx-react"
 import { useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 import { cn } from "../../lib/shadcn/utils"
 import WorkbenchTopSection from "./workbench-top-section"
 import workbenchClass from "../../classes/workbench-class"
@@ -63,7 +64,14 @@ function Workbench(): React.ReactNode {
 				<div className="flex items-center justify-center h-full">
 					{/* Middle section content goes here */}
 					<div className="text-center p-4">
-						<h3 className="text-xl text-eel">Workbench Middle Section</h3>
+						<Image
+							src="/HAFTR logo.png"
+							alt="HAFTR Logo"
+							width={300}
+							height={300}
+							className="max-w-full max-h-full object-contain"
+							priority
+						/>
 					</div>
 				</div>
 			</div>

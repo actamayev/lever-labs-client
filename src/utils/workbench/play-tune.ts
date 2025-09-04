@@ -1,48 +1,29 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import isEqual from "lodash-es/isEqual"
 import { MessageBuilder, tuneToSoundType } from "@bluedotrobots/common-ts"
 import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
-import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-
+import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 
 export default async function playTune(): Promise<void> {
-	try {
-		if (serialConnectionManagerClass.pipTurnedOn) {
-			const tuneToPlay = workbenchClass.selectedSound
+	const tuneToPlay = workbenchClass.selectedSound
+	const soundType = tuneToSoundType[tuneToPlay]
+	const buffer = MessageBuilder.createSoundMessage(soundType)
 
-			const soundType = tuneToSoundType[tuneToPlay]
-			const buffer = MessageBuilder.createSoundMessage(soundType)
-
-			await serialConnectionManagerClass.sendBinaryMessage(buffer)
-			return
-		}
-		if (
-			isNull(pipClass.selectedPip) ||
-			(pipClass.selectedPip.pipConnectionStatus === "offline")
-		) {
-			return toastClass.negative({
-				title: "Pip not connected",
-				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
-			})
-		}
-		const playTuneResponse = await blueDotApiClientClass.workbenchDataService.playTune(
-			workbenchClass.selectedSound,
-			pipClass.selectedPip.pipUUID
-		)
-		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
-			throw Error("Unable to play tune")
-		}
-	} catch (error) {
-		console.error(error)
-		return toastClass.negative({
-			title: "Unable to play tune at this time",
-			description: "Please reload the page and try again"
-		})
-	}
+	await sendDataToSerialOrApiTemplate({
+		buffer,
+		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.workbenchDataService.playTune> => {
+			if (isNull(pipClass.selectedPip)) {
+				throw new Error("No pip selected")
+			}
+			return blueDotApiClientClass.workbenchDataService.playTune(
+				workbenchClass.selectedSound,
+				pipClass.selectedPip.pipUUID
+			)
+		},
+		errorTitle: "Unable to play tune at this time",
+		errorDescription: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
+	})
 }

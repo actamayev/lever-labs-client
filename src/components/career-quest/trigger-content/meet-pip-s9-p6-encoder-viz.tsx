@@ -14,10 +14,113 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 	const [rightRotation, setRightRotation] = useState(0)
 
 	// Wheel configuration
-	const wheelSize = 120
+	const wheelSize = 200
 	const centerX = wheelSize / 2
 	const centerY = wheelSize / 2
-	const wheelRadius = 50
+	const wheelRadius = 100
+
+	// Enhanced wheel drawing function
+	const drawWheel = (ctx: CanvasRenderingContext2D, rotation: number): void => {
+		// Clear canvas
+		ctx.clearRect(0, 0, wheelSize, wheelSize)
+
+		// Save context for rotation
+		ctx.save()
+		ctx.translate(centerX, centerY)
+		ctx.rotate((rotation * Math.PI) / 180)
+
+		// Create gradient for wheel rim
+		const rimGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, wheelRadius)
+		rimGradient.addColorStop(0, "#1f2937") // Dark center
+		rimGradient.addColorStop(0.3, "#374151") // Medium
+		rimGradient.addColorStop(0.7, "#4b5563") // Lighter
+		rimGradient.addColorStop(1, "#6b7280") // Light edge
+
+		// Draw outer wheel rim without external shadow
+		ctx.fillStyle = rimGradient
+		ctx.beginPath()
+		ctx.arc(0, 0, wheelRadius, 0, 2 * Math.PI)
+		ctx.fill()
+
+		// Draw inner wheel rim (tire)
+		const tireGradient = ctx.createRadialGradient(0, 0, wheelRadius * 0.7, 0, 0, wheelRadius)
+		tireGradient.addColorStop(0, "#1f2937") // Dark inner
+		tireGradient.addColorStop(1, "#374151") // Medium outer
+
+		ctx.fillStyle = tireGradient
+		ctx.beginPath()
+		ctx.arc(0, 0, wheelRadius * 0.85, 0, 2 * Math.PI)
+		ctx.fill()
+
+		// Draw tire treads
+		ctx.strokeStyle = "#1f2937"
+		ctx.lineWidth = 2
+		for (let i = 0; i < 12; i++) {
+			const angle = (i * Math.PI) / 6
+			const startRadius = wheelRadius * 0.7
+			const endRadius = wheelRadius * 0.85
+
+			ctx.beginPath()
+			ctx.moveTo(
+				Math.cos(angle) * startRadius,
+				Math.sin(angle) * startRadius
+			)
+			ctx.lineTo(
+				Math.cos(angle) * endRadius,
+				Math.sin(angle) * endRadius
+			)
+			ctx.stroke()
+		}
+
+		// Draw wheel spokes with gradient
+		const spokeGradient = ctx.createLinearGradient(-wheelRadius * 0.6, 0, wheelRadius * 0.6, 0)
+		spokeGradient.addColorStop(0, "#9ca3af")
+		spokeGradient.addColorStop(0.5, "#d1d5db")
+		spokeGradient.addColorStop(1, "#9ca3af")
+
+		ctx.strokeStyle = spokeGradient
+		ctx.lineWidth = 4
+		ctx.lineCap = "round"
+
+		for (let i = 0; i < 6; i++) {
+			const angle = (i * Math.PI) / 3
+			ctx.beginPath()
+			ctx.moveTo(0, 0)
+			ctx.lineTo(
+				Math.cos(angle) * (wheelRadius * 0.6),
+				Math.sin(angle) * (wheelRadius * 0.6)
+			)
+			ctx.stroke()
+		}
+
+		// Draw wheel hub with metallic effect
+		const hubGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 15)
+		hubGradient.addColorStop(0, "#fbbf24") // Gold center
+		hubGradient.addColorStop(0.3, "#f59e0b") // Darker gold
+		hubGradient.addColorStop(0.7, "#d97706") // Even darker
+		hubGradient.addColorStop(1, "#92400e") // Darkest
+
+		ctx.fillStyle = hubGradient
+		ctx.beginPath()
+		ctx.arc(0, 0, 15, 0, 2 * Math.PI)
+		ctx.fill()
+
+		// Draw hub center detail
+		ctx.fillStyle = "#1f2937"
+		ctx.beginPath()
+		ctx.arc(0, 0, 8, 0, 2 * Math.PI)
+		ctx.fill()
+
+		// Add subtle highlights for 3D effect
+		ctx.strokeStyle = "rgba(255, 255, 255, 0.1)"
+		ctx.lineWidth = 1
+		ctx.beginPath()
+		ctx.arc(0, 0, wheelRadius, 0, Math.PI)
+		ctx.stroke()
+
+		// Restore context
+		ctx.restore()
+	}
 
 	// Animation function for left wheel
 	const animateLeftWheel = (): void => {
@@ -37,49 +140,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 		// Update rotation
 		setLeftRotation((prev): number => prev + degreesPerFrame)
 
-		// Clear canvas
-		ctx.clearRect(0, 0, wheelSize, wheelSize)
-
-		// Save context for rotation
-		ctx.save()
-		ctx.translate(centerX, centerY)
-		ctx.rotate((leftRotation * Math.PI) / 180)
-
-		// Draw wheel hub
-		ctx.fillStyle = "#374151"
-		ctx.beginPath()
-		ctx.arc(0, 0, 8, 0, 2 * Math.PI)
-		ctx.fill()
-
-		// Draw wheel rim
-		ctx.strokeStyle = "#6B7280"
-		ctx.lineWidth = 3
-		ctx.beginPath()
-		ctx.arc(0, 0, wheelRadius, 0, 2 * Math.PI)
-		ctx.stroke()
-
-		// Draw wheel spokes
-		ctx.strokeStyle = "#9CA3AF"
-		ctx.lineWidth = 2
-		for (let i = 0; i < 8; i++) {
-			const angle = (i * Math.PI) / 4
-			ctx.beginPath()
-			ctx.moveTo(0, 0)
-			ctx.lineTo(
-				Math.cos(angle) * wheelRadius,
-				Math.sin(angle) * wheelRadius
-			)
-			ctx.stroke()
-		}
-
-		// Draw direction indicator (red dot)
-		ctx.fillStyle = "#DC2626"
-		ctx.beginPath()
-		ctx.arc(wheelRadius - 5, 0, 4, 0, 2 * Math.PI)
-		ctx.fill()
-
-		// Restore context
-		ctx.restore()
+		// Draw the enhanced wheel
+		drawWheel(ctx, leftRotation)
 
 		leftAnimationRef.current = requestAnimationFrame(animateLeftWheel)
 	}
@@ -101,49 +163,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 		// Update rotation
 		setRightRotation((prev): number => prev + degreesPerFrame)
 
-		// Clear canvas
-		ctx.clearRect(0, 0, wheelSize, wheelSize)
-
-		// Save context for rotation
-		ctx.save()
-		ctx.translate(centerX, centerY)
-		ctx.rotate((rightRotation * Math.PI) / 180)
-
-		// Draw wheel hub
-		ctx.fillStyle = "#374151"
-		ctx.beginPath()
-		ctx.arc(0, 0, 8, 0, 2 * Math.PI)
-		ctx.fill()
-
-		// Draw wheel rim
-		ctx.strokeStyle = "#6B7280"
-		ctx.lineWidth = 3
-		ctx.beginPath()
-		ctx.arc(0, 0, wheelRadius, 0, 2 * Math.PI)
-		ctx.stroke()
-
-		// Draw wheel spokes
-		ctx.strokeStyle = "#9CA3AF"
-		ctx.lineWidth = 2
-		for (let i = 0; i < 8; i++) {
-			const angle = (i * Math.PI) / 4
-			ctx.beginPath()
-			ctx.moveTo(0, 0)
-			ctx.lineTo(
-				Math.cos(angle) * wheelRadius,
-				Math.sin(angle) * wheelRadius
-			)
-			ctx.stroke()
-		}
-
-		// Draw direction indicator (red dot)
-		ctx.fillStyle = "#DC2626"
-		ctx.beginPath()
-		ctx.arc(wheelRadius - 5, 0, 4, 0, 2 * Math.PI)
-		ctx.fill()
-
-		// Restore context
-		ctx.restore()
+		// Draw the enhanced wheel
+		drawWheel(ctx, rightRotation)
 
 		rightAnimationRef.current = requestAnimationFrame(animateRightWheel)
 	}
@@ -170,10 +191,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 	const latestRightRPM = sensorDataClass.rightWheelRPM[sensorDataClass.rightWheelRPM.length - 1] || 0
 
 	return (
-		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">Wheel Speed Visualization</h2>
-
-			<div className="flex justify-center space-x-12">
+		<div className="space-y-8">
+			<div className="flex justify-center space-x-16">
 				{/* Left Wheel */}
 				<div className="text-center">
 					<div className="relative">
@@ -181,17 +200,20 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							ref={leftWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="border-2 border-swan rounded-full bg-polar"
 						/>
 
-						{/* Speed indicator */}
-						<div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-red-100 px-3 py-1 rounded-full">
-							<span className="text-sm font-semibold text-cardinal">
-								{latestLeftRPM.toFixed(1)} RPM
-							</span>
+						{/* Enhanced Speed indicator with defined width */}
+						<div className="mt-8 flex justify-center">
+							<div className="w-3/4 bg-cardinal px-4 py-2 rounded-full">
+								<span className="text-sm font-bold text-white">
+									{latestLeftRPM.toFixed(1)} RPM
+								</span>
+							</div>
 						</div>
 					</div>
-					<div className="mt-12 text-sm font-medium text-eel">Left Wheel</div>
+					<div className="mt-8 text-lg font-semibold text-eel bg-red-200 dark:bg-red-800 px-4 py-2 rounded-full">
+						Left Wheel
+					</div>
 				</div>
 
 				{/* Right Wheel */}
@@ -201,24 +223,21 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 							ref={rightWheelRef}
 							width={wheelSize}
 							height={wheelSize}
-							className="border-2 border-swan rounded-full bg-polar"
 						/>
 
-						{/* Speed indicator */}
-						<div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-green-100 px-3 py-1 rounded-full">
-							<span className="text-sm font-semibold text-chargingGreen">
-								{latestRightRPM.toFixed(1)} RPM
-							</span>
+						{/* Enhanced Speed indicator with defined width */}
+						<div className="mt-8 flex justify-center">
+							<div className="w-3/4 bg-chargingGreen px-4 py-2 rounded-full">
+								<span className="text-sm font-bold text-white">
+									{latestRightRPM.toFixed(1)} RPM
+								</span>
+							</div>
 						</div>
 					</div>
-					<div className="mt-12 text-sm font-medium text-eel">Right Wheel</div>
+					<div className="mt-8 text-lg font-semibold text-eel bg-green-200 dark:bg-green-800 px-4 py-2 rounded-full">
+						Right Wheel
+					</div>
 				</div>
-			</div>
-
-			{/* Instructions */}
-			<div className="text-center text-sm text-wolf mt-8">
-				<div>Wheels spin at actual RPM speed from encoder data</div>
-				<div>Red dot shows rotation direction</div>
 			</div>
 		</div>
 	)

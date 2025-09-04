@@ -1,13 +1,15 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, MotionProps, motion } from "framer-motion"
 import { ReactNode } from "react"
+import Image from "next/image"
 import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
 import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 
-function RightContent({ careerData } : { careerData: CareerQuestData }): React.ReactNode {
+// eslint-disable-next-line max-lines-per-function, complexity
+function RightContent({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
@@ -15,7 +17,6 @@ function RightContent({ careerData } : { careerData: CareerQuestData }): React.R
 	// Helper function to get transition props
 	const getTransitionProps = (): MotionProps => {
 		if (isTransitioning) {
-			// During transitions, skip animations entirely
 			return {
 				initial: { opacity: 1 },
 				animate: { opacity: 1 },
@@ -23,7 +24,6 @@ function RightContent({ careerData } : { careerData: CareerQuestData }): React.R
 				transition: { duration: 0 }
 			}
 		}
-		// Normal animations
 		return {
 			initial: { opacity: 0 },
 			animate: { opacity: 1 },
@@ -48,14 +48,62 @@ function RightContent({ careerData } : { careerData: CareerQuestData }): React.R
 				</motion.div>
 			</AnimatePresence>
 		)
+	} else if (rightContent.type === "icon") {
+		// Renamed from "image" to avoid confusion with actual images
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${rightContent.iconKey}`}
+					{...getTransitionProps()}
+				>
+					{getTriggerComponent(rightContent.iconKey)}
+				</motion.div>
+			</AnimatePresence>
+		)
 	} else if (rightContent.type === "image") {
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
-					key={`${rightContent.type}-${rightContent.icon}`}
+					key={`${rightContent.type}-${rightContent.src}`}
 					{...getTransitionProps()}
+					className="h-full w-full flex items-center justify-center p-8"
 				>
-					{getTriggerComponent(rightContent.icon)}
+					<div className="relative max-w-full max-h-full">
+						<Image
+							src={rightContent.src}
+							alt={rightContent.alt}
+							width={rightContent.width}
+							height={rightContent.height}
+							className="object-contain rounded-3xl"
+							// style={{
+							// 	mask: "radial-gradient(ellipse 55% 55% at center, black 70%, transparent 100%)",
+							// 	WebkitMask: "radial-gradient(ellipse 70% 60% at center, black 40%, transparent 100%)"
+							// }}
+							priority={true}
+						/>
+					</div>
+				</motion.div>
+			</AnimatePresence>
+		)
+	} else if (rightContent.type === "video") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${rightContent.src}`}
+					{...getTransitionProps()}
+					className="h-full w-full flex items-center justify-center p-4"
+				>
+					<video
+						src={rightContent.src}
+						poster={rightContent.poster}
+						controls
+						autoPlay={rightContent.autoplay || false}
+						loop={rightContent.loop || false}
+						muted={rightContent.muted || true} // Default muted for autoplay
+						className="max-w-full max-h-full rounded-lg shadow-lg"
+					>
+						Your browser does not support the video tag.
+					</video>
 				</motion.div>
 			</AnimatePresence>
 		)
@@ -94,8 +142,6 @@ function RightContent({ careerData } : { careerData: CareerQuestData }): React.R
 		)
 	}
 
-	// This should never happen since "null" type is handled in setRightContent
-	// But we need this for TypeScript completeness
 	return <div className="h-full w-full flex items-center justify-center" />
 }
 

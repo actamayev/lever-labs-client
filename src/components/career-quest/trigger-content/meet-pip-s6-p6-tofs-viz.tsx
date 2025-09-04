@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import {
 	BarChart,
 	Bar,
@@ -10,9 +9,10 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import sensorDataClass from "../../../classes/sensor-data-class"
 import { useMemo } from "react"
+import { observer } from "mobx-react"
+import sensorDataClass from "../../../classes/sensor-data-class"
+import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P6TofsViz(): React.ReactNode {
@@ -49,9 +49,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-2xl font-bold text-center mb-6">TOF Sensor Readings</h2>
-
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 				{/* Left TOF Chart */}
 				<Card className="h-80">
 					<CardHeader className="pb-2">
@@ -59,10 +57,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</CardHeader>
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
-							<BarChart
-								data={leftTofData}
-								margin={chartConfig.margin}
-							>
+							<BarChart data={leftTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
@@ -72,10 +67,11 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 								<YAxis
 									domain={[0, 4000]}
 									className="text-xs"
-									label={{ value: "Count", angle: -90, position: "insideLeft" }}
+									tick={false}
+									mirror={true}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Count"]}
+									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
 									labelFormatter={(): string => "Left TOF"}
 								/>
 								<Bar
@@ -96,7 +92,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 					</CardHeader>
 					<CardContent className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
-							<BarChart data={rightTofData} margin={chartConfig.margin}>
+							<BarChart data={rightTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="sensor"
@@ -104,12 +100,13 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									tick={false}
 								/>
 								<YAxis
-									domain={[0, 2600]}
+									domain={[0, 2000]}
 									className="text-xs"
-									label={{ value: "Count", angle: -90, position: "insideLeft" }}
+									tick={false}
+									mirror={true}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Count"]}
+									formatter={(value: number): string[] => [`${value.toLocaleString()}`, "Value"]}
 									labelFormatter={(): string => "Right TOF"}
 								/>
 								<Bar
@@ -122,28 +119,6 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 						</ResponsiveContainer>
 					</CardContent>
 				</Card>
-			</div>
-
-			{/* Current Values Display */}
-			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-macaw">
-						{leftTofCount.toLocaleString()}
-					</div>
-					<div className="text-sm text-eel">Left TOF Count</div>
-				</div>
-				<div className="text-center p-4 bg-blue-50 rounded-lg">
-					<div className="text-2xl font-bold text-macaw">
-						{rightTofCount.toLocaleString()}
-					</div>
-					<div className="text-sm text-eel">Right TOF Count</div>
-				</div>
-			</div>
-
-			{/* Data Summary */}
-			<div className="text-center text-sm text-eel">
-				<div>Range: 0 - 30,000 counts</div>
-				<div>Higher counts = more light absorption</div>
 			</div>
 		</div>
 	)

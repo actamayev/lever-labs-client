@@ -1,24 +1,24 @@
-/* eslint-disable no-nested-ternary */
+
 // In career-quest-activity-header.tsx:
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle import
+import { ArrowLeft } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
-import ChallengeProgressCircle from "./challenge-progress-circle"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
-import careerQuestClass from "../../../classes/career-quest-class" // Add import
+// import ChallengeProgressCircle from "./challenge-progress-circle"
+// import careerQuestClass from "../../../classes/career-quest-class" // Add import
+import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
-	const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
-	const isOnChallengeSection = currentSlide.type === "challenge"
+	// const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+	// const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
+	// const isOnChallengeSection = currentSlide.type === "challenge"
 
-	const handleChatToggle = (): void => {
-		if (isOnChallengeSection) return
-		careerQuestClass.toggleCareerChat(careerData.careerUUID)
-	}
+	// const handleChatToggle = (): void => {
+	// 	if (isOnChallengeSection) return
+	// 	careerQuestClass.toggleCareerChat(careerData.careerUUID)
+	// }
 
 	return (
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
@@ -29,7 +29,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						<Link href="/career-quest">
 							<button
 								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={(): Promise<void> => stopCurrentlyRunningCode()}
+								onClick={(): Promise<void> => stopCareerTrigger()}
 							>
 								<ArrowLeft size={30} className="mr-1" />
 							</button>
@@ -41,14 +41,14 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 
 			{/* Center section with career title */}
 			<div className="w-1/2 flex justify-center">
-				<h1 className="text-xl font-semibold text-questionText text-center">
+				<h1 className="text-5xl font-medium text-questionText text-center">
 					{careerData.careerTitle}
 				</h1>
 			</div>
 
 			{/* Right section with chat button and progress circle */}
 			<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
-				<CustomTooltip
+				{/* <CustomTooltip
 					tooltipTrigger={
 						<button
 							onClick={handleChatToggle}
@@ -69,8 +69,8 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 							? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
 							: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
 					}
-				/>
-				<ChallengeProgressCircle careerData={careerData} />
+				/> */}
+				{/* <ChallengeProgressCircle careerData={careerData} /> */}
 			</div>
 		</header>
 	)

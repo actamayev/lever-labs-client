@@ -33,6 +33,8 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 		"relative",
 		// Add cursor-pointer since it's a button
 		"cursor-pointer",
+		// Add transition duration for tactile effect
+		"duration-150",
 		className
 	)
 	const shadowClass = "shadow-[0_4px_0_0_var(--shadow-color)]"
@@ -41,7 +43,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	const hoverClass = "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
 
 	// Active state - remove shadow and complete translation
-	const activeShadowClass = "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-1"
+	const activeShadowClass = "active:shadow-[0_0px_0_0_var(--shadow-color)] active:translate-y-1"
 
 	// Create a separate class for the rainbow border element
 	const rainbowBorderClasses = cn(

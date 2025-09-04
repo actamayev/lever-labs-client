@@ -170,20 +170,20 @@ export default function PrivacyPage(): React.ReactNode {
 					<ComplianceParagraph>
 						For users under the age of 13, parents and legal guardians have the right to access, review, modify, or delete their child's account and personal information at any time. Parents may contact us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Parental%20Request"
+							href="mailto:hello@bluedotrobots.com?subject=Parental%20Request"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link> {""}
 						to exercise these rights on behalf of their children. Parents can also request information about what data we have collected from their child, and how we use that data. We will respond to parental requests within a reasonable timeframe and may require verification of parental identity before processing such requests.
 					</ComplianceParagraph>
 					<ComplianceParagraph>
 						You may update or correct your information through your account settings page. To request access to your personal information, request deletion of your account, or make other privacy-related requests, please send an email to {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Privacy%20Inquiry"
+							href="mailto:hello@bluedotrobots.com?subject=Privacy%20Inquiry"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>
 						. You may also delete your Blue Dot Robots account at any time through your account settings, though this action cannot be undone and will result in loss of access to your projects and learning progress.
 					</ComplianceParagraph>
@@ -229,20 +229,20 @@ export default function PrivacyPage(): React.ReactNode {
 					<ComplianceParagraph>
 						Parents may modify or remove their child's Age Restrictions by contacting us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Remove%20Age%20Restrictions"
+							href="mailto:hello@bluedotrobots.com?subject=Remove%20Age%20Restrictions"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link> {""}
 						and providing appropriate verification of their parental status. Additionally, parents can report any concerns about their child's use of the platform or any inappropriate content to the same email address. We take all reports seriously and will investigate and respond promptly to ensure the safety of our young learners.
 					</ComplianceParagraph>
 					<ComplianceParagraph>
 						With regards to the Children's Online Privacy Protection Act (COPPA), Blue Dot Robots collects personal information from children under the age of 13 for the sole purpose of providing educational robotics services and maintaining the internal operations of our platform. If we discover that we have unknowingly collected additional personal information from these children beyond what is necessary for educational purposes, we will delete it immediately. If you believe this to be the case, please contact us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=COPPA%20Inquiry"
+							href="mailto:hello@bluedotrobots.com?subject=COPPA%20Inquiry"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>
 						.
 					</ComplianceParagraph>
@@ -271,10 +271,10 @@ export default function PrivacyPage(): React.ReactNode {
 					<ComplianceParagraph>
 						When a consumer user under the age of 13 creates an account, they must provide a parent's or legal guardian's email address during registration. Blue Dot Robots will automatically send a notification email to the parent explaining our data collection and privacy practices regarding children under 13, including how parents can access, modify, or delete their child's account and data at any time by contacting us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Consumer%20Account%20Inquiry"
+							href="mailto:hello@bluedotrobots.com?subject=Consumer%20Account%20Inquiry"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>
 						. Parents have the right to review their child's robotics projects, learning progress, and platform usage, and may modify privacy settings or request account deletion at any time.
 					</ComplianceParagraph>
@@ -304,19 +304,19 @@ export default function PrivacyPage(): React.ReactNode {
 					<ComplianceParagraph>
 						Blue Dot Robots, Inc. is the data controller of your personal information for the purposes of applicable privacy regulations. For all data privacy inquiries, questions about this Privacy Policy, requests to exercise your data subject rights, or concerns about your child's privacy and safety on our platform, please contact our privacy team at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Privacy%20Inquiry"
+							href="mailto:hello@bluedotrobots.com?subject=Privacy%20Inquiry"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>.
 					</ComplianceParagraph>
 					<ComplianceParagraph>
 						For all technical support inquiries, general questions about our robotics education platform, Pip robot troubleshooting, or other non-privacy-related concerns, please also contact us at {""}
 						<Link
-							href="mailto:bluedotrobots@gmail.com?subject=Troubleshooting%20Inquiry"
+							href="mailto:hello@bluedotrobots.com?subject=Troubleshooting%20Inquiry"
 							className="underline"
 						>
-							bluedotrobots@gmail.com
+							hello@bluedotrobots.com
 						</Link>
 						. We are committed to responding promptly to all privacy-related requests and will work with you to address any concerns about how we collect, use, or protect your personal information in connection with our robotics education services.
 					</ComplianceParagraph>

@@ -47,8 +47,8 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 			>
 				{toJS(textParentData.children).map((child): React.ReactNode => (
 					<SwiperSlide key={child.id} className="h-full">
-						<div className="h-full flex items-center justify-center px-[75px]">
-							<div className="prose prose-lg max-w-none text-4xl">
+						<div className="h-full flex items-center justify-center px-[25px]">
+							<div className="max-w-none text-4xl leading-relaxed">
 								{child.type === "morphingText" ? (
 									<NavigationMorphingText
 										staticText={child.staticText}
@@ -59,7 +59,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 										}
 									/>
 								) : (
-									<div className="leading-relaxed text-questionText text-center cursor-text">
+									<div className="text-questionText text-center cursor-text leading-relaxed">
 										{typeof child.content === "function" ? child.content((): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
 										}) : typeof child.content === "string" ? getContentComponent(child.content, (): void => {
