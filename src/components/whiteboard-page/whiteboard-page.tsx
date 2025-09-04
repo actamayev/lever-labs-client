@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
@@ -31,6 +31,19 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 	// Check if this classroom has a pending invitation
 	const isPendingInvitation = classroomData?.invitationStatus === "PENDING"
+
+	const joinHubHandler = useCallback((careerUUID: CareerUUID): void => {
+		if (careerUUID === meetPipData.careerUUID) {
+			studentClass.setIsInFocusMode(true)
+			navigate("/career-quest/meet-pip")
+			return
+		}
+		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
+		if (career) {
+			studentClass.setIsInFocusMode(true)
+			navigate(career.careerUrl)
+		}
+	}, [navigate])
 
 	if (studentClass.isRetrievingStudentData) {
 		return (
@@ -170,6 +183,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 														className="w-full h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
 														shadowHeight={2}
 														shadowClass="shadow-gray-300"
+														onClick={(): void => joinHubHandler(hub.careerUUID)}
 													>
 														Join Hub
 													</TactileButton>
