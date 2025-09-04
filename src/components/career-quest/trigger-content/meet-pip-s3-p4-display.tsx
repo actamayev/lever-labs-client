@@ -3,10 +3,10 @@
 import { observer } from "mobx-react"
 import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
-import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
+import editName from "../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../garage/display/render-display"
 import personalInfoClass from "../../../classes/personal-info-class"
-import editName from "../../../utils/personal-info/edit-name"
+import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 
 function MeetPipS3P4Display(): React.ReactNode {
 	const profanityWords: string[] = [

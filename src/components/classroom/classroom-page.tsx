@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useState } from "react"
-import { ArrowLeft, Users, Hash, Calendar, BookOpen, Plus } from "lucide-react"
+import { ArrowLeft, Users, Hash, BookOpen, Plus } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
@@ -41,7 +41,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 		setIsInviteDialogOpen(true)
 	}
 
-	const getStatusBadge = (didAccept: boolean) => {
+	const getStatusBadge = (didAccept: boolean): React.ReactNode => {
 		if (didAccept) {
 			return (
 				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -129,10 +129,10 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 							{classroomData?.students?.length || 0}
 						</div>
 						<div className="text-sm text-eel mt-2 space-y-1">
-							{(() => {
+							{((): React.ReactNode => {
 								const students = classroomData?.students || []
-								const accepted = students.filter(s => s.didAccept).length
-								const pending = students.filter(s => !s.didAccept).length
+								const accepted = students.filter((s): boolean => s.didAccept).length
+								const pending = students.filter((s): boolean => !s.didAccept).length
 								return (
 									<>
 										<div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{classroomData.students.map((student, index) => (
+								{classroomData.students.map((student, index): React.ReactNode => (
 									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
 										<TableCell className="font-medium text-wolf">
 											{index + 1}

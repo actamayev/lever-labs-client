@@ -77,7 +77,7 @@ function DinoLeaderboard(): React.ReactNode {
 								</tr>
 							</thead>
 							<tbody className="bg-standardBackground divide-y divide-swan">
-								{sortedScores.map((scoreData, index) => (
+								{sortedScores.map((scoreData, index): React.ReactNode => (
 									<tr
 										key={`${scoreData.score}-${scoreData.timestamp.getTime()}`}
 										className={`hover:bg-gray-50 transition-colors ${
@@ -90,7 +90,8 @@ function DinoLeaderboard(): React.ReactNode {
 													index < 3 ? (
 														<span className="text-2xl mr-3">{getRankIcon(index)}</span>
 													) : (
-														<span className="text-2xl font-bold text-eel bg-swan rounded-full w-8 h-8 flex items-center justify-center mr-3">
+														<span className="text-2xl font-bold text-eel bg-swan
+														rounded-full w-8 h-8 flex items-center justify-center mr-3">
 															{index + 1}
 														</span>
 													)
@@ -102,7 +103,8 @@ function DinoLeaderboard(): React.ReactNode {
 												{scoreData.score}
 											</span>
 											{scoreData.score === highScore && (
-												<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-bee text-beakInner-2">
+												<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full
+												text-xs font-medium bg-bee text-beakInner-2">
 													🏆 High Score!
 												</span>
 											)}
@@ -114,7 +116,8 @@ function DinoLeaderboard(): React.ReactNode {
 											<div className="flex items-center">
 												<div className="w-16 bg-swan rounded-full h-2 mr-3">
 													<div
-														className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full transition-all duration-300"
+														className="bg-gradient-to-r from-green-400 to-blue-500
+														h-2 rounded-full transition-all duration-300"
 														style={{
 															width: `${Math.min((scoreData.score / highScore) * 100, 100)}%`
 														}}

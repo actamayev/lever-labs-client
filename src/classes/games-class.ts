@@ -20,12 +20,12 @@ class GamesClass {
 	})
 
 	public get sortedDinoScores(): DinoScore[] {
-		return [...this.dinoScore].sort((a, b) => b.score - a.score)
+		return [...this.dinoScore].sort((a, b): number => b.score - a.score)
 	}
 
 	public get highScore(): number {
 		if (this.dinoScore.length === 0) return 0
-		return Math.max(...this.dinoScore.map(score => score.score))
+		return Math.max(...this.dinoScore.map((score): number => score.score))
 	}
 
 	public logout(): void {

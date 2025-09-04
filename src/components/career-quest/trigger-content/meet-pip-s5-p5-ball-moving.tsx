@@ -261,20 +261,20 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 						ref={canvasRef}
 						width={canvasWidth}
 						height={canvasHeight}
-						className="border-2 border-swan rounded-lg bg-polar"
+						className="w-full h-full"
 					/>
 				</div>
 			</div>
 
 			{/* IMU Data Display */}
 			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
-				<div className="text-center p-3 bg-blue-50 rounded-lg">
+				<div className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
 					<div className="text-lg font-semibold text-macaw">
 						Roll: {(sensorDataClass.roll[sensorDataClass.roll.length - 1] || 0).toFixed(1)}°
 					</div>
 					<div className="text-xs text-eel">Controls X movement</div>
 				</div>
-				<div className="text-center p-3 bg-green-50 rounded-lg">
+				<div className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg">
 					<div className="text-lg font-semibold text-chargingGreen">
 						Pitch: {(sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0).toFixed(1)}°
 					</div>

@@ -3,7 +3,7 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowLeft, MessageCircle } from "lucide-react" // Add MessageCircle import
+import { ArrowLeft } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
 import CustomTooltip from "../../custom-tooltip"
 // import ChallengeProgressCircle from "./challenge-progress-circle"

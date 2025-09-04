@@ -1236,7 +1236,6 @@ class CareerQuestClass {
 
 		// Call enter trigger function for the new text child
 		if (textChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", textChild.id)
 			textChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1386,7 +1385,6 @@ class CareerQuestClass {
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
-			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1409,7 +1407,6 @@ class CareerQuestClass {
 		// Call enter trigger function after arriving at new slide
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", newTextChild.id)
 			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1430,7 +1427,6 @@ class CareerQuestClass {
 		// Call exit trigger function before leaving current slide
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
-			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1447,7 +1443,6 @@ class CareerQuestClass {
 		// Call enter trigger function after arriving at new slide
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", newTextChild.id)
 			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1468,7 +1463,6 @@ class CareerQuestClass {
 			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
-				console.log("Calling exit trigger function for", currentTextChild.id)
 				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})
@@ -1511,7 +1505,6 @@ class CareerQuestClass {
 			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
-				console.log("Calling exit trigger function for", currentTextChild.id)
 				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})

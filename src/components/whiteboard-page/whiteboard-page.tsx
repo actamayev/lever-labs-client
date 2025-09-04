@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { observer } from "mobx-react"
-import { ArrowLeft, Users, Hash, BookOpen, Calendar } from "lucide-react"
+import { ArrowLeft, Hash, BookOpen, Calendar } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
@@ -135,7 +135,8 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 						<BookOpen className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
 						<h3 className="text-xl font-medium text-wolf mb-3">Whiteboard Coming Soon</h3>
 						<p className="text-eel mb-6 max-w-md mx-auto">
-							Interactive whiteboard features are currently in development. You'll soon be able to collaborate with your classmates on robotics projects and learning activities.
+							Interactive whiteboard features are currently in development.
+							You'll soon be able to collaborate with your classmates on robotics projects and learning activities.
 						</p>
 						<TactileButton
 							className="bg-pipTheme text-white hover:bg-pipTheme/90 rounded-xl"

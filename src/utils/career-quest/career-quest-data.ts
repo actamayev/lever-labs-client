@@ -161,14 +161,17 @@ export const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-3-3",
 					rightSideContent: "heading3-humpback",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_EXIT)
+					triggerFunctionExit: () => {
+						void careerQuestTriggersClass.exportFirstNameToDisplay()
+						return careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_EXIT)
+					}
 				},
 				{
 					type: "text",
 					id: "meet-pip-3-4",
 					content: "meet-pip-3-4",
 					rightSideContent: "s3-p4-display",
-					triggerFunctionEnter: () => careerQuestTriggersClass.exportDisplayTrigger(),
+					triggerFunctionEnter: () => careerQuestTriggersClass.exportFirstNameToDisplay(),
 				},
 				{
 					type: "text",
@@ -415,7 +418,10 @@ export const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-7-6",
 					rightSideContent: "dino-leaderboard",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_EXIT)
+					triggerFunctionExit: () => {
+						careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_EXIT)
+						return careerQuestTriggersClass.exportFirstNameToDisplay()
+					}
 				},
 				{
 					type: "text",
