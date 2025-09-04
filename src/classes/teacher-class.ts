@@ -2,8 +2,9 @@
 
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode,
+import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherViewHubData,
 	TeacherData, StudentJoinedClassroom, StudentJoinedOrLeftHub } from "@bluedotrobots/common-ts"
+import { UUID } from "crypto"
 
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
@@ -75,6 +76,18 @@ class TeacherClass {
 		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
 		if (!classroom) return
 		classroom.students = classroom.students.filter((student): boolean => student.username !== studentJoinedHub.studentUsername)
+	}
+
+	public createHub(hub: TeacherViewHubData): void {
+		const classroom = this.detailedClassroomData.get(hub.classCode)
+		if (!classroom) return
+		classroom.activeHubs.push(hub)
+	}
+
+	public deleteHub(classCode: ClassCode, hubId: UUID): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
 	}
 
 	public logout(): void {
