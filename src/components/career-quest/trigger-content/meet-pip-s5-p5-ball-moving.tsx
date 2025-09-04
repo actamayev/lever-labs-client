@@ -34,8 +34,8 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 	const friction = 0.96         // slightly lower => keeps velocity longer
 	const sensitivity = 0.14      // increased sensitivity for faster response
 	const boundaryPadding = 20
-	const canvasWidth = 600
-	const canvasHeight = 450
+	const canvasWidth = 450
+	const canvasHeight = 300
 
 	// Utility: clamp a value
 	const clamp = (v: number, a: number, b: number): number => Math.max(a, Math.min(b, v))
