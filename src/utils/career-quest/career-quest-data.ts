@@ -64,7 +64,7 @@ export const MEET_PIP: CareerQuestData = {
 						{
 							id: "variant-0",
 							text: "",
-							rightContent: createImage("s1_p5.jpeg", "meet-pip", {
+							rightContent: createImage("s1_p5_1.png", "meet-pip", {
 								alt: "Meet Pip robot introduction",
 							})
 						},
