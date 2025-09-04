@@ -6,8 +6,7 @@ import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
 import toastClass from "../../classes/toast-class"
 
-function ContactItemInCard( {email}: {email: string}): React.ReactNode {
-
+function ContactItemInCard({ email }: { email: string }): React.ReactNode {
 	const copyToClipboard = useCallback(async (): Promise<void> => {
 		try {
 			await navigator.clipboard.writeText(email)
