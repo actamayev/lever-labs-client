@@ -23,7 +23,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import { CAREER_DEFINITIONS } from "../../utils/career-quest/career-quest-data"
-import useCreateHub from "../../utils/teacher/create-hub"
+import createHub from "../../utils/teacher/create-hub"
 
 interface Props {
 	classCode: ClassCode
@@ -45,8 +45,6 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 	const [selectedCareer, setSelectedCareer] = useState<CareerOption | null>(null)
 	const [error, setError] = useState("")
 	const [isCreating, setIsCreating] = useState(false)
-
-	const createHub = useCreateHub()
 	const colors = getDuolingoColors("humpback")
 
 	// Combine meet pip data with career data
@@ -114,7 +112,7 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 		}
 
 		setIsCreating(false)
-	}, [classCode, hubName, selectedCareer, setIsCreateHubDialogOpen, createHub, getFirstSlideId])
+	}, [classCode, hubName, selectedCareer, setIsCreateHubDialogOpen, getFirstSlideId])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key === "Escape") {

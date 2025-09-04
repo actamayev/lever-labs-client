@@ -2,19 +2,22 @@
 
 import { useEffect } from "react"
 import { observer } from "mobx-react"
-import { ArrowLeft, Hash, BookOpen, Calendar } from "lucide-react"
+import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import studentClass from "../../classes/student-class"
 import ClassroomInvitationResponse from "../whiteboard/classroom-invitation-response"
+import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
+import { cn } from "../../lib/shadcn/utils"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 
@@ -83,8 +86,8 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 				<p className="text-eel text-lg">Interactive whiteboard for robotics learning</p>
 			</div>
 
-			{/* Stats Cards */}
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+			{/* Class Info Card */}
+			<div className="mb-8">
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
@@ -93,75 +96,106 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<div className="text-2xl font-mono font-bold text-wolf bg-polar px-4 py-2 rounded-lg border border-swan">
+						<div className="text-2xl font-mono font-bold text-wolf bg-polar px-4 py-2 rounded-lg border border-swan w-fit">
 							{classCode}
 						</div>
 					</CardContent>
 				</Card>
-
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-lg">
-							<BookOpen className="h-5 w-5 text-pipTheme" />
-							Class Status
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-bold text-green-600">
-							Active
-						</div>
-						<p className="text-sm text-eel mt-1">whiteboard available</p>
-					</CardContent>
-				</Card>
-
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-lg">
-							<Calendar className="h-5 w-5 text-pipTheme" />
-							Quick Actions
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<TactileButton
-							className="w-full h-10 bg-pipTheme text-white hover:bg-pipTheme/90 rounded-xl"
-							shadowHeight={2}
-							shadowClass="shadow-pipTheme/30"
-						>
-							Open Whiteboard
-						</TactileButton>
-					</CardContent>
-				</Card>
 			</div>
 
-			{/* Whiteboard Section */}
-			<Card className="border-2 border-swan bg-standardBackground">
-				<CardHeader>
-					<CardTitle className="flex items-center gap-2">
-						<BookOpen className="h-5 w-5 text-pipTheme" />
-						Interactive Whiteboard
-					</CardTitle>
-					<CardDescription>
-						Collaborative whiteboard for classroom activities and robotics projects
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<div className="text-center py-16">
-						<BookOpen className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
-						<h3 className="text-xl font-medium text-wolf mb-3">Whiteboard Coming Soon</h3>
-						<p className="text-eel mb-6 max-w-md mx-auto">
-							Interactive whiteboard features are currently in development.
-							You'll soon be able to collaborate with your classmates on robotics projects and learning activities.
-						</p>
-						<TactileButton
-							className="bg-pipTheme text-white hover:bg-pipTheme/90 rounded-xl"
-							shadowHeight={2}
-							shadowClass="shadow-pipTheme/30"
-						>
-							Get Notified
-						</TactileButton>
-					</div>
-				</CardContent>
-			</Card>
+			{/* Student Hubs Section */}
+			{classroomData?.activeHubs && classroomData.activeHubs.length > 0 ? (
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardHeader>
+						<CardTitle className="flex items-center gap-2">
+							<Play className="h-5 w-5 text-pipTheme" />
+							Available Learning Activities
+						</CardTitle>
+						<CardDescription>
+							Join active hubs to participate in robotics learning activities
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+							{classroomData.activeHubs.map((hub): React.ReactNode => {
+								// Find career data for this hub
+								const careerInfo = hub.careerUUID === meetPipData.careerUUID
+									? meetPipData
+									: careerData.find((career): boolean => career.careerUUID === hub.careerUUID)
+
+								const CareerIcon = careerInfo?.careerIcon || Play
+								const careerColors = getDuolingoColors(careerInfo?.backgroundColor || "humpback")
+
+								return (
+									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow">
+										<CardContent className="p-4">
+											<div className="flex items-start gap-3">
+												<div className={cn("p-2 rounded-lg", careerColors.bg)}>
+													<CareerIcon className="h-5 w-5 text-white" />
+												</div>
+												<div className="flex-1 min-w-0">
+													<h3 className="font-semibold text-wolf truncate mb-1">
+														{hub.hubName}
+													</h3>
+													<p className="text-sm text-eel mb-2">
+														{careerInfo?.careerName || "Unknown Career"}
+													</p>
+													<div className="flex items-center gap-2 text-xs">
+														{hub.isHubJoined ? (
+															<div className="flex items-center gap-1 text-green-600">
+																<UserCheck className="h-3 w-3" />
+																<span>Joined</span>
+															</div>
+														) : (
+															<div className="flex items-center gap-1 text-eel">
+																<Play className="h-3 w-3" />
+																<span>Available to join</span>
+															</div>
+														)}
+													</div>
+												</div>
+											</div>
+											<div className="mt-3">
+												{hub.isHubJoined ? (
+													<TactileButton
+														className={cn("w-full h-8 text-sm text-white", careerColors.bg)}
+														shadowHeight={2}
+														shadowClass={careerColors.shadow2}
+													>
+														<ExternalLink className="h-3 w-3 mr-2" />
+														Continue Learning
+													</TactileButton>
+												) : (
+													<TactileButton
+														className="w-full h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
+														shadowHeight={2}
+														shadowClass="shadow-gray-300"
+													>
+														Join Hub
+													</TactileButton>
+												)}
+											</div>
+										</CardContent>
+									</Card>
+								)
+							})}
+						</div>
+					</CardContent>
+				</Card>
+			) : (
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardContent>
+						<div className="text-center py-16">
+							<Play className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
+							<h3 className="text-xl font-medium text-wolf mb-3">No Active Learning Activities</h3>
+							<p className="text-eel mb-6 max-w-md mx-auto">
+								Your teacher hasn't started any learning activities yet.
+								Check back later or ask your teacher to create a hub for the class.
+							</p>
+						</div>
+					</CardContent>
+				</Card>
+			)}
 		</div>
 	)
 }

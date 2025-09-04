@@ -1,9 +1,9 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useEffect, useState } from "react"
-import { ArrowLeft, Users, Hash, Rocket, Plus } from "lucide-react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { useCallback, useEffect, useState } from "react"
+import { ArrowLeft, Users, Hash, Rocket, Plus, Play, UserCheck } from "lucide-react"
+import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
@@ -14,6 +14,7 @@ import teacherClass from "../../classes/teacher-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
+import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -62,6 +63,17 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 			)
 		}
 	}
+
+	const joinHubHandler = useCallback((careerUUID: CareerUUID): void => {
+		if (careerUUID === meetPipData.careerUUID) {
+			navigate("/career-quest/meet-pip")
+			return
+		}
+		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
+		if (career) {
+			navigate(career.careerUrl)
+		}
+	}, [navigate])
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
@@ -182,6 +194,75 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 					</CardContent>
 				</Card>
 			</div>
+
+			{/* Active Hubs Section */}
+			{classroomData?.activeHubs && classroomData.activeHubs.length > 0 && (
+				<Card className="border-2 border-swan bg-standardBackground mb-8">
+					<CardHeader>
+						<CardTitle className="flex items-center gap-2">
+							<Play className="h-5 w-5 text-pipTheme" />
+							Active Hubs
+						</CardTitle>
+						<CardDescription>
+							Currently running learning activities in this classroom
+						</CardDescription>
+					</CardHeader>
+					<CardContent>
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+							{classroomData.activeHubs.map((hub): React.ReactNode => {
+								// Find career data for this hub
+								const careerInfo = hub.careerUUID === meetPipData.careerUUID
+									? meetPipData
+									: careerData.find((career): boolean => career.careerUUID === hub.careerUUID)
+
+								const CareerIcon = careerInfo?.careerIcon || Rocket
+								const careerColors = getDuolingoColors(careerInfo?.backgroundColor || "humpback")
+
+								return (
+									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow">
+										<CardContent className="p-4">
+											<div className="flex items-start gap-3">
+												<div className={cn("p-2 rounded-lg", careerColors.bg)}>
+													<CareerIcon className="h-5 w-5 text-white" />
+												</div>
+												<div className="flex-1 min-w-0">
+													<h3 className="font-semibold text-wolf truncate mb-1">
+														{hub.hubName}
+													</h3>
+													<p className="text-sm text-eel mb-2">
+														{careerInfo?.careerName || "Unknown Career"}
+													</p>
+													<div className="flex items-center gap-2 text-xs text-eel">
+														<UserCheck className="h-3 w-3" />
+														<span>{hub.studentsJoined.length} students joined</span>
+													</div>
+												</div>
+											</div>
+											<div className="mt-3 flex gap-2">
+												<TactileButton
+													className="flex-1 h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
+													shadowHeight={2}
+													shadowClass="shadow-gray-300"
+												>
+													View Details
+												</TactileButton>
+												<TactileButton
+													className={cn("flex-1 h-8 text-sm text-white", careerColors.bg)}
+													shadowHeight={2}
+													shadowClass={careerColors.shadow2}
+													onClick={(): void => joinHubHandler(hub.careerUUID)}
+												>
+													Join Hub
+												</TactileButton>
+											</div>
+										</CardContent>
+									</Card>
+								)
+							})}
+						</div>
+					</CardContent>
+				</Card>
+			)}
 
 			{/* Students Table */}
 			<Card className="border-2 border-swan bg-standardBackground">
