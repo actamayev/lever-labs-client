@@ -1,8 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
-import { Bot, Navigation, Eye, Radar, Lightbulb, Cog, ArrowRight, ScanLine, Puzzle,
-	Trophy, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Heart } from "lucide-react"
+import { Bot, Navigation, Heart } from "lucide-react"
 import MeetPipS3P4Display from "../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
 import MeetPipS2P3ColorPicker from "../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
 import MeetPipS5P4ImuViz from "../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
@@ -30,41 +29,6 @@ const TRIGGER_COMPONENTS: Record<string, () => ReactNode> = {
 	"s9-p6-encoder-viz": (): ReactNode => <MeetPipS9P6EncoderViz />,
 	"dino-leaderboard": (): ReactNode => <DinoLeaderboard />,
 	"bot-humpback": (): ReactNode => <Bot size={120} className="text-humpback" />,
-	"bot-macaw": (): ReactNode => <Bot size={120} className="text-macaw" />,
-
-	// Heading icons for humpback theme
-	"heading1-humpback": (): ReactNode => <Heading1 size={120} className="text-humpback" />,
-	"heading2-humpback": (): ReactNode => <Heading2 size={120} className="text-humpback" />,
-	"heading3-humpback": (): ReactNode => <Heading3 size={120} className="text-humpback" />,
-	"heading4-humpback": (): ReactNode => <Heading4 size={120} className="text-humpback" />,
-	"heading5-humpback": (): ReactNode => <Heading5 size={120} className="text-humpback" />,
-	"heading6-humpback": (): ReactNode => <Heading6 size={120} className="text-humpback" />,
-
-	// Heading icons for macaw theme
-	"heading1-macaw": (): ReactNode => <Heading1 size={120} className="text-macaw" />,
-	"heading2-macaw": (): ReactNode => <Heading2 size={120} className="text-macaw" />,
-	"heading3-macaw": (): ReactNode => <Heading3 size={120} className="text-macaw" />,
-	"heading4-macaw": (): ReactNode => <Heading4 size={120} className="text-macaw" />,
-	"heading5-macaw": (): ReactNode => <Heading5 size={120} className="text-macaw" />,
-	"heading6-macaw": (): ReactNode => <Heading6 size={120} className="text-macaw" />,
-
-	// Other icons for macaw theme
-	"lightbulb-macaw": (): ReactNode => <Lightbulb size={120} className="text-macaw" />,
-	"cog-macaw": (): ReactNode => <Cog size={120} className="text-macaw" />,
-	"arrow-right-macaw": (): ReactNode => <ArrowRight size={120} className="text-macaw" />,
-	"scan-line-macaw": (): ReactNode => <ScanLine size={120} className="text-macaw" />,
-	"puzzle-macaw": (): ReactNode => <Puzzle size={120} className="text-macaw" />,
-	"trophy-macaw": (): ReactNode => <Trophy size={120} className="text-macaw" />,
-
-	// Other icons for humpback theme
-	"navigation-humpback": (): ReactNode => <Navigation size={120} className="text-humpback" />,
-	"eye-humpback": (): ReactNode => <Eye size={120} className="text-humpback" />,
-	"radar-humpback": (): ReactNode => <Radar size={120} className="text-humpback" />,
-	"heart-humpback": (): ReactNode => <Heart size={120} className="text-humpback" />,
-
-	// Other icons for macaw theme
-	"navigation-macaw": (): ReactNode => <Navigation size={120} className="text-macaw" />,
-	"heart-macaw": (): ReactNode => <Heart size={120} className="text-macaw" />,
 }
 
 // Helper function to get a trigger component by key

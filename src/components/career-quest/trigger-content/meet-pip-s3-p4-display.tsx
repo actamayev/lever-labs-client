@@ -7,6 +7,7 @@ import editName from "../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../garage/display/render-display"
 import personalInfoClass from "../../../classes/personal-info-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
+import Image from "next/image"
 
 function MeetPipS3P4Display(): React.ReactNode {
 	const profanityWords: string[] = [
@@ -38,6 +39,14 @@ function MeetPipS3P4Display(): React.ReactNode {
 
 	return (
 		<div className="space-y-8">
+			<Image
+				src="/images/career-quest/meet-pip/s3_p4.png"
+				alt="Meet Pip robot introduction"
+				width={600}
+				height={600}
+				className="object-contain rounded-3xl"
+				priority
+			/>
 			{/* Display */}
 			<div className="flex justify-center">
 				<RenderDisplay pixelBuffer={careerQuestTriggersClass.pixelBuffer} />
