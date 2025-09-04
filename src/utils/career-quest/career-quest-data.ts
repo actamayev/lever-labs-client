@@ -362,7 +362,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-1",
 					content: "meet-pip-6-1",
-					rightSideContent: createImage("s6_p1.png", "meet-pip", {
+					rightSideContent: createImage("s6_p1.jpeg", "meet-pip", {
 						alt: "Meet Pip robot introduction",
 					})
 				},
@@ -378,7 +378,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-3",
 					content: "meet-pip-6-3",
-					rightSideContent: createImage("s6_p3.png", "meet-pip", {
+					rightSideContent: createImage("s6_p3.jpeg", "meet-pip", {
 						alt: "Meet Pip robot introduction",
 					})
 				},
@@ -394,7 +394,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-5",
 					content: "meet-pip-6-5",
-					rightSideContent: createImage("s6_p5.png", "meet-pip", {
+					rightSideContent: createImage("s6_p5.jpeg", "meet-pip", {
 						alt: "Meet Pip robot introduction",
 					})
 				},
@@ -410,7 +410,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-7",
 					content: "meet-pip-6-7",
-					rightSideContent: createImage("s6_p7.png", "meet-pip", {
+					rightSideContent: createImage("s6_p7.jpeg", "meet-pip", {
 						alt: "Meet Pip robot introduction",
 					})
 				},
