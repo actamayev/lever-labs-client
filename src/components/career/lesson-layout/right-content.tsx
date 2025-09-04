@@ -1,3 +1,4 @@
+/* eslint-disable max-depth */
 import { observer } from "mobx-react"
 import { AnimatePresence, MotionProps, motion } from "framer-motion"
 import { ReactNode } from "react"
@@ -8,11 +9,74 @@ import CareerChatInterface from "../chat/career-chat-interface"
 import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 
+// eslint-disable-next-line complexity
+function getUpcomingImages(careerData: CareerQuestData, lookAhead: number = 2): string[] {
+	const career = careerQuestClass.careers.get(careerData.careerUUID)
+	if (!career) return []
+
+	const upcomingImages: string[] = []
+	const currentMainSlideIndex = career.currentMainSlideIndex
+	const sections = career.careerDefinition.sections
+
+	// Look ahead through the next few sections
+	for (let i = currentMainSlideIndex + 1; i < Math.min(sections.length, currentMainSlideIndex + 1 + lookAhead); i++) {
+		const section = sections[i]
+
+		if (section.type === "textParent") {
+			// Check all children in this text parent section
+			for (const child of section.children) {
+				if (child.type === "text") {
+					const rightContent = typeof child.rightSideContent === "string"
+						? { type: "icon" as const, iconKey: child.rightSideContent }
+						: child.rightSideContent
+					if (rightContent.type === "image") {
+						upcomingImages.push(rightContent.src)
+					}
+				} else if (child.type === "morphingText") {
+					// Check all variants in morphing text
+
+					for (const variant of child.morphingVariants) {
+
+						if (variant.rightContent.type === "image") {
+							upcomingImages.push(variant.rightContent.src)
+						}
+					}
+				}
+			}
+		}
+		// Note: Challenge sections don't typically have images in RightContent
+	}
+
+	return [...new Set(upcomingImages)] // Remove duplicates
+}
+
 // eslint-disable-next-line max-lines-per-function, complexity
 function RightContent({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
+	const upcomingImages = getUpcomingImages(careerData)
+
+	// Preload upcoming images invisibly
+	const preloadImages = (): ReactNode => {
+		if (!isDataReady || upcomingImages.length === 0) return null
+
+		return (
+			<div style={{ display: "none" }} aria-hidden="true">
+				{upcomingImages.map((src): ReactNode => (
+					<Image
+						key={`preload-${src}`}
+						src={src}
+						alt=""
+						width={1}
+						height={1}
+						priority={true}
+						style={{ pointerEvents: "none" }}
+					/>
+				))}
+			</div>
+		)
+	}
 
 	// Helper function to get transition props
 	const getTransitionProps = (): MotionProps => {
@@ -142,7 +206,12 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 		)
 	}
 
-	return <div className="h-full w-full flex items-center justify-center" />
+	return (
+		<>
+			{preloadImages()}
+			<div className="h-full w-full flex items-center justify-center" />
+		</>
+	)
 }
 
 export default observer(RightContent)
