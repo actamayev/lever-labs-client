@@ -9,6 +9,7 @@ import {
 	YAxis,
 	CartesianGrid,
 	Tooltip,
+	ResponsiveContainer,
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 import sensorDataClass from "../../../classes/sensor-data-class"
@@ -56,7 +57,6 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 
 	// Chart configuration
 	const chartConfig = {
-		margin: { top: 10, right: 10, left: 10, bottom: 10 },
 		strokeWidth: 2,
 		dot: false,
 		isAnimationActive: false,
@@ -64,139 +64,197 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<div className="grid grid-cols-2 gap-6">
+			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 				{/* Yaw Chart */}
-				<Card className="h-64">
+				<Card className="h-56 rounded-3xl">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Yaw (Heading)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-48">
-						<LineChart data={yawData} margin={chartConfig.margin} width={280} height={192}>
-							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-							<XAxis
-								dataKey="index"
-								className="text-xs"
-								tick={false}
-							/>
-							<YAxis
-								className="text-xs"
-								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								domain={[-180, 180]}
-							/>
-							<Tooltip
-								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
-								labelFormatter={(): string => "Sample"}
-							/>
-							<Line
-								type="monotone"
-								dataKey="value"
-								stroke="#2563EB"
-								strokeWidth={chartConfig.strokeWidth}
-								dot={chartConfig.dot}
-								isAnimationActive={chartConfig.isAnimationActive}
-							/>
-						</LineChart>
+					<CardContent className="h-4/5">
+						<ResponsiveContainer width="100%" height="100%">
+							<LineChart
+								data={yawData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+								<XAxis
+									dataKey="index"
+									className="text-xs"
+									tick={false}
+								/>
+								<YAxis
+									className="text-xs"
+									width={36}
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
+									domain={[-180, 180]}
+								/>
+								<Tooltip
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
+									labelFormatter={(): string => "Sample"}
+								/>
+								<Line
+									type="monotone"
+									dataKey="value"
+									stroke="#2563EB"
+									strokeWidth={chartConfig.strokeWidth}
+									dot={chartConfig.dot}
+									isAnimationActive={chartConfig.isAnimationActive}
+								/>
+							</LineChart>
+						</ResponsiveContainer>
 					</CardContent>
 				</Card>
 
 				{/* Pitch Chart */}
-				<Card className="h-64">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Pitch (Forward/Backward)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-48">
-						<LineChart data={pitchData} margin={chartConfig.margin} width={280} height={192}>
-							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-							<XAxis
-								dataKey="index"
-								className="text-xs"
-								tick={false}
-							/>
-							<YAxis
-								className="text-xs"
-								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								domain={[-180, 180]}
-							/>
-							<Tooltip
-								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
-								labelFormatter={(): string => "Sample"}
-							/>
-							<Line
-								type="monotone"
-								dataKey="value"
-								stroke="#DC2626"
-								strokeWidth={chartConfig.strokeWidth}
-								dot={chartConfig.dot}
-								isAnimationActive={chartConfig.isAnimationActive}
-							/>
-						</LineChart>
+					<CardContent className="h-4/5">
+						<ResponsiveContainer width="100%" height="100%">
+							<LineChart
+								data={pitchData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+								<XAxis
+									dataKey="index"
+									className="text-xs"
+									tick={false}
+								/>
+								<YAxis
+									className="text-xs"
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
+									domain={[-180, 180]}
+								/>
+								<Tooltip
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
+									labelFormatter={(): string => "Sample"}
+								/>
+								<Line
+									type="monotone"
+									dataKey="value"
+									stroke="#DC2626"
+									strokeWidth={chartConfig.strokeWidth}
+									dot={chartConfig.dot}
+									isAnimationActive={chartConfig.isAnimationActive}
+								/>
+							</LineChart>
+						</ResponsiveContainer>
 					</CardContent>
 				</Card>
 
 				{/* Roll Chart */}
-				<Card className="h-64">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Roll (Left/Right)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-48">
-						<LineChart data={rollData} margin={chartConfig.margin} width={280} height={192}>
-							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-							<XAxis
-								dataKey="index"
-								className="text-xs"
-								tick={false}
-							/>
-							<YAxis
-								className="text-xs"
-								label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
-								domain={[-180, 180]}
-							/>
-							<Tooltip
-								formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
-								labelFormatter={(): string => "Sample"}
-							/>
-							<Line
-								type="monotone"
-								dataKey="value"
-								stroke="#059669"
-								strokeWidth={chartConfig.strokeWidth}
-								dot={chartConfig.dot}
-								isAnimationActive={chartConfig.isAnimationActive}
-							/>
-						</LineChart>
+					<CardContent className="h-4/5">
+						<ResponsiveContainer width="100%" height="100%">
+							<LineChart
+								data={rollData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+								<XAxis
+									dataKey="index"
+									className="text-xs"
+									tick={false}
+								/>
+								<YAxis
+									className="text-xs"
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
+									domain={[-180, 180]}
+								/>
+								<Tooltip
+									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
+									labelFormatter={(): string => "Sample"}
+								/>
+								<Line
+									type="monotone"
+									dataKey="value"
+									stroke="#059669"
+									strokeWidth={chartConfig.strokeWidth}
+									dot={chartConfig.dot}
+									isAnimationActive={chartConfig.isAnimationActive}
+								/>
+							</LineChart>
+						</ResponsiveContainer>
 					</CardContent>
 				</Card>
 
 				{/* Linear Acceleration Chart */}
-				<Card className="h-64">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Shake</CardTitle>
 					</CardHeader>
-					<CardContent className="h-48">
-						<LineChart data={linearAccelerationData} margin={chartConfig.margin} width={280} height={192}>
-							<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
-							<XAxis
-								dataKey="index"
-								className="text-xs"
-								tick={false}
-							/>
-							<YAxis
-								className="text-xs"
-								label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
-							/>
-							<Tooltip
-								formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Shake"]}
-								labelFormatter={(): string => "Sample"}
-							/>
-							<Line
-								type="monotone"
-								dataKey="value"
-								stroke="#7C3AED"
-								strokeWidth={chartConfig.strokeWidth}
-								dot={chartConfig.dot}
-								isAnimationActive={chartConfig.isAnimationActive}
-							/>
-						</LineChart>
+					<CardContent className="h-4/5">
+						<ResponsiveContainer width="100%" height="100%">
+							<LineChart
+								data={linearAccelerationData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
+								<XAxis
+									dataKey="index"
+									className="text-xs"
+									tick={false}
+								/>
+								<YAxis
+									className="text-xs"
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "m/s²",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
+								/>
+								<Tooltip
+									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Shake"]}
+									labelFormatter={(): string => "Sample"}
+								/>
+								<Line
+									type="monotone"
+									dataKey="value"
+									stroke="#7C3AED"
+									strokeWidth={chartConfig.strokeWidth}
+									dot={chartConfig.dot}
+									isAnimationActive={chartConfig.isAnimationActive}
+								/>
+							</LineChart>
+						</ResponsiveContainer>
 					</CardContent>
 				</Card>
 			</div>
