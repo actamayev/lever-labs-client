@@ -5,7 +5,7 @@ import CareerActivityTemplate from "../../../src/components/career/career-activi
 
 export const metadata = createMetadata({
 	title: "Meet Pip",
-	description: "Guide Pip through line-following to discover its purpose in a robotics adventure.",
+	description: "Learn the basics of programming, sensors, and robotics concepts as you begin your robotics journey.",
 	path: "/career-quest/meet-pip",
 	keywords: [
 		"robotics adventure",
