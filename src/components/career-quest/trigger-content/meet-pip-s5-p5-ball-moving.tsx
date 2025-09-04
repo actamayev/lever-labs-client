@@ -95,6 +95,47 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 		}
 	}
 
+	// Reset only the hole position while keeping the ball where it is
+	const resetHolePosition = (ctx?: CanvasRenderingContext2D | null): void => {
+		const minX = boundaryPadding + ballRadius
+		const maxX = canvasWidth - boundaryPadding - ballRadius
+		const minY = boundaryPadding + ballRadius
+		const maxY = canvasHeight - boundaryPadding - ballRadius
+
+		// Pick new hole location
+		const holeR = 18 + Math.floor(Math.random() * 8) // 18..25
+		let hx: number, hy: number
+		let tries = 0
+		const currentBallPos = currentPositionRef.current
+
+		do {
+			hx = Math.floor(Math.random() * (maxX - minX + 1)) + minX
+			hy = Math.floor(Math.random() * (maxY - minY + 1)) + minY
+
+			// Ensure hole is far enough from current ball position
+			const margin = (holeR + ballRadius) + 30
+			const dx = currentBallPos.x - hx
+			const dy = currentBallPos.y - hy
+			const dist = Math.sqrt(dx * dx + dy * dy)
+
+			tries++
+			// repeat until hole is comfortably away from ball (or give up after many tries)
+			if (dist > margin || tries > 50) break
+		} while (true)
+
+		// Update only hole state + refs
+		const newHole: Vec2 = { x: hx, y: hy }
+		holePositionRef.current = newHole
+		setHolePosition(newHole)
+		holeRadiusRef.current = holeR
+		setHoleRadius(holeR)
+
+		// Optionally clear/redraw immediately
+		if (ctx) {
+			ctx.clearRect(0, 0, canvasWidth, canvasHeight)
+		}
+	}
+
 	// eslint-disable-next-line max-lines-per-function
 	useEffect((): (() => void) => {
 		const canvas = canvasRef.current
@@ -264,6 +305,22 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 						className="w-full h-full"
 					/>
 				</div>
+			</div>
+
+			{/* Reset Hole Button */}
+			<div className="flex justify-center">
+				<button
+					onClick={(): void => {
+						const canvas = canvasRef.current
+						if (canvas) {
+							const ctx = canvas.getContext("2d")
+							resetHolePosition(ctx)
+						}
+					}}
+					className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200"
+				>
+					Reset Hole Position
+				</button>
 			</div>
 
 			{/* IMU Data Display */}
