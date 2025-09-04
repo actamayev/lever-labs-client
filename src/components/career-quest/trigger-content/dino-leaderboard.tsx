@@ -80,8 +80,8 @@ function DinoLeaderboard(): React.ReactNode {
 								{sortedScores.map((scoreData, index): React.ReactNode => (
 									<tr
 										key={`${scoreData.score}-${scoreData.timestamp.getTime()}`}
-										className={`hover:bg-gray-50 transition-colors ${
-											scoreData.score === highScore ? "bg-yellow-50" : ""
+										className={`hover:bg-yellow-100 dark:hover:bg-yellow-900 transition-colors ${
+											scoreData.score === highScore ? "bg-yellow-50 dark:bg-yellow-800" : ""
 										}`}
 									>
 										<td className="px-6 py-4 whitespace-nowrap">
@@ -98,7 +98,7 @@ function DinoLeaderboard(): React.ReactNode {
 												}
 											</div>
 										</td>
-										<td className="px-6 py-4 whitespace-nowrap">
+										<td className="px-6 py-4 whitespace-nowrap flex items-center justify-center">
 											<span className={`text-2xl font-bold ${getScoreColor(scoreData.score)}`}>
 												{scoreData.score}
 											</span>
@@ -113,7 +113,7 @@ function DinoLeaderboard(): React.ReactNode {
 											{formatTimestamp(scoreData.timestamp)}
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap">
-											<div className="flex items-center">
+											<div className="flex items-center justify-center">
 												<div className="w-16 bg-swan rounded-full h-2 mr-3">
 													<div
 														className="bg-gradient-to-r from-green-400 to-blue-500
