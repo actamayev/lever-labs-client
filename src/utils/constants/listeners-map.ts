@@ -28,5 +28,10 @@ export const listenersMap: {
 	"general-sensor-data-mz": sensorDataClass.addMultizoneTofData,
 	"student-invite-join-class": studentClass.addPendingInvite,
 	"dino-score-update": gamesClass.addDinoScore,
-	"student-joined-classroom": teacherClass.addStudentToClassroom
+	"student-joined-classroom": teacherClass.addStudentToClassroom,
+	"new-hub": studentClass.addNewHub,
+	"updated-hub-slide-id": studentClass.updateHubSlideId,
+	"deleted-hub": studentClass.deleteHub,
+	"student-joined-hub": teacherClass.addStudentToHub,
+	"student-left-hub": teacherClass.removeStudentFromHub
 } as const

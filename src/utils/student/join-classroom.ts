@@ -23,7 +23,11 @@ export default async function joinClassroom(
 		if (!isEqual(joinClassResponse.status, 200) || isNonSuccessResponse(joinClassResponse.data)) {
 			throw Error("Unable to join class")
 		}
-		studentClass.addClassroomData({...joinClassResponse.data})
+		const classroomInfo: StudentClassroomDataWithHubs = {
+			...joinClassResponse.data,
+			activeHubs: joinClassResponse.data.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
+		}
+		studentClass.addClassroomData(classroomInfo)
 		return true
 	} catch (error: unknown) {
 		console.error(error)

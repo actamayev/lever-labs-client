@@ -7,7 +7,7 @@ import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import respondToClassroomInvitation from "../../utils/student/respond-to-classroom-invitation"
+import useRespondToClassroomInvitation from "../../hooks/student/respond-to-classroom-invitation"
 
 interface ClassroomInvitationResponseProps {
 	classCode: ClassCode
@@ -17,6 +17,7 @@ interface ClassroomInvitationResponseProps {
 // eslint-disable-next-line max-lines-per-function
 function ClassroomInvitationResponse({ classCode, classroomName }: ClassroomInvitationResponseProps): React.ReactNode {
 	const navigate = useTypedNavigate()
+	const respondToClassroomInvitation = useRespondToClassroomInvitation()
 	const [isResponding, setIsResponding] = useState(false)
 
 	const handleBackClick = (): void => navigate("/whiteboard")

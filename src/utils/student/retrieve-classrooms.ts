@@ -23,7 +23,11 @@ export default async function retrieveClassrooms(): Promise<void> {
 		if (!isEqual(studentClassroomsResponse.status, 200) || isErrorResponse(studentClassroomsResponse.data)) {
 			throw Error ("Unable to retrieve student classroom data")
 		}
-		studentClass.setRetrievedStudentData(studentClassroomsResponse.data)
+		const classroomInfo = studentClassroomsResponse.data.map((classroom): StudentClassroomDataWithHubs => ({
+			...classroom,
+			activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
+		}))
+		studentClass.setRetrievedStudentData(classroomInfo)
 	} catch (error) {
 		console.error(error)
 		studentClass.setIsRetrievingStudentData(false)

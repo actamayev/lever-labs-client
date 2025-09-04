@@ -41,8 +41,8 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 		setIsInviteDialogOpen(true)
 	}
 
-	const getStatusBadge = (didAccept: boolean): React.ReactNode => {
-		if (didAccept) {
+	const getStatusBadge = (inviteStatus: "ACCEPTED" | "PENDING" | "DECLINED"): React.ReactNode => {
+		if (inviteStatus === "ACCEPTED") {
 			return (
 				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
 					Accepted
@@ -131,8 +131,8 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 						<div className="text-sm text-eel mt-2 space-y-1">
 							{((): React.ReactNode => {
 								const students = classroomData?.students || []
-								const accepted = students.filter((s): boolean => s.didAccept).length
-								const pending = students.filter((s): boolean => !s.didAccept).length
+								const accepted = students.filter((s): boolean => s.inviteStatus === "ACCEPTED").length
+								const pending = students.filter((s): boolean => s.inviteStatus === "PENDING").length
 								return (
 									<>
 										<div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 											{student.username || "Unknown"}
 										</TableCell>
 										<TableCell>
-											{getStatusBadge(student.didAccept)}
+											{getStatusBadge(student.inviteStatus)}
 										</TableCell>
 										<TableCell>
 											<TactileButton
