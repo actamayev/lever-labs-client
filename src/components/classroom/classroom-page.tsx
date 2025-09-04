@@ -2,12 +2,13 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useState } from "react"
-import { ArrowLeft, Users, Hash, BookOpen, Plus } from "lucide-react"
+import { ArrowLeft, Users, Hash, Rocket, Plus } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import InviteStudentDialog from "./invite-student-dialog"
+import CreateHubDialog from "./create-hub-dialog"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
@@ -22,6 +23,7 @@ interface ClassroomPageProps {
 function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
+	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
 
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
@@ -39,6 +41,10 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 
 	const handleInviteStudent = (): void => {
 		setIsInviteDialogOpen(true)
+	}
+
+	const handleCreateHub = (): void => {
+		setIsCreateHubDialogOpen(true)
 	}
 
 	const getStatusBadge = (inviteStatus: "ACCEPTED" | "PENDING" | "DECLINED"): React.ReactNode => {
@@ -158,15 +164,21 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<BookOpen className="h-5 w-5 text-pipTheme" />
-							Class Status
+							<Rocket className="h-5 w-5 text-pipTheme" />
+							Create Hub
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<div className="text-2xl font-bold text-green-600">
-							Active
-						</div>
-						<p className="text-sm text-eel mt-1">class is currently running</p>
+						<p className="text-sm text-eel mb-3">Start a new learning activity for your students</p>
+						<TactileButton
+							onClick={handleCreateHub}
+							className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
+							shadowHeight={4}
+							shadowClass={colors.shadow2}
+						>
+							<Plus className="h-4 w-4 mr-2" />
+							Create New Hub
+						</TactileButton>
 					</CardContent>
 				</Card>
 			</div>
@@ -208,7 +220,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 							</TableHeader>
 							<TableBody>
 								{classroomData.students
-									.filter(student => student.inviteStatus !== "DECLINED")
+									.filter((student): boolean => student.inviteStatus !== "DECLINED")
 									.map((student, index): React.ReactNode => (
 										<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
 											<TableCell className="font-medium text-wolf">
@@ -259,6 +271,13 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 				classCode={classCode}
 				isInviteDialogOpen={isInviteDialogOpen}
 				setIsInviteDialogOpen={setIsInviteDialogOpen}
+			/>
+
+			{/* Create Hub Dialog */}
+			<CreateHubDialog
+				classCode={classCode}
+				isCreateHubDialogOpen={isCreateHubDialogOpen}
+				setIsCreateHubDialogOpen={setIsCreateHubDialogOpen}
 			/>
 		</div>
 	)
