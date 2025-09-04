@@ -18,31 +18,44 @@ import { CustomPartyPopper } from "../../../icons/custom-party-popper"
 import { CustomHearNoEvilMonkey } from "../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../icons/custom-speak-no-evil-monkey"
 
-function SoundActionButton({ sound, index } : { sound: FunSounds, index: number }): React.ReactNode {
+interface SoundActionButtonProps {
+	sound: FunSounds
+	index: number
+	extraClasses?: {
+		buttonClasses: string
+		shadowColor: string
+		iconClasses: string
+		iconSize: string
+	}
+}
+
+function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
+	const { sound, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
+	const iconSize = extraClasses?.iconSize || "!size-10"
 
 	// Map direction to the correct icon
 	const getSoundIcon = (): React.ReactNode => {
 		switch (sound) {
 			case "Fart":
-				return <CustomFart className="!size-10" />
+				return <CustomFart className={iconSize} />
 			case "Monkey":
 				if (garageClass.soundPlaying === "Monkey") {
-					return <CustomHearNoEvilMonkey className="!size-10" />
+					return <CustomHearNoEvilMonkey className={iconSize} />
 				}
-				return <CustomSpeakNoEvilMonkey className="!size-10" />
+				return <CustomSpeakNoEvilMonkey className={iconSize} />
 			case "Elephant":
-				return <CustomElephant className="!size-10" />
+				return <CustomElephant className={iconSize} />
 			case "Party":
-				return <CustomPartyPopper className="!size-10" />
+				return <CustomPartyPopper className={iconSize} />
 			case "UFO":
-				return <CustomUfo className="!size-10" />
+				return <CustomUfo className={iconSize} />
 			case "Countdown":
-				return <CustomCountdown className="!size-10" />
+				return <CustomCountdown className={iconSize} />
 			case "Robot":
-				return <Bot className="!size-10" />
+				return <Bot className={iconSize} />
 			case "Engine":
-				return <CustomEngine className="!size-10" />
+				return <CustomEngine className={iconSize} />
 		}
 	}
 
@@ -86,8 +99,9 @@ function SoundActionButton({ sound, index } : { sound: FunSounds, index: number 
 				"bg-sandboxOrange/20 text-sandboxOrange",
 				"dark:bg-sandboxOrange/80 dark:text-orange-200",
 				"outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
+				extraClasses?.buttonClasses
 			)}
-			shadowColor={"rgb(255 189 153)"}
+			shadowColor={extraClasses?.shadowColor || "rgb(255 189 153)"}
 			onMouseDown={handleButtonDown}
 			onMouseUp={handleButtonUp}
 			onMouseLeave={handleButtonUp}
@@ -99,6 +113,7 @@ function SoundActionButton({ sound, index } : { sound: FunSounds, index: number 
 					"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
 					"border-2 rounded-md text-xs font-medium border-sandboxOrange/40 dark:border-[rgb(255,189,153)]",
 					"group-active:border-selectedSidebarButtonBorder group-active:text-answerText",
+					extraClasses?.iconClasses
 				)}
 			>
 				{index}

@@ -24,20 +24,18 @@ export const meetPipData: CareerData = {
 	careerUrl: "/career-quest/meet-pip",
 	careerIcon: Bot,
 	backgroundColor: "humpback",
-	expectedCompletionTime: "1 HOUR",
+	expectedCompletionTime: "30 MINUTES",
 	componentsUsed: [
-		{
-			componentName: "LED",
-			componentDifficulty: 1,
-		},
-		{
-			componentName: "Side Distance Sensors",
-			componentDifficulty: 1,
-		},
-		{
-			componentName: "Multizone Distance Sensor",
-			componentDifficulty: 1,
-		}
+		"LED",
+		"Screen",
+		"Speaker",
+		"IMU",
+		"Multizone Distance Sensor",
+		"Side Distance Sensors",
+		"Buttons",
+		"Color Sensor",
+		"IR Sensors",
+		"Motors + Encoders",
 	],
 	codingConcepts: [ ]
 }
@@ -53,14 +51,8 @@ export const careerData: CareerData[] = [
 		backgroundColor: "fox",
 		expectedCompletionTime: "1.5 HOURS",
 		componentsUsed: [
-			{
-				componentName: "IR Sensors",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 2,
-			}
+			"IR Sensors",
+			"Motors + Encoders",
 		],
 		codingConcepts: [
 			"Conditional Statements",
@@ -76,19 +68,9 @@ export const careerData: CareerData[] = [
 		careerIcon: Construction,
 		backgroundColor: "macaw",
 		expectedCompletionTime: "2 HOURS",
-		componentsUsed: [
-			{
-				componentName: "Multizone Distance Sensor",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Side Distance Sensors",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 2,
-			}
+		componentsUsed: [ "Multizone Distance Sensor",
+			"Side Distance Sensors",
+			"Motors + Encoders",
 		],
 		codingConcepts: [
 			"Boolean Logic",
@@ -104,15 +86,8 @@ export const careerData: CareerData[] = [
 		careerIcon: Square,
 		backgroundColor: "cardinal",
 		expectedCompletionTime: "1 HOUR",
-		componentsUsed: [
-			{
-				componentName: "IR Sensors",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 2,
-			}
+		componentsUsed: [ "IR Sensors",
+			"Motors + Encoders",
 		],
 		codingConcepts: [
 			"Boolean Logic",
@@ -128,19 +103,9 @@ export const careerData: CareerData[] = [
 		careerIcon: Palette,
 		backgroundColor: "bee",
 		expectedCompletionTime: "1.5 HOURS",
-		componentsUsed: [
-			{
-				componentName: "Color Sensor",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "LED",
-				componentDifficulty: 1,
-			}
+		componentsUsed: [ "Color Sensor",
+			"Motors + Encoders",
+			"LED",
 		],
 		codingConcepts: [
 			"Conditional Statements",
@@ -156,20 +121,7 @@ export const careerData: CareerData[] = [
 		careerIcon: Flag,
 		backgroundColor: "beetle",
 		expectedCompletionTime: "2.5 HOURS",
-		componentsUsed: [
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 3,
-			},
-			{
-				componentName: "IMU",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "IR Sensors",
-				componentDifficulty: 2,
-			}
-		],
+		componentsUsed: [ "Motors + Encoders", "IMU", "IR Sensors"],
 		codingConcepts: [
 			"Variables",
 			"Loops",
@@ -186,18 +138,9 @@ export const careerData: CareerData[] = [
 		backgroundColor: "beakInner",
 		expectedCompletionTime: "3 HOURS",
 		componentsUsed: [
-			{
-				componentName: "IR Sensors",
-				componentDifficulty: 3,
-			},
-			{
-				componentName: "Multizone Distance Sensor",
-				componentDifficulty: 3,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 3,
-			}
+			"IR Sensors",
+			"Multizone Distance Sensor",
+			"Motors + Encoders",
 		],
 		codingConcepts: [
 			"Variables",
@@ -216,14 +159,8 @@ export const careerData: CareerData[] = [
 		backgroundColor: "humpback",
 		expectedCompletionTime: "2 HOURS",
 		componentsUsed: [
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 3,
-			},
-			{
-				componentName: "IMU",
-				componentDifficulty: 3,
-			}
+			"Motors + Encoders",
+			"IMU",
 		],
 		codingConcepts: [
 			"Variables",
@@ -240,15 +177,8 @@ export const careerData: CareerData[] = [
 		careerIcon: Eye,
 		backgroundColor: "fox",
 		expectedCompletionTime: "2.5 HOURS",
-		componentsUsed: [
-			{
-				componentName: "Multizone Distance Sensor",
-				componentDifficulty: 3,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 3,
-			}
+		componentsUsed: [ "Multizone Distance Sensor",
+			"Motors + Encoders",
 		],
 		codingConcepts: [
 			"Variables",
@@ -266,20 +196,7 @@ export const careerData: CareerData[] = [
 		careerIcon: Music,
 		backgroundColor: "macaw",
 		expectedCompletionTime: "1.5 HOURS",
-		componentsUsed: [
-			{
-				componentName: "Multizone Distance Sensor",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Speaker",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "LED",
-				componentDifficulty: 1,
-			}
-		],
+		componentsUsed: [ "Multizone Distance Sensor", "Speaker", "LED"],
 		codingConcepts: [
 			"Variables",
 			"Functions",
@@ -295,16 +212,7 @@ export const careerData: CareerData[] = [
 		careerIcon: Mountain,
 		backgroundColor: "cardinal",
 		expectedCompletionTime: "1 HOUR",
-		componentsUsed: [
-			{
-				componentName: "Multizone Distance Sensor",
-				componentDifficulty: 2,
-			},
-			{
-				componentName: "Motors + Encoders",
-				componentDifficulty: 2,
-			}
-		],
+		componentsUsed: [ "Multizone Distance Sensor", "Motors + Encoders"],
 		codingConcepts: [
 			"Boolean Logic",
 			"Conditional Statements",

@@ -1,14 +1,13 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPMessage, PipIDPayload, StandardJsonStatusMessage, PipUUID, SavedWiFiNetwork,
-	ScanCompletePayload, ScannedWiFiNetworkItem, WiFiConnectionResultPayload,
-	WiFiConnectionStatus, BatteryMonitorDataItem, SensorPayload, SensorPayloadMZ } from "@bluedotrobots/common-ts"
-import toastClass from "./toast-class"
-import workbenchClass from "./workbench-class"
-import serialConnectionManagerClass from "./serial-connection-manager-class"
+import { ESPMessage, PipUUID, SavedWiFiNetwork, ScannedWiFiNetworkItem, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
 import pipClass from "./pip-class"
+import toastClass from "./toast-class"
+import gamesClass from "./games-class"
+import workbenchClass from "./workbench-class"
 import sensorDataClass from "./sensor-data-class"
+import serialConnectionManagerClass from "./serial-connection-manager-class"
 
 interface MessageSentData {
 	content: string
@@ -133,7 +132,7 @@ class SerialMessageManagerClass {
 		switch (message.route) {
 			case "/pip-id": {
 				runInAction((): void => {
-					this.pipId = (message.payload as PipIDPayload).pipId
+					this.pipId = message.payload.pipId
 					this.showWiFiSection = true
 					serialConnectionManagerClass.pipTurnedOn = true
 					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
@@ -142,7 +141,7 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/wifi-connection-result": {
-				const status = (message.payload as WiFiConnectionResultPayload).status
+				const status = message.payload.status
 
 				// Convert to enum
 				let enumStatus: WiFiConnectionStatus
@@ -173,7 +172,7 @@ class SerialMessageManagerClass {
 			// Handle saved networks response
 				runInAction((): void => {
 					this.isLoadingSavedNetworks = false
-					this.savedNetworks = message.payload as SavedWiFiNetwork[]
+					this.savedNetworks = message.payload
 				})
 				break
 			}
@@ -188,30 +187,30 @@ class SerialMessageManagerClass {
 
 			case "/scan-result-item": {
 			// Handle individual scan result item
-				const networkItem = message.payload as ScannedWiFiNetworkItem
+				const networkItem = message.payload
 				this.scannedNetworks.push(networkItem)
 				break
 			}
 
 			case "/scan-complete": {
-			// Handle scan completion
-				const scanComplete = message.payload as ScanCompletePayload
+				// Handle scan completion
+				// const scanComplete = message.payload
 				this.isScanning = false
-				console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
+				// console.info(`Scan complete. Received ${this.scannedNetworks.length} networks (expected ${scanComplete.totalNetworks})`)
 				break
 			}
 
 			case "/motors-disabled-usb": {
-				toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
+				toastClass.neutral({ title: message.payload.status })
 				break
 			}
 
 			case "/program-paused-usb": {
-				toastClass.neutral({ title: (message.payload as StandardJsonStatusMessage).status })
+				toastClass.neutral({ title: message.payload.status })
 				break
 			}
 			case "/battery-monitor-data-item": {
-				const batteryDataItem = message.payload as BatteryMonitorDataItem
+				const batteryDataItem = message.payload
 				workbenchClass.setBatteryDataItem(batteryDataItem)
 				break
 			}
@@ -220,14 +219,19 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/sensor-data": {
-				const sensorData = message.payload as SensorPayload
+				const sensorData = message.payload
 				sensorDataClass.addSensorData(sensorData)
 				break
 			}
 
 			case "/sensor-data-mz": {
-				const sensorData = message.payload as SensorPayloadMZ
+				const sensorData = message.payload
 				sensorDataClass.addMultizoneTofData(sensorData)
+				break
+			}
+			case "/dino-score": {
+				const dinoScore = message.payload
+				gamesClass.addDinoScore(dinoScore)
 				break
 			}
 			default:

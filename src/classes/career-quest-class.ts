@@ -191,12 +191,8 @@ class CareerQuestClass {
 			currentTransitionDuration: DEFAULT_TRANSITION_DURATION,
 			lastSlideChangeTime: 0,
 			rightContent: {
-				type: "image",
-				icon:
-					(careerDefinition.sections[0].type === "textParent" &&
-						careerDefinition.sections[0].children[0].type !== "morphingText" &&
-						careerDefinition.sections[0].children[0].rightSideContent) ||
-					"null"
+				type: "icon",
+				iconKey: "bot-humpback"
 			},
 			textParentSwipers: new Map<string, SwiperType | null>(),
 			careerChatData: {
@@ -261,8 +257,11 @@ class CareerQuestClass {
 		if (!career) return
 		career.hasRetrievedAllChallenges = hasRetrievedAllChallenges
 
-		// When data becomes ready, try to restore and sync UI state
+		// When data becomes ready, immediately restore navigation indices
 		if (hasRetrievedAllChallenges) {
+			// Restore navigation indices immediately (regardless of swiper instance)
+			this.restoreNavigationFromSavedPosition(careerUUID)
+			// Try to sync swiper and right content if swiper instance exists
 			this.attemptRestoreAndSyncRightContent(careerUUID)
 		}
 	})
@@ -465,19 +464,24 @@ class CareerQuestClass {
 		return true
 	})
 
-	// Attempt to restore saved position (if any), sync the Swiper to it, and update right content
+	// Sync swiper to current navigation indices and update right content
 	private attemptRestoreAndSyncRightContent = action((careerUUID: CareerUUID): void => {
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		const swiperInstance = this.getSwiperInstance(careerUUID)
 		if (!isDataReady || !swiperInstance) return
 
-		const restored = this.restoreNavigationFromSavedPosition(careerUUID)
-		if (!restored) return
-
 		const indices = this.getNavigationIndices(careerUUID)
 		swiperInstance.slideTo(indices.mainSlideIndex, 0)
 
 		this.updateRightContentForCurrentState(careerUUID)
+		// Call triggerFunctionEnter for the current position since we just synced to it
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "textParent") return
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+		const textChild = currentSlide.data.children[currentTextChildIndex]
+		if (textChild.triggerFunctionEnter) {
+			textChild.triggerFunctionEnter()
+		}
 	})
 
 	// ========================================
@@ -1232,7 +1236,6 @@ class CareerQuestClass {
 
 		// Call enter trigger function for the new text child
 		if (textChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", textChild.id)
 			textChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1285,7 +1288,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "image", icon: "bot-humpback" }
+		return career?.rightContent || { type: "icon", iconKey: "bot-humpback" }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
@@ -1382,7 +1385,6 @@ class CareerQuestClass {
 		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
-			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1405,7 +1407,6 @@ class CareerQuestClass {
 		// Call enter trigger function after arriving at new slide
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", newTextChild.id)
 			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1426,7 +1427,6 @@ class CareerQuestClass {
 		// Call exit trigger function before leaving current slide
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
-			console.log("Calling exit trigger function for", currentTextChild.id)
 			currentTextChild.triggerFunctionExit().catch((error): void => {
 				console.error("Error executing exit trigger function:", error)
 			})
@@ -1443,7 +1443,6 @@ class CareerQuestClass {
 		// Call enter trigger function after arriving at new slide
 		const newTextChild = currentSlide.data.children[newIndex]
 		if (newTextChild.triggerFunctionEnter) {
-			console.log("Calling enter trigger function for", newTextChild.id)
 			newTextChild.triggerFunctionEnter().catch((error): void => {
 				console.error("Error executing enter trigger function:", error)
 			})
@@ -1464,7 +1463,6 @@ class CareerQuestClass {
 			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
-				console.log("Calling exit trigger function for", currentTextChild.id)
 				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})
@@ -1507,7 +1505,6 @@ class CareerQuestClass {
 			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
-				console.log("Calling exit trigger function for", currentTextChild.id)
 				currentTextChild.triggerFunctionExit().catch((error): void => {
 					console.error("Error executing exit trigger function:", error)
 				})
@@ -1630,7 +1627,7 @@ class CareerQuestClass {
 	// RIGHT CONTENT SELECTION LOGIC
 	// ========================================
 
-	// eslint-disable-next-line complexity
+
 	private updateRightContentForCurrentState = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
@@ -1639,12 +1636,8 @@ class CareerQuestClass {
 		if (!isDataReady) {
 			this.setRightContent(careerUUID,
 				{
-					type: "image",
-					icon:
-						(career.careerDefinition.sections[0].type === "textParent" &&
-							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].rightSideContent) ||
-						"null"
+					type: "icon",
+					iconKey: "bot-humpback"
 				})
 			return
 		}
@@ -1681,16 +1674,13 @@ class CareerQuestClass {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
 				this.setRightContent(careerUUID, {
-					type: "image",
-					icon:
-						(career.careerDefinition.sections[0].type === "textParent" &&
-							career.careerDefinition.sections[0].children[0].type !== "morphingText" &&
-							career.careerDefinition.sections[0].children[0].rightSideContent) ||
-						"null"
+					type: "icon",
+					iconKey: "bot-humpback"
 				})
 			}
 		} else {
-			this.setRightContent(careerUUID, { type: "image", icon: textChild.rightSideContent })
+			const resolvedContent = this.resolveRightSideContent(textChild.rightSideContent)
+			this.setRightContent(careerUUID, resolvedContent)
 		}
 	})
 
@@ -1708,11 +1698,6 @@ class CareerQuestClass {
 		career.careerChatData.currentStreamingMessageId = null
 		career.careerChatData.currentStreamId = null
 	})
-
-	public logout(): void {
-		this.careers.clear()
-		this.isDoneInitializing = false
-	}
 
 	// NEW: Check if user can advance to next text child
 	public canAdvanceToNextTextChild(careerUUID: CareerUUID): boolean {
@@ -1815,6 +1800,21 @@ class CareerQuestClass {
 
 	private sleep(ms: number): Promise<void> {
 		return new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, ms))
+	}
+
+	private resolveRightSideContent(rightSideContent: string | RightContent): RightContent {
+		// If it's already a RightContent object, return as-is
+		if (typeof rightSideContent === "object") {
+			return rightSideContent
+		}
+
+		// If it's a string, treat it as an icon (backward compatibility)
+		return { type: "icon", iconKey: rightSideContent }
+	}
+
+	public logout(): void {
+		this.careers.clear()
+		this.isDoneInitializing = false
 	}
 }
 

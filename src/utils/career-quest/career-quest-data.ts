@@ -8,6 +8,7 @@ import { CareerType, CareerUUID, MeetPipTriggerType, OBSTACLE_AVOIDANCE_CHALLENG
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
+import { createImage } from "./create-media-helpers"
 
 export const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
@@ -33,13 +34,17 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-1-2",
 					content: "meet-pip-1-2",
-					rightSideContent: "heading2-humpback"
+					rightSideContent: createImage("logo512.png", "meet-pip", {
+						alt: "Meet Pip robot introduction",
+					})
 				},
 				{
 					type: "text",
 					id: "meet-pip-1-3",
 					content: "meet-pip-1-3",
-					rightSideContent: "heading3-humpback"
+					rightSideContent: createImage("pip_bookcase.jpeg", "meet-pip", {
+						alt: "Meet Pip robot introduction",
+					})
 				},
 				{
 					type: "text",
@@ -60,12 +65,16 @@ export const MEET_PIP: CareerQuestData = {
 						{
 							id: "variant-1",
 							text: "deliver meals through a busy city,",
-							rightContent: { type: "image", icon: "navigation-humpback" }
+							rightContent: createImage("pip_right.png", "meet-pip", {
+								alt: "Meet Pip robot introduction",
+							})
 						},
 						{
 							id: "variant-2",
 							text: "or lend a hand in a hospital,",
-							rightContent: { type: "image", icon: "heart-humpback" }
+							rightContent: createImage("pip_right.png", "meet-pip", {
+								alt: "Meet Pip robot introduction",
+							})
 						},
 						{
 							id: "variant-3",
@@ -119,7 +128,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-2-4",
 					content: "meet-pip-2-4",
-					rightSideContent: "s2-p4-light-show",
+					rightSideContent: "heading4-humpback",
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S2_P4_EXIT)
 				},
 				{
@@ -152,14 +161,17 @@ export const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-3-3",
 					rightSideContent: "heading3-humpback",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_EXIT)
+					triggerFunctionExit: () => {
+						void careerQuestTriggersClass.exportFirstNameToDisplay()
+						return careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S3_P3_EXIT)
+					}
 				},
 				{
 					type: "text",
 					id: "meet-pip-3-4",
 					content: "meet-pip-3-4",
 					rightSideContent: "s3-p4-display",
-					triggerFunctionEnter: () => careerQuestTriggersClass.exportDisplayTrigger(),
+					triggerFunctionEnter: () => careerQuestTriggersClass.exportFirstNameToDisplay(),
 				},
 				{
 					type: "text",
@@ -207,7 +219,8 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-4-5",
 					content: "meet-pip-4-5",
-					rightSideContent: "heading5-humpback"
+					rightSideContent: "heading5-humpback",
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P5_EXIT)
 				},
 				{
 					type: "text",
@@ -234,10 +247,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading2-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-5-3",
-					content: "meet-pip-5-3",
-					rightSideContent: "heading3-humpback"
+					staticText: "IMUs are found in many machines you already know:",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "Drones use them to stay level in the air",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "Phones use them to flip the screen",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "Robots use them to turn and move precisely",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",
@@ -338,16 +372,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading1-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-7-2",
-					content: "meet-pip-7-2",
-					rightSideContent: "heading2-humpback"
-				},
-				{
-					type: "text",
-					id: "meet-pip-7-3",
-					content: "meet-pip-7-3",
-					rightSideContent: "heading3-humpback"
+					staticText: "In robotics, buttons give people reliable control.",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "From starting robotic arms in factories,",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "to launching or landing drones,",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "to setting new tasks for warehouse robots.",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",
@@ -367,7 +416,12 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-7-6",
 					content: "meet-pip-7-6",
-					rightSideContent: "heading6-humpback"
+					rightSideContent: "dino-leaderboard",
+					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_ENTER),
+					triggerFunctionExit: () => {
+						careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_EXIT)
+						return careerQuestTriggersClass.exportFirstNameToDisplay()
+					}
 				},
 				{
 					type: "text",
@@ -424,6 +478,11 @@ export const MEET_PIP: CareerQuestData = {
 		{
 			type: "textParent",
 			id: "meet-pip-9",
+			transition: {
+				type: "fade",
+				duration: DEFAULT_TRANSITION_DURATION,
+				color: "black"
+			},
 			children: [
 				{
 					type: "text",
@@ -441,7 +500,8 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-9-3",
 					content: "meet-pip-9-3",
-					rightSideContent: "heading3-humpback"
+					rightSideContent: "heading3-humpback",
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_EXIT)
 				},
 				{
 					type: "text",
@@ -450,10 +510,31 @@ export const MEET_PIP: CareerQuestData = {
 					rightSideContent: "heading4-humpback"
 				},
 				{
-					type: "text",
+					type: "morphingText",
 					id: "meet-pip-9-5",
-					content: "meet-pip-9-5",
-					rightSideContent: "heading5-humpback"
+					staticText: "Robots use wheels and encoders for precise movement:",
+					morphingVariants: [
+						{
+							id: "variant-0",
+							text: "",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-1",
+							text: "Delivery robots measure distance to reach their stops",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-2",
+							text: "Warehouse robots count wheel turns to follow routes",
+							rightContent: { type: "null" }
+						},
+						{
+							id: "variant-3",
+							text: "Exploration rovers track their motion across rough terrain",
+							rightContent: { type: "null" }
+						}
+					]
 				},
 				{
 					type: "text",

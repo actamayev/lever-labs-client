@@ -6,14 +6,7 @@ import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
 import toastClass from "../../classes/toast-class"
 
-interface Props {
-	name: string
-	email: string
-}
-
-function ContactItemInCard(props: Props): React.ReactNode {
-	const { name, email } = props
-
+function ContactItemInCard({ email }: { email: string }): React.ReactNode {
 	const copyToClipboard = useCallback(async (): Promise<void> => {
 		try {
 			await navigator.clipboard.writeText(email)
@@ -36,9 +29,8 @@ function ContactItemInCard(props: Props): React.ReactNode {
 					<Button
 						variant="ghost"
 						onClick={copyToClipboard}
-						className="w-full flex justify-between items-center py-2 rounded-lg hover:bg-polar"
+						className="w-full flex items-center py-2 rounded-lg hover:bg-polar"
 					>
-						<span className="text-left">{name}</span>
 						<span className="text-right font-semibold">{email}</span>
 					</Button>
 				</div>

@@ -45,7 +45,7 @@ function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }): Re
 							onMouseLeave={(): void => setIsHovered(false)}
 						/>
 					}
-					tooltipContent={`${completedChallenges}/${totalChallenges} lessons complete`}
+					tooltipContent={`${completedChallenges}/${totalChallenges} challenges complete`}
 				/>
 				{/* Progress circle */}
 				<circle

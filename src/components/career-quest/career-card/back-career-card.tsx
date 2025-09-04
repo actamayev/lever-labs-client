@@ -53,10 +53,10 @@ export default function BackCareerCard(props: Props): React.ReactNode {
 					<div className="flex items-center justify-between" style={{ height: "70%" }}>
 						{/* Components grid (2x2 like front card) */}
 						<div className="grid grid-cols-2 gap-1.5" style={{ height: "84px" }}>
-							{componentsUsed.slice(0, 4).map((component): React.ReactNode => (
+							{componentsUsed.slice(0, 4).map((componentName): React.ReactNode => (
 								<SingleComponentUsed
-									key={component.componentName}
-									component={component}
+									key={componentName}
+									componentName={componentName}
 									baseColor={backgroundColor}
 									extraClasses={cn(colors.border2, colors.bg, colors.hoverBg2)}
 								/>

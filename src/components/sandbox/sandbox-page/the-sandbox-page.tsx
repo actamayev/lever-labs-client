@@ -143,7 +143,7 @@ function TheSandboxPage(): React.ReactNode {
 										<>
 											<p className="text-hare mb-4">You don't have any projects yet</p>
 											<TactileButton
-												className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+												className="px-4 py-2 bg-blue-600 text-white rounded-md"
 												onClick={handleCreateProject}
 												disabled={isCreating}
 											>
