@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
-import { Bot, Navigation, Heart } from "lucide-react"
+import { Bot } from "lucide-react"
 import MeetPipS3P4Display from "../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
 import MeetPipS2P3ColorPicker from "../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
 import MeetPipS5P4ImuViz from "../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
