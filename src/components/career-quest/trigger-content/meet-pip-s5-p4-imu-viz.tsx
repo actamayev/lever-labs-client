@@ -57,7 +57,6 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 
 	// Chart configuration
 	const chartConfig = {
-		margin: { top: 10, right: 10, left: 10, bottom: 10 },
 		strokeWidth: 2,
 		dot: false,
 		isAnimationActive: false,
@@ -71,9 +70,13 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Yaw (Heading)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-40">
+					<CardContent className="h-4/5">
 						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={yawData} margin={chartConfig.margin}>
+							<LineChart
+								data={yawData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
@@ -82,7 +85,14 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 								<YAxis
 									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+									width={36}
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
 									domain={[-180, 180]}
 								/>
 								<Tooltip
@@ -103,13 +113,17 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</Card>
 
 				{/* Pitch Chart */}
-				<Card className="h-56 rounded-3xl">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Pitch (Forward/Backward)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-40">
+					<CardContent className="h-4/5">
 						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={pitchData} margin={chartConfig.margin}>
+							<LineChart
+								data={pitchData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
@@ -118,7 +132,16 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 								<YAxis
 									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
 									domain={[-180, 180]}
 								/>
 								<Tooltip
@@ -139,13 +162,17 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</Card>
 
 				{/* Roll Chart */}
-				<Card className="h-56 rounded-3xl">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Roll (Left/Right)</CardTitle>
 					</CardHeader>
-					<CardContent className="h-40">
+					<CardContent className="h-4/5">
 						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={rollData} margin={chartConfig.margin}>
+							<LineChart
+								data={rollData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
@@ -154,7 +181,16 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 								<YAxis
 									className="text-xs"
-									label={{ value: "Degrees", angle: -90, position: "insideLeft" }}
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "Degrees",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
 									domain={[-180, 180]}
 								/>
 								<Tooltip
@@ -175,13 +211,17 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</Card>
 
 				{/* Linear Acceleration Chart */}
-				<Card className="h-56 rounded-3xl">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Shake</CardTitle>
 					</CardHeader>
-					<CardContent className="h-40">
+					<CardContent className="h-4/5">
 						<ResponsiveContainer width="100%" height="100%">
-							<LineChart data={linearAccelerationData} margin={chartConfig.margin}>
+							<LineChart
+								data={linearAccelerationData}
+								// reduce the chart's left margin so recharts doesn't add extra space
+								margin={{ top: 0, right: 8, bottom: 0, left: 0 }}
+							>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
 								<XAxis
 									dataKey="index"
@@ -190,7 +230,16 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 								<YAxis
 									className="text-xs"
-									label={{ value: "m/s²", angle: -90, position: "insideLeft" }}
+									// reduce the reserved axis width (default can be large)
+									width={36}
+									// place the label inside the plot area and nudge it toward the axis
+									label={{
+										value: "m/s²",
+										angle: -90,
+										position: "insideLeft",
+										dx: 6,   // positive moves the label right (toward the axis) — tweak as needed
+										dy: 0,
+									}}
 								/>
 								<Tooltip
 									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Shake"]}
