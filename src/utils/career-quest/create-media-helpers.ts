@@ -54,13 +54,3 @@ export function createVideo(
 		muted: options?.muted !== false // Default to true unless explicitly set to false
 	}
 }
-
-/**
-   * Helper to create icon content (backward compatibility)
-   */
-export function createIcon(iconKey: string): RightContent {
-	return {
-		type: "icon",
-		iconKey
-	}
-}
