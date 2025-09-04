@@ -43,8 +43,11 @@ function MeetPipS3P4Display(): React.ReactNode {
 				src="/images/career-quest/meet-pip/s3_p4.png"
 				alt="Meet Pip robot introduction"
 				width={600}
-				height={600}
-				className="object-contain rounded-3xl"
+				height={400}
+				className="w-[90%] sm:w-[70%] md:w-[50%] lg:w-[40%] h-auto rounded-3xl object-contain mx-auto"
+				sizes="(max-width: 768px) 90vw,
+         (max-width: 1200px) 50vw,
+         40vw"
 				priority
 			/>
 			{/* Display */}
