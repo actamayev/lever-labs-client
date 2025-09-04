@@ -13,6 +13,7 @@ class TeacherClass {
 	public retrievedClassroomData = false
 	public isRetrievingDetailedData = false
 	public teacherData: TeacherData | null = null
+	public isFocusingStudents = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -90,6 +91,10 @@ class TeacherClass {
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
 	}
 
+	public setIsFocusingStudents = action((isFocusing: boolean): void => {
+		this.isFocusingStudents = isFocusing
+	})
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
@@ -97,6 +102,7 @@ class TeacherClass {
 		this.retrievedClassroomData = false
 		this.isRetrievingDetailedData = false
 		this.teacherData = null
+		this.isFocusingStudents = false
 	}
 }
 

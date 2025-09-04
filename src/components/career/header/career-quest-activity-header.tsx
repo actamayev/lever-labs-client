@@ -9,6 +9,7 @@ import CustomTooltip from "../../custom-tooltip"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
 // import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
+import studentClass from "../../../classes/student-class"
 
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	// const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
@@ -24,19 +25,21 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
-				<CustomTooltip
-					tooltipTrigger={
-						<Link href="/career-quest">
-							<button
-								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={(): Promise<void> => stopCareerTrigger()}
-							>
-								<ArrowLeft size={30} className="mr-1" />
-							</button>
-						</Link>
-					}
-					tooltipContent="CAREER QUEST"
-				/>
+				{!studentClass.isInFocusMode && (
+					<CustomTooltip
+						tooltipTrigger={
+							<Link href="/career-quest">
+								<button
+									className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
+									onClick={(): Promise<void> => stopCareerTrigger()}
+								>
+									<ArrowLeft size={30} className="mr-1" />
+								</button>
+							</Link>
+						}
+						tooltipContent="CAREER QUEST"
+					/>
+				)}
 			</div>
 
 			{/* Center section with career title */}

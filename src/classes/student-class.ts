@@ -10,6 +10,7 @@ class StudentClass {
 	public retrievedStudentData = false
 	public classroomData: StudentClassroomDataWithHubs[] = []
 	public pendingInvites: StudentInviteJoinClass[] = []
+	public isInFocusMode = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -82,6 +83,7 @@ class StudentClass {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === deletedHub.classCode)
 		if (!classroom) return
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== deletedHub.hubId)
+		this.setIsInFocusMode(false)
 	})
 
 	public checkIfStudentInHub = (classCode: ClassCode, hubId: UUID): boolean => {
@@ -107,10 +109,20 @@ class StudentClass {
 		})
 	})
 
+	public setIsInFocusMode = action((newState: boolean): void => {
+		this.isInFocusMode = newState
+	})
+
+	public setPendingInvites = action((pendingInvites: StudentInviteJoinClass[]): void => {
+		this.pendingInvites = pendingInvites
+	})
+
 	public logout(): void {
 		this.setClassroomData([])
 		this.setIsStudentDataRetrieved(false)
 		this.setIsRetrievingStudentData(false)
+		this.setIsInFocusMode(false)
+		this.setPendingInvites([])
 	}
 }
 
