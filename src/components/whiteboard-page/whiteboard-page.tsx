@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../sh
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import studentClass from "../../classes/student-class"
+import ClassroomInvitationResponse from "../whiteboard/classroom-invitation-response"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -24,6 +25,9 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/whiteboard")
+
+	// Check if this classroom has a pending invitation
+	const isPendingInvitation = classroomData?.invitationStatus === "PENDING"
 
 	if (studentClass.isRetrievingStudentData) {
 		return (
@@ -43,6 +47,16 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 					<div className="text-lg text-eel">Loading classroom details...</div>
 				</div>
 			</div>
+		)
+	}
+
+	// Show invitation response UI if the invitation is pending
+	if (isPendingInvitation && classroomData) {
+		return (
+			<ClassroomInvitationResponse
+				classCode={classCode}
+				classroomName={classroomData.classroomName}
+			/>
 		)
 	}
 

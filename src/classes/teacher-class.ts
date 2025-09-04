@@ -2,7 +2,8 @@
 
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherData } from "@bluedotrobots/common-ts"
+import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode,
+	TeacherData, StudentJoinedClassroom } from "@bluedotrobots/common-ts"
 
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
@@ -57,6 +58,12 @@ class TeacherClass {
 		if (isNull(this.teacherData)) return
 		Object.assign(this.teacherData, { teacherFirstName, teacherLastName })
 	})
+
+	public addStudentToClassroom(studentJoinedClassroom: StudentJoinedClassroom): void {
+		const classroom = this.detailedClassroomData.get(studentJoinedClassroom.classCode)
+		if (!classroom) return
+		classroom.students.push({ username: studentJoinedClassroom.studentUsername, didAccept: true })
+	}
 
 	public logout(): void {
 		this.classroomData = []

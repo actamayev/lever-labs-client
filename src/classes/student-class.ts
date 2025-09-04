@@ -39,6 +39,17 @@ class StudentClass {
 		return this.classroomData.find((classroom): boolean => classroom.classCode === classCode)
 	}
 
+	public updateClassroomData = action((classCode: ClassCode, updatedData: StudentClassroomData): void => {
+		const index = this.classroomData.findIndex((classroom): boolean => classroom.classCode === classCode)
+		if (index !== -1) {
+			this.classroomData[index] = updatedData
+		}
+	})
+
+	public removeClassroomData = action((classCode: ClassCode): void => {
+		this.classroomData = this.classroomData.filter((classroom): boolean => classroom.classCode !== classCode)
+	})
+
 	public addPendingInvite = action((pendingInvite: StudentInviteJoinClass): void => {
 		this.pendingInvites.push(pendingInvite)
 	})

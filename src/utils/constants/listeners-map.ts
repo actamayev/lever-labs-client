@@ -6,6 +6,7 @@ import sensorDataClass from "../../classes/sensor-data-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import handlePipStatusUpdate from "../socket/handle-pip-status-update"
 import gamesClass from "../../classes/games-class"
+import teacherClass from "../../classes/teacher-class"
 
 type ListenerHandler<E> = (payload: E) => void
 
@@ -26,5 +27,6 @@ export const listenersMap: {
 	"general-sensor-data": sensorDataClass.addSensorData,
 	"general-sensor-data-mz": sensorDataClass.addMultizoneTofData,
 	"student-invite-join-class": studentClass.addPendingInvite,
-	"dino-score-update": gamesClass.addDinoScore
+	"dino-score-update": gamesClass.addDinoScore,
+	"student-joined-classroom": teacherClass.addStudentToClassroom
 } as const
