@@ -57,13 +57,13 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 	}
 
 	return (
-		<div className="flex flex-col items-start justify-center">
-			<div className="w-full max-w-[600px] h-[600px]">
+		<div className="flex flex-col items-center justify-center">
+			<div className="w-full">
 				<Wheel
 					color={colorToShow}
 					onChange={onChange}
-					width={600}
-					height={600}
+					width={400}
+					height={400}
 				/>
 			</div>
 		</div>
