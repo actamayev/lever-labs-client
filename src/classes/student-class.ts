@@ -89,13 +89,18 @@ class StudentClass {
 	public checkIfStudentInHub = (classCode: ClassCode, hubId: UUID): boolean => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === classCode)
 		if (!classroom) return false
-		return classroom.activeHubs.some((activeHub): boolean => activeHub.hubId === hubId)
+		return classroom.activeHubs.some((activeHub): boolean => (activeHub.hubId === hubId) && activeHub.isHubJoined)
 	}
 
 	public joinHub = action((joinedHub: StudentViewHubData): void => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === joinedHub.classCode)
 		if (!classroom) return
-		classroom.activeHubs.push({ ...joinedHub, isHubJoined: true })
+		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === joinedHub.hubId)
+		if (existingHub) {
+			existingHub.isHubJoined = true
+		} else {
+			classroom.activeHubs.push({ ...joinedHub, isHubJoined: true })
+		}
 	})
 
 	public leaveHub = action((classCode: ClassCode, hubId: UUID): void => {

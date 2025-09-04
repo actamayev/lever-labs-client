@@ -70,7 +70,9 @@ class TeacherClass {
 	public addStudentToHub(studentJoinedHub: StudentJoinedOrLeftHub): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
 		if (!classroom) return
-		classroom.students.push({ username: studentJoinedHub.studentUsername, inviteStatus: "ACCEPTED" })
+		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
+		if (!existingHub) return
+		existingHub.studentsJoined.push({ username: studentJoinedHub.studentUsername, userId: studentJoinedHub.studentUserId })
 	}
 
 	public removeStudentFromHub(studentJoinedHub: StudentJoinedOrLeftHub): void {

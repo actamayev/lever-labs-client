@@ -182,13 +182,6 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 						</Select>
 					</div>
 
-					<div className="bg-polar border border-swan rounded-lg p-3">
-						<div className="text-sm text-eel mb-1">Class Code</div>
-						<div className="font-mono text-lg font-bold text-wolf bg-white px-3 py-2 rounded border">
-							{classCode}
-						</div>
-					</div>
-
 					{error && <p className="text-cardinal text-sm">{error}</p>}
 				</div>
 				<DialogFooter className="flex justify-end gap-2">

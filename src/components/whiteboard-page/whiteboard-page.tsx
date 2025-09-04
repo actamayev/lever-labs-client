@@ -12,6 +12,8 @@ import ClassroomInvitationResponse from "../whiteboard/classroom-invitation-resp
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
+import useJoinHub from "../../hooks/student/join-hub"
+import { UUID } from "crypto"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -20,6 +22,7 @@ interface ClassroomPageProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
+	const joinHub = useJoinHub()
 
 	const classroomData = studentClass.getClassroomData(classCode)
 
@@ -32,18 +35,18 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	// Check if this classroom has a pending invitation
 	const isPendingInvitation = classroomData?.invitationStatus === "PENDING"
 
-	const joinHubHandler = useCallback((careerUUID: CareerUUID): void => {
+	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: UUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
 			studentClass.setIsInFocusMode(true)
-			navigate("/career-quest/meet-pip")
+			joinHub(classCode, hubId)
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (career) {
 			studentClass.setIsInFocusMode(true)
-			navigate(career.careerUrl)
+			joinHub(classCode, hubId)
 		}
-	}, [navigate])
+	}, [classCode, joinHub])
 
 	if (studentClass.isRetrievingStudentData) {
 		return (
@@ -183,7 +186,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 														className="w-full h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
 														shadowHeight={2}
 														shadowClass="shadow-gray-300"
-														onClick={(): void => joinHubHandler(hub.careerUUID)}
+														onClick={(): void => joinHubHandler(hub.careerUUID, hub.hubId)}
 													>
 														Join Hub
 													</TactileButton>

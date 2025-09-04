@@ -66,11 +66,13 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 
 	const joinHubHandler = useCallback((careerUUID: CareerUUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
+			teacherClass.setIsFocusingStudents(true)
 			navigate("/career-quest/meet-pip")
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (career) {
+			teacherClass.setIsFocusingStudents(true)
 			navigate(career.careerUrl)
 		}
 	}, [navigate])
@@ -240,15 +242,8 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 											</div>
 											<div className="mt-3 flex gap-2">
 												<TactileButton
-													className="flex-1 h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
-													shadowHeight={2}
-													shadowClass="shadow-gray-300"
-												>
-													View Details
-												</TactileButton>
-												<TactileButton
-													className={cn("flex-1 h-8 text-sm text-white", careerColors.bg)}
-													shadowHeight={2}
+													className={cn("flex-1 h-8 text-sm text-white rounded-xl", careerColors.bg)}
+													shadowHeight={4}
 													shadowClass={careerColors.shadow2}
 													onClick={(): void => joinHubHandler(hub.careerUUID)}
 												>
