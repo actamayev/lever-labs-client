@@ -131,6 +131,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 						<div className="text-sm text-eel mt-2 space-y-1">
 							{((): React.ReactNode => {
 								const students = classroomData?.students || []
+								const declined = students.filter((s): boolean => s.inviteStatus === "DECLINED").length
 								const accepted = students.filter((s): boolean => s.inviteStatus === "ACCEPTED").length
 								const pending = students.filter((s): boolean => s.inviteStatus === "PENDING").length
 								return (
@@ -142,6 +143,10 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 										<div className="flex items-center gap-2">
 											<span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
 											{pending} pending
+										</div>
+										<div className="flex items-center gap-2">
+											<span className="w-2 h-2 bg-red-500 rounded-full"></span>
+											{declined} declined
 										</div>
 									</>
 								)
@@ -202,28 +207,30 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{classroomData.students.map((student, index): React.ReactNode => (
-									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
-										<TableCell className="font-medium text-wolf">
-											{index + 1}
-										</TableCell>
-										<TableCell className="font-medium text-wolf">
-											{student.username || "Unknown"}
-										</TableCell>
-										<TableCell>
-											{getStatusBadge(student.inviteStatus)}
-										</TableCell>
-										<TableCell>
-											<TactileButton
-												className="h-8 px-3 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
-												shadowHeight={2}
-												shadowClass="shadow-gray-300"
-											>
-												View Profile
-											</TactileButton>
-										</TableCell>
-									</TableRow>
-								))}
+								{classroomData.students
+									.filter(student => student.inviteStatus !== "DECLINED")
+									.map((student, index): React.ReactNode => (
+										<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
+											<TableCell className="font-medium text-wolf">
+												{index + 1}
+											</TableCell>
+											<TableCell className="font-medium text-wolf">
+												{student.username || "Unknown"}
+											</TableCell>
+											<TableCell>
+												{getStatusBadge(student.inviteStatus)}
+											</TableCell>
+											<TableCell>
+												<TactileButton
+													className="h-8 px-3 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
+													shadowHeight={2}
+													shadowClass="shadow-gray-300"
+												>
+													View Profile
+												</TactileButton>
+											</TableCell>
+										</TableRow>
+									))}
 							</TableBody>
 						</Table>
 					) : (
