@@ -2,13 +2,20 @@
 
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useState } from "react"
-import { ArrowLeft, Users, Hash, Rocket, Plus, Play, UserCheck } from "lucide-react"
+import { ArrowLeft, Users, Hash, Rocket, Plus, Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import InviteStudentDialog from "./invite-student-dialog"
 import CreateHubDialog from "./create-hub-dialog"
+import DeleteHubDialog from "./delete-hub-dialog"
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "../shadcn/ui/dropdown-menu"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
 import careerQuestClass from "../../classes/career-quest-class"
@@ -26,6 +33,8 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
 	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+	const [hubToDelete, setHubToDelete] = useState<TeacherViewHubData | null>(null)
 
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
@@ -48,6 +57,11 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const handleCreateHub = (): void => {
 		setIsCreateHubDialogOpen(true)
 	}
+
+	const handleDeleteHub = useCallback((hub: TeacherViewHubData): void => {
+		setHubToDelete(hub)
+		setIsDeleteDialogOpen(true)
+	}, [])
 
 	const getStatusBadge = (inviteStatus: "ACCEPTED" | "PENDING" | "DECLINED"): React.ReactNode => {
 		if (inviteStatus === "ACCEPTED") {
@@ -224,14 +238,14 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 								const careerColors = getDuolingoColors(careerInfo?.backgroundColor || "humpback")
 
 								return (
-									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow">
+									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow relative">
 										<CardContent className="p-4">
 											<div className="flex items-start gap-3">
 												<div className={cn("p-2 rounded-lg", careerColors.bg)}>
 													<CareerIcon className="h-5 w-5 text-white" />
 												</div>
 												<div className="flex-1 min-w-0">
-													<h3 className="font-semibold text-wolf truncate mb-1">
+													<h3 className="font-semibold text-wolf truncate mb-1 pr-8">
 														{hub.hubName}
 													</h3>
 													<p className="text-sm text-eel mb-2">
@@ -242,6 +256,26 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 														<span>{hub.studentsJoined.length} students joined</span>
 													</div>
 												</div>
+												<DropdownMenu>
+													<DropdownMenuTrigger asChild>
+														<div className="p-1 transition-none rounded hover:bg-polar cursor-pointer">
+															<EllipsisVertical
+																className="text-wolf"
+																size={16}
+															/>
+														</div>
+													</DropdownMenuTrigger>
+													<DropdownMenuContent className="w-32 bg-standardBackground shadow-none">
+														<DropdownMenuItem
+															onClick={(): void => handleDeleteHub(hub)}
+															// eslint-disable-next-line max-len
+															className="cursor-pointer text-sm hover:!bg-polar text-cardinal hover:!text-cardinal"
+														>
+															<Trash2 className="mr-2 !size-4" strokeWidth={2.5}/>
+															Delete
+														</DropdownMenuItem>
+													</DropdownMenuContent>
+												</DropdownMenu>
 											</div>
 											<div className="mt-3 flex gap-2">
 												<TactileButton
@@ -348,6 +382,17 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 				isCreateHubDialogOpen={isCreateHubDialogOpen}
 				setIsCreateHubDialogOpen={setIsCreateHubDialogOpen}
 			/>
+
+			{/* Delete Hub Dialog */}
+			{hubToDelete && (
+				<DeleteHubDialog
+					classCode={classCode}
+					hubId={hubToDelete.hubId}
+					hubName={hubToDelete.hubName}
+					isDeleteDialogOpen={isDeleteDialogOpen}
+					setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+				/>
+			)}
 		</div>
 	)
 }

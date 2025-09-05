@@ -322,7 +322,7 @@ class CareerQuestClass {
 		if (!career) return ""
 
 		const currentSlide = this.getCurrentMainSlide(careerUUID)
-		
+
 		if (currentSlide.type === "challenge") {
 			return currentSlide.data.challengeUUID
 		}
@@ -1871,6 +1871,7 @@ class CareerQuestClass {
 		return { type: "icon", iconKey: rightSideContent }
 	}
 
+	// eslint-disable-next-line complexity
 	public executeNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: string, targetSlideId: string): boolean => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
