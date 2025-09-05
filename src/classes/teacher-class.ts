@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherViewHubData,
-	TeacherData, StudentJoinedClassroom, StudentJoinedOrLeftHub } from "@bluedotrobots/common-ts"
+	TeacherData, StudentJoinedClassroom, StudentJoinedHub, StudentLeftHub } from "@bluedotrobots/common-ts"
 import { UUID } from "crypto"
 
 class TeacherClass {
@@ -67,7 +67,7 @@ class TeacherClass {
 		classroom.students.push({ username: studentJoinedClassroom.studentUsername, inviteStatus: "ACCEPTED" })
 	}
 
-	public addStudentToHub(studentJoinedHub: StudentJoinedOrLeftHub): void {
+	public addStudentToHub(studentJoinedHub: StudentJoinedHub): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
 		if (!classroom) return
 		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
@@ -75,10 +75,12 @@ class TeacherClass {
 		existingHub.studentsJoined.push({ username: studentJoinedHub.studentUsername, userId: studentJoinedHub.studentUserId })
 	}
 
-	public removeStudentFromHub(studentJoinedHub: StudentJoinedOrLeftHub): void {
+	public removeStudentFromHub(studentJoinedHub: StudentLeftHub): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
 		if (!classroom) return
-		classroom.students = classroom.students.filter((student): boolean => student.username !== studentJoinedHub.studentUsername)
+		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
+		if (!existingHub) return
+		existingHub.studentsJoined = existingHub.studentsJoined.filter((student): boolean => student.userId !== studentJoinedHub.studentUserId)
 	}
 
 	public createHub(hub: TeacherViewHubData): void {

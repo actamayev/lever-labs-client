@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
+import studentClass from "../../classes/student-class"
 
 function useEffectKeyboardNavigation(): string | null {
 	const [keyPressed, setKeyPressed] = useState<string | null>(null)
@@ -47,7 +48,10 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 	useEffect((): void => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return
 
-		if (shouldBlockNavigation(careerUUID)) return
+		if (
+			shouldBlockNavigation(careerUUID) ||
+			studentClass.isInFocusMode
+		) return
 
 		const navigationContext = {
 			careerUUID,
