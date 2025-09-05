@@ -419,8 +419,6 @@ class CareerQuestClass {
 		if (teacherClass.isFocusingStudents) {
 			const currentSlide = this.getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
-				const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-				const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 				void saveCareerProgress(careerUUID, morphingTextId, false, `advance_morph:${morphingTextId}`)
 			}
 		}
@@ -438,8 +436,6 @@ class CareerQuestClass {
 		if (teacherClass.isFocusingStudents) {
 			const currentSlide = this.getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
-				const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
-				const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 				void saveCareerProgress(careerUUID, morphingTextId, false, `back_morph:${morphingTextId}`)
 			}
 		}

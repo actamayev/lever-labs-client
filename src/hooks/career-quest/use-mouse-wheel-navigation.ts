@@ -135,5 +135,5 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, shouldAllowChatScrolling, swiperInstance, textParentSwiperInstance])
+	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, shouldAllowChatScrolling, swiperInstance, textParentSwiperInstance, isInFocusMode])
 }

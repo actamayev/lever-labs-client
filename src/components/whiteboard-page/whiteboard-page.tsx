@@ -76,7 +76,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 		}
 
 		studentClass.setIsInFocusMode(true)
-		
+
 		// Navigate to the appropriate career quest page
 		if (hub.careerUUID === meetPipData.careerUUID) {
 			navigate("/career-quest/meet-pip")
