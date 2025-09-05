@@ -16,6 +16,7 @@ export default function useJoinHub():(
 ) => Promise<void> {
 	const navigate = useTypedNavigate()
 
+	// eslint-disable-next-line complexity
 	return useCallback(async (classCode: ClassCode, hubId: UUID): Promise<void> => {
 		try {
 			const isStudentInHub = studentClass.checkIfStudentInHub(classCode, hubId)
@@ -31,7 +32,7 @@ export default function useJoinHub():(
 			}
 
 			studentClass.joinHub(joinHubResponse.data)
-			
+
 			// Position student at teacher's current location instead of resetting to beginning
 			const hubSlideId = joinHubResponse.data.slideId
 			if (hubSlideId) {
@@ -41,12 +42,14 @@ export default function useJoinHub():(
 				// Handle morphing commands which have format: "advance_morph:morphingTextId:actualSlideId"
 				if (hubSlideId.startsWith("advance_morph:") || hubSlideId.startsWith("back_morph:")) {
 					const parts = hubSlideId.split(":")
+					// eslint-disable-next-line max-depth
 					if (parts.length >= 3) {
 						actualSlideId = parts[2] // The actual slide ID
 					}
 				} else {
 					// Handle other commands with format: "command:actualSlideId"
 					const colonIndex = hubSlideId.indexOf(":")
+					// eslint-disable-next-line max-depth
 					if (colonIndex !== -1) {
 						actualSlideId = hubSlideId.substring(colonIndex + 1)
 					}
@@ -54,7 +57,7 @@ export default function useJoinHub():(
 
 				careerQuestClass.navigateToPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
-			
+
 			if (joinHubResponse.data.careerUUID === "3e5fd270-6265-4bd4-a7c9-f4fe0618332d") {
 				navigate("/career-quest/meet-pip")
 			} else {
