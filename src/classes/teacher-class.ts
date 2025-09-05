@@ -1,10 +1,10 @@
 "use client"
 
+import { UUID } from "crypto"
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherViewHubData,
 	TeacherData, StudentJoinedClassroom, StudentJoinedHub, StudentLeftHub } from "@bluedotrobots/common-ts"
-import { UUID } from "crypto"
 
 interface StudentFocusData {
 	classCode: ClassCode
@@ -85,7 +85,9 @@ class TeacherClass {
 		if (!classroom) return
 		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
 		if (!existingHub) return
-		existingHub.studentsJoined = existingHub.studentsJoined.filter((student): boolean => student.userId !== studentJoinedHub.studentUserId)
+		existingHub.studentsJoined = existingHub.studentsJoined.filter(
+			(student): boolean => student.userId !== studentJoinedHub.studentUserId
+		)
 	}
 
 	public createHub(hub: TeacherViewHubData): void {
