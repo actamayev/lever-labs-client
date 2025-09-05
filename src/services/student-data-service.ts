@@ -1,7 +1,9 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, ClassCode, ErrorResponse, InviteResponse, StudentClassroomData } from "@bluedotrobots/common-ts"
+import { AllCommonResponses, ClassCode, ErrorResponse,
+	NonSuccessResponse, StudentClassroomData, StudentViewHubData } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { UUID } from "crypto"
 
 export default class StudentDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -16,7 +18,7 @@ export default class StudentDataService extends BaseDataService {
 
 	async respondToClassroomInvitation(
 		classCode: ClassCode,
-		inviteResponse: InviteResponse
+		inviteResponse: "accept" | "decline"
 	): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/respond-to-classroom-invitation/${classCode}`), { inviteResponse }
@@ -26,6 +28,24 @@ export default class StudentDataService extends BaseDataService {
 	async retrieveStudentClassrooms(): Promise<AxiosResponse<StudentClassroomData[] | ErrorResponse>> {
 		return await this.httpClient.http.get<StudentClassroomData[] | ErrorResponse>(
 			this.buildUrl("/classrooms")
+		)
+	}
+
+	async joinHub(classCode: ClassCode, hubId: UUID): Promise<AxiosResponse<StudentViewHubData | NonSuccessResponse>> {
+		return await this.httpClient.http.post<StudentViewHubData | NonSuccessResponse>(
+			this.buildUrl(`/join-hub/${classCode}`), { hubId }
+		)
+	}
+
+	async leaveHub(classCode: ClassCode, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/leave-hub/${classCode}`), { hubId }
+		)
+	}
+
+	async sendDinoScore(score: number, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl("/send-dino-score"), { score, hubId }
 		)
 	}
 }

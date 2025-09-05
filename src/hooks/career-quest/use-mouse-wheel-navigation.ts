@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
+import studentClass from "../../classes/student-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
@@ -20,6 +21,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
 	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
+	const isInFocusMode = studentClass.isInFocusMode
 
 	// Helper function to check if the mouse is over a chat component
 	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
@@ -68,7 +70,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	useEffect((): () => void => {
 		if (!swiperInstance || isTransitioning) return (): void => {}
 
-
+		// eslint-disable-next-line complexity
 		const handleWheel = (e: WheelEvent): void => {
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {
@@ -85,7 +87,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			if (Math.abs(e.deltaY) < MIN_DELTA_THRESHOLD) return
 
 			// Respect cooldown and transitioning state
-			if (shouldBlockNavigation(careerUUID)) return
+			if (shouldBlockNavigation(careerUUID) || isInFocusMode) return
 
 			// If this is the start of a new gesture
 			if (!gestureActive.current) {
@@ -133,5 +135,5 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 			}
 		}
 	// eslint-disable-next-line max-len
-	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, shouldAllowChatScrolling, swiperInstance, textParentSwiperInstance])
+	}, [currentMainSlideIndex, currentTextChildIndex, mainSlides, canAdvanceToNextMain, isTransitioning, careerUUID, shouldAllowChatScrolling, swiperInstance, textParentSwiperInstance, isInFocusMode])
 }

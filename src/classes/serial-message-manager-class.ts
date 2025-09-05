@@ -7,6 +7,7 @@ import toastClass from "./toast-class"
 import gamesClass from "./games-class"
 import workbenchClass from "./workbench-class"
 import sensorDataClass from "./sensor-data-class"
+import sendDinoScore from "../utils/student/send-dino-score"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
 
 interface MessageSentData {
@@ -231,7 +232,8 @@ class SerialMessageManagerClass {
 			}
 			case "/dino-score": {
 				const dinoScore = message.payload
-				gamesClass.addDinoScore(dinoScore)
+				gamesClass.addDinoScore(dinoScore.score)
+				void sendDinoScore(dinoScore.score)
 				break
 			}
 			default:

@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCode, ClassCodeResponse, DetailedClassroomData,
-	IncomingTeacherRequestData, NonSuccessResponse, TeacherName } from "@bluedotrobots/common-ts"
+	IncomingTeacherRequestData, NonSuccessResponse, TeacherName, CareerUUID, CreateHubRequest } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { UUID } from "crypto"
 
 export default class TeacherDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -48,6 +49,29 @@ export default class TeacherDataService extends BaseDataService {
 	async inviteStudentJoinClass(classCode: ClassCode, username: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/invite-student-join-class/${classCode}`), { username }
+		)
+	}
+
+	async createHub(
+		classCode: ClassCode,
+		hubName: string,
+		careerUUID: CareerUUID,
+		slideId: string
+	): Promise<AxiosResponse<CreateHubRequest | NonSuccessResponse>> {
+		return await this.httpClient.http.post<CreateHubRequest | NonSuccessResponse>(
+			this.buildUrl(`/create-hub/${classCode}`), { hubName, careerUUID, slideId }
+		)
+	}
+
+	async deleteHub(classCode: ClassCode, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/delete-hub/${classCode}`), { hubId }
+		)
+	}
+
+	async setHubNewSlideId(classCode: ClassCode, hubId: UUID, newSlideId: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/set-hub-new-slide-id/${classCode}`), { hubId, newSlideId }
 		)
 	}
 }

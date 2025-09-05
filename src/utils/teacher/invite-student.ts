@@ -31,7 +31,7 @@ export default async function inviteStudent(
 				...currentClassData,
 				students: [
 					...currentClassData.students,
-					{ username: username.trim(), didAccept: false }
+					{ username: username.trim(), inviteStatus: "PENDING" as const }
 				]
 			}
 			teacherClass.setDetailedClassroomData(classCode, updatedClassData)

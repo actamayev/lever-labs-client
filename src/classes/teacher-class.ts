@@ -1,8 +1,15 @@
 "use client"
 
+import { UUID } from "crypto"
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherData } from "@bluedotrobots/common-ts"
+import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherViewHubData,
+	TeacherData, StudentJoinedClassroom, StudentJoinedHub, StudentLeftHub } from "@bluedotrobots/common-ts"
+
+interface StudentFocusData {
+	classCode: ClassCode
+	hubId: UUID
+}
 
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
@@ -11,6 +18,7 @@ class TeacherClass {
 	public retrievedClassroomData = false
 	public isRetrievingDetailedData = false
 	public teacherData: TeacherData | null = null
+	public isFocusingStudents: StudentFocusData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -58,6 +66,46 @@ class TeacherClass {
 		Object.assign(this.teacherData, { teacherFirstName, teacherLastName })
 	})
 
+	public addStudentToClassroom(studentJoinedClassroom: StudentJoinedClassroom): void {
+		const classroom = this.detailedClassroomData.get(studentJoinedClassroom.classCode)
+		if (!classroom) return
+		classroom.students.push({ username: studentJoinedClassroom.studentUsername, inviteStatus: "ACCEPTED" })
+	}
+
+	public addStudentToHub(studentJoinedHub: StudentJoinedHub): void {
+		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
+		if (!classroom) return
+		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
+		if (!existingHub) return
+		existingHub.studentsJoined.push({ username: studentJoinedHub.studentUsername, userId: studentJoinedHub.studentUserId })
+	}
+
+	public removeStudentFromHub(studentJoinedHub: StudentLeftHub): void {
+		const classroom = this.detailedClassroomData.get(studentJoinedHub.classCode)
+		if (!classroom) return
+		const existingHub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === studentJoinedHub.hubId)
+		if (!existingHub) return
+		existingHub.studentsJoined = existingHub.studentsJoined.filter(
+			(student): boolean => student.userId !== studentJoinedHub.studentUserId
+		)
+	}
+
+	public createHub(hub: TeacherViewHubData): void {
+		const classroom = this.detailedClassroomData.get(hub.classCode)
+		if (!classroom) return
+		classroom.activeHubs.push(hub)
+	}
+
+	public deleteHub(classCode: ClassCode, hubId: UUID): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
+	}
+
+	public setIsFocusingStudents = action((isFocusing: StudentFocusData | null): void => {
+		this.isFocusingStudents = isFocusing
+	})
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
@@ -65,6 +113,7 @@ class TeacherClass {
 		this.retrievedClassroomData = false
 		this.isRetrievingDetailedData = false
 		this.teacherData = null
+		this.isFocusingStudents = null
 	}
 }
 
