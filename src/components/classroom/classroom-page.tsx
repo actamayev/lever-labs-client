@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useState } from "react"
 import { ArrowLeft, Users, Hash, Rocket, Plus, Play, UserCheck } from "lucide-react"
-import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
@@ -64,18 +64,18 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 		}
 	}
 
-	const joinHubHandler = useCallback((careerUUID: CareerUUID): void => {
-		if (careerUUID === meetPipData.careerUUID) {
-			teacherClass.setIsFocusingStudents(true)
+	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
+		if (hub.careerUUID === meetPipData.careerUUID) {
+			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
 			navigate("/career-quest/meet-pip")
 			return
 		}
-		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
+		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
 		if (career) {
-			teacherClass.setIsFocusingStudents(true)
+			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
 			navigate(career.careerUrl)
 		}
-	}, [navigate])
+	}, [navigate, classCode])
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
@@ -245,7 +245,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 													className={cn("flex-1 h-8 text-sm text-white rounded-xl", careerColors.bg)}
 													shadowHeight={4}
 													shadowClass={careerColors.shadow2}
-													onClick={(): void => joinHubHandler(hub.careerUUID)}
+													onClick={(): void => joinHubHandler(hub)}
 												>
 													Join Hub
 												</TactileButton>

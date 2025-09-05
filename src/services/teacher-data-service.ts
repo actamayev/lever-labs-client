@@ -68,4 +68,10 @@ export default class TeacherDataService extends BaseDataService {
 			this.buildUrl(`/delete-hub/${classCode}`), { hubId }
 		)
 	}
+
+	async setHubNewSlideId(classCode: ClassCode, hubId: UUID, newSlideId: string): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/set-hub-new-slide-id/${classCode}`), { hubId, newSlideId }
+		)
+	}
 }

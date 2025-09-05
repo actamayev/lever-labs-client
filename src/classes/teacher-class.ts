@@ -6,6 +6,11 @@ import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherVie
 	TeacherData, StudentJoinedClassroom, StudentJoinedHub, StudentLeftHub } from "@bluedotrobots/common-ts"
 import { UUID } from "crypto"
 
+interface StudentFocusData {
+	classCode: ClassCode
+	hubId: UUID
+}
+
 class TeacherClass {
 	public classroomData: BasicTeacherClassroomData[] = []
 	public detailedClassroomData: Map<ClassCode, DetailedClassroomData> = new Map()
@@ -13,7 +18,7 @@ class TeacherClass {
 	public retrievedClassroomData = false
 	public isRetrievingDetailedData = false
 	public teacherData: TeacherData | null = null
-	public isFocusingStudents = false
+	public isFocusingStudents: StudentFocusData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -95,7 +100,7 @@ class TeacherClass {
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
 	}
 
-	public setIsFocusingStudents = action((isFocusing: boolean): void => {
+	public setIsFocusingStudents = action((isFocusing: StudentFocusData | null): void => {
 		this.isFocusingStudents = isFocusing
 	})
 
@@ -106,7 +111,7 @@ class TeacherClass {
 		this.retrievedClassroomData = false
 		this.isRetrievingDetailedData = false
 		this.teacherData = null
-		this.isFocusingStudents = false
+		this.isFocusingStudents = null
 	}
 }
 
