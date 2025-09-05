@@ -8,6 +8,7 @@ import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { careerData } from "../../utils/constants/career-quest/career-data"
+import careerQuestClass from "../../classes/career-quest-class"
 
 export default function useJoinHub():(
 	classCode: ClassCode,
@@ -30,6 +31,16 @@ export default function useJoinHub():(
 			}
 
 			studentClass.joinHub(joinHubResponse.data)
+			
+			// Position student at teacher's current location instead of resetting to beginning
+			const hubSlideId = joinHubResponse.data.slideId
+			if (hubSlideId) {
+				// Parse navigation command from slideId if present (format: "command:actualSlideId" or just "actualSlideId")
+				const colonIndex = hubSlideId.indexOf(":")
+				const actualSlideId = colonIndex !== -1 ? hubSlideId.substring(colonIndex + 1) : hubSlideId
+				careerQuestClass.navigateToPosition(joinHubResponse.data.careerUUID, actualSlideId)
+			}
+			
 			if (joinHubResponse.data.careerUUID === "3e5fd270-6265-4bd4-a7c9-f4fe0618332d") {
 				navigate("/career-quest/meet-pip")
 			} else {
