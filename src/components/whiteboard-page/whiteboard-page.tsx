@@ -143,7 +143,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 								const careerColors = getDuolingoColors(careerInfo?.backgroundColor || "humpback")
 
 								return (
-									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow">
+									<Card key={hub.hubId} className="border border-swan transition-shadow">
 										<CardContent className="p-4">
 											<div className="flex items-start gap-3">
 												<div className={cn("p-2 rounded-lg", careerColors.bg)}>
@@ -184,7 +184,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 												) : (
 													<TactileButton
 														className="w-full h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
-														shadowHeight={2}
+														shadowHeight={4}
 														shadowClass="shadow-gray-300"
 														onClick={(): void => joinHubHandler(hub.careerUUID, hub.hubId)}
 													>
