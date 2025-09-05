@@ -35,9 +35,23 @@ export default function useJoinHub():(
 			// Position student at teacher's current location instead of resetting to beginning
 			const hubSlideId = joinHubResponse.data.slideId
 			if (hubSlideId) {
-				// Parse navigation command from slideId if present (format: "command:actualSlideId" or just "actualSlideId")
-				const colonIndex = hubSlideId.indexOf(":")
-				const actualSlideId = colonIndex !== -1 ? hubSlideId.substring(colonIndex + 1) : hubSlideId
+				// Parse navigation command from slideId if present
+				let actualSlideId = hubSlideId
+
+				// Handle morphing commands which have format: "advance_morph:morphingTextId:actualSlideId"
+				if (hubSlideId.startsWith("advance_morph:") || hubSlideId.startsWith("back_morph:")) {
+					const parts = hubSlideId.split(":")
+					if (parts.length >= 3) {
+						actualSlideId = parts[2] // The actual slide ID
+					}
+				} else {
+					// Handle other commands with format: "command:actualSlideId"
+					const colonIndex = hubSlideId.indexOf(":")
+					if (colonIndex !== -1) {
+						actualSlideId = hubSlideId.substring(colonIndex + 1)
+					}
+				}
+
 				careerQuestClass.navigateToPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
 			

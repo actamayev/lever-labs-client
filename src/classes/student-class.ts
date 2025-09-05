@@ -72,6 +72,7 @@ class StudentClass {
 		classroom.activeHubs.push({ ...newHub, isHubJoined: false })
 	})
 
+	// eslint-disable-next-line complexity
 	public updateHubSlideId = action((updatedHubSlideId: UpdatedHubSlideId): void => {
 		console.log("updatedHubSlideId", updatedHubSlideId)
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === updatedHubSlideId.classCode)
@@ -79,15 +80,26 @@ class StudentClass {
 		const hub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === updatedHubSlideId.hubId)
 		if (!hub) return
 
-		// Parse navigation command from slideId (format: "command:actualSlideId" or just "actualSlideId")
+		// Parse navigation command from slideId
+		// Format can be: "command:actualSlideId" or "command_with_params:actualSlideId" or just "actualSlideId"
 		const slideIdWithCommand = updatedHubSlideId.newSlideId
-		const colonIndex = slideIdWithCommand.indexOf(":")
 		let navigationCommand: string | null = null
 		let actualSlideId = slideIdWithCommand
 
-		if (colonIndex !== -1) {
-			navigationCommand = slideIdWithCommand.substring(0, colonIndex)
-			actualSlideId = slideIdWithCommand.substring(colonIndex + 1)
+		// Handle morphing commands which have format: "advance_morph:morphingTextId:actualSlideId"
+		if (slideIdWithCommand.startsWith("advance_morph:") || slideIdWithCommand.startsWith("back_morph:")) {
+			const parts = slideIdWithCommand.split(":")
+			if (parts.length >= 3) {
+				navigationCommand = `${parts[0]}:${parts[1]}` // "advance_morph:morphingTextId"
+				actualSlideId = parts[2] // The actual slide ID
+			}
+		} else {
+			// Handle other commands with format: "command:actualSlideId"
+			const colonIndex = slideIdWithCommand.indexOf(":")
+			if (colonIndex !== -1) {
+				navigationCommand = slideIdWithCommand.substring(0, colonIndex)
+				actualSlideId = slideIdWithCommand.substring(colonIndex + 1)
+			}
 		}
 
 		// Update hub slide ID with actual slide ID (for UI display)
