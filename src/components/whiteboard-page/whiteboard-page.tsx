@@ -183,9 +183,9 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 													</TactileButton>
 												) : (
 													<TactileButton
-														className="w-full h-8 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
+														className={cn("w-full h-8 text-sm text-white", careerColors.bg)}
 														shadowHeight={4}
-														shadowClass="shadow-gray-300"
+														shadowClass={careerColors.shadow2}
 														onClick={(): void => joinHubHandler(hub.careerUUID, hub.hubId)}
 													>
 														Join Hub
