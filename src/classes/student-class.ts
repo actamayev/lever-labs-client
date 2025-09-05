@@ -4,6 +4,7 @@ import { UUID } from "crypto"
 import { action, makeAutoObservable } from "mobx"
 import { ClassCode, StudentInviteJoinClass,
 	StudentViewHubData, DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts"
+import careerQuestClass from "./career-quest-class"
 
 class StudentClass {
 	public isRetrievingStudentData = false
@@ -72,11 +73,30 @@ class StudentClass {
 	})
 
 	public updateHubSlideId = action((updatedHubSlideId: UpdatedHubSlideId): void => {
+		console.log("updatedHubSlideId", updatedHubSlideId)
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === updatedHubSlideId.classCode)
 		if (!classroom) return
 		const hub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === updatedHubSlideId.hubId)
 		if (!hub) return
+
+		// Update hub slide ID (existing behavior)
 		hub.slideId = updatedHubSlideId.newSlideId
+
+		// Only trigger navigation if student is in this hub
+		if (!hub.isHubJoined) return
+
+		// Set student to focus mode when receiving hub updates
+		this.setIsInFocusMode(true)
+
+		// Navigate student's career quest to match teacher's position
+		const navigationSuccess = careerQuestClass.navigateToPosition(hub.careerUUID, updatedHubSlideId.newSlideId)
+
+		if (!navigationSuccess) {
+			console.warn("Failed to navigate student to hub position:", {
+				careerUUID: hub.careerUUID,
+				slideId: updatedHubSlideId.newSlideId
+			})
+		}
 	})
 
 	public deleteHub = action((deletedHub: DeletedHub): void => {

@@ -1812,6 +1812,54 @@ class CareerQuestClass {
 		return { type: "icon", iconKey: rightSideContent }
 	}
 
+	public navigateToPosition = action((careerUUID: CareerUUID, positionId: string): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if career quest data is ready
+		if (!this.hasRetrievedAllChallengesForCareer(careerUUID)) {
+			console.warn("Cannot navigate to position: career data not yet loaded")
+			return false
+		}
+
+		// Find the position indices
+		const positionIndices = this.findPositionIndices(careerUUID, positionId)
+		if (!positionIndices) {
+			console.warn("Cannot navigate to position: position not found", positionId)
+			return false
+		}
+
+		// Update navigation indices
+		career.currentMainSlideIndex = positionIndices.mainSlideIndex
+
+		// For text parent sections, set the specific text child index
+		const targetSlide = career.mainSlides[positionIndices.mainSlideIndex]
+		if (targetSlide.type === "textParent") {
+			career.textChildIndices.set(targetSlide.id, positionIndices.textChildIndex)
+		}
+
+		// Update saved position
+		career.savedCurrentPosition = positionId
+
+		// Sync main swiper if it exists
+		if (career.swiperInstance) {
+			career.swiperInstance.slideTo(positionIndices.mainSlideIndex, 0) // Instant navigation
+		}
+
+		// Sync text parent swiper if needed
+		if (targetSlide.type === "textParent") {
+			this.syncTextParentSwiper(careerUUID, targetSlide.id, positionIndices.textChildIndex)
+		}
+
+		// Update right content for current state
+		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation constraints
+		this.updateSwiperNavigation(careerUUID)
+
+		return true
+	})
+
 	public resetCareerToBeginning = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
