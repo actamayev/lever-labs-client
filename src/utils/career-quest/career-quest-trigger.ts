@@ -12,7 +12,6 @@ export default async function careerQuestTrigger(
 ): Promise<void> {
 	const buffer = MessageBuilder.createTriggerMessage(careerType, triggerMessageType)
 
-	console.log("careerQuestTrigger", careerType, triggerMessageType)
 	await sendDataToSerialOrApiTemplate({
 		buffer,
 		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.careerQuestDataService.careerTrigger> => {

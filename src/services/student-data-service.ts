@@ -42,4 +42,10 @@ export default class StudentDataService extends BaseDataService {
 			this.buildUrl(`/leave-hub/${classCode}`), { hubId }
 		)
 	}
+
+	async sendDinoScore(score: number, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl("/send-dino-score"), { score, hubId }
+		)
+	}
 }

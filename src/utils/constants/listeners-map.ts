@@ -28,11 +28,12 @@ export const listenersMap: {
 	"general-sensor-data": (payload): void => sensorDataClass.addSensorData(payload),
 	"general-sensor-data-mz": (payload): void => sensorDataClass.addMultizoneTofData(payload),
 	"student-invite-join-class": (payload): void => studentClass.addPendingInvite(payload),
-	"dino-score-update": (payload): void => gamesClass.addDinoScore(payload),
+	"dino-score-update": (payload): void => gamesClass.addDinoScore(payload.score),
 	"student-joined-classroom": (payload): void => teacherClass.addStudentToClassroom(payload),
 	"new-hub": (payload): void => studentClass.addNewHub(payload),
 	"updated-hub-slide-id": (payload): void => studentClass.updateHubSlideId(payload),
 	"deleted-hub": (payload): void => studentClass.deleteHub(payload),
 	"student-joined-hub": (payload): void => teacherClass.addStudentToHub(payload),
-	"student-left-hub": (payload): void => teacherClass.removeStudentFromHub(payload)
+	"student-left-hub": (payload): void => teacherClass.removeStudentFromHub(payload),
+	"dino-score-update-all-peers": (payload): void => gamesClass.addDinoScore(payload.score, payload.username)
 } as const

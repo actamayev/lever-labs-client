@@ -33,7 +33,8 @@ export default function useJoinHub():(
 
 			studentClass.joinHub(joinHubResponse.data)
 
-			// Position student at teacher's current location instead of resetting to beginning
+			// Set saved position to teacher's current location instead of resetting to beginning
+			// This ensures the career quest will restore to the hub position when data loads
 			const hubSlideId = joinHubResponse.data.slideId
 			if (hubSlideId) {
 				// Parse navigation command from slideId if present
@@ -55,7 +56,8 @@ export default function useJoinHub():(
 					}
 				}
 
-				careerQuestClass.navigateToPosition(joinHubResponse.data.careerUUID, actualSlideId)
+				// Set saved position so career quest restores to hub position when it loads
+				careerQuestClass.setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
 
 			if (joinHubResponse.data.careerUUID === "3e5fd270-6265-4bd4-a7c9-f4fe0618332d") {

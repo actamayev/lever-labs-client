@@ -13,6 +13,7 @@ import { careerData, meetPipData } from "../../utils/constants/career-quest/care
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
+import careerQuestClass from "../../classes/career-quest-class"
 import { UUID } from "crypto"
 
 interface ClassroomPageProps {
@@ -47,6 +48,45 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			joinHub(classCode, hubId)
 		}
 	}, [classCode, joinHub])
+
+	const continueHubHandler = useCallback((hub: ExtendedStudentViewHubData): void => {
+		// Set the saved position to hub's current position before navigating
+		// This ensures the career quest will restore to the hub position when data loads
+		const hubSlideId = hub.slideId
+		if (hubSlideId) {
+			// Parse navigation command from slideId if present
+			let actualSlideId = hubSlideId
+
+			// Handle morphing commands which have format: "advance_morph:morphingTextId:actualSlideId"
+			if (hubSlideId.startsWith("advance_morph:") || hubSlideId.startsWith("back_morph:")) {
+				const parts = hubSlideId.split(":")
+				if (parts.length >= 3) {
+					actualSlideId = parts[2] // The actual slide ID
+				}
+			} else {
+				// Handle other commands with format: "command:actualSlideId"
+				const colonIndex = hubSlideId.indexOf(":")
+				if (colonIndex !== -1) {
+					actualSlideId = hubSlideId.substring(colonIndex + 1)
+				}
+			}
+
+			// Set saved position so career quest restores to hub position when it loads
+			careerQuestClass.setSavedPosition(hub.careerUUID, actualSlideId)
+		}
+
+		studentClass.setIsInFocusMode(true)
+		
+		// Navigate to the appropriate career quest page
+		if (hub.careerUUID === meetPipData.careerUUID) {
+			navigate("/career-quest/meet-pip")
+		} else {
+			const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
+			if (career) {
+				navigate(career.careerUrl)
+			}
+		}
+	}, [navigate])
 
 	if (studentClass.isRetrievingStudentData) {
 		return (
@@ -177,6 +217,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 														className={cn("w-full h-8 text-sm text-white", careerColors.bg)}
 														shadowHeight={2}
 														shadowClass={careerColors.shadow2}
+														onClick={(): void => continueHubHandler(hub)}
 													>
 														<ExternalLink className="h-3 w-3 mr-2" />
 														Continue Learning

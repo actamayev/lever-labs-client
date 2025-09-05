@@ -178,6 +178,11 @@ class StudentClass {
 		this.pendingInvites = pendingInvites
 	})
 
+	public getHubId = (): UUID | null => {
+		if (this.classroomData.length === 0) return null
+		return this.classroomData[0].activeHubs[0].hubId
+	}
+
 	public logout(): void {
 		this.setClassroomData([])
 		this.setIsStudentDataRetrieved(false)
