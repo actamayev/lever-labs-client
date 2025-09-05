@@ -9,7 +9,8 @@ import isNull from "lodash-es/isNull"
 export default async function saveCareerProgress(
 	careerUUID: CareerUUID,
 	currentId: string,
-	isFurthestSeen: boolean
+	isFurthestSeen: boolean,
+	navigationCommand?: string
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
@@ -19,10 +20,16 @@ export default async function saveCareerProgress(
 			isFurthestSeen
 		)
 		if (isNull(teacherClass.isFocusingStudents)) return
+
+		// Encode navigation command in slideId for backward compatibility
+		const slideIdWithCommand = navigationCommand
+			? `${navigationCommand}:${currentId}`
+			: currentId
+
 		await blueDotApiClientClass.teacherDataService.setHubNewSlideId(
 			teacherClass.isFocusingStudents.classCode,
 			teacherClass.isFocusingStudents.hubId,
-			currentId
+			slideIdWithCommand
 		)
 	} catch (error) {
 		// Silent failure as requested - just log for debugging

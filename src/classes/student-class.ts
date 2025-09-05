@@ -79,8 +79,19 @@ class StudentClass {
 		const hub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === updatedHubSlideId.hubId)
 		if (!hub) return
 
-		// Update hub slide ID (existing behavior)
-		hub.slideId = updatedHubSlideId.newSlideId
+		// Parse navigation command from slideId (format: "command:actualSlideId" or just "actualSlideId")
+		const slideIdWithCommand = updatedHubSlideId.newSlideId
+		const colonIndex = slideIdWithCommand.indexOf(":")
+		let navigationCommand: string | null = null
+		let actualSlideId = slideIdWithCommand
+
+		if (colonIndex !== -1) {
+			navigationCommand = slideIdWithCommand.substring(0, colonIndex)
+			actualSlideId = slideIdWithCommand.substring(colonIndex + 1)
+		}
+
+		// Update hub slide ID with actual slide ID (for UI display)
+		hub.slideId = actualSlideId
 
 		// Only trigger navigation if student is in this hub
 		if (!hub.isHubJoined) return
@@ -88,14 +99,27 @@ class StudentClass {
 		// Set student to focus mode when receiving hub updates
 		this.setIsInFocusMode(true)
 
-		// Navigate student's career quest to match teacher's position
-		const navigationSuccess = careerQuestClass.navigateToPosition(hub.careerUUID, updatedHubSlideId.newSlideId)
-
-		if (!navigationSuccess) {
-			console.warn("Failed to navigate student to hub position:", {
-				careerUUID: hub.careerUUID,
-				slideId: updatedHubSlideId.newSlideId
-			})
+		// Execute navigation command if available, otherwise fall back to direct positioning
+		if (navigationCommand) {
+			const commandSuccess = careerQuestClass.executeNavigationCommand(hub.careerUUID, navigationCommand, actualSlideId)
+			if (!commandSuccess) {
+				console.warn("Navigation command failed, falling back to direct positioning:", {
+					careerUUID: hub.careerUUID,
+					command: navigationCommand,
+					slideId: actualSlideId
+				})
+				// Fallback to direct positioning
+				careerQuestClass.navigateToPosition(hub.careerUUID, actualSlideId)
+			}
+		} else {
+			// No command, use direct positioning (backward compatibility)
+			const navigationSuccess = careerQuestClass.navigateToPosition(hub.careerUUID, actualSlideId)
+			if (!navigationSuccess) {
+				console.warn("Failed to navigate student to hub position:", {
+					careerUUID: hub.careerUUID,
+					slideId: actualSlideId
+				})
+			}
 		}
 	})
 
