@@ -1812,6 +1812,69 @@ class CareerQuestClass {
 		return { type: "icon", iconKey: rightSideContent }
 	}
 
+	public resetCareerToBeginning = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Reset navigation indices
+		career.currentMainSlideIndex = 0
+		career.textChildIndices.forEach((_, textParentId): void => {
+			career.textChildIndices.set(textParentId, 0)
+		})
+
+		// Reset morphing text indices
+		career.morphingTextIndices.forEach((_, morphingTextId): void => {
+			career.morphingTextIndices.set(morphingTextId, 0)
+		})
+
+		// Clear challenge completion state (but keep the challenge instances)
+		career.completedChallengeIds.clear()
+		career.challenges.forEach((challenge): void => {
+			challenge.isCompleted = false
+			// Reset blockly JSON to initial state
+			challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
+			challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+		})
+
+		// Reset seen challenges and furthest position
+		career.seenChallengeUUIDs.clear()
+		career.furthestSeenChallengeUuidOrTextUuid = ""
+
+		// Get the first text child ID for saving progress
+		const firstMainSlide = career.mainSlides[0]
+		let initialPositionId: string
+
+		if (firstMainSlide.type === "challenge") {
+			initialPositionId = firstMainSlide.data.challengeUUID
+		} else {
+			const firstTextChild = firstMainSlide.data.children[0]
+			initialPositionId = firstTextChild.id
+		}
+
+		// Set and save the beginning position
+		career.savedCurrentPosition = initialPositionId
+		career.furthestSeenChallengeUuidOrTextUuid = initialPositionId
+
+		// Update right content for current state
+		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation
+		this.updateSwiperNavigation(careerUUID)
+
+		// Sync swipers if they exist
+		if (career.swiperInstance) {
+			career.swiperInstance.slideTo(0, 0)
+		}
+
+		// Sync text parent swiper for first slide if it's a text parent
+		if (firstMainSlide.type === "textParent") {
+			this.syncTextParentSwiper(careerUUID, firstMainSlide.id, 0)
+		}
+
+		// Save progress to beginning position
+		void saveCareerProgress(careerUUID, initialPositionId, true)
+	})
+
 	public logout(): void {
 		this.careers.clear()
 		this.isDoneInitializing = false

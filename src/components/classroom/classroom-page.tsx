@@ -11,6 +11,7 @@ import InviteStudentDialog from "./invite-student-dialog"
 import CreateHubDialog from "./create-hub-dialog"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
+import careerQuestClass from "../../classes/career-quest-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
@@ -67,12 +68,14 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
 		if (hub.careerUUID === meetPipData.careerUUID) {
 			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
+			careerQuestClass.resetCareerToBeginning(meetPipData.careerUUID)
 			navigate("/career-quest/meet-pip")
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
 		if (career) {
 			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
+			careerQuestClass.resetCareerToBeginning(hub.careerUUID)
 			navigate(career.careerUrl)
 		}
 	}, [navigate, classCode])
@@ -291,7 +294,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 									<TableHead className="text-wolf font-semibold">#</TableHead>
 									<TableHead className="text-wolf font-semibold">Username</TableHead>
 									<TableHead className="text-wolf font-semibold">Status</TableHead>
-									<TableHead className="text-wolf font-semibold">Actions</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -307,15 +309,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 											</TableCell>
 											<TableCell>
 												{getStatusBadge(student.inviteStatus)}
-											</TableCell>
-											<TableCell>
-												<TactileButton
-													className="h-8 px-3 text-sm bg-polar text-eel border border-swan hover:bg-gray-50"
-													shadowHeight={2}
-													shadowClass="shadow-gray-300"
-												>
-													View Profile
-												</TactileButton>
 											</TableCell>
 										</TableRow>
 									))}
