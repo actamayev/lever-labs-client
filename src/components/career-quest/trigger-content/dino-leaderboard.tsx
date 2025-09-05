@@ -74,6 +74,9 @@ function DinoLeaderboard(): React.ReactNode {
 									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
 										Performance
 									</th>
+									<th className="px-6 py-3 text-left text-xs font-medium text-wolf uppercase tracking-wider">
+										Username
+									</th>
 								</tr>
 							</thead>
 							<tbody className="bg-standardBackground divide-y divide-swan">
@@ -127,6 +130,9 @@ function DinoLeaderboard(): React.ReactNode {
 													{Math.round((scoreData.score / highScore) * 100)}%
 												</span>
 											</div>
+										</td>
+										<td className="px-6 py-4 whitespace-nowrap text-sm text-wolf">
+											{scoreData.username}
 										</td>
 									</tr>
 								))}

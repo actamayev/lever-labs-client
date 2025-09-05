@@ -1,8 +1,10 @@
 import { action, makeAutoObservable } from "mobx"
+import personalInfoClass from "./personal-info-class"
 
 interface DinoScore {
 	score: number
 	timestamp: Date
+	username: string
 }
 
 class GamesClass {
@@ -12,10 +14,14 @@ class GamesClass {
 		makeAutoObservable(this)
 	}
 
-	public addDinoScore = action(({ score }: { score: number }): void => {
+	public addDinoScore = action((score: number, username?: string): void => {
+		if (!username) {
+			username = personalInfoClass.username || ""
+		}
 		this.dinoScore.push({
 			score,
-			timestamp: new Date()
+			timestamp: new Date(),
+			username
 		})
 	})
 

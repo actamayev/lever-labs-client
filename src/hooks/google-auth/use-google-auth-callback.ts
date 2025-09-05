@@ -55,7 +55,11 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
 			pipClass.setPipData(googleCallbackResponse.data.userPipData)
-			studentClass.setRetrievedStudentData(googleCallbackResponse.data.studentClasses)
+			const classroomInfo = googleCallbackResponse.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
+				...classroom,
+				activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
+			}))
+			studentClass.setRetrievedStudentData(classroomInfo)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 
 			// ✅ Navigate smoothly if on auth pages (no refresh)

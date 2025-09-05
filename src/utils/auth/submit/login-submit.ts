@@ -35,7 +35,11 @@ export default async function loginSubmit(
 		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
 		teacherClass.setTeacherData(response.data.teacherData)
 		pipClass.setPipData(response.data.userPipData)
-		studentClass.setRetrievedStudentData(response.data.studentClasses)
+		const classroomInfo = response.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
+			...classroom,
+			activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
+		}))
+		studentClass.setRetrievedStudentData(classroomInfo)
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		return true
 	} catch (error: unknown) {

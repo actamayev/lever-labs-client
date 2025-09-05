@@ -27,6 +27,7 @@ import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
 import { DEFAULT_TRANSITION_DURATION } from "../utils/constants/constants"
+import teacherClass from "./teacher-class"
 
 // Chat and streaming state interfaces
 interface ChatData {
@@ -316,6 +317,22 @@ class CareerQuestClass {
 		return { mainSlideIndex, textChildIndex }
 	}
 
+	public getCurrentPositionId(careerUUID: CareerUUID): string {
+		const career = this.getCareer(careerUUID)
+		if (!career) return ""
+
+		const currentSlide = this.getCurrentMainSlide(careerUUID)
+
+		if (currentSlide.type === "challenge") {
+			return currentSlide.data.challengeUUID
+		}
+
+		// For text parent sections, return the current text child ID
+		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const textChild = currentSlide.data.children[currentTextChildIndex]
+		return textChild.id
+	}
+
 	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
 		const career = this.getCareer(careerUUID)
 		return career?.mainSlides || []
@@ -397,9 +414,44 @@ class CareerQuestClass {
 		const nextIndex = currentIndex + 1
 
 		this.setMorphingIndex(careerUUID, morphingTextId, nextIndex)
+
+		// Save progress with morphing command for teacher hub synchronization
+		if (teacherClass.isFocusingStudents) {
+			const currentSlide = this.getCurrentMainSlide(careerUUID)
+			if (currentSlide.type === "textParent") {
+				void saveCareerProgress(careerUUID, morphingTextId, false, `advance_morph:${morphingTextId}`)
+			}
+		}
 	})
 
 	public goBackMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
+		if (!this.canGoBackMorphingText(careerUUID, morphingTextId)) return
+
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		const prevIndex = currentIndex - 1
+
+		this.setMorphingIndex(careerUUID, morphingTextId, prevIndex)
+
+		// Save progress with morphing command for teacher hub synchronization
+		if (teacherClass.isFocusingStudents) {
+			const currentSlide = this.getCurrentMainSlide(careerUUID)
+			if (currentSlide.type === "textParent") {
+				void saveCareerProgress(careerUUID, morphingTextId, false, `back_morph:${morphingTextId}`)
+			}
+		}
+	})
+
+	// Student-only methods that don't trigger progress saving
+	private executeMorphingTextAdvance = action((careerUUID: CareerUUID, morphingTextId: string): void => {
+		if (!this.canAdvanceMorphingText(careerUUID, morphingTextId)) return
+
+		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
+		const nextIndex = currentIndex + 1
+
+		this.setMorphingIndex(careerUUID, morphingTextId, nextIndex)
+	})
+
+	private executeMorphingTextGoBack = action((careerUUID: CareerUUID, morphingTextId: string): void => {
 		if (!this.canGoBackMorphingText(careerUUID, morphingTextId)) return
 
 		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
@@ -1200,7 +1252,8 @@ class CareerQuestClass {
 
 			void this.markChallengeAsSeen(careerUUID, currentSlide.data.challengeUUID)
 			const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, currentSlide.data.challengeUUID)
-			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID, isFurthestSeen)
+			const navigationCommand = isGoingBackward ? "prev_main" : "next_main"
+			void saveCareerProgress(careerUUID, currentSlide.data.challengeUUID, isFurthestSeen, navigationCommand)
 			this.updateFurthestSeenIfNeeded(careerUUID, currentSlide.data.challengeUUID)
 
 			// For challenge slides, reset all text parent indices to 0
@@ -1225,7 +1278,8 @@ class CareerQuestClass {
 
 		const textChild = currentSlide.data.children[textChildIndex]
 		const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, textChild.id)
-		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen)
+		const navigationCommand = isGoingBackward ? "prev_main" : "next_main"
+		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen, navigationCommand)
 		this.updateFurthestSeenIfNeeded(careerUUID, textChild.id)
 
 		// Update right content for text slide
@@ -1265,7 +1319,8 @@ class CareerQuestClass {
 		}
 
 		const isFurthestSeen = this.isPositionFurthestSeen(careerUUID, textChild.id)
-		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen)
+		const navigationCommand = isGoingBackward ? "prev_text" : "next_text"
+		void saveCareerProgress(careerUUID, textChild.id, isFurthestSeen, navigationCommand)
 		this.updateFurthestSeenIfNeeded(careerUUID, textChild.id)
 
 		// Update right content for text child change
@@ -1811,6 +1866,181 @@ class CareerQuestClass {
 		// If it's a string, treat it as an icon (backward compatibility)
 		return { type: "icon", iconKey: rightSideContent }
 	}
+
+	// eslint-disable-next-line complexity
+	public executeNavigationCommand = action((careerUUID: CareerUUID, navigationCommand: string, targetSlideId: string): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if career quest data is ready
+		if (!this.hasRetrievedAllChallengesForCareer(careerUUID)) {
+			console.warn("Cannot execute navigation command: career data not yet loaded")
+			return false
+		}
+
+		try {
+			switch (navigationCommand) {
+				case "next_main":
+					void this.handleGoToNextMainSection(careerUUID)
+					break
+				case "prev_main":
+					void this.handleGoToPreviousMainSection(careerUUID)
+					break
+				case "next_text":
+					this.handleGoToNextTextChild(careerUUID)
+					break
+				case "prev_text":
+					this.handleGoToPreviousTextChild(careerUUID)
+					break
+				default:
+					// Handle morphing text commands
+					if (navigationCommand.startsWith("advance_morph:")) {
+						const morphingTextId = navigationCommand.substring("advance_morph:".length)
+						// Execute morphing text navigation without saving progress (students only)
+						this.executeMorphingTextAdvance(careerUUID, morphingTextId)
+					} else if (navigationCommand.startsWith("back_morph:")) {
+						const morphingTextId = navigationCommand.substring("back_morph:".length)
+						// Execute morphing text navigation without saving progress (students only)
+						this.executeMorphingTextGoBack(careerUUID, morphingTextId)
+					} else {
+						console.warn("Unknown navigation command:", navigationCommand)
+						return false
+					}
+			}
+
+			// For morphing text commands, don't verify position since targetSlideId is the morphingTextId
+			if (!navigationCommand.includes("morph:")) {
+				const currentPosition = this.getCurrentPositionId(careerUUID)
+				if (currentPosition !== targetSlideId) {
+					console.warn("Navigation command succeeded but position mismatch:", {
+						expected: targetSlideId,
+						actual: currentPosition,
+						command: navigationCommand
+					})
+				}
+			}
+
+			return true
+		} catch (error) {
+			console.error("Navigation command execution failed:", {
+				command: navigationCommand,
+				targetSlideId,
+				error
+			})
+			return false
+		}
+	})
+
+	public navigateToPosition = action((careerUUID: CareerUUID, positionId: string): boolean => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if career quest data is ready
+		if (!this.hasRetrievedAllChallengesForCareer(careerUUID)) {
+			console.warn("Cannot navigate to position: career data not yet loaded")
+			return false
+		}
+
+		// Find the position indices
+		const positionIndices = this.findPositionIndices(careerUUID, positionId)
+		if (!positionIndices) {
+			console.warn("Cannot navigate to position: position not found", positionId)
+			return false
+		}
+
+		// Update navigation indices
+		career.currentMainSlideIndex = positionIndices.mainSlideIndex
+
+		// For text parent sections, set the specific text child index
+		const targetSlide = career.mainSlides[positionIndices.mainSlideIndex]
+		if (targetSlide.type === "textParent") {
+			career.textChildIndices.set(targetSlide.id, positionIndices.textChildIndex)
+		}
+
+		// Update saved position
+		career.savedCurrentPosition = positionId
+
+		// Sync main swiper if it exists
+		if (career.swiperInstance) {
+			career.swiperInstance.slideTo(positionIndices.mainSlideIndex, 0) // Instant navigation
+		}
+
+		// Sync text parent swiper if needed
+		if (targetSlide.type === "textParent") {
+			this.syncTextParentSwiper(careerUUID, targetSlide.id, positionIndices.textChildIndex)
+		}
+
+		// Update right content for current state
+		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation constraints
+		this.updateSwiperNavigation(careerUUID)
+
+		return true
+	})
+
+	public resetCareerToBeginning = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Reset navigation indices
+		career.currentMainSlideIndex = 0
+		career.textChildIndices.forEach((_, textParentId): void => {
+			career.textChildIndices.set(textParentId, 0)
+		})
+
+		// Reset morphing text indices
+		career.morphingTextIndices.forEach((_, morphingTextId): void => {
+			career.morphingTextIndices.set(morphingTextId, 0)
+		})
+
+		// Clear challenge completion state (but keep the challenge instances)
+		career.completedChallengeIds.clear()
+		career.challenges.forEach((challenge): void => {
+			challenge.isCompleted = false
+			// Reset blockly JSON to initial state
+			challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
+			challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+		})
+
+		// Reset seen challenges and furthest position
+		career.seenChallengeUUIDs.clear()
+		career.furthestSeenChallengeUuidOrTextUuid = ""
+
+		// Get the first text child ID for saving progress
+		const firstMainSlide = career.mainSlides[0]
+		let initialPositionId: string
+
+		if (firstMainSlide.type === "challenge") {
+			initialPositionId = firstMainSlide.data.challengeUUID
+		} else {
+			const firstTextChild = firstMainSlide.data.children[0]
+			initialPositionId = firstTextChild.id
+		}
+
+		// Set and save the beginning position
+		career.savedCurrentPosition = initialPositionId
+		career.furthestSeenChallengeUuidOrTextUuid = initialPositionId
+
+		// Update right content for current state
+		this.updateRightContentForCurrentState(careerUUID)
+
+		// Update swiper navigation
+		this.updateSwiperNavigation(careerUUID)
+
+		// Sync swipers if they exist
+		if (career.swiperInstance) {
+			career.swiperInstance.slideTo(0, 0)
+		}
+
+		// Sync text parent swiper for first slide if it's a text parent
+		if (firstMainSlide.type === "textParent") {
+			this.syncTextParentSwiper(careerUUID, firstMainSlide.id, 0)
+		}
+
+		// Save progress to beginning position
+		void saveCareerProgress(careerUUID, initialPositionId, true)
+	})
 
 	public logout(): void {
 		this.careers.clear()

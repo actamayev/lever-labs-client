@@ -1,14 +1,16 @@
-
-// In career-quest-activity-header.tsx:
 "use client"
 
-import Link from "next/link"
-import { ArrowLeft } from "lucide-react" // Add MessageCircle import
+import { ArrowLeft, Users } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
-import CustomTooltip from "../../custom-tooltip"
+import { TeacherViewHubData } from "@bluedotrobots/common-ts"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
 // import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
+import studentClass from "../../../classes/student-class"
+import teacherClass from "../../../classes/teacher-class"
+import { useRouter } from "next/navigation"
+import { useCallback, useState } from "react"
+import HubStudentsDialog from "./hub-students-dialog"
 
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	// const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
@@ -19,24 +21,51 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	// 	if (isOnChallengeSection) return
 	// 	careerQuestClass.toggleCareerChat(careerData.careerUUID)
 	// }
+	const router = useRouter()
+	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)
+
+	const handleBack = useCallback((): void => {
+		router.back()
+		stopCareerTrigger()
+	}, [router])
+
+	const handleShowStudents = useCallback((): void => {
+		setIsStudentsDialogOpen(true)
+	}, [])
+
+	// Check if user is teacher and is focusing students
+	const isTeacher = teacherClass.teacherData !== null
+	const isFocusingStudents = teacherClass.isFocusingStudents
+	const shouldShowStudentsButton = isTeacher && isFocusingStudents
+
+	// Get current active hub data
+	const getCurrentHub = useCallback((): TeacherViewHubData | null => {
+		if (!shouldShowStudentsButton) return null
+
+		// Find the current active hub based on career
+		for (const [, classroomData] of teacherClass.detailedClassroomData) {
+			const activeHub = classroomData.activeHubs.find((hub): boolean => hub.careerUUID === careerData.careerUUID)
+			if (activeHub) {
+				return activeHub
+			}
+		}
+		return null
+	}, [shouldShowStudentsButton, careerData.careerUUID])
+
+	const currentHub = getCurrentHub()
 
 	return (
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
-				<CustomTooltip
-					tooltipTrigger={
-						<Link href="/career-quest">
-							<button
-								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
-								onClick={(): Promise<void> => stopCareerTrigger()}
-							>
-								<ArrowLeft size={30} className="mr-1" />
-							</button>
-						</Link>
-					}
-					tooltipContent="CAREER QUEST"
-				/>
+				{!studentClass.isInFocusMode && (
+					<button
+						onClick={handleBack}
+						className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
+					>
+						<ArrowLeft size={30} className="mr-1" />
+					</button>
+				)}
 			</div>
 
 			{/* Center section with career title */}
@@ -46,8 +75,20 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 				</h1>
 			</div>
 
-			{/* Right section with chat button and progress circle */}
+			{/* Right section with students button and progress circle */}
 			<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
+				{shouldShowStudentsButton && currentHub && (
+					<button
+						onClick={handleShowStudents}
+						className="flex items-center p-2 rounded-lg text-questionText hover:bg-polar transition-colors"
+						title="View students in hub"
+					>
+						<Users size={24} />
+						<span className="ml-2 text-sm font-medium">
+							{currentHub.studentsJoined.length}
+						</span>
+					</button>
+				)}
 				{/* <CustomTooltip
 					tooltipTrigger={
 						<button
@@ -72,6 +113,16 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 				/> */}
 				{/* <ChallengeProgressCircle careerData={careerData} /> */}
 			</div>
+
+			{/* Students Dialog */}
+			{shouldShowStudentsButton && currentHub && (
+				<HubStudentsDialog
+					isStudentsDialogOpen={isStudentsDialogOpen}
+					setIsStudentsDialogOpen={setIsStudentsDialogOpen}
+					studentsJoined={currentHub.studentsJoined}
+					hubName={currentHub.hubName}
+				/>
+			)}
 		</header>
 	)
 }
