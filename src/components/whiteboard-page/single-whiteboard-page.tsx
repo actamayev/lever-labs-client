@@ -1,5 +1,6 @@
 "use client"
 
+import { UUID } from "crypto"
 import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
@@ -14,7 +15,6 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
 import careerQuestClass from "../../classes/career-quest-class"
-import { UUID } from "crypto"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
