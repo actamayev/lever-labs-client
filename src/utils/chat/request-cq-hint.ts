@@ -8,7 +8,7 @@ import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function requestCareerQuestHint(
-	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
+	careerUUIDChallengeUUID: CareerUUIDChallengeUUID
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
