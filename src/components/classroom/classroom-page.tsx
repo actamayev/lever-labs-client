@@ -22,12 +22,8 @@ import { cn } from "../../lib/shadcn/utils"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import ClassroomStatsCards from "./classroom-stats-cards"
 
-interface ClassroomPageProps {
-	classCode: ClassCode
-}
-
 // eslint-disable-next-line max-lines-per-function
-function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
+function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const [hubToDelete, setHubToDelete] = useState<TeacherViewHubData | null>(null)
