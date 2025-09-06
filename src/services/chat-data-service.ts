@@ -39,8 +39,8 @@ export default class ChatDataService extends BaseDataService {
 	async requestChallengeHint(
 		chatData: OutgoingChallengeHintMessage,
 		challengeUUID: ChallengeUUID
-	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
-		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
+	): Promise<AxiosResponse<StartChatSuccess | CheckCodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<StartChatSuccess | CheckCodeResponse |ErrorResponses>(
 			this.buildUrl(`/request-challenge-hint/${challengeUUID}`), chatData
 		)
 	}

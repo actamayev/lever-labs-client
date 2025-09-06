@@ -22,9 +22,18 @@ export default async function requestCareerQuestHint(
 			userCode,
 		}, careerUUIDChallengeUUID.challengeUUID)
 
-		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
+		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
+			throw new Error("Unable to request hint")
+		}
 
-		careerQuestClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
+		if ("streamId" in response.data) {
+			careerQuestClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
+		} else {
+			careerQuestClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
+				isCorrect: true,
+				feedback: response.data.feedback
+			})
+		}
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

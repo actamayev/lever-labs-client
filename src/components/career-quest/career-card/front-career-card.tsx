@@ -11,18 +11,18 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import ChallengeProgressCircle from "./challenge-progress-indicator"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-import teacherClass from "../../../classes/teacher-class"
+// import teacherClass from "../../../classes/teacher-class"
 
 interface Props {
 	careerData: CareerData
 	flipCard: () => void
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function FrontCareerCard(props: Props): React.ReactNode {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData
-	const disabled = teacherClass.teacherData !== null
+	// const disabled = teacherClass.teacherData !== null
 
 	const colors = getDuolingoColors(backgroundColor)
 
@@ -83,7 +83,7 @@ function FrontCareerCard(props: Props): React.ReactNode {
 				</div>
 				<div style={{ height: "30%" }}>
 					<div className="pb-4 flex flex-row items-center gap-3">
-						{!disabled ? (
+						{/* {!disabled ? (
 							<div className="flex-1">
 								<TactileButton
 									// eslint-disable-next-line max-len
@@ -95,17 +95,17 @@ function FrontCareerCard(props: Props): React.ReactNode {
 									{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
 								</TactileButton>
 							</div>
-						) : (
-							<Link href={careerData.careerUrl} className="flex-1">
-								<TactileButton
-									className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
-									shadowClass={colors.shadow}
-									shadowHeight={4}
-								>
-									{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
-								</TactileButton>
-							</Link>
-						)}
+						) : ( */}
+						<Link href={careerData.careerUrl} className="flex-1">
+							<TactileButton
+								className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+								shadowClass={colors.shadow}
+								shadowHeight={4}
+							>
+								{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+							</TactileButton>
+						</Link>
+						{/* )} */}
 						{/* Flip Button */}
 						<BackFlipButton
 							onFlip={flipCard}
