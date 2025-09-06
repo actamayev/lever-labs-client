@@ -61,7 +61,7 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 				<CardContent>
 					<TactileButton
 						onClick={(): void => setIsCreateDialogOpen(true)}
-						className={cn("w-full h-10 text-white rounded-xl", colors.bg)}
+						className={cn("w-full h-10 text-white rounded-xl text-lg", colors.bg)}
 						shadowHeight={4}
 						shadowClass={colors.shadow2}
 					>
