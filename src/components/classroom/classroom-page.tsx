@@ -2,13 +2,11 @@
 
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useState } from "react"
-import { ArrowLeft, Users, Hash, Rocket, Plus, Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
+import { ArrowLeft, Users, Rocket, Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import CreateHubDialog from "./create-hub-dialog"
-import DeleteHubDialog from "./delete-hub-dialog"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -22,15 +20,15 @@ import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
+import ClassroomStatsCards from "./classroom-stats-cards"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
-	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const [hubToDelete, setHubToDelete] = useState<TeacherViewHubData | null>(null)
 
@@ -46,11 +44,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/class-manager")
-	const colors = getDuolingoColors("humpback")
-
-	const handleCreateHub = (): void => {
-		setIsCreateHubDialogOpen(true)
-	}
 
 	const handleDeleteHub = useCallback((hub: TeacherViewHubData): void => {
 		setHubToDelete(hub)
@@ -116,69 +109,12 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 				<p className="text-eel text-lg">Manage your classroom and view student information</p>
 			</div>
 
-			{/* Stats Cards */}
-			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-lg">
-							<Hash className="h-5 w-5 text-pipTheme" />
-							Class Code
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-2xl font-mono font-bold text-wolf bg-polar px-4 py-2 rounded-lg border border-swan">
-							{classCode}
-						</div>
-					</CardContent>
-				</Card>
-
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-lg">
-							<Users className="h-5 w-5 text-pipTheme" />
-							Total Students
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<div className="text-3xl font-bold text-wolf">
-							{classroomData?.students?.length || 0}
-						</div>
-						<div className="text-sm text-eel mt-2 space-y-1">
-							{((): React.ReactNode => {
-								const students = classroomData?.students || []
-								const joined = students.length
-								return (
-									<div className="flex items-center gap-2">
-										<span className="w-2 h-2 bg-green-500 rounded-full"></span>
-										{joined} joined
-									</div>
-								)
-							})()}
-						</div>
-					</CardContent>
-				</Card>
-
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardHeader className="pb-3">
-						<CardTitle className="flex items-center gap-2 text-lg">
-							<Rocket className="h-5 w-5 text-pipTheme" />
-							Create Hub
-						</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<p className="text-sm text-eel mb-3">Start a new learning activity for your students</p>
-						<TactileButton
-							onClick={handleCreateHub}
-							className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
-							shadowHeight={4}
-							shadowClass={colors.shadow2}
-						>
-							<Plus className="h-4 w-4 mr-2" />
-							Create New Hub
-						</TactileButton>
-					</CardContent>
-				</Card>
-			</div>
+			<ClassroomStatsCards
+				classCode={classCode}
+				hubToDelete={hubToDelete}
+				isDeleteDialogOpen={isDeleteDialogOpen}
+				setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+			/>
 
 			{/* Active Hubs Section */}
 			{classroomData?.activeHubs && classroomData.activeHubs.length > 0 && (
@@ -309,23 +245,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 					)}
 				</CardContent>
 			</Card>
-
-			{/* Create Hub Dialog */}
-			<CreateHubDialog
-				classCode={classCode}
-				isCreateHubDialogOpen={isCreateHubDialogOpen}
-				setIsCreateHubDialogOpen={setIsCreateHubDialogOpen}
-			/>
-
-			{/* Delete Hub Dialog */}
-			{hubToDelete && (
-				<DeleteHubDialog
-					classCode={classCode}
-					hubToDelete={hubToDelete}
-					isDeleteDialogOpen={isDeleteDialogOpen}
-					setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-				/>
-			)}
 		</div>
 	)
 }
