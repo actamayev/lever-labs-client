@@ -32,7 +32,6 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 					<div className="text-3xl font-bold text-wolf">
 						{totalClasses}
 					</div>
-					<p className="text-sm text-eel mt-1">classrooms created</p>
 				</CardContent>
 			</Card>
 
@@ -47,7 +46,6 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 					<div className="text-3xl font-bold text-wolf">
 						{activeClasses}
 					</div>
-					<p className="text-sm text-eel mt-1">currently running</p>
 				</CardContent>
 			</Card>
 

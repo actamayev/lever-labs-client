@@ -5,7 +5,6 @@ import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
 import { FunSounds } from "@bluedotrobots/common-ts"
 import { cn } from "../../../../lib/shadcn/utils"
-import pipClass from "../../../../classes/pip-class"
 import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomFart } from "../../../icons/custom-fart"
 import garageClass from "../../../../classes/garage-class"
@@ -79,7 +78,6 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
-		if (!pipClass.selectedPip) return
 		playFunSound(sound)
 	}
 
