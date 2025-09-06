@@ -2,15 +2,13 @@
 
 import { UUID } from "crypto"
 import { action, makeAutoObservable } from "mobx"
-import { ClassCode, StudentInviteJoinClass,
-	StudentViewHubData, DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts"
+import { ClassCode, DeletedHub, UpdatedHubSlideId, StudentViewHubData } from "@bluedotrobots/common-ts"
 import careerQuestClass from "./career-quest-class"
 
 class StudentClass {
 	public isRetrievingStudentData = false
 	public retrievedStudentData = false
 	public classroomData: StudentClassroomDataWithHubs[] = []
-	public pendingInvites: StudentInviteJoinClass[] = []
 	public isInFocusMode = false
 
 	constructor() {
@@ -53,10 +51,6 @@ class StudentClass {
 	public removeClassroomData = action((classCode: ClassCode): number => {
 		this.classroomData = this.classroomData.filter((classroom): boolean => classroom.classCode !== classCode)
 		return this.classroomData.length
-	})
-
-	public addPendingInvite = action((pendingInvite: StudentInviteJoinClass): void => {
-		this.pendingInvites.push(pendingInvite)
 	})
 
 	private getHubData = (classCode: ClassCode, hubId: UUID): StudentViewHubData | undefined => {
@@ -174,10 +168,6 @@ class StudentClass {
 		this.isInFocusMode = newState
 	})
 
-	public setPendingInvites = action((pendingInvites: StudentInviteJoinClass[]): void => {
-		this.pendingInvites = pendingInvites
-	})
-
 	public getHubId = (): UUID | null => {
 		if (this.classroomData.length === 0) return null
 		return this.classroomData[0].activeHubs[0].hubId
@@ -188,7 +178,6 @@ class StudentClass {
 		this.setIsStudentDataRetrieved(false)
 		this.setIsRetrievingStudentData(false)
 		this.setIsInFocusMode(false)
-		this.setPendingInvites([])
 	}
 }
 

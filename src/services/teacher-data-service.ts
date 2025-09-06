@@ -46,12 +46,6 @@ export default class TeacherDataService extends BaseDataService {
 		)
 	}
 
-	async inviteStudentJoinClass(classCode: ClassCode, username: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/invite-student-join-class/${classCode}`), { username }
-		)
-	}
-
 	async createHub(
 		classCode: ClassCode,
 		hubName: string,

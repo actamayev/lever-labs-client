@@ -2,7 +2,7 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, ProjectUUID, SandboxProject, SandboxChatMessage,
+import { BlocklyJson, SandboxProjectUUID, SandboxProject, SandboxChatMessage,
 	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
@@ -10,9 +10,9 @@ import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
 	public hasRetrievedAllSandboxProjects = false
-	public sandboxProjects: Map<ProjectUUID, SandboxProjectWithStreaming> = new Map()
-	public retrievingSingleProjects: Map<ProjectUUID, boolean> = new Map()
-	public currentStreamIds: Map<ProjectUUID, string | null> = new Map()
+	public sandboxProjects: Map<SandboxProjectUUID, SandboxProjectWithStreaming> = new Map()
+	public retrievingSingleProjects: Map<SandboxProjectUUID, boolean> = new Map()
+	public currentStreamIds: Map<SandboxProjectUUID, string | null> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -44,39 +44,39 @@ class SandboxClass {
 			currentStreamingMessageId: null,
 			cppCode: generateCppFromJson(normalizedSandboxJson)
 		}
-		this.sandboxProjects.set(sandboxProject.projectUUID, projectWithStreaming)
-		this.setIsRetrievingSingleProject(sandboxProject.projectUUID, false)
+		this.sandboxProjects.set(sandboxProject.sandboxProjectUUID, projectWithStreaming)
+		this.setIsRetrievingSingleProject(sandboxProject.sandboxProjectUUID, false)
 	})
 
-	public setIsRetrievingSingleProject = action((projectUUID: ProjectUUID, isRetrieving: boolean): void => {
+	public setIsRetrievingSingleProject = action((projectUUID: SandboxProjectUUID, isRetrieving: boolean): void => {
 		this.retrievingSingleProjects.set(projectUUID, isRetrieving)
 	})
 
-	public isRetrievingSingleProject = (projectUUID: ProjectUUID): boolean => {
+	public isRetrievingSingleProject = (projectUUID: SandboxProjectUUID): boolean => {
 		return this.retrievingSingleProjects.get(projectUUID) || false
 	}
 
-	public updateStarStatus = action((projectUUID: ProjectUUID): void => {
+	public updateStarStatus = action((projectUUID: SandboxProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 		project.isStarred = !project.isStarred
 	})
 
-	public updateProjectName = action((projectUUID: ProjectUUID, newName: string): void => {
+	public updateProjectName = action((projectUUID: SandboxProjectUUID, newName: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		project.projectName = newName
 	})
 
-	public updateProjectNotes = action((projectUUID: ProjectUUID, newNotes: string): void => {
+	public updateProjectNotes = action((projectUUID: SandboxProjectUUID, newNotes: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		project.projectNotes = newNotes
 	})
 
-	public updateProjectLastUpdated = action((projectUUID: ProjectUUID): void => {
+	public updateProjectLastUpdated = action((projectUUID: SandboxProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
@@ -84,7 +84,7 @@ class SandboxClass {
 	})
 
 	// Method to update project JSON in the store
-	public updateProjectJson = action((projectUUID: ProjectUUID, newJson: BlocklyJson): void => {
+	public updateProjectJson = action((projectUUID: SandboxProjectUUID, newJson: BlocklyJson): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
@@ -92,30 +92,30 @@ class SandboxClass {
 		project.cppCode = generateCppFromJson(newJson)
 	})
 
-	public getCppCode = action((projectUUID: ProjectUUID): string => {
+	public getCppCode = action((projectUUID: SandboxProjectUUID): string => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return ""
 		return project.cppCode
 	})
 
-	public setCppCode = action((projectUUID: ProjectUUID, cppCode: string): void => {
+	public setCppCode = action((projectUUID: SandboxProjectUUID, cppCode: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 		project.cppCode = cppCode
 	})
 
-	public deleteSandboxProject = action((projectUUID: ProjectUUID): void => {
+	public deleteSandboxProject = action((projectUUID: SandboxProjectUUID): void => {
 		this.sandboxProjects.delete(projectUUID)
 	})
 
-	public getProjectNotes = action((projectUUID: ProjectUUID): string => {
+	public getProjectNotes = action((projectUUID: SandboxProjectUUID): string => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return ""
 		return project.projectNotes || ""
 	})
 
 	// Chat-related methods
-	public addUserMessage = action((projectUUID: ProjectUUID, content: string): void => {
+	public addUserMessage = action((projectUUID: SandboxProjectUUID, content: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
@@ -179,7 +179,7 @@ class SandboxClass {
 		project.currentStreamingMessageId = null
 	})
 
-	public clearChatMessages = action((projectUUID: ProjectUUID): void => {
+	public clearChatMessages = action((projectUUID: SandboxProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 		project.sandboxChatMessages = []
@@ -187,7 +187,7 @@ class SandboxClass {
 	})
 
 	// Update the resetChatStreamingState method to also clear stream ID:
-	public resetChatStreamingState = action((projectUUID: ProjectUUID): void => {
+	public resetChatStreamingState = action((projectUUID: SandboxProjectUUID): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
@@ -197,35 +197,35 @@ class SandboxClass {
 	})
 
 	// Check if currently streaming for a project
-	public isStreaming(projectUUID: ProjectUUID): boolean {
+	public isStreaming(projectUUID: SandboxProjectUUID): boolean {
 		const project = this.sandboxProjects.get(projectUUID)
 		return project?.isStreaming || false
 	}
 
 	// Check if waiting for response for a project
-	public isWaitingForResponse(projectUUID: ProjectUUID): boolean {
+	public isWaitingForResponse(projectUUID: SandboxProjectUUID): boolean {
 		const project = this.sandboxProjects.get(projectUUID)
 		return project?.isWaitingForResponse || false
 	}
 
 	// Set waiting for response state
-	public setWaitingForResponse = action((projectUUID: ProjectUUID, isWaiting: boolean): void => {
+	public setWaitingForResponse = action((projectUUID: SandboxProjectUUID, isWaiting: boolean): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 		project.isWaitingForResponse = isWaiting
 	})
 
 	// Get chat messages for a project
-	public getChatMessages(projectUUID: ProjectUUID): SandboxChatMessage[] {
+	public getChatMessages(projectUUID: SandboxProjectUUID): SandboxChatMessage[] {
 		const project = this.sandboxProjects.get(projectUUID)
 		return project?.sandboxChatMessages || []
 	}
 
-	public setCurrentStreamId = action((projectUUID: ProjectUUID, streamId: string | null): void => {
+	public setCurrentStreamId = action((projectUUID: SandboxProjectUUID, streamId: string | null): void => {
 		this.currentStreamIds.set(projectUUID, streamId)
 	})
 
-	public getCurrentStreamId(projectUUID: ProjectUUID): string | null {
+	public getCurrentStreamId(projectUUID: SandboxProjectUUID): string | null {
 		return this.currentStreamIds.get(projectUUID) || null
 	}
 

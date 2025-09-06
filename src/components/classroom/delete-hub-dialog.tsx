@@ -2,8 +2,7 @@
 
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 import { AlertTriangle } from "lucide-react"
-import { UUID } from "crypto"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
 import {
 	Dialog,
 	DialogContent,
@@ -20,13 +19,12 @@ import deleteHub from "../../utils/teacher/delete-hub"
 interface Props {
 	isDeleteDialogOpen: boolean
 	setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>
-	hubName: string
-	hubId: UUID
+	hubToDelete: TeacherViewHubData
 	classCode: ClassCode
 }
 
 export default function DeleteHubDialog(props: Props): React.ReactNode {
-	const { isDeleteDialogOpen, setIsDeleteDialogOpen, hubName, hubId, classCode } = props
+	const { isDeleteDialogOpen, setIsDeleteDialogOpen, hubToDelete, classCode } = props
 	const [isDeleting, setIsDeleting] = useState(false)
 
 	const colors = getDuolingoColors("cardinal")
@@ -39,14 +37,14 @@ export default function DeleteHubDialog(props: Props): React.ReactNode {
 		setIsDeleting(true)
 
 		try {
-			await deleteHub(classCode, hubId)
+			await deleteHub(classCode, hubToDelete.hubId)
 			setIsDeleteDialogOpen(false)
 		} catch (error) {
 			console.error("Error deleting hub:", error)
 		}
 
 		setIsDeleting(false)
-	}, [classCode, hubId, setIsDeleteDialogOpen])
+	}, [classCode, hubToDelete.hubId, setIsDeleteDialogOpen])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key === "Escape") {
@@ -72,7 +70,7 @@ export default function DeleteHubDialog(props: Props): React.ReactNode {
 						<div className="bg-white border border-cardinal/30 rounded-lg p-3">
 							<div className="text-sm text-eel mb-1">Hub Name</div>
 							<div className="text-lg font-semibold text-wolf">
-								{hubName}
+								{hubToDelete.hubName}
 							</div>
 						</div>
 					</div>

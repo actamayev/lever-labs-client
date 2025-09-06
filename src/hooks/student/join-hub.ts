@@ -7,7 +7,7 @@ import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { careerData } from "../../utils/constants/career-quest/career-data"
+import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import careerQuestClass from "../../classes/career-quest-class"
 
 export default function useJoinHub():(
@@ -60,7 +60,7 @@ export default function useJoinHub():(
 				careerQuestClass.setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
 
-			if (joinHubResponse.data.careerUUID === "3e5fd270-6265-4bd4-a7c9-f4fe0618332d") {
+			if (joinHubResponse.data.careerUUID === meetPipData.careerUUID) {
 				navigate("/career-quest/meet-pip")
 			} else {
 				const careerUUID = joinHubResponse.data.careerUUID

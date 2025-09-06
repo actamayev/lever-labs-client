@@ -27,7 +27,6 @@ export const listenersMap: {
 	"battery-monitor-data": (payload): void => workbenchClass.setBatteryData(payload),
 	"general-sensor-data": (payload): void => sensorDataClass.addSensorData(payload),
 	"general-sensor-data-mz": (payload): void => sensorDataClass.addMultizoneTofData(payload),
-	"student-invite-join-class": (payload): void => studentClass.addPendingInvite(payload),
 	"dino-score-update": (payload): void => gamesClass.addDinoScore(payload.score),
 	"student-joined-classroom": (payload): void => teacherClass.addStudentToClassroom(payload),
 	"new-hub": (payload): void => studentClass.addNewHub(payload),

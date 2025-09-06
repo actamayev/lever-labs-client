@@ -7,7 +7,6 @@ import { ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import InviteStudentDialog from "./invite-student-dialog"
 import CreateHubDialog from "./create-hub-dialog"
 import DeleteHubDialog from "./delete-hub-dialog"
 import {
@@ -31,7 +30,6 @@ interface ClassroomPageProps {
 // eslint-disable-next-line max-lines-per-function, complexity
 function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
-	const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
 	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 	const [hubToDelete, setHubToDelete] = useState<TeacherViewHubData | null>(null)
@@ -50,10 +48,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const handleBackClick = (): void => navigate("/class-manager")
 	const colors = getDuolingoColors("humpback")
 
-	const handleInviteStudent = (): void => {
-		setIsInviteDialogOpen(true)
-	}
-
 	const handleCreateHub = (): void => {
 		setIsCreateHubDialogOpen(true)
 	}
@@ -62,22 +56,6 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 		setHubToDelete(hub)
 		setIsDeleteDialogOpen(true)
 	}, [])
-
-	const getStatusBadge = (inviteStatus: "ACCEPTED" | "PENDING" | "DECLINED"): React.ReactNode => {
-		if (inviteStatus === "ACCEPTED") {
-			return (
-				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-					Accepted
-				</span>
-			)
-		} else {
-			return (
-				<span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-					Pending
-				</span>
-			)
-		}
-	}
 
 	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
 		if (hub.careerUUID === meetPipData.careerUUID) {
@@ -168,24 +146,12 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 						<div className="text-sm text-eel mt-2 space-y-1">
 							{((): React.ReactNode => {
 								const students = classroomData?.students || []
-								const declined = students.filter((s): boolean => s.inviteStatus === "DECLINED").length
-								const accepted = students.filter((s): boolean => s.inviteStatus === "ACCEPTED").length
-								const pending = students.filter((s): boolean => s.inviteStatus === "PENDING").length
+								const joined = students.length
 								return (
-									<>
-										<div className="flex items-center gap-2">
-											<span className="w-2 h-2 bg-green-500 rounded-full"></span>
-											{accepted} accepted
-										</div>
-										<div className="flex items-center gap-2">
-											<span className="w-2 h-2 bg-yellow-500 rounded-full"></span>
-											{pending} pending
-										</div>
-										<div className="flex items-center gap-2">
-											<span className="w-2 h-2 bg-red-500 rounded-full"></span>
-											{declined} declined
-										</div>
-									</>
+									<div className="flex items-center gap-2">
+										<span className="w-2 h-2 bg-green-500 rounded-full"></span>
+										{joined} joined
+									</div>
 								)
 							})()}
 						</div>
@@ -309,19 +275,10 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 								View all students enrolled in this classroom
 							</CardDescription>
 						</div>
-						<TactileButton
-							onClick={handleInviteStudent}
-							className={cn("text-white", colors.bg)}
-							shadowHeight={4}
-							shadowClass={colors.shadow2}
-						>
-							<Plus className="h-4 w-4" />
-							Invite Student
-						</TactileButton>
 					</div>
 				</CardHeader>
 				<CardContent>
-					{classroomData?.students && classroomData.students.length > 0 ? (
+					{classroomData?.students &&  (
 						<Table>
 							<TableHeader>
 								<TableRow className="border-swan">
@@ -331,50 +288,27 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{classroomData.students
-									.filter((student): boolean => student.inviteStatus !== "DECLINED")
-									.map((student, index): React.ReactNode => (
-										<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
-											<TableCell className="font-medium text-wolf">
-												{index + 1}
-											</TableCell>
-											<TableCell className="font-medium text-wolf">
-												{student.username || "Unknown"}
-											</TableCell>
-											<TableCell>
-												{getStatusBadge(student.inviteStatus)}
-											</TableCell>
-										</TableRow>
-									))}
+								{classroomData.students.map((student, index): React.ReactNode => (
+									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
+										<TableCell className="font-medium text-wolf">
+											{index + 1}
+										</TableCell>
+										<TableCell className="font-medium text-wolf">
+											{student.username || "Unknown"}
+										</TableCell>
+										<TableCell>
+											<span className="inline-flex items-center px-2.5 py-0.5 rounded-full
+											text-xs font-medium bg-green-100 text-green-800">
+												Accepted
+											</span>
+										</TableCell>
+									</TableRow>
+								))}
 							</TableBody>
 						</Table>
-					) : (
-						<div className="text-center py-12">
-							<Users className="h-12 w-12 text-eel mx-auto mb-4 opacity-50" />
-							<h3 className="text-lg font-medium text-wolf mb-2">No students yet</h3>
-							<p className="text-eel mb-4">
-								Students will appear here once they join your class using the class code.
-							</p>
-							<TactileButton
-								onClick={handleInviteStudent}
-								className={cn("flex-1 h-10 rounded-xl text-lg text-white", colors.bg)}
-								shadowHeight={4}
-								shadowClass={colors.shadow2}
-							>
-								<Plus className="h-4 w-4" />
-								Invite Students
-							</TactileButton>
-						</div>
 					)}
 				</CardContent>
 			</Card>
-
-			{/* Invite Student Dialog */}
-			<InviteStudentDialog
-				classCode={classCode}
-				isInviteDialogOpen={isInviteDialogOpen}
-				setIsInviteDialogOpen={setIsInviteDialogOpen}
-			/>
 
 			{/* Create Hub Dialog */}
 			<CreateHubDialog
@@ -387,8 +321,7 @@ function ClassroomPage({ classCode }: ClassroomPageProps): React.ReactNode {
 			{hubToDelete && (
 				<DeleteHubDialog
 					classCode={classCode}
-					hubId={hubToDelete.hubId}
-					hubName={hubToDelete.hubName}
+					hubToDelete={hubToDelete}
 					isDeleteDialogOpen={isDeleteDialogOpen}
 					setIsDeleteDialogOpen={setIsDeleteDialogOpen}
 				/>

@@ -47,18 +47,8 @@ function MappedNavData(): React.ReactNode {
 		return pathname.startsWith(itemUrl)
 	}, [pathname])
 
-	const { hasActiveClasses, hasPendingInvites } = useMemo((): { hasActiveClasses: boolean, hasPendingInvites: boolean } => {
-		const activeClasses = studentClass.classroomData.filter(
-			(classroom): boolean => classroom.invitationStatus === "PENDING" || classroom.invitationStatus === "ACCEPTED"
-		)
-		const pendingInvites = studentClass.classroomData.some(
-			(classroom): boolean => classroom.invitationStatus === "PENDING"
-		)
-
-		return {
-			hasActiveClasses: activeClasses.length > 0,
-			hasPendingInvites: pendingInvites
-		}
+	const hasActiveClasses = useMemo((): boolean => {
+		return studentClass.classroomData.length > 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [studentClass.classroomData.length])
 
@@ -98,7 +88,6 @@ function MappedNavData(): React.ReactNode {
 				<SidebarMenu>
 					{navData.map((item): React.ReactNode => {
 						const active = isActive(item.url)
-						const isWhiteboardItem = item.url === "/whiteboard"
 
 						// Create styled icon elements
 						const iconElement = (
@@ -107,10 +96,6 @@ function MappedNavData(): React.ReactNode {
 								item.textColor
 							)}>
 								<item.icon className="h-[35px] w-[35px]" />
-								{/* Notification circle for pending invites */}
-								{isWhiteboardItem && hasPendingInvites && (
-									<div className="absolute -top-1 -right-1 w-3 h-3 bg-cardinal border-2 border-white rounded-full" />
-								)}
 							</div>
 						)
 

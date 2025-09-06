@@ -41,7 +41,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				<CustomTooltip
 					tooltipTrigger={
 						<button
-							onClick={(): Promise<void> => starSandboxProject(project.projectUUID)}
+							onClick={(): Promise<void> => starSandboxProject(project.sandboxProjectUUID)}
 							className={cn(
 								"p-2 rounded-md transition-none hover:bg-polar",
 								project.isStarred ? "text-bee" : ""

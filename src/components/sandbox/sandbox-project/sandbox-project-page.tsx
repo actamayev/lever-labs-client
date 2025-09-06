@@ -5,7 +5,7 @@ import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
-import { BlocklyJson, ProjectUUID } from "@bluedotrobots/common-ts"
+import { BlocklyJson, SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
@@ -31,7 +31,7 @@ import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-s
 const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SandboxProjectPage({ projectUUID }: { projectUUID: ProjectUUID }): React.ReactNode {
+function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
 	useEffect((): void => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
 	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")

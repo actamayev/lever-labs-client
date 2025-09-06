@@ -1,13 +1,13 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import AuthenticatedLayout from "../../../src/components/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project/sandbox-project-page"
 
 interface SandboxProjectPageProps {
 	params: Promise<{
-		projectUUID: ProjectUUID
+		projectUUID: SandboxProjectUUID
 	}>
 }
 
