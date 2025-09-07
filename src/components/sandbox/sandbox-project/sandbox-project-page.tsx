@@ -207,7 +207,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 								<TactileButton
 									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
 									shadowColor="rgb(150, 50, 75)"
-									onClick={stopCurrentlyRunningCode}
+									onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
 								>
 									STOP
 								</TactileButton>

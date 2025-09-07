@@ -232,7 +232,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					<TactileButton
 						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
 						shadowColor="rgb(150, 50, 75)"
-						onClick={stopCurrentlyRunningCode}
+						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
 					>
 						STOP
 					</TactileButton>

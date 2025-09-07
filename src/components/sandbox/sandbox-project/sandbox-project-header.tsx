@@ -16,7 +16,7 @@ import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = (): void => {
-		void stopCurrentlyRunningCode()
+		void stopCurrentlyRunningCode(true)
 		void stopPollingSensors()
 	}
 
