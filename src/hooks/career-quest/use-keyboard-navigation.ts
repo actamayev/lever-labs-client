@@ -1,7 +1,6 @@
 
 import { useEffect, useRef, useState } from "react"
 import type { CareerUUID } from "@bluedotrobots/common-ts"
-import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
@@ -40,11 +39,11 @@ function useEffectKeyboardNavigation(): string | null {
 }
 
 export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
-	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
-	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 	const keyPressed = useEffectKeyboardNavigation()
 	const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
-	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
+	const isTransitioning = navigationManagerClass.getIsTransitioning(careerUUID)
 
 	useEffect((): void => {
 		if (!keyPressed || !swiperInstance || isTransitioning) return

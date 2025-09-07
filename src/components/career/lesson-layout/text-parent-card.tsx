@@ -17,11 +17,11 @@ interface TextParentCardProps {
 function TextParentCard(props: TextParentCardProps): React.ReactNode {
 	const { slide, careerUUID } = props
 	const textParentData = slide.data
-	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
-	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+	const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
 	const isActive = currentMainSlideIndex === mainSlides.findIndex((s): boolean => s.id === slide.id)
 	// Get the text child index specific to this slide
-	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID, slide.id)
+	const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, slide.id)
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
@@ -35,7 +35,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 				allowSlidePrev={true}
 				allowTouchMove={false}
 				onSwiper={(swiper): void => {
-					careerQuestClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
+					navigationManagerClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
 					// If this slide is currently active, immediately sync to the correct index
 					if (isActive) {
 						swiper.slideTo(currentTextChildIndex, 0) // Instant slide with no animation
@@ -56,7 +56,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 										morphingTexts={child.morphingVariants.map((variant): string => variant.text)}
 										currentIndex={navigationManagerClass.getCurrentMorphingIndex(careerUUID, child.id)}
 										onAnimationStateChange={(isAnimating): void =>
-											careerQuestClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
+											navigationManagerClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
 										}
 									/>
 								) : (

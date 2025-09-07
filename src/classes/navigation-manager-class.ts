@@ -1,3 +1,5 @@
+/* eslint-disable max-params */
+/* eslint-disable max-depth */
 "use client"
 
 import { action, makeAutoObservable, observable } from "mobx"
@@ -478,7 +480,11 @@ export class NavigationManagerClass {
 	})
 
 	// Student-only methods that don't trigger progress saving
-	private executeMorphingTextAdvance = action((careerUUID: CareerUUID, morphingTextId: string, morphingSection: MorphingTextSection): void => {
+	private executeMorphingTextAdvance = action((
+		careerUUID: CareerUUID,
+		morphingTextId: string,
+		morphingSection: MorphingTextSection
+	): void => {
 		if (!this.canAdvanceMorphingText(careerUUID, morphingTextId, morphingSection)) return
 
 		const currentIndex = this.getCurrentMorphingIndex(careerUUID, morphingTextId)
@@ -506,6 +512,7 @@ export class NavigationManagerClass {
 		onPrevMain?: () => Promise<void>,
 		onNextText?: () => void,
 		onPrevText?: () => void
+
 	): boolean => {
 		const navigation = this.getNavigation(careerUUID)
 		if (!navigation) return false
@@ -678,7 +685,10 @@ export class NavigationManagerClass {
 		}
 	})
 
-	public updateSwiperNavigation = action((careerUUID: CareerUUID, canAdvanceToNextMainCallback: (slideIndex: number) => boolean): void => {
+	public updateSwiperNavigation = action((
+		careerUUID: CareerUUID,
+		canAdvanceToNextMainCallback: (slideIndex: number) => boolean
+	): void => {
 		const navigation = this.getNavigation(careerUUID)
 		if (!navigation?.swiperInstance) return
 
@@ -822,7 +832,11 @@ export class NavigationManagerClass {
 		}
 	})
 
-	public changeMainSlideToCqChat = action((careerUUID: CareerUUID, challengeUUID: ChallengeUUID, onMainSlideChange?: () => void): void => {
+	public changeMainSlideToCqChat = action((
+		careerUUID: CareerUUID,
+		challengeUUID: ChallengeUUID,
+		onMainSlideChange?: () => void
+	): void => {
 		const navigation = this.getNavigation(careerUUID)
 		if (!navigation || !navigation.swiperInstance) return
 		const index = navigation.mainSlides.findIndex((slide): boolean => {

@@ -167,7 +167,7 @@ class CareerQuestClass {
 	})
 
 	private updateSwiperNavigation = action((careerUUID: CareerUUID): void => {
-		navigationManagerClass.updateSwiperNavigation(careerUUID, (slideIndex: number) =>
+		navigationManagerClass.updateSwiperNavigation(careerUUID, (slideIndex: number): boolean =>
 			this.canAdvanceToNextMain(careerUUID, slideIndex)
 		)
 	})
@@ -192,30 +192,6 @@ class CareerQuestClass {
 	})
 
 	// ========================================
-	// NAVIGATION STATE MANAGEMENT
-	// ========================================
-
-	public getCurrentMainSlideIndex(careerUUID: CareerUUID): number {
-		return navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
-	}
-
-	public getCurrentTextChildIndex(careerUUID: CareerUUID, textParentId?: string): number {
-		return navigationManagerClass.getCurrentTextChildIndex(careerUUID, textParentId)
-	}
-
-	public getNavigationIndices(careerUUID: CareerUUID): { mainSlideIndex: number; textChildIndex: number } {
-		return navigationManagerClass.getNavigationIndices(careerUUID)
-	}
-
-	public getCurrentPositionId(careerUUID: CareerUUID): string {
-		return navigationManagerClass.getCurrentPositionId(careerUUID)
-	}
-
-	public getMainSlides(careerUUID: CareerUUID): MainSlide[] {
-		return navigationManagerClass.getMainSlides(careerUUID)
-	}
-
-	// ========================================
 	// MORPHING TEXT MANAGEMENT
 	// ========================================
 
@@ -233,18 +209,6 @@ class CareerQuestClass {
 		return navigationManagerClass.canAdvanceMorphingText(careerUUID, morphingTextId, morphingSection)
 	}
 
-	public canGoBackMorphingText(careerUUID: CareerUUID, morphingTextId: string): boolean {
-		return navigationManagerClass.canGoBackMorphingText(careerUUID, morphingTextId)
-	}
-
-	public setMorphingAnimationState = action((careerUUID: CareerUUID, morphingTextId: string, isAnimating: boolean): void => {
-		navigationManagerClass.setMorphingAnimationState(careerUUID, morphingTextId, isAnimating)
-	})
-
-	public isAnyMorphingTextAnimating(careerUUID: CareerUUID): boolean {
-		return navigationManagerClass.isAnyMorphingTextAnimating(careerUUID)
-	}
-
 	public advanceMorphingText = action((careerUUID: CareerUUID, morphingTextId: string): void => {
 		const morphingSection = this.findMorphingTextSection(careerUUID, morphingTextId)
 		if (!morphingSection) return
@@ -253,12 +217,12 @@ class CareerQuestClass {
 			careerUUID,
 			morphingTextId,
 			morphingSection,
-			() => this.updateRightContentForCurrentState(careerUUID)
+			(): void => this.updateRightContentForCurrentState(careerUUID)
 		)
 
 		// Save progress with morphing command for teacher hub synchronization
 		if (teacherClass.isFocusingStudents) {
-			const currentSlide = this.getCurrentMainSlide(careerUUID)
+			const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
 				void saveCareerProgress(careerUUID, morphingTextId, false, `advance_morph:${morphingTextId}`)
 			}
@@ -269,12 +233,12 @@ class CareerQuestClass {
 		navigationManagerClass.goBackMorphingText(
 			careerUUID,
 			morphingTextId,
-			() => this.updateRightContentForCurrentState(careerUUID)
+			(): void => this.updateRightContentForCurrentState(careerUUID)
 		)
 
 		// Save progress with morphing command for teacher hub synchronization
 		if (teacherClass.isFocusingStudents) {
-			const currentSlide = this.getCurrentMainSlide(careerUUID)
+			const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
 				void saveCareerProgress(careerUUID, morphingTextId, false, `back_morph:${morphingTextId}`)
 			}
@@ -310,14 +274,14 @@ class CareerQuestClass {
 		const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
 		if (!isDataReady || !swiperInstance) return
 
-		const indices = this.getNavigationIndices(careerUUID)
+		const indices = navigationManagerClass.getNavigationIndices(careerUUID)
 		swiperInstance.slideTo(indices.mainSlideIndex, 0)
 
 		this.updateRightContentForCurrentState(careerUUID)
 		// Call triggerFunctionEnter for the current position since we just synced to it
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		if (textChild.triggerFunctionEnter) {
 			textChild.triggerFunctionEnter()
@@ -488,7 +452,6 @@ class CareerQuestClass {
 		return furthestIndices.textChildIndex > currentIndices.textChildIndex
 	}
 
-
 	// ========================================
 	// HELPER METHODS
 	// ========================================
@@ -518,7 +481,7 @@ class CareerQuestClass {
 		if (!career) return null
 		const careerDefinition = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (!careerDefinition) return null
-		const currentSlide = this.getMainSlides(careerUUID)[navigationManagerClass.getCurrentMainSlideIndex(careerUUID)]
+		const currentSlide = navigationManagerClass.getMainSlides(careerUUID)[navigationManagerClass.getCurrentMainSlideIndex(careerUUID)]
 		if (currentSlide.type === "challenge") return null
 		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const child = currentSlide.data.children[currentTextChildIndex]
@@ -636,7 +599,7 @@ class CareerQuestClass {
 	}
 
 	public canAdvanceToNextMain = action((careerUUID: CareerUUID, slideIndex: number): boolean => {
-		return navigationManagerClass.canAdvanceToNextMain(careerUUID, slideIndex, (challengeData: CqChallengeData) =>
+		return navigationManagerClass.canAdvanceToNextMain(careerUUID, slideIndex, (challengeData: CqChallengeData): boolean =>
 			chatManagerClass.isCodeCorrect(challengeData)
 		)
 	})
@@ -654,7 +617,7 @@ class CareerQuestClass {
 		// Update class state instead of component state
 		navigationManagerClass.setCurrentMainSlideIndex(careerUUID, newIndex)
 
-		const currentSlide = this.getMainSlides(careerUUID)[newIndex]
+		const currentSlide = navigationManagerClass.getMainSlides(careerUUID)[newIndex]
 
 		if (currentSlide.type === "challenge") {
 			// Turn off chat toggle when navigating to a challenge section
@@ -716,7 +679,7 @@ class CareerQuestClass {
 		if (!career || !swiper) return
 
 		// Save progress when text child changes
-		const currentSlide = this.getMainSlides(careerUUID)[swiper.activeIndex]
+		const currentSlide = navigationManagerClass.getMainSlides(careerUUID)[swiper.activeIndex]
 		if (currentSlide.type !== "textParent") return
 
 		navigationManagerClass.setCurrentTextChildIndex(careerUUID, currentSlide.id, newIndex)
@@ -740,15 +703,6 @@ class CareerQuestClass {
 		// Update swiper navigation when text child changes
 		this.updateSwiperNavigation(careerUUID)
 	})
-
-	public getIsTransitioning = (careerUUID: CareerUUID): boolean => {
-		return navigationManagerClass.getIsTransitioning(careerUUID)
-	}
-
-	public getCurrentTransitionDuration = (careerUUID: CareerUUID): number => {
-		return navigationManagerClass.getCurrentTransitionDuration(careerUUID)
-	}
-
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
@@ -785,27 +739,8 @@ class CareerQuestClass {
 	// TEXT PARENT SWIPER MANAGEMENT
 	// ========================================
 
-	public setTextParentSwiperInstance = action((
-		careerUUID: CareerUUID,
-		textParentId: string,
-		swiperInstance: SwiperType
-	): void => {
-		navigationManagerClass.setTextParentSwiperInstance(careerUUID, textParentId, swiperInstance)
-	})
-
-	public getTextParentSwiperInstance(
-		careerUUID: CareerUUID,
-		textParentId: string
-	): SwiperType | null {
-		return navigationManagerClass.getTextParentSwiperInstance(careerUUID, textParentId)
-	}
-
-	public cleanupAllSwipers = action((careerUUID: CareerUUID): void => {
-		navigationManagerClass.cleanupAllSwipers(careerUUID)
-	})
-
 	private syncTextParentSwiper = action((careerUUID: CareerUUID, textParentId: string, targetIndex: number): void => {
-		const textParentSwiper = this.getTextParentSwiperInstance(careerUUID, textParentId)
+		const textParentSwiper = navigationManagerClass.getTextParentSwiperInstance(careerUUID, textParentId)
 		if (!textParentSwiper) return
 
 		// Only sync if not already at the correct position
@@ -832,14 +767,14 @@ class CareerQuestClass {
 	public handleGoToNextTextChild = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
 		// Check if we can advance to the next text child
 		if (!this.canAdvanceToNextTextChild(careerUUID)) return
 
 		// Call exit trigger function before leaving current slide
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 		if (currentTextChild.triggerFunctionExit) {
 			currentTextChild.triggerFunctionExit().catch((error): void => {
@@ -848,9 +783,11 @@ class CareerQuestClass {
 		}
 
 		// Normal navigation (existing code)
-		const mainSlides = this.getMainSlides(careerUUID)
-		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
-		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
+		const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+		const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(
+			careerUUID, mainSlides[currentMainSlideIndex].id
+		)
 		if (!textParentSwiperInstance) return
 
 		navigationManagerClass.setLastSlideChangeTime(careerUUID, Date.now())
@@ -873,12 +810,12 @@ class CareerQuestClass {
 	public handleGoToPreviousTextChild = action((careerUUID: CareerUUID): void => {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 		const canGoPrev = currentTextChildIndex > 0
-		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
+		const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (!canGoPrev || !textParentSwiperInstance) return
 
 		// Call exit trigger function before leaving current slide
@@ -915,9 +852,9 @@ class CareerQuestClass {
 		if (!canAdvance) return
 
 		// Call exit trigger function before leaving current slide if it's a text parent
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type === "textParent") {
-			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+			const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
 				currentTextChild.triggerFunctionExit().catch((error): void => {
@@ -957,9 +894,9 @@ class CareerQuestClass {
 		if (!swiperInstance || !canGoPrev) return
 
 		// Call exit trigger function before leaving current slide if it's a text parent
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type === "textParent") {
-			const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+			const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 			const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 			if (currentTextChild.triggerFunctionExit) {
 				currentTextChild.triggerFunctionExit().catch((error): void => {
@@ -974,7 +911,7 @@ class CareerQuestClass {
 
 		// Check if the target (previous) section has a transition
 		const targetMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID) - 1
-		const targetSlide = this.getMainSlides(careerUUID)[targetMainSlideIndex]
+		const targetSlide = navigationManagerClass.getMainSlides(careerUUID)[targetMainSlideIndex]
 
 		if (targetSlide.type === "textParent" && targetSlide.data.transition) {
 			await this.handleMainSlideTransitionNavigation(
@@ -1014,11 +951,6 @@ class CareerQuestClass {
 		this.handleMainSlideChange(careerUUID)
 	})
 
-
-	public getCurrentMainSlide(careerUUID: CareerUUID): MainSlide {
-		return navigationManagerClass.getCurrentMainSlide(careerUUID)
-	}
-
 	public getToolboxConfig(cqInformation: CareerUUIDChallengeUUID): Blockly.utils.toolbox.ToolboxDefinition {
 		const career = this.getCareer(cqInformation.careerUUID)
 		if (!career) return {} as Blockly.utils.toolbox.ToolboxDefinition
@@ -1044,12 +976,9 @@ class CareerQuestClass {
 		const initialBlocklyJson = challengeSection.challengeData.initialBlocklyJson
 
 		// Check if already at initial state
-		if (
-			isEqual(
-				stripBlockPositions(currentBlocklyJson),
-				stripBlockPositions(initialBlocklyJson)
-			)
-		) return false
+		if (isEqual(stripBlockPositions(currentBlocklyJson), stripBlockPositions(initialBlocklyJson))) {
+			return false
+		}
 
 		// Reset to initial state
 		const cppCode = generateCppFromJson(initialBlocklyJson)
@@ -1100,7 +1029,7 @@ class CareerQuestClass {
 			return
 		}
 
-		const currentSlide = this.getMainSlides(careerUUID)[navigationManagerClass.getCurrentMainSlideIndex(careerUUID)]
+		const currentSlide = navigationManagerClass.getMainSlides(careerUUID)[navigationManagerClass.getCurrentMainSlideIndex(careerUUID)]
 
 		if (currentSlide.type === "challenge") {
 			this.setRightContent(careerUUID, { type: "challenge", challengeData: currentSlide.data })
@@ -1142,20 +1071,15 @@ class CareerQuestClass {
 		}
 	})
 
-	// Add this method to your CareerQuestClass
-	public setCareerChatRetrievedData = action((careerUUID: CareerUUID, messages: CareerChatMessage[]): void => {
-		chatManagerClass.setCareerChatRetrievedData(careerUUID, messages)
-	})
-
 	// NEW: Check if user can advance to next text child
 	public canAdvanceToNextTextChild(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
 
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return false
 
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 
 		// Check if we can advance past the current text child
@@ -1172,10 +1096,10 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
-		const currentSlide = this.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return
 
-		const currentTextChildIndex = this.getCurrentTextChildIndex(careerUUID)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 
 		// Check if this text child requires button interaction
@@ -1199,7 +1123,7 @@ class CareerQuestClass {
 		void saveCareerProgress(careerUUID, nextTextChild.id, true)
 
 		// Navigate to the next text child
-		const textParentSwiperInstance = this.getTextParentSwiperInstance(careerUUID, currentSlide.id)
+		const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(careerUUID, currentSlide.id)
 		if (textParentSwiperInstance) {
 			navigationManagerClass.setLastSlideChangeTime(careerUUID, Date.now())
 			navigationManagerClass.setIsTransitioning(careerUUID, true)
@@ -1263,9 +1187,9 @@ class CareerQuestClass {
 		if (!career) return false
 
 		const morphingSections = new Map<string, MorphingTextSection>()
-		career.careerDefinition.sections.forEach((section) => {
+		career.careerDefinition.sections.forEach((section): void => {
 			if (section.type === "textParent") {
-				section.children.forEach((child) => {
+				section.children.forEach((child): void => {
 					if (child.type === "morphingText") {
 						morphingSections.set(child.id, child)
 					}
@@ -1278,10 +1202,10 @@ class CareerQuestClass {
 			navigationCommand,
 			targetSlideId,
 			morphingSections,
-			() => this.handleGoToNextMainSection(careerUUID),
-			() => this.handleGoToPreviousMainSection(careerUUID),
-			() => this.handleGoToNextTextChild(careerUUID),
-			() => this.handleGoToPreviousTextChild(careerUUID)
+			(): Promise<void> => this.handleGoToNextMainSection(careerUUID),
+			(): Promise<void> => this.handleGoToPreviousMainSection(careerUUID),
+			(): void => this.handleGoToNextTextChild(careerUUID),
+			(): void => this.handleGoToPreviousTextChild(careerUUID)
 		)
 	})
 
@@ -1326,7 +1250,7 @@ class CareerQuestClass {
 		career.furthestSeenChallengeUuidOrTextUuid = ""
 
 		// Get the first text child ID for saving progress
-		const firstMainSlide = this.getMainSlides(careerUUID)[0]
+		const firstMainSlide = navigationManagerClass.getMainSlides(careerUUID)[0]
 		let initialPositionId: string
 
 		if (firstMainSlide.type === "challenge") {

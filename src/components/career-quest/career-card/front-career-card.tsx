@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 "use client"
 
 import Link from "next/link"
@@ -86,7 +87,6 @@ function FrontCareerCard(props: Props): React.ReactNode {
 						{/* {!disabled ? (
 							<div className="flex-1">
 								<TactileButton
-									// eslint-disable-next-line max-len
 									className={cn("duration-150 bg-gray-300 h-10 rounded-full text-base w-full text-gray-500 cursor-not-allowed")}
 									shadowClass="bg-gray-400"
 									shadowHeight={4}
