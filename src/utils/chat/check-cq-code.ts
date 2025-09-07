@@ -18,6 +18,7 @@ export default async function checkCareerQuestCode(
 		careerQuestClass.changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
 
 		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
+		careerQuestClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
 
 		const response = await blueDotApiClientClass.chatDataService.checkChallengeCode({
 			userCode,
@@ -35,5 +36,6 @@ export default async function checkCareerQuestCode(
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})
+		careerQuestClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, false)
 	}
 }

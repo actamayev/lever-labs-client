@@ -61,6 +61,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
 	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
+	const isWaitingForCodeCheck = careerQuestClass.isChallengeWaitingForCodeCheck(challengeData)
 
 	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
 
@@ -177,6 +178,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 							setInputValue={setInputValue}
 							isStreaming={isStreaming}
 							handleHintClick={handleHintClick}
+							isWaitingForCodeCheck={isWaitingForCodeCheck}
 						/>
 					</ChatParentComponent>
 				</div>

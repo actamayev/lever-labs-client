@@ -40,6 +40,7 @@ interface StreamingState {
 	currentStreamingMessageId: string | null
 	currentStreamId: string | null
 	currentInteractionType: InteractionType | null
+	isWaitingForCodeCheck: boolean
 }
 
 interface ChallengeInstance extends ChatData, StreamingState {
@@ -126,7 +127,7 @@ class CareerQuestClass {
 				currentStreamingMessageId: null,
 				currentStreamId: null,
 				currentInteractionType: null,
-
+				isWaitingForCodeCheck: false,
 				// Completion
 				isCompleted: false,
 
@@ -202,7 +203,8 @@ class CareerQuestClass {
 				isStreaming: false,
 				currentStreamingMessageId: null,
 				currentStreamId: null,
-				currentInteractionType: null
+				currentInteractionType: null,
+				isWaitingForCodeCheck: false
 			},
 			isCareerChatToggled: false,
 			previousRightContent: null
@@ -819,6 +821,7 @@ class CareerQuestClass {
 		if (!challenge || !career) return
 
 		challenge.isWaitingForResponse = false
+		challenge.isWaitingForCodeCheck = false
 
 		const message: ChallengeChatMessage = {
 			id: `evaluation-result-${Date.now()}`,
@@ -945,9 +948,21 @@ class CareerQuestClass {
 		}
 
 		challenge.messages.push(streamingMessage)
-		challenge.isStreaming = true
+		this.setChallengeStreaming({ ...startEvent }, true)
 		challenge.currentStreamingMessageId = streamingMessage.id
 		challenge.currentInteractionType = startEvent.interactionType
+	})
+
+	public setChallengeStreaming = action((cqInformation: CareerUUIDChallengeUUID, streaming: boolean): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.isStreaming = streaming
+	})
+
+	public setChallengeWaitingForCodeCheck = action((cqInformation: CareerUUIDChallengeUUID, isWaitingForCodeCheck: boolean): void => {
+		const challenge = this.getChallenge(cqInformation)
+		if (!challenge) return
+		challenge.isWaitingForCodeCheck = isWaitingForCodeCheck
 	})
 
 	public addChallengeStreamingChunk = action((chunkEvent: ChallengeChatbotStreamChunkEvent): void => {
@@ -972,7 +987,6 @@ class CareerQuestClass {
 		const challenge = this.getChallenge({ ...completeEvent })
 		if (
 			!challenge ||
-			!challenge.isStreaming ||
 			!challenge.currentStreamingMessageId
 		) return
 
@@ -989,6 +1003,7 @@ class CareerQuestClass {
 		challenge.currentStreamingMessageId = null
 		challenge.currentInteractionType = null
 		challenge.currentStreamId = null
+		challenge.isWaitingForCodeCheck = false
 	})
 
 	public resetChallengeStreamingState = action((cqInformation: CareerUUIDChallengeUUID): void => {
@@ -1106,6 +1121,11 @@ class CareerQuestClass {
 	public isChallengeWaitingForResponse(cqChallengeData: CqChallengeData): boolean {
 		const challenge = this.getChallenge({ ...cqChallengeData })
 		return challenge?.isWaitingForResponse || false
+	}
+
+	public isChallengeWaitingForCodeCheck(cqChallengeData: CqChallengeData): boolean {
+		const challenge = this.getChallenge({ ...cqChallengeData })
+		return challenge?.isWaitingForCodeCheck || false
 	}
 
 	public isCareerStreaming(careerUUID: CareerUUID): boolean {

@@ -51,6 +51,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const [resetCounter, setResetCounter] = useState(0) // NEW: Track reset count
 
 	const cppCode = careerQuestClass.getCppCode({ ...challengeData })
+	const isWaitingForCodeCheck = careerQuestClass.isChallengeWaitingForCodeCheck(challengeData)
 
 	const handleReset = useCallback((): void => {
 		const didReset = careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
@@ -224,7 +225,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						)}
 						shadowClass={foxColors.shadow2}
 						onClick={(): Promise<void> => checkCareerQuestCode({ ...challengeData })}
-						disabled={isStreaming || isEmpty(cppCode)}
+						disabled={isStreaming || isEmpty(cppCode) || isWaitingForCodeCheck}
 					>
 						CHECK CODE
 					</TactileButton>

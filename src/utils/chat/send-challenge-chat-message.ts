@@ -16,6 +16,7 @@ export default async function sendChallengeChatMessage(
 		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
 
 		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		careerQuestClass.setChallengeStreaming(careerUUIDChallengeUUID, true)
 
 		const response = await blueDotApiClientClass.chatDataService.sendChallengeMessage({
 			careerUUID: careerUUIDChallengeUUID.careerUUID,
