@@ -69,14 +69,14 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 		}
 	},
-	[LOOP_BLOCK_TYPES.ESP32_DELAY]: {
+	[LOOP_BLOCK_TYPES.DELAY]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
 					.appendField("Delay")
 					.appendField(
 						new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
-						LOOP_BLOCK_TYPES.ESP32_DELAY
+						LOOP_BLOCK_TYPES.DELAY
 					)
 					.appendField("milliseconds")
 				this.setPreviousStatement(true, null)
@@ -87,11 +87,11 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["delay", "wait", "pause", "sleep", "milliseconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.ESP32_DELAY)
+			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.DELAY)
 			return `delay(${delay});\n`  // Changed to standard Arduino delay
 		}
 	},
-	[LOOP_BLOCK_TYPES.ESP32_LOOP]: {
+	[LOOP_BLOCK_TYPES.FOREVER_LOOP]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
