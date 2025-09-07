@@ -7,6 +7,7 @@ import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
 import chatManagerClass from "../../classes/chat-manager-class"
+import navigationManagerClass from "../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
@@ -17,7 +18,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const hasNavigatedInGesture = useRef(false)
 	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
-	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
+	const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
 	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5

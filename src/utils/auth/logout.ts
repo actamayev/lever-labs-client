@@ -16,6 +16,7 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 import sensorDataClass from "../../classes/sensor-data-class"
 import chatManagerClass from "../../classes/chat-manager-class"
+import navigationManagerClass from "../../classes/navigation-manager-class"
 
 export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true) // ADD this first line
@@ -25,6 +26,7 @@ export default async function logout(): Promise<void> {
 		pipClass.logout()
 		socketClass.logout()
 		careerQuestClass.logout()
+		navigationManagerClass.logout()
 		chatManagerClass.logout()
 		careerQuestTriggersClass.logout()
 		authClass.logout()
@@ -42,6 +44,7 @@ export default async function logout(): Promise<void> {
 		pipClass.logout()
 		socketClass.logout()
 		careerQuestClass.logout()
+		navigationManagerClass.logout()
 		chatManagerClass.logout()
 		careerQuestTriggersClass.logout()
 		authClass.logout()

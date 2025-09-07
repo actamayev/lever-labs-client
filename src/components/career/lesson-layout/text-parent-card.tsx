@@ -6,6 +6,7 @@ import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 interface TextParentCardProps {
 	slide: TextParentMainSlide
@@ -53,7 +54,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 									<NavigationMorphingText
 										staticText={child.staticText}
 										morphingTexts={child.morphingVariants.map((variant): string => variant.text)}
-										currentIndex={careerQuestClass.getCurrentMorphingIndex(careerUUID, child.id)}
+										currentIndex={navigationManagerClass.getCurrentMorphingIndex(careerUUID, child.id)}
 										onAnimationStateChange={(isAnimating): void =>
 											careerQuestClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
 										}
