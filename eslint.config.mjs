@@ -36,6 +36,7 @@ const eslintConfig = [
 			"public/keepalive-worker.js",
 			// Ignore test directory
 			"test/**/*",
+			"src/classes/__tests__/**/*",
 		],
 	},
 

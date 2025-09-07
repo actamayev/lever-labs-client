@@ -456,7 +456,7 @@ class CareerQuestClass {
 	// HELPER METHODS
 	// ========================================
 
-	private getCareer(careerUUID: CareerUUID): CareerInstance | undefined {
+	public getCareer(careerUUID: CareerUUID): CareerInstance | undefined {
 		return this.careers.get(careerUUID)
 	}
 
