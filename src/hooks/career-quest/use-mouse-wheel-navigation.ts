@@ -6,6 +6,7 @@ import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
@@ -58,11 +59,11 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		) return false
 
 		if (currentSlide.type === "challenge") {
-			const challengeMessages = careerQuestClass.getChallengeMessages(currentSlide.data)
+			const challengeMessages = chatManagerClass.getChallengeMessages(currentSlide.data)
 			// Only allow normal scrolling if there are messages (length > 0)
 			return !isEmpty(challengeMessages)
 		}
-		const careerMessages = careerQuestClass.getCareerChatMessages(careerUUID)
+		const careerMessages = chatManagerClass.getCareerChatMessages(careerUUID)
 		return !isEmpty(careerMessages)
 	}, [careerUUID])
 

@@ -13,6 +13,7 @@ import deleteCareerChat from "../../../utils/chat/delete-career-chat"
 import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import sendCareerMessage from "../../../utils/chat/send-career-message"
 import { reactNodeToString } from "../../../utils/career-quest/react-node-to-string"
+import chatManagerClass from "../../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode {
@@ -21,10 +22,10 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = careerQuestClass.getCareerChatMessages(careerUUID)
-	const isStreaming = careerQuestClass.isCareerStreaming(careerUUID)
+	const messages = chatManagerClass.getCareerChatMessages(careerUUID)
+	const isStreaming = chatManagerClass.isCareerStreaming(careerUUID)
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(careerUUID)
-	const isWaitingForResponse = careerQuestClass.isCareerWaitingForResponse(careerUUID)
+	const isWaitingForResponse = chatManagerClass.isCareerWaitingForResponse(careerUUID)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect((): void => {
@@ -39,7 +40,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 		setInputValue("")
 
 		// Add user message to career quest class
-		careerQuestClass.addCareerUserMessage(careerUUID, inputValue)
+		chatManagerClass.addCareerUserMessage(careerUUID, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout((): void => {
@@ -59,8 +60,8 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = careerQuestClass.getCareerStreamId(careerUUID)
-		careerQuestClass.resetCareerStreamingState(careerUUID)
+		const streamId = chatManagerClass.getCareerStreamId(careerUUID)
+		chatManagerClass.resetCareerStreamingState(careerUUID)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId
