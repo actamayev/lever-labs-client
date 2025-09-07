@@ -3,17 +3,10 @@
 import * as Blockly from "blockly"
 import { ReactNode } from "react"
 import {
-	InteractionType,
-	ChallengeChatbotStreamStartEvent,
-	ChallengeChatbotStreamChunkEvent,
-	ChallengeChatbotStreamCompleteEvent,
 	BinaryEvaluationResult,
-	CqChallengeData,
 	CareerUUID,
 	BlocklyJson,
 	ChallengeUUID,
-	CareerChatbotStreamStartOrCompleteEvent,
-	CareerChatbotChunkEvent
 } from "@bluedotrobots/common-ts"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
@@ -28,37 +21,10 @@ import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
 import { DEFAULT_TRANSITION_DURATION } from "../utils/constants/constants"
 import teacherClass from "./teacher-class"
-
-// Chat and streaming state interfaces
-interface ChatData {
-	messages: ChallengeChatMessage[]
-	isWaitingForResponse: boolean
-}
-
-interface StreamingState {
-	isStreaming: boolean
-	currentStreamingMessageId: string | null
-	currentStreamId: string | null
-	currentInteractionType: InteractionType | null
-	isWaitingForCodeCheck: boolean
-}
-
-interface ChallengeInstance extends ChatData, StreamingState {
-	challengeData: CqChallengeData
-	isCompleted: boolean
-	blocklyJson: BlocklyJson
-	cppCode: string
-}
-
-// omit interactionType:
-interface CareerChatData extends Omit<StreamingState, "interactionType"> {
-	messages: CareerChatMessage[]
-	isWaitingForResponse: boolean
-}
+import chatManagerClass from "./chat-manager-class"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
-	challenges: Map<string, ChallengeInstance>
 	completedChallengeIds: Set<ChallengeUUID>
 	currentChallengeUuidOrTextUuid: string
 	hasRetrievedAllChallenges: boolean
@@ -77,7 +43,6 @@ interface CareerInstance {
 	currentTransitionDuration: number
 	rightContent: RightContent
 	lastSlideChangeTime: number
-	careerChatData: CareerChatData
 	isCareerChatToggled: boolean
 	previousRightContent: RightContent | null
 }
@@ -111,31 +76,20 @@ class CareerQuestClass {
 		// Extract challenge sections using helper
 		const challengeSections = this.getAllChallengeSections(careerDefinition.sections)
 
-		// Initialize challenge data
-		const challenges = new Map<string, ChallengeInstance>()
+		// Initialize challenge chats in ChatManager
 		challengeSections.forEach((section): void => {
-			challenges.set(section.challengeData.challengeUUID, {
-				// Static challenge data
-				challengeData: section.challengeData,
-
-				// Chat data
-				messages: [],
-				isWaitingForResponse: false,
-
-				// Streaming state
-				isStreaming: false,
-				currentStreamingMessageId: null,
-				currentStreamId: null,
-				currentInteractionType: null,
-				isWaitingForCodeCheck: false,
-				// Completion
-				isCompleted: false,
-
-				// Code
-				blocklyJson: section.challengeData.initialBlocklyJson,
-				cppCode: ""
-			})
+			chatManagerClass.initializeChallengeChat(
+				careerDefinition.careerUUID,
+				section.challengeData.challengeUUID,
+				section.challengeData,
+				section.challengeData.initialBlocklyJson,
+				"",
+				false
+			)
 		})
+
+		// Initialize career chat
+		chatManagerClass.initializeCareerChat(careerDefinition.careerUUID)
 
 		// Create main slides from sections
 		const mainSlides: MainSlide[] = careerDefinition.sections.map((section): MainSlide => {
@@ -175,7 +129,6 @@ class CareerQuestClass {
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
-			challenges,
 			completedChallengeIds: new Set<ChallengeUUID>(),
 			currentChallengeUuidOrTextUuid: "",
 			hasRetrievedAllChallenges: false,
@@ -197,15 +150,6 @@ class CareerQuestClass {
 				iconKey: "bot-humpback"
 			},
 			textParentSwipers: new Map<string, SwiperType | null>(),
-			careerChatData: {
-				messages: [],
-				isWaitingForResponse: false,
-				isStreaming: false,
-				currentStreamingMessageId: null,
-				currentStreamId: null,
-				currentInteractionType: null,
-				isWaitingForCodeCheck: false
-			},
 			isCareerChatToggled: false,
 			previousRightContent: null
 		}
@@ -737,155 +681,20 @@ class CareerQuestClass {
 		return this.careers.get(careerUUID)
 	}
 
-	private getChallenge(cqInformation: CareerUUIDChallengeUUID): ChallengeInstance | undefined {
-		const career = this.getCareer(cqInformation.careerUUID)
-		return career?.challenges.get(cqInformation.challengeUUID)
-	}
-
-	private getCareerChat(careerUUID: CareerUUID): CareerChatData | undefined {
-		const career = this.getCareer(careerUUID)
-		return career?.careerChatData
-	}
-
-	// ========================================
-	// MESSAGE MANAGEMENT
-	// ========================================
-
-	// Challenge messages
-	public getChallengeMessages(cqInformation: CareerUUIDChallengeUUID): ChallengeChatMessage[] {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.messages || []
-	}
-
-	public addChallengeUserMessage = action((cqInformation: CareerUUIDChallengeUUID, content: string): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-
-		// Hide hint button from all messages when a new message is added
-		this.hideChallengeHintButtons(cqInformation)
-
-		challenge.isWaitingForResponse = true
-
-		const message: ChallengeChatMessage = {
-			id: `user-${Date.now()}`,
-			role: "user",
-			content,
-			timestamp: new Date()
-		}
-
-		challenge.messages.push(message)
-	})
-
-	public addChallengeHintRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-
-		this.hideChallengeHintButtons(cqInformation)
-		challenge.isWaitingForResponse = true
-
-		const message: ChallengeChatMessage = {
-			id: `hint-request-${Date.now()}`,
-			role: "user",
-			content: "?",
-			timestamp: new Date(),
-			isHintRequest: true
-		}
-
-		challenge.messages.push(message)
-	})
-
-	public addChallengeCheckCodeRequestMessage = action((cqInformation: CareerUUIDChallengeUUID): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-
-		this.hideChallengeHintButtons(cqInformation)
-		challenge.isWaitingForResponse = true
-
-		const message: ChallengeChatMessage = {
-			id: `check-code-request-${Date.now()}`,
-			role: "user",
-			content: "?",
-			timestamp: new Date(),
-			isCheckCodeRequest: true
-		}
-
-		challenge.messages.push(message)
-	})
-
 	public addChallengeEvaluationResultMessage = action((
 		cqInformation: CareerUUIDChallengeUUID,
 		evaluationResult: BinaryEvaluationResult
 	): void => {
-		const challenge = this.getChallenge(cqInformation)
 		const career = this.getCareer(cqInformation.careerUUID)
-		if (!challenge || !career) return
+		if (!career) return
 
-		challenge.isWaitingForResponse = false
-		challenge.isWaitingForCodeCheck = false
-
-		const message: ChallengeChatMessage = {
-			id: `evaluation-result-${Date.now()}`,
-			role: "assistant",
-			content: evaluationResult.feedback,
-			timestamp: new Date(),
-			evaluationResult,
-			shouldShowHintButton: !evaluationResult.isCorrect
+		// Handle challenge completion callback
+		const onChallengeCompleted = (careerUUID: CareerUUID, challengeUUID: ChallengeUUID): void => {
+			career.completedChallengeIds.add(challengeUUID)
+			this.updateSwiperNavigation(careerUUID)
 		}
 
-		challenge.messages.push(message)
-
-		// Mark challenge as completed if correct
-		if (!evaluationResult.isCorrect) return
-		challenge.isCompleted = true
-		career.completedChallengeIds.add(cqInformation.challengeUUID)
-
-		// ADD THIS LINE - Update swiper navigation immediately
-		this.updateSwiperNavigation(cqInformation.careerUUID)
-	})
-
-	public isCodeCorrect(cqInformation: CareerUUIDChallengeUUID): boolean {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return false
-		return challenge.isCompleted
-	}
-
-	private hideChallengeHintButtons = action((cqInformation: CareerUUIDChallengeUUID): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-
-		challenge.messages.forEach((message): void => {
-			if (message.shouldShowHintButton) {
-				message.shouldShowHintButton = false
-			}
-		})
-	})
-
-	public clearChallengeMessages = action((cqInformation: CareerUUIDChallengeUUID): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.messages = []
-		this.resetChallengeStreamingState(cqInformation)
-	})
-
-	// Career chat messages
-	public getCareerChatMessages(careerUUID: CareerUUID): CareerChatMessage[] {
-		const careerChat = this.getCareerChat(careerUUID)
-		return careerChat?.messages || []
-	}
-
-	public addCareerUserMessage = action((careerUUID: CareerUUID, content: string): void => {
-		const careerChat = this.getCareerChat(careerUUID)
-		if (!careerChat) return
-		careerChat.isWaitingForResponse = true
-
-		const message: CareerChatMessage = {
-			id: `user-${Date.now()}`,
-			role: "user",
-			content,
-			timestamp: new Date()
-		}
-
-		careerChat.messages.push(message)
+		chatManagerClass.addChallengeEvaluationResultMessage(cqInformation, evaluationResult, onChallengeCompleted)
 	})
 
 	public getCareerDataForMessage = action((careerUUID: CareerUUID): CareerDataForMessage | null => {
@@ -920,224 +729,6 @@ class CareerQuestClass {
 		}
 	})
 
-	public clearCareerChatMessages = action((careerUUID: CareerUUID): void => {
-		const careerChat = this.getCareerChat(careerUUID)
-		if (!careerChat) return
-		careerChat.messages = []
-		this.resetCareerStreamingState(careerUUID)
-	})
-
-	// ========================================
-	// STREAMING MANAGEMENT
-	// ========================================
-
-	public startChallengeStreaming = action((startEvent: ChallengeChatbotStreamStartEvent): void => {
-		// Note: You'll need to pass careerUUID in the event or determine it from challengeUUID
-		const challenge = this.getChallenge({ ...startEvent })
-		if (!challenge) return
-
-		challenge.isWaitingForResponse = false
-
-		const streamingMessage: ChallengeChatMessage = {
-			id: `streaming-${Date.now()}`,
-			role: "assistant",
-			content: "",
-			timestamp: new Date(),
-			isStreaming: true,
-			isHintResponse: startEvent.interactionType === "hint"
-		}
-
-		challenge.messages.push(streamingMessage)
-		this.setChallengeStreaming({ ...startEvent }, true)
-		challenge.currentStreamingMessageId = streamingMessage.id
-		challenge.currentInteractionType = startEvent.interactionType
-	})
-
-	public setChallengeStreaming = action((cqInformation: CareerUUIDChallengeUUID, streaming: boolean): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.isStreaming = streaming
-	})
-
-	public setChallengeWaitingForCodeCheck = action((cqInformation: CareerUUIDChallengeUUID, isWaitingForCodeCheck: boolean): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.isWaitingForCodeCheck = isWaitingForCodeCheck
-	})
-
-	public addChallengeStreamingChunk = action((chunkEvent: ChallengeChatbotStreamChunkEvent): void => {
-		const challenge = this.getChallenge({ ...chunkEvent })
-		if (!challenge) return
-
-		if (!challenge.isStreaming || !challenge.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for challenge:", chunkEvent.challengeUUID)
-			return
-		}
-
-		const streamingMessage = challenge.messages.find(
-			(msg): boolean => msg.id === challenge.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.content += chunkEvent.content
-		}
-	})
-
-	public completeChallengeStreaming = action((completeEvent: ChallengeChatbotStreamCompleteEvent): void => {
-		const challenge = this.getChallenge({ ...completeEvent })
-		if (
-			!challenge ||
-			!challenge.currentStreamingMessageId
-		) return
-
-		const streamingMessage = challenge.messages.find(
-			(msg): boolean => msg.id === challenge.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.isStreaming = false
-		}
-
-		// Reset streaming state
-		challenge.isStreaming = false
-		challenge.currentStreamingMessageId = null
-		challenge.currentInteractionType = null
-		challenge.currentStreamId = null
-		challenge.isWaitingForCodeCheck = false
-	})
-
-	public resetChallengeStreamingState = action((cqInformation: CareerUUIDChallengeUUID): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-
-		challenge.isStreaming = false
-		challenge.currentStreamingMessageId = null
-		challenge.currentInteractionType = null
-		challenge.currentStreamId = null
-	})
-
-	// Stream ID management
-	public setChallengeStreamId = action((cqInformation: CareerUUIDChallengeUUID, streamId: string | null): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.currentStreamId = streamId
-	})
-
-	public getChallengeStreamId(cqInformation: CareerUUIDChallengeUUID): string | null {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.currentStreamId || null
-	}
-
-	//Career Chat
-	public startCareerStreaming = action((startEvent: CareerChatbotStreamStartOrCompleteEvent): void => {
-		const careerChat = this.getCareerChat(startEvent.careerUUID)
-		if (!careerChat) return
-
-		careerChat.isWaitingForResponse = false
-
-		const streamingMessage: CareerChatMessage = {
-			id: `streaming-${Date.now()}`,
-			role: "assistant",
-			content: "",
-			timestamp: new Date(),
-			isStreaming: true
-		}
-
-		careerChat.messages.push(streamingMessage)
-		careerChat.isStreaming = true
-		careerChat.currentStreamingMessageId = streamingMessage.id
-	})
-
-	public addCareerStreamingChunk = action((chunkEvent: CareerChatbotChunkEvent): void => {
-		const careerChat = this.getCareerChat(chunkEvent.careerUUID)
-		if (!careerChat) return
-
-		if (!careerChat.isStreaming || !careerChat.currentStreamingMessageId) {
-			console.warn("Received chunk but not streaming for career:", chunkEvent.careerUUID)
-			return
-		}
-
-		const streamingMessage = careerChat.messages.find(
-			(msg): boolean => msg.id === careerChat.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.content += chunkEvent.content
-		}
-	})
-
-	public completeCareerStreaming = action((completeEvent: CareerChatbotStreamStartOrCompleteEvent): void => {
-		const careerChat = this.getCareerChat(completeEvent.careerUUID)
-		if (
-			!careerChat ||
-			!careerChat.isStreaming ||
-			!careerChat.currentStreamingMessageId
-		) return
-
-		const streamingMessage = careerChat.messages.find(
-			(msg): boolean => msg.id === careerChat.currentStreamingMessageId
-		)
-
-		if (streamingMessage) {
-			streamingMessage.isStreaming = false
-		}
-
-		careerChat.isStreaming = false
-		careerChat.currentStreamingMessageId = null
-		careerChat.currentInteractionType = null
-		careerChat.currentStreamId = null
-	})
-
-	public resetCareerStreamingState = action((careerUUID: CareerUUID): void => {
-		const careerChat = this.getCareerChat(careerUUID)
-		if (!careerChat) return
-
-		careerChat.isStreaming = false
-		careerChat.currentStreamingMessageId = null
-		careerChat.currentInteractionType = null
-		careerChat.currentStreamId = null
-	})
-
-	public setCareerStreamId = action((careerUUID: CareerUUID, streamId: string | null): void => {
-		const careerChat = this.getCareerChat(careerUUID)
-		if (!careerChat) return
-		careerChat.currentStreamId = streamId
-	})
-
-	public getCareerStreamId(careerUUID: CareerUUID): string | null {
-		const careerChat = this.getCareerChat(careerUUID)
-		return careerChat?.currentStreamId || null
-	}
-
-	// ========================================
-	// STATE GETTERS
-	// ========================================
-
-	public isChallengeStreaming(cqChallengeData: CqChallengeData): boolean {
-		const challenge = this.getChallenge({ ...cqChallengeData })
-		return challenge?.isStreaming || false
-	}
-
-	public isChallengeWaitingForResponse(cqChallengeData: CqChallengeData): boolean {
-		const challenge = this.getChallenge({ ...cqChallengeData })
-		return challenge?.isWaitingForResponse || false
-	}
-
-	public isChallengeWaitingForCodeCheck(cqChallengeData: CqChallengeData): boolean {
-		const challenge = this.getChallenge({ ...cqChallengeData })
-		return challenge?.isWaitingForCodeCheck || false
-	}
-
-	public isCareerStreaming(careerUUID: CareerUUID): boolean {
-		const careerChat = this.getCareerChat(careerUUID)
-		return careerChat?.isStreaming || false
-	}
-
-	public isCareerWaitingForResponse(careerUUID: CareerUUID): boolean {
-		const careerChat = this.getCareerChat(careerUUID)
-		return careerChat?.isWaitingForResponse || false
-	}
-
 	// ========================================
 	// DATA MANAGEMENT
 	// ========================================
@@ -1150,40 +741,42 @@ class CareerQuestClass {
 		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
 	): void => {
-		const challenge = this.getChallenge(cqInformation)
 		const career = this.getCareer(cqInformation.careerUUID)
-		if (!challenge || !career) return
+		if (!career) return
 
-		challenge.messages = messages
-		challenge.isCompleted = isCompleted
+		// Handle challenge completion callback
+		const onChallengeCompleted = (careerUUID: CareerUUID, challengeUUID: ChallengeUUID): void => {
+			career.completedChallengeIds.add(challengeUUID)
+			this.updateSwiperNavigation(careerUUID)
+		}
 
-		// Update blockly JSON if provided
+		// Normalize and generate CPP code
+		let normalizedJson: BlocklyJson
+		let cppCode: string
 		if (sandboxJson) {
-			challenge.blocklyJson = normalizeSandboxJson(sandboxJson)
-			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
+			normalizedJson = normalizeSandboxJson(sandboxJson)
+			cppCode = generateCppFromJson(normalizedJson)
 		} else {
-			challenge.blocklyJson = normalizeSandboxJson(challenge.challengeData.initialBlocklyJson)
-			challenge.cppCode = generateCppFromJson(challenge.blocklyJson)
+			// Get initial data from chat manager
+			normalizedJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
+			cppCode = generateCppFromJson(normalizedJson)
 		}
 
-		if (isCompleted) {
-			career.completedChallengeIds.add(cqInformation.challengeUUID)
-			this.updateSwiperNavigation(cqInformation.careerUUID)
-		}
+		chatManagerClass.setChallengeRetrievedData(
+			cqInformation,
+			messages,
+			normalizedJson,
+			isCompleted,
+			onChallengeCompleted
+		)
+
+		// Update the blockly JSON and CPP code
+		chatManagerClass.updateBlocklyJson(cqInformation, normalizedJson, cppCode)
 	})
 
-	// Blockly JSON management
-	public getUpdatedBlocklyJson(cqInformation: CareerUUIDChallengeUUID): BlocklyJson {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return {}
-		return challenge.blocklyJson
-	}
-
 	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.blocklyJson = newBlocklyJson
-		challenge.cppCode = generateCppFromJson(newBlocklyJson)
+		const cppCode = generateCppFromJson(newBlocklyJson)
+		chatManagerClass.updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
 
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
@@ -1245,7 +838,7 @@ class CareerQuestClass {
 			return isAtLastTextChild
 		}
 		// For challenge slides, must be completed
-		return this.isCodeCorrect(currentSlide.data)
+		return chatManagerClass.isCodeCorrect(currentSlide.data)
 	})
 
 	private handleMainSlideChange = action((careerUUID: CareerUUID): void => {
@@ -1643,34 +1236,41 @@ class CareerQuestClass {
 		return mainSlides[currentMainSlideIndex]
 	}
 
-	public getCppCode(cqInformation: CareerUUIDChallengeUUID): string {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.cppCode || ""
-	}
-
-	public setCppCode = action((cqInformation: CareerUUIDChallengeUUID, cppCode: string): void => {
-		const challenge = this.getChallenge(cqInformation)
-		if (!challenge) return
-		challenge.cppCode = cppCode
-	})
-
 	public getToolboxConfig(cqInformation: CareerUUIDChallengeUUID): Blockly.utils.toolbox.ToolboxDefinition {
-		const challenge = this.getChallenge(cqInformation)
-		return challenge?.challengeData.toolboxConfig as Blockly.utils.toolbox.ToolboxDefinition
+		const career = this.getCareer(cqInformation.careerUUID)
+		if (!career) return {} as Blockly.utils.toolbox.ToolboxDefinition
+
+		// Find the challenge data from the career definition
+		const challengeSection = this.getAllChallengeSections(career.careerDefinition.sections)
+			.find((section): boolean => section.challengeData.challengeUUID === cqInformation.challengeUUID)
+
+		return (challengeSection?.challengeData.toolboxConfig || {}) as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
 	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): boolean => {
-		const challenge = this.getChallenge(cqInformation)
+		// Get current and initial blockly JSON
+		const currentBlocklyJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
+		const career = this.getCareer(cqInformation.careerUUID)
+		if (!career) return false
+
+		// Find the initial JSON from the career definition
+		const challengeSection = this.getAllChallengeSections(career.careerDefinition.sections)
+			.find((section): boolean => section.challengeData.challengeUUID === cqInformation.challengeUUID)
+		if (!challengeSection) return false
+
+		const initialBlocklyJson = challengeSection.challengeData.initialBlocklyJson
+
+		// Check if already at initial state
 		if (
-			!challenge ||
 			isEqual(
-				stripBlockPositions(challenge.blocklyJson),
-				stripBlockPositions(challenge.challengeData.initialBlocklyJson)
+				stripBlockPositions(currentBlocklyJson),
+				stripBlockPositions(initialBlocklyJson)
 			)
 		) return false
 
-		challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
-		challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
+		// Reset to initial state
+		const cppCode = generateCppFromJson(initialBlocklyJson)
+		chatManagerClass.updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
 		return true
 	})
 
@@ -1761,17 +1361,7 @@ class CareerQuestClass {
 
 	// Add this method to your CareerQuestClass
 	public setCareerChatRetrievedData = action((careerUUID: CareerUUID, messages: CareerChatMessage[]): void => {
-		const career = this.getCareer(careerUUID)
-		if (!career) return
-
-		// Set the retrieved messages in the career chat data
-		career.careerChatData.messages = messages
-
-		// Reset any streaming states since these are retrieved messages
-		career.careerChatData.isWaitingForResponse = false
-		career.careerChatData.isStreaming = false
-		career.careerChatData.currentStreamingMessageId = null
-		career.careerChatData.currentStreamId = null
+		chatManagerClass.setCareerChatRetrievedData(careerUUID, messages)
 	})
 
 	// NEW: Check if user can advance to next text child
@@ -2014,14 +1604,9 @@ class CareerQuestClass {
 			career.morphingTextIndices.set(morphingTextId, 0)
 		})
 
-		// Clear challenge completion state (but keep the challenge instances)
+		// Clear challenge completion state
 		career.completedChallengeIds.clear()
-		career.challenges.forEach((challenge): void => {
-			challenge.isCompleted = false
-			// Reset blockly JSON to initial state
-			challenge.blocklyJson = challenge.challengeData.initialBlocklyJson
-			challenge.cppCode = generateCppFromJson(challenge.challengeData.initialBlocklyJson)
-		})
+		// Note: Challenge state reset will be handled by ChatManager if needed
 
 		// Reset seen challenges and furthest position
 		career.seenChallengeUUIDs.clear()
