@@ -34,6 +34,8 @@ const eslintConfig = [
 			"next.config.js",
 			"postcss.config.js",
 			"public/keepalive-worker.js",
+			// Ignore test directory
+			"test/**/*",
 		],
 	},
 
