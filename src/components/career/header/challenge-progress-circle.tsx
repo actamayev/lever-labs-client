@@ -18,6 +18,8 @@ function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData 
 		return `text-${careerData.careerColor}`
 	}, [careerData.careerColor])
 
+	if (totalChallenges === 0) return null
+
 	return (
 		<div className="relative inline-flex items-center justify-center">
 			<svg

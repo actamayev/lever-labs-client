@@ -6,6 +6,7 @@ import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function checkCareerQuestCode(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
@@ -13,11 +14,12 @@ export default async function checkCareerQuestCode(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		careerQuestClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
-		careerQuestClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		chatManagerClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
+		chatManagerClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 		careerQuestClass.changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
 
-		const userCode = careerQuestClass.getCppCode(careerUUIDChallengeUUID)
+		const userCode = chatManagerClass.getCppCode(careerUUIDChallengeUUID)
+		chatManagerClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
 
 		const response = await blueDotApiClientClass.chatDataService.checkChallengeCode({
 			userCode,
@@ -25,7 +27,7 @@ export default async function checkCareerQuestCode(
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) return
 
-		careerQuestClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
+		chatManagerClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
 			isCorrect: response.data.isCorrect,
 			feedback: response.data.feedback
 		})
@@ -35,5 +37,6 @@ export default async function checkCareerQuestCode(
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})
+		chatManagerClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, false)
 	}
 }

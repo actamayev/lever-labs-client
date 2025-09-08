@@ -2,15 +2,13 @@
 
 import { UUID } from "crypto"
 import { action, makeAutoObservable } from "mobx"
-import { ClassCode, StudentInviteJoinClass,
-	StudentViewHubData, DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts"
+import { ClassCode, DeletedHub, UpdatedHubSlideId, StudentViewHubData } from "@bluedotrobots/common-ts"
 import careerQuestClass from "./career-quest-class"
 
 class StudentClass {
 	public isRetrievingStudentData = false
 	public retrievedStudentData = false
 	public classroomData: StudentClassroomDataWithHubs[] = []
-	public pendingInvites: StudentInviteJoinClass[] = []
 	public isInFocusMode = false
 
 	constructor() {
@@ -55,10 +53,6 @@ class StudentClass {
 		return this.classroomData.length
 	})
 
-	public addPendingInvite = action((pendingInvite: StudentInviteJoinClass): void => {
-		this.pendingInvites.push(pendingInvite)
-	})
-
 	private getHubData = (classCode: ClassCode, hubId: UUID): StudentViewHubData | undefined => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === classCode)
 		if (!classroom) return
@@ -74,7 +68,6 @@ class StudentClass {
 
 	// eslint-disable-next-line complexity
 	public updateHubSlideId = action((updatedHubSlideId: UpdatedHubSlideId): void => {
-		console.log("updatedHubSlideId", updatedHubSlideId)
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === updatedHubSlideId.classCode)
 		if (!classroom) return
 		const hub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === updatedHubSlideId.hubId)
@@ -174,10 +167,6 @@ class StudentClass {
 		this.isInFocusMode = newState
 	})
 
-	public setPendingInvites = action((pendingInvites: StudentInviteJoinClass[]): void => {
-		this.pendingInvites = pendingInvites
-	})
-
 	public getHubId = (): UUID | null => {
 		if (this.classroomData.length === 0) return null
 		return this.classroomData[0].activeHubs[0].hubId
@@ -188,7 +177,6 @@ class StudentClass {
 		this.setIsStudentDataRetrieved(false)
 		this.setIsRetrievingStudentData(false)
 		this.setIsInFocusMode(false)
-		this.setPendingInvites([])
 	}
 }
 

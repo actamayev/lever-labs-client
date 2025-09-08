@@ -22,12 +22,7 @@ export default async function retrieveDetailedClassroomInfo(classCode: ClassCode
 		if (!isEqual(detailedClassroomResponse.status, 200) || isNonSuccessResponse(detailedClassroomResponse.data)) {
 			throw Error("Unable to retrieve detailed classroom data")
 		}
-
-		// The API returns an array, but we expect single classroom data
-		const classroomData = Array.isArray(detailedClassroomResponse.data) ?
-			detailedClassroomResponse.data[0] : detailedClassroomResponse.data
-
-		teacherClass.setDetailedClassroomData(classCode, classroomData)
+		teacherClass.setDetailedClassroomData(classCode, detailedClassroomResponse.data)
 	} catch (error) {
 		console.error(error)
 		teacherClass.setIsRetrievingDetailedData(false)

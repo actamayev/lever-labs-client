@@ -1,5 +1,6 @@
 "use client"
 
+import { UUID } from "crypto"
 import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
@@ -8,19 +9,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../sh
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import studentClass from "../../classes/student-class"
-import ClassroomInvitationResponse from "../whiteboard/classroom-invitation-response"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
 import careerQuestClass from "../../classes/career-quest-class"
-import { UUID } from "crypto"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const joinHub = useJoinHub()
@@ -32,9 +31,6 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/whiteboard")
-
-	// Check if this classroom has a pending invitation
-	const isPendingInvitation = classroomData?.invitationStatus === "PENDING"
 
 	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: UUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
@@ -106,16 +102,6 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 					<div className="text-lg text-eel">Loading classroom details...</div>
 				</div>
 			</div>
-		)
-	}
-
-	// Show invitation response UI if the invitation is pending
-	if (isPendingInvitation && classroomData) {
-		return (
-			<ClassroomInvitationResponse
-				classCode={classCode}
-				classroomName={classroomData.classroomName}
-			/>
 		)
 	}
 

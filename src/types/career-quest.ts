@@ -133,6 +133,7 @@ declare global {
 		careerUUID: CareerUUID
 		careerTitle: string
 		careerColor: DuolingoColors
+		needsChat: boolean
 		sections: CareerSection[]
 	}
 

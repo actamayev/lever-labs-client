@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants/constants"
-import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import playFunSound from "../../utils/garage/play-fun-sound"
 
@@ -18,7 +17,6 @@ export default function useGarageSoundsUseEffect(): void {
 
 		const sound = soundMappings[key]
 		garageClass.setSoundPlaying(sound)
-		if (!pipClass.selectedPip) return
 		playFunSound(sound)
 	}
 

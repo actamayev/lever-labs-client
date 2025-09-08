@@ -1,14 +1,14 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function deleteSandboxChat(projectUUID: ProjectUUID): Promise<void> {
+export default async function deleteSandboxChat(projectUUID: SandboxProjectUUID): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 

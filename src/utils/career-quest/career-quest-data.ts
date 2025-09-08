@@ -14,6 +14,7 @@ export const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
 	careerTitle: "Meet Pip",
 	careerColor: "humpback",
+	needsChat: false,
 	sections: [
 		{
 			type: "textParent",
@@ -246,7 +247,8 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-4-4",
 					content: "meet-pip-4-4",
-					rightSideContent: "s4-p4-speaker"
+					rightSideContent: "s4-p4-speaker",
+					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P4_EXIT)
 				},
 				{
 					type: "text",
@@ -723,6 +725,7 @@ export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
 	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
 	careerTitle: "Obstacle Avoidance",
 	careerColor: "macaw",
+	needsChat: true,
 	sections: [
 		{
 			type: "textParent",

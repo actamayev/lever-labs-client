@@ -40,15 +40,9 @@ export default class TeacherDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveDetailedClassroomInfo(classCode: ClassCode): Promise<AxiosResponse<DetailedClassroomData[] | NonSuccessResponse>> {
-		return await this.httpClient.http.get<DetailedClassroomData[] | NonSuccessResponse>(
+	async retrieveDetailedClassroomInfo(classCode: ClassCode): Promise<AxiosResponse<DetailedClassroomData | NonSuccessResponse>> {
+		return await this.httpClient.http.get<DetailedClassroomData | NonSuccessResponse>(
 			this.buildUrl(`/retrieve-detailed-classroom-info/${classCode}`)
-		)
-	}
-
-	async inviteStudentJoinClass(classCode: ClassCode, username: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/invite-student-join-class/${classCode}`), { username }
 		)
 	}
 

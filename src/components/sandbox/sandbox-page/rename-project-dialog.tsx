@@ -34,9 +34,9 @@ export default function RenameProjectDialog(props: Props): React.ReactNode {
 	}, [setIsRenameDialogOpen])
 
 	const handleSaveRename = useCallback(async (): Promise<void> => {
-		await editSandboxProjectName(project.projectUUID, newProjectName)
+		await editSandboxProjectName(project.sandboxProjectUUID, newProjectName)
 		setIsRenameDialogOpen(false)
-	}, [project.projectUUID, newProjectName, setIsRenameDialogOpen])
+	}, [project.sandboxProjectUUID, newProjectName, setIsRenameDialogOpen])
 
 	return (
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>

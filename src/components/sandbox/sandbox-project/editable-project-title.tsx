@@ -84,7 +84,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 		// Only save if the name is not empty and has changed
 		if (newName.trim() && newName !== projectName) {
 			setProjectName(newName) // Update the displayed name
-			editSandboxProjectName(project.projectUUID, newName) // Save to DB immediately
+			editSandboxProjectName(project.sandboxProjectUUID, newName) // Save to DB immediately
 		} else {
 			// Revert to previous name if empty
 			setEditingName(projectName)

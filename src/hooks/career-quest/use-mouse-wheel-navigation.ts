@@ -6,21 +6,23 @@ import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
+import chatManagerClass from "../../classes/chat-manager-class"
+import navigationManagerClass from "../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
-	const currentMainSlideIndex = careerQuestClass.getCurrentMainSlideIndex(careerUUID)
-	const currentTextChildIndex = careerQuestClass.getCurrentTextChildIndex(careerUUID)
+	const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 	const gestureActive = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
-	const mainSlides = careerQuestClass.getMainSlides(careerUUID)
+	const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
-	const swiperInstance = careerQuestClass.getSwiperInstance(careerUUID)
-	const textParentSwiperInstance = careerQuestClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+	const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
+	const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
-	const isTransitioning = careerQuestClass.getIsTransitioning(careerUUID)
+	const isTransitioning = navigationManagerClass.getIsTransitioning(careerUUID)
 	const isInFocusMode = studentClass.isInFocusMode
 
 	// Helper function to check if the mouse is over a chat component
@@ -51,18 +53,18 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	// Helper function to check if we should allow normal scrolling in chat
 	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
-		const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (
 			currentSlide.type !== "challenge" &&
 			!careerQuestClass.isCareerChatToggled(careerUUID)
 		) return false
 
 		if (currentSlide.type === "challenge") {
-			const challengeMessages = careerQuestClass.getChallengeMessages(currentSlide.data)
+			const challengeMessages = chatManagerClass.getChallengeMessages(currentSlide.data)
 			// Only allow normal scrolling if there are messages (length > 0)
 			return !isEmpty(challengeMessages)
 		}
-		const careerMessages = careerQuestClass.getCareerChatMessages(careerUUID)
+		const careerMessages = chatManagerClass.getCareerChatMessages(careerUUID)
 		return !isEmpty(careerMessages)
 	}, [careerUUID])
 

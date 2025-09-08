@@ -97,7 +97,7 @@ ChallengeMainSlide {
 
 ### Main Navigation (Vertical Swiper)
 - Controls progression through main sections (TextParent → Challenge → TextParent...)
-- Managed by `CareerQuestClass.swiperInstance`
+- Managed by `NavigationManagerClass.swiperInstance`
 - Navigation rules:
   - Can always go backward
   - Can only advance if current challenge is completed (for challenge sections)
@@ -106,14 +106,14 @@ ChallengeMainSlide {
 ### Text Child Navigation (Nested Vertical Swiper)  
 - Within TextParent sections, controls progression through individual text children
 - Each TextParentSection has its own nested swiper
-- Managed by `CareerQuestClass.textParentSwipers` Map
+- Managed by `NavigationManagerClass.textParentSwipers` Map
 - Supports both regular text slides and morphing text slides
 
 ### Morphing Text Navigation
 - Allows navigation through text variants within a single morphing section
-- Controlled by `morphingTextIndices` Map storing current variant index per morphing section
-- Animation states tracked in `morphingAnimationStates` Map to prevent navigation during transitions
-- Methods: `advanceMorphingText()`, `goBackMorphingText()`, `canAdvanceMorphingText()`
+- Controlled by `NavigationManagerClass.morphingTextIndices` Map storing current variant index per morphing section
+- Animation states tracked in `NavigationManagerClass.morphingAnimationStates` Map to prevent navigation during transitions
+- Methods: `NavigationManagerClass.advanceMorphingText()`, `goBackMorphingText()`, `canAdvanceMorphingText()`
 
 ### Transition System
 - **Fade Transitions**: Smooth black overlay transitions between main sections
@@ -144,57 +144,98 @@ The right column content changes based on complex state logic:
   - Clears `previousRightContent`
 - Challenge sections override chat toggle (challenges always take priority)
 
-## State Management (CareerQuestClass)
+## State Management Architecture
 
-### Core State Structure
+The state management has been refactored from a monolithic `CareerQuestClass` into three focused manager classes that work together:
+
+### CareerQuestClass (Main Coordinator)
+Manages career lifecycle, progress tracking, and UI state coordination.
+
 ```typescript
 CareerInstance {
   careerDefinition: CareerQuestData
-  challenges: Map<string, ChallengeInstance>
   completedChallengeIds: Set<ChallengeUUID>
   currentChallengeUuidOrTextUuid: string
   hasRetrievedAllChallenges: boolean
   isRetrievingData: boolean
-  
+  savedCurrentPosition: string
+  furthestSeenChallengeUuidOrTextUuid: string
+  seenChallengeUUIDs: Set<ChallengeUUID>
+  rightContent: RightContent
+  isCareerChatToggled: boolean
+  previousRightContent: RightContent | null
+}
+```
+
+**Key Methods:**
+- **Progress**: `setSavedPosition()`, `markChallengeAsSeen()`, `setFurthestSeenPosition()`
+- **Button Interactions**: `handleButtonClickAdvance()`, `canAdvancePastTextChild()`
+- **Right Content**: `setRightContent()`, `toggleCareerChat()`, `updateRightContentForCurrentState()`
+- **Data Management**: `setChallengeRetrievedData()`, `updateBlocklyJson()`
+
+### ChatManagerClass (Chat State Manager)
+Manages all challenge and career chat functionality, streaming, and messaging.
+
+```typescript
+ChallengeInstance {
+  challengeData: CqChallengeData
+  messages: ChallengeChatMessage[]
+  isWaitingForResponse: boolean
+  isStreaming: boolean
+  currentStreamingMessageId: string | null
+  currentStreamId: string | null
+  currentInteractionType: InteractionType | null
+  isWaitingForCodeCheck: boolean
+  isCompleted: boolean
+  blocklyJson: BlocklyJson
+  cppCode: string
+}
+
+CareerChatData {
+  messages: CareerChatMessage[]
+  isWaitingForResponse: boolean
+  isStreaming: boolean
+  currentStreamingMessageId: string | null
+  currentStreamId: string | null
+  currentInteractionType: InteractionType | null
+  isWaitingForCodeCheck: boolean
+}
+```
+
+**Key Methods:**
+- **Challenge Chat**: `addChallengeUserMessage()`, `addChallengeHintRequestMessage()`
+- **Career Chat**: `addCareerUserMessage()`, `clearCareerChatMessages()`
+- **Streaming**: `startChallengeStreaming()`, `addChallengeStreamingChunk()`
+- **Code Management**: `updateBlocklyJson()`, `getCppCode()`
+
+### NavigationManagerClass (Navigation State Manager)
+Handles all navigation state, swiper instances, and morphing text management.
+
+```typescript
+CareerNavigationInstance {
+  careerUUID: CareerUUID
   // Navigation state
   currentMainSlideIndex: number
-  currentTextChildIndex: number
+  textChildIndices: Map<string, number>
+  morphingTextIndices: Map<string, number>
+  morphingAnimationStates: Map<string, boolean>
   mainSlides: MainSlide[]
-  
-  // Morphing text state
-  morphingTextIndices: Map<string, number> // morphingTextId -> currentVariantIndex
-  morphingAnimationStates: Map<string, boolean> // morphingTextId -> isAnimating
-  
-  // Swiper instances
+  // Swiper state
   swiperInstance: SwiperType | null
   textParentSwipers: Map<string, SwiperType | null>
-  
   // Transition state
   isTransitioning: boolean
   currentTransitionDuration: number
   lastSlideChangeTime: number
-  
-  // UI state
-  rightContent: RightContent
-  isCareerChatToggled: boolean
-  previousRightContent: RightContent | null
-  careerChatData: CareerChatData
-  
-  // Progress tracking
-  savedCurrentPosition: string
-  furthestSeenChallengeUuidOrTextUuid: string
-  seenChallengeUUIDs: Set<ChallengeUUID>
 }
 ```
 
-### Key State Management Methods
+**Key Methods:**
 - **Navigation**: `getCurrentMainSlideIndex()`, `getCurrentTextChildIndex()`
 - **Morphing Text**: `setMorphingIndex()`, `advanceMorphingText()`, `canAdvanceMorphingText()`
 - **Swiper Management**: `setSwiperInstance()`, `setTextParentSwiperInstance()`
 - **Transitions**: `setIsTransitioning()`, `handleMainSlideTransitionNavigation()`
-- **Progress**: `setSavedPosition()`, `markChallengeAsSeen()`, `setFurthestSeenPosition()`
-- **Button Interactions**: `handleButtonClickAdvance()`, `canAdvancePastTextChild()`
-- **Right Content**: `setRightContent()`, `toggleCareerChat()`, `updateRightContentForCurrentState()`
+- **Position Management**: `findPositionIndices()`, `navigateToPosition()`
 
 ## Progress Persistence
 
@@ -255,22 +296,19 @@ CareerInstance {
 
 ## Challenge Integration
 
-### Challenge State
+### Challenge Integration with ChatManagerClass
+Challenge state is now managed by `ChatManagerClass` with the following structure:
+
 ```typescript
 ChallengeInstance {
   challengeData: CqChallengeData
-  
-  // Chat state
   messages: ChallengeChatMessage[]
   isWaitingForResponse: boolean
-  
-  // Streaming state
   isStreaming: boolean
   currentStreamingMessageId: string | null
   currentStreamId: string | null
   currentInteractionType: InteractionType | null
-  
-  // Completion state
+  isWaitingForCodeCheck: boolean
   isCompleted: boolean
   blocklyJson: BlocklyJson
   cppCode: string
@@ -288,7 +326,9 @@ ChallengeInstance {
 ### Data Layer
 - `src/utils/career-quest/career-quest-data.tsx` - Static content definitions
 - `src/types/career-quest.ts` - Type definitions
-- `src/classes/career-quest-class.ts` - State management
+- `src/classes/career-quest-class.ts` - Main coordinator and progress management
+- `src/classes/chat-manager-class.ts` - Chat and messaging state management  
+- `src/classes/navigation-manager-class.ts` - Navigation and swiper state management
 
 ### UI Components
 - `src/components/career/lesson-layout/career-layout.tsx` - Main layout component

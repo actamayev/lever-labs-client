@@ -1,14 +1,14 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isErrorResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function createSandboxProject(): Promise<ProjectUUID | undefined> {
+export default async function createSandboxProject(): Promise<SandboxProjectUUID | undefined> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
@@ -18,7 +18,7 @@ export default async function createSandboxProject(): Promise<ProjectUUID | unde
 		}
 
 		sandboxClass.addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
-		return createSandboxProjectResponse.data.sandboxProject.projectUUID
+		return createSandboxProjectResponse.data.sandboxProject.sandboxProjectUUID
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

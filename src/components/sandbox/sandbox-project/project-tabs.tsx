@@ -3,14 +3,14 @@
 import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
 import { useRef, useEffect, useState, useMemo } from "react"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import sandboxClass from "../../../classes/sandbox-class"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
 
-function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }): React.ReactNode {
+function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 	const cppCode = useMemo((): string => {
 		return sandboxClass.getCppCode(projectUUID)
@@ -19,7 +19,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: ProjectUUID }): React.React
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
-		debounce(async (uuid: ProjectUUID, newNotes: string): Promise<void> => {
+		debounce(async (uuid: SandboxProjectUUID, newNotes: string): Promise<void> => {
 			try {
 				await editSandboxProjectNotes(uuid, newNotes)
 				setHasUnsavedChanges(false) // Clear unsaved changes flag on successful save

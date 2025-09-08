@@ -310,7 +310,6 @@ class SerialConnectionManagerClass {
 
 	private startWorkerKeepalive(): void {
 		if (this.keepaliveWorker) {
-			console.info("Starting worker-based keepalive")
 			this.keepaliveWorker.postMessage({
 				type: "START_KEEPALIVE",
 				data: { interval: this.keepAliveTimeout }

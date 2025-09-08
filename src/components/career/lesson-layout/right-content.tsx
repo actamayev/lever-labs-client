@@ -7,12 +7,13 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
 import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function RightContent({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
-	const isTransitioning = careerQuestClass.getIsTransitioning(careerData.careerUUID)
+	const isTransitioning = navigationManagerClass.getIsTransitioning(careerData.careerUUID)
 
 	// Helper function to get transition props
 	const getTransitionProps = (): MotionProps => {

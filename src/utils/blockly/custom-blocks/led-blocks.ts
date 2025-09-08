@@ -2,10 +2,11 @@
 
 import * as Blockly from "blockly"
 import { ledCategoryColour } from "../../constants/constants"
-import { LEDSensorType, SENSOR_TYPES, LED_BLOCK_TYPES } from "@bluedotrobots/common-ts"
+import { LEDSensorType, SENSOR_TYPES, LED_BLOCK_TYPES, LED_FIELD_VALUES } from "@bluedotrobots/common-ts"
+import { upperFirst } from "lodash-es"
 
 export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
-	[LED_BLOCK_TYPES.ESP32_LED_CONTROL]: {
+	[LED_BLOCK_TYPES.CONTROL_ALL_LEDS]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
@@ -13,10 +14,10 @@ export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]): [string, string] =>
-								[key.toLowerCase(), value]
+								[upperFirst(key.toLowerCase()), value]
 							)
 						),
-						LED_BLOCK_TYPES.ESP32_LED_CONTROL
+						LED_FIELD_VALUES.LED_COLOR
 					)
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
@@ -26,7 +27,7 @@ export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["light", "color", "bright", "dim", "illuminate", "glow", "flash", "blink", "RGB", "bulb"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const state = block.getFieldValue(LED_BLOCK_TYPES.ESP32_LED_CONTROL) as LEDSensorType
+			const state = block.getFieldValue(LED_FIELD_VALUES.LED_COLOR) as LEDSensorType
 			if (state === "OFF") return "rgbLed.turn_led_off();\n"
 			else return `rgbLed.set_led_${state.toLowerCase()}();\n`
 		}

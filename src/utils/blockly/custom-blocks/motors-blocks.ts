@@ -3,6 +3,7 @@
 import * as Blockly from "blockly"
 import { motorsCategoryColour } from "../../constants/constants"
 import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "@bluedotrobots/common-ts"
+import { upperFirst } from "lodash-es"
 
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 	[MOTOR_BLOCK_TYPES.GO_FORWARD]: {
@@ -184,9 +185,11 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Turn")
 					.appendField(
 						new Blockly.FieldDropdown([
-							["clockwise", TURN_DIRECTIONS.CLOCKWISE],
-							["counterclockwise", TURN_DIRECTIONS.COUNTERCLOCKWISE]
-						]),
+							[upperFirst(TURN_DIRECTIONS.CLOCKWISE.toLowerCase()), TURN_DIRECTIONS.CLOCKWISE],
+							[upperFirst(TURN_DIRECTIONS.COUNTERCLOCKWISE.toLowerCase()), TURN_DIRECTIONS.COUNTERCLOCKWISE]
+						].map(([key, value]): [string, string] =>
+							[upperFirst(key.toLowerCase()), value]
+						)),
 						MOTOR_FIELD_VALUES.TURN_DIRECTION
 					)
 

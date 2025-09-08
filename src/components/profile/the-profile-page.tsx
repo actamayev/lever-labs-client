@@ -9,9 +9,10 @@ import ProfileImage from "./profile-image/profile-image"
 import ChangePasswordSection from "./change-password-section"
 import ChangeUsernameSection from "./change-username-section"
 import personalInfoClass from "../../classes/personal-info-class"
-import setDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
+import useSetDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
 
 function ProfilePage(): React.ReactNode {
+	const setDefaultSiteTheme = useSetDefaultSiteTheme()
 	return (
 		<ProfileLayout>
 			<div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 mt-5 max-w-full">

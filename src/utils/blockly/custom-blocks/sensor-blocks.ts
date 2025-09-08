@@ -12,6 +12,7 @@ import {
 	// IRSensorType
 } from "@bluedotrobots/common-ts"
 import { sensorsCategoryColour } from "../../constants/constants"
+import { upperFirst } from "lodash-es"
 
 export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	[SENSORS_BLOCK_TYPES.IMU_READ]: {
@@ -22,7 +23,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.IMU).map(([key, value]): [string, string] =>
-								[key.toLowerCase(), value] as [string, string]
+								[upperFirst(key.toLowerCase()), value] as [string, string]
 							)
 						),
 						SENSORS_FIELD_VALUES.IMU_READ
@@ -45,15 +46,16 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
-					.appendField("Is object near side")
+					.appendField("Is object near")
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.LEFTRIGHT).map(([key, value]): [string, string] =>
-								[key.toLowerCase(), value] as [string, string]
+								[upperFirst(key.toLowerCase()), value] as [string, string]
 							)
 						),
 						SENSORS_FIELD_VALUES.SIDE_TOF_READ
 					)
+					.appendField("side")
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected by the front-left or front-right sensor")
@@ -88,7 +90,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 	// 				.appendField(
 	// 					new Blockly.FieldDropdown(
 	// 						Object.entries(SENSOR_TYPES.IR).map(([key, value]): [string, string] =>
-	//                             [key.toLowerCase(), value] as [string, string]
+	//                             [upperFirst(key.toLowerCase()), value] as [string, string]
 	// 						)
 	// 					),
 	// 					SENSORS_FIELD_VALUES.IR_READ
