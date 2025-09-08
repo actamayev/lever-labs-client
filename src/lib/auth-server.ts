@@ -8,6 +8,7 @@ export interface AuthState {
 	userId: number | null
 	username: string | null
 	theme: SiteThemes
+	isIncompleteSignup: boolean // Add this
 }
 
 export async function getAuthState(): Promise<AuthState> {
@@ -24,7 +25,8 @@ export async function getAuthState(): Promise<AuthState> {
 				hasCompletedSignup: authData.hasCompletedSignup,
 				userId: authData.userId,
 				username: authData.username || null,
-				theme: authData.theme === "dark" ? "dark" : "light"
+				theme: authData.theme === "dark" ? "dark" : "light",
+				isIncompleteSignup: authData.state === 'authenticated-incomplete' // Add this
 			}
 		} catch (error) {
 			console.error('Failed to parse auth data header:', error)
@@ -37,6 +39,7 @@ export async function getAuthState(): Promise<AuthState> {
 		hasCompletedSignup: false,
 		userId: null,
 		username: null,
-		theme: "light"
+		theme: "light",
+		isIncompleteSignup: false
 	}
 }

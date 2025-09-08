@@ -7,14 +7,15 @@ import HeaderNav from "../site-header/header-nav"
 interface Props {
 	extraClasses?: string
 	children: React.ReactNode
+	isIncompleteSignup?: boolean // Add this
 }
 
 function ClassicLayout(props: Props): React.ReactNode {
-	const { extraClasses = "px-14", children } = props
+	const { extraClasses = "px-14", children, isIncompleteSignup = false } = props
 
 	return (
 		<div className="min-h-screen bg-standardBackground flex flex-col duration-0">
-			<HeaderNav />
+			<HeaderNav isIncompleteSignup={isIncompleteSignup} />
 			<main className={cn(
 				"flex-1 w-full overflow-y-auto pt-14",
 				extraClasses
@@ -26,9 +27,9 @@ function ClassicLayout(props: Props): React.ReactNode {
 	)
 }
 
-export default function PublicOnlyPage({ children }: { children: React.ReactNode }): React.ReactNode {
+export default function PublicOnlyPage({ children, isIncompleteSignup = false }: { children: React.ReactNode, isIncompleteSignup?: boolean }): React.ReactNode {
 	return (
-		<ClassicLayout>
+		<ClassicLayout isIncompleteSignup={isIncompleteSignup}>
 			{children}
 		</ClassicLayout>
 	)

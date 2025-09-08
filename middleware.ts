@@ -1,6 +1,7 @@
 
 import { jwtVerify } from "jose"
 import { NextRequest, NextResponse } from "next/server"
+import { OpenPages } from "./src/utils/constants/page-constants"
 
 interface JwtPayload {
 	userId: number
@@ -84,12 +85,14 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 			return handleUnauthenticated(themeCookie)
 		}
 
-		// Rule #4: Incomplete signup (userId but no username) → redirect to /register-google
 		if (userId && !username) {
-			if (pathname !== "/register-google") {
+			// Allow OpenPages during incomplete signup
+			const isOpenPage = OpenPages.includes(pathname as PageNames)
+
+			if (!isOpenPage && pathname !== "/register-google") {
 				return createRedirect(request, "/register-google")
 			}
-			// User is on /register-google page, continue normally
+			// Continue normally for /register-google and OpenPages
 			return handleIncompleteSignup(userId, themeCookie)
 		}
 
@@ -166,8 +169,12 @@ export const config = {
 		 * - api (API routes)
 		 * - _next/static (static files)
 		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
+		 * - favicon.ico, favicon.svg (favicon files)
+		 * - apple-touch-icon.png, icon-*.png (PWA icons)
+		 * - manifest.json, robots.txt, sitemap.xml (meta files)
+		 * - Any file with an extension (images, fonts, etc.)
 		 */
-		"/((?!api|_next/static|_next/image|favicon.ico).*)",
+		// eslint-disable-next-line max-len
+		"/((?!api|_next/static|_next/image|favicon\\.ico|favicon\\.svg|apple-touch-icon\\.png|icon-.*\\.png|manifest\\.json|robots\\.txt|sitemap\\.xml|.*\\.[a-zA-Z]+$).*)",
 	],
 }

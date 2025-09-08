@@ -1,16 +1,16 @@
 // src/components/layouts/layout-wrapper.tsx
 "use client"
 
-import { usePathname } from "next/navigation"
 import { useEffect } from "react"
 import { observer } from "mobx-react"
-import ClassicLayout from "./classic-layout"
-import InternalPagesLayout from "./internal-pages-layout"
-import ThemeProvider from "../theme/theme-provider"
+import { AuthState } from "@/lib/auth-server"
+import { usePathname } from "next/navigation"
+import PublicOnlyPage from "./classic-layout"
 import authClass from "../../classes/auth-class"
+import ThemeProvider from "../theme/theme-provider"
+import InternalPagesLayout from "./internal-pages-layout"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
-import { AuthState } from "@/lib/auth-server"
 
 interface LayoutWrapperProps {
 	children: React.ReactNode
@@ -36,20 +36,26 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 
 	const isPrivatePage = PrivatePageNames.some((path): boolean => pathname.startsWith(path))
 	const isOpenPage = OpenPages.some((path): boolean => pathname.startsWith(path))
-
-	// Use MobX auth state for reactive updates, fallback to server state
 	const isAuthenticated = authClass.isLoggedIn || initialAuthState.isAuthenticated
+	const isIncompleteSignup = initialAuthState.isIncompleteSignup
+
 	const currentTheme = personalInfoClass.defaultSiteTheme
 
+	const shouldUseClassicForIncompleteSignup = isIncompleteSignup && isOpenPage
+
 	// Determine if we should show internal layout
-	const shouldShowInternalLayout = isAuthenticated && (isPrivatePage || isOpenPage)
+	const shouldShowInternalLayout = isAuthenticated &&
+		!shouldUseClassicForIncompleteSignup &&
+		(isPrivatePage || isOpenPage)
 
 	return (
 		<ThemeProvider initialTheme={currentTheme}>
 			{shouldShowInternalLayout ? (
 				<InternalPagesLayout>{children}</InternalPagesLayout>
 			) : (
-				<ClassicLayout>{children}</ClassicLayout>
+				<PublicOnlyPage isIncompleteSignup={isIncompleteSignup}>
+					{children}
+				</PublicOnlyPage>
 			)}
 		</ThemeProvider>
 	)
