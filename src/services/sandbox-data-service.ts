@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, BlocklyJson, CreateSandboxProjectResponse, ErrorResponse, PipUUID, ProjectUUID,
+import { AllCommonResponses, BlocklyJson, CreateSandboxProjectResponse, ErrorResponse, PipUUID, SandboxProjectUUID,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
@@ -15,21 +15,21 @@ export default class SandboxDataService extends BaseDataService {
 		)
 	}
 
-	async editSandboxProject(projectUUID: ProjectUUID, newBlocklyJson: BlocklyJson): Promise<AxiosResponse<AllCommonResponses>> {
+	async editSandboxProject(projectUUID: SandboxProjectUUID, newBlocklyJson: BlocklyJson): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/edit-sandbox-project/${projectUUID}`),
 			{ newBlocklyJson }
 		)
 	}
 
-	async editSandboxProjectName(projectUUID: ProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
+	async editSandboxProjectName(projectUUID: SandboxProjectUUID, projectName: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/edit-sandbox-project-name/${projectUUID}`),
 			{ projectName }
 		)
 	}
 
-	async editSandboxProjectNotes(projectUUID: ProjectUUID, projectNotes: string): Promise<AxiosResponse<AllCommonResponses>> {
+	async editSandboxProjectNotes(projectUUID: SandboxProjectUUID, projectNotes: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/edit-sandbox-project-notes/${projectUUID}`),
 			{ projectNotes }
@@ -42,20 +42,22 @@ export default class SandboxDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveSingleSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
+	async retrieveSingleSandboxProject(
+		projectUUID: SandboxProjectUUID
+	): Promise<AxiosResponse<RetrieveSandboxProjectResponse | ErrorResponse>> {
 		return await this.httpClient.http.get<RetrieveSandboxProjectResponse | ErrorResponse>(
 			this.buildUrl(`/retrieve-single-sandbox-project/${projectUUID}`)
 		)
 	}
 
-	async starSandboxProject(projectUUID: ProjectUUID, starStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+	async starSandboxProject(projectUUID: SandboxProjectUUID, starStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/star-sandbox-project/${projectUUID}`),
 			{ starStatus }
 		)
 	}
 
-	async deleteSandboxProject(projectUUID: ProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
+	async deleteSandboxProject(projectUUID: SandboxProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/delete-sandbox-project/${projectUUID}`)
 		)

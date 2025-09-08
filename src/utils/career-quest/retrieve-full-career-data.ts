@@ -6,6 +6,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default async function retrieveFullCareerData(careerUUID: CareerUUID): Promise<void> {
@@ -126,7 +127,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		})
 
 		// Set the career chat messages in the career quest class
-		careerQuestClass.setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
+		chatManagerClass.setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
 
 		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""

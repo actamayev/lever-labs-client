@@ -17,6 +17,7 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import SingleCareerQuestMessage from "../../chat/single-challenge-message"
 import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
+import chatManagerClass from "../../../classes/chat-manager-class"
 
 const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode => {
 	const onClick = (): void => {
@@ -57,12 +58,13 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = careerQuestClass.getChallengeMessages(challengeData)
-	const isStreaming = careerQuestClass.isChallengeStreaming(challengeData)
+	const messages = chatManagerClass.getChallengeMessages(challengeData)
+	const isStreaming = chatManagerClass.isChallengeStreaming(challengeData)
 	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
-	const isWaitingForResponse = careerQuestClass.isChallengeWaitingForResponse(challengeData)
+	const isWaitingForResponse = chatManagerClass.isChallengeWaitingForResponse(challengeData)
+	const isWaitingForCodeCheck = chatManagerClass.isChallengeWaitingForCodeCheck(challengeData)
 
-	const isCodeCorrect = careerQuestClass.isCodeCorrect(challengeData)
+	const isCodeCorrect = chatManagerClass.isCodeCorrect(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect((): void => {
@@ -77,7 +79,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 		setInputValue("")
 
 		// Add user message to career quest class
-		careerQuestClass.addChallengeUserMessage(challengeData, inputValue)
+		chatManagerClass.addChallengeUserMessage(challengeData, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout((): void => {
@@ -89,8 +91,8 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = careerQuestClass.getChallengeStreamId(challengeData)
-		careerQuestClass.resetChallengeStreamingState(challengeData)
+		const streamId = chatManagerClass.getChallengeStreamId(challengeData)
+		chatManagerClass.resetChallengeStreamingState(challengeData)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId
@@ -177,6 +179,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 							setInputValue={setInputValue}
 							isStreaming={isStreaming}
 							handleHintClick={handleHintClick}
+							isWaitingForCodeCheck={isWaitingForCodeCheck}
 						/>
 					</ChatParentComponent>
 				</div>

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"
 import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
-import { ProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID, SandboxProject } from "@bluedotrobots/common-ts"
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,
@@ -26,7 +26,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)
 	const [newProjectName, setNewProjectName] = useState(project.projectName || "")
 
-	const handleProjectClick = useCallback((projectUUID: ProjectUUID): void => {
+	const handleProjectClick = useCallback((projectUUID: SandboxProjectUUID): void => {
 		if (isDeleteMode) return
 		navigate(`/sandbox/${projectUUID}`)
 	}, [navigate, isDeleteMode])
@@ -38,8 +38,8 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 
 	const handleStarClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
-		starSandboxProject(project.projectUUID)
-	}, [project.projectUUID])
+		starSandboxProject(project.sandboxProjectUUID)
+	}, [project.sandboxProjectUUID])
 
 	const handleRenameClick = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
@@ -54,20 +54,20 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 
 	const handleConfirmDelete = useCallback(async (e: React.MouseEvent): Promise<void> => {
 		e.stopPropagation()
-		await deleteSandboxProject(project.projectUUID)
+		await deleteSandboxProject(project.sandboxProjectUUID)
 		setIsDeleteMode(false)
-	}, [project.projectUUID])
+	}, [project.sandboxProjectUUID])
 
 	return (
 		<>
 			<div
-				key={project.projectUUID}
+				key={project.sandboxProjectUUID}
 				className={cn(
 					"border-2 rounded-xl p-4 cursor-pointer transition-none border-swan min-h-32",
 					isDeleteMode ? "bg-cardinal border-cardinal" : "hover:bg-polar"
 				)}
-				onClick={(): void => handleProjectClick(project.projectUUID)}
-				onDoubleClick={(): void => { if (!isDeleteMode) handleProjectClick(project.projectUUID) }}
+				onClick={(): void => handleProjectClick(project.sandboxProjectUUID)}
+				onDoubleClick={(): void => { if (!isDeleteMode) handleProjectClick(project.sandboxProjectUUID) }}
 			>
 				{isDeleteMode ? (
 					<div className="flex flex-col items-center text-white">

@@ -6,7 +6,9 @@ import pipClass from "../../classes/pip-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 
-export default async function stopCurrentlyRunningCode(): Promise<void> {
+export default async function stopCurrentlyRunningCode(
+	failSilently: boolean
+): Promise<void> {
 	const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
 	await sendDataToSerialOrApiTemplate({
@@ -20,6 +22,7 @@ export default async function stopCurrentlyRunningCode(): Promise<void> {
 			)
 		},
 		errorTitle: "Unable to stop currently running code on Pip at this time",
-		skipOfflineCheck: true // Skip offline check since we want silent failure for this action
+		skipOfflineCheck: true, // Skip offline check since we want silent failure for this action
+		failSilently
 	})
 }

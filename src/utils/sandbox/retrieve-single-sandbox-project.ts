@@ -2,13 +2,13 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import sandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function retrieveSingleSandboxProject(projectUUID: ProjectUUID): Promise<void> {
+export default async function retrieveSingleSandboxProject(projectUUID: SandboxProjectUUID): Promise<void> {
 	try {
 		// If we already have the project in the context, no need to fetch it again
 		const foundProject = sandboxClass.sandboxProjects.get(projectUUID)

@@ -69,7 +69,7 @@ class TeacherClass {
 	public addStudentToClassroom(studentJoinedClassroom: StudentJoinedClassroom): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedClassroom.classCode)
 		if (!classroom) return
-		classroom.students.push({ username: studentJoinedClassroom.studentUsername, inviteStatus: "ACCEPTED" })
+		classroom.students.push({ username: studentJoinedClassroom.studentUsername })
 	}
 
 	public addStudentToHub(studentJoinedHub: StudentJoinedHub): void {

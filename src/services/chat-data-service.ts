@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios"
 import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingChallengeCheckCodeMessage,
-	ProjectUUID, AllCommonResponses, OutgoingSandboxChatData, OutgoingChallengeHintMessage,
+	AllCommonResponses, OutgoingSandboxChatData, OutgoingChallengeHintMessage,
 	OutgoingChallengeGeneralMessage, CheckCodeResponse, NonSuccessResponse,
-	ChallengeUUID, CareerUUID, OutgoingCareerMessage } from "@bluedotrobots/common-ts"
+	ChallengeUUID, CareerUUID, OutgoingCareerMessage, SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
@@ -39,8 +39,8 @@ export default class ChatDataService extends BaseDataService {
 	async requestChallengeHint(
 		chatData: OutgoingChallengeHintMessage,
 		challengeUUID: ChallengeUUID
-	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
-		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
+	): Promise<AxiosResponse<StartChatSuccess | CheckCodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<StartChatSuccess | CheckCodeResponse |ErrorResponses>(
 			this.buildUrl(`/request-challenge-hint/${challengeUUID}`), chatData
 		)
 	}
@@ -69,7 +69,7 @@ export default class ChatDataService extends BaseDataService {
 
 	// Sandbox Chat Endpoints
 	async sendSandboxMessage(
-		projectUUID: ProjectUUID,
+		projectUUID: SandboxProjectUUID,
 		chatMessage: OutgoingSandboxChatData
 	): Promise<AxiosResponse<StartChatSuccess | ErrorResponses>> {
 		return await this.httpClient.http.post<StartChatSuccess | ErrorResponses>(
@@ -77,7 +77,7 @@ export default class ChatDataService extends BaseDataService {
 		)
 	}
 
-	async deleteSandboxChat(projectUUID: ProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
+	async deleteSandboxChat(projectUUID: SandboxProjectUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/delete-sandbox-chat/${projectUUID}`)
 		)

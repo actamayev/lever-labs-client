@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { ProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import sandboxClass from "../../../classes/sandbox-class"
@@ -14,7 +14,7 @@ import deleteSandboxChat from "../../../utils/chat/delete-sandbox-chat"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 
 interface SandboxChatInterfaceProps {
-	projectUUID: ProjectUUID
+	projectUUID: SandboxProjectUUID
 }
 
 

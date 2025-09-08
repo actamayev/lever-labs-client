@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 "use client"
 
 import { observer } from "mobx-react"
@@ -16,11 +17,12 @@ interface Props {
 	setInputValue: Dispatch<SetStateAction<string>>
 	isStreaming: boolean
 	handleHintClick?: () => Promise<void>
+	isWaitingForCodeCheck?: boolean
 }
 
 function ChatTextArea(props: Props): React.ReactNode {
 	const { handleSendMessage, onStopStreaming, inputRef, inputValue,
-		setInputValue, isStreaming, handleHintClick } = props
+		setInputValue, isStreaming, handleHintClick, isWaitingForCodeCheck } = props
 
 	// Create the conditional logic inside the component
 	const onClickAction = useCallback(async (): Promise<void> => {
@@ -58,15 +60,14 @@ function ChatTextArea(props: Props): React.ReactNode {
 					tooltipTrigger={
 						<TactileButton
 							onClick={onClickAction}
-							disabled={!isStreaming && !inputValue.trim()}
-							shadowColor={cn(!isStreaming ? "rgb(0, 100, 200)" : undefined)}
-							shadowClass={cn(isStreaming ? "shadow-cardinal-2" : undefined)}
+							disabled={!isStreaming && !inputValue.trim() || isWaitingForCodeCheck}
+							shadowClass={cn((isStreaming && !isWaitingForCodeCheck) ? "shadow-cardinal-2" : undefined)}
 							shadowHeight={4}
 							className={cn("absolute right-2 bottom-4 h-8 w-8 shrink-0 text-white font-semibold",
-								isStreaming ? "bg-cardinal" : "bg-iMessageBlue"
+								(isStreaming && !isWaitingForCodeCheck) ? "bg-cardinal" : "bg-iMessageBlue"
 							)}
 						>
-							{isStreaming ? (
+							{(isStreaming && !isWaitingForCodeCheck) ? (
 								<Square className="w-4 h-4" />
 							) : (
 								<Send className="w-4 h-4" />

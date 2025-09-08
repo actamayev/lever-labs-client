@@ -1,26 +1,31 @@
+/* eslint-disable no-nested-ternary */
 "use client"
 
-import { ArrowLeft, Users } from "lucide-react" // Add MessageCircle import
+import { ArrowLeft, MessageCircle, Users } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
 import { TeacherViewHubData } from "@bluedotrobots/common-ts"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
-// import careerQuestClass from "../../../classes/career-quest-class" // Add import
+import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import HubStudentsDialog from "./hub-students-dialog"
+import CustomTooltip from "../../custom-tooltip"
+import ChallengeProgressCircle from "./challenge-progress-circle"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
+// eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	// const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
-	// const currentSlide = careerQuestClass.getCurrentMainSlide(careerData.careerUUID)
-	// const isOnChallengeSection = currentSlide.type === "challenge"
+	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
+	const isOnChallengeSection = currentSlide.type === "challenge"
 
-	// const handleChatToggle = (): void => {
-	// 	if (isOnChallengeSection) return
-	// 	careerQuestClass.toggleCareerChat(careerData.careerUUID)
-	// }
+	const handleChatToggle = (): void => {
+		if (isOnChallengeSection) return
+		careerQuestClass.toggleCareerChat(careerData.careerUUID)
+	}
 	const router = useRouter()
 	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)
 
@@ -89,29 +94,31 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						</span>
 					</button>
 				)}
-				{/* <CustomTooltip
-					tooltipTrigger={
-						<button
-							onClick={handleChatToggle}
-							disabled={isOnChallengeSection}
-							className={`flex items-center p-2 rounded-lg transition-colors ${
-								isOnChallengeSection
-									? "text-gray-400 cursor-not-allowed opacity-50"
-									: isChatToggled
-										? "bg-blue-100 text-blue-600 hover:bg-blue-200"
-										: "text-questionText hover:bg-polar"
-							}`}
-						>
-							<MessageCircle size={24} />
-						</button>
-					}
-					tooltipContent={
-						isOnChallengeSection
-							? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
-							: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
-					}
-				/> */}
-				{/* <ChallengeProgressCircle careerData={careerData} /> */}
+				{careerData.needsChat && (
+					<CustomTooltip
+						tooltipTrigger={
+							<button
+								onClick={handleChatToggle}
+								disabled={isOnChallengeSection}
+								className={`flex items-center p-2 rounded-lg transition-colors ${
+									isOnChallengeSection
+										? "text-gray-400 cursor-not-allowed opacity-50"
+										: isChatToggled
+											? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+											: "text-questionText hover:bg-polar"
+								}`}
+							>
+								<MessageCircle size={24} />
+							</button>
+						}
+						tooltipContent={
+							isOnChallengeSection
+								? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
+								: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
+						}
+					/>
+				)}
+				<ChallengeProgressCircle careerData={careerData} />
 			</div>
 
 			{/* Students Dialog */}

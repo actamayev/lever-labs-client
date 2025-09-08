@@ -1,5 +1,6 @@
 import type { CareerUUID } from "@bluedotrobots/common-ts"
 import careerQuestClass from "../../classes/career-quest-class"
+import navigationManagerClass from "../../classes/navigation-manager-class"
 
 interface NavigationContext {
 	careerUUID: CareerUUID
@@ -12,7 +13,7 @@ interface NavigationContext {
  */
 export function handleForwardNavigation(context: NavigationContext): void {
 	const { careerUUID, currentTextChildIndex } = context
-	const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
+	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 
 	if (currentSlide.type === "challenge") {
 		// Challenge slide - try to move to next main slide
@@ -21,7 +22,7 @@ export function handleForwardNavigation(context: NavigationContext): void {
 	}
 
 	// Block all navigation if any morphing text is animating
-	if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
+	if (navigationManagerClass.isAnyMorphingTextAnimating(careerUUID)) {
 		return
 	}
 
@@ -67,7 +68,7 @@ export function handleForwardNavigation(context: NavigationContext): void {
  */
 export function handleBackwardNavigation(context: NavigationContext): void {
 	const { careerUUID, currentTextChildIndex } = context
-	const currentSlide = careerQuestClass.getCurrentMainSlide(careerUUID)
+	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 
 	if (currentSlide.type === "challenge") {
 		// Challenge slide - always go to previous main slide
@@ -76,7 +77,7 @@ export function handleBackwardNavigation(context: NavigationContext): void {
 	}
 
 	// Block all navigation if any morphing text is animating
-	if (careerQuestClass.isAnyMorphingTextAnimating(careerUUID)) {
+	if (navigationManagerClass.isAnyMorphingTextAnimating(careerUUID)) {
 		return
 	}
 
@@ -84,7 +85,7 @@ export function handleBackwardNavigation(context: NavigationContext): void {
 	const currentChild = currentSlide.data.children[currentTextChildIndex]
 	if (currentChild.type === "morphingText") {
 		// Try to move to previous morphing variant
-		const canGoBack = careerQuestClass.canGoBackMorphingText(careerUUID, currentChild.id)
+		const canGoBack = navigationManagerClass.canGoBackMorphingText(careerUUID, currentChild.id)
 		if (canGoBack) {
 			careerQuestClass.goBackMorphingText(careerUUID, currentChild.id)
 			return

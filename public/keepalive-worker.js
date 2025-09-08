@@ -19,7 +19,6 @@ self.onmessage = function(e) {
         if (keepaliveInterval) {
             clearInterval(keepaliveInterval)
             keepaliveInterval = null
-            console.info('Worker: Stopped keepalive')
         }
     }
 }

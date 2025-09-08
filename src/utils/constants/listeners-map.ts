@@ -3,10 +3,10 @@ import sandboxClass from "../../classes/sandbox-class"
 import studentClass from "../../classes/student-class"
 import workbenchClass from "../../classes/workbench-class"
 import sensorDataClass from "../../classes/sensor-data-class"
-import careerQuestClass from "../../classes/career-quest-class"
 import handlePipStatusUpdate from "../socket/handle-pip-status-update"
 import gamesClass from "../../classes/games-class"
 import teacherClass from "../../classes/teacher-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 type ListenerHandler<E> = (payload: E) => void
 
@@ -14,12 +14,12 @@ type ListenerHandler<E> = (payload: E) => void
 export const listenersMap: {
 	[K in SocketEvents]: ListenerHandler<SocketEventPayloadMap[K]>
 } = {
-	"challenge-chatbot-stream-start": (payload): void => careerQuestClass.startChallengeStreaming(payload),
-	"challenge-chatbot-stream-chunk": (payload): void => careerQuestClass.addChallengeStreamingChunk(payload),
-	"challenge-chatbot-stream-complete": (payload): void => careerQuestClass.completeChallengeStreaming(payload),
-	"career-chatbot-stream-start": (payload): void => careerQuestClass.startCareerStreaming(payload),
-	"career-chatbot-stream-chunk": (payload): void => careerQuestClass.addCareerStreamingChunk(payload),
-	"career-chatbot-stream-complete": (payload): void => careerQuestClass.completeCareerStreaming(payload),
+	"challenge-chatbot-stream-start": (payload): void => chatManagerClass.startChallengeStreaming(payload),
+	"challenge-chatbot-stream-chunk": (payload): void => chatManagerClass.addChallengeStreamingChunk(payload),
+	"challenge-chatbot-stream-complete": (payload): void => chatManagerClass.completeChallengeStreaming(payload),
+	"career-chatbot-stream-start": (payload): void => chatManagerClass.startCareerStreaming(payload),
+	"career-chatbot-stream-chunk": (payload): void => chatManagerClass.addCareerStreamingChunk(payload),
+	"career-chatbot-stream-complete": (payload): void => chatManagerClass.completeCareerStreaming(payload),
 	"sandbox-chatbot-stream-start": (payload): void => sandboxClass.startStreaming(payload),
 	"sandbox-chatbot-stream-chunk": (payload): void => sandboxClass.addStreamingChunk(payload),
 	"sandbox-chatbot-stream-complete": (payload): void => sandboxClass.completeStreaming(payload),
@@ -27,7 +27,6 @@ export const listenersMap: {
 	"battery-monitor-data": (payload): void => workbenchClass.setBatteryData(payload),
 	"general-sensor-data": (payload): void => sensorDataClass.addSensorData(payload),
 	"general-sensor-data-mz": (payload): void => sensorDataClass.addMultizoneTofData(payload),
-	"student-invite-join-class": (payload): void => studentClass.addPendingInvite(payload),
 	"dino-score-update": (payload): void => gamesClass.addDinoScore(payload.score),
 	"student-joined-classroom": (payload): void => teacherClass.addStudentToClassroom(payload),
 	"new-hub": (payload): void => studentClass.addNewHub(payload),

@@ -1,11 +1,11 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { ledCategoryColour, motorsCategoryColour } from "../constants/constants"
+import { ledCategoryColour, motorsCategoryColour, speakerCategoryColour } from "../constants/constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
-import { LED_BLOCK_TYPES, MOTOR_BLOCK_TYPES } from "@bluedotrobots/common-ts"
+import { LED_BLOCK_TYPES, MOTOR_BLOCK_TYPES, SPEAKER_BLOCK_TYPES } from "@bluedotrobots/common-ts"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {
@@ -29,7 +29,7 @@ const ledCategory: CustomCategoryInfo = {
 	name: "LED",
 	colour: ledCategoryColour,
 	contents: [
-		{ kind: "block", type: LED_BLOCK_TYPES.ESP32_LED_CONTROL }
+		{ kind: "block", type: LED_BLOCK_TYPES.CONTROL_ALL_LEDS }
 	]
 }
 
@@ -41,12 +41,14 @@ const ledCategory: CustomCategoryInfo = {
 // 	]
 // }
 
-// const speakerCategory: CustomCategoryInfo = {
-// 	...baseCategory,
-// 	name: "Speaker",
-// 	colour: speakerCategoryColour,
-// 	contents: []
-// }
+const speakerCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Speaker",
+	colour: speakerCategoryColour,
+	contents: [
+		{ kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_SOUND },
+	]
+}
 
 // const buttonsCategory: CustomCategoryInfo = {
 // 	...baseCategory,
@@ -63,8 +65,8 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		sensorsCategory,
 		motorsCategory,
 		ledCategory,
+		speakerCategory,
 		// screenCategory,
-		// speakerCategory,
 		// buttonsCategory
 	]
 }

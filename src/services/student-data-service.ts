@@ -16,15 +16,6 @@ export default class StudentDataService extends BaseDataService {
 		)
 	}
 
-	async respondToClassroomInvitation(
-		classCode: ClassCode,
-		inviteResponse: "accept" | "decline"
-	): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/respond-to-classroom-invitation/${classCode}`), { inviteResponse }
-		)
-	}
-
 	async retrieveStudentClassrooms(): Promise<AxiosResponse<StudentClassroomData[] | ErrorResponse>> {
 		return await this.httpClient.http.get<StudentClassroomData[] | ErrorResponse>(
 			this.buildUrl("/classrooms")

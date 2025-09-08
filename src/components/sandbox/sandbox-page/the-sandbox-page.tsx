@@ -108,7 +108,7 @@ function TheSandboxPage(): React.ReactNode {
 							</div>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{filteredStarredProjects.map((project): React.ReactNode => (
-									<SingleProjectCard key={project.projectUUID} project={project} />
+									<SingleProjectCard key={project.sandboxProjectUUID} project={project} />
 								))}
 							</div>
 							<div className="h-0.5 bg-swan rounded-full mt-8"/>
@@ -131,7 +131,7 @@ function TheSandboxPage(): React.ReactNode {
 						{filteredAllProjects.length > 0 ? (
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								{filteredAllProjects.map((project): React.ReactNode => (
-									<SingleProjectCard key={project.projectUUID} project={project} />
+									<SingleProjectCard key={project.sandboxProjectUUID} project={project} />
 								))}
 							</div>
 						) : (

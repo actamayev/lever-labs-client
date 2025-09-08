@@ -20,6 +20,7 @@ export default async function stopPollingSensors(): Promise<void> {
 			)
 		},
 		errorTitle: "Unable to stop sensor polling on Pip at this time",
-		skipOfflineCheck: true
+		skipOfflineCheck: true,
+		failSilently: true
 	})
 }

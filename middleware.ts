@@ -11,11 +11,33 @@ interface JwtPayload {
 	exp?: number
 }
 
+// JWT verification cache to reduce repeated verifications
+const jwtCache = new Map<string, { payload: JwtPayload; exp: number }>()
+
+// Clean expired cache entries periodically
+setInterval((): void => {
+	const now = Date.now() / 1000
+	for (const [token, cached] of jwtCache.entries()) {
+		if (cached.exp <= now) {
+			jwtCache.delete(token)
+		}
+	}
+}, 300000) // Clean every 5 minutes
+
 // Pages that should redirect to /garage if user is fully authenticated
 const AUTH_PAGES = ["/login", "/register", "/register-google", "/"]
 
+// eslint-disable-next-line complexity
 export async function middleware(request: NextRequest): Promise<NextResponse> {
 	const { pathname } = request.nextUrl
+
+	// Skip middleware entirely for public routes and auth pages
+	if (pathname === "/" || pathname === "/login" || pathname === "/register" ||
+		pathname.startsWith("/contact") || pathname.startsWith("/mission") ||
+		pathname.startsWith("/schools") || pathname.startsWith("/terms") ||
+		pathname.startsWith("/privacy") || pathname.startsWith("/community-guidelines")) {
+		return NextResponse.next()
+	}
 
 	try {
 		// Get JWT from cookie
@@ -25,11 +47,30 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 			return handleUnauthenticated(request, pathname)
 		}
 
+		// Check cache first to avoid repeated JWT verification
+		const cached = jwtCache.get(token)
+		if (cached && cached.exp > Date.now() / 1000) {
+			const hasCompletedSignup = Boolean(cached.payload.username)
+			const isActive = cached.payload.isActive !== false
+
+			if (!isActive) {
+				return handleUnauthenticated(request, pathname)
+			}
+
+			return handleAuthenticated(request, pathname, {
+				hasCompletedSignup,
+				userId: cached.payload.userId,
+				username: cached.payload.username
+			})
+		}
+
 		// Verify JWT using secure environment variable
 		const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 		const { payload } = await jwtVerify(token, secret) as { payload: JwtPayload }
 
-		const isAuthenticated = true
+		// Cache the verified payload
+		jwtCache.set(token, { payload, exp: payload.exp || (Date.now() / 1000 + 3600) })
+
 		const hasCompletedSignup = Boolean(payload.username)
 		const isActive = payload.isActive !== false // Default to true if not specified
 
@@ -39,14 +80,17 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 
 		// Handle authenticated users
 		return handleAuthenticated(request, pathname, {
-			isAuthenticated,
 			hasCompletedSignup,
 			userId: payload.userId,
 			username: payload.username
 		})
 
 	} catch (error) {
-		// JWT verification failed
+		// JWT verification failed - remove from cache if exists
+		const token = request.cookies.get("auth_token")?.value
+		if (token) {
+			jwtCache.delete(token)
+		}
 		console.error("JWT verification failed:", error)
 		return handleUnauthenticated(request, pathname)
 	}
@@ -56,11 +100,14 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 function handleUnauthenticated(_request: NextRequest, pathname: string): NextResponse {
 	const response = NextResponse.next()
 
-	// Add auth state headers for pages to read
-	response.headers.set("x-auth-state", "unauthenticated")
-	response.headers.set("x-user-id", "")
-	response.headers.set("x-username", "")
-	response.headers.set("x-has-completed-signup", "false")
+	// Add consolidated auth state header for pages to read
+	const authData = {
+		state: "unauthenticated",
+		userId: null,
+		username: "",
+		hasCompletedSignup: false
+	}
+	response.headers.set("x-auth-data", JSON.stringify(authData))
 
 	if (pathname === "/register-google") {
 		return NextResponse.redirect(new URL("/", _request.url))
@@ -85,7 +132,7 @@ function handleUnauthenticated(_request: NextRequest, pathname: string): NextRes
 function handleAuthenticated(
 	request: NextRequest,
 	pathname: string,
-	auth: { isAuthenticated: boolean, hasCompletedSignup: boolean, userId: number, username: string | null }
+	auth: { hasCompletedSignup: boolean, userId: number, username: string | null }
 ): NextResponse {
 	// Check if user needs to complete signup (Google users without username)
 	if (!auth.hasCompletedSignup) {
@@ -96,10 +143,13 @@ function handleAuthenticated(
 
 		// Add auth state for register-google page
 		const response = NextResponse.next()
-		response.headers.set("x-auth-state", "authenticated-incomplete")
-		response.headers.set("x-user-id", auth.userId.toString())
-		response.headers.set("x-username", "")
-		response.headers.set("x-has-completed-signup", "false")
+		const authData = {
+			state: "authenticated-incomplete",
+			userId: auth.userId,
+			username: "",
+			hasCompletedSignup: false
+		}
+		response.headers.set("x-auth-data", JSON.stringify(authData))
 		return response
 	}
 
@@ -110,12 +160,15 @@ function handleAuthenticated(
 		return NextResponse.redirect(new URL("/garage", request.url))
 	}
 
-	// For all other pages, add auth state headers
+	// For all other pages, add consolidated auth state header
 	const response = NextResponse.next()
-	response.headers.set("x-auth-state", "authenticated")
-	response.headers.set("x-user-id", auth.userId.toString())
-	response.headers.set("x-username", auth.username || "")
-	response.headers.set("x-has-completed-signup", "true")
+	const authData = {
+		state: "authenticated",
+		userId: auth.userId,
+		username: auth.username || "",
+		hasCompletedSignup: true
+	}
+	response.headers.set("x-auth-data", JSON.stringify(authData))
 
 	return response
 }
@@ -123,14 +176,14 @@ function handleAuthenticated(
 // Configure which paths the middleware should run on
 export const config = {
 	matcher: [
-	/*
-	* Match all request paths except for:
-	* - api (API routes)
-	* - _next/static (static files)
-	* - _next/image (image optimization files)
-	* - favicon.ico, favicon.svg (favicon files)  ← ADD THIS
-	* - public folder assets (png, jpg, svg, etc.)  ← ADD THIS
-	*/
-		"/((?!api|_next/static|_next/image|favicon|.*\\.).*)",
+		// Only run middleware on protected routes that actually need authentication
+		"/garage/:path*",
+		"/add-pip/:path*",
+		"/sandbox/:path*",
+		"/settings/:path*",
+		"/career-quest/:path*",
+		"/class-manager/:path*",
+		"/whiteboard/:path*",
+		"/register-google"
 	],
 }
