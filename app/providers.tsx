@@ -11,7 +11,6 @@ import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
-import useCookieWatcher from "../src/utils/cookies/cookie-watcher"
 
 const retrieveInfo = async (): Promise<void> => {
 	// Only retrieve if user is authenticated but we don't have personal info yet
@@ -30,7 +29,6 @@ const retrieveInfo = async (): Promise<void> => {
 
 export default function Providers({ children }: { children: ReactNode }): React.ReactNode {
 	useInitializeGoogleAnalytics()
-	useCookieWatcher()
 
 	// Smart data retrieval - only if needed
 	useEffect((): void => {
