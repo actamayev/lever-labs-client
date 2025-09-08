@@ -5,6 +5,7 @@ import { forwardRef } from "react"
 import type { LucideIcon, LucideProps } from "lucide-react"
 
 export const CustomInstagram: LucideIcon = forwardRef<SVGSVGElement, LucideProps>(
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	({ color = "currentColor", size = 24, className = "", ...props }, ref) => (
 		<svg
 			ref={ref}
