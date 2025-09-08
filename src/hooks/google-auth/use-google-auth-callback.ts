@@ -4,7 +4,6 @@ import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
-import { SiteThemes } from "@bluedotrobots/common-ts"
 import { CredentialResponse } from "@react-oauth/google"
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
@@ -31,9 +30,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				typeof window === "undefined"
 			) return
 
-			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-			let siteTheme: SiteThemes = "dark"
-			if (siteThemeFromStorage === "light") siteTheme = "light"
+			const siteTheme = personalInfoClass.defaultSiteTheme
 
 			const googleCallbackResponse = await blueDotApiClientClass.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme

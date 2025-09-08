@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { NewGoogleInfoRequest, SiteThemes } from "@bluedotrobots/common-ts"
+import { NewGoogleInfoRequest } from "@bluedotrobots/common-ts"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
@@ -29,9 +29,7 @@ export default async function registerGoogleInfo(
 		}
 		if (typeof window === "undefined") return false
 
-		const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-		let siteTheme: SiteThemes = "dark"
-		if (siteThemeFromStorage === "light") siteTheme = "light"
+		const siteTheme = personalInfoClass.defaultSiteTheme
 		personalInfoClass.setRegisteredValues(
 			googleInfo.username,
 			response.data.email,

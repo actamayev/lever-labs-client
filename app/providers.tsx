@@ -10,9 +10,7 @@ import personalInfoClass from "../src/classes/personal-info-class"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
-import useEffectLogoutListener from "@/hooks/listeners/use-effect-logout-listener"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
-import useEffectSiteThemeListener from "@/hooks/listeners/use-effect-site-theme-listener"
 import useCookieWatcher from "../src/utils/cookies/cookie-watcher"
 
 const retrieveInfo = async (): Promise<void> => {
@@ -31,8 +29,6 @@ const retrieveInfo = async (): Promise<void> => {
 }
 
 export default function Providers({ children }: { children: ReactNode }): React.ReactNode {
-	useEffectLogoutListener()
-	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
 	useCookieWatcher()
 

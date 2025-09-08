@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { RegisterRequest, SiteThemes } from "@bluedotrobots/common-ts"
+import { RegisterRequest } from "@bluedotrobots/common-ts"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import confirmRegisterFields from "../confirm-register-fields"
@@ -23,9 +23,7 @@ export default async function registerSubmit(
 		authClass.setAuthenticating(true)
 		if (typeof window === "undefined") return false
 
-		const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-		let siteTheme: SiteThemes = "dark"
-		if (siteThemeFromStorage === "light") siteTheme = "light"
+		const siteTheme = personalInfoClass.defaultSiteTheme
 		if (isNull(registerCredentials.age)) return false
 
 		const registerRequest: RegisterRequest = {

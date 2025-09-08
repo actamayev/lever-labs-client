@@ -57,7 +57,6 @@ class PersonalInfoClass {
 
 		if (typeof window === "undefined") return
 
-		// Update cookie instead of localStorage
 		if (updateCookie) {
 			setThemeCookie(newSiteTheme)
 		}
