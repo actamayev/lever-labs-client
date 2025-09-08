@@ -28,7 +28,7 @@ export default async function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
-				{(process.env.VERCEL_ENV === "production" || process.env.VERCEL_ENV === "preview") && (
+				{process.env.VERCEL_ENV === "production" && (
 					<>
 						<Analytics />
 						<SpeedInsights />
