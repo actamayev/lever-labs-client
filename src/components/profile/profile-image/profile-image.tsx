@@ -40,6 +40,7 @@ function ProfileImage(): React.ReactNode {
 						alt="Profile Picture"
 						width={128}
 						height={128}
+						priority
 					/>
 				) : (
 					<AvatarFallback className="bg-standardBackground text-questionText">
