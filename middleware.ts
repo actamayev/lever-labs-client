@@ -26,6 +26,7 @@ function createRedirect(request: NextRequest, path: string): NextResponse {
 	return NextResponse.redirect(new URL(path, request.url))
 }
 
+// eslint-disable-next-line complexity
 export async function middleware(request: NextRequest): Promise<NextResponse> {
 	const { pathname } = request.nextUrl
 

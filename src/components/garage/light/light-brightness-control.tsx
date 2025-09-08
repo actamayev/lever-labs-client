@@ -1,67 +1,113 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 "use client"
 
 import clamp from "lodash-es/clamp"
 import { observer } from "mobx-react"
 import { rgbaToHsva } from "@uiw/color-convert"
 import { Minus, PlusIcon } from "lucide-react"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
 
-function LightBrightnessControl(): React.ReactNode {
+const INITIAL_DELAY_MS = 400
+const REPEAT_INTERVAL_MS = 80
+
+// eslint-disable-next-line max-lines-per-function
+function LightBrightnessControl(): ReactNode {
 	const [isDecreasing, setIsDecreasing] = useState(false)
 	const [isIncreasing, setIsIncreasing] = useState(false)
-	const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-	// Calculate the current brightness percentage
-	const brightnessPercent = Math.round(rgbaToHsva(garageClass.realColor).v)
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-	const decreaseBrightness = useCallback((): void => {
-		const newValue = Math.max(0, brightnessPercent - 5)
-		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent])
-
-	const increaseBrightness = useCallback((): void => {
-		const newValue = Math.min(100, brightnessPercent + 5)
-		garageClass.setColorShade(newValue / 100)
-	}, [brightnessPercent])
-
-	const enforceRGBRange = useCallback((value: string): number => {
-		const numValue = parseInt(value || "0")
-		return clamp(numValue, 0, 100)
+	const getBrightness = useCallback((): number => {
+		return Math.round(rgbaToHsva(garageClass.realColor).v)
 	}, [])
 
-	useEffect((): () => void => {
-		if (isDecreasing && brightnessPercent > 0) {
-			intervalRef.current = setInterval(decreaseBrightness, 200)
-		} else if (isIncreasing && brightnessPercent < 100) {
-			intervalRef.current = setInterval(increaseBrightness, 200)
-		} else {
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current)
-			}
-		}
+	const setBrightnessPct = useCallback((pct: number): void => {
+		garageClass.setColorShade(clamp(pct, 0, 100) / 100)
+	}, [])
 
-		return (): void => {
-			if (intervalRef.current) {
-				clearInterval(intervalRef.current)
-			}
-		}
-	}, [isDecreasing, isIncreasing, brightnessPercent, decreaseBrightness, increaseBrightness])
+	const stepDelta = useCallback(
+		(delta: number): void => {
+			const current = getBrightness()
+			const next = clamp(current + delta, 0, 100)
+			if (next !== current) setBrightnessPct(next)
+		},
+		[getBrightness, setBrightnessPct],
+	)
+
+	const startRepeat = useCallback(
+		(delta: number): void => {
+			// Immediate single step
+			stepDelta(delta)
+
+			// After delay, fast repeat
+			timeoutRef.current = setTimeout((): void => {
+				intervalRef.current = setInterval((): void => {
+					stepDelta(delta)
+				}, REPEAT_INTERVAL_MS)
+			}, INITIAL_DELAY_MS)
+		},
+		[stepDelta],
+	)
+
+	const clearTimers = useCallback((): void => {
+		if (timeoutRef.current) clearTimeout(timeoutRef.current)
+		if (intervalRef.current) clearInterval(intervalRef.current)
+		timeoutRef.current = null
+		intervalRef.current = null
+	}, [])
+
+	const stopHold = useCallback((): void => {
+		clearTimers()
+		setIsDecreasing(false)
+		setIsIncreasing(false)
+	}, [clearTimers])
+
+	useEffect((): () => void => {
+		return (): void => stopHold() // cleanup on unmount
+	}, [stopHold])
+
+	const brightnessPercent = getBrightness()
+
+	const onDecreaseDown = useCallback(
+		(e: React.PointerEvent): void => {
+			e.preventDefault()
+			if (getBrightness() <= 0) return
+			setIsDecreasing(true)
+			startRepeat(-1)
+		},
+		[getBrightness, startRepeat],
+	)
+
+	const onIncreaseDown = useCallback(
+		(e: React.PointerEvent): void => {
+			e.preventDefault()
+			if (getBrightness() >= 100) return
+			setIsIncreasing(true)
+			startRepeat(1)
+		},
+		[getBrightness, startRepeat],
+	)
+
+	const enforceRGBRange = useCallback((value: string): number => {
+		const numValue = parseInt(value || "0", 10)
+		return clamp(numValue, 0, 100)
+	}, [])
 
 	return (
 		<>
 			<Button
 				variant="outline"
 				size="icon"
-				onClick={decreaseBrightness}
 				disabled={brightnessPercent <= 0}
-				onMouseDown={(): void => setIsDecreasing(true)}
-				onMouseUp={(): void => setIsDecreasing(false)}
-				onMouseLeave={(): void => setIsDecreasing(false)}
-				onTouchStart={(): void => setIsDecreasing(true)}
-				onTouchEnd={(): void => setIsDecreasing(false)}
+				aria-pressed={isDecreasing}
+				onPointerDown={onDecreaseDown}
+				onPointerUp={stopHold}
+				onPointerLeave={stopHold}
+				onPointerCancel={stopHold}
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>
@@ -73,7 +119,9 @@ function LightBrightnessControl(): React.ReactNode {
 					<Input
 						type="number"
 						value={brightnessPercent}
-						onChange={(e): void => garageClass.setColorShade(enforceRGBRange(e.target.value) / 100)}
+						onChange={(e): void =>
+							setBrightnessPct(enforceRGBRange(e.target.value))
+						}
 						min="0"
 						max="100"
 						// eslint-disable-next-line max-len
@@ -92,13 +140,12 @@ function LightBrightnessControl(): React.ReactNode {
 			<Button
 				variant="outline"
 				size="icon"
-				onClick={increaseBrightness}
 				disabled={brightnessPercent >= 100}
-				onMouseDown={(): void => setIsIncreasing(true)}
-				onMouseUp={(): void => setIsIncreasing(false)}
-				onMouseLeave={(): void => setIsIncreasing(false)}
-				onTouchStart={(): void => setIsIncreasing(true)}
-				onTouchEnd={(): void => setIsIncreasing(false)}
+				aria-pressed={isIncreasing}
+				onPointerDown={onIncreaseDown}
+				onPointerUp={stopHold}
+				onPointerLeave={stopHold}
+				onPointerCancel={stopHold}
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>

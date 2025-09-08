@@ -10,7 +10,7 @@ const getAuthCookie = (): string | null => {
 	if (typeof document === "undefined") return null
 
 	const cookies = document.cookie.split(";")
-	const authCookie = cookies.find(cookie =>
+	const authCookie = cookies.find((cookie): boolean =>
 		cookie.trim().startsWith("auth_token=")
 	)
 
@@ -18,9 +18,9 @@ const getAuthCookie = (): string | null => {
 }
 
 export default function useCookieWatcher(): void {
-	useEffect(() => {
+	useEffect((): () => void => {
 		// Only run if user is currently logged in
-		if (!authClass.isLoggedIn) return
+		if (!authClass.isLoggedIn) return (): void => {}
 
 		const handleVisibilityChange = (): void => {
 			// Only check when page becomes visible (user returns to tab)
@@ -48,9 +48,9 @@ export default function useCookieWatcher(): void {
 		window.addEventListener("focus", handleFocus)
 
 		// Cleanup
-		return () => {
+		return (): void => {
 			document.removeEventListener("visibilitychange", handleVisibilityChange)
 			window.removeEventListener("focus", handleFocus)
 		}
-	}, [authClass.isLoggedIn])
+	}, [])
 }
