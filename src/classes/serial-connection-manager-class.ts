@@ -310,7 +310,6 @@ class SerialConnectionManagerClass {
 
 	private startWorkerKeepalive(): void {
 		if (this.keepaliveWorker) {
-			console.info("Starting worker-based keepalive")
 			this.keepaliveWorker.postMessage({
 				type: "START_KEEPALIVE",
 				data: { interval: this.keepAliveTimeout }
@@ -371,7 +370,6 @@ class SerialConnectionManagerClass {
 				if (lines.length > 1) {
 					for (let i = 0; i < lines.length - 1; i++) {
 						const line = lines[i].trim()
-						console.info("line", line)
 						if (line) {
 							serialMessageManagerClass.handleRawMessage(line)
 						}

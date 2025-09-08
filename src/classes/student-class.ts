@@ -68,7 +68,6 @@ class StudentClass {
 
 	// eslint-disable-next-line complexity
 	public updateHubSlideId = action((updatedHubSlideId: UpdatedHubSlideId): void => {
-		console.log("updatedHubSlideId", updatedHubSlideId)
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === updatedHubSlideId.classCode)
 		if (!classroom) return
 		const hub = classroom.activeHubs.find((activeHub): boolean => activeHub.hubId === updatedHubSlideId.hubId)
