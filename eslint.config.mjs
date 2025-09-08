@@ -37,6 +37,7 @@ const eslintConfig = [
 			// Ignore test directory
 			"test/**/*",
 			"src/classes/__tests__/**/*",
+			"coverage/**/*",
 		],
 	},
 

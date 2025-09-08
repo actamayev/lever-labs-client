@@ -17,7 +17,7 @@ export function createMockSwiper(initialIndex = 0): MockSwiperInstance {
 		activeIndex: initialIndex,
 		allowSlideNext: true,
 		allowSlidePrev: true,
-		slideTo: vi.fn((index: number, speed?: number) => {
+		slideTo: vi.fn((index: number, _speed?: number) => {
 			mock.activeIndex = index
 		}),
 		slideNext: vi.fn(() => {
