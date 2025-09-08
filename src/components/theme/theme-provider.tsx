@@ -10,7 +10,7 @@ interface ThemeProviderProps {
 }
 
 export default function ThemeProvider({ children, initialTheme }: ThemeProviderProps): React.ReactNode {
-	useEffect(() => {
+	useEffect((): void => {
 		// Apply theme to document on mount and when theme changes
 		if (initialTheme === "dark") {
 			document.documentElement.classList.add("dark")

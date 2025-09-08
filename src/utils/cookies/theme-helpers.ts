@@ -15,7 +15,7 @@ export const getThemeFromCookie = (): SiteThemes => {
 	if (typeof document === "undefined") return "light"
 
 	const cookies = document.cookie.split(";")
-	const themeCookie = cookies.find(cookie =>
+	const themeCookie = cookies.find((cookie): boolean =>
 		cookie.trim().startsWith(`${THEME_COOKIE_NAME}=`)
 	)
 

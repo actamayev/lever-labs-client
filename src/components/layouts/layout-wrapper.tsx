@@ -21,7 +21,7 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 	const pathname = usePathname()
 
 	// Sync server auth state and theme with client on mount
-	useEffect(() => {
+	useEffect((): void => {
 		// Sync auth state
 		if (!authClass.isLoggedIn && initialAuthState.isAuthenticated) {
 			authClass.setAuthState({
