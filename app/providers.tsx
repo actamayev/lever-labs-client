@@ -13,6 +13,7 @@ import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-i
 import useEffectLogoutListener from "@/hooks/listeners/use-effect-logout-listener"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
 import useEffectSiteThemeListener from "@/hooks/listeners/use-effect-site-theme-listener"
+import useCookieWatcher from "../src/utils/cookies/cookie-watcher"
 
 const retrieveInfo = async (): Promise<void> => {
 	// Only retrieve if user is authenticated but we don't have personal info yet
@@ -33,6 +34,7 @@ export default function Providers({ children }: { children: ReactNode }): React.
 	useEffectLogoutListener()
 	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
+	useCookieWatcher()
 
 	// Smart data retrieval - only if needed
 	useEffect((): void => {
