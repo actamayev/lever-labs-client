@@ -1,4 +1,5 @@
 import Mission from "../../src/page-components/mission"
+import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -9,5 +10,9 @@ export const metadata = createMetadata({
 })
 
 export default function MissionPage(): React.ReactNode {
-	return <Mission />
+	return (
+		<LayoutOnlyWrapper>
+			<Mission />
+		</LayoutOnlyWrapper>
+	)
 }

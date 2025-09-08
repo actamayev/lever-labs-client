@@ -9,7 +9,7 @@ interface Props {
 	children: React.ReactNode
 }
 
-export default function ClassicLayout(props: Props): React.ReactNode {
+function ClassicLayout(props: Props): React.ReactNode {
 	const { extraClasses = "px-14", children } = props
 
 	return (
@@ -23,5 +23,13 @@ export default function ClassicLayout(props: Props): React.ReactNode {
 			</main>
 			<Footer />
 		</div>
+	)
+}
+
+export default function PublicOnlyPage({ children }: { children: React.ReactNode }): React.ReactNode {
+	return (
+		<ClassicLayout>
+			{children}
+		</ClassicLayout>
 	)
 }

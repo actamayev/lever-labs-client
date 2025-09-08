@@ -19,9 +19,13 @@ import chatManagerClass from "../../classes/chat-manager-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
 
 export default async function logout(): Promise<void> {
-	authClass.setLoggingOut(true) // ADD this first line
+	authClass.setLoggingOut(true)
+
 	try {
+		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
 		await blueDotApiClientClass.authDataService.logout()
+
+		// Clear all client state
 		personalInfoClass.logout()
 		pipClass.logout()
 		socketClass.logout()
@@ -38,8 +42,16 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
+
+		// Redirect to home page
+		if (typeof window !== "undefined") {
+			window.location.href = "/"
+		}
+
 	} catch (error) {
 		console.error("Logout error:", error)
+
+		// Even if API fails, clear local state and redirect
 		personalInfoClass.logout()
 		pipClass.logout()
 		socketClass.logout()
@@ -56,6 +68,10 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
+
+		if (typeof window !== "undefined") {
+			window.location.href = "/"
+		}
 	} finally {
 		authClass.setLoggingOut(false)
 	}

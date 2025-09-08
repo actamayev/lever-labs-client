@@ -1,4 +1,5 @@
 import TermsPage from "../../src/page-components/terms"
+import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -9,5 +10,9 @@ export const metadata = createMetadata({
 })
 
 export default function Terms(): React.ReactNode {
-	return <TermsPage />
+	return (
+		<LayoutOnlyWrapper>
+			<TermsPage />
+		</LayoutOnlyWrapper>
+	)
 }
