@@ -1,4 +1,4 @@
-
+// Add this to your existing middleware.ts
 import { jwtVerify } from "jose"
 import { NextRequest, NextResponse } from "next/server"
 
@@ -12,11 +12,14 @@ interface JwtPayload {
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
 	try {
+		// Get theme from cookie for SSR
+		const themeCookie = request.cookies.get("site_theme")?.value || "light"
+
 		// Get JWT from cookie
 		const token = request.cookies.get("auth_token")?.value
 
 		if (!token) {
-			return handleUnauthenticated()
+			return handleUnauthenticated(themeCookie)
 		}
 
 		// Verify JWT using secure environment variable
@@ -24,10 +27,10 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 		const { payload } = await jwtVerify(token, secret) as { payload: JwtPayload }
 
 		const hasCompletedSignup = Boolean(payload.username)
-		const isActive = payload.isActive !== false // Default to true if not specified
+		const isActive = payload.isActive !== false
 
 		if (!isActive) {
-			return handleUnauthenticated()
+			return handleUnauthenticated(themeCookie)
 		}
 
 		// Handle authenticated users
@@ -35,23 +38,25 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 			hasCompletedSignup,
 			userId: payload.userId,
 			username: payload.username
-		})
+		}, themeCookie)
 
 	} catch (error) {
 		console.error("JWT verification failed:", error)
-		return handleUnauthenticated()
+		const themeCookie = request.cookies.get("site_theme")?.value || "light"
+		return handleUnauthenticated(themeCookie)
 	}
 }
 
-function handleUnauthenticated(): NextResponse {
+function handleUnauthenticated(theme: string): NextResponse {
 	const response = NextResponse.next()
 
-	// Set consistent auth data header
+	// Set consistent auth data header with theme
 	const authData = {
 		state: "unauthenticated",
 		userId: null,
 		username: "",
-		hasCompletedSignup: false
+		hasCompletedSignup: false,
+		theme: theme
 	}
 	response.headers.set("x-auth-data", JSON.stringify(authData))
 
@@ -62,25 +67,25 @@ function handleAuthenticated(auth: {
 	hasCompletedSignup: boolean,
 	userId: number,
 	username: string | null
-}): NextResponse {
+}, theme: string): NextResponse {
 	const response = NextResponse.next()
 
-	// Set auth data based on signup completion
+	// Set auth data with theme
 	const authData = {
 		state: auth.hasCompletedSignup ? "authenticated" : "authenticated-incomplete",
 		userId: auth.userId,
 		username: auth.username || "",
-		hasCompletedSignup: auth.hasCompletedSignup
+		hasCompletedSignup: auth.hasCompletedSignup,
+		theme: theme
 	}
 	response.headers.set("x-auth-data", JSON.stringify(authData))
 
 	return response
 }
 
-// Configure which paths the middleware should run on
+// Keep your existing config
 export const config = {
 	matcher: [
-		// Run middleware on protected routes that need authentication
 		"/garage/:path*",
 		"/add-pip/:path*",
 		"/sandbox/:path*",
@@ -90,6 +95,7 @@ export const config = {
 		"/whiteboard/:path*",
 		"/register-google",
 		"/mission",
+		"/contact",
 		"/schools",
 		"/terms",
 		"/privacy",

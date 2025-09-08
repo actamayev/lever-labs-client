@@ -1,8 +1,9 @@
+// src/classes/personal-info-class.ts
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { isValidSiteTheme } from "../utils/type-checks"
 import { BasicPersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
+import { setThemeCookie, getThemeFromCookie } from "../utils/cookies/theme-helpers"
 
 class PersonalInfoClass {
 	public username: string | null = null
@@ -17,16 +18,13 @@ class PersonalInfoClass {
 
 	constructor() {
 		makeAutoObservable(this)
-		this.setDefaultsFromLocalStorage()
+		this.setDefaultsFromCookies()
 	}
 
-	private setDefaultsFromLocalStorage(): void {
+	private setDefaultsFromCookies(): void {
 		if (typeof window === "undefined") return
-		const locallyStoredDefaultSiteTheme = localStorage.getItem("defaultSiteTheme")
-		if (!isValidSiteTheme(locallyStoredDefaultSiteTheme)) {
-			return this.setDefaultSiteTheme("light")
-		}
-		this.setDefaultSiteTheme(locallyStoredDefaultSiteTheme)
+		const cookieTheme = getThemeFromCookie()
+		this.setDefaultSiteTheme(cookieTheme, false) // Don't set cookie again
 	}
 
 	public setIsRetrievingPersonalDetails = action((newState: boolean): void => {
@@ -54,12 +52,22 @@ class PersonalInfoClass {
 		this.setDefaultSiteTheme(defaultSiteTheme)
 	})
 
-	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, addToLocalStorage: boolean = true): void => {
+	public setDefaultSiteTheme = action((newSiteTheme: SiteThemes, updateCookie: boolean = true): void => {
 		this.defaultSiteTheme = newSiteTheme
+
 		if (typeof window === "undefined") return
-		if (addToLocalStorage === true) localStorage.setItem("defaultSiteTheme", newSiteTheme)
-		if (newSiteTheme === "dark") document.documentElement.classList.add("dark")
-		else document.documentElement.classList.remove("dark")
+
+		// Update cookie instead of localStorage
+		if (updateCookie) {
+			setThemeCookie(newSiteTheme)
+		}
+
+		// Apply theme immediately
+		if (newSiteTheme === "dark") {
+			document.documentElement.classList.add("dark")
+		} else {
+			document.documentElement.classList.remove("dark")
+		}
 	})
 
 	public setProfilePictureUrl = action((newProfilePictureUrl: string | null): void => {

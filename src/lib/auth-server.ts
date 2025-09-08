@@ -1,10 +1,13 @@
+// lib/auth-server.ts
 import { headers } from 'next/headers'
+import { SiteThemes } from "@bluedotrobots/common-ts"
 
 export interface AuthState {
 	isAuthenticated: boolean
 	hasCompletedSignup: boolean
 	userId: number | null
 	username: string | null
+	theme: SiteThemes
 }
 
 export async function getAuthState(): Promise<AuthState> {
@@ -20,7 +23,8 @@ export async function getAuthState(): Promise<AuthState> {
 				isAuthenticated: authData.state === 'authenticated' || authData.state === 'authenticated-incomplete',
 				hasCompletedSignup: authData.hasCompletedSignup,
 				userId: authData.userId,
-				username: authData.username || null
+				username: authData.username || null,
+				theme: authData.theme === "dark" ? "dark" : "light"
 			}
 		} catch (error) {
 			console.error('Failed to parse auth data header:', error)
@@ -32,6 +36,7 @@ export async function getAuthState(): Promise<AuthState> {
 		isAuthenticated: false,
 		hasCompletedSignup: false,
 		userId: null,
-		username: null
+		username: null,
+		theme: "light"
 	}
 }
