@@ -4,13 +4,16 @@ import { cn } from "../../lib/shadcn/utils"
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"
 
-interface Props {
-	extraClasses?: string
+interface PublicOnlyPageProps {
 	children: React.ReactNode
-	isIncompleteSignup?: boolean // Add this
+	isIncompleteSignup?: boolean
 }
 
-function ClassicLayout(props: Props): React.ReactNode {
+interface ClassicLayoutProps extends PublicOnlyPageProps {
+	extraClasses?: string
+}
+
+function ClassicLayout(props: ClassicLayoutProps): React.ReactNode {
 	const { extraClasses = "px-14", children, isIncompleteSignup = false } = props
 
 	return (
@@ -27,7 +30,7 @@ function ClassicLayout(props: Props): React.ReactNode {
 	)
 }
 
-export default function PublicOnlyPage({ children, isIncompleteSignup = false }: { children: React.ReactNode, isIncompleteSignup?: boolean }): React.ReactNode {
+export default function PublicOnlyPage({ children, isIncompleteSignup = false }: PublicOnlyPageProps): React.ReactNode {
 	return (
 		<ClassicLayout isIncompleteSignup={isIncompleteSignup}>
 			{children}

@@ -42,17 +42,17 @@ export default async function requestToConnectToPip(
 		if (error instanceof AxiosError) {
 			if (isMessageResponse(error.response?.data)) {
 				// eslint-disable-next-line max-depth
-				if (error.response.data.message === "Someone is already connected to this Pip") {
+				if (error.response?.data.message === "Someone is already connected to this Pip") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: `Someone is already connected to ${foundPip?.pipName}`
 					})
-				} else if (error.response.data.message === "This Pip is not active/connected to the internet") {
+				} else if (error.response?.data.message === "This Pip is not active/connected to the internet") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: `${foundPip?.pipName} is not connected to the internet`
 					})
-				}  else if (error.response.data.message === "User hasn't registered this UUID") {
+				}  else if (error.response?.data.message === "User hasn't registered this UUID") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: "Please register this Pip ID"
