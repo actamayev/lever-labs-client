@@ -69,26 +69,26 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 		}
 	},
-	[LOOP_BLOCK_TYPES.DELAY]: {
+	[LOOP_BLOCK_TYPES.WAIT]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
-					.appendField("Delay")
+					.appendField("Wait")
 					.appendField(
 						new Blockly.FieldNumber(1, 0), // value: 1000, min: 0
-						LOOP_BLOCK_TYPES.DELAY
+						LOOP_BLOCK_TYPES.WAIT
 					)
 					.appendField("second")
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
-				this.setTooltip("Delay for a certain number of seconds")
+				this.setTooltip("Wait for a certain number of seconds")
 			},
-			keywords: ["delay", "wait", "pause", "sleep", "seconds", "time"]
+			keywords: ["wait", "pause", "sleep", "seconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.DELAY)
-			return `delay(${delay});\n`  // Changed to standard Arduino delay
+			const wait = block.getFieldValue(LOOP_BLOCK_TYPES.WAIT)
+			return `wait(${wait});\n`
 		}
 	},
 	[LOOP_BLOCK_TYPES.FOREVER_LOOP]: {
