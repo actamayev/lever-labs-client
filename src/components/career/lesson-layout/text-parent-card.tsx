@@ -6,7 +6,7 @@ import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
-import getNavigationManagerClass from "../../../classes/navigation-manager-class"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 interface TextParentCardProps {
 	slide: TextParentMainSlide
@@ -17,11 +17,11 @@ interface TextParentCardProps {
 function TextParentCard(props: TextParentCardProps): React.ReactNode {
 	const { slide, careerUUID } = props
 	const textParentData = slide.data
-	const currentMainSlideIndex = getNavigationManagerClass().getCurrentMainSlideIndex(careerUUID)
-	const mainSlides = getNavigationManagerClass().getMainSlides(careerUUID)
+	const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+	const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
 	const isActive = currentMainSlideIndex === mainSlides.findIndex((s): boolean => s.id === slide.id)
 	// Get the text child index specific to this slide
-	const currentTextChildIndex = getNavigationManagerClass().getCurrentTextChildIndex(careerUUID, slide.id)
+	const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, slide.id)
 
 	return (
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
@@ -35,7 +35,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 				allowSlidePrev={true}
 				allowTouchMove={false}
 				onSwiper={(swiper): void => {
-					getNavigationManagerClass().setTextParentSwiperInstance(careerUUID, slide.id, swiper)
+					navigationManagerClass.setTextParentSwiperInstance(careerUUID, slide.id, swiper)
 					// If this slide is currently active, immediately sync to the correct index
 					if (isActive) {
 						swiper.slideTo(currentTextChildIndex, 0) // Instant slide with no animation
@@ -54,9 +54,9 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 									<NavigationMorphingText
 										staticText={child.staticText}
 										morphingTexts={child.morphingVariants.map((variant): string => variant.text)}
-										currentIndex={getNavigationManagerClass().getCurrentMorphingIndex(careerUUID, child.id)}
+										currentIndex={navigationManagerClass.getCurrentMorphingIndex(careerUUID, child.id)}
 										onAnimationStateChange={(isAnimating): void =>
-											getNavigationManagerClass().setMorphingAnimationState(careerUUID, child.id, isAnimating)
+											navigationManagerClass.setMorphingAnimationState(careerUUID, child.id, isAnimating)
 										}
 									/>
 								) : (

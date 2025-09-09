@@ -14,12 +14,12 @@ import { useCallback, useState } from "react"
 import HubStudentsDialog from "./hub-students-dialog"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
-import getNavigationManagerClass from "../../../classes/navigation-manager-class"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
-	const currentSlide = getNavigationManagerClass().getCurrentMainSlide(careerData.careerUUID)
+	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
 	const handleChatToggle = (): void => {

@@ -7,23 +7,22 @@ import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
 import chatManagerClass from "../../classes/chat-manager-class"
-import getNavigationManagerClass from "../../classes/navigation-manager-class"
+import navigationManagerClass from "../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
-	const navigationManager = getNavigationManagerClass()
-	const currentMainSlideIndex = navigationManager.getCurrentMainSlideIndex(careerUUID)
-	const currentTextChildIndex = navigationManager.getCurrentTextChildIndex(careerUUID)
+	const currentMainSlideIndex = navigationManagerClass.getCurrentMainSlideIndex(careerUUID)
+	const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
 	const gestureActive = useRef(false)
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
-	const mainSlides = navigationManager.getMainSlides(careerUUID)
+	const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
 	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
-	const swiperInstance = navigationManager.getSwiperInstance(careerUUID)
-	const textParentSwiperInstance = navigationManager.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
+	const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
+	const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
-	const isTransitioning = navigationManager.getIsTransitioning(careerUUID)
+	const isTransitioning = navigationManagerClass.getIsTransitioning(careerUUID)
 	const isInFocusMode = studentClass.isInFocusMode
 
 	// Helper function to check if the mouse is over a chat component
@@ -54,7 +53,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	// Helper function to check if we should allow normal scrolling in chat
 	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
-		const currentSlide = navigationManager.getCurrentMainSlide(careerUUID)
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (
 			currentSlide.type !== "challenge" &&
 			!careerQuestClass.isCareerChatToggled(careerUUID)
@@ -67,7 +66,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		}
 		const careerMessages = chatManagerClass.getCareerChatMessages(careerUUID)
 		return !isEmpty(careerMessages)
-	}, [careerUUID, navigationManager])
+	}, [careerUUID])
 
 	useEffect((): () => void => {
 		if (!swiperInstance || isTransitioning) return (): void => {}

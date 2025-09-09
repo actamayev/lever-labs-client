@@ -2,11 +2,11 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { observer } from "mobx-react"
-import getNavigationManagerClass from "../../../classes/navigation-manager-class"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 function TransitionOverlay({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isTransitioning = getNavigationManagerClass().getIsTransitioning(careerData.careerUUID)
-	const duration = getNavigationManagerClass().getCurrentTransitionDuration(careerData.careerUUID)
+	const isTransitioning = navigationManagerClass.getIsTransitioning(careerData.careerUUID)
+	const duration = navigationManagerClass.getCurrentTransitionDuration(careerData.careerUUID)
 
 	return (
 		<AnimatePresence>

@@ -956,13 +956,6 @@ export class NavigationManagerClass {
 	}
 }
 
-let navigationManagerClassInstance: NavigationManagerClass | null = null
+const navigationManagerClass = new NavigationManagerClass()
 
-export const getNavigationManagerClass = (): NavigationManagerClass => {
-	if (!navigationManagerClassInstance) {
-		navigationManagerClassInstance = new NavigationManagerClass()
-	}
-	return navigationManagerClassInstance
-}
-
-export default getNavigationManagerClass
+export default navigationManagerClass
