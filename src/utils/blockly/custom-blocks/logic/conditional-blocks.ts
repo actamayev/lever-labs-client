@@ -1,6 +1,6 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
 import { getCppGenerator } from "../../../cpp/cpp-generator"

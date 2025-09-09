@@ -1,6 +1,6 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"

@@ -1,6 +1,6 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { logicCategoryColour } from "../../../constants/constants"
 import { START_BLOCK_TYPES } from "@bluedotrobots/common-ts/types/blockly/logic"
 

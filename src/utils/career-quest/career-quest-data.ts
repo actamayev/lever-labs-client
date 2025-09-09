@@ -1,6 +1,5 @@
 "use client"
 
-
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"

@@ -1,4 +1,3 @@
-// lib/auth-server.ts
 import { headers } from 'next/headers'
 import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 

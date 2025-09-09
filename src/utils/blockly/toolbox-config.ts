@@ -1,6 +1,6 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { ledCategoryColour, motorsCategoryColour, speakerCategoryColour } from "../constants/constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"

@@ -1,6 +1,6 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { ReactNode } from "react"
 import {
 	CareerUUID,
@@ -11,7 +11,7 @@ import { action, makeAutoObservable, observable } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+// Dynamic import - career definitions will be loaded on-demand
 import { getContentComponent } from "../utils/career-quest/career-quest-content"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
@@ -47,7 +47,7 @@ class CareerQuestClass {
 	constructor() {
 		makeAutoObservable(this)
 
-		this.initializeAllCareers(CAREER_DEFINITIONS)
+		// Career definitions will be loaded on-demand when needed
 	}
 
 	// ========================================
@@ -147,12 +147,13 @@ class CareerQuestClass {
 		)
 	})
 
-	public reinitialize = action((): void => {
+	public reinitialize = action(async (): Promise<void> => {
 		// Clear existing data
 		this.careers.clear()
 		this.isDoneInitializing = false
 
 		// Re-initialize with fresh data
+		const { CAREER_DEFINITIONS } = await import("../utils/career-quest/career-quest-data")
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 

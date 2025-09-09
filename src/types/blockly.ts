@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { BlockNames } from "@bluedotrobots/common-ts/types/blockly/blockly"
 import { BlocklyCategoryName, ParentCategoryName } from "@bluedotrobots/common-ts/types/blockly/block-categories"
 import { ToolboxItem } from "@bluedotrobots/common-ts/types/sandbox"
