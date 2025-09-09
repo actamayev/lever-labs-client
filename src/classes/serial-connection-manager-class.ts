@@ -2,7 +2,7 @@
 "use client"
 
 import { makeAutoObservable, runInAction } from "mobx"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"

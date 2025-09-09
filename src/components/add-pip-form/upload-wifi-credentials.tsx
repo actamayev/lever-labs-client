@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import { WiFiConnectionStatus } from "@bluedotrobots/common-ts/protocol"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 
 function UploadWiFiCredentials(): React.ReactNode {

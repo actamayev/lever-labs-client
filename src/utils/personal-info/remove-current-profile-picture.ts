@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function removeCurrentProfilePicture(
 	setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,7 +13,7 @@ export default async function removeCurrentProfilePicture(
 	try {
 		personalInfoClass.setProfilePictureUrl(null)
 		setIsDeletingCurrentPicture(false)
-		const response = await blueDotApiClientClass.personalInfoDataService.removeCurrentProfilePicture()
+		const response = await blueDotApiClient.personalInfoDataService.removeCurrentProfilePicture()
 
 		if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
 			return

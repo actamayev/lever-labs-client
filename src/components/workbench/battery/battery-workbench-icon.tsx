@@ -13,14 +13,15 @@ function BatteryWorkbenchIcon(): React.ReactNode {
 	if (workbenchClass.batteryData?.isCharging || pipClass.pipPluggedInSerial) {
 		return <BatteryCharging className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
 	}
-	if (!workbenchClass.batteryData?.stateOfCharge) {
+	const batteryData = workbenchClass.batteryData
+	if (!batteryData?.stateOfCharge) {
 		return <BatteryFull className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
 	}
-	if (workbenchClass.batteryData.stateOfCharge <= 20) {
+	if (batteryData.stateOfCharge <= 20) {
 		return <BatteryWarning className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
-	} else if (workbenchClass.batteryData.stateOfCharge <= 40) {
+	} else if (batteryData.stateOfCharge <= 40) {
 		return <BatteryLow className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
-	} else if (workbenchClass.batteryData.stateOfCharge <= 70) {
+	} else if (batteryData.stateOfCharge <= 70) {
 		return <BatteryMedium className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
 	}
 	return <BatteryFull className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>

@@ -21,7 +21,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      // Add explicit path mapping for your package (fallback)
+      "@bluedotrobots/common-ts/*": ["./node_modules/@bluedotrobots/common-ts/dist/src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -33,18 +35,22 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "noImplicitThis": true,
-    "verbatimModuleSyntax": false
+    "verbatimModuleSyntax": false,
+    // Ensure proper resolution of exports
+    "allowImportingTsExtensions": false,
+    "resolvePackageJsonExports": true,
+    "resolvePackageJsonImports": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "./tailwind.config.ts",
+    "./tailwind.config.ts"
   ],
   "exclude": [
     "node_modules",
-    "eslint.config.mjs",
+    "eslint.config.mjs", 
     "postcss.config.js",
     "next.config.js",
     "keepalive-worker.js"

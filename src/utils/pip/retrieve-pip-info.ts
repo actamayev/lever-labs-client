@@ -6,7 +6,7 @@ import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import { isErrorResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function retrievePipInfo(): Promise<void> {
 	try {
@@ -19,7 +19,7 @@ export default async function retrievePipInfo(): Promise<void> {
 
 		pipClass.setIsRetrievingPipData(true)
 
-		const pipDataResponse = await blueDotApiClientClass.pipDataService.retrievePreviouslyAddedPips()
+		const pipDataResponse = await blueDotApiClient.pipDataService.retrievePreviouslyAddedPips()
 		if (!isEqual(pipDataResponse.status, 200) || isErrorResponse(pipDataResponse.data)) {
 			throw Error ("Unable to retrieve pip Data")
 		}

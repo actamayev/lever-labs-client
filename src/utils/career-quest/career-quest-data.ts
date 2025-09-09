@@ -1,14 +1,16 @@
 "use client"
 
-
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { CareerType, CareerUUID, MeetPipTriggerType, OBSTACLE_AVOIDANCE_CHALLENGE_1, OBSTACLE_AVOIDANCE_CHALLENGE_2,
-	OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_4, OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts"
 import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
 import careerQuestTrigger from "./career-quest-trigger"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 import { createImage } from "./create-media-helpers"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
+import { OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_1,
+	OBSTACLE_AVOIDANCE_CHALLENGE_2, OBSTACLE_AVOIDANCE_CHALLENGE_4,
+	OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts/types/cq-challenge-data"
 
 export const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,

@@ -3,8 +3,8 @@
 import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
-import { cppGenerator } from "../../../cpp/cpp-generator"
-import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@bluedotrobots/common-ts"
+import getCppGenerator from "../../../cpp/cpp-generator"
+import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
 export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 	[MATH_BLOCK_TYPES.COMPARE]: {
@@ -43,8 +43,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 			}
 			const operator = OPERATORS[block.getFieldValue(MATH_FIELD_VALUES.COMPARE_OP)]
 			const order = Order.RELATIONAL
-			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.COMPARE_A, order) || "0"
-			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.COMPARE_B, order) || "0"
+			const argument0 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.COMPARE_A, order) || "0"
+			const argument1 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.COMPARE_B, order) || "0"
 			return [`${argument0} ${operator} ${argument1}`, order]
 		}
 	},
@@ -73,8 +73,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 		generator: (block: Blockly.Block): [string, number] => {
 			const operator = block.getFieldValue(MATH_FIELD_VALUES.OPERATION_OP) === "AND" ? "&&" : "||"
 			const order = operator === "&&" ? Order.LOGICAL_AND : Order.LOGICAL_OR
-			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_A, order) || "false"
-			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.OPERATION_B, order) || "false"
+			const argument0 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.OPERATION_A, order) || "false"
+			const argument1 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.OPERATION_B, order) || "false"
 			return [`(${argument0}) ${operator} (${argument1})`, order]
 		}
 	},
@@ -93,7 +93,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["not", "negate", "invert", "boolean", "logic", "condition"]
 		},
 		generator: (block: Blockly.Block): [string, number] => {
-			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.NEGATE_BOOL, Order.LOGICAL_NOT) || "false"
+			const argument0 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.NEGATE_BOOL, Order.LOGICAL_NOT) || "false"
 			return [`!${argument0}`, Order.LOGICAL_NOT]
 		}
 	},
@@ -150,8 +150,8 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 			const tuple = OPERATORS[block.getFieldValue(MATH_FIELD_VALUES.ARITHMETIC_OP)]
 			const operator = tuple[0]
 			const order = tuple[1]
-			const argument0 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_A, order) || "0"
-			const argument1 = cppGenerator.valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_B, order) || "0"
+			const argument0 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_A, order) || "0"
+			const argument1 = getCppGenerator().valueToCode(block, MATH_FIELD_VALUES.ARITHMETIC_B, order) || "0"
 
 			if (operator === "pow") {
 				return [`pow(${argument0}, ${argument1})`, Order.FUNCTION_CALL]
@@ -190,7 +190,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 		// eslint-disable-next-line complexity
 		generator: (block: Blockly.Block): [string, number] => {
 			const operator = block.getFieldValue("OP")
-			const arg = cppGenerator.valueToCode(block, "NUM", Order.NONE) || "0"
+			const arg = getCppGenerator().valueToCode(block, "NUM", Order.NONE) || "0"
 
 			switch (operator) {
 				case "NEG":

@@ -1,12 +1,13 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { CareerUUID, ClassCode, TeacherViewHubData } from "@bluedotrobots/common-ts"
+import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function createHub(
 	classCode: ClassCode,
@@ -17,7 +18,7 @@ export default async function createHub(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const createHubResponse = await blueDotApiClientClass.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
+		const createHubResponse = await blueDotApiClient.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
 
 		if (!isEqual(createHubResponse.status, 200) || isNonSuccessResponse(createHubResponse.data)) {
 			throw Error("Unable to create hub")

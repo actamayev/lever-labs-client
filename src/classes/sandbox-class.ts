@@ -2,10 +2,11 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, SandboxProjectUUID, SandboxProject, SandboxChatMessage,
-	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
+import { BlocklyJson, SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
+import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
+	SandboxChatbotStreamStartOrCompleteEvent } from "@bluedotrobots/common-ts/types/chat"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
@@ -26,15 +27,16 @@ class SandboxClass {
 		this.hasRetrievedAllSandboxProjects = newHasRetrievedAllSandboxProjects
 	})
 
-	public setSandboxProjects = action((sandboxProjects: SandboxProject[]): void => {
-		sandboxProjects.forEach((sandboxProject): void => this.addSandboxProject(sandboxProject))
+	public setSandboxProjects = action(async (sandboxProjects: SandboxProject[]): Promise<void> => {
+		await Promise.all(sandboxProjects.map((sandboxProject): Promise<void> => this.addSandboxProject(sandboxProject)))
 		this.setHasRetrievedAllSandboxProjects(true)
 		this.setIsRetrievingAllSandboxProjects(false)
 	})
 
-	public addSandboxProject = action((sandboxProject: SandboxProject): void => {
+	public addSandboxProject = action(async (sandboxProject: SandboxProject): Promise<void> => {
 		// Normalize the sandboxJson to ensure consistent format
 		const normalizedSandboxJson = normalizeSandboxJson(sandboxProject.sandboxJson)
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		// Add streaming state to the project
 		const projectWithStreaming: SandboxProjectWithStreaming = {
 			...sandboxProject,
@@ -42,7 +44,7 @@ class SandboxClass {
 			isStreaming: false,
 			isWaitingForResponse: false,
 			currentStreamingMessageId: null,
-			cppCode: generateCppFromJson(normalizedSandboxJson)
+			cppCode: await getCppGenerator().generateCppFromJson(normalizedSandboxJson)
 		}
 		this.sandboxProjects.set(sandboxProject.sandboxProjectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.sandboxProjectUUID, false)
@@ -84,12 +86,13 @@ class SandboxClass {
 	})
 
 	// Method to update project JSON in the store
-	public updateProjectJson = action((projectUUID: SandboxProjectUUID, newJson: BlocklyJson): void => {
+	public updateProjectJson = action(async (projectUUID: SandboxProjectUUID, newJson: BlocklyJson): Promise<void> => {
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		project.sandboxJson = newJson
-		project.cppCode = generateCppFromJson(newJson)
+		project.cppCode = await getCppGenerator().generateCppFromJson(newJson)
 	})
 
 	public getCppCode = action((projectUUID: SandboxProjectUUID): string => {

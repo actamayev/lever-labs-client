@@ -1,7 +1,6 @@
 "use client"
 
 import { ReactNode, useEffect } from "react"
-import { AnimatePresence } from "framer-motion"
 import { Slide, ToastContainer } from "react-toastify"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 
@@ -10,11 +9,8 @@ import authClass from "../src/classes/auth-class"
 import personalInfoClass from "../src/classes/personal-info-class"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
-import ConditionalLayout from "../src/components/layouts/conditional-layout"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
-import useEffectLogoutListener from "@/hooks/listeners/use-effect-logout-listener"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
-import useEffectSiteThemeListener from "@/hooks/listeners/use-effect-site-theme-listener"
 
 const retrieveInfo = async (): Promise<void> => {
 	// Only retrieve if user is authenticated but we don't have personal info yet
@@ -32,8 +28,6 @@ const retrieveInfo = async (): Promise<void> => {
 }
 
 export default function Providers({ children }: { children: ReactNode }): React.ReactNode {
-	useEffectLogoutListener()
-	useEffectSiteThemeListener()
 	useInitializeGoogleAnalytics()
 
 	// Smart data retrieval - only if needed
@@ -43,11 +37,7 @@ export default function Providers({ children }: { children: ReactNode }): React.
 
 	return (
 		<GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
-			<ConditionalLayout>
-				<AnimatePresence mode="wait">
-					{children}
-				</AnimatePresence>
-			</ConditionalLayout>
+			{children}
 			<ToastContainer
 				position="bottom-right"
 				autoClose={5000}

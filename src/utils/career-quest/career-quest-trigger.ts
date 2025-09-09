@@ -1,10 +1,13 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { CareerType, MessageBuilder, ValidTriggerMessageType } from "@bluedotrobots/common-ts"
+import { CareerType, ValidTriggerMessageType } from "@bluedotrobots/common-ts/protocol"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
+import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
+import { AxiosResponse } from "axios"
 
 export default async function careerQuestTrigger(
 	careerType: CareerType,
@@ -14,12 +17,13 @@ export default async function careerQuestTrigger(
 
 	await sendDataToSerialOrApiTemplate({
 		buffer,
-		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.careerQuestDataService.careerTrigger> => {
-			if (isNull(pipClass.selectedPip)) {
+		dataServiceEndpoint: (): Promise<AxiosResponse<AllCommonResponses>>=> {
+			const selectedPip = pipClass.selectedPip
+			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClientClass.careerQuestDataService.careerTrigger(
-				careerType, triggerMessageType, pipClass.selectedPip.pipUUID
+			return blueDotApiClient.careerQuestDataService.careerTrigger(
+				careerType, triggerMessageType, selectedPip.pipUUID
 			)
 		},
 		errorTitle: "Unable to trigger career message at this time",

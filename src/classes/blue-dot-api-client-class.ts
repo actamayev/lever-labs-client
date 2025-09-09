@@ -33,6 +33,6 @@ class BlueDotApiClient {
 	// No logout method needed: cookies are cleared by server endpoint
 }
 
-const blueDotApiClientClass = new BlueDotApiClient()
+const blueDotApiClient = new BlueDotApiClient()
 
-export default blueDotApiClientClass
+export default blueDotApiClient

@@ -1,9 +1,10 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, ClassCode, ErrorResponse,
-	NonSuccessResponse, StudentClassroomData, StudentViewHubData } from "@bluedotrobots/common-ts"
+import { AllCommonResponses, ErrorResponse,
+	NonSuccessResponse, StudentClassroomData } from "@bluedotrobots/common-ts/types/api"
+import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { UUID } from "crypto"
+import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
 
 export default class StudentDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -22,19 +23,19 @@ export default class StudentDataService extends BaseDataService {
 		)
 	}
 
-	async joinHub(classCode: ClassCode, hubId: UUID): Promise<AxiosResponse<StudentViewHubData | NonSuccessResponse>> {
+	async joinHub(classCode: ClassCode, hubId: HubUUID): Promise<AxiosResponse<StudentViewHubData | NonSuccessResponse>> {
 		return await this.httpClient.http.post<StudentViewHubData | NonSuccessResponse>(
 			this.buildUrl(`/join-hub/${classCode}`), { hubId }
 		)
 	}
 
-	async leaveHub(classCode: ClassCode, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+	async leaveHub(classCode: ClassCode, hubId: HubUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/leave-hub/${classCode}`), { hubId }
 		)
 	}
 
-	async sendDinoScore(score: number, hubId: UUID): Promise<AxiosResponse<AllCommonResponses>> {
+	async sendDinoScore(score: number, hubId: HubUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl("/send-dino-score"), { score, hubId }
 		)

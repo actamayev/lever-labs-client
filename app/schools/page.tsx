@@ -1,5 +1,6 @@
 import SchoolsPage from "../../src/page-components/schools"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 
 export const metadata = createMetadata({
 	title: "Schools | Blue Dot Robots",
@@ -10,5 +11,9 @@ export const metadata = createMetadata({
 })
 
 export default function Schools(): React.ReactNode {
-	return <SchoolsPage />
+	return (
+		<LayoutOnlyWrapper>
+			<SchoolsPage />
+		</LayoutOnlyWrapper>
+	)
 }

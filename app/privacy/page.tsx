@@ -1,4 +1,5 @@
 import PrivacyPage from "../../src/page-components/privacy"
+import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -9,5 +10,9 @@ export const metadata = createMetadata({
 })
 
 export default function Privacy(): React.ReactNode {
-	return <PrivacyPage />
+	return (
+		<LayoutOnlyWrapper>
+			<PrivacyPage />
+		</LayoutOnlyWrapper>
+	)
 }

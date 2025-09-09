@@ -1,11 +1,13 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
+import { AxiosResponse } from "axios"
+import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
 
 export default async function createDisplayMessage(buffer: Uint8Array): Promise<void> {
 	const displayBufferMessage = MessageBuilder.createDisplayBufferMessage(buffer)
@@ -18,13 +20,14 @@ export default async function createDisplayMessage(buffer: Uint8Array): Promise<
 
 	await sendDataToSerialOrApiTemplate({
 		buffer: displayBufferMessage,
-		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.garageDataService.createDisplayBuffer> => {
-			if (isNull(pipClass.selectedPip)) {
+		dataServiceEndpoint: (): Promise<AxiosResponse<AllCommonResponses>>=> {
+			const selectedPip = pipClass.selectedPip
+			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClientClass.garageDataService.createDisplayBuffer(
+			return blueDotApiClient.garageDataService.createDisplayBuffer(
 				buffer,
-				pipClass.selectedPip.pipUUID
+				selectedPip.pipUUID
 			)
 		},
 		errorTitle: "Unable to send display buffer to Pip at this time",

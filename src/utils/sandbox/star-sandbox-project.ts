@@ -2,12 +2,12 @@
 
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function starSandboxProject(projectUUID: SandboxProjectUUID) : Promise<void> {
 	try {
@@ -15,7 +15,7 @@ export default async function starSandboxProject(projectUUID: SandboxProjectUUID
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const starSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.starSandboxProject(
+		const starSandboxProjectResponse = await blueDotApiClient.sandboxDataService.starSandboxProject(
 			project.sandboxProjectUUID,
 			!project.isStarred
 		)

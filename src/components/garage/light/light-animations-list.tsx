@@ -9,7 +9,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu"
-import { LightAnimation } from "@bluedotrobots/common-ts"
+import { LightAnimation } from "@bluedotrobots/common-ts/types/garage"
 import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"

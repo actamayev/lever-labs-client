@@ -5,7 +5,7 @@ import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
@@ -30,7 +30,7 @@ export default async function changePassword(
 			return "New password must be at least 6 characters"
 		}
 
-		const updatePasswordResponse = await blueDotApiClientClass.personalInfoDataService.changePassword(
+		const updatePasswordResponse = await blueDotApiClient.personalInfoDataService.changePassword(
 			oldPassword, newPassword
 		)
 

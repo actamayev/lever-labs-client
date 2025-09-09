@@ -108,7 +108,6 @@ class ToastClass {
 	}
 }
 
-// Export singleton instance
 const toastClass = new ToastClass()
 
 export default toastClass

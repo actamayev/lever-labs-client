@@ -6,7 +6,7 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
@@ -145,7 +145,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	}, [])
 
 	useEffect((): void => {
-		initializeBlocks()
+		void initializeBlocks()
 		setupToolbox()
 		// TODO 12/1/24: Fix, not working
 

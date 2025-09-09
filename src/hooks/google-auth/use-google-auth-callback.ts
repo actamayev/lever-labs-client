@@ -4,7 +4,6 @@ import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
-import { SiteThemes } from "@bluedotrobots/common-ts"
 import { CredentialResponse } from "@react-oauth/google"
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
@@ -13,7 +12,7 @@ import teacherClass from "../../classes/teacher-class"
 import { isErrorResponses } from "../../utils/type-checks"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
@@ -31,11 +30,9 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				typeof window === "undefined"
 			) return
 
-			const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-			let siteTheme: SiteThemes = "dark"
-			if (siteThemeFromStorage === "light") siteTheme = "light"
+			const siteTheme = personalInfoClass.defaultSiteTheme
 
-			const googleCallbackResponse = await blueDotApiClientClass.authDataService.googleLoginCallback(
+			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
 

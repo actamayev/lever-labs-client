@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { LoginRequest } from "@bluedotrobots/common-ts"
+import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
 import pipClass from "../../../classes/pip-class"
 import authClass from "../../../classes/auth-class"
 import studentClass from "../../../classes/student-class"
@@ -9,7 +9,7 @@ import teacherClass from "../../../classes/teacher-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
 import confirmLoginFields from "../confirm-login-fields"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
@@ -23,7 +23,7 @@ export default async function loginSubmit(
 		if (areCredentialsValid === false) return false
 
 		authClass.setAuthenticating(true)
-		const response = await blueDotApiClientClass.authDataService.login(loginInformation)
+		const response = await blueDotApiClient.authDataService.login(loginInformation)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to log in. Please reload the page and try again")
 			return false

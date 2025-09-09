@@ -1,7 +1,7 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MotorControlInput } from "@bluedotrobots/common-ts"
+import { MotorControlInput } from "@bluedotrobots/common-ts/types/garage"
 import authClass from "../../classes/auth-class"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
@@ -59,18 +59,19 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	garageClass.updatePressedDirections(newDirections)
 
 	if (authClass.isFinishedWithSignup === false) return
+	const selectedPip = pipClass.selectedPip
 
-	if (isNull(pipClass.selectedPip)) {
+	if (isNull(selectedPip)) {
 		return toastClass.negative({ title: "Please add a Pip" })
 	}
-	if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-		return toastClass.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
+	if (selectedPip.pipConnectionStatus === "offline") {
+		return toastClass.negative({ title: `Please connect ${selectedPip.pipName} to the internet` })
 	}
 
 	// Emit motor control via socket
 	socketClass.emitToServer("motor-control", {
 		motorControl,
-		pipUUID: pipClass.selectedPip.pipUUID,
+		pipUUID: selectedPip.pipUUID,
 		motorThrottlePercent: garageClass.motorThrottlePercent
 	})
 }

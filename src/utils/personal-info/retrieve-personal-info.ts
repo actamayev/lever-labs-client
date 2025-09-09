@@ -5,7 +5,7 @@ import { isErrorResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import teacherClass from "../../classes/teacher-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function retrievePersonalInfo(): Promise<void> {
@@ -18,7 +18,7 @@ export default async function retrievePersonalInfo(): Promise<void> {
 
 		personalInfoClass.setIsRetrievingPersonalDetails(true)
 
-		const personalInfoResponse = await blueDotApiClientClass.personalInfoDataService.retrievePersonalInfo()
+		const personalInfoResponse = await blueDotApiClient.personalInfoDataService.retrievePersonalInfo()
 		if (!isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
 			throw Error ("Unable to retrieve personal info")
 		}

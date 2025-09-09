@@ -2,7 +2,7 @@
 
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts"
+import { LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"

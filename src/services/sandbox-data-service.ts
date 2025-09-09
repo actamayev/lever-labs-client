@@ -1,6 +1,8 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, BlocklyJson, CreateSandboxProjectResponse, ErrorResponse, PipUUID, SandboxProjectUUID,
-	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts"
+import { AllCommonResponses, CreateSandboxProjectResponse, ErrorResponse,
+	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@bluedotrobots/common-ts/types/api"
+import { SandboxProjectUUID, PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 

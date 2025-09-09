@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function uploadProfilePicture(
 	selectedImage: File,
@@ -12,7 +12,7 @@ export default async function uploadProfilePicture(
 ) : Promise<void> {
 	try {
 		setIsLoading(true)
-		const uploadProfilePictureResponse = await blueDotApiClientClass.personalInfoDataService.uploadProfilePicture(selectedImage)
+		const uploadProfilePictureResponse = await blueDotApiClient.personalInfoDataService.uploadProfilePicture(selectedImage)
 		if (!isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {
 			return
 		}

@@ -1,6 +1,6 @@
 "use client"
 
-import { PipStatusUpdate } from "@bluedotrobots/common-ts"
+import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import workbenchClass from "../../classes/workbench-class"

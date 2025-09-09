@@ -7,7 +7,7 @@ import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BotMessageSquare, PartyPopper, X } from "lucide-react"
 import HintButton from "./hint-button"
 import { cn } from "../../lib/shadcn/utils"
@@ -132,6 +132,8 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 		)
 	}
 
+	const profilePictureUrl = personalInfoClass.profilePictureUrl
+
 	return (
 		<div
 			key={message.id}
@@ -169,9 +171,9 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(personalInfoClass.profilePictureUrl) ? (
+					{!isNull(profilePictureUrl) ? (
 						<Image
-							src={personalInfoClass.profilePictureUrl}
+							src={profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}

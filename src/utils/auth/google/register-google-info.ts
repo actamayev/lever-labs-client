@@ -2,11 +2,11 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { NewGoogleInfoRequest, SiteThemes } from "@bluedotrobots/common-ts"
+import { NewGoogleInfoRequest } from "@bluedotrobots/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
@@ -22,16 +22,14 @@ export default async function registerGoogleInfo(
 			age: googleInfo.age,
 			username: googleInfo.username
 		}
-		const response = await blueDotApiClientClass.authDataService.registerGoogleInfo(cleanGoogleData)
+		const response = await blueDotApiClient.authDataService.registerGoogleInfo(cleanGoogleData)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to register username. Please reload the page and try again")
 			return false
 		}
 		if (typeof window === "undefined") return false
 
-		const siteThemeFromStorage = localStorage.getItem("defaultSiteTheme")
-		let siteTheme: SiteThemes = "dark"
-		if (siteThemeFromStorage === "light") siteTheme = "light"
+		const siteTheme = personalInfoClass.defaultSiteTheme
 		personalInfoClass.setRegisteredValues(
 			googleInfo.username,
 			response.data.email,

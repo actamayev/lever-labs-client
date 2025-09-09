@@ -2,12 +2,13 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { CppParser, MessageBuilder } from "@bluedotrobots/common-ts"
+import { CppParser } from "@bluedotrobots/common-ts/parsers"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
@@ -44,7 +45,9 @@ export default async function sendCppToPip(
 			return
 		}
 
-		if (isNull(pipClass.selectedPip)) {
+		const selectedPip = pipClass.selectedPip
+
+		if (isNull(selectedPip)) {
 			return toastClass.neutral({
 				title: "You have not connected to a Pip",
 				description: "Please connect to a Pip to upload code"
@@ -53,25 +56,25 @@ export default async function sendCppToPip(
 		if (pipClass.isSendingCppToPip === true) {
 			return toastClass.neutral({
 				title: "Currently sending code to Pip",
-				description: `We're beaming your code over to ${pipClass.selectedPip.pipName} as fast as we can!`
+				description: `We're beaming your code over to ${selectedPip.pipName} as fast as we can!`
 			})
 		}
 
-		if (pipClass.selectedPip.pipConnectionStatus === "offline") {
+		if (selectedPip.pipConnectionStatus === "offline") {
 			return toastClass.negative({
-				title: `${pipClass.selectedPip.pipName} is not online`,
-				description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code`
+				title: `${selectedPip.pipName} is not online`,
+				description: `Please connect ${selectedPip.pipName} to the internet to upload code`
 			})
-		} else if (pipClass.selectedPip.pipConnectionStatus === "connected to other user") {
+		} else if (selectedPip.pipConnectionStatus === "connected to other user") {
 			return toastClass.negative({
-				title: `Unable to upload code to ${pipClass.selectedPip.pipName} at this time`,
-				description: `${pipClass.selectedPip.pipName} is connected to another user`
+				title: `Unable to upload code to ${selectedPip.pipName} at this time`,
+				description: `${selectedPip.pipName} is connected to another user`
 			})
 		}
 		pipClass.setIsSendingCppToPip(true)
 
-		const connectToPipResponse = await blueDotApiClientClass.sandboxDataService.sendSandboxCodeToPip(
-			pipClass.selectedPip.pipUUID, cppCode
+		const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
+			selectedPip.pipUUID, cppCode
 		)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {

@@ -3,10 +3,11 @@
 import { AxiosError } from "axios"
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { AddPipData, PipData } from "@bluedotrobots/common-ts"
+import { PipData } from "@bluedotrobots/common-ts/types/pip"
+import { AddPipData } from "@bluedotrobots/common-ts/types/api"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
@@ -45,7 +46,7 @@ export default async function useAddPip(getFormValues: () => IncompletePipData):
 			pipName: getFormValues().pipName,
 		}
 
-		const addPipDataResponse = await blueDotApiClientClass.pipDataService.addPip(dataToSend)
+		const addPipDataResponse = await blueDotApiClient.pipDataService.addPip(dataToSend)
 
 		if (!isEqual(addPipDataResponse.status, 200) || isNonSuccessResponse(addPipDataResponse.data)) {
 			throw new Error("Add Pip failed")
@@ -63,13 +64,13 @@ export default async function useAddPip(getFormValues: () => IncompletePipData):
 		if (error instanceof AxiosError) {
 			if (isMessageResponse(error.response?.data)) {
 				// eslint-disable-next-line max-depth
-				if (error.response.data.message === "User already registered this Pip UUID") {
+				if (error.response?.data.message === "User already registered this Pip UUID") {
 					toastClass.negative({
 						title: "Unable to add Pip ID",
 						description: "You have a Pip with this ID"
 					})
 					return false
-				} else if (error.response.data.message === "Pip UUID doesn't exist") {
+				} else if (error.response?.data.message === "Pip UUID doesn't exist") {
 					toastClass.negative({
 						title: "Unable to add Pip ID",
 						description: "The Pip ID you entered does not exist"

@@ -1,7 +1,8 @@
 import { ReactNode } from "react"
 import { LucideIcon } from "lucide-react"
-import { BinaryEvaluationResult, CareerUUID, ChallengeUUID,
-	ChatMessageRole, CqChallengeData, SandboxChatMessage } from "@bluedotrobots/common-ts"
+import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
+import { BinaryEvaluationResult, ChatMessageRole, SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 
 declare global {
 	type ComponentName =

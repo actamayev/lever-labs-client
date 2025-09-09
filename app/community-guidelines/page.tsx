@@ -1,4 +1,5 @@
 import CommunityGuidelines from "../../src/page-components/community-guidelines"
+import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -10,5 +11,9 @@ export const metadata = createMetadata({
 })
 
 export default function CommunityGuidelinesPage(): React.ReactNode {
-	return <CommunityGuidelines />
+	return (
+		<LayoutOnlyWrapper>
+			<CommunityGuidelines />
+		</LayoutOnlyWrapper>
+	)
 }

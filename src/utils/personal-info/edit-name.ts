@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponses } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function editName(newName: string) : Promise<void> {
 	try {
@@ -14,7 +14,7 @@ export default async function editName(newName: string) : Promise<void> {
 			newName === personalInfoClass.name
 		) return
 
-		const updateNameResponse = await blueDotApiClientClass.personalInfoDataService.updateName(newName)
+		const updateNameResponse = await blueDotApiClient.personalInfoDataService.updateName(newName)
 		if (!isEqual(updateNameResponse.status, 200) || isErrorResponses(updateNameResponse.data)) {
 			throw Error ("Unable to edit name")
 		}

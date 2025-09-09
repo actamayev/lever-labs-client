@@ -3,11 +3,11 @@
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function joinClassroom(
@@ -18,7 +18,7 @@ export default async function joinClassroom(
 	try {
 		if (authClass.isFinishedWithSignup === false) return false
 
-		const joinClassResponse = await blueDotApiClientClass.studentDataService.joinClass(classCode)
+		const joinClassResponse = await blueDotApiClient.studentDataService.joinClass(classCode)
 
 		if (!isEqual(joinClassResponse.status, 200) || isNonSuccessResponse(joinClassResponse.data)) {
 			throw Error("Unable to join class")

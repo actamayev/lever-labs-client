@@ -25,7 +25,6 @@ class AuthClass {
 		return this._isAuthenticated && this._hasCompletedSignup
 	}
 
-
 	// Update auth state from server (called by components that receive server auth state)
 	public setAuthState = action((authState: {
 		isAuthenticated: boolean
@@ -62,4 +61,5 @@ class AuthClass {
 }
 
 const authClass = new AuthClass()
+
 export default authClass

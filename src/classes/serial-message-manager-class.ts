@@ -1,7 +1,9 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPMessage, PipUUID, SavedWiFiNetwork, ScannedWiFiNetworkItem, WiFiConnectionStatus } from "@bluedotrobots/common-ts"
+import { ESPMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
+import { WiFiConnectionStatus } from "@bluedotrobots/common-ts/protocol"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import pipClass from "./pip-class"
 import toastClass from "./toast-class"
 import gamesClass from "./games-class"

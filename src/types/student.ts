@@ -1,4 +1,5 @@
-import { StudentClassroomData, StudentViewHubData } from "@bluedotrobots/common-ts"
+import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { StudentClassroomData } from "@bluedotrobots/common-ts/types/api"
 
 declare global {
 	interface ExtendedStudentViewHubData extends StudentViewHubData {

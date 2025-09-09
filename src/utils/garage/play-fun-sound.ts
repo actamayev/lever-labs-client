@@ -1,7 +1,9 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { FunSounds, MessageBuilder, tuneToSoundType } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
+import { tuneToSoundType } from "@bluedotrobots/common-ts/protocol"
 import toastClass from "../../classes/toast-class"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"
@@ -18,9 +20,10 @@ export default async function playFunSound(sound: FunSounds): Promise<void> {
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = pipClass.selectedPip
 		if (
-			isNull(pipClass.selectedPip) ||
-			(pipClass.selectedPip.pipConnectionStatus === "offline")
+			isNull(selectedPip) ||
+			(selectedPip.pipConnectionStatus === "offline")
 		) {
 			return toastClass.negative({
 				title: "Pip not connected",
@@ -28,7 +31,7 @@ export default async function playFunSound(sound: FunSounds): Promise<void> {
 			})
 		}
 		socketClass.emitToServer("play-fun-sound", {
-			pipUUID: pipClass.selectedPip.pipUUID,
+			pipUUID: selectedPip.pipUUID,
 			sound
 		})
 		return

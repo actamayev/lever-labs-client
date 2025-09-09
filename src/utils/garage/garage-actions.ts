@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
@@ -11,6 +11,7 @@ export default function garageActions(): {
 	deactivateAction: (action: Actions) => Promise<void>
 } {
 	const activateAction = async (action: Actions): Promise<void> => {
+		const selectedPip = pipClass.selectedPip
 		switch (action) {
 			case "headlights":
 				garageClass.setAreHeadlightsOn(true)
@@ -22,11 +23,11 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!selectedPip ||
+				selectedPip.pipConnectionStatus === "offline"
 				) return
 				socketClass.emitToServer("headlight-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+					pipUUID: selectedPip.pipUUID,
 					areHeadlightsOn: true
 				})
 				return
@@ -41,11 +42,11 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!selectedPip ||
+				selectedPip.pipConnectionStatus === "offline"
 				) return
 				socketClass.emitToServer("horn-sound-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+					pipUUID: selectedPip.pipUUID,
 					hornStatus: true
 				})
 				return
@@ -56,6 +57,7 @@ export default function garageActions(): {
    * Handle turning an action off
    */
 	const deactivateAction = async (action: Actions): Promise<void> => {
+		const selectedPip = pipClass.selectedPip
 		switch (action) {
 			case "headlights":
 				garageClass.setAreHeadlightsOn(false)
@@ -67,11 +69,11 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!selectedPip ||
+				selectedPip.pipConnectionStatus === "offline"
 				) return
 				socketClass.emitToServer("headlight-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+					pipUUID: selectedPip.pipUUID,
 					areHeadlightsOn: false
 				})
 				return
@@ -85,11 +87,11 @@ export default function garageActions(): {
 					return
 				}
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!selectedPip ||
+				selectedPip.pipConnectionStatus === "offline"
 				) return
 				socketClass.emitToServer("horn-sound-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+					pipUUID: selectedPip.pipUUID,
 					hornStatus: false
 				})
 				return

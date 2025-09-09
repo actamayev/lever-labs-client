@@ -1,4 +1,4 @@
-import { SocketEventPayloadMap, SocketEvents } from "@bluedotrobots/common-ts"
+import { SocketEventPayloadMap, SocketEvents } from "@bluedotrobots/common-ts/types/socket"
 import sandboxClass from "../../classes/sandbox-class"
 import studentClass from "../../classes/student-class"
 import workbenchClass from "../../classes/workbench-class"

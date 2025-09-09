@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useState, useRef, useEffect, useCallback } from "react"
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import careerQuestClass from "../../../classes/career-quest-class"

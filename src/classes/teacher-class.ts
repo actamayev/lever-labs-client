@@ -1,14 +1,15 @@
 "use client"
-
-import { UUID } from "crypto"
+import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
-import { BasicTeacherClassroomData, DetailedClassroomData, ClassCode, TeacherViewHubData,
-	TeacherData, StudentJoinedClassroom, StudentJoinedHub, StudentLeftHub } from "@bluedotrobots/common-ts"
+import { BasicTeacherClassroomData, DetailedClassroomData,
+	TeacherData } from "@bluedotrobots/common-ts/types/api"
+import { StudentJoinedClassroom, StudentLeftHub, StudentJoinedHub} from "@bluedotrobots/common-ts/types/socket"
+import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 
 interface StudentFocusData {
 	classCode: ClassCode
-	hubId: UUID
+	hubId: HubUUID
 }
 
 class TeacherClass {
@@ -96,7 +97,7 @@ class TeacherClass {
 		classroom.activeHubs.push(hub)
 	}
 
-	public deleteHub(classCode: ClassCode, hubId: UUID): void {
+	public deleteHub(classCode: ClassCode, hubId: HubUUID): void {
 		const classroom = this.detailedClassroomData.get(classCode)
 		if (!classroom) return
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
@@ -118,4 +119,5 @@ class TeacherClass {
 }
 
 const teacherClass = new TeacherClass()
+
 export default teacherClass

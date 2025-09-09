@@ -13,11 +13,12 @@ function BatteryWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
+	const batteryData = workbenchClass.batteryData
 	// eslint-disable-next-line complexity
 	function GetTimeText(): React.ReactNode	{
-		if (!workbenchClass.batteryData) return "OFFLINE"
-		if (workbenchClass.batteryData.isCharging) {
-			const timeToFull = workbenchClass.batteryData.estimatedTimeToFull
+		if (!batteryData) return "OFFLINE"
+		if (batteryData.isCharging) {
+			const timeToFull = batteryData.estimatedTimeToFull
 			// Time to full is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
 			// If hours is 0, we don't need to show it.
 			const hours = Math.floor(timeToFull)
@@ -33,7 +34,7 @@ function BatteryWorkbench(): React.ReactNode {
 				</>
 			)
 		}
-		const timeToEmpty = workbenchClass.batteryData.estimatedTimeToEmpty
+		const timeToEmpty = batteryData.estimatedTimeToEmpty
 		// Time to empty is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
 		// If hours is 0, we don't need to show it.
 		const hours = Math.floor(timeToEmpty)
@@ -48,6 +49,7 @@ function BatteryWorkbench(): React.ReactNode {
 			</>
 		)
 	}
+
 
 	return (
 		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>
@@ -80,19 +82,19 @@ function BatteryWorkbench(): React.ReactNode {
 							<span className="font-medium">BATTERY</span>
 						</div>
 						<span className={cn("font-semibold", batteryColorClasses)}>
-							{isNull(workbenchClass.batteryData) ? "OFFLINE" : `${workbenchClass.batteryData.stateOfCharge}%`}
+							{isNull(batteryData) ? "OFFLINE" : `${batteryData.stateOfCharge}%`}
 						</span>
 					</div>
 
 					<div className="space-y-2">
-						{workbenchClass.batteryData?.isCharging && (
+						{batteryData?.isCharging && (
 							<div className="flex items-center gap-2 text-chargingGreen">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Charging</span>
 							</div>
 						)}
 
-						{workbenchClass.batteryData?.isDischarging && (
+						{batteryData?.isDischarging && (
 							<div className="flex items-center gap-2 text-cardinal">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Discharging</span>

@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { StudentClassroomData } from "@bluedotrobots/common-ts"
+import { StudentClassroomData } from "@bluedotrobots/common-ts/types/api"
 import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 

@@ -1,11 +1,11 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,7 +20,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// Set loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerProgressData(careerUUID)
+		const careerResponse = await blueDotApiClient.careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")
@@ -35,7 +35,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		)
 
 		// Process each challenge's data by matching challengeUUID
-		careerResponse.data.careerQuestChallengeData.forEach((challengeData): void => {
+		await Promise.all(careerResponse.data.careerQuestChallengeData.map(async (challengeData): Promise<void> => {
 			// Find the matching challenge section by UUID
 			const challengeSection = challengeMap.get(challengeData.challengeUUID)
 
@@ -105,13 +105,13 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 			const isCompleted = challengeData.hasEverBeenCorrect
 
-			careerQuestClass.setChallengeRetrievedData(
+			await careerQuestClass.setChallengeRetrievedData(
 				careerUUIDChallengeUUID,
 				transformedMessages,
 				challengeData.sandboxJson,
 				isCompleted
 			)
-		})
+		}))
 
 		// NEW: Process and set career chat messages
 		const transformedCareerChatMessages: CareerChatMessage[] = careerResponse.data.careerChatMessages.map((msg): CareerChatMessage => {

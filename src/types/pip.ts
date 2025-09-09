@@ -1,4 +1,4 @@
-import { AddPipData } from "@bluedotrobots/common-ts"
+import { AddPipData } from "@bluedotrobots/common-ts/types/api"
 
 declare global {
 	interface IncompletePipData extends AddPipData {

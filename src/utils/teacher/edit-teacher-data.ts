@@ -2,11 +2,12 @@
 
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { IncomingTeacherRequestData, TeacherName } from "@bluedotrobots/common-ts"
+import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts/types/api"
+import { TeacherName } from "@bluedotrobots/common-ts/types/teacher"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import teacherClass from "../../classes/teacher-class"
 
 export default async function editTeacherData(
@@ -18,9 +19,10 @@ export default async function editTeacherData(
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Check if no changes were made
+		const teacherData = teacherClass.teacherData
 		if (
-			teacherNameData.teacherFirstName === teacherClass.teacherData?.teacherFirstName &&
-			teacherNameData.teacherLastName === teacherClass.teacherData.teacherLastName
+			teacherNameData.teacherFirstName === teacherData?.teacherFirstName &&
+			teacherNameData.teacherLastName === teacherData.teacherLastName
 		) {
 			setError("No changes detected. Please modify your information before updating.")
 			return
@@ -29,7 +31,7 @@ export default async function editTeacherData(
 		const { teacherFirstName, teacherLastName } = teacherNameData
 		const nameOnlyData: TeacherName = { teacherFirstName, teacherLastName }
 
-		const updateNameResponse = await blueDotApiClientClass.teacherDataService.editTeacherNameData(nameOnlyData)
+		const updateNameResponse = await blueDotApiClient.teacherDataService.editTeacherNameData(nameOnlyData)
 
 		if (!isEqual(updateNameResponse.status, 200) || isErrorResponses(updateNameResponse.data)) {
 			throw Error("Unable to edit teacher name data")

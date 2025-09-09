@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ClassCode } from "@bluedotrobots/common-ts"
-import AuthenticatedLayout from "../../../src/components/authenticated-layout"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SingleWhiteboardPage from "../../../src/components/whiteboard-page/single-whiteboard-page"
 

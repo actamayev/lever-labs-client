@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function sendChallengeChatMessage(
@@ -18,7 +18,7 @@ export default async function sendChallengeChatMessage(
 		chatManagerClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
 		chatManagerClass.setChallengeStreaming(careerUUIDChallengeUUID, true)
 
-		const response = await blueDotApiClientClass.chatDataService.sendChallengeMessage({
+		const response = await blueDotApiClient.chatDataService.sendChallengeMessage({
 			careerUUID: careerUUIDChallengeUUID.careerUUID,
 			message,
 			userCode,

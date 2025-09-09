@@ -1,7 +1,8 @@
 "use client"
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
-	NonSuccessResponse, SiteThemes, ValidationErrorResponse } from "@bluedotrobots/common-ts"
+	NonSuccessResponse, ValidationErrorResponse } from "@bluedotrobots/common-ts/types/api"
+import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 import { allPages } from "./constants/page-constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

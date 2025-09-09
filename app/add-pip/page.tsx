@@ -1,5 +1,5 @@
 import AddPipForm from "../../src/components/add-pip-form/add-pip-form"
-import AuthenticatedLayout from "../../src/components/authenticated-layout"
+import AuthenticatedLayout from "../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
