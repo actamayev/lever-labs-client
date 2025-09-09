@@ -2,7 +2,8 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BasicPersonalInfoResponse, SiteThemes } from "@bluedotrobots/common-ts"
+import { BasicPersonalInfoResponse } from "@bluedotrobots/common-ts/types/api"
+import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 import { setThemeCookie, getThemeFromCookie } from "../utils/cookies/theme-helpers"
 
 class PersonalInfoClass {

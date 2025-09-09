@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { LoginRequest } from "@bluedotrobots/common-ts"
+import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
 import pipClass from "../../../classes/pip-class"
 import authClass from "../../../classes/auth-class"
 import studentClass from "../../../classes/student-class"

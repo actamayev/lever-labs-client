@@ -1,4 +1,4 @@
-import { ClassCode, SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { ClassCode, SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { allPages, careerQuestPages, staticPages } from "../utils/constants/page-constants"
 
 declare global {

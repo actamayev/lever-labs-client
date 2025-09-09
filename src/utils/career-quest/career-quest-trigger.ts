@@ -1,7 +1,8 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { CareerType, MessageBuilder, ValidTriggerMessageType } from "@bluedotrobots/common-ts"
+import { CareerType, ValidTriggerMessageType } from "@bluedotrobots/common-ts/protocol"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"

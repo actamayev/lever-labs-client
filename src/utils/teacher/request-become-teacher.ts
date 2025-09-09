@@ -2,7 +2,7 @@
 
 import { AxiosError } from "axios"
 import { Dispatch, SetStateAction } from "react"
-import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts"
+import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts/types/api"
 import authClass from "../../classes/auth-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 

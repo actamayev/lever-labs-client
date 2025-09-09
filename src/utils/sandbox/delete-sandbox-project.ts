@@ -2,12 +2,12 @@
 
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 
 export default async function deleteSandboxProject(projectUUID: SandboxProjectUUID) : Promise<void> {
 	try {

@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { motorsCategoryColour } from "../../constants/constants"
-import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "@bluedotrobots/common-ts"
+import { MOTOR_BLOCK_TYPES, MOTOR_FIELD_VALUES, TURN_DIRECTIONS } from "@bluedotrobots/common-ts/types/blockly/motor"
 import { upperFirst } from "lodash-es"
 
 export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {

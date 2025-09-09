@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import { SandboxProject } from "@bluedotrobots/common-ts"
+import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"

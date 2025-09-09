@@ -3,12 +3,9 @@
 import * as Blockly from "blockly"
 import { ReactNode } from "react"
 import {
-	BinaryEvaluationResult,
 	CareerUUID,
-	BlocklyJson,
 	ChallengeUUID,
-	CqChallengeData,
-} from "@bluedotrobots/common-ts"
+} from "@bluedotrobots/common-ts/types/utils"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
 import blueDotApiClient from "../classes/blue-dot-api-client-class"
@@ -23,6 +20,9 @@ import { careerData } from "../utils/constants/career-quest/career-data"
 import teacherClass from "./teacher-class"
 import chatManagerClass from "./chat-manager-class"
 import navigationManagerClass from "./navigation-manager-class"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
+import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData

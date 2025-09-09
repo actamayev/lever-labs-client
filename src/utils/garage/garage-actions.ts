@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"

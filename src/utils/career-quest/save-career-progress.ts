@@ -1,6 +1,6 @@
 "use client"
 
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"

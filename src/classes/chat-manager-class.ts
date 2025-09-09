@@ -7,13 +7,12 @@ import {
 	ChallengeChatbotStreamChunkEvent,
 	ChallengeChatbotStreamCompleteEvent,
 	BinaryEvaluationResult,
-	CqChallengeData,
-	CareerUUID,
-	BlocklyJson,
-	ChallengeUUID,
 	CareerChatbotStreamStartOrCompleteEvent,
 	CareerChatbotChunkEvent
-} from "@bluedotrobots/common-ts"
+} from "@bluedotrobots/common-ts/types/chat"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
+import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 
 // Chat and streaming state interfaces
 interface ChatData {

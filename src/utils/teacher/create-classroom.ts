@@ -2,7 +2,7 @@
 
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"

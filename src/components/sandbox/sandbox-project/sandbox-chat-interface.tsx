@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
 import sandboxClass from "../../../classes/sandbox-class"

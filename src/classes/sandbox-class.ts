@@ -2,10 +2,12 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { BlocklyJson, SandboxProjectUUID, SandboxProject, SandboxChatMessage,
-	SandboxChatbotStreamStartOrCompleteEvent, SandboxChatbotStreamChunkEvent } from "@bluedotrobots/common-ts"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
+import { BlocklyJson, SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
+import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
+	SandboxChatbotStreamStartOrCompleteEvent } from "@bluedotrobots/common-ts/types/chat"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false

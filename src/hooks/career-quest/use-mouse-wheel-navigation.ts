@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
-import type { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"

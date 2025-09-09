@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Control, useWatch } from "react-hook-form"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import { Button } from "../shadcn/ui/button"
 import EnterWifiPassword from "./enter-wifi-password"
 import EnterWifiNetworkName from "./enter-wifi-network-name"

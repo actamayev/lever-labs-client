@@ -1,7 +1,7 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"

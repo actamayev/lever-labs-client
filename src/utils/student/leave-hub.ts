@@ -1,12 +1,11 @@
-import { UUID } from "crypto"
 import isEqual from "lodash-es/isEqual"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
-export default async function leaveHub(classCode: ClassCode, hubId: UUID): Promise<void> {
+export default async function leaveHub(classCode: ClassCode, hubId: HubUUID): Promise<void> {
 	try {
 		const isStudentInHub = studentClass.checkIfStudentInHub(classCode, hubId)
 		if (!isStudentInHub) {

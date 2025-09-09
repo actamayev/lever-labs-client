@@ -4,12 +4,9 @@
 
 import { action, makeAutoObservable, observable } from "mobx"
 import type { Swiper as SwiperType } from "swiper"
-import {
-	CareerUUID,
-	ChallengeUUID,
-	CqChallengeData,
-} from "@bluedotrobots/common-ts"
 import { DEFAULT_TRANSITION_DURATION } from "../utils/constants/constants"
+import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 
 // Navigation state interfaces
 interface NavigationState {

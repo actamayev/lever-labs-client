@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import * as Blockly from "blockly"
-import { BlocklyCategoryName, BlockNames, ParentCategoryName, ToolboxItem, } from "@bluedotrobots/common-ts"
+import { BlockNames } from "@bluedotrobots/common-ts/types/blockly/blockly"
+import { BlocklyCategoryName, ParentCategoryName } from "@bluedotrobots/common-ts/types/blockly/block-categories"
+import { ToolboxItem } from "@bluedotrobots/common-ts/types/sandbox"
 
 declare global {
 	interface CustomBlockDefinition {

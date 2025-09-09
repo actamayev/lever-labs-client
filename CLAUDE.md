@@ -52,7 +52,7 @@ import { observer } from "mobx-react"
 import { useState } from "react"
 
 // Internal utilities & types
-import { CareerUUID } from "@bluedotrobots/common-ts" 
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils" 
 import { Button } from "@/components/shadcn/ui/button"
 
 // Classes & services  

@@ -6,8 +6,8 @@ import fireConfetti from "../fire-confetti"
 import personalInfoClass from "../../classes/personal-info-class"
 import { Highlighter } from "../../components/magicui/highlighter"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
-import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts"
 import careerQuestTrigger from "./career-quest-trigger"
+import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components

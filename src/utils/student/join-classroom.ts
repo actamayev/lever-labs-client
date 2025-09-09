@@ -3,7 +3,7 @@
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"

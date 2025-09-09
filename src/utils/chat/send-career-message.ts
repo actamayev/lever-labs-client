@@ -6,7 +6,8 @@ import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import { CareerUUID, OutgoingCareerMessage } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { OutgoingCareerMessage } from "@bluedotrobots/common-ts/types/chat"
 
 export default async function sendCareerMessage(careerUUID: CareerUUID, careerData: OutgoingCareerMessage): Promise<void> {
 	try {

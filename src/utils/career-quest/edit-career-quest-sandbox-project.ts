@@ -1,7 +1,8 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { BlocklyJson, ChallengeUUID } from "@bluedotrobots/common-ts"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"

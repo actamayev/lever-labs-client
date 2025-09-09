@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown, RotateCcw, X } from "lucide-react"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { motion, AnimatePresence } from "framer-motion"
 import CustomTooltip from "../../custom-tooltip"
 import { TactileButton } from "../../shadcn/ui/tactile-button"

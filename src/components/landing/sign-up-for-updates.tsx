@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useMemo, useState } from "react"
-import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts/types/api"
 import { Input } from "../shadcn/ui/input"
 import isEmailValid from "../../utils/auth/is-email-valid"
 import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"

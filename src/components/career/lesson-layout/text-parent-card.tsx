@@ -2,7 +2,7 @@
 import { observer } from "mobx-react"
 import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
-import type { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"

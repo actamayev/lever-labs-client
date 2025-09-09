@@ -1,9 +1,10 @@
 "use client"
 
-import { UUID } from "crypto"
 import { action, makeAutoObservable } from "mobx"
-import { ClassCode, DeletedHub, UpdatedHubSlideId, StudentViewHubData } from "@bluedotrobots/common-ts"
+import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "./career-quest-class"
+import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts/types/socket"
 
 class StudentClass {
 	public isRetrievingStudentData = false
@@ -53,7 +54,7 @@ class StudentClass {
 		return this.classroomData.length
 	})
 
-	private getHubData = (classCode: ClassCode, hubId: UUID): StudentViewHubData | undefined => {
+	private getHubData = (classCode: ClassCode, hubId: HubUUID): StudentViewHubData | undefined => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === classCode)
 		if (!classroom) return
 		return classroom.activeHubs.find((hub): boolean => hub.hubId === hubId)
@@ -135,7 +136,7 @@ class StudentClass {
 		this.setIsInFocusMode(false)
 	})
 
-	public checkIfStudentInHub = (classCode: ClassCode, hubId: UUID): boolean => {
+	public checkIfStudentInHub = (classCode: ClassCode, hubId: HubUUID): boolean => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === classCode)
 		if (!classroom) return false
 		return classroom.activeHubs.some((activeHub): boolean => (activeHub.hubId === hubId) && activeHub.isHubJoined)
@@ -152,7 +153,7 @@ class StudentClass {
 		}
 	})
 
-	public leaveHub = action((classCode: ClassCode, hubId: UUID): void => {
+	public leaveHub = action((classCode: ClassCode, hubId: HubUUID): void => {
 		const classroom = this.classroomData.find((classroomData): boolean => classroomData.classCode === classCode)
 		if (!classroom) return
 		classroom.activeHubs = classroom.activeHubs.map((activeHub): ExtendedStudentViewHubData => {
@@ -167,7 +168,7 @@ class StudentClass {
 		this.isInFocusMode = newState
 	})
 
-	public getHubId = (): UUID | null => {
+	public getHubId = (): HubUUID | null => {
 		if (this.classroomData.length === 0) return null
 		return this.classroomData[0].activeHubs[0].hubId
 	}

@@ -1,6 +1,6 @@
 // lib/auth-server.ts
 import { headers } from 'next/headers'
-import { SiteThemes } from "@bluedotrobots/common-ts"
+import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 
 export interface AuthState {
 	isAuthenticated: boolean

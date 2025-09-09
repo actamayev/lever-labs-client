@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"

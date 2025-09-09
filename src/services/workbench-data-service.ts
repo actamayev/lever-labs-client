@@ -1,5 +1,7 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses, PipUUID, TuneToPlay } from "@bluedotrobots/common-ts"
+import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { TuneToPlay } from "@bluedotrobots/common-ts/types/workbench"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 

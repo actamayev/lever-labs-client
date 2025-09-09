@@ -4,7 +4,8 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { PipConnectionStatus, PipData, PipStatusUpdate, PipUUID } from "@bluedotrobots/common-ts"
+import { PipConnectionStatus, PipData, PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 
 class PipClass {
 	public pipData: PipData[] = []

@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import sandboxClass from "../../classes/sandbox-class"

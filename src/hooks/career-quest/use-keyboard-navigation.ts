@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react"
-import type { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"

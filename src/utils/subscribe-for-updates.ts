@@ -2,7 +2,7 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts/types/api"
 import toastClass from "../classes/toast-class"
 import blueDotApiClientClass from "../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "./type-checks"

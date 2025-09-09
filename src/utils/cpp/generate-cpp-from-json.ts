@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { cppGenerator } from "./cpp-generator"
 import initializeBlocks from "../blockly/initialize-blocks"
 

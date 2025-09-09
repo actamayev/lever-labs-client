@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { PipData } from "@bluedotrobots/common-ts"
+import { PipData } from "@bluedotrobots/common-ts/types/pip"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"

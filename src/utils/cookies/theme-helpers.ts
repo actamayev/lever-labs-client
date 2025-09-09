@@ -1,5 +1,5 @@
 // src/utils/cookies/theme-helpers.ts
-import { SiteThemes } from "@bluedotrobots/common-ts"
+import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const THEME_COOKIE_NAME = "site_theme"

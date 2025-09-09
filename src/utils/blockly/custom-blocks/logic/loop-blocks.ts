@@ -5,7 +5,7 @@ import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
 import { cppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
-import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "@bluedotrobots/common-ts"
+import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
 export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	// [LOOP_BLOCK_TYPES.WHILE_UNTIL]: {

@@ -7,7 +7,7 @@ import {
 	SocketEvents,
 	ClientSocketEvents,
 	ClientSocketEventPayloadMap,
-} from "@bluedotrobots/common-ts"
+} from "@bluedotrobots/common-ts/types/socket"
 import { listenersMap } from "../utils/constants/listeners-map"
 
 class SocketClass {

@@ -1,10 +1,9 @@
 "use client"
 
-import { UUID } from "crypto"
 import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
-import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts"
+import { CareerUUID, ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
@@ -32,7 +31,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 	const handleBackClick = (): void => navigate("/whiteboard")
 
-	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: UUID): void => {
+	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: HubUUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
 			studentClass.setIsInFocusMode(true)
 			joinHub(classCode, hubId)
