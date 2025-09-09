@@ -22,6 +22,7 @@ import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import blueDotApiClient from "./blue-dot-api-client-class"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -146,14 +147,11 @@ class CareerQuestClass {
 		)
 	})
 
-	public reinitialize = action(async (): Promise<void> => {
+	public reinitialize = action((): void => {
 		// Clear existing data
 		this.careers.clear()
 		this.isDoneInitializing = false
 
-		// Re-initialize with fresh data
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const { CAREER_DEFINITIONS } = await import("../utils/career-quest/career-quest-data")
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 
