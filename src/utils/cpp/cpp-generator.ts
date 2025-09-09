@@ -80,7 +80,6 @@ class CppGenerator {
 	}
 
 	public async generateCppFromJson(blocklyJson: BlocklyJson): Promise<string> {
-		console.log("Generating CPP from JSON")
 		// Dynamically import Blockly only when needed
 		const Blockly = await import("blockly")
 

@@ -22,7 +22,6 @@ import getNavigationManagerClass from "./navigation-manager-class"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
-import getCppGenerator from "../utils/cpp/cpp-generator"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -531,6 +530,8 @@ class CareerQuestClass {
 			this.updateSwiperNavigation(careerUUID)
 		}
 
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
+
 		// Normalize and generate CPP code
 		let normalizedJson: BlocklyJson
 		let cppCode: string
@@ -556,6 +557,7 @@ class CareerQuestClass {
 	})
 
 	public updateBlocklyJson = action(async (cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): Promise<void> => {
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		const cppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
 		getChatManagerClass().updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
@@ -981,6 +983,7 @@ class CareerQuestClass {
 		if (isEqual(stripBlockPositions(currentBlocklyJson), stripBlockPositions(initialBlocklyJson))) {
 			return false
 		}
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 
 		// Reset to initial state
 		const cppCode = await getCppGenerator().generateCppFromJson(initialBlocklyJson)
@@ -1286,7 +1289,6 @@ class CareerQuestClass {
 let careerQuestClassInstance: CareerQuestClass | null = null
 
 export const getCareerQuestClass = (): CareerQuestClass => {
-	console.log("getCareerQuestClass")
 	if (!careerQuestClassInstance) {
 		careerQuestClassInstance = new CareerQuestClass()
 	}

@@ -7,7 +7,6 @@ import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BlocklyJson, SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
 	SandboxChatbotStreamStartOrCompleteEvent } from "@bluedotrobots/common-ts/types/chat"
-import getCppGenerator from "../utils/cpp/cpp-generator"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
@@ -37,6 +36,7 @@ class SandboxClass {
 	public addSandboxProject = action(async (sandboxProject: SandboxProject): Promise<void> => {
 		// Normalize the sandboxJson to ensure consistent format
 		const normalizedSandboxJson = normalizeSandboxJson(sandboxProject.sandboxJson)
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		// Add streaming state to the project
 		const projectWithStreaming: SandboxProjectWithStreaming = {
 			...sandboxProject,
@@ -87,6 +87,7 @@ class SandboxClass {
 
 	// Method to update project JSON in the store
 	public updateProjectJson = action(async (projectUUID: SandboxProjectUUID, newJson: BlocklyJson): Promise<void> => {
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
@@ -244,10 +245,8 @@ class SandboxClass {
 let sandboxClassInstance: SandboxClass | null = null
 
 export const getSandboxClass = (): SandboxClass => {
-	console.log("getSandboxClass")
 	if (!sandboxClassInstance) {
 		sandboxClassInstance = new SandboxClass()
-		console.log("sandboxClassInstance", sandboxClassInstance)
 	}
 	return sandboxClassInstance
 }
