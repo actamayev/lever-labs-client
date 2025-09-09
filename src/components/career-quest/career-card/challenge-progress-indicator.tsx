@@ -6,15 +6,15 @@ import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import { careerData } from "../../../utils/constants/career-quest/career-data"
 
 function ChallengeProgressCircle({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode {
 	const [isHovered, setIsHovered] = useState(false)
 	const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 	if (!career) return null
-	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerUUID)
-	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerUUID)
+	const completedChallenges = getCareerQuestClass().getCompletedChallengesForProgress(careerUUID)
+	const totalChallenges = getCareerQuestClass().getTotalChallengesForProgress(careerUUID)
 	const size = 64
 
 	const colors = getDuolingoColors(career.backgroundColor)

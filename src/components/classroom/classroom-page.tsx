@@ -16,7 +16,7 @@ import {
 } from "../shadcn/ui/dropdown-menu"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
@@ -50,14 +50,14 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
 		if (hub.careerUUID === meetPipData.careerUUID) {
 			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
-			careerQuestClass.resetCareerToBeginning(meetPipData.careerUUID)
+			getCareerQuestClass().resetCareerToBeginning(meetPipData.careerUUID)
 			navigate("/career-quest/meet-pip")
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
 		if (career) {
 			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
-			careerQuestClass.resetCareerToBeginning(hub.careerUUID)
+			getCareerQuestClass().resetCareerToBeginning(hub.careerUUID)
 			navigate(career.careerUrl)
 		}
 	}, [navigate, classCode])

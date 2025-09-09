@@ -13,8 +13,8 @@ import { Button } from "../../shadcn/ui/button"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
-import careerQuestClass from "../../../classes/career-quest-class"
-import chatManagerClass from "../../../classes/chat-manager-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
+import getChatManagerClass from "../../../classes/chat-manager-class"
 
 interface Props {
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID
@@ -31,8 +31,8 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
-	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
-	const blocklyJson = chatManagerClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
+	const toolboxConfig = getCareerQuestClass().getToolboxConfig(careerUUIDChallengeUUID)
+	const blocklyJson = getChatManagerClass().getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false, true)

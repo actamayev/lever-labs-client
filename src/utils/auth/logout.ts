@@ -4,18 +4,18 @@ import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import socketClass from "../../classes/socket-class"
 import garageClass from "../../classes/garage-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import studentClass from "../../classes/student-class"
 import teacherClass from "../../classes/teacher-class"
 import workbenchClass from "../../classes/workbench-class"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 import sensorDataClass from "../../classes/sensor-data-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
 
 export default async function logout(): Promise<void> {
@@ -29,13 +29,13 @@ export default async function logout(): Promise<void> {
 		personalInfoClass.logout()
 		pipClass.logout()
 		socketClass.logout()
-		careerQuestClass.logout()
+		getCareerQuestClass().logout()
 		navigationManagerClass.logout()
-		chatManagerClass.logout()
+		getChatManagerClass().logout()
 		careerQuestTriggersClass.logout()
 		authClass.logout()
 		workbenchClass.logout()
-		sandboxClass.logout()
+		getSandboxClass().logout()
 		garageClass.logout()
 		sensorDataClass.logout()
 		serialMessageManagerClass.logout()
@@ -55,13 +55,13 @@ export default async function logout(): Promise<void> {
 		personalInfoClass.logout()
 		pipClass.logout()
 		socketClass.logout()
-		careerQuestClass.logout()
+		getCareerQuestClass().logout()
 		navigationManagerClass.logout()
-		chatManagerClass.logout()
+		getChatManagerClass().logout()
 		careerQuestTriggersClass.logout()
 		authClass.logout()
 		workbenchClass.logout()
-		sandboxClass.logout()
+		getSandboxClass().logout()
 		garageClass.logout()
 		sensorDataClass.logout()
 		serialMessageManagerClass.logout()

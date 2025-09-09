@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, useCallback } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
@@ -13,7 +13,7 @@ import deleteCareerChat from "../../../utils/chat/delete-career-chat"
 import SingleSandboxMessage from "../../chat/single-sandbox-message"
 import sendCareerMessage from "../../../utils/chat/send-career-message"
 import { reactNodeToString } from "../../../utils/career-quest/react-node-to-string"
-import chatManagerClass from "../../../classes/chat-manager-class"
+import getChatManagerClass from "../../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode {
@@ -22,10 +22,10 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = chatManagerClass.getCareerChatMessages(careerUUID)
-	const isStreaming = chatManagerClass.isCareerStreaming(careerUUID)
-	const isRetrievingData = careerQuestClass.isRetrievingCareerData(careerUUID)
-	const isWaitingForResponse = chatManagerClass.isCareerWaitingForResponse(careerUUID)
+	const messages = getChatManagerClass().getCareerChatMessages(careerUUID)
+	const isStreaming = getChatManagerClass().isCareerStreaming(careerUUID)
+	const isRetrievingData = getCareerQuestClass().isRetrievingCareerData(careerUUID)
+	const isWaitingForResponse = getChatManagerClass().isCareerWaitingForResponse(careerUUID)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect((): void => {
@@ -40,14 +40,14 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 		setInputValue("")
 
 		// Add user message to career quest class
-		chatManagerClass.addCareerUserMessage(careerUUID, inputValue)
+		getChatManagerClass().addCareerUserMessage(careerUUID, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout((): void => {
 			inputRef.current?.focus()
 		}, 0)
 
-		const careerDataForMessage = careerQuestClass.getCareerDataForMessage(careerUUID)
+		const careerDataForMessage = getCareerQuestClass().getCareerDataForMessage(careerUUID)
 		if (!careerDataForMessage) return
 
 		await sendCareerMessage(careerUUID, {
@@ -60,8 +60,8 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = chatManagerClass.getCareerStreamId(careerUUID)
-		chatManagerClass.resetCareerStreamingState(careerUUID)
+		const streamId = getChatManagerClass().getCareerStreamId(careerUUID)
+		getChatManagerClass().resetCareerStreamingState(careerUUID)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId

@@ -3,10 +3,10 @@
 import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
@@ -17,7 +17,7 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
 	const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
-	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
+	const canAdvanceToNextMain = getCareerQuestClass().canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const swiperInstance = navigationManagerClass.getSwiperInstance(careerUUID)
 	const textParentSwiperInstance = navigationManagerClass.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
@@ -56,15 +56,15 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (
 			currentSlide.type !== "challenge" &&
-			!careerQuestClass.isCareerChatToggled(careerUUID)
+			!getCareerQuestClass().isCareerChatToggled(careerUUID)
 		) return false
 
 		if (currentSlide.type === "challenge") {
-			const challengeMessages = chatManagerClass.getChallengeMessages(currentSlide.data)
+			const challengeMessages = getChatManagerClass().getChallengeMessages(currentSlide.data)
 			// Only allow normal scrolling if there are messages (length > 0)
 			return !isEmpty(challengeMessages)
 		}
-		const careerMessages = chatManagerClass.getCareerChatMessages(careerUUID)
+		const careerMessages = getChatManagerClass().getCareerChatMessages(careerUUID)
 		return !isEmpty(careerMessages)
 	}, [careerUUID])
 

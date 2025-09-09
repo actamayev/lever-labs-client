@@ -1,5 +1,5 @@
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
 
 interface NavigationContext {
@@ -17,7 +17,7 @@ export function handleForwardNavigation(context: NavigationContext): void {
 
 	if (currentSlide.type === "challenge") {
 		// Challenge slide - try to move to next main slide
-		careerQuestClass.handleGoToNextMainSection(careerUUID)
+		getCareerQuestClass().handleGoToNextMainSection(careerUUID)
 		return
 	}
 
@@ -30,9 +30,9 @@ export function handleForwardNavigation(context: NavigationContext): void {
 	const currentChild = currentSlide.data.children[currentTextChildIndex]
 	if (currentChild.type === "morphingText") {
 		// Try to advance morphing variant first
-		const canAdvance = careerQuestClass.canAdvanceMorphingText(careerUUID, currentChild.id)
+		const canAdvance = getCareerQuestClass().canAdvanceMorphingText(careerUUID, currentChild.id)
 		if (canAdvance) {
-			careerQuestClass.advanceMorphingText(careerUUID, currentChild.id)
+			getCareerQuestClass().advanceMorphingText(careerUUID, currentChild.id)
 			return
 		}
 		// If we can't advance in morphing text, allow normal text navigation
@@ -42,10 +42,10 @@ export function handleForwardNavigation(context: NavigationContext): void {
 
 		if (hasOnlyOneChild || isAtLastTextChild) {
 			// Move to next main slide if possible
-			careerQuestClass.handleGoToNextMainSection(careerUUID)
+			getCareerQuestClass().handleGoToNextMainSection(careerUUID)
 		} else {
 			// Move to next text child
-			careerQuestClass.handleGoToNextTextChild(careerUUID)
+			getCareerQuestClass().handleGoToNextTextChild(careerUUID)
 		}
 		return
 	}
@@ -56,10 +56,10 @@ export function handleForwardNavigation(context: NavigationContext): void {
 
 	if (hasOnlyOneChild || isAtLastTextChild) {
 		// Move to next main slide if possible
-		careerQuestClass.handleGoToNextMainSection(careerUUID)
+		getCareerQuestClass().handleGoToNextMainSection(careerUUID)
 	} else {
 		// Move to next text child
-		careerQuestClass.handleGoToNextTextChild(careerUUID)
+		getCareerQuestClass().handleGoToNextTextChild(careerUUID)
 	}
 }
 
@@ -72,7 +72,7 @@ export function handleBackwardNavigation(context: NavigationContext): void {
 
 	if (currentSlide.type === "challenge") {
 		// Challenge slide - always go to previous main slide
-		careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+		getCareerQuestClass().handleGoToPreviousMainSection(careerUUID)
 		return
 	}
 
@@ -87,27 +87,27 @@ export function handleBackwardNavigation(context: NavigationContext): void {
 		// Try to move to previous morphing variant
 		const canGoBack = navigationManagerClass.canGoBackMorphingText(careerUUID, currentChild.id)
 		if (canGoBack) {
-			careerQuestClass.goBackMorphingText(careerUUID, currentChild.id)
+			getCareerQuestClass().goBackMorphingText(careerUUID, currentChild.id)
 			return
 		}
 		// If we can't go back in morphing text and we're not at first text child,
 		// allow navigation to previous text child
 		const isAtFirstTextChild = currentTextChildIndex === 0
 		if (!isAtFirstTextChild) {
-			careerQuestClass.handleGoToPreviousTextChild(careerUUID)
+			getCareerQuestClass().handleGoToPreviousTextChild(careerUUID)
 			return
 		}
 		// If we're at first text child, allow navigation to previous main section
-		careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+		getCareerQuestClass().handleGoToPreviousMainSection(careerUUID)
 		return
 	}
 
 	const isAtFirstTextChild = currentTextChildIndex === 0
 	if (!isAtFirstTextChild) {
 		// Move to previous text child
-		careerQuestClass.handleGoToPreviousTextChild(careerUUID)
+		getCareerQuestClass().handleGoToPreviousTextChild(careerUUID)
 	} else {
-		careerQuestClass.handleGoToPreviousMainSection(careerUUID)
+		getCareerQuestClass().handleGoToPreviousMainSection(careerUUID)
 	}
 }
 
@@ -116,5 +116,5 @@ export function handleBackwardNavigation(context: NavigationContext): void {
  */
 export function shouldBlockNavigation(careerUUID: CareerUUID): boolean {
 	const now = Date.now()
-	return now - careerQuestClass.getLastSlideChangeTime(careerUUID) < careerQuestClass.SLIDE_COOLDOWN
+	return now - getCareerQuestClass().getLastSlideChangeTime(careerUUID) < getCareerQuestClass().SLIDE_COOLDOWN
 }

@@ -5,7 +5,7 @@ import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function sendSandboxMessage(
@@ -16,8 +16,8 @@ export default async function sendSandboxMessage(
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Reset chat streaming state for new conversation
-		sandboxClass.resetChatStreamingState(projectUUID)
-		const userCode = sandboxClass.getCppCode(projectUUID)
+		getSandboxClass().resetChatStreamingState(projectUUID)
+		const userCode = getSandboxClass().getCppCode(projectUUID)
 
 		// Send request to backend - projectUUID will be included in the WebSocket response
 		const response = await blueDotApiClientClass.chatDataService.sendSandboxMessage(
@@ -28,7 +28,7 @@ export default async function sendSandboxMessage(
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
 		// Set stream ID if you implement stream ID management in sandbox class
-		sandboxClass.setCurrentStreamId(projectUUID, response.data.streamId)
+		getSandboxClass().setCurrentStreamId(projectUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

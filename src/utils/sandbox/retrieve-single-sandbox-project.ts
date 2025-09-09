@@ -5,22 +5,22 @@ import isEqual from "lodash-es/isEqual"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveSingleSandboxProject(projectUUID: SandboxProjectUUID): Promise<void> {
 	try {
 		// If we already have the project in the context, no need to fetch it again
-		const foundProject = sandboxClass.sandboxProjects.get(projectUUID)
+		const foundProject = getSandboxClass().sandboxProjects.get(projectUUID)
 		if (foundProject) return
 
 		if (
 			authClass.isFinishedWithSignup === false ||
-			sandboxClass.isRetrievingSingleProject(projectUUID)
+			getSandboxClass().isRetrievingSingleProject(projectUUID)
 		) return
 
 		// Set loading state
-		sandboxClass.setIsRetrievingSingleProject(projectUUID, true)
+		getSandboxClass().setIsRetrievingSingleProject(projectUUID, true)
 
 		const sandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
 		if (
@@ -31,9 +31,9 @@ export default async function retrieveSingleSandboxProject(projectUUID: SandboxP
 			throw Error ("Unable to retrieve sandbox project")
 		}
 
-		await sandboxClass.addSandboxProject(sandboxProjectResponse.data.sandboxProject)
+		await getSandboxClass().addSandboxProject(sandboxProjectResponse.data.sandboxProject)
 	} catch (error) {
 		console.error(error)
-		sandboxClass.setIsRetrievingSingleProject(projectUUID, false)
+		getSandboxClass().setIsRetrievingSingleProject(projectUUID, false)
 	}
 }

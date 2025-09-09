@@ -7,7 +7,7 @@ import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 
 export default function useJoinHub():(
 	classCode: ClassCode,
@@ -56,7 +56,7 @@ export default function useJoinHub():(
 				}
 
 				// Set saved position so career quest restores to hub position when it loads
-				careerQuestClass.setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
+				getCareerQuestClass().setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
 
 			if (joinHubResponse.data.careerUUID === meetPipData.careerUUID) {

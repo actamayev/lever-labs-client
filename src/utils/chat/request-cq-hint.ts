@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 
 export default async function requestCareerQuestHint(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID
@@ -13,9 +13,9 @@ export default async function requestCareerQuestHint(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const userCode = chatManagerClass.getCppCode(careerUUIDChallengeUUID)
-		chatManagerClass.addChallengeHintRequestMessage(careerUUIDChallengeUUID)
-		chatManagerClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		const userCode = getChatManagerClass().getCppCode(careerUUIDChallengeUUID)
+		getChatManagerClass().addChallengeHintRequestMessage(careerUUIDChallengeUUID)
+		getChatManagerClass().resetChallengeStreamingState(careerUUIDChallengeUUID)
 
 		const response = await blueDotApiClientClass.chatDataService.requestChallengeHint({
 			careerUUID: careerUUIDChallengeUUID.careerUUID,
@@ -27,9 +27,9 @@ export default async function requestCareerQuestHint(
 		}
 
 		if ("streamId" in response.data) {
-			chatManagerClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
+			getChatManagerClass().setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
 		} else {
-			chatManagerClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
+			getChatManagerClass().addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
 				isCorrect: true,
 				feedback: response.data.feedback
 			})

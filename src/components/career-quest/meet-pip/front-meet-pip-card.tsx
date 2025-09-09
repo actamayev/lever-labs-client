@@ -8,7 +8,7 @@ import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { meetPipData } from "../../../utils/constants/career-quest/career-data"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
@@ -88,7 +88,7 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 						shadowHeight={4}
 						onClick={enterCareerOnClick}
 					>
-						{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+						{getCareerQuestClass().getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
 					</TactileButton>
 					<BackFlipButton
 						onFlip={flipCard}

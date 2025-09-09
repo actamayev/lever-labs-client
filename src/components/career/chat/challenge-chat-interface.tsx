@@ -10,7 +10,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import ChatMessagesFramework from "../../chat/chat-messages-framework"
 import requestCareerQuestHint from "../../../utils/chat/request-cq-hint"
@@ -18,11 +18,11 @@ import ClearChatHistoryHeader from "../../chat/clear-chat-history-header"
 import SingleCareerQuestMessage from "../../chat/single-challenge-message"
 import deleteChallengeChat from "../../../utils/chat/delete-challenge-chat"
 import sendChallengeChatMessage from "../../../utils/chat/send-challenge-chat-message"
-import chatManagerClass from "../../../classes/chat-manager-class"
+import getChatManagerClass from "../../../classes/chat-manager-class"
 
 const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }): React.ReactNode => {
 	const onClick = (): void => {
-		careerQuestClass.handleGoToNextMainSection(careerUUID)
+		getCareerQuestClass().handleGoToNextMainSection(careerUUID)
 	}
 
 	return (
@@ -59,13 +59,13 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages directly from career quest class
-	const messages = chatManagerClass.getChallengeMessages(challengeData)
-	const isStreaming = chatManagerClass.isChallengeStreaming(challengeData)
-	const isRetrievingData = careerQuestClass.isRetrievingCareerData(challengeData.careerUUID)
-	const isWaitingForResponse = chatManagerClass.isChallengeWaitingForResponse(challengeData)
-	const isWaitingForCodeCheck = chatManagerClass.isChallengeWaitingForCodeCheck(challengeData)
+	const messages = getChatManagerClass().getChallengeMessages(challengeData)
+	const isStreaming = getChatManagerClass().isChallengeStreaming(challengeData)
+	const isRetrievingData = getCareerQuestClass().isRetrievingCareerData(challengeData.careerUUID)
+	const isWaitingForResponse = getChatManagerClass().isChallengeWaitingForResponse(challengeData)
+	const isWaitingForCodeCheck = getChatManagerClass().isChallengeWaitingForCodeCheck(challengeData)
 
-	const isCodeCorrect = chatManagerClass.isCodeCorrect(challengeData)
+	const isCodeCorrect = getChatManagerClass().isCodeCorrect(challengeData)
 
 	// Reset confirmation state when messages change (e.g., new message sent)
 	useEffect((): void => {
@@ -80,7 +80,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 		setInputValue("")
 
 		// Add user message to career quest class
-		chatManagerClass.addChallengeUserMessage(challengeData, inputValue)
+		getChatManagerClass().addChallengeUserMessage(challengeData, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout((): void => {
@@ -92,8 +92,8 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const streamId = chatManagerClass.getChallengeStreamId(challengeData)
-		chatManagerClass.resetChallengeStreamingState(challengeData)
+		const streamId = getChatManagerClass().getChallengeStreamId(challengeData)
+		getChatManagerClass().resetChallengeStreamingState(challengeData)
 
 		// Get stream ID for this specific challenge and stop it
 		return streamId

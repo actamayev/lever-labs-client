@@ -565,5 +565,13 @@ export class ChatManagerClass {
 	}
 }
 
-const chatManagerClass = new ChatManagerClass()
-export default chatManagerClass
+let chatManagerClassInstance: ChatManagerClass | null = null
+
+export const getChatManagerClass = (): ChatManagerClass => {
+	if (!chatManagerClassInstance) {
+		chatManagerClassInstance = new ChatManagerClass()
+	}
+	return chatManagerClassInstance
+}
+
+export default getChatManagerClass

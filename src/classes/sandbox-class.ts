@@ -241,6 +241,15 @@ class SandboxClass {
 	}
 }
 
-const sandboxClass = new SandboxClass()
+let sandboxClassInstance: SandboxClass | null = null
 
-export default sandboxClass
+export const getSandboxClass = (): SandboxClass => {
+	console.log("getSandboxClass")
+	if (!sandboxClassInstance) {
+		sandboxClassInstance = new SandboxClass()
+		console.log("sandboxClassInstance", sandboxClassInstance)
+	}
+	return sandboxClassInstance
+}
+
+export default getSandboxClass

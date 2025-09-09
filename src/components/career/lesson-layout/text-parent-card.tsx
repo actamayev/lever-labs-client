@@ -3,7 +3,7 @@ import { observer } from "mobx-react"
 import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
@@ -39,7 +39,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 					// If this slide is currently active, immediately sync to the correct index
 					if (isActive) {
 						swiper.slideTo(currentTextChildIndex, 0) // Instant slide with no animation
-						careerQuestClass.onTextSlideChange(careerUUID)
+						getCareerQuestClass().onTextSlideChange(careerUUID)
 					}
 				}}
 				className="h-full"
@@ -62,9 +62,9 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 								) : (
 									<div className="text-questionText text-center cursor-text leading-relaxed">
 										{typeof child.content === "function" ? child.content((): void => {
-											careerQuestClass.handleButtonClickAdvance(careerUUID)
+											getCareerQuestClass().handleButtonClickAdvance(careerUUID)
 										}) : typeof child.content === "string" ? getContentComponent(child.content, (): void => {
-											careerQuestClass.handleButtonClickAdvance(careerUUID)
+											getCareerQuestClass().handleButtonClickAdvance(careerUUID)
 										}) : child.content}
 									</div>
 								)}

@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 
 export default async function deleteChallengeChat(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
 	try {
@@ -18,7 +18,7 @@ export default async function deleteChallengeChat(careerUUIDChallengeUUID: Caree
 			throw new Error("Unable to delete challenge chat")
 		}
 
-		chatManagerClass.clearChallengeMessages(careerUUIDChallengeUUID)
+		getChatManagerClass().clearChallengeMessages(careerUUIDChallengeUUID)
 		return
 	} catch (error) {
 		console.error(error)

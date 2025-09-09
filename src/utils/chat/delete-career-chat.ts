@@ -5,7 +5,7 @@ import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function deleteCareerChat(careerUUID: CareerUUID): Promise<void> {
@@ -19,7 +19,7 @@ export default async function deleteCareerChat(careerUUID: CareerUUID): Promise<
 			throw new Error("Unable to delete chat")
 		}
 
-		chatManagerClass.clearCareerChatMessages(careerUUID)
+		getChatManagerClass().clearCareerChatMessages(careerUUID)
 		return
 	} catch (error) {
 		console.error(error)

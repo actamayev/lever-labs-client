@@ -5,14 +5,14 @@ import isUndefined from "lodash-es/isUndefined"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function starSandboxProject(projectUUID: SandboxProjectUUID) : Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
-		const project = sandboxClass.sandboxProjects.get(projectUUID)
+		const project = getSandboxClass().sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		const starSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.starSandboxProject(
@@ -23,7 +23,7 @@ export default async function starSandboxProject(projectUUID: SandboxProjectUUID
 			throw Error ("Unable to star sandbox project")
 		}
 
-		sandboxClass.updateStarStatus(projectUUID)
+		getSandboxClass().updateStarStatus(projectUUID)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

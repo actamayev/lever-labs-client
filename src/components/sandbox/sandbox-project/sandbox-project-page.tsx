@@ -11,7 +11,7 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } fro
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
 import pipClass from "../../../classes/pip-class"
-import sandboxClass from "../../../classes/sandbox-class"
+import getSandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
@@ -39,12 +39,12 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)
 	const previousSearchingRef = useRef(false)
-	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
+	const isLoading = getSandboxClass().isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo((): SandboxProjectWithStreaming | undefined => {
-		return sandboxClass.sandboxProjects.get(projectUUID)
+		return getSandboxClass().sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [projectUUID, sandboxClass.sandboxProjects.size])
+	}, [projectUUID, getSandboxClass().sandboxProjects.size])
 
 	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
@@ -87,13 +87,13 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
 			if (isEmpty(project.cppCode)) {
-				sandboxClass.setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
+				getSandboxClass().setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
 			}
 			return
 		}
 
-		sandboxClass.setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
-		await sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
+		getSandboxClass().setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
+		await getSandboxClass().updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
 	}, [project, isLoading, projectUUID])
 

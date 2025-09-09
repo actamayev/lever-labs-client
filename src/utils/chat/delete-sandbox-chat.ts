@@ -5,7 +5,7 @@ import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function deleteSandboxChat(projectUUID: SandboxProjectUUID): Promise<void> {
@@ -20,7 +20,7 @@ export default async function deleteSandboxChat(projectUUID: SandboxProjectUUID)
 		}
 
 		// Clear the chat messages from the sandbox class
-		sandboxClass.clearChatMessages(projectUUID)
+		getSandboxClass().clearChatMessages(projectUUID)
 		return
 	} catch (error) {
 		console.error(error)

@@ -12,7 +12,7 @@ import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import checkCareerQuestCode from "../../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
@@ -20,7 +20,7 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../../utils/career-quest/edit-career-quest-sandbox-project"
-import chatManagerClass from "../../../classes/chat-manager-class"
+import getChatManagerClass from "../../../classes/chat-manager-class"
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
@@ -48,15 +48,15 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const hasInitializedRef = useRef(false)
 	const hasSeenExpectedBlocksRef = useRef(false) // NEW: Track if we've seen the initial blocks load
 	const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null) // NEW: Debounce saves
-	const isStreaming = chatManagerClass.isChallengeStreaming(challengeData)
-	const hasRetrievedData = careerQuestClass.hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
+	const isStreaming = getChatManagerClass().isChallengeStreaming(challengeData)
+	const hasRetrievedData = getCareerQuestClass().hasRetrievedAllChallengesForCareer(challengeData.careerUUID)
 	const [resetCounter, setResetCounter] = useState(0) // NEW: Track reset count
 
-	const cppCode = chatManagerClass.getCppCode({ ...challengeData })
-	const isWaitingForCodeCheck = chatManagerClass.isChallengeWaitingForCodeCheck(challengeData)
+	const cppCode = getChatManagerClass().getCppCode({ ...challengeData })
+	const isWaitingForCodeCheck = getChatManagerClass().isChallengeWaitingForCodeCheck(challengeData)
 
 	const handleReset = useCallback(async (): Promise<void> => {
-		const didReset = await careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
+		const didReset = await getCareerQuestClass().resetChallengeBlocklyJsonToInitial({ ...challengeData })
 		if (!didReset) return
 		setResetCounter((prev): number => prev + 1) // Increment reset counter to force remount
 	}, [challengeData])
@@ -86,7 +86,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		if (!pendingBlocklyJson || !hasRetrievedData || !hasInitializedRef.current) return
 
 		// Update career quest class
-		void careerQuestClass.updateBlocklyJson({ ...challengeData }, pendingBlocklyJson)
+		void getCareerQuestClass().updateBlocklyJson({ ...challengeData }, pendingBlocklyJson)
 
 		// Save to backend with debounce
 		debouncedSave(pendingBlocklyJson)
@@ -101,7 +101,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	// eslint-disable-next-line complexity
 	const handleJsonChange = useCallback(async (newBlocklyJson: BlocklyJson): Promise<void> => {
 	// Get current JSON from class for comparison, but don't depend on it
-		const currentJsonFromClass = chatManagerClass.getUpdatedBlocklyJson({ ...challengeData })
+		const currentJsonFromClass = getChatManagerClass().getUpdatedBlocklyJson({ ...challengeData })
 		const expectedBlockCount = getBlockCount(currentJsonFromClass)
 		const actualBlockCount = getBlockCount(newBlocklyJson)
 
@@ -157,7 +157,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}
 
 		// Update local state
-		chatManagerClass.setCppCode({ ...challengeData }, await generateCppFromJson(newBlocklyJson))
+		getChatManagerClass().setCppCode({ ...challengeData }, await generateCppFromJson(newBlocklyJson))
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)

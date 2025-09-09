@@ -5,17 +5,17 @@ import isUndefined from "lodash-es/isUndefined"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function editSandboxProjectNotes(projectUUID: SandboxProjectUUID, newProjectNotes: string) : Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
-		const project = sandboxClass.sandboxProjects.get(projectUUID)
+		const project = getSandboxClass().sandboxProjects.get(projectUUID)
 		if (isUndefined(project) || project.projectName === newProjectNotes) return
 
-		sandboxClass.updateProjectNotes(projectUUID, newProjectNotes)
+		getSandboxClass().updateProjectNotes(projectUUID, newProjectNotes)
 		const editSandboxProjectNotesResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProjectNotes(
 			project.sandboxProjectUUID,
 			newProjectNotes

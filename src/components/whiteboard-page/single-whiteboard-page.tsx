@@ -12,7 +12,7 @@ import { careerData, meetPipData } from "../../utils/constants/career-quest/care
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -67,7 +67,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			}
 
 			// Set saved position so career quest restores to hub position when it loads
-			careerQuestClass.setSavedPosition(hub.careerUUID, actualSlideId)
+			getCareerQuestClass().setSavedPosition(hub.careerUUID, actualSlideId)
 		}
 
 		studentClass.setIsInFocusMode(true)

@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
 import studentClass from '../student-class'
-import careerQuestClass from '../career-quest-class'
+import getCareerQuestClass from '../career-quest-class'
 import { ClassCode, HubUUID } from '@bluedotrobots/common-ts/types/utils'
 import { UpdatedHubSlideId } from '@bluedotrobots/common-ts/types/socket'
 
@@ -51,15 +51,15 @@ describe('StudentClass Hub Navigation', () => {
 			studentClass.updateHubSlideId(updateData)
 
 			// Should call direct navigation (no command)
-			expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'simple-slide-id'
 			)
-			expect(careerQuestClass.executeNavigationCommand).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().executeNavigationCommand).not.toHaveBeenCalled()
 		})
 
 		test('should parse advance_morph command correctly', () => {
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -70,7 +70,7 @@ describe('StudentClass Hub Navigation', () => {
 			studentClass.updateHubSlideId(updateData)
 
 			// Should execute navigation command with parsed parts
-			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:morphing-text-1',
 				'target-slide-id'
@@ -82,7 +82,7 @@ describe('StudentClass Hub Navigation', () => {
 		})
 
 		test('should parse back_morph command correctly', () => {
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -92,7 +92,7 @@ describe('StudentClass Hub Navigation', () => {
 
 			studentClass.updateHubSlideId(updateData)
 
-			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'back_morph:morphing-text-1',
 				'previous-slide-id'
@@ -100,7 +100,7 @@ describe('StudentClass Hub Navigation', () => {
 		})
 
 		test('should parse other commands with colon format', () => {
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -110,7 +110,7 @@ describe('StudentClass Hub Navigation', () => {
 
 			studentClass.updateHubSlideId(updateData)
 
-			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'next_text',
 				'slide-id-123'
@@ -118,7 +118,7 @@ describe('StudentClass Hub Navigation', () => {
 		})
 
 		test('should handle complex morphing command with multiple colons', () => {
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -132,7 +132,7 @@ describe('StudentClass Hub Navigation', () => {
 			// For 'advance_morph:complex:morphing:id:final-slide-id'
 			// parts = ['advance_morph', 'complex', 'morphing', 'id', 'final-slide-id']
 			// command = 'advance_morph:complex', actualSlideId = 'morphing'
-			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:complex',
 				'morphing'
@@ -142,8 +142,8 @@ describe('StudentClass Hub Navigation', () => {
 
 	describe('updateHubSlideId - Navigation Execution', () => {
 		test('should fallback to direct navigation when command fails', () => {
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(false)
-			vi.mocked(careerQuestClass.navigateToPosition).mockReturnValue(true)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(false)
+			vi.mocked(getCareerQuestClass().navigateToPosition).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -154,12 +154,12 @@ describe('StudentClass Hub Navigation', () => {
 			studentClass.updateHubSlideId(updateData)
 
 			// Should try command first, then fallback
-			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:morphing-text-1',
 				'fallback-slide'
 			)
-			expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
+			expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'fallback-slide'
 			)
@@ -167,7 +167,7 @@ describe('StudentClass Hub Navigation', () => {
 
 		test('should log warning when command fails and fallback is used', () => {
 			const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(false)
+			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(false)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -191,7 +191,7 @@ describe('StudentClass Hub Navigation', () => {
 
 		test('should log warning when direct navigation fails', () => {
 			const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-			vi.mocked(careerQuestClass.navigateToPosition).mockReturnValue(false)
+			vi.mocked(getCareerQuestClass().navigateToPosition).mockReturnValue(false)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -270,8 +270,8 @@ describe('StudentClass Hub Navigation', () => {
 			// Should update slideId but not trigger navigation
 			const hub = studentClass.getClassroomData(mockClassCode)?.activeHubs[0]
 			expect(hub?.slideId).toBe('test-slide')
-			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
-			expect(careerQuestClass.executeNavigationCommand).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().executeNavigationCommand).not.toHaveBeenCalled()
 		})
 
 		test('should handle non-existent classroom gracefully', () => {
@@ -283,7 +283,7 @@ describe('StudentClass Hub Navigation', () => {
 
 			// Should not throw
 			expect(() => studentClass.updateHubSlideId(updateData)).not.toThrow()
-			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
 		})
 
 		test('should handle non-existent hub gracefully', () => {
@@ -295,7 +295,7 @@ describe('StudentClass Hub Navigation', () => {
 
 			// Should not throw
 			expect(() => studentClass.updateHubSlideId(updateData)).not.toThrow()
-			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
 		})
 	})
 
@@ -319,7 +319,7 @@ describe('StudentClass Hub Navigation', () => {
 
 			// TODO: This should trigger navigation to teacher's current position
 			// Currently this functionality is missing
-			// expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
+			// expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
 			//   mockCareerUUID, 'teacher-current-position'
 			// )
 			
@@ -327,7 +327,7 @@ describe('StudentClass Hub Navigation', () => {
 			const classroom = studentClass.getClassroomData(mockClassCode)
 			const joinedHub = classroom?.activeHubs.find(h => h.hubId === 'new-hub-id' as HubUUID)
 			expect(joinedHub?.isHubJoined).toBe(true)
-			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
+			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
 		})
 	})
 })

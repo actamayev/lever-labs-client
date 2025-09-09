@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import { isErrorResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
@@ -17,7 +17,7 @@ export default async function createSandboxProject(): Promise<SandboxProjectUUID
 			throw Error ("Unable to create new sandbox project")
 		}
 
-		await sandboxClass.addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
+		await getSandboxClass().addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
 		return createSandboxProjectResponse.data.sandboxProject.sandboxProjectUUID
 	} catch (error) {
 		console.error(error)

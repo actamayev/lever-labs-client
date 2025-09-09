@@ -2,7 +2,7 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
-import careerQuestClass from "./career-quest-class"
+import getCareerQuestClass from "./career-quest-class"
 import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts/types/socket"
 
@@ -107,7 +107,7 @@ class StudentClass {
 
 		// Execute navigation command if available, otherwise fall back to direct positioning
 		if (navigationCommand) {
-			const commandSuccess = careerQuestClass.executeNavigationCommand(hub.careerUUID, navigationCommand, actualSlideId)
+			const commandSuccess = getCareerQuestClass().executeNavigationCommand(hub.careerUUID, navigationCommand, actualSlideId)
 			if (!commandSuccess) {
 				console.warn("Navigation command failed, falling back to direct positioning:", {
 					careerUUID: hub.careerUUID,
@@ -115,11 +115,11 @@ class StudentClass {
 					slideId: actualSlideId
 				})
 				// Fallback to direct positioning
-				careerQuestClass.navigateToPosition(hub.careerUUID, actualSlideId)
+				getCareerQuestClass().navigateToPosition(hub.careerUUID, actualSlideId)
 			}
 		} else {
 			// No command, use direct positioning (backward compatibility)
-			const navigationSuccess = careerQuestClass.navigateToPosition(hub.careerUUID, actualSlideId)
+			const navigationSuccess = getCareerQuestClass().navigateToPosition(hub.careerUUID, actualSlideId)
 			if (!navigationSuccess) {
 				console.warn("Failed to navigate student to hub position:", {
 					careerUUID: hub.careerUUID,

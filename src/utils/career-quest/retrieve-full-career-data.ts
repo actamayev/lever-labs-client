@@ -4,21 +4,21 @@ import isEqual from "lodash-es/isEqual"
 import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import careerQuestClass from "../../classes/career-quest-class"
+import getCareerQuestClass from "../../classes/career-quest-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default async function retrieveFullCareerData(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (
 			authClass.isFinishedWithSignup === false ||
-			careerQuestClass.isRetrievingCareerData(careerUUID) ||
-			careerQuestClass.hasRetrievedAllChallengesForCareer(careerUUID)
+			getCareerQuestClass().isRetrievingCareerData(careerUUID) ||
+			getCareerQuestClass().hasRetrievedAllChallengesForCareer(careerUUID)
 		) return
 
 		// Set loading state for entire career
-		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
+		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, true)
 
 		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
@@ -27,7 +27,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		}
 
 		// Get challenge sections to create a lookup map
-		const challengeSections = careerQuestClass.getChallengeSectionByChallengeUUID(careerUUID)
+		const challengeSections = getCareerQuestClass().getChallengeSectionByChallengeUUID(careerUUID)
 
 		// Create a map for quick lookup: challengeUUID -> challengeSection
 		const challengeMap = new Map(
@@ -105,7 +105,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 			const isCompleted = challengeData.hasEverBeenCorrect
 
-			await careerQuestClass.setChallengeRetrievedData(
+			await getCareerQuestClass().setChallengeRetrievedData(
 				careerUUIDChallengeUUID,
 				transformedMessages,
 				challengeData.sandboxJson,
@@ -127,22 +127,22 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		})
 
 		// Set the career chat messages in the career quest class
-		chatManagerClass.setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
+		getChatManagerClass().setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
 
 		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""
 		const seenChallengeUUIDs = careerResponse.data.seenChallengeUUIDs
 		const furthestSeenPosition = careerResponse.data.furthestSeenChallengeUuidOrTextUuid || ""
 
-		careerQuestClass.setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
-		careerQuestClass.setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
-		careerQuestClass.setFurthestSeenPosition(careerUUID, furthestSeenPosition) // NEW: Set furthest seen position
+		getCareerQuestClass().setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
+		getCareerQuestClass().setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
+		getCareerQuestClass().setFurthestSeenPosition(careerUUID, furthestSeenPosition) // NEW: Set furthest seen position
 
 		// Clear loading state for entire career
-		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)
-		careerQuestClass.setHasRetrievedAllChallengesForCareer(careerUUID, true)
+		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, false)
+		getCareerQuestClass().setHasRetrievedAllChallengesForCareer(careerUUID, true)
 	} catch (error) {
 		console.error(error)
-		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)
+		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, false)
 	}
 }

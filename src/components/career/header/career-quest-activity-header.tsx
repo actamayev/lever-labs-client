@@ -5,7 +5,7 @@ import { ArrowLeft, MessageCircle, Users } from "lucide-react" // Add MessageCir
 import { observer } from "mobx-react" // Add observer import
 import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
-import careerQuestClass from "../../../classes/career-quest-class" // Add import
+import getCareerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"
@@ -18,13 +18,13 @@ import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+	const isChatToggled = getCareerQuestClass().isCareerChatToggled(careerData.careerUUID)
 	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
 	const handleChatToggle = (): void => {
 		if (isOnChallengeSection) return
-		careerQuestClass.toggleCareerChat(careerData.careerUUID)
+		getCareerQuestClass().toggleCareerChat(careerData.careerUUID)
 	}
 	const router = useRouter()
 	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)

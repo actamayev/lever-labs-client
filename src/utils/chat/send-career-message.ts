@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import chatManagerClass from "../../classes/chat-manager-class"
+import getChatManagerClass from "../../classes/chat-manager-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { OutgoingCareerMessage } from "@bluedotrobots/common-ts/types/chat"
@@ -13,13 +13,13 @@ export default async function sendCareerMessage(careerUUID: CareerUUID, careerDa
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		chatManagerClass.resetCareerStreamingState(careerUUID)
+		getChatManagerClass().resetCareerStreamingState(careerUUID)
 
 		const response = await blueDotApiClientClass.chatDataService.sendCareerMessage(careerData, careerUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		chatManagerClass.setCareerStreamId(careerUUID, response.data.streamId)
+		getChatManagerClass().setCareerStreamId(careerUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

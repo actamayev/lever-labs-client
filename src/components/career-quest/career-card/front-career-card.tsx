@@ -8,7 +8,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import careerQuestClass from "../../../classes/career-quest-class"
+import getCareerQuestClass from "../../../classes/career-quest-class"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import ChallengeProgressCircle from "./challenge-progress-indicator"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
@@ -92,7 +92,7 @@ function FrontCareerCard(props: Props): React.ReactNode {
 									shadowHeight={4}
 									disabled
 								>
-									{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+									{getCareerQuestClass().getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
 								</TactileButton>
 							</div>
 						) : ( */}
@@ -102,7 +102,7 @@ function FrontCareerCard(props: Props): React.ReactNode {
 								shadowClass={colors.shadow}
 								shadowHeight={4}
 							>
-								{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
+								{getCareerQuestClass().getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
 							</TactileButton>
 						</Link>
 						{/* )} */}

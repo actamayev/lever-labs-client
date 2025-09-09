@@ -3,27 +3,27 @@
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveAllSandboxProjects(): Promise<void> {
 	try {
 		if (
 			authClass.isFinishedWithSignup === false ||
-			sandboxClass.isRetrievingAllSandboxProjects === true ||
-			sandboxClass.hasRetrievedAllSandboxProjects === true
+			getSandboxClass().isRetrievingAllSandboxProjects === true ||
+			getSandboxClass().hasRetrievedAllSandboxProjects === true
 		) return
 
-		sandboxClass.setIsRetrievingAllSandboxProjects(true)
+		getSandboxClass().setIsRetrievingAllSandboxProjects(true)
 
 		const sandboxProjectsResponse = await blueDotApiClientClass.sandboxDataService.retrieveAllSandboxProjects()
 		if (!isEqual(sandboxProjectsResponse.status, 200) || isErrorResponse(sandboxProjectsResponse.data)) {
 			throw Error ("Unable to retrieve sandbox projects")
 		}
 
-		await sandboxClass.setSandboxProjects(sandboxProjectsResponse.data.sandboxProjects)
+		await getSandboxClass().setSandboxProjects(sandboxProjectsResponse.data.sandboxProjects)
 	} catch (error) {
 		console.error(error)
-		sandboxClass.setIsRetrievingAllSandboxProjects(false)
+		getSandboxClass().setIsRetrievingAllSandboxProjects(false)
 	}
 }

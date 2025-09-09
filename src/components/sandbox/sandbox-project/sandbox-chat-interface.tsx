@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { useState, useRef, useEffect, useCallback } from "react"
 import ChatTextArea from "../../chat/chat-text-area"
-import sandboxClass from "../../../classes/sandbox-class"
+import getSandboxClass from "../../../classes/sandbox-class"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import ChatParentComponent from "../../chat/chat-parent-component"
 import SingleSandboxMessage from "../../chat/single-sandbox-message"
@@ -24,9 +24,9 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps): React
 	const inputRef = useRef<HTMLTextAreaElement>(null)
 
 	// Get messages and streaming state from sandbox class
-	const messages = sandboxClass.getChatMessages(projectUUID)
-	const isStreaming = sandboxClass.isStreaming(projectUUID)
-	const isWaitingForResponse = sandboxClass.isWaitingForResponse(projectUUID)
+	const messages = getSandboxClass().getChatMessages(projectUUID)
+	const isStreaming = getSandboxClass().isStreaming(projectUUID)
+	const isWaitingForResponse = getSandboxClass().isWaitingForResponse(projectUUID)
 
 	const hasAnyMessages = messages.length > 0
 
@@ -41,7 +41,7 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps): React
 		setInputValue("")
 
 		// Add user message to sandbox
-		sandboxClass.addUserMessage(projectUUID, inputValue)
+		getSandboxClass().addUserMessage(projectUUID, inputValue)
 
 		// Keep focus on input after sending
 		setTimeout((): void => {
@@ -54,8 +54,8 @@ function SandboxChatInterface({ projectUUID }: SandboxChatInterfaceProps): React
 
 	const chatReset = useCallback((): string | null => {
 		// Reset streaming state immediately for UI responsiveness
-		const currentStreamId = sandboxClass.getCurrentStreamId(projectUUID)
-		sandboxClass.resetChatStreamingState(projectUUID)
+		const currentStreamId = getSandboxClass().getCurrentStreamId(projectUUID)
+		getSandboxClass().resetChatStreamingState(projectUUID)
 
 		// If you implement stream ID tracking in sandbox class, uncomment this:
 		return currentStreamId

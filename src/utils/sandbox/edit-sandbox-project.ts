@@ -6,14 +6,14 @@ import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
-import sandboxClass from "../../classes/sandbox-class"
+import getSandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function editSandboxProject(projectUUID: SandboxProjectUUID, newBlocklyJson: BlocklyJson) : Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
-		const project = sandboxClass.sandboxProjects.get(projectUUID)
+		const project = getSandboxClass().sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		const editSandboxProjectResponse = await blueDotApiClientClass.sandboxDataService.editSandboxProject(
@@ -23,7 +23,7 @@ export default async function editSandboxProject(projectUUID: SandboxProjectUUID
 		if (!isEqual(editSandboxProjectResponse.status, 200) || isNonSuccessResponse(editSandboxProjectResponse.data)) {
 			throw Error ("Unable to edit sandbox project")
 		}
-		sandboxClass.updateProjectLastUpdated(projectUUID)
+		getSandboxClass().updateProjectLastUpdated(projectUUID)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({

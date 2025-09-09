@@ -7,7 +7,7 @@ import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
-import sandboxClass from "../../../classes/sandbox-class"
+import getSandboxClass from "../../../classes/sandbox-class"
 import WorkbenchLayout from "../../layouts/workbench-layout"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
@@ -46,7 +46,7 @@ function TheSandboxPage(): React.ReactNode {
 	}, [searchQuery])
 
 	// Get all projects and sort by updated date
-	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
+	const allProjects = Array.from(getSandboxClass().sandboxProjects.values())
 		.sort((a, b): number => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
 	// Filter all projects based on search query
@@ -135,7 +135,7 @@ function TheSandboxPage(): React.ReactNode {
 								))}
 							</div>
 						) : (
-							!sandboxClass.isRetrievingAllSandboxProjects && (
+							!getSandboxClass().isRetrievingAllSandboxProjects && (
 								<div className="text-center py-12">
 									{searchQuery ? (
 										<p className="text-hare mb-4">No projects match your search</p>
@@ -157,7 +157,7 @@ function TheSandboxPage(): React.ReactNode {
 					</div>
 
 					{/* Loading state */}
-					{sandboxClass.isRetrievingAllSandboxProjects && (
+					{getSandboxClass().isRetrievingAllSandboxProjects && (
 						<div className="text-center py-12">
 							<p className="text-hare">Loading projects...</p>
 						</div>

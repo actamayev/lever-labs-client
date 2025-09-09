@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import authClass from "@/classes/auth-class"
 import { AuthState } from "@/lib/auth-server"
 import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
-// Dynamic import - will be loaded only when needed
+import getCareerQuestClass from "../../classes/career-quest-class"
 
 interface AuthenticatedLayoutClientProps {
 	children: React.ReactNode
@@ -25,10 +25,8 @@ function AuthenticatedLayoutClient({
 				isAuthenticated: authState.isAuthenticated,
 				hasCompletedSignup: authState.hasCompletedSignup
 			})
-			// Dynamically import and re-initialize career quest data for the new user
-			void import("../../classes/career-quest-class").then((module) => {
-				module.default.reinitialize()
-			})
+			// Re-initialize career quest data for the new user
+			getCareerQuestClass().reinitialize()
 		}
 	}, [authState])
 
