@@ -160,8 +160,20 @@ function TheSandboxPage(): React.ReactNode {
 
 					{/* Loading state */}
 					{sandboxClass.isRetrievingAllSandboxProjects && (
-						<div className="text-center py-12">
-							<p className="text-hare">Loading projects...</p>
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+							{/* Create 6 loading skeleton cards */}
+							{Array.from({ length: 6 }).map((_, index): React.ReactNode => (
+								<div
+									key={`loading-${index}`}
+									className="border-2 rounded-xl p-4 border-swan min-h-32 animate-pulse"
+								>
+									<div className="flex justify-between items-center">
+										<div className="bg-swan rounded h-6 w-32"></div>
+										<div className="bg-swan rounded h-5 w-5"></div>
+									</div>
+									<div className="bg-swan rounded h-4 w-24 mt-2"></div>
+								</div>
+							))}
 						</div>
 					)}
 				</div>
