@@ -26,9 +26,9 @@ function CareerActivityTemplate(props: Props): React.ReactNode {
 	}
 
 	// Wait for careers to be initialized before rendering
-	// if (!careerQuestClass.isDoneInitializing) {
-	return <CareerActivityLoadingComponent careerTitle={careerData.careerTitle} />
-	// }
+	if (!careerQuestClass.isDoneInitializing) {
+		return <CareerActivityLoadingComponent careerTitle={careerData.careerTitle} />
+	}
 
 	return (
 		<div className="flex flex-col h-screen min-h-0">
