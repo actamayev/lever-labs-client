@@ -50,6 +50,14 @@ class CareerQuestClass {
 		// Career definitions will be loaded on-demand when needed
 	}
 
+	public reinitialize = action((): void => {
+		// Clear existing data
+		this.careers.clear()
+		this.isDoneInitializing = false
+
+		this.initializeAllCareers(CAREER_DEFINITIONS)
+	})
+
 	// ========================================
 	// CAREER INITIALIZATION
 	// ========================================
@@ -145,14 +153,6 @@ class CareerQuestClass {
 			morphingTextIndices,
 			morphingAnimationStates
 		)
-	})
-
-	public reinitialize = action((): void => {
-		// Clear existing data
-		this.careers.clear()
-		this.isDoneInitializing = false
-
-		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 
 	public setSwiperInstance = action((careerUUID: CareerUUID, swiperInstance: SwiperType): void => {
