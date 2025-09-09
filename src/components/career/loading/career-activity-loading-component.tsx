@@ -67,28 +67,24 @@ export default function CareerActivityLoadingComponent({ careerTitle }: Props): 
 					<div className="relative" style={{ width: "45%" }}>
 						<div className="px-[100px] py-8 h-full pointer-events-none">
 							<div className="h-full pointer-events-auto">
-								<div className="h-full">
-									<div className="h-[calc(100vh-10rem)]">
-										<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
-											<div className="h-full flex items-center justify-center px-[25px]">
-												<div className="space-y-6">
-													<div className="bg-swan animate-pulse rounded h-8 w-3/4 mx-auto"/>
-													<div className="space-y-3">
-														<div className="bg-swan animate-pulse rounded h-4 w-full"/>
-														<div className="bg-swan animate-pulse rounded h-4 w-5/6 mx-auto"/>
-														<div className="bg-swan animate-pulse rounded h-4 w-4/5 mx-auto"/>
-													</div>
-													<div className="bg-swan animate-pulse rounded h-6 w-1/2 mx-auto"/>
-													<div className="space-y-2">
-														<div className="bg-swan animate-pulse rounded h-4 w-full"/>
-														<div className="bg-swan animate-pulse rounded h-4 w-3/4 mx-auto"/>
-													</div>
+								<div className="h-[calc(100vh-10rem)]">
+									<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
+										<div className="h-full flex items-center justify-center px-[25px]">
+											<div className="space-y-6">
+												<div className="bg-swan animate-pulse rounded h-8 w-3/4 mx-auto"></div>
+												<div className="space-y-3">
+													<div className="bg-swan animate-pulse rounded h-4 w-full"></div>
+													<div className="bg-swan animate-pulse rounded h-4 w-5/6 mx-auto"></div>
+													<div className="bg-swan animate-pulse rounded h-4 w-4/5 mx-auto"></div>
+												</div>
+												<div className="bg-swan animate-pulse rounded h-6 w-1/2 mx-auto"></div>
+												<div className="space-y-2">
+													<div className="bg-swan animate-pulse rounded h-4 w-full"></div>
+													<div className="bg-swan animate-pulse rounded h-4 w-3/4 mx-auto"></div>
 												</div>
 											</div>
 										</div>
-
 									</div>
-
 								</div>
 							</div>
 						</div>
