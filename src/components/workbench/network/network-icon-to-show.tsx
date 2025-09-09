@@ -16,8 +16,9 @@ function NetworkIconToShow(): React.ReactNode {
 			</div>
 		)
 	}
-	if (isNull(getPipClass().selectedPip)) return null
-	else if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
+	const selectedPip = getPipClass().selectedPip
+	if (isNull(selectedPip)) return null
+	else if (selectedPip.pipConnectionStatus === "offline") {
 		return (
 			<div className="flex items-center justify-center flex-col text-cardinal opacity-50">
 				<WifiOff
@@ -28,7 +29,7 @@ function NetworkIconToShow(): React.ReactNode {
 			</div>
 		)
 	}
-	switch (getPipClass().selectedPip.pipConnectionStatus) {
+	switch (selectedPip.pipConnectionStatus) {
 		case "online":
 			return (
 				<div className="flex items-center justify-center flex-col text-macaw">

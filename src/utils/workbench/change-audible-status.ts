@@ -19,7 +19,9 @@ export default async function changeAudibleStatus(newMutedState: boolean): Promi
 			getWorkbenchClass().setIsMuted(newMutedState)
 			return
 		}
-		if (isNull(getPipClass().selectedPip) || getPipClass().selectedPip.pipConnectionStatus === "offline") {
+
+		const selectedPip = getPipClass().selectedPip
+		if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {
 			return getToastClass().negative({
 				title: "Pip not connected",
 				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
@@ -27,7 +29,7 @@ export default async function changeAudibleStatus(newMutedState: boolean): Promi
 		}
 		const playTuneResponse = await getBlueDotApiClientClass().workbenchDataService.changeAudibleStatus(
 			newMutedState,
-			getPipClass().selectedPip.pipUUID
+			selectedPip.pipUUID
 		)
 		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
 			throw Error("Unable to change mute status")

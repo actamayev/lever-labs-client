@@ -28,11 +28,12 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 	} = options
 
 	try {
+		const selectedPip = getPipClass().selectedPip
 		if (
 			failSilently &&
 			(
-				isNull(getPipClass().selectedPip) ||
-				getPipClass().selectedPip.pipConnectionStatus === "offline"
+				isNull(selectedPip) ||
+				selectedPip.pipConnectionStatus === "offline"
 			) &&
 			!serialConnectionManagerClass.pipTurnedOn
 		) return
@@ -43,8 +44,8 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 		}
 
 		if (!skipOfflineCheck && (
-			isNull(getPipClass().selectedPip) ||
-			getPipClass().selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip) ||
+			selectedPip.pipConnectionStatus === "offline"
 		)) {
 			return getToastClass().negative({
 				title: "Pip not connected",

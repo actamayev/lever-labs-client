@@ -61,18 +61,19 @@ export default function useEffectSetDefaultColors(): void {
 				return
 			}
 
+			const selectedPip = getPipClass().selectedPip
 			if (
-				isNull(getPipClass().selectedPip)
-				|| getPipClass().selectedPip.pipConnectionStatus === "offline"
+				isNull(selectedPip)
+				|| selectedPip.pipConnectionStatus === "offline"
 				|| isEmpty(getGarageClass().selectedDots)
 			) return
 
-			getSocketClass().emitToServer("new-led-colors", {...ledControlData, pipUUID: getPipClass().selectedPip.pipUUID })
+			getSocketClass().emitToServer("new-led-colors", {...ledControlData, pipUUID: selectedPip.pipUUID })
 		}, 10),
 		[getGarageClass().selectedColorRgba.r,
 			getGarageClass().selectedColorRgba.g,
 			getGarageClass().selectedColorRgba.b,
-			getGarageClass().selectedColorShade, getPipClass().selectedPip, socketClass]
+			getGarageClass().selectedColorShade]
 	)
 
 	// This use
@@ -99,5 +100,5 @@ export default function useEffectSetDefaultColors(): void {
 		getGarageClass().selectedColorRgba.r,
 		getGarageClass().selectedColorRgba.g,
 		getGarageClass().selectedColorRgba.b,
-		getGarageClass().selectedColorShade, garageClass])
+		getGarageClass().selectedColorShade])
 }

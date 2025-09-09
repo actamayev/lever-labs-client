@@ -20,9 +20,10 @@ export default async function playFunSound(sound: FunSounds): Promise<void> {
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = getPipClass().selectedPip
 		if (
-			isNull(getPipClass().selectedPip) ||
-			(getPipClass().selectedPip.pipConnectionStatus === "offline")
+			isNull(selectedPip) ||
+			(selectedPip.pipConnectionStatus === "offline")
 		) {
 			return getToastClass().negative({
 				title: "Pip not connected",
@@ -30,7 +31,7 @@ export default async function playFunSound(sound: FunSounds): Promise<void> {
 			})
 		}
 		getSocketClass().emitToServer("play-fun-sound", {
-			pipUUID: getPipClass().selectedPip.pipUUID,
+			pipUUID: selectedPip.pipUUID,
 			sound
 		})
 		return

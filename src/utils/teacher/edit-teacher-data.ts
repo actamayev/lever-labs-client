@@ -19,9 +19,10 @@ export default async function editTeacherData(
 		if (getAuthClass().isFinishedWithSignup === false) return
 
 		// Check if no changes were made
+		const teacherData = getTeacherClass().teacherData
 		if (
-			teacherNameData.teacherFirstName === getTeacherClass().teacherData?.teacherFirstName &&
-			teacherNameData.teacherLastName === getTeacherClass().teacherData.teacherLastName
+			teacherNameData.teacherFirstName === teacherData?.teacherFirstName &&
+			teacherNameData.teacherLastName === teacherData.teacherLastName
 		) {
 			setError("No changes detected. Please modify your information before updating.")
 			return

@@ -24,7 +24,8 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
-		if (isNull(getPipClass().selectedPip) || getPipClass().selectedPip.pipConnectionStatus === "offline") {
+		const selectedPip = getPipClass().selectedPip
+		if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {
 			return getToastClass().negative({
 				title: "Pip not connected",
 				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
@@ -32,7 +33,7 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 		}
 		const playTuneResponse = await getBlueDotApiClientClass().workbenchDataService.changeVolume(
 			volume,
-			getPipClass().selectedPip.pipUUID
+			selectedPip.pipUUID
 		)
 		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
 			throw Error("Unable to change volume")

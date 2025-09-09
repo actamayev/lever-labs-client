@@ -59,18 +59,19 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	getGarageClass().updatePressedDirections(newDirections)
 
 	if (getAuthClass().isFinishedWithSignup === false) return
+	const selectedPip = getPipClass().selectedPip
 
-	if (isNull(getPipClass().selectedPip)) {
+	if (isNull(selectedPip)) {
 		return getToastClass().negative({ title: "Please add a Pip" })
 	}
-	if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
-		return getToastClass().negative({ title: `Please connect ${getPipClass().selectedPip.pipName} to the internet` })
+	if (selectedPip.pipConnectionStatus === "offline") {
+		return getToastClass().negative({ title: `Please connect ${selectedPip.pipName} to the internet` })
 	}
 
 	// Emit motor control via socket
 	getSocketClass().emitToServer("motor-control", {
 		motorControl,
-		pipUUID: getPipClass().selectedPip.pipUUID,
+		pipUUID: selectedPip.pipUUID,
 		motorThrottlePercent: getGarageClass().motorThrottlePercent
 	})
 }

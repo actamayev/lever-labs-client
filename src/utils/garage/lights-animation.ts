@@ -23,16 +23,17 @@ export default async function lightsAnimation(newAnimation: LightAnimation): Pro
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = getPipClass().selectedPip
 		if (
 			getAuthClass().isFinishedWithSignup === false ||
-			isNull(getPipClass().selectedPip) ||
-			getPipClass().selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip) ||
+			selectedPip.pipConnectionStatus === "offline"
 		) return
 
 		getGarageClass().setSelectedAnimation(newAnimation)
 
 		const newLightsAnimationResponse = await getBlueDotApiClientClass().garageDataService.lightsAnimation(
-			newAnimation, getPipClass().selectedPip.pipUUID
+			newAnimation, selectedPip.pipUUID
 		)
 		if (!isEqual(newLightsAnimationResponse.status, 200) || isNonSuccessResponse(newLightsAnimationResponse.data)) {
 			throw Error ("Unable to animate lights")

@@ -6,6 +6,8 @@ import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import getPipClass from "../../classes/pip-class"
 import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
+import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
+import { AxiosResponse } from "axios"
 
 export default async function careerQuestTrigger(
 	careerType: CareerType,
@@ -15,12 +17,13 @@ export default async function careerQuestTrigger(
 
 	await sendDataToSerialOrApiTemplate({
 		buffer,
-		dataServiceEndpoint: (): ReturnType<typeof getBlueDotApiClientClass().careerQuestDataService.careerTrigger> => {
-			if (isNull(getPipClass().selectedPip)) {
+		dataServiceEndpoint: (): Promise<AxiosResponse<AllCommonResponses>>=> {
+			const selectedPip = getPipClass().selectedPip
+			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
 			return getBlueDotApiClientClass().careerQuestDataService.careerTrigger(
-				careerType, triggerMessageType, getPipClass().selectedPip.pipUUID
+				careerType, triggerMessageType, selectedPip.pipUUID
 			)
 		},
 		errorTitle: "Unable to trigger career message at this time",

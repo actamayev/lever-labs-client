@@ -326,7 +326,7 @@ class CareerQuestClass {
 
 		// Call API (fire and forget - no error handling for now)
 		try {
-			await blueDotApiClient.careerQuestDataService.markChallengeAsSeen(challengeUUID)
+			await getBlueDotApiClient().careerQuestDataService.markChallengeAsSeen(challengeUUID)
 		} catch (error) {
 			console.error("Failed to mark challenge as seen:", error)
 			// Could add retry logic here later

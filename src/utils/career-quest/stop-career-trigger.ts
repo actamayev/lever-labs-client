@@ -17,13 +17,14 @@ export default async function stopCareerTrigger(): Promise<void> {
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = getPipClass().selectedPip
 		if (
-			isNull(getPipClass().selectedPip) ||
-			getPipClass().selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip) ||
+			selectedPip.pipConnectionStatus === "offline"
 		) return
 
 		const stopScriptResponse = await getBlueDotApiClientClass().careerQuestDataService.stopCareerTrigger(
-			getPipClass().selectedPip.pipUUID
+			selectedPip.pipUUID
 		)
 
 		if (!isEqual(stopScriptResponse.status, 200) || isNonSuccessResponse(stopScriptResponse.data)) {

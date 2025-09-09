@@ -39,10 +39,11 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 			void serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = getPipClass().selectedPip
 
 		if (
-			isNull(getPipClass().selectedPip)
-			|| getPipClass().selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip)
+			|| selectedPip.pipConnectionStatus === "offline"
 		) return
 
 		getSocketClass().emitToServer("new-led-colors", {
@@ -52,7 +53,7 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 			middleRightColor: colorResult.rgba,
 			backLeftColor: colorResult.rgba,
 			backRightColor: colorResult.rgba,
-			pipUUID: getPipClass().selectedPip.pipUUID
+			pipUUID: selectedPip.pipUUID
 		})
 	}
 

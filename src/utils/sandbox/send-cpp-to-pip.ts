@@ -45,7 +45,9 @@ export default async function sendCppToPip(
 			return
 		}
 
-		if (isNull(getPipClass().selectedPip)) {
+		const selectedPip = getPipClass().selectedPip
+
+		if (isNull(selectedPip)) {
 			return getToastClass().neutral({
 				title: "You have not connected to a Pip",
 				description: "Please connect to a Pip to upload code"
@@ -54,25 +56,25 @@ export default async function sendCppToPip(
 		if (getPipClass().isSendingCppToPip === true) {
 			return getToastClass().neutral({
 				title: "Currently sending code to Pip",
-				description: `We're beaming your code over to ${getPipClass().selectedPip.pipName} as fast as we can!`
+				description: `We're beaming your code over to ${selectedPip.pipName} as fast as we can!`
 			})
 		}
 
-		if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
+		if (selectedPip.pipConnectionStatus === "offline") {
 			return getToastClass().negative({
-				title: `${getPipClass().selectedPip.pipName} is not online`,
-				description: `Please connect ${getPipClass().selectedPip.pipName} to the internet to upload code`
+				title: `${selectedPip.pipName} is not online`,
+				description: `Please connect ${selectedPip.pipName} to the internet to upload code`
 			})
-		} else if (getPipClass().selectedPip.pipConnectionStatus === "connected to other user") {
+		} else if (selectedPip.pipConnectionStatus === "connected to other user") {
 			return getToastClass().negative({
-				title: `Unable to upload code to ${getPipClass().selectedPip.pipName} at this time`,
-				description: `${getPipClass().selectedPip.pipName} is connected to another user`
+				title: `Unable to upload code to ${selectedPip.pipName} at this time`,
+				description: `${selectedPip.pipName} is connected to another user`
 			})
 		}
 		getPipClass().setIsSendingCppToPip(true)
 
 		const connectToPipResponse = await getBlueDotApiClientClass().sandboxDataService.sendSandboxCodeToPip(
-			getPipClass().selectedPip.pipUUID, cppCode
+			selectedPip.pipUUID, cppCode
 		)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {

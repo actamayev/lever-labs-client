@@ -16,9 +16,10 @@ function NetworkWorkbench(): React.ReactNode {
 
 	const getStatusText = (): string => {
 		if (getPipClass().pipPluggedInSerial) return "Connected to USB"
-		if (isNull(getPipClass().selectedPip)) return "No device selected"
+		const selectedPip = getPipClass().selectedPip
+		if (isNull(selectedPip)) return "No device selected"
 
-		switch (getPipClass().selectedPip.pipConnectionStatus) {
+		switch (selectedPip.pipConnectionStatus) {
 			case "offline":
 				return "Offline"
 			case "online":
@@ -36,9 +37,10 @@ function NetworkWorkbench(): React.ReactNode {
 
 	const getStatusColor = (): string => {
 		if (getPipClass().pipPluggedInSerial) return "text-green-500"
-		if (isNull(getPipClass().selectedPip)) return "text-wolf"
+		const selectedPip = getPipClass().selectedPip
+		if (isNull(selectedPip)) return "text-wolf"
 
-		switch (getPipClass().selectedPip.pipConnectionStatus) {
+		switch (selectedPip.pipConnectionStatus) {
 			case "offline":
 				return "text-cardinal"
 			case "online":
