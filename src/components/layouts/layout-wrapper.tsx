@@ -11,6 +11,7 @@ import ThemeProvider from "../theme/theme-provider"
 import InternalPagesLayout from "./internal-pages-layout"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
+import careerQuestClass from "../../classes/career-quest-class"
 
 interface LayoutWrapperProps {
 	children: React.ReactNode
@@ -28,6 +29,7 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 				isAuthenticated: initialAuthState.isAuthenticated,
 				hasCompletedSignup: initialAuthState.hasCompletedSignup
 			})
+			careerQuestClass.reinitialize()
 		}
 
 		// Sync theme from server
