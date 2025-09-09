@@ -82,7 +82,6 @@ export class NavigationManagerClass {
 
 	public getCurrentMainSlideIndex(careerUUID: CareerUUID): number {
 		const navigation = this.getNavigation(careerUUID)
-		console.log("navigation", navigation)
 		return navigation?.currentMainSlideIndex || 0
 	}
 
@@ -142,7 +141,6 @@ export class NavigationManagerClass {
 
 	public getCurrentMainSlide(careerUUID: CareerUUID): MainSlide {
 		const mainSlides = this.getMainSlides(careerUUID)
-		console.log("mainSlides", mainSlides)
 		const currentMainSlideIndex = this.getCurrentMainSlideIndex(careerUUID)
 		return mainSlides[currentMainSlideIndex]
 	}

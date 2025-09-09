@@ -8,9 +8,6 @@ import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveAllSandboxProjects(): Promise<void> {
 	try {
-		console.log("authClass.isFinishedWithSignup", authClass.isFinishedWithSignup)
-		console.log("sandboxClass.isRetrievingAllSandboxProjects", sandboxClass.isRetrievingAllSandboxProjects)
-		console.log("sandboxClass.hasRetrievedAllSandboxProjects", sandboxClass.hasRetrievedAllSandboxProjects)
 		if (
 			authClass.isFinishedWithSignup === false ||
 			sandboxClass.isRetrievingAllSandboxProjects === true ||

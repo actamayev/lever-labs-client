@@ -5,11 +5,13 @@ import Link from "next/link"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
+import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
+import ConnectUsbButton from "../../connect-usb-button"
 import pipClass from "../../../classes/pip-class"
 import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
@@ -24,7 +26,7 @@ import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
-import useRetrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
+import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 
@@ -33,10 +35,9 @@ const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
-	const retrieveSingleSandboxProject = useRetrieveSingleSandboxProject()
 	useEffect((): void => {
 		void retrieveSingleSandboxProject(projectUUID)
-	}, [projectUUID, retrieveSingleSandboxProject])
+	}, [projectUUID])
 	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
@@ -153,23 +154,94 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 		return (): void => document.removeEventListener("keydown", handleKeyDown)
 	}, [])
 
-	// console.log("project", project)
-	// console.log("isLoading", isLoading)
-
-	if (!project || isLoading) {
+	// Loading state - show full layout but disabled
+	if (isLoading) {
 		return (
-			<div className="p-6">
-				<div className="flex items-center mb-6">
-					<Link href="/sandbox">
-						<Button className="mr-4 px-3 py-1 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors">
-							Back
-						</Button>
-					</Link>
-					<h1 className="text-2xl font-bold">
-						{isLoading
-							? "Loading project..."
-							: "Project not found"}
-					</h1>
+			<div className="flex flex-col h-screen min-h-0">
+				{/* Loading Header */}
+				<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
+					<div className="flex flex-row items-center justify-center">
+						<Link href="/sandbox">
+							<button className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2">
+								<ArrowLeft size={30} className="mr-1" />
+							</button>
+						</Link>
+						<div className="bg-swan animate-pulse rounded h-8 w-48 mr-4"></div>
+						<button className="p-2 rounded-md opacity-50 cursor-not-allowed">
+							<Star size={30} />
+						</button>
+					</div>
+					<div className="flex flex-row items-center justify-center space-x-4">
+						<ConnectUsbButton />
+						<button className="p-2 rounded-md border-2 text-questionText border-swan opacity-50 cursor-not-allowed">
+							<NotebookPen size={30} />
+						</button>
+					</div>
+				</div>
+
+				<div className="flex flex-1 overflow-hidden">
+					<div
+						className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
+						style={{ width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)" }}
+					>
+						<div className="min-h-0 flex flex-col h-full">
+							{/* Loading Search Bar */}
+							<div className="bg-swan animate-pulse rounded-t-3xl h-12 border-2 border-swan"></div>
+
+							{/* Loading Blockly Area */}
+							<div className="h-full w-full border-b-2 border-x-2 border-swan rounded-b-3xl bg-polar min-h-0 flex flex-col">
+								<BlocklyLoadingComponent />
+								<div className="flex gap-3 pt-3 pb-2 px-4">
+									<div className="bg-swan animate-pulse rounded-xl h-14 flex-1"></div>
+									<div className="bg-swan animate-pulse rounded-xl h-14 w-32"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Loading Side Panel */}
+					<div className="flex flex-col h-full transition-all duration-300 ease-in-out border-swan"
+						style={{
+							width: "0",
+							borderLeftWidth: "0",
+							opacity: "0",
+							padding: "0",
+							visibility: "hidden"
+						}}>
+						{personalInfoClass.sandboxNotesOpen && (
+							<div className="bg-swan animate-pulse rounded h-full"></div>
+						)}
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	// Project not found - show header with message
+	if (!project) {
+		return (
+			<div className="flex flex-col h-screen min-h-0">
+				{/* Header with back button only */}
+				<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
+					<div className="flex flex-row items-center justify-center">
+						<Link href="/sandbox">
+							<button className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2">
+								<ArrowLeft size={30} className="mr-1" />
+							</button>
+						</Link>
+						<h1 className="text-2xl font-bold">Project not found</h1>
+					</div>
+				</div>
+
+				<div className="flex flex-1 items-center justify-center">
+					<div className="text-center">
+						<h2 className="text-xl text-hare mb-4">This project could not be found</h2>
+						<Link href="/sandbox">
+							<TactileButton className="bg-blue-600 text-white px-6 py-2 rounded-lg">
+								Return to Sandbox
+							</TactileButton>
+						</Link>
+					</div>
 				</div>
 			</div>
 		)
@@ -184,9 +256,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 			<div className="flex flex-1 overflow-hidden">
 				<div
 					className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
-					style={{
-						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
-					}}
+					style={{ width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)" }}
 				>
 					<div className="min-h-0 flex flex-col h-full">
 						<BlocklySearchBar
