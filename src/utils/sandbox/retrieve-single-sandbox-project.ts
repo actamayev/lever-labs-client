@@ -31,7 +31,7 @@ export default async function retrieveSingleSandboxProject(projectUUID: SandboxP
 			throw Error ("Unable to retrieve sandbox project")
 		}
 
-		sandboxClass.addSandboxProject(sandboxProjectResponse.data.sandboxProject)
+		await sandboxClass.addSandboxProject(sandboxProjectResponse.data.sandboxProject)
 	} catch (error) {
 		console.error(error)
 		sandboxClass.setIsRetrievingSingleProject(projectUUID, false)

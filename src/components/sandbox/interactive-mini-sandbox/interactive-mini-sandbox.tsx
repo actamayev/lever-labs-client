@@ -117,7 +117,9 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 		}
 	}, [isDarkMode])
 
-	useEffect((): void => initializeBlocks(), [])
+	useEffect((): void => {
+		void initializeBlocks()
+	}, [])
 
 	return (
 		<div

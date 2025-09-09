@@ -17,7 +17,7 @@ export default async function createSandboxProject(): Promise<SandboxProjectUUID
 			throw Error ("Unable to create new sandbox project")
 		}
 
-		sandboxClass.addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
+		await sandboxClass.addSandboxProject(createSandboxProjectResponse.data.sandboxProject)
 		return createSandboxProjectResponse.data.sandboxProject.sandboxProjectUUID
 	} catch (error) {
 		console.error(error)

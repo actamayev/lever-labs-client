@@ -145,7 +145,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	}, [])
 
 	useEffect((): void => {
-		initializeBlocks()
+		void initializeBlocks()
 		setupToolbox()
 		// TODO 12/1/24: Fix, not working
 

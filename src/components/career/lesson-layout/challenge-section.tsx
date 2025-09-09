@@ -55,8 +55,8 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	const cppCode = chatManagerClass.getCppCode({ ...challengeData })
 	const isWaitingForCodeCheck = chatManagerClass.isChallengeWaitingForCodeCheck(challengeData)
 
-	const handleReset = useCallback((): void => {
-		const didReset = careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
+	const handleReset = useCallback(async (): Promise<void> => {
+		const didReset = await careerQuestClass.resetChallengeBlocklyJsonToInitial({ ...challengeData })
 		if (!didReset) return
 		setResetCounter((prev): number => prev + 1) // Increment reset counter to force remount
 	}, [challengeData])
@@ -86,7 +86,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		if (!pendingBlocklyJson || !hasRetrievedData || !hasInitializedRef.current) return
 
 		// Update career quest class
-		careerQuestClass.updateBlocklyJson({ ...challengeData }, pendingBlocklyJson)
+		void careerQuestClass.updateBlocklyJson({ ...challengeData }, pendingBlocklyJson)
 
 		// Save to backend with debounce
 		debouncedSave(pendingBlocklyJson)
@@ -99,7 +99,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 	}, [pendingBlocklyJson, hasRetrievedData, challengeData, debouncedSave])
 
 	// eslint-disable-next-line complexity
-	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson): void => {
+	const handleJsonChange = useCallback(async (newBlocklyJson: BlocklyJson): Promise<void> => {
 	// Get current JSON from class for comparison, but don't depend on it
 		const currentJsonFromClass = chatManagerClass.getUpdatedBlocklyJson({ ...challengeData })
 		const expectedBlockCount = getBlockCount(currentJsonFromClass)
@@ -157,7 +157,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}
 
 		// Update local state
-		chatManagerClass.setCppCode({ ...challengeData }, generateCppFromJson(newBlocklyJson))
+		chatManagerClass.setCppCode({ ...challengeData }, await generateCppFromJson(newBlocklyJson))
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)

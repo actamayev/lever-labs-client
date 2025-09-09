@@ -21,7 +21,7 @@ export default async function retrieveAllSandboxProjects(): Promise<void> {
 			throw Error ("Unable to retrieve sandbox projects")
 		}
 
-		sandboxClass.setSandboxProjects(sandboxProjectsResponse.data.sandboxProjects)
+		await sandboxClass.setSandboxProjects(sandboxProjectsResponse.data.sandboxProjects)
 	} catch (error) {
 		console.error(error)
 		sandboxClass.setIsRetrievingAllSandboxProjects(false)

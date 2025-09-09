@@ -35,7 +35,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		)
 
 		// Process each challenge's data by matching challengeUUID
-		careerResponse.data.careerQuestChallengeData.forEach((challengeData): void => {
+		await Promise.all(careerResponse.data.careerQuestChallengeData.map(async (challengeData): Promise<void> => {
 			// Find the matching challenge section by UUID
 			const challengeSection = challengeMap.get(challengeData.challengeUUID)
 
@@ -105,13 +105,13 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 			const isCompleted = challengeData.hasEverBeenCorrect
 
-			careerQuestClass.setChallengeRetrievedData(
+			await careerQuestClass.setChallengeRetrievedData(
 				careerUUIDChallengeUUID,
 				transformedMessages,
 				challengeData.sandboxJson,
 				isCompleted
 			)
-		})
+		}))
 
 		// NEW: Process and set career chat messages
 		const transformedCareerChatMessages: CareerChatMessage[] = careerResponse.data.careerChatMessages.map((msg): CareerChatMessage => {

@@ -76,7 +76,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 		return (): void => clearTimeout(timer)
 	}, [isSwitchingMode])
 
-	const handleJsonChange = useCallback((newBlocklyJson: BlocklyJson): void => {
+	const handleJsonChange = useCallback(async (newBlocklyJson: BlocklyJson): Promise<void> => {
 		if (!project || isLoading) return
 
 		// Skip the first change event which happens during workspace initialization
@@ -87,13 +87,13 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
 			if (isEmpty(project.cppCode)) {
-				sandboxClass.setCppCode(projectUUID, generateCppFromJson(newBlocklyJson))
+				sandboxClass.setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
 			}
 			return
 		}
 
-		sandboxClass.setCppCode(projectUUID, generateCppFromJson(newBlocklyJson))
-		sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
+		sandboxClass.setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
+		await sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
 	}, [project, isLoading, projectUUID])
 

@@ -1,14 +1,17 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
-import { cppGenerator } from "./cpp-generator"
+import { getCppGenerator } from "./cpp-generator"
 import initializeBlocks from "../blockly/initialize-blocks"
 
-export default function generateCppFromJson(blocklyJson: BlocklyJson): string {
+export default async function generateCppFromJson(blocklyJson: BlocklyJson): Promise<string> {
 	try {
+		// Dynamically import Blockly only when needed
+		const Blockly = await import("blockly")
+
 		// Ensure blocks are initialized
-		initializeBlocks()
+		await initializeBlocks()
 
 		// Create a temporary workspace
 		const tempWorkspace = new Blockly.Workspace()
@@ -18,8 +21,9 @@ export default function generateCppFromJson(blocklyJson: BlocklyJson): string {
 			Blockly.serialization.workspaces.load(blocklyJson, tempWorkspace)
 		}
 
-		// Generate C++ code from the workspace
-		const cppCode = cppGenerator.workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
+		// Get the cpp generator and generate code
+		const cppGenerator = getCppGenerator()
+		const cppCode = await cppGenerator.workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
 
 		// Clean up the temporary workspace
 		tempWorkspace.dispose()

@@ -514,12 +514,12 @@ class CareerQuestClass {
 
 	// UPDATE: Add position update when retrieved data indicates completion
 	// UPDATE this existing method to trigger swiper updates:
-	public setChallengeRetrievedData = action((
+	public setChallengeRetrievedData = action(async (
 		cqInformation: CareerUUIDChallengeUUID,
 		messages: ChallengeChatMessage[],
 		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
-	): void => {
+	): Promise<void> => {
 		const career = this.getCareer(cqInformation.careerUUID)
 		if (!career) return
 
@@ -534,11 +534,11 @@ class CareerQuestClass {
 		let cppCode: string
 		if (sandboxJson) {
 			normalizedJson = normalizeSandboxJson(sandboxJson)
-			cppCode = generateCppFromJson(normalizedJson)
+			cppCode = await generateCppFromJson(normalizedJson)
 		} else {
 			// Get initial data from chat manager
 			normalizedJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
-			cppCode = generateCppFromJson(normalizedJson)
+			cppCode = await generateCppFromJson(normalizedJson)
 		}
 
 		chatManagerClass.setChallengeRetrievedData(
@@ -553,8 +553,8 @@ class CareerQuestClass {
 		chatManagerClass.updateBlocklyJson(cqInformation, normalizedJson, cppCode)
 	})
 
-	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
-		const cppCode = generateCppFromJson(newBlocklyJson)
+	public updateBlocklyJson = action(async (cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): Promise<void> => {
+		const cppCode = await generateCppFromJson(newBlocklyJson)
 		chatManagerClass.updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
 
@@ -962,7 +962,7 @@ class CareerQuestClass {
 		return (challengeSection?.challengeData.toolboxConfig || {}) as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
-	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): boolean => {
+	public resetChallengeBlocklyJsonToInitial = action(async (cqInformation: CareerUUIDChallengeUUID): Promise<boolean> => {
 		// Get current and initial blockly JSON
 		const currentBlocklyJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
 		const career = this.getCareer(cqInformation.careerUUID)
@@ -981,7 +981,7 @@ class CareerQuestClass {
 		}
 
 		// Reset to initial state
-		const cppCode = generateCppFromJson(initialBlocklyJson)
+		const cppCode = await generateCppFromJson(initialBlocklyJson)
 		chatManagerClass.updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
 		return true
 	})
