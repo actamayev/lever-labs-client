@@ -1,6 +1,6 @@
 "use client"
 
-import { getCppGenerator } from "../cpp/cpp-generator"
+import getCppGenerator from "../cpp/cpp-generator"
 import createAllBlocks from "./custom-blocks/create-all-blocks"
 
 export default async function initializeBlocks(): Promise<void> {

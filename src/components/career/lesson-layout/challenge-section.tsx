@@ -15,7 +15,7 @@ import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import getCareerQuestClass from "../../../classes/career-quest-class"
 import checkCareerQuestCode from "../../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
+import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
@@ -157,7 +157,8 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 		}
 
 		// Update local state
-		getChatManagerClass().setCppCode({ ...challengeData }, await generateCppFromJson(newBlocklyJson))
+		const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
+		getChatManagerClass().setCppCode({ ...challengeData }, generatedCppCode)
 
 		// Queue the JSON for class update and backend save (handled by separate effect)
 		setPendingBlocklyJson(newBlocklyJson)

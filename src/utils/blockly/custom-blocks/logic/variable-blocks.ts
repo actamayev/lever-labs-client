@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { Order } from "../../order"
-import { getCppGenerator } from "../../../cpp/cpp-generator"
+import getCppGenerator from "../../../cpp/cpp-generator"
 import { logicCategoryColour } from "../../../constants/constants"
 import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 

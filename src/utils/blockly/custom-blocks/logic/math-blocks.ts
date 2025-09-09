@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
-import { getCppGenerator } from "../../../cpp/cpp-generator"
+import getCppGenerator from "../../../cpp/cpp-generator"
 import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
 export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {

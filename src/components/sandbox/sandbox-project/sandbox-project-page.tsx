@@ -21,12 +21,12 @@ import getPersonalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
-import generateCppFromJson from "../../../utils/cpp/generate-cpp-from-json"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
+import getCppGenerator from "../../../utils/cpp/cpp-generator"
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
@@ -87,12 +87,14 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
 			if (isEmpty(project.cppCode)) {
-				getSandboxClass().setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
+				const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
+				getSandboxClass().setCppCode(projectUUID, generatedCppCode)
 			}
 			return
 		}
 
-		getSandboxClass().setCppCode(projectUUID, await generateCppFromJson(newBlocklyJson))
+		const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
+		getSandboxClass().setCppCode(projectUUID, generatedCppCode)
 		await getSandboxClass().updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
 	}, [project, isLoading, projectUUID])

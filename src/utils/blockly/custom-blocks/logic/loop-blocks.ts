@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
-import { getCppGenerator } from "../../../cpp/cpp-generator"
+import getCppGenerator from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 

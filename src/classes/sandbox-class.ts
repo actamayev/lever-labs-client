@@ -3,11 +3,11 @@
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BlocklyJson, SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
 	SandboxChatbotStreamStartOrCompleteEvent } from "@bluedotrobots/common-ts/types/chat"
+import getCppGenerator from "../utils/cpp/cpp-generator"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false
@@ -44,7 +44,7 @@ class SandboxClass {
 			isStreaming: false,
 			isWaitingForResponse: false,
 			currentStreamingMessageId: null,
-			cppCode: await generateCppFromJson(normalizedSandboxJson)
+			cppCode: await getCppGenerator().generateCppFromJson(normalizedSandboxJson)
 		}
 		this.sandboxProjects.set(sandboxProject.sandboxProjectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.sandboxProjectUUID, false)
@@ -91,7 +91,7 @@ class SandboxClass {
 		if (isUndefined(project)) return
 
 		project.sandboxJson = newJson
-		project.cppCode = await generateCppFromJson(newJson)
+		project.cppCode = await getCppGenerator().generateCppFromJson(newJson)
 	})
 
 	public getCppCode = action((projectUUID: SandboxProjectUUID): string => {

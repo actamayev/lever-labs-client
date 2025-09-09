@@ -1,7 +1,7 @@
 "use client"
 
 import type * as Blockly from "blockly/core"
-import { getCppGenerator } from "../../cpp/cpp-generator"
+import getCppGenerator from "../../cpp/cpp-generator"
 
 export function generateStatementCode(
 	block: Blockly.Block,

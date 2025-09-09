@@ -13,7 +13,6 @@ import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 // Dynamic import - career definitions will be loaded on-demand
 import { getContentComponent } from "../utils/career-quest/career-quest-content"
-import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
@@ -23,6 +22,7 @@ import getNavigationManagerClass from "./navigation-manager-class"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import getCppGenerator from "../utils/cpp/cpp-generator"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -536,11 +536,11 @@ class CareerQuestClass {
 		let cppCode: string
 		if (sandboxJson) {
 			normalizedJson = normalizeSandboxJson(sandboxJson)
-			cppCode = await generateCppFromJson(normalizedJson)
+			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		} else {
 			// Get initial data from chat manager
 			normalizedJson = getChatManagerClass().getUpdatedBlocklyJson(cqInformation)
-			cppCode = await generateCppFromJson(normalizedJson)
+			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		}
 
 		getChatManagerClass().setChallengeRetrievedData(
@@ -556,7 +556,7 @@ class CareerQuestClass {
 	})
 
 	public updateBlocklyJson = action(async (cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): Promise<void> => {
-		const cppCode = await generateCppFromJson(newBlocklyJson)
+		const cppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
 		getChatManagerClass().updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
 
@@ -983,7 +983,7 @@ class CareerQuestClass {
 		}
 
 		// Reset to initial state
-		const cppCode = await generateCppFromJson(initialBlocklyJson)
+		const cppCode = await getCppGenerator().generateCppFromJson(initialBlocklyJson)
 		getChatManagerClass().updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
 		return true
 	})
@@ -1030,8 +1030,9 @@ class CareerQuestClass {
 				})
 			return
 		}
+		const navigationManager = getNavigationManagerClass()
 
-		const currentSlide = getNavigationManagerClass().getMainSlides(careerUUID)[getNavigationManagerClass().getCurrentMainSlideIndex(careerUUID)]
+		const currentSlide = navigationManager.getMainSlides(careerUUID)[navigationManager.getCurrentMainSlideIndex(careerUUID)]
 
 		if (currentSlide.type === "challenge") {
 			this.setRightContent(careerUUID, { type: "challenge", challengeData: currentSlide.data })
@@ -1053,10 +1054,10 @@ class CareerQuestClass {
 		}
 
 		// Otherwise use the current text child's right content
-		const currentTextChildIndex = getNavigationManagerClass().getCurrentTextChildIndex(careerUUID, currentSlide.id)
+		const currentTextChildIndex = navigationManager.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		if (textChild.type === "morphingText") {
-			const morphingIndex = getNavigationManagerClass().getCurrentMorphingIndex(careerUUID, textChild.id)
+			const morphingIndex = navigationManager.getCurrentMorphingIndex(careerUUID, textChild.id)
 			const currentVariant = textChild.morphingVariants[morphingIndex]
 
 			if (currentVariant) {
