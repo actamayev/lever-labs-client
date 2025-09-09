@@ -25,13 +25,14 @@ function ProfileImage(): React.ReactNode {
 	}, [])
 
 	const imageStyle = isHovered ? { opacity: 0.8 } : { opacity: 1 }
+	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
 
 	return (
 		<div className="relative inline-block" style={{ minWidth: "128px", maxWidth: "128px" }}>
 			<Avatar className="w-full h-full">
-				{getPersonalInfoClass().profilePictureUrl ? (
+				{profilePictureUrl ? (
 					<Image
-						src={getPersonalInfoClass().profilePictureUrl}
+						src={profilePictureUrl}
 						className="w-32 h-32 rounded-full object-cover cursor-pointer"
 						style={imageStyle}
 						onClick={handleOpenDialog}

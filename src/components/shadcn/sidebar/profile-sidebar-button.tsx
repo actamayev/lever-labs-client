@@ -10,19 +10,21 @@ import { CustomUserCircle } from "../../icons/custom-user-circle"
 import getPersonalInfoClass from "../../../classes/personal-info-class"
 
 function ProfileSidebarButton(): React.ReactNode {
+	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem className="flex justify-start">
 				<CustomSidebarButton
 					icon={(
 						<Avatar className="w-full h-full">
-							{isNull(getPersonalInfoClass().profilePictureUrl) ? (
+							{isNull(profilePictureUrl) ? (
 								<AvatarFallback className="bg-standardBackground text-questionText">
 									<CustomUserCircle className="w-full h-full" />
 								</AvatarFallback>
 							) : (
 								<Image
-									src={getPersonalInfoClass().profilePictureUrl}
+									src={profilePictureUrl}
 									alt="Your profile"
 									width={32}
 									height={32}

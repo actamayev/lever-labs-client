@@ -132,6 +132,8 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 		)
 	}
 
+	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
+
 	return (
 		<div
 			key={message.id}
@@ -169,9 +171,9 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(getPersonalInfoClass().profilePictureUrl) ? (
+					{!isNull(profilePictureUrl) ? (
 						<Image
-							src={getPersonalInfoClass().profilePictureUrl}
+							src={profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}

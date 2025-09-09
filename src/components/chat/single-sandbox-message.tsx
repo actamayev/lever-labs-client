@@ -22,7 +22,6 @@ interface SingleSandboxMessageProps {
 function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps): React.ReactNode {
 	const isUser = message.role === "user"
 	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
-
 	// Don't render assistant messages that are streaming with no content yet
 	if (!isUser && isStreamingWithNoContent) {
 		return (
@@ -43,6 +42,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 		)
 	}
 
+	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
 	return (
 		<div
 			key={`${new Date(message.timestamp).getTime()}-${message.role}`}
@@ -78,9 +78,9 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(getPersonalInfoClass().profilePictureUrl) ? (
+					{!isNull(profilePictureUrl) ? (
 						<Image
-							src={getPersonalInfoClass().profilePictureUrl}
+							src={profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}
