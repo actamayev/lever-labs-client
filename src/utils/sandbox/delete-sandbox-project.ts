@@ -15,7 +15,9 @@ export default async function deleteSandboxProject(projectUUID: SandboxProjectUU
 		const project = getSandboxClass().sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const deleteSandboxProjectResponse = await getBlueDotApiClientClass().sandboxDataService.deleteSandboxProject(project.sandboxProjectUUID)
+		const deleteSandboxProjectResponse = await getBlueDotApiClientClass().sandboxDataService.deleteSandboxProject(
+			project.sandboxProjectUUID
+		)
 		if (!isEqual(deleteSandboxProjectResponse.status, 200) || isNonSuccessResponse(deleteSandboxProjectResponse.data)) {
 			throw Error ("Unable to delete sandbox project")
 		}

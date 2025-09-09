@@ -11,6 +11,7 @@ import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 
 function DisplayControls(): React.ReactNode {
+	const garageClass = getGarageClass()
 	return (
 		<div className="space-y-8">
 			{/* Pre-defined designs dropdown */}
@@ -29,7 +30,7 @@ function DisplayControls(): React.ReactNode {
 							style={{ height: "60px" }}
 						>
 							<span className="flex items-center gap-2">
-								{getGarageClass().selectedDesign}
+								{garageClass.selectedDesign}
 							</span>
 							<ChevronDown className="!size-6" />
 						</div>
@@ -50,9 +51,9 @@ function DisplayControls(): React.ReactNode {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={(): void => void getGarageClass().applyDesignToBuffer(getGarageClass().selectedDesign)}
-						isEmpty={getGarageClass().selectedDesign === "No design"}
-						isActive={getGarageClass().designOnBuffer === getGarageClass().selectedDesign && getGarageClass().designOnBuffer !== "No design"}
+						applyToBuffer={(): void => void garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
+						isEmpty={garageClass.selectedDesign === "No design"}
+						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
 					/>
 				</div>
 			</div>
@@ -61,11 +62,11 @@ function DisplayControls(): React.ReactNode {
 			<div className="flex flex-row gap-4">
 				<Input
 					placeholder="Enter text..."
-					value={getGarageClass().textInput}
-					onChange={(e): void => getGarageClass().setTextInput(e.target.value)}
+					value={garageClass.textInput}
+					onChange={(e): void => garageClass.setTextInput(e.target.value)}
 					onKeyDown={(e): void => {
-						if (e.key === "Enter" && getGarageClass().textInput.trim()) {
-							void getGarageClass().applyTextToBuffer()
+						if (e.key === "Enter" && garageClass.textInput.trim()) {
+							void garageClass.applyTextToBuffer()
 						}
 					}}
 					className={cn(
@@ -77,9 +78,9 @@ function DisplayControls(): React.ReactNode {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={(): void => void getGarageClass().applyTextToBuffer()}
-						isEmpty={!getGarageClass().textInput.trim()}
-						isActive={(getGarageClass().textOnBuffer === getGarageClass().textInput) && (getGarageClass().textInput.trim() !== "")}
+						applyToBuffer={(): void => void garageClass.applyTextToBuffer()}
+						isEmpty={!garageClass.textInput.trim()}
+						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 					/>
 				</div>
 			</div>

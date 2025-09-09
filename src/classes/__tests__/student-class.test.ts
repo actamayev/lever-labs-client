@@ -5,11 +5,13 @@ import { ClassCode, HubUUID } from '@bluedotrobots/common-ts/types/utils'
 import { UpdatedHubSlideId } from '@bluedotrobots/common-ts/types/socket'
 
 // Mock the career quest class
+const mockCareerQuestInstance = {
+	executeNavigationCommand: vi.fn(),
+	navigateToPosition: vi.fn(),
+}
+
 vi.mock('../career-quest-class', () => ({
-	default: {
-		executeNavigationCommand: vi.fn(),
-		navigateToPosition: vi.fn(),
-	}
+	default: () => mockCareerQuestInstance
 }))
 
 describe('StudentClass Hub Navigation', () => {

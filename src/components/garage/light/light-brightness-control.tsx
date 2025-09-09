@@ -11,7 +11,7 @@ import { Button } from "../../shadcn/ui/button"
 import getGarageClass from "../../../classes/garage-class"
 
 const INITIAL_DELAY_MS = 400
-const REPEAT_INTERVAL_MS = 80
+const REPEAT_INTERVAL_MS = 60
 
 // eslint-disable-next-line max-lines-per-function
 function LightBrightnessControl(): ReactNode {

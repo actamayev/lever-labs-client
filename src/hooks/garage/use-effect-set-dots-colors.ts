@@ -12,7 +12,6 @@ import getGarageClass from "../../classes/garage-class"
 import getSocketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-
 export default function useEffectSetDefaultColors(): void {
 	// Create a debounced emit function for the first useEffect
 	// eslint-disable-next-line react-hooks/exhaustive-deps
