@@ -12,7 +12,7 @@ import getCareerQuestClass from "../../../classes/career-quest-class"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import ChallengeProgressCircle from "./challenge-progress-indicator"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
-// import teacherClass from "../../../classes/teacher-class"
+// import getTeacherClass from "../../../classes/teacher-class"
 
 interface Props {
 	careerData: CareerData
@@ -23,7 +23,7 @@ interface Props {
 function FrontCareerCard(props: Props): React.ReactNode {
 	const { careerData, flipCard } = props
 	const { careerName, componentsUsed, careerIcon: Icon, backgroundColor, careerUUID } = careerData
-	// const disabled = teacherClass.teacherData !== null
+	// const disabled = getTeacherClass().teacherData !== null
 
 	const colors = getDuolingoColors(backgroundColor)
 

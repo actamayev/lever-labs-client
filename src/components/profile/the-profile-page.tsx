@@ -8,7 +8,7 @@ import ChangeNameSection from "./change-name-section"
 import ProfileImage from "./profile-image/profile-image"
 import ChangePasswordSection from "./change-password-section"
 import ChangeUsernameSection from "./change-username-section"
-import personalInfoClass from "../../classes/personal-info-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
 import useSetDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
 
 function ProfilePage(): React.ReactNode {
@@ -30,7 +30,7 @@ function ProfilePage(): React.ReactNode {
 						Email
 					</div>
 					<div className="text-base md:text-lg font-medium text-wolf break-words">
-						{personalInfoClass.email || "No email set"}
+						{getPersonalInfoClass().email || "No email set"}
 					</div>
 				</div>
 
@@ -48,7 +48,7 @@ function ProfilePage(): React.ReactNode {
 						onClick={setDefaultSiteTheme}
 						className="rounded-full h-9 w-9 md:h-10 md:w-10"
 					>
-						{personalInfoClass.defaultSiteTheme === "light" ? (
+						{getPersonalInfoClass().defaultSiteTheme === "light" ? (
 							<Moon className="h-5 w-5 md:!h-6 md:!w-6" />
 						) : (
 							<Sun className="h-5 w-5 md:!h-6 md:!w-6" />
@@ -58,7 +58,7 @@ function ProfilePage(): React.ReactNode {
 						className="ml-3 text-base md:text-lg font-medium cursor-pointer"
 						onClick={setDefaultSiteTheme}
 					>
-						{personalInfoClass.defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
+						{getPersonalInfoClass().defaultSiteTheme === "light" ? "Dark Mode" : "Light Mode"}
 					</span>
 				</div>
 			</div>

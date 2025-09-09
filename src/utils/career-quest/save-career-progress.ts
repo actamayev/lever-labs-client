@@ -1,9 +1,9 @@
 "use client"
 
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import authClass from "../../classes/auth-class"
-import teacherClass from "../../classes/teacher-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getAuthClass from "../../classes/auth-class"
+import getTeacherClass from "../../classes/teacher-class"
 import isNull from "lodash-es/isNull"
 
 export default async function saveCareerProgress(
@@ -13,22 +13,22 @@ export default async function saveCareerProgress(
 	navigationCommand?: string
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
-		await blueDotApiClientClass.careerQuestDataService.updateCareerQuestUserProgress(
+		if (getAuthClass().isFinishedWithSignup === false) return
+		await getBlueDotApiClientClass().careerQuestDataService.updateCareerQuestUserProgress(
 			currentId,
 			careerUUID,
 			isFurthestSeen
 		)
-		if (isNull(teacherClass.isFocusingStudents)) return
+		if (isNull(getTeacherClass().isFocusingStudents)) return
 
 		// Encode navigation command in slideId for backward compatibility
 		const slideIdWithCommand = navigationCommand
 			? `${navigationCommand}:${currentId}`
 			: currentId
 
-		await blueDotApiClientClass.teacherDataService.setHubNewSlideId(
-			teacherClass.isFocusingStudents.classCode,
-			teacherClass.isFocusingStudents.hubId,
+		await getBlueDotApiClientClass().teacherDataService.setHubNewSlideId(
+			getTeacherClass().isFocusingStudents.classCode,
+			getTeacherClass().isFocusingStudents.hubId,
 			slideIdWithCommand
 		)
 	} catch (error) {

@@ -6,8 +6,8 @@ import isNull from "lodash-es/isNull"
 import Wheel from "@uiw/react-color-wheel"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import { ColorResult, HsvaColor, rgbaToHsva } from "@uiw/color-convert"
-import pipClass from "../../../classes/pip-class"
-import socketClass from "../../../classes/socket-class"
+import getPipClass from "../../../classes/pip-class"
+import getSocketClass from "../../../classes/socket-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
@@ -41,18 +41,18 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 		}
 
 		if (
-			isNull(pipClass.selectedPip)
-			|| pipClass.selectedPip.pipConnectionStatus === "offline"
+			isNull(getPipClass().selectedPip)
+			|| getPipClass().selectedPip.pipConnectionStatus === "offline"
 		) return
 
-		socketClass.emitToServer("new-led-colors", {
+		getSocketClass().emitToServer("new-led-colors", {
 			topLeftColor: colorResult.rgba,
 			topRightColor: colorResult.rgba,
 			middleLeftColor: colorResult.rgba,
 			middleRightColor: colorResult.rgba,
 			backLeftColor: colorResult.rgba,
 			backRightColor: colorResult.rgba,
-			pipUUID: pipClass.selectedPip.pipUUID
+			pipUUID: getPipClass().selectedPip.pipUUID
 		})
 	}
 

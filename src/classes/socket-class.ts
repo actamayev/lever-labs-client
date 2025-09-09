@@ -93,6 +93,13 @@ class SocketClass {
 	})
 }
 
-const socketClass = new SocketClass()
+let socketClassInstance: SocketClass | null = null
 
-export default socketClass
+export const getSocketClass = (): SocketClass => {
+	if (!socketClassInstance) {
+		socketClassInstance = new SocketClass()
+	}
+	return socketClassInstance
+}
+
+export default getSocketClass

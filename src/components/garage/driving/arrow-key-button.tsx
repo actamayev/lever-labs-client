@@ -4,15 +4,15 @@ import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import applyMotorControl from "../../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../../utils/garage/compute-motor-control"
 
 function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.ReactNode {
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const shadowColor = personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
+	const shadowColor = getPersonalInfoClass().defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"
 
 	// Map direction to the correct icon
 	const getMotorDirectionIcon = (): React.ReactNode => {
@@ -34,7 +34,7 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.Rea
 
 		const buttonElement = buttonRef.current
 
-		if (garageClass.pressedMotorKeys.has(direction)) {
+		if (getGarageClass().pressedMotorKeys.has(direction)) {
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
@@ -44,17 +44,17 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.Rea
 			buttonElement.style.boxShadow = ""
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [direction, garageClass.pressedMotorKeys.size])
+	}, [direction, getGarageClass().pressedMotorKeys.size])
 
 	const handleButtonDown = (): void => {
-		garageClass.setPressedKey(direction, Date.now())
+		getGarageClass().setPressedKey(direction, Date.now())
 
 		const motorControl = computeMotorControl()
 		applyMotorControl(motorControl)
 	}
 
 	const handleButtonUp = (): void => {
-		garageClass.removePressedKey(direction)
+		getGarageClass().removePressedKey(direction)
 
 		const motorControl = computeMotorControl()
 		applyMotorControl(motorControl)

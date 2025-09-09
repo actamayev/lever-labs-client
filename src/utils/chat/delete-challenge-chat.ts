@@ -1,18 +1,18 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getToastClass from "../../classes/toast-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import getChatManagerClass from "../../classes/chat-manager-class"
 
 export default async function deleteChallengeChat(careerUUIDChallengeUUID: CareerUUIDChallengeUUID): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (getAuthClass().isFinishedWithSignup === false) return
 
 		// Call the delete endpoint
-		const response = await blueDotApiClientClass.chatDataService.deleteChallengeChat(careerUUIDChallengeUUID.challengeUUID)
+		const response = await getBlueDotApiClientClass().chatDataService.deleteChallengeChat(careerUUIDChallengeUUID.challengeUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
 			throw new Error("Unable to delete challenge chat")
@@ -22,7 +22,7 @@ export default async function deleteChallengeChat(careerUUIDChallengeUUID: Caree
 		return
 	} catch (error) {
 		console.error(error)
-		toastClass.negative({
+		getToastClass().negative({
 			title: "Unable to delete challenge chat",
 			description: "Please reload the page and try again"
 		})

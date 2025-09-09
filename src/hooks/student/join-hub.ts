@@ -1,11 +1,11 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
-import toastClass from "../../classes/toast-class"
-import studentClass from "../../classes/student-class"
+import getToastClass from "../../classes/toast-class"
+import getStudentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getCareerQuestClass from "../../classes/career-quest-class"
 
@@ -18,19 +18,19 @@ export default function useJoinHub():(
 	// eslint-disable-next-line complexity
 	return useCallback(async (classCode: ClassCode, hubId: HubUUID): Promise<void> => {
 		try {
-			const isStudentInHub = studentClass.checkIfStudentInHub(classCode, hubId)
+			const isStudentInHub = getStudentClass().checkIfStudentInHub(classCode, hubId)
 			if (isStudentInHub) {
-				toastClass.positive({
+				getToastClass().positive({
 					title: "You're already in this hub"
 				})
 				return
 			}
-			const joinHubResponse = await blueDotApiClientClass.studentDataService.joinHub(classCode, hubId)
+			const joinHubResponse = await getBlueDotApiClientClass().studentDataService.joinHub(classCode, hubId)
 			if (!isEqual(joinHubResponse.status, 200) || isNonSuccessResponse(joinHubResponse.data)) {
 				throw Error("Unable to join hub")
 			}
 
-			studentClass.joinHub(joinHubResponse.data)
+			getStudentClass().joinHub(joinHubResponse.data)
 
 			// Set saved position to teacher's current location instead of resetting to beginning
 			// This ensures the career quest will restore to the hub position when data loads
@@ -70,7 +70,7 @@ export default function useJoinHub():(
 			}
 		} catch (error) {
 			console.error(error)
-			toastClass.negative({
+			getToastClass().negative({
 				title: "Unable to join hub",
 				description: "Please try again"
 			})

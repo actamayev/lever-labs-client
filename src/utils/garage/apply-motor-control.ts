@@ -2,11 +2,11 @@
 
 import isNull from "lodash-es/isNull"
 import { MotorControlInput } from "@bluedotrobots/common-ts/types/garage"
-import authClass from "../../classes/auth-class"
-import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
-import socketClass from "../../classes/socket-class"
-import garageClass from "../../classes/garage-class"
+import getAuthClass from "../../classes/auth-class"
+import getPipClass from "../../classes/pip-class"
+import getToastClass from "../../classes/toast-class"
+import getSocketClass from "../../classes/socket-class"
+import getGarageClass from "../../classes/garage-class"
 
 // Map motor control values to drive directions
 const motorControlToDriveDirections = (motorControl: { vertical: number, horizontal: number }): Set<DriveDirection> => {
@@ -22,55 +22,55 @@ const motorControlToDriveDirections = (motorControl: { vertical: number, horizon
 }
 
 export default function applyMotorControl(motorControl: MotorControlInput, forceEmit?: boolean) : void {
-	const throttleChanged = garageClass.lastThrottlePercent !== garageClass.motorThrottlePercent
+	const throttleChanged = getGarageClass().lastThrottlePercent !== getGarageClass().motorThrottlePercent
 
 	// Skip if no change in motor control and throttle hasn't changed, unless forced
 	if (
 		!forceEmit &&
 		!throttleChanged &&
-		motorControl.vertical === garageClass.motorState.vertical &&
-		motorControl.horizontal === garageClass.motorState.horizontal
+		motorControl.vertical === getGarageClass().motorState.vertical &&
+		motorControl.horizontal === getGarageClass().motorState.horizontal
 	) {
 		return
 	}
 
 	// Update GarageClass state
-	garageClass.setMotorState(motorControl)
+	getGarageClass().setMotorState(motorControl)
 
 	// 1. Update garage using drive directions
 	const newDirections = motorControlToDriveDirections(motorControl)
-	const currentDirections = garageClass.pressedDirections
+	const currentDirections = getGarageClass().pressedDirections
 
 	// Stop directions that are no longer active
 	currentDirections.forEach((dir): void => {
 		if (!newDirections.has(dir)) {
-			garageClass.stopDriving(dir)
+			getGarageClass().stopDriving(dir)
 		}
 	})
 
 	// Start directions that are newly active
 	newDirections.forEach((dir): void => {
 		if (!currentDirections.has(dir)) {
-			garageClass.drive(dir)
+			getGarageClass().drive(dir)
 		}
 	})
 
 	// Update current directions
-	garageClass.updatePressedDirections(newDirections)
+	getGarageClass().updatePressedDirections(newDirections)
 
-	if (authClass.isFinishedWithSignup === false) return
+	if (getAuthClass().isFinishedWithSignup === false) return
 
-	if (isNull(pipClass.selectedPip)) {
-		return toastClass.negative({ title: "Please add a Pip" })
+	if (isNull(getPipClass().selectedPip)) {
+		return getToastClass().negative({ title: "Please add a Pip" })
 	}
-	if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-		return toastClass.negative({ title: `Please connect ${pipClass.selectedPip.pipName} to the internet` })
+	if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
+		return getToastClass().negative({ title: `Please connect ${getPipClass().selectedPip.pipName} to the internet` })
 	}
 
 	// Emit motor control via socket
-	socketClass.emitToServer("motor-control", {
+	getSocketClass().emitToServer("motor-control", {
 		motorControl,
-		pipUUID: pipClass.selectedPip.pipUUID,
-		motorThrottlePercent: garageClass.motorThrottlePercent
+		pipUUID: getPipClass().selectedPip.pipUUID,
+		motorThrottlePercent: getGarageClass().motorThrottlePercent
 	})
 }

@@ -8,7 +8,7 @@ import { Minus, PlusIcon } from "lucide-react"
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 
 const INITIAL_DELAY_MS = 400
 const REPEAT_INTERVAL_MS = 80
@@ -22,11 +22,11 @@ function LightBrightnessControl(): ReactNode {
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
 	const getBrightness = useCallback((): number => {
-		return Math.round(rgbaToHsva(garageClass.realColor).v)
+		return Math.round(rgbaToHsva(getGarageClass().realColor).v)
 	}, [])
 
 	const setBrightnessPct = useCallback((pct: number): void => {
-		garageClass.setColorShade(clamp(pct, 0, 100) / 100)
+		getGarageClass().setColorShade(clamp(pct, 0, 100) / 100)
 	}, [])
 
 	const stepDelta = useCallback(

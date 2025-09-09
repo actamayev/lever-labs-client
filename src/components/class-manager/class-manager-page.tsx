@@ -6,7 +6,7 @@ import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
 import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts/types/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
-import teacherClass from "../../classes/teacher-class"
+import getTeacherClass from "../../classes/teacher-class"
 import CreateClassroomDialog from "./create-classroom-dialog"
 import RenameClassroomDialog from "./rename-classroom-dialog"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
@@ -32,7 +32,7 @@ function ClassManagerPage(): React.ReactNode {
 		setIsRenameDialogOpen(true)
 	}, [])
 
-	if (teacherClass.isRetrievingClassroomData) {
+	if (getTeacherClass().isRetrievingClassroomData) {
 		return (
 			<div className="p-6">
 				<div className="flex items-center justify-center min-h-[400px]">
@@ -69,7 +69,7 @@ function ClassManagerPage(): React.ReactNode {
 				</CardHeader>
 				<CardContent>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{teacherClass.classroomData.map((classroom): React.ReactNode => (
+						{getTeacherClass().classroomData.map((classroom): React.ReactNode => (
 							<SingleClassCard
 								key={classroom.classCode}
 								classroom={classroom}

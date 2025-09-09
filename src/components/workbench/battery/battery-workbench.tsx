@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
-import workbenchClass from "../../../classes/workbench-class"
+import getWorkbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
@@ -15,9 +15,9 @@ function BatteryWorkbench(): React.ReactNode {
 
 	// eslint-disable-next-line complexity
 	function GetTimeText(): React.ReactNode	{
-		if (!workbenchClass.batteryData) return "OFFLINE"
-		if (workbenchClass.batteryData.isCharging) {
-			const timeToFull = workbenchClass.batteryData.estimatedTimeToFull
+		if (!getWorkbenchClass().batteryData) return "OFFLINE"
+		if (getWorkbenchClass().batteryData.isCharging) {
+			const timeToFull = getWorkbenchClass().batteryData.estimatedTimeToFull
 			// Time to full is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
 			// If hours is 0, we don't need to show it.
 			const hours = Math.floor(timeToFull)
@@ -33,7 +33,7 @@ function BatteryWorkbench(): React.ReactNode {
 				</>
 			)
 		}
-		const timeToEmpty = workbenchClass.batteryData.estimatedTimeToEmpty
+		const timeToEmpty = getWorkbenchClass().batteryData.estimatedTimeToEmpty
 		// Time to empty is a float, number of hours (ie 1.23 hours). Need to convert to a string with hours and minutes.
 		// If hours is 0, we don't need to show it.
 		const hours = Math.floor(timeToEmpty)
@@ -56,9 +56,9 @@ function BatteryWorkbench(): React.ReactNode {
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryWorkbenchIcon />
 						<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
-							{isNull(workbenchClass.batteryDataLastUpdated) ?
+							{isNull(getWorkbenchClass().batteryDataLastUpdated) ?
 								"\u00A0" :
-								`${Math.max(0, Math.min(100, workbenchClass.batteryData?.stateOfCharge || 0))}%`}
+								`${Math.max(0, Math.min(100, getWorkbenchClass().batteryData?.stateOfCharge || 0))}%`}
 						</span>
 					</WorkbenchIconTemplate>
 				</div>
@@ -80,19 +80,19 @@ function BatteryWorkbench(): React.ReactNode {
 							<span className="font-medium">BATTERY</span>
 						</div>
 						<span className={cn("font-semibold", batteryColorClasses)}>
-							{isNull(workbenchClass.batteryData) ? "OFFLINE" : `${workbenchClass.batteryData.stateOfCharge}%`}
+							{isNull(getWorkbenchClass().batteryData) ? "OFFLINE" : `${getWorkbenchClass().batteryData.stateOfCharge}%`}
 						</span>
 					</div>
 
 					<div className="space-y-2">
-						{workbenchClass.batteryData?.isCharging && (
+						{getWorkbenchClass().batteryData?.isCharging && (
 							<div className="flex items-center gap-2 text-chargingGreen">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Charging</span>
 							</div>
 						)}
 
-						{workbenchClass.batteryData?.isDischarging && (
+						{getWorkbenchClass().batteryData?.isDischarging && (
 							<div className="flex items-center gap-2 text-cardinal">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Discharging</span>

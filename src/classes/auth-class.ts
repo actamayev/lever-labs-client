@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import socketClass from "./socket-class"
+import getSocketClass from "./socket-class"
 
 class AuthClass {
 	public showLoginOrRegister: LoginOrRegister = "Register"
@@ -36,7 +36,7 @@ class AuthClass {
 
 		// Auto-connect socket when authenticated
 		if (this._isAuthenticated) {
-			socketClass.connect()
+			getSocketClass().connect()
 		}
 	})
 
@@ -61,5 +61,13 @@ class AuthClass {
 	})
 }
 
-const authClass = new AuthClass()
-export default authClass
+let authClassInstance: AuthClass | null = null
+
+export const getAuthClass = (): AuthClass => {
+	if (!authClassInstance) {
+		authClassInstance = new AuthClass()
+	}
+	return authClassInstance
+}
+
+export default getAuthClass

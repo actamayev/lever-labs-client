@@ -7,9 +7,9 @@ import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import { LedControlData } from "@bluedotrobots/common-ts/types/garage"
-import pipClass from "../../classes/pip-class"
-import garageClass from "../../classes/garage-class"
-import socketClass from "../../classes/socket-class"
+import getPipClass from "../../classes/pip-class"
+import getGarageClass from "../../classes/garage-class"
+import getSocketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 
@@ -18,39 +18,39 @@ export default function useEffectSetDefaultColors(): void {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const debouncedEmitLedColors = useCallback(
 		debounce((): void => {
-			if (isEmpty(garageClass.selectedDots)) return
+			if (isEmpty(getGarageClass().selectedDots)) return
 
-			const selectedColorShade = garageClass.selectedColorShade
+			const selectedColorShade = getGarageClass().selectedColorShade
 			const ledControlData: Omit<LedControlData, "pipUUID"> = {
 				topLeftColor: {
-					r: Math.round(garageClass.dotColors[0].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[0].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[0].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[0].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[0].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[0].b * selectedColorShade)
 				},
 				topRightColor: {
-					r: Math.round(garageClass.dotColors[1].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[1].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[1].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[1].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[1].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[1].b * selectedColorShade)
 				},
 				middleLeftColor: {
-					r: Math.round(garageClass.dotColors[2].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[2].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[2].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[2].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[2].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[2].b * selectedColorShade)
 				},
 				middleRightColor: {
-					r: Math.round(garageClass.dotColors[3].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[3].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[3].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[3].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[3].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[3].b * selectedColorShade)
 				},
 				backLeftColor: {
-					r: Math.round(garageClass.dotColors[4].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[4].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[4].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[4].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[4].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[4].b * selectedColorShade)
 				},
 				backRightColor: {
-					r: Math.round(garageClass.dotColors[5].r * selectedColorShade),
-					g: Math.round(garageClass.dotColors[5].g * selectedColorShade),
-					b: Math.round(garageClass.dotColors[5].b * selectedColorShade)
+					r: Math.round(getGarageClass().dotColors[5].r * selectedColorShade),
+					g: Math.round(getGarageClass().dotColors[5].g * selectedColorShade),
+					b: Math.round(getGarageClass().dotColors[5].b * selectedColorShade)
 				}
 			}
 
@@ -62,17 +62,17 @@ export default function useEffectSetDefaultColors(): void {
 			}
 
 			if (
-				isNull(pipClass.selectedPip)
-				|| pipClass.selectedPip.pipConnectionStatus === "offline"
-				|| isEmpty(garageClass.selectedDots)
+				isNull(getPipClass().selectedPip)
+				|| getPipClass().selectedPip.pipConnectionStatus === "offline"
+				|| isEmpty(getGarageClass().selectedDots)
 			) return
 
-			socketClass.emitToServer("new-led-colors", {...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
+			getSocketClass().emitToServer("new-led-colors", {...ledControlData, pipUUID: getPipClass().selectedPip.pipUUID })
 		}, 10),
-		[garageClass.selectedColorRgba.r,
-			garageClass.selectedColorRgba.g,
-			garageClass.selectedColorRgba.b,
-			garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
+		[getGarageClass().selectedColorRgba.r,
+			getGarageClass().selectedColorRgba.g,
+			getGarageClass().selectedColorRgba.b,
+			getGarageClass().selectedColorShade, getPipClass().selectedPip, socketClass]
 	)
 
 	// This use
@@ -86,18 +86,18 @@ export default function useEffectSetDefaultColors(): void {
 
 	// This use effect updates the dot color with no delay, when the selected dots change, or color shade, or selected color change
 	useEffect((): void => {
-		garageClass.updateDotColor(garageClass.selectedDots,
+		getGarageClass().updateDotColor(getGarageClass().selectedDots,
 			{
-				r: garageClass.selectedColorRgba.r * garageClass.selectedColorShade,
-				g: garageClass.selectedColorRgba.g * garageClass.selectedColorShade,
-				b: garageClass.selectedColorRgba.b * garageClass.selectedColorShade,
+				r: getGarageClass().selectedColorRgba.r * getGarageClass().selectedColorShade,
+				g: getGarageClass().selectedColorRgba.g * getGarageClass().selectedColorShade,
+				b: getGarageClass().selectedColorRgba.b * getGarageClass().selectedColorShade,
 				a: 1
 			}
 		)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [garageClass.selectedDots,
-		garageClass.selectedColorRgba.r,
-		garageClass.selectedColorRgba.g,
-		garageClass.selectedColorRgba.b,
-		garageClass.selectedColorShade, garageClass])
+	}, [getGarageClass().selectedDots,
+		getGarageClass().selectedColorRgba.r,
+		getGarageClass().selectedColorRgba.g,
+		getGarageClass().selectedColorRgba.b,
+		getGarageClass().selectedColorShade, garageClass])
 }

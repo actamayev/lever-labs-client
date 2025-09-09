@@ -14,7 +14,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
-import personalInfoClass from "../../classes/personal-info-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 import getChatManagerClass from "../../classes/chat-manager-class"
 
@@ -169,9 +169,9 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(personalInfoClass.profilePictureUrl) ? (
+					{!isNull(getPersonalInfoClass().profilePictureUrl) ? (
 						<Image
-							src={personalInfoClass.profilePictureUrl}
+							src={getPersonalInfoClass().profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}

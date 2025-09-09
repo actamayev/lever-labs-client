@@ -2,13 +2,13 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Usb, Wifi, WifiOff } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import pipClass from "../../../classes/pip-class"
+import getPipClass from "../../../classes/pip-class"
 
 function NetworkIconToShow(): React.ReactNode {
 	const baseClasses = "!h-12 !w-12"
 	const strokeWidth = 2.5
 
-	if (pipClass.pipPluggedInSerial) {
+	if (getPipClass().pipPluggedInSerial) {
 		return (
 			<div className="flex items-center justify-center flex-col text-green-500">
 				<Usb className={cn(baseClasses)} strokeWidth={strokeWidth}/>
@@ -16,8 +16,8 @@ function NetworkIconToShow(): React.ReactNode {
 			</div>
 		)
 	}
-	if (isNull(pipClass.selectedPip)) return null
-	else if (pipClass.selectedPip.pipConnectionStatus === "offline") {
+	if (isNull(getPipClass().selectedPip)) return null
+	else if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
 		return (
 			<div className="flex items-center justify-center flex-col text-cardinal opacity-50">
 				<WifiOff
@@ -28,7 +28,7 @@ function NetworkIconToShow(): React.ReactNode {
 			</div>
 		)
 	}
-	switch (pipClass.selectedPip.pipConnectionStatus) {
+	switch (getPipClass().selectedPip.pipConnectionStatus) {
 		case "online":
 			return (
 				<div className="flex items-center justify-center flex-col text-macaw">

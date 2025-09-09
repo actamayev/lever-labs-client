@@ -5,7 +5,7 @@ import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import editName from "../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../garage/display/render-display"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 import Image from "next/image"
 
@@ -31,7 +31,7 @@ function MeetPipS3P4Display(): React.ReactNode {
 	}
 
 	const setTextInput = async (text: string): Promise<void> => {
-		const currentText = personalInfoClass.name || ""
+		const currentText = getPersonalInfoClass().name || ""
 		if (containsProfanity(text, currentText)) return
 		await careerQuestTriggersClass.setTextInput(text)
 		void editName(text)
@@ -59,7 +59,7 @@ function MeetPipS3P4Display(): React.ReactNode {
 			<div className="flex justify-center">
 				<Input
 					placeholder="Enter text..."
-					value={personalInfoClass.name || ""}
+					value={getPersonalInfoClass().name || ""}
 					onChange={(e): Promise<void> => setTextInput(e.target.value)}
 					className={cn(
 						"border-2 pr-6 border-swan rounded-2xl !text-xl text-center bg-inherit shadow-none",

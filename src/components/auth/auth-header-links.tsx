@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { BlueTactileButton } from "../buttons/tactile-buttons"
 
 interface LinkAuthHeaderProps {
@@ -33,7 +33,7 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 	return (
 		<BlueTactileButton
 			className="text-sm font-normal"
-			onClick={(): void => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
+			onClick={(): void => getAuthClass().setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}
 		</BlueTactileButton>

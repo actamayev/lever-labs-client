@@ -11,25 +11,25 @@ import {
 } from "recharts"
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import getSensorDataClass from "../../../classes/sensor-data-class"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P6TofsViz(): React.ReactNode {
 	// Get latest TOF count values
 	const leftTofCount = useMemo((): number => {
-		return sensorDataClass.leftSideTofCounts.length > 0
-			? sensorDataClass.leftSideTofCounts[sensorDataClass.leftSideTofCounts.length - 1]
+		return getSensorDataClass().leftSideTofCounts.length > 0
+			? getSensorDataClass().leftSideTofCounts[getSensorDataClass().leftSideTofCounts.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.leftSideTofCounts, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().leftSideTofCounts, getSensorDataClass().dataVersion])
 
 	const rightTofCount = useMemo((): number => {
-		return sensorDataClass.rightSideTofCounts.length > 0
-			? sensorDataClass.rightSideTofCounts[sensorDataClass.rightSideTofCounts.length - 1]
+		return getSensorDataClass().rightSideTofCounts.length > 0
+			? getSensorDataClass().rightSideTofCounts[getSensorDataClass().rightSideTofCounts.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.rightSideTofCounts, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().rightSideTofCounts, getSensorDataClass().dataVersion])
 
 	// Format data for charts
 	const leftTofData = useMemo((): { sensor: string, count: number }[] => [

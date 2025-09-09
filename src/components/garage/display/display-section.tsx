@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import RenderDisplay from "./render-display"
 import DisplayControls from "./display-controls"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 
 function DisplaySection(): React.ReactNode {
@@ -17,7 +17,7 @@ function DisplaySection(): React.ReactNode {
 		>
 			<div className="w-full grid grid-cols-2 pt-10 ml-[18px]">
 				<DisplayControls />
-				<RenderDisplay pixelBuffer={garageClass.pixelBuffer} />
+				<RenderDisplay pixelBuffer={getGarageClass().pixelBuffer} />
 			</div>
 		</div>
 	)

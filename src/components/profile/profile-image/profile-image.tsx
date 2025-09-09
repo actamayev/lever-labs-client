@@ -6,7 +6,7 @@ import { Pencil } from "lucide-react"
 import { useState, useCallback } from "react"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 
 function ProfileImage(): React.ReactNode {
@@ -29,9 +29,9 @@ function ProfileImage(): React.ReactNode {
 	return (
 		<div className="relative inline-block" style={{ minWidth: "128px", maxWidth: "128px" }}>
 			<Avatar className="w-full h-full">
-				{personalInfoClass.profilePictureUrl ? (
+				{getPersonalInfoClass().profilePictureUrl ? (
 					<Image
-						src={personalInfoClass.profilePictureUrl}
+						src={getPersonalInfoClass().profilePictureUrl}
 						className="w-32 h-32 rounded-full object-cover cursor-pointer"
 						style={imageStyle}
 						onClick={handleOpenDialog}

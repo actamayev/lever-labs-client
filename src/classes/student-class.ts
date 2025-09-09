@@ -181,6 +181,13 @@ class StudentClass {
 	}
 }
 
-const studentClass = new StudentClass()
+let studentClassInstance: StudentClass | null = null
 
-export default studentClass
+export const getStudentClass = (): StudentClass => {
+	if (!studentClassInstance) {
+		studentClassInstance = new StudentClass()
+	}
+	return studentClassInstance
+}
+
+export default getStudentClass

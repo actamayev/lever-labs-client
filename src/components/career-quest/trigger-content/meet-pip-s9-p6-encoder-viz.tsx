@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import getSensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS9P6EncoderViz(): React.ReactNode {
@@ -131,7 +131,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 		if (!ctx) return
 
 		// Get latest left wheel RPM
-		const latestRPM = sensorDataClass.leftWheelRPM[sensorDataClass.leftWheelRPM.length - 1] || 0
+		const latestRPM = getSensorDataClass().leftWheelRPM[getSensorDataClass().leftWheelRPM.length - 1] || 0
 
 		// Convert RPM to rotation speed (degrees per frame)
 		// Assuming 60fps, convert RPM to degrees per frame
@@ -155,7 +155,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 		if (!ctx) return
 
 		// Get latest right wheel RPM
-		const latestRPM = sensorDataClass.rightWheelRPM[sensorDataClass.rightWheelRPM.length - 1] || 0
+		const latestRPM = getSensorDataClass().rightWheelRPM[getSensorDataClass().rightWheelRPM.length - 1] || 0
 
 		// Convert RPM to rotation speed (degrees per frame)
 		const degreesPerFrame = (latestRPM * 360) / (60 * 60)
@@ -184,11 +184,11 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 			}
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.leftWheelRPM, sensorDataClass.rightWheelRPM, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().leftWheelRPM, getSensorDataClass().rightWheelRPM, getSensorDataClass().dataVersion])
 
 	// Get latest RPM values for display
-	const latestLeftRPM = sensorDataClass.leftWheelRPM[sensorDataClass.leftWheelRPM.length - 1] || 0
-	const latestRightRPM = sensorDataClass.rightWheelRPM[sensorDataClass.rightWheelRPM.length - 1] || 0
+	const latestLeftRPM = getSensorDataClass().leftWheelRPM[getSensorDataClass().leftWheelRPM.length - 1] || 0
+	const latestRightRPM = getSensorDataClass().rightWheelRPM[getSensorDataClass().rightWheelRPM.length - 1] || 0
 
 	return (
 		<div className="space-y-8">

@@ -14,7 +14,7 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
 import playTune from "../../../utils/workbench/play-tune"
-import workbenchClass from "../../../classes/workbench-class"
+import getWorkbenchClass from "../../../classes/workbench-class"
 import { Button, buttonVariants } from "../../shadcn/ui/button"
 
 interface Props {
@@ -31,7 +31,7 @@ function TestSounds(props: Props): React.ReactNode {
 			<div className="text-sm font-medium text-eel/70">Test Sounds</div>
 			<div className="flex items-center gap-2">
 				<Button
-					disabled={workbenchClass.isMuted}
+					disabled={getWorkbenchClass().isMuted}
 					className="rounded-xl bg-eel flex-1"
 					onClick={playTune}
 				>
@@ -49,11 +49,11 @@ function TestSounds(props: Props): React.ReactNode {
 										variant: "outline",
 										className: "flex items-center gap-1 rounded-xl justify-between w-full h-9 px-2 shadow-none"
 									}),
-									workbenchClass.isMuted && "opacity-50 pointer-events-none"
+									getWorkbenchClass().isMuted && "opacity-50 pointer-events-none"
 								)}
 							>
 								<span className="text-xs font-medium">
-									{toUpper(workbenchClass.selectedSound)}
+									{toUpper(getWorkbenchClass().selectedSound)}
 								</span>
 								<ChevronDown className="h-3 w-3" />
 							</div>
@@ -66,7 +66,7 @@ function TestSounds(props: Props): React.ReactNode {
 								<DropdownMenuItem
 									key={sound}
 									onClick={(): void => {
-										workbenchClass.setSelectedSound(sound)
+										getWorkbenchClass().setSelectedSound(sound)
 										setIsDropdownOpen(false)
 									}}
 									className="cursor-pointer transition-none hover:!bg-polar rounded-lg"

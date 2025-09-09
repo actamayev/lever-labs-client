@@ -10,14 +10,14 @@ import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
-import pipClass from "../../../classes/pip-class"
+import getPipClass from "../../../classes/pip-class"
 import getSandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import BlocklySearchBar from "../blockly-search-bar"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
@@ -177,7 +177,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 				<div
 					className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
 					style={{
-						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
+						width: getPersonalInfoClass().sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
 					}}
 				>
 					<div className="min-h-0 flex flex-col h-full">
@@ -199,7 +199,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 							<div className="flex gap-3 pt-3 pb-2 px-4">
 								<AnimatedStateButton
 									buttonText="SEND CODE"
-									isDisabled={isEmpty(project.cppCode) || pipClass.isSendingCppToPip}
+									isDisabled={isEmpty(project.cppCode) || getPipClass().isSendingCppToPip}
 									onClick={async (event): Promise<void> => {
 										return await sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())
 									}}
@@ -221,14 +221,14 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 				<div
 					className="flex flex-col h-full transition-all duration-300 ease-in-out border-swan"
 					style={{
-						width: personalInfoClass.sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
-						borderLeftWidth: personalInfoClass.sandboxNotesOpen ? "2px" : "0",
-						opacity: personalInfoClass.sandboxNotesOpen ? 1 : 0,
-						padding: personalInfoClass.sandboxNotesOpen ? "1rem" : "0",
-						visibility: personalInfoClass.sandboxNotesOpen ? "visible" : "hidden"
+						width: getPersonalInfoClass().sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
+						borderLeftWidth: getPersonalInfoClass().sandboxNotesOpen ? "2px" : "0",
+						opacity: getPersonalInfoClass().sandboxNotesOpen ? 1 : 0,
+						padding: getPersonalInfoClass().sandboxNotesOpen ? "1rem" : "0",
+						visibility: getPersonalInfoClass().sandboxNotesOpen ? "visible" : "hidden"
 					}}
 				>
-					{personalInfoClass.sandboxNotesOpen && (
+					{getPersonalInfoClass().sandboxNotesOpen && (
 						<ProjectTabs projectUUID={projectUUID} />
 					)}
 				</div>

@@ -3,11 +3,11 @@
 import isEqual from "lodash-es/isEqual"
 import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import authClass from "../../classes/auth-class"
-import toastClass from "../../classes/toast-class"
+import getAuthClass from "../../classes/auth-class"
+import getToastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
-import teacherClass from "../../classes/teacher-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getTeacherClass from "../../classes/teacher-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function createHub(
 	classCode: ClassCode,
@@ -16,9 +16,9 @@ export default async function createHub(
 	slideId: string
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (getAuthClass().isFinishedWithSignup === false) return
 
-		const createHubResponse = await blueDotApiClientClass.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
+		const createHubResponse = await getBlueDotApiClientClass().teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
 
 		if (!isEqual(createHubResponse.status, 200) || isNonSuccessResponse(createHubResponse.data)) {
 			throw Error("Unable to create hub")
@@ -28,11 +28,11 @@ export default async function createHub(
 		const newClassroom: TeacherViewHubData = {
 			hubName, classCode, careerUUID, slideId,
 			hubId: createHubResponse.data.hubId, studentsJoined: [] }
-		teacherClass.createHub(newClassroom)
-		// teacherClass.setIsFocusingStudents(true)
+		getTeacherClass().createHub(newClassroom)
+		// getTeacherClass().setIsFocusingStudents(true)
 	} catch (error) {
 		console.error(error)
-		toastClass.negative({
+		getToastClass().negative({
 			title: "Unable to create hub",
 			description: "Please try again"
 		})

@@ -14,10 +14,10 @@ import {
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
-import studentClass from "../../../classes/student-class"
+import getStudentClass from "../../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import { CustomBriefcase } from "../../icons/custom-briefcase"
-import teacherClass from "../../../classes/teacher-class"
+import getTeacherClass from "../../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
@@ -48,12 +48,12 @@ function MappedNavData(): React.ReactNode {
 	}, [pathname])
 
 	const hasActiveClasses = useMemo((): boolean => {
-		return studentClass.classroomData.length > 0
+		return getStudentClass().classroomData.length > 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [studentClass.classroomData.length])
+	}, [getStudentClass().classroomData.length])
 
 	// Check if user is approved teacher
-	const isApprovedTeacher = teacherClass.teacherData?.isApproved === true
+	const isApprovedTeacher = getTeacherClass().teacherData?.isApproved === true
 
 	const studentNavData: SidebarNavData = {
 		title: "Whiteboard",

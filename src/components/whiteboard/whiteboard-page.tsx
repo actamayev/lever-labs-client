@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useState } from "react"
 import { BookOpen } from "lucide-react"
-import studentClass from "../../classes/student-class"
+import getStudentClass from "../../classes/student-class"
 import JoinClassroomDialog from "./join-classroom-dialog"
 import SingleWhiteboardCard from "./single-whiteboard-card"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
@@ -13,7 +13,7 @@ import WhiteboardStatsCards from "./whiteboard-stats-cards"
 function WhiteboardPage(): React.ReactNode {
 	const [isJoinDialogOpen, setIsJoinDialogOpen] = useState(false)
 
-	if (studentClass.isRetrievingStudentData) {
+	if (getStudentClass().isRetrievingStudentData) {
 		return (
 			<div className="p-6">
 				<div className="flex items-center justify-center min-h-[400px]">
@@ -45,7 +45,7 @@ function WhiteboardPage(): React.ReactNode {
 				</CardHeader>
 				<CardContent>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-						{studentClass.classroomData.map((classroom): React.ReactNode => (
+						{getStudentClass().classroomData.map((classroom): React.ReactNode => (
 							<SingleWhiteboardCard
 								key={classroom.classCode}
 								classroom={classroom}

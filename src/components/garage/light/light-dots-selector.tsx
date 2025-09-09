@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { rgbaToHex } from "@uiw/color-convert"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomPip } from "../../icons/custom-pip"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DOT_POSITIONS = [
@@ -24,16 +24,16 @@ function LightDotsSelector(): React.ReactNode {
 				{DOT_POSITIONS.map((position, index): React.ReactNode => (
 					<button
 						key={index}
-						onClick={(): void => garageClass.toggleDot(index)}
+						onClick={(): void => getGarageClass().toggleDot(index)}
 						className={cn(
 							"absolute w-5 h-5 rounded-sm",
 							"transition-all duration-1000",
-							garageClass.selectedDots.includes(index) && "animate-pulse"
+							getGarageClass().selectedDots.includes(index) && "animate-pulse"
 						)}
 						style={{
-							backgroundColor: rgbaToHex(garageClass.dotColors[index]) || "#999",
-							boxShadow: garageClass.selectedDots.includes(index)
-								? `0 0 10px 3px ${rgbaToHex(garageClass.dotColors[index]) || "#999"}`
+							backgroundColor: rgbaToHex(getGarageClass().dotColors[index]) || "#999",
+							boxShadow: getGarageClass().selectedDots.includes(index)
+								? `0 0 10px 3px ${rgbaToHex(getGarageClass().dotColors[index]) || "#999"}`
 								: "none",
 							transform: "translate(-50%, -50%)",
 							...position // Spread the position styles

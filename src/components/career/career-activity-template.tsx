@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { Particles } from "../magicui/particles"
 import CareerLayout from "./lesson-layout/career-layout"
-import personalInfoClass from "../../classes/personal-info-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
 import useEffectRetrieveSingleCareerChallenges from "../../hooks/career-quest/use-effect-retrieve-single-career-challenges"
 import useEffectSetSelectedPipFirstPip from "../../hooks/pip/use-effect-set-selected-pip-first-pip"
@@ -14,7 +14,7 @@ interface Props {
 
 function CareerActivityTemplate(props: Props): React.ReactNode {
 	const { careerData } = props
-	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
+	const isDarkMode = getPersonalInfoClass().defaultSiteTheme === "dark"
 	useEffectRetrieveSingleCareerChallenges(careerData.careerUUID)
 	useEffectSetSelectedPipFirstPip()
 

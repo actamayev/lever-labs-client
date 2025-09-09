@@ -3,20 +3,20 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import authClass from "../../classes/auth-class"
-import toastClass from "../../classes/toast-class"
-import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getAuthClass from "../../classes/auth-class"
+import getToastClass from "../../classes/toast-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
 export default async function editUsername(newUsername: string) : Promise<string | null> {
 	try {
-		if (authClass.isFinishedWithSignup === false) {
+		if (getAuthClass().isFinishedWithSignup === false) {
 			return "You must be logged in to update your username"
 		}
 
-		if (newUsername === personalInfoClass.username) {
+		if (newUsername === getPersonalInfoClass().username) {
 			return null // No change, no error
 		}
 
@@ -28,13 +28,13 @@ export default async function editUsername(newUsername: string) : Promise<string
 			return "Username cannot exceed 50 characters"
 		}
 
-		const updateNameResponse = await blueDotApiClientClass.personalInfoDataService.updateUsername(newUsername)
+		const updateNameResponse = await getBlueDotApiClientClass().personalInfoDataService.updateUsername(newUsername)
 
 		if (!isEqual(updateNameResponse.status, 200) || isNonSuccessResponse(updateNameResponse.data)) {
 			throw Error
 		}
 
-		personalInfoClass.setUsername(newUsername)
+		getPersonalInfoClass().setUsername(newUsername)
 		return null // Success, no error
 	} catch (error: unknown) {
 		console.error(error)
@@ -51,7 +51,7 @@ export default async function editUsername(newUsername: string) : Promise<string
 			}
 
 			if (error.response?.status === 500) {
-				toastClass.negative({
+				getToastClass().negative({
 					title: "Server error",
 					description: "Please try again later"
 				})
@@ -60,7 +60,7 @@ export default async function editUsername(newUsername: string) : Promise<string
 		}
 
 		// Add a default return for any other error case
-		toastClass.negative({
+		getToastClass().negative({
 			title: "Unable to edit username",
 			description: "Please reload the page and try again"
 		})

@@ -2,21 +2,21 @@ import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
 import { Button } from "../../shadcn/ui/button"
-import pipClass from "../../../classes/pip-class"
-import workbenchClass from "../../../classes/workbench-class"
+import getPipClass from "../../../classes/pip-class"
+import getWorkbenchClass from "../../../classes/workbench-class"
 import disconnectFromPip from "../../../utils/pip/disconnect-from-pip"
 import requestToConnectToPip from "../../../utils/pip/request-to-connect-to-pip"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }): React.ReactNode {
-	const selectedPip = pipClass.selectedPip
-	if (pipClass.pipPluggedInSerial) {
+	const selectedPip = getPipClass().selectedPip
+	if (getPipClass().pipPluggedInSerial) {
 		return (
 			<Button
 				onClick={(e): void => {
 					e.stopPropagation()
-					workbenchClass.setIsWiFiDialogOpen(true)
+					getWorkbenchClass().setIsWiFiDialogOpen(true)
 					setIsHoverCardOpen(false) // Close hover card when opening dialog
 				}}
 				className="rounded-xl bg-eel h-9 px-3 w-full"
@@ -46,7 +46,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 					<Button
 						onClick={(e): void => {
 							e.stopPropagation()
-							workbenchClass.setIsWiFiDialogOpen(true)
+							getWorkbenchClass().setIsWiFiDialogOpen(true)
 							setIsHoverCardOpen(false) // Close hover card when opening dialog
 						}}
 						className="rounded-xl bg-eel h-9 px-3 w-full"
@@ -99,7 +99,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 				<Button
 					onClick={(e): void => {
 						e.stopPropagation()
-						workbenchClass.setIsWiFiDialogOpen(true)
+						getWorkbenchClass().setIsWiFiDialogOpen(true)
 						setIsHoverCardOpen(false) // Close hover card when opening dialog
 					}}
 					className="rounded-xl bg-eel h-9 px-3 w-full"

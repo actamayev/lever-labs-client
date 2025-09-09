@@ -3,10 +3,10 @@
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
-import teacherClass from "../../classes/teacher-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getTeacherClass from "../../classes/teacher-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 export default async function editClassroomName(
 	classCode: ClassCode,
@@ -14,17 +14,17 @@ export default async function editClassroomName(
 	setError: Dispatch<SetStateAction<string>>
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (getAuthClass().isFinishedWithSignup === false) return
 
 		setError("")
 
-		const editClassroomNameResponse = await blueDotApiClientClass.teacherDataService.editClassroomName(newClassroomName, classCode)
+		const editClassroomNameResponse = await getBlueDotApiClientClass().teacherDataService.editClassroomName(newClassroomName, classCode)
 
 		if (!isEqual(editClassroomNameResponse.status, 200) || isNonSuccessResponse(editClassroomNameResponse.data)) {
 			throw Error("Unable to edit classroom name")
 		}
 
-		teacherClass.editClassroomName(classCode, newClassroomName)
+		getTeacherClass().editClassroomName(classCode, newClassroomName)
 	} catch (error) {
 		console.error(error)
 		setError("Unable to edit classroom name. Please try again.")

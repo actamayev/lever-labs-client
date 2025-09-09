@@ -1,15 +1,15 @@
 "use client"
 
 import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
-import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
-import workbenchClass from "../../classes/workbench-class"
+import getPipClass from "../../classes/pip-class"
+import getToastClass from "../../classes/toast-class"
+import getWorkbenchClass from "../../classes/workbench-class"
 import requestToConnectToPip from "../pip/request-to-connect-to-pip"
 import { BlackWhiteTactileButton } from "../../components/buttons/tactile-buttons"
 
 export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
-	const previousPipConnectionStatus = pipClass.getPipConnectionStatus(data.pipUUID)
-	pipClass.updatePipConnectionStatus(data)
+	const previousPipConnectionStatus = getPipClass().getPipConnectionStatus(data.pipUUID)
+	getPipClass().updatePipConnectionStatus(data)
 	const { newConnectionStatus } = data
 	switch (newConnectionStatus) {
 		case "online":
@@ -21,31 +21,31 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 
 			let title: string = ""
 			if (previousPipConnectionStatus === "connected") {
-				title = `Disconnected from ${pipClass.findPipNameFromUUID(data.pipUUID)}`
+				title = `Disconnected from ${getPipClass().findPipNameFromUUID(data.pipUUID)}`
 			} else {
-				title = `${pipClass.findPipNameFromUUID(data.pipUUID)} is online. Ready to connect?`
+				title = `${getPipClass().findPipNameFromUUID(data.pipUUID)} is online. Ready to connect?`
 			}
 
-			workbenchClass.setBatteryDataItem({
+			getWorkbenchClass().setBatteryDataItem({
 				key: "isCharging",
 				value: false
 			})
-			return toastClass.positive({
+			return getToastClass().positive({
 				title,
 				action: actionElement
 			})
 		case "offline": {
-			if (!pipClass.pipPluggedInSerial) {
-				workbenchClass.setBatteryDataNull()
-				return toastClass.neutral({
-					title: `${pipClass.findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
+			if (!getPipClass().pipPluggedInSerial) {
+				getWorkbenchClass().setBatteryDataNull()
+				return getToastClass().neutral({
+					title: `${getPipClass().findPipNameFromUUID(data.pipUUID)} has disconnected from the internet`
 				})
 			}
 			break
 		}
 		case "connected":
-			return toastClass.superPositive({
-				title: `Connected to ${pipClass.findPipNameFromUUID(data.pipUUID)}`,
+			return getToastClass().superPositive({
+				title: `Connected to ${getPipClass().findPipNameFromUUID(data.pipUUID)}`,
 				description: "Happy building!"
 			})
 	}

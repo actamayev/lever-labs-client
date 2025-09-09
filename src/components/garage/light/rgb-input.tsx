@@ -5,7 +5,7 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Input } from "../../shadcn/ui/input"
 import { Label } from "../../shadcn/ui/label"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 
 function RGBInput(): React.ReactNode {
 	// Function to enforce RGB range (0-255)
@@ -32,9 +32,9 @@ function RGBInput(): React.ReactNode {
 				<Input
 					id="rgb-r"
 					type="number"
-					value={Math.round(garageClass.selectedColorRgba.r * garageClass.selectedColorShade)}
+					value={Math.round(getGarageClass().selectedColorRgba.r * getGarageClass().selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e): void => garageClass.updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
+					onChange={(e): void => getGarageClass().updateSelectedColorByField("r", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-red-300 dark:border-red-700 rounded-xl !text-xl text-center bg-red-300 dark:bg-red-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
@@ -46,9 +46,9 @@ function RGBInput(): React.ReactNode {
 				<Input
 					id="rgb-g"
 					type="number"
-					value={Math.round(garageClass.selectedColorRgba.g * garageClass.selectedColorShade)}
+					value={Math.round(getGarageClass().selectedColorRgba.g * getGarageClass().selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e): void => garageClass.updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
+					onChange={(e): void => getGarageClass().updateSelectedColorByField("g", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-green-300 dark:border-green-700 rounded-xl !text-xl text-center bg-green-300 dark:bg-green-700 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
@@ -60,9 +60,9 @@ function RGBInput(): React.ReactNode {
 				<Input
 					id="rgb-b"
 					type="number"
-					value={Math.round(garageClass.selectedColorRgba.b * garageClass.selectedColorShade)}
+					value={Math.round(getGarageClass().selectedColorRgba.b * getGarageClass().selectedColorShade)}
 					onInput={handleInput}
-					onChange={(e): void => garageClass.updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
+					onChange={(e): void => getGarageClass().updateSelectedColorByField("b", enforceRGBRange(e.target.value))}
 					min="0"
 					max="255"
 					className="border-2 border-blue-200 dark:border-blue-800 rounded-xl !text-xl text-center bg-blue-200 dark:bg-blue-800 shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"

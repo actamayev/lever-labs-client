@@ -8,7 +8,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import ConnectUsbButton from "../../connect-usb-button"
 import EditableProjectTitle from "./editable-project-title"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
@@ -63,16 +63,16 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 						<button
 							onClick={setSandboxNotesOpenStatus}
 							className={`p-2 rounded-md transition-none border-2 ${
-								personalInfoClass.sandboxNotesOpen
+								getPersonalInfoClass().sandboxNotesOpen
 									? "bg-standardBackgroundHover text-macaw border-standardBackgroundHover"
 									: "text-questionText hover:bg-polar border-swan"
 							}`}
-							title={personalInfoClass.sandboxNotesOpen ? "Hide Code" : "Show Code"}
+							title={getPersonalInfoClass().sandboxNotesOpen ? "Hide Code" : "Show Code"}
 						>
 							<NotebookPen size={30} />
 						</button>
 					}
-					tooltipContent={personalInfoClass.sandboxNotesOpen ? "CLOSE SIDE PANEL" : "OPEN SIDE PANEL"}
+					tooltipContent={getPersonalInfoClass().sandboxNotesOpen ? "CLOSE SIDE PANEL" : "OPEN SIDE PANEL"}
 				/>
 			</div>
 		</div>

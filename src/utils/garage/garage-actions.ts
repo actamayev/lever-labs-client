@@ -1,9 +1,9 @@
 "use client"
 
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import pipClass from "../../classes/pip-class"
-import garageClass from "../../classes/garage-class"
-import socketClass from "../../classes/socket-class"
+import getPipClass from "../../classes/pip-class"
+import getGarageClass from "../../classes/garage-class"
+import getSocketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function garageActions(): {
@@ -13,7 +13,7 @@ export default function garageActions(): {
 	const activateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
 			case "headlights":
-				garageClass.setAreHeadlightsOn(true)
+				getGarageClass().setAreHeadlightsOn(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
 					const buffer = MessageBuilder.createHeadlightMessage(true)
@@ -22,17 +22,17 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!getPipClass().selectedPip ||
+				getPipClass().selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("headlight-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+				getSocketClass().emitToServer("headlight-update", {
+					pipUUID: getPipClass().selectedPip.pipUUID,
 					areHeadlightsOn: true
 				})
 				return
 
 			case "horn":
-				garageClass.setIsHornPressed(true)
+				getGarageClass().setIsHornPressed(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
 					const buffer = MessageBuilder.createHornSoundMessage(true)
@@ -41,11 +41,11 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!getPipClass().selectedPip ||
+				getPipClass().selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("horn-sound-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+				getSocketClass().emitToServer("horn-sound-update", {
+					pipUUID: getPipClass().selectedPip.pipUUID,
 					hornStatus: true
 				})
 				return
@@ -58,7 +58,7 @@ export default function garageActions(): {
 	const deactivateAction = async (action: Actions): Promise<void> => {
 		switch (action) {
 			case "headlights":
-				garageClass.setAreHeadlightsOn(false)
+				getGarageClass().setAreHeadlightsOn(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
 					const buffer = MessageBuilder.createHeadlightMessage(false)
@@ -67,17 +67,17 @@ export default function garageActions(): {
 				}
 
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!getPipClass().selectedPip ||
+				getPipClass().selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("headlight-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+				getSocketClass().emitToServer("headlight-update", {
+					pipUUID: getPipClass().selectedPip.pipUUID,
 					areHeadlightsOn: false
 				})
 				return
 
 			case "horn":
-				garageClass.setIsHornPressed(false)
+				getGarageClass().setIsHornPressed(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
 					const buffer = MessageBuilder.createHornSoundMessage(false)
@@ -85,11 +85,11 @@ export default function garageActions(): {
 					return
 				}
 				if (
-					!pipClass.selectedPip ||
-				pipClass.selectedPip.pipConnectionStatus === "offline"
+					!getPipClass().selectedPip ||
+				getPipClass().selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("horn-sound-update", {
-					pipUUID: pipClass.selectedPip.pipUUID,
+				getSocketClass().emitToServer("horn-sound-update", {
+					pipUUID: getPipClass().selectedPip.pipUUID,
 					hornStatus: false
 				})
 				return

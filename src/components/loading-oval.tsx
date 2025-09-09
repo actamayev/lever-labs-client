@@ -2,14 +2,14 @@
 
 import { observer } from "mobx-react"
 import { Oval } from "react-loader-spinner"
-import personalInfoClass from "../classes/personal-info-class"
+import getPersonalInfoClass from "../classes/personal-info-class"
 
 function LoadingOval(): React.ReactNode {
 	return (
 		<Oval
 			height="22"
 			width="22"
-			color={personalInfoClass.defaultSiteTheme === "light" ? "#FFFFFF" : "#000000"}
+			color={getPersonalInfoClass().defaultSiteTheme === "light" ? "#FFFFFF" : "#000000"}
 			ariaLabel="oval-loading"
 			wrapperStyle={{ cursor: "default" }} // Add the cursor style here
 			wrapperClass=""

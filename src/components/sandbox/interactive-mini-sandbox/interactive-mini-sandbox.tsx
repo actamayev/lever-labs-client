@@ -10,7 +10,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { Button } from "../../shadcn/ui/button"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
 import getCareerQuestClass from "../../../classes/career-quest-class"
@@ -27,7 +27,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 		careerUUIDChallengeUUID,
 		onJsonChange
 	} = props
-	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
+	const isDarkMode = getPersonalInfoClass().defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)

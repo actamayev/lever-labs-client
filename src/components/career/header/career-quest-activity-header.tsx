@@ -7,19 +7,19 @@ import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
 import getCareerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
-import studentClass from "../../../classes/student-class"
-import teacherClass from "../../../classes/teacher-class"
+import getStudentClass from "../../../classes/student-class"
+import getTeacherClass from "../../../classes/teacher-class"
 import { useRouter } from "next/navigation"
 import { useCallback, useState } from "react"
 import HubStudentsDialog from "./hub-students-dialog"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
-import navigationManagerClass from "../../../classes/navigation-manager-class"
+import getNavigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const isChatToggled = getCareerQuestClass().isCareerChatToggled(careerData.careerUUID)
-	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
+	const currentSlide = getNavigationManagerClass().getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
 	const handleChatToggle = (): void => {
@@ -39,8 +39,8 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	}, [])
 
 	// Check if user is teacher and is focusing students
-	const isTeacher = teacherClass.teacherData !== null
-	const isFocusingStudents = teacherClass.isFocusingStudents
+	const isTeacher = getTeacherClass().teacherData !== null
+	const isFocusingStudents = getTeacherClass().isFocusingStudents
 	const shouldShowStudentsButton = isTeacher && isFocusingStudents
 
 	// Get current active hub data
@@ -48,7 +48,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 		if (!shouldShowStudentsButton) return null
 
 		// Find the current active hub based on career
-		for (const [, classroomData] of teacherClass.detailedClassroomData) {
+		for (const [, classroomData] of getTeacherClass().detailedClassroomData) {
 			const activeHub = classroomData.activeHubs.find((hub): boolean => hub.careerUUID === careerData.careerUUID)
 			if (activeHub) {
 				return activeHub
@@ -63,7 +63,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
 			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
-				{!studentClass.isInFocusMode && (
+				{!getStudentClass().isInFocusMode && (
 					<button
 						onClick={handleBack}
 						className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"

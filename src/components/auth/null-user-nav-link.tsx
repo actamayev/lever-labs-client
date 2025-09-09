@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { isValidRoute } from "../../utils/type-checks"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import SetLoginOrRegisterAuthHeaderButton, { LinkAuthHeaderButton } from "./auth-header-links"
 
 // eslint-disable-next-line complexity
@@ -34,7 +34,7 @@ function NullUserNavLink(): React.ReactNode {
 		return (
 			<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
 		)
-	} else if (authClass.showLoginOrRegister === "Login") {
+	} else if (getAuthClass().showLoginOrRegister === "Login") {
 		return (
 			<SetLoginOrRegisterAuthHeaderButton title="SIGN UP" setShowLoginOrRegister="Register" />
 		)

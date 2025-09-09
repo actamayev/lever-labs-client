@@ -3,11 +3,11 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { RegisterRequest } from "@bluedotrobots/common-ts/types/api"
-import authClass from "../../../classes/auth-class"
+import getAuthClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import confirmRegisterFields from "../confirm-register-fields"
-import personalInfoClass from "../../../classes/personal-info-class"
-import blueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
+import getBlueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
@@ -20,10 +20,10 @@ export default async function registerSubmit(
 		const areCredentialsValid = confirmRegisterFields(registerCredentials, setError)
 		if (areCredentialsValid === false) return false
 
-		authClass.setAuthenticating(true)
+		getAuthClass().setAuthenticating(true)
 		if (typeof window === "undefined") return false
 
-		const siteTheme = personalInfoClass.defaultSiteTheme
+		const siteTheme = getPersonalInfoClass().defaultSiteTheme
 		if (isNull(registerCredentials.age)) return false
 
 		const registerRequest: RegisterRequest = {
@@ -32,17 +32,17 @@ export default async function registerSubmit(
 			siteTheme
 		}
 
-		const response = await blueDotApiClientClass.authDataService.register(registerRequest)
+		const response = await getBlueDotApiClientClass().authDataService.register(registerRequest)
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to register. Please reload the page and try again")
 			return false
 		}
-		authClass.setAuthState({
+		getAuthClass().setAuthState({
 			isAuthenticated: true,
 			hasCompletedSignup: true
 		})
-		personalInfoClass.setRegisteredValues(
+		getPersonalInfoClass().setRegisteredValues(
 			registerCredentials.username,
 			registerCredentials.email,
 			siteTheme,
@@ -53,6 +53,6 @@ export default async function registerSubmit(
 		setErrorAxiosResponse(error, setError)
 		return false
 	} finally {
-		authClass.setAuthenticating(false)
+		getAuthClass().setAuthenticating(false)
 	}
 }

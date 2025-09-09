@@ -17,7 +17,7 @@ import {
 import LoadingOval from "../../loading-oval"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
@@ -110,7 +110,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 
 	const handleDelete = useCallback((): void => {
 		// If we have a preview but no saved profile picture, just clear the preview without marking for deletion
-		if (previewUrl && !personalInfoClass.profilePictureUrl) {
+		if (previewUrl && !getPersonalInfoClass().profilePictureUrl) {
 			URL.revokeObjectURL(previewUrl)
 			setPreviewUrl(null)
 			setSelectedImage(null)
@@ -128,12 +128,12 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 			setSelectedImage(null)
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [previewUrl, personalInfoClass.profilePictureUrl])
+	}, [previewUrl, getPersonalInfoClass().profilePictureUrl])
 
 	// Determine which image to show
-	const hasProfilePicture = !isNull(personalInfoClass.profilePictureUrl)
+	const hasProfilePicture = !isNull(getPersonalInfoClass().profilePictureUrl)
 	const imageToShow = previewUrl ||
-                  (pendingDelete ? null : personalInfoClass.profilePictureUrl)
+                  (pendingDelete ? null : getPersonalInfoClass().profilePictureUrl)
 
 	const colors = getDuolingoColors("humpback")
 	const deleteColors = getDuolingoColors("cardinal")

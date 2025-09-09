@@ -3,8 +3,8 @@
 import { AxiosError } from "axios"
 import { Dispatch, SetStateAction } from "react"
 import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts/types/api"
-import authClass from "../../classes/auth-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getAuthClass from "../../classes/auth-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function requestBecomeTeacher(
@@ -13,9 +13,9 @@ export default async function requestBecomeTeacher(
 	setSuccess: Dispatch<SetStateAction<string>>
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (getAuthClass().isFinishedWithSignup === false) return
 
-		const response = await blueDotApiClientClass.teacherDataService.requestBecomeTeacher(data)
+		const response = await getBlueDotApiClientClass().teacherDataService.requestBecomeTeacher(data)
 
 		if (response.status !== 200) {
 			setError("Failed to submit teacher request")

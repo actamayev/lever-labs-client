@@ -2,34 +2,34 @@
 
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
-import toastClass from "../../classes/toast-class"
-import teacherClass from "../../classes/teacher-class"
-import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getToastClass from "../../classes/toast-class"
+import getTeacherClass from "../../classes/teacher-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function retrievePersonalInfo(): Promise<void> {
 	try {
 		if (
 			// We need to retrieve the personal info wherever we are to confirm Google users have finished registering their usernames
-			personalInfoClass.isRetrievingPersonalInfo === true ||
-			personalInfoClass.retrievedPersonalInfo === true
+			getPersonalInfoClass().isRetrievingPersonalInfo === true ||
+			getPersonalInfoClass().retrievedPersonalInfo === true
 		) return
 
-		personalInfoClass.setIsRetrievingPersonalDetails(true)
+		getPersonalInfoClass().setIsRetrievingPersonalDetails(true)
 
-		const personalInfoResponse = await blueDotApiClientClass.personalInfoDataService.retrievePersonalInfo()
+		const personalInfoResponse = await getBlueDotApiClientClass().personalInfoDataService.retrievePersonalInfo()
 		if (!isEqual(personalInfoResponse.status, 200) || isErrorResponse(personalInfoResponse.data)) {
 			throw Error ("Unable to retrieve personal info")
 		}
-		personalInfoClass.setRetrievedPersonalData(personalInfoResponse.data)
-		teacherClass.setTeacherData(personalInfoResponse.data.teacherData)
+		getPersonalInfoClass().setRetrievedPersonalData(personalInfoResponse.data)
+		getTeacherClass().setTeacherData(personalInfoResponse.data.teacherData)
 		// This is here to auto-connect when the username is retrieved
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 	} catch (error) {
 		console.error(error)
-		personalInfoClass.setIsRetrievingPersonalDetails(false)
-		return toastClass.negative({
+		getPersonalInfoClass().setIsRetrievingPersonalDetails(false)
+		return getToastClass().negative({
 			title: "Unable to retrieve Personal Info",
 			description: "Please reload the page and try again"
 		})

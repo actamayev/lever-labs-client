@@ -7,7 +7,7 @@ import { CareerUUID, ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/u
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import studentClass from "../../classes/student-class"
+import getStudentClass from "../../classes/student-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
@@ -23,7 +23,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	const navigate = useTypedNavigate()
 	const joinHub = useJoinHub()
 
-	const classroomData = studentClass.getClassroomData(classCode)
+	const classroomData = getStudentClass().getClassroomData(classCode)
 
 	useEffect((): void => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
@@ -33,13 +33,13 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: HubUUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
-			studentClass.setIsInFocusMode(true)
+			getStudentClass().setIsInFocusMode(true)
 			joinHub(classCode, hubId)
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (career) {
-			studentClass.setIsInFocusMode(true)
+			getStudentClass().setIsInFocusMode(true)
 			joinHub(classCode, hubId)
 		}
 	}, [classCode, joinHub])
@@ -70,7 +70,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			getCareerQuestClass().setSavedPosition(hub.careerUUID, actualSlideId)
 		}
 
-		studentClass.setIsInFocusMode(true)
+		getStudentClass().setIsInFocusMode(true)
 
 		// Navigate to the appropriate career quest page
 		if (hub.careerUUID === meetPipData.careerUUID) {
@@ -83,7 +83,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 		}
 	}, [navigate])
 
-	if (studentClass.isRetrievingStudentData) {
+	if (getStudentClass().isRetrievingStudentData) {
 		return (
 			<div className="p-6">
 				<div className="flex items-center gap-4 mb-8">

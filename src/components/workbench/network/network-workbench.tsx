@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
 import NetworkContent from "./network-content"
-import pipClass from "../../../classes/pip-class"
+import getPipClass from "../../../classes/pip-class"
 import NetworkIconToShow from "./network-icon-to-show"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
@@ -15,10 +15,10 @@ function NetworkWorkbench(): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = (): string => {
-		if (pipClass.pipPluggedInSerial) return "Connected to USB"
-		if (isNull(pipClass.selectedPip)) return "No device selected"
+		if (getPipClass().pipPluggedInSerial) return "Connected to USB"
+		if (isNull(getPipClass().selectedPip)) return "No device selected"
 
-		switch (pipClass.selectedPip.pipConnectionStatus) {
+		switch (getPipClass().selectedPip.pipConnectionStatus) {
 			case "offline":
 				return "Offline"
 			case "online":
@@ -35,10 +35,10 @@ function NetworkWorkbench(): React.ReactNode {
 	}
 
 	const getStatusColor = (): string => {
-		if (pipClass.pipPluggedInSerial) return "text-green-500"
-		if (isNull(pipClass.selectedPip)) return "text-wolf"
+		if (getPipClass().pipPluggedInSerial) return "text-green-500"
+		if (isNull(getPipClass().selectedPip)) return "text-wolf"
 
-		switch (pipClass.selectedPip.pipConnectionStatus) {
+		switch (getPipClass().selectedPip.pipConnectionStatus) {
 			case "offline":
 				return "text-cardinal"
 			case "online":

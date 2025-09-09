@@ -10,7 +10,7 @@ import { SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
-import personalInfoClass from "../../classes/personal-info-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 
 interface SingleSandboxMessageProps {
@@ -78,9 +78,9 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(personalInfoClass.profilePictureUrl) ? (
+					{!isNull(getPersonalInfoClass().profilePictureUrl) ? (
 						<Image
-							src={personalInfoClass.profilePictureUrl}
+							src={getPersonalInfoClass().profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}

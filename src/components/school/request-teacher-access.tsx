@@ -9,7 +9,7 @@ import { Label } from "../shadcn/ui/label"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
-import teacherClass from "../../classes/teacher-class"
+import getTeacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editTeacherData from "../../utils/teacher/edit-teacher-data"
@@ -25,7 +25,7 @@ function RequestTeacherAccess(): React.ReactNode {
 	const [success, setSuccess] = useState("")
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
-	const teacherData = teacherClass.teacherData
+	const teacherData = getTeacherClass().teacherData
 	const hasExistingData = teacherData !== null
 	const colors = getDuolingoColors("humpback")
 

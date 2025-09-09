@@ -8,7 +8,7 @@ import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { cn } from "../../../lib/shadcn/utils"
 import ChallengeHeader from "./challenge-header"
-import pipClass from "../../../classes/pip-class"
+import getPipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
@@ -216,7 +216,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 				<div className="flex-shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
-						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+						isDisabled={isEmpty(cppCode) || getPipClass().isSendingCppToPip}
 						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
 						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
 					/>

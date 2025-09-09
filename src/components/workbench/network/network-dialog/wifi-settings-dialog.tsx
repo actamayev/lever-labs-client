@@ -8,7 +8,7 @@ import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import { Button } from "../../../shadcn/ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
-import workbenchClass from "../../../../classes/workbench-class"
+import getWorkbenchClass from "../../../../classes/workbench-class"
 import useScanForNetworks from "../../../../hooks/use-scan-for-networks"
 import PreviouslyConnectedSection from "./previously-connected-section"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
@@ -37,16 +37,16 @@ function WiFiSettingsDialog(): React.ReactNode {
 
 	// Request saved networks when dialog opens
 	useEffect((): void => {
-		if (workbenchClass.isWiFiDialogOpen && serialConnectionManagerClass.pipTurnedOn) {
+		if (getWorkbenchClass().isWiFiDialogOpen && serialConnectionManagerClass.pipTurnedOn) {
 			void requestSavedNetworksAndWiFiScan()
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [requestSavedNetworksAndWiFiScan, workbenchClass.isWiFiDialogOpen, serialConnectionManagerClass.pipTurnedOn])
+	}, [requestSavedNetworksAndWiFiScan, getWorkbenchClass().isWiFiDialogOpen, serialConnectionManagerClass.pipTurnedOn])
 
 	if (!serialConnectionManagerClass.pipTurnedOn) return null
 
 	return (
-		<Dialog open={workbenchClass.isWiFiDialogOpen} onOpenChange={workbenchClass.setIsWiFiDialogOpen}>
+		<Dialog open={getWorkbenchClass().isWiFiDialogOpen} onOpenChange={getWorkbenchClass().setIsWiFiDialogOpen}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
 					<DialogTitle>Wi-Fi Settings</DialogTitle>

@@ -1,46 +1,46 @@
 "use client"
 
-import pipClass from "../../classes/pip-class"
-import authClass from "../../classes/auth-class"
-import socketClass from "../../classes/socket-class"
-import garageClass from "../../classes/garage-class"
+import getPipClass from "../../classes/pip-class"
+import getAuthClass from "../../classes/auth-class"
+import getSocketClass from "../../classes/socket-class"
+import getGarageClass from "../../classes/garage-class"
 import getSandboxClass from "../../classes/sandbox-class"
-import studentClass from "../../classes/student-class"
-import teacherClass from "../../classes/teacher-class"
-import workbenchClass from "../../classes/workbench-class"
+import getStudentClass from "../../classes/student-class"
+import getTeacherClass from "../../classes/teacher-class"
+import getWorkbenchClass from "../../classes/workbench-class"
 import getCareerQuestClass from "../../classes/career-quest-class"
-import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
-import sensorDataClass from "../../classes/sensor-data-class"
+import getSensorDataClass from "../../classes/sensor-data-class"
 import getChatManagerClass from "../../classes/chat-manager-class"
-import navigationManagerClass from "../../classes/navigation-manager-class"
+import getNavigationManagerClass from "../../classes/navigation-manager-class"
 
 export default async function logout(): Promise<void> {
-	authClass.setLoggingOut(true)
+	getAuthClass().setLoggingOut(true)
 
 	try {
 		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
-		await blueDotApiClientClass.authDataService.logout()
+		await getBlueDotApiClientClass().authDataService.logout()
 
 		// Clear all client state
-		personalInfoClass.logout()
-		pipClass.logout()
-		socketClass.logout()
+		getPersonalInfoClass().logout()
+		getPipClass().logout()
+		getSocketClass().logout()
 		getCareerQuestClass().logout()
-		navigationManagerClass.logout()
+		getNavigationManagerClass().logout()
 		getChatManagerClass().logout()
 		careerQuestTriggersClass.logout()
-		authClass.logout()
-		workbenchClass.logout()
+		getAuthClass().logout()
+		getWorkbenchClass().logout()
 		getSandboxClass().logout()
-		garageClass.logout()
-		sensorDataClass.logout()
+		getGarageClass().logout()
+		getSensorDataClass().logout()
 		serialMessageManagerClass.logout()
-		studentClass.logout()
-		teacherClass.logout()
+		getStudentClass().logout()
+		getTeacherClass().logout()
 		await serialConnectionManagerClass.logout()
 
 		// Redirect to home page
@@ -52,27 +52,27 @@ export default async function logout(): Promise<void> {
 		console.error("Logout error:", error)
 
 		// Even if API fails, clear local state and redirect
-		personalInfoClass.logout()
-		pipClass.logout()
-		socketClass.logout()
+		getPersonalInfoClass().logout()
+		getPipClass().logout()
+		getSocketClass().logout()
 		getCareerQuestClass().logout()
-		navigationManagerClass.logout()
+		getNavigationManagerClass().logout()
 		getChatManagerClass().logout()
 		careerQuestTriggersClass.logout()
-		authClass.logout()
-		workbenchClass.logout()
+		getAuthClass().logout()
+		getWorkbenchClass().logout()
 		getSandboxClass().logout()
-		garageClass.logout()
-		sensorDataClass.logout()
+		getGarageClass().logout()
+		getSensorDataClass().logout()
 		serialMessageManagerClass.logout()
-		studentClass.logout()
-		teacherClass.logout()
+		getStudentClass().logout()
+		getTeacherClass().logout()
 		await serialConnectionManagerClass.logout()
 
 		if (typeof window !== "undefined") {
 			window.location.href = "/"
 		}
 	} finally {
-		authClass.setLoggingOut(false)
+		getAuthClass().setLoggingOut(false)
 	}
 }

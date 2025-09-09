@@ -1,7 +1,7 @@
 "use client"
 
 import { toast, ToastOptions as ReactToastifyOptions, Id } from "react-toastify"
-import personalInfoClass from "./personal-info-class"
+import getPersonalInfoClass from "./personal-info-class"
 
 interface CustomToastOptions {
 	title: string
@@ -61,7 +61,7 @@ class ToastClass {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: personalInfoClass.defaultSiteTheme
+			theme: getPersonalInfoClass().defaultSiteTheme
 		}
 
 		return this.showToastIfNotActive(toast, content, options)
@@ -75,7 +75,7 @@ class ToastClass {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: personalInfoClass.defaultSiteTheme
+			theme: getPersonalInfoClass().defaultSiteTheme
 		}
 
 		return this.showToastIfNotActive(toast, content, options)
@@ -88,7 +88,7 @@ class ToastClass {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: personalInfoClass.defaultSiteTheme
+			theme: getPersonalInfoClass().defaultSiteTheme
 		}
 
 		return this.showToastIfNotActive(toast, content, options)
@@ -101,14 +101,20 @@ class ToastClass {
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
-			theme: personalInfoClass.defaultSiteTheme
+			theme: getPersonalInfoClass().defaultSiteTheme
 		}
 
 		return this.showToastIfNotActive(toast.error, content, options)
 	}
 }
 
-// Export singleton instance
-const toastClass = new ToastClass()
+let toastClassInstance: ToastClass | null = null
 
-export default toastClass
+export const getToastClass = (): ToastClass => {
+	if (!toastClassInstance) {
+		toastClassInstance = new ToastClass()
+	}
+	return toastClassInstance
+}
+
+export default getToastClass

@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import CreateHubDialog from "./create-hub-dialog"
 import DeleteHubDialog from "./delete-hub-dialog"
-import teacherClass from "../../classes/teacher-class"
+import getTeacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
@@ -31,7 +31,7 @@ function ClassroomStatsCards(props: ClassroomStatsCardsProps): React.ReactNode {
 		setIsCreateHubDialogOpen(true)
 	}
 
-	const classroomData = teacherClass.getDetailedClassroomData(classCode)
+	const classroomData = getTeacherClass().getDetailedClassroomData(classCode)
 
 	return (
 		<div>

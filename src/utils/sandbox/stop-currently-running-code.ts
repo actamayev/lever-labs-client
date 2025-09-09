@@ -2,8 +2,8 @@
 
 import isNull from "lodash-es/isNull"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import pipClass from "../../classes/pip-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getPipClass from "../../classes/pip-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 
 export default async function stopCurrentlyRunningCode(
@@ -13,12 +13,12 @@ export default async function stopCurrentlyRunningCode(
 
 	await sendDataToSerialOrApiTemplate({
 		buffer,
-		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode> => {
-			if (isNull(pipClass.selectedPip)) {
+		dataServiceEndpoint: (): ReturnType<typeof getBlueDotApiClientClass().sandboxDataService.stopCurrentlyRunningCode> => {
+			if (isNull(getPipClass().selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode(
-				pipClass.selectedPip.pipUUID
+			return getBlueDotApiClientClass().sandboxDataService.stopCurrentlyRunningCode(
+				getPipClass().selectedPip.pipUUID
 			)
 		},
 		errorTitle: "Unable to stop currently running code on Pip at this time",

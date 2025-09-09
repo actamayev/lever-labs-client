@@ -2,17 +2,17 @@
 
 import isEqual from "lodash-es/isEqual"
 import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import getCareerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import getChatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default async function retrieveFullCareerData(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (
-			authClass.isFinishedWithSignup === false ||
+			getAuthClass().isFinishedWithSignup === false ||
 			getCareerQuestClass().isRetrievingCareerData(careerUUID) ||
 			getCareerQuestClass().hasRetrievedAllChallengesForCareer(careerUUID)
 		) return
@@ -20,7 +20,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// Set loading state for entire career
 		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await blueDotApiClientClass.careerQuestDataService.retrieveCareerProgressData(careerUUID)
+		const careerResponse = await getBlueDotApiClientClass().careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")

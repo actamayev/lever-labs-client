@@ -1,5 +1,5 @@
 import { action, makeAutoObservable } from "mobx"
-import personalInfoClass from "./personal-info-class"
+import getPersonalInfoClass from "./personal-info-class"
 
 interface DinoScore {
 	score: number
@@ -16,7 +16,7 @@ class GamesClass {
 
 	public addDinoScore = action((score: number, username?: string): void => {
 		if (!username) {
-			username = personalInfoClass.username || ""
+			username = getPersonalInfoClass().username || ""
 		}
 		this.dinoScore.push({
 			score,
@@ -39,6 +39,13 @@ class GamesClass {
 	}
 }
 
-const gamesClass = new GamesClass()
+let gamesClassInstance: GamesClass | null = null
 
-export default gamesClass
+export const getGamesClass = (): GamesClass => {
+	if (!gamesClassInstance) {
+		gamesClassInstance = new GamesClass()
+	}
+	return gamesClassInstance
+}
+
+export default getGamesClass

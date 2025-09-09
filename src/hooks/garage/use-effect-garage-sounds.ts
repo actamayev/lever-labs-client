@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants/constants"
-import garageClass from "../../classes/garage-class"
+import getGarageClass from "../../classes/garage-class"
 import playFunSound from "../../utils/garage/play-fun-sound"
 
 export default function useGarageSoundsUseEffect(): void {
@@ -16,7 +16,7 @@ export default function useGarageSoundsUseEffect(): void {
 		if (!(key in soundMappings)) return
 
 		const sound = soundMappings[key]
-		garageClass.setSoundPlaying(sound)
+		getGarageClass().setSoundPlaying(sound)
 		playFunSound(sound)
 	}
 
@@ -27,7 +27,7 @@ export default function useGarageSoundsUseEffect(): void {
 
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
-		garageClass.setSoundPlaying(null)
+		getGarageClass().setSoundPlaying(null)
 	}
 
 	// Set up key event listeners

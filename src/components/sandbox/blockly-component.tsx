@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import personalInfoClass from "../../classes/personal-info-class"
+import getPersonalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
@@ -30,7 +30,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		searchTerm = "",
 		isSwitchingMode
 	} = props
-	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
+	const isDarkMode = getPersonalInfoClass().defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)

@@ -15,7 +15,7 @@ import {
 	DropdownMenuTrigger,
 } from "../shadcn/ui/dropdown-menu"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import teacherClass from "../../classes/teacher-class"
+import getTeacherClass from "../../classes/teacher-class"
 import getCareerQuestClass from "../../classes/career-quest-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
@@ -34,7 +34,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 		retrieveDetailedClassroomInfo(classCode)
 	}, [classCode])
 
-	const classroomData = teacherClass.getDetailedClassroomData(classCode)
+	const classroomData = getTeacherClass().getDetailedClassroomData(classCode)
 
 	useEffect((): void => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
@@ -49,20 +49,20 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 
 	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
 		if (hub.careerUUID === meetPipData.careerUUID) {
-			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
+			getTeacherClass().setIsFocusingStudents({ classCode, hubId: hub.hubId })
 			getCareerQuestClass().resetCareerToBeginning(meetPipData.careerUUID)
 			navigate("/career-quest/meet-pip")
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
 		if (career) {
-			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
+			getTeacherClass().setIsFocusingStudents({ classCode, hubId: hub.hubId })
 			getCareerQuestClass().resetCareerToBeginning(hub.careerUUID)
 			navigate(career.careerUrl)
 		}
 	}, [navigate, classCode])
 
-	if (teacherClass.isRetrievingDetailedData) {
+	if (getTeacherClass().isRetrievingDetailedData) {
 		return (
 			<div className="p-6">
 				<div className="flex items-center gap-4 mb-8">

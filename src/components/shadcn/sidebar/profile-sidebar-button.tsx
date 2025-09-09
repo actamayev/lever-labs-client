@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from "@/components/shadcn/ui/avatar"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import getPersonalInfoClass from "../../../classes/personal-info-class"
 
 function ProfileSidebarButton(): React.ReactNode {
 	return (
@@ -16,13 +16,13 @@ function ProfileSidebarButton(): React.ReactNode {
 				<CustomSidebarButton
 					icon={(
 						<Avatar className="w-full h-full">
-							{isNull(personalInfoClass.profilePictureUrl) ? (
+							{isNull(getPersonalInfoClass().profilePictureUrl) ? (
 								<AvatarFallback className="bg-standardBackground text-questionText">
 									<CustomUserCircle className="w-full h-full" />
 								</AvatarFallback>
 							) : (
 								<Image
-									src={personalInfoClass.profilePictureUrl}
+									src={getPersonalInfoClass().profilePictureUrl}
 									alt="Your profile"
 									width={32}
 									height={32}

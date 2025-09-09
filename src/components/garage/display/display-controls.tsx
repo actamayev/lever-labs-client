@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
-import garageClass from "../../../classes/garage-class"
+import getGarageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
 import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
@@ -29,7 +29,7 @@ function DisplayControls(): React.ReactNode {
 							style={{ height: "60px" }}
 						>
 							<span className="flex items-center gap-2">
-								{garageClass.selectedDesign}
+								{getGarageClass().selectedDesign}
 							</span>
 							<ChevronDown className="!size-6" />
 						</div>
@@ -40,7 +40,7 @@ function DisplayControls(): React.ReactNode {
 						{PRE_DEFINED_DESIGNS.map((design): React.ReactNode => (
 							<DropdownMenuItem
 								key={design.name}
-								onClick={(): void => garageClass.setSelectedDesign(design.name)}
+								onClick={(): void => getGarageClass().setSelectedDesign(design.name)}
 								className="cursor-pointer transition-none hover:!bg-polar rounded-lg text-xl"
 							>
 								{design.name}
@@ -50,9 +50,9 @@ function DisplayControls(): React.ReactNode {
 				</DropdownMenu>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={(): void => void garageClass.applyDesignToBuffer(garageClass.selectedDesign)}
-						isEmpty={garageClass.selectedDesign === "No design"}
-						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
+						applyToBuffer={(): void => void getGarageClass().applyDesignToBuffer(getGarageClass().selectedDesign)}
+						isEmpty={getGarageClass().selectedDesign === "No design"}
+						isActive={getGarageClass().designOnBuffer === getGarageClass().selectedDesign && getGarageClass().designOnBuffer !== "No design"}
 					/>
 				</div>
 			</div>
@@ -61,11 +61,11 @@ function DisplayControls(): React.ReactNode {
 			<div className="flex flex-row gap-4">
 				<Input
 					placeholder="Enter text..."
-					value={garageClass.textInput}
-					onChange={(e): void => garageClass.setTextInput(e.target.value)}
+					value={getGarageClass().textInput}
+					onChange={(e): void => getGarageClass().setTextInput(e.target.value)}
 					onKeyDown={(e): void => {
-						if (e.key === "Enter" && garageClass.textInput.trim()) {
-							void garageClass.applyTextToBuffer()
+						if (e.key === "Enter" && getGarageClass().textInput.trim()) {
+							void getGarageClass().applyTextToBuffer()
 						}
 					}}
 					className={cn(
@@ -77,9 +77,9 @@ function DisplayControls(): React.ReactNode {
 				/>
 				<div className="flex justify-center">
 					<DisplayActionTriangle
-						applyToBuffer={(): void => void garageClass.applyTextToBuffer()}
-						isEmpty={!garageClass.textInput.trim()}
-						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
+						applyToBuffer={(): void => void getGarageClass().applyTextToBuffer()}
+						isEmpty={!getGarageClass().textInput.trim()}
+						isActive={(getGarageClass().textOnBuffer === getGarageClass().textInput) && (getGarageClass().textInput.trim() !== "")}
 					/>
 				</div>
 			</div>

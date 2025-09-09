@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BlueTactileButton } from "./tactile-buttons"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 
 interface Props {
 	loading?: boolean
@@ -15,7 +15,7 @@ function AuthButton(props: Props): React.ReactNode {
 	return (
 		<BlueTactileButton
 			type="submit"
-			disabled={loading || authClass.isAuthenticating}
+			disabled={loading || getAuthClass().isAuthenticating}
 			className="w-full h-12 my-2"
 		>
 			{title}

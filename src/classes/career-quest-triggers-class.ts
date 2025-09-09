@@ -2,7 +2,7 @@
 
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import personalInfoClass from "./personal-info-class"
+import getPersonalInfoClass from "./personal-info-class"
 import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../utils/constants/display-constants"
 
@@ -40,8 +40,8 @@ class CareerQuestTriggersClass {
 
 	public exportFirstNameToDisplay = action(async (): Promise<void> => {
 		this.clearBuffer()
-		if (personalInfoClass.name && personalInfoClass.name.trim()) {
-			applyTextToBuffer(personalInfoClass.name, this.setPixelInBuffer)
+		if (getPersonalInfoClass().name && getPersonalInfoClass().name.trim()) {
+			applyTextToBuffer(getPersonalInfoClass().name, this.setPixelInBuffer)
 		}
 		await exportDisplay(this.pixelBuffer)
 	})

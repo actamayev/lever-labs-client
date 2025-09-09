@@ -1,18 +1,18 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
-import toastClass from "../../classes/toast-class"
+import getToastClass from "../../classes/toast-class"
 import getCareerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import getChatManagerClass from "../../classes/chat-manager-class"
 
 export default async function checkCareerQuestCode(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (getAuthClass().isFinishedWithSignup === false) return
 
 		getChatManagerClass().addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
 		getChatManagerClass().resetChallengeStreamingState(careerUUIDChallengeUUID)
@@ -21,7 +21,7 @@ export default async function checkCareerQuestCode(
 		const userCode = getChatManagerClass().getCppCode(careerUUIDChallengeUUID)
 		getChatManagerClass().setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
 
-		const response = await blueDotApiClientClass.chatDataService.checkChallengeCode({
+		const response = await getBlueDotApiClientClass().chatDataService.checkChallengeCode({
 			userCode,
 		}, careerUUIDChallengeUUID.challengeUUID)
 
@@ -33,7 +33,7 @@ export default async function checkCareerQuestCode(
 		})
 	} catch (error) {
 		console.error(error)
-		toastClass.negative({
+		getToastClass().negative({
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})

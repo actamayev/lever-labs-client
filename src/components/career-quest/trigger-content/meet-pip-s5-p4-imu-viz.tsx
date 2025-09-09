@@ -12,15 +12,15 @@ import {
 	ResponsiveContainer,
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import getSensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS5P4ImuViz(): React.ReactNode {
 	// Calculate linear acceleration magnitude from aX, aY, aZ
 	const linearAccelerationData = useMemo((): { index: number, value: number }[] => {
-		return sensorDataClass.aX.map((ax, index): { index: number, value: number } => {
-			const ay = sensorDataClass.aY[index] || 0
-			const az = sensorDataClass.aZ[index] || 0
+		return getSensorDataClass().aX.map((ax, index): { index: number, value: number } => {
+			const ay = getSensorDataClass().aY[index] || 0
+			const az = getSensorDataClass().aZ[index] || 0
 			const magnitude = Math.sqrt(ax * ax + ay * ay + az * az)
 			return {
 				index,
@@ -28,32 +28,32 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 			}
 		})
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.aX, sensorDataClass.aY, sensorDataClass.aZ, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().aX, getSensorDataClass().aY, getSensorDataClass().aZ, getSensorDataClass().dataVersion])
 
 	// Format data for yaw, pitch, roll charts
 	const yawData = useMemo((): { index: number, value: number }[] => {
-		return sensorDataClass.yaw.map((value, index): { index: number, value: number } => ({
+		return getSensorDataClass().yaw.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.yaw, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().yaw, getSensorDataClass().dataVersion])
 
 	const pitchData = useMemo((): { index: number, value: number }[] => {
-		return sensorDataClass.pitch.map((value, index): { index: number, value: number } => ({
+		return getSensorDataClass().pitch.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.pitch, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().pitch, getSensorDataClass().dataVersion])
 
 	const rollData = useMemo((): { index: number, value: number }[] => {
-		return sensorDataClass.roll.map((value, index): { index: number, value: number } => ({
+		return getSensorDataClass().roll.map((value, index): { index: number, value: number } => ({
 			index,
 			value,
 		}))
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [sensorDataClass.roll, sensorDataClass.dataVersion])
+	}, [getSensorDataClass().roll, getSensorDataClass().dataVersion])
 
 	// Chart configuration
 	const chartConfig = {

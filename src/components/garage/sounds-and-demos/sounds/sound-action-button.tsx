@@ -7,7 +7,7 @@ import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import { cn } from "../../../../lib/shadcn/utils"
 import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomFart } from "../../../icons/custom-fart"
-import garageClass from "../../../../classes/garage-class"
+import getGarageClass from "../../../../classes/garage-class"
 import { CustomEngine } from "../../../icons/custom-engine"
 import { CustomElephant } from "../../../icons/custom-elephant"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
@@ -39,7 +39,7 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 			case "Fart":
 				return <CustomFart className={iconSize} />
 			case "Monkey":
-				if (garageClass.soundPlaying === "Monkey") {
+				if (getGarageClass().soundPlaying === "Monkey") {
 					return <CustomHearNoEvilMonkey className={iconSize} />
 				}
 				return <CustomSpeakNoEvilMonkey className={iconSize} />
@@ -64,7 +64,7 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 
 		const buttonElement = buttonRef.current
 
-		if (garageClass.soundPlaying === sound) {
+		if (getGarageClass().soundPlaying === sound) {
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
@@ -74,7 +74,7 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 			buttonElement.style.boxShadow = ""
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [garageClass.soundPlaying, sound])
+	}, [getGarageClass().soundPlaying, sound])
 
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
@@ -84,8 +84,8 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 	// Handle button release for action buttons
 	const handleButtonUp = (): void => {
 		// Reset the sound playing state when button is released
-		if (garageClass.soundPlaying === sound) {
-			garageClass.setSoundPlaying(null)
+		if (getGarageClass().soundPlaying === sound) {
+			getGarageClass().setSoundPlaying(null)
 		}
 	}
 

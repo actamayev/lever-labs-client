@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import garageClass from "../../classes/garage-class"
+import getGarageClass from "../../classes/garage-class"
 import { motorKeyMappings } from "../../utils/constants/constants"
 import applyMotorControl from "../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../utils/garage/compute-motor-control"
@@ -22,7 +22,7 @@ export default function useEffectMotorDrive(): void {
 
 		const mapping = motorKeyMappings[key]
 
-		garageClass.setPressedKey(mapping.direction, Date.now())
+		getGarageClass().setPressedKey(mapping.direction, Date.now())
 
 		const motorControl = computeMotorControl()
 		applyMotorControl(motorControl)
@@ -38,7 +38,7 @@ export default function useEffectMotorDrive(): void {
 		const mapping = motorKeyMappings[key]
 
 
-		garageClass.removePressedKey(mapping.direction)
+		getGarageClass().removePressedKey(mapping.direction)
 
 		const motorControl = computeMotorControl()
 		applyMotorControl(motorControl)
@@ -62,9 +62,9 @@ export default function useEffectMotorDrive(): void {
 	// Watch for changes in motorThrottlePercent and emit updates
 	useEffect((): void => {
 		// If throttle changes, re-emit the current motor state
-		if (garageClass.lastThrottlePercent !== garageClass.motorThrottlePercent) {
-			applyMotorControl(garageClass.motorState, true)
+		if (getGarageClass().lastThrottlePercent !== getGarageClass().motorThrottlePercent) {
+			applyMotorControl(getGarageClass().motorState, true)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [garageClass.motorThrottlePercent])
+	}, [getGarageClass().motorThrottlePercent])
 }

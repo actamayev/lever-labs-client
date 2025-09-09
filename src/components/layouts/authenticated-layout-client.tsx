@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { observer } from "mobx-react"
-import authClass from "@/classes/auth-class"
+import getAuthClass from "@/classes/auth-class"
 import { AuthState } from "@/lib/auth-server"
 import ShowAuthToNullUser from "@/components/auth/show-auth-to-null-user"
 import getCareerQuestClass from "../../classes/career-quest-class"
@@ -20,8 +20,8 @@ function AuthenticatedLayoutClient({
 	// Sync server auth state with client auth state on mount
 	useEffect((): void => {
 		// Only update from server state if client doesn't have auth state yet
-		if (!authClass.isLoggedIn && authState.isAuthenticated) {
-			authClass.setAuthState({
+		if (!getAuthClass().isLoggedIn && authState.isAuthenticated) {
+			getAuthClass().setAuthState({
 				isAuthenticated: authState.isAuthenticated,
 				hasCompletedSignup: authState.hasCompletedSignup
 			})
@@ -31,7 +31,7 @@ function AuthenticatedLayoutClient({
 	}, [authState])
 
 	// Use client auth state (prioritized for smooth updates) or fall back to server state
-	const isAuthenticated = authClass.isLoggedIn || authState.isAuthenticated
+	const isAuthenticated = getAuthClass().isLoggedIn || authState.isAuthenticated
 
 	// If not authenticated, show auth component
 	if (!isAuthenticated) {

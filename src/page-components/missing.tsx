@@ -2,14 +2,14 @@
 
 import Link from "next/link"
 import { observer } from "mobx-react"
-import authClass from "../classes/auth-class"
+import getAuthClass from "../classes/auth-class"
 import { CustomHouse } from "../components/icons/custom-house"
 import { CustomGarage } from "../components/icons/custom-garage"
 import { PageToNavigateAfterLogin } from "../utils/constants/page-constants"
 import { BlackWhiteTactileButton } from "../components/buttons/tactile-buttons"
 
 function Missing(): React.ReactNode {
-	const destination = authClass.isFinishedWithSignup ? PageToNavigateAfterLogin : "/"
+	const destination = getAuthClass().isFinishedWithSignup ? PageToNavigateAfterLogin : "/"
 
 	return (
 		<div className="flex flex-col items-center gap-8 pt-16">
@@ -18,7 +18,7 @@ function Missing(): React.ReactNode {
 			</h1>
 			<Link href={destination}>
 				<BlackWhiteTactileButton className="text-2xl p-5">
-					{authClass.isFinishedWithSignup ? (
+					{getAuthClass().isFinishedWithSignup ? (
 						<>
 							RETURN TO GARAGE
 							<CustomGarage className="ml-2 !h-7 !w-7" />

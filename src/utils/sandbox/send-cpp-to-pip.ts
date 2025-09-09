@@ -4,11 +4,11 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { CppParser } from "@bluedotrobots/common-ts/parsers"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
+import getPipClass from "../../classes/pip-class"
+import getToastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
@@ -26,7 +26,7 @@ export default async function sendCppToPip(
 			const hasStartButton = checkForStartButton(bytecode)
 
 			if (hasMotorCommands && !hasStartButton) {
-				return toastClass.negative({
+				return getToastClass().negative({
 					title: "Start button required for USB connection",
 					// eslint-disable-next-line max-len
 					description: "When connected via USB, programs with motor commands must begin with the \"Start program when button is pressed\" block"
@@ -45,34 +45,34 @@ export default async function sendCppToPip(
 			return
 		}
 
-		if (isNull(pipClass.selectedPip)) {
-			return toastClass.neutral({
+		if (isNull(getPipClass().selectedPip)) {
+			return getToastClass().neutral({
 				title: "You have not connected to a Pip",
 				description: "Please connect to a Pip to upload code"
 			})
 		}
-		if (pipClass.isSendingCppToPip === true) {
-			return toastClass.neutral({
+		if (getPipClass().isSendingCppToPip === true) {
+			return getToastClass().neutral({
 				title: "Currently sending code to Pip",
-				description: `We're beaming your code over to ${pipClass.selectedPip.pipName} as fast as we can!`
+				description: `We're beaming your code over to ${getPipClass().selectedPip.pipName} as fast as we can!`
 			})
 		}
 
-		if (pipClass.selectedPip.pipConnectionStatus === "offline") {
-			return toastClass.negative({
-				title: `${pipClass.selectedPip.pipName} is not online`,
-				description: `Please connect ${pipClass.selectedPip.pipName} to the internet to upload code`
+		if (getPipClass().selectedPip.pipConnectionStatus === "offline") {
+			return getToastClass().negative({
+				title: `${getPipClass().selectedPip.pipName} is not online`,
+				description: `Please connect ${getPipClass().selectedPip.pipName} to the internet to upload code`
 			})
-		} else if (pipClass.selectedPip.pipConnectionStatus === "connected to other user") {
-			return toastClass.negative({
-				title: `Unable to upload code to ${pipClass.selectedPip.pipName} at this time`,
-				description: `${pipClass.selectedPip.pipName} is connected to another user`
+		} else if (getPipClass().selectedPip.pipConnectionStatus === "connected to other user") {
+			return getToastClass().negative({
+				title: `Unable to upload code to ${getPipClass().selectedPip.pipName} at this time`,
+				description: `${getPipClass().selectedPip.pipName} is connected to another user`
 			})
 		}
-		pipClass.setIsSendingCppToPip(true)
+		getPipClass().setIsSendingCppToPip(true)
 
-		const connectToPipResponse = await blueDotApiClientClass.sandboxDataService.sendSandboxCodeToPip(
-			pipClass.selectedPip.pipUUID, cppCode
+		const connectToPipResponse = await getBlueDotApiClientClass().sandboxDataService.sendSandboxCodeToPip(
+			getPipClass().selectedPip.pipUUID, cppCode
 		)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
@@ -84,11 +84,11 @@ export default async function sendCppToPip(
 		)
 	} catch (error) {
 		console.error(error)
-		return toastClass.negative({
+		return getToastClass().negative({
 			title: "Unable to upload code to Pip at this time",
 			description: "Please reload the page and try again"
 		})
 	} finally {
-		pipClass.setIsSendingCppToPip(false)
+		getPipClass().setIsSendingCppToPip(false)
 	}
 }

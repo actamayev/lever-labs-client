@@ -4,18 +4,18 @@ import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { Button } from "../shadcn/ui/button"
 import CustomTooltip from "../custom-tooltip"
-import toastClass from "../../classes/toast-class"
+import getToastClass from "../../classes/toast-class"
 
 function ContactItemInCard({ email }: { email: string }): React.ReactNode {
 	const copyToClipboard = useCallback(async (): Promise<void> => {
 		try {
 			await navigator.clipboard.writeText(email)
-			return toastClass.neutral({
+			return getToastClass().neutral({
 				title: `${email} copied to clipboard`
 			})
 		} catch (error) {
 			console.error(error)
-			return toastClass.neutral({
+			return getToastClass().neutral({
 				title: "Unable to copy email to clipboard at this time",
 				description: "Please reload the page and try again"
 			})

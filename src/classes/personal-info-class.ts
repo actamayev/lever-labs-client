@@ -98,6 +98,13 @@ class PersonalInfoClass {
 	}
 }
 
-const personalInfoClass = new PersonalInfoClass()
+let personalInfoClassInstance: PersonalInfoClass | null = null
 
-export default personalInfoClass
+export const getPersonalInfoClass = (): PersonalInfoClass => {
+	if (!personalInfoClassInstance) {
+		personalInfoClassInstance = new PersonalInfoClass()
+	}
+	return personalInfoClassInstance
+}
+
+export default getPersonalInfoClass

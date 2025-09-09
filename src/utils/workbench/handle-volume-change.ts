@@ -3,19 +3,19 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import pipClass from "../../classes/pip-class"
-import toastClass from "../../classes/toast-class"
+import getPipClass from "../../classes/pip-class"
+import getToastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
-import workbenchClass from "../../classes/workbench-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getWorkbenchClass from "../../classes/workbench-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import changeAudibleStatus from "./change-audible-status"
 
 export default async function handleVolumeChange(value: number[]): Promise<void> {
 	try {
 		const volume = value[0]
-		workbenchClass.setVolume(value[0])
-		if (workbenchClass.isMuted && value[0] > 0) {
+		getWorkbenchClass().setVolume(value[0])
+		if (getWorkbenchClass().isMuted && value[0] > 0) {
 			changeAudibleStatus(false)
 		}
 		if (serialConnectionManagerClass.pipTurnedOn) {
@@ -24,23 +24,23 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
-		if (isNull(pipClass.selectedPip) || pipClass.selectedPip.pipConnectionStatus === "offline") {
-			return toastClass.negative({
+		if (isNull(getPipClass().selectedPip) || getPipClass().selectedPip.pipConnectionStatus === "offline") {
+			return getToastClass().negative({
 				title: "Pip not connected",
 				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
 			})
 		}
-		const playTuneResponse = await blueDotApiClientClass.workbenchDataService.changeVolume(
+		const playTuneResponse = await getBlueDotApiClientClass().workbenchDataService.changeVolume(
 			volume,
-			pipClass.selectedPip.pipUUID
+			getPipClass().selectedPip.pipUUID
 		)
 		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
 			throw Error("Unable to change volume")
 		}
-		workbenchClass.setVolume(volume)
+		getWorkbenchClass().setVolume(volume)
 	} catch (error) {
 		console.error(error)
-		return toastClass.negative({
+		return getToastClass().negative({
 			title: "Unable to change volume",
 			description: "Please reload the page and try again"
 		})

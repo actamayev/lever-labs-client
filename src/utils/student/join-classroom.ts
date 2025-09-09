@@ -4,10 +4,10 @@ import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import authClass from "../../classes/auth-class"
+import getAuthClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
-import studentClass from "../../classes/student-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import getStudentClass from "../../classes/student-class"
+import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function joinClassroom(
@@ -16,9 +16,9 @@ export default async function joinClassroom(
 	setSuccess: Dispatch<SetStateAction<string>>
 ) : Promise<boolean> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return false
+		if (getAuthClass().isFinishedWithSignup === false) return false
 
-		const joinClassResponse = await blueDotApiClientClass.studentDataService.joinClass(classCode)
+		const joinClassResponse = await getBlueDotApiClientClass().studentDataService.joinClass(classCode)
 
 		if (!isEqual(joinClassResponse.status, 200) || isNonSuccessResponse(joinClassResponse.data)) {
 			throw Error("Unable to join class")
@@ -27,7 +27,7 @@ export default async function joinClassroom(
 			...joinClassResponse.data,
 			activeHubs: joinClassResponse.data.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
 		}
-		studentClass.addClassroomData(classroomInfo)
+		getStudentClass().addClassroomData(classroomInfo)
 		return true
 	} catch (error: unknown) {
 		console.error(error)
