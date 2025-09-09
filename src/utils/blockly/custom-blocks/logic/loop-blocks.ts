@@ -75,16 +75,16 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Delay")
 					.appendField(
-						new Blockly.FieldNumber(1000, 0), // value: 1000, min: 0
+						new Blockly.FieldNumber(1, 0), // value: 1000, min: 0
 						LOOP_BLOCK_TYPES.DELAY
 					)
-					.appendField("milliseconds")
+					.appendField("second")
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
-				this.setTooltip("Delay for a certain number of milliseconds")
+				this.setTooltip("Delay for a certain number of seconds")
 			},
-			keywords: ["delay", "wait", "pause", "sleep", "milliseconds", "time"]
+			keywords: ["delay", "wait", "pause", "sleep", "seconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.DELAY)
