@@ -69,26 +69,44 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 		}
 	},
-	[LOOP_BLOCK_TYPES.DELAY]: {
+	[LOOP_BLOCK_TYPES.WAIT]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
+				// Create the text field first so we can reference it
+				const secondsField = new Blockly.FieldLabelSerializable("second")
+
 				this.appendDummyInput()
-					.appendField("Delay")
+					.appendField("Wait")
 					.appendField(
-						new Blockly.FieldNumber(1, 0), // value: 1000, min: 0
-						LOOP_BLOCK_TYPES.DELAY
+						new Blockly.FieldNumber(1, 0), // value: 1, min: 0
+						LOOP_BLOCK_TYPES.WAIT
 					)
-					.appendField("second")
+					.appendField(secondsField, "SECONDS_LABEL")
+
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
-				this.setTooltip("Delay for a certain number of seconds")
+				this.setTooltip("Wait for a certain number of seconds")
+
+				// Function to update the seconds label
+				const updateSecondsLabel = (newValue: number | string) => {
+					const label = newValue === 1 ? "second" : "seconds"
+					secondsField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				const numberField = this.getField(LOOP_BLOCK_TYPES.WAIT) as Blockly.FieldNumber
+				numberField.setValidator(updateSecondsLabel)
+
+				// Set initial label
+				updateSecondsLabel(1)
 			},
-			keywords: ["delay", "wait", "pause", "sleep", "seconds", "time"]
+			keywords: ["wait", "pause", "sleep", "seconds", "time"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const delay = block.getFieldValue(LOOP_BLOCK_TYPES.DELAY)
-			return `delay(${delay});\n`  // Changed to standard Arduino delay
+			const wait = block.getFieldValue(LOOP_BLOCK_TYPES.WAIT)
+			return `wait(${wait});\n`
 		}
 	},
 	[LOOP_BLOCK_TYPES.FOREVER_LOOP]: {
