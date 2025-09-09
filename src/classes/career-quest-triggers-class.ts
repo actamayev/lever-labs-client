@@ -40,8 +40,9 @@ class CareerQuestTriggersClass {
 
 	public exportFirstNameToDisplay = action(async (): Promise<void> => {
 		this.clearBuffer()
-		if (getPersonalInfoClass().name && getPersonalInfoClass().name.trim()) {
-			applyTextToBuffer(getPersonalInfoClass().name, this.setPixelInBuffer)
+		const name = getPersonalInfoClass().name
+		if (name && name.trim()) {
+			applyTextToBuffer(name, this.setPixelInBuffer)
 		}
 		await exportDisplay(this.pixelBuffer)
 	})

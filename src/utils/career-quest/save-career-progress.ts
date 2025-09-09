@@ -19,7 +19,8 @@ export default async function saveCareerProgress(
 			careerUUID,
 			isFurthestSeen
 		)
-		if (isNull(getTeacherClass().isFocusingStudents)) return
+		const isFocusingStudents = getTeacherClass().isFocusingStudents
+		if (isNull(isFocusingStudents)) return
 
 		// Encode navigation command in slideId for backward compatibility
 		const slideIdWithCommand = navigationCommand
@@ -27,8 +28,8 @@ export default async function saveCareerProgress(
 			: currentId
 
 		await getBlueDotApiClientClass().teacherDataService.setHubNewSlideId(
-			getTeacherClass().isFocusingStudents.classCode,
-			getTeacherClass().isFocusingStudents.hubId,
+			isFocusingStudents.classCode,
+			isFocusingStudents.hubId,
 			slideIdWithCommand
 		)
 	} catch (error) {
