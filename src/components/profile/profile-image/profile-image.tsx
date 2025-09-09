@@ -6,7 +6,7 @@ import { Pencil } from "lucide-react"
 import { useState, useCallback } from "react"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import getPersonalInfoClass from "../../../classes/personal-info-class"
+import personalInfoClass from "../../../classes/personal-info-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 
 function ProfileImage(): React.ReactNode {
@@ -25,7 +25,7 @@ function ProfileImage(): React.ReactNode {
 	}, [])
 
 	const imageStyle = isHovered ? { opacity: 0.8 } : { opacity: 1 }
-	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
+	const profilePictureUrl = personalInfoClass.profilePictureUrl
 
 	return (
 		<div className="relative inline-block" style={{ minWidth: "128px", maxWidth: "128px" }}>

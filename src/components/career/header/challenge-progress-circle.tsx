@@ -3,12 +3,12 @@
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/shadcn/utils"
-import getCareerQuestClass from "../../../classes/career-quest-class"
+import careerQuestClass from "../../../classes/career-quest-class"
 
 function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }): React.ReactNode {
 	// Get progress data from career quest class
-	const completedChallenges = getCareerQuestClass().getCompletedChallengesForProgress(careerData.careerUUID)
-	const totalChallenges = getCareerQuestClass().getTotalChallengesForProgress(careerData.careerUUID)
+	const completedChallenges = careerQuestClass.getCompletedChallengesForProgress(careerData.careerUUID)
+	const totalChallenges = careerQuestClass.getTotalChallengesForProgress(careerData.careerUUID)
 	const size = 64
 	const percentage = totalChallenges > 0 ? (completedChallenges / totalChallenges) * 100 : 0
 	const circumference = 2 * Math.PI * 20 // radius of 20

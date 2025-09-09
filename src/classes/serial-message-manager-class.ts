@@ -4,11 +4,11 @@ import { action, makeAutoObservable, runInAction } from "mobx"
 import { ESPMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts/protocol"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import getPipClass from "./pip-class"
-import getToastClass from "./toast-class"
-import getGamesClass from "./games-class"
-import getWorkbenchClass from "./workbench-class"
-import getSensorDataClass from "./sensor-data-class"
+import pipClass from "./pip-class"
+import toastClass from "./toast-class"
+import gamesClass from "./games-class"
+import workbenchClass from "./workbench-class"
+import sensorDataClass from "./sensor-data-class"
 import sendDinoScore from "../utils/student/send-dino-score"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
 
@@ -138,8 +138,8 @@ class SerialMessageManagerClass {
 					this.pipId = message.payload.pipId
 					this.showWiFiSection = true
 					serialConnectionManagerClass.pipTurnedOn = true
-					getWorkbenchClass().setBatteryDataItem({ key: "isCharging", value: true })
-					getPipClass().setPipPluggedInSerial(true)
+					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
+					pipClass.setPipPluggedInSerial(true)
 				})
 				break
 			}
@@ -204,37 +204,37 @@ class SerialMessageManagerClass {
 			}
 
 			case "/motors-disabled-usb": {
-				getToastClass().neutral({ title: message.payload.status })
+				toastClass.neutral({ title: message.payload.status })
 				break
 			}
 
 			case "/program-paused-usb": {
-				getToastClass().neutral({ title: message.payload.status })
+				toastClass.neutral({ title: message.payload.status })
 				break
 			}
 			case "/battery-monitor-data-item": {
 				const batteryDataItem = message.payload
-				getWorkbenchClass().setBatteryDataItem(batteryDataItem)
+				workbenchClass.setBatteryDataItem(batteryDataItem)
 				break
 			}
 			case "/battery-monitor-data-complete": {
-				getWorkbenchClass().setBatteryDataLastUpdated()
+				workbenchClass.setBatteryDataLastUpdated()
 				break
 			}
 			case "/sensor-data": {
 				const sensorData = message.payload
-				getSensorDataClass().addSensorData(sensorData)
+				sensorDataClass.addSensorData(sensorData)
 				break
 			}
 
 			case "/sensor-data-mz": {
 				const sensorData = message.payload
-				getSensorDataClass().addMultizoneTofData(sensorData)
+				sensorDataClass.addMultizoneTofData(sensorData)
 				break
 			}
 			case "/dino-score": {
 				const dinoScore = message.payload
-				getGamesClass().addDinoScore(dinoScore.score)
+				gamesClass.addDinoScore(dinoScore.score)
 				void sendDinoScore(dinoScore.score)
 				break
 			}

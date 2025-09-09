@@ -1,42 +1,42 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
-import getToastClass from "../../classes/toast-class"
-import getCareerQuestClass from "../../classes/career-quest-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import getChatManagerClass from "../../classes/chat-manager-class"
+import toastClass from "../../classes/toast-class"
+import careerQuestClass from "../../classes/career-quest-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function checkCareerQuestCode(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
 ): Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
+		if (authClass.isFinishedWithSignup === false) return
 
-		getChatManagerClass().addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
-		getChatManagerClass().resetChallengeStreamingState(careerUUIDChallengeUUID)
-		getCareerQuestClass().changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
+		chatManagerClass.addChallengeCheckCodeRequestMessage(careerUUIDChallengeUUID)
+		chatManagerClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		careerQuestClass.changeMainSlideToCqChat(careerUUIDChallengeUUID.careerUUID, careerUUIDChallengeUUID.challengeUUID)
 
-		const userCode = getChatManagerClass().getCppCode(careerUUIDChallengeUUID)
-		getChatManagerClass().setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
+		const userCode = chatManagerClass.getCppCode(careerUUIDChallengeUUID)
+		chatManagerClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
 
-		const response = await getBlueDotApiClientClass().chatDataService.checkChallengeCode({
+		const response = await blueDotApiClient.chatDataService.checkChallengeCode({
 			userCode,
 		}, careerUUIDChallengeUUID.challengeUUID)
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) return
 
-		getChatManagerClass().addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
+		chatManagerClass.addChallengeEvaluationResultMessage(careerUUIDChallengeUUID, {
 			isCorrect: response.data.isCorrect,
 			feedback: response.data.feedback
 		})
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})
-		getChatManagerClass().setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, false)
+		chatManagerClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, false)
 	}
 }

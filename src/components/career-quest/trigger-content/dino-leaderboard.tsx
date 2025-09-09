@@ -1,10 +1,10 @@
 import { observer } from "mobx-react"
-import getGamesClass from "../../../classes/games-class"
+import gamesClass from "../../../classes/games-class"
 
 // eslint-disable-next-line max-lines-per-function
 function DinoLeaderboard(): React.ReactNode {
-	const sortedScores = getGamesClass().sortedDinoScores
-	const highScore = getGamesClass().highScore
+	const sortedScores = gamesClass.sortedDinoScores
+	const highScore = gamesClass.highScore
 
 	const formatTimestamp = (timestamp: Date): string => {
 		const now = new Date()

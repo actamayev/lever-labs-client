@@ -8,7 +8,6 @@ import {
 } from "@bluedotrobots/common-ts/types/utils"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
-import getBlueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 // Dynamic import - career definitions will be loaded on-demand
@@ -16,12 +15,13 @@ import { getContentComponent } from "../utils/career-quest/career-quest-content"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
-import getTeacherClass from "./teacher-class"
-import getChatManagerClass from "./chat-manager-class"
+import teacherClass from "./teacher-class"
+import chatManagerClass from "./chat-manager-class"
 import getNavigationManagerClass from "./navigation-manager-class"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import blueDotApiClient from "./blue-dot-api-client-class"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -68,7 +68,7 @@ class CareerQuestClass {
 
 		// Initialize challenge chats in ChatManager
 		challengeSections.forEach((section): void => {
-			getChatManagerClass().initializeChallengeChat(
+			chatManagerClass.initializeChallengeChat(
 				careerDefinition.careerUUID,
 				section.challengeData.challengeUUID,
 				section.challengeData,
@@ -79,7 +79,7 @@ class CareerQuestClass {
 		})
 
 		// Initialize career chat
-		getChatManagerClass().initializeCareerChat(careerDefinition.careerUUID)
+		chatManagerClass.initializeCareerChat(careerDefinition.careerUUID)
 
 		// Create main slides from sections
 		const mainSlides: MainSlide[] = careerDefinition.sections.map((section): MainSlide => {
@@ -222,7 +222,7 @@ class CareerQuestClass {
 		)
 
 		// Save progress with morphing command for teacher hub synchronization
-		if (getTeacherClass().isFocusingStudents) {
+		if (teacherClass.isFocusingStudents) {
 			const currentSlide = getNavigationManagerClass().getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
 				void saveCareerProgress(careerUUID, morphingTextId, false, `advance_morph:${morphingTextId}`)
@@ -238,7 +238,7 @@ class CareerQuestClass {
 		)
 
 		// Save progress with morphing command for teacher hub synchronization
-		if (getTeacherClass().isFocusingStudents) {
+		if (teacherClass.isFocusingStudents) {
 			const currentSlide = getNavigationManagerClass().getCurrentMainSlide(careerUUID)
 			if (currentSlide.type === "textParent") {
 				void saveCareerProgress(careerUUID, morphingTextId, false, `back_morph:${morphingTextId}`)
@@ -325,7 +325,7 @@ class CareerQuestClass {
 
 		// Call API (fire and forget - no error handling for now)
 		try {
-			await getBlueDotApiClient().careerQuestDataService.markChallengeAsSeen(challengeUUID)
+			await blueDotApiClient.careerQuestDataService.markChallengeAsSeen(challengeUUID)
 		} catch (error) {
 			console.error("Failed to mark challenge as seen:", error)
 			// Could add retry logic here later
@@ -474,7 +474,7 @@ class CareerQuestClass {
 			this.updateSwiperNavigation(careerUUID)
 		}
 
-		getChatManagerClass().addChallengeEvaluationResultMessage(cqInformation, evaluationResult, onChallengeCompleted)
+		chatManagerClass.addChallengeEvaluationResultMessage(cqInformation, evaluationResult, onChallengeCompleted)
 	})
 
 	public getCareerDataForMessage = action((careerUUID: CareerUUID): CareerDataForMessage | null => {
@@ -541,11 +541,11 @@ class CareerQuestClass {
 			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		} else {
 			// Get initial data from chat manager
-			normalizedJson = getChatManagerClass().getUpdatedBlocklyJson(cqInformation)
+			normalizedJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
 			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		}
 
-		getChatManagerClass().setChallengeRetrievedData(
+		chatManagerClass.setChallengeRetrievedData(
 			cqInformation,
 			messages,
 			normalizedJson,
@@ -554,13 +554,13 @@ class CareerQuestClass {
 		)
 
 		// Update the blockly JSON and CPP code
-		getChatManagerClass().updateBlocklyJson(cqInformation, normalizedJson, cppCode)
+		chatManagerClass.updateBlocklyJson(cqInformation, normalizedJson, cppCode)
 	})
 
 	public updateBlocklyJson = action(async (cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): Promise<void> => {
 		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		const cppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
-		getChatManagerClass().updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
+		chatManagerClass.updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
 
 	public getCompletedChallengesForProgress(careerUUID: CareerUUID): number {
@@ -605,7 +605,7 @@ class CareerQuestClass {
 
 	public canAdvanceToNextMain = action((careerUUID: CareerUUID, slideIndex: number): boolean => {
 		return getNavigationManagerClass().canAdvanceToNextMain(careerUUID, slideIndex, (challengeData: CqChallengeData): boolean =>
-			getChatManagerClass().isCodeCorrect(challengeData)
+			chatManagerClass.isCodeCorrect(challengeData)
 		)
 	})
 
@@ -970,7 +970,7 @@ class CareerQuestClass {
 
 	public resetChallengeBlocklyJsonToInitial = action(async (cqInformation: CareerUUIDChallengeUUID): Promise<boolean> => {
 		// Get current and initial blockly JSON
-		const currentBlocklyJson = getChatManagerClass().getUpdatedBlocklyJson(cqInformation)
+		const currentBlocklyJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
 		const career = this.getCareer(cqInformation.careerUUID)
 		if (!career) return false
 
@@ -989,7 +989,7 @@ class CareerQuestClass {
 
 		// Reset to initial state
 		const cppCode = await getCppGenerator().generateCppFromJson(initialBlocklyJson)
-		getChatManagerClass().updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
+		chatManagerClass.updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
 		return true
 	})
 
@@ -1288,13 +1288,6 @@ class CareerQuestClass {
 	}
 }
 
-let careerQuestClassInstance: CareerQuestClass | null = null
+const careerQuestClass = new CareerQuestClass()
 
-export const getCareerQuestClass = (): CareerQuestClass => {
-	if (!careerQuestClassInstance) {
-		careerQuestClassInstance = new CareerQuestClass()
-	}
-	return careerQuestClassInstance
-}
-
-export default getCareerQuestClass
+export default careerQuestClass

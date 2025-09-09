@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
-import getSensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../classes/sensor-data-class"
 
 type Vec2 = { x: number; y: number }
 
@@ -156,8 +156,8 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 		// eslint-disable-next-line max-lines-per-function
 		const animate = (): void => {
 			// Get latest IMU data
-			const latestRoll = getSensorDataClass().roll[getSensorDataClass().roll.length - 1] || 0
-			const latestPitch = getSensorDataClass().pitch[getSensorDataClass().pitch.length - 1] || 0
+			const latestRoll = sensorDataClass.roll[sensorDataClass.roll.length - 1] || 0
+			const latestPitch = sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0
 
 			// Convert roll and pitch to velocity changes
 			const rollVelocity = (latestRoll / 90) * sensitivity
@@ -327,13 +327,13 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 			<div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
 				<div className="text-center p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
 					<div className="text-lg font-semibold text-macaw">
-						Roll: {(getSensorDataClass().roll[getSensorDataClass().roll.length - 1] || 0).toFixed(1)}°
+						Roll: {(sensorDataClass.roll[sensorDataClass.roll.length - 1] || 0).toFixed(1)}°
 					</div>
 					<div className="text-xs text-eel">Controls X movement</div>
 				</div>
 				<div className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg">
 					<div className="text-lg font-semibold text-chargingGreen">
-						Pitch: {(getSensorDataClass().pitch[getSensorDataClass().pitch.length - 1] || 0).toFixed(1)}°
+						Pitch: {(sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0).toFixed(1)}°
 					</div>
 					<div className="text-xs text-eel">Controls Y movement</div>
 				</div>

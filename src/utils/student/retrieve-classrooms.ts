@@ -3,23 +3,23 @@
 import isEmpty from "lodash-es/isEmpty"
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
-import getAuthClass from "../../classes/auth-class"
-import getToastClass from "../../classes/toast-class"
-import getStudentClass from "../../classes/student-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import authClass from "../../classes/auth-class"
+import toastClass from "../../classes/toast-class"
+import studentClass from "../../classes/student-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveClassrooms(): Promise<void> {
 	try {
 		if (
-			getAuthClass().isFinishedWithSignup === false ||
-			!isEmpty(getStudentClass().classroomData) ||
-			getStudentClass().isRetrievingStudentData === true ||
-			getStudentClass().retrievedStudentData === true
+			authClass.isFinishedWithSignup === false ||
+			!isEmpty(studentClass.classroomData) ||
+			studentClass.isRetrievingStudentData === true ||
+			studentClass.retrievedStudentData === true
 		) return
 
-		getStudentClass().setIsRetrievingStudentData(true)
+		studentClass.setIsRetrievingStudentData(true)
 
-		const studentClassroomsResponse = await getBlueDotApiClientClass().studentDataService.retrieveStudentClassrooms()
+		const studentClassroomsResponse = await blueDotApiClient.studentDataService.retrieveStudentClassrooms()
 		if (!isEqual(studentClassroomsResponse.status, 200) || isErrorResponse(studentClassroomsResponse.data)) {
 			throw Error ("Unable to retrieve student classroom data")
 		}
@@ -27,11 +27,11 @@ export default async function retrieveClassrooms(): Promise<void> {
 			...classroom,
 			activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
 		}))
-		getStudentClass().setRetrievedStudentData(classroomInfo)
+		studentClass.setRetrievedStudentData(classroomInfo)
 	} catch (error) {
 		console.error(error)
-		getStudentClass().setIsRetrievingStudentData(false)
-		return getToastClass().negative({
+		studentClass.setIsRetrievingStudentData(false)
+		return toastClass.negative({
 			title: "Unable to retrieve classroom data",
 			description: "Please reload the page and try again"
 		})

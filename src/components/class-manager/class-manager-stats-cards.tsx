@@ -4,7 +4,7 @@ import { Plus, Users, BookOpen, Calendar } from "lucide-react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
-import getTeacherClass from "../../classes/teacher-class"
+import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { Dispatch, SetStateAction } from "react"
@@ -16,7 +16,7 @@ interface ClassManagerStatsCardsProps {
 function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCardsProps): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
-	const totalClasses = getTeacherClass().classroomData.length
+	const totalClasses = teacherClass.classroomData.length
 	const activeClasses = totalClasses // All classes are considered active for now
 
 	return (

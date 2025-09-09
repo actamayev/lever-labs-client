@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import ReactMarkdown from "react-markdown"
 import { Highlight, themes } from "prism-react-renderer"
 import { cn } from "../../lib/shadcn/utils"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 
 interface AssistantMessageMarkdownProps {
 	messageContent: string
@@ -22,7 +22,7 @@ function AssistantMessageMarkdown({ messageContent, forceDarkMode = false }: Ass
 					code({ node: _node, className, children, ...props }): React.ReactNode {
 						const match = /language-(\w+)/.exec(className || "")
 						const isInline = !match
-						const shouldUseDarkTheme = forceDarkMode || getPersonalInfoClass().defaultSiteTheme === "dark"
+						const shouldUseDarkTheme = forceDarkMode || personalInfoClass.defaultSiteTheme === "dark"
 
 						// Map language names for compatibility
 						let language = match?.[1] || "text"

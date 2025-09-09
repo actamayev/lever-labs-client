@@ -6,7 +6,7 @@ import { observer } from "mobx-react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import TextParentCard from "./text-parent-card"
 import ChallengeChatInterface from "../chat/challenge-chat-interface"
-import getCareerQuestClass from "../../../classes/career-quest-class"
+import careerQuestClass from "../../../classes/career-quest-class"
 import useKeyboardNavigation from "../../../hooks/career-quest/use-keyboard-navigation"
 import useMousewheelNavigation from "../../../hooks/career-quest/use-mouse-wheel-navigation"
 import getNavigationManagerClass from "../../../classes/navigation-manager-class"
@@ -23,7 +23,7 @@ function EmptyTextParentCard(): React.ReactNode {
 
 
 function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isDataReady = getCareerQuestClass().hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const mainSlides = getNavigationManagerClass().getMainSlides(careerData.careerUUID)
 
 	useMousewheelNavigation(careerData.careerUUID)
@@ -48,7 +48,7 @@ function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }): Rea
 			allowTouchMove={false}
 			initialSlide={getNavigationManagerClass().getCurrentMainSlideIndex(careerData.careerUUID)}
 			onSwiper={(swiper): void => {
-				getCareerQuestClass().setSwiperInstance(careerData.careerUUID, swiper)
+				careerQuestClass.setSwiperInstance(careerData.careerUUID, swiper)
 			}}
 			className="h-full"
 		>

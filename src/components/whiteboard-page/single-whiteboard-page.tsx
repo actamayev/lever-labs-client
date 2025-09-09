@@ -7,12 +7,12 @@ import { CareerUUID, ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/u
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import getStudentClass from "../../classes/student-class"
+import studentClass from "../../classes/student-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
-import getCareerQuestClass from "../../classes/career-quest-class"
+import careerQuestClass from "../../classes/career-quest-class"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -23,7 +23,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	const navigate = useTypedNavigate()
 	const joinHub = useJoinHub()
 
-	const classroomData = getStudentClass().getClassroomData(classCode)
+	const classroomData = studentClass.getClassroomData(classCode)
 
 	useEffect((): void => {
 		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
@@ -33,13 +33,13 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 	const joinHubHandler = useCallback((careerUUID: CareerUUID, hubId: HubUUID): void => {
 		if (careerUUID === meetPipData.careerUUID) {
-			getStudentClass().setIsInFocusMode(true)
+			studentClass.setIsInFocusMode(true)
 			joinHub(classCode, hubId)
 			return
 		}
 		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === careerUUID)
 		if (career) {
-			getStudentClass().setIsInFocusMode(true)
+			studentClass.setIsInFocusMode(true)
 			joinHub(classCode, hubId)
 		}
 	}, [classCode, joinHub])
@@ -67,10 +67,10 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			}
 
 			// Set saved position so career quest restores to hub position when it loads
-			getCareerQuestClass().setSavedPosition(hub.careerUUID, actualSlideId)
+			careerQuestClass.setSavedPosition(hub.careerUUID, actualSlideId)
 		}
 
-		getStudentClass().setIsInFocusMode(true)
+		studentClass.setIsInFocusMode(true)
 
 		// Navigate to the appropriate career quest page
 		if (hub.careerUUID === meetPipData.careerUUID) {
@@ -83,7 +83,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 		}
 	}, [navigate])
 
-	if (getStudentClass().isRetrievingStudentData) {
+	if (studentClass.isRetrievingStudentData) {
 		return (
 			<div className="p-6">
 				<div className="flex items-center gap-4 mb-8">

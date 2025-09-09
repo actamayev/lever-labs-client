@@ -9,7 +9,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import { Slider } from "../../shadcn/ui/slider"
 import { Checkbox } from "../../shadcn/ui/checkbox"
 import { Separator } from "../../shadcn/ui/separator"
-import getWorkbenchClass from "../../../classes/workbench-class"
+import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
@@ -23,13 +23,13 @@ function SoundWorkbench(): React.ReactNode {
 	const SpeakerIconToShow = (): React.ReactNode => {
 		const baseClasses = "!h-11 !w-11"
 		const strokeWidth = 2.5
-		if (getWorkbenchClass().isMuted) {
+		if (workbenchClass.isMuted) {
 			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
 		}
 
-		if (getWorkbenchClass().volume <= 20) {
+		if (workbenchClass.volume <= 20) {
 			return <Volume className={baseClasses} strokeWidth={strokeWidth}/>
-		} else if (getWorkbenchClass().volume <= 40) {
+		} else if (workbenchClass.volume <= 40) {
 			return <Volume1 className={baseClasses} strokeWidth={strokeWidth}/>
 		} else {
 			return <Volume2 className={baseClasses} strokeWidth={strokeWidth}/>
@@ -65,9 +65,9 @@ function SoundWorkbench(): React.ReactNode {
 						<SpeakerIconToShow />
 						<span className={cn(
 							"text-base font-medium mt-0 w-full text-center",
-							getWorkbenchClass().isMuted && "opacity-50"
+							workbenchClass.isMuted && "opacity-50"
 						)}>
-							{getWorkbenchClass().volume}%
+							{workbenchClass.volume}%
 						</span>
 					</WorkbenchIconTemplate>
 				</div>
@@ -89,16 +89,16 @@ function SoundWorkbench(): React.ReactNode {
 						<div className="flex items-center gap-2">
 							<div className={cn(
 								"w-2 h-2 rounded-full",
-								getWorkbenchClass().isMuted ? "bg-cardinal" : "bg-macaw"
+								workbenchClass.isMuted ? "bg-cardinal" : "bg-macaw"
 							)} />
 							<span className="font-medium">SOUND</span>
 						</div>
 						<div
 							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-							onClick={(): Promise<void> => changeAudibleStatus(!getWorkbenchClass().isMuted)}
+							onClick={(): Promise<void> => changeAudibleStatus(!workbenchClass.isMuted)}
 						>
 							<div className="text-sm font-medium">MUTE</div>
-							<Checkbox checked={getWorkbenchClass().isMuted} />
+							<Checkbox checked={workbenchClass.isMuted} />
 						</div>
 					</div>
 
@@ -108,9 +108,9 @@ function SoundWorkbench(): React.ReactNode {
 							<span className="text-eel/70">Volume</span>
 							<span className={cn(
 								"font-semibold",
-								getWorkbenchClass().isMuted ? "text-eel/50" : "text-eel"
+								workbenchClass.isMuted ? "text-eel/50" : "text-eel"
 							)}>
-								{getWorkbenchClass().volume}%
+								{workbenchClass.volume}%
 							</span>
 						</div>
 						<div
@@ -119,12 +119,12 @@ function SoundWorkbench(): React.ReactNode {
 							tabIndex={0}
 						>
 							<Slider
-								defaultValue={[getWorkbenchClass().volume]}
+								defaultValue={[workbenchClass.volume]}
 								max={100}
 								step={1}
 								onValueChange={handleVolumeChange}
-								className={cn("duration-0", getWorkbenchClass().isMuted ? "opacity-50" : "")}
-								value={[getWorkbenchClass().volume]}
+								className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
+								value={[workbenchClass.volume]}
 								onKeyDown={handleKeyDown}
 							/>
 						</div>

@@ -4,11 +4,11 @@ import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { CppParser } from "@bluedotrobots/common-ts/parsers"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import getPipClass from "../../classes/pip-class"
-import getToastClass from "../../classes/toast-class"
+import pipClass from "../../classes/pip-class"
+import toastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
@@ -26,7 +26,7 @@ export default async function sendCppToPip(
 			const hasStartButton = checkForStartButton(bytecode)
 
 			if (hasMotorCommands && !hasStartButton) {
-				return getToastClass().negative({
+				return toastClass.negative({
 					title: "Start button required for USB connection",
 					// eslint-disable-next-line max-len
 					description: "When connected via USB, programs with motor commands must begin with the \"Start program when button is pressed\" block"
@@ -45,35 +45,35 @@ export default async function sendCppToPip(
 			return
 		}
 
-		const selectedPip = getPipClass().selectedPip
+		const selectedPip = pipClass.selectedPip
 
 		if (isNull(selectedPip)) {
-			return getToastClass().neutral({
+			return toastClass.neutral({
 				title: "You have not connected to a Pip",
 				description: "Please connect to a Pip to upload code"
 			})
 		}
-		if (getPipClass().isSendingCppToPip === true) {
-			return getToastClass().neutral({
+		if (pipClass.isSendingCppToPip === true) {
+			return toastClass.neutral({
 				title: "Currently sending code to Pip",
 				description: `We're beaming your code over to ${selectedPip.pipName} as fast as we can!`
 			})
 		}
 
 		if (selectedPip.pipConnectionStatus === "offline") {
-			return getToastClass().negative({
+			return toastClass.negative({
 				title: `${selectedPip.pipName} is not online`,
 				description: `Please connect ${selectedPip.pipName} to the internet to upload code`
 			})
 		} else if (selectedPip.pipConnectionStatus === "connected to other user") {
-			return getToastClass().negative({
+			return toastClass.negative({
 				title: `Unable to upload code to ${selectedPip.pipName} at this time`,
 				description: `${selectedPip.pipName} is connected to another user`
 			})
 		}
-		getPipClass().setIsSendingCppToPip(true)
+		pipClass.setIsSendingCppToPip(true)
 
-		const connectToPipResponse = await getBlueDotApiClientClass().sandboxDataService.sendSandboxCodeToPip(
+		const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
 			selectedPip.pipUUID, cppCode
 		)
 
@@ -86,11 +86,11 @@ export default async function sendCppToPip(
 		)
 	} catch (error) {
 		console.error(error)
-		return getToastClass().negative({
+		return toastClass.negative({
 			title: "Unable to upload code to Pip at this time",
 			description: "Please reload the page and try again"
 		})
 	} finally {
-		getPipClass().setIsSendingCppToPip(false)
+		pipClass.setIsSendingCppToPip(false)
 	}
 }

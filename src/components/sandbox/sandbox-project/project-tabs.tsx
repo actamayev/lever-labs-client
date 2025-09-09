@@ -6,16 +6,16 @@ import { useRef, useEffect, useState, useMemo } from "react"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { Textarea } from "../../shadcn/ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
-import getSandboxClass from "../../../classes/sandbox-class"
+import sandboxClass from "../../../classes/sandbox-class"
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
 
 function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 	const cppCode = useMemo((): string => {
-		return getSandboxClass().getCppCode(projectUUID)
+		return sandboxClass.getCppCode(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [projectUUID, getSandboxClass().sandboxProjects.get(projectUUID)?.cppCode])
+	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.cppCode])
 
 	// Create debounced save function - 500ms delay
 	const debouncedSaveNotes = useRef(
@@ -55,7 +55,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 
 	const handleNotesChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
 		const newNotes = e.target.value
-		getSandboxClass().updateProjectNotes(projectUUID, newNotes)
+		sandboxClass.updateProjectNotes(projectUUID, newNotes)
 		setHasUnsavedChanges(true) // Set unsaved changes flag when user types
 		debouncedSaveNotes(projectUUID, newNotes)
 	}
@@ -78,7 +78,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 				<Textarea
 					placeholder="Add notes about your project here..."
 					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
-					value={getSandboxClass().getProjectNotes(projectUUID) || ""}
+					value={sandboxClass.getProjectNotes(projectUUID) || ""}
 					onChange={handleNotesChange}
 				/>
 			</TabsContent>

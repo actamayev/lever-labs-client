@@ -4,9 +4,9 @@ import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
-import getAuthClass from "../../classes/auth-class"
-import getTeacherClass from "../../classes/teacher-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import authClass from "../../classes/auth-class"
+import teacherClass from "../../classes/teacher-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function createClassroom(
 	classroomName: string,
@@ -15,12 +15,12 @@ export default async function createClassroom(
 	onSuccess: (classCode: ClassCode) => void
 ): Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
+		if (authClass.isFinishedWithSignup === false) return
 
 		setError("")
 		setSuccess("")
 
-		const createClassroomResponse = await getBlueDotApiClientClass().teacherDataService.createClassroom(classroomName)
+		const createClassroomResponse = await blueDotApiClient.teacherDataService.createClassroom(classroomName)
 
 		if (!isEqual(createClassroomResponse.status, 200) || isNonSuccessResponse(createClassroomResponse.data)) {
 			throw Error("Unable to create classroom")
@@ -30,7 +30,7 @@ export default async function createClassroom(
 
 		// Add the new classroom to local state
 		const newClassroom = { classroomName, classCode }
-		getTeacherClass().addNewClassroom(newClassroom)
+		teacherClass.addNewClassroom(newClassroom)
 
 		setSuccess("Classroom created successfully!")
 		onSuccess(classCode)

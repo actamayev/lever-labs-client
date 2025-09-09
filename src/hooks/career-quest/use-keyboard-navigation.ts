@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
-import getStudentClass from "../../classes/student-class"
+import studentClass from "../../classes/student-class"
 import getNavigationManagerClass from "../../classes/navigation-manager-class"
 
 function useEffectKeyboardNavigation(): string | null {
@@ -50,7 +50,7 @@ export default function useKeyboardNavigation(careerUUID: CareerUUID): void {
 
 		if (
 			shouldBlockNavigation(careerUUID) ||
-			getStudentClass().isInFocusMode
+			studentClass.isInFocusMode
 		) return
 
 		const navigationContext = {

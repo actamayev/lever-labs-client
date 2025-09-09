@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
-import getWorkbenchClass from "../../../classes/workbench-class"
+import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
@@ -13,7 +13,7 @@ function BatteryWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
-	const batteryData = getWorkbenchClass().batteryData
+	const batteryData = workbenchClass.batteryData
 	// eslint-disable-next-line complexity
 	function GetTimeText(): React.ReactNode	{
 		if (!batteryData) return "OFFLINE"
@@ -58,9 +58,9 @@ function BatteryWorkbench(): React.ReactNode {
 					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
 						<BatteryWorkbenchIcon />
 						<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
-							{isNull(getWorkbenchClass().batteryDataLastUpdated) ?
+							{isNull(workbenchClass.batteryDataLastUpdated) ?
 								"\u00A0" :
-								`${Math.max(0, Math.min(100, getWorkbenchClass().batteryData?.stateOfCharge || 0))}%`}
+								`${Math.max(0, Math.min(100, workbenchClass.batteryData?.stateOfCharge || 0))}%`}
 						</span>
 					</WorkbenchIconTemplate>
 				</div>

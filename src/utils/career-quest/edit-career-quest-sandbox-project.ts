@@ -3,19 +3,19 @@
 import isEqual from "lodash-es/isEqual"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import getToastClass from "../../classes/toast-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import toastClass from "../../classes/toast-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function editCareerQuestSandboxProject(
 	challengeUUID: ChallengeUUID,
 	newBlocklyJson: BlocklyJson
 ) : Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
+		if (authClass.isFinishedWithSignup === false) return
 
-		const editCareerQuestSandboxProjectResponse = await getBlueDotApiClientClass().careerQuestDataService.editCareerQuestSandboxProject(
+		const editCareerQuestSandboxProjectResponse = await blueDotApiClient.careerQuestDataService.editCareerQuestSandboxProject(
 			challengeUUID,
 			newBlocklyJson
 		)
@@ -24,7 +24,7 @@ export default async function editCareerQuestSandboxProject(
 		}
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to edit project",
 			description: "Please reload the page and try again"
 		})

@@ -1,17 +1,15 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
-import getStudentClass from '../student-class'
-import getCareerQuestClass from '../career-quest-class'
+import studentClass from '../student-class'
+import careerQuestClass from '../career-quest-class'
 import { ClassCode, HubUUID } from '@bluedotrobots/common-ts/types/utils'
 import { UpdatedHubSlideId } from '@bluedotrobots/common-ts/types/socket'
 
 // Mock the career quest class
-const mockCareerQuestInstance = {
-	executeNavigationCommand: vi.fn(),
-	navigateToPosition: vi.fn(),
-}
-
 vi.mock('../career-quest-class', () => ({
-	default: () => mockCareerQuestInstance
+	default: {
+		executeNavigationCommand: vi.fn(),
+		navigateToPosition: vi.fn(),
+	}
 }))
 
 describe('StudentClass Hub Navigation', () => {
@@ -21,7 +19,7 @@ describe('StudentClass Hub Navigation', () => {
 
 	beforeEach(() => {
 		// Reset the singleton instance
-		getStudentClass().logout()
+		studentClass.logout()
 		vi.clearAllMocks()
 		
 		// Setup mock classroom data with a joined hub
@@ -39,7 +37,7 @@ describe('StudentClass Hub Navigation', () => {
 			joinedClassroomAt: new Date(),
 		}
 		
-		getStudentClass().setRetrievedStudentData([mockClassroom])
+		studentClass.setRetrievedStudentData([mockClassroom])
 	})
 
 	describe('updateHubSlideId - Command Parsing', () => {
@@ -50,18 +48,18 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'simple-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			// Should call direct navigation (no command)
-			expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
+			expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'simple-slide-id'
 			)
-			expect(getCareerQuestClass().executeNavigationCommand).not.toHaveBeenCalled()
+			expect(careerQuestClass.executeNavigationCommand).not.toHaveBeenCalled()
 		})
 
 		test('should parse advance_morph command correctly', () => {
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -69,22 +67,22 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'advance_morph:morphing-text-1:target-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			// Should execute navigation command with parsed parts
-			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
+			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:morphing-text-1',
 				'target-slide-id'
 			)
 			
 			// Hub should show the actual slide ID
-			const hub = getStudentClass().getClassroomData(mockClassCode)?.activeHubs[0]
+			const hub = studentClass.getClassroomData(mockClassCode)?.activeHubs[0]
 			expect(hub?.slideId).toBe('target-slide-id')
 		})
 
 		test('should parse back_morph command correctly', () => {
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -92,9 +90,9 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'back_morph:morphing-text-1:previous-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
-			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
+			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'back_morph:morphing-text-1',
 				'previous-slide-id'
@@ -102,7 +100,7 @@ describe('StudentClass Hub Navigation', () => {
 		})
 
 		test('should parse other commands with colon format', () => {
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -110,9 +108,9 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'next_text:slide-id-123'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
-			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
+			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'next_text',
 				'slide-id-123'
@@ -120,7 +118,7 @@ describe('StudentClass Hub Navigation', () => {
 		})
 
 		test('should handle complex morphing command with multiple colons', () => {
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(true)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -128,13 +126,13 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'advance_morph:complex:morphing:id:final-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			// Based on the actual parsing logic: parts[0] + ':' + parts[1], then parts[2]
 			// For 'advance_morph:complex:morphing:id:final-slide-id'
 			// parts = ['advance_morph', 'complex', 'morphing', 'id', 'final-slide-id']
 			// command = 'advance_morph:complex', actualSlideId = 'morphing'
-			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
+			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:complex',
 				'morphing'
@@ -144,8 +142,8 @@ describe('StudentClass Hub Navigation', () => {
 
 	describe('updateHubSlideId - Navigation Execution', () => {
 		test('should fallback to direct navigation when command fails', () => {
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(false)
-			vi.mocked(getCareerQuestClass().navigateToPosition).mockReturnValue(true)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(false)
+			vi.mocked(careerQuestClass.navigateToPosition).mockReturnValue(true)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -153,15 +151,15 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'advance_morph:morphing-text-1:fallback-slide'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			// Should try command first, then fallback
-			expect(getCareerQuestClass().executeNavigationCommand).toHaveBeenCalledWith(
+			expect(careerQuestClass.executeNavigationCommand).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'advance_morph:morphing-text-1',
 				'fallback-slide'
 			)
-			expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
+			expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
 				mockCareerUUID,
 				'fallback-slide'
 			)
@@ -169,7 +167,7 @@ describe('StudentClass Hub Navigation', () => {
 
 		test('should log warning when command fails and fallback is used', () => {
 			const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-			vi.mocked(getCareerQuestClass().executeNavigationCommand).mockReturnValue(false)
+			vi.mocked(careerQuestClass.executeNavigationCommand).mockReturnValue(false)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -177,7 +175,7 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'advance_morph:morphing-text-1:slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				'Navigation command failed, falling back to direct positioning:',
@@ -193,7 +191,7 @@ describe('StudentClass Hub Navigation', () => {
 
 		test('should log warning when direct navigation fails', () => {
 			const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-			vi.mocked(getCareerQuestClass().navigateToPosition).mockReturnValue(false)
+			vi.mocked(careerQuestClass.navigateToPosition).mockReturnValue(false)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -201,7 +199,7 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'simple-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			expect(consoleSpy).toHaveBeenCalledWith(
 				'Failed to navigate student to hub position:',
@@ -217,7 +215,7 @@ describe('StudentClass Hub Navigation', () => {
 
 	describe('updateHubSlideId - Hub State Management', () => {
 		test('should set student to focus mode when receiving hub updates', () => {
-			expect(getStudentClass().isInFocusMode).toBe(false)
+			expect(studentClass.isInFocusMode).toBe(false)
 			
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -225,9 +223,9 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'test-slide'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
-			expect(getStudentClass().isInFocusMode).toBe(true)
+			expect(studentClass.isInFocusMode).toBe(true)
 		})
 
 		test('should update hub slideId with actual slide ID (not command)', () => {
@@ -237,9 +235,9 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'advance_morph:morphing-text-1:actual-slide-id'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
-			const hub = getStudentClass().getClassroomData(mockClassCode)?.activeHubs[0]
+			const hub = studentClass.getClassroomData(mockClassCode)?.activeHubs[0]
 			expect(hub?.slideId).toBe('actual-slide-id')
 		})
 
@@ -259,7 +257,7 @@ describe('StudentClass Hub Navigation', () => {
 				joinedClassroomAt: new Date()
 			}
 			
-			getStudentClass().setRetrievedStudentData([mockClassroom])
+			studentClass.setRetrievedStudentData([mockClassroom])
 
 			const updateData: UpdatedHubSlideId = {
 				classCode: mockClassCode,
@@ -267,13 +265,13 @@ describe('StudentClass Hub Navigation', () => {
 				newSlideId: 'test-slide'
 			}
 
-			getStudentClass().updateHubSlideId(updateData)
+			studentClass.updateHubSlideId(updateData)
 
 			// Should update slideId but not trigger navigation
-			const hub = getStudentClass().getClassroomData(mockClassCode)?.activeHubs[0]
+			const hub = studentClass.getClassroomData(mockClassCode)?.activeHubs[0]
 			expect(hub?.slideId).toBe('test-slide')
-			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
-			expect(getCareerQuestClass().executeNavigationCommand).not.toHaveBeenCalled()
+			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
+			expect(careerQuestClass.executeNavigationCommand).not.toHaveBeenCalled()
 		})
 
 		test('should handle non-existent classroom gracefully', () => {
@@ -284,8 +282,8 @@ describe('StudentClass Hub Navigation', () => {
 			}
 
 			// Should not throw
-			expect(() => getStudentClass().updateHubSlideId(updateData)).not.toThrow()
-			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
+			expect(() => studentClass.updateHubSlideId(updateData)).not.toThrow()
+			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
 		})
 
 		test('should handle non-existent hub gracefully', () => {
@@ -296,8 +294,8 @@ describe('StudentClass Hub Navigation', () => {
 			}
 
 			// Should not throw
-			expect(() => getStudentClass().updateHubSlideId(updateData)).not.toThrow()
-			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
+			expect(() => studentClass.updateHubSlideId(updateData)).not.toThrow()
+			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
 		})
 	})
 
@@ -317,19 +315,19 @@ describe('StudentClass Hub Navigation', () => {
 			}
 
 			// When student joins hub, they should navigate to current position
-			getStudentClass().joinHub(hubWithPosition)
+			studentClass.joinHub(hubWithPosition)
 
 			// TODO: This should trigger navigation to teacher's current position
 			// Currently this functionality is missing
-			// expect(getCareerQuestClass().navigateToPosition).toHaveBeenCalledWith(
+			// expect(careerQuestClass.navigateToPosition).toHaveBeenCalledWith(
 			//   mockCareerUUID, 'teacher-current-position'
 			// )
 			
 			// For now, verify the hub is joined but navigation doesn't happen
-			const classroom = getStudentClass().getClassroomData(mockClassCode)
+			const classroom = studentClass.getClassroomData(mockClassCode)
 			const joinedHub = classroom?.activeHubs.find(h => h.hubId === 'new-hub-id' as HubUUID)
 			expect(joinedHub?.isHubJoined).toBe(true)
-			expect(getCareerQuestClass().navigateToPosition).not.toHaveBeenCalled()
+			expect(careerQuestClass.navigateToPosition).not.toHaveBeenCalled()
 		})
 	})
 })

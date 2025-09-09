@@ -6,9 +6,9 @@ import { useMemo } from "react"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.ReactNode {
 	const pathname = usePathname()
@@ -16,12 +16,12 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 	const whereToNavigate = useMemo((): PageNames => {
 		if (
 			pathname === "/register-google" ||
-			(getAuthClass().isLoggedIn && isNull(getPersonalInfoClass().username))
+			(authClass.isLoggedIn && isNull(personalInfoClass.username))
 		) return "/register-google"
-		if (getAuthClass().isFinishedWithSignup) return PageToNavigateAfterLogin
+		if (authClass.isFinishedWithSignup) return PageToNavigateAfterLogin
 		return "/"
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [pathname, getAuthClass().isFinishedWithSignup, getAuthClass().isLoggedIn, getPersonalInfoClass().username])
+	}, [pathname, authClass.isFinishedWithSignup, authClass.isLoggedIn, personalInfoClass.username])
 
 	return (
 		<div

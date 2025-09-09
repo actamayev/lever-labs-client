@@ -3,11 +3,11 @@
 
 import { makeAutoObservable, runInAction } from "mobx"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import getAuthClass from "./auth-class"
+import authClass from "./auth-class"
 import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
-import getWorkbenchClass from "./workbench-class"
-import getPipClass from "./pip-class"
+import workbenchClass from "./workbench-class"
+import pipClass from "./pip-class"
 
 class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
@@ -149,7 +149,7 @@ class SerialConnectionManagerClass {
 
 	// Check and auto-connect if user is logged in (called when user logs in)
 	public async checkAndAutoConnectIfLoggedIn(): Promise<void> {
-		if (!getAuthClass().isFinishedWithSignup || this.pipTurnedOn) return
+		if (!authClass.isFinishedWithSignup || this.pipTurnedOn) return
 
 		try {
 			await this.tryAutoReconnect()
@@ -161,7 +161,7 @@ class SerialConnectionManagerClass {
 	// Handle when a USB device is plugged in
 	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
 		// Don't auto-connect if we're already connected OR if user isn't logged in
-		if (this.pipTurnedOn || !getAuthClass().isFinishedWithSignup) return
+		if (this.pipTurnedOn || !authClass.isFinishedWithSignup) return
 
 		try {
 			const info = port.getInfo()
@@ -199,7 +199,7 @@ class SerialConnectionManagerClass {
 	// Connect to a specific port (used for auto-reconnect and device selection)
 	async connectToSpecificPort(port: SerialPort): Promise<void> {
 		// Check auth state
-		if (!getAuthClass().isFinishedWithSignup) {
+		if (!authClass.isFinishedWithSignup) {
 			console.error("Cannot connect: user not logged in")
 			return
 		}
@@ -242,7 +242,7 @@ class SerialConnectionManagerClass {
 	// Original connect method - now uses filtered device selection
 	public async connectToDevice(): Promise<void> {
 		// Check auth state
-		if (!getAuthClass().isFinishedWithSignup) {
+		if (!authClass.isFinishedWithSignup) {
 			console.error("Cannot connect: user not logged in")
 			return
 		}
@@ -276,7 +276,7 @@ class SerialConnectionManagerClass {
 	// Request permission for a new device (forces the native browser dialog)
 	public async requestNewDevice(): Promise<void> {
 		// Check auth state
-		if (!getAuthClass().isFinishedWithSignup) {
+		if (!authClass.isFinishedWithSignup) {
 			console.error("Cannot request new device: user not logged in")
 			return
 		}
@@ -470,8 +470,8 @@ class SerialConnectionManagerClass {
 			this.writer = null
 			this.connected = false
 			this.pipTurnedOn = false
-			getWorkbenchClass().setBatteryDataNull()
-			getPipClass().setPipPluggedInSerial(false)
+			workbenchClass.setBatteryDataNull()
+			pipClass.setPipPluggedInSerial(false)
 		})
 
 		console.info("Connection cleanup complete")

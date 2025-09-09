@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
 import NetworkContent from "./network-content"
-import getPipClass from "../../../classes/pip-class"
+import pipClass from "../../../classes/pip-class"
 import NetworkIconToShow from "./network-icon-to-show"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
@@ -15,8 +15,8 @@ function NetworkWorkbench(): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = (): string => {
-		if (getPipClass().pipPluggedInSerial) return "Connected to USB"
-		const selectedPip = getPipClass().selectedPip
+		if (pipClass.pipPluggedInSerial) return "Connected to USB"
+		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "No device selected"
 
 		switch (selectedPip.pipConnectionStatus) {
@@ -36,8 +36,8 @@ function NetworkWorkbench(): React.ReactNode {
 	}
 
 	const getStatusColor = (): string => {
-		if (getPipClass().pipPluggedInSerial) return "text-green-500"
-		const selectedPip = getPipClass().selectedPip
+		if (pipClass.pipPluggedInSerial) return "text-green-500"
+		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "text-wolf"
 
 		switch (selectedPip.pipConnectionStatus) {

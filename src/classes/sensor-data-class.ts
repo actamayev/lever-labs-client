@@ -104,13 +104,6 @@ class SensorDataClass {
 	}
 }
 
-let sensorDataClassInstance: SensorDataClass | null = null
+const sensorDataClass = new SensorDataClass()
 
-export const getSensorDataClass = (): SensorDataClass => {
-	if (!sensorDataClassInstance) {
-		sensorDataClassInstance = new SensorDataClass()
-	}
-	return sensorDataClassInstance
-}
-
-export default getSensorDataClass
+export default sensorDataClass

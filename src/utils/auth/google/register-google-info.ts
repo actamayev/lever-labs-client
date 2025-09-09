@@ -3,10 +3,10 @@
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
 import { NewGoogleInfoRequest } from "@bluedotrobots/common-ts/types/api"
-import getAuthClass from "../../../classes/auth-class"
+import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
-import getPersonalInfoClass from "../../../classes/personal-info-class"
-import getBlueDotApiClientClass from "../../../classes/blue-dot-api-client-class"
+import personalInfoClass from "../../../classes/personal-info-class"
+import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
@@ -16,26 +16,26 @@ export default async function registerGoogleInfo(
 ) : Promise<boolean> {
 	setError("")
 	try {
-		getAuthClass().setAuthenticating(true)
+		authClass.setAuthenticating(true)
 		if (isNull(googleInfo.age)) return false
 		const cleanGoogleData: NewGoogleInfoRequest = {
 			age: googleInfo.age,
 			username: googleInfo.username
 		}
-		const response = await getBlueDotApiClientClass().authDataService.registerGoogleInfo(cleanGoogleData)
+		const response = await blueDotApiClient.authDataService.registerGoogleInfo(cleanGoogleData)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to register username. Please reload the page and try again")
 			return false
 		}
 		if (typeof window === "undefined") return false
 
-		const siteTheme = getPersonalInfoClass().defaultSiteTheme
-		getPersonalInfoClass().setRegisteredValues(
+		const siteTheme = personalInfoClass.defaultSiteTheme
+		personalInfoClass.setRegisteredValues(
 			googleInfo.username,
 			response.data.email,
 			siteTheme,
 		)
-		getAuthClass().setAuthState({
+		authClass.setAuthState({
 			isAuthenticated: true,
 			hasCompletedSignup: true
 		})
@@ -45,6 +45,6 @@ export default async function registerGoogleInfo(
 		setErrorAxiosResponse(error, setError)
 		return false
 	} finally {
-		getAuthClass().setAuthenticating(false)
+		authClass.setAuthenticating(false)
 	}
 }

@@ -96,13 +96,6 @@ class PipClass {
 	}
 }
 
-let pipClassInstance: PipClass | null = null
+const pipClass = new PipClass()
 
-export const getPipClass = (): PipClass => {
-	if (!pipClassInstance) {
-		pipClassInstance = new PipClass()
-	}
-	return pipClassInstance
-}
-
-export default getPipClass
+export default pipClass

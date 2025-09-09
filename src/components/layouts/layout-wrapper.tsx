@@ -6,10 +6,10 @@ import { observer } from "mobx-react"
 import { AuthState } from "@/lib/auth-server"
 import { usePathname } from "next/navigation"
 import PublicOnlyPage from "./classic-layout"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import ThemeProvider from "../theme/theme-provider"
 import InternalPagesLayout from "./internal-pages-layout"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
 
 interface LayoutWrapperProps {
@@ -23,23 +23,23 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 	// Sync server auth state and theme with client on mount
 	useEffect((): void => {
 		// Sync auth state
-		if (!getAuthClass().isLoggedIn && initialAuthState.isAuthenticated) {
-			getAuthClass().setAuthState({
+		if (!authClass.isLoggedIn && initialAuthState.isAuthenticated) {
+			authClass.setAuthState({
 				isAuthenticated: initialAuthState.isAuthenticated,
 				hasCompletedSignup: initialAuthState.hasCompletedSignup
 			})
 		}
 
 		// Sync theme from server
-		getPersonalInfoClass().setDefaultSiteTheme(initialAuthState.theme, false)
+		personalInfoClass.setDefaultSiteTheme(initialAuthState.theme, false)
 	}, [initialAuthState])
 
 	const isPrivatePage = PrivatePageNames.some((path): boolean => pathname.startsWith(path))
 	const isOpenPage = OpenPages.some((path): boolean => pathname.startsWith(path))
-	const isAuthenticated = getAuthClass().isLoggedIn || initialAuthState.isAuthenticated
+	const isAuthenticated = authClass.isLoggedIn || initialAuthState.isAuthenticated
 	const isIncompleteSignup = initialAuthState.isIncompleteSignup
 
-	const currentTheme = getPersonalInfoClass().defaultSiteTheme
+	const currentTheme = personalInfoClass.defaultSiteTheme
 
 	const shouldUseClassicForIncompleteSignup = isIncompleteSignup && isOpenPage
 

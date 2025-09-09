@@ -7,7 +7,7 @@ import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
-import getSandboxClass from "../../../classes/sandbox-class"
+import sandboxClass from "../../../classes/sandbox-class"
 import WorkbenchLayout from "../../layouts/workbench-layout"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
@@ -18,7 +18,9 @@ import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage(): React.ReactNode {
-	useEffect((): void => void retrieveAllSandboxProjects(), [])
+	useEffect((): void => {
+		void retrieveAllSandboxProjects()
+	}, [])
 	const navigate = useTypedNavigate()
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")
@@ -46,7 +48,7 @@ function TheSandboxPage(): React.ReactNode {
 	}, [searchQuery])
 
 	// Get all projects and sort by updated date
-	const allProjects = Array.from(getSandboxClass().sandboxProjects.values())
+	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
 		.sort((a, b): number => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
 	// Filter all projects based on search query
@@ -135,7 +137,7 @@ function TheSandboxPage(): React.ReactNode {
 								))}
 							</div>
 						) : (
-							!getSandboxClass().isRetrievingAllSandboxProjects && (
+							!sandboxClass.isRetrievingAllSandboxProjects && (
 								<div className="text-center py-12">
 									{searchQuery ? (
 										<p className="text-hare mb-4">No projects match your search</p>
@@ -157,7 +159,7 @@ function TheSandboxPage(): React.ReactNode {
 					</div>
 
 					{/* Loading state */}
-					{getSandboxClass().isRetrievingAllSandboxProjects && (
+					{sandboxClass.isRetrievingAllSandboxProjects && (
 						<div className="text-center py-12">
 							<p className="text-hare">Loading projects...</p>
 						</div>

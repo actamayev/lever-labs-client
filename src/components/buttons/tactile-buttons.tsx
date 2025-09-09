@@ -6,7 +6,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { ButtonProps } from "../shadcn/ui/button"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 
 type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
 	shadowHeight?: 2 | 4
@@ -29,7 +29,7 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 						cursor-default bg-blue-300  text-blue-950 \
 						dark:bg-blue-950 dark:text-blue-200"
 				)}
-				shadowColor={getPersonalInfoClass().defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(96 165 250)" : "rgb(37 99 235)"}
 				shadowHeight={shadowHeight}
 				{...props}
 			/>
@@ -47,7 +47,7 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 					"text-eel dark:text-wolf",
 					className
 				)}
-				shadowColor={getPersonalInfoClass().defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(229 229 229)" : "rgb(55 70 79)"}
 				shadowHeight={shadowHeight}
 				{...props}
 			/>
@@ -73,7 +73,7 @@ export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, Lan
 					"bg-green-500 border-none text-white",
 					"dark:bg-green-900 dark:border-green-600 dark:text-green-200"
 				)}
-				shadowColor={getPersonalInfoClass().defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
+				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
 				{...props}
 			>
 				{children}

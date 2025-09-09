@@ -3,8 +3,8 @@ import { isEqual } from "lodash-es"
 import { AxiosResponse } from "axios"
 import isNull from "lodash-es/isNull"
 import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
-import getPipClass from "../classes/pip-class"
-import getToastClass from "../classes/toast-class"
+import pipClass from "../classes/pip-class"
+import toastClass from "../classes/toast-class"
 import { isNonSuccessResponse } from "./type-checks"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
@@ -28,7 +28,7 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 	} = options
 
 	try {
-		const selectedPip = getPipClass().selectedPip
+		const selectedPip = pipClass.selectedPip
 		if (
 			failSilently &&
 			(
@@ -47,7 +47,7 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 			isNull(selectedPip) ||
 			selectedPip.pipConnectionStatus === "offline"
 		)) {
-			return getToastClass().negative({
+			return toastClass.negative({
 				title: "Pip not connected",
 				description: "Please connect your Pip to the Wi-Fi or via USB"
 			})
@@ -61,7 +61,7 @@ export default async function sendDataToSerialOrApiTemplate(options: SendDataOpt
 	}
 	catch (error) {
 		console.error(error)
-		return getToastClass().negative({
+		return toastClass.negative({
 			title: errorTitle,
 			description: errorDescription
 		})

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import ArrowKeyButton from "./arrow-key-button"
 import DrivingActionButton from "./driving-action-button"
 import AdjustMaxDrivingSpeed from "./adjust-max-driving-speed"
-import getGarageClass from "../../../classes/garage-class"
+import garageClass from "../../../classes/garage-class"
 import useEffectMotorDrive from "../../../hooks/garage/use-effect-motor-drive"
 import useGarageActionsUseEffect from "../../../hooks/garage/use-garage-actions-use-effect"
 
@@ -19,7 +19,7 @@ function DrivingControls(): React.ReactNode {
 				<div className="col-start-1">
 					<DrivingActionButton
 						action="headlights"
-						isPressed={getGarageClass().areHeadlightsOn}
+						isPressed={garageClass.areHeadlightsOn}
 					/>
 				</div>
 				<div className="col-start-2">
@@ -28,7 +28,7 @@ function DrivingControls(): React.ReactNode {
 				<div className="col-start-3">
 					<DrivingActionButton
 						action="horn"
-						isPressed={getGarageClass().isHornPressed}
+						isPressed={garageClass.isHornPressed}
 					/>
 				</div>
 

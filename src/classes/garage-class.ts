@@ -207,13 +207,6 @@ class GarageClass {
 	}
 }
 
-let garageClassInstance: GarageClass | null = null
+const garageClass = new GarageClass()
 
-export const getGarageClass = (): GarageClass => {
-	if (!garageClassInstance) {
-		garageClassInstance = new GarageClass()
-	}
-	return garageClassInstance
-}
-
-export default getGarageClass
+export default garageClass

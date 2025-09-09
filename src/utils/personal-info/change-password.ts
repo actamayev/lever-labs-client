@@ -3,9 +3,9 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import getAuthClass from "../../classes/auth-class"
-import getToastClass from "../../classes/toast-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import authClass from "../../classes/auth-class"
+import toastClass from "../../classes/toast-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
@@ -14,7 +14,7 @@ export default async function changePassword(
 	newPassword: string
 ) : Promise<string | null> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) {
+		if (authClass.isFinishedWithSignup === false) {
 			return "You must be logged in to change your password"
 		}
 
@@ -30,7 +30,7 @@ export default async function changePassword(
 			return "New password must be at least 6 characters"
 		}
 
-		const updatePasswordResponse = await getBlueDotApiClientClass().personalInfoDataService.changePassword(
+		const updatePasswordResponse = await blueDotApiClient.personalInfoDataService.changePassword(
 			oldPassword, newPassword
 		)
 
@@ -38,7 +38,7 @@ export default async function changePassword(
 			throw Error("Unable to change password")
 		}
 
-		getToastClass().positive({
+		toastClass.positive({
 			title: "Password updated successfully"
 		})
 		return null // Success, no error
@@ -66,7 +66,7 @@ export default async function changePassword(
 			}
 
 			if (error.response?.status === 500) {
-				getToastClass().negative({
+				toastClass.negative({
 					title: "Server error",
 					description: "Please try again later"
 				})
@@ -74,7 +74,7 @@ export default async function changePassword(
 			}
 		}
 
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to change password",
 			description: "Please reload the page and try again"
 		})

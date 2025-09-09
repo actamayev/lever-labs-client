@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { Dispatch, SetStateAction } from "react"
 import { Plus, Users, BookOpen, Calendar } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import getStudentClass from "../../classes/student-class"
+import studentClass from "../../classes/student-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
@@ -17,7 +17,7 @@ interface WhiteboardStatsCardsProps {
 function WhiteboardStatsCards({ setIsJoinDialogOpen }: WhiteboardStatsCardsProps): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
-	const totalClasses = getStudentClass().classroomData.length
+	const totalClasses = studentClass.classroomData.length
 	const activeClasses = totalClasses // All classes are considered active for now
 
 	return (

@@ -2,25 +2,25 @@
 
 import isEqual from "lodash-es/isEqual"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import getToastClass from "../../classes/toast-class"
-import getSandboxClass from "../../classes/sandbox-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import toastClass from "../../classes/toast-class"
+import sandboxClass from "../../classes/sandbox-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function sendSandboxMessage(
 	projectUUID: SandboxProjectUUID,
 	message: string
 ): Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
+		if (authClass.isFinishedWithSignup === false) return
 
 		// Reset chat streaming state for new conversation
-		getSandboxClass().resetChatStreamingState(projectUUID)
-		const userCode = getSandboxClass().getCppCode(projectUUID)
+		sandboxClass.resetChatStreamingState(projectUUID)
+		const userCode = sandboxClass.getCppCode(projectUUID)
 
 		// Send request to backend - projectUUID will be included in the WebSocket response
-		const response = await getBlueDotApiClientClass().chatDataService.sendSandboxMessage(
+		const response = await blueDotApiClient.chatDataService.sendSandboxMessage(
 			projectUUID,
 			{ userCode, message }
 		)
@@ -28,10 +28,10 @@ export default async function sendSandboxMessage(
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
 		// Set stream ID if you implement stream ID management in sandbox class
-		getSandboxClass().setCurrentStreamId(projectUUID, response.data.streamId)
+		sandboxClass.setCurrentStreamId(projectUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})

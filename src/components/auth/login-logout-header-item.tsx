@@ -4,13 +4,13 @@ import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import NullUserNavLink from "./null-user-nav-link"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function LoginLogoutHeaderItem(): React.ReactNode {
 	const pathname = usePathname()
 
 	if (
-		!isNull(getPersonalInfoClass().username) ||
+		!isNull(personalInfoClass.username) ||
 		pathname === "/register-google"
 	) return null
 	return <NullUserNavLink />

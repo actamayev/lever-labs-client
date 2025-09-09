@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
-import getSensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P4MzViz(): React.ReactNode {
@@ -68,7 +68,7 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 	const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>): void => {
 		const cell = getCellFromMouse(event.clientX, event.clientY)
 		if (cell) {
-			const rowData = getSensorDataClass().distanceGrid[cell.row]
+			const rowData = sensorDataClass.distanceGrid[cell.row]
 
 			if (rowData && rowData.length === 8) {
 				const value = rowData[cell.col] || 0
@@ -97,14 +97,14 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 			ctx.clearRect(0, 0, canvasSize, canvasSize)
 
 			// Check if we have valid grid data
-			const hasValidData = getSensorDataClass().distanceGrid.length === 8 &&
-				getSensorDataClass().distanceGrid.every((row): boolean => row.length === 8)
+			const hasValidData = sensorDataClass.distanceGrid.length === 8 &&
+				sensorDataClass.distanceGrid.every((row): boolean => row.length === 8)
 
 			if (hasValidData) {
 				// Draw grid cells
 				for (let row = 0; row < gridSize; row++) {
 					for (let col = 0; col < gridSize; col++) {
-						const distance = getSensorDataClass().distanceGrid[row][col] || 0
+						const distance = sensorDataClass.distanceGrid[row][col] || 0
 						const isInvalid = distance === -1
 
 						// Calculate cell position

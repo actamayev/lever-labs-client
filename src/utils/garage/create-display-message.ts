@@ -2,9 +2,9 @@
 
 import isNull from "lodash-es/isNull"
 import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import getPipClass from "../../classes/pip-class"
-import getToastClass from "../../classes/toast-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import pipClass from "../../classes/pip-class"
+import toastClass from "../../classes/toast-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 import { AxiosResponse } from "axios"
 import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
@@ -12,7 +12,7 @@ import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
 export default async function createDisplayMessage(buffer: Uint8Array): Promise<void> {
 	const displayBufferMessage = MessageBuilder.createDisplayBufferMessage(buffer)
 	if (isNull(displayBufferMessage)) {
-		return getToastClass().negative({
+		return toastClass.negative({
 			title: "Unable to create display message",
 			description: "Display buffer message is null"
 		})
@@ -21,11 +21,11 @@ export default async function createDisplayMessage(buffer: Uint8Array): Promise<
 	await sendDataToSerialOrApiTemplate({
 		buffer: displayBufferMessage,
 		dataServiceEndpoint: (): Promise<AxiosResponse<AllCommonResponses>>=> {
-			const selectedPip = getPipClass().selectedPip
+			const selectedPip = pipClass.selectedPip
 			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return getBlueDotApiClientClass().garageDataService.createDisplayBuffer(
+			return blueDotApiClient.garageDataService.createDisplayBuffer(
 				buffer,
 				selectedPip.pipUUID
 			)

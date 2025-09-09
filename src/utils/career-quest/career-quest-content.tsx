@@ -3,7 +3,7 @@
 
 import { ReactNode } from "react"
 import fireConfetti from "../fire-confetti"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 import { Highlighter } from "../../components/magicui/highlighter"
 import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
 import careerQuestTrigger from "./career-quest-trigger"
@@ -176,7 +176,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 	),
 	"meet-pip-3-5": (): ReactNode => (
 		<div>
-			Thanks, {getPersonalInfoClass().name || "friend"}. Now it really feels like we're partners.
+			Thanks, {personalInfoClass.name || "friend"}. Now it really feels like we're partners.
 		</div>
 	),
 	"meet-pip-3-6": (): ReactNode => (

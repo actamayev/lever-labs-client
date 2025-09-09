@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import Image from "next/image"
 import { cn } from "../../lib/shadcn/utils"
 import WorkbenchTopSection from "./workbench-top-section"
-import getWorkbenchClass from "../../classes/workbench-class"
+import workbenchClass from "../../classes/workbench-class"
 import DrivingControls from "../garage/driving/driving-controls"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
@@ -19,9 +19,9 @@ function Workbench(): React.ReactNode {
 	useEffect((): () => void => {
 		const updateDimensions = (): void => {
 			if (containerRef.current) {
-				getWorkbenchClass().setFixedWidth((containerRef.current.offsetWidth))
+				workbenchClass.setFixedWidth((containerRef.current.offsetWidth))
 			}
-			getWorkbenchClass().setWindowHeight(window.innerHeight)
+			workbenchClass.setWindowHeight(window.innerHeight)
 		}
 
 		updateDimensions()
@@ -30,9 +30,9 @@ function Workbench(): React.ReactNode {
 	}, [])
 
 	// Calculate section heights
-	const topSectionHeight = getWorkbenchClass().windowHeight / 5  // 1/4 of screen height
-	const bottomSectionHeight = getWorkbenchClass().windowHeight / 3  // 1/3 of screen height
-	const middleSectionHeight = getWorkbenchClass().windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
+	const topSectionHeight = workbenchClass.windowHeight / 5  // 1/4 of screen height
+	const bottomSectionHeight = workbenchClass.windowHeight / 3  // 1/3 of screen height
+	const middleSectionHeight = workbenchClass.windowHeight - topSectionHeight - (isGaragePage ? bottomSectionHeight : 0)
 
 	// Calculate positions
 	const middleSectionTop = topSectionHeight
@@ -52,7 +52,7 @@ function Workbench(): React.ReactNode {
 					isGaragePage ? "border-l" : "border-l-2"
 				)}
 				style={{
-					width: getWorkbenchClass().fixedWidth + "px",
+					width: workbenchClass.fixedWidth + "px",
 					top: `${middleSectionTop}px`,
 					height: `${middleSectionHeight}px`,
 					maxHeight: `${middleSectionHeight}px`,
@@ -81,7 +81,7 @@ function Workbench(): React.ReactNode {
 				<div
 					className="fixed border-l border-t z-0"
 					style={{
-						width: getWorkbenchClass().fixedWidth + "px",
+						width: workbenchClass.fixedWidth + "px",
 						top: `${bottomSectionTop}px`,
 						height: `${bottomSectionHeight}px`,
 						maxHeight: `${bottomSectionHeight}px`,

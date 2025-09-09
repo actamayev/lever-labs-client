@@ -14,7 +14,7 @@ import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
-import getGarageClass from "../../../classes/garage-class"
+import garageClass from "../../../classes/garage-class"
 import lightsAnimation from "../../../utils/garage/lights-animation"
 
 interface Animation {
@@ -52,7 +52,6 @@ const ANIMATIONS: Animation[] = [
 ]
 
 function LightAnimationsList(): React.ReactNode {
-	const garageClass = getGarageClass()
 	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`
 	const optimizedLightsAnimation = useCallback(lightsAnimation, [])
 

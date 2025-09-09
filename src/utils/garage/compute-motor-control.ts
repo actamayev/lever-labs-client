@@ -1,7 +1,7 @@
 "use client"
 
 import { MotorControlInput } from "@bluedotrobots/common-ts/types/garage"
-import getGarageClass from "../../classes/garage-class"
+import garageClass from "../../classes/garage-class"
 import { motorKeyMappings } from "../constants/constants"
 
 const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping): Record<MotorDirection, MotorDriveKeyMapping> => {
@@ -12,7 +12,7 @@ const directionToMapping = Object.values(motorKeyMappings).reduce((acc, mapping)
 export default function computeMotorControl(): MotorControlInput {
 	// Compute motor control values based on pressed keys
 	const motorControl: MotorControlInput = { vertical: 0, horizontal: 0 }
-	const keys = getGarageClass().pressedMotorKeys
+	const keys = garageClass.pressedMotorKeys
 
 	const verticalKeys = Array.from(keys.entries())
 		.filter(([dir]): boolean => directionToMapping[dir].axis === "vertical")

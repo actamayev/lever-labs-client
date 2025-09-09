@@ -5,8 +5,8 @@ import { Slide, ToastContainer } from "react-toastify"
 import { GoogleOAuthProvider } from "@react-oauth/google"
 
 // Custom hooks from your application
-import getAuthClass from "../src/classes/auth-class"
-import getPersonalInfoClass from "../src/classes/personal-info-class"
+import authClass from "../src/classes/auth-class"
+import personalInfoClass from "../src/classes/personal-info-class"
 import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
@@ -15,7 +15,7 @@ import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-googl
 const retrieveInfo = async (): Promise<void> => {
 	// Only retrieve if user is authenticated but we don't have personal info yet
 	// This handles page refreshes where middleware knows user is auth but client state is empty
-	if (!getAuthClass().isLoggedIn || getPersonalInfoClass().retrievedPersonalInfo) return
+	if (!authClass.isLoggedIn || personalInfoClass.retrievedPersonalInfo) return
 	try {
 		await retrievePersonalInfo()
 		void retrievePipInfo()

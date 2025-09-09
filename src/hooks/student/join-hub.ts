@@ -1,13 +1,13 @@
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
 import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
-import getToastClass from "../../classes/toast-class"
-import getStudentClass from "../../classes/student-class"
+import toastClass from "../../classes/toast-class"
+import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
-import getCareerQuestClass from "../../classes/career-quest-class"
+import careerQuestClass from "../../classes/career-quest-class"
 
 export default function useJoinHub():(
 	classCode: ClassCode,
@@ -18,19 +18,19 @@ export default function useJoinHub():(
 	// eslint-disable-next-line complexity
 	return useCallback(async (classCode: ClassCode, hubId: HubUUID): Promise<void> => {
 		try {
-			const isStudentInHub = getStudentClass().checkIfStudentInHub(classCode, hubId)
+			const isStudentInHub = studentClass.checkIfStudentInHub(classCode, hubId)
 			if (isStudentInHub) {
-				getToastClass().positive({
+				toastClass.positive({
 					title: "You're already in this hub"
 				})
 				return
 			}
-			const joinHubResponse = await getBlueDotApiClientClass().studentDataService.joinHub(classCode, hubId)
+			const joinHubResponse = await blueDotApiClient.studentDataService.joinHub(classCode, hubId)
 			if (!isEqual(joinHubResponse.status, 200) || isNonSuccessResponse(joinHubResponse.data)) {
 				throw Error("Unable to join hub")
 			}
 
-			getStudentClass().joinHub(joinHubResponse.data)
+			studentClass.joinHub(joinHubResponse.data)
 
 			// Set saved position to teacher's current location instead of resetting to beginning
 			// This ensures the career quest will restore to the hub position when data loads
@@ -56,7 +56,7 @@ export default function useJoinHub():(
 				}
 
 				// Set saved position so career quest restores to hub position when it loads
-				getCareerQuestClass().setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
+				careerQuestClass.setSavedPosition(joinHubResponse.data.careerUUID, actualSlideId)
 			}
 
 			if (joinHubResponse.data.careerUUID === meetPipData.careerUUID) {
@@ -70,7 +70,7 @@ export default function useJoinHub():(
 			}
 		} catch (error) {
 			console.error(error)
-			getToastClass().negative({
+			toastClass.negative({
 				title: "Unable to join hub",
 				description: "Please try again"
 			})

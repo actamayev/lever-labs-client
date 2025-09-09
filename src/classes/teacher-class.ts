@@ -118,13 +118,6 @@ class TeacherClass {
 	}
 }
 
-let teacherClassInstance: TeacherClass | null = null
+const teacherClass = new TeacherClass()
 
-export const getTeacherClass = (): TeacherClass => {
-	if (!teacherClassInstance) {
-		teacherClassInstance = new TeacherClass()
-	}
-	return teacherClassInstance
-}
-
-export default getTeacherClass
+export default teacherClass

@@ -3,10 +3,10 @@
 import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import getCareerQuestClass from "../../classes/career-quest-class"
+import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
-import getStudentClass from "../../classes/student-class"
-import getChatManagerClass from "../../classes/chat-manager-class"
+import studentClass from "../../classes/student-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 import getNavigationManagerClass from "../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
@@ -18,13 +18,13 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 	const gestureTimeout = useRef<NodeJS.Timeout | null>(null)
 	const hasNavigatedInGesture = useRef(false)
 	const mainSlides = navigationManager.getMainSlides(careerUUID)
-	const canAdvanceToNextMain = getCareerQuestClass().canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
+	const canAdvanceToNextMain = careerQuestClass.canAdvanceToNextMain(careerUUID, currentMainSlideIndex)
 	const swiperInstance = navigationManager.getSwiperInstance(careerUUID)
 	const textParentSwiperInstance = navigationManager.getTextParentSwiperInstance(careerUUID, mainSlides[currentMainSlideIndex].id)
 	const GESTURE_END_DELAY = 40
 	const MIN_DELTA_THRESHOLD = 5
 	const isTransitioning = navigationManager.getIsTransitioning(careerUUID)
-	const isInFocusMode = getStudentClass().isInFocusMode
+	const isInFocusMode = studentClass.isInFocusMode
 
 	// Helper function to check if the mouse is over a chat component
 	const isMouseOverChatComponent = (event: WheelEvent): boolean => {
@@ -57,15 +57,15 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		const currentSlide = navigationManager.getCurrentMainSlide(careerUUID)
 		if (
 			currentSlide.type !== "challenge" &&
-			!getCareerQuestClass().isCareerChatToggled(careerUUID)
+			!careerQuestClass.isCareerChatToggled(careerUUID)
 		) return false
 
 		if (currentSlide.type === "challenge") {
-			const challengeMessages = getChatManagerClass().getChallengeMessages(currentSlide.data)
+			const challengeMessages = chatManagerClass.getChallengeMessages(currentSlide.data)
 			// Only allow normal scrolling if there are messages (length > 0)
 			return !isEmpty(challengeMessages)
 		}
-		const careerMessages = getChatManagerClass().getCareerChatMessages(careerUUID)
+		const careerMessages = chatManagerClass.getCareerChatMessages(careerUUID)
 		return !isEmpty(careerMessages)
 	}, [careerUUID, navigationManager])
 

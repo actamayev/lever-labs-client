@@ -105,13 +105,6 @@ class WorkbenchClass {
 	}
 }
 
-let workbenchClassInstance: WorkbenchClass | null = null
+const workbenchClass = new WorkbenchClass()
 
-export const getWorkbenchClass = (): WorkbenchClass => {
-	if (!workbenchClassInstance) {
-		workbenchClassInstance = new WorkbenchClass()
-	}
-	return workbenchClassInstance
-}
-
-export default getWorkbenchClass
+export default workbenchClass

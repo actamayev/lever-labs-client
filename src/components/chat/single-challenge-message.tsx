@@ -14,9 +14,9 @@ import { cn } from "../../lib/shadcn/utils"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
-import getChatManagerClass from "../../classes/chat-manager-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 interface SingleCareerQuestMessageProps {
 	message: ChallengeChatMessage
@@ -62,7 +62,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 	const isHintRequest = message.isHintRequest
 	const isHintResponse = message.isHintResponse
 	const isEvaluationResult = !isUndefined(message.evaluationResult)
-	const cppCode = getChatManagerClass().getCppCode(cqChallengeData)
+	const cppCode = chatManagerClass.getCppCode(cqChallengeData)
 	const shouldShowHintButton = message.shouldShowHintButton && cqChallengeData.challengeUUID && cppCode
 	const isStreamingWithNoContent = message.isStreaming && isEmpty(message.content.trim())
 
@@ -132,7 +132,7 @@ function SingleCareerQuestMessage({ message, cqChallengeData }: SingleCareerQues
 		)
 	}
 
-	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
+	const profilePictureUrl = personalInfoClass.profilePictureUrl
 
 	return (
 		<div

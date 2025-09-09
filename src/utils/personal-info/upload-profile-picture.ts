@@ -1,10 +1,10 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import getToastClass from "../../classes/toast-class"
+import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
-import getPersonalInfoClass from "../../classes/personal-info-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import personalInfoClass from "../../classes/personal-info-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function uploadProfilePicture(
 	selectedImage: File,
@@ -12,17 +12,17 @@ export default async function uploadProfilePicture(
 ) : Promise<void> {
 	try {
 		setIsLoading(true)
-		const uploadProfilePictureResponse = await getBlueDotApiClientClass().personalInfoDataService.uploadProfilePicture(selectedImage)
+		const uploadProfilePictureResponse = await blueDotApiClient.personalInfoDataService.uploadProfilePicture(selectedImage)
 		if (!isEqual(uploadProfilePictureResponse.status, 200) || isNonSuccessResponse(uploadProfilePictureResponse.data)) {
 			return
 		}
-		getPersonalInfoClass().setProfilePictureUrl(uploadProfilePictureResponse.data.profilePictureUrl)
-		getToastClass().positive({
+		personalInfoClass.setProfilePictureUrl(uploadProfilePictureResponse.data.profilePictureUrl)
+		toastClass.positive({
 			title: "New profile picture uploaded"
 		})
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to upload profile picture at this time. Please reload page and try again"
 		})
 	} finally {

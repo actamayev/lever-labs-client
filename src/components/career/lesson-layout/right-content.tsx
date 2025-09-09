@@ -3,7 +3,7 @@ import { AnimatePresence, MotionProps, motion } from "framer-motion"
 import { ReactNode } from "react"
 import Image from "next/image"
 import ChallengeSection from "./challenge-section"
-import getCareerQuestClass from "../../../classes/career-quest-class"
+import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
 import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
 import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
@@ -11,8 +11,8 @@ import getNavigationManagerClass from "../../../classes/navigation-manager-class
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function RightContent({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const rightContent = getCareerQuestClass().getRightContent(careerData.careerUUID)
-	const isDataReady = getCareerQuestClass().hasRetrievedAllChallengesForCareer(careerData.careerUUID)
+	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
+	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
 	const isTransitioning = getNavigationManagerClass().getIsTransitioning(careerData.careerUUID)
 
 	// Helper function to get transition props

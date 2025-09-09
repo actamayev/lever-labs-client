@@ -7,10 +7,10 @@ import { Avatar, AvatarFallback } from "@/components/shadcn/ui/avatar"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "./custom-sidebar-button"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
-import getPersonalInfoClass from "../../../classes/personal-info-class"
+import personalInfoClass from "../../../classes/personal-info-class"
 
 function ProfileSidebarButton(): React.ReactNode {
-	const profilePictureUrl = getPersonalInfoClass().profilePictureUrl
+	const profilePictureUrl = personalInfoClass.profilePictureUrl
 
 	return (
 		<SidebarMenu>

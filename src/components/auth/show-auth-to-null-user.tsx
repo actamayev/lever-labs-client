@@ -3,10 +3,10 @@
 import { observer } from "mobx-react"
 import Login from "./login/login-component"
 import Register from "./register/register-component"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 
 function ShowAuthToNullUser(): React.ReactNode {
-	if (getAuthClass().showLoginOrRegister === "Register") {
+	if (authClass.showLoginOrRegister === "Register") {
 		return <Register />
 	}
 	return <Login />

@@ -1,24 +1,24 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import getToastClass from "../../classes/toast-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import getChatManagerClass from "../../classes/chat-manager-class"
+import toastClass from "../../classes/toast-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function sendChallengeChatMessage(
 	careerUUIDChallengeUUID: CareerUUIDChallengeUUID,
 	message: string
 ): Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
-		const userCode = getChatManagerClass().getCppCode(careerUUIDChallengeUUID)
+		if (authClass.isFinishedWithSignup === false) return
+		const userCode = chatManagerClass.getCppCode(careerUUIDChallengeUUID)
 
-		getChatManagerClass().resetChallengeStreamingState(careerUUIDChallengeUUID)
-		getChatManagerClass().setChallengeStreaming(careerUUIDChallengeUUID, true)
+		chatManagerClass.resetChallengeStreamingState(careerUUIDChallengeUUID)
+		chatManagerClass.setChallengeStreaming(careerUUIDChallengeUUID, true)
 
-		const response = await getBlueDotApiClientClass().chatDataService.sendChallengeMessage({
+		const response = await blueDotApiClient.chatDataService.sendChallengeMessage({
 			careerUUID: careerUUIDChallengeUUID.careerUUID,
 			message,
 			userCode,
@@ -26,10 +26,10 @@ export default async function sendChallengeChatMessage(
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 
-		getChatManagerClass().setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
+		chatManagerClass.setChallengeStreamId(careerUUIDChallengeUUID, response.data.streamId)
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to send message",
 			description: "Please reload the page and try again"
 		})

@@ -2,30 +2,30 @@
 
 import { observer } from "mobx-react"
 import { useMemo } from "react"
-import getSensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../classes/sensor-data-class"
 
 function MeetPipS8P3ColorViz(): React.ReactNode {
 	// Get latest RGB values
 	const latestRed = useMemo((): number => {
-		return getSensorDataClass().redValue.length > 0
-			? getSensorDataClass().redValue[getSensorDataClass().redValue.length - 1]
+		return sensorDataClass.redValue.length > 0
+			? sensorDataClass.redValue[sensorDataClass.redValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getSensorDataClass().redValue, getSensorDataClass().dataVersion])
+	}, [sensorDataClass.redValue, sensorDataClass.dataVersion])
 
 	const latestGreen = useMemo((): number => {
-		return getSensorDataClass().greenValue.length > 0
-			? getSensorDataClass().greenValue[getSensorDataClass().greenValue.length - 1]
+		return sensorDataClass.greenValue.length > 0
+			? sensorDataClass.greenValue[sensorDataClass.greenValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getSensorDataClass().greenValue, getSensorDataClass().dataVersion])
+	}, [sensorDataClass.greenValue, sensorDataClass.dataVersion])
 
 	const latestBlue = useMemo((): number => {
-		return getSensorDataClass().blueValue.length > 0
-			? getSensorDataClass().blueValue[getSensorDataClass().blueValue.length - 1]
+		return sensorDataClass.blueValue.length > 0
+			? sensorDataClass.blueValue[sensorDataClass.blueValue.length - 1]
 			: 0
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getSensorDataClass().blueValue, getSensorDataClass().dataVersion])
+	}, [sensorDataClass.blueValue, sensorDataClass.dataVersion])
 
 	// Create RGB color string
 	const rgbColor = `rgb(${latestRed}, ${latestGreen}, ${latestBlue})`

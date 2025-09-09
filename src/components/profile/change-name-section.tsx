@@ -8,26 +8,26 @@ import { Label } from "../shadcn/ui/label"
 import { Button } from "../shadcn/ui/button"
 import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
-import getPersonalInfoClass from "../../classes/personal-info-class"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function ChangeNameSection(): React.ReactNode {
-	const [name, setName] = useState(getPersonalInfoClass().name || "")
+	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
 
 	// ADD THIS: Sync local state when MobX observable changes
 	useEffect((): void => {
-		if (getPersonalInfoClass().name === null) return
-		setName(getPersonalInfoClass().name || "")
+		if (personalInfoClass.name === null) return
+		setName(personalInfoClass.name || "")
 		setIsNameChanged(false) // Reset changed state when data loads
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getPersonalInfoClass().name])
+	}, [personalInfoClass.name])
 
 	// Name handling
 	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		setName(e.target.value)
-		setIsNameChanged(e.target.value !== getPersonalInfoClass().name)
+		setIsNameChanged(e.target.value !== personalInfoClass.name)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [getPersonalInfoClass().name])
+	}, [personalInfoClass.name])
 
 	const saveName = useCallback(async (): Promise<void> => {
 		await editName(name)

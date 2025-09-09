@@ -5,13 +5,12 @@ import { ChevronDown } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import { buttonVariants } from "../../shadcn/ui/button"
-import getGarageClass from "../../../classes/garage-class"
+import garageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
 import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
 
 function DisplayControls(): React.ReactNode {
-	const garageClass = getGarageClass()
 	return (
 		<div className="space-y-8">
 			{/* Pre-defined designs dropdown */}
@@ -41,7 +40,7 @@ function DisplayControls(): React.ReactNode {
 						{PRE_DEFINED_DESIGNS.map((design): React.ReactNode => (
 							<DropdownMenuItem
 								key={design.name}
-								onClick={(): void => getGarageClass().setSelectedDesign(design.name)}
+								onClick={(): void => garageClass.setSelectedDesign(design.name)}
 								className="cursor-pointer transition-none hover:!bg-polar rounded-lg text-xl"
 							>
 								{design.name}

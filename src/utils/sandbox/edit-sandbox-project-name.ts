@@ -3,20 +3,20 @@
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
-import getAuthClass from "../../classes/auth-class"
-import getToastClass from "../../classes/toast-class"
-import getSandboxClass from "../../classes/sandbox-class"
+import authClass from "../../classes/auth-class"
+import toastClass from "../../classes/toast-class"
+import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function editSandboxProjectName(projectUUID: SandboxProjectUUID, newProjectName: string): Promise<void> {
 	try {
-		if (getAuthClass().isFinishedWithSignup === false) return
-		const project = getSandboxClass().sandboxProjects.get(projectUUID)
+		if (authClass.isFinishedWithSignup === false) return
+		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project) || project.projectName === newProjectName) return
 
-		getSandboxClass().updateProjectName(projectUUID, newProjectName)
-		const editSandboxProjectNameResponse = await getBlueDotApiClientClass().sandboxDataService.editSandboxProjectName(
+		sandboxClass.updateProjectName(projectUUID, newProjectName)
+		const editSandboxProjectNameResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectName(
 			project.sandboxProjectUUID,
 			newProjectName
 		)
@@ -25,7 +25,7 @@ export default async function editSandboxProjectName(projectUUID: SandboxProject
 		}
 	} catch (error) {
 		console.error(error)
-		getToastClass().negative({
+		toastClass.negative({
 			title: "Unable to edit project name",
 			description: "Please reload the page and try again"
 		})

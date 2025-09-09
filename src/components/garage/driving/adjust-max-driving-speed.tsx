@@ -2,12 +2,12 @@
 
 import { observer } from "mobx-react"
 import { Slider } from "../../shadcn/ui/slider"
-import getGarageClass from "../../../classes/garage-class"
+import garageClass from "../../../classes/garage-class"
 
 function AdjustMaxDrivingSpeed(): React.ReactNode {
 	const handleValueChange = (value: number[]): void => {
 		const newMaxSpeed = value[0]
-		getGarageClass().setMotorThrottlePercent(newMaxSpeed)
+		garageClass.setMotorThrottlePercent(newMaxSpeed)
 	}
 
 	const handleKeyDown = (event: React.KeyboardEvent): void => {
@@ -29,12 +29,12 @@ function AdjustMaxDrivingSpeed(): React.ReactNode {
 		>
 			<div className="h-full relative">
 				<Slider
-					defaultValue={[getGarageClass().motorThrottlePercent]}
+					defaultValue={[garageClass.motorThrottlePercent]}
 					max={100}
 					step={1}
 					onValueChange={handleValueChange}
 					className="h-full duration-0"
-					value={[getGarageClass().motorThrottlePercent]}
+					value={[garageClass.motorThrottlePercent]}
 					onKeyDown={handleKeyDown}
 					orientation="vertical"
 					size={80}

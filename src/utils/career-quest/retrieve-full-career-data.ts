@@ -2,32 +2,32 @@
 
 import isEqual from "lodash-es/isEqual"
 import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
-import getAuthClass from "../../classes/auth-class"
+import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
-import getCareerQuestClass from "../../classes/career-quest-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
-import getChatManagerClass from "../../classes/chat-manager-class"
+import careerQuestClass from "../../classes/career-quest-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import chatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
 export default async function retrieveFullCareerData(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (
-			getAuthClass().isFinishedWithSignup === false ||
-			getCareerQuestClass().isRetrievingCareerData(careerUUID) ||
-			getCareerQuestClass().hasRetrievedAllChallengesForCareer(careerUUID)
+			authClass.isFinishedWithSignup === false ||
+			careerQuestClass.isRetrievingCareerData(careerUUID) ||
+			careerQuestClass.hasRetrievedAllChallengesForCareer(careerUUID)
 		) return
 
 		// Set loading state for entire career
-		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, true)
+		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await getBlueDotApiClientClass().careerQuestDataService.retrieveCareerProgressData(careerUUID)
+		const careerResponse = await blueDotApiClient.careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")
 		}
 
 		// Get challenge sections to create a lookup map
-		const challengeSections = getCareerQuestClass().getChallengeSectionByChallengeUUID(careerUUID)
+		const challengeSections = careerQuestClass.getChallengeSectionByChallengeUUID(careerUUID)
 
 		// Create a map for quick lookup: challengeUUID -> challengeSection
 		const challengeMap = new Map(
@@ -105,7 +105,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 
 			const isCompleted = challengeData.hasEverBeenCorrect
 
-			await getCareerQuestClass().setChallengeRetrievedData(
+			await careerQuestClass.setChallengeRetrievedData(
 				careerUUIDChallengeUUID,
 				transformedMessages,
 				challengeData.sandboxJson,
@@ -127,22 +127,22 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		})
 
 		// Set the career chat messages in the career quest class
-		getChatManagerClass().setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
+		chatManagerClass.setCareerChatRetrievedData(careerUUID, transformedCareerChatMessages)
 
 		// UPDATED: Set saved position and seen challenges from API response
 		const savedPosition = careerResponse.data.currentChallengeUuidOrTextUuid || ""
 		const seenChallengeUUIDs = careerResponse.data.seenChallengeUUIDs
 		const furthestSeenPosition = careerResponse.data.furthestSeenChallengeUuidOrTextUuid || ""
 
-		getCareerQuestClass().setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
-		getCareerQuestClass().setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
-		getCareerQuestClass().setFurthestSeenPosition(careerUUID, furthestSeenPosition) // NEW: Set furthest seen position
+		careerQuestClass.setSavedPosition(careerUUID, savedPosition) // Remove isLocked parameter
+		careerQuestClass.setSeenChallenges(careerUUID, seenChallengeUUIDs) // NEW method
+		careerQuestClass.setFurthestSeenPosition(careerUUID, furthestSeenPosition) // NEW: Set furthest seen position
 
 		// Clear loading state for entire career
-		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, false)
-		getCareerQuestClass().setHasRetrievedAllChallengesForCareer(careerUUID, true)
+		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)
+		careerQuestClass.setHasRetrievedAllChallengesForCareer(careerUUID, true)
 	} catch (error) {
 		console.error(error)
-		getCareerQuestClass().setIsRetrievingCareerData(careerUUID, false)
+		careerQuestClass.setIsRetrievingCareerData(careerUUID, false)
 	}
 }

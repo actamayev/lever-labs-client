@@ -5,14 +5,14 @@ import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { CredentialResponse } from "@react-oauth/google"
-import getPipClass from "../../classes/pip-class"
-import getAuthClass from "../../classes/auth-class"
-import getStudentClass from "../../classes/student-class"
-import getTeacherClass from "../../classes/teacher-class"
+import pipClass from "../../classes/pip-class"
+import authClass from "../../classes/auth-class"
+import studentClass from "../../classes/student-class"
+import teacherClass from "../../classes/teacher-class"
 import { isErrorResponses } from "../../utils/type-checks"
 import useTypedNavigate from "../navigate/use-typed-navigate"
-import getPersonalInfoClass from "../../classes/personal-info-class"
-import getBlueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import personalInfoClass from "../../classes/personal-info-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
@@ -23,16 +23,16 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 	// eslint-disable-next-line complexity
 	return useCallback(async (successResponse: CredentialResponse): Promise<void> => {
 		try {
-			getAuthClass().setAuthenticating(true)
+			authClass.setAuthenticating(true)
 			if (
 				isUndefined(successResponse.credential) ||
 				isUndefined(successResponse.clientId) ||
 				typeof window === "undefined"
 			) return
 
-			const siteTheme = getPersonalInfoClass().defaultSiteTheme
+			const siteTheme = personalInfoClass.defaultSiteTheme
 
-			const googleCallbackResponse = await getBlueDotApiClientClass().authDataService.googleLoginCallback(
+			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
 
@@ -40,7 +40,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				throw Error("Unable to log in")
 			}
 
-			getAuthClass().setAuthState({
+			authClass.setAuthState({
 				isAuthenticated: true,
 				hasCompletedSignup: !googleCallbackResponse.data.isNewUser
 			})
@@ -49,14 +49,14 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 				return navigate("/register-google") // Smooth navigation, no refresh
 			}
 
-			getPersonalInfoClass().setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
-			getTeacherClass().setTeacherData(googleCallbackResponse.data.teacherData)
-			getPipClass().setPipData(googleCallbackResponse.data.userPipData)
+			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
+			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
+			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			const classroomInfo = googleCallbackResponse.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
 				...classroom,
 				activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
 			}))
-			getStudentClass().setRetrievedStudentData(classroomInfo)
+			studentClass.setRetrievedStudentData(classroomInfo)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 
 			// ✅ Navigate smoothly if on auth pages (no refresh)
@@ -67,7 +67,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 		} catch (error) {
 			console.error(error)
 		} finally {
-			getAuthClass().setAuthenticating(false)
+			authClass.setAuthenticating(false)
 		}
 	}, [navigate, pathname])
 }
