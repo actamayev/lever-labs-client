@@ -72,17 +72,35 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	[LOOP_BLOCK_TYPES.WAIT]: {
 		definition: {
 			init: function(this: Blockly.Block): void {
+				// Create the text field first so we can reference it
+				const secondsField = new Blockly.FieldLabelSerializable("second")
+
 				this.appendDummyInput()
 					.appendField("Wait")
 					.appendField(
-						new Blockly.FieldNumber(1, 0), // value: 1000, min: 0
+						new Blockly.FieldNumber(1, 0), // value: 1, min: 0
 						LOOP_BLOCK_TYPES.WAIT
 					)
-					.appendField("second")
+					.appendField(secondsField, "SECONDS_LABEL")
+
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Wait for a certain number of seconds")
+
+				// Function to update the seconds label
+				const updateSecondsLabel = (newValue: number | string) => {
+					const label = newValue === 1 ? "second" : "seconds"
+					secondsField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				const numberField = this.getField(LOOP_BLOCK_TYPES.WAIT) as Blockly.FieldNumber
+				numberField.setValidator(updateSecondsLabel)
+
+				// Set initial label
+				updateSecondsLabel(1)
 			},
 			keywords: ["wait", "pause", "sleep", "seconds", "time"]
 		},
