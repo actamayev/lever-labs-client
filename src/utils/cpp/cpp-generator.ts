@@ -78,14 +78,12 @@ class CppGenerator {
 	}
 }
 
-let cppGeneratorInstance: CppGenerator | null = null
+let getCppGeneratorInstance: CppGenerator | null = null
 
 export function getCppGenerator(): CppGenerator {
-	if (!cppGeneratorInstance) {
-		cppGeneratorInstance = new CppGenerator()
+	if (!getCppGeneratorInstance) {
+		getCppGeneratorInstance = new CppGenerator()
 	}
-	return cppGeneratorInstance
+	return getCppGeneratorInstance
 }
 
-// Export singleton instance for block generators (legacy compatibility)
-export const cppGenerator = getCppGenerator()

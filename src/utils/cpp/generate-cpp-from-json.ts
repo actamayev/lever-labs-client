@@ -22,8 +22,7 @@ export default async function generateCppFromJson(blocklyJson: BlocklyJson): Pro
 		}
 
 		// Get the cpp generator and generate code
-		const cppGenerator = getCppGenerator()
-		const cppCode = await cppGenerator.workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
+		const cppCode = await getCppGenerator().workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
 
 		// Clean up the temporary workspace
 		tempWorkspace.dispose()

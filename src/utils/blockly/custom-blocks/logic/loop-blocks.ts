@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
-import { cppGenerator } from "../../../cpp/cpp-generator"
+import { getCppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
@@ -31,7 +31,7 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 	// 	},
 	// 	generator: (block: Blockly.Block): string => {
 	// 		const until = block.getFieldValue(LOOP_FIELD_VALUES.WHILE_MODE) === "UNTIL"
-	// 		let condition = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
+	// 		let condition = getCppGenerator().valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
 	// 		if (until) {
 	// 			condition = `!(${condition})`
 	// 		}
@@ -63,8 +63,8 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["repeat", "loop", "iterate", "count", "times", "number", "numeric"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const repeats = cppGenerator.valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
-			const loopVar = cppGenerator.nameDB_?.getDistinctName("count", "VARIABLE") || "i"
+			const repeats = getCppGenerator().valueToCode(block, LOOP_FIELD_VALUES.REPEAT_TIMES, Order.ASSIGNMENT) || "0"
+			const loopVar = getCppGenerator().nameDB_?.getDistinctName("count", "VARIABLE") || "i"
 			const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.REPEAT_DO)
 			return `for (int ${loopVar} = 0; ${loopVar} < ${repeats}; ${loopVar}++) {\n${bodyCode}}\n`
 		}

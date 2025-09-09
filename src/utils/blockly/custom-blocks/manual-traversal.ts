@@ -1,7 +1,7 @@
 "use client"
 
 import * as Blockly from "blockly"
-import { cppGenerator } from "../../cpp/cpp-generator"
+import { getCppGenerator } from "../../cpp/cpp-generator"
 
 export function generateStatementCode(
 	block: Blockly.Block,
@@ -14,16 +14,16 @@ export function generateStatementCode(
 	if (firstBlock) {
 		let currentBlock: Blockly.Block | null = firstBlock
 		while (currentBlock) {
-			const code = cppGenerator.blockToCode(currentBlock)
+			const code = getCppGenerator().blockToCode(currentBlock)
 			if (Array.isArray(code)) {
 				// Add additional indentation for each line
 				bodyCode += code[0].split("\n")
-					.map((line): string => line ? cppGenerator.INDENT + line : line)
+					.map((line): string => line ? getCppGenerator().INDENT + line : line)
 					.join("\n") + "\n"
 			} else if (code) {
 				// Add additional indentation for each line
 				bodyCode += code.split("\n")
-					.map((line): string => line ? cppGenerator.INDENT + line : line)
+					.map((line): string => line ? getCppGenerator().INDENT + line : line)
 					.join("\n")
 			}
 			currentBlock = currentBlock.getNextBlock()

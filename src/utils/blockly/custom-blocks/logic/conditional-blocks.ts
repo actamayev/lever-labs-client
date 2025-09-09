@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
-import { cppGenerator } from "../../../cpp/cpp-generator"
+import { getCppGenerator } from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
 import { CONDITIONAL_BLOCK_TYPES, CONDITIONAL_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
@@ -26,7 +26,7 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["if", "then", "else", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const condition = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
+			const condition = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF_CONDITION, Order.NONE) || "false"
 			const bodyCode = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF_DO)
 			return `if (${condition}) {\n${bodyCode}}\n`
 		}
@@ -51,7 +51,7 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["if", "else", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const condition = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const condition = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
 			const ifCode = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF1_DO)
 			const elseCode = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.ELSE_DO)
 			return `if (${condition}) {\n${ifCode}} else {\n${elseCode}}\n`
@@ -82,8 +82,8 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["if", "else", "elseif", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const condition1 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
-			const condition2 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
+			const condition1 = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const condition2 = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
 			const if1Code = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF1_DO)
 			const if2Code = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF2_DO)
 			const elseCode = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.ELSE_DO)
@@ -120,9 +120,9 @@ export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["if", "else", "elseif", "condition", "decision", "branch", "test", "check"]
 		},
 		generator: (block: Blockly.Block): string => {
-			const condition1 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
-			const condition2 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
-			const condition3 = cppGenerator.valueToCode(block, CONDITIONAL_FIELD_VALUES.IF3_CONDITION, Order.NONE) || "false"
+			const condition1 = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF1_CONDITION, Order.NONE) || "false"
+			const condition2 = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF2_CONDITION, Order.NONE) || "false"
+			const condition3 = getCppGenerator().valueToCode(block, CONDITIONAL_FIELD_VALUES.IF3_CONDITION, Order.NONE) || "false"
 			const if1Code = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF1_DO)
 			const if2Code = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF2_DO)
 			const if3Code = generateStatementCode(block, CONDITIONAL_FIELD_VALUES.IF3_DO)
