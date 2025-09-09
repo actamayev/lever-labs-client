@@ -10,7 +10,7 @@ import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"
 import { useRouter } from "next/navigation"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import HubStudentsDialog from "./hub-students-dialog"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
@@ -28,9 +28,24 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	}
 	const router = useRouter()
 	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)
+	const hasNavigationHistory = useRef(false)
+
+	// Track if user has navigation history from within the app
+	useEffect(() => {
+		// Check if there's a referrer from the same origin
+		if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
+			hasNavigationHistory.current = true
+		}
+	}, [])
 
 	const handleBack = useCallback((): void => {
-		router.back()
+		// If user came directly to this page (no internal navigation), go to career-quest page
+		// Otherwise, use normal back navigation
+		if (!hasNavigationHistory.current) {
+			router.push("/career-quest")
+		} else {
+			router.back()
+		}
 		stopCareerTrigger()
 	}, [router])
 
