@@ -10,21 +10,21 @@ import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
 import { Button } from "../../shadcn/ui/button"
-import getPipClass from "../../../classes/pip-class"
-import getSandboxClass from "../../../classes/sandbox-class"
+import pipClass from "../../../classes/pip-class"
+import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import BlocklySearchBar from "../blockly-search-bar"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
-import getPersonalInfoClass from "../../../classes/personal-info-class"
+import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
-import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
+import useRetrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 
@@ -33,18 +33,21 @@ const BlocklyComponent = lazy(() => import("../blockly-component"))
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
-	useEffect((): void => void retrieveSingleSandboxProject(projectUUID), [projectUUID])
+	const retrieveSingleSandboxProject = useRetrieveSingleSandboxProject()
+	useEffect((): void => {
+		void retrieveSingleSandboxProject(projectUUID)
+	}, [projectUUID, retrieveSingleSandboxProject])
 	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)
 	const previousSearchingRef = useRef(false)
-	const isLoading = getSandboxClass().isRetrievingSingleProject(projectUUID)
+	const isLoading = sandboxClass.isRetrievingSingleProject(projectUUID)
 
 	const project = useMemo((): SandboxProjectWithStreaming | undefined => {
-		return getSandboxClass().sandboxProjects.get(projectUUID)
+		return sandboxClass.sandboxProjects.get(projectUUID)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [projectUUID, getSandboxClass().sandboxProjects.size])
+	}, [projectUUID, sandboxClass.sandboxProjects.size])
 
 	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
@@ -88,14 +91,14 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 		if (isEqual(stripBlockPositions(newBlocklyJson), stripBlockPositions(project.sandboxJson))) {
 			if (isEmpty(project.cppCode)) {
 				const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
-				getSandboxClass().setCppCode(projectUUID, generatedCppCode)
+				sandboxClass.setCppCode(projectUUID, generatedCppCode)
 			}
 			return
 		}
 
 		const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
-		getSandboxClass().setCppCode(projectUUID, generatedCppCode)
-		await getSandboxClass().updateProjectJson(projectUUID, newBlocklyJson)
+		sandboxClass.setCppCode(projectUUID, generatedCppCode)
+		await sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
 		editSandboxProject(projectUUID, newBlocklyJson)
 	}, [project, isLoading, projectUUID])
 
@@ -150,6 +153,9 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 		return (): void => document.removeEventListener("keydown", handleKeyDown)
 	}, [])
 
+	// console.log("project", project)
+	// console.log("isLoading", isLoading)
+
 	if (!project || isLoading) {
 		return (
 			<div className="p-6">
@@ -179,7 +185,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 				<div
 					className="flex flex-col min-h-0 transition-all duration-300 ease-in-out m-4"
 					style={{
-						width: getPersonalInfoClass().sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
+						width: personalInfoClass.sandboxNotesOpen ? "calc(60% - 1rem)" : "calc(100% - 2rem)"
 					}}
 				>
 					<div className="min-h-0 flex flex-col h-full">
@@ -201,7 +207,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 							<div className="flex gap-3 pt-3 pb-2 px-4">
 								<AnimatedStateButton
 									buttonText="SEND CODE"
-									isDisabled={isEmpty(project.cppCode) || getPipClass().isSendingCppToPip}
+									isDisabled={isEmpty(project.cppCode) || pipClass.isSendingCppToPip}
 									onClick={async (event): Promise<void> => {
 										return await sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())
 									}}
@@ -223,14 +229,14 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 				<div
 					className="flex flex-col h-full transition-all duration-300 ease-in-out border-swan"
 					style={{
-						width: getPersonalInfoClass().sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
-						borderLeftWidth: getPersonalInfoClass().sandboxNotesOpen ? "2px" : "0",
-						opacity: getPersonalInfoClass().sandboxNotesOpen ? 1 : 0,
-						padding: getPersonalInfoClass().sandboxNotesOpen ? "1rem" : "0",
-						visibility: getPersonalInfoClass().sandboxNotesOpen ? "visible" : "hidden"
+						width: personalInfoClass.sandboxNotesOpen ? "calc(40% - 1rem)" : "0",
+						borderLeftWidth: personalInfoClass.sandboxNotesOpen ? "2px" : "0",
+						opacity: personalInfoClass.sandboxNotesOpen ? 1 : 0,
+						padding: personalInfoClass.sandboxNotesOpen ? "1rem" : "0",
+						visibility: personalInfoClass.sandboxNotesOpen ? "visible" : "hidden"
 					}}
 				>
-					{getPersonalInfoClass().sandboxNotesOpen && (
+					{personalInfoClass.sandboxNotesOpen && (
 						<ProjectTabs projectUUID={projectUUID} />
 					)}
 				</div>
