@@ -1,4 +1,4 @@
-import { BlocklyJson } from "@bluedotrobots/common-ts"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 
 // eslint-disable-next-line complexity
 export default function normalizeSandboxJson (sandboxJson: unknown): BlocklyJson {

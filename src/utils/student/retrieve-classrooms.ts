@@ -6,7 +6,7 @@ import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveClassrooms(): Promise<void> {
 	try {
@@ -19,7 +19,7 @@ export default async function retrieveClassrooms(): Promise<void> {
 
 		studentClass.setIsRetrievingStudentData(true)
 
-		const studentClassroomsResponse = await blueDotApiClientClass.studentDataService.retrieveStudentClassrooms()
+		const studentClassroomsResponse = await blueDotApiClient.studentDataService.retrieveStudentClassrooms()
 		if (!isEqual(studentClassroomsResponse.status, 200) || isErrorResponse(studentClassroomsResponse.data)) {
 			throw Error ("Unable to retrieve student classroom data")
 		}

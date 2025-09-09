@@ -1,7 +1,7 @@
 "use client"
 
 import { z } from "zod"
-import { PipUUID } from "@bluedotrobots/common-ts"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 
 export const addPipSchema = z.object({
 	selectedWiFiNetworkName: z.string().optional(),

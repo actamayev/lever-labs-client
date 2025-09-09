@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react" // Add useEffect
 import { Save } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
@@ -13,6 +13,14 @@ import personalInfoClass from "../../classes/personal-info-class"
 function ChangeNameSection(): React.ReactNode {
 	const [name, setName] = useState(personalInfoClass.name || "")
 	const [isNameChanged, setIsNameChanged] = useState(false)
+
+	// ADD THIS: Sync local state when MobX observable changes
+	useEffect((): void => {
+		if (personalInfoClass.name === null) return
+		setName(personalInfoClass.name || "")
+		setIsNameChanged(false) // Reset changed state when data loads
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [personalInfoClass.name])
 
 	// Name handling
 	const handleNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {

@@ -1,23 +1,22 @@
-import { UUID } from "crypto"
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import careerQuestClass from "../../classes/career-quest-class"
 
 export default function useJoinHub():(
 	classCode: ClassCode,
-	hubId: UUID
+	hubId: HubUUID
 ) => Promise<void> {
 	const navigate = useTypedNavigate()
 
 	// eslint-disable-next-line complexity
-	return useCallback(async (classCode: ClassCode, hubId: UUID): Promise<void> => {
+	return useCallback(async (classCode: ClassCode, hubId: HubUUID): Promise<void> => {
 		try {
 			const isStudentInHub = studentClass.checkIfStudentInHub(classCode, hubId)
 			if (isStudentInHub) {
@@ -26,7 +25,7 @@ export default function useJoinHub():(
 				})
 				return
 			}
-			const joinHubResponse = await blueDotApiClientClass.studentDataService.joinHub(classCode, hubId)
+			const joinHubResponse = await blueDotApiClient.studentDataService.joinHub(classCode, hubId)
 			if (!isEqual(joinHubResponse.status, 200) || isNonSuccessResponse(joinHubResponse.data)) {
 				throw Error("Unable to join hub")
 			}

@@ -1,18 +1,21 @@
 import { headers } from 'next/headers'
+import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 
 export interface AuthState {
 	isAuthenticated: boolean
 	hasCompletedSignup: boolean
 	userId: number | null
 	username: string | null
-	shouldShowAuthComponent: boolean
+	theme: SiteThemes
+	isIncompleteSignup: boolean // Add this
 }
 
 export async function getAuthState(): Promise<AuthState> {
 	const headersList = await headers()
 
-	// Try to get consolidated auth data first (new format)
+	// Get consolidated auth data from middleware
 	const authDataHeader = headersList.get('x-auth-data')
+	
 	if (authDataHeader) {
 		try {
 			const authData = JSON.parse(authDataHeader)
@@ -21,25 +24,21 @@ export async function getAuthState(): Promise<AuthState> {
 				hasCompletedSignup: authData.hasCompletedSignup,
 				userId: authData.userId,
 				username: authData.username || null,
-				shouldShowAuthComponent: headersList.get('x-show-auth-component') === 'true'
+				theme: authData.theme === "dark" ? "dark" : "light",
+				isIncompleteSignup: authData.state === 'authenticated-incomplete' // Add this
 			}
 		} catch (error) {
 			console.error('Failed to parse auth data header:', error)
 		}
 	}
 
-	// Fallback to old header format for backward compatibility
-	const authState = headersList.get('x-auth-state') || 'unauthenticated'
-	const userId = headersList.get('x-user-id')
-	const username = headersList.get('x-username')
-	const hasCompletedSignup = headersList.get('x-has-completed-signup') === 'true'
-	const shouldShowAuthComponent = headersList.get('x-show-auth-component') === 'true'
-
+	// Default to unauthenticated state if no header or parsing fails
 	return {
-		isAuthenticated: authState === 'authenticated' || authState === 'authenticated-incomplete',
-		hasCompletedSignup,
-		userId: userId ? parseInt(userId, 10) : null,
-		username: username || null,
-		shouldShowAuthComponent
+		isAuthenticated: false,
+		hasCompletedSignup: false,
+		userId: null,
+		username: null,
+		theme: "light",
+		isIncompleteSignup: false
 	}
 }

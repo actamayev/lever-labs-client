@@ -1,11 +1,11 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { PipData } from "@bluedotrobots/common-ts"
+import { PipData } from "@bluedotrobots/common-ts/types/pip"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function disconnectFromPip(
 	pipData: PipData
@@ -19,7 +19,7 @@ export default async function disconnectFromPip(
 			})
 		}
 
-		const connectToPipResponse = await blueDotApiClientClass.pipDataService.disconnectFromPip(pipData.pipUUID)
+		const connectToPipResponse = await blueDotApiClient.pipDataService.disconnectFromPip(pipData.pipUUID)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 			throw new Error("Disconnect from Pip failed")

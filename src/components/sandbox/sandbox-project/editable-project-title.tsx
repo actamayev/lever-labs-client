@@ -1,5 +1,5 @@
 "use client"
-import { SandboxProject } from "@bluedotrobots/common-ts"
+import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
 import { Input } from "../../shadcn/ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"

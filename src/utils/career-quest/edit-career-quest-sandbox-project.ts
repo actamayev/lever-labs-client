@@ -1,11 +1,12 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { BlocklyJson, ChallengeUUID } from "@bluedotrobots/common-ts"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function editCareerQuestSandboxProject(
 	challengeUUID: ChallengeUUID,
@@ -14,7 +15,7 @@ export default async function editCareerQuestSandboxProject(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const editCareerQuestSandboxProjectResponse = await blueDotApiClientClass.careerQuestDataService.editCareerQuestSandboxProject(
+		const editCareerQuestSandboxProjectResponse = await blueDotApiClient.careerQuestDataService.editCareerQuestSandboxProject(
 			challengeUUID,
 			newBlocklyJson
 		)

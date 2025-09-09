@@ -4,7 +4,7 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
 import Wheel from "@uiw/react-color-wheel"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import { ColorResult, HsvaColor, rgbaToHsva } from "@uiw/color-convert"
 import pipClass from "../../../classes/pip-class"
 import socketClass from "../../../classes/socket-class"
@@ -39,10 +39,11 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 			void serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = pipClass.selectedPip
 
 		if (
-			isNull(pipClass.selectedPip)
-			|| pipClass.selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip)
+			|| selectedPip.pipConnectionStatus === "offline"
 		) return
 
 		socketClass.emitToServer("new-led-colors", {
@@ -52,7 +53,7 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 			middleRightColor: colorResult.rgba,
 			backLeftColor: colorResult.rgba,
 			backRightColor: colorResult.rgba,
-			pipUUID: pipClass.selectedPip.pipUUID
+			pipUUID: selectedPip.pipUUID
 		})
 	}
 

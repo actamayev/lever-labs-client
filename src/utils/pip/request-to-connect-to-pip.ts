@@ -2,10 +2,10 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import { PipUUID } from "@bluedotrobots/common-ts"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
@@ -30,7 +30,7 @@ export default async function requestToConnectToPip(
 				})
 			}
 		}
-		const connectToPipResponse = await blueDotApiClientClass.pipDataService.requestToConnectToPip(foundPip.pipUUID)
+		const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(foundPip.pipUUID)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 			throw new Error("Connect to Pip failed")
@@ -42,17 +42,17 @@ export default async function requestToConnectToPip(
 		if (error instanceof AxiosError) {
 			if (isMessageResponse(error.response?.data)) {
 				// eslint-disable-next-line max-depth
-				if (error.response.data.message === "Someone is already connected to this Pip") {
+				if (error.response?.data.message === "Someone is already connected to this Pip") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: `Someone is already connected to ${foundPip?.pipName}`
 					})
-				} else if (error.response.data.message === "This Pip is not active/connected to the internet") {
+				} else if (error.response?.data.message === "This Pip is not active/connected to the internet") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: `${foundPip?.pipName} is not connected to the internet`
 					})
-				}  else if (error.response.data.message === "User hasn't registered this UUID") {
+				}  else if (error.response?.data.message === "User hasn't registered this UUID") {
 					return toastClass.negative({
 						title: "Unable to connect",
 						description: "Please register this Pip ID"

@@ -1,10 +1,12 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
+import { AxiosResponse } from "axios"
+import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
 
 export default async function stopCurrentlyRunningCode(
 	failSilently: boolean
@@ -13,12 +15,13 @@ export default async function stopCurrentlyRunningCode(
 
 	await sendDataToSerialOrApiTemplate({
 		buffer,
-		dataServiceEndpoint: (): ReturnType<typeof blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode> => {
-			if (isNull(pipClass.selectedPip)) {
+		dataServiceEndpoint: (): Promise<AxiosResponse<AllCommonResponses>>=> {
+			const selectedPip = pipClass.selectedPip
+			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClientClass.sandboxDataService.stopCurrentlyRunningCode(
-				pipClass.selectedPip.pipUUID
+			return blueDotApiClient.sandboxDataService.stopCurrentlyRunningCode(
+				selectedPip.pipUUID
 			)
 		},
 		errorTitle: "Unable to stop currently running code on Pip at this time",

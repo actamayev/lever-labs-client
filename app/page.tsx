@@ -1,5 +1,6 @@
 import Landing from "../src/page-components/landing"
 import { createMetadata } from "../src/utils/helmet-data/create-metadata"
+import PublicOnlyPage from "../src/components/layouts/classic-layout"
 
 export const metadata = createMetadata({
 	title: "Blue Dot Robots | The best way to learn robotics is with Pip",
@@ -11,5 +12,9 @@ export const metadata = createMetadata({
 })
 
 export default function Home(): React.ReactNode {
-	return <Landing />
+	return (
+		<PublicOnlyPage>
+			<Landing />
+		</PublicOnlyPage>
+	)
 }

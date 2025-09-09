@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "../../../src/components/authenticated-layout"
+import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import SchoolSettingsPage from "../../../src/components/school/school-settings-page"
 

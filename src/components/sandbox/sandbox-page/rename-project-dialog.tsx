@@ -1,6 +1,6 @@
 "use client"
 
-import { SandboxProject } from "@bluedotrobots/common-ts"
+import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { Dispatch, SetStateAction, useCallback } from "react"
 import {
 	Dialog,

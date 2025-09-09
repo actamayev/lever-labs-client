@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "../../../src/components/authenticated-layout"
+import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import { MEET_PIP } from "../../../src/utils/career-quest/career-quest-data"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"

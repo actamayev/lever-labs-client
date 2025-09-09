@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { observer } from "mobx-react"
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"

@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Edit, EllipsisVertical } from "lucide-react"
-import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts"
+import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts/types/api"
 import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../shadcn/ui/dropdown-menu"

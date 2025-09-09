@@ -4,8 +4,9 @@ import { useState, useEffect } from "react"
 import { cn } from "../../lib/shadcn/utils"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
+import { LinkAuthHeaderButton } from "../auth/auth-header-links"
 
-export default function HeaderNav(): React.ReactNode {
+export default function HeaderNav({ isIncompleteSignup = false }: { isIncompleteSignup: boolean }): React.ReactNode {
 	const [isScrolled, setIsScrolled] = useState(false)
 
 	useEffect((): () => void => {
@@ -41,7 +42,10 @@ export default function HeaderNav(): React.ReactNode {
 						isScrolled ? "flex" : "hidden sm:flex"
 					)}
 				>
-					<LoginLogoutHeaderItem />
+					{isIncompleteSignup ? <LinkAuthHeaderButton
+						title="FINISH REGISTRATION"
+						linkTo="/register-google"
+					/> : <LoginLogoutHeaderItem />}
 				</div>
 			</div>
 		</nav>

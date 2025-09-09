@@ -3,7 +3,7 @@
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
-import { FunSounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import { cn } from "../../../../lib/shadcn/utils"
 import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomFart } from "../../../icons/custom-fart"

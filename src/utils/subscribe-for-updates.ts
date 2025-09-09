@@ -2,9 +2,9 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import { EmailUpdatesRequest } from "@bluedotrobots/common-ts"
+import { EmailUpdatesRequest } from "@bluedotrobots/common-ts/types/api"
 import toastClass from "../classes/toast-class"
-import blueDotApiClientClass from "../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "./type-checks"
 
 export default async function subscribeForUpdates(
@@ -14,7 +14,7 @@ export default async function subscribeForUpdates(
 	try {
 		if (!values.email) return
 		setIsLoading(true)
-		const subscribeForUpdatesResponse = await blueDotApiClientClass.miscDataService.subscribeForUpdates(values.email)
+		const subscribeForUpdatesResponse = await blueDotApiClient.miscDataService.subscribeForUpdates(values.email)
 		if (!isEqual(subscribeForUpdatesResponse.status, 200) || isNonSuccessResponse(subscribeForUpdatesResponse.data)) {
 			throw new Error("Email subscription failed")
 		}

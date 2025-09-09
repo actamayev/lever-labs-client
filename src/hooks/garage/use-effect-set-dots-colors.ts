@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client"
 
 
@@ -5,16 +6,16 @@ import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
 import { useEffect, useCallback } from "react"
-import { LedControlData, MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
+import { LedControlData } from "@bluedotrobots/common-ts/types/garage"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-
 export default function useEffectSetDefaultColors(): void {
 	// Create a debounced emit function for the first useEffect
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+
 	const debouncedEmitLedColors = useCallback(
 		debounce((): void => {
 			if (isEmpty(garageClass.selectedDots)) return
@@ -60,18 +61,19 @@ export default function useEffectSetDefaultColors(): void {
 				return
 			}
 
+			const selectedPip = pipClass.selectedPip
 			if (
-				isNull(pipClass.selectedPip)
-				|| pipClass.selectedPip.pipConnectionStatus === "offline"
+				isNull(selectedPip)
+				|| selectedPip.pipConnectionStatus === "offline"
 				|| isEmpty(garageClass.selectedDots)
 			) return
 
-			socketClass.emitToServer("new-led-colors", {...ledControlData, pipUUID: pipClass.selectedPip.pipUUID })
+			socketClass.emitToServer("new-led-colors", {...ledControlData, pipUUID: selectedPip.pipUUID })
 		}, 10),
 		[garageClass.selectedColorRgba.r,
 			garageClass.selectedColorRgba.g,
 			garageClass.selectedColorRgba.b,
-			garageClass.selectedColorShade, pipClass.selectedPip, socketClass]
+			garageClass.selectedColorShade]
 	)
 
 	// This use
@@ -93,10 +95,9 @@ export default function useEffectSetDefaultColors(): void {
 				a: 1
 			}
 		)
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.selectedDots,
 		garageClass.selectedColorRgba.r,
 		garageClass.selectedColorRgba.g,
 		garageClass.selectedColorRgba.b,
-		garageClass.selectedColorShade, garageClass])
+		garageClass.selectedColorShade])
 }

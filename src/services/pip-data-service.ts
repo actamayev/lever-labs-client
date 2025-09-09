@@ -1,7 +1,8 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AddNewPipResponse, AddPipData, AllCommonResponses, ErrorResponse,
-	NonSuccessResponse, PipUUID, PreviouslyAddedPipsResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts"
+	NonSuccessResponse, PreviouslyAddedPipsResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
 export default class PipDataService extends BaseDataService {

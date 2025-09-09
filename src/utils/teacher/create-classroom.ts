@@ -2,11 +2,11 @@
 
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function createClassroom(
 	classroomName: string,
@@ -20,7 +20,7 @@ export default async function createClassroom(
 		setError("")
 		setSuccess("")
 
-		const createClassroomResponse = await blueDotApiClientClass.teacherDataService.createClassroom(classroomName)
+		const createClassroomResponse = await blueDotApiClient.teacherDataService.createClassroom(classroomName)
 
 		if (!isEqual(createClassroomResponse.status, 200) || isNonSuccessResponse(createClassroomResponse.data)) {
 			throw Error("Unable to create classroom")

@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 
 export function isValidClassCode(input: string): input is ClassCode {
 	// Check if the input is exactly 5 characters long

@@ -6,7 +6,7 @@ import { Control, FieldPath } from "react-hook-form"
 import { Input } from "@/components/shadcn/ui/input"
 import { Button } from "@/components/shadcn/ui/button"
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
-import { LoginRequest } from "@bluedotrobots/common-ts"
+import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
 
 interface PasswordFieldProps<T extends LoginRequest | RegisterFormValues> {
 	control: Control<T>

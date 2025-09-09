@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { CqChallengeData } from "@bluedotrobots/common-ts"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { CustomLightbulb } from "../icons/custom-lightbulb"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"

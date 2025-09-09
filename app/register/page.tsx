@@ -1,5 +1,6 @@
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 import RegisterComponent from "../../src/components/auth/register/register-component"
+import PublicOnlyPage from "../../src/components/layouts/classic-layout"
 
 export const metadata = createMetadata({
 	title: "Register",
@@ -10,5 +11,9 @@ export const metadata = createMetadata({
 })
 
 export default function Register(): React.ReactNode {
-	return <RegisterComponent />
+	return (
+		<PublicOnlyPage>
+			<RegisterComponent />
+		</PublicOnlyPage>
+	)
 }

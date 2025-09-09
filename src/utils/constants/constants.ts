@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { FunSounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import rgbToBlocklyColor from "../blockly/rgb-to-hex"
 
 export const bentoIconSize = 40

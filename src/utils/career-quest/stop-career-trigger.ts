@@ -2,11 +2,11 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { MessageBuilder } from "@bluedotrobots/common-ts"
+import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function stopCareerTrigger(): Promise<void> {
@@ -17,13 +17,14 @@ export default async function stopCareerTrigger(): Promise<void> {
 			await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			return
 		}
+		const selectedPip = pipClass.selectedPip
 		if (
-			isNull(pipClass.selectedPip) ||
-			pipClass.selectedPip.pipConnectionStatus === "offline"
+			isNull(selectedPip) ||
+			selectedPip.pipConnectionStatus === "offline"
 		) return
 
-		const stopScriptResponse = await blueDotApiClientClass.careerQuestDataService.stopCareerTrigger(
-			pipClass.selectedPip.pipUUID
+		const stopScriptResponse = await blueDotApiClient.careerQuestDataService.stopCareerTrigger(
+			selectedPip.pipUUID
 		)
 
 		if (!isEqual(stopScriptResponse.status, 200) || isNonSuccessResponse(stopScriptResponse.data)) {

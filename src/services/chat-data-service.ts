@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios"
-import { ErrorResponses, SuccessResponse, StartChatSuccess, OutgoingChallengeCheckCodeMessage,
-	AllCommonResponses, OutgoingSandboxChatData, OutgoingChallengeHintMessage,
-	OutgoingChallengeGeneralMessage, CheckCodeResponse, NonSuccessResponse,
-	ChallengeUUID, CareerUUID, OutgoingCareerMessage, SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { SuccessResponse, ErrorResponses, StartChatSuccess,
+	AllCommonResponses, CheckCodeResponse, NonSuccessResponse } from "@bluedotrobots/common-ts/types/api"
+import { ChallengeUUID, CareerUUID, SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
+import { OutgoingChallengeGeneralMessage, OutgoingChallengeCheckCodeMessage,
+	OutgoingChallengeHintMessage, OutgoingCareerMessage, OutgoingSandboxChatData } from "@bluedotrobots/common-ts/types/chat"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 

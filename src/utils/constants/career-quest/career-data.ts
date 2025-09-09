@@ -14,7 +14,7 @@ import {
 	Music,
 	Mountain
 } from "lucide-react"
-import { CareerUUID } from "@bluedotrobots/common-ts"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 
 // Meet Pip data
 export const meetPipData: CareerData = {

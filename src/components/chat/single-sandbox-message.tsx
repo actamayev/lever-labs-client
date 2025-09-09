@@ -6,7 +6,7 @@ import { isEmpty } from "lodash-es"
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
-import { SandboxChatMessage } from "@bluedotrobots/common-ts"
+import { SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
 import { CustomUserCircle } from "../icons/custom-user-circle"
@@ -22,7 +22,6 @@ interface SingleSandboxMessageProps {
 function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMessageProps): React.ReactNode {
 	const isUser = message.role === "user"
 	const isStreamingWithNoContent = isStreaming && isEmpty(message.content.trim())
-
 	// Don't render assistant messages that are streaming with no content yet
 	if (!isUser && isStreamingWithNoContent) {
 		return (
@@ -43,6 +42,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 		)
 	}
 
+	const profilePictureUrl = personalInfoClass.profilePictureUrl
 	return (
 		<div
 			key={`${new Date(message.timestamp).getTime()}-${message.role}`}
@@ -78,9 +78,9 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 
 			{isUser && (
 				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
-					{!isNull(personalInfoClass.profilePictureUrl) ? (
+					{!isNull(profilePictureUrl) ? (
 						<Image
-							src={personalInfoClass.profilePictureUrl}
+							src={profilePictureUrl}
 							alt="Your profile"
 							width={32}
 							height={32}

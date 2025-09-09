@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { FunSounds } from "@bluedotrobots/common-ts"
+import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import SoundActionButton from "../../garage/sounds-and-demos/sounds/sound-action-button"
 import useGarageSoundsUseEffect from "../../../hooks/garage/use-effect-garage-sounds"
 

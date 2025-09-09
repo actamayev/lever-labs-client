@@ -1,28 +1,28 @@
 "use client"
 
-import * as Blockly from "blockly"
+import type * as Blockly from "blockly/core"
 import { ReactNode } from "react"
 import {
-	BinaryEvaluationResult,
 	CareerUUID,
-	BlocklyJson,
 	ChallengeUUID,
-	CqChallengeData,
-} from "@bluedotrobots/common-ts"
+} from "@bluedotrobots/common-ts/types/utils"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
-import blueDotApiClient from "../classes/blue-dot-api-client-class"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+// Dynamic import - career definitions will be loaded on-demand
 import { getContentComponent } from "../utils/career-quest/career-quest-content"
-import generateCppFromJson from "../utils/cpp/generate-cpp-from-json"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
 import teacherClass from "./teacher-class"
 import chatManagerClass from "./chat-manager-class"
 import navigationManagerClass from "./navigation-manager-class"
+import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
+import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import blueDotApiClient from "./blue-dot-api-client-class"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -47,7 +47,7 @@ class CareerQuestClass {
 	constructor() {
 		makeAutoObservable(this)
 
-		this.initializeAllCareers(CAREER_DEFINITIONS)
+		// Career definitions will be loaded on-demand when needed
 	}
 
 	// ========================================
@@ -152,7 +152,6 @@ class CareerQuestClass {
 		this.careers.clear()
 		this.isDoneInitializing = false
 
-		// Re-initialize with fresh data
 		this.initializeAllCareers(CAREER_DEFINITIONS)
 	})
 
@@ -514,12 +513,12 @@ class CareerQuestClass {
 
 	// UPDATE: Add position update when retrieved data indicates completion
 	// UPDATE this existing method to trigger swiper updates:
-	public setChallengeRetrievedData = action((
+	public setChallengeRetrievedData = action(async (
 		cqInformation: CareerUUIDChallengeUUID,
 		messages: ChallengeChatMessage[],
 		sandboxJson: BlocklyJson | null,
 		isCompleted: boolean
-	): void => {
+	): Promise<void> => {
 		const career = this.getCareer(cqInformation.careerUUID)
 		if (!career) return
 
@@ -529,16 +528,18 @@ class CareerQuestClass {
 			this.updateSwiperNavigation(careerUUID)
 		}
 
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
+
 		// Normalize and generate CPP code
 		let normalizedJson: BlocklyJson
 		let cppCode: string
 		if (sandboxJson) {
 			normalizedJson = normalizeSandboxJson(sandboxJson)
-			cppCode = generateCppFromJson(normalizedJson)
+			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		} else {
 			// Get initial data from chat manager
 			normalizedJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
-			cppCode = generateCppFromJson(normalizedJson)
+			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		}
 
 		chatManagerClass.setChallengeRetrievedData(
@@ -553,8 +554,9 @@ class CareerQuestClass {
 		chatManagerClass.updateBlocklyJson(cqInformation, normalizedJson, cppCode)
 	})
 
-	public updateBlocklyJson = action((cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): void => {
-		const cppCode = generateCppFromJson(newBlocklyJson)
+	public updateBlocklyJson = action(async (cqInformation: CareerUUIDChallengeUUID, newBlocklyJson: BlocklyJson): Promise<void> => {
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
+		const cppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
 		chatManagerClass.updateBlocklyJson(cqInformation, newBlocklyJson, cppCode)
 	})
 
@@ -962,7 +964,7 @@ class CareerQuestClass {
 		return (challengeSection?.challengeData.toolboxConfig || {}) as Blockly.utils.toolbox.ToolboxDefinition
 	}
 
-	public resetChallengeBlocklyJsonToInitial = action((cqInformation: CareerUUIDChallengeUUID): boolean => {
+	public resetChallengeBlocklyJsonToInitial = action(async (cqInformation: CareerUUIDChallengeUUID): Promise<boolean> => {
 		// Get current and initial blockly JSON
 		const currentBlocklyJson = chatManagerClass.getUpdatedBlocklyJson(cqInformation)
 		const career = this.getCareer(cqInformation.careerUUID)
@@ -979,9 +981,10 @@ class CareerQuestClass {
 		if (isEqual(stripBlockPositions(currentBlocklyJson), stripBlockPositions(initialBlocklyJson))) {
 			return false
 		}
+		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 
 		// Reset to initial state
-		const cppCode = generateCppFromJson(initialBlocklyJson)
+		const cppCode = await getCppGenerator().generateCppFromJson(initialBlocklyJson)
 		chatManagerClass.updateBlocklyJson(cqInformation, initialBlocklyJson, cppCode)
 		return true
 	})
@@ -1079,7 +1082,7 @@ class CareerQuestClass {
 		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 		if (currentSlide.type !== "textParent") return false
 
-		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID)
+		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const currentTextChild = currentSlide.data.children[currentTextChildIndex]
 
 		// Check if we can advance past the current text child
@@ -1281,4 +1284,5 @@ class CareerQuestClass {
 }
 
 const careerQuestClass = new CareerQuestClass()
+
 export default careerQuestClass

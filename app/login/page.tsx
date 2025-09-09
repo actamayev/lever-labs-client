@@ -1,4 +1,5 @@
 import LoginComponent from "../../src/components/auth/login/login-component"
+import PublicOnlyPage from "../../src/components/layouts/classic-layout"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
@@ -11,5 +12,9 @@ export const metadata = createMetadata({
 
 // Simplified - no wrapper needed, middleware handles redirects
 export default function Login(): React.ReactNode {
-	return <LoginComponent />
+	return (
+		<PublicOnlyPage>
+			<LoginComponent />
+		</PublicOnlyPage>
+	)
 }

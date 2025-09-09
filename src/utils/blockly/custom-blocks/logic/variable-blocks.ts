@@ -2,9 +2,9 @@
 
 import * as Blockly from "blockly"
 import { Order } from "../../order"
-import { cppGenerator } from "../../../cpp/cpp-generator"
+import getCppGenerator from "../../../cpp/cpp-generator"
 import { logicCategoryColour } from "../../../constants/constants"
-import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "@bluedotrobots/common-ts"
+import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
 export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// Float variables (original implementation)
@@ -28,7 +28,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
-			const value = cppGenerator.valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0.0"
+			const value = getCppGenerator().valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0.0"
 
 			return `float ${varName} = ${value};\n`
 		}
@@ -53,7 +53,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
-			const value = cppGenerator.valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0.0"
+			const value = getCppGenerator().valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0.0"
 
 			return `${varName} = ${value};\n`
 		}
@@ -98,7 +98,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
-			const value = cppGenerator.valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0"
+			const value = getCppGenerator().valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "0"
 
 			return `int ${varName} = ${value};\n`
 		}
@@ -142,7 +142,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): string => {
 			const varName = block.getFieldValue(VARIABLE_FIELD_VALUES.VARIABLE_NAME)
-			const value = cppGenerator.valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "false"
+			const value = getCppGenerator().valueToCode(block, VARIABLE_FIELD_VALUES.VARIABLE_VALUE, Order.ASSIGNMENT) || "false"
 
 			return `bool ${varName} = ${value};\n`
 		}

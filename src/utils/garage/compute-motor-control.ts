@@ -1,6 +1,6 @@
 "use client"
 
-import { MotorControlInput } from "@bluedotrobots/common-ts"
+import { MotorControlInput } from "@bluedotrobots/common-ts/types/garage"
 import garageClass from "../../classes/garage-class"
 import { motorKeyMappings } from "../constants/constants"
 

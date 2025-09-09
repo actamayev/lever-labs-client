@@ -6,7 +6,7 @@ import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse, isValidationErrorResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
@@ -28,7 +28,7 @@ export default async function editUsername(newUsername: string) : Promise<string
 			return "Username cannot exceed 50 characters"
 		}
 
-		const updateNameResponse = await blueDotApiClientClass.personalInfoDataService.updateUsername(newUsername)
+		const updateNameResponse = await blueDotApiClient.personalInfoDataService.updateUsername(newUsername)
 
 		if (!isEqual(updateNameResponse.status, 200) || isNonSuccessResponse(updateNameResponse.data)) {
 			throw Error

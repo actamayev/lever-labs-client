@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function checkCareerQuestCode(
@@ -21,7 +21,7 @@ export default async function checkCareerQuestCode(
 		const userCode = chatManagerClass.getCppCode(careerUUIDChallengeUUID)
 		chatManagerClass.setChallengeWaitingForCodeCheck(careerUUIDChallengeUUID, true)
 
-		const response = await blueDotApiClientClass.chatDataService.checkChallengeCode({
+		const response = await blueDotApiClient.chatDataService.checkChallengeCode({
 			userCode,
 		}, careerUUIDChallengeUUID.challengeUUID)
 

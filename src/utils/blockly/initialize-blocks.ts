@@ -1,11 +1,15 @@
 "use client"
 
-import * as Blockly from "blockly"
-import { cppGenerator } from "../cpp/cpp-generator"
+import getCppGenerator from "../cpp/cpp-generator"
 import createAllBlocks from "./custom-blocks/create-all-blocks"
 
-export default function initializeBlocks(): void {
-	if (cppGenerator.areBlocksInitialized) return
+export default async function initializeBlocks(): Promise<void> {
+	if (getCppGenerator().areBlocksInitialized) return
+
+	// Dynamically import Blockly and ensure generator is initialized
+	const Blockly = await import("blockly")
+	const generator = await getCppGenerator().ensureInitialized()
+
 	const blocks = createAllBlocks().kinds
 
 	Object.entries(blocks).forEach(([blockName, blockData]): void => {
@@ -21,8 +25,8 @@ export default function initializeBlocks(): void {
 			keywords: blockData.definition.keywords
 		}
 
-		// Set the generator function
-		cppGenerator.forBlock[blockName] = blockData.generator.bind(cppGenerator)
+		// Set the generator function on the actual Blockly generator
+		generator.forBlock[blockName] = blockData.generator.bind(generator)
 	})
-	cppGenerator.areBlocksInitialized = true
+	getCppGenerator().areBlocksInitialized = true
 }

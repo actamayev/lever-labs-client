@@ -1,12 +1,12 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts"
+import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function sendSandboxMessage(
 	projectUUID: SandboxProjectUUID,
@@ -20,7 +20,7 @@ export default async function sendSandboxMessage(
 		const userCode = sandboxClass.getCppCode(projectUUID)
 
 		// Send request to backend - projectUUID will be included in the WebSocket response
-		const response = await blueDotApiClientClass.chatDataService.sendSandboxMessage(
+		const response = await blueDotApiClient.chatDataService.sendSandboxMessage(
 			projectUUID,
 			{ userCode, message }
 		)

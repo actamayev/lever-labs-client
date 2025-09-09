@@ -1,12 +1,12 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ClassCode } from "@bluedotrobots/common-ts"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClientClass from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 
 export default async function retrieveDetailedClassroomInfo(classCode: ClassCode): Promise<void> {
 	try {
@@ -18,7 +18,7 @@ export default async function retrieveDetailedClassroomInfo(classCode: ClassCode
 
 		teacherClass.setIsRetrievingDetailedData(true)
 
-		const detailedClassroomResponse = await blueDotApiClientClass.teacherDataService.retrieveDetailedClassroomInfo(classCode)
+		const detailedClassroomResponse = await blueDotApiClient.teacherDataService.retrieveDetailedClassroomInfo(classCode)
 		if (!isEqual(detailedClassroomResponse.status, 200) || isNonSuccessResponse(detailedClassroomResponse.data)) {
 			throw Error("Unable to retrieve detailed classroom data")
 		}

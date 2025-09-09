@@ -1,7 +1,8 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey, TuneToPlay } from "@bluedotrobots/common-ts"
+import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey } from "@bluedotrobots/common-ts/types/pip"
+import { TuneToPlay } from "@bluedotrobots/common-ts/types/workbench"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
