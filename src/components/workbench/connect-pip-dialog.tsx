@@ -27,7 +27,7 @@ interface PipSearchResult {
 	isSomeoneConnectedToPip: boolean
 }
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 function ConnectToPipDialog(): React.ReactNode {
 	const [pipUUID, setPipUUID] = useState("")
 	const [searchResult, setSearchResult] = useState<PipSearchResult | null>(null)
@@ -68,12 +68,16 @@ function ConnectToPipDialog(): React.ReactNode {
 			if (!result) {
 				setErrorMessage("We couldn't find a Pip with that ID. Could you double check your ID?")
 			} else {
+				// If someone else is connected, set status to "connected to other user"
+				const effectiveStatus = result.isSomeoneConnectedToPip ? "connected to other user" : result.pipConnectionStatus
 				setSearchResult({
 					pipName: result.pipName || filteredValue,
-					pipConnectionStatus: result.pipConnectionStatus,
+					pipConnectionStatus: effectiveStatus as PipConnectionStatus,
 					pipUUID: filteredValue,
 					isSomeoneConnectedToPip: result.isSomeoneConnectedToPip
 				})
+				// Only blur the input if we found a result
+				e.target.blur()
 			}
 		} catch (error) {
 			console.error("Error searching for pip:", error)
@@ -87,7 +91,14 @@ function ConnectToPipDialog(): React.ReactNode {
 
 		setIsConnecting(true)
 		try {
-			await requestToConnectToPip(searchResult.pipUUID as PipUUID)
+			await requestToConnectToPip(searchResult.pipUUID as PipUUID, (): void => {
+				// Update local state to show someone else is connected
+				setSearchResult((prev): PipSearchResult | null => prev ? {
+					...prev,
+					pipConnectionStatus: "connected to other user" as PipConnectionStatus,
+					isSomeoneConnectedToPip: true
+				} : null)
+			})
 			handleClose()
 		} catch (error) {
 			console.error("Error connecting to pip:", error)
@@ -101,24 +112,28 @@ function ConnectToPipDialog(): React.ReactNode {
 		}
 	}, [handleClose])
 
-	const getStatusBgColor = (status: PipConnectionStatus): string => {
+	const getStatusBgColor = (status: PipConnectionStatus | "connected to other user"): string => {
 		switch (status) {
 			case "offline":
 				return "bg-cardinal"
 			case "connected":
 				return "bg-chargingGreen"
+			case "connected to other user":
+				return "bg-beetle"
 			case "updating firmware":
 			default:
 				return "bg-macaw"
 		}
 	}
 
-	const getStatusText = (status: PipConnectionStatus): string => {
+	const getStatusText = (status: PipConnectionStatus | "connected to other user"): string => {
 		switch (status) {
 			case "offline":
 				return "Offline"
 			case "connected":
 				return "Online"
+			case "connected to other user":
+				return "In Use"
 			case "updating firmware":
 				return "Updating"
 			default:
@@ -147,7 +162,6 @@ function ConnectToPipDialog(): React.ReactNode {
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={5}
-							disabled={isSearching || isConnecting}
 						/>
 						{isSearching && (
 							<p className="text-sm text-wolf mt-2">Searching...</p>
@@ -174,7 +188,7 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 								<div className={cn(
 									"px-3 py-1 rounded-full text-white text-sm font-medium",
-									getStatusBgColor(searchResult.pipConnectionStatus)
+									getStatusBgColor(searchResult.pipConnectionStatus as PipConnectionStatus | "connected to other user")
 								)}>
 									{getStatusText(searchResult.pipConnectionStatus)}
 								</div>
@@ -190,16 +204,6 @@ function ConnectToPipDialog(): React.ReactNode {
 								>
 									{isConnecting ? "CONNECTING..." : "CONNECT"}
 								</TactileButton>
-							)}
-							{searchResult.pipConnectionStatus === "connected" && searchResult.isSomeoneConnectedToPip && (
-								<div className="text-center text-wolf text-sm">
-									Someone else is already connected to this Pip
-								</div>
-							)}
-							{searchResult.pipConnectionStatus === "offline" && (
-								<div className="text-center text-wolf text-sm">
-									This Pip is currently offline
-								</div>
 							)}
 						</div>
 					)}

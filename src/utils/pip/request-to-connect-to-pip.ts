@@ -9,7 +9,7 @@ import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
-export default async function requestToConnectToPip(pipUUID: PipUUID): Promise<void> {
+export default async function requestToConnectToPip(pipUUID: PipUUID, onAlreadyConnected?: () => void): Promise<void> {
 	try {
 		if (pipClass.selectedPip?.pipUUID === pipUUID) return
 		const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(pipUUID)
@@ -24,10 +24,11 @@ export default async function requestToConnectToPip(pipUUID: PipUUID): Promise<v
 			if (isMessageResponse(error.response?.data)) {
 				// eslint-disable-next-line max-depth
 				if (error.response?.data.message === "Someone is already connected to this Pip") {
-					return toastClass.negative({
-						title: "Unable to connect",
-						description: `Someone is already connected to ${pipUUID}`
-					})
+					// Don't close dialog, don't show toast, just update local state
+					if (onAlreadyConnected) {
+						onAlreadyConnected()
+					}
+					return
 				} else if (error.response?.data.message === "This Pip is not active/connected to the internet") {
 					return toastClass.negative({
 						title: "Unable to connect",

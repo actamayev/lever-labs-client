@@ -36,6 +36,14 @@ export function isValidRoute(route: string): route is PageNames {
 		const uuidPattern = /^\/sandbox\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 		return uuidPattern.test(route)
 	}
+	if (route.startsWith("/class-manager/")) {
+		const classCodePattern = /^\/class-manager\/[a-zA-Z0-9]{5}$/i
+		return classCodePattern.test(route)
+	}
+	if (route.startsWith("/whiteboard/")) {
+		const classCodePattern = /^\/whiteboard\/[a-zA-Z0-9]{5}$/i
+		return classCodePattern.test(route)
+	}
 
 	return false
 }

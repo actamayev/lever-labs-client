@@ -14,6 +14,7 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import { isEmpty } from "lodash-es"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -57,9 +58,18 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			studentClass.setRetrievedStudentData(classroomInfo)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 
+			if (googleCallbackResponse.data.teacherData && googleCallbackResponse.data.teacherData.isApproved === true) {
+				navigate("/class-manager")
+				return
+			}
+			if (!isEmpty(classroomInfo)) {
+				navigate("/whiteboard")
+				return
+			}
 			// ✅ Navigate smoothly if on auth pages (no refresh)
 			if (pathname === "/login" || pathname === "/register") {
 				navigate(PageToNavigateAfterLogin)
+				return
 			}
 			// If on other pages (like /garage), stay where you are - auth state update will show correct content
 		} catch (error) {
