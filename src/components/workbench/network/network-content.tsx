@@ -79,20 +79,15 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 			return null
 		case "connected":
 			return (
-				<div className="space-y-3">
-					<div className="text-base font-medium text-green-500">
-						Connected to {selectedPip.pipUUID}
-					</div>
-					<Button
-						onClick={(): void => {
-							disconnectFromPip(selectedPip)
-							setIsHoverCardOpen(false)
-						}}
-						className="rounded-xl bg-eel w-full"
-					>
-						DISCONNECT
-					</Button>
-				</div>
+				<Button
+					onClick={(): void => {
+						disconnectFromPip(selectedPip)
+						setIsHoverCardOpen(false)
+					}}
+					className="rounded-xl bg-eel w-full"
+				>
+					DISCONNECT
+				</Button>
 			)
 		case "connected to serial":
 			return (

@@ -24,9 +24,10 @@ interface PipSearchResult {
 	pipName: string
 	pipConnectionStatus: PipConnectionStatus
 	pipUUID: string
+	isSomeoneConnectedToPip: boolean
 }
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function ConnectToPipDialog(): React.ReactNode {
 	const [pipUUID, setPipUUID] = useState("")
 	const [searchResult, setSearchResult] = useState<PipSearchResult | null>(null)
@@ -70,7 +71,8 @@ function ConnectToPipDialog(): React.ReactNode {
 				setSearchResult({
 					pipName: result.pipName || filteredValue,
 					pipConnectionStatus: result.pipConnectionStatus,
-					pipUUID: filteredValue
+					pipUUID: filteredValue,
+					isSomeoneConnectedToPip: result.isSomeoneConnectedToPip
 				})
 			}
 		} catch (error) {
@@ -116,9 +118,9 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "offline":
 				return "Offline"
 			case "connected":
-				return "Connected"
-			case "updating firmware":
 				return "Online"
+			case "updating firmware":
+				return "Updating"
 			default:
 				return "Online"
 		}
@@ -178,7 +180,7 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 							</div>
 
-							{searchResult.pipConnectionStatus === "updating firmware" && (
+							{searchResult.pipConnectionStatus === "connected" && !searchResult.isSomeoneConnectedToPip && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
@@ -188,6 +190,16 @@ function ConnectToPipDialog(): React.ReactNode {
 								>
 									{isConnecting ? "CONNECTING..." : "CONNECT"}
 								</TactileButton>
+							)}
+							{searchResult.pipConnectionStatus === "connected" && searchResult.isSomeoneConnectedToPip && (
+								<div className="text-center text-wolf text-sm">
+									Someone else is already connected to this Pip
+								</div>
+							)}
+							{searchResult.pipConnectionStatus === "offline" && (
+								<div className="text-center text-wolf text-sm">
+									This Pip is currently offline
+								</div>
 							)}
 						</div>
 					)}
