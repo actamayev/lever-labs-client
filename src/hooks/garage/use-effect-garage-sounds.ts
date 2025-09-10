@@ -3,11 +3,15 @@
 import { useEffect } from "react"
 import { soundMappings } from "../../utils/constants/constants"
 import garageClass from "../../classes/garage-class"
+import pipClass from "../../classes/pip-class"
 import playFunSound from "../../utils/garage/play-fun-sound"
 
 export default function useGarageSoundsUseEffect(): void {
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
@@ -21,6 +25,9 @@ export default function useGarageSoundsUseEffect(): void {
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields

@@ -31,7 +31,6 @@ const userRoutes: RouteConfig[] = [
 	{ path: "/login", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/register", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/register-google", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/add-pip", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
 ]
 

@@ -8,7 +8,6 @@ import careerQuestClass from "../../classes/career-quest-class"
 import CareerQuestActivityHeader from "./header/career-quest-activity-header"
 import CareerActivityLoadingComponent from "./loading/career-activity-loading-component"
 import useEffectRetrieveSingleCareerChallenges from "../../hooks/career-quest/use-effect-retrieve-single-career-challenges"
-import useEffectSetSelectedPipFirstPip from "../../hooks/pip/use-effect-set-selected-pip-first-pip"
 
 interface Props {
 	careerData: CareerQuestData
@@ -18,7 +17,6 @@ function CareerActivityTemplate(props: Props): React.ReactNode {
 	const { careerData } = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	useEffectRetrieveSingleCareerChallenges(careerData.careerUUID)
-	useEffectSetSelectedPipFirstPip()
 
 	// Ensure careers are initialized on mount
 	if (!careerQuestClass.isDoneInitializing) {

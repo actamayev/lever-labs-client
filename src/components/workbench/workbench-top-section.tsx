@@ -5,7 +5,9 @@ import { cn } from "../../lib/shadcn/utils"
 import BatteryWorkbench from "./battery/battery-workbench"
 import NetworkWorkbench from "./network/network-workbench"
 import SoundWorkbench from "./sound/sound-workbench"
+import ConnectToPipButton from "./connect-pip-button"
 import workbenchClass from "../../classes/workbench-class"
+import pipClass from "../../classes/pip-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 
 function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }): React.ReactNode {
@@ -27,11 +29,19 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 			}}
 		>
 			<div className="relative p-3 z-50">
-				<div className="flex flex-row justify-between">
-					<BatteryWorkbench />
-					<NetworkWorkbench />
-					<SoundWorkbench />
-				</div>
+				{pipClass.selectedPip ? (
+					<div className="flex flex-row justify-between">
+						<BatteryWorkbench />
+						<div className="flex gap-2">
+							<NetworkWorkbench />
+							<SoundWorkbench />
+						</div>
+					</div>
+				) : (
+					<div className="flex justify-center">
+						<ConnectToPipButton />
+					</div>
+				)}
 			</div>
 		</div>
 	)

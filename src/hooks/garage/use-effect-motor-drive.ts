@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import garageClass from "../../classes/garage-class"
+import pipClass from "../../classes/pip-class"
 import { motorKeyMappings } from "../../utils/constants/constants"
 import applyMotorControl from "../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../utils/garage/compute-motor-control"
@@ -9,6 +10,9 @@ import computeMotorControl from "../../utils/garage/compute-motor-control"
 export default function useEffectMotorDrive(): void {
 	// Key event handlers
 	const handleKeyDown = (event: KeyboardEvent): void => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
@@ -29,6 +33,9 @@ export default function useEffectMotorDrive(): void {
 	}
 
 	const handleKeyUp = (event: KeyboardEvent): void => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields

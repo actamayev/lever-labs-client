@@ -1,6 +1,5 @@
 export const PrivatePageNames: PageNames[] = [
 	"/garage",
-	"/add-pip",
 	"/sandbox",
 	"/settings/profile",
 	"/settings/schools",
@@ -28,7 +27,6 @@ export const staticPages = [
 
 	// Private:
 	"/garage",
-	"/add-pip",
 	"/sandbox",
 	"/class-manager",
 	"/whiteboard",

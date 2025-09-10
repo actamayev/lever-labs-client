@@ -2,7 +2,6 @@
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
 	NonSuccessResponse, ValidationErrorResponse } from "@bluedotrobots/common-ts/types/api"
-import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 import { allPages } from "./constants/page-constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -24,10 +23,6 @@ export function isNonSuccessResponse(data: any): data is NonSuccessResponse {
 
 export function isErrorResponses(data: any): data is ErrorResponses {
 	return isErrorResponse(data) || isValidationErrorResponse(data)
-}
-
-export function isValidSiteTheme(value: any): value is SiteThemes {
-	return ["light", "dark"].includes(value)
 }
 
 export function isValidRoute(route: string): route is PageNames {

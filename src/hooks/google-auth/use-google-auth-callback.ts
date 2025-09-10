@@ -5,7 +5,6 @@ import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { CredentialResponse } from "@react-oauth/google"
-import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import studentClass from "../../classes/student-class"
 import teacherClass from "../../classes/teacher-class"
@@ -51,7 +50,6 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
-			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			const classroomInfo = googleCallbackResponse.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
 				...classroom,
 				activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))

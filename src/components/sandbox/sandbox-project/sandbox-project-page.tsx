@@ -10,13 +10,14 @@ import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectTabs from "./project-tabs"
-import ConnectUsbButton from "../../connect-usb-button"
 import pipClass from "../../../classes/pip-class"
+import BlocklySearchBar from "../blockly-search-bar"
+import ConnectUsbButton from "../../connect-usb-button"
 import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./sandbox-project-header"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
+import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import BlocklyLoadingComponent from "../blockly-loading-component"
-import BlocklySearchBar from "../blockly-search-bar"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { toolboxConfig } from "../../../utils/blockly/toolbox-config"
@@ -26,8 +27,6 @@ import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
-import useEffectSetSelectedPipFirstPip from "../../../hooks/pip/use-effect-set-selected-pip-first-pip"
-import getCppGenerator from "../../../utils/cpp/cpp-generator"
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
@@ -37,7 +36,6 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 	useEffect((): void => {
 		void retrieveSingleSandboxProject(projectUUID)
 	}, [projectUUID])
-	useEffectSetSelectedPipFirstPip()
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)

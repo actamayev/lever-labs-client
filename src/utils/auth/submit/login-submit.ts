@@ -2,7 +2,6 @@
 
 import isEqual from "lodash-es/isEqual"
 import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
-import pipClass from "../../../classes/pip-class"
 import authClass from "../../../classes/auth-class"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"
@@ -34,7 +33,6 @@ export default async function loginSubmit(
 		})
 		personalInfoClass.setRetrievedPersonalData(response.data.personalInfo)
 		teacherClass.setTeacherData(response.data.teacherData)
-		pipClass.setPipData(response.data.userPipData)
 		const classroomInfo = response.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
 			...classroom,
 			activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))

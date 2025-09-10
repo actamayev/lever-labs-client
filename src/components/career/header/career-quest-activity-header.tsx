@@ -31,7 +31,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	const hasNavigationHistory = useRef(false)
 
 	// Track if user has navigation history from within the app
-	useEffect(() => {
+	useEffect((): void => {
 		// Check if there's a referrer from the same origin
 		if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
 			hasNavigationHistory.current = true

@@ -65,7 +65,7 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 		return toastClass.negative({ title: "Please add a Pip" })
 	}
 	if (selectedPip.pipConnectionStatus === "offline") {
-		return toastClass.negative({ title: `Please connect ${selectedPip.pipName} to the internet` })
+		return toastClass.negative({ title: `Please connect ${selectedPip.pipUUID} to the internet` })
 	}
 
 	// Emit motor control via socket

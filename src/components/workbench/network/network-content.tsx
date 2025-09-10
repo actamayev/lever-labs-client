@@ -41,7 +41,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 			return (
 				<div className="space-y-3">
 					<div className="text-base font-medium">
-						Please connect {selectedPip.pipName} to the internet
+						Please connect {selectedPip.pipUUID} to the internet
 					</div>
 					<Button
 						onClick={(e): void => {
@@ -62,7 +62,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 			return (
 				<div className="space-y-3">
 					<div className="text-base font-medium">
-						{selectedPip.pipName} is ready to connect
+						{selectedPip.pipUUID} is ready to connect
 					</div>
 					<Button
 						onClick={(): void => {
@@ -81,7 +81,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 			return (
 				<div className="space-y-3">
 					<div className="text-base font-medium text-green-500">
-						Connected to {selectedPip.pipName}
+						Connected to {selectedPip.pipUUID}
 					</div>
 					<Button
 						onClick={(): void => {
