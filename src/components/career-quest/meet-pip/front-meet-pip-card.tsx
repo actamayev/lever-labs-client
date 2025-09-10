@@ -87,6 +87,7 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 						shadowClass={colors.shadow}
 						shadowHeight={4}
 						onClick={enterCareerOnClick}
+						disabled={meetPipData.isDisabled}
 					>
 						{careerQuestClass.getCompletedChallengesForProgress(careerUUID) === 0 ? "START" : "CONTINUE"}
 					</TactileButton>
