@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useMemo } from "react"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../../classes/sensor-data-class"
 
 function MeetPipS8P3ColorViz(): React.ReactNode {
 	// Get latest RGB values

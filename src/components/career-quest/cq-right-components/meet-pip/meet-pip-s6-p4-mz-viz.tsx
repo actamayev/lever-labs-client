@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P4MzViz(): React.ReactNode {

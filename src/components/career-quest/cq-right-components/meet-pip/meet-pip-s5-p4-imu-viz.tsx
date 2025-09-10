@@ -11,8 +11,8 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
+import sensorDataClass from "../../../../classes/sensor-data-class"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS5P4ImuViz(): React.ReactNode {

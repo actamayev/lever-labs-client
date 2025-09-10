@@ -1,5 +1,3 @@
-// SOLUTION: Target the blocklyWidgetDiv positioning specifically
-
 "use client"
 
 import * as Blockly from "blockly"

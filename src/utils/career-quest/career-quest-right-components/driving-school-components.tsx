@@ -1,16 +1,16 @@
 "use client"
 
 import { ReactNode } from "react"
-import MeetPipS3P4Display from "../../../components/career-quest/trigger-content/meet-pip-s3-p4-display"
-import MeetPipS2P3ColorPicker from "../../../components/career-quest/trigger-content/meet-pip-s2-p3-color-picker"
-import MeetPipS5P4ImuViz from "../../../components/career-quest/trigger-content/meet-pip-s5-p4-imu-viz"
-import MeetPipS5P5BallMoving from "../../../components/career-quest/trigger-content/meet-pip-s5-p5-ball-moving"
-import MeetPipS6P4MzViz from "../../../components/career-quest/trigger-content/meet-pip-s6-p4-mz-viz"
-import MeetPipS6P6TofsViz from "../../../components/career-quest/trigger-content/meet-pip-s6-p6-tofs-viz"
-import MeetPipS9P6EncoderViz from "../../../components/career-quest/trigger-content/meet-pip-s9-p6-encoder-viz"
-import MeetPipS8P3ColorViz from "../../../components/career-quest/trigger-content/meet-pip-s8-p3-color-viz"
-import DinoLeaderboard from "../../../components/career-quest/trigger-content/dino-leaderboard"
-import MeetPipS4P4 from "../../../components/career-quest/trigger-content/meet-pip-s4-p4-speaker"
+import MeetPipS3P4Display from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s3-p4-display"
+import MeetPipS2P3ColorPicker from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s2-p3-color-picker"
+import MeetPipS5P4ImuViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s5-p4-imu-viz"
+import MeetPipS5P5BallMoving from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s5-p5-ball-moving"
+import MeetPipS6P4MzViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s6-p4-mz-viz"
+import MeetPipS6P6TofsViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s6-p6-tofs-viz"
+import MeetPipS9P6EncoderViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s9-p6-encoder-viz"
+import MeetPipS8P3ColorViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s8-p3-color-viz"
+import DinoLeaderboard from "../../../components/career-quest/cq-right-components/meet-pip/dino-leaderboard"
+import MeetPipS4P4 from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s4-p4-speaker"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DRIVING_SCHOOL_COMPONENTS: Record<string, () => ReactNode> = {

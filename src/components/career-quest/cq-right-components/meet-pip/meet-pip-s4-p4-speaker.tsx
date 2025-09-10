@@ -2,8 +2,8 @@
 
 import { observer } from "mobx-react"
 import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
-import SoundActionButton from "../../garage/sounds-and-demos/sounds/sound-action-button"
-import useGarageSoundsUseEffect from "../../../hooks/garage/use-effect-garage-sounds"
+import SoundActionButton from "../../../garage/sounds-and-demos/sounds/sound-action-button"
+import useGarageSoundsUseEffect from "../../../../hooks/garage/use-effect-garage-sounds"
 
 interface FunSoundWithClasses {
 	sound: FunSounds

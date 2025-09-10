@@ -11,8 +11,8 @@ import {
 } from "recharts"
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import sensorDataClass from "../../../classes/sensor-data-class"
-import { Card, CardContent, CardHeader, CardTitle } from "../../shadcn/ui/card"
+import sensorDataClass from "../../../../classes/sensor-data-class"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P6TofsViz(): React.ReactNode {

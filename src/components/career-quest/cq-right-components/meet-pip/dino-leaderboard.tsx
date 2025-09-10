@@ -1,5 +1,5 @@
 import { observer } from "mobx-react"
-import gamesClass from "../../../classes/games-class"
+import gamesClass from "../../../../classes/games-class"
 
 // eslint-disable-next-line max-lines-per-function
 function DinoLeaderboard(): React.ReactNode {

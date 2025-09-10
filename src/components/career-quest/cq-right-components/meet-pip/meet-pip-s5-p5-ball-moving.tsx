@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
-import sensorDataClass from "../../../classes/sensor-data-class"
+import sensorDataClass from "../../../../classes/sensor-data-class"
 
 type Vec2 = { x: number; y: number }
 
