@@ -61,6 +61,9 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	if (authClass.isFinishedWithSignup === false) return
 	const selectedPip = pipClass.selectedPip
 
+	if (pipClass.pipPluggedInSerial) {
+		return toastClass.negative({ title: "Please unplug your Pip from the computer to drive" })
+	}
 	if (isNull(selectedPip)) {
 		return toastClass.negative({ title: "Please add a Pip" })
 	}
