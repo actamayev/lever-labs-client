@@ -90,6 +90,7 @@ function ConnectToPipDialog(): React.ReactNode {
 		if (!searchResult) return
 
 		setIsConnecting(true)
+		let shouldCloseDialog = true
 		try {
 			await requestToConnectToPip(searchResult.pipUUID as PipUUID, (): void => {
 				// Update local state to show someone else is connected
@@ -98,8 +99,13 @@ function ConnectToPipDialog(): React.ReactNode {
 					pipConnectionStatus: "connected to other user" as PipConnectionStatus,
 					isSomeoneConnectedToPip: true
 				} : null)
+				// Don't close dialog when someone else is connected
+				shouldCloseDialog = false
 			})
-			handleClose()
+			// Only close dialog if connection was successful
+			if (shouldCloseDialog) {
+				handleClose()
+			}
 		} catch (error) {
 			console.error("Error connecting to pip:", error)
 		}
