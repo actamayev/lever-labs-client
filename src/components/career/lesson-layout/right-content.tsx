@@ -5,8 +5,8 @@ import Image from "next/image"
 import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
-import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
-import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
+import { getCareerQuestRightComponent } from "../../../utils/career-quest/career-quest-right-components/all-career-quest-right-components"
+import { getLeftContentComponent } from "../../../utils/career-quest/career-quest-left-content/all-career-quest-left-content"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
@@ -57,7 +57,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					key={`${rightContent.type}-${rightContent.iconKey}`}
 					{...getTransitionProps()}
 				>
-					{getTriggerComponent(rightContent.iconKey)}
+					{getCareerQuestRightComponent(rightContent.iconKey)}
 				</motion.div>
 			</AnimatePresence>
 		)
@@ -113,7 +113,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 		if (typeof rightContent.component === "function") {
 			componentContent = rightContent.component()
 		} else if (typeof rightContent.component === "string") {
-			componentContent = getContentComponent(rightContent.component)
+			componentContent = getLeftContentComponent(rightContent.component)
 		} else {
 			componentContent = rightContent.component
 		}

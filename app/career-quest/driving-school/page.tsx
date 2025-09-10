@@ -1,23 +1,23 @@
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import MEET_PIP from "../../../src/utils/career-quest/career-quest-right-content/meet-pip-right-content"
+import DRIVING_SCHOOL_CAREER from "../../../src/utils/career-quest/career-quest-right-content/driving-school-right-content"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 
 export const metadata = createMetadata({
-	title: "Meet Pip",
-	description: "Learn the basics of programming, sensors, and robotics concepts as you begin your robotics journey.",
-	path: "/career-quest/meet-pip",
+	title: "Driving School",
+	description: "Learn the basics of driving a robot.",
+	path: "/career-quest/driving-school",
 	keywords: [
 		"robotics adventure",
-		"meet pip",
+		"driving school",
 		"introduction to robotics"
 	]
 })
 
-export default function CareerQuestMeetPipPage(): React.ReactNode {
+export default function CareerQuestDrivingSchoolPage(): React.ReactNode {
 	return (
 		<AuthenticatedLayout>
-			<CareerActivityTemplate careerData={MEET_PIP} />
+			<CareerActivityTemplate careerData={DRIVING_SCHOOL_CAREER} />
 		</AuthenticatedLayout>
 	)
 }

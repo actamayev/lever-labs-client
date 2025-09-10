@@ -65,7 +65,7 @@ function ConnectToPipDialog(): React.ReactNode {
 		try {
 			const result = await searchForPipByUUID(filteredValue as PipUUID)
 			if (!result) {
-				setErrorMessage("The Pip UUID you entered doesn't exist. Please try again.")
+				setErrorMessage("We couldn't find a Pip with that ID. Could you double check your ID?")
 			} else {
 				setSearchResult({
 					pipName: result.pipName || filteredValue,
@@ -75,7 +75,7 @@ function ConnectToPipDialog(): React.ReactNode {
 			}
 		} catch (error) {
 			console.error("Error searching for pip:", error)
-			setErrorMessage("The Pip UUID you entered doesn't exist. Please try again.")
+			setErrorMessage("We couldn't find a Pip with that ID. Could you double check your ID?")
 		}
 		setIsSearching(false)
 	}, [])

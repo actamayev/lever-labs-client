@@ -28,6 +28,7 @@ declare global {
 		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
 		expectedCompletionTime: string
+		isDisabled: boolean
 	}
 
 	type CodingConceptName =

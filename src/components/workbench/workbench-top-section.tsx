@@ -29,17 +29,15 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 			}}
 		>
 			<div className="relative p-3 z-50">
-				{pipClass.selectedPip ? (
+				{!pipClass.selectedPip ? (
+					<ConnectToPipButton />
+				) : (
 					<div className="flex flex-row justify-between">
 						<BatteryWorkbench />
 						<div className="flex gap-2">
 							<NetworkWorkbench />
 							<SoundWorkbench />
 						</div>
-					</div>
-				) : (
-					<div className="flex justify-center">
-						<ConnectToPipButton />
 					</div>
 				)}
 			</div>

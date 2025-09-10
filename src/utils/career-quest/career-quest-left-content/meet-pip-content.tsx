@@ -2,18 +2,18 @@
 "use client"
 
 import { ReactNode } from "react"
-import fireConfetti from "../fire-confetti"
-import personalInfoClass from "../../classes/personal-info-class"
-import { Highlighter } from "../../components/magicui/highlighter"
-import AnimatedStateButton from "../../components/magicui/animated-rainbow-button"
-import careerQuestTrigger from "./career-quest-trigger"
+
 import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
+import fireConfetti from "../../fire-confetti"
+import personalInfoClass from "../../../classes/personal-info-class"
+import { Highlighter } from "../../../components/magicui/highlighter"
+import AnimatedStateButton from "../../../components/magicui/animated-rainbow-button"
+import careerQuestTrigger from "../career-quest-trigger"
 
 // Component registry for content components
 // This allows us to store string keys in MobX state while rendering JSX components
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
-	// Meet Pip career content
+const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
 	"meet-pip-1-1": (): ReactNode => (
 		<div className="text-4xl" style={{ lineHeight: "1.5" }}>
 			Hey there!<br />
@@ -620,80 +620,7 @@ const CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> 
 			<br />
 			The first step of our journey starts now.
 		</div>
-	),
-
-	// Obstacle Avoidance career content
-	"obstacle-avoidance-1-1": (): React.ReactNode => (
-		<div>
-			Test 1
-		</div>
-	),
-	"obstacle-avoidance-1-2": (): React.ReactNode => (
-		<div>
-			Test 2
-		</div>
-	),
-	"obstacle-avoidance-1-3": (): React.ReactNode => (
-		<div>
-			Test 3
-		</div>
-	),
-	"obstacle-avoidance-1-4": (): React.ReactNode => (
-		<div>
-			Test 4
-		</div>
-	),
-	"obstacle-avoidance-1-5": (): React.ReactNode => (
-		<div>
-			Test 5
-		</div>
-	),
-	"obstacle-avoidance-2-1": (): React.ReactNode => (
-		<div>
-			Test 6
-		</div>
-	),
-	"obstacle-avoidance-2-2": (): React.ReactNode => (
-		<div>
-			Test 7
-		</div>
-	),
-	"obstacle-avoidance-3-1": (): React.ReactNode => (
-		<div>
-			Test 8
-		</div>
-	),
-	"obstacle-avoidance-4-1": (): React.ReactNode => (
-		<div>
-			Test 9
-		</div>
-	),
-	"obstacle-avoidance-5-1": (): React.ReactNode => (
-		<div>
-			Test 10
-		</div>
-	),
-	"obstacle-avoidance-6-1": (): React.ReactNode => (
-		<div>
-			Test 11
-		</div>
-	),
-
-	// Morphing text components
-	"morphing-stars-component": (): React.ReactNode => (
-		<div className="text-6xl">
-			🌟✨💫
-		</div>
-	),
+	)
 }
 
-// Helper function to get a content component by key
-export function getContentComponent(key: string, onAdvance?: () => void): ReactNode {
-	const component = CONTENT_COMPONENTS[key]
-
-	if (!component) {
-		console.warn(`Content component "${key}" not found in registry`)
-		return <div>Content not found</div> // fallback
-	}
-	return component(onAdvance)
-}
+export default MEET_PIP_CONTENT_COMPONENTS

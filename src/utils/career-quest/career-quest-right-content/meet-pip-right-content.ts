@@ -2,17 +2,14 @@
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { DEFAULT_TRANSITION_DURATION } from "../constants/constants"
-import careerQuestTrigger from "./career-quest-trigger"
-import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
-import { createImage } from "./create-media-helpers"
+import { DEFAULT_TRANSITION_DURATION } from "../../constants/constants"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
-import { OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_1,
-	OBSTACLE_AVOIDANCE_CHALLENGE_2, OBSTACLE_AVOIDANCE_CHALLENGE_4,
-	OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts/types/cq-challenge-data"
+import { createImage } from "../create-media-helpers"
+import careerQuestTrigger from "../career-quest-trigger"
+import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"
 
-export const MEET_PIP: CareerQuestData = {
+const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
 	careerTitle: "Meet Pip",
 	careerColor: "humpback",
@@ -138,7 +135,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-2-3",
 					content: "meet-pip-2-3",
-					rightSideContent: "s2-p3-color-picker"
+					rightSideContent: "meet-pip-s2-p3-color-picker"
 				},
 				{
 					type: "text",
@@ -196,7 +193,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-3-4",
 					content: "meet-pip-3-4",
-					rightSideContent: "s3-p4-display",
+					rightSideContent: "meet-pip-s3-p4-display",
 					triggerFunctionEnter: () => careerQuestTriggersClass.exportFirstNameToDisplay(),
 				},
 				{
@@ -249,7 +246,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-4-4",
 					content: "meet-pip-4-4",
-					rightSideContent: "s4-p4-speaker",
+					rightSideContent: "meet-pip-s4-p4-speaker",
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P4_EXIT)
 				},
 				{
@@ -330,7 +327,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-5-4",
 					content: "meet-pip-5-4",
-					rightSideContent: "s5-p4-imu-viz",
+					rightSideContent: "meet-pip-s5-p4-imu-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P4_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P4_EXIT)
 				},
@@ -338,7 +335,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-5-5",
 					content: "meet-pip-5-5",
-					rightSideContent: "s5-p5-ball-moving",
+					rightSideContent: "meet-pip-s5-p5-ball-moving",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P5_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P5_EXIT)
 				},
@@ -392,7 +389,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-4",
 					content: "meet-pip-6-4",
-					rightSideContent: "s6-p4-mz-viz",
+					rightSideContent: "meet-pip-s6-p4-mz-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P4_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P4_EXIT)
 				},
@@ -408,7 +405,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-6-6",
 					content: "meet-pip-6-6",
-					rightSideContent: "s6-p6-tofs-viz",
+					rightSideContent: "meet-pip-s6-p6-tofs-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P6_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P6_EXIT)
 				},
@@ -499,7 +496,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-7-6",
 					content: "meet-pip-7-6",
-					rightSideContent: "dino-leaderboard",
+					rightSideContent: "meet-pip-dino-leaderboard",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_ENTER),
 					triggerFunctionExit: () => {
 						careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S7_P6_EXIT)
@@ -540,7 +537,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-8-3",
 					content: "meet-pip-8-3",
-					rightSideContent: "s8-p3-color-viz",
+					rightSideContent: "meet-pip-s8-p3-color-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
 				},
@@ -651,7 +648,7 @@ export const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-9-6",
 					content: "meet-pip-9-6",
-					rightSideContent: "s9-p6-encoder-viz",
+					rightSideContent: "meet-pip-s9-p6-encoder-viz",
 					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P6_ENTER),
 					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P6_EXIT)
 				},
@@ -722,166 +719,4 @@ export const MEET_PIP: CareerQuestData = {
 	]
 }
 
-// Sample data for Obstacle Avoidance career
-export const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {
-	careerUUID: "2c9600cb-087d-477f-ae96-eb7cbf445bcd" as CareerUUID,
-	careerTitle: "Obstacle Avoidance",
-	careerColor: "macaw",
-	needsChat: true,
-	sections: [
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-1",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-1-1",
-					content: "obstacle-avoidance-1-1",
-					rightSideContent: createImage("s1_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-				{
-					type: "text",
-					id: "obstacle-avoidance-1-2",
-					content: "obstacle-avoidance-1-2",
-					rightSideContent: createImage("s1_p2.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-				{
-					type: "text",
-					id: "obstacle-avoidance-1-3",
-					content: "obstacle-avoidance-1-3",
-					rightSideContent: createImage("s1_p3.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-				{
-					type: "text",
-					id: "obstacle-avoidance-1-4",
-					content: "obstacle-avoidance-1-4",
-					rightSideContent: createImage("s1_p4.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-				{
-					type: "text",
-					id: "obstacle-avoidance-1-5",
-					content: "obstacle-avoidance-1-5",
-					rightSideContent: createImage("s1_p5.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_1.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_1
-		},
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-2",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-2-1",
-					content: "obstacle-avoidance-2-1",
-					rightSideContent: createImage("s2_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-				{
-					type: "text",
-					id: "obstacle-avoidance-2-2",
-					content: "obstacle-avoidance-2-2",
-					rightSideContent: createImage("s2_p2.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_2.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_2
-		},
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-3",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-3-1",
-					content: "obstacle-avoidance-3-1",
-					rightSideContent: createImage("s3_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_3.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_3
-		},
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-4",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-4-1",
-					content: "obstacle-avoidance-4-1",
-					rightSideContent: createImage("s4_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_4.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_4
-		},
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-5",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-5-1",
-					content: "obstacle-avoidance-5-1",
-					rightSideContent: createImage("s5_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		},
-		{
-			type: "challenge",
-			id: OBSTACLE_AVOIDANCE_CHALLENGE_5.challengeUUID,
-			challengeData: OBSTACLE_AVOIDANCE_CHALLENGE_5
-		},
-		{
-			type: "textParent",
-			id: "obstacle-avoidance-6",
-			children: [
-				{
-					type: "text",
-					id: "obstacle-avoidance-6-1",
-					content: "obstacle-avoidance-6-1",
-					rightSideContent: createImage("s6_p1.png", "meet-pip", {
-						alt: "Meet Pip robot introduction",
-					})
-				},
-			]
-		}
-	]
-}
-
-export const CAREER_DEFINITIONS = {
-	[MEET_PIP.careerUUID]: MEET_PIP,
-	[OBSTACLE_AVOIDANCE_CAREER.careerUUID]: OBSTACLE_AVOIDANCE_CAREER
-}
+export default MEET_PIP

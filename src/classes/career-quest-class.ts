@@ -11,7 +11,7 @@ import { action, makeAutoObservable, observable } from "mobx"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 // Dynamic import - career definitions will be loaded on-demand
-import { getContentComponent } from "../utils/career-quest/career-quest-content"
+import { getLeftContentComponent } from "../utils/career-quest/career-quest-left-content/all-career-quest-left-content"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
@@ -22,7 +22,7 @@ import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import blueDotApiClient from "./blue-dot-api-client-class"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-right-content/all-career-quest-right-content"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -495,7 +495,7 @@ class CareerQuestClass {
 			if (typeof content === "function") {
 				whatUserSees = content()
 			} else if (typeof content === "string") {
-				whatUserSees = getContentComponent(content)
+				whatUserSees = getLeftContentComponent(content)
 			} else {
 				whatUserSees = content
 			}
