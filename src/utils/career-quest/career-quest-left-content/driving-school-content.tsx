@@ -2,6 +2,7 @@
 "use client"
 
 import { ReactNode } from "react"
+import { Highlighter } from "../../../components/magicui/highlighter"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => ReactNode> = {
@@ -185,9 +186,15 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Your turn!</p>
 			<p>Build a program that makes me:</p>
-			<p>1. turn 180 degrees clockwise</p>
-			<p>2. wait two seconds</p>
-			<p>3. turn 180 degrees counterclockwise</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				1. turn 180 degrees clockwise
+			</Highlighter>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				2. wait two seconds
+			</Highlighter>
+			<Highlighter action="highlight" color="#e6aaff" strokeWidth={2} isView={true}>
+				3. turn 180 degrees counterclockwise
+			</Highlighter>
 		</div>
 	),
 	"driving-school-4-6": (): React.ReactNode => (

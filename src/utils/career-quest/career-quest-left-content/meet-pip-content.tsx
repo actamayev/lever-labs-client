@@ -29,7 +29,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	"meet-pip-1-2": (): ReactNode => (
 		<div>
 			My name is {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>Pip</Highlighter>.
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>Pip</Highlighter>.
 			<br />
 			I don't know what I was made for,
 			<br />
@@ -96,7 +96,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	"meet-pip-2-1": (): ReactNode => (
 		<div>
 			I have 8 {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				LED lights
 			</Highlighter>,
 			{" "}each able to glow any color.
@@ -148,7 +148,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	"meet-pip-3-1": (): ReactNode => (
 		<div>
 			My {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				screen
 			</Highlighter>
 			<br />
@@ -195,7 +195,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			I don't just use lights or screens.
 			<br />
 			Using my {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				speaker
 			</Highlighter>,
 			{" "}I can use sound to share signals too.
@@ -266,11 +266,11 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	"meet-pip-5-2": (): React.ReactNode => (
 		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			This sensor is called an {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				IMU
 			</Highlighter>,
 			{" "}which means {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				Inertial Measurement Unit.
 			</Highlighter>
 			<br />
@@ -327,11 +327,11 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			I need to sense not only motion but also distance.
 			<br />
 			That's why I use {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				ToF
 			</Highlighter>,
 			{" "}or {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				Time-of-Flight sensors
 			</Highlighter>.
 		</div>
@@ -392,7 +392,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			but I still need your input.
 			<br />
 			That's why I have {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				buttons
 			</Highlighter>.
 		</div>
@@ -438,7 +438,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			I can also sense colors beneath me
 			<br />
 			using a downward-facing {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				color sensor
 			</Highlighter>.
 		</div>
@@ -470,7 +470,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			color sensor,
 			<br />
 			I also have {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				line-following sensors
 			</Highlighter>.
 			<br />
@@ -509,7 +509,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	"meet-pip-9-2": (): React.ReactNode => (
 		<div>
 			My {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				motors
 			</Highlighter>
 			{" "}let me drive forward, turn, and explore.
@@ -531,7 +531,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			To keep track of my movement,
 			<br />
 			each wheel has a sensor called an {" "}
-			<Highlighter action="highlight" color="#87CEFA" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
 				encoder
 			</Highlighter>.
 			<br />
