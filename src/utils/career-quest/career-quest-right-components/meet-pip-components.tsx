@@ -14,7 +14,6 @@ import MeetPipS4P4 from "../../../components/career-quest/cq-right-components/me
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const MEET_PIP_COMPONENTS: Record<string, () => ReactNode> = {
-	// Bot icons for different themes
 	"meet-pip-s2-p3-color-picker": (): ReactNode => <MeetPipS2P3ColorPicker />,
 	"meet-pip-s3-p4-display": (): ReactNode => <MeetPipS3P4Display />,
 	"meet-pip-s4-p4-speaker": (): ReactNode => <MeetPipS4P4 />,
