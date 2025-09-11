@@ -213,7 +213,6 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					/>
 				</div>
 
-				{/* Action Buttons Section - Bottom */}
 				<div className="flex-shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"

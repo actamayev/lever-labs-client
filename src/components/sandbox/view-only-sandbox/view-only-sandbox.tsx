@@ -9,6 +9,13 @@ import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { isEmpty } from "lodash-es"
+import AnimatedStateButton from "../../magicui/animated-rainbow-button"
+import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
+import pipClass from "../../../classes/pip-class"
+import { TactileButton } from "../../shadcn/ui/tactile-button"
+import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
+import getCppGenerator from "../../../utils/cpp/cpp-generator"
 
 interface Props {
 	blocklyJson: BlocklyJson
@@ -25,6 +32,10 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
+
+	const cppCode = useMemo(async (): Promise<string> => {
+		return await getCppGenerator().generateCppFromJson(blocklyJson)
+	}, [blocklyJson])
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, true)
@@ -143,16 +154,37 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	}, [])
 
 	return (
-		<div
-			ref={containerRef}
-			className={cn("relative z-0 rounded-3xl overflow-hidden h-full", extraClasses)}
-		>
-			<BlocklyWorkspace
-				initialJson={blocklyJson}
-				workspaceConfiguration={workspaceConfiguration}
-				className="h-full w-full duration-0"
-				onWorkspaceChange={handleWorkspaceChange}
-			/>
+		<div className="flex flex-col h-full">
+			<div className="h-full flex flex-col">
+				<div className="flex-1 min-h-0">
+					<div
+						ref={containerRef}
+						className={cn("relative z-0 rounded-3xl overflow-hidden border-b-2 border-swan h-full", extraClasses)}
+					>
+						<BlocklyWorkspace
+							initialJson={blocklyJson}
+							workspaceConfiguration={workspaceConfiguration}
+							className="h-full w-full duration-0"
+							onWorkspaceChange={handleWorkspaceChange}
+						/>
+					</div>
+				</div>
+				<div className="flex-shrink-0 flex gap-3 p-3">
+					<AnimatedStateButton
+						buttonText="SEND CODE"
+						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
+						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
+					/>
+					<TactileButton
+						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
+						shadowColor="rgb(150, 50, 75)"
+						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
+					>
+						STOP
+					</TactileButton>
+				</div>
+			</div>
 		</div>
 	)
 }
