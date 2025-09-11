@@ -2,6 +2,9 @@
 
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { createImage } from "../create-media-helpers"
+import { DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5,
+	DRIVING_SCHOOL_CHALLENGE_S4_P5, DRIVING_SCHOOL_CHALLENGE_S5_P4
+} from "@bluedotrobots/common-ts/types/cq-challenge-data/driving-school-challenge-data"
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -75,12 +78,17 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					content: "driving-school-2-3",
 					rightSideContent: "driving-school-2-3-content"
 				},
-				{
-					type: "text",
-					id: "driving-school-2-4",
-					content: "driving-school-2-4",
-					rightSideContent: "driving-school-2-4-content"
-				},
+			],
+		},
+		{
+			type: "challenge",
+			id: DRIVING_SCHOOL_CHALLENGE_S2_P4.challengeUUID,
+			challengeData: DRIVING_SCHOOL_CHALLENGE_S2_P4
+		},
+		{
+			type: "textParent",
+			id: "driving-school-2-4",
+			children: [
 				{
 					type: "text",
 					id: "driving-school-2-5",
@@ -117,6 +125,17 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					content: "driving-school-3-4",
 					rightSideContent: "driving-school-3-4-content"
 				},
+			]
+		},
+		{
+			type: "challenge",
+			id: DRIVING_SCHOOL_CHALLENGE_S3_P5.challengeUUID,
+			challengeData: DRIVING_SCHOOL_CHALLENGE_S3_P5
+		},
+		{
+			type: "textParent",
+			id: "driving-school-3-5",
+			children: [
 				{
 					type: "text",
 					id: "driving-school-3-5",
@@ -167,6 +186,17 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					content: "driving-school-4-4",
 					rightSideContent: "driving-school-4-4-content"
 				},
+			]
+		},
+		{
+			type: "challenge",
+			id: DRIVING_SCHOOL_CHALLENGE_S4_P5.challengeUUID,
+			challengeData: DRIVING_SCHOOL_CHALLENGE_S4_P5
+		},
+		{
+			type: "textParent",
+			id: "driving-school-4-5",
+			children: [
 				{
 					type: "text",
 					id: "driving-school-4-5",
@@ -181,12 +211,13 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 						alt: "Driving School Image",
 					})
 				},
-
 				{
 					type: "text",
 					id: "driving-school-5-1",
 					content: "driving-school-5-1",
-					rightSideContent: "driving-school-5-1-content"
+					rightSideContent: createImage("S4P6.png", "driving-school", {
+						alt: "Driving School Image",
+					})
 				},
 				{
 					type: "text",
@@ -198,25 +229,36 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-3",
 					content: "driving-school-5-3",
-					rightSideContent: "driving-school-5-3-content"
+					rightSideContent: createImage("S4P6.png", "driving-school", {
+						alt: "Driving School Image",
+					})
 				},
-				{
-					type: "text",
-					id: "driving-school-5-4",
-					content: "driving-school-5-4",
-					rightSideContent: "driving-school-5-4-content"
-				},
+			]
+		},
+		{
+			type: "challenge",
+			id: DRIVING_SCHOOL_CHALLENGE_S5_P4.challengeUUID,
+			challengeData: DRIVING_SCHOOL_CHALLENGE_S5_P4
+		},
+		{
+			type: "textParent",
+			id: "driving-school-5-4",
+			children: [
 				{
 					type: "text",
 					id: "driving-school-5-5",
 					content: "driving-school-5-5",
-					rightSideContent: "driving-school-5-5-content"
+					rightSideContent: createImage("S4P6.png", "driving-school", {
+						alt: "Driving School Image",
+					})
 				},
 				{
 					type: "text",
 					id: "driving-school-5-6",
 					content: "driving-school-5-6",
-					rightSideContent: "driving-school-5-6-content"
+					rightSideContent: createImage("S4P6.png", "driving-school", {
+						alt: "Driving School Image",
+					})
 				}
 			]
 		},

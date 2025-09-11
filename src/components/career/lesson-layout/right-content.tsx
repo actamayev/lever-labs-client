@@ -76,10 +76,6 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 							width={rightContent.width}
 							height={rightContent.height}
 							className="object-contain rounded-3xl"
-							// style={{
-							// 	mask: "radial-gradient(ellipse 55% 55% at center, black 70%, transparent 100%)",
-							// 	WebkitMask: "radial-gradient(ellipse 70% 60% at center, black 40%, transparent 100%)"
-							// }}
 							priority={true}
 						/>
 					</div>

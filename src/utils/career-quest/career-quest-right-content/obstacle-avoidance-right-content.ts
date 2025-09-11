@@ -6,7 +6,7 @@ import { createImage } from "../create-media-helpers"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { OBSTACLE_AVOIDANCE_CHALLENGE_3, OBSTACLE_AVOIDANCE_CHALLENGE_1,
 	OBSTACLE_AVOIDANCE_CHALLENGE_2, OBSTACLE_AVOIDANCE_CHALLENGE_4,
-	OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts/types/cq-challenge-data"
+	OBSTACLE_AVOIDANCE_CHALLENGE_5 } from "@bluedotrobots/common-ts/types/cq-challenge-data/obstacle-avoidance-challenge-data"
 
 // Sample data for Obstacle Avoidance career
 const OBSTACLE_AVOIDANCE_CAREER: CareerQuestData = {

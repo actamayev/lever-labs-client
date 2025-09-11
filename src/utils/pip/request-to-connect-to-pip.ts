@@ -1,3 +1,4 @@
+/* eslint-disable max-depth */
 "use client"
 
 import { AxiosError } from "axios"
@@ -22,7 +23,6 @@ export default async function requestToConnectToPip(pipUUID: PipUUID, onAlreadyC
 		console.error(error)
 		if (error instanceof AxiosError) {
 			if (isMessageResponse(error.response?.data)) {
-				// eslint-disable-next-line max-depth
 				if (error.response?.data.message === "Someone is already connected to this Pip") {
 					// Don't close dialog, don't show toast, just update local state
 					if (onAlreadyConnected) {
