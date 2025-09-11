@@ -96,7 +96,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
-					key={`${rightContent.type}-${rightContent.blocklyJson.id}`}
+					key={`${rightContent.type}-${JSON.stringify(rightContent.blocklyJson)}`}
 					{...getTransitionProps()}
 					className="h-full w-full"
 				>

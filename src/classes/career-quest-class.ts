@@ -36,7 +36,7 @@ interface CareerInstance {
 	rightContent: RightContent
 	isCareerChatToggled: boolean
 	previousRightContent: RightContent | null
-	isChallengeChatToggled: boolean
+	challengeChatToggledStates: Map<ChallengeUUID, boolean>
 }
 
 class CareerQuestClass {
@@ -126,6 +126,12 @@ class CareerQuestClass {
 			}
 		})
 
+		// Initialize challenge chat toggle states for all challenges (default: false)
+		const challengeChatToggledStates = new Map<ChallengeUUID, boolean>()
+		challengeSections.forEach((section): void => {
+			challengeChatToggledStates.set(section.challengeData.challengeUUID, false)
+		})
+
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
@@ -139,7 +145,7 @@ class CareerQuestClass {
 			rightContent: { type: "null" },
 			isCareerChatToggled: false,
 			previousRightContent: null,
-			isChallengeChatToggled: false
+			challengeChatToggledStates
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -1016,12 +1022,25 @@ class CareerQuestClass {
 		const career = this.getCareer(careerUUID)
 		if (!career) return
 
-		career.isChallengeChatToggled = !career.isChallengeChatToggled
+		// Get the current challenge UUID
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "challenge") return
+
+		const challengeUUID = currentSlide.data.challengeUUID
+		const currentState = career.challengeChatToggledStates.get(challengeUUID) || false
+		career.challengeChatToggledStates.set(challengeUUID, !currentState)
 	})
 
 	public isChallengeChatToggled(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
-		return career?.isChallengeChatToggled || false
+		if (!career) return false
+
+		// Get the current challenge UUID
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "challenge") return false
+
+		const challengeUUID = currentSlide.data.challengeUUID
+		return career.challengeChatToggledStates.get(challengeUUID) || false
 	}
 
 	// ========================================
