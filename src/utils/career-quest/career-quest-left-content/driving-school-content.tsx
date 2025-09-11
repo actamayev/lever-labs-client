@@ -102,7 +102,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Here's my first driving program.</p>
 			<p>It makes me go forward for two seconds</p>
-			<p>at 20 percent speed, then stop.</p>
+			<p>at 20% speed, then stop.</p>
 		</div>
 	),
 	"driving-school-3-3": (): React.ReactNode => (
@@ -120,15 +120,15 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>Driving by time works, but it isn't always exact.</p>
 			<p>With distance, I can be more precise.</p>
 			<p>This program makes me go forward 5 centimeters</p>
-			<p>at 20 percent speed, then stop.</p>
+			<p>at 20% speed, then stop.</p>
 		</div>
 	),
 	"718e291a-1c03-4948-88c4-ef0762cfc4df": (): React.ReactNode => (
 		<div>
 			<p>Your turn.</p>
 			<p>Build a program that makes me</p>
-			<p>go forward 15 centimeters</p>
-			<p>at 50 percent speed, then stop.</p>
+			<p>go forward 5 centimeters</p>
+			<p>at 20% speed, then stop.</p>
 		</div>
 	),
 	"driving-school-3-6": (): React.ReactNode => (
