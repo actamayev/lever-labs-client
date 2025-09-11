@@ -36,6 +36,7 @@ interface CareerInstance {
 	rightContent: RightContent
 	isCareerChatToggled: boolean
 	previousRightContent: RightContent | null
+	isChallengeChatToggled: boolean
 }
 
 class CareerQuestClass {
@@ -137,7 +138,8 @@ class CareerQuestClass {
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
 			rightContent: { type: "null" },
 			isCareerChatToggled: false,
-			previousRightContent: null
+			previousRightContent: null,
+			isChallengeChatToggled: false
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -1008,6 +1010,18 @@ class CareerQuestClass {
 	public isCareerChatToggled(careerUUID: CareerUUID): boolean {
 		const career = this.getCareer(careerUUID)
 		return career?.isCareerChatToggled || false
+	}
+
+	public toggleChallengeChat = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.isChallengeChatToggled = !career.isChallengeChatToggled
+	})
+
+	public isChallengeChatToggled(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		return career?.isChallengeChatToggled || false
 	}
 
 	// ========================================

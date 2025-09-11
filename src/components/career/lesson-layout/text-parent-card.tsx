@@ -13,7 +13,6 @@ interface TextParentCardProps {
 	careerUUID: CareerUUID
 }
 
-
 function TextParentCard(props: TextParentCardProps): React.ReactNode {
 	const { slide, careerUUID } = props
 	const textParentData = slide.data

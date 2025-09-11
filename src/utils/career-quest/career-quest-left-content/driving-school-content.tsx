@@ -71,7 +71,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>and finally turns them off.</p>
 		</div>
 	),
-	"driving-school-2-4": (): React.ReactNode => (
+	"5892848a-8334-48a7-82aa-bbbe43d2e92f": (): React.ReactNode => (
 		<div>
 			<p>Your turn.</p>
 			<p>Build a program that</p>
@@ -123,7 +123,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>at 20 percent speed, then stop.</p>
 		</div>
 	),
-	"driving-school-3-5": (): React.ReactNode => (
+	"718e291a-1c03-4948-88c4-ef0762cfc4df": (): React.ReactNode => (
 		<div>
 			<p>Your turn.</p>
 			<p>Build a program that makes me</p>
@@ -185,7 +185,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>in a full 360 degree turn.</p>
 		</div>
 	),
-	"driving-school-4-5": (): React.ReactNode => (
+	"b9114111-48f1-4589-bc10-5030f2d9621f": (): React.ReactNode => (
 		<div>
 			<p>Your turn!</p>
 			<p>Build a program that makes me:</p>
@@ -228,7 +228,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>turned this path into a shape</p>
 		</div>
 	),
-	"driving-school-5-4": (): React.ReactNode => (
+	"d7eb2c2f-da43-4f6a-96e5-cffa51c51531": (): React.ReactNode => (
 		<div>
 			<p>Here's your challenge.</p>
 			<p>Build a program that makes me</p>

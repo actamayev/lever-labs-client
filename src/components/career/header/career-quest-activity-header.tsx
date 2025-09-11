@@ -18,13 +18,20 @@ import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
 	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
+	// Get appropriate toggle state based on section type
+	const isChatToggled = isOnChallengeSection
+		? careerQuestClass.isChallengeChatToggled(careerData.careerUUID)
+		: careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+
 	const handleChatToggle = (): void => {
-		if (isOnChallengeSection) return
-		careerQuestClass.toggleCareerChat(careerData.careerUUID)
+		if (isOnChallengeSection) {
+			careerQuestClass.toggleChallengeChat(careerData.careerUUID)
+		} else {
+			careerQuestClass.toggleCareerChat(careerData.careerUUID)
+		}
 	}
 	const router = useRouter()
 	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)
@@ -114,13 +121,10 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						tooltipTrigger={
 							<button
 								onClick={handleChatToggle}
-								disabled={isOnChallengeSection}
 								className={`flex items-center p-2 rounded-lg transition-colors ${
-									isOnChallengeSection
-										? "text-gray-400 cursor-not-allowed opacity-50"
-										: isChatToggled
-											? "bg-blue-100 text-blue-600 hover:bg-blue-200"
-											: "text-questionText hover:bg-polar"
+									isChatToggled
+										? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+										: "text-questionText hover:bg-polar"
 								}`}
 							>
 								<MessageCircle size={24} />
@@ -128,8 +132,8 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						}
 						tooltipContent={
 							isOnChallengeSection
-								? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
-								: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
+								? (isChatToggled ? "SHOW CHALLENGE TEXT" : "SHOW CHALLENGE CHAT")
+								: (isChatToggled ? "HIDE CHAT" : "SHOW CHAT")
 						}
 					/>
 				)}
