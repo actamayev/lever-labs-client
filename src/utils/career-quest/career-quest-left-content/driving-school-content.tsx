@@ -101,16 +101,16 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-3-2": (): React.ReactNode => (
 		<div>
 			<p>Here's my first driving program.</p>
-			<p>It makes me go forward for one second</p>
-			<p>at 40 percent speed, then stop.</p>
+			<p>It makes me go forward for two seconds</p>
+			<p>at 20 percent speed, then stop.</p>
 		</div>
 	),
 	"driving-school-3-3": (): React.ReactNode => (
 		<div>
 			<p>That was three steps again:</p>
-			<p>Start</p>
-			<p>Drive</p>
-			<p>Stop</p>
+			<p>1. Start</p>
+			<p>2. Drive</p>
+			<p>3. Stop</p>
 			<p>The same steps as the LEDs,</p>
 			<p>but now with motors.</p>
 		</div>
@@ -119,8 +119,8 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Driving by time works, but it isn't always exact.</p>
 			<p>With distance, I can be more precise.</p>
-			<p>This program makes me go forward 20 centimeters</p>
-			<p>at 40 percent speed, then stop.</p>
+			<p>This program makes me go forward 5 centimeters</p>
+			<p>at 20 percent speed, then stop.</p>
 		</div>
 	),
 	"driving-school-3-5": (): React.ReactNode => (
@@ -189,9 +189,9 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Your turn!</p>
 			<p>Build a program that makes me:</p>
-			<p>turn 180 degrees clockwise</p>
-			<p>wait two seconds</p>
-			<p>then turn 180 degrees counterclockwise</p>
+			<p>1. turn 180 degrees clockwise</p>
+			<p>2. wait two seconds</p>
+			<p>3. turn 180 degrees counterclockwise</p>
 		</div>
 	),
 	"driving-school-4-6": (): React.ReactNode => (
