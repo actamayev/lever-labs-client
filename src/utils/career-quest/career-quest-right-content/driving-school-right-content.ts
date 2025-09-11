@@ -2,9 +2,13 @@
 
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { createImage } from "../create-media-helpers"
-import { DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5, DRIVING_SCHOOL_VIEW_ONLY_S3_P4,
-	DRIVING_SCHOOL_CHALLENGE_S4_P5, DRIVING_SCHOOL_CHALLENGE_S5_P4, DRIVING_SCHOOL_VIEW_ONLY_S2_P3,
-	DRIVING_SCHOOL_VIEW_ONLY_S3_P2, DRIVING_SCHOOL_VIEW_ONLY_S5_P2
+import {
+	DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5,
+	DRIVING_SCHOOL_CHALLENGE_S4_P5, DRIVING_SCHOOL_CHALLENGE_S5_P4,
+	DRIVING_SCHOOL_VIEW_ONLY_S2_P1, DRIVING_SCHOOL_VIEW_ONLY_S2_P3,
+	DRIVING_SCHOOL_VIEW_ONLY_S3_P2, DRIVING_SCHOOL_VIEW_ONLY_S3_P4,
+	DRIVING_SCHOOL_VIEW_ONLY_S5_P2, DRIVING_SCHOOL_VIEW_ONLY_S4_P3,
+	DRIVING_SCHOOL_VIEW_ONLY_S4_P4,
 } from "@bluedotrobots/common-ts/types/cq-challenge-data/driving-school-challenge-data"
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -63,7 +67,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-2-1",
 					content: "driving-school-2-1",
-					rightSideContent: "driving-school-2-1-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S2_P1
+					}
 				},
 				{
 					type: "text",
@@ -182,13 +189,19 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-4-3",
 					content: "driving-school-4-3",
-					rightSideContent: "driving-school-4-3-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S4_P3
+					}
 				},
 				{
 					type: "text",
 					id: "driving-school-4-4",
 					content: "driving-school-4-4",
-					rightSideContent: "driving-school-4-4-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S4_P4
+					}
 				},
 			]
 		},
