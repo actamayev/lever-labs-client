@@ -32,13 +32,36 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isCentered, setIsCentered] = useState(false)
+	const [cppCode, setCppCode] = useState<string>("")
 
-	const cppCode = useMemo(async (): Promise<string> => {
-		return await getCppGenerator().generateCppFromJson(blocklyJson)
+	// Generate CPP code from blockly JSON on component mount and when blocklyJson changes
+	useEffect((): () => void => {
+		let isCancelled = false
+
+		const generateCppCode = async (): Promise<void> => {
+			try {
+				const generatedCode = await getCppGenerator().generateCppFromJson(blocklyJson)
+				if (!isCancelled) {
+					setCppCode(generatedCode)
+				}
+			} catch (error) {
+				console.error("Error generating CPP code:", error)
+				if (!isCancelled) {
+					setCppCode("")
+				}
+			}
+		}
+
+		void generateCppCode()
+
+		// Cleanup function to prevent state updates if component unmounts
+		return (): void => {
+			isCancelled = true
+		}
 	}, [blocklyJson])
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		return getWorkspaceConfig(isDarkMode, true)
+		return getWorkspaceConfig(isDarkMode, true, 1.4, true)
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((): void => {
@@ -76,39 +99,6 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 
 		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, blocklyJson, isCentered])
-
-	useEffect((): () => void => {
-		// Add CSS to prevent widget div from affecting layout
-		const style = document.createElement("style")
-		style.textContent = `
-			.blocklyWidgetDiv {
-				position: fixed !important;
-				z-index: 9999 !important;
-				pointer-events: auto !important;
-			}
-
-			.blocklyWidgetDiv * {
-				position: static !important;
-			}
-
-			.blocklyHtmlInput {
-				position: static !important;
-			}
-
-			/* Prevent scroll anchoring during Blockly operations */
-			body.blockly-widget-active {
-				overflow-anchor: none !important;
-				scroll-behavior: auto !important;
-			}
-		`
-		document.head.appendChild(style)
-
-		return (): void => {
-			if (document.head.contains(style)) {
-				document.head.removeChild(style)
-			}
-		}
-	}, [])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {

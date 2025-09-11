@@ -53,6 +53,7 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 const getWorkspaceConfig = (
 	isDarkMode: boolean,
 	viewOnly: boolean,
+	startScale: number = 1,
 	disableZoomAndScroll = false
 ): Blockly.BlocklyOptions => {
 	// Configure movement and scrolling behavior
@@ -88,7 +89,7 @@ const getWorkspaceConfig = (
 		zoom: {
 			controls: viewOnly ? false : !disableZoomAndScroll,
 			wheel: viewOnly ? false : !disableZoomAndScroll,
-			startScale: 1.0,
+			startScale,
 			maxScale: 3,
 			minScale: 0.3,
 			scaleSpeed: 1.2,
