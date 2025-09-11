@@ -135,10 +135,7 @@ class CareerQuestClass {
 			savedCurrentPosition: "",
 			furthestSeenChallengeUuidOrTextUuid: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
-			rightContent: {
-				type: "icon",
-				iconKey: "bot-humpback"
-			},
+			rightContent: { type: "null" },
 			isCareerChatToggled: false,
 			previousRightContent: null
 		}
@@ -708,7 +705,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "icon", iconKey: "bot-humpback" }
+		return career?.rightContent || { type: "null" }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
@@ -1025,10 +1022,7 @@ class CareerQuestClass {
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		if (!isDataReady) {
 			this.setRightContent(careerUUID,
-				{
-					type: "icon",
-					iconKey: "bot-humpback"
-				})
+				{ type: "null" })
 			return
 		}
 
@@ -1063,10 +1057,7 @@ class CareerQuestClass {
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
-				this.setRightContent(careerUUID, {
-					type: "icon",
-					iconKey: "bot-humpback"
-				})
+				this.setRightContent(careerUUID, { type: "null" })
 			}
 		} else {
 			const resolvedContent = this.resolveRightSideContent(textChild.rightSideContent)
@@ -1174,7 +1165,7 @@ class CareerQuestClass {
 		}
 
 		// If it's a string, treat it as an icon (backward compatibility)
-		return { type: "icon", iconKey: rightSideContent }
+		return { type: "null" }
 	}
 
 

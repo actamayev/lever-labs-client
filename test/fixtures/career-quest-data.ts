@@ -60,12 +60,12 @@ export const mockCareerQuestData: CareerQuestData = {
 						{
 							id: "variant-1",
 							text: "variant 1",
-							rightContent: { type: "icon", iconKey: "robot" },
+							rightContent: { type: "null" },
 						},
 						{
 							id: "variant-2",
 							text: "variant 2",
-							rightContent: { type: "icon", iconKey: "bot-humpback" },
+							rightContent: { type: "null" },
 						},
 					],
 				},

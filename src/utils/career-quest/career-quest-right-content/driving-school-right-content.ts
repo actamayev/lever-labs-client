@@ -2,8 +2,9 @@
 
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import { createImage } from "../create-media-helpers"
-import { DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5,
-	DRIVING_SCHOOL_CHALLENGE_S4_P5, DRIVING_SCHOOL_CHALLENGE_S5_P4
+import { DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5, DRIVING_SCHOOL_VIEW_ONLY_S3_P4,
+	DRIVING_SCHOOL_CHALLENGE_S4_P5, DRIVING_SCHOOL_CHALLENGE_S5_P4, DRIVING_SCHOOL_VIEW_ONLY_S2_P3,
+	DRIVING_SCHOOL_VIEW_ONLY_S3_P2, DRIVING_SCHOOL_VIEW_ONLY_S5_P2
 } from "@bluedotrobots/common-ts/types/cq-challenge-data/driving-school-challenge-data"
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -76,7 +77,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-2-3",
 					content: "driving-school-2-3",
-					rightSideContent: "driving-school-2-3-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S2_P3
+					}
 				},
 			],
 		},
@@ -109,7 +113,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-3-2",
 					content: "driving-school-3-2",
-					rightSideContent: "driving-school-3-2-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S3_P2
+					}
 				},
 				{
 					type: "text",
@@ -123,7 +130,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-3-4",
 					content: "driving-school-3-4",
-					rightSideContent: "driving-school-3-4-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S3_P4
+					}
 				},
 			]
 		},
@@ -136,12 +146,6 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 			type: "textParent",
 			id: "driving-school-3-5",
 			children: [
-				{
-					type: "text",
-					id: "driving-school-3-5",
-					content: "driving-school-3-5",
-					rightSideContent: "driving-school-3-5-content"
-				},
 				{
 					type: "text",
 					id: "driving-school-3-6",
@@ -199,12 +203,6 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 			children: [
 				{
 					type: "text",
-					id: "driving-school-4-5",
-					content: "driving-school-4-5",
-					rightSideContent: "driving-school-4-5-content"
-				},
-				{
-					type: "text",
 					id: "driving-school-4-6",
 					content: "driving-school-4-6",
 					rightSideContent: createImage("S4P6.png", "driving-school", {
@@ -223,7 +221,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-2",
 					content: "driving-school-5-2",
-					rightSideContent: "driving-school-5-2-content"
+					rightSideContent: {
+						type: "view-only-sandbox",
+						blocklyJson: DRIVING_SCHOOL_VIEW_ONLY_S5_P2
+					}
 				},
 				{
 					type: "text",
