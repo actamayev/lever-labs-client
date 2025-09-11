@@ -1036,18 +1036,7 @@ class CareerQuestClass {
 		// If chat is toggled, avoid overriding UI with non-challenge content
 		if (career.isCareerChatToggled) return
 
-		// Determine if the next challenge has been seen
-		const currentSectionIndex = career.careerDefinition.sections.findIndex((section): boolean => section.id === currentSlide.id)
-		const nextChallenge = career.careerDefinition.sections
-			.slice(currentSectionIndex + 1)
-			.find((section): boolean => section.type === "challenge") as ChallengeSection | undefined
-
-		if (nextChallenge && this.hasChallengeBeenSeen(careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			this.setRightContent(careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
-			return
-		}
-
-		// Otherwise use the current text child's right content
+		// Use the current text child's right content
 		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		if (textChild.type === "morphingText") {

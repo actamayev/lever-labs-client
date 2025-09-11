@@ -155,6 +155,28 @@ body {
   border-radius: 1rem; /* Equivalent to rounded-2xl */
 }
 
+/* Keep Blockly scrollbars in the DOM (so APIs like scrollCenter() work),
+   but make them invisible and not interactable. */
+.blocklyScrollbar,
+.blocklyScrollbarBackground,
+.blocklyScrollbarHandle {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+/* Also hide any native overflow scrollbars on the workspace SVG/containers.
+  This ensures there's no visual scrollbar even in browsers that render things differently. */
+.blocklyWorkspaceSvg,
+.blocklySvg {
+  overflow: hidden !important;
+}
+.blocklyScrollbar {
+  width: 0 !important;
+  height: 0 !important;
+}
+
+   
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
