@@ -10,6 +10,7 @@ import {
 	DRIVING_SCHOOL_VIEW_ONLY_S5_P2, DRIVING_SCHOOL_VIEW_ONLY_S4_P3,
 	DRIVING_SCHOOL_VIEW_ONLY_S4_P4,
 } from "@bluedotrobots/common-ts/types/cq-challenge-data/driving-school-challenge-data"
+import DrivingSchoolS3P6 from "../../../components/career-quest/cq-right-components/driving-school/driving-school-s3-p6"
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -157,9 +158,10 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-3-6",
 					content: "driving-school-3-6",
-					rightSideContent: createImage("S3P6.png", "driving-school", {
-						alt: "Driving School Image",
-					})
+					rightSideContent: {
+						type: "component",
+						component: DrivingSchoolS3P6
+					}
 				},
 				{
 					type: "text",
@@ -226,7 +228,7 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-1",
 					content: "driving-school-5-1",
-					rightSideContent: createImage("S4P6.png", "driving-school", {
+					rightSideContent: createImage("S5P1.png", "driving-school", {
 						alt: "Driving School Image",
 					})
 				},
@@ -243,7 +245,7 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-3",
 					content: "driving-school-5-3",
-					rightSideContent: createImage("S4P6.png", "driving-school", {
+					rightSideContent: createImage("S5P3.png", "driving-school", {
 						alt: "Driving School Image",
 					})
 				},
@@ -262,7 +264,7 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-5",
 					content: "driving-school-5-5",
-					rightSideContent: createImage("S4P6.png", "driving-school", {
+					rightSideContent: createImage("S5P5.png", "driving-school", {
 						alt: "Driving School Image",
 					})
 				},
@@ -270,7 +272,7 @@ const DRIVING_SCHOOL_CAREER: CareerQuestData = {
 					type: "text",
 					id: "driving-school-5-6",
 					content: "driving-school-5-6",
-					rightSideContent: createImage("S4P6.png", "driving-school", {
+					rightSideContent: createImage("S5P6.png", "driving-school", {
 						alt: "Driving School Image",
 					})
 				}
