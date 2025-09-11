@@ -48,6 +48,7 @@ declare global {
 	| "beetle"
 	| "humpback"
 	| "beakInner"
+	| "chargingGreen"
 }
 
 export {}

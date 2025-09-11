@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { ReactNode } from "react"
@@ -137,10 +137,6 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>time and using distance.</p>
 			<p>Which one do you think helps me</p>
 			<p>be more exact when I stop?</p>
-			<p><strong>If correct (B):</strong></p>
-			<p>"Exactly. Distance is more exact because my wheels can measure how far I've gone. That way I'll stop in the same place each time."</p>
-			<p><strong>If incorrect (A):</strong></p>
-			<p>"Time can work, but it changes if I go faster or slower, or if the floor is different. Distance is better because my encoders track how far I move. That's why distance works better."</p>
 		</div>
 	),
 	"driving-school-3-7": (): React.ReactNode => (
