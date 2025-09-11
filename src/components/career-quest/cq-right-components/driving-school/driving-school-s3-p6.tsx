@@ -102,7 +102,8 @@ export default function DrivingSchoolS3P6(): React.ReactNode {
 					</TactileButton>
 					<TactileButton
 						onClick={(): void => handleAnswerClick("distance")}
-						className={cn("px-8 py-4 rounded-lg font-semibold text-3xl  min-w-32", humpbackColors.bg, getButtonStyles("distance"))}
+						className={cn("px-8 py-4 rounded-lg font-semibold text-3xl  min-w-32",
+							humpbackColors.bg, getButtonStyles("distance"))}
 						shadowHeight={4}
 						shadowClass={distanceShadowClass}
 					>
