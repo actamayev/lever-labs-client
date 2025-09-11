@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { useCallback, useEffect, useMemo, useRef } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
@@ -15,6 +15,7 @@ interface Props {
 	extraClasses?: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function ViewOnlySandbox(props: Props): React.ReactNode {
 	const {
 		blocklyJson,
@@ -23,16 +24,47 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	console.log("blocklyJson", blocklyJson)
+	const [isCentered, setIsCentered] = useState(false)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, true)
 	}, [isDarkMode])
 
+	const centerWorkspace = useCallback((): void => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		// Set the scale to the start scale
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
+
+		// Center the workspace
+		workspace.scrollCenter()
+		setIsCentered(true)
+	}, [workspaceConfiguration.zoom?.startScale])
+
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
-		console.log("workspaceChange", workspace)
 		workspaceRef.current = workspace
-	}, [])
+		if (!isCentered) {
+			// Use a small timeout to ensure the workspace is fully rendered
+			setTimeout((): void => {
+				centerWorkspace()
+			}, 100)
+		}
+	}, [centerWorkspace, isCentered])
+
+	useEffect((): void => {
+		setIsCentered(false)
+	}, [blocklyJson])
+
+	// Add effect to center workspace after it's initialized and when blocks change
+	useEffect((): () => void => {
+		if (isCentered) return (): void => {}
+		const timer = setTimeout((): void => {
+			centerWorkspace()
+		}, 200) // Slightly longer delay for view-only to ensure full rendering
+
+		return (): void => clearTimeout(timer)
+	}, [centerWorkspace, blocklyJson, isCentered])
 
 	useEffect((): () => void => {
 		// Add CSS to prevent widget div from affecting layout
@@ -67,12 +99,23 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 		}
 	}, [])
 
+	useEffect((): void => {
+		if (workspaceRef.current) {
+			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
+
+		}
+	}, [isDarkMode])
+
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
 
 		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
+				// Re-center after resize if already centered
+				if (isCentered) {
+					setTimeout((): void => centerWorkspace(), 50)
+				}
 			}
 		})
 
@@ -81,7 +124,13 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 		return (): void => {
 			resizeObserver.disconnect()
 		}
-	}, [])
+	}, [centerWorkspace, isCentered])
+
+	useEffect((): void => {
+		if (workspaceRef.current) {
+			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
+		}
+	}, [isDarkMode])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
@@ -94,20 +143,16 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	}, [])
 
 	return (
-		<div className="h-full flex flex-col">
-			<div className="flex-1 min-h-0">
-				<div
-					ref={containerRef}
-					className={cn("relative z-0 rounded-3xl overflow-hidden border-y-2 border-swan h-full", extraClasses)}
-				>
-					<BlocklyWorkspace
-						initialJson={blocklyJson}
-						workspaceConfiguration={workspaceConfiguration}
-						className="h-full w-full duration-0"
-						onWorkspaceChange={handleWorkspaceChange}
-					/>
-				</div>
-			</div>
+		<div
+			ref={containerRef}
+			className={cn("relative z-0 rounded-3xl overflow-hidden h-full", extraClasses)}
+		>
+			<BlocklyWorkspace
+				initialJson={blocklyJson}
+				workspaceConfiguration={workspaceConfiguration}
+				className="h-full w-full duration-0"
+				onWorkspaceChange={handleWorkspaceChange}
+			/>
 		</div>
 	)
 }
