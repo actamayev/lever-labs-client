@@ -76,10 +76,18 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Your turn.</p>
 			<p>Build a program that</p>
-			<p>Starts on Button A,</p>
-			<p>Turns my LEDs blue for two second,</p>
-			<p>Then switches to red for two second,</p>
-			<p>Then turns off</p>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				Starts on Button A,
+			</Highlighter>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				Turns my LEDs blue for two second,
+			</Highlighter>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				Then switches to red for two second,
+			</Highlighter>
+			<Highlighter action="highlight" color="#2ddc79" strokeWidth={2} isView={true}>
+				Then turns off
+			</Highlighter>
 		</div>
 	),
 	"driving-school-2-5": (): React.ReactNode => (
