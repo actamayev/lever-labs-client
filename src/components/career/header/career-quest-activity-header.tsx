@@ -15,6 +15,8 @@ import HubStudentsDialog from "./hub-students-dialog"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
+import pipClass from "../../../classes/pip-class"
+import ConnectToPipButton from "../../workbench/connect-pip-button"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
@@ -61,7 +63,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	}, [])
 
 	// Check if user is teacher and is focusing students
-	const isTeacher = teacherClass.teacherData !== null
+	const isTeacher = teacherClass.teacherData !== null && teacherClass.teacherData.isApproved
 	const isFocusingStudents = teacherClass.isFocusingStudents
 	const shouldShowStudentsButton = isTeacher && isFocusingStudents
 
@@ -115,6 +117,9 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 							{currentHub.studentsJoined.length}
 						</span>
 					</button>
+				)}
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
+					<ConnectToPipButton />
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip
