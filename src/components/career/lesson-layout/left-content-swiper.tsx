@@ -79,11 +79,34 @@ function LeftContentSwiper({ careerData }: { careerData: CareerQuestData }): Rea
 
 					if (slide.type === "challenge") {
 						// For challenge sections, show text by default, chat when toggled
-						if (careerQuestClass.isChallengeChatToggled(careerData.careerUUID)) {
-							content = <ChallengeChatInterface challengeData={slide.data} />
-						} else {
-							content = <ChallengeTextCard challengeUUID={slide.data.challengeUUID} />
-						}
+						const isChatToggled = careerQuestClass.isChallengeChatToggled(careerData.careerUUID)
+						content = (
+							<AnimatePresence mode="wait">
+								{isChatToggled ? (
+									<motion.div
+										key={`challenge-chat-${slide.data.challengeUUID}`}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.3 }}
+										className="h-full w-full"
+									>
+										<ChallengeChatInterface challengeData={slide.data} />
+									</motion.div>
+								) : (
+									<motion.div
+										key={`challenge-text-${slide.data.challengeUUID}`}
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										transition={{ duration: 0.3 }}
+										className="h-full w-full"
+									>
+										<ChallengeTextCard challengeUUID={slide.data.challengeUUID} />
+									</motion.div>
+								)}
+							</AnimatePresence>
+						)
 					} else {
 						content = (
 							<TextParentCard

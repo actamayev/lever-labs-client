@@ -226,7 +226,13 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 							foxColors.bg
 						)}
 						shadowClass={foxColors.shadow2}
-						onClick={(): Promise<void> => checkCareerQuestCode({ ...challengeData })}
+						onClick={(): Promise<void> => {
+							// Show the challenge chat when checking code (only if not already showing)
+							if (!careerQuestClass.isChallengeChatToggled(challengeData.careerUUID)) {
+								careerQuestClass.toggleChallengeChat(challengeData.careerUUID)
+							}
+							return checkCareerQuestCode({ ...challengeData })
+						}}
 						disabled={isStreaming || isEmpty(cppCode) || isWaitingForCodeCheck}
 					>
 						CHECK CODE
