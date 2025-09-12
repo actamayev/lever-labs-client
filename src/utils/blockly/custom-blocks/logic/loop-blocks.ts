@@ -89,7 +89,7 @@ export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
 				this.setTooltip("Wait for a certain number of seconds")
 
 				// Function to update the seconds label
-				const updateSecondsLabel = (newValue: number | string) => {
+				const updateSecondsLabel = (newValue: number | string): number | string => {
 					const label = newValue === 1 ? "second" : "seconds"
 					secondsField.setValue(label)
 					return newValue // Return the value unchanged

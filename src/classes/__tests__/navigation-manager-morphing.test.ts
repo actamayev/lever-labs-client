@@ -30,8 +30,8 @@ describe('NavigationManagerClass Morphing Commands', () => {
 					id: 'morphing-text-1',
 					staticText: 'Static text content',
 					morphingVariants: [
-						{ id: 'variant-1', text: 'variant 1', rightContent: { type: 'icon' as const, iconKey: 'Book' } },
-						{ id: 'variant-2', text: 'variant 2', rightContent: { type: 'icon' as const, iconKey: 'Book' } }
+						{ id: 'variant-1', text: 'variant 1', rightContent: { type: 'null' as const } },
+						{ id: 'variant-2', text: 'variant 2', rightContent: { type: 'null' as const } }
 					]
 				}]
 			])
@@ -54,8 +54,8 @@ describe('NavigationManagerClass Morphing Commands', () => {
 					id: 'morphing-text-1',
 					staticText: 'Static text content',
 					morphingVariants: [
-						{ id: 'variant-1', text: 'variant 1', rightContent: { type: 'icon' as const, iconKey: 'Book' } },
-						{ id: 'variant-2', text: 'variant 2', rightContent: { type: 'icon' as const, iconKey: 'Book' } }
+						{ id: 'variant-1', text: 'variant 1', rightContent: { type: 'null' as const } },
+						{ id: 'variant-2', text: 'variant 2', rightContent: { type: 'null' as const } }
 					]
 				}]
 			])

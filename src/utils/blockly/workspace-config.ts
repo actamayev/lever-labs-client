@@ -49,32 +49,25 @@ export const lightTheme = Blockly.Theme.defineTheme("light", {
 	},
 	...commonStyles
 })
-
 const getWorkspaceConfig = (
 	isDarkMode: boolean,
 	viewOnly: boolean,
+	startScale: number = 1,
 	disableZoomAndScroll = false
 ): Blockly.BlocklyOptions => {
 	// Configure movement and scrolling behavior
 	let moveConfig: Blockly.BlocklyOptions["move"] = undefined
 
-	if (viewOnly) {
+	if (disableZoomAndScroll) {
+		// Keep scrollbars true so Blockly creates the internal scrollbar objects
+		// which are required by workspace.scrollCenter() and other metrics-based APIs.
 		moveConfig = {
 			scrollbars: {
-				horizontal: true,  // Allow horizontal scrolling for centering
-				vertical: true     // Allow vertical scrolling for centering
+				horizontal: true,
+				vertical: true,
 			},
-			drag: false,          // Disable dragging the workspace
-			wheel: false          // Disable mouse wheel scrolling by user
-		}
-	} else if (disableZoomAndScroll) {
-		moveConfig = {
-			scrollbars: {
-				horizontal: false,  // Disable horizontal scrolling
-				vertical: false     // Disable vertical scrolling
-			},
-			drag: false,          // Disable dragging the workspace
-			wheel: false          // Disable mouse wheel scrolling
+			drag: false,   // user can't drag the canvas
+			wheel: false,  // wheel zoom/scroll disabled
 		}
 	}
 
@@ -88,7 +81,7 @@ const getWorkspaceConfig = (
 		zoom: {
 			controls: viewOnly ? false : !disableZoomAndScroll,
 			wheel: viewOnly ? false : !disableZoomAndScroll,
-			startScale: 1.0,
+			startScale,
 			maxScale: 3,
 			minScale: 0.3,
 			scaleSpeed: 1.2,

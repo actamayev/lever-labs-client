@@ -5,7 +5,6 @@ import isEqual from "lodash-es/isEqual"
 import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { CredentialResponse } from "@react-oauth/google"
-import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import studentClass from "../../classes/student-class"
 import teacherClass from "../../classes/teacher-class"
@@ -15,6 +14,7 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
+import { isEmpty } from "lodash-es"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -51,7 +51,6 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
 			teacherClass.setTeacherData(googleCallbackResponse.data.teacherData)
-			pipClass.setPipData(googleCallbackResponse.data.userPipData)
 			const classroomInfo = googleCallbackResponse.data.studentClasses.map((classroom): StudentClassroomDataWithHubs => ({
 				...classroom,
 				activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
@@ -59,9 +58,18 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			studentClass.setRetrievedStudentData(classroomInfo)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 
+			if (googleCallbackResponse.data.teacherData && googleCallbackResponse.data.teacherData.isApproved === true) {
+				navigate("/class-manager")
+				return
+			}
+			if (!isEmpty(classroomInfo)) {
+				navigate("/whiteboard")
+				return
+			}
 			// ✅ Navigate smoothly if on auth pages (no refresh)
 			if (pathname === "/login" || pathname === "/register") {
 				navigate(PageToNavigateAfterLogin)
+				return
 			}
 			// If on other pages (like /garage), stay where you are - auth state update will show correct content
 		} catch (error) {

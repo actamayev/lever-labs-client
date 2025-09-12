@@ -15,7 +15,7 @@ Educational robotics platform built with Next.js 15, React, TypeScript, and MobX
 ## Code Conventions
 
 ### File Naming & Organization
-- **Components**: kebab-case (e.g., `career-quest.tsx`, `add-pip-form.tsx`)
+- **Components**: kebab-case (e.g., `career-quest.tsx`, `create-metadata.ts`)
 - **Classes**: kebab-case with `-class` suffix (e.g., `auth-class.ts`, `garage-class.ts`) 
 - **Utils/Services**: kebab-case (e.g., `career-quest-data.tsx`, `pip-data-service.ts`)
 - **Hooks**: camelCase with `use-` prefix (e.g., `use-typed-navigate.ts`)

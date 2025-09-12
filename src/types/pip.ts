@@ -1,11 +1,10 @@
-import { AddPipData } from "@bluedotrobots/common-ts/types/api"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { PipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
 
 declare global {
-	interface IncompletePipData extends AddPipData {
-		selectedWiFiNetworkName?: string
-		selectedWiFiPassword?: string
-		manualWiFiNetworkName?: string
-		manualWiFiPassword?: string
+	interface PipData {
+		pipUUID: PipUUID
+		pipConnectionStatus: PipConnectionStatus
 	}
 }
 

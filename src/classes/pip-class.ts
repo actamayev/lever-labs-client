@@ -1,98 +1,54 @@
 "use client"
 
-import isNull from "lodash-es/isNull"
-import isEmpty from "lodash-es/isEmpty"
-import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import { PipConnectionStatus, PipData, PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
-import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
 
 class PipClass {
-	public pipData: PipData[] = []
-	public isRetrievingPipData = false
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
-	public retrievedPipData: boolean = false
 	public pipPluggedInSerial: boolean = false
+	public isConnectPipDialogOpen: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
 	}
 
-	public checkIfUUIDAlreadyExists(pipUUID: PipUUID): boolean {
-		return this.pipData.some((data): boolean => data.pipUUID === pipUUID)
-	}
-
-	public setPipData(pipData: PipData[]): void {
-		pipData.map((singlePipData): void => this.addNewPip(singlePipData))
-		this.setRetrievedPipData(true)
-		this.setIsRetrievingPipData(false)
-	}
-
 	public addNewPip(pipData: PipData): void {
-		if (this.checkIfUUIDAlreadyExists(pipData.pipUUID)) return
-		this.pipData.push(pipData)
+		if (this.selectedPip && this.selectedPip.pipUUID === pipData.pipUUID) return
+		this.setSelectedPip(pipData)
+	}
+
+	public deletePip(): void {
+		this.setSelectedPip(null)
 	}
 
 	public updatePipConnectionStatus(data: PipStatusUpdate): void {
-		const pipToUpdate = this.pipData.find((pip): boolean => pip.pipUUID === data.pipUUID)
-		if (!pipToUpdate) return
+		if (!this.selectedPip) return
 
-		pipToUpdate.pipConnectionStatus = data.newConnectionStatus
+		this.selectedPip.pipConnectionStatus = data.newConnectionStatus
 	}
 
-	public checkIfPipAlreadyConnected(pipUUID: PipUUID): boolean {
-		return this.pipData.some(
-			(data): boolean => data.pipUUID === pipUUID && data.pipConnectionStatus === "connected"
-		)
-	}
-
-	public findPipFromUUID(pipUUID: PipUUID): PipData | undefined {
-		return this.pipData.find((pipInfo): boolean => pipInfo.pipUUID === pipUUID)
-	}
-
-	public getPipConnectionStatus(pipUUID: PipUUID): PipConnectionStatus | undefined {
-		return this.findPipFromUUID(pipUUID)?.pipConnectionStatus
-	}
-
-	public findPipNameFromUUID(pipUUID: PipUUID): string {
-		const pip = this.findPipFromUUID(pipUUID)
-		if (isUndefined(pip)) return "Pip"
-		return pip.pipName
-	}
-
-	public setIsRetrievingPipData = action((newState: boolean): void => {
-		this.isRetrievingPipData = newState
-	})
-
-	public setSelectedPip = action((newSelectedPip: PipData | null): void => {
+	private setSelectedPip = action((newSelectedPip: PipData | null): void => {
 		this.selectedPip = newSelectedPip
-	})
-
-	public setSelectedPipToFirstPip = action((): void => {
-		if (!isNull(this.selectedPip) || isEmpty(this.pipData)) return
-		this.setSelectedPip(this.pipData[0])
 	})
 
 	public setIsSendingCppToPip = action((newState: boolean): void => {
 		this.isSendingCppToPip = newState
 	})
 
-	private setRetrievedPipData = action((newState: boolean): void => {
-		this.retrievedPipData = newState
-	})
-
 	public setPipPluggedInSerial = action((newState: boolean): void => {
 		this.pipPluggedInSerial = newState
 	})
 
+	public setIsConnectPipDialogOpen = action((isOpen: boolean): void => {
+		this.isConnectPipDialogOpen = isOpen
+	})
+
 	public logout(): void {
-		this.pipData = []
-		this.setIsRetrievingPipData(false)
 		this.setSelectedPip(null)
 		this.setIsSendingCppToPip(false)
-		this.setRetrievedPipData(false)
 		this.setPipPluggedInSerial(false)
+		this.setIsConnectPipDialogOpen(false)
 	}
 }
 

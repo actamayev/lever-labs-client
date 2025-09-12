@@ -3,12 +3,16 @@
 import { useEffect } from "react"
 import garageActions from "../../utils/garage/garage-actions"
 import { actionMappings } from "../../utils/constants/constants"
+import pipClass from "../../classes/pip-class"
 
 export default function useGarageActionsUseEffect(): void {
 	const { activateAction, deactivateAction } = garageActions()
 
 	// Key event handlers
 	const handleKeyDown = async (event: KeyboardEvent): Promise<void> => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		// Ignore if focus is in an input, textarea, or contenteditable element
 		const active = document.activeElement as HTMLElement
 		if (
@@ -31,6 +35,9 @@ export default function useGarageActionsUseEffect(): void {
 	}
 
 	const handleKeyUp = async (event: KeyboardEvent): Promise<void> => {
+		// Skip if Connect to Pip dialog is open
+		if (pipClass.isConnectPipDialogOpen) return
+
 		// Ignore if focus is in an input, textarea, or contenteditable element
 		const active = document.activeElement as HTMLElement
 		if (

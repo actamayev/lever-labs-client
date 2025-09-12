@@ -97,7 +97,7 @@
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
     "updateCommon": "sudo npm update @bluedotrobots/common-ts",
-    "check-unused": "ts-unused-exports tsconfig.json --excludePathsFromReport=\"test|spec|\\.next|middleware\\.ts|app/(manifest|robots|sitemap).ts|app/(layout|not-found).tsx|src/components/shadcn\""
+    "check-unused": "ts-unused-exports tsconfig.json --excludePathsFromReport=\"test|spec|\\.next|middleware\\.ts|app/(manifest|robots|sitemap).ts|app/(layout|not-found).tsx|src/components/shadcn|app/.*/page\\.tsx\""
   },
   "browserslist": {
     "production": [

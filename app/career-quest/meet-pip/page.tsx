@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
-import { MEET_PIP } from "../../../src/utils/career-quest/career-quest-data"
+import MEET_PIP from "../../../src/utils/career-quest/career-quest-right-content/meet-pip-right-content"
 import CareerActivityTemplate from "../../../src/components/career/career-activity-template"
 
 export const metadata = createMetadata({

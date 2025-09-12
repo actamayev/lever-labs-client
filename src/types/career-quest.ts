@@ -3,6 +3,7 @@ import { LucideIcon } from "lucide-react"
 import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BinaryEvaluationResult, ChatMessageRole, SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
+import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 
 declare global {
 	type ComponentName =
@@ -28,6 +29,7 @@ declare global {
 		backgroundColor: DuolingoColors
 		codingConcepts: CodingConceptName[]
 		expectedCompletionTime: string
+		isDisabled: boolean
 	}
 
 	type CodingConceptName =
@@ -56,11 +58,10 @@ declare global {
 	}
 
 	type RightContent =
-	| { type: "icon", iconKey: string } // Renamed from "image" to avoid confusion
 	| { type: "image", src: string, alt: string, width: number, height: number }
-	| { type: "video", src: string, poster?: string, autoplay?: boolean, loop?: boolean, muted?: boolean }
-	| { type: "component", component: (() => ReactNode) | string }
+	| { type: "component", component: () => ReactNode }
 	| { type: "challenge", challengeData: CqChallengeData }
+	| { type: "view-only-sandbox", blocklyJson: BlocklyJson }
 	| { type: "chat" }
 	| { type: "null" }
 
@@ -99,16 +100,6 @@ declare global {
 		alt?: string
 		width?: number
 		height?: number
-	}
-
-	// Helper type for creating video content easily
-	interface VideoContent {
-		type: "video"
-		src: string  // e.g., "/videos/career-quest/pip-demo.mp4"
-		poster?: string // Optional poster image path
-		autoplay?: boolean
-		loop?: boolean
-		muted?: boolean
 	}
 
 	// New morphing text section type

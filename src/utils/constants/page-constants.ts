@@ -1,6 +1,5 @@
 export const PrivatePageNames: PageNames[] = [
 	"/garage",
-	"/add-pip",
 	"/sandbox",
 	"/settings/profile",
 	"/settings/schools",
@@ -28,7 +27,6 @@ export const staticPages = [
 
 	// Private:
 	"/garage",
-	"/add-pip",
 	"/sandbox",
 	"/class-manager",
 	"/whiteboard",
@@ -38,6 +36,7 @@ export const staticPages = [
 	"/career-quest",
 	"/career-quest/meet-pip",
 	"/career-quest/obstacle-avoidance",
+	"/career-quest/driving-school",
 
 	// Open:
 	"/contact",
@@ -53,6 +52,7 @@ export const careerQuestPages = [
 	"/career-quest",
 	"/career-quest/meet-pip",
 	"/career-quest/obstacle-avoidance",
+	"/career-quest/driving-school",
 ] as const
 
 export const allPages = [...staticPages, ...careerQuestPages] as const
