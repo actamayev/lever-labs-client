@@ -20,6 +20,7 @@ interface Props {
 }
 
 
+// eslint-disable-next-line max-lines-per-function
 function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const {
 		careerUUIDChallengeUUID,
@@ -29,6 +30,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
+	const [isCentered, setIsCentered] = useState(false)
 	const toolboxConfig = careerQuestClass.getToolboxConfig(careerUUIDChallengeUUID)
 	const blocklyJson = chatManagerClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 
@@ -36,11 +38,27 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
 
+	const centerWorkspace = useCallback((): void => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
+		workspace.scrollCenter()
+		setIsCentered(true)
+	}, [workspaceConfiguration.zoom?.startScale])
+
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 		onJsonChange(newJson)
-	}, [onJsonChange])
+
+		// Center workspace only on first initialization with delay
+		if (!isCentered) {
+			setTimeout((): void => {
+				centerWorkspace()
+			}, 100)
+		}
+	}, [onJsonChange, isCentered, centerWorkspace])
 
 	const toggleToolbox = useCallback((): void => {
 		const workspace = workspaceRef.current
