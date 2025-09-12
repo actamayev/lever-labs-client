@@ -76,7 +76,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
-					<rightContent.component careerUUID={careerData.careerUUID} />
+					<rightContent.component />
 				</motion.div>
 			</AnimatePresence>
 		)

@@ -19,7 +19,7 @@ interface Props {
 	onJsonChange: (json: BlocklyJson) => void
 }
 
-// eslint-disable-next-line max-lines-per-function
+
 function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const {
 		careerUUIDChallengeUUID,
@@ -33,7 +33,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const blocklyJson = chatManagerClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		return getWorkspaceConfig(isDarkMode, false, 1, false)
+		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
@@ -41,40 +41,6 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 		onJsonChange(newJson)
 	}, [onJsonChange])
-
-	// Additional CSS-based fix
-	useEffect((): () => void => {
-		// Add CSS to prevent widget div from affecting layout
-		const style = document.createElement("style")
-		style.textContent = `
-			.blocklyWidgetDiv {
-				position: fixed !important;
-				z-index: 9999 !important;
-				pointer-events: auto !important;
-			}
-
-			.blocklyWidgetDiv * {
-				position: static !important;
-			}
-
-			.blocklyHtmlInput {
-				position: static !important;
-			}
-
-			/* Prevent scroll anchoring during Blockly operations */
-			body.blockly-widget-active {
-				overflow-anchor: none !important;
-				scroll-behavior: auto !important;
-			}
-		`
-		document.head.appendChild(style)
-
-		return (): void => {
-			if (document.head.contains(style)) {
-				document.head.removeChild(style)
-			}
-		}
-	}, [])
 
 	const toggleToolbox = useCallback((): void => {
 		const workspace = workspaceRef.current
@@ -122,7 +88,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-3xl overflow-hidden border-y-2 border-swan h-full")}
+			className={cn("relative z-0 rounded-3xl border-y-2 border-swan h-full")}
 		>
 			{/* Toggle Toolbox Button */}
 			<Button

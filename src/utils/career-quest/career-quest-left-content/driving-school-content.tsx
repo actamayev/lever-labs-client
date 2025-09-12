@@ -59,15 +59,15 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Watch:</p>
 			<p>this program tells my LEDs to:</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} >
 				turn on,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				wait,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				turn off.
 			</Highlighter>
 		</div>
@@ -75,27 +75,27 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-2-2": (): React.ReactNode => (
 		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>That was three steps in order:</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				LEDs on,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				wait,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				LEDs off.
 			</Highlighter>
 			<p>The same pattern works for driving:</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				start moving,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				keep moving,
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				stop.
 			</Highlighter>
 		</div>
@@ -106,15 +106,16 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>to happen</p>
 			<p>before they start.</p>
 			This one
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<br />
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				waits for Button A
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				turns my LEDs on for two seconds
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				turns them off
 			</Highlighter>
 		</div>
@@ -160,14 +161,14 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Here's my first driving program.</p>
 			<p>It makes me</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} multiline={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} multiline={true} delay={0}>
 				<p>go forward for</p>
 				<p>one second</p>
 			</Highlighter>
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				at 15% speed,
 			</Highlighter>
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				then stop.
 			</Highlighter>
 		</div>
@@ -175,15 +176,15 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-3-3": (): React.ReactNode => (
 		<div>
 			<p>That was three steps again:</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}	>
 				start
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				drive
 			</Highlighter>
 			<br />
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				stop.
 			</Highlighter>
 			<p>The same steps as the LEDs,</p>
@@ -196,13 +197,13 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>With distance, I can be more precise.</p>
 			<p>This program</p>
 			<p>makes me</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				go forward 8 inches
 			</Highlighter>
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				at 15% speed
 			</Highlighter>
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
 				then stop.
 			</Highlighter>
 		</div>
@@ -211,13 +212,13 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Your turn.</p>
 			<p>Build a program that makes me</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				go forward 8 inches at 15% speed,
 			</Highlighter>
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={1000}>
 				go backward 8 inches at 15% speed,
 			</Highlighter>
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={2000}>
 				then stop.
 			</Highlighter>
 		</div>
@@ -237,7 +238,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>sorted out,</p>
 			<p>we can move on</p>
 			<p>to the next skill…</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				Turning!
 			</Highlighter>
 		</div>
@@ -281,13 +282,13 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Your turn!</p>
 			<p>Build a program that makes me:</p>
-			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				turn 180 degrees clockwise
 			</Highlighter>
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				wait two seconds
 			</Highlighter>
-			<Highlighter action="highlight" color="#e6aaff" strokeWidth={2} isView={true}>
+			<Highlighter action="highlight" color="#e6aaff" strokeWidth={2} isView={true} delay={2000}>
 				turn 180 degrees counterclockwise
 			</Highlighter>
 		</div>
