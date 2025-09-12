@@ -46,6 +46,7 @@ export const mockCareerQuestData: CareerQuestData = {
 				description: "A test challenge",
 				initialBlocklyJson: { blocks: { blocks: [] } },
 				toolboxConfig: { contents: [] } as Blockly.utils.toolbox.ToolboxDefinition,
+				isDefiniteSolution: false,
 			},
 		},
 		{
