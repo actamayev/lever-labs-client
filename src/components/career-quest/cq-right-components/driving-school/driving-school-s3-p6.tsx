@@ -7,10 +7,11 @@ import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import { cn } from "../../../../lib/shadcn/utils"
 import careerQuestClass from "../../../../classes/career-quest-class"
 import navigationManagerClass from "../../../../classes/navigation-manager-class"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 type AnswerChoice = "time" | "distance" | null
 
 interface Props {
-	careerUUID?: string // Optional: if provided, will mark slide completion on correct answer
+	careerUUID?: CareerUUID // Optional: if provided, will mark slide completion on correct answer
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,12 +21,12 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 
 	const handleAnswerClick = (answer: AnswerChoice): void => {
 		setSelectedAnswer(answer)
-		
+
 		// Mark completion if correct answer is selected and in career quest context
 		if (answer === "distance" && careerUUID) {
 			const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
 			let slideId: string | undefined
-			
+
 			if (currentSlide.type === "textParent") {
 				const textChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 				const textChild = currentSlide.data.children[textChildIndex]
@@ -33,7 +34,7 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 			} else if (currentSlide.type === "challenge") {
 				slideId = currentSlide.id
 			}
-			
+
 			if (slideId) {
 				careerQuestClass.markSlideInteractionComplete(careerUUID, slideId)
 			}

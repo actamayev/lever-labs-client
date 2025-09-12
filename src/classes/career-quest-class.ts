@@ -1,3 +1,4 @@
+/* eslint-disable max-depth */
 "use client"
 
 import type * as Blockly from "blockly/core"
@@ -259,7 +260,7 @@ class CareerQuestClass {
 		for (const section of career.careerDefinition.sections) {
 			if (section.type === "textParent") {
 				for (const child of section.children) {
-					// eslint-disable-next-line max-depth
+
 					if (child.type === "morphingText" && child.id === morphingTextId) {
 						return child
 					}
@@ -400,11 +401,11 @@ class CareerQuestClass {
 		for (const section of career.careerDefinition.sections) {
 			if (section.type === "textParent") {
 				for (const child of section.children) {
-					// eslint-disable-next-line max-depth
+
 					if (child.id === textChildId) {
 						// Check if the content contains an AnimatedStateButton
 						// We'll do this by checking if the text child ID matches known button IDs
-						// eslint-disable-next-line max-depth
+
 						if (child.type === "text") {
 							// For now, we'll check if the text child ID matches known button IDs
 							// In the future, this could be made more sophisticated by analyzing the JSX
@@ -1059,6 +1060,7 @@ class CareerQuestClass {
 		return true
 	}
 
+	// eslint-disable-next-line complexity
 	private slideRequiresInteraction(careerUUID: CareerUUID, slideId: string): boolean {
 		const career = this.getCareer(careerUUID)
 		if (!career) return false
@@ -1070,7 +1072,7 @@ class CareerQuestClass {
 				for (const textChild of slide.data.children) {
 					if (textChild.id === slideId) {
 						let rightContent
-						
+
 						// Handle different property names for different text child types
 						if (textChild.type === "text") {
 							rightContent = textChild.rightSideContent
@@ -1083,7 +1085,7 @@ class CareerQuestClass {
 						if (rightContent && typeof rightContent === "object") {
 							// View-only sandboxes require interaction
 							// Component type might be a quiz (like driving-school-s3-p6)
-							return rightContent.type === "view-only-sandbox" || 
+							return rightContent.type === "view-only-sandbox" ||
 								   (rightContent.type === "component" && this.isQuizComponent(slideId))
 						}
 					}
@@ -1111,7 +1113,7 @@ class CareerQuestClass {
 		// Get all slide IDs in order and compare positions
 		const allSlideIds: string[] = []
 		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
-		
+
 		for (const slide of mainSlides) {
 			if (slide.type === "textParent") {
 				for (const textChild of slide.data.children) {
