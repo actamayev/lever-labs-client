@@ -76,7 +76,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
-					<rightContent.component />
+					<rightContent.component careerUUID={careerData.careerUUID} />
 				</motion.div>
 			</AnimatePresence>
 		)
@@ -100,7 +100,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					{...getTransitionProps()}
 					className="h-full w-full"
 				>
-					<ViewOnlySandbox blocklyJson={rightContent.blocklyJson} />
+					<ViewOnlySandbox blocklyJson={rightContent.blocklyJson} careerUUID={careerData.careerUUID} />
 				</motion.div>
 			</AnimatePresence>
 		)

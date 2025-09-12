@@ -2,6 +2,7 @@
 
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
@@ -16,10 +17,14 @@ import pipClass from "../../../classes/pip-class"
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
+import careerQuestClass from "../../../classes/career-quest-class"
+import navigationManagerClass from "../../../classes/navigation-manager-class"
+import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 
 interface Props {
 	blocklyJson: BlocklyJson
 	extraClasses?: string
+	careerUUID?: CareerUUID // Optional: if provided, will mark slide completion on successful upload
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -27,11 +32,14 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	const {
 		blocklyJson,
 		extraClasses = "h-full",
+		careerUUID,
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
+	const pathname = usePathname()
 	const [isCentered, setIsCentered] = useState(false)
+	const [isCentering, setIsCentering] = useState(false)
 	const [cppCode, setCppCode] = useState<string>("")
 
 	// Generate CPP code from blockly JSON on component mount and when blocklyJson changes
@@ -65,40 +73,45 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((): void => {
+		setIsCentering(true)
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
-		// Set the scale to the start scale
+		// Always center the workspace
 		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
-
-		// Center the workspace
 		workspace.scrollCenter()
+
 		setIsCentered(true)
+		setIsCentering(false)
 	}, [workspaceConfiguration.zoom?.startScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
+
+		// Center workspace on first initialization
 		if (!isCentered) {
-			// Use a small timeout to ensure the workspace is fully rendered
-			setTimeout((): void => {
-				centerWorkspace()
-			}, 100)
+			centerWorkspace()
 		}
-	}, [centerWorkspace, isCentered])
+	}, [isCentered, centerWorkspace])
 
 	useEffect((): void => {
 		setIsCentered(false)
 	}, [blocklyJson])
 
+	// Reset isCentered when pathname changes (navigation)
+	useEffect((): void => {
+		setIsCentered(false)
+	}, [pathname])
+
 	// Add effect to center workspace after it's initialized and when blocks change
 	useEffect((): () => void => {
-		if (isCentered) return (): void => {}
+		if (isCentered || isCentering) return (): void => {}
 		const timer = setTimeout((): void => {
 			centerWorkspace()
-		}, 200) // Slightly longer delay for view-only to ensure full rendering
+		}, 100) // Small delay to ensure workspace is fully rendered
 
 		return (): void => clearTimeout(timer)
-	}, [centerWorkspace, blocklyJson, isCentered])
+	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
@@ -113,10 +126,6 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
-				// Re-center after resize if already centered
-				if (isCentered) {
-					setTimeout((): void => centerWorkspace(), 50)
-				}
 			}
 		})
 
@@ -125,13 +134,7 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 		return (): void => {
 			resizeObserver.disconnect()
 		}
-	}, [centerWorkspace, isCentered])
-
-	useEffect((): void => {
-		if (workspaceRef.current) {
-			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
-		}
-	}, [isDarkMode])
+	}, [])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
@@ -142,6 +145,34 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	useEffect((): void => {
 		void initializeBlocks()
 	}, [])
+
+	const handleSendCode = useCallback(async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+		try {
+			// Send code to robot
+			await sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())
+
+			// Mark slide completion if in career quest context
+			if (careerUUID) {
+				const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+				let slideId: string | undefined
+
+				if (currentSlide.type === "textParent") {
+					const textChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+					const textChild = currentSlide.data.children[textChildIndex]
+					slideId = textChild.id
+				} else if (currentSlide.type === "challenge") {
+					slideId = currentSlide.id
+				}
+
+				if (slideId) {
+					careerQuestClass.markSlideInteractionComplete(careerUUID, slideId)
+				}
+			}
+		} catch (error) {
+			console.error("Error sending code to robot:", error)
+			// Don't mark completion if there was an error
+		}
+	}, [cppCode, careerUUID])
 
 	return (
 		<div className="flex flex-col h-full">
@@ -163,7 +194,7 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
-						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
+						onClick={handleSendCode}
 						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
 					/>
 					<TactileButton

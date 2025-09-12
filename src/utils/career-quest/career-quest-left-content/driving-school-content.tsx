@@ -10,14 +10,18 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-1-1": (): React.ReactNode => (
 		<div>
 			<p>Welcome to Driving School.</p>
-			<p>I've got wheels, but I don't yet know how to use them well.</p>
-			<p>That's where you come in.</p>
+			<p>I've got wheels, but I don't yet know how</p>
+			<p>to use them well.</p>
+			<p>That's where</p>
+			<p>you come in.</p>
 		</div>
 	),
 	"driving-school-1-2": (): React.ReactNode => (
 		<div>
 			<p>I don't make my own choices;</p>
-			<p>I follow the instructions you give me.</p>
+			<p>I follow the</p>
+			<p>instructions</p>
+			<p>you give me.</p>
 		</div>
 	),
 	"driving-school-1-3": (): React.ReactNode => (
@@ -30,16 +34,18 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		</div>
 	),
 	"driving-school-1-4": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>When blocks are stacked,</p>
-			<p>they form a set of steps called a program.</p>
+			<p>they form</p>
+			<p>a set of steps</p>
+			<p>called a program.</p>
 			<p>I always follow them in order:</p>
 			<p>first the top block, then the next,</p>
 			<p>until I reach the bottom.</p>
 		</div>
 	),
 	"driving-school-1-5": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Before we practice driving,</p>
 			<p>let's start with my lights.</p>
 			<p>They're an easy way to try out instructions.</p>
@@ -51,49 +57,92 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	// Sequence 2
 	"driving-school-2-1": (): React.ReactNode => (
 		<div>
-			<p>Watch: this program tells my LEDs to</p>
-			<p>turn on, wait, then turn off.</p>
+			<p>Watch:</p>
+			<p>this program tells my LEDs to:</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				turn on,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				wait,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				turn off.
+			</Highlighter>
 		</div>
 	),
 	"driving-school-2-2": (): React.ReactNode => (
-		<div>
-			<p>That was three clear steps in order:</p>
-			<p>LEDs on. Hold. LEDs off.</p>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			<p>That was three steps in order:</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				LEDs on,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				wait,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				LEDs off.
+			</Highlighter>
 			<p>The same pattern works for driving:</p>
-			<p>start moving, keep moving, then stop.</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				start moving,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				keep moving,
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				stop.
+			</Highlighter>
 		</div>
 	),
 	"driving-school-2-3": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Programs can also wait for something</p>
-			<p>to happen before they start.</p>
-			<p>This one waits for Button A,</p>
-			<p>then turns my LEDs on for two seconds,</p>
-			<p>and finally turns them off.</p>
+			<p>to happen</p>
+			<p>before they start.</p>
+			This one
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				waits for Button A
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				turns my LEDs on for two seconds
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				turns them off
+			</Highlighter>
 		</div>
 	),
 	"5892848a-8334-48a7-82aa-bbbe43d2e92f": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Your turn.</p>
 			<p>Build a program that</p>
 			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
-				Starts on Button A,
+				starts on Button A,
 			</Highlighter>
 			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
-				Turns my LEDs blue for two second,
+				turns my LEDs blue for two seconds,
 			</Highlighter>
 			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
-				Then switches to red for two second,
+				then switches to red for two seconds,
 			</Highlighter>
 			<Highlighter action="highlight" color="#2ddc79" strokeWidth={2} isView={true}>
-				Then turns off
+				then turns off
 			</Highlighter>
 		</div>
 	),
 	"driving-school-2-5": (): React.ReactNode => (
 		<div>
 			<p>Nice work.</p>
-			<p>You connected steps I could follow,</p>
+			<p>You connected</p>
+			<p>steps</p>
+			<p>I could follow,</p>
 			<p>and it worked perfectly.</p>
 			<p>Now it's time to roll forward with my wheels.</p>
 		</div>
@@ -110,40 +159,73 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-3-2": (): React.ReactNode => (
 		<div>
 			<p>Here's my first driving program.</p>
-			<p>It makes me go forward for two seconds</p>
-			<p>at 20% speed, then stop.</p>
+			<p>It makes me</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} multiline={true}>
+				<p>go forward for</p>
+				<p>one second</p>
+			</Highlighter>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				at 15% speed,
+			</Highlighter>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				then stop.
+			</Highlighter>
 		</div>
 	),
 	"driving-school-3-3": (): React.ReactNode => (
 		<div>
 			<p>That was three steps again:</p>
-			<p>1. Start</p>
-			<p>2. Drive</p>
-			<p>3. Stop</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				start
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				drive
+			</Highlighter>
+			<br />
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				stop.
+			</Highlighter>
 			<p>The same steps as the LEDs,</p>
 			<p>but now with motors.</p>
 		</div>
 	),
 	"driving-school-3-4": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Driving by time works, but it isn't always exact.</p>
 			<p>With distance, I can be more precise.</p>
-			<p>This program makes me go forward 5 centimeters</p>
-			<p>at 20% speed, then stop.</p>
+			<p>This program</p>
+			<p>makes me</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				go forward 8 inches
+			</Highlighter>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				at 15% speed
+			</Highlighter>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				then stop.
+			</Highlighter>
 		</div>
 	),
 	"718e291a-1c03-4948-88c4-ef0762cfc4df": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Your turn.</p>
 			<p>Build a program that makes me</p>
-			<p>go forward 5 centimeters</p>
-			<p>at 20% speed, then stop.</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				go forward 8 inches at 15% speed,
+			</Highlighter>
+			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true}>
+				go backward 8 inches at 15% speed,
+			</Highlighter>
+			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
+				then stop.
+			</Highlighter>
 		</div>
 	),
 	"driving-school-3-6": (): React.ReactNode => (
 		<div>
 			<p>You've seen me drive using</p>
-			<p>time and using distance.</p>
+			<p>time and distance.</p>
 			<p>Which one do you think helps me</p>
 			<p>be more exact when I stop?</p>
 		</div>
@@ -151,9 +233,13 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-3-7": (): React.ReactNode => (
 		<div>
 			<p>Great!</p>
-			<p>With that sorted out,</p>
-			<p>we can move on to the next skill…</p>
-			<p>Turning!</p>
+			<p>With that</p>
+			<p>sorted out,</p>
+			<p>we can move on</p>
+			<p>to the next skill…</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				Turning!
+			</Highlighter>
 		</div>
 	),
 
@@ -166,7 +252,7 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		</div>
 	),
 	"driving-school-4-2": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Here's how I do it:</p>
 			<p>if one wheel moves forward</p>
 			<p>and the other backward,</p>
@@ -179,8 +265,9 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Instead of controlling each wheel separately,</p>
 			<p>you can use a turning block.</p>
-			<p>This one tells me to turn</p>
-			<p>clockwise 90 degrees.</p>
+			<p>This one tells me to</p>
+			<p>turn clockwise</p>
+			<p>90 degrees.</p>
 		</div>
 	),
 	"driving-school-4-4": (): React.ReactNode => (
@@ -195,21 +282,23 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>Your turn!</p>
 			<p>Build a program that makes me:</p>
 			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
-				1. turn 180 degrees clockwise
+				turn 180 degrees clockwise
 			</Highlighter>
 			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true}>
-				2. wait two seconds
+				wait two seconds
 			</Highlighter>
 			<Highlighter action="highlight" color="#e6aaff" strokeWidth={2} isView={true}>
-				3. turn 180 degrees counterclockwise
+				turn 180 degrees counterclockwise
 			</Highlighter>
 		</div>
 	),
 	"driving-school-4-6": (): React.ReactNode => (
-		<div>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
 			<p>Awesome!</p>
-			<p>Now I can drive straight,</p>
-			<p>make small turns, big turns,</p>
+			<p>Now I can</p>
+			<p>drive straight,</p>
+			<p>make small turns,</p>
+			<p>big turns,</p>
 			<p>and even combine them.</p>
 			<p>That's the foundation</p>
 			<p>of real navigation.</p>
@@ -220,7 +309,8 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 	"driving-school-5-1": (): React.ReactNode => (
 		<div>
 			<p>I've got the basics.</p>
-			<p>Now let's see if I can</p>
+			<p>Now let's see</p>
+			<p>if I can</p>
 			<p>handle a real challenge.</p>
 		</div>
 	),
@@ -243,25 +333,32 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 		<div>
 			<p>Here's your challenge.</p>
 			<p>Build a program that makes me</p>
-			<p>drive in a square</p>
-			<p>and return to where I started.</p>
+			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true}>
+				<p>drive clockwise</p>
+				<p>in an</p>
+				<p>8 inch square</p>
+				<p>at 15% speed.</p>
+			</Highlighter>
 		</div>
 	),
 	"driving-school-5-5": (): React.ReactNode => (
 		<div>
 			<p>Yes!</p>
-			<p>That's a perfect square.</p>
-			<p>With straight driving and turning together,</p>
-			<p>I can follow paths and return to the start.</p>
+			<p>That's a</p>
+			<p>perfect square.</p>
+			<p>With straight driving and turning,</p>
+			<p>I can follow paths and return to</p>
+			<p>the start.</p>
 		</div>
 	),
 	"driving-school-5-6": (): React.ReactNode => (
-		<div>
-			<p>Driving School is complete!</p>
+		<div className="text-3xl" style={{ lineHeight: "1.5" }}>
+			<p>Driving School</p>
+			<p>is complete!</p>
 			<p>I can handle straight lines and turns,</p>
 			<p>and bring them together to get around.</p>
-			<p>I'm ready for what comes next</p>
-			<p>and excited to see where the road takes us.</p>
+			<p>I'm excited to see where the road</p>
+			<p>takes us.</p>
 		</div>
 	),
 }

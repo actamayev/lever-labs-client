@@ -9,6 +9,7 @@ import ConnectToPipButton from "./connect-pip-button"
 import workbenchClass from "../../classes/workbench-class"
 import pipClass from "../../classes/pip-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number }): React.ReactNode {
 	const pathname = usePathname()
@@ -30,7 +31,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 		>
 			<div className="relative p-3 z-50">
 				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
-					<ConnectToPipButton />
+					<ConnectToPipButton colors={getDuolingoColors("humpback")}/>
 				) : (
 					<div className="flex flex-row justify-between">
 						<BatteryWorkbench />

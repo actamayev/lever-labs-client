@@ -1,18 +1,43 @@
 "use client"
 
 import Image from "next/image"
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import { cn } from "../../../../lib/shadcn/utils"
+import careerQuestClass from "../../../../classes/career-quest-class"
+import navigationManagerClass from "../../../../classes/navigation-manager-class"
 type AnswerChoice = "time" | "distance" | null
 
+interface Props {
+	careerUUID?: string // Optional: if provided, will mark slide completion on correct answer
+}
+
 // eslint-disable-next-line max-lines-per-function
-export default function DrivingSchoolS3P6(): React.ReactNode {
+export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
+	const { careerUUID } = props
 	const [selectedAnswer, setSelectedAnswer] = useState<AnswerChoice>(null)
 
 	const handleAnswerClick = (answer: AnswerChoice): void => {
 		setSelectedAnswer(answer)
+		
+		// Mark completion if correct answer is selected and in career quest context
+		if (answer === "distance" && careerUUID) {
+			const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+			let slideId: string | undefined
+			
+			if (currentSlide.type === "textParent") {
+				const textChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
+				const textChild = currentSlide.data.children[textChildIndex]
+				slideId = textChild.id
+			} else if (currentSlide.type === "challenge") {
+				slideId = currentSlide.id
+			}
+			
+			if (slideId) {
+				careerQuestClass.markSlideInteractionComplete(careerUUID, slideId)
+			}
+		}
 	}
 
 	const getButtonStyles = (answer: AnswerChoice): string => {

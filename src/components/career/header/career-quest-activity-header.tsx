@@ -17,6 +17,7 @@ import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 import pipClass from "../../../classes/pip-class"
 import ConnectToPipButton from "../../workbench/connect-pip-button"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
@@ -119,7 +120,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 					</button>
 				)}
 				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
-					<ConnectToPipButton />
+					<ConnectToPipButton colors={getDuolingoColors(careerData.careerColor)}/>
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip

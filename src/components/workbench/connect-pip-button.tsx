@@ -3,13 +3,11 @@
 import { observer } from "mobx-react"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import ConnectToPipDialog from "./connect-pip-dialog"
-import getDuolingoColors from "../../utils/get-duolingo-colors"
+import { DuolingoColorVariants } from "../../utils/get-duolingo-colors"
 import pipClass from "../../classes/pip-class"
 import { WifiHighIcon } from "lucide-react"
 
-function ConnectToPipButton(): React.ReactNode {
-	const colors = getDuolingoColors("humpback")
-
+function ConnectToPipButton({ colors }: { colors: DuolingoColorVariants }): React.ReactNode {
 	return (
 		<>
 			<TactileButton

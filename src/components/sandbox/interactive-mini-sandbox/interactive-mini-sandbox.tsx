@@ -33,7 +33,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 	const blocklyJson = chatManagerClass.getUpdatedBlocklyJson(careerUUIDChallengeUUID)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		return getWorkspaceConfig(isDarkMode, false, 1, true)
+		return getWorkspaceConfig(isDarkMode, false, 1, false)
 	}, [isDarkMode])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {

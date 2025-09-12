@@ -1,10 +1,34 @@
 "use client"
 
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-/**
- * Generate Tailwind background classes for different color variants
- */
-export default function getDuolingoColors(baseColor: DuolingoColors) {
+export interface DuolingoColorVariants {
+	bg: string
+	bg1: string
+	bg2: string
+	bg3: string
+	hoverBg: string
+	hoverBg1: string
+	hoverBg2: string
+	hoverBg3: string
+	text: string
+	text1: string
+	text2: string
+	text3: string
+	border: string
+	border1: string
+	border2: string
+	border3: string
+	ring: string
+	ring1: string
+	ring2: string
+	ring3: string
+	shadow: string
+	shadow1: string
+	shadow2: string
+	shadow3: string
+	hoverShadow: string
+}
+
+export default function getDuolingoColors(baseColor: DuolingoColors): DuolingoColorVariants {
 	return {
 		// Main background (base color)
 		bg: `bg-${baseColor}`,

@@ -37,6 +37,7 @@ interface CareerInstance {
 	isCareerChatToggled: boolean
 	previousRightContent: RightContent | null
 	challengeChatToggledStates: Map<ChallengeUUID, boolean>
+	completedInteractions: Set<string> // Tracks completed slides that require interaction (view-only sandboxes, quizzes, etc.)
 }
 
 class CareerQuestClass {
@@ -145,7 +146,8 @@ class CareerQuestClass {
 			rightContent: { type: "null" },
 			isCareerChatToggled: false,
 			previousRightContent: null,
-			challengeChatToggledStates
+			challengeChatToggledStates,
+			completedInteractions: new Set<string>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -430,30 +432,8 @@ class CareerQuestClass {
 
 	// NEW: Check if user can advance past a text child that requires button interaction
 	public canAdvancePastTextChild(careerUUID: CareerUUID, textChildId: string): boolean {
-		if (!this.requiresButtonInteraction(careerUUID, textChildId)) {
-			return true // No button interaction required, allow advancement
-		}
-
-		// Check if the user has seen past this text child
-		const furthestSeen = this.getFurthestSeenPosition(careerUUID)
-		if (!furthestSeen) return false // No furthest seen, haven't progressed past this point
-
-		// Get position indices for comparison
-		const currentIndices = navigationManagerClass.findPositionIndices(careerUUID, textChildId)
-		const furthestIndices = navigationManagerClass.findPositionIndices(careerUUID, furthestSeen)
-
-		if (!currentIndices || !furthestIndices) return false
-
-		// Check if furthest seen is after the current text child
-		if (furthestIndices.mainSlideIndex > currentIndices.mainSlideIndex) {
-			return true
-		}
-		if (furthestIndices.mainSlideIndex < currentIndices.mainSlideIndex) {
-			return false
-		}
-
-		// If same main slide, check if furthest seen text child index is greater
-		return furthestIndices.textChildIndex > currentIndices.textChildIndex
+		// Use the new progress locking system
+		return this.canAdvanceFromSlide(careerUUID, textChildId)
 	}
 
 	// ========================================
@@ -1041,6 +1021,111 @@ class CareerQuestClass {
 
 		const challengeUUID = currentSlide.data.challengeUUID
 		return career.challengeChatToggledStates.get(challengeUUID) || false
+	}
+
+	// ========================================
+	// PROGRESS LOCKING METHODS
+	// ========================================
+
+	public markSlideInteractionComplete = action((careerUUID: CareerUUID, slideId: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.completedInteractions.add(slideId)
+	})
+
+	public isSlideInteractionComplete(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		return career.completedInteractions.has(slideId)
+	}
+
+	public canAdvanceFromSlide(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if user has already progressed beyond this slide
+		const furthestSlideId = career.furthestSeenChallengeUuidOrTextUuid
+		if (furthestSlideId && this.isSlideAfter(careerUUID, furthestSlideId, slideId)) {
+			return true
+		}
+
+		// Check if this slide requires interaction completion
+		if (this.slideRequiresInteraction(careerUUID, slideId)) {
+			return this.isSlideInteractionComplete(careerUUID, slideId)
+		}
+
+		return true
+	}
+
+	private slideRequiresInteraction(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Find the slide and check its right content type
+		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
+		for (const slide of mainSlides) {
+			if (slide.type === "textParent") {
+				for (const textChild of slide.data.children) {
+					if (textChild.id === slideId) {
+						let rightContent
+						
+						// Handle different property names for different text child types
+						if (textChild.type === "text") {
+							rightContent = textChild.rightSideContent
+						} else if (textChild.type === "morphingText") {
+							// For morphing text, get the current variant's right content
+							const morphingIndex = navigationManagerClass.getCurrentMorphingIndex(careerUUID, textChild.id)
+							rightContent = textChild.morphingVariants[morphingIndex]?.rightContent
+						}
+
+						if (rightContent && typeof rightContent === "object") {
+							// View-only sandboxes require interaction
+							// Component type might be a quiz (like driving-school-s3-p6)
+							return rightContent.type === "view-only-sandbox" || 
+								   (rightContent.type === "component" && this.isQuizComponent(slideId))
+						}
+					}
+				}
+			} else if (slide.id === slideId) {
+				// For challenge slides, check the right content
+				const rightContent = career.rightContent
+				return rightContent.type === "view-only-sandbox"
+			}
+		}
+
+		return false
+	}
+
+	private isQuizComponent(slideId: string): boolean {
+		// Check if this slide ID corresponds to a quiz component
+		// For now, we'll check for the specific driving school quiz
+		return slideId === "driving-school-s3-p6"
+	}
+
+	private isSlideAfter(careerUUID: CareerUUID, slideIdA: string, slideIdB: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Get all slide IDs in order and compare positions
+		const allSlideIds: string[] = []
+		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
+		
+		for (const slide of mainSlides) {
+			if (slide.type === "textParent") {
+				for (const textChild of slide.data.children) {
+					allSlideIds.push(textChild.id)
+				}
+			} else {
+				allSlideIds.push(slide.id)
+			}
+		}
+
+		const indexA = allSlideIds.indexOf(slideIdA)
+		const indexB = allSlideIds.indexOf(slideIdB)
+
+		return indexA > indexB
 	}
 
 	// ========================================
