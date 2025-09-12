@@ -200,11 +200,9 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				go forward 8 inches
 			</Highlighter>
+			<br />
 			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={1000}>
 				at 15% speed
-			</Highlighter>
-			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={2000}>
-				then stop.
 			</Highlighter>
 		</div>
 	),
@@ -215,11 +213,9 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<Highlighter action="highlight" color="#64c9ff" strokeWidth={2} isView={true} delay={0}>
 				go forward 8 inches at 15% speed,
 			</Highlighter>
+			<br />
 			<Highlighter action="highlight" color="#ff7878" strokeWidth={2} isView={true} delay={1000}>
-				go backward 8 inches at 15% speed,
-			</Highlighter>
-			<Highlighter action="highlight" color="#ffdc50" strokeWidth={2} isView={true} delay={2000}>
-				then stop.
+				go backward 8 inches at 15% speed
 			</Highlighter>
 		</div>
 	),
@@ -320,14 +316,14 @@ const DRIVING_SCHOOL_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void)
 			<p>Watch this.</p>
 			<p>I can go forward,</p>
 			<p>make a turn,</p>
-			<p>then go forward again and stop.</p>
+			<p>then go forward again.</p>
 		</div>
 	),
 	"driving-school-5-3": (): React.ReactNode => (
 		<div>
 			<p>Not bad.</p>
 			<p>What if I kept going and</p>
-			<p>turned this path into a shape</p>
+			<p>turned this path into a shape?</p>
 		</div>
 	),
 	"d7eb2c2f-da43-4f6a-96e5-cffa51c51531": (): React.ReactNode => (
