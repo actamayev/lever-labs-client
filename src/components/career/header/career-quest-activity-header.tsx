@@ -15,23 +15,33 @@ import HubStudentsDialog from "./hub-students-dialog"
 import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
+import pipClass from "../../../classes/pip-class"
+import ConnectToPipButton from "../../workbench/connect-pip-button"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
-	const isChatToggled = careerQuestClass.isCareerChatToggled(careerData.careerUUID)
 	const currentSlide = navigationManagerClass.getCurrentMainSlide(careerData.careerUUID)
 	const isOnChallengeSection = currentSlide.type === "challenge"
 
+	// Get appropriate toggle state based on section type
+	const isChatToggled = isOnChallengeSection
+		? careerQuestClass.isChallengeChatToggled(careerData.careerUUID)
+		: careerQuestClass.isCareerChatToggled(careerData.careerUUID)
+
 	const handleChatToggle = (): void => {
-		if (isOnChallengeSection) return
-		careerQuestClass.toggleCareerChat(careerData.careerUUID)
+		if (isOnChallengeSection) {
+			careerQuestClass.toggleChallengeChat(careerData.careerUUID)
+		} else {
+			careerQuestClass.toggleCareerChat(careerData.careerUUID)
+		}
 	}
 	const router = useRouter()
 	const [isStudentsDialogOpen, setIsStudentsDialogOpen] = useState(false)
 	const hasNavigationHistory = useRef(false)
 
 	// Track if user has navigation history from within the app
-	useEffect(() => {
+	useEffect((): void => {
 		// Check if there's a referrer from the same origin
 		if (document.referrer && new URL(document.referrer).origin === window.location.origin) {
 			hasNavigationHistory.current = true
@@ -54,7 +64,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	}, [])
 
 	// Check if user is teacher and is focusing students
-	const isTeacher = teacherClass.teacherData !== null
+	const isTeacher = teacherClass.teacherData !== null && teacherClass.teacherData.isApproved
 	const isFocusingStudents = teacherClass.isFocusingStudents
 	const shouldShowStudentsButton = isTeacher && isFocusingStudents
 
@@ -109,18 +119,18 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						</span>
 					</button>
 				)}
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
+					<ConnectToPipButton colors={getDuolingoColors(careerData.careerColor)}/>
+				)}
 				{careerData.needsChat && (
 					<CustomTooltip
 						tooltipTrigger={
 							<button
 								onClick={handleChatToggle}
-								disabled={isOnChallengeSection}
 								className={`flex items-center p-2 rounded-lg transition-colors ${
-									isOnChallengeSection
-										? "text-gray-400 cursor-not-allowed opacity-50"
-										: isChatToggled
-											? "bg-blue-100 text-blue-600 hover:bg-blue-200"
-											: "text-questionText hover:bg-polar"
+									isChatToggled
+										? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+										: "text-questionText hover:bg-polar"
 								}`}
 							>
 								<MessageCircle size={24} />
@@ -128,8 +138,8 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						}
 						tooltipContent={
 							isOnChallengeSection
-								? "CHAT UNAVAILABLE ON CHALLENGE SECTIONS"
-								: isChatToggled ? "HIDE CHAT" : "SHOW CHAT"
+								? (isChatToggled ? "SHOW CHALLENGE TEXT" : "SHOW CHALLENGE CHAT")
+								: (isChatToggled ? "HIDE CHAT" : "SHOW CHAT")
 						}
 					/>
 				)}

@@ -13,7 +13,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
-export interface BlocklyComponentProps {
+interface BlocklyComponentProps {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void

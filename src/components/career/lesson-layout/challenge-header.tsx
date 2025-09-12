@@ -31,28 +31,37 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 						<div className="px-3 pt-3">
 							<div className="flex gap-4">
 								{/* First column - Title and Description (45%) */}
-								<div className="w-[45%]">
-									<h3 className="text-xl font-semibold mb-3 text-foreground">
-										{challengeData.title}
-									</h3>
-									<p className="text-sm text-muted-foreground leading-relaxed">
-										{challengeData.description}
-									</p>
-								</div>
+								{challengeData.beforeRunningText ? (
+									<>
+										<div className="w-[45%]">
+											<h3 className="text-xl font-semibold mb-3 text-foreground">
+												{challengeData.title}
+											</h3>
+											<p className="text-sm text-muted-foreground leading-relaxed">
+												{challengeData.description}
+											</p>
+										</div>
 
-								{/* Second column - Before Running Text (45%) */}
-								<div className="w-[45%]">
-									{challengeData.beforeRunningText && (
-										<>
+										{/* Second column - Before Running Text (45%) */}
+										<div className="w-[45%]">
 											<h4 className="text-lg font-medium mb-2 text-foreground">
 												Before Running
 											</h4>
 											<p className="text-sm text-muted-foreground leading-relaxed">
 												{challengeData.beforeRunningText}
 											</p>
-										</>
-									)}
-								</div>
+										</div>
+									</>
+								) : (
+									<div className="w-full">
+										<h3 className="text-xl font-semibold mb-3 text-foreground">
+											{challengeData.title}
+										</h3>
+										<p className="text-sm text-muted-foreground leading-relaxed">
+											{challengeData.description}
+										</p>
+									</div>
+								)}
 
 								{/* Third column - Action Buttons (10%) */}
 								<div className="w-[10%] flex flex-col gap-2">

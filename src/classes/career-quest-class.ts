@@ -1,3 +1,4 @@
+/* eslint-disable max-depth */
 "use client"
 
 import type * as Blockly from "blockly/core"
@@ -11,7 +12,7 @@ import { action, makeAutoObservable, observable } from "mobx"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 // Dynamic import - career definitions will be loaded on-demand
-import { getContentComponent } from "../utils/career-quest/career-quest-content"
+import { getLeftContentComponent } from "../utils/career-quest/career-quest-left-content/all-career-quest-left-content"
 import isEqual from "lodash-es/isEqual"
 import { stripBlockPositions } from "../utils/blockly/strip-blockly-positions"
 import { careerData } from "../utils/constants/career-quest/career-data"
@@ -22,7 +23,7 @@ import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import blueDotApiClient from "./blue-dot-api-client-class"
-import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-data"
+import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-right-content/all-career-quest-right-content"
 
 interface CareerInstance {
 	careerDefinition: CareerQuestData
@@ -36,6 +37,8 @@ interface CareerInstance {
 	rightContent: RightContent
 	isCareerChatToggled: boolean
 	previousRightContent: RightContent | null
+	challengeChatToggledStates: Map<ChallengeUUID, boolean>
+	completedInteractions: Set<string> // Tracks completed slides that require interaction (view-only sandboxes, quizzes, etc.)
 }
 
 class CareerQuestClass {
@@ -125,6 +128,12 @@ class CareerQuestClass {
 			}
 		})
 
+		// Initialize challenge chat toggle states for all challenges (default: false)
+		const challengeChatToggledStates = new Map<ChallengeUUID, boolean>()
+		challengeSections.forEach((section): void => {
+			challengeChatToggledStates.set(section.challengeData.challengeUUID, false)
+		})
+
 		// Initialize career instance
 		const careerInstance: CareerInstance = {
 			careerDefinition,
@@ -135,12 +144,11 @@ class CareerQuestClass {
 			savedCurrentPosition: "",
 			furthestSeenChallengeUuidOrTextUuid: "",
 			seenChallengeUUIDs: new Set<ChallengeUUID>(),
-			rightContent: {
-				type: "icon",
-				iconKey: "bot-humpback"
-			},
+			rightContent: { type: "null" },
 			isCareerChatToggled: false,
-			previousRightContent: null
+			previousRightContent: null,
+			challengeChatToggledStates,
+			completedInteractions: new Set<string>()
 		}
 
 		this.careers.set(careerDefinition.careerUUID, careerInstance)
@@ -252,7 +260,7 @@ class CareerQuestClass {
 		for (const section of career.careerDefinition.sections) {
 			if (section.type === "textParent") {
 				for (const child of section.children) {
-					// eslint-disable-next-line max-depth
+
 					if (child.type === "morphingText" && child.id === morphingTextId) {
 						return child
 					}
@@ -393,11 +401,11 @@ class CareerQuestClass {
 		for (const section of career.careerDefinition.sections) {
 			if (section.type === "textParent") {
 				for (const child of section.children) {
-					// eslint-disable-next-line max-depth
+
 					if (child.id === textChildId) {
 						// Check if the content contains an AnimatedStateButton
 						// We'll do this by checking if the text child ID matches known button IDs
-						// eslint-disable-next-line max-depth
+
 						if (child.type === "text") {
 							// For now, we'll check if the text child ID matches known button IDs
 							// In the future, this could be made more sophisticated by analyzing the JSX
@@ -425,30 +433,8 @@ class CareerQuestClass {
 
 	// NEW: Check if user can advance past a text child that requires button interaction
 	public canAdvancePastTextChild(careerUUID: CareerUUID, textChildId: string): boolean {
-		if (!this.requiresButtonInteraction(careerUUID, textChildId)) {
-			return true // No button interaction required, allow advancement
-		}
-
-		// Check if the user has seen past this text child
-		const furthestSeen = this.getFurthestSeenPosition(careerUUID)
-		if (!furthestSeen) return false // No furthest seen, haven't progressed past this point
-
-		// Get position indices for comparison
-		const currentIndices = navigationManagerClass.findPositionIndices(careerUUID, textChildId)
-		const furthestIndices = navigationManagerClass.findPositionIndices(careerUUID, furthestSeen)
-
-		if (!currentIndices || !furthestIndices) return false
-
-		// Check if furthest seen is after the current text child
-		if (furthestIndices.mainSlideIndex > currentIndices.mainSlideIndex) {
-			return true
-		}
-		if (furthestIndices.mainSlideIndex < currentIndices.mainSlideIndex) {
-			return false
-		}
-
-		// If same main slide, check if furthest seen text child index is greater
-		return furthestIndices.textChildIndex > currentIndices.textChildIndex
+		// Use the new progress locking system
+		return this.canAdvanceFromSlide(careerUUID, textChildId)
 	}
 
 	// ========================================
@@ -495,7 +481,7 @@ class CareerQuestClass {
 			if (typeof content === "function") {
 				whatUserSees = content()
 			} else if (typeof content === "string") {
-				whatUserSees = getContentComponent(content)
+				whatUserSees = getLeftContentComponent(content)
 			} else {
 				whatUserSees = content
 			}
@@ -708,7 +694,7 @@ class CareerQuestClass {
 
 	public getRightContent = (careerUUID: CareerUUID): RightContent => {
 		const career = this.getCareer(careerUUID)
-		return career?.rightContent || { type: "icon", iconKey: "bot-humpback" }
+		return career?.rightContent || { type: "null" }
 	}
 
 	public setRightContent = action((careerUUID: CareerUUID, rightContent: RightContent): void => {
@@ -1013,6 +999,137 @@ class CareerQuestClass {
 		return career?.isCareerChatToggled || false
 	}
 
+	public toggleChallengeChat = action((careerUUID: CareerUUID): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		// Get the current challenge UUID
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "challenge") return
+
+		const challengeUUID = currentSlide.data.challengeUUID
+		const currentState = career.challengeChatToggledStates.get(challengeUUID) || false
+		career.challengeChatToggledStates.set(challengeUUID, !currentState)
+	})
+
+	public isChallengeChatToggled(careerUUID: CareerUUID): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Get the current challenge UUID
+		const currentSlide = navigationManagerClass.getCurrentMainSlide(careerUUID)
+		if (currentSlide.type !== "challenge") return false
+
+		const challengeUUID = currentSlide.data.challengeUUID
+		return career.challengeChatToggledStates.get(challengeUUID) || false
+	}
+
+	// ========================================
+	// PROGRESS LOCKING METHODS
+	// ========================================
+
+	public markSlideInteractionComplete = action((careerUUID: CareerUUID, slideId: string): void => {
+		const career = this.getCareer(careerUUID)
+		if (!career) return
+
+		career.completedInteractions.add(slideId)
+	})
+
+	public isSlideInteractionComplete(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		return career.completedInteractions.has(slideId)
+	}
+
+	public canAdvanceFromSlide(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Check if user has already progressed beyond this slide
+		const furthestSlideId = career.furthestSeenChallengeUuidOrTextUuid
+		if (furthestSlideId && this.isSlideAfter(careerUUID, furthestSlideId, slideId)) {
+			return true
+		}
+
+		// Check if this slide requires interaction completion
+		if (this.slideRequiresInteraction(careerUUID, slideId)) {
+			return this.isSlideInteractionComplete(careerUUID, slideId)
+		}
+
+		return true
+	}
+
+	// eslint-disable-next-line complexity
+	private slideRequiresInteraction(careerUUID: CareerUUID, slideId: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Find the slide and check its right content type
+		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
+		for (const slide of mainSlides) {
+			if (slide.type === "textParent") {
+				for (const textChild of slide.data.children) {
+					if (textChild.id === slideId) {
+						let rightContent
+
+						// Handle different property names for different text child types
+						if (textChild.type === "text") {
+							rightContent = textChild.rightSideContent
+						} else if (textChild.type === "morphingText") {
+							// For morphing text, get the current variant's right content
+							const morphingIndex = navigationManagerClass.getCurrentMorphingIndex(careerUUID, textChild.id)
+							rightContent = textChild.morphingVariants[morphingIndex]?.rightContent
+						}
+
+						if (rightContent && typeof rightContent === "object") {
+							// View-only sandboxes require interaction
+							// Component type might be a quiz (like driving-school-s3-p6)
+							return rightContent.type === "view-only-sandbox" ||
+								   (rightContent.type === "component" && this.isQuizComponent(slideId))
+						}
+					}
+				}
+			} else if (slide.id === slideId) {
+				// For challenge slides, check the right content
+				const rightContent = career.rightContent
+				return rightContent.type === "view-only-sandbox"
+			}
+		}
+
+		return false
+	}
+
+	private isQuizComponent(slideId: string): boolean {
+		// Check if this slide ID corresponds to a quiz component
+		// For now, we'll check for the specific driving school quiz
+		return slideId === "driving-school-s3-p6"
+	}
+
+	private isSlideAfter(careerUUID: CareerUUID, slideIdA: string, slideIdB: string): boolean {
+		const career = this.getCareer(careerUUID)
+		if (!career) return false
+
+		// Get all slide IDs in order and compare positions
+		const allSlideIds: string[] = []
+		const mainSlides = navigationManagerClass.getMainSlides(careerUUID)
+
+		for (const slide of mainSlides) {
+			if (slide.type === "textParent") {
+				for (const textChild of slide.data.children) {
+					allSlideIds.push(textChild.id)
+				}
+			} else {
+				allSlideIds.push(slide.id)
+			}
+		}
+
+		const indexA = allSlideIds.indexOf(slideIdA)
+		const indexB = allSlideIds.indexOf(slideIdB)
+
+		return indexA > indexB
+	}
+
 	// ========================================
 	// RIGHT CONTENT SELECTION LOGIC
 	// ========================================
@@ -1025,10 +1142,7 @@ class CareerQuestClass {
 		const isDataReady = this.hasRetrievedAllChallengesForCareer(careerUUID)
 		if (!isDataReady) {
 			this.setRightContent(careerUUID,
-				{
-					type: "icon",
-					iconKey: "bot-humpback"
-				})
+				{ type: "null" })
 			return
 		}
 
@@ -1042,18 +1156,7 @@ class CareerQuestClass {
 		// If chat is toggled, avoid overriding UI with non-challenge content
 		if (career.isCareerChatToggled) return
 
-		// Determine if the next challenge has been seen
-		const currentSectionIndex = career.careerDefinition.sections.findIndex((section): boolean => section.id === currentSlide.id)
-		const nextChallenge = career.careerDefinition.sections
-			.slice(currentSectionIndex + 1)
-			.find((section): boolean => section.type === "challenge") as ChallengeSection | undefined
-
-		if (nextChallenge && this.hasChallengeBeenSeen(careerUUID, nextChallenge.challengeData.challengeUUID)) {
-			this.setRightContent(careerUUID, { type: "challenge", challengeData: nextChallenge.challengeData })
-			return
-		}
-
-		// Otherwise use the current text child's right content
+		// Use the current text child's right content
 		const currentTextChildIndex = navigationManagerClass.getCurrentTextChildIndex(careerUUID, currentSlide.id)
 		const textChild = currentSlide.data.children[currentTextChildIndex]
 		if (textChild.type === "morphingText") {
@@ -1063,10 +1166,7 @@ class CareerQuestClass {
 			if (currentVariant) {
 				this.setRightContent(careerUUID, currentVariant.rightContent)
 			} else {
-				this.setRightContent(careerUUID, {
-					type: "icon",
-					iconKey: "bot-humpback"
-				})
+				this.setRightContent(careerUUID, { type: "null" })
 			}
 		} else {
 			const resolvedContent = this.resolveRightSideContent(textChild.rightSideContent)
@@ -1174,7 +1274,7 @@ class CareerQuestClass {
 		}
 
 		// If it's a string, treat it as an icon (backward compatibility)
-		return { type: "icon", iconKey: rightSideContent }
+		return { type: "null" }
 	}
 
 

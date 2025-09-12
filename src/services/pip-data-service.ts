@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AddNewPipResponse, AddPipData, AllCommonResponses, ErrorResponse,
-	NonSuccessResponse, PreviouslyAddedPipsResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import { AllCommonResponses, NonSuccessResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
@@ -10,21 +9,9 @@ export default class PipDataService extends BaseDataService {
 		super(httpClient, pathHeader)
 	}
 
-	async addPip(addPipToAccountData: AddPipData): Promise<AxiosResponse<AddNewPipResponse | NonSuccessResponse>> {
-		return await this.httpClient.http.post<AddNewPipResponse | NonSuccessResponse>(
-			this.buildUrl("/add-pip-to-account"), { addPipToAccountData }
-		)
-	}
-
 	async requestToConnectToPip(pipUUID: PipUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl("/client-connect-to-pip-request"), { pipUUID }
-		)
-	}
-
-	async retrievePreviouslyAddedPips(): Promise<AxiosResponse<PreviouslyAddedPipsResponse | ErrorResponse>> {
-		return await this.httpClient.http.get<PreviouslyAddedPipsResponse | ErrorResponse>(
-			this.buildUrl("/retrieve-previously-added-pips")
 		)
 	}
 

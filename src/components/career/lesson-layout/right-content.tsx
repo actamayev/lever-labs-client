@@ -1,15 +1,13 @@
 import { observer } from "mobx-react"
 import { AnimatePresence, MotionProps, motion } from "framer-motion"
-import { ReactNode } from "react"
 import Image from "next/image"
 import ChallengeSection from "./challenge-section"
 import careerQuestClass from "../../../classes/career-quest-class"
 import CareerChatInterface from "../chat/career-chat-interface"
-import { getTriggerComponent } from "../../../utils/career-quest/trigger-components"
-import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
+import ViewOnlySandbox from "../../sandbox/view-only-sandbox/view-only-sandbox"
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 function RightContent({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
 	const rightContent = careerQuestClass.getRightContent(careerData.careerUUID)
 	const isDataReady = careerQuestClass.hasRetrievedAllChallengesForCareer(careerData.careerUUID)
@@ -49,18 +47,6 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 				</motion.div>
 			</AnimatePresence>
 		)
-	} else if (rightContent.type === "icon") {
-		// Renamed from "image" to avoid confusion with actual images
-		return (
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={`${rightContent.type}-${rightContent.iconKey}`}
-					{...getTransitionProps()}
-				>
-					{getTriggerComponent(rightContent.iconKey)}
-				</motion.div>
-			</AnimatePresence>
-		)
 	} else if (rightContent.type === "image") {
 		return (
 			<AnimatePresence mode="wait">
@@ -76,48 +62,13 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 							width={rightContent.width}
 							height={rightContent.height}
 							className="object-contain rounded-3xl"
-							// style={{
-							// 	mask: "radial-gradient(ellipse 55% 55% at center, black 70%, transparent 100%)",
-							// 	WebkitMask: "radial-gradient(ellipse 70% 60% at center, black 40%, transparent 100%)"
-							// }}
 							priority={true}
 						/>
 					</div>
 				</motion.div>
 			</AnimatePresence>
 		)
-	} else if (rightContent.type === "video") {
-		return (
-			<AnimatePresence mode="wait">
-				<motion.div
-					key={`${rightContent.type}-${rightContent.src}`}
-					{...getTransitionProps()}
-					className="h-full w-full flex items-center justify-center p-4"
-				>
-					<video
-						src={rightContent.src}
-						poster={rightContent.poster}
-						controls
-						autoPlay={rightContent.autoplay || false}
-						loop={rightContent.loop || false}
-						muted={rightContent.muted || true} // Default muted for autoplay
-						className="max-w-full max-h-full rounded-lg shadow-lg"
-					>
-						Your browser does not support the video tag.
-					</video>
-				</motion.div>
-			</AnimatePresence>
-		)
 	} else if (rightContent.type === "component") {
-		let componentContent: ReactNode
-		if (typeof rightContent.component === "function") {
-			componentContent = rightContent.component()
-		} else if (typeof rightContent.component === "string") {
-			componentContent = getContentComponent(rightContent.component)
-		} else {
-			componentContent = rightContent.component
-		}
-
 		return (
 			<AnimatePresence mode="wait">
 				<motion.div
@@ -125,7 +76,7 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					{...getTransitionProps()}
 					className="h-full w-full flex items-center justify-center"
 				>
-					{componentContent}
+					<rightContent.component />
 				</motion.div>
 			</AnimatePresence>
 		)
@@ -138,6 +89,18 @@ function RightContent({ careerData }: { careerData: CareerQuestData }): React.Re
 					className="h-full w-full"
 				>
 					<ChallengeSection challengeData={rightContent.challengeData} />
+				</motion.div>
+			</AnimatePresence>
+		)
+	} else if (rightContent.type === "view-only-sandbox") {
+		return (
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`${rightContent.type}-${JSON.stringify(rightContent.blocklyJson)}`}
+					{...getTransitionProps()}
+					className="h-full w-full"
+				>
+					<ViewOnlySandbox blocklyJson={rightContent.blocklyJson} careerUUID={careerData.careerUUID} />
 				</motion.div>
 			</AnimatePresence>
 		)

@@ -46,7 +46,7 @@ interface CareerUUIDChallengeUUID {
 	challengeUUID: ChallengeUUID
 }
 
-export class ChatManagerClass {
+class ChatManagerClass {
 	// Challenge chat data: careerUUID -> challengeUUID -> ChallengeInstance
 	public challengeChats = observable.map<CareerUUID, Map<ChallengeUUID, ChallengeInstance>>()
 

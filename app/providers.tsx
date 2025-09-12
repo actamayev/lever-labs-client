@@ -7,7 +7,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google"
 // Custom hooks from your application
 import authClass from "../src/classes/auth-class"
 import personalInfoClass from "../src/classes/personal-info-class"
-import retrievePipInfo from "../src/utils/pip/retrieve-pip-info"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
@@ -18,7 +17,6 @@ const retrieveInfo = async (): Promise<void> => {
 	if (!authClass.isLoggedIn || personalInfoClass.retrievedPersonalInfo) return
 	try {
 		await retrievePersonalInfo()
-		void retrievePipInfo()
 		void retrieveClassrooms()
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {

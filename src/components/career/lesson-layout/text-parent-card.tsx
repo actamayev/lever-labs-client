@@ -5,14 +5,13 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
-import { getContentComponent } from "../../../utils/career-quest/career-quest-content"
+import { getLeftContentComponent } from "../../../utils/career-quest/career-quest-left-content/all-career-quest-left-content"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 
 interface TextParentCardProps {
 	slide: TextParentMainSlide
 	careerUUID: CareerUUID
 }
-
 
 function TextParentCard(props: TextParentCardProps): React.ReactNode {
 	const { slide, careerUUID } = props
@@ -63,7 +62,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 									<div className="text-questionText text-center cursor-text leading-relaxed">
 										{typeof child.content === "function" ? child.content((): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
-										}) : typeof child.content === "string" ? getContentComponent(child.content, (): void => {
+										}) : typeof child.content === "string" ? getLeftContentComponent(child.content, (): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
 										}) : child.content}
 									</div>

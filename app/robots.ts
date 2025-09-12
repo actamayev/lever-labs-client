@@ -18,7 +18,6 @@ export default function robots(): MetadataRoute.Robots {
 				],
 				disallow: [
 					"/garage/",
-					"/add-pip/",
 					"/sandbox/",
 					"/settings/",
 					"/career-quest/",

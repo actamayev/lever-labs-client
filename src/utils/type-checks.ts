@@ -2,7 +2,6 @@
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
 	NonSuccessResponse, ValidationErrorResponse } from "@bluedotrobots/common-ts/types/api"
-import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 import { allPages } from "./constants/page-constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -26,10 +25,6 @@ export function isErrorResponses(data: any): data is ErrorResponses {
 	return isErrorResponse(data) || isValidationErrorResponse(data)
 }
 
-export function isValidSiteTheme(value: any): value is SiteThemes {
-	return ["light", "dark"].includes(value)
-}
-
 export function isValidRoute(route: string): route is PageNames {
 	// First check if it's a direct match in allPages
 	if (allPages.includes(route as any)) return true
@@ -40,6 +35,14 @@ export function isValidRoute(route: string): route is PageNames {
 	// This regex matches the UUID format: 8-4-4-4-12 hexadecimal characters
 		const uuidPattern = /^\/sandbox\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 		return uuidPattern.test(route)
+	}
+	if (route.startsWith("/class-manager/")) {
+		const classCodePattern = /^\/class-manager\/[a-zA-Z0-9]{5}$/i
+		return classCodePattern.test(route)
+	}
+	if (route.startsWith("/whiteboard/")) {
+		const classCodePattern = /^\/whiteboard\/[a-zA-Z0-9]{5}$/i
+		return classCodePattern.test(route)
 	}
 
 	return false

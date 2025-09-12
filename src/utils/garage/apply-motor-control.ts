@@ -61,11 +61,14 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	if (authClass.isFinishedWithSignup === false) return
 	const selectedPip = pipClass.selectedPip
 
+	if (pipClass.pipPluggedInSerial) {
+		return toastClass.negative({ title: "Please unplug your Pip from the computer to drive" })
+	}
 	if (isNull(selectedPip)) {
 		return toastClass.negative({ title: "Please add a Pip" })
 	}
 	if (selectedPip.pipConnectionStatus === "offline") {
-		return toastClass.negative({ title: `Please connect ${selectedPip.pipName} to the internet` })
+		return toastClass.negative({ title: `Please connect ${selectedPip.pipUUID} to the internet` })
 	}
 
 	// Emit motor control via socket
