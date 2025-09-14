@@ -42,6 +42,10 @@ class GarageClass {
 	public textOnBuffer: string = ""
 	public designOnBuffer: PreDefinedDesignName = "No design"
 
+	public garageDrivingStatus: boolean = true
+	public garageSoundsStatus: boolean = true
+	public garageLightsStatus: boolean = true
+
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -176,6 +180,30 @@ class GarageClass {
 		this.selectedColorShade = newShade
 	})
 
+	public setStudentGarageStatuses = action((garageData: StudentClassroomDataWithHubs[]): void => {
+		if (garageData.some((classroom): boolean => classroom.garageDrivingAllowed === false)) {
+			this.setGarageDrivingStatus(false)
+		}
+		if (garageData.some((classroom): boolean => classroom.garageSoundsAllowed === false)) {
+			this.setGarageSoundsStatus(false)
+		}
+		if (garageData.some((classroom): boolean => classroom.garageLightsAllowed === false)) {
+			this.setGarageLightsStatus(false)
+		}
+	})
+
+	public setGarageDrivingStatus = action((newGarageDrivingStatus: boolean): void => {
+		this.garageDrivingStatus = newGarageDrivingStatus
+	})
+
+	public setGarageSoundsStatus = action((newGarageSoundsStatus: boolean): void => {
+		this.garageSoundsStatus = newGarageSoundsStatus
+	})
+
+	public setGarageLightsStatus = action((newGarageLightsStatus: boolean): void => {
+		this.garageLightsStatus = newGarageLightsStatus
+	})
+
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -204,6 +232,9 @@ class GarageClass {
 		this.setSelectedDesign("No design" as PreDefinedDesignName)
 		this.textOnBuffer = ""
 		this.designOnBuffer = "No design"
+		this.setGarageDrivingStatus(true)
+		this.setGarageSoundsStatus(true)
+		this.setGarageLightsStatus(true)
 	}
 }
 

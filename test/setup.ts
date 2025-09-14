@@ -1,5 +1,8 @@
 import "@testing-library/jest-dom"
 
+// Mock timers globally to prevent hanging tests
+vi.useFakeTimers()
+
 // Mock Next.js router
 vi.mock("next/navigation", () => ({
 	useRouter: vi.fn((): Record<string, ReturnType<typeof vi.fn>> => ({
@@ -36,11 +39,23 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 	disconnect: vi.fn(),
 }))
 
+// Mock Worker (used by SerialConnectionManagerClass)
+global.Worker = vi.fn().mockImplementation(() => ({
+	postMessage: vi.fn(),
+	terminate: vi.fn(),
+	addEventListener: vi.fn(),
+	removeEventListener: vi.fn(),
+	onmessage: null,
+	onerror: null,
+}))
+
 // Mock Web Serial API (since your app uses it)
 global.navigator = {
 	...global.navigator,
 	serial: {
 		requestPort: vi.fn(),
-		getPorts: vi.fn((): Promise<unknown[]> => Promise.resolve([])),
+		getPorts: vi.fn(() => Promise.resolve([])),
+		addEventListener: vi.fn(),
+		removeEventListener: vi.fn(),
 	}
 } as any

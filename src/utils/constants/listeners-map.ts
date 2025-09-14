@@ -7,6 +7,7 @@ import handlePipStatusUpdate from "../socket/handle-pip-status-update"
 import gamesClass from "../../classes/games-class"
 import teacherClass from "../../classes/teacher-class"
 import chatManagerClass from "../../classes/chat-manager-class"
+import garageClass from "../../classes/garage-class"
 
 type ListenerHandler<E> = (payload: E) => void
 
@@ -34,5 +35,8 @@ export const listenersMap: {
 	"deleted-hub": (payload): void => studentClass.deleteHub(payload),
 	"student-joined-hub": (payload): void => teacherClass.addStudentToHub(payload),
 	"student-left-hub": (payload): void => teacherClass.removeStudentFromHub(payload),
-	"dino-score-update-all-peers": (payload): void => gamesClass.addDinoScore(payload.score, payload.username)
+	"dino-score-update-all-peers": (payload): void => gamesClass.addDinoScore(payload.score, payload.username),
+	"garage-driving-status-update": (payload): void => garageClass.setGarageDrivingStatus(payload.garageDrivingStatus),
+	"garage-sounds-status-update": (payload): void => garageClass.setGarageSoundsStatus(payload.garageSoundsStatus),
+	"garage-lights-status-update": (payload): void => garageClass.setGarageLightsStatus(payload.garageLightsStatus)
 } as const

@@ -15,15 +15,11 @@ export default function useGarageActionsUseEffect(): void {
 
 		// Ignore if focus is in an input, textarea, or contenteditable element
 		const active = document.activeElement as HTMLElement
-		if (
-
-			active &&
-		(
+		if (active && (
 			active.tagName === "INPUT" ||
 			active.tagName === "TEXTAREA" ||
 			active.isContentEditable
-		)
-		) {
+		)) {
 			return
 		}
 

@@ -4,6 +4,7 @@ import studentClass from '../student-class'
 import careerQuestClass from '../career-quest-class'
 import { ClassCode, HubUUID } from '@bluedotrobots/common-ts/types/utils'
 import { UpdatedHubSlideId } from '@bluedotrobots/common-ts/types/socket'
+import { StudentViewHubData } from '@bluedotrobots/common-ts/types/hub'
 
 // Mock career quest class
 vi.mock('../career-quest-class', () => ({
@@ -26,11 +27,15 @@ describe('StudentClass Extended Tests', () => {
 
   describe('Classroom Data Management', () => {
     test('should set and retrieve student data correctly', () => {
-      const mockClassroomData = [{
+      const mockClassroomData: StudentClassroomDataWithHubs[] = [{
         classCode: mockClassCode,
         classroomName: 'Test Classroom',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }]
 
       expect(studentClass.retrievedStudentData).toBe(false)
@@ -46,18 +51,26 @@ describe('StudentClass Extended Tests', () => {
     })
 
     test('should add new classroom data', () => {
-      const initialClassroom = {
+      const initialClassroom: StudentClassroomDataWithHubs = {
         classCode: 'CLASS1' as ClassCode,
         classroomName: 'Class 1',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
-      const newClassroom = {
+      const newClassroom: StudentClassroomDataWithHubs = {
         classCode: 'CLASS2' as ClassCode,
         classroomName: 'Class 2',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
       runInAction(() => {
@@ -70,16 +83,24 @@ describe('StudentClass Extended Tests', () => {
     })
 
     test('should update existing classroom data', () => {
-      const initialClassroom = {
+      const initialClassroom: StudentClassroomDataWithHubs = {
         classCode: mockClassCode,
         classroomName: 'Original Name',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
       const updatedClassroom = {
         ...initialClassroom,
         classroomName: 'Updated Name',
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
       runInAction(() => {
@@ -92,19 +113,27 @@ describe('StudentClass Extended Tests', () => {
     })
 
     test('should remove classroom data', () => {
-      const classroom1 = {
+      const classroom1: StudentClassroomDataWithHubs = {
         classCode: 'CLASS1' as ClassCode,
         classroomName: 'Class 1',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
-      const classroom2 = {
+      const classroom2: StudentClassroomDataWithHubs = {
         classCode: 'CLASS2' as ClassCode,
         classroomName: 'Class 2',
         activeHubs: [],
         joinedClassroomAt: new Date(),
-      }
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
+        }
 
       runInAction(() => {
         studentClass.setRetrievedStudentData([classroom1, classroom2])
@@ -138,11 +167,15 @@ describe('StudentClass Extended Tests', () => {
     }
 
     beforeEach(() => {
-      const mockClassroom = {
+      const mockClassroom: StudentClassroomDataWithHubs = {
         classCode: mockClassCode,
         classroomName: 'Test Classroom',
         activeHubs: [mockHubData],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
       
       runInAction(() => {
@@ -151,13 +184,12 @@ describe('StudentClass Extended Tests', () => {
     })
 
     test('should add new hub to classroom', () => {
-      const newHub = {
+      const newHub: StudentViewHubData = {
         hubId: 'new-hub-id' as HubUUID,
         careerUUID: mockCareerUUID,
         slideId: 'new-slide',
-        isHubJoined: false,
         classCode: mockClassCode,
-        hubName: 'New Hub'
+        hubName: 'New Hub',
       }
 
       runInAction(() => {
@@ -166,13 +198,16 @@ describe('StudentClass Extended Tests', () => {
 
       const classroom = studentClass.getClassroomData(mockClassCode)
       expect(classroom?.activeHubs).toHaveLength(2)
-      expect(classroom?.activeHubs[1]).toEqual(newHub)
+      const newHubWithIsHubJoined = {
+        ...newHub,
+        isHubJoined: false,
+      }
+      expect(classroom?.activeHubs[1]).toEqual(newHubWithIsHubJoined)
     })
 
     test('should join hub correctly', () => {
-      const hubToJoin = {
+      const hubToJoin: StudentViewHubData = {
         ...mockHubData,
-        isHubJoined: true
       }
 
       runInAction(() => {
@@ -271,6 +306,10 @@ describe('StudentClass Extended Tests', () => {
           hubName: 'Test Hub'
         }],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
       
       runInAction(() => {
@@ -309,7 +348,11 @@ describe('StudentClass Extended Tests', () => {
           classCode: mockClassCode,
           hubName: 'Test Hub'
         }],
-        joinedClassroomAt: new Date()
+        joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
       
       runInAction(() => {
@@ -376,6 +419,10 @@ describe('StudentClass Extended Tests', () => {
           hubName: 'Test Hub'
         }],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
       
       runInAction(() => {
@@ -428,6 +475,10 @@ describe('StudentClass Extended Tests', () => {
           hubName: 'Test Hub'
         }],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
       
       runInAction(() => {
@@ -451,6 +502,10 @@ describe('StudentClass Extended Tests', () => {
         classroomName: 'Test Classroom',
         activeHubs: [],
         joinedClassroomAt: new Date(),
+        studentId: 123,
+        garageDrivingAllowed: true,
+        garageSoundsAllowed: true,
+        garageLightsAllowed: true,
       }
 
       runInAction(() => {

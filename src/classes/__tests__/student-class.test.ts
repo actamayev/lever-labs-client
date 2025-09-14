@@ -32,9 +32,17 @@ describe('StudentClass Hub Navigation', () => {
 				slideId: 'initial-slide',
 				isHubJoined: true, // Student is joined to this hub
 				classCode: mockClassCode,
-				hubName: 'Test Hub'
+				hubName: 'Test Hub',
+				studentId: 123,
+				garageDrivingAllowed: true,
+				garageSoundsAllowed: true,
+				garageLightsAllowed: true,
 			}],
 			joinedClassroomAt: new Date(),
+			studentId: 123,
+			garageDrivingAllowed: true,
+			garageSoundsAllowed: true,
+			garageLightsAllowed: true,
 		}
 		
 		studentClass.setRetrievedStudentData([mockClassroom])
@@ -254,7 +262,11 @@ describe('StudentClass Hub Navigation', () => {
 					classCode: mockClassCode,
 					hubName: 'Test Hub'
 				}],
-				joinedClassroomAt: new Date()
+				joinedClassroomAt: new Date(),
+				studentId: 123,
+				garageDrivingAllowed: true,
+				garageSoundsAllowed: true,
+				garageLightsAllowed: true,
 			}
 			
 			studentClass.setRetrievedStudentData([mockClassroom])

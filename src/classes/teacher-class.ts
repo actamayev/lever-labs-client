@@ -70,7 +70,10 @@ class TeacherClass {
 	public addStudentToClassroom(studentJoinedClassroom: StudentJoinedClassroom): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedClassroom.classCode)
 		if (!classroom) return
-		classroom.students.push({ username: studentJoinedClassroom.studentUsername })
+		classroom.students.push({
+			studentId: studentJoinedClassroom.studentId,
+			username: studentJoinedClassroom.studentUsername
+		})
 	}
 
 	public addStudentToHub(studentJoinedHub: StudentJoinedHub): void {

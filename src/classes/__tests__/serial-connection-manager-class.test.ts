@@ -1,5 +1,6 @@
 import { describe, test, expect, beforeEach, vi, afterEach } from "vitest"
 import { runInAction } from "mobx"
+
 import serialConnectionManagerClass from "../serial-connection-manager-class"
 import authClass from "../auth-class"
 import serialMessageManagerClass from "../serial-message-manager-class"
@@ -57,7 +58,7 @@ const mockSerialPort = {
 Object.defineProperty(global.navigator, "serial", {
   value: {
     requestPort: vi.fn(),
-    getPorts: vi.fn(),
+    getPorts: vi.fn(() => Promise.resolve([])),
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
   },
