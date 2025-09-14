@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useState } from "react"
-import { ArrowLeft, Users, Rocket, Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
+import { ArrowLeft, Users, Rocket, Play, UserCheck, EllipsisVertical, Trash2, Car, Lightbulb, Volume2 } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
@@ -18,12 +18,18 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
+import updateDrivingStatusForAllStudents from "../../utils/teacher/update-driving-status-all-students"
+import updateLightsStatusForAllStudents from "../../utils/teacher/update-lights-status-all-students"
+import updateSoundsStatusForAllStudents from "../../utils/teacher/update-sounds-status-all-students"
+import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
+import updateIndividualStudentLightsStatus from "../../utils/teacher/update-individual-student-lights-status"
+import updateIndividualStudentSoundsStatus from "../../utils/teacher/update-individual-student-sounds-status"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import ClassroomStatsCards from "./classroom-stats-cards"
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -61,6 +67,71 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 			navigate(career.careerUrl)
 		}
 	}, [navigate, classCode])
+
+	// Helper functions for garage control buttons
+	const getGarageStatus = useCallback((statusType: "driving" | "lights" | "sounds"): "none" | "all-on" | "all-off" | "mixed" => {
+		if (!classroomData?.students || classroomData.students.length === 0) return "none"
+
+		const allOn = classroomData.students.every((student): boolean => {
+			switch (statusType) {
+				case "driving": return student.garageDrivingAllowed
+				case "lights": return student.garageLightsAllowed
+				case "sounds": return student.garageSoundsAllowed
+				default: return false
+			}
+		})
+
+		const allOff = classroomData.students.every((student): boolean => {
+			switch (statusType) {
+				case "driving": return !student.garageDrivingAllowed
+				case "lights": return !student.garageLightsAllowed
+				case "sounds": return !student.garageSoundsAllowed
+				default: return false
+			}
+		})
+
+		if (allOn) return "all-on"
+		if (allOff) return "all-off"
+		return "mixed"
+	}, [classroomData])
+
+	const handleGarageControlClick = useCallback((statusType: "driving" | "lights" | "sounds"): void => {
+		const currentStatus = getGarageStatus(statusType)
+		// If mixed or all-on, turn all off. If all-off, turn all on
+		const newStatus = currentStatus === "all-off"
+
+		switch (statusType) {
+			case "driving":
+				updateDrivingStatusForAllStudents(classCode, newStatus)
+				break
+			case "lights":
+				updateLightsStatusForAllStudents(classCode, newStatus)
+				break
+			case "sounds":
+				updateSoundsStatusForAllStudents(classCode, newStatus)
+				break
+		}
+	}, [classCode, getGarageStatus])
+
+	const handleIndividualStudentControl = useCallback((
+		studentId: number,
+		statusType: "driving" | "lights" | "sounds",
+		currentStatus: boolean
+	): void => {
+		const newStatus = !currentStatus
+
+		switch (statusType) {
+			case "driving":
+				updateIndividualStudentDrivingStatus(classCode, studentId, newStatus)
+				break
+			case "lights":
+				updateIndividualStudentLightsStatus(classCode, studentId, newStatus)
+				break
+			case "sounds":
+				updateIndividualStudentSoundsStatus(classCode, studentId, newStatus)
+				break
+		}
+	}, [classCode])
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
@@ -208,6 +279,51 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								View all students enrolled in this classroom
 							</CardDescription>
 						</div>
+						<div className="flex items-center gap-2">
+							{/* Garage Control Buttons */}
+							<TactileButton
+								onClick={(): void => handleGarageControlClick("driving")}
+								className={cn(
+									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
+									getGarageStatus("driving") === "all-on" && "bg-chargingGreen text-standardBackground",
+									getGarageStatus("driving") === "all-off" && "bg-cardinal text-standardBackground",
+									getGarageStatus("driving") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+								)}
+								shadowHeight={2}
+								shadowClass="shadow-gray-300"
+								title="Toggle driving for all students"
+							>
+								<Car className="h-4 w-4" />
+							</TactileButton>
+							<TactileButton
+								onClick={(): void => handleGarageControlClick("lights")}
+								className={cn(
+									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
+									getGarageStatus("lights") === "all-on" && "bg-chargingGreen text-standardBackground",
+									getGarageStatus("lights") === "all-off" && "bg-cardinal text-standardBackground",
+									getGarageStatus("lights") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+								)}
+								shadowHeight={2}
+								shadowClass="shadow-gray-300"
+								title="Toggle lights for all students"
+							>
+								<Lightbulb className="h-4 w-4" />
+							</TactileButton>
+							<TactileButton
+								onClick={(): void => handleGarageControlClick("sounds")}
+								className={cn(
+									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
+									getGarageStatus("sounds") === "all-on" && "bg-chargingGreen text-standardBackground",
+									getGarageStatus("sounds") === "all-off" && "bg-cardinal text-standardBackground",
+									getGarageStatus("sounds") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+								)}
+								shadowHeight={2}
+								shadowClass="shadow-gray-300"
+								title="Toggle sounds for all students"
+							>
+								<Volume2 className="h-4 w-4" />
+							</TactileButton>
+						</div>
 					</div>
 				</CardHeader>
 				<CardContent>
@@ -218,6 +334,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 									<TableHead className="text-wolf font-semibold">#</TableHead>
 									<TableHead className="text-wolf font-semibold">Username</TableHead>
 									<TableHead className="text-wolf font-semibold">Status</TableHead>
+									<TableHead className="text-wolf font-semibold text-center">Garage Controls</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
@@ -234,6 +351,65 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 											text-xs font-medium bg-green-100 text-green-800">
 												Accepted
 											</span>
+										</TableCell>
+										<TableCell>
+											<div className="flex items-center justify-center gap-1">
+												{/* Individual Student Garage Controls */}
+												<TactileButton
+													onClick={(): void => handleIndividualStudentControl(
+														student.studentId,
+														"driving",
+														student.garageDrivingAllowed
+													)}
+													className={cn(
+														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														student.garageDrivingAllowed
+															? "bg-chargingGreen text-standardBackground"
+															: "bg-cardinal text-standardBackground"
+													)}
+													shadowHeight={2}
+													shadowClass="shadow-gray-300"
+													title={`Toggle driving for ${student.username}`}
+												>
+													<Car className="h-3 w-3" />
+												</TactileButton>
+												<TactileButton
+													onClick={(): void => handleIndividualStudentControl(
+														student.studentId,
+														"lights",
+														student.garageLightsAllowed
+													)}
+													className={cn(
+														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														student.garageLightsAllowed
+															? "bg-chargingGreen text-standardBackground"
+															: "bg-cardinal text-standardBackground"
+													)}
+													shadowHeight={2}
+													shadowClass="shadow-gray-300"
+													title={`Toggle lights for ${student.username}`}
+												>
+													<Lightbulb className="h-3 w-3" />
+												</TactileButton>
+												<TactileButton
+													onClick={(): void => handleIndividualStudentControl(
+														student.studentId,
+														"sounds",
+														student.garageSoundsAllowed
+													)}
+													className={cn(
+														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														student.garageSoundsAllowed
+															? "bg-chargingGreen text-standardBackground"
+															: "bg-cardinal text-standardBackground"
+													)}
+													shadowHeight={2}
+													shadowClass="shadow-gray-300"
+													title={`Toggle sounds for ${student.username}`}
+												>
+													<Volume2 className="h-3 w-3" />
+												</TactileButton>
+											</div>
 										</TableCell>
 									</TableRow>
 								))}

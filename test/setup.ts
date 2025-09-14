@@ -52,6 +52,7 @@ global.Worker = vi.fn().mockImplementation(() => ({
 // Mock Web Serial API (since your app uses it)
 global.navigator = {
 	...global.navigator,
+	userAgent: 'node.js',
 	serial: {
 		requestPort: vi.fn(),
 		getPorts: vi.fn(() => Promise.resolve([])),

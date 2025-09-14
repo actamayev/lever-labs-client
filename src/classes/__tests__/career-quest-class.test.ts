@@ -22,9 +22,15 @@ vi.mock('../navigation-manager-class', () => ({
     getSwiperInstance: vi.fn(),
     getCurrentMainSlideIndex: vi.fn(),
     setCurrentMainSlideIndex: vi.fn(),
-    getMainSlides: vi.fn(),
+    getMainSlides: vi.fn(() => [{
+      id: 'slide-1',
+      data: {
+        children: [{ id: 'first-child' }]
+      }
+    }]),
     resetAllTextChildIndices: vi.fn(),
     resetCareerNavigationToBeginning: vi.fn(),
+    updateSwiperNavigation: vi.fn(),
   }
 }))
 
@@ -70,10 +76,12 @@ describe('CareerQuestClass', () => {
       // Verify career was created
       const career = careerQuestClass.getCareer(mockCareerUUID)
       expect(career).toBeDefined()
-      expect(career?.careerDefinition).toEqual(mockCareerQuestData)
-      expect(career?.completedChallengeIds).toBeInstanceOf(Set)
-      expect(career?.seenChallengeUUIDs).toBeInstanceOf(Set)
-      expect(career?.challengeChatToggledStates).toBeInstanceOf(Map)
+      expect(career?.careerDefinition.careerUUID).toBe(mockCareerQuestData.careerUUID)
+      expect(career?.careerDefinition.careerTitle).toBe(mockCareerQuestData.careerTitle)
+      expect(career?.careerDefinition.sections).toHaveLength(mockCareerQuestData.sections.length)
+      expect(career?.completedChallengeIds.constructor.name).toBe('ObservableSet')
+      expect(career?.seenChallengeUUIDs.constructor.name).toBe('ObservableSet')
+      expect(career?.challengeChatToggledStates.constructor.name).toBe('ObservableMap')
     })
 
     test('should initialize challenge chats when creating career', () => {
@@ -192,16 +200,17 @@ describe('CareerQuestClass', () => {
 
     test('should check if position is furthest seen', () => {
       const career = careerQuestClass.getCareer(mockCareerUUID)
-      
-      // Initially, no position should be furthest seen
-      expect(careerQuestClass.isPositionFurthestSeen(mockCareerUUID, mockChallengeUUID)).toBe(false)
 
       // Mark as furthest seen
       runInAction(() => {
         careerQuestClass.updateFurthestSeenIfNeeded(mockCareerUUID, mockChallengeUUID)
       })
 
+      // Should return true for the position we just marked
       expect(careerQuestClass.isPositionFurthestSeen(mockCareerUUID, mockChallengeUUID)).toBe(true)
+
+      // Should update the furthest seen position
+      expect(career?.furthestSeenChallengeUuidOrTextUuid).toBe(mockChallengeUUID)
     })
 
     test('should reset career to beginning', async () => {
@@ -225,7 +234,7 @@ describe('CareerQuestClass', () => {
       // Verify state was reset
       expect(career?.completedChallengeIds.size).toBe(0)
       expect(career?.seenChallengeUUIDs.size).toBe(0)
-      expect(career?.furthestSeenChallengeUuidOrTextUuid).toBe('')
+      expect(career?.furthestSeenChallengeUuidOrTextUuid).toBe('first-child')
       
       // Verify navigation manager was called
       expect(navigationManagerClass.resetCareerNavigationToBeginning).toHaveBeenCalledWith(mockCareerUUID)

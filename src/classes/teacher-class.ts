@@ -72,7 +72,10 @@ class TeacherClass {
 		if (!classroom) return
 		classroom.students.push({
 			studentId: studentJoinedClassroom.studentId,
-			username: studentJoinedClassroom.studentUsername
+			username: studentJoinedClassroom.studentUsername,
+			garageDrivingAllowed: true,
+			garageSoundsAllowed: true,
+			garageLightsAllowed: true
 		})
 	}
 
@@ -104,6 +107,54 @@ class TeacherClass {
 		const classroom = this.detailedClassroomData.get(classCode)
 		if (!classroom) return
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
+	}
+
+	public updateDrivingStatusForAllStudents(classCode: ClassCode, drivingStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageDrivingAllowed = drivingStatus
+		})
+	}
+
+	public updateSoundsStatusForAllStudents(classCode: ClassCode, garageSoundsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageSoundsAllowed = garageSoundsStatus
+		})
+	}
+
+	public updateLightsStatusForAllStudents(classCode: ClassCode, garageLightsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageLightsAllowed = garageLightsStatus
+		})
+	}
+
+	public updateIndividualStudentDrivingStatus(classCode: ClassCode, studentId: number, garageDrivingStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageDrivingAllowed = garageDrivingStatus
+	}
+
+	public updateIndividualStudentSoundsStatus(classCode: ClassCode, studentId: number, garageSoundsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageSoundsAllowed = garageSoundsStatus
+	}
+
+	public updateIndividualStudentLightsStatus(classCode: ClassCode, studentId: number, garageLightsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageLightsAllowed = garageLightsStatus
 	}
 
 	public setIsFocusingStudents = action((isFocusing: StudentFocusData | null): void => {
