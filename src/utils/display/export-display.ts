@@ -1,7 +1,6 @@
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA } from "../constants/display-constants"
-import createDisplayMessage from "../garage/create-display-message"
 
-export default async function exportDisplay(pixelBuffer: PixelBuffer): Promise<void> {
+export default function exportDisplay(pixelBuffer: PixelBuffer): Uint8Array {
 	// SSD1306 uses 1 bit per pixel, organized in pages of 8 vertical pixels
 	// Buffer size: 128 columns × 8 pages = 1024 bytes
 	const buffer = new Uint8Array(128 * 8)
@@ -20,13 +19,7 @@ export default async function exportDisplay(pixelBuffer: PixelBuffer): Promise<v
 		}
 	}
 
-	// Send to ESP32 instead of just logging
-	// You'll need to import MessageBuilder and your connection manager
-	try {
-		await createDisplayMessage(buffer)
-	} catch (error) {
-		console.error("Failed to send display buffer:", error)
-	}
+	return buffer
 }
 
 export function applyTextToBuffer(text: string, setPixelInBuffer: (x: number, y: number, state: boolean) => void): void {

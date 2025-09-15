@@ -3,8 +3,9 @@
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import personalInfoClass from "./personal-info-class"
-import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
+import { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH } from "../utils/constants/display-constants"
+import createDisplayMessage from "../utils/garage/create-display-message"
 
 class CareerQuestTriggersClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
@@ -35,7 +36,7 @@ class CareerQuestTriggersClass {
 		if (text.trim()) {
 			applyTextToBuffer(text, this.setPixelInBuffer)
 		}
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public exportFirstNameToDisplay = action(async (): Promise<void> => {
@@ -44,7 +45,7 @@ class CareerQuestTriggersClass {
 		if (name && name.trim()) {
 			applyTextToBuffer(name, this.setPixelInBuffer)
 		}
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public logout(): void {

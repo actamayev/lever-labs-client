@@ -3,9 +3,10 @@
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts/types/garage"
-import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
+import { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
+import createDisplayMessage from "../utils/garage/create-display-message"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
@@ -72,7 +73,7 @@ class GarageClass {
 		})
 		this.designOnBuffer = designName
 		this.textOnBuffer = ""
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public applyTextToBuffer = action(async (): Promise<void> => {
@@ -81,7 +82,7 @@ class GarageClass {
 		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
 		this.textOnBuffer = this.textInput
 		this.designOnBuffer = "No design"
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
