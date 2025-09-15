@@ -2,6 +2,8 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
 
 class PipClass {
 	public selectedPip: PipData | null = null
@@ -38,6 +40,17 @@ class PipClass {
 
 	public setPipPluggedInSerial = action((newState: boolean): void => {
 		this.pipPluggedInSerial = newState
+	})
+
+	public setPipPluggedInSerialAndNotifyBackend = action((newState: boolean, pipUUID?: PipUUID): void => {
+		this.pipPluggedInSerial = newState
+
+		// Notify backend if we have a pip UUID and the selected pip
+		if (pipUUID) {
+			void setSerialConnectionStatus(pipUUID, newState)
+		} else if (this.selectedPip) {
+			void setSerialConnectionStatus(this.selectedPip.pipUUID, newState)
+		}
 	})
 
 	public setIsConnectPipDialogOpen = action((isOpen: boolean): void => {

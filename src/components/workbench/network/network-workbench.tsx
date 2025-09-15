@@ -24,9 +24,9 @@ function NetworkWorkbench(): React.ReactNode {
 				return "Offline"
 			case "online":
 				return "Online"
-			case "connected to other user":
+			case "connected to another user":
 				return "Connected to other user"
-			case "connected":
+			case "connected to you":
 				return "Connected"
 			case "connected to serial":
 				return "Connected to USB"
@@ -45,9 +45,9 @@ function NetworkWorkbench(): React.ReactNode {
 				return "text-cardinal"
 			case "online":
 				return "text-macaw"
-			case "connected to other user":
+			case "connected to another user":
 				return "text-beetle"
-			case "connected":
+			case "connected to you":
 				return "text-green-500"
 			case "connected to serial":
 				return "text-green-500"

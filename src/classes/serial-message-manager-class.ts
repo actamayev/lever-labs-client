@@ -11,6 +11,7 @@ import workbenchClass from "./workbench-class"
 import sensorDataClass from "./sensor-data-class"
 import sendDinoScore from "../utils/student/send-dino-score"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
+import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
 
 interface MessageSentData {
 	content: string
@@ -104,6 +105,11 @@ class SerialMessageManagerClass {
 	})
 
 	public handleDisconnected (): void {
+		// Notify backend that pip is disconnected from serial before clearing pipId
+		if (this.pipId) {
+			void setSerialConnectionStatus(this.pipId, false)
+		}
+
 		runInAction((): void => {
 			this.hasBeenDisconnected = true
 			this.pipId = null
@@ -141,6 +147,11 @@ class SerialMessageManagerClass {
 					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
 					pipClass.setPipPluggedInSerial(true)
 				})
+
+				// Notify backend that pip is connected to serial
+				if (this.pipId) {
+					void setSerialConnectionStatus(this.pipId, true)
+				}
 				break
 			}
 			case "/wifi-connection-result": {
@@ -246,6 +257,11 @@ class SerialMessageManagerClass {
 
 	// Reset flow state
 	public resetFlowState = action((): void => {
+		// Notify backend that pip is disconnected from serial before clearing pipId
+		if (this.pipId) {
+			void setSerialConnectionStatus(this.pipId, false)
+		}
+
 		this.pipId = null
 		this.showWiFiSection = false
 		this.showNameSection = false
