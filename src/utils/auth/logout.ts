@@ -42,7 +42,6 @@ export default async function logout(): Promise<void> {
 		serialMessageManagerClass.logout()
 		studentClass.logout()
 		teacherClass.logout()
-		console.log("isFinishedWithSignup", authClass.isFinishedWithSignup)
 	} catch (error) {
 		console.error("Logout error:", error)
 
