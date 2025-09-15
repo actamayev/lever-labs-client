@@ -10,6 +10,7 @@ export default function garageActions(): {
 	activateAction: (action: Actions) => Promise<void>
 	deactivateAction: (action: Actions) => Promise<void>
 } {
+	// eslint-disable-next-line complexity
 	const activateAction = async (action: Actions): Promise<void> => {
 		const selectedPip = pipClass.selectedPip
 		switch (action) {
@@ -62,6 +63,7 @@ export default function garageActions(): {
 	/**
    * Handle turning an action off
    */
+	// eslint-disable-next-line complexity
 	const deactivateAction = async (action: Actions): Promise<void> => {
 		const selectedPip = pipClass.selectedPip
 		switch (action) {

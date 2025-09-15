@@ -36,6 +36,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }]
 
       expect(studentClass.retrievedStudentData).toBe(false)
@@ -60,6 +61,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       const newClassroom: StudentClassroomDataWithHubs = {
@@ -71,6 +73,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       runInAction(() => {
@@ -92,6 +95,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       const updatedClassroom = {
@@ -101,6 +105,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       runInAction(() => {
@@ -122,6 +127,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       const classroom2: StudentClassroomDataWithHubs = {
@@ -133,6 +139,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
         }
 
       runInAction(() => {
@@ -176,7 +183,8 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
-      }
+        garageDisplayAllowed: true,
+      } as StudentClassroomDataWithHubs 
       
       runInAction(() => {
         studentClass.setRetrievedStudentData([mockClassroom])
@@ -310,6 +318,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
       
       runInAction(() => {
@@ -353,6 +362,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
       
       runInAction(() => {
@@ -423,6 +433,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
       
       runInAction(() => {
@@ -479,6 +490,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
       
       runInAction(() => {
@@ -506,6 +518,7 @@ describe('StudentClass Extended Tests', () => {
         garageDrivingAllowed: true,
         garageSoundsAllowed: true,
         garageLightsAllowed: true,
+        garageDisplayAllowed: true,
       }
 
       runInAction(() => {

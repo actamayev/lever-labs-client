@@ -77,7 +77,8 @@ class TeacherClass {
 			username: studentJoinedClassroom.studentUsername,
 			garageDrivingAllowed: true,
 			garageSoundsAllowed: true,
-			garageLightsAllowed: true
+			garageLightsAllowed: true,
+			garageDisplayAllowed: true
 		})
 	}
 

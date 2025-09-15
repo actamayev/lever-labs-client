@@ -45,6 +45,7 @@ class GarageClass {
 	public garageDrivingStatus: boolean = true
 	public garageSoundsStatus: boolean = true
 	public garageLightsStatus: boolean = true
+	public garageDisplayStatus: boolean = true
 
 	constructor() {
 		makeAutoObservable(this)
@@ -204,6 +205,10 @@ class GarageClass {
 		this.garageLightsStatus = newGarageLightsStatus
 	})
 
+	public setGarageDisplayStatus = action((newGarageDisplayStatus: boolean): void => {
+		this.garageDisplayStatus = newGarageDisplayStatus
+	})
+
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -235,6 +240,7 @@ class GarageClass {
 		this.setGarageDrivingStatus(true)
 		this.setGarageSoundsStatus(true)
 		this.setGarageLightsStatus(true)
+		this.setGarageDisplayStatus(true)
 	}
 }
 

@@ -43,6 +43,7 @@ describe('StudentClass Hub Navigation', () => {
 			garageDrivingAllowed: true,
 			garageSoundsAllowed: true,
 			garageLightsAllowed: true,
+			garageDisplayAllowed: true,
 		}
 		
 		studentClass.setRetrievedStudentData([mockClassroom])
@@ -267,6 +268,7 @@ describe('StudentClass Hub Navigation', () => {
 				garageDrivingAllowed: true,
 				garageSoundsAllowed: true,
 				garageLightsAllowed: true,
+				garageDisplayAllowed: true,
 			}
 			
 			studentClass.setRetrievedStudentData([mockClassroom])
