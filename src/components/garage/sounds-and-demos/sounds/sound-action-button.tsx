@@ -5,6 +5,7 @@ import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
 import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
 import { cn } from "../../../../lib/shadcn/utils"
+import CustomTooltip from "../../../custom-tooltip"
 import { CustomUfo } from "../../../icons/custom-ufo"
 import { CustomFart } from "../../../icons/custom-fart"
 import garageClass from "../../../../classes/garage-class"
@@ -28,35 +29,98 @@ interface SoundActionButtonProps {
 	}
 }
 
+// Helper function to get sound icon
+const getSoundIcon = (sound: FunSounds, iconSize: string): React.ReactNode => {
+	switch (sound) {
+		case "Fart":
+			return <CustomFart className={iconSize} />
+		case "Monkey":
+			if (garageClass.soundPlaying === "Monkey") {
+				return <CustomHearNoEvilMonkey className={iconSize} />
+			}
+			return <CustomSpeakNoEvilMonkey className={iconSize} />
+		case "Elephant":
+			return <CustomElephant className={iconSize} />
+		case "Party":
+			return <CustomPartyPopper className={iconSize} />
+		case "UFO":
+			return <CustomUfo className={iconSize} />
+		case "Countdown":
+			return <CustomCountdown className={iconSize} />
+		case "Robot":
+			return <Bot className={iconSize} />
+		case "Engine":
+			return <CustomEngine className={iconSize} />
+	}
+}
+
+// Helper function to get button classes based on disabled state
+const getButtonClasses = (isDisabled: boolean, extraClasses?: string): string => {
+	const baseClasses = "duration-150 w-20 h-20 flex items-center justify-center rounded-xl"
+	const stateClasses = isDisabled
+		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
+		: "bg-sandboxOrange/20 text-sandboxOrange dark:bg-sandboxOrange/80 dark:text-orange-200"
+	const focusClasses = "outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+
+	return cn(baseClasses, stateClasses, focusClasses, extraClasses)
+}
+
+// Helper function to get border classes for the index span
+const getBorderClasses = (isDisabled: boolean, extraClasses?: string): string => {
+	const baseClasses = "absolute top-1 left-1 w-5 h-5 flex items-center justify-center border-2 rounded-md text-xs font-medium"
+	const stateClasses = isDisabled
+		? "border-gray-300/40 dark:border-gray-500/40"
+		: "border-sandboxOrange/40 dark:border-[rgb(255,189,153)] " +
+			"group-active:border-selectedSidebarButtonBorder group-active:text-answerText"
+
+	return cn(baseClasses, stateClasses, extraClasses)
+}
+
+// Helper function to render the tooltip trigger
+const renderTooltipTrigger = (params: {
+	buttonRef: React.RefObject<HTMLButtonElement>
+	isDisabled: boolean
+	extraClasses: SoundActionButtonProps["extraClasses"]
+	handleButtonDown: () => void
+	handleButtonUp: () => void
+	index: number
+	sound: FunSounds
+	iconSize: string
+}): React.ReactNode => {
+	const { buttonRef, isDisabled, extraClasses, handleButtonDown, handleButtonUp, index, sound, iconSize } = params
+
+	return (
+		<div className="relative">
+			<TactileButton
+				ref={buttonRef}
+				className={getButtonClasses(isDisabled, extraClasses?.buttonClasses)}
+				shadowColor={isDisabled ? "rgb(156 163 175)" : (extraClasses?.shadowColor || "rgb(255 189 153)")}
+				onMouseDown={handleButtonDown}
+				onMouseUp={handleButtonUp}
+				onMouseLeave={handleButtonUp}
+				onTouchStart={handleButtonDown}
+				onTouchEnd={handleButtonUp}
+				disabled={isDisabled}
+			>
+				<span className={getBorderClasses(isDisabled, extraClasses?.iconClasses)}>
+					{index}
+				</span>
+				<div className={cn(isDisabled && "opacity-50")}>
+					{getSoundIcon(sound, iconSize)}
+				</div>
+			</TactileButton>
+			{/* Invisible overlay for tooltip when disabled */}
+			{isDisabled && (
+				<div className="absolute inset-0 cursor-not-allowed" />
+			)}
+		</div>
+	)
+}
+
 function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 	const { sound, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const iconSize = extraClasses?.iconSize || "!size-10"
-
-	// Map direction to the correct icon
-	const getSoundIcon = (): React.ReactNode => {
-		switch (sound) {
-			case "Fart":
-				return <CustomFart className={iconSize} />
-			case "Monkey":
-				if (garageClass.soundPlaying === "Monkey") {
-					return <CustomHearNoEvilMonkey className={iconSize} />
-				}
-				return <CustomSpeakNoEvilMonkey className={iconSize} />
-			case "Elephant":
-				return <CustomElephant className={iconSize} />
-			case "Party":
-				return <CustomPartyPopper className={iconSize} />
-			case "UFO":
-				return <CustomUfo className={iconSize} />
-			case "Countdown":
-				return <CustomCountdown className={iconSize} />
-			case "Robot":
-				return <Bot className={iconSize} />
-			case "Engine":
-				return <CustomEngine className={iconSize} />
-		}
-	}
 
 	// Update button styling directly when isPressed changes
 	useEffect((): void => {
@@ -78,7 +142,10 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
-		playFunSound(sound)
+		// Only play sound if garage sounds are enabled
+		if (garageClass.garageSoundsStatus) {
+			playFunSound(sound)
+		}
 	}
 
 	// Handle button release for action buttons
@@ -89,35 +156,26 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 		}
 	}
 
+	const isDisabled = !garageClass.garageSoundsStatus
+
 	return (
-		<TactileButton
-			ref={buttonRef}
-			className={cn(
-				"duration-150 w-20 h-20 flex items-center justify-center rounded-xl",
-				"bg-sandboxOrange/20 text-sandboxOrange",
-				"dark:bg-sandboxOrange/80 dark:text-orange-200",
-				"outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0",
-				extraClasses?.buttonClasses
-			)}
-			shadowColor={extraClasses?.shadowColor || "rgb(255 189 153)"}
-			onMouseDown={handleButtonDown}
-			onMouseUp={handleButtonUp}
-			onMouseLeave={handleButtonUp}
-			onTouchStart={handleButtonDown}
-			onTouchEnd={handleButtonUp}
-		>
-			<span
-				className={cn(
-					"absolute top-1 left-1 w-5 h-5 flex items-center justify-center",
-					"border-2 rounded-md text-xs font-medium border-sandboxOrange/40 dark:border-[rgb(255,189,153)]",
-					"group-active:border-selectedSidebarButtonBorder group-active:text-answerText",
-					extraClasses?.iconClasses
-				)}
-			>
-				{index}
-			</span>
-			{getSoundIcon()}
-		</TactileButton>
+		<CustomTooltip
+			tooltipTrigger={renderTooltipTrigger({
+				buttonRef,
+				isDisabled,
+				extraClasses,
+				handleButtonDown,
+				handleButtonUp,
+				index,
+				sound,
+				iconSize
+			})}
+			tooltipContent={
+				isDisabled
+					? "Sounds disabled by teacher"
+					: `Play ${sound} sound`
+			}
+		/>
 	)
 }
 

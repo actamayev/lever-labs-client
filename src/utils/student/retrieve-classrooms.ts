@@ -7,6 +7,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import garageClass from "../../classes/garage-class"
 
 export default async function retrieveClassrooms(): Promise<void> {
 	try {
@@ -27,6 +28,7 @@ export default async function retrieveClassrooms(): Promise<void> {
 			...classroom,
 			activeHubs: classroom.activeHubs.map((hub): ExtendedStudentViewHubData => ({ ...hub, isHubJoined: false }))
 		}))
+		garageClass.setStudentGarageStatuses(classroomInfo)
 		studentClass.setRetrievedStudentData(classroomInfo)
 	} catch (error) {
 		console.error(error)

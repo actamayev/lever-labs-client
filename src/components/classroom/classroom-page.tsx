@@ -278,22 +278,24 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{classroomData.students.map((student, index): React.ReactNode => (
-									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
-										<TableCell className="font-medium text-wolf">
-											{index + 1}
-										</TableCell>
-										<TableCell className="font-medium text-wolf">
-											{student.username || "Unknown"}
-										</TableCell>
-										<TableCell>
-											<StudentGarageControls
-												studentId={student.studentId}
-												classCode={classCode}
-											/>
-										</TableCell>
-									</TableRow>
-								))}
+								{[...classroomData.students]
+									.sort((a, b): number => a.studentId - b.studentId)
+									.map((student, index): React.ReactNode => (
+										<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
+											<TableCell className="font-medium text-wolf">
+												{index + 1}
+											</TableCell>
+											<TableCell className="font-medium text-wolf">
+												{student.username || "Unknown"}
+											</TableCell>
+											<TableCell>
+												<StudentGarageControls
+													studentId={student.studentId}
+													classCode={classCode}
+												/>
+											</TableCell>
+										</TableRow>
+									))}
 							</TableBody>
 						</Table>
 					)}
