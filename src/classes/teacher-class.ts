@@ -136,6 +136,14 @@ class TeacherClass {
 		})
 	}
 
+	public updateDisplayStatusForAllStudents(classCode: ClassCode, garageDisplayStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageDisplayAllowed = garageDisplayStatus
+		})
+	}
+
 	public updateIndividualStudentDrivingStatus(classCode: ClassCode, studentId: number, garageDrivingStatus: boolean): void {
 		const classroom = this.detailedClassroomData.get(classCode)
 		if (!classroom) return
@@ -158,6 +166,14 @@ class TeacherClass {
 		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
 		if (!student) return
 		student.garageLightsAllowed = garageLightsStatus
+	}
+
+	public updateIndividualStudentDisplayStatus(classCode: ClassCode, studentId: number, garageDisplayStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageDisplayAllowed = garageDisplayStatus
 	}
 
 	public setIsFocusingStudents = action((isFocusing: StudentFocusData | null): void => {

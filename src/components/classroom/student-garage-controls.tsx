@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Car, Lightbulb, Volume2 } from "lucide-react"
+import { Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
@@ -9,6 +9,7 @@ import teacherClass from "../../classes/teacher-class"
 import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
 import updateIndividualStudentLightsStatus from "../../utils/teacher/update-individual-student-lights-status"
 import updateIndividualStudentSoundsStatus from "../../utils/teacher/update-individual-student-sounds-status"
+import updateIndividualStudentDisplayStatus from "../../utils/teacher/update-individual-student-display-status"
 import { observer } from "mobx-react"
 import CustomTooltip from "../custom-tooltip"
 
@@ -28,7 +29,7 @@ function StudentGarageControls({
 
 	if (!student) return null
 
-	const { username, garageDrivingAllowed, garageLightsAllowed, garageSoundsAllowed } = student
+	const { username, garageDrivingAllowed, garageLightsAllowed, garageSoundsAllowed, garageDisplayAllowed } = student
 
 	const handleDrivingToggle = (): void => {
 		updateIndividualStudentDrivingStatus(classCode, studentId, !garageDrivingAllowed)
@@ -40,6 +41,10 @@ function StudentGarageControls({
 
 	const handleSoundsToggle = (): void => {
 		updateIndividualStudentSoundsStatus(classCode, studentId, !garageSoundsAllowed)
+	}
+
+	const handleDisplayToggle = (): void => {
+		updateIndividualStudentDisplayStatus(classCode, studentId, !garageDisplayAllowed)
 	}
 	return (
 		<div className="flex items-center justify-center gap-1">
@@ -119,6 +124,32 @@ function StudentGarageControls({
 					garageSoundsAllowed
 						? `Disable sounds for ${username}`
 						: `Enable sounds for ${username}`
+				}
+			/>
+			<CustomTooltip
+				tooltipTrigger={
+					<TactileButton
+						onClick={handleDisplayToggle}
+						className={cn(
+							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							garageDisplayAllowed
+								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
+								: "bg-cardinal text-standardBackground border border-cardinal"
+						)}
+						shadowHeight={4}
+						shadowClass={
+							garageDisplayAllowed
+								? "shadow-chargingGreen-2"
+								: "shadow-cardinal-2"
+						}
+					>
+						<Monitor className="h-3 w-3" />
+					</TactileButton>
+				}
+				tooltipContent={
+					garageDisplayAllowed
+						? `Disable display for ${username}`
+						: `Enable display for ${username}`
 				}
 			/>
 		</div>

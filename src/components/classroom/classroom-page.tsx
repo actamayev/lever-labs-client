@@ -4,7 +4,7 @@
 
 import { observer } from "mobx-react"
 import { useCallback, useEffect } from "react"
-import { ArrowLeft, Users, Car, Lightbulb, Volume2 } from "lucide-react"
+import { ArrowLeft, Users, Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
@@ -15,6 +15,7 @@ import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed
 import updateDrivingStatusForAllStudents from "../../utils/teacher/update-driving-status-all-students"
 import updateLightsStatusForAllStudents from "../../utils/teacher/update-lights-status-all-students"
 import updateSoundsStatusForAllStudents from "../../utils/teacher/update-sounds-status-all-students"
+import updateDisplayStatusForAllStudents from "../../utils/teacher/update-display-status-all-students"
 import { cn } from "../../lib/shadcn/utils"
 import ClassroomStatsCards from "./classroom-stats-cards"
 import StudentGarageControls from "./student-garage-controls"
@@ -38,7 +39,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 	const handleBackClick = (): void => navigate("/class-manager")
 
 	// Helper functions for garage control buttons
-	const getGarageStatus = useCallback((statusType: "driving" | "lights" | "sounds"): "none" | "all-on" | "all-off" | "mixed" => {
+	const getGarageStatus = useCallback((statusType: "driving" | "lights" | "sounds" | "display"): "none" | "all-on" | "all-off" | "mixed" => {
 		if (!classroomData?.students || classroomData.students.length === 0) return "none"
 
 		const allOn = classroomData.students.every((student): boolean => {
@@ -46,6 +47,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 				case "driving": return student.garageDrivingAllowed
 				case "lights": return student.garageLightsAllowed
 				case "sounds": return student.garageSoundsAllowed
+				case "display": return student.garageDisplayAllowed
 				default: return false
 			}
 		})
@@ -55,6 +57,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 				case "driving": return !student.garageDrivingAllowed
 				case "lights": return !student.garageLightsAllowed
 				case "sounds": return !student.garageSoundsAllowed
+				case "display": return !student.garageDisplayAllowed
 				default: return false
 			}
 		})
@@ -64,7 +67,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 		return "mixed"
 	}, [classroomData])
 
-	const handleGarageControlClick = useCallback((statusType: "driving" | "lights" | "sounds"): void => {
+	const handleGarageControlClick = useCallback((statusType: "driving" | "lights" | "sounds" | "display"): void => {
 		const currentStatus = getGarageStatus(statusType)
 		// If mixed or all-on, turn all off. If all-off, turn all on
 		const newStatus = currentStatus === "all-off"
@@ -78,6 +81,9 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 				break
 			case "sounds":
 				updateSoundsStatusForAllStudents(classCode, newStatus)
+				break
+			case "display":
+				updateDisplayStatusForAllStudents(classCode, newStatus)
 				break
 		}
 	}, [classCode, getGarageStatus])
@@ -262,6 +268,36 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 										: getGarageStatus("sounds") === "all-off"
 											? "Enable sounds for all students"
 											: "Disable sounds for all students"
+								}
+							/>
+							<CustomTooltip
+								tooltipTrigger={
+									<TactileButton
+										onClick={(): void => handleGarageControlClick("display")}
+										className={cn(
+											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+											getGarageStatus("display") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+											getGarageStatus("display") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
+											getGarageStatus("display") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+										)}
+										shadowHeight={4}
+										shadowClass={
+											getGarageStatus("display") === "all-on"
+												? "shadow-chargingGreen-2"
+												: getGarageStatus("display") === "all-off"
+													? "shadow-cardinal-2"
+													: "shadow-swan"
+										}
+									>
+										<Monitor className="h-4 w-4" />
+									</TactileButton>
+								}
+								tooltipContent={
+									getGarageStatus("display") === "all-on"
+										? "Disable display for all students"
+										: getGarageStatus("display") === "all-off"
+											? "Enable display for all students"
+											: "Disable display for all students"
 								}
 							/>
 						</div>

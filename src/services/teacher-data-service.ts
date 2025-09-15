@@ -120,4 +120,23 @@ export default class TeacherDataService extends BaseDataService {
 			this.buildUrl(`/update-individual-student-garage-lights/${classCode}`), { studentId, garageLightsStatus }
 		)
 	}
+
+	async updateIndividualStudentDisplayStatus(
+		classCode: ClassCode,
+		studentId: number,
+		garageDisplayStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-individual-student-garage-display/${classCode}`), { studentId, garageDisplayStatus }
+		)
+	}
+
+	async updateDisplayStatusForAllStudents(
+		classCode: ClassCode,
+		garageDisplayStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-garage-display-all-students/${classCode}`), { garageDisplayStatus }
+		)
+	}
 }
