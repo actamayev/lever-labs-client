@@ -14,7 +14,7 @@ export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
 				workbenchClass.setBatteryDataNull()
 				pipClass.deletePip()
 				return toastClass.neutral({
-					title: `${pipClass.selectedPip?.pipUUID} has disconnected from the internet`
+					title: "Your Pip has disconnected from the internet"
 				})
 			}
 			break

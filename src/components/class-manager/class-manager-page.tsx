@@ -13,7 +13,6 @@ import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-clas
 import SingleClassCard from "./single-class-card"
 import ClassManagerStatsCards from "./class-manager-stats-cards"
 
-
 function ClassManagerPage(): React.ReactNode {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
 	const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false)

@@ -1,16 +1,19 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 import { soundMappings } from "../../utils/constants/constants"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"
 import playFunSound from "../../utils/garage/play-fun-sound"
 
-export default function useGarageSoundsUseEffect(): void {
+export default function useGarageSoundsUseEffect(isInGarage: boolean): void {
 	// Key event handlers
-	const handleKeyDown = (event: KeyboardEvent): void => {
+	const handleKeyDown = useCallback((event: KeyboardEvent): void => {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
+
+		// Skip if in garage and sounds are disabled by teacher
+		if (isInGarage && !garageClass.garageSoundsStatus) return
 
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
@@ -22,11 +25,14 @@ export default function useGarageSoundsUseEffect(): void {
 		const sound = soundMappings[key]
 		garageClass.setSoundPlaying(sound)
 		playFunSound(sound)
-	}
+	}, [isInGarage])
 
-	const handleKeyUp = (event: KeyboardEvent): void => {
+	const handleKeyUp = useCallback((event: KeyboardEvent): void => {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
+
+		// Skip if in garage and sounds are disabled by teacher
+		if (isInGarage && !garageClass.garageSoundsStatus) return
 
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
@@ -35,7 +41,7 @@ export default function useGarageSoundsUseEffect(): void {
 		const key = event.key.toLowerCase()
 		if (!(key in soundMappings)) return
 		garageClass.setSoundPlaying(null)
-	}
+	}, [isInGarage])
 
 	// Set up key event listeners
 	useEffect((): () => void => {
@@ -46,5 +52,5 @@ export default function useGarageSoundsUseEffect(): void {
 			window.removeEventListener("keydown", handleKeyDown)
 			window.removeEventListener("keyup", handleKeyUp)
 		}
-	}, [])
+	}, [handleKeyDown, handleKeyUp, isInGarage])
 }

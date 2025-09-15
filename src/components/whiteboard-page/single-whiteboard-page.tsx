@@ -1,18 +1,19 @@
 "use client"
 
+import { isEmpty } from "lodash-es"
 import { useCallback, useEffect } from "react"
 import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
 import { CareerUUID, ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { cn } from "../../lib/shadcn/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import studentClass from "../../classes/student-class"
-import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
-import { cn } from "../../lib/shadcn/utils"
 import useJoinHub from "../../hooks/student/join-hub"
 import careerQuestClass from "../../classes/career-quest-class"
+import studentClass from "../../classes/student-class"
+import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 
 interface ClassroomPageProps {
 	classCode: ClassCode
@@ -104,6 +105,16 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 		)
 	}
 
+	if (!classroomData) {
+		return (
+			<div className="p-6">
+				<div className="flex items-center justify-center min-h-[400px]">
+					<div className="text-lg text-eel">Classroom not found</div>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			{/* Header with back button */}
@@ -122,9 +133,8 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			{/* Page Title */}
 			<div className="mb-8">
 				<h1 className="text-4xl font-bold text-wolf mb-2">
-					{classroomData?.classroomName || "Classroom"}
+					{classroomData.classroomName || "Classroom"}
 				</h1>
-				<p className="text-eel text-lg">Interactive whiteboard for robotics learning</p>
 			</div>
 
 			{/* Class Info Card */}
@@ -145,15 +155,28 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 			</div>
 
 			{/* Student Hubs Section */}
-			{classroomData?.activeHubs && classroomData.activeHubs.length > 0 ? (
+			{isEmpty(classroomData.activeHubs) ? (
+				<Card className="border-2 border-swan bg-standardBackground">
+					<CardContent>
+						<div className="text-center py-16">
+							<Play className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
+							<h3 className="text-xl font-medium text-wolf mb-3">No Active Hubs</h3>
+							<p className="text-eel mb-6 max-w-md mx-auto">
+								Your teacher hasn't started any hubs yet.
+								Check back later or ask your teacher to create a hub for the class.
+							</p>
+						</div>
+					</CardContent>
+				</Card>
+			) : (
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
 							<Play className="h-5 w-5 text-pipTheme" />
-							Available Learning Activities
+							Available Hubs
 						</CardTitle>
 						<CardDescription>
-							Join active hubs to participate in robotics learning activities
+							Join active hubs to participate in robotics learning
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
@@ -222,19 +245,6 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 									</Card>
 								)
 							})}
-						</div>
-					</CardContent>
-				</Card>
-			) : (
-				<Card className="border-2 border-swan bg-standardBackground">
-					<CardContent>
-						<div className="text-center py-16">
-							<Play className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
-							<h3 className="text-xl font-medium text-wolf mb-3">No Active Learning Activities</h3>
-							<p className="text-eel mb-6 max-w-md mx-auto">
-								Your teacher hasn't started any learning activities yet.
-								Check back later or ask your teacher to create a hub for the class.
-							</p>
 						</div>
 					</CardContent>
 				</Card>

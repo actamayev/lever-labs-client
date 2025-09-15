@@ -1,33 +1,29 @@
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useEffect, useState } from "react"
-import { ArrowLeft, Users, Rocket, Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
+import { useCallback, useEffect } from "react"
+import { ArrowLeft, Users, Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "../shadcn/ui/dropdown-menu"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"
-import careerQuestClass from "../../classes/career-quest-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
-import getDuolingoColors from "../../utils/get-duolingo-colors"
+import updateDrivingStatusForAllStudents from "../../utils/teacher/update-driving-status-all-students"
+import updateLightsStatusForAllStudents from "../../utils/teacher/update-lights-status-all-students"
+import updateSoundsStatusForAllStudents from "../../utils/teacher/update-sounds-status-all-students"
+import updateDisplayStatusForAllStudents from "../../utils/teacher/update-display-status-all-students"
 import { cn } from "../../lib/shadcn/utils"
-import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import ClassroomStatsCards from "./classroom-stats-cards"
-
-// eslint-disable-next-line max-lines-per-function
+import StudentGarageControls from "./student-garage-controls"
+import ClassroomHubsSection from "./classroom-hubs-section"
+import CustomTooltip from "../custom-tooltip"
+// eslint-disable-next-line max-lines-per-function, complexity
 function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const navigate = useTypedNavigate()
-	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-	const [hubToDelete, setHubToDelete] = useState<TeacherViewHubData | null>(null)
 
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
@@ -42,25 +38,56 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 
 	const handleBackClick = (): void => navigate("/class-manager")
 
-	const handleDeleteHub = useCallback((hub: TeacherViewHubData): void => {
-		setHubToDelete(hub)
-		setIsDeleteDialogOpen(true)
-	}, [])
+	// Helper functions for garage control buttons
+	const getGarageStatus = useCallback((statusType: "driving" | "lights" | "sounds" | "display"): "none" | "all-on" | "all-off" | "mixed" => {
+		if (!classroomData?.students || classroomData.students.length === 0) return "none"
 
-	const joinHubHandler = useCallback((hub: TeacherViewHubData): void => {
-		if (hub.careerUUID === meetPipData.careerUUID) {
-			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
-			careerQuestClass.resetCareerToBeginning(meetPipData.careerUUID)
-			navigate("/career-quest/meet-pip")
-			return
+		const allOn = classroomData.students.every((student): boolean => {
+			switch (statusType) {
+				case "driving": return student.garageDrivingAllowed
+				case "lights": return student.garageLightsAllowed
+				case "sounds": return student.garageSoundsAllowed
+				case "display": return student.garageDisplayAllowed
+				default: return false
+			}
+		})
+
+		const allOff = classroomData.students.every((student): boolean => {
+			switch (statusType) {
+				case "driving": return !student.garageDrivingAllowed
+				case "lights": return !student.garageLightsAllowed
+				case "sounds": return !student.garageSoundsAllowed
+				case "display": return !student.garageDisplayAllowed
+				default: return false
+			}
+		})
+
+		if (allOn) return "all-on"
+		if (allOff) return "all-off"
+		return "mixed"
+	}, [classroomData])
+
+	const handleGarageControlClick = useCallback((statusType: "driving" | "lights" | "sounds" | "display"): void => {
+		const currentStatus = getGarageStatus(statusType)
+		// If mixed or all-on, turn all off. If all-off, turn all on
+		const newStatus = currentStatus === "all-off"
+
+		switch (statusType) {
+			case "driving":
+				updateDrivingStatusForAllStudents(classCode, newStatus)
+				break
+			case "lights":
+				updateLightsStatusForAllStudents(classCode, newStatus)
+				break
+			case "sounds":
+				updateSoundsStatusForAllStudents(classCode, newStatus)
+				break
+			case "display":
+				updateDisplayStatusForAllStudents(classCode, newStatus)
+				break
 		}
-		const career = careerData.find((singleCareerData): boolean => singleCareerData.careerUUID === hub.careerUUID)
-		if (career) {
-			teacherClass.setIsFocusingStudents({ classCode, hubId: hub.hubId })
-			careerQuestClass.resetCareerToBeginning(hub.careerUUID)
-			navigate(career.careerUrl)
-		}
-	}, [navigate, classCode])
+	}, [classCode, getGarageStatus])
+
 
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
@@ -83,6 +110,30 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 		)
 	}
 
+	if (!classroomData) {
+		return (
+			<div className="p-6">
+				<div className="flex items-center gap-4 mb-8">
+					<TactileButton
+						onClick={handleBackClick}
+						className="flex items-center gap-2 h-10 px-4 rounded-xl text-lg bg-polar text-eel border border-swan"
+						shadowHeight={2}
+						shadowClass="shadow-gray-300"
+					>
+						<ArrowLeft className="h-4 w-4" />
+						Back
+					</TactileButton>
+				</div>
+				<div className="flex items-center justify-center min-h-[400px]">
+					<div className="text-center">
+						<div className="text-lg text-eel mb-2">Classroom not found</div>
+						<div className="text-sm text-eel">This classroom may have been deleted or you may not have access to it.</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
 	return (
 		<div className="p-6 max-w-7xl mx-auto">
 			{/* Header with back button */}
@@ -90,7 +141,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 				<TactileButton
 					onClick={handleBackClick}
 					className="flex items-center gap-2 h-10 px-4 rounded-xl text-lg bg-polar text-eel border border-swan hover:bg-gray-50"
-					shadowHeight={2}
+					shadowHeight={4}
 					shadowClass="shadow-gray-300"
 				>
 					<ArrowLeft className="h-4 w-4" />
@@ -108,92 +159,11 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 
 			<ClassroomStatsCards
 				classCode={classCode}
-				hubToDelete={hubToDelete}
-				isDeleteDialogOpen={isDeleteDialogOpen}
-				setIsDeleteDialogOpen={setIsDeleteDialogOpen}
 			/>
 
-			{/* Active Hubs Section */}
-			{classroomData?.activeHubs && classroomData.activeHubs.length > 0 && (
-				<Card className="border-2 border-swan bg-standardBackground mb-8">
-					<CardHeader>
-						<CardTitle className="flex items-center gap-2">
-							<Play className="h-5 w-5 text-pipTheme" />
-							Active Hubs
-						</CardTitle>
-						<CardDescription>
-							Currently running learning activities in this classroom
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							{classroomData.activeHubs.map((hub): React.ReactNode => {
-								// Find career data for this hub
-								const careerInfo = hub.careerUUID === meetPipData.careerUUID
-									? meetPipData
-									: careerData.find((career): boolean => career.careerUUID === hub.careerUUID)
-
-								const CareerIcon = careerInfo?.careerIcon || Rocket
-								const careerColors = getDuolingoColors(careerInfo?.backgroundColor || "humpback")
-
-								return (
-									<Card key={hub.hubId} className="border border-swan hover:shadow-md transition-shadow relative">
-										<CardContent className="p-4">
-											<div className="flex items-start gap-3">
-												<div className={cn("p-2 rounded-lg", careerColors.bg)}>
-													<CareerIcon className="h-5 w-5 text-white" />
-												</div>
-												<div className="flex-1 min-w-0">
-													<h3 className="font-semibold text-wolf truncate mb-1 pr-8">
-														{hub.hubName}
-													</h3>
-													<p className="text-sm text-eel mb-2">
-														{careerInfo?.careerName || "Unknown Career"}
-													</p>
-													<div className="flex items-center gap-2 text-xs text-eel">
-														<UserCheck className="h-3 w-3" />
-														<span>{hub.studentsJoined.length} students joined</span>
-													</div>
-												</div>
-												<DropdownMenu>
-													<DropdownMenuTrigger asChild>
-														<div className="p-1 transition-none rounded hover:bg-polar cursor-pointer">
-															<EllipsisVertical
-																className="text-wolf"
-																size={16}
-															/>
-														</div>
-													</DropdownMenuTrigger>
-													<DropdownMenuContent className="w-32 bg-standardBackground shadow-none">
-														<DropdownMenuItem
-															onClick={(): void => handleDeleteHub(hub)}
-															// eslint-disable-next-line max-len
-															className="cursor-pointer text-sm hover:!bg-polar text-cardinal hover:!text-cardinal"
-														>
-															<Trash2 className="mr-2 !size-4" strokeWidth={2.5}/>
-															Delete
-														</DropdownMenuItem>
-													</DropdownMenuContent>
-												</DropdownMenu>
-											</div>
-											<div className="mt-3 flex gap-2">
-												<TactileButton
-													className={cn("flex-1 h-8 text-sm text-white rounded-xl", careerColors.bg)}
-													shadowHeight={4}
-													shadowClass={careerColors.shadow2}
-													onClick={(): void => joinHubHandler(hub)}
-												>
-													Join Hub
-												</TactileButton>
-											</div>
-										</CardContent>
-									</Card>
-								)
-							})}
-						</div>
-					</CardContent>
-				</Card>
-			)}
+			<ClassroomHubsSection
+				classCode={classCode}
+			/>
 
 			{/* Students Table */}
 			<Card className="border-2 border-swan bg-standardBackground">
@@ -208,6 +178,129 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								View all students enrolled in this classroom
 							</CardDescription>
 						</div>
+						<div className="flex items-center gap-2">
+							{/* Garage Control Buttons */}
+							<CustomTooltip
+								tooltipTrigger={
+									<TactileButton
+										onClick={(): void => handleGarageControlClick("driving")}
+										className={cn(
+											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+											getGarageStatus("driving") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+											getGarageStatus("driving") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
+											getGarageStatus("driving") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+										)}
+										shadowHeight={4}
+										shadowClass={
+											getGarageStatus("driving") === "all-on"
+												? "shadow-chargingGreen-2"
+												: getGarageStatus("driving") === "all-off"
+													? "shadow-cardinal-2"
+													: "shadow-swan"
+										}
+									>
+										<Car className="h-4 w-4" />
+									</TactileButton>
+								}
+								tooltipContent={
+									getGarageStatus("driving") === "all-on"
+										? "Disable driving for all students"
+										: getGarageStatus("driving") === "all-off"
+											? "Enable driving for all students"
+											: "Disable driving for all students"
+								}
+							/>
+							<CustomTooltip
+								tooltipTrigger={
+									<TactileButton
+										onClick={(): void => handleGarageControlClick("lights")}
+										className={cn(
+											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+											getGarageStatus("lights") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+											getGarageStatus("lights") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
+											getGarageStatus("lights") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+										)}
+										shadowHeight={4}
+										shadowClass={
+											getGarageStatus("lights") === "all-on"
+												? "shadow-chargingGreen-2"
+												: getGarageStatus("lights") === "all-off"
+													? "shadow-cardinal-2"
+													: "shadow-swan"
+										}
+									>
+										<Lightbulb className="h-4 w-4" />
+									</TactileButton>
+								}
+								tooltipContent={
+									getGarageStatus("lights") === "all-on"
+										? "Disable lights for all students"
+										: getGarageStatus("lights") === "all-off"
+											? "Enable lights for all students"
+											: "Disable lights for all students"
+								}
+							/>
+							<CustomTooltip
+								tooltipTrigger={
+									<TactileButton
+										onClick={(): void => handleGarageControlClick("sounds")}
+										className={cn(
+											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+											getGarageStatus("sounds") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+											getGarageStatus("sounds") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
+											getGarageStatus("sounds") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+										)}
+										shadowHeight={4}
+										shadowClass={
+											getGarageStatus("sounds") === "all-on"
+												? "shadow-chargingGreen-2"
+												: getGarageStatus("sounds") === "all-off"
+													? "shadow-cardinal-2"
+													: "shadow-swan"
+										}
+									>
+										<Volume2 className="h-4 w-4" />
+									</TactileButton>
+								}
+								tooltipContent={
+									getGarageStatus("sounds") === "all-on"
+										? "Disable sounds for all students"
+										: getGarageStatus("sounds") === "all-off"
+											? "Enable sounds for all students"
+											: "Disable sounds for all students"
+								}
+							/>
+							<CustomTooltip
+								tooltipTrigger={
+									<TactileButton
+										onClick={(): void => handleGarageControlClick("display")}
+										className={cn(
+											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+											getGarageStatus("display") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+											getGarageStatus("display") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
+											getGarageStatus("display") === "mixed" && "bg-standardBackground text-wolf border border-swan"
+										)}
+										shadowHeight={4}
+										shadowClass={
+											getGarageStatus("display") === "all-on"
+												? "shadow-chargingGreen-2"
+												: getGarageStatus("display") === "all-off"
+													? "shadow-cardinal-2"
+													: "shadow-swan"
+										}
+									>
+										<Monitor className="h-4 w-4" />
+									</TactileButton>
+								}
+								tooltipContent={
+									getGarageStatus("display") === "all-on"
+										? "Disable display for all students"
+										: getGarageStatus("display") === "all-off"
+											? "Enable display for all students"
+											: "Disable display for all students"
+								}
+							/>
+						</div>
 					</div>
 				</CardHeader>
 				<CardContent>
@@ -217,26 +310,28 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								<TableRow className="border-swan">
 									<TableHead className="text-wolf font-semibold">#</TableHead>
 									<TableHead className="text-wolf font-semibold">Username</TableHead>
-									<TableHead className="text-wolf font-semibold">Status</TableHead>
+									<TableHead className="text-wolf font-semibold text-center">Garage Controls</TableHead>
 								</TableRow>
 							</TableHeader>
 							<TableBody>
-								{classroomData.students.map((student, index): React.ReactNode => (
-									<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
-										<TableCell className="font-medium text-wolf">
-											{index + 1}
-										</TableCell>
-										<TableCell className="font-medium text-wolf">
-											{student.username || "Unknown"}
-										</TableCell>
-										<TableCell>
-											<span className="inline-flex items-center px-2.5 py-0.5 rounded-full
-											text-xs font-medium bg-green-100 text-green-800">
-												Accepted
-											</span>
-										</TableCell>
-									</TableRow>
-								))}
+								{[...classroomData.students]
+									.sort((a, b): number => a.studentId - b.studentId)
+									.map((student, index): React.ReactNode => (
+										<TableRow key={student.username || index} className="border-swan hover:bg-polar/50">
+											<TableCell className="font-medium text-wolf">
+												{index + 1}
+											</TableCell>
+											<TableCell className="font-medium text-wolf">
+												{student.username || "Unknown"}
+											</TableCell>
+											<TableCell>
+												<StudentGarageControls
+													studentId={student.studentId}
+													classCode={classCode}
+												/>
+											</TableCell>
+										</TableRow>
+									))}
 							</TableBody>
 						</Table>
 					)}

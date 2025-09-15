@@ -120,7 +120,11 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 					</button>
 				)}
 				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
-					<ConnectToPipButton colors={getDuolingoColors(careerData.careerColor)}/>
+					<ConnectToPipButton
+						colors={getDuolingoColors(careerData.careerColor)}
+						tactileButtonClasses="text-3xl"
+						wifiIconClasses="!size-9 mb-2"
+					/>
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip

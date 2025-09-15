@@ -9,6 +9,8 @@ import { ReactNode, useCallback, useEffect, useRef, useState } from "react"
 import { Input } from "../../shadcn/ui/input"
 import { Button } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
+import CustomTooltip from "../../custom-tooltip"
+import { cn } from "../../../lib/shadcn/utils"
 
 const INITIAL_DELAY_MS = 400
 const REPEAT_INTERVAL_MS = 60
@@ -21,13 +23,16 @@ function LightBrightnessControl(): ReactNode {
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
+	const isDisabled = !garageClass.garageLightsStatus
+
 	const getBrightness = useCallback((): number => {
 		return Math.round(rgbaToHsva(garageClass.realColor).v)
 	}, [])
 
 	const setBrightnessPct = useCallback((pct: number): void => {
+		if (isDisabled) return
 		garageClass.setColorShade(clamp(pct, 0, 100) / 100)
-	}, [])
+	}, [isDisabled])
 
 	const stepDelta = useCallback(
 		(delta: number): void => {
@@ -40,6 +45,7 @@ function LightBrightnessControl(): ReactNode {
 
 	const startRepeat = useCallback(
 		(delta: number): void => {
+			if (isDisabled) return
 			// Immediate single step
 			stepDelta(delta)
 
@@ -50,7 +56,7 @@ function LightBrightnessControl(): ReactNode {
 				}, REPEAT_INTERVAL_MS)
 			}, INITIAL_DELAY_MS)
 		},
-		[stepDelta],
+		[stepDelta, isDisabled],
 	)
 
 	const clearTimers = useCallback((): void => {
@@ -75,21 +81,21 @@ function LightBrightnessControl(): ReactNode {
 	const onDecreaseDown = useCallback(
 		(e: React.PointerEvent): void => {
 			e.preventDefault()
-			if (getBrightness() <= 0) return
+			if (isDisabled || getBrightness() <= 0) return
 			setIsDecreasing(true)
 			startRepeat(-1)
 		},
-		[getBrightness, startRepeat],
+		[getBrightness, startRepeat, isDisabled],
 	)
 
 	const onIncreaseDown = useCallback(
 		(e: React.PointerEvent): void => {
 			e.preventDefault()
-			if (getBrightness() >= 100) return
+			if (isDisabled || getBrightness() >= 100) return
 			setIsIncreasing(true)
 			startRepeat(1)
 		},
-		[getBrightness, startRepeat],
+		[getBrightness, startRepeat, isDisabled],
 	)
 
 	const enforceRGBRange = useCallback((value: string): number => {
@@ -97,12 +103,12 @@ function LightBrightnessControl(): ReactNode {
 		return clamp(numValue, 0, 100)
 	}, [])
 
-	return (
+	const content = (
 		<>
 			<Button
 				variant="outline"
 				size="icon"
-				disabled={brightnessPercent <= 0}
+				disabled={brightnessPercent <= 0 || isDisabled}
 				aria-pressed={isDecreasing}
 				onPointerDown={onDecreaseDown}
 				onPointerUp={stopHold}
@@ -127,9 +133,13 @@ function LightBrightnessControl(): ReactNode {
 						// eslint-disable-next-line max-len
 						className="border-2 pr-6 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
 						style={{ width: "120px", height: "52px" }}
+						disabled={isDisabled}
 					/>
 					<span
-						className="absolute top-1/2 transform -translate-y-1/2 text-xl pointer-events-none"
+						className={cn(
+							"absolute top-1/2 transform -translate-y-1/2 text-xl pointer-events-none",
+							isDisabled && "opacity-50"
+						)}
 						style={{ left: `calc(50% + ${String(brightnessPercent).length * 4}px)` }}
 					>
 						%
@@ -140,7 +150,7 @@ function LightBrightnessControl(): ReactNode {
 			<Button
 				variant="outline"
 				size="icon"
-				disabled={brightnessPercent >= 100}
+				disabled={brightnessPercent >= 100 || isDisabled}
 				aria-pressed={isIncreasing}
 				onPointerDown={onIncreaseDown}
 				onPointerUp={stopHold}
@@ -152,6 +162,18 @@ function LightBrightnessControl(): ReactNode {
 				<PlusIcon className="!size-6 text-questionText" />
 			</Button>
 		</>
+	)
+
+	return (
+		<div className="relative flex items-center gap-3 w-full">
+			{content}
+			{isDisabled && (
+				<CustomTooltip
+					tooltipTrigger={<div className="absolute inset-0 cursor-not-allowed" />}
+					tooltipContent="Lights disabled by teacher"
+				/>
+			)}
+		</div>
 	)
 }
 

@@ -29,17 +29,23 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 				borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 			}}
 		>
-			<div className="relative p-3 z-50">
-				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
-					<ConnectToPipButton colors={getDuolingoColors("humpback")}/>
-				) : (
+			{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+				<div className="h-full w-full flex items-center justify-center p-5">
+					<ConnectToPipButton
+						colors={getDuolingoColors("humpback")}
+						tactileButtonClasses="text-4xl"
+						wifiIconClasses="!size-12 mb-2"
+					/>
+				</div>
+			) : (
+				<div className="relative p-3 z-50">
 					<div className="flex flex-row justify-between">
 						<BatteryWorkbench />
 						<NetworkWorkbench />
 						<SoundWorkbench />
 					</div>
-				)}
-			</div>
+				</div>
+			)}
 		</div>
 	)
 }

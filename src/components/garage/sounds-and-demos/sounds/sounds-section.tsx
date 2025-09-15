@@ -6,7 +6,7 @@ import SoundActionButton from "./sound-action-button"
 import useGarageSoundsUseEffect from "../../../../hooks/garage/use-effect-garage-sounds"
 
 function SoundsSection(): React.ReactNode {
-	useGarageSoundsUseEffect()
+	useGarageSoundsUseEffect(true)
 	const sounds: FunSounds[] = [
 		"Fart",
 		"Monkey",

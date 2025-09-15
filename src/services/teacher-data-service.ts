@@ -69,4 +69,74 @@ export default class TeacherDataService extends BaseDataService {
 			this.buildUrl(`/set-hub-new-slide-id/${classCode}`), { hubId, newSlideId }
 		)
 	}
+
+	async updateDrivingStatusForAllStudents(
+		classCode: ClassCode,
+		garageDrivingStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-garage-driving-status-all-students/${classCode}`), { garageDrivingStatus }
+		)
+	}
+
+	async updateSoundsStatusForAllStudents(classCode: ClassCode, garageSoundsStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-garage-sounds-all-students/${classCode}`), { garageSoundsStatus }
+		)
+	}
+
+	async updateLightsStatusForAllStudents(classCode: ClassCode, garageLightsStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-garage-lights-all-students/${classCode}`), { garageLightsStatus }
+		)
+	}
+
+	async updateIndividualStudentDrivingStatus(
+		classCode: ClassCode,
+		studentId: number,
+		garageDrivingStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-individual-student-garage-driving/${classCode}`), { studentId, garageDrivingStatus }
+		)
+	}
+
+	async updateIndividualStudentSoundsStatus(
+		classCode: ClassCode,
+		studentId: number,
+		garageSoundsStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-individual-student-garage-sounds/${classCode}`), { studentId, garageSoundsStatus }
+		)
+	}
+
+	async updateIndividualStudentLightsStatus(
+		classCode: ClassCode,
+		studentId: number,
+		garageLightsStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-individual-student-garage-lights/${classCode}`), { studentId, garageLightsStatus }
+		)
+	}
+
+	async updateIndividualStudentDisplayStatus(
+		classCode: ClassCode,
+		studentId: number,
+		garageDisplayStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-individual-student-garage-display/${classCode}`), { studentId, garageDisplayStatus }
+		)
+	}
+
+	async updateDisplayStatusForAllStudents(
+		classCode: ClassCode,
+		garageDisplayStatus: boolean
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/update-garage-display-all-students/${classCode}`), { garageDisplayStatus }
+		)
+	}
 }

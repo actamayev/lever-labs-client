@@ -16,6 +16,7 @@ import { CustomYoga } from "../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
 import lightsAnimation from "../../../utils/garage/lights-animation"
+import CustomTooltip from "../../custom-tooltip"
 
 interface Animation {
 	name: LightAnimation
@@ -54,35 +55,46 @@ const ANIMATIONS: Animation[] = [
 function LightAnimationsList(): React.ReactNode {
 	const rgbColor = `rgb(${garageClass.selectedColorRgba.r}, ${garageClass.selectedColorRgba.g}, ${garageClass.selectedColorRgba.b})`
 	const optimizedLightsAnimation = useCallback(lightsAnimation, [])
+	const isDisabled = !garageClass.garageLightsStatus
 
-	return (
+	const trigger = (
+		<div
+			className={cn(
+				buttonVariants({
+					variant: "outline",
+					className: cn(
+						"flex items-center gap-1 rounded-xl justify-between",
+						"px-4 !py-6 font-medium w-full border-2 shadow-none !text-xl",
+						isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+					)
+				})
+			)}
+			style={{ height: "52px" }}
+		>
+			<span className="flex items-center gap-2">
+				<div style={{ color: rgbColor, fill: rgbColor }}>
+					{ANIMATIONS.find((anim): boolean => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
+				</div>
+				{garageClass.selectedAnimation}
+			</span>
+			<ChevronDown className="!size-6" />
+		</div>
+	)
+
+	const menu = (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<div
-					className={cn(
-						buttonVariants({
-							variant: "outline",
-							className: "flex items-center gap-1 rounded-xl justify-between \
-								px-4 !py-6 font-medium cursor-pointer w-full border-2 shadow-none !text-xl"
-						})
-					)}
-					style={{ height: "52px" }}
-				>
-					<span className="flex items-center gap-2">
-						<div style={{ color: rgbColor, fill: rgbColor }}>
-							{ANIMATIONS.find((anim): boolean => anim.name === garageClass.selectedAnimation)?.icon(rgbColor)}
-						</div>
-						{garageClass.selectedAnimation}
-					</span>
-					<ChevronDown className="!size-6" />
-				</div>
+				{trigger}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">
 				{ANIMATIONS.map((animation): React.ReactNode => (
 					<DropdownMenuItem
 						key={animation.name}
-						onClick={(): Promise<void> => optimizedLightsAnimation(animation.name)}
-						className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
+						onClick={(): Promise<void> => (!isDisabled ? optimizedLightsAnimation(animation.name) : Promise.resolve())}
+						className={cn(
+							"transition-none hover:!bg-polar rounded-lg",
+							isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+						)}
 					>
 						<div className="flex-shrink-0">
 							{animation.icon(rgbColor)}
@@ -95,6 +107,18 @@ function LightAnimationsList(): React.ReactNode {
 				))}
 			</DropdownMenuContent>
 		</DropdownMenu>
+	)
+
+	return !isDisabled ? ( menu ) : (
+		<CustomTooltip
+			tooltipTrigger={
+				<div className="relative w-full">
+					{menu}
+					<div className="absolute inset-0 cursor-not-allowed" />
+				</div>
+			}
+			tooltipContent="Lights disabled by teacher"
+		/>
 	)
 }
 

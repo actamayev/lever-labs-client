@@ -14,16 +14,20 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 import handleVolumeChange from "../../../utils/workbench/handle-volume-change"
+import CustomTooltip from "../../custom-tooltip"
+import garageClass from "../../../classes/garage-class"
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function SoundWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
+	const isSoundsDisabled = !garageClass.garageSoundsStatus
+
 	const SpeakerIconToShow = (): React.ReactNode => {
 		const baseClasses = "!h-11 !w-11"
 		const strokeWidth = 2.5
-		if (workbenchClass.isMuted) {
+		if (workbenchClass.isMuted || isSoundsDisabled) {
 			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
 		}
 
@@ -65,7 +69,7 @@ function SoundWorkbench(): React.ReactNode {
 						<SpeakerIconToShow />
 						<span className={cn(
 							"text-base font-medium mt-0 w-full text-center",
-							workbenchClass.isMuted && "opacity-50"
+							(workbenchClass.isMuted || isSoundsDisabled) && "opacity-50"
 						)}>
 							{workbenchClass.volume}%
 						</span>
@@ -89,16 +93,27 @@ function SoundWorkbench(): React.ReactNode {
 						<div className="flex items-center gap-2">
 							<div className={cn(
 								"w-2 h-2 rounded-full",
-								workbenchClass.isMuted ? "bg-cardinal" : "bg-macaw"
+								(workbenchClass.isMuted || isSoundsDisabled) ? "bg-cardinal" : "bg-macaw"
 							)} />
 							<span className="font-medium">SOUND</span>
 						</div>
-						<div
-							className="flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity"
-							onClick={(): Promise<void> => changeAudibleStatus(!workbenchClass.isMuted)}
-						>
-							<div className="text-sm font-medium">MUTE</div>
-							<Checkbox checked={workbenchClass.isMuted} />
+						<div className="relative">
+							<div
+								className={cn(
+									"flex flex-row items-center justify-between space-x-2 cursor-pointer hover:opacity-80 transition-opacity",
+									isSoundsDisabled && "opacity-50 cursor-not-allowed hover:opacity-100"
+								)}
+								onClick={(): Promise<void> => isSoundsDisabled ? Promise.resolve() : changeAudibleStatus(!workbenchClass.isMuted)}
+							>
+								<div className="text-sm font-medium">MUTE</div>
+								<Checkbox checked={workbenchClass.isMuted || isSoundsDisabled} />
+							</div>
+							{isSoundsDisabled && (
+								<CustomTooltip
+									tooltipTrigger={<div className="absolute inset-0 cursor-not-allowed" />}
+									tooltipContent="Sounds disabled by teacher"
+								/>
+							)}
 						</div>
 					</div>
 
@@ -108,25 +123,34 @@ function SoundWorkbench(): React.ReactNode {
 							<span className="text-eel/70">Volume</span>
 							<span className={cn(
 								"font-semibold",
-								workbenchClass.isMuted ? "text-eel/50" : "text-eel"
+								(workbenchClass.isMuted || isSoundsDisabled) ? "text-eel/50" : "text-eel"
 							)}>
 								{workbenchClass.volume}%
 							</span>
 						</div>
-						<div
-							className="cursor-pointer"
-							onKeyDown={handleKeyDown}
-							tabIndex={0}
-						>
-							<Slider
-								defaultValue={[workbenchClass.volume]}
-								max={100}
-								step={1}
-								onValueChange={handleVolumeChange}
-								className={cn("duration-0", workbenchClass.isMuted ? "opacity-50" : "")}
-								value={[workbenchClass.volume]}
+						<div className="relative">
+							<div
+								className={cn("cursor-pointer", (workbenchClass.isMuted || isSoundsDisabled) && "opacity-50 cursor-not-allowed")}
 								onKeyDown={handleKeyDown}
-							/>
+								tabIndex={0}
+							>
+								<Slider
+									defaultValue={[workbenchClass.volume]}
+									max={100}
+									step={1}
+									onValueChange={isSoundsDisabled ? (): void => {} : handleVolumeChange}
+									className={cn("duration-0", (workbenchClass.isMuted || isSoundsDisabled) ? "opacity-50" : "")}
+									value={[workbenchClass.volume]}
+									onKeyDown={handleKeyDown}
+									disabled={isSoundsDisabled}
+								/>
+							</div>
+							{isSoundsDisabled && (
+								<CustomTooltip
+									tooltipTrigger={<div className="absolute inset-0 cursor-not-allowed" />}
+									tooltipContent="Sounds disabled by teacher"
+								/>
+							)}
 						</div>
 					</div>
 

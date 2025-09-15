@@ -93,10 +93,10 @@ module.exports = {
 				landingOuterBorder: "rgb(var(--landing-outer-border))",
 				landingDottedLine: "rgb(var(--landing-dotted-line))",
 
-				chargingGreen: "rgb(var(--charging-green))",
-				"chargingGreen-1": "rgb(var(--charging-green-1))",
-				"chargingGreen-2": "rgb(var(--charging-green-2))",
-				"chargingGreen-3": "rgb(var(--charging-green-3))",
+				chargingGreen: "rgb(var(--chargingGreen))",
+				"chargingGreen-1": "rgb(var(--chargingGreen-1))",
+				"chargingGreen-2": "rgb(var(--chargingGreen-2))",
+				"chargingGreen-3": "rgb(var(--chargingGreen-3))",
 				careerQuestYellow: "rgb(var(--career-quest-yellow))",
 
 				/* Duolingo colors */

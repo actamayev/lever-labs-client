@@ -69,18 +69,10 @@ export default function DeleteHubDialog(props: Props): React.ReactNode {
 							Are you sure you want to delete this hub?
 						</p>
 						<div className="bg-white border border-cardinal/30 rounded-lg p-3">
-							<div className="text-sm text-eel mb-1">Hub Name</div>
 							<div className="text-lg font-semibold text-wolf">
 								{hubToDelete.hubName}
 							</div>
 						</div>
-					</div>
-
-					<div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-						<p className="text-amber-800 text-sm">
-							<strong>Warning:</strong> This action cannot be undone. All students will be removed from this hub and any
-							progress will be lost.
-						</p>
 					</div>
 				</div>
 				<DialogFooter className="flex justify-end gap-2">

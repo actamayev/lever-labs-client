@@ -13,6 +13,9 @@ export default function useEffectMotorDrive(): void {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
 
+		// Skip if garage driving is disabled by teacher
+		if (!garageClass.garageDrivingStatus) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
@@ -36,6 +39,9 @@ export default function useEffectMotorDrive(): void {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
 
+		// Skip if garage driving is disabled by teacher
+		if (!garageClass.garageDrivingStatus) return
+
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
@@ -43,7 +49,6 @@ export default function useEffectMotorDrive(): void {
 		if (!(key in motorKeyMappings)) return
 
 		const mapping = motorKeyMappings[key]
-
 
 		garageClass.removePressedKey(mapping.direction)
 

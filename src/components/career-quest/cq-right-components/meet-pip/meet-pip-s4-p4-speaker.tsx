@@ -14,7 +14,7 @@ interface FunSoundWithClasses {
 }
 
 function MeetPipS4P4(): React.ReactNode {
-	useGarageSoundsUseEffect()
+	useGarageSoundsUseEffect(false)
 	const iconSize = "!size-16"
 	const sounds: FunSoundWithClasses[] = [
 		{

@@ -20,6 +20,8 @@ class TeacherClass {
 	public isRetrievingDetailedData = false
 	public teacherData: TeacherData | null = null
 	public isFocusingStudents: StudentFocusData | null = null
+	public isDeleteDialogOpen = false
+	public hubToDelete: TeacherViewHubData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -70,7 +72,14 @@ class TeacherClass {
 	public addStudentToClassroom(studentJoinedClassroom: StudentJoinedClassroom): void {
 		const classroom = this.detailedClassroomData.get(studentJoinedClassroom.classCode)
 		if (!classroom) return
-		classroom.students.push({ username: studentJoinedClassroom.studentUsername })
+		classroom.students.push({
+			studentId: studentJoinedClassroom.studentId,
+			username: studentJoinedClassroom.studentUsername,
+			garageDrivingAllowed: true,
+			garageSoundsAllowed: true,
+			garageLightsAllowed: true,
+			garageDisplayAllowed: true
+		})
 	}
 
 	public addStudentToHub(studentJoinedHub: StudentJoinedHub): void {
@@ -103,8 +112,80 @@ class TeacherClass {
 		classroom.activeHubs = classroom.activeHubs.filter((activeHub): boolean => activeHub.hubId !== hubId)
 	}
 
+	public updateDrivingStatusForAllStudents(classCode: ClassCode, drivingStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageDrivingAllowed = drivingStatus
+		})
+	}
+
+	public updateSoundsStatusForAllStudents(classCode: ClassCode, garageSoundsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageSoundsAllowed = garageSoundsStatus
+		})
+	}
+
+	public updateLightsStatusForAllStudents(classCode: ClassCode, garageLightsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageLightsAllowed = garageLightsStatus
+		})
+	}
+
+	public updateDisplayStatusForAllStudents(classCode: ClassCode, garageDisplayStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		classroom.students.forEach((student): void => {
+			student.garageDisplayAllowed = garageDisplayStatus
+		})
+	}
+
+	public updateIndividualStudentDrivingStatus(classCode: ClassCode, studentId: number, garageDrivingStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageDrivingAllowed = garageDrivingStatus
+	}
+
+	public updateIndividualStudentSoundsStatus(classCode: ClassCode, studentId: number, garageSoundsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageSoundsAllowed = garageSoundsStatus
+	}
+
+	public updateIndividualStudentLightsStatus(classCode: ClassCode, studentId: number, garageLightsStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageLightsAllowed = garageLightsStatus
+	}
+
+	public updateIndividualStudentDisplayStatus(classCode: ClassCode, studentId: number, garageDisplayStatus: boolean): void {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return
+		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
+		if (!student) return
+		student.garageDisplayAllowed = garageDisplayStatus
+	}
+
 	public setIsFocusingStudents = action((isFocusing: StudentFocusData | null): void => {
 		this.isFocusingStudents = isFocusing
+	})
+
+	public setIsDeleteDialogOpen = action((isOpen: boolean): void => {
+		this.isDeleteDialogOpen = isOpen
+	})
+
+	public setHubToDelete = action((hub: TeacherViewHubData | null): void => {
+		this.hubToDelete = hub
 	})
 
 	public logout(): void {
@@ -115,6 +196,8 @@ class TeacherClass {
 		this.isRetrievingDetailedData = false
 		this.teacherData = null
 		this.isFocusingStudents = null
+		this.isDeleteDialogOpen = false
+		this.hubToDelete = null
 	}
 }
 

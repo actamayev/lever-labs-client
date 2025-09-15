@@ -3,9 +3,10 @@
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
 import { LightAnimation, MotorControlInput, FunSounds } from "@bluedotrobots/common-ts/types/garage"
-import exportDisplay, { applyTextToBuffer } from "../utils/display/export-display"
+import { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
+import createDisplayMessage from "../utils/garage/create-display-message"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
@@ -42,6 +43,11 @@ class GarageClass {
 	public textOnBuffer: string = ""
 	public designOnBuffer: PreDefinedDesignName = "No design"
 
+	public garageDrivingStatus: boolean = true
+	public garageSoundsStatus: boolean = true
+	public garageLightsStatus: boolean = true
+	public garageDisplayStatus: boolean = true
+
 	constructor() {
 		makeAutoObservable(this)
 	}
@@ -67,7 +73,7 @@ class GarageClass {
 		})
 		this.designOnBuffer = designName
 		this.textOnBuffer = ""
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public applyTextToBuffer = action(async (): Promise<void> => {
@@ -76,7 +82,7 @@ class GarageClass {
 		applyTextToBuffer(this.textInput, this.setPixelInBuffer)
 		this.textOnBuffer = this.textInput
 		this.designOnBuffer = "No design"
-		await exportDisplay(this.pixelBuffer)
+		await createDisplayMessage(this.pixelBuffer)
 	})
 
 	public setSelectedDesign = action((designName: PreDefinedDesignName): void => {
@@ -176,6 +182,57 @@ class GarageClass {
 		this.selectedColorShade = newShade
 	})
 
+	public setStudentGarageStatuses = action((garageData: StudentClassroomDataWithHubs[]): void => {
+		if (garageData.some((classroom): boolean => classroom.garageDrivingAllowed === false)) {
+			this.setGarageDrivingStatus(false)
+		}
+		if (garageData.some((classroom): boolean => classroom.garageSoundsAllowed === false)) {
+			this.setGarageSoundsStatus(false)
+		}
+		if (garageData.some((classroom): boolean => classroom.garageLightsAllowed === false)) {
+			this.setGarageLightsStatus(false)
+		}
+		if (garageData.some((classroom): boolean => classroom.garageDisplayAllowed === false)) {
+			this.setGarageDisplayStatus(false)
+		}
+	})
+
+	public setGarageDrivingStatus = action((newGarageDrivingStatus: boolean): void => {
+		this.garageDrivingStatus = newGarageDrivingStatus
+	})
+
+	public setGarageSoundsStatus = action((newGarageSoundsStatus: boolean): void => {
+		this.garageSoundsStatus = newGarageSoundsStatus
+	})
+
+	public setGarageLightsStatus = action((newGarageLightsStatus: boolean): void => {
+		this.garageLightsStatus = newGarageLightsStatus
+	})
+
+	public setGarageDisplayStatus = action((newGarageDisplayStatus: boolean): void => {
+		this.garageDisplayStatus = newGarageDisplayStatus
+	})
+
+	public releaseAllPressedButtons = action((): void => {
+		// Stop any playing sounds
+		this.setSoundPlaying(null)
+
+		// Clear all pressed motor keys
+		this.pressedMotorKeys.clear()
+
+		// Reset horn and headlights state
+		this.setIsHornPressed(false)
+		this.setAreHeadlightsOn(false)
+
+		// Clear driving directions
+		this.driveDirections.clear()
+		this.pressedDirections.clear()
+		this.isDriving = false
+
+		// Reset motor state
+		this.motorState = { vertical: 0, horizontal: 0 }
+	})
+
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]
@@ -204,6 +261,10 @@ class GarageClass {
 		this.setSelectedDesign("No design" as PreDefinedDesignName)
 		this.textOnBuffer = ""
 		this.designOnBuffer = "No design"
+		this.setGarageDrivingStatus(true)
+		this.setGarageSoundsStatus(true)
+		this.setGarageLightsStatus(true)
+		this.setGarageDisplayStatus(true)
 	}
 }
 
