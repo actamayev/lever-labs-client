@@ -20,6 +20,8 @@ class TeacherClass {
 	public isRetrievingDetailedData = false
 	public teacherData: TeacherData | null = null
 	public isFocusingStudents: StudentFocusData | null = null
+	public isDeleteDialogOpen = false
+	public hubToDelete: TeacherViewHubData | null = null
 
 	constructor() {
 		makeAutoObservable(this)
@@ -161,6 +163,14 @@ class TeacherClass {
 		this.isFocusingStudents = isFocusing
 	})
 
+	public setIsDeleteDialogOpen = action((isOpen: boolean): void => {
+		this.isDeleteDialogOpen = isOpen
+	})
+
+	public setHubToDelete = action((hub: TeacherViewHubData | null): void => {
+		this.hubToDelete = hub
+	})
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
@@ -169,6 +179,8 @@ class TeacherClass {
 		this.isRetrievingDetailedData = false
 		this.teacherData = null
 		this.isFocusingStudents = null
+		this.isDeleteDialogOpen = false
+		this.hubToDelete = null
 	}
 }
 

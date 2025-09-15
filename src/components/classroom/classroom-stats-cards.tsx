@@ -2,10 +2,9 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Dispatch, SetStateAction, useState } from "react"
+import { useState, SetStateAction } from "react"
 import { Users, Hash, Rocket, Plus } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import CreateHubDialog from "./create-hub-dialog"
@@ -14,15 +13,7 @@ import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
-interface ClassroomStatsCardsProps {
-	classCode: ClassCode
-	hubToDelete: TeacherViewHubData | null
-	isDeleteDialogOpen: boolean
-	setIsDeleteDialogOpen: Dispatch<SetStateAction<boolean>>
-}
-
-function ClassroomStatsCards(props: ClassroomStatsCardsProps): React.ReactNode {
-	const { classCode, hubToDelete, isDeleteDialogOpen, setIsDeleteDialogOpen } = props
+function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
 
 	const colors = getDuolingoColors("humpback")
@@ -95,12 +86,18 @@ function ClassroomStatsCards(props: ClassroomStatsCardsProps): React.ReactNode {
 			/>
 
 			{/* Delete Hub Dialog */}
-			{hubToDelete && (
+			{teacherClass.hubToDelete && (
 				<DeleteHubDialog
 					classCode={classCode}
-					hubToDelete={hubToDelete}
-					isDeleteDialogOpen={isDeleteDialogOpen}
-					setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+					hubToDelete={teacherClass.hubToDelete}
+					isDeleteDialogOpen={teacherClass.isDeleteDialogOpen}
+					setIsDeleteDialogOpen={(value: SetStateAction<boolean>): void => {
+						if (typeof value === "boolean") {
+							teacherClass.setIsDeleteDialogOpen(value)
+						} else {
+							teacherClass.setIsDeleteDialogOpen(value(teacherClass.isDeleteDialogOpen))
+						}
+					}}
 				/>
 			)}
 		</div>

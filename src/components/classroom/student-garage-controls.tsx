@@ -1,0 +1,129 @@
+
+"use client"
+
+import { Car, Lightbulb, Volume2 } from "lucide-react"
+import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import { TactileButton } from "../shadcn/ui/tactile-button"
+import { cn } from "../../lib/shadcn/utils"
+import teacherClass from "../../classes/teacher-class"
+import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
+import updateIndividualStudentLightsStatus from "../../utils/teacher/update-individual-student-lights-status"
+import updateIndividualStudentSoundsStatus from "../../utils/teacher/update-individual-student-sounds-status"
+import { observer } from "mobx-react"
+import CustomTooltip from "../custom-tooltip"
+
+interface StudentGarageControlsProps {
+	studentId: number
+	classCode: ClassCode
+}
+
+// eslint-disable-next-line max-lines-per-function, complexity
+function StudentGarageControls({
+	studentId,
+	classCode
+}: StudentGarageControlsProps): React.ReactNode {
+	// Get student data from teacher class
+	const classroomData = teacherClass.getDetailedClassroomData(classCode)
+	const student = classroomData?.students.find((s): boolean => s.studentId === studentId)
+
+	if (!student) return null
+
+	const { username, garageDrivingAllowed, garageLightsAllowed, garageSoundsAllowed } = student
+
+	const handleDrivingToggle = (): void => {
+		updateIndividualStudentDrivingStatus(classCode, studentId, !garageDrivingAllowed)
+	}
+
+	const handleLightsToggle = (): void => {
+		updateIndividualStudentLightsStatus(classCode, studentId, !garageLightsAllowed)
+	}
+
+	const handleSoundsToggle = (): void => {
+		updateIndividualStudentSoundsStatus(classCode, studentId, !garageSoundsAllowed)
+	}
+	return (
+		<div className="flex items-center justify-center gap-1">
+			{/* Individual Student Garage Controls */}
+			<CustomTooltip
+				tooltipTrigger={
+					<TactileButton
+						onClick={handleDrivingToggle}
+						className={cn(
+							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							garageDrivingAllowed
+								? "bg-chargingGreen text-standardBackground"
+								: "bg-cardinal text-standardBackground border border-cardinal"
+						)}
+						shadowHeight={4}
+						shadowClass={
+							garageDrivingAllowed
+								? "shadow-chargingGreen-2"
+								: "shadow-cardinal-2"
+						}
+					>
+						<Car className="h-3 w-3" />
+					</TactileButton>
+				}
+				tooltipContent={
+					garageDrivingAllowed
+						? `Disable driving for ${username}`
+						: `Enable driving for ${username}`
+				}
+			/>
+			<CustomTooltip
+				tooltipTrigger={
+					<TactileButton
+						onClick={handleLightsToggle}
+						className={cn(
+							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							garageLightsAllowed
+								? "bg-chargingGreen text-standardBackground"
+								: "bg-cardinal text-standardBackground border border-cardinal"
+						)}
+						shadowHeight={4}
+						shadowClass={
+							garageLightsAllowed
+								? "shadow-chargingGreen-2"
+								: "shadow-cardinal-2"
+						}
+					>
+						<Lightbulb className="h-3 w-3" />
+					</TactileButton>
+				}
+				tooltipContent={
+					garageLightsAllowed
+						? `Disable lights for ${username}`
+						: `Enable lights for ${username}`
+				}
+			/>
+			<CustomTooltip
+				tooltipTrigger={
+					<TactileButton
+						onClick={handleSoundsToggle}
+						className={cn(
+							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							garageSoundsAllowed
+								? "bg-chargingGreen text-standardBackground"
+								: "bg-cardinal text-standardBackground border border-cardinal"
+						)}
+						shadowHeight={4}
+						shadowClass={
+							garageSoundsAllowed
+								? "shadow-chargingGreen-2"
+								: "shadow-cardinal-2"
+						}
+					>
+						<Volume2 className="h-3 w-3" />
+					</TactileButton>
+				}
+				tooltipContent={
+					garageSoundsAllowed
+						? `Disable sounds for ${username}`
+						: `Enable sounds for ${username}`
+				}
+			/>
+		</div>
+	)
+}
+
+export default observer(StudentGarageControls)
