@@ -9,7 +9,7 @@ import serialMessageManagerClass from "./serial-message-manager-class"
 import workbenchClass from "./workbench-class"
 import pipClass from "./pip-class"
 
-class SerialConnectionManagerClass {
+export class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
@@ -159,7 +159,7 @@ class SerialConnectionManagerClass {
 	}
 
 	// Handle when a USB device is plugged in
-	private async handleDevicePluggedIn(port: SerialPort): Promise<void> {
+	public async handleDevicePluggedIn(port: SerialPort): Promise<void> {
 		// Don't auto-connect if we're already connected OR if user isn't logged in
 		if (this.pipTurnedOn || !authClass.isFinishedWithSignup) return
 

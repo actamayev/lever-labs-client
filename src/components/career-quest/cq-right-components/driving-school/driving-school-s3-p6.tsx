@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { useMemo, useState, useEffect } from "react"
+import { useMemo, useState } from "react"
 import { TactileButton } from "../../../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import { cn } from "../../../../lib/shadcn/utils"
@@ -89,7 +89,6 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 	const humpbackColors = getDuolingoColors("humpback")
 	const chargingGreenColors = getDuolingoColors("chargingGreen")
 	const cardinalColors = getDuolingoColors("cardinal")
-	console.log(chargingGreenColors)
 
 	const distanceShadowClass = useMemo((): string => {
 		return selectedAnswer === "distance" ? chargingGreenColors.shadow2 : humpbackColors.shadow2

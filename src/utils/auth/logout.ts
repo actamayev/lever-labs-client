@@ -42,12 +42,6 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
-
-		// Redirect to home page
-		if (typeof window !== "undefined") {
-			window.location.href = "/"
-		}
-
 	} catch (error) {
 		console.error("Logout error:", error)
 
@@ -68,10 +62,6 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
-
-		if (typeof window !== "undefined") {
-			window.location.href = "/"
-		}
 	} finally {
 		authClass.setLoggingOut(false)
 	}

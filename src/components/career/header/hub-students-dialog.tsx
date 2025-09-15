@@ -12,6 +12,7 @@ import {
 import { Card, CardContent } from "../../shadcn/ui/card"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 import { observer } from "mobx-react"
+import { isEmpty } from "lodash-es"
 
 interface Props {
 	isStudentsDialogOpen: boolean
@@ -41,12 +42,16 @@ function HubStudentsDialog(props: Props): React.ReactNode {
 						</div>
 					</div>
 
-					<div>
-						<div className="text-sm font-medium text-wolf mb-3">
-							{studentsJoined.length} {studentsJoined.length === 1 ? "student" : "students"} joined
+					{isEmpty(studentsJoined) ? (
+						<div className="text-center py-8">
+							<Users className="h-12 w-12 text-eel mx-auto mb-3 opacity-50" />
+							<p className="text-eel">No students have joined this hub yet</p>
 						</div>
-
-						{studentsJoined.length > 0 ? (
+					) : (
+						<div>
+							<div className="text-sm font-medium text-wolf mb-3">
+								{studentsJoined.length} {studentsJoined.length === 1 ? "student" : "students"} joined
+							</div>
 							<div className="space-y-2 max-h-60 overflow-y-auto">
 								{studentsJoined.map((student): React.ReactNode => (
 									<Card key={student.userId} className="border border-swan">
@@ -71,13 +76,8 @@ function HubStudentsDialog(props: Props): React.ReactNode {
 									</Card>
 								))}
 							</div>
-						) : (
-							<div className="text-center py-8">
-								<Users className="h-12 w-12 text-eel mx-auto mb-3 opacity-50" />
-								<p className="text-eel">No students have joined this hub yet</p>
-							</div>
-						)}
-					</div>
+						</div>
+					)}
 				</div>
 			</DialogContent>
 		</Dialog>

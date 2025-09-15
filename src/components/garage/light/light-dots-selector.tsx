@@ -5,6 +5,7 @@ import { rgbaToHex } from "@uiw/color-convert"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomPip } from "../../icons/custom-pip"
 import garageClass from "../../../classes/garage-class"
+import CustomTooltip from "../../custom-tooltip"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const DOT_POSITIONS = [
@@ -17,18 +18,20 @@ const DOT_POSITIONS = [
 ]
 
 function LightDotsSelector(): React.ReactNode {
-	return (
+	const isDisabled = !garageClass.garageLightsStatus
+	const content = (
 		<div className="flex items-start justify-end">
 			<div className="relative w-full h-full px-5">
 				<CustomPip size={200}/>
 				{DOT_POSITIONS.map((position, index): React.ReactNode => (
 					<button
 						key={index}
-						onClick={(): void => garageClass.toggleDot(index)}
+						onClick={(): void => { if (!isDisabled) garageClass.toggleDot(index) }}
 						className={cn(
 							"absolute w-5 h-5 rounded-sm",
 							"transition-all duration-1000",
-							garageClass.selectedDots.includes(index) && "animate-pulse"
+							garageClass.selectedDots.includes(index) && "animate-pulse",
+							isDisabled && "opacity-50 cursor-not-allowed"
 						)}
 						style={{
 							backgroundColor: rgbaToHex(garageClass.dotColors[index]) || "#999",
@@ -42,6 +45,18 @@ function LightDotsSelector(): React.ReactNode {
 				))}
 			</div>
 		</div>
+	)
+
+	return !isDisabled ? ( content ) : (
+		<CustomTooltip
+			tooltipTrigger={
+				<div className="relative w-full h-full">
+					{content}
+					<div className="absolute inset-0 cursor-not-allowed" />
+				</div>
+			}
+			tooltipContent="Lights disabled by teacher"
+		/>
 	)
 }
 
