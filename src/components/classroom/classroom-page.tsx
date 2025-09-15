@@ -135,7 +135,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 				<TactileButton
 					onClick={handleBackClick}
 					className="flex items-center gap-2 h-10 px-4 rounded-xl text-lg bg-polar text-eel border border-swan hover:bg-gray-50"
-					shadowHeight={2}
+					shadowHeight={4}
 					shadowClass="shadow-gray-300"
 				>
 					<ArrowLeft className="h-4 w-4" />

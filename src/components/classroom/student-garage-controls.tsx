@@ -43,7 +43,6 @@ function StudentGarageControls({
 	}
 	return (
 		<div className="flex items-center justify-center gap-1">
-			{/* Individual Student Garage Controls */}
 			<CustomTooltip
 				tooltipTrigger={
 					<TactileButton
@@ -51,7 +50,7 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageDrivingAllowed
-								? "bg-chargingGreen text-standardBackground"
+								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
 								: "bg-cardinal text-standardBackground border border-cardinal"
 						)}
 						shadowHeight={4}
@@ -77,7 +76,7 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageLightsAllowed
-								? "bg-chargingGreen text-standardBackground"
+								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
 								: "bg-cardinal text-standardBackground border border-cardinal"
 						)}
 						shadowHeight={4}
@@ -103,7 +102,7 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageSoundsAllowed
-								? "bg-chargingGreen text-standardBackground"
+								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
 								: "bg-cardinal text-standardBackground border border-cardinal"
 						)}
 						shadowHeight={4}

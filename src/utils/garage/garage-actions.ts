@@ -14,6 +14,9 @@ export default function garageActions(): {
 		const selectedPip = pipClass.selectedPip
 		switch (action) {
 			case "headlights":
+				// Skip if garage lights are disabled by teacher
+				if (!garageClass.garageLightsStatus) return
+
 				garageClass.setAreHeadlightsOn(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
@@ -33,6 +36,9 @@ export default function garageActions(): {
 				return
 
 			case "horn":
+				// Skip if garage sounds are disabled by teacher
+				if (!garageClass.garageSoundsStatus) return
+
 				garageClass.setIsHornPressed(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
@@ -60,6 +66,9 @@ export default function garageActions(): {
 		const selectedPip = pipClass.selectedPip
 		switch (action) {
 			case "headlights":
+				// Skip if garage lights are disabled by teacher
+				if (!garageClass.garageLightsStatus) return
+
 				garageClass.setAreHeadlightsOn(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
@@ -79,6 +88,9 @@ export default function garageActions(): {
 				return
 
 			case "horn":
+				// Skip if garage sounds are disabled by teacher
+				if (!garageClass.garageSoundsStatus) return
+
 				garageClass.setIsHornPressed(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
