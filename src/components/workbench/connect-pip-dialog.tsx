@@ -16,15 +16,16 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import searchForPipByUUID from "../../utils/pip/search-for-pip-by-uuid"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { PipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
 import { BotIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
+import { isString } from "lodash-es"
+import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 
 interface PipSearchResult {
 	pipName: string
-	pipConnectionStatus: PipConnectionStatus
+	pipConnectionStatus: ClientPipConnectionStatus
 	pipUUID: string
-	isSomeoneConnectedToPip: boolean
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -65,16 +66,13 @@ function ConnectToPipDialog(): React.ReactNode {
 		setIsSearching(true)
 		try {
 			const result = await searchForPipByUUID(filteredValue as PipUUID)
-			if (!result) {
-				setErrorMessage("We couldn't find a Pip with that ID. Could you double check your ID?")
+			if (isString(result)) {
+				setErrorMessage(result)
 			} else {
-				// If someone else is connected, set status to "connected to other user"
-				const effectiveStatus = result.isSomeoneConnectedToPip ? "connected to other user" : result.pipConnectionStatus
 				setSearchResult({
 					pipName: result.pipName || filteredValue,
-					pipConnectionStatus: effectiveStatus as PipConnectionStatus,
+					pipConnectionStatus: result.pipConnectionStatus,
 					pipUUID: filteredValue,
-					isSomeoneConnectedToPip: result.isSomeoneConnectedToPip
 				})
 				// Only blur the input if we found a result
 				e.target.blur()
@@ -96,8 +94,7 @@ function ConnectToPipDialog(): React.ReactNode {
 				// Update local state to show someone else is connected
 				setSearchResult((prev): PipSearchResult | null => prev ? {
 					...prev,
-					pipConnectionStatus: "connected to other user" as PipConnectionStatus,
-					isSomeoneConnectedToPip: true
+					pipConnectionStatus: "connected to another user",
 				} : null)
 				// Don't close dialog when someone else is connected
 				shouldCloseDialog = false
@@ -113,38 +110,30 @@ function ConnectToPipDialog(): React.ReactNode {
 	}, [searchResult, handleClose])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
-		if (e.key === "Escape") {
-			handleClose()
-		}
+		if (e.key !== "Escape") return
+		handleClose()
 	}, [handleClose])
 
-	const getStatusBgColor = (status: PipConnectionStatus | "connected to other user"): string => {
-		switch (status) {
-			case "offline":
-				return "bg-cardinal"
-			case "connected":
-				return "bg-chargingGreen"
-			case "connected to other user":
-				return "bg-beetle"
-			case "updating firmware":
-			default:
-				return "bg-macaw"
+	const getStatusBgColor = (status: RetrieveIsPipUUIDValidResponse): string => {
+		if (status.pipConnectionStatus === "online") {
+			return "bg-macaw"
+		} else if (status.pipConnectionStatus === "connected to another user") {
+			return "bg-beetle"
+		} else if (status.pipConnectionStatus === "connected to serial") {
+			return "bg-beetle"
 		}
+		return "bg-cardinal"
 	}
 
-	const getStatusText = (status: PipConnectionStatus | "connected to other user"): string => {
-		switch (status) {
-			case "offline":
-				return "Offline"
-			case "connected":
-				return "Online"
-			case "connected to other user":
-				return "In Use"
-			case "updating firmware":
-				return "Updating"
-			default:
-				return "Online"
+	const getStatusText = (status: RetrieveIsPipUUIDValidResponse): string => {
+		if (status.pipConnectionStatus === "online") {
+			return "Online"
+		} else if (status.pipConnectionStatus === "connected to another user") {
+			return "Connected to another user"
+		} else if (status.pipConnectionStatus === "connected to serial") {
+			return "Connected to USB"
 		}
+		return "Unknown status"
 	}
 
 	return (
@@ -194,13 +183,13 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 								<div className={cn(
 									"px-3 py-1 rounded-full text-white text-sm font-medium",
-									getStatusBgColor(searchResult.pipConnectionStatus as PipConnectionStatus | "connected to other user")
+									getStatusBgColor(searchResult)
 								)}>
-									{getStatusText(searchResult.pipConnectionStatus)}
+									{getStatusText(searchResult)}
 								</div>
 							</div>
 
-							{searchResult.pipConnectionStatus === "connected" && !searchResult.isSomeoneConnectedToPip && (
+							{searchResult.pipConnectionStatus === "online" && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}

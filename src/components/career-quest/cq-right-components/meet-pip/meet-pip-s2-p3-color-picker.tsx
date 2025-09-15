@@ -41,10 +41,7 @@ function MeetPipS2P3ColorPicker(): React.ReactNode {
 		}
 		const selectedPip = pipClass.selectedPip
 
-		if (
-			isNull(selectedPip)
-			|| selectedPip.pipConnectionStatus === "offline"
-		) return
+		if (isNull(selectedPip)) return
 
 		socketClass.emitToServer("new-led-colors", {
 			topLeftColor: colorResult.rgba,

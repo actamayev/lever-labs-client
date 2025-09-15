@@ -65,7 +65,7 @@ export default async function sendCppToPip(
 				title: `${selectedPip.pipUUID} is not online`,
 				description: `Please connect ${selectedPip.pipUUID} to the internet to upload code`
 			})
-		} else if (selectedPip.pipConnectionStatus === "connected to other user") {
+		} else if (selectedPip.pipConnectionStatus === "connected to another user") {
 			return toastClass.negative({
 				title: `Unable to upload code to ${selectedPip.pipUUID} at this time`,
 				description: `${selectedPip.pipUUID} is connected to another user`

@@ -145,7 +145,7 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 		if (!garageClass.garageSoundsStatus && garageClass.soundPlaying === sound) {
 			garageClass.setSoundPlaying(null)
 		}
-	}, [garageClass.garageSoundsStatus, sound])
+	}, [sound])
 
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
