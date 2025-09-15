@@ -63,7 +63,7 @@ function ClassroomHubsSection({ classCode }: ClassroomHubsSectionProps): React.R
 					Active Hubs
 				</CardTitle>
 				<CardDescription>
-					Currently running learning activities in this classroom
+					Currently running hubs in this classroom
 				</CardDescription>
 			</CardHeader>
 			<CardContent>

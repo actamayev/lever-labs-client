@@ -64,7 +64,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<p className="text-sm text-eel mb-3">Start a new learning activity for your students</p>
+						<p className="text-sm text-eel mb-3">Start a new hub for your students</p>
 						<TactileButton
 							onClick={handleCreateHub}
 							className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
