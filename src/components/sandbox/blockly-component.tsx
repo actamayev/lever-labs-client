@@ -47,9 +47,12 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
 		const workspace = workspaceRef.current
-		if (!workspace) return
+		if (!workspace) {
+			setIsCentering(false)
+			return
+		}
 
-		// Always center the workspace
+		// Center the workspace (isCentering flag prevents onChange from firing)
 		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 		workspace.scrollCenter()
 

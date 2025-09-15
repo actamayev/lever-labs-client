@@ -77,8 +77,11 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 		return (): void => clearTimeout(timer)
 	}, [isSwitchingMode])
 
+	// Track if we're currently processing a change to prevent duplicate API calls
+	const isProcessingChangeRef = useRef(false)
+
 	const handleJsonChange = useCallback(async (newBlocklyJson: BlocklyJson): Promise<void> => {
-		if (!project || isLoading) return
+		if (!project || isLoading || isProcessingChangeRef.current) return
 
 		// Skip the first change event which happens during workspace initialization
 		if (isFirstChangeAfterInitRef.current) {
@@ -94,15 +97,24 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 			return
 		}
 
-		const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
-		sandboxClass.setCppCode(projectUUID, generatedCppCode)
-		await sandboxClass.updateProjectJson(projectUUID, newBlocklyJson)
-		editSandboxProject(projectUUID, newBlocklyJson)
+		// Set flag to prevent duplicate processing
+		isProcessingChangeRef.current = true
+
+		try {
+			const generatedCppCode = await getCppGenerator().generateCppFromJson(newBlocklyJson)
+			// Use the new method that doesn't regenerate CPP code
+			sandboxClass.updateProjectJsonWithCpp(projectUUID, newBlocklyJson, generatedCppCode)
+			await editSandboxProject(projectUUID, newBlocklyJson)
+		} finally {
+			// Reset flag when done
+			isProcessingChangeRef.current = false
+		}
 	}, [project, isLoading, projectUUID])
 
 	// Reset the flag when navigating to a different project
 	useEffect((): void => {
 		isFirstChangeAfterInitRef.current = true
+		isProcessingChangeRef.current = false
 		setIsSwitchingMode(false)
 		setSearchTerm("")
 		previousSearchingRef.current = false
