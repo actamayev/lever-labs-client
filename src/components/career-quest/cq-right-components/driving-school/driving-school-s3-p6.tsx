@@ -89,7 +89,6 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 	const humpbackColors = getDuolingoColors("humpback")
 	const chargingGreenColors = getDuolingoColors("chargingGreen")
 	const cardinalColors = getDuolingoColors("cardinal")
-	console.log(chargingGreenColors)
 
 	const distanceShadowClass = useMemo((): string => {
 		return selectedAnswer === "distance" ? chargingGreenColors.shadow2 : humpbackColors.shadow2

@@ -50,7 +50,6 @@ class CareerQuestTriggersClass {
 
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
-		void this.setTextInput("")
 		this.pixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map((): boolean[] => Array(DISPLAY_WIDTH).fill(false))
 	}
 }
