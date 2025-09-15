@@ -22,6 +22,7 @@ export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true)
 
 	try {
+		await serialConnectionManagerClass.logout()
 		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
 		await blueDotApiClient.authDataService.logout()
 
@@ -41,7 +42,7 @@ export default async function logout(): Promise<void> {
 		serialMessageManagerClass.logout()
 		studentClass.logout()
 		teacherClass.logout()
-		await serialConnectionManagerClass.logout()
+		console.log("isFinishedWithSignup", authClass.isFinishedWithSignup)
 	} catch (error) {
 		console.error("Logout error:", error)
 
