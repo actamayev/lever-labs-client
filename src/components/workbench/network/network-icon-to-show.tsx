@@ -37,7 +37,7 @@ function NetworkIconToShow(): React.ReactNode {
 					<span className="text-sm">ONLINE</span>
 				</div>
 			)
-		case "connected to other user":
+		case "connected to another user":
 			return (
 				<div className="flex items-center justify-center flex-col text-beetle">
 					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
@@ -45,7 +45,7 @@ function NetworkIconToShow(): React.ReactNode {
 					<span className="text-sm">ANOTHER USER</span>
 				</div>
 			)
-		case "connected":
+		case "connected to you":
 			return (
 				<div className="flex items-center justify-center flex-col text-green-500">
 					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>

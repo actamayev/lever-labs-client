@@ -29,6 +29,7 @@ function RGBInput(): React.ReactNode {
 	const isDisabled = !garageClass.garageLightsStatus
 
 	const channel = (
+		// eslint-disable-next-line max-params
 		(id: string, label: string, value: number, onChange: (n: number) => void, borderClass: string, bgClass: string): React.ReactNode => (
 			<div className="flex items-center flex-col">
 				<Label htmlFor={id} className="text-xl font-medium mb-0.5">{label}</Label>

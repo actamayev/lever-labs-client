@@ -32,4 +32,10 @@ export default class PipDataService extends BaseDataService {
 			this.buildUrl("/stop-sensor-polling"), { pipUUID }
 		)
 	}
+
+	async setSerialConnectionStatus(pipUUID: PipUUID, connected: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl("/set-serial-connection"), { pipUUID, connected }
+		)
+	}
 }
