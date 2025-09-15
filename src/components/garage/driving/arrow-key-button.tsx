@@ -77,6 +77,15 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.Rea
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [direction, garageClass.pressedMotorKeys.size])
 
+	// Release button when driving is disabled
+	useEffect((): void => {
+		if (isDisabled && garageClass.pressedMotorKeys.has(direction)) {
+			garageClass.removePressedKey(direction)
+			const motorControl = computeMotorControl()
+			applyMotorControl(motorControl)
+		}
+	}, [isDisabled, direction])
+
 	const handleButtonDown = (): void => {
 		// Only activate if not disabled
 		if (!isDisabled) {

@@ -9,6 +9,8 @@ import {
 	ClientSocketEventPayloadMap,
 } from "@bluedotrobots/common-ts/types/socket"
 import { listenersMap } from "../utils/constants/listeners-map"
+import pipClass from "./pip-class"
+import garageClass from "./garage-class"
 
 class SocketClass {
 	private _socket: Socket | null = null
@@ -46,7 +48,10 @@ class SocketClass {
 		})
 
 		this._socket.on("disconnect", (_reason: Socket.DisconnectReason): void => {
+			pipClass.deletePip()
 			this.isConnected = false
+			// Release all pressed buttons when socket disconnects
+			this.releaseAllPressedButtons()
 		})
 
 		// Handle reconnection attempts
@@ -84,12 +89,26 @@ class SocketClass {
 		this._socket.emit(event, payload)
 	}
 
+	private releaseAllPressedButtons = action((): void => {
+		// Stop any playing sounds
+		garageClass.setSoundPlaying(null)
+		
+		// Clear all pressed motor keys
+		garageClass.pressedMotorKeys.clear()
+		
+		// Reset any active actions (headlights, horn, etc.)
+		// Note: These would need to be tracked in garageClass if not already
+		// For now, we rely on the individual components to handle their own state
+	})
+
 	public logout = action((): void => {
 		if (this._socket) {
 			this._socket.disconnect()
 			this._socket = null
 		}
 		this.isConnected = false
+		// Also release buttons on logout
+		this.releaseAllPressedButtons()
 	})
 }
 

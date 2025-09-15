@@ -140,6 +140,13 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [garageClass.soundPlaying, sound])
 
+	// Release button when sounds are disabled
+	useEffect((): void => {
+		if (!garageClass.garageSoundsStatus && garageClass.soundPlaying === sound) {
+			garageClass.setSoundPlaying(null)
+		}
+	}, [garageClass.garageSoundsStatus, sound])
+
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
 		// Only play sound if garage sounds are enabled

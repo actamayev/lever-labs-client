@@ -91,6 +91,13 @@ function DrivingActionButton({
 		}
 	}, [isPressed])
 
+	// Release button when action is disabled
+	useEffect((): void => {
+		if (isDisabled && isPressed) {
+			deactivateAction(action)
+		}
+	}, [isDisabled, isPressed, action, deactivateAction])
+
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
 		// Only activate if not disabled
