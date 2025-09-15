@@ -164,18 +164,16 @@ function LightBrightnessControl(): ReactNode {
 		</>
 	)
 
-	return isDisabled ? (
-		<CustomTooltip
-			tooltipTrigger={
-				<div className="relative flex items-center gap-3 w-full">
-					{content}
-					<div className="absolute inset-0 cursor-not-allowed" />
-				</div>
-			}
-			tooltipContent="Lights disabled by teacher"
-		/>
-	) : (
-		content
+	return (
+		<div className="relative flex items-center gap-3 w-full">
+			{content}
+			{isDisabled && (
+				<CustomTooltip
+					tooltipTrigger={<div className="absolute inset-0 cursor-not-allowed" />}
+					tooltipContent="Lights disabled by teacher"
+				/>
+			)}
+		</div>
 	)
 }
 

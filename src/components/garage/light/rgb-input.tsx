@@ -40,7 +40,7 @@ function RGBInput(): React.ReactNode {
 					onChange={(e): void => { if (!isDisabled) onChange(enforceRGBRange(e.target.value)) }}
 					min="0"
 					max="255"
-					className={`border-2 ${borderClass} rounded-xl !text-xl text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0`}
+					className={`border-2 ${borderClass} rounded-xl !text-xl text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
 					style={{ width: "72px", height: "52px" }}
 					disabled={isDisabled}
 				/>
@@ -56,16 +56,16 @@ function RGBInput(): React.ReactNode {
 		</>
 	)
 
-	return !isDisabled ? ( content ) : (
-		<CustomTooltip
-			tooltipTrigger={
-				<div className="relative flex items-center gap-3 w-full">
-					{content}
-					<div className="absolute inset-0 cursor-not-allowed" />
-				</div>
-			}
-			tooltipContent="Lights disabled by teacher"
-		/>
+	return (
+		<div className="relative flex items-center gap-3 w-full">
+			{content}
+			{isDisabled && (
+				<CustomTooltip
+					tooltipTrigger={<div className="absolute inset-0 cursor-not-allowed" />}
+					tooltipContent="Lights disabled by teacher"
+				/>
+			)}
+		</div>
 	)
 }
 
