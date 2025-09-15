@@ -85,14 +85,13 @@ class SandboxClass {
 		project.updatedAt = new Date()
 	})
 
-	// Method to update project JSON in the store
-	public updateProjectJson = action(async (projectUUID: SandboxProjectUUID, newJson: BlocklyJson): Promise<void> => {
-		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
+	// Method to update project JSON without regenerating CPP (when CPP is already generated)
+	public updateProjectJsonWithCpp = action((projectUUID: SandboxProjectUUID, newJson: BlocklyJson, cppCode: string): void => {
 		const project = this.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
 		project.sandboxJson = newJson
-		project.cppCode = await getCppGenerator().generateCppFromJson(newJson)
+		project.cppCode = cppCode
 	})
 
 	public getCppCode = action((projectUUID: SandboxProjectUUID): string => {
