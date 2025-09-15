@@ -212,6 +212,26 @@ class GarageClass {
 		this.garageDisplayStatus = newGarageDisplayStatus
 	})
 
+	public releaseAllPressedButtons = action((): void => {
+		// Stop any playing sounds
+		this.setSoundPlaying(null)
+
+		// Clear all pressed motor keys
+		this.pressedMotorKeys.clear()
+
+		// Reset horn and headlights state
+		this.setIsHornPressed(false)
+		this.setAreHeadlightsOn(false)
+
+		// Clear driving directions
+		this.driveDirections.clear()
+		this.pressedDirections.clear()
+		this.isDriving = false
+
+		// Reset motor state
+		this.motorState = { vertical: 0, horizontal: 0 }
+	})
+
 	public logout(): void {
 		this.setSelectedColorRgba({ r: 255, g: 255, b: 255, a: 1 })
 		this.selectedDots = [0, 1, 2, 3, 4, 5]

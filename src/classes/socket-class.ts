@@ -51,7 +51,7 @@ class SocketClass {
 			pipClass.deletePip()
 			this.isConnected = false
 			// Release all pressed buttons when socket disconnects
-			this.releaseAllPressedButtons()
+			garageClass.releaseAllPressedButtons()
 		})
 
 		// Handle reconnection attempts
@@ -89,17 +89,6 @@ class SocketClass {
 		this._socket.emit(event, payload)
 	}
 
-	private releaseAllPressedButtons = action((): void => {
-		// Stop any playing sounds
-		garageClass.setSoundPlaying(null)
-		
-		// Clear all pressed motor keys
-		garageClass.pressedMotorKeys.clear()
-		
-		// Reset any active actions (headlights, horn, etc.)
-		// Note: These would need to be tracked in garageClass if not already
-		// For now, we rely on the individual components to handle their own state
-	})
 
 	public logout = action((): void => {
 		if (this._socket) {
@@ -108,7 +97,7 @@ class SocketClass {
 		}
 		this.isConnected = false
 		// Also release buttons on logout
-		this.releaseAllPressedButtons()
+		garageClass.releaseAllPressedButtons()
 	})
 }
 
