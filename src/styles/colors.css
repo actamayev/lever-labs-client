@@ -14,10 +14,10 @@
 		--landing-outer-border: 244 244 246;
 		--landing-dotted-line: 238 238 242;
 
-		--charging-green: 35 200 100;
-		--charging-green-1: 45 220 120;
-		--charging-green-2: 30 180 100;
-		--charging-green-3: 50 240 140;
+		--chargingGreen: 35 200 100;
+		--chargingGreen-1: 45 220 120;
+		--chargingGreen-2: 30 180 100;
+		--chargingGreen-3: 50 240 140;
 
 		--career-quest-yellow: 253 217 11;
 		/* https://design.duolingo.com/identity/color */
@@ -78,10 +78,10 @@
 		--landing-outer-border: 35 45 50;
 		--landing-dotted-line: 40 50 55;
 
-		--charging-green: 35 200 100;
-		--charging-green-1: 45 220 120;
-		--charging-green-2: 30 180 100;
-		--charging-green-3: 50 240 140;
+		--chargingGreen: 35 200 100;
+		--chargingGreen-1: 45 220 120;
+		--chargingGreen-2: 30 180 100;
+		--chargingGreen-3: 50 240 140;
 
 		--career-quest-yellow: 253 217 11;
 

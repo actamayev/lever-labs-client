@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-nested-ternary */
 "use client"
 
 import { observer } from "mobx-react"
@@ -238,7 +240,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 													<DropdownMenuContent className="w-32 bg-standardBackground shadow-none">
 														<DropdownMenuItem
 															onClick={(): void => handleDeleteHub(hub)}
-															// eslint-disable-next-line max-len
+
 															className="cursor-pointer text-sm hover:!bg-polar text-cardinal hover:!text-cardinal"
 														>
 															<Trash2 className="mr-2 !size-4" strokeWidth={2.5}/>
@@ -284,13 +286,19 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 							<TactileButton
 								onClick={(): void => handleGarageControlClick("driving")}
 								className={cn(
-									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
-									getGarageStatus("driving") === "all-on" && "bg-chargingGreen text-standardBackground",
-									getGarageStatus("driving") === "all-off" && "bg-cardinal text-standardBackground",
+									"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+									getGarageStatus("driving") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+									getGarageStatus("driving") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
 									getGarageStatus("driving") === "mixed" && "bg-standardBackground text-wolf border border-swan"
 								)}
-								shadowHeight={2}
-								shadowClass="shadow-gray-300"
+								shadowHeight={4}
+								shadowClass={
+									getGarageStatus("driving") === "all-on"
+										? "shadow-chargingGreen-2"
+										: getGarageStatus("driving") === "all-off"
+											? "shadow-cardinal-2"
+											: "shadow-swan"
+								}
 								title="Toggle driving for all students"
 							>
 								<Car className="h-4 w-4" />
@@ -298,13 +306,19 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 							<TactileButton
 								onClick={(): void => handleGarageControlClick("lights")}
 								className={cn(
-									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
-									getGarageStatus("lights") === "all-on" && "bg-chargingGreen text-standardBackground",
-									getGarageStatus("lights") === "all-off" && "bg-cardinal text-standardBackground",
+									"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+									getGarageStatus("lights") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+									getGarageStatus("lights") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
 									getGarageStatus("lights") === "mixed" && "bg-standardBackground text-wolf border border-swan"
 								)}
-								shadowHeight={2}
-								shadowClass="shadow-gray-300"
+								shadowHeight={4}
+								shadowClass={
+									getGarageStatus("lights") === "all-on"
+										? "shadow-chargingGreen-2"
+										: getGarageStatus("lights") === "all-off"
+											? "shadow-cardinal-2"
+											: "shadow-swan"
+								}
 								title="Toggle lights for all students"
 							>
 								<Lightbulb className="h-4 w-4" />
@@ -312,13 +326,19 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 							<TactileButton
 								onClick={(): void => handleGarageControlClick("sounds")}
 								className={cn(
-									"h-8 w-8 rounded-lg flex items-center justify-center transition-colors",
-									getGarageStatus("sounds") === "all-on" && "bg-chargingGreen text-standardBackground",
-									getGarageStatus("sounds") === "all-off" && "bg-cardinal text-standardBackground",
+									"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
+									getGarageStatus("sounds") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
+									getGarageStatus("sounds") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
 									getGarageStatus("sounds") === "mixed" && "bg-standardBackground text-wolf border border-swan"
 								)}
-								shadowHeight={2}
-								shadowClass="shadow-gray-300"
+								shadowHeight={4}
+								shadowClass={
+									getGarageStatus("sounds") === "all-on"
+										? "shadow-chargingGreen-2"
+										: getGarageStatus("sounds") === "all-off"
+											? "shadow-cardinal-2"
+											: "shadow-swan"
+								}
 								title="Toggle sounds for all students"
 							>
 								<Volume2 className="h-4 w-4" />
@@ -333,7 +353,6 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								<TableRow className="border-swan">
 									<TableHead className="text-wolf font-semibold">#</TableHead>
 									<TableHead className="text-wolf font-semibold">Username</TableHead>
-									<TableHead className="text-wolf font-semibold">Status</TableHead>
 									<TableHead className="text-wolf font-semibold text-center">Garage Controls</TableHead>
 								</TableRow>
 							</TableHeader>
@@ -347,12 +366,6 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 											{student.username || "Unknown"}
 										</TableCell>
 										<TableCell>
-											<span className="inline-flex items-center px-2.5 py-0.5 rounded-full
-											text-xs font-medium bg-green-100 text-green-800">
-												Accepted
-											</span>
-										</TableCell>
-										<TableCell>
 											<div className="flex items-center justify-center gap-1">
 												{/* Individual Student Garage Controls */}
 												<TactileButton
@@ -362,13 +375,17 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 														student.garageDrivingAllowed
 													)}
 													className={cn(
-														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														"h-6 w-6 rounded flex items-center justify-center duration-150",
 														student.garageDrivingAllowed
 															? "bg-chargingGreen text-standardBackground"
-															: "bg-cardinal text-standardBackground"
+															: "bg-cardinal text-standardBackground border border-cardinal"
 													)}
-													shadowHeight={2}
-													shadowClass="shadow-gray-300"
+													shadowHeight={4}
+													shadowClass={
+														student.garageDrivingAllowed
+															? "shadow-chargingGreen-2"
+															: "shadow-cardinal-2"
+													}
 													title={`Toggle driving for ${student.username}`}
 												>
 													<Car className="h-3 w-3" />
@@ -380,13 +397,17 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 														student.garageLightsAllowed
 													)}
 													className={cn(
-														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														"h-6 w-6 rounded flex items-center justify-center duration-150",
 														student.garageLightsAllowed
 															? "bg-chargingGreen text-standardBackground"
-															: "bg-cardinal text-standardBackground"
+															: "bg-cardinal text-standardBackground border border-cardinal"
 													)}
-													shadowHeight={2}
-													shadowClass="shadow-gray-300"
+													shadowHeight={4}
+													shadowClass={
+														student.garageLightsAllowed
+															? "shadow-chargingGreen-2"
+															: "shadow-cardinal-2"
+													}
 													title={`Toggle lights for ${student.username}`}
 												>
 													<Lightbulb className="h-3 w-3" />
@@ -398,13 +419,17 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 														student.garageSoundsAllowed
 													)}
 													className={cn(
-														"h-6 w-6 rounded flex items-center justify-center transition-colors",
+														"h-6 w-6 rounded flex items-center justify-center duration-150",
 														student.garageSoundsAllowed
 															? "bg-chargingGreen text-standardBackground"
-															: "bg-cardinal text-standardBackground"
+															: "bg-cardinal text-standardBackground border border-cardinal"
 													)}
-													shadowHeight={2}
-													shadowClass="shadow-gray-300"
+													shadowHeight={4}
+													shadowClass={
+														student.garageSoundsAllowed
+															? "shadow-chargingGreen-2"
+															: "shadow-cardinal-2"
+													}
 													title={`Toggle sounds for ${student.username}`}
 												>
 													<Volume2 className="h-3 w-3" />
