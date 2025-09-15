@@ -191,6 +191,9 @@ class GarageClass {
 		if (garageData.some((classroom): boolean => classroom.garageLightsAllowed === false)) {
 			this.setGarageLightsStatus(false)
 		}
+		if (garageData.some((classroom): boolean => classroom.garageDisplayAllowed === false)) {
+			this.setGarageDisplayStatus(false)
+		}
 	})
 
 	public setGarageDrivingStatus = action((newGarageDrivingStatus: boolean): void => {
