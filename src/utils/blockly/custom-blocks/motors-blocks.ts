@@ -13,7 +13,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go forward at")
 
 				// Use a number field with min and max constraints
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -22,6 +22,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward at specified percentage (0-100%)")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "move", "advance", "drive", "straight", "ahead", "fast", "slow", "speed", "velocity"]
 		},
@@ -37,7 +38,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go backward at")
 
 				// Use a number field with min and max constraints
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -46,6 +47,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward at specified percentage (0-100%)")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "reverse", "back", "retreat", "return", "undo", "rewind", "speed", "velocity"]
 		},
@@ -61,13 +63,13 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go forward for")
 
 				// Add time input
-				const secondsField = new Blockly.FieldNumber(2, 0.1, 60, 0.1)
+				const secondsField = new Blockly.FieldNumber(2, 0.1, 10, 0.1)
 				this.appendDummyInput()
 					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
 					.appendField("seconds at")
 
 				// Add speed input
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -76,6 +78,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified time and speed")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "move", "advance", "drive", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
@@ -92,13 +95,13 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go backward for")
 
 				// Add time input
-				const secondsField = new Blockly.FieldNumber(2, 0.1, 60, 0.1)
+				const secondsField = new Blockly.FieldNumber(2, 0.1, 10, 0.1)
 				this.appendDummyInput()
 					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
 					.appendField("seconds at")
 
 				// Add speed input
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -107,6 +110,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified time and speed")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "reverse", "back", "retreat", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
@@ -123,13 +127,13 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go forward")
 
 				// Add distance input
-				const distanceField = new Blockly.FieldNumber(10, 1, 500, 1)
+				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
 					.appendField("inches at")
 
 				// Add speed input
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -138,6 +142,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified distance at given speed")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "move", "advance", "drive", "distance", "in", "inches", "length", "travel"]
 		},
@@ -154,13 +159,13 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("Go backward")
 
 				// Add distance input
-				const distanceField = new Blockly.FieldNumber(10, 1, 500, 1)
+				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
 					.appendField("inches at")
 
 				// Add speed input
-				const percentField = new Blockly.FieldNumber(50, 0, 100, 1)
+				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
 				this.appendDummyInput()
 					.appendField(percentField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
 					.appendField("% speed")
@@ -169,6 +174,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified distance at given speed")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "reverse", "back", "retreat", "distance", "in", "inches", "length", "travel"]
 		},
@@ -197,7 +203,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 					.appendField("by")
 
 				// Use a number field for angle with min and max constraints
-				const angleField = new Blockly.FieldNumber(90, 0, 360, 1)
+				const angleField = new Blockly.FieldNumber(30, 30, 1080, 1)
 				this.appendDummyInput()
 					.appendField(angleField, MOTOR_FIELD_VALUES.TURN_DEGREES)
 					.appendField("degrees")
@@ -206,6 +212,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Turn Pip by specified angle")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "turn", "rotate", "spin", "angle", "degrees", "direction", "clockwise", "counterclockwise"]
 		},
@@ -225,6 +232,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Stop all motors")
+				this.setInputsInline(true)
 			},
 			keywords: ["motor", "halt", "brake", "pause", "cease", "end", "quit", "freeze", "standstill"]
 		},
