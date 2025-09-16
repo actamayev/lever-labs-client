@@ -47,7 +47,7 @@ function WiFiSettingsDialog(): React.ReactNode {
 
 	return (
 		<Dialog open={workbenchClass.isWiFiDialogOpen} onOpenChange={workbenchClass.setIsWiFiDialogOpen}>
-			<DialogContent className="sm:max-w-[500px]">
+			<DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
 				<DialogHeader>
 					<DialogTitle>Wi-Fi Settings</DialogTitle>
 					<DialogClose />

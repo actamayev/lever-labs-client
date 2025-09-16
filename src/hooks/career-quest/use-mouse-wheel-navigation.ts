@@ -50,6 +50,33 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 		return false
 	}
 
+	// Helper function to check if the mouse is over the dino leaderboard scrollable area
+	const isMouseOverDinoLeaderboard = (event: WheelEvent): boolean => {
+		const target = event.target as Element
+
+		if (!target) return false
+
+		// Check if the target or any of its parents is specifically the scrollable table area
+		let element: Element | null = target
+		while (element) {
+			// Only check for the scrollable table container itself, not the entire component
+			if (
+				// Check for the specific scrollable table container
+				(element.classList.contains("max-h-96") &&
+				 element.classList.contains("overflow-y-auto") &&
+				 element.querySelector("table")) ||
+				// Check for table elements within the scrollable container
+				(element.tagName === "TABLE" && element.closest(".max-h-96.overflow-y-auto")) ||
+				// Check for tbody, thead, tr, td elements within the scrollable dino table
+				(["TBODY", "THEAD", "TR", "TD", "TH"].includes(element.tagName) && element.closest(".max-h-96.overflow-y-auto"))
+			) {
+				return true
+			}
+			element = element.parentElement
+		}
+		return false
+	}
+
 	// Helper function to check if we should allow normal scrolling in chat
 	const shouldAllowChatScrolling = useCallback((): boolean => {
 		// Get the current slide to check if it's a challenge
@@ -73,6 +100,11 @@ export default function useMousewheelNavigation(careerUUID: CareerUUID): void {
 
 		// eslint-disable-next-line complexity
 		const handleWheel = (e: WheelEvent): void => {
+			// Check if mouse is over dino leaderboard - if so, allow normal scrolling
+			if (isMouseOverDinoLeaderboard(e)) {
+				return // Don't prevent default, allow normal scrolling
+			}
+
 			// Check if mouse is over chat component - if so, check message length
 			if (isMouseOverChatComponent(e)) {
 				// Only allow normal scrolling if there are messages
