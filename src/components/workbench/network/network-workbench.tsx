@@ -11,7 +11,6 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
-
 function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
@@ -68,7 +67,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				<HoverCardTrigger asChild >
 					<div>
 						<WorkbenchIconTemplate>
-							<NetworkIconToShow iconClasses={isSandboxPage ? "!size-8" : ""} />
+							<NetworkIconToShow iconClasses={isSandboxPage ? "!size-8" : ""} extraTextClasses="text-base font-medium" />
 						</WorkbenchIconTemplate>
 					</div>
 				</HoverCardTrigger>
@@ -81,7 +80,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 					)}
 					side="bottom"
 					align="center"
-					sideOffset={5}
+					sideOffset={isSandboxPage ? 5 : 20}
 				>
 					<div className="space-y-3">
 						<div className="flex items-center gap-2">

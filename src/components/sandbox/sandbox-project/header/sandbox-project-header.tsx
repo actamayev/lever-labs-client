@@ -17,7 +17,7 @@ import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import pipClass from "../../../../classes/pip-class"
 import ConnectToPipButton from "../../../connect-pip/connect-to-pip-button"
 import SandboxBatterySection from "./sandbox-battery-section"
-import SandboxNetworkSection from "./sandbox-network-section"
+import NetworkWorkbench from "../../../workbench/network/network-workbench"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = useCallback((): void => {
@@ -73,7 +73,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				) : (
 					<div className="flex flex-row gap-8">
 						<SandboxBatterySection />
-						<SandboxNetworkSection />
+						<NetworkWorkbench isSandboxPage={true} />
 					</div>
 				)}
 				<CustomTooltip

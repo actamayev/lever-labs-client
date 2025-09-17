@@ -25,7 +25,7 @@ function SoundWorkbench(): React.ReactNode {
 	const isSoundsDisabled = !garageClass.garageSoundsStatus
 
 	const SpeakerIconToShow = (): React.ReactNode => {
-		const baseClasses = "!h-11 !w-11"
+		const baseClasses = "!h-20 !w-20"
 		const strokeWidth = 2.5
 		if (workbenchClass.isMuted || isSoundsDisabled) {
 			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
@@ -68,7 +68,7 @@ function SoundWorkbench(): React.ReactNode {
 					<WorkbenchIconTemplate>
 						<SpeakerIconToShow />
 						<span className={cn(
-							"text-base font-medium mt-0 w-full text-center",
+							"text-2xl font-medium mt-0 w-full text-center",
 							(workbenchClass.isMuted || isSoundsDisabled) && "opacity-50"
 						)}>
 							{workbenchClass.volume}%
@@ -85,7 +85,7 @@ function SoundWorkbench(): React.ReactNode {
 				)}
 				side="bottom"
 				align="end"
-				sideOffset={5}
+				sideOffset={20}
 			>
 				<div className="w-full max-w-sm space-y-4">
 					{/* Header with mute toggle */}

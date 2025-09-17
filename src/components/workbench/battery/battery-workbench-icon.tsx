@@ -11,7 +11,7 @@ interface BatteryWorkbenchIconProps {
 
 function BatteryWorkbenchIcon({ extraClasses }: BatteryWorkbenchIconProps): React.ReactNode {
 	const batteryColorClasses = useGetBatteryColorClasses()
-	const baseClasses = "!h-14 !w-14"
+	const baseClasses = "!h-20 !w-20"
 	const strokeWidth = 2.5
 
 	if (workbenchClass.batteryData?.isCharging || pipClass.pipPluggedInSerial) {

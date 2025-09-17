@@ -7,17 +7,22 @@ import pipClass from "../../../classes/pip-class"
 interface NetworkIconToShowProps {
 	colorClasses?: string
 	iconClasses?: string
+	extraTextClasses?: string
 }
 
-function NetworkIconToShow({ colorClasses, iconClasses }: NetworkIconToShowProps): React.ReactNode {
-	const baseClasses = "!h-12 !w-12"
+function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: NetworkIconToShowProps): React.ReactNode {
+	const baseClasses = "!h-20 !w-20"
 	const strokeWidth = 2.5
+	const textClasses = "text-xl"
 
 	if (pipClass.pipPluggedInSerial) {
 		return (
 			<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
-				<Usb className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-				<span className="text-sm">CONNECTED</span>
+				<Usb
+					className={cn(baseClasses, iconClasses)}
+					strokeWidth={strokeWidth}
+				/>
+				<span className={cn(textClasses, extraTextClasses)}>CONNECTED</span>
 			</div>
 		)
 	}
@@ -30,7 +35,7 @@ function NetworkIconToShow({ colorClasses, iconClasses }: NetworkIconToShowProps
 					className={cn(baseClasses, iconClasses)}
 					strokeWidth={strokeWidth}
 				/>
-				<span className="text-sm ">OFFLINE</span>
+				<span className={cn(textClasses, extraTextClasses)}>OFFLINE</span>
 			</div>
 		)
 	}
@@ -39,36 +44,36 @@ function NetworkIconToShow({ colorClasses, iconClasses }: NetworkIconToShowProps
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-macaw", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className="text-sm">ONLINE</span>
+					<span className={cn(textClasses, extraTextClasses)}>ONLINE</span>
 				</div>
 			)
 		case "connected to another user":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-beetle", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className="text-sm">CONNECTED TO</span>
-					<span className="text-sm">ANOTHER USER</span>
+					<span className={cn(textClasses, extraTextClasses)}>CONNECTED TO</span>
+					<span className={cn(textClasses, extraTextClasses)}>ANOTHER USER</span>
 				</div>
 			)
 		case "connected to you":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className="text-sm">CONNECTED</span>
+					<span className={cn(textClasses, extraTextClasses)}>CONNECTED</span>
 				</div>
 			)
 		case "connected to serial":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Usb className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className="text-sm">CONNECTED TO USB</span>
+					<span className={cn(textClasses, extraTextClasses)}>CONNECTED TO USB</span>
 				</div>
 			)
 		default:
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-wolf", colorClasses)}>
 					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
-					<span className="text-sm">UNKNOWN STATUS</span>
+					<span className={cn(textClasses, extraTextClasses)}>UNKNOWN STATUS</span>
 				</div>
 			)
 	}
