@@ -201,9 +201,7 @@ class SerialMessageManagerClass {
 			}
 
 			case "/scan-result-item": {
-			// Handle individual scan result item
-				const networkItem = message.payload
-				this.scannedNetworks.push(networkItem)
+				this.scannedNetworks.push(message.payload)
 				break
 			}
 
@@ -225,8 +223,7 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/battery-monitor-data-item": {
-				const batteryDataItem = message.payload
-				workbenchClass.setBatteryDataItem(batteryDataItem)
+				workbenchClass.setBatteryDataItem(message.payload)
 				break
 			}
 			case "/battery-monitor-data-complete": {
@@ -234,14 +231,12 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/sensor-data": {
-				const sensorData = message.payload
-				sensorDataClass.addSensorData(sensorData)
+				sensorDataClass.addSensorData(message.payload)
 				break
 			}
 
 			case "/sensor-data-mz": {
-				const sensorData = message.payload
-				sensorDataClass.addMultizoneTofData(sensorData)
+				sensorDataClass.addMultizoneTofData(message.payload)
 				break
 			}
 			case "/dino-score": {
@@ -250,8 +245,7 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/wifi-deleted-network": {
-				const success = message.payload.status
-				this.onWiFiDeletionResult?.(success)
+				this.onWiFiDeletionResult?.(message.payload.status)
 				break
 			}
 			default:
