@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
@@ -14,16 +15,13 @@ import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-
 import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import pipClass from "../../../classes/pip-class"
-import BatteryWorkbench from "../../workbench/battery/battery-workbench"
-import SoundWorkbench from "../../workbench/sound/sound-workbench"
-import NetworkWorkbench from "../../workbench/network/network-workbench"
 import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
-	const leaveSandbox = (): void => {
+	const leaveSandbox = useCallback((): void => {
 		void stopCurrentlyRunningCode(true)
 		void stopPollingSensors()
-	}
+	}, [])
 
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
@@ -62,21 +60,13 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				/>
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
-				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
 					<div className="h-1/2">
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-12 text-2xl"
 							botIconClasses="!size-10"
 						/>
-					</div>
-				) : (
-					<div className="relative p-3 z-50">
-						<div className="flex flex-row justify-between">
-							<BatteryWorkbench />
-							<NetworkWorkbench />
-							<SoundWorkbench />
-						</div>
 					</div>
 				)}
 				<CustomTooltip

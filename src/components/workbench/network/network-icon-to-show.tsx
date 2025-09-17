@@ -12,7 +12,7 @@ function NetworkIconToShow(): React.ReactNode {
 		return (
 			<div className="flex items-center justify-center flex-col text-green-500">
 				<Usb className={cn(baseClasses)} strokeWidth={strokeWidth}/>
-				<span className="text-sm">CONNECTED TO USB</span>
+				<span className="text-sm">CONNECTED</span>
 			</div>
 		)
 	}
