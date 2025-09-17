@@ -1,24 +1,29 @@
 "use client"
 
 import Link from "next/link"
+import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
-import CustomTooltip from "../../custom-tooltip"
-import ConnectUsbButton from "../../connect-usb-button"
+import { cn } from "../../../../lib/shadcn/utils"
+import CustomTooltip from "../../../custom-tooltip"
 import EditableProjectTitle from "./editable-project-title"
-import personalInfoClass from "../../../classes/personal-info-class"
-import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
-import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
-import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
+import personalInfoClass from "../../../../classes/personal-info-class"
+import starSandboxProject from "../../../../utils/sandbox/star-sandbox-project"
+import stopCurrentlyRunningCode from "../../../../utils/sandbox/stop-currently-running-code"
+import setSandboxNotesOpenStatus from "../../../../utils/personal-info/set-sandbox-notes-open-status"
+import stopPollingSensors from "../../../../utils/pip/stop-polling-sensors"
+import getDuolingoColors from "../../../../utils/get-duolingo-colors"
+import pipClass from "../../../../classes/pip-class"
+import ConnectToPipButton from "../../../connect-pip/connect-to-pip-button"
+import SandboxBatterySection from "./sandbox-battery-section"
+import NetworkWorkbench from "../../../workbench/network/network-workbench"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
-	const leaveSandbox = (): void => {
+	const leaveSandbox = useCallback((): void => {
 		void stopCurrentlyRunningCode(true)
 		void stopPollingSensors()
-	}
+	}, [])
 
 	return (
 		<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
@@ -57,7 +62,20 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				/>
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
-				<ConnectUsbButton />
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+					<div className="h-1/2">
+						<ConnectToPipButton
+							colors={getDuolingoColors("humpback")}
+							tactileButtonClasses="h-12 text-2xl"
+							botIconClasses="!size-10"
+						/>
+					</div>
+				) : (
+					<div className="flex flex-row gap-8">
+						<SandboxBatterySection />
+						<NetworkWorkbench isSandboxPage={true} />
+					</div>
+				)}
 				<CustomTooltip
 					tooltipTrigger={
 						<button

@@ -5,17 +5,19 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import ConnectToPipDialog from "./connect-pip-dialog"
 import { DuolingoColorVariants } from "../../utils/get-duolingo-colors"
 import pipClass from "../../classes/pip-class"
-import { WifiHighIcon } from "lucide-react"
+import { BotIcon } from "lucide-react"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 import { cn } from "../../lib/shadcn/utils"
 
 interface ConnectToPipButtonProps {
 	colors: DuolingoColorVariants
 	tactileButtonClasses: string
-	wifiIconClasses: string
+	botIconClasses: string
 }
 
-function ConnectToPipButton({ colors, tactileButtonClasses, wifiIconClasses }: ConnectToPipButtonProps): React.ReactNode {
+function ConnectToPipButton(props: ConnectToPipButtonProps): React.ReactNode {
+	const { colors, tactileButtonClasses, botIconClasses } = props
+
 	return (
 		<>
 			<TactileButton
@@ -29,7 +31,7 @@ function ConnectToPipButton({ colors, tactileButtonClasses, wifiIconClasses }: C
 				}}
 			>
 				<div className="flex items-center justify-center gap-2">
-					<WifiHighIcon className={cn(wifiIconClasses)} />
+					<BotIcon className={cn(botIconClasses)} />
 					<span className="leading-none">Connect to Pip</span>
 				</div>
 			</TactileButton>

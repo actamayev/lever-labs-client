@@ -16,8 +16,10 @@ import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 import pipClass from "../../../classes/pip-class"
-import ConnectToPipButton from "../../workbench/connect-pip-button"
+import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import CQBatterySection from "./cq-battery-section"
+import CQNetworkSection from "./cq-network-section"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
@@ -106,11 +108,11 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 			</div>
 
 			{/* Right section with students button and progress circle */}
-			<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
+			<div className="w-1/4 flex justify-end items-center gap-2">
 				{shouldShowStudentsButton && currentHub && (
 					<button
 						onClick={handleShowStudents}
-						className="flex items-center p-2 rounded-lg text-questionText hover:bg-polar transition-colors"
+						className="flex items-center p-2 rounded-lg text-questionText hover:bg-polar duration-0"
 						title="View students in hub"
 					>
 						<Users size={24} />
@@ -119,25 +121,30 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						</span>
 					</button>
 				)}
-				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) && (
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
 					<ConnectToPipButton
 						colors={getDuolingoColors(careerData.careerColor)}
 						tactileButtonClasses="text-3xl"
-						wifiIconClasses="!size-9 mb-2"
+						botIconClasses="!size-9"
 					/>
+				) : (
+					<div className="flex flex-row gap-5">
+						<CQBatterySection />
+						<CQNetworkSection />
+					</div>
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip
 						tooltipTrigger={
 							<button
 								onClick={handleChatToggle}
-								className={`flex items-center p-2 rounded-lg transition-colors ${
+								className={`flex items-center p-2 rounded-lg duration-0 ${
 									isChatToggled
-										? "bg-blue-100 text-blue-600 hover:bg-blue-200"
+										? "bg-macaw text-white"
 										: "text-questionText hover:bg-polar"
 								}`}
 							>
-								<MessageCircle size={24} />
+								<MessageCircle size={30} />
 							</button>
 						}
 						tooltipContent={

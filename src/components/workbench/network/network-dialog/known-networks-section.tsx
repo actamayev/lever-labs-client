@@ -17,7 +17,7 @@ function KnownNetworksSection(): React.ReactNode {
 	}
 
 	return (
-		<div className="border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
+		<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
 			{serialMessageManagerClass.knownNetworks.map((network, index): React.ReactNode => (
 				<div
 					key={`known-${network.ssid}-${index}`}

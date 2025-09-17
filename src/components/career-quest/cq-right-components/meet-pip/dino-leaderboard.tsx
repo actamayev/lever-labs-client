@@ -36,7 +36,7 @@ function DinoLeaderboard(): React.ReactNode {
 	}
 
 	return (
-		<div className="max-w-4xl mx-auto p-6">
+		<div className="max-w-4xl mx-auto p-6" data-component="dino-leaderboard">
 			{/* Header Section */}
 			<div className="text-center mb-8">
 				<h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
@@ -58,7 +58,7 @@ function DinoLeaderboard(): React.ReactNode {
 						<p className="text-wolf">Play your first game to see your scores here.</p>
 					</div>
 				) : (
-					<div className="overflow-x-auto">
+					<div className="max-h-96 overflow-y-auto overflow-x-auto">
 						<table className="w-full">
 							<thead className="bg-swan">
 								<tr>

@@ -1,5 +1,6 @@
 "use client"
 
+import { isEmpty } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "./career-quest-class"
@@ -169,7 +170,10 @@ class StudentClass {
 	})
 
 	public getHubId = (): HubUUID | null => {
-		if (this.classroomData.length === 0) return null
+		if (
+			isEmpty(this.classroomData) ||
+			isEmpty(this.classroomData[0].activeHubs)
+		) return null
 		return this.classroomData[0].activeHubs[0].hubId
 	}
 

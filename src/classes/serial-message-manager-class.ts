@@ -22,6 +22,7 @@ interface MessageSentData {
 class SerialMessageManagerClass {
 	public messages: SerialMessage[] = []
 	public onWiFiConnectionResult: ((status: WiFiConnectionStatus) => void) | null = null
+	public onWiFiDeletionResult: ((success: boolean) => void) | null = null
 
 	// Pip flow state
 	public pipId: PipUUID | null = null
@@ -200,9 +201,7 @@ class SerialMessageManagerClass {
 			}
 
 			case "/scan-result-item": {
-			// Handle individual scan result item
-				const networkItem = message.payload
-				this.scannedNetworks.push(networkItem)
+				this.scannedNetworks.push(message.payload)
 				break
 			}
 
@@ -224,8 +223,7 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/battery-monitor-data-item": {
-				const batteryDataItem = message.payload
-				workbenchClass.setBatteryDataItem(batteryDataItem)
+				workbenchClass.setBatteryDataItem(message.payload)
 				break
 			}
 			case "/battery-monitor-data-complete": {
@@ -233,20 +231,21 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/sensor-data": {
-				const sensorData = message.payload
-				sensorDataClass.addSensorData(sensorData)
+				sensorDataClass.addSensorData(message.payload)
 				break
 			}
 
 			case "/sensor-data-mz": {
-				const sensorData = message.payload
-				sensorDataClass.addMultizoneTofData(sensorData)
+				sensorDataClass.addMultizoneTofData(message.payload)
 				break
 			}
 			case "/dino-score": {
-				const dinoScore = message.payload
-				gamesClass.addDinoScore(dinoScore.score)
-				void sendDinoScore(dinoScore.score)
+				gamesClass.addDinoScore(message.payload.score)
+				void sendDinoScore(message.payload.score)
+				break
+			}
+			case "/wifi-deleted-network": {
+				this.onWiFiDeletionResult?.(message.payload.status)
 				break
 			}
 			default:
@@ -299,6 +298,10 @@ class SerialMessageManagerClass {
 		if (!this.savedNetworks.find((n): boolean => n.ssid === network.ssid)) {
 			this.savedNetworks.push(network)
 		}
+	})
+
+	public removeSavedNetwork = action((ssid: string): void => {
+		this.savedNetworks = this.savedNetworks.filter((network): boolean => network.ssid !== ssid)
 	})
 
 	public logout = action((): void => {
