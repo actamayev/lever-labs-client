@@ -164,7 +164,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				const inchesLabelField = new Blockly.FieldLabelSerializable("inches")
 
 				// Add distance input
-				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
+				const distanceField = new Blockly.FieldNumber(10, 1, 240, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
 					.appendField(inchesLabelField, "INCHES_LABEL")
@@ -213,7 +213,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				const inchesLabelField = new Blockly.FieldLabelSerializable("inches")
 
 				// Add distance input
-				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
+				const distanceField = new Blockly.FieldNumber(10, 1, 240, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
 					.appendField(inchesLabelField, "INCHES_LABEL")
