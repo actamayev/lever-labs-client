@@ -4,7 +4,7 @@ import NetworkWorkbench from "../../../workbench/network/network-workbench"
 function SandboxNetworkSection(): React.ReactNode {
 	return (
 		<div className="flex items-center font-medium">
-			<NetworkWorkbench isSandboxPage />
+			<NetworkWorkbench isSandboxPage={true} />
 		</div>
 	)
 }

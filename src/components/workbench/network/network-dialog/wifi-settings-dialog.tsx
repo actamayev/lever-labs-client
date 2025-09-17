@@ -96,7 +96,6 @@ function WiFiSettingsDialog(): React.ReactNode {
 								<ScanNetworksSection />
 							</div>
 
-							{/* Previously Connected Section */}
 							<div>
 								<h3 className="text-lg font-medium mb-3">
 									Previously Connected

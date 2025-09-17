@@ -65,7 +65,7 @@ function SoundWorkbench(): React.ReactNode {
 		>
 			<HoverCardTrigger asChild>
 				<div>
-					<WorkbenchIconTemplate extraButtonClasses={isOpen ? "border-swan" : ""}>
+					<WorkbenchIconTemplate>
 						<SpeakerIconToShow />
 						<span className={cn(
 							"text-base font-medium mt-0 w-full text-center",

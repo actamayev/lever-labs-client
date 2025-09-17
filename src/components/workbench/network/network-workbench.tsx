@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useState } from "react"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
 import { cn } from "../../../lib/shadcn/utils"
@@ -11,12 +11,8 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
-interface NetworkWorkbenchProps {
-	isSandboxPage?: boolean
-}
 
-// eslint-disable-next-line max-lines-per-function
-function NetworkWorkbench({ isSandboxPage }: NetworkWorkbenchProps): React.ReactNode {
+function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = (): string => {
@@ -61,12 +57,6 @@ function NetworkWorkbench({ isSandboxPage }: NetworkWorkbenchProps): React.React
 		}
 	}
 
-	const getIconClasses = useMemo((): string => {
-		if (isSandboxPage) return ""
-		if (isHoverCardOpen) return "border-swan"
-		return ""
-	}, [isSandboxPage, isHoverCardOpen])
-
 	return (
 		<>
 			<HoverCard
@@ -75,10 +65,10 @@ function NetworkWorkbench({ isSandboxPage }: NetworkWorkbenchProps): React.React
 				openDelay={0}
 				closeDelay={100}
 			>
-				<HoverCardTrigger asChild className={isSandboxPage ? "cursor-default" : ""}>
+				<HoverCardTrigger asChild >
 					<div>
-						<WorkbenchIconTemplate extraButtonClasses={getIconClasses}>
-							<NetworkIconToShow />
+						<WorkbenchIconTemplate>
+							<NetworkIconToShow iconClasses={isSandboxPage ? "!size-8" : ""} />
 						</WorkbenchIconTemplate>
 					</div>
 				</HoverCardTrigger>

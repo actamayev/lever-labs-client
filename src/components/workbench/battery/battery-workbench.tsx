@@ -55,7 +55,7 @@ function BatteryWorkbench(): React.ReactNode {
 		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>
 			<HoverCardTrigger asChild>
 				<div>
-					<WorkbenchIconTemplate extraButtonClasses={!isOpen ? "" : "border-swan"}>
+					<WorkbenchIconTemplate>
 						<BatteryWorkbenchIcon />
 						<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
 							{isNull(workbenchClass.batteryDataLastUpdated) ?

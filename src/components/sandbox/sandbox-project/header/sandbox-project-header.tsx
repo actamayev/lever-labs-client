@@ -18,8 +18,6 @@ import pipClass from "../../../../classes/pip-class"
 import ConnectToPipButton from "../../../connect-pip/connect-to-pip-button"
 import SandboxBatterySection from "./sandbox-battery-section"
 import SandboxNetworkSection from "./sandbox-network-section"
-import BatteryWorkbench from "../../../workbench/battery/battery-workbench"
-import NetworkWorkbench from "../../../workbench/network/network-workbench"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = useCallback((): void => {
@@ -73,7 +71,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 						/>
 					</div>
 				) : (
-					<div className="flex flex-row gap-5">
+					<div className="flex flex-row gap-8">
 						<SandboxBatterySection />
 						<SandboxNetworkSection />
 					</div>

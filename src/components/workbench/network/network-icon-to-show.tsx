@@ -67,7 +67,7 @@ function NetworkIconToShow({ colorClasses, iconClasses }: NetworkIconToShowProps
 		default:
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-wolf", colorClasses)}>
-					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
+					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
 					<span className="text-sm">UNKNOWN STATUS</span>
 				</div>
 			)
