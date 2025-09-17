@@ -11,7 +11,7 @@ interface NetworkIconToShowProps {
 }
 
 function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: NetworkIconToShowProps): React.ReactNode {
-	const baseClasses = "!h-20 !w-20"
+	const baseClasses = "!h-16 !w-16"
 	const strokeWidth = 2.5
 	const textClasses = "text-2xl -mt-2"
 
@@ -22,7 +22,7 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 					className={cn(baseClasses, iconClasses)}
 					strokeWidth={strokeWidth}
 				/>
-				<span className={cn(textClasses, extraTextClasses)}>CONNECTED</span>
+				<span className={cn(textClasses, extraTextClasses)}>PAIRED</span>
 			</div>
 		)
 	}
@@ -51,7 +51,7 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-beetle", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className={cn(textClasses, extraTextClasses)}>CONNECTED TO</span>
+					<span className={cn(textClasses, extraTextClasses)}>PAIRED TO</span>
 					<span className={cn(textClasses, extraTextClasses)}>ANOTHER USER</span>
 				</div>
 			)
@@ -59,21 +59,23 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className={cn(textClasses, extraTextClasses)}>CONNECTED</span>
+					<span className={cn(textClasses, extraTextClasses)}>PAIRED</span>
 				</div>
 			)
 		case "connected to serial":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Usb className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
-					<span className={cn(textClasses, extraTextClasses)}>CONNECTED TO USB</span>
+					<span className={cn(textClasses, extraTextClasses)}>PAIRED TO</span>
+					<span className={cn(textClasses, extraTextClasses)}>ANOTHER USER</span>
 				</div>
 			)
 		default:
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-wolf", colorClasses)}>
 					<Wifi className={cn(baseClasses)} strokeWidth={strokeWidth}/>
-					<span className={cn(textClasses, extraTextClasses)}>UNKNOWN STATUS</span>
+					<span className={cn(textClasses, extraTextClasses)}>UNKNOWN</span>
+					<span className={cn(textClasses, extraTextClasses)}>STATUS</span>
 				</div>
 			)
 	}
