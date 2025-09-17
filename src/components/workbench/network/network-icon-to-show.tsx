@@ -13,7 +13,7 @@ interface NetworkIconToShowProps {
 function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: NetworkIconToShowProps): React.ReactNode {
 	const baseClasses = "!h-20 !w-20"
 	const strokeWidth = 2.5
-	const textClasses = "text-xl"
+	const textClasses = "text-2xl -mt-2"
 
 	if (pipClass.pipPluggedInSerial) {
 		return (

@@ -11,6 +11,7 @@ import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
 
+// eslint-disable-next-line max-lines-per-function
 function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React.ReactNode {
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
@@ -67,7 +68,10 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				<HoverCardTrigger asChild >
 					<div>
 						<WorkbenchIconTemplate>
-							<NetworkIconToShow iconClasses={isSandboxPage ? "!size-8" : ""} extraTextClasses="text-base font-medium" />
+							<NetworkIconToShow
+								iconClasses={isSandboxPage ? "!size-8" : ""}
+								extraTextClasses={isSandboxPage ? "text-base font-medium mt-0" : ""}
+							/>
 						</WorkbenchIconTemplate>
 					</div>
 				</HoverCardTrigger>

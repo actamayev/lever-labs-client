@@ -7,7 +7,7 @@ function CQNetworkSection(): React.ReactNode {
 			<NetworkIconToShow
 				iconClasses="!size-9"
 				colorClasses="text-wolf"
-				extraTextClasses="text-base"
+				extraTextClasses="text-base font-medium text-center mt-0"
 			/>
 		</div>
 	)

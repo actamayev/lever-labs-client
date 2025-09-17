@@ -67,10 +67,12 @@ function SoundWorkbench(): React.ReactNode {
 				<div>
 					<WorkbenchIconTemplate>
 						<SpeakerIconToShow />
-						<span className={cn(
-							"text-2xl font-medium mt-0 w-full text-center",
-							(workbenchClass.isMuted || isSoundsDisabled) && "opacity-50"
-						)}>
+						<span
+							className={cn(
+								"text-2xl font-medium -mt-2 w-full text-center",
+								(workbenchClass.isMuted || isSoundsDisabled) && "opacity-50"
+							)}
+						>
 							{workbenchClass.volume}%
 						</span>
 					</WorkbenchIconTemplate>
