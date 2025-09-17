@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
-import ConnectToPipUsbButton from "../../connect-to-pip-usb-button"
+import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import personalInfoClass from "../../../classes/personal-info-class"
 
@@ -24,7 +25,13 @@ function SandboxProjectPage(): React.ReactNode {
 					</button>
 				</div>
 				<div className="flex flex-row items-center justify-center space-x-4">
-					<ConnectToPipUsbButton />
+					<div className="h-12">
+						<ConnectToPipButton
+							colors={getDuolingoColors("humpback")}
+							tactileButtonClasses="h-12 text-lg"
+							botIconClasses="!size-6"
+						/>
+					</div>
 					<button className="p-2 rounded-md border-2 text-questionText border-swan opacity-50 cursor-not-allowed">
 						<NotebookPen size={30} />
 					</button>

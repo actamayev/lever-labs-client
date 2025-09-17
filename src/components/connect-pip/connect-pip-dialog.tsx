@@ -17,10 +17,11 @@ import searchForPipByUUID from "../../utils/pip/search-for-pip-by-uuid"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
-import { BotIcon } from "lucide-react"
+import { BotIcon, WifiHighIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
 import { isString } from "lodash-es"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import UsbConnectionSection from "./usb-connection-section"
 
 interface PipSearchResult {
 	pipName: string
@@ -200,7 +201,7 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 							</div>
 
-							{searchResult.pipConnectionStatus !== "offline" && (
+							{searchResult.pipConnectionStatus === "online" && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
@@ -208,11 +209,16 @@ function ConnectToPipDialog(): React.ReactNode {
 									shadowClass={colors.shadow2}
 									disabled={isConnecting}
 								>
-									{isConnecting ? "CONNECTING..." : "CONNECT"}
+									<div className="flex items-center justify-center gap-2">
+										<WifiHighIcon className="!size-8 text-white mb-2" />
+										{isConnecting ? "CONNECTING..." : "CONNECT"}
+									</div>
 								</TactileButton>
 							)}
 						</div>
 					)}
+
+					<UsbConnectionSection />
 				</div>
 			</DialogContent>
 		</Dialog>

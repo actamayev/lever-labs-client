@@ -16,7 +16,7 @@ import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 import pipClass from "../../../classes/pip-class"
-import ConnectToPipButton from "../../workbench/connect-to-pip-wifi-button"
+import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function, complexity
@@ -123,7 +123,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 					<ConnectToPipButton
 						colors={getDuolingoColors(careerData.careerColor)}
 						tactileButtonClasses="text-3xl"
-						wifiIconClasses="!size-9 mb-2"
+						botIconClasses="!size-9"
 					/>
 				)}
 				{careerData.needsChat && (

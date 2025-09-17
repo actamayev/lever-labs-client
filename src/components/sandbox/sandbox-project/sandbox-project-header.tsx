@@ -17,7 +17,7 @@ import pipClass from "../../../classes/pip-class"
 import BatteryWorkbench from "../../workbench/battery/battery-workbench"
 import SoundWorkbench from "../../workbench/sound/sound-workbench"
 import NetworkWorkbench from "../../workbench/network/network-workbench"
-import ConnectToPipWiFiButton from "../../workbench/connect-to-pip-wifi-button"
+import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = (): void => {
@@ -64,10 +64,10 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 			<div className="flex flex-row items-center justify-center space-x-4">
 				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
 					<div className="h-1/2">
-						<ConnectToPipWiFiButton
+						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-12 text-2xl"
-							wifiIconClasses="!size-10 mb-2"
+							botIconClasses="!size-10"
 						/>
 					</div>
 				) : (
