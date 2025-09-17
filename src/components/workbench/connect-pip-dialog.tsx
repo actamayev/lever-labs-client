@@ -115,25 +115,36 @@ function ConnectToPipDialog(): React.ReactNode {
 	}, [handleClose])
 
 	const getStatusBgColor = (status: RetrieveIsPipUUIDValidResponse): string => {
-		if (status.pipConnectionStatus === "online") {
-			return "bg-macaw"
-		} else if (status.pipConnectionStatus === "connected to another user") {
-			return "bg-beetle"
-		} else if (status.pipConnectionStatus === "connected to serial") {
-			return "bg-beetle"
+		switch (status.pipConnectionStatus) {
+			case "offline":
+				return "bg-cardinal"
+			case "online":
+				return "bg-macaw"
+			case "connected to another user":
+			case "connected to serial":
+				return "bg-beetle"
+			case "connected to you":
+				return "bg-chargingGreen"
+			default:
+				return "bg-cardinal"
 		}
-		return "bg-cardinal"
 	}
 
 	const getStatusText = (status: RetrieveIsPipUUIDValidResponse): string => {
-		if (status.pipConnectionStatus === "online") {
-			return "Online"
-		} else if (status.pipConnectionStatus === "connected to another user") {
-			return "Connected to another user"
-		} else if (status.pipConnectionStatus === "connected to serial") {
-			return "Connected to USB"
+		switch (status.pipConnectionStatus) {
+			case "offline":
+				return "Offline"
+			case "online":
+				return "Online"
+			case "connected to another user":
+				return "Connected to another user"
+			case "connected to serial":
+				return "Connected to USB"
+			case "connected to you":
+				return "Connected"
+			default:
+				return "Unknown status"
 		}
-		return "Unknown status"
 	}
 
 	return (
@@ -189,7 +200,7 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 							</div>
 
-							{searchResult.pipConnectionStatus === "online" && (
+							{searchResult.pipConnectionStatus !== "offline" && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}

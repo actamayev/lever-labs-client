@@ -15,7 +15,9 @@ interface ConnectToPipButtonProps {
 	wifiIconClasses: string
 }
 
-function ConnectToPipButton({ colors, tactileButtonClasses, wifiIconClasses }: ConnectToPipButtonProps): React.ReactNode {
+function ConnectToPipWiFiButton(props: ConnectToPipButtonProps): React.ReactNode {
+	const { colors, tactileButtonClasses, wifiIconClasses } = props
+
 	return (
 		<>
 			<TactileButton
@@ -39,4 +41,4 @@ function ConnectToPipButton({ colors, tactileButtonClasses, wifiIconClasses }: C
 	)
 }
 
-export default observer(ConnectToPipButton)
+export default observer(ConnectToPipWiFiButton)

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
-import ConnectUsbButton from "../../connect-usb-button"
+import ConnectToPipUsbButton from "../../connect-to-pip-usb-button"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import personalInfoClass from "../../../classes/personal-info-class"
 
@@ -24,7 +24,7 @@ function SandboxProjectPage(): React.ReactNode {
 					</button>
 				</div>
 				<div className="flex flex-row items-center justify-center space-x-4">
-					<ConnectUsbButton />
+					<ConnectToPipUsbButton />
 					<button className="p-2 rounded-md border-2 text-questionText border-swan opacity-50 cursor-not-allowed">
 						<NotebookPen size={30} />
 					</button>

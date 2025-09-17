@@ -16,7 +16,7 @@ import CustomTooltip from "../../custom-tooltip"
 import ChallengeProgressCircle from "./challenge-progress-circle"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 import pipClass from "../../../classes/pip-class"
-import ConnectToPipButton from "../../workbench/connect-pip-button"
+import ConnectToPipButton from "../../workbench/connect-to-pip-wifi-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function, complexity

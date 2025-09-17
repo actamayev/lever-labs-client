@@ -6,13 +6,18 @@ import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { ArrowLeft, Star, NotebookPen } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
-import ConnectUsbButton from "../../connect-usb-button"
 import EditableProjectTitle from "./editable-project-title"
 import personalInfoClass from "../../../classes/personal-info-class"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import setSandboxNotesOpenStatus from "../../../utils/personal-info/set-sandbox-notes-open-status"
 import stopPollingSensors from "../../../utils/pip/stop-polling-sensors"
+import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import pipClass from "../../../classes/pip-class"
+import BatteryWorkbench from "../../workbench/battery/battery-workbench"
+import SoundWorkbench from "../../workbench/sound/sound-workbench"
+import NetworkWorkbench from "../../workbench/network/network-workbench"
+import ConnectToPipWiFiButton from "../../workbench/connect-to-pip-wifi-button"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = (): void => {
@@ -57,7 +62,23 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				/>
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
-				<ConnectUsbButton />
+				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+					<div className="h-1/2">
+						<ConnectToPipWiFiButton
+							colors={getDuolingoColors("humpback")}
+							tactileButtonClasses="h-12 text-2xl"
+							wifiIconClasses="!size-10 mb-2"
+						/>
+					</div>
+				) : (
+					<div className="relative p-3 z-50">
+						<div className="flex flex-row justify-between">
+							<BatteryWorkbench />
+							<NetworkWorkbench />
+							<SoundWorkbench />
+						</div>
+					</div>
+				)}
 				<CustomTooltip
 					tooltipTrigger={
 						<button

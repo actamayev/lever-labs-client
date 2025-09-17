@@ -6,7 +6,7 @@ import CustomTooltip from "./custom-tooltip"
 import { CustomUsb } from "./icons/custom-usb"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 
-function EnhancedConnectUsbButton(): React.ReactNode {
+function ConnectToPipUsbButton(): React.ReactNode {
 	const handleConnect = useCallback(async (): Promise<void> => {
 		if (serialConnectionManagerClass.pipTurnedOn) return
 
@@ -75,4 +75,4 @@ function EnhancedConnectUsbButton(): React.ReactNode {
 	)
 }
 
-export default observer(EnhancedConnectUsbButton)
+export default observer(ConnectToPipUsbButton)

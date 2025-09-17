@@ -5,7 +5,7 @@ import { cn } from "../../lib/shadcn/utils"
 import BatteryWorkbench from "./battery/battery-workbench"
 import NetworkWorkbench from "./network/network-workbench"
 import SoundWorkbench from "./sound/sound-workbench"
-import ConnectToPipButton from "./connect-pip-button"
+import ConnectToPipWiFiButton from "./connect-to-pip-wifi-button"
 import workbenchClass from "../../classes/workbench-class"
 import pipClass from "../../classes/pip-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
@@ -31,7 +31,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 		>
 			{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
 				<div className="h-full w-full flex items-center justify-center p-5">
-					<ConnectToPipButton
+					<ConnectToPipWiFiButton
 						colors={getDuolingoColors("humpback")}
 						tactileButtonClasses="text-4xl"
 						wifiIconClasses="!size-12 mb-2"
