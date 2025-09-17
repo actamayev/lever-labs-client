@@ -23,6 +23,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new float variable and assign an initial value")
+				this.setInputsInline(true)
 			},
 			keywords: ["declare", "create", "initialize", "define", "store", "memory", "decimal", "number", "float"]
 		},
@@ -48,6 +49,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Assign a new value to an existing variable")
+				this.setInputsInline(true)
 			},
 			keywords: ["assign", "set", "update", "change", "modify", "store", "value", "equal"]
 		},
@@ -68,6 +70,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of a variable")
+				this.setInputsInline(true)
 			},
 			keywords: ["get", "read", "retrieve", "access", "variable", "number", "float"]
 		},
@@ -93,6 +96,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new integer variable and assign an initial value")
+				this.setInputsInline(true)
 			},
 			keywords: ["declare", "create", "initialize", "define", "store", "memory", "integer", "number", "int"]
 		},
@@ -113,6 +117,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Number")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of an integer variable")
+				this.setInputsInline(true)
 			},
 			keywords: ["get", "read", "retrieve", "access", "variable", "integer", "number", "int"]
 		},
@@ -137,6 +142,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setNextStatement(true, null)
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Declare a new boolean variable and assign an initial value")
+				this.setInputsInline(true)
 			},
 			keywords: ["declare", "create", "initialize", "define", "store", "memory", "boolean", "bool"]
 		},
@@ -157,6 +163,7 @@ export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Get the value of a boolean variable")
+				this.setInputsInline(true)
 			},
 			keywords: ["get", "read", "retrieve", "access", "variable", "boolean", "bool"]
 		},

@@ -4,11 +4,10 @@ import { buttonVariants } from "../shadcn/ui/button"
 
 interface Props {
 	children: React.ReactNode
-	extraButtonClasses?: string
 }
 
 export default function WorkbenchIconTemplate(props: Props): React.ReactNode {
-	const { children, extraButtonClasses = "" } = props
+	const { children } = props
 
 	return (
 		<div
@@ -17,11 +16,10 @@ export default function WorkbenchIconTemplate(props: Props): React.ReactNode {
 					variant: "ghost",
 					size: "lg",
 					className: cn(
-						"relative flex flex-col items-center cursor-default justify-center hover:bg-standardBackground",
+						"relative flex flex-col items-center cursor-default justify-center",
 						"h-auto hover:text-current rounded-2xl p-0 outline-none",
-						"border-2 border-transparent",
 						"transition-none", // Add smooth transitions
-						extraButtonClasses
+						"bg-inherit hover:bg-inherit"
 					)
 				})
 			)}

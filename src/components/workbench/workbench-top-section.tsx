@@ -5,7 +5,7 @@ import { cn } from "../../lib/shadcn/utils"
 import BatteryWorkbench from "./battery/battery-workbench"
 import NetworkWorkbench from "./network/network-workbench"
 import SoundWorkbench from "./sound/sound-workbench"
-import ConnectToPipButton from "./connect-pip-button"
+import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
 import workbenchClass from "../../classes/workbench-class"
 import pipClass from "../../classes/pip-class"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
@@ -34,12 +34,12 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 					<ConnectToPipButton
 						colors={getDuolingoColors("humpback")}
 						tactileButtonClasses="text-4xl"
-						wifiIconClasses="!size-12 mb-2"
+						botIconClasses="!size-12"
 					/>
 				</div>
 			) : (
-				<div className="relative p-3 z-50">
-					<div className="flex flex-row justify-between">
+				<div className="relative px-10 z-50 h-full">
+					<div className="flex flex-row justify-between items-center h-full">
 						<BatteryWorkbench />
 						<NetworkWorkbench />
 						<SoundWorkbench />

@@ -239,40 +239,6 @@ export class SerialConnectionManagerClass {
 		}
 	}
 
-	// Original connect method - now uses filtered device selection
-	public async connectToDevice(): Promise<void> {
-		// Check auth state
-		if (!authClass.isFinishedWithSignup) {
-			console.error("Cannot connect: user not logged in")
-			return
-		}
-
-		if (this.pipTurnedOn) return
-
-		try {
-
-			if (!navigator.serial) {
-				throw new Error("Web Serial API not supported in this browser")
-			}
-
-			// First try auto-reconnect
-			const autoConnected = await this.tryAutoReconnect()
-			if (autoConnected) return
-
-			// If auto-reconnect failed, show filtered device selector
-			const port = await navigator.serial.requestPort({
-				filters: [PIP_ROBOT_USB_ID]
-			})
-
-			await this.connectToSpecificPort(port)
-		} catch (error) {
-			// Check if it's a user cancellation
-			if (!(error instanceof DOMException && error.name === "NotFoundError")) {
-				console.error("Error requesting port:", error)
-			}
-		}
-	}
-
 	// Request permission for a new device (forces the native browser dialog)
 	public async requestNewDevice(): Promise<void> {
 		// Check auth state

@@ -17,10 +17,11 @@ import searchForPipByUUID from "../../utils/pip/search-for-pip-by-uuid"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
-import { BotIcon } from "lucide-react"
+import { BotIcon, WifiHighIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
 import { isString } from "lodash-es"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import UsbConnectionSection from "./usb-connection-section"
 
 interface PipSearchResult {
 	pipName: string
@@ -115,25 +116,36 @@ function ConnectToPipDialog(): React.ReactNode {
 	}, [handleClose])
 
 	const getStatusBgColor = (status: RetrieveIsPipUUIDValidResponse): string => {
-		if (status.pipConnectionStatus === "online") {
-			return "bg-macaw"
-		} else if (status.pipConnectionStatus === "connected to another user") {
-			return "bg-beetle"
-		} else if (status.pipConnectionStatus === "connected to serial") {
-			return "bg-beetle"
+		switch (status.pipConnectionStatus) {
+			case "offline":
+				return "bg-cardinal"
+			case "online":
+				return "bg-macaw"
+			case "connected to another user":
+			case "connected to serial":
+				return "bg-beetle"
+			case "connected to you":
+				return "bg-chargingGreen"
+			default:
+				return "bg-cardinal"
 		}
-		return "bg-cardinal"
 	}
 
 	const getStatusText = (status: RetrieveIsPipUUIDValidResponse): string => {
-		if (status.pipConnectionStatus === "online") {
-			return "Online"
-		} else if (status.pipConnectionStatus === "connected to another user") {
-			return "Connected to another user"
-		} else if (status.pipConnectionStatus === "connected to serial") {
-			return "Connected to USB"
+		switch (status.pipConnectionStatus) {
+			case "offline":
+				return "Offline"
+			case "online":
+				return "Online"
+			case "connected to another user":
+				return "Connected to another user"
+			case "connected to serial":
+				return "Connected to USB"
+			case "connected to you":
+				return "Connected"
+			default:
+				return "Unknown status"
 		}
-		return "Unknown status"
 	}
 
 	return (
@@ -197,11 +209,16 @@ function ConnectToPipDialog(): React.ReactNode {
 									shadowClass={colors.shadow2}
 									disabled={isConnecting}
 								>
-									{isConnecting ? "CONNECTING..." : "CONNECT"}
+									<div className="flex items-center justify-center gap-2">
+										<WifiHighIcon className="!size-8 text-white mb-2" />
+										{isConnecting ? "CONNECTING..." : "CONNECT"}
+									</div>
 								</TactileButton>
 							)}
 						</div>
 					)}
+
+					<UsbConnectionSection />
 				</div>
 			</DialogContent>
 		</Dialog>
