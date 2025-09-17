@@ -1,7 +1,6 @@
 "use client"
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
-import { useState } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
@@ -10,7 +9,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/h
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
 function BatteryWorkbench(): React.ReactNode {
-	const [isOpen, setIsOpen] = useState(false)
 	const batteryColorClasses = useGetBatteryColorClasses()
 
 	const batteryData = workbenchClass.batteryData
@@ -52,7 +50,7 @@ function BatteryWorkbench(): React.ReactNode {
 
 
 	return (
-		<HoverCard openDelay={0} closeDelay={100} onOpenChange={setIsOpen}>
+		<HoverCard openDelay={0} closeDelay={100}>
 			<HoverCardTrigger asChild>
 				<div>
 					<WorkbenchIconTemplate>
