@@ -38,14 +38,14 @@ function PreviouslyConnectedSection(): React.ReactNode {
 
 	return (
 		<>
-			<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-800 rounded-lg bg-white">
+			<div className="max-h-60 overflow-y-auto border border-gray-200 dark:border-gray-800 rounded-lg bg-inherit">
 				{serialMessageManagerClass.previouslyConnected.map((network): React.ReactNode => (
 					<div
 						key={`previous-${network.index}`}
 						className="flex items-center justify-between p-3 border-b border-polar last:border-b-0"
 					>
 						<div className="flex flex-col">
-							<span className="font-medium text-sm text-gray-600">{network.ssid}</span>
+							<span className="font-medium text-sm text-eel">{network.ssid}</span>
 							<span className="text-xs text-gray-400">Not in range</span>
 						</div>
 						<Button

@@ -1,10 +1,10 @@
 import { observer } from "mobx-react"
-import NetworkIconToShow from "../../../workbench/network/network-icon-to-show"
+import NetworkWorkbench from "../../../workbench/network/network-workbench"
 
 function SandboxNetworkSection(): React.ReactNode {
 	return (
 		<div className="flex items-center font-medium">
-			<NetworkIconToShow />
+			<NetworkWorkbench isSandboxPage />
 		</div>
 	)
 }

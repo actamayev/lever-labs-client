@@ -5,26 +5,30 @@ import pipClass from "../../../classes/pip-class"
 import workbenchClass from "../../../classes/workbench-class"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
-function BatteryWorkbenchIcon(): React.ReactNode {
+interface BatteryWorkbenchIconProps {
+	extraClasses?: string
+}
+
+function BatteryWorkbenchIcon({ extraClasses }: BatteryWorkbenchIconProps): React.ReactNode {
 	const batteryColorClasses = useGetBatteryColorClasses()
 	const baseClasses = "!h-14 !w-14"
 	const strokeWidth = 2.5
 
 	if (workbenchClass.batteryData?.isCharging || pipClass.pipPluggedInSerial) {
-		return <BatteryCharging className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+		return <BatteryCharging className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	}
 	const batteryData = workbenchClass.batteryData
 	if (!batteryData?.stateOfCharge) {
-		return <BatteryFull className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+		return <BatteryFull className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	}
 	if (batteryData.stateOfCharge <= 20) {
-		return <BatteryWarning className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+		return <BatteryWarning className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	} else if (batteryData.stateOfCharge <= 40) {
-		return <BatteryLow className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+		return <BatteryLow className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	} else if (batteryData.stateOfCharge <= 70) {
-		return <BatteryMedium className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+		return <BatteryMedium className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	}
-	return <BatteryFull className={cn(baseClasses, batteryColorClasses)} strokeWidth={strokeWidth}/>
+	return <BatteryFull className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 }
 
 export default observer(BatteryWorkbenchIcon)

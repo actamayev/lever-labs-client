@@ -128,7 +128,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						botIconClasses="!size-9"
 					/>
 				) : (
-					<div className="flex flex-row gap-5 border-2 border-swan rounded-3xl px-3">
+					<div className="flex flex-row gap-5">
 						<CQBatterySection />
 						<CQNetworkSection />
 					</div>
