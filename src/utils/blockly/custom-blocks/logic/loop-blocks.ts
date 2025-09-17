@@ -8,38 +8,6 @@ import { generateStatementCode } from "../manual-traversal"
 import { LOOP_BLOCK_TYPES, LOOP_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
 
 export const loopBlocks: Record<LOOP_BLOCK_TYPES, CustomBlock> = {
-	// [LOOP_BLOCK_TYPES.WHILE_UNTIL]: {
-	// 	definition: {
-	// 		init: function(this: Blockly.Block) {
-	// 			this.appendDummyInput()
-	// 				.appendField(new Blockly.FieldDropdown([
-	// 					["while", "WHILE"],
-	// 					["until", "UNTIL"]
-	// 				]), LOOP_FIELD_VALUES.WHILE_MODE)
-
-	// 			this.appendValueInput(LOOP_FIELD_VALUES.WHILE_BOOL)
-	// 				.setCheck("Boolean")
-
-	// 			this.appendStatementInput(LOOP_FIELD_VALUES.WHILE_DO)
-	// 				.appendField("do")
-
-	// 			this.setPreviousStatement(true, null)
-	// 			this.setNextStatement(true, null)
-	// 			this.setColour(logicCategoryColour)
-	// 			this.setTooltip("While/Until a condition is true, do some statements")
-	// 		}
-	// 	},
-	// 	generator: (block: Blockly.Block): string => {
-	// 		const until = block.getFieldValue(LOOP_FIELD_VALUES.WHILE_MODE) === "UNTIL"
-	// 		let condition = getCppGenerator().valueToCode(block, LOOP_FIELD_VALUES.WHILE_BOOL, Order.NONE) || "false"
-	// 		if (until) {
-	// 			condition = `!(${condition})`
-	// 		}
-	// 		const bodyCode = generateStatementCode(block, LOOP_FIELD_VALUES.WHILE_DO)
-	// 		return `while (${condition}) {\n${bodyCode}}\n`
-	// 	}
-	// },
-
 	[LOOP_BLOCK_TYPES.REPEAT]: {
 		definition: {
 			init: function(this: Blockly.Block): void {

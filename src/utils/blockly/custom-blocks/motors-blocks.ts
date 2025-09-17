@@ -62,11 +62,15 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Go forward for")
 
+				// Create the seconds label field first so we can reference it
+				const secondsLabelField = new Blockly.FieldLabelSerializable("seconds")
+
 				// Add time input
 				const secondsField = new Blockly.FieldNumber(2, 0.1, 10, 0.1)
 				this.appendDummyInput()
 					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
-					.appendField("seconds at")
+					.appendField(secondsLabelField, "SECONDS_LABEL")
+					.appendField("at")
 
 				// Add speed input
 				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
@@ -79,6 +83,19 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified time and speed")
 				this.setInputsInline(true)
+
+				// Function to update the seconds label
+				const updateSecondsLabel = (newValue: number | string): number | string => {
+					const label = newValue === 1 ? "second" : "seconds"
+					secondsLabelField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				secondsField.setValidator(updateSecondsLabel)
+
+				// Set initial label
+				updateSecondsLabel(2)
 			},
 			keywords: ["motor", "move", "advance", "drive", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
@@ -94,11 +111,15 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Go backward for")
 
+				// Create the seconds label field first so we can reference it
+				const secondsLabelField = new Blockly.FieldLabelSerializable("seconds")
+
 				// Add time input
 				const secondsField = new Blockly.FieldNumber(2, 0.1, 10, 0.1)
 				this.appendDummyInput()
 					.appendField(secondsField, MOTOR_FIELD_VALUES.DRIVING_SECONDS)
-					.appendField("seconds at")
+					.appendField(secondsLabelField, "SECONDS_LABEL")
+					.appendField("at")
 
 				// Add speed input
 				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
@@ -111,6 +132,19 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified time and speed")
 				this.setInputsInline(true)
+
+				// Function to update the seconds label
+				const updateSecondsLabel = (newValue: number | string): number | string => {
+					const label = newValue === 1 ? "second" : "seconds"
+					secondsLabelField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				secondsField.setValidator(updateSecondsLabel)
+
+				// Set initial label
+				updateSecondsLabel(2)
 			},
 			keywords: ["motor", "reverse", "back", "retreat", "duration", "timer", "temporary", "timed", "seconds", "time"]
 		},
@@ -126,11 +160,15 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Go forward")
 
+				// Create the inches label field first so we can reference it
+				const inchesLabelField = new Blockly.FieldLabelSerializable("inches")
+
 				// Add distance input
 				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
-					.appendField("inches at")
+					.appendField(inchesLabelField, "INCHES_LABEL")
+					.appendField("at")
 
 				// Add speed input
 				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
@@ -143,6 +181,19 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  forward for specified distance at given speed")
 				this.setInputsInline(true)
+
+				// Function to update the inches label
+				const updateInchesLabel = (newValue: number | string): number | string => {
+					const label = newValue === 1 ? "inch" : "inches"
+					inchesLabelField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				distanceField.setValidator(updateInchesLabel)
+
+				// Set initial label
+				updateInchesLabel(10)
 			},
 			keywords: ["motor", "move", "advance", "drive", "distance", "in", "inches", "length", "travel"]
 		},
@@ -158,11 +209,15 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("Go backward")
 
+				// Create the inches label field first so we can reference it
+				const inchesLabelField = new Blockly.FieldLabelSerializable("inches")
+
 				// Add distance input
 				const distanceField = new Blockly.FieldNumber(10, 1, 100, 1)
 				this.appendDummyInput()
 					.appendField(distanceField, MOTOR_FIELD_VALUES.DRIVING_DISTANCE)
-					.appendField("inches at")
+					.appendField(inchesLabelField, "INCHES_LABEL")
+					.appendField("at")
 
 				// Add speed input
 				const percentField = new Blockly.FieldNumber(20, 0, 100, 1)
@@ -175,6 +230,19 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Move Pip  backward for specified distance at given speed")
 				this.setInputsInline(true)
+
+				// Function to update the inches label
+				const updateInchesLabel = (newValue: number | string): number | string => {
+					const label = newValue === 1 ? "inch" : "inches"
+					inchesLabelField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				distanceField.setValidator(updateInchesLabel)
+
+				// Set initial label
+				updateInchesLabel(10)
 			},
 			keywords: ["motor", "reverse", "back", "retreat", "distance", "in", "inches", "length", "travel"]
 		},
@@ -202,17 +270,33 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.appendDummyInput()
 					.appendField("by")
 
+				// Create the degrees label field first so we can reference it
+				const degreesLabelField = new Blockly.FieldLabelSerializable("degrees")
+
 				// Use a number field for angle with min and max constraints
-				const angleField = new Blockly.FieldNumber(30, 30, 1080, 1)
+				const angleField = new Blockly.FieldNumber(90, 1, 1080, 1)
 				this.appendDummyInput()
 					.appendField(angleField, MOTOR_FIELD_VALUES.TURN_DEGREES)
-					.appendField("degrees")
+					.appendField(degreesLabelField, "DEGREES_LABEL")
 
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
 				this.setTooltip("Turn Pip by specified angle")
 				this.setInputsInline(true)
+
+				// Function to update the degrees label
+				const updateDegreesLabel = (newValue: number | string): number | string => {
+					const label = newValue === 1 ? "degree" : "degrees"
+					degreesLabelField.setValue(label)
+					return newValue // Return the value unchanged
+				}
+
+				// Set validator on the number field
+				angleField.setValidator(updateDegreesLabel)
+
+				// Set initial label
+				updateDegreesLabel(90)
 			},
 			keywords: ["motor", "turn", "rotate", "spin", "angle", "degrees", "direction", "clockwise", "counterclockwise"]
 		},
