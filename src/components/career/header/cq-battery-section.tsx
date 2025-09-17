@@ -5,11 +5,11 @@ import { cn } from "../../../lib/shadcn/utils"
 import workbenchClass from "../../../classes/workbench-class"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
-function BatterySection(): React.ReactNode {
+function CQBatterySection(): React.ReactNode {
 	const batteryColorClasses = useGetBatteryColorClasses()
 
 	return (
-		<div className="flex flex-col items-center justify-center font-medium border-2 border-swan rounded-2xl p-1 aspect-square">
+		<div className="flex flex-col items-center justify-center font-medium">
 			<BatteryWorkbenchIcon />
 			<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
 				{isNull(workbenchClass.batteryDataLastUpdated) ?
@@ -20,4 +20,4 @@ function BatterySection(): React.ReactNode {
 	)
 }
 
-export default observer(BatterySection)
+export default observer(CQBatterySection)

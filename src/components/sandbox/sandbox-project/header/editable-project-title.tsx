@@ -1,8 +1,8 @@
 "use client"
 import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
-import { Input } from "../../shadcn/ui/input"
-import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
+import { Input } from "../../../shadcn/ui/input"
+import editSandboxProjectName from "../../../../utils/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function
 export default function EditableProjectTitle({ project }: { project: SandboxProject }): React.ReactNode {

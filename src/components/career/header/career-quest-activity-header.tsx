@@ -18,8 +18,8 @@ import navigationManagerClass from "../../../classes/navigation-manager-class"
 import pipClass from "../../../classes/pip-class"
 import ConnectToPipButton from "../../connect-pip/connect-to-pip-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import BatterySection from "./battery-section"
-import NetworkSection from "./network-section"
+import CQBatterySection from "./cq-battery-section"
+import CQNetworkSection from "./cq-network-section"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData }): React.ReactNode {
@@ -128,10 +128,10 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						botIconClasses="!size-9"
 					/>
 				) : (
-					<>
-						<BatterySection />
-						<NetworkSection />
-					</>
+					<div className="flex flex-row gap-5 border-2 border-swan rounded-3xl px-3">
+						<CQBatterySection />
+						<CQNetworkSection />
+					</div>
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip
