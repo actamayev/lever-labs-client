@@ -1,13 +1,23 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
+import { PipStatusUpdate, ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+
+interface PipSearchResult {
+	pipName: string
+	pipConnectionStatus: ClientPipConnectionStatus
+	pipUUID: string
+}
 
 class PipClass {
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
 	public pipPluggedInSerial: boolean = false
 	public isConnectPipDialogOpen: boolean = false
+	public pipUUIDSearchTerm: string = ""
+	public searchResult: PipSearchResult | null = null
+	public errorMessage: string = ""
+	public isSearching: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -44,11 +54,31 @@ class PipClass {
 		this.isConnectPipDialogOpen = isOpen
 	})
 
+	public setPipUUIDSearchTerm = action((pipUUIDSearchTerm: string): void => {
+		this.pipUUIDSearchTerm = pipUUIDSearchTerm
+	})
+
+	public setSearchResult = action((searchResult: PipSearchResult | null): void => {
+		this.searchResult = searchResult
+	})
+
+	public setErrorMessage = action((errorMessage: string): void => {
+		this.errorMessage = errorMessage
+	})
+
+	public setIsSearching = action((isSearching: boolean): void => {
+		this.isSearching = isSearching
+	})
+
 	public logout(): void {
 		this.setSelectedPip(null)
 		this.setIsSendingCppToPip(false)
 		this.setPipPluggedInSerial(false)
 		this.setIsConnectPipDialogOpen(false)
+		this.setPipUUIDSearchTerm("")
+		this.setSearchResult(null)
+		this.setErrorMessage("")
+		this.setIsSearching(false)
 	}
 }
 
