@@ -3,7 +3,7 @@
 /* eslint-disable max-len */
 import { forwardRef } from "react"
 import type { LucideIcon, LucideProps } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../lib/shadcn/utils"
 
 export const CustomUsb: LucideIcon = forwardRef<SVGSVGElement, LucideProps>(
 	({ color = "currentColor", size = 24, className = "", ...props }, ref) => (

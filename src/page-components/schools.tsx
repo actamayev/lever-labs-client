@@ -8,7 +8,7 @@ import { landingBulletTextParagraph } from "../utils/text-styles"
 import ProfileLayout from "../components/profile/profile-layout"
 import SupportSection from "../components/support/support-section"
 import { SupportBorder } from "../components/support/support-header"
-import { CustomWizardHat } from "../components/icons/custom-wizard-hat"
+import { CustomWizardHat } from "../icons/custom-wizard-hat"
 import ContactItemInCard from "../components/contact/contact-item-in-card"
 import SupportSectionContainer from "../components/support/support-section-container"
 

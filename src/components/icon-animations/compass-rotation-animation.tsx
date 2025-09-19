@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import { CustomCompass } from "../icons/custom-compass"
+import { CustomCompass } from "../../icons/custom-compass"
 
 const animationStyles = `
   @keyframes compass-wobble {

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useState } from "react"
-import { CustomInfinity } from "../icons/custom-infinity"
+import { CustomInfinity } from "../../icons/custom-infinity"
 import { InfinityIcon } from "lucide-react"
 
 export default function ModuleAnimation({ iconSize } : { iconSize: number }): React.ReactNode {

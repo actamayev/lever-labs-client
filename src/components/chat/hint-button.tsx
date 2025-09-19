@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"
 
 function HintButton({ cqChallengeData }: { cqChallengeData: CqChallengeData}): React.ReactNode {
