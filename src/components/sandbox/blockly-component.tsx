@@ -10,14 +10,13 @@ import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
-import BlocklySearchFilter from "../../utils/sandbox/search-helpers"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 interface BlocklyComponentProps {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	initialBlocklyJson: BlocklyJson
 	onJsonChange: (json: BlocklyJson) => void
-	searchTerm?: string
+	searchTerm: string
 	isSwitchingMode: boolean
 }
 
@@ -27,7 +26,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		toolboxConfig,
 		initialBlocklyJson,
 		onJsonChange,
-		searchTerm = "",
+		searchTerm,
 		isSwitchingMode
 	} = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -39,10 +38,6 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
-
-	const filteredToolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
-		return BlocklySearchFilter.filterToolboxConfig(toolboxConfig, searchTerm)
-	}, [toolboxConfig, searchTerm])
 
 	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
@@ -92,10 +87,9 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	}, [isSwitchingMode, centerWorkspace])
 
 	useEffect((): void => {
-		if (isEmpty(searchTerm)) {
-			setIsCentered(false)
-			centerWorkspace()
-		}
+		if (!isEmpty(searchTerm)) return
+		setIsCentered(false)
+		centerWorkspace()
 	}, [isSwitchingMode, searchTerm, centerWorkspace])
 
 	// Reset isCentered when pathname changes (navigation)
@@ -162,7 +156,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		>
 			<BlocklyWorkspace
 				key={searchTerm.trim() ? "search-mode" : "normal-mode"}
-				toolboxConfiguration={filteredToolboxConfig}
+				toolboxConfiguration={toolboxConfig}
 				initialJson={initialBlocklyJson}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
