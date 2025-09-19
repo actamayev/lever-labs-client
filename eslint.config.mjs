@@ -186,6 +186,16 @@ const eslintConfig = [
 		},
 	},
 
+	// Override for icon components - disable explicit function return type
+	{
+		files: ["src/icons/**/*"],
+		rules: {
+			"@typescript-eslint/explicit-function-return-type": "off",
+			"max-len": "off",
+			"max-lines-per-function": "off",
+		},
+	},
+
 	// Override for JavaScript files - disable TypeScript-specific rules
 	{
 		files: ["**/*.{js,mjs,cjs}"],
