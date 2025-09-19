@@ -1,13 +1,13 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { BotIcon } from "lucide-react"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import ConnectToPipDialog from "./connect-pip-dialog"
 import { DuolingoColorVariants } from "../../utils/get-duolingo-colors"
 import pipClass from "../../classes/pip-class"
-import { BotIcon } from "lucide-react"
-import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 import { cn } from "../../lib/shadcn/utils"
+import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 
 interface ConnectToPipButtonProps {
