@@ -15,12 +15,12 @@ const motorsCategory: CustomCategoryInfo = {
 	name: "Motors",
 	colour: motorsCategoryColour,
 	contents: [
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD_TIME },
+		// { kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD },
+		// { kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD_TIME },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_FORWARD_DISTANCE },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME },
-		{ kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE },
+		// { kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD },
+		// { kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_TIME },
+		// { kind: "block", type: MOTOR_BLOCK_TYPES.GO_BACKWARD_DISTANCE },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.TURN },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.STOP },
 	]
@@ -64,7 +64,7 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: [
 		logicCategory,
-		sensorsCategory,
+		// sensorsCategory,
 		motorsCategory,
 		ledCategory,
 		speakerCategory,
