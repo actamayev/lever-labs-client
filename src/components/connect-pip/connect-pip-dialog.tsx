@@ -13,37 +13,25 @@ import { Input } from "../shadcn/ui/input"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
-import searchForPipByUUID from "../../utils/pip/search-for-pip-by-uuid"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
 import { BotIcon, WifiHighIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
-import { isString } from "lodash-es"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 import UsbConnectionSection from "./usb-connection-section"
-
-interface PipSearchResult {
-	pipName: string
-	pipConnectionStatus: ClientPipConnectionStatus
-	pipUUID: string
-}
+import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 
 // eslint-disable-next-line max-lines-per-function
 function ConnectToPipDialog(): React.ReactNode {
-	const [pipUUID, setPipUUID] = useState("")
-	const [searchResult, setSearchResult] = useState<PipSearchResult | null>(null)
-	const [errorMessage, setErrorMessage] = useState("")
-	const [isSearching, setIsSearching] = useState(false)
 	const [isConnecting, setIsConnecting] = useState(false)
 	const colors = getDuolingoColors("humpback")
 
 	const handleClose = useCallback((): void => {
 		pipClass.setIsConnectPipDialogOpen(false)
-		setPipUUID("")
-		setSearchResult(null)
-		setErrorMessage("")
-		setIsSearching(false)
+		pipClass.setPipUUIDSearchTerm("")
+		pipClass.setSearchResult(null)
+		pipClass.setErrorMessage("")
+		pipClass.setIsSearching(false)
 		setIsConnecting(false)
 	}, [])
 
@@ -58,45 +46,32 @@ function ConnectToPipDialog(): React.ReactNode {
 			.slice(0, 5) // Maximum 5 characters
 			.join("")
 
-		setPipUUID(filteredValue)
-		setSearchResult(null)
-		setErrorMessage("")
+		pipClass.setPipUUIDSearchTerm(filteredValue)
+		pipClass.setSearchResult(null)
+		pipClass.setErrorMessage("")
 
 		// Auto-search when 5 characters are entered
 		if (filteredValue.length !== 5) return
-		setIsSearching(true)
-		try {
-			const result = await searchForPipByUUID(filteredValue as PipUUID)
-			if (isString(result)) {
-				setErrorMessage(result)
-			} else {
-				setSearchResult({
-					pipName: result.pipName || filteredValue,
-					pipConnectionStatus: result.pipConnectionStatus,
-					pipUUID: filteredValue,
-				})
-				// Only blur the input if we found a result
-				e.target.blur()
-			}
-		} catch (error) {
-			console.error("Error searching for pip:", error)
-			setErrorMessage("We couldn't find a Pip with that ID. Could you double check your ID?")
-		}
-		setIsSearching(false)
+		await searchPipByUUIDUtil(filteredValue, (): void => {
+			// Only blur the input if we found a result
+			e.target.blur()
+		})
 	}, [])
 
 	const handleConnectToPip = useCallback(async (): Promise<void> => {
-		if (!searchResult) return
+		if (!pipClass.searchResult) return
 
 		setIsConnecting(true)
 		let shouldCloseDialog = true
 		try {
-			await requestToConnectToPip(searchResult.pipUUID as PipUUID, (): void => {
-				// Update local state to show someone else is connected
-				setSearchResult((prev): PipSearchResult | null => prev ? {
-					...prev,
-					pipConnectionStatus: "connected to another user",
-				} : null)
+			await requestToConnectToPip(pipClass.searchResult.pipUUID as PipUUID, (): void => {
+				// Update state to show someone else is connected
+				if (pipClass.searchResult) {
+					pipClass.setSearchResult({
+						...pipClass.searchResult,
+						pipConnectionStatus: "connected to another user",
+					})
+				}
 				// Don't close dialog when someone else is connected
 				shouldCloseDialog = false
 			})
@@ -108,7 +83,7 @@ function ConnectToPipDialog(): React.ReactNode {
 			console.error("Error connecting to pip:", error)
 		}
 		setIsConnecting(false)
-	}, [searchResult, handleClose])
+	}, [handleClose])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key !== "Escape") return
@@ -162,7 +137,7 @@ function ConnectToPipDialog(): React.ReactNode {
 						</label>
 						<Input
 							id="pipUUID"
-							value={pipUUID}
+							value={pipClass.pipUUIDSearchTerm}
 							onChange={handleInputChange}
 							placeholder="Enter 5-character Pip ID"
 							className="w-full !text-xl h-10"
@@ -170,38 +145,38 @@ function ConnectToPipDialog(): React.ReactNode {
 							autoFocus
 							maxLength={5}
 						/>
-						{isSearching && (
+						{pipClass.isSearching && (
 							<p className="text-sm text-wolf mt-2">Searching...</p>
 						)}
 					</div>
 
-					{errorMessage && (
+					{pipClass.errorMessage && (
 						<div className="text-cardinal text-sm">
-							{errorMessage}
+							{pipClass.errorMessage}
 						</div>
 					)}
 
-					{searchResult && (
+					{pipClass.searchResult && (
 						<div className="border rounded-lg p-4 space-y-3">
 							<div className="flex items-center gap-3">
 								<BotIcon className="h-6 w-6 text-wolf" />
 								<div className="flex-1">
 									<div className="font-medium text-wolf">
-										{searchResult.pipName}
+										{pipClass.searchResult.pipName}
 									</div>
 									<div className="text-sm text-wolf opacity-75">
-										{searchResult.pipUUID}
+										{pipClass.searchResult.pipUUID}
 									</div>
 								</div>
 								<div className={cn(
 									"px-3 py-1 rounded-full text-white text-sm font-medium",
-									getStatusBgColor(searchResult)
+									getStatusBgColor(pipClass.searchResult)
 								)}>
-									{getStatusText(searchResult)}
+									{getStatusText(pipClass.searchResult)}
 								</div>
 							</div>
 
-							{searchResult.pipConnectionStatus === "online" && (
+							{pipClass.searchResult.pipConnectionStatus === "online" && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
