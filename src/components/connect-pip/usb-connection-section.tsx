@@ -11,6 +11,7 @@ import { CustomChrome } from "../../icons/custom-chrome"
 import { CustomEdge } from "../../icons/custom-edge"
 import { CustomFirefox } from "../../icons/custom-firefox"
 import { CustomSafari } from "../../icons/custom-safari"
+import CustomTooltip from "../custom-tooltip"
 
 function ConnectToPipDialog(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
@@ -79,8 +80,14 @@ function ConnectToPipDialog(): React.ReactNode {
 					<div className="flex items-center gap-2">
 						<div className="text-sm text-chargingGreen font-medium">Supported:</div>
 						<div className="flex items-center gap-1">
-							<CustomChrome size={16} />
-							<CustomEdge size={16} />
+							<CustomTooltip
+								tooltipTrigger={<CustomChrome size={16} />}
+								tooltipContent="Google Chrome"
+							/>
+							<CustomTooltip
+								tooltipTrigger={<CustomEdge size={16} />}
+								tooltipContent="Microsoft Edge"
+							/>
 						</div>
 					</div>
 
@@ -88,8 +95,14 @@ function ConnectToPipDialog(): React.ReactNode {
 					<div className="flex items-center gap-2">
 						<div className="text-sm text-cardinal font-medium">Not supported:</div>
 						<div className="flex items-center gap-1">
-							<CustomFirefox size={16} />
-							<CustomSafari size={16} />
+							<CustomTooltip
+								tooltipTrigger={<CustomFirefox size={16} />}
+								tooltipContent="Mozilla Firefox"
+							/>
+							<CustomTooltip
+								tooltipTrigger={<CustomSafari size={16} />}
+								tooltipContent="Safari"
+							/>
 						</div>
 					</div>
 				</div>
