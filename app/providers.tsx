@@ -10,6 +10,7 @@ import personalInfoClass from "../src/classes/personal-info-class"
 import retrieveClassrooms from "../src/utils/student/retrieve-classrooms"
 import retrievePersonalInfo from "../src/utils/personal-info/retrieve-personal-info"
 import useInitializeGoogleAnalytics from "@/hooks/analytics/use-initialize-google-analytics"
+import retrieveActivePipConnection from "../src/utils/pip/retrieve-active-pip-connection"
 
 const retrieveInfo = async (): Promise<void> => {
 	// Only retrieve if user is authenticated but we don't have personal info yet
@@ -18,6 +19,7 @@ const retrieveInfo = async (): Promise<void> => {
 	try {
 		await retrievePersonalInfo()
 		void retrieveClassrooms()
+		void retrieveActivePipConnection()
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
 		// If this fails, user might not actually be authenticated

@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, NonSuccessResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import { AllCommonResponses, ErrorResponse, NonSuccessResponse,
+	RetrieveActivePipConnectionResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
@@ -37,5 +38,10 @@ export default class PipDataService extends BaseDataService {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl("/set-serial-connection"), { pipUUID, connected }
 		)
+	}
+
+	async retrieveActivePipConnection(): Promise<AxiosResponse<RetrieveActivePipConnectionResponse | ErrorResponse>> {
+		return await this.httpClient.http.get<RetrieveActivePipConnectionResponse | ErrorResponse>(
+			this.buildUrl("/retrieve-active-pip-connection"))
 	}
 }
