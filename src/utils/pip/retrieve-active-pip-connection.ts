@@ -8,19 +8,19 @@ import isNull from "lodash-es/isNull"
 
 export default async function retrieveActivePipConnection(): Promise<void> {
 	try {
-		const response = await blueDotApiClient.pipDataService.retrieveActivePipConnection()
+		const response = await blueDotApiClient.pipDataService.attemptPipAutoConnect()
 
 		if (!isEqual(response.status, 200) || isErrorResponse(response.data)) {
-			throw new Error("Retrieve active pip connection failed")
+			throw new Error("Attempt pip auto connect failed")
 		}
 
-		if (isNull(response.data.pipUUID)) return
+		if (isNull(response.data.autoConnectedPipUUID)) return
 
 		pipClass.addNewPip({
-			pipUUID: response.data.pipUUID,
+			pipUUID: response.data.autoConnectedPipUUID,
 			pipConnectionStatus: "connected online to you"
 		})
 	} catch (error) {
-		console.error("Error retrieving active pip connection:", error)
+		console.error("Error attempting pip auto connect:", error)
 	}
 }

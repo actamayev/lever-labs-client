@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AllCommonResponses, ErrorResponse, NonSuccessResponse,
-	RetrieveActivePipConnectionResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+	AutoConnectPipResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
@@ -40,8 +40,8 @@ export default class PipDataService extends BaseDataService {
 		)
 	}
 
-	async retrieveActivePipConnection(): Promise<AxiosResponse<RetrieveActivePipConnectionResponse | ErrorResponse>> {
-		return await this.httpClient.http.get<RetrieveActivePipConnectionResponse | ErrorResponse>(
-			this.buildUrl("/retrieve-active-pip-connection"))
+	async attemptPipAutoConnect(): Promise<AxiosResponse<AutoConnectPipResponse | ErrorResponse>> {
+		return await this.httpClient.http.get<AutoConnectPipResponse | ErrorResponse>(
+			this.buildUrl("/attempt-pip-auto-connect"))
 	}
 }
