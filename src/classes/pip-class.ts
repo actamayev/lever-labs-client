@@ -1,7 +1,8 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { PipStatusUpdate, ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
+import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
 
 interface PipSearchResult {
 	pipName: string
@@ -32,8 +33,11 @@ class PipClass {
 		this.setSelectedPip(null)
 	}
 
-	public updatePipConnectionStatus(data: PipStatusUpdate): void {
-		if (!this.selectedPip) return
+	public updatePipConnectionStatus(data: PipConnectionUpdate): void {
+		if (!this.selectedPip) {
+			this.addNewPip({ pipUUID: data.pipUUID, pipConnectionStatus: data.newConnectionStatus })
+			return
+		}
 
 		this.selectedPip.pipConnectionStatus = data.newConnectionStatus
 	}

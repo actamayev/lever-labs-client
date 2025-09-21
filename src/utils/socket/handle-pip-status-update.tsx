@@ -1,11 +1,11 @@
 "use client"
 
-import { PipStatusUpdate } from "@bluedotrobots/common-ts/types/pip"
+import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import workbenchClass from "../../classes/workbench-class"
 
-export default function handlePipStatusUpdate(data: PipStatusUpdate): void {
+export default function handlePipStatusUpdate(data: PipConnectionUpdate): void {
 	pipClass.updatePipConnectionStatus(data)
 	const { newConnectionStatus } = data
 	switch (newConnectionStatus) {
