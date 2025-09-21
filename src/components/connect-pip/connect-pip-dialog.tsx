@@ -1,7 +1,8 @@
 "use client"
 
-import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
+import { useCallback, useState } from "react"
+import { BotIcon, WifiHighIcon } from "lucide-react"
 import {
 	Dialog,
 	DialogContent,
@@ -15,7 +16,6 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { BotIcon, WifiHighIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
 import UsbConnectionSection from "./usb-connection-section"
@@ -69,7 +69,7 @@ function ConnectToPipDialog(): React.ReactNode {
 				if (pipClass.searchResult) {
 					pipClass.setSearchResult({
 						...pipClass.searchResult,
-						pipConnectionStatus: "connected to another user",
+						pipConnectionStatus: "connected online to another user",
 					})
 				}
 				// Don't close dialog when someone else is connected
@@ -96,10 +96,12 @@ function ConnectToPipDialog(): React.ReactNode {
 				return "bg-cardinal"
 			case "online":
 				return "bg-macaw"
-			case "connected to another user":
-			case "connected to serial":
+			case "connected online to another user":
+			case "connected to serial to another user":
 				return "bg-beetle"
-			case "connected to you":
+			case "connected online to you":
+				return "bg-chargingGreen"
+			case "connected to serial to you":
 				return "bg-chargingGreen"
 			default:
 				return "bg-cardinal"
@@ -112,11 +114,13 @@ function ConnectToPipDialog(): React.ReactNode {
 				return "Offline"
 			case "online":
 				return "Online"
-			case "connected to another user":
+			case "connected online to another user":
 				return "Connected to another user"
-			case "connected to serial":
+			case "connected to serial to another user":
 				return "Connected to USB"
-			case "connected to you":
+			case "connected to serial to you":
+				return "Connected to you via USB"
+			case "connected online to you":
 				return "Connected"
 			default:
 				return "Unknown status"

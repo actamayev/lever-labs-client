@@ -8,10 +8,12 @@ interface DisplayActionTriangleProps {
 	isEmpty: boolean
 	isActive: boolean
 	isDisabled?: boolean
+	emptyTooltipContent: string
+	tooltipContent: string
 }
 
 export default function DisplayActionTriangle(props: DisplayActionTriangleProps): React.ReactNode {
-	const { applyToBuffer, isEmpty, isActive, isDisabled = false } = props
+	const { applyToBuffer, isEmpty, isActive, isDisabled = false, emptyTooltipContent = "", tooltipContent = "" } = props
 
 	const triangleStyles = useMemo((): string => {
 		if (isDisabled) {
@@ -27,13 +29,9 @@ export default function DisplayActionTriangle(props: DisplayActionTriangleProps)
 	}, [isActive, isEmpty, isDisabled])
 
 	const getTooltipContent = (): string => {
-		if (isDisabled) {
-			return "Display disabled by teacher"
-		}
-		if (isEmpty) {
-			return "Enter text first"
-		}
-		return "Apply entered text"
+		if (isDisabled) return "Display disabled by teacher"
+		if (isEmpty) return emptyTooltipContent
+		return tooltipContent
 	}
 
 	const buttonContent = (

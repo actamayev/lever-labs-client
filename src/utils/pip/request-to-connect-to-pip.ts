@@ -18,7 +18,7 @@ export default async function requestToConnectToPip(pipUUID: PipUUID, onAlreadyC
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 			throw new Error("Connect to Pip failed")
 		}
-		pipClass.addNewPip({ pipUUID, pipConnectionStatus: "connected to you" })
+		pipClass.addNewPip({ pipUUID, pipConnectionStatus: "connected online to you" })
 	} catch (error) {
 		console.error(error)
 		if (error instanceof AxiosError) {

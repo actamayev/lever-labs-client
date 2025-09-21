@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
+import { ESPToSerialMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts/protocol"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import pipClass from "./pip-class"
@@ -138,7 +138,7 @@ class SerialMessageManagerClass {
 	}
 
 	// eslint-disable-next-line complexity, max-lines-per-function
-	private handleStructuredMessage(message: ESPMessage): void {
+	private handleStructuredMessage(message: ESPToSerialMessage): void {
 		switch (message.route) {
 			case "/pip-id": {
 				runInAction((): void => {

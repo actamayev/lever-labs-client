@@ -8,7 +8,6 @@ import disconnectFromPip from "../../../utils/pip/disconnect-from-pip"
 import requestToConnectToPip from "../../../utils/pip/request-to-connect-to-pip"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 
-
 function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }): React.ReactNode {
 	const selectedPip = pipClass.selectedPip
 	if (pipClass.pipPluggedInSerial) {
@@ -54,9 +53,9 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 					</Button>
 				</div>
 			)
-		case "connected to another user":
+		case "connected online to another user":
 			return null
-		case "connected to you":
+		case "connected online to you":
 			return (
 				<Button
 					onClick={(): void => {
@@ -68,7 +67,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 					DISCONNECT
 				</Button>
 			)
-		case "connected to serial":
+		case "connected to serial to you":
 			return (
 				<Button
 					onClick={(e): void => {
@@ -84,6 +83,8 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 					Wi-Fi Settings...
 				</Button>
 			)
+		case "connected to serial to another user":
+			return null
 		default:
 			return (
 				<div className="text-center text-eel/70">

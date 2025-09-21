@@ -47,7 +47,7 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 					<span className={cn(textClasses, extraTextClasses)}>ONLINE</span>
 				</div>
 			)
-		case "connected to another user":
+		case "connected online to another user":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-beetle", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
@@ -55,19 +55,26 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 					<span className={cn(textClasses, extraTextClasses)}>ANOTHER USER</span>
 				</div>
 			)
-		case "connected to you":
+		case "connected online to you":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Wifi className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
 					<span className={cn(textClasses, extraTextClasses)}>PAIRED</span>
 				</div>
 			)
-		case "connected to serial":
+		case "connected to serial to another user":
 			return (
 				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 					<Usb className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
 					<span className={cn(textClasses, extraTextClasses)}>PAIRED TO</span>
 					<span className={cn(textClasses, extraTextClasses)}>ANOTHER USER</span>
+				</div>
+			)
+		case "connected to serial to you":
+			return (
+				<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
+					<Usb className={cn(baseClasses, iconClasses)} strokeWidth={strokeWidth}/>
+					<span className={cn(textClasses, extraTextClasses)}>PAIRED</span>
 				</div>
 			)
 		default:

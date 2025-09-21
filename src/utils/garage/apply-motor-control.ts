@@ -62,19 +62,10 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	const selectedPip = pipClass.selectedPip
 
 	if (pipClass.pipPluggedInSerial) {
-		return toastClass.negative({ title: "Please unplug your Pip from the computer to drive" })
+		return toastClass.negative({ title: "Please unplug Pip from the computer to drive" })
 	}
-	if (isNull(selectedPip)) {
-		return toastClass.negative({
-			title: "Please add a Pip",
-			description: "Please connect your Pip to the Wi-Fi or via USB to drive"
-		})
-	}
-	if (selectedPip.pipConnectionStatus === "offline") {
-		return toastClass.negative({
-			title: "Please connect your Pip to the internet",
-			description: "Please connect your Pip to the Wi-Fi or via USB to drive"
-		})
+	if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {
+		return toastClass.negative({ title: "Please connect Pip to the Wi-Fi in order to drive" })
 	}
 
 	// Emit motor control via socket
