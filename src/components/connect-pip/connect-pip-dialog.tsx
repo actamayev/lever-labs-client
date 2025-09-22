@@ -116,6 +116,8 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "online":
 			case "connected online to another user":
 				return "Online"
+			case "connected to serial to another user":
+				return "Connected to another user via USB"
 			case "connected to serial to you":
 				return "Connected to you via USB"
 			case "connected online to you":
