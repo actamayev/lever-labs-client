@@ -18,6 +18,7 @@ import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import BrowserCompatibility from "./browser-compatibility"
 import UsbConnectionSection from "./usb-connection-section"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 
@@ -148,6 +149,7 @@ function ConnectToPipDialog(): React.ReactNode {
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={5}
+							autoComplete="new-password"
 						/>
 						{pipClass.isSearching && (
 							<p className="text-sm text-wolf mt-2">Searching...</p>
@@ -198,6 +200,7 @@ function ConnectToPipDialog(): React.ReactNode {
 					)}
 
 					<UsbConnectionSection />
+					<BrowserCompatibility />
 				</div>
 			</DialogContent>
 		</Dialog>
