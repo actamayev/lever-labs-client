@@ -148,7 +148,7 @@ function ConnectToPipDialog(): React.ReactNode {
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={5}
-							autoComplete="new-password"
+							autoComplete="one-time-code"
 						/>
 						{pipClass.isSearching && (
 							<p className="text-sm text-wolf mt-2">Searching...</p>
