@@ -44,6 +44,7 @@ class PipClass {
 
 	private setSelectedPip = action((newSelectedPip: PipData | null): void => {
 		this.selectedPip = newSelectedPip
+		this.setIsConnectPipDialogOpen(false)
 	})
 
 	public setIsSendingCppToPip = action((newState: boolean): void => {
@@ -52,6 +53,7 @@ class PipClass {
 
 	public setPipPluggedInSerial = action((newState: boolean): void => {
 		this.pipPluggedInSerial = newState
+		this.setIsConnectPipDialogOpen(false)
 	})
 
 	public setIsConnectPipDialogOpen = action((isOpen: boolean): void => {

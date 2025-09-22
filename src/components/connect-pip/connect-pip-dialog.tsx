@@ -96,8 +96,8 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "offline":
 				return "bg-cardinal"
 			case "online":
-				return "bg-macaw"
 			case "connected online to another user":
+				return "bg-macaw"
 			case "connected to serial to another user":
 				return "bg-beetle"
 			case "connected online to you":
@@ -114,11 +114,8 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "offline":
 				return "Offline"
 			case "online":
-				return "Online"
 			case "connected online to another user":
-				return "Connected to another user"
-			case "connected to serial to another user":
-				return "Connected to another user via USB"
+				return "Online"
 			case "connected to serial to you":
 				return "Connected to you via USB"
 			case "connected online to you":
@@ -182,7 +179,10 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 							</div>
 
-							{pipClass.searchResult.pipConnectionStatus === "online" && (
+							{(
+								pipClass.searchResult.pipConnectionStatus === "online" ||
+								pipClass.searchResult.pipConnectionStatus === "connected online to another user"
+							) && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
