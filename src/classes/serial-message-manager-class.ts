@@ -38,7 +38,6 @@ class SerialMessageManagerClass {
 	public isLoadingSavedNetworks: boolean = false
 	public scannedNetworks: ScannedWiFiNetworkItem[] = []
 	public isScanning: boolean = false
-	private isGracefulShutdownInProgress: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -108,8 +107,7 @@ class SerialMessageManagerClass {
 	})
 
 	public handleDisconnected(): void {
-		// Skip the backend notification if graceful shutdown is handling it
-		if (this.pipId && !this.isGracefulShutdownInProgress) {
+		if (this.pipId) {
 			void setSerialConnectionStatus(this.pipId, false)
 		}
 
@@ -127,8 +125,6 @@ class SerialMessageManagerClass {
 			this.scannedNetworks = []
 			this.isScanning = false
 		})
-
-		this.setIsGracefulShutdownInProgress(false)
 	}
 
 	public handleMessageSent (messageData: MessageSentData): void {
@@ -255,7 +251,8 @@ class SerialMessageManagerClass {
 			}
 			case "/pip-turning-off": {
 				console.log("pip-turning-off")
-				this.handleGracefulShutdown()
+				void this.handleGracefulShutdown()
+				this.resetFlowState(false)
 				break
 			}
 			default:
@@ -265,9 +262,9 @@ class SerialMessageManagerClass {
 	}
 
 	// Reset flow state
-	public resetFlowState = action((): void => {
+	private resetFlowState = action((shouldCallApi: boolean): void => {
 		// Notify backend that pip is disconnected from serial before clearing pipId
-		if (this.pipId) {
+		if (this.pipId && shouldCallApi) {
 			void setSerialConnectionStatus(this.pipId, false)
 		}
 
@@ -284,14 +281,10 @@ class SerialMessageManagerClass {
 	})
 
 	private async handleGracefulShutdown(): Promise<void> {
-		this.setIsGracefulShutdownInProgress(true)
-
 		try {
 			await pipTurningOffSerialDisconnection()
 		} catch (error) {
 			console.error("Error during graceful shutdown:", error)
-		} finally {
-			this.setIsGracefulShutdownInProgress(false)
 		}
 	}
 
@@ -315,10 +308,6 @@ class SerialMessageManagerClass {
 		this.scannedNetworks = []
 	})
 
-	private setIsGracefulShutdownInProgress = action((isGracefulShutdownInProgress: boolean): void => {
-		this.isGracefulShutdownInProgress = isGracefulShutdownInProgress
-	})
-
 	public addSavedNetwork = action((network: SavedWiFiNetwork): void => {
 		// Only add if not already present
 		if (!this.savedNetworks.find((n): boolean => n.ssid === network.ssid)) {
@@ -332,7 +321,7 @@ class SerialMessageManagerClass {
 
 	public logout = action((): void => {
 		this.messages = []
-		this.resetFlowState()
+		this.resetFlowState(true)
 		this.setWiFiConnectionStatus(null)
 		this.setIsTestingWiFiConnection(false)
 	})
