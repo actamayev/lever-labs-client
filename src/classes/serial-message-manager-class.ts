@@ -12,6 +12,7 @@ import sensorDataClass from "./sensor-data-class"
 import sendDinoScore from "../utils/student/send-dino-score"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
 import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
+import pipTurningOffSerialDisconnection from "../utils/pip/pip-turning-off-serial-disconnection"
 
 interface MessageSentData {
 	content: string
@@ -37,6 +38,7 @@ class SerialMessageManagerClass {
 	public isLoadingSavedNetworks: boolean = false
 	public scannedNetworks: ScannedWiFiNetworkItem[] = []
 	public isScanning: boolean = false
+	private isGracefulShutdownInProgress: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -105,12 +107,13 @@ class SerialMessageManagerClass {
 		this.hasBeenDisconnected = false
 	})
 
-	public handleDisconnected (): void {
-		// Notify backend that pip is disconnected from serial before clearing pipId
-		if (this.pipId) {
+	public handleDisconnected(): void {
+		// Skip the backend notification if graceful shutdown is handling it
+		if (this.pipId && !this.isGracefulShutdownInProgress) {
 			void setSerialConnectionStatus(this.pipId, false)
 		}
 
+		// Continue with the rest of the cleanup (state reset, UI updates, etc.)
 		runInAction((): void => {
 			this.hasBeenDisconnected = true
 			this.pipId = null
@@ -124,6 +127,8 @@ class SerialMessageManagerClass {
 			this.scannedNetworks = []
 			this.isScanning = false
 		})
+
+		this.setIsGracefulShutdownInProgress(false)
 	}
 
 	public handleMessageSent (messageData: MessageSentData): void {
@@ -146,7 +151,7 @@ class SerialMessageManagerClass {
 					this.showWiFiSection = true
 					serialConnectionManagerClass.pipTurnedOn = true
 					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
-					pipClass.setPipPluggedInSerial(true)
+					pipClass.setPipPluggedInSerial(this.pipId)
 				})
 
 				// Notify backend that pip is connected to serial
@@ -248,6 +253,11 @@ class SerialMessageManagerClass {
 				this.onWiFiDeletionResult?.(message.payload.status)
 				break
 			}
+			case "/pip-turning-off": {
+				console.log("pip-turning-off")
+				this.handleGracefulShutdown()
+				break
+			}
 			default:
 				console.info("Unknown message route:", message.route)
 				break
@@ -273,6 +283,18 @@ class SerialMessageManagerClass {
 		this.isScanning = false
 	})
 
+	private async handleGracefulShutdown(): Promise<void> {
+		this.setIsGracefulShutdownInProgress(true)
+
+		try {
+			await pipTurningOffSerialDisconnection()
+		} catch (error) {
+			console.error("Error during graceful shutdown:", error)
+		} finally {
+			this.setIsGracefulShutdownInProgress(false)
+		}
+	}
+
 	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null): void => {
 		this.wiFiConnectionStatus = status
 	})
@@ -291,6 +313,10 @@ class SerialMessageManagerClass {
 
 	public clearScannedNetworks = action((): void => {
 		this.scannedNetworks = []
+	})
+
+	private setIsGracefulShutdownInProgress = action((isGracefulShutdownInProgress: boolean): void => {
+		this.isGracefulShutdownInProgress = isGracefulShutdownInProgress
 	})
 
 	public addSavedNetwork = action((network: SavedWiFiNetwork): void => {

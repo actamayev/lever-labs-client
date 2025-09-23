@@ -1,6 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
 import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
 
@@ -13,7 +14,6 @@ interface PipSearchResult {
 class PipClass {
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
-	public pipPluggedInSerial: boolean = false
 	public isConnectPipDialogOpen: boolean = false
 	public pipUUIDSearchTerm: string = ""
 	public searchResult: PipSearchResult | null = null
@@ -51,8 +51,12 @@ class PipClass {
 		this.isSendingCppToPip = newState
 	})
 
-	public setPipPluggedInSerial = action((newState: boolean): void => {
-		this.pipPluggedInSerial = newState
+	public setPipPluggedInSerial = action((pipUUID: PipUUID | null): void => {
+		if (pipUUID) {
+			this.selectedPip = { pipUUID, pipConnectionStatus: "connected to serial to you" }
+		} else {
+			this.selectedPip = null
+		}
 		this.setIsConnectPipDialogOpen(false)
 	})
 
@@ -79,7 +83,6 @@ class PipClass {
 	public logout(): void {
 		this.setSelectedPip(null)
 		this.setIsSendingCppToPip(false)
-		this.setPipPluggedInSerial(false)
 		this.setIsConnectPipDialogOpen(false)
 		this.setPipUUIDSearchTerm("")
 		this.setSearchResult(null)

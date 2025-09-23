@@ -10,7 +10,7 @@ export default function handlePipStatusUpdate(data: PipConnectionUpdate): void {
 	const { newConnectionStatus } = data
 	switch (newConnectionStatus) {
 		case "offline": {
-			if (!pipClass.pipPluggedInSerial) {
+			if (pipClass.selectedPip?.pipConnectionStatus !== "connected to serial to you") {
 				workbenchClass.setBatteryDataNull()
 				pipClass.deletePip()
 				return toastClass.neutral({

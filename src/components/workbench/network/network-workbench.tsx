@@ -16,7 +16,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = (): string => {
-		if (pipClass.pipPluggedInSerial) return "Connected to USB"
+		if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") return "Connected to USB"
 		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "No device selected"
 
@@ -39,7 +39,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 	}
 
 	const getStatusColor = (): string => {
-		if (pipClass.pipPluggedInSerial) return "text-green-500"
+		if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") return "text-green-500"
 		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "text-wolf"
 

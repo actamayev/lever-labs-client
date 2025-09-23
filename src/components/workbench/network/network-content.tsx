@@ -10,7 +10,7 @@ import serialConnectionManagerClass from "../../../classes/serial-connection-man
 
 function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCardOpen: boolean) => void }): React.ReactNode {
 	const selectedPip = pipClass.selectedPip
-	if (pipClass.pipPluggedInSerial) {
+	if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") {
 		return (
 			<Button
 				onClick={(e): void => {

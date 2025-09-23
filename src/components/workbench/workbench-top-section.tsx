@@ -29,7 +29,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 				borderBottomLeftRadius: WORKBENCH_ROUNDING_RADIUS,
 			}}
 		>
-			{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+			{!pipClass.selectedPip ? (
 				<div className="h-full w-full flex items-center justify-center p-5">
 					<ConnectToPipButton
 						colors={getDuolingoColors("humpback")}

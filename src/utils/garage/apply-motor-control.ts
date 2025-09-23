@@ -61,7 +61,7 @@ export default function applyMotorControl(motorControl: MotorControlInput, force
 	if (authClass.isFinishedWithSignup === false) return
 	const selectedPip = pipClass.selectedPip
 
-	if (pipClass.pipPluggedInSerial) {
+	if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") {
 		return toastClass.negative({ title: "Please unplug Pip from the computer to drive" })
 	}
 	if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {

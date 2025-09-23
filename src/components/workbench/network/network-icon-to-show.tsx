@@ -15,7 +15,7 @@ function NetworkIconToShow({ colorClasses, iconClasses, extraTextClasses }: Netw
 	const strokeWidth = 2.5
 	const textClasses = "text-2xl -mt-2"
 
-	if (pipClass.pipPluggedInSerial) {
+	if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") {
 		return (
 			<div className={cn("flex items-center justify-center flex-col text-green-500", colorClasses)}>
 				<Usb
