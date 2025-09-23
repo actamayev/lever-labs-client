@@ -10,7 +10,7 @@ import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
-export default async function requestToConnectToPip(pipUUID: PipUUID, onAlreadyConnected?: () => void): Promise<void> {
+export default async function requestToConnectToPip(pipUUID: PipUUID): Promise<void> {
 	try {
 		if (pipClass.selectedPip?.pipUUID === pipUUID) return
 		const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(pipUUID)
@@ -23,11 +23,12 @@ export default async function requestToConnectToPip(pipUUID: PipUUID, onAlreadyC
 		console.error(error)
 		if (error instanceof AxiosError) {
 			if (isMessageResponse(error.response?.data)) {
-				if (error.response?.data.message === "Someone is already connected to this Pip") {
-					// Don't close dialog, don't show toast, just update local state
-					if (onAlreadyConnected) {
-						onAlreadyConnected()
-					}
+				if (error.response?.data.message === "Unable to connect to Pip, serial connection is active") {
+					pipClass.setSearchResult({
+						pipUUID,
+						pipName: "Pip",
+						pipConnectionStatus: "connected to serial to another user"
+					})
 					return
 				} else if (error.response?.data.message === "This Pip is not active/connected to the internet") {
 					return toastClass.negative({

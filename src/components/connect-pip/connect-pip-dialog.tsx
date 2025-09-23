@@ -63,28 +63,13 @@ function ConnectToPipDialog(): React.ReactNode {
 		if (!pipClass.searchResult) return
 
 		setIsConnecting(true)
-		let shouldCloseDialog = true
 		try {
-			await requestToConnectToPip(pipClass.searchResult.pipUUID as PipUUID, (): void => {
-				// Update state to show someone else is connected
-				if (pipClass.searchResult) {
-					pipClass.setSearchResult({
-						...pipClass.searchResult,
-						pipConnectionStatus: "connected online to another user",
-					})
-				}
-				// Don't close dialog when someone else is connected
-				shouldCloseDialog = false
-			})
-			// Only close dialog if connection was successful
-			if (shouldCloseDialog) {
-				handleClose()
-			}
+			await requestToConnectToPip(pipClass.searchResult.pipUUID as PipUUID)
 		} catch (error) {
 			console.error("Error connecting to pip:", error)
 		}
 		setIsConnecting(false)
-	}, [handleClose])
+	}, [])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key !== "Escape") return
