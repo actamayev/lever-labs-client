@@ -250,7 +250,6 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/pip-turning-off": {
-				console.log("pip-turning-off")
 				void this.handleGracefulShutdown()
 				this.resetFlowState(false)
 				break

@@ -8,7 +8,6 @@ import pipClass from "../../classes/pip-class"
 export default async function pipTurningOffSerialDisconnection(): Promise<void> {
 	try {
 		const pipUUID = pipClass.selectedPip?.pipUUID
-		console.log("pipUUID", pipUUID)
 		if (!pipUUID) return
 
 		const response = await blueDotApiClient.pipDataService.pipTurningOff(pipUUID)
