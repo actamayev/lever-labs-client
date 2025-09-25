@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { cn } from "@/lib/shadcn/utils"
-import { CustomWheel } from "../icons/custom-wheel"
+import { CustomWheel } from "../../icons/custom-wheel"
 
 const animationStyles = `
 	.spin-wheel {

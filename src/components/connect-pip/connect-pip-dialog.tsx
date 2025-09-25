@@ -1,7 +1,8 @@
 "use client"
 
-import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
+import { useCallback, useState } from "react"
+import { BotIcon, WifiHighIcon } from "lucide-react"
 import {
 	Dialog,
 	DialogContent,
@@ -15,9 +16,9 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { BotIcon, WifiHighIcon } from "lucide-react"
 import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import BrowserCompatibility from "./browser-compatibility"
 import UsbConnectionSection from "./usb-connection-section"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 
@@ -62,28 +63,13 @@ function ConnectToPipDialog(): React.ReactNode {
 		if (!pipClass.searchResult) return
 
 		setIsConnecting(true)
-		let shouldCloseDialog = true
 		try {
-			await requestToConnectToPip(pipClass.searchResult.pipUUID as PipUUID, (): void => {
-				// Update state to show someone else is connected
-				if (pipClass.searchResult) {
-					pipClass.setSearchResult({
-						...pipClass.searchResult,
-						pipConnectionStatus: "connected to another user",
-					})
-				}
-				// Don't close dialog when someone else is connected
-				shouldCloseDialog = false
-			})
-			// Only close dialog if connection was successful
-			if (shouldCloseDialog) {
-				handleClose()
-			}
+			await requestToConnectToPip(pipClass.searchResult.pipUUID as PipUUID)
 		} catch (error) {
 			console.error("Error connecting to pip:", error)
 		}
 		setIsConnecting(false)
-	}, [handleClose])
+	}, [])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key !== "Escape") return
@@ -95,11 +81,13 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "offline":
 				return "bg-cardinal"
 			case "online":
+			case "connected online to another user":
 				return "bg-macaw"
-			case "connected to another user":
-			case "connected to serial":
+			case "connected to serial to another user":
 				return "bg-beetle"
-			case "connected to you":
+			case "connected online to you":
+				return "bg-chargingGreen"
+			case "connected to serial to you":
 				return "bg-chargingGreen"
 			default:
 				return "bg-cardinal"
@@ -111,12 +99,13 @@ function ConnectToPipDialog(): React.ReactNode {
 			case "offline":
 				return "Offline"
 			case "online":
+			case "connected online to another user":
 				return "Online"
-			case "connected to another user":
-				return "Connected to another user"
-			case "connected to serial":
-				return "Connected to USB"
-			case "connected to you":
+			case "connected to serial to another user":
+				return "Connected to another user via USB"
+			case "connected to serial to you":
+				return "Connected to you via USB"
+			case "connected online to you":
 				return "Connected"
 			default:
 				return "Unknown status"
@@ -144,6 +133,7 @@ function ConnectToPipDialog(): React.ReactNode {
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={5}
+							autoComplete="one-time-code"
 						/>
 						{pipClass.isSearching && (
 							<p className="text-sm text-wolf mt-2">Searching...</p>
@@ -176,7 +166,10 @@ function ConnectToPipDialog(): React.ReactNode {
 								</div>
 							</div>
 
-							{pipClass.searchResult.pipConnectionStatus === "online" && (
+							{(
+								pipClass.searchResult.pipConnectionStatus === "online" ||
+								pipClass.searchResult.pipConnectionStatus === "connected online to another user"
+							) && (
 								<TactileButton
 									onClick={handleConnectToPip}
 									className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
@@ -194,6 +187,7 @@ function ConnectToPipDialog(): React.ReactNode {
 					)}
 
 					<UsbConnectionSection />
+					<BrowserCompatibility />
 				</div>
 			</DialogContent>
 		</Dialog>

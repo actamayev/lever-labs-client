@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, NonSuccessResponse, RetrieveIsPipUUIDValidResponse } from "@bluedotrobots/common-ts/types/api"
+import { AllCommonResponses, NonSuccessResponse,
+	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@bluedotrobots/common-ts/types/api"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class PipDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -36,6 +37,12 @@ export default class PipDataService extends BaseDataService {
 	async setSerialConnectionStatus(pipUUID: PipUUID, connected: boolean): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl("/set-serial-connection"), { pipUUID, connected }
+		)
+	}
+
+	async pipTurningOff(pipUUID: PipUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			this.buildUrl("/pip-turning-off-serial-connection"), { pipUUID }
 		)
 	}
 }

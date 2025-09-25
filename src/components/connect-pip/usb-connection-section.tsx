@@ -6,7 +6,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import { CustomUsb } from "../icons/custom-usb"
+import { CustomUsb } from "../../icons/custom-usb"
 
 function ConnectToPipDialog(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")

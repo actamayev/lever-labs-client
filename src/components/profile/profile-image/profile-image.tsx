@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { Pencil } from "lucide-react"
 import { useState, useCallback } from "react"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
-import { CustomUserCircle } from "../../icons/custom-user-circle"
+import { CustomUserCircle } from "../../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
 

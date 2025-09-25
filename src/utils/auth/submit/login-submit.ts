@@ -1,6 +1,6 @@
 "use client"
 
-import { isEmpty } from "lodash-es"
+import { isEmpty, isNull } from "lodash-es"
 import isEqual from "lodash-es/isEqual"
 import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
@@ -13,6 +13,7 @@ import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import garageClass from "../../../classes/garage-class"
+import pipClass from "../../../classes/pip-class"
 
 type WhereToNavigate = "PageToNavigateAfterLogin" | "Whiteboard" | "ClassManager" | null
 
@@ -44,6 +45,12 @@ export default async function loginSubmit(
 		studentClass.setRetrievedStudentData(classroomInfo)
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 		garageClass.setStudentGarageStatuses(classroomInfo)
+		if (!isNull(response.data.autoConnectedPipUUID)) {
+			pipClass.addNewPip({
+				pipUUID: response.data.autoConnectedPipUUID,
+				pipConnectionStatus: "connected online to you"
+			})
+		}
 
 		if (response.data.teacherData && response.data.teacherData.isApproved === true) return "ClassManager"
 		if (!isEmpty(classroomInfo)) return "Whiteboard"

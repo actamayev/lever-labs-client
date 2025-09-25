@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
+import { ESPToSerialMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@bluedotrobots/common-ts/types/pip"
 import { WiFiConnectionStatus } from "@bluedotrobots/common-ts/protocol"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import pipClass from "./pip-class"
@@ -12,6 +12,7 @@ import sensorDataClass from "./sensor-data-class"
 import sendDinoScore from "../utils/student/send-dino-score"
 import serialConnectionManagerClass from "./serial-connection-manager-class"
 import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
+import pipTurningOffSerialDisconnection from "../utils/pip/pip-turning-off-serial-disconnection"
 
 interface MessageSentData {
 	content: string
@@ -105,12 +106,12 @@ class SerialMessageManagerClass {
 		this.hasBeenDisconnected = false
 	})
 
-	public handleDisconnected (): void {
-		// Notify backend that pip is disconnected from serial before clearing pipId
+	public handleDisconnected(): void {
 		if (this.pipId) {
 			void setSerialConnectionStatus(this.pipId, false)
 		}
 
+		// Continue with the rest of the cleanup (state reset, UI updates, etc.)
 		runInAction((): void => {
 			this.hasBeenDisconnected = true
 			this.pipId = null
@@ -138,7 +139,7 @@ class SerialMessageManagerClass {
 	}
 
 	// eslint-disable-next-line complexity, max-lines-per-function
-	private handleStructuredMessage(message: ESPMessage): void {
+	private handleStructuredMessage(message: ESPToSerialMessage): void {
 		switch (message.route) {
 			case "/pip-id": {
 				runInAction((): void => {
@@ -146,7 +147,7 @@ class SerialMessageManagerClass {
 					this.showWiFiSection = true
 					serialConnectionManagerClass.pipTurnedOn = true
 					workbenchClass.setBatteryDataItem({ key: "isCharging", value: true })
-					pipClass.setPipPluggedInSerial(true)
+					pipClass.setPipPluggedInSerial(this.pipId)
 				})
 
 				// Notify backend that pip is connected to serial
@@ -248,6 +249,11 @@ class SerialMessageManagerClass {
 				this.onWiFiDeletionResult?.(message.payload.status)
 				break
 			}
+			case "/pip-turning-off": {
+				void pipTurningOffSerialDisconnection()
+				this.resetFlowState(false)
+				break
+			}
 			default:
 				console.info("Unknown message route:", message.route)
 				break
@@ -255,9 +261,9 @@ class SerialMessageManagerClass {
 	}
 
 	// Reset flow state
-	public resetFlowState = action((): void => {
+	private resetFlowState = action((shouldCallApi: boolean): void => {
 		// Notify backend that pip is disconnected from serial before clearing pipId
-		if (this.pipId) {
+		if (this.pipId && shouldCallApi) {
 			void setSerialConnectionStatus(this.pipId, false)
 		}
 
@@ -306,7 +312,7 @@ class SerialMessageManagerClass {
 
 	public logout = action((): void => {
 		this.messages = []
-		this.resetFlowState()
+		this.resetFlowState(true)
 		this.setWiFiConnectionStatus(null)
 		this.setIsTestingWiFiConnection(false)
 	})

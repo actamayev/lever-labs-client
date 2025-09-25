@@ -2,7 +2,7 @@
 
 import { Baby, Cog } from "lucide-react"
 import ShowIcon from "./show-icon"
-import { CustomSandbox } from "../icons/custom-sandbox"
+import { CustomSandbox } from "../../icons/custom-sandbox"
 import LandingSectionSplit from "./landing-section-split"
 import LandingSectionHeaderText from "./landing-section-header-text"
 import { landingBulletTextParagraph, landingBulletTextTitle, landingParagraph } from "../../utils/text-styles"

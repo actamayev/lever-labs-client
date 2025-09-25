@@ -1,7 +1,10 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { PipStatusUpdate, ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
+import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { isNull } from "lodash-es"
 
 interface PipSearchResult {
 	pipName: string
@@ -12,7 +15,6 @@ interface PipSearchResult {
 class PipClass {
 	public selectedPip: PipData | null = null
 	public isSendingCppToPip: boolean = false
-	public pipPluggedInSerial: boolean = false
 	public isConnectPipDialogOpen: boolean = false
 	public pipUUIDSearchTerm: string = ""
 	public searchResult: PipSearchResult | null = null
@@ -32,22 +34,31 @@ class PipClass {
 		this.setSelectedPip(null)
 	}
 
-	public updatePipConnectionStatus(data: PipStatusUpdate): void {
-		if (!this.selectedPip) return
+	public updatePipConnectionStatus(data: PipConnectionUpdate): void {
+		if (!this.selectedPip) {
+			this.addNewPip({ pipUUID: data.pipUUID, pipConnectionStatus: data.newConnectionStatus })
+			return
+		}
 
 		this.selectedPip.pipConnectionStatus = data.newConnectionStatus
 	}
 
 	private setSelectedPip = action((newSelectedPip: PipData | null): void => {
 		this.selectedPip = newSelectedPip
+		this.setIsConnectPipDialogOpen(false)
 	})
 
 	public setIsSendingCppToPip = action((newState: boolean): void => {
 		this.isSendingCppToPip = newState
 	})
 
-	public setPipPluggedInSerial = action((newState: boolean): void => {
-		this.pipPluggedInSerial = newState
+	public setPipPluggedInSerial = action((pipUUID: PipUUID | null): void => {
+		if (isNull(pipUUID)) {
+			this.selectedPip = null
+		} else {
+			this.selectedPip = { pipUUID, pipConnectionStatus: "connected to serial to you" }
+		}
+		this.setIsConnectPipDialogOpen(false)
 	})
 
 	public setIsConnectPipDialogOpen = action((isOpen: boolean): void => {
@@ -73,7 +84,6 @@ class PipClass {
 	public logout(): void {
 		this.setSelectedPip(null)
 		this.setIsSendingCppToPip(false)
-		this.setPipPluggedInSerial(false)
 		this.setIsConnectPipDialogOpen(false)
 		this.setPipUUIDSearchTerm("")
 		this.setSearchResult(null)

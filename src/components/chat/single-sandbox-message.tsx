@@ -9,7 +9,7 @@ import { BotMessageSquare } from "lucide-react"
 import { SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
 import { cn } from "../../lib/shadcn/utils"
 import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
-import { CustomUserCircle } from "../icons/custom-user-circle"
+import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
 

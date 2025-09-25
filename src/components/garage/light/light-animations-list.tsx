@@ -12,7 +12,7 @@ import {
 import { LightAnimation } from "@bluedotrobots/common-ts/types/garage"
 import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { CustomYoga } from "../../icons/custom-yoga"
+import { CustomYoga } from "../../../icons/custom-yoga"
 import { buttonVariants } from "../../shadcn/ui/button"
 import garageClass from "../../../classes/garage-class"
 import lightsAnimation from "../../../utils/garage/lights-animation"

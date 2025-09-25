@@ -141,6 +141,8 @@ function DisplayControls(): React.ReactNode {
 						isEmpty={garageClass.selectedDesign === "No design" || isDisabled}
 						isActive={garageClass.designOnBuffer === garageClass.selectedDesign && garageClass.designOnBuffer !== "No design"}
 						isDisabled={isDisabled}
+						emptyTooltipContent="No design selected"
+						tooltipContent="Apply selected design"
 					/>
 				</div>
 			</div>
@@ -158,6 +160,8 @@ function DisplayControls(): React.ReactNode {
 						isEmpty={!garageClass.textInput.trim() || isDisabled}
 						isActive={(garageClass.textOnBuffer === garageClass.textInput) && (garageClass.textInput.trim() !== "")}
 						isDisabled={isDisabled}
+						emptyTooltipContent="No text entered"
+						tooltipContent="Apply entered text"
 					/>
 				</div>
 			</div>

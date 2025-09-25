@@ -27,6 +27,7 @@ function ConnectToPipButton(props: ConnectToPipButtonProps): React.ReactNode {
 			await searchPipByUUIDUtil(pipClass.pipUUIDSearchTerm)
 		}
 	}
+
 	return (
 		<>
 			<TactileButton

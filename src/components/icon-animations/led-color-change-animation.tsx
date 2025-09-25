@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { CustomLightbulb } from "../icons/custom-lightbulb"
+import { CustomLightbulb } from "../../icons/custom-lightbulb"
 
 export default function LEDColorChangeAnimation({ iconSize }: { iconSize: number }): React.ReactNode {
 	const [ledColor, setLedColor] = useState<string | null>(null)

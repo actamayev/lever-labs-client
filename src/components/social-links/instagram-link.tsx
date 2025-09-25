@@ -1,6 +1,6 @@
 "use client"
 
-import { CustomInstagram } from "../icons/custom-instagram"
+import { CustomInstagram } from "../../icons/custom-instagram"
 
 export default function InstagramLink(): React.ReactNode {
 	return (
