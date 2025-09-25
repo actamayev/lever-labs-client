@@ -40,11 +40,6 @@ export default class PipDataService extends BaseDataService {
 		)
 	}
 
-	async attemptPipAutoConnect(): Promise<AxiosResponse<AutoConnectPipResponse | ErrorResponse>> {
-		return await this.httpClient.http.get<AutoConnectPipResponse | ErrorResponse>(
-			this.buildUrl("/attempt-pip-auto-connect"))
-	}
-
 	async pipTurningOff(pipUUID: PipUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
 			this.buildUrl("/pip-turning-off-serial-connection"), { pipUUID }
