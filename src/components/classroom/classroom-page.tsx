@@ -171,7 +171,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 					<div className="flex items-center justify-between">
 						<div>
 							<CardTitle className="flex items-center gap-2">
-								<Users className="h-5 w-5 text-pipTheme" />
+								<Users className="h-5 w-5 text-humpback" />
 								Students
 							</CardTitle>
 							<CardDescription>

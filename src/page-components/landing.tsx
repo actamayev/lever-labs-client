@@ -56,7 +56,7 @@ function Landing(): React.ReactNode {
 					<SimpleSetup />
 				</LandingSectionContainer>
 
-				<LandingSectionContainer extraClasses="bg-pipTheme py-16 sm:py-20 md:py-24 lg:py-32 mt-8 sm:mt-10 md:mt-12">
+				<LandingSectionContainer extraClasses="bg-humpback py-16 sm:py-20 md:py-24 lg:py-32 mt-8 sm:mt-10 md:mt-12">
 					<TheLittleThings />
 				</LandingSectionContainer>
 

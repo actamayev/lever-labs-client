@@ -95,7 +95,7 @@ function FeatureItem({ feature }: FeatureItemProps): React.ReactNode {
 				<div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
 					<div className="pointer-events-auto w-fit">
 						<Icon
-							className="text-pipThemeText duration-0 cursor-default"
+							className="text-humpbackText duration-0 cursor-default"
 							size={bentoIconSize}
 							strokeWidth={2}
 						/>

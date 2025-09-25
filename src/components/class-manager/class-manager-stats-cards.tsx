@@ -23,7 +23,7 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 			<Card className="border-2 border-swan bg-standardBackground">
 				<CardHeader className="pb-3">
 					<CardTitle className="flex items-center gap-2 text-lg">
-						<BookOpen className="h-5 w-5 text-pipTheme" />
+						<BookOpen className="h-5 w-5 text-humpback" />
 						Total Classes
 					</CardTitle>
 				</CardHeader>
@@ -37,7 +37,7 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 			<Card className="border-2 border-swan bg-standardBackground">
 				<CardHeader className="pb-3">
 					<CardTitle className="flex items-center gap-2 text-lg">
-						<Calendar className="h-5 w-5 text-pipTheme" />
+						<Calendar className="h-5 w-5 text-humpback" />
 						Quick Actions
 					</CardTitle>
 				</CardHeader>

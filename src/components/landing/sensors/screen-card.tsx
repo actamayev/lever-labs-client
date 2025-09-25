@@ -19,7 +19,7 @@ export default function ScreenCard(): React.ReactNode {
 
 				{isHovered && (
 					<div
-						className="absolute bg-pipThemeText rounded-full duration-0"
+						className="absolute bg-humpback rounded-full duration-0"
 						style={{
 							width: "15px",
 							height: "15px",

@@ -31,7 +31,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Hash className="h-5 w-5 text-pipTheme" />
+							<Hash className="h-5 w-5 text-humpback" />
 							Class Code
 						</CardTitle>
 					</CardHeader>
@@ -45,7 +45,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Users className="h-5 w-5 text-pipTheme" />
+							<Users className="h-5 w-5 text-humpback" />
 							Total Students
 						</CardTitle>
 					</CardHeader>
@@ -59,7 +59,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Rocket className="h-5 w-5 text-pipTheme" />
+							<Rocket className="h-5 w-5 text-humpback" />
 							Create Hub
 						</CardTitle>
 					</CardHeader>
