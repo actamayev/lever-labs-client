@@ -62,7 +62,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				/>
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
-				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+				{!pipClass.selectedPip ? (
 					<div className="h-1/2">
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}

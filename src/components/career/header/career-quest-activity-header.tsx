@@ -121,7 +121,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						</span>
 					</button>
 				)}
-				{(!pipClass.selectedPip && !pipClass.pipPluggedInSerial) ? (
+				{!pipClass.selectedPip ? (
 					<ConnectToPipButton
 						colors={getDuolingoColors(careerData.careerColor)}
 						tactileButtonClasses="text-3xl"

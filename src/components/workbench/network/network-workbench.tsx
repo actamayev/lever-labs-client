@@ -16,7 +16,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 	const [isHoverCardOpen, setIsHoverCardOpen] = useState(false)
 
 	const getStatusText = (): string => {
-		if (pipClass.pipPluggedInSerial) return "Connected to USB"
+		if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") return "Connected to USB"
 		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "No device selected"
 
@@ -25,19 +25,21 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				return "Offline"
 			case "online":
 				return "Online"
-			case "connected to another user":
+			case "connected online to another user":
 				return "Connected to other user"
-			case "connected to you":
+			case "connected online to you":
 				return "Connected"
-			case "connected to serial":
-				return "Connected to USB"
+			case "connected to serial to another user":
+				return "Connected to another user via USB"
+			case "connected to serial to you":
+				return "Connected to you via USB"
 			default:
 				return "Unknown status"
 		}
 	}
 
 	const getStatusColor = (): string => {
-		if (pipClass.pipPluggedInSerial) return "text-green-500"
+		if (pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") return "text-green-500"
 		const selectedPip = pipClass.selectedPip
 		if (isNull(selectedPip)) return "text-wolf"
 
@@ -46,11 +48,13 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				return "text-cardinal"
 			case "online":
 				return "text-macaw"
-			case "connected to another user":
+			case "connected online to another user":
 				return "text-beetle"
-			case "connected to you":
+			case "connected online to you":
 				return "text-green-500"
-			case "connected to serial":
+			case "connected to serial to another user":
+				return "text-beetle"
+			case "connected to serial to you":
 				return "text-green-500"
 			default:
 				return "text-wolf"

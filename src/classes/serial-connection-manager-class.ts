@@ -437,7 +437,7 @@ export class SerialConnectionManagerClass {
 			this.connected = false
 			this.pipTurnedOn = false
 			workbenchClass.setBatteryDataNull()
-			pipClass.setPipPluggedInSerial(false)
+			pipClass.setPipPluggedInSerial(null)
 		})
 
 		console.info("Connection cleanup complete")

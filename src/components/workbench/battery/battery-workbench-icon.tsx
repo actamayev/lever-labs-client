@@ -14,7 +14,7 @@ function BatteryWorkbenchIcon({ extraClasses }: BatteryWorkbenchIconProps): Reac
 	const baseClasses = "!h-16 !w-16"
 	const strokeWidth = 2.5
 
-	if (workbenchClass.batteryData?.isCharging || pipClass.pipPluggedInSerial) {
+	if (workbenchClass.batteryData?.isCharging || pipClass.selectedPip?.pipConnectionStatus === "connected to serial to you") {
 		return <BatteryCharging className={cn(baseClasses, batteryColorClasses, extraClasses)} strokeWidth={strokeWidth}/>
 	}
 	const batteryData = workbenchClass.batteryData

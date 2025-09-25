@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CustomButton } from "../icons/custom-button"
+import { CustomButton } from "../../icons/custom-button"
 
 export default function ButtonSpringAnimation({ iconSize } : { iconSize: number }): React.ReactNode {
 	return (

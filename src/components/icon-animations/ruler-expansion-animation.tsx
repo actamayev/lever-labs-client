@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react"
 import { cn } from "@/lib/shadcn/utils"
-import { CustomRuler } from "../icons/custom-ruler"
+import { CustomRuler } from "../../icons/custom-ruler"
 
 const measureStyles = `
   @keyframes measure {

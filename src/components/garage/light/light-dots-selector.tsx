@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { rgbaToHex } from "@uiw/color-convert"
 import { cn } from "../../../lib/shadcn/utils"
-import { CustomPip } from "../../icons/custom-pip"
+import { CustomPip } from "../../../icons/custom-pip"
 import garageClass from "../../../classes/garage-class"
 import CustomTooltip from "../../custom-tooltip"
 

@@ -14,8 +14,9 @@ import personalInfoClass from "../../classes/personal-info-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import { isEmpty } from "lodash-es"
+import { isEmpty, isNull } from "lodash-es"
 import garageClass from "../../classes/garage-class"
+import pipClass from "../../classes/pip-class"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
 	const navigate = useTypedNavigate()
@@ -59,6 +60,12 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			studentClass.setRetrievedStudentData(classroomInfo)
 			void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
 			garageClass.setStudentGarageStatuses(classroomInfo)
+			if (!isNull(googleCallbackResponse.data.autoConnectedPipUUID)) {
+				pipClass.addNewPip({
+					pipUUID: googleCallbackResponse.data.autoConnectedPipUUID,
+					pipConnectionStatus: "connected online to you"
+				})
+			}
 			if (googleCallbackResponse.data.teacherData && googleCallbackResponse.data.teacherData.isApproved === true) {
 				navigate("/class-manager")
 				return

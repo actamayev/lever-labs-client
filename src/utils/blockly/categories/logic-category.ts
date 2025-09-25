@@ -74,9 +74,9 @@ export const logicCategory: ParentCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		startCategory,
-		// variableCategory,
-		// conditionalsCategory,
-		// mathCategory,
-		// loopsCategory,
+		variableCategory,
+		conditionalsCategory,
+		mathCategory,
+		loopsCategory,
 	]
 }

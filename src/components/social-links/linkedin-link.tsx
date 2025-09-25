@@ -1,6 +1,6 @@
 "use client"
 
-import { CustomLinkedin } from "../icons/custom-linkedin"
+import { CustomLinkedin } from "../../icons/custom-linkedin"
 
 export default function LinkedinLink(): React.ReactNode {
 	return (

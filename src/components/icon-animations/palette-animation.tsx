@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { CustomPalette } from "../icons/custom-palette"
+import { CustomPalette } from "../../icons/custom-palette"
 import { observer } from "mobx-react"
 
 

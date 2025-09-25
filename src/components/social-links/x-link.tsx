@@ -1,6 +1,6 @@
 "use client"
 
-import { CustomX } from "../icons/custom-x"
+import { CustomX } from "../../icons/custom-x"
 
 export default function XLink(): React.ReactNode {
 	return (
