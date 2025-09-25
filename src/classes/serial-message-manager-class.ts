@@ -250,7 +250,7 @@ class SerialMessageManagerClass {
 				break
 			}
 			case "/pip-turning-off": {
-				void this.handleGracefulShutdown()
+				void pipTurningOffSerialDisconnection()
 				this.resetFlowState(false)
 				break
 			}
@@ -278,14 +278,6 @@ class SerialMessageManagerClass {
 		this.scannedNetworks = []
 		this.isScanning = false
 	})
-
-	private async handleGracefulShutdown(): Promise<void> {
-		try {
-			await pipTurningOffSerialDisconnection()
-		} catch (error) {
-			console.error("Error during graceful shutdown:", error)
-		}
-	}
 
 	public setWiFiConnectionStatus = action((status: WiFiConnectionStatus | null): void => {
 		this.wiFiConnectionStatus = status

@@ -4,6 +4,7 @@ import { action, makeAutoObservable } from "mobx"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
 import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { isNull } from "lodash-es"
 
 interface PipSearchResult {
 	pipName: string
@@ -52,10 +53,10 @@ class PipClass {
 	})
 
 	public setPipPluggedInSerial = action((pipUUID: PipUUID | null): void => {
-		if (pipUUID) {
-			this.selectedPip = { pipUUID, pipConnectionStatus: "connected to serial to you" }
-		} else {
+		if (isNull(pipUUID)) {
 			this.selectedPip = null
+		} else {
+			this.selectedPip = { pipUUID, pipConnectionStatus: "connected to serial to you" }
 		}
 		this.setIsConnectPipDialogOpen(false)
 	})
