@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-nested-ternary */
 "use client"
 
@@ -16,11 +15,12 @@ import updateDrivingStatusForAllStudents from "../../utils/teacher/update-drivin
 import updateLightsStatusForAllStudents from "../../utils/teacher/update-lights-status-all-students"
 import updateSoundsStatusForAllStudents from "../../utils/teacher/update-sounds-status-all-students"
 import updateDisplayStatusForAllStudents from "../../utils/teacher/update-display-status-all-students"
-import { cn } from "../../lib/shadcn/utils"
+import { getGarageStatusClasses } from "../../utils/garage-status-classes"
 import ClassroomStatsCards from "./classroom-stats-cards"
 import StudentGarageControls from "./student-garage-controls"
 import ClassroomHubsSection from "./classroom-hubs-section"
 import CustomTooltip from "../custom-tooltip"
+
 // eslint-disable-next-line max-lines-per-function, complexity
 function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -39,7 +39,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 	const handleBackClick = (): void => navigate("/class-manager")
 
 	// Helper functions for garage control buttons
-	const getGarageStatus = useCallback((statusType: "driving" | "lights" | "sounds" | "display"): "none" | "all-on" | "all-off" | "mixed" => {
+	const getGarageStatus = useCallback((statusType: GarageStatusType): GarageStatusValue => {
 		if (!classroomData?.students || classroomData.students.length === 0) return "none"
 
 		const allOn = classroomData.students.every((student): boolean => {
@@ -184,20 +184,9 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								tooltipTrigger={
 									<TactileButton
 										onClick={(): void => handleGarageControlClick("driving")}
-										className={cn(
-											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
-											getGarageStatus("driving") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
-											getGarageStatus("driving") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
-											getGarageStatus("driving") === "mixed" && "bg-standardBackground text-wolf border border-swan"
-										)}
+										className={getGarageStatusClasses(getGarageStatus("driving")).className}
 										shadowHeight={4}
-										shadowClass={
-											getGarageStatus("driving") === "all-on"
-												? "shadow-chargingGreen-2"
-												: getGarageStatus("driving") === "all-off"
-													? "shadow-cardinal-2"
-													: "shadow-swan"
-										}
+										shadowClass={getGarageStatusClasses(getGarageStatus("driving")).shadowClass}
 									>
 										<Car className="h-4 w-4" />
 									</TactileButton>
@@ -214,20 +203,9 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								tooltipTrigger={
 									<TactileButton
 										onClick={(): void => handleGarageControlClick("lights")}
-										className={cn(
-											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
-											getGarageStatus("lights") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
-											getGarageStatus("lights") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
-											getGarageStatus("lights") === "mixed" && "bg-standardBackground text-wolf border border-swan"
-										)}
+										className={getGarageStatusClasses(getGarageStatus("lights")).className}
 										shadowHeight={4}
-										shadowClass={
-											getGarageStatus("lights") === "all-on"
-												? "shadow-chargingGreen-2"
-												: getGarageStatus("lights") === "all-off"
-													? "shadow-cardinal-2"
-													: "shadow-swan"
-										}
+										shadowClass={getGarageStatusClasses(getGarageStatus("lights")).shadowClass}
 									>
 										<Lightbulb className="h-4 w-4" />
 									</TactileButton>
@@ -244,20 +222,9 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								tooltipTrigger={
 									<TactileButton
 										onClick={(): void => handleGarageControlClick("sounds")}
-										className={cn(
-											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
-											getGarageStatus("sounds") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
-											getGarageStatus("sounds") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
-											getGarageStatus("sounds") === "mixed" && "bg-standardBackground text-wolf border border-swan"
-										)}
+										className={getGarageStatusClasses(getGarageStatus("sounds")).className}
 										shadowHeight={4}
-										shadowClass={
-											getGarageStatus("sounds") === "all-on"
-												? "shadow-chargingGreen-2"
-												: getGarageStatus("sounds") === "all-off"
-													? "shadow-cardinal-2"
-													: "shadow-swan"
-										}
+										shadowClass={getGarageStatusClasses(getGarageStatus("sounds")).shadowClass}
 									>
 										<Volume2 className="h-4 w-4" />
 									</TactileButton>
@@ -274,20 +241,9 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 								tooltipTrigger={
 									<TactileButton
 										onClick={(): void => handleGarageControlClick("display")}
-										className={cn(
-											"h-8 w-8 rounded-lg flex items-center justify-center duration-150",
-											getGarageStatus("display") === "all-on" && "bg-chargingGreen text-standardBackground border border-chargingGreen",
-											getGarageStatus("display") === "all-off" && "bg-cardinal text-standardBackground border border-cardinal",
-											getGarageStatus("display") === "mixed" && "bg-standardBackground text-wolf border border-swan"
-										)}
+										className={getGarageStatusClasses(getGarageStatus("display")).className}
 										shadowHeight={4}
-										shadowClass={
-											getGarageStatus("display") === "all-on"
-												? "shadow-chargingGreen-2"
-												: getGarageStatus("display") === "all-off"
-													? "shadow-cardinal-2"
-													: "shadow-swan"
-										}
+										shadowClass={getGarageStatusClasses(getGarageStatus("display")).shadowClass}
 									>
 										<Monitor className="h-4 w-4" />
 									</TactileButton>
