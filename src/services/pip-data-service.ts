@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { AllCommonResponses, ErrorResponse, NonSuccessResponse,
-	AutoConnectPipResponse, RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@bluedotrobots/common-ts/types/api"
+import { AllCommonResponses, NonSuccessResponse,
+	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@bluedotrobots/common-ts/types/api"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
+import BlueDotHttpClient from "../classes/blue-dot-http-client"
 
 export default class PipDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
