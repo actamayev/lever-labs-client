@@ -18,7 +18,6 @@ const retrieveInfo = async (): Promise<void> => {
 	try {
 		await retrievePersonalInfo()
 		void retrieveClassrooms()
-		// void retrieveActivePipConnection()
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (error) {
 		// If this fails, user might not actually be authenticated
