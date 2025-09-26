@@ -1,3 +1,5 @@
+"use client"
+
 // src/utils/cookies/theme-helpers.ts
 import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
 

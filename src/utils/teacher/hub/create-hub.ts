@@ -3,11 +3,12 @@
 import isEqual from "lodash-es/isEqual"
 import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
 import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import authClass from "../../classes/auth-class"
-import toastClass from "../../classes/toast-class"
-import { isNonSuccessResponse } from "../type-checks"
-import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import authClass from "../../../classes/auth-class"
+import toastClass from "../../../classes/toast-class"
+import { isNonSuccessResponse } from "../../type-checks"
+import teacherClass from "../../../classes/teacher-class"
+import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
+import isNull from "lodash-es/isNull"
 
 export default async function createHub(
 	classCode: ClassCode,
@@ -16,7 +17,11 @@ export default async function createHub(
 	slideId: string
 ): Promise<void> {
 	try {
-		if (authClass.isFinishedWithSignup === false) return
+		if (
+			authClass.isFinishedWithSignup === false ||
+			isNull(teacherClass.teacherData) ||
+			!teacherClass.teacherData.isApproved
+		) return
 
 		const createHubResponse = await blueDotApiClient.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
 

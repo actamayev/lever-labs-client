@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryWarning, BatteryLow, BatteryMedium } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"

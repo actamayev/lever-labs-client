@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import gamesClass from "../../../../classes/games-class"
 

@@ -1,3 +1,5 @@
+"use client"
+
 import { getAuthState } from "@/lib/auth-server"
 import LayoutWrapper from "./layout-wrapper"
 

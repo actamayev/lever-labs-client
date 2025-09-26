@@ -1,3 +1,5 @@
+"use client"
+
 import { useRef, useEffect, useCallback } from "react"
 import { DISPLAY_WIDTH, DISPLAY_HEIGHT, PIXEL_SIZE, CANVAS_WIDTH, CANVAS_HEIGHT } from "../../../utils/constants/display-constants"
 

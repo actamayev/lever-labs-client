@@ -2,9 +2,10 @@ import { AxiosResponse } from "axios"
 import { TeacherName } from "@bluedotrobots/common-ts/types/teacher"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCodeResponse, DetailedClassroomData,
 	IncomingTeacherRequestData, NonSuccessResponse, CreateHubRequest } from "@bluedotrobots/common-ts/types/api"
-import { ClassCode, CareerUUID, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, CareerUUID, HubUUID, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { Scoreboard } from "@bluedotrobots/common-ts/types/scoreboard"
 
 export default class TeacherDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -137,6 +138,34 @@ export default class TeacherDataService extends BaseDataService {
 	): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/update-garage-display-all-students/${classCode}`), { garageDisplayStatus }
+		)
+	}
+
+	async createScoreboard(
+		classCode: ClassCode,
+		scoreboardName: string
+	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
+		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/create-scoreboard/${classCode}`), { scoreboardName }
+		)
+	}
+
+	async updateScoreboardTime(
+		scoreboardId: ScoreboardUUID,
+		timeInSeconds: number
+	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
+		return await this.httpClient.http.put<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/update-time/${scoreboardId}`), { timeInSeconds }
+		)
+	}
+
+	async updateScoreboardTeamScore(
+		scoreboardId: ScoreboardUUID,
+		teamNumber: 1 | 2,
+		newScore: number
+	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
+		return await this.httpClient.http.put<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/update-team-score/${scoreboardId}`), { teamNumber, newScore }
 		)
 	}
 }

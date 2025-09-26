@@ -23,6 +23,7 @@ export default function robots(): MetadataRoute.Robots {
 					"/career-quest/",
 					"/class-manager/",
 					"/whiteboard/",
+					"/scoreboard/",
 				]
 			}
 		],

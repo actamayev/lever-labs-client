@@ -1,3 +1,5 @@
+"use client"
+
 import { action, makeAutoObservable } from "mobx"
 import personalInfoClass from "./personal-info-class"
 

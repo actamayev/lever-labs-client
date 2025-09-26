@@ -1,3 +1,5 @@
+"use client"
+
 export function getGarageStatusClasses(status: GarageStatusValue): { className: string, shadowClass: string } {
 	const baseClasses = "h-8 w-8 rounded-lg flex items-center justify-center duration-150"
 

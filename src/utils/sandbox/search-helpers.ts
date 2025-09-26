@@ -1,3 +1,5 @@
+"use client"
+
 import * as Blockly from "blockly"
 
 // Define types for toolbox items

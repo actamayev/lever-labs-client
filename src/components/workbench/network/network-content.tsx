@@ -1,3 +1,5 @@
+"use client"
+
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"

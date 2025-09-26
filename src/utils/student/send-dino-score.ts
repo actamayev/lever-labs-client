@@ -1,3 +1,5 @@
+"use client"
+
 import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"

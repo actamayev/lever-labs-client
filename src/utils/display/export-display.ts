@@ -1,3 +1,5 @@
+"use client"
+
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH, FONT_DATA } from "../constants/display-constants"
 
 export default function exportDisplay(pixelBuffer: PixelBuffer): Uint8Array {
