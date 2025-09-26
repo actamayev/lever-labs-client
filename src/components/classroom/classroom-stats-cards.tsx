@@ -14,6 +14,7 @@ import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
+// eslint-disable-next-line max-lines-per-function
 function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
 	const [isCreateScoreboardDialogOpen, setIsCreateScoreboardDialogOpen] = useState(false)

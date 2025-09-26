@@ -44,6 +44,11 @@ export function isValidRoute(route: string): route is PageNames {
 		const classCodePattern = /^\/whiteboard\/[a-zA-Z0-9]{5}$/i
 		return classCodePattern.test(route)
 	}
+	if (route.startsWith("/scoreboard/")) {
+		// Check for /scoreboard/classCode/scoreboardId pattern
+		const scoreboardPattern = /^\/scoreboard\/[a-zA-Z0-9]{5}\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+		return scoreboardPattern.test(route)
+	}
 
 	return false
 }
