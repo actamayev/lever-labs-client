@@ -25,7 +25,7 @@ class GarageClass {
 	// Driving state
 	public isDriving: boolean = false
 	public driveDirections: Set<DriveDirection> = new Set()
-	public motorThrottlePercent: number = 100
+	public motorThrottlePercent: number = 50
 
 	//Horn and headlights
 	public isHornPressed: boolean = false
@@ -34,7 +34,7 @@ class GarageClass {
 	public pressedMotorKeys: Map<MotorDirection, number> = new Map()
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
-	public lastThrottlePercent: number = 100
+	public lastThrottlePercent: number = 50
 	public soundPlaying: FunSounds | null = null
 
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map((): boolean[] => Array(DISPLAY_WIDTH).fill(false))
@@ -247,12 +247,12 @@ class GarageClass {
 		this.setSelectedAnimation("No animation")
 		this.isDriving = false
 		this.driveDirections.clear()
-		this.setMotorThrottlePercent(100)
+		this.setMotorThrottlePercent(50)
 
 		this.pressedMotorKeys.clear()
 		this.pressedDirections.clear()
 		this.motorState = { vertical: 0, horizontal: 0 }
-		this.lastThrottlePercent = 100
+		this.lastThrottlePercent = 50
 		this.setIsHornPressed(false)
 		this.setAreHeadlightsOn(false)
 		this.setSoundPlaying(null)
