@@ -22,15 +22,15 @@ function SupportLink({ page } : { page: "mission" | "contact" }): React.ReactNod
 			<Link
 				href={page}
 				className={cn(
-					"text-hare hover:!text-pipThemeText duration-0 text-base px-4 py-2 flex flex-col items-center",
-					active ? "!text-pipThemeText" : ""
+					"text-hare hover:!text-humpbackText duration-0 text-base px-4 py-2 flex flex-col items-center",
+					active ? "!text-humpbackText" : ""
 				)}
 			>
 				<span>{toUpper(page)}</span>
 				<div
 					className={cn(
 						"absolute -bottom-0.5 w-full h-1 duration-0 cursor-pointer",
-						active ? "bg-pipThemeText" : "group-hover:bg-pipThemeText"
+						active ? "bg-humpback" : "group-hover:bg-humpback"
 					)}
 				/>
 			</Link>

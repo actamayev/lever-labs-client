@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect } from "react"
 import authClass from "../../classes/auth-class"
 import careerQuestClass from "../../classes/career-quest-class"

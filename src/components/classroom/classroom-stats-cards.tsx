@@ -3,26 +3,23 @@
 
 import { observer } from "mobx-react"
 import { useState, SetStateAction } from "react"
-import { Users, Hash, Rocket, Plus } from "lucide-react"
+import { Hash, Rocket, Plus, Trophy } from "lucide-react"
 import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import CreateHubDialog from "./create-hub-dialog"
 import DeleteHubDialog from "./delete-hub-dialog"
+import CreateScoreboardDialog from "./create-scoreboard-dialog"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
+// eslint-disable-next-line max-lines-per-function
 function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const [isCreateHubDialogOpen, setIsCreateHubDialogOpen] = useState(false)
+	const [isCreateScoreboardDialogOpen, setIsCreateScoreboardDialogOpen] = useState(false)
 
 	const colors = getDuolingoColors("humpback")
-
-	const handleCreateHub = (): void => {
-		setIsCreateHubDialogOpen(true)
-	}
-
-	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 
 	return (
 		<div>
@@ -31,7 +28,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Hash className="h-5 w-5 text-pipTheme" />
+							<Hash className="h-5 w-5 text-humpback" />
 							Class Code
 						</CardTitle>
 					</CardHeader>
@@ -45,28 +42,35 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Users className="h-5 w-5 text-pipTheme" />
-							Total Students
+							<Trophy className="h-5 w-5 text-humpback" />
+							Create Scoreboard
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
-						<div className="text-3xl font-bold text-wolf">
-							{classroomData?.students?.length || 0}
-						</div>
+						<p className="text-sm text-eel mb-3">Start a new scoreboard for your students</p>
+						<TactileButton
+							onClick={(): void => setIsCreateScoreboardDialogOpen(true)}
+							className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
+							shadowHeight={4}
+							shadowClass={colors.shadow2}
+						>
+							<Plus className="h-4 w-4 mr-2" />
+							Create New Scoreboard
+						</TactileButton>
 					</CardContent>
 				</Card>
 
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Rocket className="h-5 w-5 text-pipTheme" />
+							<Rocket className="h-5 w-5 text-humpback" />
 							Create Hub
 						</CardTitle>
 					</CardHeader>
 					<CardContent>
 						<p className="text-sm text-eel mb-3">Start a new hub for your students</p>
 						<TactileButton
-							onClick={handleCreateHub}
+							onClick={(): void => setIsCreateHubDialogOpen(true)}
 							className={cn("w-full h-10 rounded-xl text-lg text-white", colors.bg)}
 							shadowHeight={4}
 							shadowClass={colors.shadow2}
@@ -77,6 +81,13 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 					</CardContent>
 				</Card>
 			</div>
+
+			{/* Create Scoreboard Dialog */}
+			<CreateScoreboardDialog
+				classCode={classCode}
+				isCreateScoreboardDialogOpen={isCreateScoreboardDialogOpen}
+				setIsCreateScoreboardDialogOpen={setIsCreateScoreboardDialogOpen}
+			/>
 
 			{/* Create Hub Dialog */}
 			<CreateHubDialog

@@ -1,3 +1,5 @@
+"use client"
+
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
 import careerQuestClass from "../../classes/career-quest-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"

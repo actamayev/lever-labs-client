@@ -6,6 +6,7 @@ import { BasicTeacherClassroomData, DetailedClassroomData,
 	TeacherData } from "@bluedotrobots/common-ts/types/api"
 import { StudentJoinedClassroom, StudentLeftHub, StudentJoinedHub} from "@bluedotrobots/common-ts/types/socket"
 import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { Scoreboard } from "@bluedotrobots/common-ts/types/scoreboard"
 
 interface StudentFocusData {
 	classCode: ClassCode
@@ -187,6 +188,54 @@ class TeacherClass {
 	public setHubToDelete = action((hub: TeacherViewHubData | null): void => {
 		this.hubToDelete = hub
 	})
+
+	public createScoreboard(scoreboard: Scoreboard): void {
+		const classroom = this.detailedClassroomData.get(scoreboard.classCode)
+		if (!classroom) return
+		classroom.scoreboards.push(scoreboard)
+	}
+
+	public getScoreboardData(scoreboardId: string): Scoreboard | undefined {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) return scoreboard
+		}
+		return undefined
+	}
+
+	public updateScoreboardTime(scoreboardId: string, timeInSeconds: number): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) {
+				scoreboard.timeRemaining = timeInSeconds
+				return
+			}
+		}
+	}
+
+	public updateScoreboardTeamScore(scoreboardId: string, teamNumber: 1 | 2, newScore: number): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) {
+				if (teamNumber === 1) {
+					scoreboard.team1Stats.score = newScore
+				} else {
+					scoreboard.team2Stats.score = newScore
+				}
+				return
+			}
+		}
+	}
+
+	public deleteScoreboard(scoreboardId: string): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboardIndex = classroom.scoreboards.findIndex((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboardIndex !== -1) {
+				classroom.scoreboards.splice(scoreboardIndex, 1)
+				return
+			}
+		}
+	}
 
 	public logout(): void {
 		this.classroomData = []

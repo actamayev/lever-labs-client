@@ -1,3 +1,5 @@
+"use client"
+
 import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
 
 // eslint-disable-next-line complexity

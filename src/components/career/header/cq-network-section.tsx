@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import NetworkIconToShow from "../../workbench/network/network-icon-to-show"
 

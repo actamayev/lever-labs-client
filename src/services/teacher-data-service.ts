@@ -2,9 +2,10 @@ import { AxiosResponse } from "axios"
 import { TeacherName } from "@bluedotrobots/common-ts/types/teacher"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCodeResponse, DetailedClassroomData,
 	IncomingTeacherRequestData, NonSuccessResponse, CreateHubRequest } from "@bluedotrobots/common-ts/types/api"
-import { ClassCode, CareerUUID, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, CareerUUID, HubUUID, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import { Scoreboard } from "@bluedotrobots/common-ts/types/scoreboard"
 
 export default class TeacherDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
@@ -54,19 +55,19 @@ export default class TeacherDataService extends BaseDataService {
 		slideId: string
 	): Promise<AxiosResponse<CreateHubRequest | NonSuccessResponse>> {
 		return await this.httpClient.http.post<CreateHubRequest | NonSuccessResponse>(
-			this.buildUrl(`/create-hub/${classCode}`), { hubName, careerUUID, slideId }
+			this.buildUrl(`/hub/create-hub/${classCode}`), { hubName, careerUUID, slideId }
 		)
 	}
 
 	async deleteHub(classCode: ClassCode, hubId: HubUUID): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/delete-hub/${classCode}`), { hubId }
+			this.buildUrl(`/hub/delete-hub/${classCode}`), { hubId }
 		)
 	}
 
 	async setHubNewSlideId(classCode: ClassCode, hubId: HubUUID, newSlideId: string): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/set-hub-new-slide-id/${classCode}`), { hubId, newSlideId }
+			this.buildUrl(`/hub/set-hub-new-slide-id/${classCode}`), { hubId, newSlideId }
 		)
 	}
 
@@ -137,6 +138,45 @@ export default class TeacherDataService extends BaseDataService {
 	): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/update-garage-display-all-students/${classCode}`), { garageDisplayStatus }
+		)
+	}
+
+	async createScoreboard(
+		classCode: ClassCode,
+		scoreboardName: string
+	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
+		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/create-scoreboard/${classCode}`), { scoreboardName }
+		)
+	}
+
+	async updateScoreboardTime(
+		scoreboardId: ScoreboardUUID,
+		timeRemainingInSeconds: number,
+		classCode: ClassCode
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/update-remaining-time/${classCode}`), { timeRemainingInSeconds, scoreboardId }
+		)
+	}
+
+	async updateScoreboardTeamScore(
+		scoreboardId: ScoreboardUUID,
+		teamNumber: 1 | 2,
+		newScore: number,
+		classCode: ClassCode
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/update-team-score/${classCode}`), { teamNumber, newScore, scoreboardId }
+		)
+	}
+
+	async deleteScoreboard(
+		classCode: ClassCode,
+		scoreboardId: ScoreboardUUID
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/delete-scoreboard/${classCode}`), { scoreboardId }
 		)
 	}
 }

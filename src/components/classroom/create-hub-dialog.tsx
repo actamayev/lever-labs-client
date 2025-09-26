@@ -23,7 +23,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import { CAREER_DEFINITIONS } from "../../utils/career-quest/career-quest-right-content/all-career-quest-right-content"
-import createHub from "../../utils/teacher/create-hub"
+import createHub from "../../utils/teacher/hub/create-hub"
 
 interface Props {
 	classCode: ClassCode
@@ -170,7 +170,7 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 								{allCareers.map((career): React.ReactNode => {
 									const Icon = career.careerIcon
 									return (
-										<SelectItem key={career.careerUUID} value={career.careerUUID}>
+										<SelectItem key={career.careerUUID} value={career.careerUUID} className="cursor-pointer">
 											<div className="flex items-center gap-2">
 												<Icon className="h-4 w-4" />
 												<span>{career.careerName}</span>

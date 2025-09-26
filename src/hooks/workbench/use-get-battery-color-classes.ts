@@ -1,3 +1,5 @@
+"use client"
+
 import { useMemo } from "react"
 import workbenchClass from "../../classes/workbench-class"
 

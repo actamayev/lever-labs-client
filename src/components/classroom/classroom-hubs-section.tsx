@@ -59,7 +59,7 @@ function ClassroomHubsSection({ classCode }: ClassroomHubsSectionProps): React.R
 		<Card className="border-2 border-swan bg-standardBackground mb-8">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
-					<Play className="h-5 w-5 text-pipTheme" />
+					<Play className="h-5 w-5 text-humpback" />
 					Active Hubs
 				</CardTitle>
 				<CardDescription>

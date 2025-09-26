@@ -31,7 +31,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 		>
 			<Link
 				href={whereToNavigate}
-				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-pipThemeText duration-0"
+				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-humpbackText duration-0"
 			>
 				<Image
 					src="/favicon.svg"

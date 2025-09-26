@@ -29,7 +29,7 @@ function HubStudentsDialog(props: Props): React.ReactNode {
 			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl flex items-center gap-2">
-						<Users className="h-6 w-6 text-pipTheme" />
+						<Users className="h-6 w-6 text-humpback" />
 						Students in Hub
 					</DialogTitle>
 					<DialogClose />
@@ -58,7 +58,7 @@ function HubStudentsDialog(props: Props): React.ReactNode {
 										<CardContent className="p-3">
 											<div className="flex items-center gap-3">
 												<Avatar className="h-8 w-8">
-													<AvatarFallback className="bg-pipTheme text-white text-sm">
+													<AvatarFallback className="bg-humpback text-white text-sm">
 														{student.username.charAt(0).toUpperCase()}
 													</AvatarFallback>
 												</Avatar>

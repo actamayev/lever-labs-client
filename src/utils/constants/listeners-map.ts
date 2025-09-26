@@ -1,3 +1,5 @@
+"use client"
+
 import { SocketEventPayloadMap, SocketEvents } from "@bluedotrobots/common-ts/types/socket"
 import sandboxClass from "../../classes/sandbox-class"
 import studentClass from "../../classes/student-class"

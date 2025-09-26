@@ -142,7 +142,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
-							<Hash className="h-5 w-5 text-pipTheme" />
+							<Hash className="h-5 w-5 text-humpback" />
 							Class Code
 						</CardTitle>
 					</CardHeader>
@@ -172,7 +172,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
-							<Play className="h-5 w-5 text-pipTheme" />
+							<Play className="h-5 w-5 text-humpback" />
 							Available Hubs
 						</CardTitle>
 						<CardDescription>

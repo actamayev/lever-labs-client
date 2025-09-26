@@ -4,9 +4,9 @@ const path = require('path');
 // Configuration
 const ROOT_DIR = './src'; // Change this to your project directory
 const EXTENSIONS = ['.tsx', '.jsx', '.ts']; // File extensions to process
-const EXCLUDED_DIRS = ['node_modules', '.next', 'dist', 'build', 'types', 'services']; // Directories to skip
+const EXCLUDED_DIRS = ['node_modules', '.next', 'dist', 'build', 'types', 'services', 'src/classes/__tests__']; // Directories to skip
 const EXCLUDED_FILES = ['.d.ts']; // File extensions to skip
-const EXCLUDED_FILENAMES = ['create-metadata.ts', 'constants.ts', 'page-constants.ts', 'rgb-to-hex.ts']; // Specific files to skip
+const EXCLUDED_FILENAMES = ['create-metadata.ts', 'constants.ts', 'page-constants.ts', 'rgb-to-hex.ts', 'auth-server.ts', 'authenticated-layout.tsx']; // Specific files to skip
 
 // Counter for reporting
 let stats = {

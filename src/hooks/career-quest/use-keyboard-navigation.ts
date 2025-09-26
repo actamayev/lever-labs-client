@@ -1,3 +1,5 @@
+"use client"
+
 
 import { useEffect, useRef, useState } from "react"
 import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
