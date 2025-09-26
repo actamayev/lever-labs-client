@@ -22,7 +22,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	const [displayTime, setDisplayTime] = useState(0)
 	const [hasBeenStarted, setHasBeenStarted] = useState(false)
 	const colors = getDuolingoColors("humpback")
-	
+
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
 		retrieveDetailedClassroomInfo(classCode)
@@ -201,7 +201,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 							</div>
 
-							<div className="flex justify-center gap-4">
+							{/* <div className="flex justify-center gap-4">
 								<TactileButton
 									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
 									shadowHeight={4}
@@ -217,7 +217,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>
-							</div>
+							</div> */}
 						</div>
 					</CardContent>
 				</Card>
@@ -254,7 +254,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 							</div>
 
-							<div className="flex justify-center gap-4">
+							{/* <div className="flex justify-center gap-4">
 								<TactileButton
 									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
 									shadowHeight={4}
@@ -270,7 +270,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>
-							</div>
+							</div> */}
 						</div>
 					</CardContent>
 				</Card>
