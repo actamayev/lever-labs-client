@@ -26,10 +26,9 @@ function AdjustMaxDrivingSpeed(): React.ReactNode {
 
 	const handleValueChange = (value: number[]): void => {
 		// Only allow changes if not disabled
-		if (!isDisabled) {
-			const newMaxSpeed = value[0]
-			garageClass.setMotorThrottlePercent(newMaxSpeed)
-		}
+		if (isDisabled) return
+		const newMaxSpeed = value[0]
+		garageClass.setMotorThrottlePercent(newMaxSpeed)
 	}
 
 	const handleKeyDown = (event: React.KeyboardEvent): void => {
@@ -56,7 +55,7 @@ function AdjustMaxDrivingSpeed(): React.ReactNode {
 				<div className="h-full relative">
 					<Slider
 						defaultValue={[garageClass.motorThrottlePercent]}
-						max={100}
+						max={50}
 						step={1}
 						onValueChange={handleValueChange}
 						className={cn("h-full duration-0", isDisabled && "opacity-50")}
