@@ -14,6 +14,7 @@ import updateScoreboardTime from "../../utils/teacher/scoreboard/update-scoreboa
 import updateScoreboardTeamScore from "../../utils/teacher/scoreboard/update-scoreboard-team-score"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import updateTeamDrivingStatus from "../../utils/teacher/scoreboard/update-team-driving-status"
+import updateTeamLightsStatus from "../../utils/teacher/scoreboard/update-team-lights-status"
 import TeamMemberAssignmentDialog from "./team-member-assignment-dialog"
 
 // eslint-disable-next-line max-lines-per-function
@@ -96,6 +97,13 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 		void updateTeamDrivingStatus(classCode, scoreboardId, teamNumber, !currentStatus)
 	}, [classCode, scoreboardId])
 
+	const handleTeamLightsToggle = useCallback((teamNumber: 1 | 2): void => {
+		const currentStatus = teacherClass.getTeamLightsStatus(classCode, scoreboardId, teamNumber)
+		if (currentStatus === null) return
+
+		void updateTeamLightsStatus(classCode, scoreboardId, teamNumber, !currentStatus)
+	}, [classCode, scoreboardId])
+
 	const getTeamDrivingStatus = useCallback((teamNumber: 1 | 2): boolean | null => {
 		return teacherClass.getTeamDrivingStatus(classCode, scoreboardId, teamNumber)
 	}, [classCode, scoreboardId])
@@ -113,6 +121,24 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 		if (status === false) return "shadow-cardinal-2"
 		return "shadow-hare"
 	}, [getTeamDrivingStatus])
+
+	const getTeamLightsStatus = useCallback((teamNumber: 1 | 2): boolean | null => {
+		return teacherClass.getTeamLightsStatus(classCode, scoreboardId, teamNumber)
+	}, [classCode, scoreboardId])
+
+	const getTeamLightsButtonClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamLightsStatus(teamNumber)
+		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === false) return "bg-cardinal border border-cardinal"
+		return "bg-eel dark:bg-swan"
+	}, [getTeamLightsStatus])
+
+	const getTeamLightsShadowClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamLightsStatus(teamNumber)
+		if (status === true) return "shadow-chargingGreen-2"
+		if (status === false) return "shadow-cardinal-2"
+		return "shadow-hare"
+	}, [getTeamLightsStatus])
 
 	const formatTime = useCallback((seconds: number): string => {
 		const mins = Math.floor(seconds / 60)
@@ -251,9 +277,10 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamLightsToggle(1)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(1))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamLightsShadowClass(1)}
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>
@@ -316,9 +343,10 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamLightsToggle(2)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(2))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamLightsShadowClass(2)}
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>

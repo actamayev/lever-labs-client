@@ -295,6 +295,29 @@ class TeacherClass {
 		return allSameStatus ? firstStatus : null
 	}
 
+	public getTeamLightsStatus(classCode: ClassCode, scoreboardId: string, teamNumber: 1 | 2): boolean | null {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return null
+
+		const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+		if (!scoreboard) return null
+
+		const teamStudents = teamNumber === 1 ? scoreboard.team1Stats.students : scoreboard.team2Stats.students
+		if (teamStudents.length === 0) return null
+
+		// Check if all team members have the same lights status
+		const firstStudent = classroom.students.find((s): boolean => s.studentId === teamStudents[0].studentId)
+		if (!firstStudent) return null
+
+		const firstStatus = firstStudent.garageLightsAllowed
+		const allSameStatus = teamStudents.every((teamStudent): boolean => {
+			const student = classroom.students.find((s): boolean => s.studentId === teamStudent.studentId)
+			return student?.garageLightsAllowed === firstStatus
+		})
+
+		return allSameStatus ? firstStatus : null
+	}
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
