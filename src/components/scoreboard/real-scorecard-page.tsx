@@ -3,7 +3,7 @@
 import { ClassCode, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
-import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users } from "lucide-react"
+import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users, RotateCcw } from "lucide-react"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { Card, CardContent } from "../shadcn/ui/card"
@@ -79,6 +79,12 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 	const handleAddTime = useCallback((seconds: number): void => {
 		setDisplayTime((prev): number => prev + seconds)
+	}, [])
+
+	const handleResetTime = useCallback((): void => {
+		setDisplayTime(0)
+		setIsPaused(true)
+		setHasBeenStarted(false)
 	}, [])
 
 	const handleTeamScoreChange = useCallback((teamNumber: 1 | 2, change: number): void => {
@@ -211,6 +217,15 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 				{/* Timer Control Buttons */}
 				<div className="flex justify-center gap-4">
+					<TactileButton
+						onClick={handleResetTime}
+						className="px-6 py-3 rounded-xl text-lg text-white bg-cardinal"
+						shadowHeight={4}
+						shadowClass="shadow-cardinal"
+					>
+						<RotateCcw className="h-5 w-5" />
+					</TactileButton>
+
 					<TactileButton
 						onClick={handlePauseResume}
 						className={cn("px-6 py-3 rounded-xl text-lg text-white", isPaused ? colors.bg : "bg-eel dark:bg-swan")}
