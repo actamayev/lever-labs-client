@@ -49,7 +49,7 @@ export default function CreateScoreboardDialog(props: Props): React.ReactNode {
 		try {
 			const createdScoreboard = await createScoreboard(classCode, scoreboardName)
 			if (createdScoreboard) {
-				navigate(`/scoreboard/${createdScoreboard.scoreboardId}`)
+				navigate(`/scoreboard/${classCode}/${createdScoreboard.scoreboardId}`)
 			}
 
 			// Success - close dialog and reset form

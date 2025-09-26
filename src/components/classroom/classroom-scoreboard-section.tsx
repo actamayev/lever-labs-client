@@ -32,8 +32,8 @@ function ClassroomScoreboardSection({ classCode }: ClassroomScoreboardSectionPro
 	}, [classCode])
 
 	const joinScoreboardHandler = useCallback((scoreboard: Scoreboard): void => {
-		navigate(`/scoreboard/${scoreboard.scoreboardId}`)
-	}, [navigate])
+		navigate(`/scoreboard/${classCode}/${scoreboard.scoreboardId}`)
+	}, [navigate, classCode])
 
 	const formatTime = useCallback((seconds: number): string => {
 		const mins = Math.floor(seconds / 60)

@@ -81,7 +81,8 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 			<div className="flex items-center gap-4 mb-8">
 				<TactileButton
 					onClick={handleBackClick}
-					className="flex items-center gap-2 h-10 px-4 rounded-xl text-lg bg-polar text-eel border border-swan hover:bg-gray-50"
+					className="flex items-center gap-2 h-10 px-4 rounded-xl text-lg bg-polar text-eel
+					border border-swan hover:bg-gray-50 dark:hover:bg-swan"
 					shadowHeight={4}
 					shadowClass="shadow-gray-300"
 				>

@@ -8,7 +8,7 @@ declare global {
 
 	type TeacherPages =
 	| "/scoreboard"
-	| `/scoreboard/${ScoreboardUUID}`
+	| `/scoreboard/${ClassCode}/${ScoreboardUUID}`
 	| ClassManagerPages
 
 	type ClassManagerPages =

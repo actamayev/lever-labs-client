@@ -1,6 +1,6 @@
 "use client"
 
-import { ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
 import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus } from "lucide-react"
@@ -12,14 +12,20 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import updateScoreboardTime from "../../utils/teacher/scoreboard/update-scoreboard-time"
 import updateScoreboardTeamScore from "../../utils/teacher/scoreboard/update-scoreboard-team-score"
+import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 
 // eslint-disable-next-line max-lines-per-function
-function RealScoreboardPage({ scoreboardId }: { scoreboardId: ScoreboardUUID }): React.ReactNode {
+function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode; scoreboardId: ScoreboardUUID }): React.ReactNode {
 	const scoreboardData = teacherClass.getScoreboardData(scoreboardId)
 	const navigate = useTypedNavigate()
 	const [isPaused, setIsPaused] = useState(false)
 	const [displayTime, setDisplayTime] = useState(0)
 	const colors = getDuolingoColors("humpback")
+
+	// Fetch detailed classroom data on component mount
+	useEffect((): void => {
+		retrieveDetailedClassroomInfo(classCode)
+	}, [classCode])
 
 	// Initialize display time when scoreboard data loads
 	useEffect((): void => {
@@ -54,10 +60,8 @@ function RealScoreboardPage({ scoreboardId }: { scoreboardId: ScoreboardUUID }):
 	}, [displayTime, scoreboardId, scoreboardData])
 
 	const handleBackClick = useCallback((): void => {
-		if (scoreboardData) {
-			navigate(`/class-manager/${scoreboardData.classCode}`)
-		}
-	}, [navigate, scoreboardData])
+		navigate(`/class-manager/${classCode}`)
+	}, [navigate, classCode])
 
 	const handlePauseResume = useCallback((): void => {
 		setIsPaused(!isPaused)
@@ -81,6 +85,28 @@ function RealScoreboardPage({ scoreboardId }: { scoreboardId: ScoreboardUUID }):
 		const secs = seconds % 60
 		return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`
 	}, [])
+
+	// Show loading state while retrieving classroom data
+	if (teacherClass.isRetrievingDetailedData) {
+		return (
+			<div className="min-h-screen bg-standardBackground p-6">
+				<div className="mb-8">
+					<TactileButton
+						onClick={handleBackClick}
+						className="flex items-center gap-2 px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						<ArrowLeft className="h-4 w-4" />
+						Back to Class Manager
+					</TactileButton>
+				</div>
+				<div className="flex items-center justify-center min-h-[400px]">
+					<div className="text-lg text-eel">Loading scoreboard data...</div>
+				</div>
+			</div>
+		)
+	}
 
 	if (!scoreboardData) return <div>Scoreboard not found</div>
 
