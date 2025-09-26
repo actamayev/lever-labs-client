@@ -3,7 +3,7 @@
 import { ClassCode, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
-import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus } from "lucide-react"
+import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users, RotateCcw } from "lucide-react"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { Card, CardContent } from "../shadcn/ui/card"
@@ -13,6 +13,9 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import updateScoreboardTime from "../../utils/teacher/scoreboard/update-scoreboard-time"
 import updateScoreboardTeamScore from "../../utils/teacher/scoreboard/update-scoreboard-team-score"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
+import updateTeamDrivingStatus from "../../utils/teacher/scoreboard/update-team-driving-status"
+import updateTeamLightsStatus from "../../utils/teacher/scoreboard/update-team-lights-status"
+import TeamMemberAssignmentDialog from "./team-member-assignment-dialog"
 
 // eslint-disable-next-line max-lines-per-function
 function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode; scoreboardId: ScoreboardUUID }): React.ReactNode {
@@ -21,6 +24,8 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	const [isPaused, setIsPaused] = useState(true)
 	const [displayTime, setDisplayTime] = useState(0)
 	const [hasBeenStarted, setHasBeenStarted] = useState(false)
+	const [isTeam1DialogOpen, setIsTeam1DialogOpen] = useState(false)
+	const [isTeam2DialogOpen, setIsTeam2DialogOpen] = useState(false)
 	const colors = getDuolingoColors("humpback")
 
 	// Fetch detailed classroom data on component mount
@@ -76,6 +81,12 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 		setDisplayTime((prev): number => prev + seconds)
 	}, [])
 
+	const handleResetTime = useCallback((): void => {
+		setDisplayTime(0)
+		setIsPaused(true)
+		setHasBeenStarted(false)
+	}, [])
+
 	const handleTeamScoreChange = useCallback((teamNumber: 1 | 2, change: number): void => {
 		if (!scoreboardData) return
 
@@ -84,6 +95,56 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 		void updateScoreboardTeamScore(scoreboardId, teamNumber, newScore)
 	}, [scoreboardData, scoreboardId])
+
+	const handleTeamDrivingToggle = useCallback((teamNumber: 1 | 2): void => {
+		const currentStatus = teacherClass.getTeamDrivingStatus(classCode, scoreboardId, teamNumber)
+		if (currentStatus === null) return
+
+		void updateTeamDrivingStatus(classCode, scoreboardId, teamNumber, !currentStatus)
+	}, [classCode, scoreboardId])
+
+	const handleTeamLightsToggle = useCallback((teamNumber: 1 | 2): void => {
+		const currentStatus = teacherClass.getTeamLightsStatus(classCode, scoreboardId, teamNumber)
+		if (currentStatus === null) return
+
+		void updateTeamLightsStatus(classCode, scoreboardId, teamNumber, !currentStatus)
+	}, [classCode, scoreboardId])
+
+	const getTeamDrivingStatus = useCallback((teamNumber: 1 | 2): boolean | null => {
+		return teacherClass.getTeamDrivingStatus(classCode, scoreboardId, teamNumber)
+	}, [classCode, scoreboardId])
+
+	const getTeamDrivingButtonClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamDrivingStatus(teamNumber)
+		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === false) return "bg-cardinal border border-cardinal"
+		return "bg-eel dark:bg-swan"
+	}, [getTeamDrivingStatus])
+
+	const getTeamDrivingShadowClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamDrivingStatus(teamNumber)
+		if (status === true) return "shadow-chargingGreen-2"
+		if (status === false) return "shadow-cardinal-2"
+		return "shadow-hare"
+	}, [getTeamDrivingStatus])
+
+	const getTeamLightsStatus = useCallback((teamNumber: 1 | 2): boolean | null => {
+		return teacherClass.getTeamLightsStatus(classCode, scoreboardId, teamNumber)
+	}, [classCode, scoreboardId])
+
+	const getTeamLightsButtonClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamLightsStatus(teamNumber)
+		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === false) return "bg-cardinal border border-cardinal"
+		return "bg-eel dark:bg-swan"
+	}, [getTeamLightsStatus])
+
+	const getTeamLightsShadowClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamLightsStatus(teamNumber)
+		if (status === true) return "shadow-chargingGreen-2"
+		if (status === false) return "shadow-cardinal-2"
+		return "shadow-hare"
+	}, [getTeamLightsStatus])
 
 	const formatTime = useCallback((seconds: number): string => {
 		const mins = Math.floor(seconds / 60)
@@ -113,7 +174,25 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 		)
 	}
 
-	if (!scoreboardData) return <div>Scoreboard not found</div>
+	if (!scoreboardData) {
+		return (
+			<div className="min-h-screen bg-standardBackground p-6">
+				<div className="mb-8">
+					<TactileButton
+						onClick={handleBackClick}
+						className="flex items-center gap-2 px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						<ArrowLeft className="h-4 w-4" />
+						Back to Class Manager
+					</TactileButton>
+				</div>
+				<div className="flex items-center justify-center min-h-[400px]">
+					<div className="text-lg text-eel">Scoreboard not found</div>
+				</div>
+			</div>)
+	}
 
 	return (
 		<div className="min-h-screen bg-standardBackground p-6">
@@ -138,6 +217,15 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 				{/* Timer Control Buttons */}
 				<div className="flex justify-center gap-4">
+					<TactileButton
+						onClick={handleResetTime}
+						className="px-6 py-3 rounded-xl text-lg text-white bg-cardinal"
+						shadowHeight={4}
+						shadowClass="shadow-cardinal"
+					>
+						<RotateCcw className="h-5 w-5" />
+					</TactileButton>
+
 					<TactileButton
 						onClick={handlePauseResume}
 						className={cn("px-6 py-3 rounded-xl text-lg text-white", isPaused ? colors.bg : "bg-eel dark:bg-swan")}
@@ -169,9 +257,19 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 			{/* Teams Section */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-				{/* Team 1 */}
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardContent className="p-6">
+						<div className="relative">
+							{/* Team Assignment Button */}
+							<TactileButton
+								onClick={(): void => setIsTeam1DialogOpen(true)}
+								className="absolute top-0 right-0 px-3 py-2 rounded-lg text-sm text-white bg-eel dark:bg-swan"
+								shadowHeight={2}
+								shadowClass="shadow-hare"
+							>
+								<Users className="h-4 w-4" />
+							</TactileButton>
+						</div>
 						<div className="text-center">
 							<h2 className="text-2xl font-bold text-wolf underline mb-4">
 								{scoreboardData.team1Stats.teamName}
@@ -201,23 +299,25 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 							</div>
 
-							{/* <div className="flex justify-center gap-4">
+							<div className="flex justify-center gap-4">
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamDrivingToggle(1)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(1))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamDrivingShadowClass(1)}
 								>
 									<Car className="h-4 w-4" />
 								</TactileButton>
 
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamLightsToggle(1)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(1))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamLightsShadowClass(1)}
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>
-							</div> */}
+							</div>
 						</div>
 					</CardContent>
 				</Card>
@@ -225,6 +325,17 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 				{/* Team 2 */}
 				<Card className="border-2 border-swan bg-standardBackground">
 					<CardContent className="p-6">
+						<div className="relative">
+							{/* Team Assignment Button */}
+							<TactileButton
+								onClick={(): void => setIsTeam2DialogOpen(true)}
+								className="absolute top-0 right-0 px-3 py-2 rounded-lg text-sm text-white bg-eel dark:bg-swan"
+								shadowHeight={2}
+								shadowClass="shadow-hare"
+							>
+								<Users className="h-4 w-4" />
+							</TactileButton>
+						</div>
 						<div className="text-center">
 							<h2 className="text-2xl font-bold text-wolf underline mb-4">
 								{scoreboardData.team2Stats.teamName}
@@ -254,27 +365,45 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 								</TactileButton>
 							</div>
 
-							{/* <div className="flex justify-center gap-4">
+							<div className="flex justify-center gap-4">
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamDrivingToggle(2)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(2))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamDrivingShadowClass(2)}
 								>
 									<Car className="h-4 w-4" />
 								</TactileButton>
 
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamLightsToggle(2)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(2))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamLightsShadowClass(2)}
 								>
 									<Lightbulb className="h-4 w-4" />
 								</TactileButton>
-							</div> */}
+							</div>
 						</div>
 					</CardContent>
 				</Card>
 			</div>
+
+			{/* Team Assignment Dialogs */}
+			<TeamMemberAssignmentDialog
+				classCode={classCode}
+				scoreboardId={scoreboardId}
+				teamNumber={1}
+				isOpen={isTeam1DialogOpen}
+				setIsOpen={setIsTeam1DialogOpen}
+			/>
+			<TeamMemberAssignmentDialog
+				classCode={classCode}
+				scoreboardId={scoreboardId}
+				teamNumber={2}
+				isOpen={isTeam2DialogOpen}
+				setIsOpen={setIsTeam2DialogOpen}
+			/>
 		</div>
 	)
 }

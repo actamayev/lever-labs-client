@@ -237,6 +237,87 @@ class TeacherClass {
 		}
 	}
 
+	public addStudentToScoreboard(scoreboardId: string, studentId: number, teamNumber: 1 | 2 = 1): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (!scoreboard) continue
+
+			const student = classroom.students.find((s): boolean => s.studentId === studentId)
+			if (!student) continue
+
+			const targetTeam = teamNumber === 1 ? scoreboard.team1Stats : scoreboard.team2Stats
+			const existingStudent = targetTeam.students.find((s): boolean => s.studentId === studentId)
+			if (existingStudent) continue
+
+			targetTeam.students.push({
+				studentId: student.studentId,
+				username: student.username
+			})
+			return
+		}
+	}
+
+	public removeStudentFromScoreboard(scoreboardId: string, studentId: number, teamNumber: 1 | 2): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) {
+				// Remove from both teams
+				if (teamNumber === 1) {
+					scoreboard.team1Stats.students = scoreboard.team1Stats.students.filter((s): boolean => s.studentId !== studentId)
+				} else {
+					scoreboard.team2Stats.students = scoreboard.team2Stats.students.filter((s): boolean => s.studentId !== studentId)
+				}
+				return
+			}
+		}
+	}
+
+	public getTeamDrivingStatus(classCode: ClassCode, scoreboardId: string, teamNumber: 1 | 2): boolean | null {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return null
+
+		const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+		if (!scoreboard) return null
+
+		const teamStudents = teamNumber === 1 ? scoreboard.team1Stats.students : scoreboard.team2Stats.students
+		if (teamStudents.length === 0) return null
+
+		// Check if all team members have the same driving status
+		const firstStudent = classroom.students.find((s): boolean => s.studentId === teamStudents[0].studentId)
+		if (!firstStudent) return null
+
+		const firstStatus = firstStudent.garageDrivingAllowed
+		const allSameStatus = teamStudents.every((teamStudent): boolean => {
+			const student = classroom.students.find((s): boolean => s.studentId === teamStudent.studentId)
+			return student?.garageDrivingAllowed === firstStatus
+		})
+
+		return allSameStatus ? firstStatus : null
+	}
+
+	public getTeamLightsStatus(classCode: ClassCode, scoreboardId: string, teamNumber: 1 | 2): boolean | null {
+		const classroom = this.detailedClassroomData.get(classCode)
+		if (!classroom) return null
+
+		const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+		if (!scoreboard) return null
+
+		const teamStudents = teamNumber === 1 ? scoreboard.team1Stats.students : scoreboard.team2Stats.students
+		if (teamStudents.length === 0) return null
+
+		// Check if all team members have the same lights status
+		const firstStudent = classroom.students.find((s): boolean => s.studentId === teamStudents[0].studentId)
+		if (!firstStudent) return null
+
+		const firstStatus = firstStudent.garageLightsAllowed
+		const allSameStatus = teamStudents.every((teamStudent): boolean => {
+			const student = classroom.students.find((s): boolean => s.studentId === teamStudent.studentId)
+			return student?.garageLightsAllowed === firstStatus
+		})
+
+		return allSameStatus ? firstStatus : null
+	}
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
