@@ -168,7 +168,25 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 		)
 	}
 
-	if (!scoreboardData) return <div>Scoreboard not found</div>
+	if (!scoreboardData) {
+		return (
+			<div className="min-h-screen bg-standardBackground p-6">
+				<div className="mb-8">
+					<TactileButton
+						onClick={handleBackClick}
+						className="flex items-center gap-2 px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+						shadowHeight={4}
+						shadowClass="shadow-hare"
+					>
+						<ArrowLeft className="h-4 w-4" />
+						Back to Class Manager
+					</TactileButton>
+				</div>
+				<div className="flex items-center justify-center min-h-[400px]">
+					<div className="text-lg text-eel">Scoreboard not found</div>
+				</div>
+			</div>)
+	}
 
 	return (
 		<div className="min-h-screen bg-standardBackground p-6">
