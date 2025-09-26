@@ -179,4 +179,26 @@ export default class TeacherDataService extends BaseDataService {
 			this.buildUrl(`/scoreboard/delete-scoreboard/${classCode}`), { scoreboardId }
 		)
 	}
+
+	async addStudentToScoreboard(
+		classCode: ClassCode,
+		studentId: number,
+		scoreboardId: ScoreboardUUID,
+		teamNumber: 1 | 2
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/add-student-to-scoreboard/${classCode}`), { studentId, scoreboardId, teamNumber }
+		)
+	}
+
+	async removeStudentFromScoreboard(
+		classCode: ClassCode,
+		studentId: number,
+		scoreboardId: ScoreboardUUID,
+		teamNumber: 1 | 2
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/remove-student-from-scoreboard/${classCode}`), { studentId, scoreboardId, teamNumber }
+		)
+	}
 }
