@@ -114,5 +114,6 @@ function isProtectedPage(path: PageNames): boolean {
 		path.startsWith("/settings/") ||
 		path.startsWith("/career-quest/") ||
 		path.startsWith("/class-manager/") ||
-		path.startsWith("/whiteboard/")
+		path.startsWith("/whiteboard/") ||
+		path.startsWith("/scoreboard/")
 }

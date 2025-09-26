@@ -1,3 +1,5 @@
+"use client"
+
 import { isNil } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { SensorPayload, SensorPayloadMZ } from "@bluedotrobots/common-ts/types/pip"

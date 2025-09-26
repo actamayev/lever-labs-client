@@ -18,14 +18,14 @@ export function landingBulletTextParagraph (additionalClasses?: string): string 
 
 export function landingBulletTextTitle (additionalClasses?: string): string {
 	return cn(
-		"text-lg sm:text-xl font-semibold text-pipThemeText",
+		"text-lg sm:text-xl font-semibold text-humpbackText",
 		additionalClasses
 	)
 }
 
 export function landingTableHeader (additionalClasses?: string): string {
 	return cn(
-		"p-2 sm:p-4 font-semibold text-lg sm:text-lg md:text-xl text-center bg-pipTheme bg-opacity-10",
+		"p-2 sm:p-4 font-semibold text-lg sm:text-lg md:text-xl text-center bg-humpback bg-opacity-10",
 		additionalClasses
 	)
 }

@@ -1,3 +1,5 @@
+"use client"
+
 /**
  * Helper to create image content for career quest
  * @param filename - Just the filename, e.g. "pip-intro.jpg"

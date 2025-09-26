@@ -9,7 +9,7 @@ interface Props {
 
 export default function LandingSectionHeaderText({ text, extraClasses = "" } : Props): React.ReactNode {
 	return (
-		<h2 className={cn("text-5xl md:text-5xl lg:text-5xl font-bold text-pipThemeText", extraClasses)}>
+		<h2 className={cn("text-5xl md:text-5xl lg:text-5xl font-bold text-humpbackText", extraClasses)}>
 			{text}
 		</h2>
 	)

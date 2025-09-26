@@ -1,3 +1,5 @@
+"use client"
+
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import BatteryWorkbenchIcon from "../../workbench/battery/battery-workbench-icon"

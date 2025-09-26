@@ -1,6 +1,6 @@
 "use client"
 
-import { Plus, Users, BookOpen, Calendar } from "lucide-react"
+import { Plus, BookOpen, Calendar } from "lucide-react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
@@ -17,14 +17,13 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 	const colors = getDuolingoColors("humpback")
 
 	const totalClasses = teacherClass.classroomData.length
-	const activeClasses = totalClasses // All classes are considered active for now
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+		<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 			<Card className="border-2 border-swan bg-standardBackground">
 				<CardHeader className="pb-3">
 					<CardTitle className="flex items-center gap-2 text-lg">
-						<BookOpen className="h-5 w-5 text-pipTheme" />
+						<BookOpen className="h-5 w-5 text-humpback" />
 						Total Classes
 					</CardTitle>
 				</CardHeader>
@@ -38,21 +37,7 @@ function ClassManagerStatsCards({ setIsCreateDialogOpen }: ClassManagerStatsCard
 			<Card className="border-2 border-swan bg-standardBackground">
 				<CardHeader className="pb-3">
 					<CardTitle className="flex items-center gap-2 text-lg">
-						<Users className="h-5 w-5 text-pipTheme" />
-						Active Classes
-					</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<div className="text-3xl font-bold text-wolf">
-						{activeClasses}
-					</div>
-				</CardContent>
-			</Card>
-
-			<Card className="border-2 border-swan bg-standardBackground">
-				<CardHeader className="pb-3">
-					<CardTitle className="flex items-center gap-2 text-lg">
-						<Calendar className="h-5 w-5 text-pipTheme" />
+						<Calendar className="h-5 w-5 text-humpback" />
 						Quick Actions
 					</CardTitle>
 				</CardHeader>

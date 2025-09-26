@@ -1,3 +1,5 @@
+"use client"
+
 import { Trash2, X } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"

@@ -15,7 +15,7 @@ import {
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
-import deleteHub from "../../utils/teacher/delete-hub"
+import deleteHub from "../../utils/teacher/hub/delete-hub"
 
 interface Props {
 	isDeleteDialogOpen: boolean

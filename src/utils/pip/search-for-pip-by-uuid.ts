@@ -1,3 +1,5 @@
+"use client"
+
 import isEqual from "lodash-es/isEqual"
 import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"

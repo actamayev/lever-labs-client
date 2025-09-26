@@ -1,3 +1,5 @@
+"use client"
+
 import { observer } from "mobx-react"
 import { AnimatePresence, MotionProps, motion } from "framer-motion"
 import Image from "next/image"
