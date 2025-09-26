@@ -41,6 +41,7 @@ function TeamMemberAssignmentDialog(props: Props): React.ReactNode {
 	const currentTeamStudents = useMemo((): StudentJoinedScoreboardData[] => {
 		if (!scoreboardData) return []
 		return teamNumber === 1 ? scoreboardData.team1Stats.students : scoreboardData.team2Stats.students
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [scoreboardData, teamNumber, scoreboardData?.team1Stats.students.length, scoreboardData?.team2Stats.students.length])
 
 	const availableStudents = useMemo((): StudentJoinedScoreboardData[] => {

@@ -13,6 +13,7 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import updateScoreboardTime from "../../utils/teacher/scoreboard/update-scoreboard-time"
 import updateScoreboardTeamScore from "../../utils/teacher/scoreboard/update-scoreboard-team-score"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
+import updateTeamDrivingStatus from "../../utils/teacher/scoreboard/update-team-driving-status"
 import TeamMemberAssignmentDialog from "./team-member-assignment-dialog"
 
 // eslint-disable-next-line max-lines-per-function
@@ -87,6 +88,31 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 		void updateScoreboardTeamScore(scoreboardId, teamNumber, newScore)
 	}, [scoreboardData, scoreboardId])
+
+	const handleTeamDrivingToggle = useCallback((teamNumber: 1 | 2): void => {
+		const currentStatus = teacherClass.getTeamDrivingStatus(classCode, scoreboardId, teamNumber)
+		if (currentStatus === null) return
+
+		void updateTeamDrivingStatus(classCode, scoreboardId, teamNumber, !currentStatus)
+	}, [classCode, scoreboardId])
+
+	const getTeamDrivingStatus = useCallback((teamNumber: 1 | 2): boolean | null => {
+		return teacherClass.getTeamDrivingStatus(classCode, scoreboardId, teamNumber)
+	}, [classCode, scoreboardId])
+
+	const getTeamDrivingButtonClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamDrivingStatus(teamNumber)
+		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === false) return "bg-cardinal border border-cardinal"
+		return "bg-eel dark:bg-swan"
+	}, [getTeamDrivingStatus])
+
+	const getTeamDrivingShadowClass = useCallback((teamNumber: 1 | 2): string => {
+		const status = getTeamDrivingStatus(teamNumber)
+		if (status === true) return "shadow-chargingGreen-2"
+		if (status === false) return "shadow-cardinal-2"
+		return "shadow-hare"
+	}, [getTeamDrivingStatus])
 
 	const formatTime = useCallback((seconds: number): string => {
 		const mins = Math.floor(seconds / 60)
@@ -216,9 +242,10 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 							<div className="flex justify-center gap-4">
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamDrivingToggle(1)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(1))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamDrivingShadowClass(1)}
 								>
 									<Car className="h-4 w-4" />
 								</TactileButton>
@@ -280,9 +307,10 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 							<div className="flex justify-center gap-4">
 								<TactileButton
-									className="px-4 py-2 rounded-xl text-lg text-white bg-eel dark:bg-swan"
+									onClick={(): void => handleTeamDrivingToggle(2)}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(2))}
 									shadowHeight={4}
-									shadowClass="shadow-hare"
+									shadowClass={getTeamDrivingShadowClass(2)}
 								>
 									<Car className="h-4 w-4" />
 								</TactileButton>
