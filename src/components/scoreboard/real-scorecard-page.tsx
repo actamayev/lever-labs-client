@@ -18,10 +18,11 @@ import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed
 function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode; scoreboardId: ScoreboardUUID }): React.ReactNode {
 	const scoreboardData = teacherClass.getScoreboardData(scoreboardId)
 	const navigate = useTypedNavigate()
-	const [isPaused, setIsPaused] = useState(false)
+	const [isPaused, setIsPaused] = useState(true)
 	const [displayTime, setDisplayTime] = useState(0)
+	const [hasBeenStarted, setHasBeenStarted] = useState(false)
 	const colors = getDuolingoColors("humpback")
-
+	
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
 		retrieveDetailedClassroomInfo(classCode)
@@ -36,7 +37,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 	// Timer countdown effect
 	useEffect((): (() => void) | undefined => {
-		if (!isPaused && displayTime > 0) {
+		if (!isPaused && displayTime > 0 && hasBeenStarted) {
 			const timer = setInterval((): void => {
 				setDisplayTime((prev): number => {
 					if (prev <= 1) {
@@ -50,7 +51,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 			return (): void => clearInterval(timer)
 		}
 		return undefined
-	}, [isPaused, displayTime])
+	}, [isPaused, displayTime, hasBeenStarted])
 
 	// Update server when display time changes
 	useEffect((): void => {
@@ -64,6 +65,10 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	}, [navigate, classCode])
 
 	const handlePauseResume = useCallback((): void => {
+		if (isPaused) {
+			// Starting the timer for the first time
+			setHasBeenStarted(true)
+		}
 		setIsPaused(!isPaused)
 	}, [isPaused])
 
