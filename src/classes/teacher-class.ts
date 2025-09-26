@@ -227,6 +227,16 @@ class TeacherClass {
 		}
 	}
 
+	public deleteScoreboard(scoreboardId: string): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboardIndex = classroom.scoreboards.findIndex((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboardIndex !== -1) {
+				classroom.scoreboards.splice(scoreboardIndex, 1)
+				return
+			}
+		}
+	}
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()

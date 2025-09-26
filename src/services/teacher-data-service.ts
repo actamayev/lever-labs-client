@@ -154,8 +154,8 @@ export default class TeacherDataService extends BaseDataService {
 		scoreboardId: ScoreboardUUID,
 		timeRemainingInSeconds: number,
 		classCode: ClassCode
-	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
-		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/scoreboard/update-remaining-time/${classCode}`), { timeRemainingInSeconds, scoreboardId }
 		)
 	}
@@ -165,9 +165,18 @@ export default class TeacherDataService extends BaseDataService {
 		teamNumber: 1 | 2,
 		newScore: number,
 		classCode: ClassCode
-	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
-		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl(`/scoreboard/update-team-score/${classCode}`), { teamNumber, newScore, scoreboardId }
+		)
+	}
+
+	async deleteScoreboard(
+		classCode: ClassCode,
+		scoreboardId: ScoreboardUUID
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/scoreboard/delete-scoreboard/${classCode}`), { scoreboardId }
 		)
 	}
 }

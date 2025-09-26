@@ -10,6 +10,7 @@ import teacherClass from "../../classes/teacher-class"
 import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed-classroom-info"
 import ClassroomStatsCards from "./classroom-stats-cards"
 import ClassroomHubsSection from "./classroom-hubs-section"
+import ClassroomScoreboardSection from "./classroom-scoreboard-section"
 import StudentsTable from "./students-table"
 
 function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
@@ -100,6 +101,8 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 			<ClassroomStatsCards classCode={classCode} />
 
 			<ClassroomHubsSection classCode={classCode} />
+
+			<ClassroomScoreboardSection classCode={classCode} />
 
 			{/* Students Table */}
 			<StudentsTable classCode={classCode} />
