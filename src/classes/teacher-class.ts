@@ -237,6 +237,42 @@ class TeacherClass {
 		}
 	}
 
+	public addStudentToScoreboard(scoreboardId: string, studentId: number, teamNumber: 1 | 2 = 1): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) {
+				// Find the student in the classroom
+				const student = classroom.students.find((s): boolean => s.studentId === studentId)
+				if (student) {
+					const targetTeam = teamNumber === 1 ? scoreboard.team1Stats : scoreboard.team2Stats
+					const existingStudent = targetTeam.students.find((s): boolean => s.studentId === studentId)
+					if (!existingStudent) {
+						targetTeam.students.push({
+							studentId: student.studentId,
+							username: student.username
+						})
+					}
+				}
+				return
+			}
+		}
+	}
+
+	public removeStudentFromScoreboard(scoreboardId: string, studentId: number, teamNumber: 1 | 2): void {
+		for (const classroom of this.detailedClassroomData.values()) {
+			const scoreboard = classroom.scoreboards.find((s): boolean => s.scoreboardId === scoreboardId)
+			if (scoreboard) {
+				// Remove from both teams
+				if (teamNumber === 1) {
+					scoreboard.team1Stats.students = scoreboard.team1Stats.students.filter((s): boolean => s.studentId !== studentId)
+				} else {
+					scoreboard.team2Stats.students = scoreboard.team2Stats.students.filter((s): boolean => s.studentId !== studentId)
+				}
+				return
+			}
+		}
+	}
+
 	public logout(): void {
 		this.classroomData = []
 		this.detailedClassroomData.clear()
