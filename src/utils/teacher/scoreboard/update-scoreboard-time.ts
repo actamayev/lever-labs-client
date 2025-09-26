@@ -17,7 +17,14 @@ export default async function updateScoreboardTime(scoreboardId: ScoreboardUUID,
 			!teacherClass.teacherData.isApproved
 		) return
 
-		const updateResponse = await blueDotApiClient.teacherDataService.updateScoreboardTime(scoreboardId, timeInSeconds)
+		const classCode = teacherClass.getScoreboardData(scoreboardId)?.classCode
+		if (!classCode) return
+
+		const updateResponse = await blueDotApiClient.teacherDataService.updateScoreboardTime(
+			scoreboardId,
+			timeInSeconds,
+			classCode
+		)
 
 		if (!isEqual(updateResponse.status, 200) || isNonSuccessResponse(updateResponse.data)) {
 			throw Error("Unable to update scoreboard time")

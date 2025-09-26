@@ -152,20 +152,22 @@ export default class TeacherDataService extends BaseDataService {
 
 	async updateScoreboardTime(
 		scoreboardId: ScoreboardUUID,
-		timeInSeconds: number
+		timeRemainingInSeconds: number,
+		classCode: ClassCode
 	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
-		return await this.httpClient.http.put<Scoreboard | NonSuccessResponse>(
-			this.buildUrl(`/scoreboard/update-time/${scoreboardId}`), { timeInSeconds }
+		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/update-remaining-time/${classCode}`), { timeRemainingInSeconds, scoreboardId }
 		)
 	}
 
 	async updateScoreboardTeamScore(
 		scoreboardId: ScoreboardUUID,
 		teamNumber: 1 | 2,
-		newScore: number
+		newScore: number,
+		classCode: ClassCode
 	): Promise<AxiosResponse<Scoreboard | NonSuccessResponse>> {
-		return await this.httpClient.http.put<Scoreboard | NonSuccessResponse>(
-			this.buildUrl(`/scoreboard/update-team-score/${scoreboardId}`), { teamNumber, newScore }
+		return await this.httpClient.http.post<Scoreboard | NonSuccessResponse>(
+			this.buildUrl(`/scoreboard/update-team-score/${classCode}`), { teamNumber, newScore, scoreboardId }
 		)
 	}
 }

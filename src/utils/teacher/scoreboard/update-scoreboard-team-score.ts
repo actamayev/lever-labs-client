@@ -17,7 +17,15 @@ export default async function updateScoreboardTeamScore(scoreboardId: Scoreboard
 			!teacherClass.teacherData.isApproved
 		) return
 
-		const updateResponse = await blueDotApiClient.teacherDataService.updateScoreboardTeamScore(scoreboardId, teamNumber, newScore)
+		const classCode = teacherClass.getScoreboardData(scoreboardId)?.classCode
+		if (!classCode) return
+
+		const updateResponse = await blueDotApiClient.teacherDataService.updateScoreboardTeamScore(
+			scoreboardId,
+			teamNumber,
+			newScore,
+			classCode
+		)
 
 		if (!isEqual(updateResponse.status, 200) || isNonSuccessResponse(updateResponse.data)) {
 			throw Error("Unable to update team score")
