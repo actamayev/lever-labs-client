@@ -3,7 +3,7 @@
 import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import studentClass from "../../classes/student-class"
 
 export default async function sendDinoScore(dinoScore: number): Promise<void> {

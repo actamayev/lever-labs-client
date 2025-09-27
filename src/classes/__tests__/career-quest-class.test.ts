@@ -38,7 +38,7 @@ vi.mock('../../../utils/career-quest/save-career-progress', () => ({
   default: vi.fn()
 }))
 
-vi.mock('../blue-dot-api-client-class', () => ({
+vi.mock('../lever-labs-api-client-class', () => ({
   default: {
     careerQuestDataService: {
       markChallengeAsSeen: vi.fn()

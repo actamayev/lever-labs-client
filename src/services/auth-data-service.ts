@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { LoginRequest, LoginSuccess, NonSuccessResponse, RegisterRequest, RegisterSuccess,
 	SuccessResponse, ErrorResponse, EmailUpdatesRequest,
 	GoogleAuthSuccess, NewGoogleInfoRequest, ErrorResponses } from "@lever-labs/common-ts/types/api"
@@ -7,7 +7,7 @@ import { BaseDataService } from "./base-data-service"
 import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 
 export default class AuthDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

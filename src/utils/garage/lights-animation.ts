@@ -9,7 +9,7 @@ import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import garageClass from "../../classes/garage-class"
 import { isNonSuccessResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function lightsAnimation(newAnimation: LightAnimation): Promise<void> {

@@ -6,7 +6,7 @@ import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function createClassroom(
 	classroomName: string,

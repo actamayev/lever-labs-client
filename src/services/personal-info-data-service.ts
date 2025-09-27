@@ -1,12 +1,12 @@
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { AllCommonResponses, ErrorResponse, ErrorResponses, NonSuccessResponse,
 	PersonalInfoResponse, ProfilePictureUrl, SuccessResponse } from "@lever-labs/common-ts/types/api"
 import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
 export default class PersonalInfoDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

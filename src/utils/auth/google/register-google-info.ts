@@ -6,7 +6,7 @@ import { NewGoogleInfoRequest } from "@lever-labs/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
-import blueDotApiClient from "../../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 

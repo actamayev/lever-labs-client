@@ -6,7 +6,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isErrorResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function createSandboxProject(): Promise<SandboxProjectUUID | undefined> {
 	try {

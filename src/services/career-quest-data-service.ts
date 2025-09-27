@@ -3,11 +3,11 @@ import { CareerProgressData, ErrorResponses, SuccessResponse, AllCommonResponses
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { CareerUUID, ChallengeUUID, PipUUID } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { CareerType, ValidTriggerMessageType } from "@lever-labs/common-ts/protocol"
 
 export default class CareerQuestDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

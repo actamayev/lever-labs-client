@@ -6,7 +6,7 @@ import { ChallengeUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function editCareerQuestSandboxProject(
 	challengeUUID: ChallengeUUID,

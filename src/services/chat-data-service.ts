@@ -5,10 +5,10 @@ import { ChallengeUUID, CareerUUID, SandboxProjectUUID } from "@lever-labs/commo
 import { OutgoingChallengeGeneralMessage, OutgoingChallengeCheckCodeMessage,
 	OutgoingChallengeHintMessage, OutgoingCareerMessage, OutgoingSandboxChatData } from "@lever-labs/common-ts/types/chat"
 import { BaseDataService } from "./base-data-service"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 
 export default class ChatDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

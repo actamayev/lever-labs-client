@@ -2,7 +2,7 @@
 
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import pipClass from "../../classes/pip-class"
 
 export default async function pipTurningOffSerialDisconnection(): Promise<void> {

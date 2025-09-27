@@ -5,7 +5,7 @@ import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function setSandboxNotesOpenStatus():  Promise<void> {
 	try {

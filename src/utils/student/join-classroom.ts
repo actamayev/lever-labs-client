@@ -7,7 +7,7 @@ import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function joinClassroom(

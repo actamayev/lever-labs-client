@@ -5,7 +5,7 @@ import { isErrorResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import teacherClass from "../../classes/teacher-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function retrievePersonalInfo(): Promise<void> {

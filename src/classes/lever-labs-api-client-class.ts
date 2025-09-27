@@ -1,6 +1,6 @@
 "use client"
 
-import BlueDotHttpClient from "./blue-dot-http-client"
+import LeverLabsHttpClient from "./lever-labs-http-client"
 import PipDataService from "../services/pip-data-service"
 import AuthDataService from "../services/auth-data-service"
 import ChatDataService from "../services/chat-data-service"
@@ -14,7 +14,7 @@ import PersonalInfoDataService from "../services/personal-info-data-service"
 import CareerQuestDataService from "../services/career-quest-data-service"
 
 class BlueDotApiClient {
-	public httpClient: BlueDotHttpClient = new BlueDotHttpClient()
+	public httpClient: LeverLabsHttpClient = new LeverLabsHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
 	public careerQuestDataService: CareerQuestDataService = new CareerQuestDataService(this.httpClient, "/career-quest")
 	public chatDataService: ChatDataService = new ChatDataService(this.httpClient, "/chat")
