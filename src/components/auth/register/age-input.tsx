@@ -40,7 +40,7 @@ export default function AgeInput<T extends { age: number | null }>({
 					<FormMessage />
 					<div className="text-sm text-wolf mt-1">
 						<span>
-							Providing your age ensures you get the right Blue Dot Robots experience. For more details, please visit our{" "}
+							Providing your age ensures you get the right Lever Labs experience. For more details, please visit our{" "}
 						</span>
 						<Link
 							href="/privacy"

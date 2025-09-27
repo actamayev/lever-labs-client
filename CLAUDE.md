@@ -1,4 +1,4 @@
-# Blue Dot Robots Client - CLAUDE.md
+# Lever Lab Client - CLAUDE.md
 
 ## Project Overview
 Educational robotics platform built with Next.js 15, React, TypeScript, and MobX. Enables students to program robots through visual block coding and interact with hardware via Web Serial API.

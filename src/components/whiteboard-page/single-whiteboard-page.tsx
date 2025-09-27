@@ -27,7 +27,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 	const classroomData = studentClass.getClassroomData(classCode)
 
 	useEffect((): void => {
-		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
+		document.title = `${classroomData?.classroomName} | Lever Labs`
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/whiteboard")

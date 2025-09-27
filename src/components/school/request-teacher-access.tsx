@@ -116,7 +116,7 @@ function RequestTeacherAccess(): React.ReactNode {
 					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
 					<span>
 						Your teacher application was not accepted.
-						Please contact our support team at hello@bluedotrobots.com for assistance.
+						Please contact our support team at hello@leverlabs.com for assistance.
 					</span>
 				</div>
 			)

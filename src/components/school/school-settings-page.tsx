@@ -9,7 +9,7 @@ function SchoolSettingsPage(): React.ReactNode {
 		<ProfileLayout>
 			<div className="px-4 sm:px-6 md:px-8 lg:px-16 xl:px-32 mt-5 max-w-full">
 				<div className="font-medium text-2xl md:text-3xl text-eel mb-8 md:mb-14	">
-					Blue Dot for Schools
+					Lever Labs for Schools
 				</div>
 
 				<JoinClassroom />

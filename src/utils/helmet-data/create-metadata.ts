@@ -3,7 +3,7 @@ import { PrivatePageNames } from "../constants/page-constants"
 
 // Define the base domain for your site
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const BASE_URL = "https://www.bluedotrobots.com"
+const BASE_URL = "https://www.leverlabs.com"
 
 // Define common image paths
 // const DEFAULT_OG_IMAGE = "/images/og-default.jpg"
@@ -12,7 +12,7 @@ const BASE_URL = "https://www.bluedotrobots.com"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const STATIC_KEYWORDS: [string, string, string] = [
 	"robotics education",
-	"blue dot robots",
+	"lever labs",
 	"stem learning"
 ]
 
@@ -21,7 +21,7 @@ type MetadataProps = {
 	title: string
 	description: string
 	path: PageNames
-	needsBlueDotSuffix?: boolean
+	needsLeverLabsSuffix?: boolean
 	keywords: [string, string, string] // Tuple type enforces exactly 3 strings
 	noIndex?: boolean
 };
@@ -34,14 +34,14 @@ export function createMetadata({
 	title,
 	description,
 	path,
-	needsBlueDotSuffix = true,
+	needsLeverLabsSuffix = true,
 	keywords,
 	noIndex,
 }: MetadataProps): Metadata {
 	// No need to validate count, TypeScript enforces exactly 3 keywords
 
-	// Format title based on needsBlueDotSuffix flag
-	const formattedTitle = needsBlueDotSuffix ? `${title} | Blue Dot Robots` : title
+	// Format title based on needsLeverLabsSuffix flag
+	const formattedTitle = needsLeverLabsSuffix ? `${title} | Lever Labs` : title
 
 	// Build the full URL
 	const url = `${BASE_URL}${path}`
@@ -69,7 +69,7 @@ export function createMetadata({
 			title: formattedTitle,
 			description,
 			url,
-			siteName: "Blue Dot Robots",
+			siteName: "Lever Labs",
 			locale: "en_US",
 			type: "website",
 			// images: [
@@ -77,7 +77,7 @@ export function createMetadata({
 			// 		url: `${BASE_URL}${ogImage}`,
 			// 		width: 1200,
 			// 		height: 630,
-			// 		alt: `Blue Dot Robots - ${title}`,
+			// 		alt: `Lever Labs - ${title}`,
 			// 	},
 			// ],
 		},
@@ -87,7 +87,7 @@ export function createMetadata({
 			card: "summary_large_image",
 			title: formattedTitle,
 			description,
-			creator: "@bluedotrobots",
+			creator: "@lever_labs",
 			// images: [`${BASE_URL}${twitterImageUrl}`],
 		},
 
@@ -95,8 +95,8 @@ export function createMetadata({
 		keywords: combinedKeywords,
 
 		// Other metadata
-		authors: [{ name: "Blue Dot Robots Team" }],
-		publisher: "Blue Dot Robots",
+		authors: [{ name: "Lever Labs Team" }],
+		publisher: "Lever Labs",
 
 		// SEO settings
 		robots: shouldNoIndex

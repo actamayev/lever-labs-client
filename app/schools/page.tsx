@@ -3,7 +3,7 @@ import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 
 export const metadata = createMetadata({
-	title: "Schools | Blue Dot Robots",
+	title: "Schools",
 	// eslint-disable-next-line max-len
 	description: "Bring fun, accessible robotics education to your classroom with Pip! A complete curriculum that adapts to each student's pace, with easy progress tracking for teachers.",
 	path: "/schools",

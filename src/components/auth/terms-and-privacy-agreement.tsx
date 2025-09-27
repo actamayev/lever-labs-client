@@ -6,7 +6,7 @@ export default function TermsAndPrivacyAgreement(): React.ReactNode {
 	return (
 		<div className="text-xs font-normal mt-10 text-center text-hare">
 			<p>
-				By signing in to Blue Dot Robots, you agree to our{" "}
+				By signing in to Lever Labs, you agree to our{" "}
 				<Link
 					href="/terms"
 					className="font-semibold"

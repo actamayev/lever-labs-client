@@ -33,12 +33,12 @@ export default function Mission(): React.ReactNode {
 							After purchasing several educational robots and finding the same problems we faced growing up – difficult setup and static curricula – we realized innovation in robotics education had stagnated.
 						</div>
 						<div>
-							We started Blue Dot Robots so that everyone could have a chance. A robotics education that's accessible, engaging, and grows with you – no frustrating assembly, no ceiling on what you can learn.
+							We started Lever Labs so that everyone could have a chance. A robotics education that's accessible, engaging, and grows with you – no frustrating assembly, no ceiling on what you can learn.
 						</div>
 					</div>
 				</SupportSection>
 				<SupportBorder />
-				<SupportSection sectionTitle="The Blue Dot Difference" extraClasses="mt-10">
+				<SupportSection sectionTitle="The Lever Labs Difference" extraClasses="mt-10">
 					<div className="flex flex-col space-y-4">
 						<div>
 							Millions of people are interested in robotics, but most educational products either require hours of setup or offer limited learning paths.
