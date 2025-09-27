@@ -1,6 +1,6 @@
 "use client"
 
-import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
+import { PipConnectionUpdate } from "@lever-labs/common-ts/types/socket"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import workbenchClass from "../../classes/workbench-class"

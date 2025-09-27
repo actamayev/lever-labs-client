@@ -4,7 +4,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
-import { TuneToPlay } from "@bluedotrobots/common-ts/types/workbench"
+import { TuneToPlay } from "@lever-labs/common-ts/types/workbench"
 import { ChevronDown } from "lucide-react"
 import {
 	DropdownMenu,

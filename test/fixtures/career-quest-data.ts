@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import type { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
+import type { CareerUUID, ChallengeUUID } from "@lever-labs/common-ts/types/utils"
 import type * as Blockly from "blockly/core"
 
 export const TEST_CAREER_UUID: CareerUUID = "test-career-uuid" as CareerUUID

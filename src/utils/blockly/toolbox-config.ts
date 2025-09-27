@@ -5,9 +5,9 @@ import { ledCategoryColour, motorsCategoryColour, speakerCategoryColour } from "
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
-import { MOTOR_BLOCK_TYPES } from "@bluedotrobots/common-ts/types/blockly/motor"
-import { LED_BLOCK_TYPES } from "@bluedotrobots/common-ts/types/blockly/led"
-import { SPEAKER_BLOCK_TYPES } from "@bluedotrobots/common-ts/types/blockly/speaker"
+import { MOTOR_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/motor"
+import { LED_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/led"
+import { SPEAKER_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/speaker"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {

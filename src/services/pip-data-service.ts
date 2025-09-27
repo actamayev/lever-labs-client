@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, NonSuccessResponse,
-	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@bluedotrobots/common-ts/types/api"
-import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@lever-labs/common-ts/types/api"
+import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 

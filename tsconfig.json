@@ -23,7 +23,7 @@
     "paths": {
       "@/*": ["./src/*"],
       // Add explicit path mapping for your package (fallback)
-      "@bluedotrobots/common-ts/*": ["./node_modules/@bluedotrobots/common-ts/dist/src/*"]
+      "@lever-labs/common-ts/*": ["./node_modules/@lever-labs/common-ts/dist/src/*"]
     },
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,

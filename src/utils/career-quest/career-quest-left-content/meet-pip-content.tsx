@@ -3,7 +3,7 @@
 
 import { ReactNode } from "react"
 
-import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import fireConfetti from "../../fire-confetti"
 import personalInfoClass from "../../../classes/personal-info-class"
 import { Highlighter } from "../../../components/magicui/highlighter"

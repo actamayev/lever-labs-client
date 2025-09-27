@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"

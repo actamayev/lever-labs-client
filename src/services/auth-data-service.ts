@@ -2,9 +2,9 @@ import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { LoginRequest, LoginSuccess, NonSuccessResponse, RegisterRequest, RegisterSuccess,
 	SuccessResponse, ErrorResponse, EmailUpdatesRequest,
-	GoogleAuthSuccess, NewGoogleInfoRequest, ErrorResponses } from "@bluedotrobots/common-ts/types/api"
+	GoogleAuthSuccess, NewGoogleInfoRequest, ErrorResponses } from "@lever-labs/common-ts/types/api"
 import { BaseDataService } from "./base-data-service"
-import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
+import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 
 export default class AuthDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {

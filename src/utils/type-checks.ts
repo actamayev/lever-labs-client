@@ -1,7 +1,7 @@
 "use client"
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
-	NonSuccessResponse, ValidationErrorResponse } from "@bluedotrobots/common-ts/types/api"
+	NonSuccessResponse, ValidationErrorResponse } from "@lever-labs/common-ts/types/api"
 import { allPages } from "./constants/page-constants"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

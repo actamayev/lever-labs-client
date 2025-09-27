@@ -1,12 +1,12 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
+import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 import { AxiosResponse } from "axios"
-import { AllCommonResponses } from "@bluedotrobots/common-ts/types/api"
+import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
 
 export default async function stopCurrentlyRunningCode(
 	failSilently: boolean

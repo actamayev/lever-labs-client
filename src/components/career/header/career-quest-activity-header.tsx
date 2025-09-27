@@ -3,7 +3,7 @@
 
 import { ArrowLeft, MessageCircle, Users } from "lucide-react" // Add MessageCircle import
 import { observer } from "mobx-react" // Add observer import
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
 // import ChallengeProgressCircle from "./challenge-progress-circle"
 import careerQuestClass from "../../../classes/career-quest-class" // Add import
 import stopCareerTrigger from "../../../utils/career-quest/stop-career-trigger"

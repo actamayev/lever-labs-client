@@ -9,10 +9,10 @@ import {
 	BinaryEvaluationResult,
 	CareerChatbotStreamStartOrCompleteEvent,
 	CareerChatbotChunkEvent
-} from "@bluedotrobots/common-ts/types/chat"
-import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
-import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+} from "@lever-labs/common-ts/types/chat"
+import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
+import { CareerUUID, ChallengeUUID } from "@lever-labs/common-ts/types/utils"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 // Chat and streaming state interfaces
 interface ChatData {

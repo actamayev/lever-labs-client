@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { ClassCode, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
 import RealScorecardPage from "../../../../src/components/scoreboard/real-scorecard-page"
 import AuthenticatedLayout from "../../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../../src/utils/helmet-data/create-metadata"

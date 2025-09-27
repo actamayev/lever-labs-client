@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, ErrorResponse,
-	NonSuccessResponse, StudentClassroomData } from "@bluedotrobots/common-ts/types/api"
-import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+	NonSuccessResponse, StudentClassroomData } from "@lever-labs/common-ts/types/api"
+import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
-import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { StudentViewHubData } from "@lever-labs/common-ts/types/hub"
 
 export default class StudentDataService extends BaseDataService {
 	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {

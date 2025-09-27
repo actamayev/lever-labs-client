@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useState, useCallback, useEffect } from "react"
 import { AlertCircle, CheckCircle, Info } from "lucide-react"
-import { IncomingTeacherRequestData } from "@bluedotrobots/common-ts/types/api"
+import { IncomingTeacherRequestData } from "@lever-labs/common-ts/types/api"
 import { Input } from "../shadcn/ui/input"
 import { Label } from "../shadcn/ui/label"
 import { cn } from "../../lib/shadcn/utils"

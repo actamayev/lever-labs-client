@@ -1,9 +1,9 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { PipConnectionUpdate } from "@bluedotrobots/common-ts/types/socket"
-import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { PipConnectionUpdate } from "@lever-labs/common-ts/types/socket"
+import { ClientPipConnectionStatus } from "@lever-labs/common-ts/types/pip"
 import { isNull } from "lodash-es"
 
 interface PipSearchResult {

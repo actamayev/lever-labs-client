@@ -5,7 +5,7 @@ import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
 import getCppGenerator from "../../../cpp/cpp-generator"
 import { generateStatementCode } from "../manual-traversal"
-import { CONDITIONAL_BLOCK_TYPES, CONDITIONAL_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
+import { CONDITIONAL_BLOCK_TYPES, CONDITIONAL_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/logic"
 
 export const conditionalBlocks: Record<CONDITIONAL_BLOCK_TYPES, CustomBlock> = {
 	[CONDITIONAL_BLOCK_TYPES.IF]: {

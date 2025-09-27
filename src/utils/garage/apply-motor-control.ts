@@ -1,7 +1,7 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MotorControlInput } from "@bluedotrobots/common-ts/types/garage"
+import { MotorControlInput } from "@lever-labs/common-ts/types/garage"
 import authClass from "../../classes/auth-class"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"

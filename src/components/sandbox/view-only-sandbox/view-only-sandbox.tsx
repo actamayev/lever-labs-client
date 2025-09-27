@@ -9,7 +9,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { isEmpty } from "lodash-es"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
@@ -19,7 +19,7 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import careerQuestClass from "../../../classes/career-quest-class"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
-import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 
 interface Props {
 	blocklyJson: BlocklyJson

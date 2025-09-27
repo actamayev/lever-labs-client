@@ -1,5 +1,5 @@
 "use client"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import type * as Blockly from "blockly/core"
 import initializeBlocks from "../blockly/initialize-blocks"
 

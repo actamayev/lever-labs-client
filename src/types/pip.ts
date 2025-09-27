@@ -1,5 +1,5 @@
-import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
-import { ClientPipConnectionStatus } from "@bluedotrobots/common-ts/types/pip"
+import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { ClientPipConnectionStatus } from "@lever-labs/common-ts/types/pip"
 
 declare global {
 	interface PipData {

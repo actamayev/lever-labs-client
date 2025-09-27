@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import toLower from "lodash-es/toLower"
 import { Order } from "../order"
 import { SENSORS_BLOCK_TYPES, SENSORS_FIELD_VALUES,
-	SENSOR_TYPES, IMUSensorType, LeftRightSensorType } from "@bluedotrobots/common-ts/types/blockly/sensor"
+	SENSOR_TYPES, IMUSensorType, LeftRightSensorType } from "@lever-labs/common-ts/types/blockly/sensor"
 import { sensorsCategoryColour } from "../../constants/constants"
 import { upperFirst } from "lodash-es"
 

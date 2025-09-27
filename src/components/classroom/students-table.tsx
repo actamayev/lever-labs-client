@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import { Users, Car, Lightbulb, Volume2, Monitor } from "lucide-react"
-import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
 import { TactileButton } from "../shadcn/ui/tactile-button"

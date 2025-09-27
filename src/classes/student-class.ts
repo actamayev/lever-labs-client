@@ -2,10 +2,10 @@
 
 import { isEmpty } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
-import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import careerQuestClass from "./career-quest-class"
-import { StudentViewHubData } from "@bluedotrobots/common-ts/types/hub"
-import { DeletedHub, UpdatedHubSlideId } from "@bluedotrobots/common-ts/types/socket"
+import { StudentViewHubData } from "@lever-labs/common-ts/types/hub"
+import { DeletedHub, UpdatedHubSlideId } from "@lever-labs/common-ts/types/socket"
 
 class StudentClass {
 	public isRetrievingStudentData = false

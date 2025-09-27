@@ -4,8 +4,8 @@ import { observer } from "mobx-react"
 import truncate from "lodash-es/truncate"
 import { useCallback, useState } from "react"
 import { EllipsisVertical, Star, Trash2, Edit } from "lucide-react"
-import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
+import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
+import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
 import {
 	DropdownMenu,
 	DropdownMenuTrigger,

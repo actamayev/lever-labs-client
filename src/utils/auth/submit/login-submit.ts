@@ -2,7 +2,7 @@
 
 import { isEmpty, isNull } from "lodash-es"
 import isEqual from "lodash-es/isEqual"
-import { LoginRequest } from "@bluedotrobots/common-ts/types/api"
+import { LoginRequest } from "@lever-labs/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"

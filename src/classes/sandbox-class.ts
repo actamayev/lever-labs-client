@@ -3,10 +3,10 @@
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
-import { BlocklyJson, SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
+import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+import { BlocklyJson, SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
-	SandboxChatbotStreamStartOrCompleteEvent } from "@bluedotrobots/common-ts/types/chat"
+	SandboxChatbotStreamStartOrCompleteEvent } from "@lever-labs/common-ts/types/chat"
 
 class SandboxClass {
 	public isRetrievingAllSandboxProjects = false

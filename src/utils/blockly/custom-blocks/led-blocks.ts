@@ -2,8 +2,8 @@
 
 import * as Blockly from "blockly"
 import { ledCategoryColour } from "../../constants/constants"
-import { LED_BLOCK_TYPES, LED_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/led"
-import { LEDSensorType, SENSOR_TYPES } from "@bluedotrobots/common-ts/types/blockly/sensor"
+import { LED_BLOCK_TYPES, LED_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/led"
+import { LEDSensorType, SENSOR_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
 import { upperFirst } from "lodash-es"
 
 export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
