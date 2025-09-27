@@ -3,10 +3,10 @@ import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({
-	title: "Privacy | Blue Dot Robots",
-	description: "Your privacy is important to us. Read the Blue Dot Robots privacy policy to learn more.",
+	title: "Privacy",
+	description: "Your privacy is important to us. Read the Lever Labs privacy policy to learn more.",
 	path: "/privacy",
-	keywords: ["privacy", "blue dot robots", "privacy policy"]
+	keywords: ["privacy", "lever labs", "privacy policy"]
 })
 
 export default function Privacy(): React.ReactNode {

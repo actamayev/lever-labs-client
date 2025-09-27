@@ -65,7 +65,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 
 	// Update document title whenever projectName changes (not during editing)
 	useEffect((): void => {
-		document.title = `${projectName} | Blue Dot Robots`
+		document.title = `${projectName} | Lever Labs`
 	}, [projectName])
 
 	// Update local state when project prop changes

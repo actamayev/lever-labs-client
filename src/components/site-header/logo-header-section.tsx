@@ -43,7 +43,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 				/>
 				{/* Text visibility: always show on mobile when not scrolled, hidden on mobile when scrolled */}
 				<span className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}>
-					Blue Dot Robots
+					Lever Labs
 				</span>
 			</Link>
 		</div>

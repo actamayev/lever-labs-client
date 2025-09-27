@@ -12,7 +12,7 @@ export default function CommunityGuidelines(): React.ReactNode {
 		<ProfileLayout>
 			<SupportSectionContainer title="Community Guidelines">
 				<div>
-					<ComplianceSectionHeader>Blue Dot Robots is a community of robotics learners</ComplianceSectionHeader>
+					<ComplianceSectionHeader>Lever Labs is a community of robotics learners</ComplianceSectionHeader>
 					<ComplianceParagraph>
 						We believe that everyone should have access to a world-class robotics education. Our guidelines are meant to build a mutual understanding of what being a part of this community is all about. We will take action if any of these guidelines are not upheld, so please read carefully.
 					</ComplianceParagraph>
@@ -53,17 +53,17 @@ export default function CommunityGuidelines(): React.ReactNode {
 
 					<Separator className="bg-swan my-10 h-1 rounded-full"/>
 
-					<ComplianceSectionHeader>Please Don’t Use Blue Dot Robots to...</ComplianceSectionHeader>
+					<ComplianceSectionHeader>Please Don’t Use Lever Labs to...</ComplianceSectionHeader>
 					<ComplianceSectionHeader>Attack a Person or Group of People with Words and Actions</ComplianceSectionHeader>
 					<ComplianceParagraph>
-						Blue Dot Robots is a safe place for learners of all backgrounds. Harassment and hurtful content will not be tolerated. Using project names, descriptions, or code comments that promote hate - as well as harassing, targeting, or making inappropriate remarks towards someone - are considered abuse. The same goes for inappropriate usernames and profile information. As stated in the {""}
+						Lever Labs is a safe place for learners of all backgrounds. Harassment and hurtful content will not be tolerated. Using project names, descriptions, or code comments that promote hate - as well as harassing, targeting, or making inappropriate remarks towards someone - are considered abuse. The same goes for inappropriate usernames and profile information. As stated in the {""}
 						<Link
 							href="/terms"
 							className="underline"
 						>
 							terms
 						</Link>
-						, Blue Dot Robots reserves the right to replace images or remove these accounts at its sole discretion. Rule of thumb: if you are making someone feel attacked or hurt, then you shouldn’t be doing it. We take these reports seriously and may delete your account without previous notice if such activity is verified by our team.
+						, Lever Labs reserves the right to replace images or remove these accounts at its sole discretion. Rule of thumb: if you are making someone feel attacked or hurt, then you shouldn’t be doing it. We take these reports seriously and may delete your account without previous notice if such activity is verified by our team.
 					</ComplianceParagraph>
 
 					<ComplianceSectionHeader>Create Harmful or Dangerous Robot Code</ComplianceSectionHeader>
@@ -73,7 +73,7 @@ export default function CommunityGuidelines(): React.ReactNode {
 
 					<ComplianceSectionHeader>Script or Cheat Maliciously</ComplianceSectionHeader>
 					<ComplianceParagraph>
-						Blue Dot Robots believes in honest learning. If you are creating automated scripts to manipulate the platform, sharing information and instructions about using Blue Dot Robots in ways that may impact the system, community, learning, data, or experience in a negative or significant manner, your account and projects may be removed. We’re here to help you learn robotics through hands-on coding, not to game the system.
+						Lever Labs believes in honest learning. If you are creating automated scripts to manipulate the platform, sharing information and instructions about using Lever Labs in ways that may impact the system, community, learning, data, or experience in a negative or significant manner, your account and projects may be removed. We’re here to help you learn robotics through hands-on coding, not to game the system.
 					</ComplianceParagraph>
 
 					<ComplianceSectionHeader>Share Inappropriate Content</ComplianceSectionHeader>
@@ -98,7 +98,7 @@ export default function CommunityGuidelines(): React.ReactNode {
 						<li>Intended to disrupt the platform or community learning experience</li>
 					</ul>
 					<ComplianceParagraph>
-						Please don’t waste your time looking for loopholes; we will remove any content that violates the spirit of these guidelines and you will risk losing partial or full access to Blue Dot Robots without warning. By following these guidelines, we will all contribute to an inspiring and helpful robotics learning community.
+						Please don’t waste your time looking for loopholes; we will remove any content that violates the spirit of these guidelines and you will risk losing partial or full access to Lever Labs without warning. By following these guidelines, we will all contribute to an inspiring and helpful robotics learning community.
 					</ComplianceParagraph>
 				</div>
 			</SupportSectionContainer>

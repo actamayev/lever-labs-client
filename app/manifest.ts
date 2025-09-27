@@ -2,8 +2,8 @@ import { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		name: "Blue Dot Robots",
-		short_name: "Blue Dot Robots",
+		name: "Lever Labs",
+		short_name: "Lever Labs",
 		icons: [
 			{
 				src: "/favicon.ico",

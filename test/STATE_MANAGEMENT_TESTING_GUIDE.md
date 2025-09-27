@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides a comprehensive strategy for testing MobX state management classes in the Blue Dot Robots client application. The focus is on ensuring state mutations, side effects, and error handling work correctly.
+This guide provides a comprehensive strategy for testing MobX state management classes in the Lever Labs client application. The focus is on ensuring state mutations, side effects, and error handling work correctly.
 
 ## Testing Strategy
 

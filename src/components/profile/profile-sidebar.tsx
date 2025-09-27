@@ -65,14 +65,14 @@ export default function ProfileSidebar(): React.ReactNode {
 			<div >
 				<SidebarSection title="Account">
 					<SidebarLink href="/settings/profile">Profile</SidebarLink>
-					<SidebarLink href="/settings/schools">Blue Dot for Schools</SidebarLink>
+					<SidebarLink href="/settings/schools">Lever Labs for Schools</SidebarLink>
 				</SidebarSection>
 
 				{/* <SidebarSection title="Support">
 					<SidebarLink href="/help">Help Center</SidebarLink>
 				</SidebarSection> */}
 
-				<SidebarSection title="Blue Dot Robots">
+				<SidebarSection title="Lever Labs">
 					<SidebarLink href="/mission">Mission</SidebarLink>
 					<SidebarLink href="/contact">Contact Us</SidebarLink>
 				</SidebarSection>

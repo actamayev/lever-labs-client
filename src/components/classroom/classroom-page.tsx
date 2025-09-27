@@ -24,7 +24,7 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 
 	useEffect((): void => {
-		document.title = `${classroomData?.classroomName} | Blue Dot Robots`
+		document.title = `${classroomData?.classroomName} | Lever Labs`
 	}, [classroomData?.classroomName])
 
 	const handleBackClick = (): void => navigate("/class-manager")

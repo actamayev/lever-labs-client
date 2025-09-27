@@ -27,6 +27,6 @@ export default function robots(): MetadataRoute.Robots {
 				]
 			}
 		],
-		sitemap: "https://www.bluedotrobots.com/sitemap.xml",
+		sitemap: "https://www.leverlabs.com/sitemap.xml",
 	}
 }

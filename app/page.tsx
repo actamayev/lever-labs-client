@@ -3,12 +3,12 @@ import { createMetadata } from "../src/utils/helmet-data/create-metadata"
 import PublicOnlyPage from "../src/components/layouts/classic-layout"
 
 export const metadata = createMetadata({
-	title: "Blue Dot Robots | The best way to learn robotics is with Pip",
+	title: "Lever Labs | The best way to learn robotics is with Pip",
 	// eslint-disable-next-line max-len
 	description: "Explore Pip, the educational robot designed to make learning robotics fun and seamless. From coding basics to advanced control algorithms, start your robotics journey today.",
 	path: "/",
 	keywords: ["educational robot", "learn robotics", "coding for beginners"],
-	needsBlueDotSuffix: false
+	needsLeverLabsSuffix: false
 })
 
 export default function Home(): React.ReactNode {

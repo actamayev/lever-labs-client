@@ -43,7 +43,7 @@ export default function ByBuildersForBuilders(): React.ReactNode {
 								"dark:bg-green-900 dark:border-green-600 dark:text-green-200")}
 							navigateTo="/mission"
 						>
-							About Blue Dot
+							About Lever Labs
 						</LandingCTAButton>
 					</div>
 				</div>
