@@ -11,7 +11,7 @@ import teacherClass from "../../classes/teacher-class"
 import { isErrorResponses } from "../../utils/type-checks"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { isEmpty, isNull } from "lodash-es"
@@ -34,7 +34,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 
 			const siteTheme = personalInfoClass.defaultSiteTheme
 
-			const googleCallbackResponse = await blueDotApiClient.authDataService.googleLoginCallback(
+			const googleCallbackResponse = await leverLabsApiClient.authDataService.googleLoginCallback(
 				successResponse.credential, siteTheme
 			)
 

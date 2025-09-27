@@ -9,7 +9,7 @@ import teacherClass from "../../../classes/teacher-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"
 import confirmLoginFields from "../confirm-login-fields"
-import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../../classes/lever-labs-api-client-class"
 import setErrorAxiosResponse from "../../error-handling/set-error-axios-response"
 import serialConnectionManagerClass from "../../../classes/serial-connection-manager-class"
 import garageClass from "../../../classes/garage-class"
@@ -27,7 +27,7 @@ export default async function loginSubmit(
 		if (areCredentialsValid === false) return null
 
 		authClass.setAuthenticating(true)
-		const response = await blueDotApiClient.authDataService.login(loginInformation)
+		const response = await leverLabsApiClient.authDataService.login(loginInformation)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to log in. Please reload the page and try again")
 			return null

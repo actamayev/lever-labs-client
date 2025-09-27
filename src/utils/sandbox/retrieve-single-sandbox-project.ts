@@ -6,7 +6,7 @@ import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function retrieveSingleSandboxProject(projectUUID: SandboxProjectUUID): Promise<void> {
 	try {
@@ -21,7 +21,7 @@ export default async function retrieveSingleSandboxProject(projectUUID: SandboxP
 		// Set loading state
 		sandboxClass.setIsRetrievingSingleProject(projectUUID, true)
 
-		const sandboxProjectResponse = await blueDotApiClient.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
+		const sandboxProjectResponse = await leverLabsApiClient.sandboxDataService.retrieveSingleSandboxProject(projectUUID)
 		if (
 			!isEqual(sandboxProjectResponse.status, 200) ||
 			isErrorResponse(sandboxProjectResponse.data) ||

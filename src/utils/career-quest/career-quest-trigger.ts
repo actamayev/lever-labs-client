@@ -4,7 +4,7 @@ import isNull from "lodash-es/isNull"
 import { CareerType, ValidTriggerMessageType } from "@lever-labs/common-ts/protocol"
 import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
 import { AxiosResponse } from "axios"
@@ -22,7 +22,7 @@ export default async function careerQuestTrigger(
 			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClient.careerQuestDataService.careerTrigger(
+			return leverLabsApiClient.careerQuestDataService.careerTrigger(
 				careerType, triggerMessageType, selectedPip.pipUUID
 			)
 		},

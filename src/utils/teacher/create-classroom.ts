@@ -6,7 +6,7 @@ import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function createClassroom(
 	classroomName: string,
@@ -20,7 +20,7 @@ export default async function createClassroom(
 		setError("")
 		setSuccess("")
 
-		const createClassroomResponse = await blueDotApiClient.teacherDataService.createClassroom(classroomName)
+		const createClassroomResponse = await leverLabsApiClient.teacherDataService.createClassroom(classroomName)
 
 		if (!isEqual(createClassroomResponse.status, 200) || isNonSuccessResponse(createClassroomResponse.data)) {
 			throw Error("Unable to create classroom")

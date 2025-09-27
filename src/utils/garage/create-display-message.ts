@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { isEqual } from "lodash-es"
 import { isNonSuccessResponse } from "../type-checks"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
@@ -34,7 +34,7 @@ export default async function createDisplayMessage(pixelBuffer: PixelBuffer): Pr
 		}
 		const buffer = exportDisplay(pixelBuffer)
 
-		const response = await blueDotApiClient.garageDataService.createDisplayBuffer(
+		const response = await leverLabsApiClient.garageDataService.createDisplayBuffer(
 			buffer,
 			selectedPip.pipUUID
 		)

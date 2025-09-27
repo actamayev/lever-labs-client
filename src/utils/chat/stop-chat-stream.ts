@@ -5,7 +5,7 @@ import isEqual from "lodash-es/isEqual"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function stopChatStream(chatReset: () => string | null): Promise<void> {
 	try {
@@ -14,7 +14,7 @@ export default async function stopChatStream(chatReset: () => string | null): Pr
 		const streamId = chatReset()
 		if (isNull(streamId)) return
 
-		const response = await blueDotApiClient.chatDataService.stopChatStream(streamId)
+		const response = await leverLabsApiClient.chatDataService.stopChatStream(streamId)
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
 			console.error("Failed to stop chat stream")
 		}

@@ -6,7 +6,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function sendSandboxMessage(
 	projectUUID: SandboxProjectUUID,
@@ -20,7 +20,7 @@ export default async function sendSandboxMessage(
 		const userCode = sandboxClass.getCppCode(projectUUID)
 
 		// Send request to backend - projectUUID will be included in the WebSocket response
-		const response = await blueDotApiClient.chatDataService.sendSandboxMessage(
+		const response = await leverLabsApiClient.chatDataService.sendSandboxMessage(
 			projectUUID,
 			{ userCode, message }
 		)

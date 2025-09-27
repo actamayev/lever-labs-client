@@ -7,7 +7,7 @@ import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"
 import workbenchClass from "../../classes/workbench-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import changeAudibleStatus from "./change-audible-status"
 
@@ -31,7 +31,7 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
 			})
 		}
-		const playTuneResponse = await blueDotApiClient.workbenchDataService.changeVolume(
+		const playTuneResponse = await leverLabsApiClient.workbenchDataService.changeVolume(
 			volume,
 			selectedPip.pipUUID
 		)

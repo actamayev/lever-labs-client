@@ -6,7 +6,7 @@ import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import teacherClass from "../../../classes/teacher-class"
-import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../../classes/lever-labs-api-client-class"
 import isNull from "lodash-es/isNull"
 
 export default async function removeStudentFromScoreboard(
@@ -22,7 +22,7 @@ export default async function removeStudentFromScoreboard(
 			!teacherClass.teacherData.isApproved
 		) return
 
-		const removeResponse = await blueDotApiClient.teacherDataService.removeStudentFromScoreboard(
+		const removeResponse = await leverLabsApiClient.teacherDataService.removeStudentFromScoreboard(
 			classCode,
 			studentId,
 			scoreboardId,

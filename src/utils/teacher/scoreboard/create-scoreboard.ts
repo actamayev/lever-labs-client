@@ -7,7 +7,7 @@ import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import teacherClass from "../../../classes/teacher-class"
-import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../../classes/lever-labs-api-client-class"
 import isNull from "lodash-es/isNull"
 
 export default async function createScoreboard(classCode: ClassCode, scoreboardName: string): Promise<Scoreboard | null> {
@@ -18,7 +18,7 @@ export default async function createScoreboard(classCode: ClassCode, scoreboardN
 			!teacherClass.teacherData.isApproved
 		) return null
 
-		const createHubResponse = await blueDotApiClient.teacherDataService.createScoreboard(classCode, scoreboardName)
+		const createHubResponse = await leverLabsApiClient.teacherDataService.createScoreboard(classCode, scoreboardName)
 
 		if (!isEqual(createHubResponse.status, 200) || isNonSuccessResponse(createHubResponse.data)) {
 			throw Error("Unable to create scoreboard")

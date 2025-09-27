@@ -6,7 +6,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function updateIndividualStudentDisplayStatus(
 	classCode: ClassCode,
@@ -16,7 +16,7 @@ export default async function updateIndividualStudentDisplayStatus(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const updateDisplayStatusResponse = await blueDotApiClient.teacherDataService.updateIndividualStudentDisplayStatus(
+		const updateDisplayStatusResponse = await leverLabsApiClient.teacherDataService.updateIndividualStudentDisplayStatus(
 			classCode,
 			studentId,
 			garageDisplayStatus

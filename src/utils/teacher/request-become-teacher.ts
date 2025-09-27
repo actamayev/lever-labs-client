@@ -4,7 +4,7 @@ import { AxiosError } from "axios"
 import { Dispatch, SetStateAction } from "react"
 import { IncomingTeacherRequestData } from "@lever-labs/common-ts/types/api"
 import authClass from "../../classes/auth-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function requestBecomeTeacher(
@@ -15,7 +15,7 @@ export default async function requestBecomeTeacher(
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const response = await blueDotApiClient.teacherDataService.requestBecomeTeacher(data)
+		const response = await leverLabsApiClient.teacherDataService.requestBecomeTeacher(data)
 
 		if (response.status !== 200) {
 			setError("Failed to submit teacher request")

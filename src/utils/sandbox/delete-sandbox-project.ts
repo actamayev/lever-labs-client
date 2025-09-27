@@ -6,7 +6,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
 
 export default async function deleteSandboxProject(projectUUID: SandboxProjectUUID) : Promise<void> {
@@ -15,7 +15,7 @@ export default async function deleteSandboxProject(projectUUID: SandboxProjectUU
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const deleteSandboxProjectResponse = await blueDotApiClient.sandboxDataService.deleteSandboxProject(
+		const deleteSandboxProjectResponse = await leverLabsApiClient.sandboxDataService.deleteSandboxProject(
 			project.sandboxProjectUUID
 		)
 		if (!isEqual(deleteSandboxProjectResponse.status, 200) || isNonSuccessResponse(deleteSandboxProjectResponse.data)) {

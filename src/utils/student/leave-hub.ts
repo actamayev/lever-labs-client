@@ -5,7 +5,7 @@ import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function leaveHub(classCode: ClassCode, hubId: HubUUID): Promise<void> {
 	try {
@@ -16,7 +16,7 @@ export default async function leaveHub(classCode: ClassCode, hubId: HubUUID): Pr
 			})
 			return
 		}
-		const leaveHubResponse = await blueDotApiClient.studentDataService.leaveHub(classCode, hubId)
+		const leaveHubResponse = await leverLabsApiClient.studentDataService.leaveHub(classCode, hubId)
 		if (!isEqual(leaveHubResponse.status, 200) || isNonSuccessResponse(leaveHubResponse.data)) {
 			throw Error("Unable to leave hub")
 		}

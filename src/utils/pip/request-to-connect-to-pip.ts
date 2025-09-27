@@ -6,14 +6,14 @@ import isEqual from "lodash-es/isEqual"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 
 // eslint-disable-next-line complexity
 export default async function requestToConnectToPip(pipUUID: PipUUID): Promise<void> {
 	try {
 		if (pipClass.selectedPip?.pipUUID === pipUUID) return
-		const connectToPipResponse = await blueDotApiClient.pipDataService.requestToConnectToPip(pipUUID)
+		const connectToPipResponse = await leverLabsApiClient.pipDataService.requestToConnectToPip(pipUUID)
 
 		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
 			throw new Error("Connect to Pip failed")

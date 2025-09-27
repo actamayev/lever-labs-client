@@ -40,15 +40,15 @@ const nextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "blue-dot-robots-local-bucket.s3.us-east-1.amazonaws.com",
+				hostname: "lever-labs-local-bucket.s3.us-east-1.amazonaws.com",
 			},
 			{
 				protocol: "https",
-				hostname: "blue-dot-robots-staging-bucket.s3.us-east-1.amazonaws.com",
+				hostname: "lever-labs-staging-bucket.s3.us-east-1.amazonaws.com",
 			},
 			{
 				protocol: "https",
-				hostname: "blue-dot-robots-production-bucket.s3.us-east-1.amazonaws.com",
+				hostname: "lever-labs-production-bucket.s3.us-east-1.amazonaws.com",
 			},
 		],
 		formats: ["image/webp", "image/avif"], // Use modern image formats
