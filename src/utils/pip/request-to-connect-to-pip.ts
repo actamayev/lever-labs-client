@@ -3,7 +3,7 @@
 
 import { AxiosError } from "axios"
 import isEqual from "lodash-es/isEqual"
-import { PipUUID } from "@bluedotrobots/common-ts/types/utils"
+import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import blueDotApiClient from "../../classes/blue-dot-api-client-class"

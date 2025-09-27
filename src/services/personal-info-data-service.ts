@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios"
 import BlueDotHttpClient from "../classes/blue-dot-http-client"
 import { AllCommonResponses, ErrorResponse, ErrorResponses, NonSuccessResponse,
-	PersonalInfoResponse, ProfilePictureUrl, SuccessResponse } from "@bluedotrobots/common-ts/types/api"
-import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
+	PersonalInfoResponse, ProfilePictureUrl, SuccessResponse } from "@lever-labs/common-ts/types/api"
+import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 
 export default class PersonalInfoDataService extends BaseDataService {

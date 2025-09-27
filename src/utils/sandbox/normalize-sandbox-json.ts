@@ -1,6 +1,6 @@
 "use client"
 
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 // eslint-disable-next-line complexity
 export default function normalizeSandboxJson (sandboxJson: unknown): BlocklyJson {

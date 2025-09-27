@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { DEFAULT_TRANSITION_DURATION } from "../../constants/constants"
-import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
-import { CareerType, MeetPipTriggerType } from "@bluedotrobots/common-ts/protocol"
+import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import { createImage } from "../create-media-helpers"
 import careerQuestTrigger from "../career-quest-trigger"
 import careerQuestTriggersClass from "../../../classes/career-quest-triggers-class"

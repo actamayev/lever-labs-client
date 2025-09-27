@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import cloneDeep from "lodash-es/cloneDeep"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 // This is used to not save block positions (ie when someone moves blocks around, it shouldn't trigger a save)
 export function stripBlockPositions(blocklyJson: BlocklyJson): BlocklyJson {

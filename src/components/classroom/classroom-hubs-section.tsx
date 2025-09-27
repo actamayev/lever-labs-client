@@ -3,8 +3,8 @@
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import { Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
-import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
+import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import {

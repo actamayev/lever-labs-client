@@ -1,6 +1,6 @@
 "use client"
 
-import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { createImage } from "../create-media-helpers"
 import {
 	DRIVING_SCHOOL_CHALLENGE_S2_P4, DRIVING_SCHOOL_CHALLENGE_S3_P5,
@@ -9,7 +9,7 @@ import {
 	DRIVING_SCHOOL_VIEW_ONLY_S3_P2, DRIVING_SCHOOL_VIEW_ONLY_S3_P4,
 	DRIVING_SCHOOL_VIEW_ONLY_S5_P2, DRIVING_SCHOOL_VIEW_ONLY_S4_P3,
 	DRIVING_SCHOOL_VIEW_ONLY_S4_P4,
-} from "@bluedotrobots/common-ts/types/cq-challenge-data/driving-school-challenge-data"
+} from "@lever-labs/common-ts/types/cq-challenge-data/driving-school-challenge-data"
 import DrivingSchoolS3P6 from "../../../components/career-quest/cq-right-components/driving-school/driving-school-s3-p6"
 
 /* eslint-disable @typescript-eslint/naming-convention */

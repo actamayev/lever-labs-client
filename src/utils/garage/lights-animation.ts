@@ -2,9 +2,9 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { LightAnimation } from "@bluedotrobots/common-ts/types/garage"
-import { lightToLEDType } from "@bluedotrobots/common-ts/protocol"
-import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
+import { LightAnimation } from "@lever-labs/common-ts/types/garage"
+import { lightToLEDType } from "@lever-labs/common-ts/protocol"
+import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import authClass from "../../classes/auth-class"
 import garageClass from "../../classes/garage-class"

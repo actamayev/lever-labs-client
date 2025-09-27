@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import { Order } from "../../order"
 import getCppGenerator from "../../../cpp/cpp-generator"
 import { logicCategoryColour } from "../../../constants/constants"
-import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "@bluedotrobots/common-ts/types/blockly/logic"
+import { VARIABLE_BLOCK_TYPES, VARIABLE_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/logic"
 
 export const variableBlocks: Record<VARIABLE_BLOCK_TYPES, CustomBlock> = {
 	// Float variables (original implementation)

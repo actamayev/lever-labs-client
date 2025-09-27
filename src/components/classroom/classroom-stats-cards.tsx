@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useState, SetStateAction } from "react"
 import { Hash, Rocket, Plus, Trophy } from "lucide-react"
-import { ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import CreateHubDialog from "./create-hub-dialog"

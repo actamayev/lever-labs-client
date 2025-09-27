@@ -2,7 +2,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { SiteThemes } from "@bluedotrobots/common-ts/types/utils"
+import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 
 interface ThemeProviderProps {
 	children: React.ReactNode

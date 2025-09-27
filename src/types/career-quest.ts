@@ -1,9 +1,9 @@
 import { ReactNode } from "react"
 import { LucideIcon } from "lucide-react"
-import { CareerUUID, ChallengeUUID } from "@bluedotrobots/common-ts/types/utils"
-import { BinaryEvaluationResult, ChatMessageRole, SandboxChatMessage } from "@bluedotrobots/common-ts/types/chat"
-import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { CareerUUID, ChallengeUUID } from "@lever-labs/common-ts/types/utils"
+import { BinaryEvaluationResult, ChatMessageRole, SandboxChatMessage } from "@lever-labs/common-ts/types/chat"
+import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
 	type ComponentName =

@@ -2,7 +2,7 @@
 
 
 import { useEffect, useRef, useState } from "react"
-import { CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"

@@ -4,7 +4,7 @@
 import { BookOpen } from "lucide-react"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
-import { BasicTeacherClassroomData } from "@bluedotrobots/common-ts/types/api"
+import { BasicTeacherClassroomData } from "@lever-labs/common-ts/types/api"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
 import teacherClass from "../../classes/teacher-class"
 import CreateClassroomDialog from "./create-classroom-dialog"

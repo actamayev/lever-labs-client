@@ -1,4 +1,4 @@
-import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
+import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
 	interface SandboxProjectWithStreaming extends SandboxProject {

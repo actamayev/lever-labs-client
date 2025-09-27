@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"

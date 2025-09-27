@@ -1,7 +1,7 @@
 "use client"
 
 import isEmpty from "lodash-es/isEmpty"
-import { BytecodeOpCode } from "@bluedotrobots/common-ts/types/bytecode-types"
+import { BytecodeOpCode } from "@lever-labs/common-ts/types/bytecode-types"
 
 export function checkForMotorCommands(bytecode: Float32Array): boolean {
 	const motorOpcodes: BytecodeOpCode[] = [

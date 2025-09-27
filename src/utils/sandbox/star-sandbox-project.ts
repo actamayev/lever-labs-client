@@ -2,7 +2,7 @@
 
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
-import { SandboxProjectUUID } from "@bluedotrobots/common-ts/types/utils"
+import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"

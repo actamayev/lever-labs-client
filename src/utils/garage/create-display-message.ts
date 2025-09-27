@@ -8,7 +8,7 @@ import { isEqual } from "lodash-es"
 import { isNonSuccessResponse } from "../type-checks"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import exportDisplay from "../display/export-display"
-import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
+import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 
 export default async function createDisplayMessage(pixelBuffer: PixelBuffer): Promise<void> {
 	try {

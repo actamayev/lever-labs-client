@@ -1,8 +1,8 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest'
 import studentClass from '../student-class'
 import careerQuestClass from '../career-quest-class'
-import { ClassCode, HubUUID } from '@bluedotrobots/common-ts/types/utils'
-import { UpdatedHubSlideId } from '@bluedotrobots/common-ts/types/socket'
+import { ClassCode, HubUUID } from '@lever-labs/common-ts/types/utils'
+import { UpdatedHubSlideId } from '@lever-labs/common-ts/types/socket'
 
 // Mock the career quest class
 vi.mock('../career-quest-class', () => ({

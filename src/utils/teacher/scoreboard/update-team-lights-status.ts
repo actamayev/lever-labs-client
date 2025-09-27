@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode, ScoreboardUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
 import teacherClass from "../../../classes/teacher-class"
 import updateIndividualStudentLightsStatus from "../update-individual-student-lights-status"
 

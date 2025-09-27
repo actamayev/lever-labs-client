@@ -1,8 +1,8 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
-import { CareerUUID, ClassCode } from "@bluedotrobots/common-ts/types/utils"
+import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
+import { CareerUUID, ClassCode } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"

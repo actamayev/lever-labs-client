@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode, CareerUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react"
 import {
 	Dialog,

@@ -6,7 +6,7 @@ import { ReactNode } from "react"
 import {
 	CareerUUID,
 	ChallengeUUID,
-} from "@bluedotrobots/common-ts/types/utils"
+} from "@lever-labs/common-ts/types/utils"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
 import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
@@ -19,9 +19,9 @@ import { careerData } from "../utils/constants/career-quest/career-data"
 import teacherClass from "./teacher-class"
 import chatManagerClass from "./chat-manager-class"
 import navigationManagerClass from "./navigation-manager-class"
-import { CqChallengeData } from "@bluedotrobots/common-ts/types/career-quest"
-import { BinaryEvaluationResult } from "@bluedotrobots/common-ts/types/chat"
-import { BlocklyJson } from "@bluedotrobots/common-ts/types/sandbox"
+import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
+import { BinaryEvaluationResult } from "@lever-labs/common-ts/types/chat"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import blueDotApiClient from "./blue-dot-api-client-class"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-right-content/all-career-quest-right-content"
 

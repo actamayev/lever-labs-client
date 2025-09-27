@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"

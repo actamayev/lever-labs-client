@@ -1,9 +1,9 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { FunSounds } from "@bluedotrobots/common-ts/types/garage"
-import { MessageBuilder } from "@bluedotrobots/common-ts/message-builder"
-import { tuneToSoundType } from "@bluedotrobots/common-ts/protocol"
+import { FunSounds } from "@lever-labs/common-ts/types/garage"
+import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { tuneToSoundType } from "@lever-labs/common-ts/protocol"
 import toastClass from "../../classes/toast-class"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"

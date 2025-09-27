@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { useCallback, useEffect, useState } from "react"
-import { SandboxProject } from "@bluedotrobots/common-ts/types/sandbox"
+import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"

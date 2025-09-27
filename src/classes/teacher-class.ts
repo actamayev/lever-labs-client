@@ -1,12 +1,12 @@
 "use client"
-import { ClassCode, HubUUID } from "@bluedotrobots/common-ts/types/utils"
+import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import isNull from "lodash-es/isNull"
 import { action, makeAutoObservable } from "mobx"
 import { BasicTeacherClassroomData, DetailedClassroomData,
-	TeacherData } from "@bluedotrobots/common-ts/types/api"
-import { StudentJoinedClassroom, StudentLeftHub, StudentJoinedHub} from "@bluedotrobots/common-ts/types/socket"
-import { TeacherViewHubData } from "@bluedotrobots/common-ts/types/hub"
-import { Scoreboard } from "@bluedotrobots/common-ts/types/scoreboard"
+	TeacherData } from "@lever-labs/common-ts/types/api"
+import { StudentJoinedClassroom, StudentLeftHub, StudentJoinedHub} from "@lever-labs/common-ts/types/socket"
+import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
+import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
 
 interface StudentFocusData {
 	classCode: ClassCode
