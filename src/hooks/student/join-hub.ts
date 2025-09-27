@@ -7,7 +7,7 @@ import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import careerQuestClass from "../../classes/career-quest-class"
 

@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../type-checks"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function removeCurrentProfilePicture(
 	setIsDeletingCurrentPicture: React.Dispatch<React.SetStateAction<boolean>>

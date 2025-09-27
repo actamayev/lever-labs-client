@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import chatManagerClass from "../../classes/chat-manager-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { OutgoingCareerMessage } from "@lever-labs/common-ts/types/chat"
 

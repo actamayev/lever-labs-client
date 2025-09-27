@@ -4,11 +4,11 @@ import { AllCommonResponses, BasicTeacherClassroomData, ClassCodeResponse, Detai
 	IncomingTeacherRequestData, NonSuccessResponse, CreateHubRequest } from "@lever-labs/common-ts/types/api"
 import { ClassCode, CareerUUID, HubUUID, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
 
 export default class TeacherDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

@@ -1,10 +1,10 @@
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 
 export abstract class BaseDataService {
-	protected readonly httpClient: BlueDotHttpClient
+	protected readonly httpClient: LeverLabsHttpClient
 	protected readonly pathHeader: EndpointHeaders
 
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		this.httpClient = httpClient
 		this.pathHeader = pathHeader
 	}

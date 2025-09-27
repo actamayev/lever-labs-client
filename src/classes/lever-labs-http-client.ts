@@ -2,7 +2,7 @@
 
 import axios, { AxiosInstance } from "axios"
 
-export default class BlueDotHttpClient {
+export default class LeverLabsHttpClient {
 	public readonly http: AxiosInstance
 
 	constructor() {

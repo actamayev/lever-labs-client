@@ -5,7 +5,7 @@ import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function leaveHub(classCode: ClassCode, hubId: HubUUID): Promise<void> {
 	try {

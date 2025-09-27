@@ -6,7 +6,7 @@ import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function stopCareerTrigger(): Promise<void> {

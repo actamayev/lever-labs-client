@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
-import BlueDotHttpClient from "../classes/blue-dot-http-client"
+import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
 import { BaseDataService } from "./base-data-service"
 
 export default class MiscDataService extends BaseDataService {
-	constructor(httpClient: BlueDotHttpClient, pathHeader: EndpointHeaders) {
+	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
 		super(httpClient, pathHeader)
 	}
 

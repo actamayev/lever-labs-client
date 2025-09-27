@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import careerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 
 export default async function checkCareerQuestCode(

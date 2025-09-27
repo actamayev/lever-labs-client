@@ -3,7 +3,7 @@
 import isEqual from "lodash-es/isEqual"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import { AxiosError } from "axios"
 

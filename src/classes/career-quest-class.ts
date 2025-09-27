@@ -22,7 +22,7 @@ import navigationManagerClass from "./navigation-manager-class"
 import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
 import { BinaryEvaluationResult } from "@lever-labs/common-ts/types/chat"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
-import blueDotApiClient from "./blue-dot-api-client-class"
+import blueDotApiClient from "./lever-labs-api-client-class"
 import { CAREER_DEFINITIONS } from "../utils/career-quest/career-quest-right-content/all-career-quest-right-content"
 
 interface CareerInstance {

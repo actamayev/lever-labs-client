@@ -6,7 +6,7 @@ import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import garageClass from "../../classes/garage-class"
 
 export default async function retrieveClassrooms(): Promise<void> {

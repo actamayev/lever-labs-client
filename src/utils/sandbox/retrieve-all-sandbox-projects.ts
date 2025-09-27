@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function retrieveAllSandboxProjects(): Promise<void> {
 	try {

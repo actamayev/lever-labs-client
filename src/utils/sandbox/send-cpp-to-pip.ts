@@ -8,7 +8,7 @@ import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/blue-dot-api-client-class"
+import blueDotApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
