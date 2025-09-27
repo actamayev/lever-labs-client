@@ -6,14 +6,14 @@ import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function deleteSandboxChat(projectUUID: SandboxProjectUUID): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Call the delete endpoint
-		const response = await blueDotApiClient.chatDataService.deleteSandboxChat(projectUUID)
+		const response = await leverLabsApiClient.chatDataService.deleteSandboxChat(projectUUID)
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			throw new Error("Unable to delete chat")

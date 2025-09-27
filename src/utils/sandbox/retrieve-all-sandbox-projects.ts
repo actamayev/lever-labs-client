@@ -4,7 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import sandboxClass from "../../classes/sandbox-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function retrieveAllSandboxProjects(): Promise<void> {
 	try {
@@ -17,7 +17,7 @@ export default async function retrieveAllSandboxProjects(): Promise<void> {
 
 		sandboxClass.setIsRetrievingAllSandboxProjects(true)
 
-		const sandboxProjectsResponse = await blueDotApiClient.sandboxDataService.retrieveAllSandboxProjects()
+		const sandboxProjectsResponse = await leverLabsApiClient.sandboxDataService.retrieveAllSandboxProjects()
 		if (!isEqual(sandboxProjectsResponse.status, 200) || isErrorResponse(sandboxProjectsResponse.data)) {
 			throw Error ("Unable to retrieve sandbox projects")
 		}

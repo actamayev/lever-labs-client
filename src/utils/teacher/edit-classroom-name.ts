@@ -6,7 +6,7 @@ import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function editClassroomName(
 	classCode: ClassCode,
@@ -18,7 +18,7 @@ export default async function editClassroomName(
 
 		setError("")
 
-		const editClassroomNameResponse = await blueDotApiClient.teacherDataService.editClassroomName(newClassroomName, classCode)
+		const editClassroomNameResponse = await leverLabsApiClient.teacherDataService.editClassroomName(newClassroomName, classCode)
 
 		if (!isEqual(editClassroomNameResponse.status, 200) || isNonSuccessResponse(editClassroomNameResponse.data)) {
 			throw Error("Unable to edit classroom name")

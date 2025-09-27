@@ -6,7 +6,7 @@ import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import garageClass from "../../classes/garage-class"
 
 export default async function retrieveClassrooms(): Promise<void> {
@@ -20,7 +20,7 @@ export default async function retrieveClassrooms(): Promise<void> {
 
 		studentClass.setIsRetrievingStudentData(true)
 
-		const studentClassroomsResponse = await blueDotApiClient.studentDataService.retrieveStudentClassrooms()
+		const studentClassroomsResponse = await leverLabsApiClient.studentDataService.retrieveStudentClassrooms()
 		if (!isEqual(studentClassroomsResponse.status, 200) || isErrorResponse(studentClassroomsResponse.data)) {
 			throw Error ("Unable to retrieve student classroom data")
 		}

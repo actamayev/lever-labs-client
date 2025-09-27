@@ -3,13 +3,13 @@
 import isEqual from "lodash-es/isEqual"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import { AxiosError } from "axios"
 
 export default async function searchForPipByUUID(pipUUID: PipUUID): Promise<RetrieveIsPipUUIDValidResponse | string> {
 	try {
-		const response = await blueDotApiClient.pipDataService.retrievePipUUIDStatus(pipUUID)
+		const response = await leverLabsApiClient.pipDataService.retrievePipUUIDStatus(pipUUID)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			throw new Error("Search for Pip by UUID failed")
 		}

@@ -5,7 +5,7 @@ import { CareerUUID, ChallengeUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 
 // eslint-disable-next-line max-lines-per-function
@@ -20,7 +20,7 @@ export default async function retrieveFullCareerData(careerUUID: CareerUUID): Pr
 		// Set loading state for entire career
 		careerQuestClass.setIsRetrievingCareerData(careerUUID, true)
 
-		const careerResponse = await blueDotApiClient.careerQuestDataService.retrieveCareerProgressData(careerUUID)
+		const careerResponse = await leverLabsApiClient.careerQuestDataService.retrieveCareerProgressData(careerUUID)
 
 		if (!isEqual(careerResponse.status, 200) || isErrorResponses(careerResponse.data)) {
 			throw Error("Unable to retrieve career data")

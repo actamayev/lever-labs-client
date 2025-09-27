@@ -8,7 +8,7 @@ import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
@@ -76,7 +76,7 @@ export default async function sendCppToPip(
 		}
 		pipClass.setIsSendingCppToPip(true)
 
-		const connectToPipResponse = await blueDotApiClient.sandboxDataService.sendSandboxCodeToPip(
+		const connectToPipResponse = await leverLabsApiClient.sandboxDataService.sendSandboxCodeToPip(
 			selectedPip.pipUUID, cppCode
 		)
 

@@ -6,7 +6,7 @@ import { isErrorResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default function useSetDefaultSiteTheme(): () => Promise<void> {
 	return useCallback(async (): Promise<void> => {
@@ -16,7 +16,7 @@ export default function useSetDefaultSiteTheme(): () => Promise<void> {
 			if (authClass.isFinishedWithSignup === false) {
 				return // No toast because we don't want a negative toast if someone isn't logged in
 			}
-			const siteThemeResponse = await blueDotApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
+			const siteThemeResponse = await leverLabsApiClient.personalInfoDataService.setDefaultSiteTheme(newSiteTheme)
 			if (!isEqual(siteThemeResponse.status, 200) || isErrorResponse(siteThemeResponse.data)) {
 				throw Error("Unable to save new default site theme")
 			}

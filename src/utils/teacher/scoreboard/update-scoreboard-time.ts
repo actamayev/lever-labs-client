@@ -6,7 +6,7 @@ import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import teacherClass from "../../../classes/teacher-class"
-import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../../classes/lever-labs-api-client-class"
 import isNull from "lodash-es/isNull"
 
 export default async function updateScoreboardTime(scoreboardId: ScoreboardUUID, timeInSeconds: number): Promise<void> {
@@ -20,7 +20,7 @@ export default async function updateScoreboardTime(scoreboardId: ScoreboardUUID,
 		const classCode = teacherClass.getScoreboardData(scoreboardId)?.classCode
 		if (!classCode) return
 
-		const updateResponse = await blueDotApiClient.teacherDataService.updateScoreboardTime(
+		const updateResponse = await leverLabsApiClient.teacherDataService.updateScoreboardTime(
 			scoreboardId,
 			timeInSeconds,
 			classCode

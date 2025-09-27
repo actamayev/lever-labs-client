@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 import { AxiosResponse } from "axios"
 import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
@@ -18,7 +18,7 @@ export default async function stopPollingSensors(): Promise<void> {
 			if (isNull(selectedPip)) {
 				throw new Error("No pip selected")
 			}
-			return blueDotApiClient.pipDataService.stopSensorPolling(selectedPip.pipUUID)
+			return leverLabsApiClient.pipDataService.stopSensorPolling(selectedPip.pipUUID)
 		},
 		errorTitle: "Unable to stop sensor polling on Pip at this time",
 		skipOfflineCheck: true,

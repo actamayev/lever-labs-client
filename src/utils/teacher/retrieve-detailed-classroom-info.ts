@@ -6,7 +6,7 @@ import { isNonSuccessResponse } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import teacherClass from "../../classes/teacher-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function retrieveDetailedClassroomInfo(classCode: ClassCode): Promise<void> {
 	try {
@@ -18,7 +18,7 @@ export default async function retrieveDetailedClassroomInfo(classCode: ClassCode
 
 		teacherClass.setIsRetrievingDetailedData(true)
 
-		const detailedClassroomResponse = await blueDotApiClient.teacherDataService.retrieveDetailedClassroomInfo(classCode)
+		const detailedClassroomResponse = await leverLabsApiClient.teacherDataService.retrieveDetailedClassroomInfo(classCode)
 		if (!isEqual(detailedClassroomResponse.status, 200) || isNonSuccessResponse(detailedClassroomResponse.data)) {
 			throw Error("Unable to retrieve detailed classroom data")
 		}

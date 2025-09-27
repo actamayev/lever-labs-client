@@ -6,7 +6,7 @@ import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default async function stopCareerTrigger(): Promise<void> {
@@ -23,7 +23,7 @@ export default async function stopCareerTrigger(): Promise<void> {
 			selectedPip.pipConnectionStatus === "offline"
 		) return
 
-		const stopScriptResponse = await blueDotApiClient.careerQuestDataService.stopCareerTrigger(
+		const stopScriptResponse = await leverLabsApiClient.careerQuestDataService.stopCareerTrigger(
 			selectedPip.pipUUID
 		)
 

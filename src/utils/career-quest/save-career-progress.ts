@@ -1,7 +1,7 @@
 "use client"
 
 import { CareerUUID } from "@lever-labs/common-ts/types/utils"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"
 import isNull from "lodash-es/isNull"
@@ -14,7 +14,7 @@ export default async function saveCareerProgress(
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
-		await blueDotApiClient.careerQuestDataService.updateCareerQuestUserProgress(
+		await leverLabsApiClient.careerQuestDataService.updateCareerQuestUserProgress(
 			currentId,
 			careerUUID,
 			isFurthestSeen
@@ -27,7 +27,7 @@ export default async function saveCareerProgress(
 			? `${navigationCommand}:${currentId}`
 			: currentId
 
-		await blueDotApiClient.teacherDataService.setHubNewSlideId(
+		await leverLabsApiClient.teacherDataService.setHubNewSlideId(
 			isFocusingStudents.classCode,
 			isFocusingStudents.hubId,
 			slideIdWithCommand

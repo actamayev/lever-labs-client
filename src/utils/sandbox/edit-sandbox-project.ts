@@ -8,7 +8,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function editSandboxProject(projectUUID: SandboxProjectUUID, newBlocklyJson: BlocklyJson) : Promise<void> {
 	try {
@@ -16,7 +16,7 @@ export default async function editSandboxProject(projectUUID: SandboxProjectUUID
 		const project = sandboxClass.sandboxProjects.get(projectUUID)
 		if (isUndefined(project)) return
 
-		const editSandboxProjectResponse = await blueDotApiClient.sandboxDataService.editSandboxProject(
+		const editSandboxProjectResponse = await leverLabsApiClient.sandboxDataService.editSandboxProject(
 			projectUUID,
 			newBlocklyJson
 		)

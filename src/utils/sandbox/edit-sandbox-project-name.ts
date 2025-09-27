@@ -7,7 +7,7 @@ import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function editSandboxProjectName(projectUUID: SandboxProjectUUID, newProjectName: string): Promise<void> {
 	try {
@@ -16,7 +16,7 @@ export default async function editSandboxProjectName(projectUUID: SandboxProject
 		if (isUndefined(project) || project.projectName === newProjectName) return
 
 		sandboxClass.updateProjectName(projectUUID, newProjectName)
-		const editSandboxProjectNameResponse = await blueDotApiClient.sandboxDataService.editSandboxProjectName(
+		const editSandboxProjectNameResponse = await leverLabsApiClient.sandboxDataService.editSandboxProjectName(
 			project.sandboxProjectUUID,
 			newProjectName
 		)

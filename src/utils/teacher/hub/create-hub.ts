@@ -7,7 +7,7 @@ import authClass from "../../../classes/auth-class"
 import toastClass from "../../../classes/toast-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import teacherClass from "../../../classes/teacher-class"
-import blueDotApiClient from "../../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../../classes/lever-labs-api-client-class"
 import isNull from "lodash-es/isNull"
 
 export default async function createHub(
@@ -23,7 +23,7 @@ export default async function createHub(
 			!teacherClass.teacherData.isApproved
 		) return
 
-		const createHubResponse = await blueDotApiClient.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
+		const createHubResponse = await leverLabsApiClient.teacherDataService.createHub(classCode, hubName, careerUUID, slideId)
 
 		if (!isEqual(createHubResponse.status, 200) || isNonSuccessResponse(createHubResponse.data)) {
 			throw Error("Unable to create hub")

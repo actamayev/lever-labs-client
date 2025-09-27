@@ -7,7 +7,7 @@ import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import studentClass from "../../classes/student-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 // eslint-disable-next-line complexity
 export default async function joinClassroom(
@@ -18,7 +18,7 @@ export default async function joinClassroom(
 	try {
 		if (authClass.isFinishedWithSignup === false) return false
 
-		const joinClassResponse = await blueDotApiClient.studentDataService.joinClass(classCode)
+		const joinClassResponse = await leverLabsApiClient.studentDataService.joinClass(classCode)
 
 		if (!isEqual(joinClassResponse.status, 200) || isNonSuccessResponse(joinClassResponse.data)) {
 			throw Error("Unable to join class")

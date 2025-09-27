@@ -5,7 +5,7 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import chatManagerClass from "../../classes/chat-manager-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { OutgoingCareerMessage } from "@lever-labs/common-ts/types/chat"
 
@@ -15,7 +15,7 @@ export default async function sendCareerMessage(careerUUID: CareerUUID, careerDa
 
 		chatManagerClass.resetCareerStreamingState(careerUUID)
 
-		const response = await blueDotApiClient.chatDataService.sendCareerMessage(careerData, careerUUID)
+		const response = await leverLabsApiClient.chatDataService.sendCareerMessage(careerData, careerUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) return
 

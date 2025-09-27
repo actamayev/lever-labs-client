@@ -13,7 +13,7 @@ import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import CareerQuestDataService from "../services/career-quest-data-service"
 
-class BlueDotApiClient {
+class LeverLabsApiClient {
 	public httpClient: LeverLabsHttpClient = new LeverLabsHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
 	public careerQuestDataService: CareerQuestDataService = new CareerQuestDataService(this.httpClient, "/career-quest")
@@ -33,6 +33,6 @@ class BlueDotApiClient {
 	// No logout method needed: cookies are cleared by server endpoint
 }
 
-const blueDotApiClient = new BlueDotApiClient()
+const leverLabsApiClient = new LeverLabsApiClient()
 
-export default blueDotApiClient
+export default leverLabsApiClient

@@ -6,14 +6,14 @@ import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import chatManagerClass from "../../classes/chat-manager-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function deleteCareerChat(careerUUID: CareerUUID): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
 		// Call the delete endpoint
-		const response = await blueDotApiClient.chatDataService.deleteCareerChat(careerUUID)
+		const response = await leverLabsApiClient.chatDataService.deleteCareerChat(careerUUID)
 
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
 			throw new Error("Unable to delete chat")

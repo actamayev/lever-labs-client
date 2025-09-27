@@ -7,7 +7,7 @@ import toastClass from "../../classes/toast-class"
 import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../navigate/use-typed-navigate"
 import { isNonSuccessResponse } from "../../utils/type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import careerQuestClass from "../../classes/career-quest-class"
 
@@ -27,7 +27,7 @@ export default function useJoinHub():(
 				})
 				return
 			}
-			const joinHubResponse = await blueDotApiClient.studentDataService.joinHub(classCode, hubId)
+			const joinHubResponse = await leverLabsApiClient.studentDataService.joinHub(classCode, hubId)
 			if (!isEqual(joinHubResponse.status, 200) || isNonSuccessResponse(joinHubResponse.data)) {
 				throw Error("Unable to join hub")
 			}

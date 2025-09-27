@@ -10,7 +10,7 @@ import teacherClass from "../../classes/teacher-class"
 import workbenchClass from "../../classes/workbench-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import personalInfoClass from "../../classes/personal-info-class"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
@@ -24,7 +24,7 @@ export default async function logout(): Promise<void> {
 	try {
 		await serialConnectionManagerClass.logout()
 		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
-		await blueDotApiClient.authDataService.logout()
+		await leverLabsApiClient.authDataService.logout()
 
 		// Clear all client state
 		personalInfoClass.logout()

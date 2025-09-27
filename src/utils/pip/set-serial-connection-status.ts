@@ -2,12 +2,12 @@
 
 import isEqual from "lodash-es/isEqual"
 import { isNonSuccessResponse } from "../type-checks"
-import blueDotApiClient from "../../classes/lever-labs-api-client-class"
+import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
 
 export default async function setSerialConnectionStatus(pipUUID: PipUUID, connected: boolean): Promise<void> {
 	try {
-		const response = await blueDotApiClient.pipDataService.setSerialConnectionStatus(pipUUID, connected)
+		const response = await leverLabsApiClient.pipDataService.setSerialConnectionStatus(pipUUID, connected)
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			throw new Error(`Set serial connection status failed for pip ${pipUUID}`)
