@@ -24,6 +24,7 @@ export default function useInitializeGoogleAnalytics(): void {
 		initializeGA()
 	}, [])
 
+
 	// Send pageview only after GA is initialized
 	useEffect((): void => {
 		if (!analyticsInitialized) return
