@@ -302,7 +302,7 @@ export default function PrivacyPage(): React.ReactNode {
 
 					<ComplianceSectionHeader>12. Contact Us</ComplianceSectionHeader>
 					<ComplianceParagraph>
-						Lever Labs, Inc. is the data controller of your personal information for the purposes of applicable privacy regulations. For all data privacy inquiries, questions about this Privacy Policy, requests to exercise your data subject rights, or concerns about your child's privacy and safety on our platform, please contact our privacy team at {""}
+						Blue Dot Robots, Inc. is the data controller of your personal information for the purposes of applicable privacy regulations. For all data privacy inquiries, questions about this Privacy Policy, requests to exercise your data subject rights, or concerns about your child's privacy and safety on our platform, please contact our privacy team at {""}
 						<Link
 							href="mailto:hello@leverlabs.com?subject=Privacy%20Inquiry"
 							className="underline"
