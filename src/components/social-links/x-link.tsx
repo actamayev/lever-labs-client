@@ -5,7 +5,7 @@ import { CustomX } from "../../icons/custom-x"
 export default function XLink(): React.ReactNode {
 	return (
 		<a
-			href="https://x.com/bluedotrobots"
+			href="https://x.com/lever_labs"
 			aria-label="X"
 			className="text-questionText hover:text-gray-950 dark:hover:text-white duration-0"
 			target="_blank"
