@@ -11,7 +11,7 @@ export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
-					.appendField("Turn LED")
+					.appendField("Turn all LEDs")
 					.appendField(
 						new Blockly.FieldDropdown(
 							Object.entries(SENSOR_TYPES.LED_COLORS).map(([key, value]): [string, string] =>
