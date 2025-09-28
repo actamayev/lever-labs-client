@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import toLower from "lodash-es/toLower"
 import { Order } from "../order"
 import { SENSORS_BLOCK_TYPES, SENSORS_FIELD_VALUES,
-	SENSOR_TYPES, IMUSensorType, LeftRightSensorType } from "@lever-labs/common-ts/types/blockly/sensor"
+	SENSOR_TYPES, IMUSensorType, LeftRightSensorType, ColorSensorReadColorsType } from "@lever-labs/common-ts/types/blockly/sensor"
 import { sensorsCategoryColour } from "../../constants/constants"
 import { upperFirst } from "lodash-es"
 
@@ -76,42 +76,28 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			return ["is_object_in_front()", Order.FUNCTION_CALL]
 		}
 	},
-	// [SENSORS_BLOCK_TYPES.IR_READ]: {
-	// 	definition: {
-	// 		init: function(this: Blockly.Block): void {
-	// 			this.appendDummyInput()
-	// 				.appendField("Read IR sensor")
-	// 				.appendField(
-	// 					new Blockly.FieldDropdown(
-	// 						Object.entries(SENSOR_TYPES.IR).map(([key, value]): [string, string] =>
-	//                             [upperFirst(key.toLowerCase()), value] as [string, string]
-	// 						)
-	// 					),
-	// 					SENSORS_FIELD_VALUES.IR_READ
-	// 				)
-	// 			this.setOutput(true, "Number")
-	// 			this.setColour(sensorsCategoryColour)
-	// 			this.setTooltip("Read value from infrared sensor")
-	// 		}
-	// 	},
-	// 	generator: (block: Blockly.Block): [string, number] => {
-	// 		const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.IR_READ) as IRSensorType
-	// 		return [`readIR(IR_${sensor})`, Order.FUNCTION_CALL]
-	// 	}
-	// },
-	// [SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
-	// 	definition: {
-	// 		init: function(this: Blockly.Block): void {
-	// 			this.appendDummyInput()
-	// 				.appendField("Read Color Sensor")
-	// 			this.setOutput(true, "String")
-	// 			this.setColour(sensorsCategoryColour)
-	// 			this.setTooltip("Read value from color sensor")
-	// 		}
-	// 	},
-	// 	generator: (block: Blockly.Block): [string, number] => {
-	// 		const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
-	// 		return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
-	// 	}
-	// },
+	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
+		definition: {
+			init: function(this: Blockly.Block): void {
+				this.appendDummyInput()
+					.appendField("Is object")
+					.appendField(
+						new Blockly.FieldDropdown(
+							Object.entries(SENSOR_TYPES.COLOR_SENSOR_READ_COLORS).map(([key, value]): [string, string] =>
+								[upperFirst(key.toLowerCase()), value] as [string, string]
+							)
+						),
+						SENSORS_FIELD_VALUES.COLOR_SENSOR_READ
+					)
+				this.setOutput(true, "Boolean")
+				this.setColour(sensorsCategoryColour)
+				this.setTooltip("Returns true if an object is detected by the color sensor")
+			},
+			keywords: ["color", "red", "green", "blue", "white", "black", "detect", "sensor", "vision"]
+		},
+		generator: (block: Blockly.Block): [string, number] => {
+			const value = block.getFieldValue(SENSORS_FIELD_VALUES.COLOR_SENSOR_READ) as ColorSensorReadColorsType
+			return [`is_object_${value.toLowerCase()}()`, Order.FUNCTION_CALL]
+		}
+	}
 }
