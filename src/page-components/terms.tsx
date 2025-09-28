@@ -295,7 +295,7 @@ export default function TermsPage(): React.ReactNode {
 							href={"/privacy"}
 							className="underline"
 						>
-							www.bluedotrobots.com/privacy
+							www.leverlabs.com/privacy
 						</Link>
 						. By using the Service, you consent to the terms of the Privacy Policy. Our Privacy Policy explains how we collect, use, and protect information from users, including special protections for users under 13 years of age in compliance with COPPA and other applicable privacy laws.
 					</ComplianceParagraph>
