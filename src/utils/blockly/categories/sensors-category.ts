@@ -35,14 +35,14 @@ const distanceSensorsCategory: CustomCategoryInfo = {
 // 	]
 // }
 
-// const colorSensorCategory: CustomCategoryInfo = {
-// 	...baseCategory,
-// 	name: "Color Sensor",
-// 	colour: sensorsCategoryColour,
-// 	contents: [
-// 		{ kind: "block", type: SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ }
-// 	]
-// }
+const colorSensorCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Color Sensor",
+	colour: sensorsCategoryColour,
+	contents: [
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ }
+	]
+}
 
 // Then include them in the parent category
 export const sensorsCategory: ParentCategoryInfo = {
@@ -53,6 +53,6 @@ export const sensorsCategory: ParentCategoryInfo = {
 		imuSensorsCategory,
 		distanceSensorsCategory,
 		// irSensorsCategory,
-		// colorSensorCategory
+		colorSensorCategory
 	]
 }
