@@ -1,22 +1,27 @@
 "use client"
 
-import Image from "next/image"
-
 export default function LandingHero(): React.ReactNode {
 	return (
-		<section className="relative w-full h-screen overflow-hidden">
-			{/* Image covers the viewport; excess is cropped */}
-			<div className="absolute inset-0">
-				<Image
-					src="/trmnl-hero.jpg"
-					alt="TRMNL style hero"
-					fill
-					sizes="100vw"
-					quality={100}
-					priority
-					style={{ objectFit: "cover", objectPosition: "center 35%" }}
-				/>
-			</div>
-		</section>
+		<div className="relative overflow-hidden h-dvh">
+			{/* Match TRMNL exactly: plain img tags with responsive opacity classes */}
+			<img
+				className="3xl:opacity-0 sm:opacity-100 opacity-0 w-full h-full object-cover absolute"
+				src="/trmnl-hero.jpg"
+				alt="TRMNL hero"
+				style={{ objectPosition: "left center" }}
+			/>
+			<img
+				className="3xl:opacity-100 opacity-0 w-full h-full object-cover absolute"
+				src="/trmnl-hero-wide.jpg"
+				alt="TRMNL hero wide"
+				style={{ objectPosition: "center center" }}
+			/>
+			<img
+				className="sm:opacity-0 opacity-100 w-full h-full object-cover absolute"
+				src="/trmnl-hero-mobile.jpg"
+				alt="TRMNL hero mobile"
+				style={{ objectPosition: "center center" }}
+			/>
+		</div>
 	)
 }

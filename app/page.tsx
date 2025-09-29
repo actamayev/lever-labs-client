@@ -13,8 +13,8 @@ export const metadata = createMetadata({
 
 export default function Home(): React.ReactNode {
 	return (
-		<PublicOnlyPage extraClasses="w-full">
-			<Landing />
-		</PublicOnlyPage>
+		// <PublicOnlyPage extraClasses="w-full">
+		<Landing />
+		// </PublicOnlyPage>
 	)
 }

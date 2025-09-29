@@ -17,55 +17,53 @@ import LandingSectionContainer from "../components/landing/landing-section-conta
 
 function Landing(): React.ReactNode {
 	return (
-		<>
-			<div className="min-h-screen w-full relative">
-				<LandingHero />
+		<div className="">
+			<LandingHero />
 
-				<LandingSectionContainer>
-					<SmallRobotBigPossibilities />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<SmallRobotBigPossibilities />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<CareerQuestLanding />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<CareerQuestLanding />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<LearnByDoing />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<LearnByDoing />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<LandingSensors />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<LandingSensors />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<AllAgesWelcome />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<AllAgesWelcome />
+			</LandingSectionContainer>
 
-				{/* <LandingSectionContainer>
+			{/* <LandingSectionContainer>
 					<CodeThatComesAlive />
 				</LandingSectionContainer> */}
 
-				<LandingSectionContainer>
-					<SimpleSetup />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<SimpleSetup />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer extraClasses="bg-humpback py-16 sm:py-20 md:py-24 lg:py-32 mt-8 sm:mt-10 md:mt-12">
-					<TheLittleThings />
-				</LandingSectionContainer>
+			<LandingSectionContainer extraClasses="bg-humpback py-16 sm:py-20 md:py-24 lg:py-32 mt-8 sm:mt-10 md:mt-12">
+				<TheLittleThings />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<BridgingTwoWorlds />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<BridgingTwoWorlds />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer>
-					<ByBuildersForBuilders />
-				</LandingSectionContainer>
+			<LandingSectionContainer>
+				<ByBuildersForBuilders />
+			</LandingSectionContainer>
 
-				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
-					<SignUpForUpdates />
-				</LandingSectionContainer>
-			</div>
-		</>
+			<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
+				<SignUpForUpdates />
+			</LandingSectionContainer>
+		</div>
 	)
 }
 
