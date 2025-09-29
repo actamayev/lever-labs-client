@@ -1,8 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import GridPattern from "../components/shadcn/ui/grid-pattern"
-import LandingHeader from "../components/landing/landing-header"
+import LandingHero from "../components/landing/landing-hero"
 import TheLittleThings from "../components/landing/the-little-things"
 import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
@@ -20,13 +19,7 @@ function Landing(): React.ReactNode {
 	return (
 		<>
 			<div className="min-h-screen w-full relative">
-				<div className="fixed inset-0">
-					<GridPattern />
-				</div>
-
-				<LandingSectionContainer>
-					<LandingHeader />
-				</LandingSectionContainer>
+				<LandingHero />
 
 				<LandingSectionContainer>
 					<SmallRobotBigPossibilities />

@@ -1,6 +1,6 @@
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 import RegisterComponent from "../../src/components/auth/register/register-component"
-import PublicOnlyPage from "../../src/components/layouts/classic-layout"
+import PublicOnlyPage from "../../src/components/layouts/public-only-page"
 
 export const metadata = createMetadata({
 	title: "Register",
