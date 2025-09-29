@@ -5,13 +5,13 @@ export default function LandingHero(): React.ReactNode {
 		<div className="relative overflow-hidden h-dvh">
 			{/* Match TRMNL exactly: plain img tags with responsive opacity classes */}
 			<img
-				className="3xl:opacity-0 sm:opacity-100 opacity-0 w-full h-full object-cover absolute"
+				className="wide:opacity-0 sm:opacity-100 opacity-0 w-full h-full object-cover absolute"
 				src="/trmnl-hero.jpg"
 				alt="TRMNL hero"
 				style={{ objectPosition: "left center" }}
 			/>
 			<img
-				className="3xl:opacity-100 opacity-0 w-full h-full object-cover absolute"
+				className="wide:opacity-100 opacity-0 w-full h-full object-cover absolute"
 				src="/trmnl-hero-wide.jpg"
 				alt="TRMNL hero wide"
 				style={{ objectPosition: "center center" }}
