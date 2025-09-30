@@ -17,10 +17,10 @@ import LandingSectionContainer from "../components/landing/landing-section-conta
 
 function Landing(): React.ReactNode {
 	return (
-		<div className="">
+		<>
 			<LandingHero />
 
-			<LandingSectionContainer>
+			{/* <LandingSectionContainer>
 				<SmallRobotBigPossibilities />
 			</LandingSectionContainer>
 
@@ -38,13 +38,13 @@ function Landing(): React.ReactNode {
 
 			<LandingSectionContainer>
 				<AllAgesWelcome />
-			</LandingSectionContainer>
+			</LandingSectionContainer> */}
 
 			{/* <LandingSectionContainer>
 					<CodeThatComesAlive />
 				</LandingSectionContainer> */}
 
-			<LandingSectionContainer>
+			{/* <LandingSectionContainer>
 				<SimpleSetup />
 			</LandingSectionContainer>
 
@@ -62,8 +62,8 @@ function Landing(): React.ReactNode {
 
 			<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
 				<SignUpForUpdates />
-			</LandingSectionContainer>
-		</div>
+			</LandingSectionContainer> */}
+		</>
 	)
 }
 

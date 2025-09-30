@@ -57,7 +57,7 @@ module.exports = {
 	theme: {
 		extend: {
 			screens: {
-				'wide': '1900px',
+				"wide": "1900px",
 			},
 			fontFamily: {
 				sans: ["var(--font-lexend)", "sans-serif"],
