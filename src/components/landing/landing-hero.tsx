@@ -66,6 +66,10 @@ export default function LandingHero(): React.ReactNode {
 							TRMNL is an e-ink companion that helps you stay focused.
 						</p>
 					</div>
+					<a target="_blank" className="mt-12 sm:mt-0 cursor-pointer rounded-full relative bg-black sm:min-w-40 sm:w-auto w-full px-8 py-3 hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 flex items-center justify-center mb-2 group transition duration-200" href="https://shop.usetrmnl.com/collections/devices">
+						<span className="font-heading text-white text-xl group-hover:text-black transition duration-200">Buy Now</span>
+						<span className="top-14 absolute transform left-1/2 -translate-x-1/2 text-sm text-gray-200 font-heading italic hidden group-hover:opacity-100 group-hover:block w-full text-center transition ease-in-out delay-100">OG Model In Stock</span>
+					</a>
 				</div>
 			</div>
 		</div>
