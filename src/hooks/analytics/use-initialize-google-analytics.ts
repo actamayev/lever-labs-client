@@ -11,6 +11,7 @@ export default function useInitializeGoogleAnalytics(): void {
 	useEffect((): void => {
 		const initializeGA = async (): Promise<void> => {
 			try {
+				console.log("process.env.VERCEL_ENV", process.env.VERCEL_ENV)
 				if (process.env.VERCEL_ENV !== "production") return
 				// Dynamically import ReactGA only when needed
 				const ReactGA = (await import("react-ga4")).default
@@ -30,6 +31,7 @@ export default function useInitializeGoogleAnalytics(): void {
 		if (!analyticsInitialized) return
 
 		const sendPageView = async (): Promise<void> => {
+			console.log("process.env.VERCEL_ENV", process.env.VERCEL_ENV)
 			if (process.env.VERCEL_ENV !== "production") return
 			const ReactGA = (await import("react-ga4")).default
 			ReactGA.send({
