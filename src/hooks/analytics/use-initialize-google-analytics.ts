@@ -14,6 +14,7 @@ export default function useInitializeGoogleAnalytics(): void {
 				console.log("process.env.VERCEL_ENV", process.env.VERCEL_ENV)
 				console.log("process.env.NODE_ENV", process.env.NODE_ENV)
 				// Dynamically import ReactGA only when needed
+
 				const ReactGA = (await import("react-ga4")).default
 				ReactGA.initialize(process.env.NEXT_PUBLIC_MEASUREMENT_ID as string)
 				setAnalyticsInitialized(true)
