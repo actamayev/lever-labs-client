@@ -1,3 +1,4 @@
+"use client"
 import { observer } from "mobx-react"
 import { useEffect, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
