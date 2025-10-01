@@ -36,7 +36,7 @@ class LearnClass {
 	public setLessons = action((lessons: Lesson[]): void => {
 		const map: Record<LessonUUID, LocalLesson> = {}
 		for (const lesson of lessons) {
-			map[lesson.lessonUuid] = {
+			map[lesson.lessonId] = {
 				...lesson,
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
@@ -45,27 +45,27 @@ class LearnClass {
 		this.lessonsById = map
 	})
 
-	public setIsRetrievingDetailedData = action((lessonUuid: LessonUUID, isRetrieving: boolean): void => {
-		const lesson = this.lessonsById[lessonUuid]
+	public setIsRetrievingDetailedData = action((lessonId: LessonUUID, isRetrieving: boolean): void => {
+		const lesson = this.lessonsById[lessonId]
 		if (!lesson) return
 		lesson.isRetrievingDetailedData = isRetrieving
 	})
 
-	public setHasRetrievedDetailedData = action((lessonUuid: LessonUUID, hasRetrieved: boolean): void => {
-		const lesson = this.lessonsById[lessonUuid]
+	public setHasRetrievedDetailedData = action((lessonId: LessonUUID, hasRetrieved: boolean): void => {
+		const lesson = this.lessonsById[lessonId]
 		if (!lesson) return
 		lesson.hasRetrievedDetailedData = hasRetrieved
 	})
 
-	public setLessonQuestionMap = action((lessonUuid: LessonUUID, lessonQuestionMap: LessonQuestionMap[]): void => {
-		const lesson = this.lessonsById[lessonUuid]
+	public setLessonQuestionMap = action((lessonId: LessonUUID, lessonQuestionMap: LessonQuestionMap[]): void => {
+		const lesson = this.lessonsById[lessonId]
 		if (!lesson) return
 		lesson.lessonQuestionMap = lessonQuestionMap as LocalLessonQuestionMap[]
 	})
 
 	// eslint-disable-next-line complexity
-	public setQuestionAnsweredCorrectness = action((lessonUuid: LessonUUID, questionId: string, answerChoiceId: number): void => {
-		const lesson = this.lessonsById[lessonUuid]
+	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, answerChoiceId: number): void => {
+		const lesson = this.lessonsById[lessonId]
 		if (!lesson || !lesson.lessonQuestionMap) return
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
@@ -90,20 +90,20 @@ class LearnClass {
 		}
 	})
 
-	public getLesson = (lessonUuid: LessonUUID): LocalLesson | undefined => {
-		return this.lessonsById[lessonUuid]
+	public getLesson = (lessonId: LessonUUID): LocalLesson | undefined => {
+		return this.lessonsById[lessonId]
 	}
 
-	public isRetrievingDetailedData = (lessonUuid: LessonUUID): boolean => {
-		return this.lessonsById[lessonUuid]?.isRetrievingDetailedData === true
+	public isRetrievingDetailedData = (lessonId: LessonUUID): boolean => {
+		return this.lessonsById[lessonId]?.isRetrievingDetailedData === true
 	}
 
-	public hasRetrievedDetailedData = (lessonUuid: LessonUUID): boolean => {
-		return this.lessonsById[lessonUuid]?.hasRetrievedDetailedData === true
+	public hasRetrievedDetailedData = (lessonId: LessonUUID): boolean => {
+		return this.lessonsById[lessonId]?.hasRetrievedDetailedData === true
 	}
 
-	public setLessonCompleted = action((lessonUuid: LessonUUID): void => {
-		const lesson = this.lessonsById[lessonUuid]
+	public setLessonCompleted = action((lessonId: LessonUUID): void => {
+		const lesson = this.lessonsById[lessonId]
 		if (!lesson) return
 		lesson.isCompleted = true
 	})

@@ -6,28 +6,28 @@ import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
-export default async function retrieveDetailedLesson(lessonUuid: LessonUUID): Promise<void> {
+export default async function retrieveDetailedLesson(lessonId: LessonUUID): Promise<void> {
 	try {
-		const lesson = learnClass.getLesson(lessonUuid)
+		const lesson = learnClass.getLesson(lessonId)
 		if (
 			!lesson ||
-			learnClass.isRetrievingDetailedData(lessonUuid) ||
-			learnClass.hasRetrievedDetailedData(lessonUuid)
+			learnClass.isRetrievingDetailedData(lessonId) ||
+			learnClass.hasRetrievedDetailedData(lessonId)
 		) return
 
-		learnClass.setIsRetrievingDetailedData(lessonUuid, true)
+		learnClass.setIsRetrievingDetailedData(lessonId, true)
 
-		const response = await leverLabsApiClient.learnDataService.getDetailedLesson(lessonUuid)
+		const response = await leverLabsApiClient.learnDataService.getDetailedLesson(lessonId)
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
 			throw Error("Unable to retrieve lesson details")
 		}
 
-		learnClass.setLessonQuestionMap(lessonUuid, response.data.lesson.lessonQuestionMap)
-		learnClass.setHasRetrievedDetailedData(lessonUuid, true)
-		learnClass.setIsRetrievingDetailedData(lessonUuid, false)
+		learnClass.setLessonQuestionMap(lessonId, response.data.lesson.lessonQuestionMap)
+		learnClass.setHasRetrievedDetailedData(lessonId, true)
+		learnClass.setIsRetrievingDetailedData(lessonId, false)
 	} catch (error) {
 		console.error(error)
-		learnClass.setIsRetrievingDetailedData(lessonUuid, false)
+		learnClass.setIsRetrievingDetailedData(lessonId, false)
 	}
 }
 

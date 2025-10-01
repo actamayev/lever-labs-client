@@ -15,43 +15,43 @@ export default class LearnDataService extends BaseDataService {
 		)
 	}
 
-	async getDetailedLesson(lessonUUID: LessonUUID): Promise<AxiosResponse<DetailedLessonResponse | ErrorResponses>> {
+	async getDetailedLesson(lessonId: LessonUUID): Promise<AxiosResponse<DetailedLessonResponse | ErrorResponses>> {
 		return await this.httpClient.http.get<DetailedLessonResponse | ErrorResponses>(
-			this.buildUrl(`/get-detailed-lesson/${lessonUUID}`)
+			this.buildUrl(`/get-detailed-lesson/${lessonId}`)
 		)
 	}
 
-	async markLessonComplete(lessonUUID: LessonUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+	async markLessonComplete(lessonId: LessonUUID): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/mark-lesson-complete/${lessonUUID}`)
+			this.buildUrl(`/mark-lesson-complete/${lessonId}`)
 		)
 	}
 
 	async submitBlockToFunctionAnswer(
-		lessonUUID: LessonUUID,
+		lessonId: LessonUUID,
 		answerChoiceId: number,
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-block-to-function/${lessonUUID}`), { answerChoiceId }
+			this.buildUrl(`/submit-block-to-function/${lessonId}`), { answerChoiceId }
 		)
 	}
 
 	async submitFunctionToBlockAnswer(
-		lessonUUID: LessonUUID,
+		lessonId: LessonUUID,
 		answerChoiceId: number
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-function-to-block/${lessonUUID}`), { answerChoiceId }
+			this.buildUrl(`/submit-function-to-block/${lessonId}`), { answerChoiceId }
 		)
 	}
 
 	async submitFillInTheBlankAnswer(
-		lessonUUID: LessonUUID,
+		lessonId: LessonUUID,
 		fillInTheBlankId: string,
 		answer: string
 	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-fill-in-the-blank/${lessonUUID}`), { fillInTheBlankId, answer }
+			this.buildUrl(`/submit-fill-in-the-blank/${lessonId}`), { fillInTheBlankId, answer }
 		)
 	}
 }
