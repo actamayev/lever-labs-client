@@ -36,6 +36,10 @@ export function isValidRoute(route: string): route is PageNames {
 		const uuidPattern = /^\/sandbox\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 		return uuidPattern.test(route)
 	}
+	if (route.startsWith("/learn/")) {
+		const lessonUuidPattern = /^\/learn\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+		return lessonUuidPattern.test(route)
+	}
 	if (route.startsWith("/class-manager/")) {
 		const classCodePattern = /^\/class-manager\/[a-zA-Z0-9]{5}$/i
 		return classCodePattern.test(route)
