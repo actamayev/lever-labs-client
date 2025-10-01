@@ -8,6 +8,7 @@ declare global {
 		| "/career-quest"
 		| "/chat"
 		| "/misc"
+		| "/learn"
 		| "/garage"
 		| "/pip"
 		| "/personal-info"
@@ -17,7 +18,7 @@ declare global {
 		| "/workbench"
 
 	interface SidebarNavData {
-		title: "Sandbox" | "Career Quest" | "Garage" | "Whiteboard" | "Class Manager"
+		title: "Sandbox" | "Career Quest" | "Garage" | "Whiteboard" | "Class Manager" | "Learn"
 		url: PageNames
 		icon: LucideIcon
 		textColor: string

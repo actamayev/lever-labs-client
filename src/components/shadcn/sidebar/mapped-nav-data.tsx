@@ -1,6 +1,6 @@
 "use client"
 
-import { School } from "lucide-react"
+import { Book, School } from "lucide-react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { useCallback, useMemo } from "react"
@@ -38,6 +38,12 @@ const baseNavData: SidebarNavData[] = [
 		icon: CustomGarage,
 		textColor: "text-humpback"
 	},
+	{
+		title: "Learn",
+		url: "/learn",
+		icon: Book,
+		textColor: "text-fox"
+	}
 ]
 
 function MappedNavData(): React.ReactNode {

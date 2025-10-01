@@ -1,10 +1,14 @@
-import { ClassCode, SandboxProjectUUID, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
+import { ClassCode, LessonUUID, SandboxProjectUUID, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
 import { allPages, careerQuestPages, staticPages } from "../utils/constants/page-constants"
 
 declare global {
 	type SandboxPages =
 	| "/sandbox"
 	| `/sandbox/${SandboxProjectUUID}`
+
+	type LearnPages =
+	| "/learn"
+	| `/learn/${LessonUUID}`
 
 	type TeacherPages =
 	| "/scoreboard"
@@ -23,7 +27,7 @@ declare global {
 
 	type StaticPageNames = (typeof staticPages)[number];
 
-	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages;
+	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | LearnPages;
 }
 
 export {}
