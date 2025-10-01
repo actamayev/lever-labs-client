@@ -21,6 +21,12 @@ import teacherClass from "../../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
+		title: "Learn",
+		url: "/learn",
+		icon: Book,
+		textColor: "text-fox"
+	},
+	{
 		title: "Career Quest",
 		url: "/career-quest",
 		icon: CustomBriefcase,
@@ -37,12 +43,6 @@ const baseNavData: SidebarNavData[] = [
 		url: "/garage",
 		icon: CustomGarage,
 		textColor: "text-humpback"
-	},
-	{
-		title: "Learn",
-		url: "/learn",
-		icon: Book,
-		textColor: "text-fox"
 	}
 ]
 
