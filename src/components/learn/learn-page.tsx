@@ -6,16 +6,16 @@ import { Lesson } from "@lever-labs/common-ts/types/learn"
 import learnClass from "../../classes/learn-class"
 import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
 
-function LearnPage({ lessonUUID }: { lessonUUID: LessonUUID }): React.ReactNode {
+function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	useEffect((): void => {
-		void retrieveDetailedLesson(lessonUUID)
-	}, [lessonUUID])
-	const isLoading = learnClass.isRetrievingDetailedData(lessonUUID)
+		void retrieveDetailedLesson(lessonId)
+	}, [lessonId])
+	const isLoading = learnClass.isRetrievingDetailedData(lessonId)
 
 	const lesson = useMemo((): Lesson | undefined => {
-		return learnClass.getLesson(lessonUUID)
+		return learnClass.getLesson(lessonId)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lessonUUID, learnClass.lessonsById])
+	}, [lessonId, learnClass.lessonsById])
 
 	if (isLoading) {
 		return (
