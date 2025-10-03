@@ -6,6 +6,7 @@ import learnClass from "../../classes/learn-class"
 import FunctionToBlockQuestion from "./function-to-block-question"
 import BlockToFunctionQuestion from "./block-to-function-question"
 import DemoQuestion from "./demo-question"
+import FillInBlankQuestion from "./fill-in-blank-question"
 
 function LessonQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -35,14 +36,7 @@ function LessonQuestion(): React.ReactNode {
 	}
 
 	if (question.questionType === "FILL_IN_BLANK" && question.fillInTheBlank) {
-		// TODO: Implement FILL_IN_BLANK UI
-		return (
-			<div className="text-center">
-				<p className="text-gray-500 dark:text-gray-400">
-					FILL_IN_BLANK question type not yet implemented
-				</p>
-			</div>
-		)
+		return <FillInBlankQuestion />
 	}
 
 	return (

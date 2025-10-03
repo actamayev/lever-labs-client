@@ -1,8 +1,10 @@
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
+import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -71,6 +73,10 @@ class LearnClass {
 			if (q.questionType === "DEMO") {
 				// Demo questions are always considered correct
 				isCorrect = true
+			} else if (q.questionType === "FILL_IN_BLANK") {
+				// For fill-in-blank, the correctness was already determined by the API submission
+				// We'll mark it as correct here - the actual checking happens in checkCurrentAnswer
+				isCorrect = true
 			} else if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
 				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
 					(c): boolean => c.blockToFunctionAnswerChoiceId === answerChoiceId
@@ -135,6 +141,23 @@ class LearnClass {
 		this.currentQuestionState.selectedAnswerId = answerId
 	})
 
+	public setFillInBlankAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+		// Find the question in the current lesson and store the answer
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		questionMap.question.fillInBlankAnswer = {
+			blocklyJson,
+			cppCode
+		}
+	})
+
 	// eslint-disable-next-line complexity
 	public checkCurrentAnswer = action(async (lessonId: LessonUUID): Promise<boolean> => {
 		if (!this.currentQuestionState) return false
@@ -145,6 +168,13 @@ class LearnClass {
 		if (question.questionType === "DEMO") {
 			// Demo questions are always considered correct and don't need submission
 			isCorrect = true
+		} else if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
+			// For fill-in-blank, submit the CPP code
+			isCorrect = await submitFillInBlankAnswer(
+				lessonId,
+				question.questionId,
+				question.fillInBlankAnswer.cppCode
+			)
 		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
 			const choice = question.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
 				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId

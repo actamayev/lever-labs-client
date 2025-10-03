@@ -1,9 +1,14 @@
 import { LessonQuestionMap, Question, Lesson } from "@lever-labs/common-ts/types/learn"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
 	interface LocalQuestion extends Omit<Question, "questionType"> {
 		userHasAnsweredCorrectly?: boolean
 		questionType: Question["questionType"] | "DEMO"
+		fillInBlankAnswer?: {
+			blocklyJson: BlocklyJson
+			cppCode: string
+		}
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {
