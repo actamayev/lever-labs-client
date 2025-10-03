@@ -1,11 +1,13 @@
+/* eslint-disable no-nested-ternary */
 "use client"
 
 import { observer } from "mobx-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
 import learnClass from "../../classes/learn-class"
+import { TactileButton } from "../shadcn/ui/tactile-button"
 
 function LessonQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
+	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
 	if (!currentQuestionState) {
 		return (
@@ -26,28 +28,33 @@ function LessonQuestion(): React.ReactNode {
 		const sortedChoices = [...functionToBlockAnswerChoice].sort((a, b): number => a.order - b.order)
 
 		return (
-			<div className="space-y-6">
-				{/* Question text */}
+			<div>
 				<h2 className="text-3xl font-semibold text-questionText">
 					{questionText}
 				</h2>
 
-				{/* Answer choices */}
-				<div className="flex justify-start gap-4">
+				<div className="flex justify-start gap-4" style={{ transform: 'translateY(2.5rem)' }}>
 					{sortedChoices.map((choice): React.ReactNode => {
 						const isSelected = selectedAnswerId === choice.functionToBlockAnswerChoiceId
 
 						return (
 							<TactileButton
 								key={choice.functionToBlockAnswerChoiceId}
-								onClick={(): void => learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)}
+								onClick={(): void => {
+									if (!isInConfirmationStage) {
+										learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
+									}
+								}}
 								className={`h-60 w-44 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 ${
 									isSelected
 										? "bg-standardBackgroundHover border-2 border-selectedSidebarButtonBorder"
-										: "bg-standardBackground border-2 border-swan hover:bg-standardBackgroundHover"
+										: isInConfirmationStage
+											? "bg-standardBackground border-2 border-swan cursor-default"
+											: "bg-standardBackground border-2 border-swan hover:bg-standardBackgroundHover"
 								}`}
 								shadowClass="shadow-gray-2"
 								shadowHeight={2}
+								disabled={isInConfirmationStage}
 							>
 								{choice.codingBlockId}
 							</TactileButton>

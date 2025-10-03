@@ -5,7 +5,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
-import { Check } from "lucide-react"
+import { Check, X } from "lucide-react"
 
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
@@ -39,11 +39,20 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 				/>
 			</div>
 
-			{/* Center: Correct message (only in confirmation stage) */}
-			{isInConfirmationStage && lastAnswerWasCorrect && (
+			{/* Center: Feedback message (only in confirmation stage) */}
+			{isInConfirmationStage && (
 				<div className="flex items-center gap-3">
-					<Check className="w-6 h-6 text-green-600" />
-					<span className="text-lg font-semibold text-green-600">Correct!</span>
+					{lastAnswerWasCorrect ? (
+						<>
+							<Check className="w-6 h-6 text-green-600" />
+							<span className="text-lg font-semibold text-green-600">Correct!</span>
+						</>
+					) : (
+						<>
+							<X className="w-6 h-6 text-cardinal" />
+							<span className="text-lg font-semibold text-cardinal">Incorrect</span>
+						</>
+					)}
 				</div>
 			)}
 
