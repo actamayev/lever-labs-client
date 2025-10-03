@@ -8,6 +8,7 @@ import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
 import { useCallback } from "react"
 import BlockVisualization from "./block-visualization"
+import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 
 // eslint-disable-next-line max-lines-per-function
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
@@ -17,14 +18,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 	const currentQuestion = learnClass.currentQuestionState?.question
 
 	// Get the correct answer for display
-	const getCorrectAnswer = (): string | null => {
+	const getCorrectAnswer = (): { codingBlock: CodingBlock; codingBlockId: string } | null => {
 		if (!currentQuestion) return null
 
 		if (currentQuestion.questionType === "FUNCTION_TO_BLOCK" && currentQuestion.functionToBlockFlashcard) {
 			const correctChoice = currentQuestion.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
 				(choice): boolean => choice.isCorrect
 			)
-			return correctChoice ? correctChoice.codingBlock.codingBlockId.toString() : null
+			return correctChoice ? {
+				codingBlock: correctChoice.codingBlock,
+				codingBlockId: correctChoice.codingBlock.codingBlockId.toString()
+			} : null
 		}
 
 		// TODO: Add other question types as needed
@@ -92,12 +96,16 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 					) : (
 						<div className="flex items-center gap-3">
 							<X className="size-10 text-cardinal" />
-							<div className="flex flex-col">
+							<div className="flex flex-col items-center">
 								<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
-								<BlockVisualization
-									codingBlock={correctAnswer}
-									className="w-full h-full p-4"
-								/>
+								{correctAnswer && (
+									<div className="relative h-24 w-32">
+										<BlockVisualization
+											codingBlock={correctAnswer.codingBlock}
+											className="w-full h-full"
+										/>
+									</div>
+								)}
 							</div>
 						</div>
 					)}
