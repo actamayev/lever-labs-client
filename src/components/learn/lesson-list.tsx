@@ -2,16 +2,12 @@
 "use client"
 
 import { observer } from "mobx-react"
-import learnClass, { LocalLesson } from "../../classes/learn-class"
+import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 function LessonList(): React.ReactNode {
-	const lessons = Object.values(learnClass.lessonsById)
+	const lessons = Array.from(learnClass.lessonsById.values())
 	const navigate = useTypedNavigate()
-
-	const handleLessonClick = (lesson: LocalLesson): void => {
-		navigate(`/learn/${lesson.lessonId}`)
-	}
 
 	if (learnClass.isRetrievingAllLessons) {
 		return (
@@ -31,10 +27,10 @@ function LessonList(): React.ReactNode {
 
 	return (
 		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
-			{lessons.map((lesson) => (
+			{lessons.map((lesson): React.ReactNode => (
 				<div
 					key={lesson.lessonId}
-					onClick={(): void => handleLessonClick(lesson)}
+					onClick={(): void => navigate(`/learn/${lesson.lessonId}`)}
 					className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-gray-200 dark:border-gray-700"
 				>
 					<div className="flex items-center justify-between mb-4">
