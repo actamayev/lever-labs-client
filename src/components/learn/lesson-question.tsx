@@ -7,7 +7,6 @@ import FunctionToBlockQuestion from "./function-to-block-question"
 import BlockToFunctionQuestion from "./block-to-function-question"
 import DemoQuestion from "./demo-question"
 
-
 function LessonQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 
