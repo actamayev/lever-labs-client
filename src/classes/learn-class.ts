@@ -1,5 +1,5 @@
 import { action, makeAutoObservable } from "mobx"
-import { Lesson, LessonQuestionMap } from "@lever-labs/common-ts/types/learn"
+import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
@@ -30,12 +30,16 @@ class LearnClass {
 				...lesson,
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
+				numberQuestionsCorrect: 0,
 			})
 		}
 	})
 
 	public setSingleLesson = action((lesson: LocalLesson): void => {
-		this.lessonsById.set(lesson.lessonId, lesson)
+		this.lessonsById.set(lesson.lessonId, {
+			...lesson,
+			numberQuestionsCorrect: lesson.numberQuestionsCorrect ?? 0
+		})
 	})
 
 	public setIsRetrievingDetailedData = action((lessonId: LessonUUID, isRetrieving: boolean): void => {
@@ -50,21 +54,19 @@ class LearnClass {
 		lesson.hasRetrievedDetailedData = hasRetrieved
 	})
 
-	public setLessonQuestionMap = action((lessonId: LessonUUID, lessonQuestionMap: LessonQuestionMap[]): void => {
-		const lesson = this.lessonsById.get(lessonId)
-		if (!lesson) return
-		lesson.lessonQuestionMap = lessonQuestionMap as LocalLessonQuestionMap[]
-	})
-
 	// eslint-disable-next-line complexity
 	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, answerChoiceId: number): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
+
+		let wasCorrect = false
+		let isCorrect = false
+
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 
 			const q = mapEntry.question
-			let isCorrect = false
+			wasCorrect = q.userHasAnsweredCorrectly === true
 
 			if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
 				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
@@ -80,6 +82,13 @@ class LearnClass {
 
 			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
 			break
+		}
+
+		// Update the counter based on the change in correctness
+		if (isCorrect && !wasCorrect) {
+			lesson.numberQuestionsCorrect += 1
+		} else if (!isCorrect && wasCorrect) {
+			lesson.numberQuestionsCorrect -= 1
 		}
 	})
 

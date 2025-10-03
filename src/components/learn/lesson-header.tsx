@@ -19,12 +19,8 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		const totalQuestions = lesson.lessonQuestionMap.length
 		if (totalQuestions === 0) return 0
 
-		const completedQuestions = lesson.lessonQuestionMap.filter(
-			(mapEntry): boolean => mapEntry.question.userHasAnsweredCorrectly === true
-		).length
-
-		return (completedQuestions / totalQuestions) * 100
-	}, [lesson?.lessonQuestionMap])
+		return (lesson.numberQuestionsCorrect / totalQuestions) * 100
+	}, [lesson?.lessonQuestionMap, lesson?.numberQuestionsCorrect])
 
 	return (
 		<header className="h-[15vh] flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96">

@@ -13,6 +13,7 @@ declare global {
 		isRetrievingDetailedData: boolean
 		hasRetrievedDetailedData: boolean
 		lessonQuestionMap?: LocalLessonQuestionMap[]
+		numberQuestionsCorrect: number
 	}
 
 	interface CurrentQuestionState {
