@@ -7,6 +7,7 @@ import learnClass from "../../classes/learn-class"
 import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
 import LessonHeader from "./lesson-header"
 import LessonFooter from "./lesson-footer"
+import LessonQuestions from "./lesson-questions"
 
 function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	useEffect((): void => {
@@ -26,7 +27,7 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex-1 flex items-center justify-center">
 					<h1 className="text-xl">Loading...</h1>
 				</div>
-				<LessonFooter />
+				<LessonFooter lessonId={lessonId} />
 			</div>
 		)
 	}
@@ -38,7 +39,7 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex-1 flex items-center justify-center">
 					<h1 className="text-xl">Lesson not found</h1>
 				</div>
-				<LessonFooter />
+				<LessonFooter lessonId={lessonId} />
 			</div>
 		)
 	}
@@ -47,10 +48,9 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		<div className="h-screen flex flex-col">
 			<LessonHeader lessonId={lessonId} />
 			<main className="flex-1 overflow-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-[650px] py-6">
-				<h1 className="text-2xl font-bold mb-4">{lesson.lessonName}</h1>
-				{/* Lesson content will go here */}
+				<LessonQuestions lessonId={lessonId} />
 			</main>
-			<LessonFooter />
+			<LessonFooter lessonId={lessonId} />
 		</div>
 	)
 }

@@ -8,11 +8,7 @@ import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 
-interface LessonHeaderProps {
-	lessonId: LessonUUID
-}
-
-function LessonHeader({ lessonId }: LessonHeaderProps): React.ReactNode {
+function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const lesson = learnClass.getLesson(lessonId)
 

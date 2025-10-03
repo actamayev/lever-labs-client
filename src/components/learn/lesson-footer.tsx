@@ -2,10 +2,14 @@
 
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import learnClass from "../../classes/learn-class"
 
-function LessonFooter(): React.ReactNode {
+function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 	const handleCheckClick = (): void => {
-		// TODO: Implement check functionality
+		const isCorrect = learnClass.checkCurrentAnswer(lessonId)
+		// TODO: Handle incorrect answers (show feedback, etc.)
+		console.log(`Answer checked: ${isCorrect ? "correct" : "incorrect"}`)
 	}
 
 	const handleRunCodeClick = (): void => {
