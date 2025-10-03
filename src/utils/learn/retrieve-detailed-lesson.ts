@@ -9,9 +9,7 @@ import authClass from "../../classes/auth-class"
 
 export default async function retrieveDetailedLesson(lessonId: LessonUUID): Promise<void> {
 	try {
-		const lesson = learnClass.getLesson(lessonId)
 		if (
-			!lesson ||
 			authClass.isFinishedWithSignup === false ||
 			learnClass.isRetrievingDetailedData(lessonId) ||
 			learnClass.hasRetrievedDetailedData(lessonId)
@@ -24,9 +22,12 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			throw Error("Unable to retrieve lesson details")
 		}
 
-		learnClass.setLessonQuestionMap(lessonId, response.data.lesson.lessonQuestionMap)
-		learnClass.setHasRetrievedDetailedData(lessonId, true)
-		learnClass.setIsRetrievingDetailedData(lessonId, false)
+		// Set the complete lesson data (basic + detailed) from the response
+		learnClass.lessonsById.set(lessonId, {
+			...response.data.lesson,
+			isRetrievingDetailedData: false,
+			hasRetrievedDetailedData: true,
+		})
 	} catch (error) {
 		console.error(error)
 		learnClass.setIsRetrievingDetailedData(lessonId, false)
