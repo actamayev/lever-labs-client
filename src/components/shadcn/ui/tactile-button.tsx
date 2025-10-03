@@ -8,10 +8,11 @@ type TactileButtonProps = Omit<ButtonProps, 'variant'> & {
   shadowColor?: string      // Legacy support - RGB values
   shadowClass?: string      // New approach - Tailwind classes like "shadow-humpback-2"
   shadowHeight?: 2 | 4
+  shouldHoverPushButton?: boolean
 }
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
-  ({ className, shadowColor, shadowClass, shadowHeight = 4, style, ...props }, ref) => {
+  ({ className, shadowColor, shadowClass, shadowHeight = 4, style, shouldHoverPushButton = true, ...props }, ref) => {
     
     // Determine which shadow approach to use
     const useNewSystem = shadowClass && !shadowColor
@@ -26,7 +27,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
         ? "shadow-[0_4px_0_0_var(--shadow-color)]"
         : "shadow-[0_2px_0_0_var(--shadow-color)]"
       
-      const hoverClass = shadowHeight === 4 && "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+      const hoverClass = shadowHeight === 4 && shouldHoverPushButton && "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
       
       const activeShadowClass = shadowHeight === 4
         ? "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-1"

@@ -58,8 +58,9 @@ function BlockToFunctionQuestion(): React.ReactNode {
 										: "bg-standardBackground border-2 border-swan hover:bg-polar"
 							}`}
 							shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
-							shadowHeight={4}
+							shadowHeight={2}
 							disabled={isInConfirmationStage}
+							shouldHoverPushButton={false}
 						>
 							<span className={"text-left text-eel"}>
 								{choice.functionDescriptionText}
