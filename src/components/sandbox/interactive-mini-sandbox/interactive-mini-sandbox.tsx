@@ -19,13 +19,9 @@ interface Props {
 	onJsonChange: (json: BlocklyJson) => void
 }
 
-
 // eslint-disable-next-line max-lines-per-function
 function InteractiveMiniSandbox(props: Props): React.ReactNode {
-	const {
-		careerUUIDChallengeUUID,
-		onJsonChange
-	} = props
+	const { careerUUIDChallengeUUID, onJsonChange } = props
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
