@@ -56,9 +56,6 @@ function LessonList(): React.ReactNode {
 							</div>
 						)}
 					</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">
-						Lesson ID: {lesson.lessonId}
-					</div>
 				</div>
 			))}
 		</div>

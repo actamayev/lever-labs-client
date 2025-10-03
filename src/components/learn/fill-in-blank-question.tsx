@@ -7,7 +7,7 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { BlockNames } from "@lever-labs/common-ts/types/blockly/blockly"
 import { createChallengeToolbox } from "@lever-labs/common-ts/types/utils/blockly-helpers"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Menu, X } from "lucide-react"
+import { RotateCcw } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import { Button } from "../shadcn/ui/button"
 import learnClass from "../../classes/learn-class"
@@ -22,7 +22,6 @@ function FillInBlankQuestion(): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
-	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
 	const isFirstChangeRef = useRef(true)
 
@@ -104,22 +103,27 @@ function FillInBlankQuestion(): React.ReactNode {
 		}
 	}, [centerWorkspace, currentQuestionState])
 
-	const toggleToolbox = useCallback((): void => {
+	const resetWorkspace = useCallback(async (): Promise<void> => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
-		const flyout = workspace.getFlyout()
-		const newVisibility = !isToolboxVisible
-
-		if (flyout) {
-			flyout.setVisible(newVisibility)
-			setIsToolboxVisible(newVisibility)
+		try {
+		// Load initial JSON back into the workspace
+			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
+			// Generate fresh CPP from the initial JSON and persist as the current answer
+			const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
+			if (currentQuestionState) {
+				learnClass.setFillInBlankAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
+			}
+			// Recenter after reset
+			setTimeout((): void => {
+				centerWorkspace()
+				Blockly.svgResize(workspace)
+			}, 50)
+		} catch (error) {
+			console.error("Failed to reset workspace:", error)
 		}
-
-		setTimeout((): void => {
-			Blockly.svgResize(workspace)
-		}, 100)
-	}, [isToolboxVisible])
+	}, [centerWorkspace, currentQuestionState, parsedInitialJson])
 
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
@@ -181,24 +185,20 @@ function FillInBlankQuestion(): React.ReactNode {
 				ref={containerRef}
 				className={cn("relative z-0 rounded-3xl border-2 border-swan h-[500px]")}
 			>
-				{/* Toggle Toolbox Button */}
+				{/* Reset Workspace Button */}
 				<Button
 					variant="outline"
 					size="sm"
-					onClick={toggleToolbox}
+					onClick={(): void => { void resetWorkspace() }}
 					className={cn(
 						"absolute top-2 right-2 z-10 p-2 h-8 w-8",
 						"bg-background/80 backdrop-blur-sm border-border/50",
 						"hover:bg-accent hover:text-accent-foreground",
 						"transition-all duration-200"
 					)}
-					title={isToolboxVisible ? "Hide Toolbox" : "Show Toolbox"}
+					title="Reset blocks to start"
 				>
-					{isToolboxVisible ? (
-						<X className="h-4 w-4" />
-					) : (
-						<Menu className="h-4 w-4" />
-					)}
+					<RotateCcw className="h-4 w-4" />
 				</Button>
 
 				<BlocklyWorkspace
