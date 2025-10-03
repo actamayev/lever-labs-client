@@ -1,13 +1,14 @@
 "use client"
 
 import type * as Blockly from "blockly/core"
-import { ledCategoryColour, motorsCategoryColour, speakerCategoryColour } from "../constants/constants"
+import { ledCategoryColour, motorsCategoryColour, speakerCategoryColour, buttonsCategoryColour } from "../constants/constants"
 import { baseCategory } from "./categories/base-category"
 import { logicCategory } from "./categories/logic-category"
 import { sensorsCategory } from "./categories/sensors-category"
 import { MOTOR_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/motor"
 import { LED_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/led"
 import { SPEAKER_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/speaker"
+import { BUTTON_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/button-block-types"
 
 // Define the Motors category
 const motorsCategory: CustomCategoryInfo = {
@@ -53,12 +54,14 @@ const speakerCategory: CustomCategoryInfo = {
 	]
 }
 
-// const buttonsCategory: CustomCategoryInfo = {
-// 	...baseCategory,
-// 	name: "Buttons",
-// 	colour: buttonsCategoryColour,
-// 	contents: []
-// }
+const buttonsCategory: CustomCategoryInfo = {
+	...baseCategory,
+	name: "Button",
+	colour: buttonsCategoryColour,
+	contents: [
+		{ kind: "block", type: BUTTON_BLOCK_TYPES.RIGHT_BUTTON_PRESS },
+	]
+}
 
 // Then update the toolboxConfig object to include the variables category:
 export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
@@ -70,6 +73,6 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 		ledCategory,
 		speakerCategory,
 		// screenCategory,
-		// buttonsCategory
+		buttonsCategory
 	]
 }

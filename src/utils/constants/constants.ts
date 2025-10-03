@@ -10,7 +10,7 @@ export const motorsCategoryColour = rgbToBlocklyColor(35, 200, 100) //chargingGr
 export const ledCategoryColour = rgbToBlocklyColor(255, 150, 0) //fox
 // export const screenCategoryColour = rgbToBlocklyColor(206, 130, 255) //beetle
 export const speakerCategoryColour = rgbToBlocklyColor(43, 112, 201) // humpback
-// export const buttonsCategoryColour = rgbToBlocklyColor(182, 110, 40) // beakInner
+export const buttonsCategoryColour = rgbToBlocklyColor(182, 110, 40) // beakInner
 
 export const motorKeyMappings: Record<string, MotorDriveKeyMapping> = {
 	"w": { direction: "up", axis: "vertical", value: 1 },
