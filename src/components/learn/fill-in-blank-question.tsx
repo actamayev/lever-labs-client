@@ -54,9 +54,9 @@ function FillInBlankQuestion(): React.ReactNode {
 		if (!fillInTheBlank?.fillInTheBlankBlockBank) {
 			return { kind: "flyoutToolbox", contents: [] }
 		}
-		// Sort by order and extract block names
-		const sortedBlocks = [...fillInTheBlank.fillInTheBlankBlockBank].sort((a, b): number => a.order - b.order)
-		const blockNames = Array.from(new Set(sortedBlocks.map((block): BlockNames => block.codingBlock.blockName)))
+		const blockNames = Array.from(new Set(
+			fillInTheBlank.fillInTheBlankBlockBank.map((block): BlockNames => block.codingBlock.blockName)
+		))
 
 		// Use createChallengeToolbox to generate the toolbox
 		const blockData = createChallengeToolbox(blockNames)
