@@ -23,9 +23,19 @@ function FillInBlankQuestion(): React.ReactNode {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [isToolboxVisible, setIsToolboxVisible] = useState(true)
+	const [blocksInitialized, setBlocksInitialized] = useState(false)
 	const isFirstChangeRef = useRef(true)
 
 	const fillInTheBlank = currentQuestionState?.question.fillInTheBlank
+
+	// Initialize blocks before anything else
+	useEffect((): void => {
+		const initialize = async (): Promise<void> => {
+			await initializeBlocks()
+			setBlocksInitialized(true)
+		}
+		void initialize()
+	}, [])
 
 	// Parse the initial blockly JSON from string
 	const parsedInitialJson = useMemo((): BlocklyJson => {
@@ -47,7 +57,7 @@ function FillInBlankQuestion(): React.ReactNode {
 		}
 		// Sort by order and extract block names
 		const sortedBlocks = [...fillInTheBlank.fillInTheBlankBlockBank].sort((a, b): number => a.order - b.order)
-		const blockNames = sortedBlocks.map((block): BlockNames => block.codingBlock.blockName)
+		const blockNames = Array.from(new Set(sortedBlocks.map((block): BlockNames => block.codingBlock.blockName)))
 
 		// Use createChallengeToolbox to generate the toolbox
 		const blockData = createChallengeToolbox(blockNames)
@@ -133,14 +143,21 @@ function FillInBlankQuestion(): React.ReactNode {
 		}
 	}, [isDarkMode])
 
-	useEffect((): void => {
-		void initializeBlocks()
-	}, [])
-
 	// Reset the first change flag when question changes
 	useEffect((): void => {
 		isFirstChangeRef.current = true
 	}, [currentQuestionState?.question.questionId])
+
+	// Don't render until blocks are initialized
+	if (!blocksInitialized) {
+		return (
+			<div className="flex items-center justify-center h-[500px]">
+				<p className="text-gray-500 dark:text-gray-400">
+					Loading blocks...
+				</p>
+			</div>
+		)
+	}
 
 	if (!fillInTheBlank) {
 		return (
