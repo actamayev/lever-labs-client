@@ -46,8 +46,12 @@ class SandboxClass {
 			currentStreamingMessageId: null,
 			cppCode: await getCppGenerator().generateCppFromJson(normalizedSandboxJson)
 		}
-		this.sandboxProjects.set(sandboxProject.sandboxProjectUUID, projectWithStreaming)
+		this.setSandboxProject(sandboxProject.sandboxProjectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.sandboxProjectUUID, false)
+	})
+
+	private setSandboxProject = action((projectUUID: SandboxProjectUUID, projectWithStreaming: SandboxProjectWithStreaming): void => {
+		this.sandboxProjects.set(projectUUID, projectWithStreaming)
 	})
 
 	public setIsRetrievingSingleProject = action((projectUUID: SandboxProjectUUID, isRetrieving: boolean): void => {
