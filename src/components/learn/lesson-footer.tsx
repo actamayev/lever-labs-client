@@ -8,6 +8,8 @@ import { Check, X } from "lucide-react"
 import { useCallback } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -53,6 +55,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			// For demo questions, skip confirmation and go directly to next question
 			if (currentQuestion?.questionType === "DEMO") {
 				learnClass.continueToNextQuestion(lessonId)
+				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
 			} else {
 				await learnClass.checkCurrentAnswer(lessonId)
 			}
