@@ -29,7 +29,7 @@ function LessonQuestion(): React.ReactNode {
 			<div className="space-y-6">
 				{/* Question text */}
 				<div className="text-center">
-					<h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+					<h2 className="text-xl font-semibold text-questionText">
 						{questionText}
 					</h2>
 				</div>
