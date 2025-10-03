@@ -8,10 +8,29 @@ import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
 import { useCallback } from "react"
 
+// eslint-disable-next-line max-lines-per-function
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 	const hasSelectedAnswer = learnClass.currentQuestionState?.selectedAnswerId !== null
+	const currentQuestion = learnClass.currentQuestionState?.question
+
+	// Get the correct answer for display
+	const getCorrectAnswer = (): string | null => {
+		if (!currentQuestion) return null
+
+		if (currentQuestion.questionType === "FUNCTION_TO_BLOCK" && currentQuestion.functionToBlockFlashcard) {
+			const correctChoice = currentQuestion.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
+				(choice): boolean => choice.isCorrect
+			)
+			return correctChoice ? correctChoice.codingBlockId.toString() : null
+		}
+
+		// TODO: Add other question types as needed
+		return null
+	}
+
+	const correctAnswer = getCorrectAnswer()
 
 	const handleCheckClick = async (): Promise<void> => {
 		if (isInConfirmationStage) {
@@ -70,10 +89,15 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 							<span className="text-3xl font-semibold text-chargingGreen">Correct!</span>
 						</>
 					) : (
-						<>
+						<div className="flex items-center gap-3">
 							<X className="size-10 text-cardinal" />
-							<span className="text-3xl font-semibold text-cardinal">Incorrect</span>
-						</>
+							<div className="flex flex-col">
+								<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
+								<span className="text-xl font-semibold text-cardinal">
+									{correctAnswer}
+								</span>
+							</div>
+						</div>
 					)}
 				</div>
 			)}
