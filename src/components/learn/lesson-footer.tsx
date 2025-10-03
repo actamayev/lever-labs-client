@@ -55,7 +55,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			// For demo questions, skip confirmation and go directly to next question
 			if (currentQuestion?.questionType === "DEMO") {
 				learnClass.continueToNextQuestion(lessonId)
-				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
+				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
 			} else {
 				await learnClass.checkCurrentAnswer(lessonId)
 			}

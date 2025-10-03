@@ -2,6 +2,7 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { isUndefined } from "lodash-es"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
@@ -12,11 +13,14 @@ import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 function LessonList(): React.ReactNode {
 	const lessons = Array.from(learnClass.lessonsById.values())
 	const navigate = useTypedNavigate()
+	const currentQuestionIndex = learnClass.currentQuestionState?.currentQuestionIndex
 
 	const goToLearnPage = useCallback((lessonId: LessonUUID): void => {
-		careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
+		if (currentQuestionIndex === 0 || isUndefined(currentQuestionIndex)) {
+			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
+		}
 		navigate(`/learn/${lessonId}`)
-	}, [navigate])
+	}, [navigate, currentQuestionIndex])
 
 	if (learnClass.isRetrievingAllLessons) {
 		return (
