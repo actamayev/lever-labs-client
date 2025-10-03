@@ -49,6 +49,7 @@ const speakerCategory: CustomCategoryInfo = {
 	colour: speakerCategoryColour,
 	contents: [
 		{ kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_SOUND },
+		{ kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_TONE },
 	]
 }
 

@@ -56,7 +56,7 @@ function LessonQuestion(): React.ReactNode {
 								shadowHeight={2}
 								disabled={isInConfirmationStage}
 							>
-								{choice.codingBlockId}
+								{choice.codingBlock.codingBlockId}
 							</TactileButton>
 						)
 					})}
