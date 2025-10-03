@@ -50,8 +50,8 @@ export const sensorsCategory: ParentCategoryInfo = {
 	name: "Sensors",
 	colour: sensorsCategoryColour,
 	contents: [
-		imuSensorsCategory,
-		distanceSensorsCategory,
+		// imuSensorsCategory,
+		// distanceSensorsCategory,
 		// irSensorsCategory,
 		colorSensorCategory
 	]

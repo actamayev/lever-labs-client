@@ -49,7 +49,7 @@ const speakerCategory: CustomCategoryInfo = {
 	name: "Speaker",
 	colour: speakerCategoryColour,
 	contents: [
-		{ kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_SOUND },
+		// { kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_SOUND },
 		{ kind: "block", type: SPEAKER_BLOCK_TYPES.PLAY_TONE },
 	]
 }
@@ -69,10 +69,10 @@ export const toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition = {
 	contents: [
 		logicCategory,
 		sensorsCategory,
-		motorsCategory,
+		// motorsCategory,
 		ledCategory,
 		speakerCategory,
 		// screenCategory,
-		buttonsCategory
+		// buttonsCategory
 	]
 }
