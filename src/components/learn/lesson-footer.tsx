@@ -54,7 +54,6 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 		}
 	}
 
-
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return "shadow-chargingGreen-2"
