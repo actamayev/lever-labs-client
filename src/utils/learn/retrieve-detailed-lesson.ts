@@ -27,6 +27,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			...response.data.lesson,
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,
+			numberQuestionsCorrect: 0,
 		})
 	} catch (error) {
 		console.error(error)
