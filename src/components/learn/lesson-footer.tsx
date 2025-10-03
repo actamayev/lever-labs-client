@@ -23,7 +23,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 			const correctChoice = currentQuestion.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
 				(choice): boolean => choice.isCorrect
 			)
-			return correctChoice ? correctChoice.codingBlockId.toString() : null
+			return correctChoice ? correctChoice.codingBlock.codingBlockId.toString() : null
 		}
 
 		// TODO: Add other question types as needed
