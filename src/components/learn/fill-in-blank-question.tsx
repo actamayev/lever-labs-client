@@ -152,6 +152,29 @@ function FillInBlankQuestion(): React.ReactNode {
 		isFirstChangeRef.current = true
 	}, [currentQuestionState?.question.questionId])
 
+	// When the question changes, load its initial JSON into the workspace
+	useEffect((): void => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		try {
+			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
+			void (async (): Promise<void> => {
+				const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
+				if (currentQuestionState) {
+					learnClass.setFillInBlankAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
+				}
+				setTimeout((): void => {
+					centerWorkspace()
+					Blockly.svgResize(workspace)
+				}, 50)
+			})()
+		} catch (error) {
+			console.error("Failed to load initial JSON for new question:", error)
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [parsedInitialJson, currentQuestionState?.question.questionId, centerWorkspace])
+
 	// Don't render until blocks are initialized
 	if (!blocksInitialized) {
 		return (
