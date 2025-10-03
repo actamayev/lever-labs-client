@@ -68,7 +68,10 @@ class LearnClass {
 			const q = mapEntry.question
 			wasCorrect = q.userHasAnsweredCorrectly === true
 
-			if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
+			if (q.questionType === "DEMO") {
+				// Demo questions are always considered correct
+				isCorrect = true
+			} else if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
 				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
 					(c): boolean => c.blockToFunctionAnswerChoiceId === answerChoiceId
 				)
@@ -139,7 +142,10 @@ class LearnClass {
 		const { question, selectedAnswerId } = this.currentQuestionState
 		let isCorrect = false
 
-		if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
+		if (question.questionType === "DEMO") {
+			// Demo questions are always considered correct and don't need submission
+			isCorrect = true
+		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
 			const choice = question.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
 				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId
 			)

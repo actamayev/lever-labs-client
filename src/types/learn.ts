@@ -1,8 +1,9 @@
 import { LessonQuestionMap, Question, Lesson } from "@lever-labs/common-ts/types/learn"
 
 declare global {
-	interface LocalQuestion extends Question {
+	interface LocalQuestion extends Omit<Question, "questionType"> {
 		userHasAnsweredCorrectly?: boolean
+		questionType: Question["questionType"] | "DEMO"
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {
