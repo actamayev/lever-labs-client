@@ -15,7 +15,7 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const lesson = useMemo((): Lesson | undefined => {
 		return learnClass.getLesson(lessonId)
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lessonId, learnClass.lessonsById])
+	}, [lessonId, learnClass.lessonsById, learnClass.lessonsById])
 
 	if (isLoading) {
 		return (

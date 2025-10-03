@@ -14,8 +14,8 @@ export default async function retrieveSingleSandboxProject(projectUUID: SandboxP
 		const foundProject = sandboxClass.sandboxProjects.get(projectUUID)
 		if (
 			foundProject ||
-				authClass.isFinishedWithSignup === false ||
-				sandboxClass.isRetrievingSingleProject(projectUUID)
+			authClass.isFinishedWithSignup === false ||
+			sandboxClass.isRetrievingSingleProject(projectUUID)
 		) return
 
 		// Set loading state

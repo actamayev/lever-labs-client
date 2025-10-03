@@ -19,7 +19,7 @@ export interface LocalLesson extends Lesson {
 class LearnClass {
 	public isRetrievingAllLessons = false
 	public hasRetrievedAllLessons = false
-	public lessonsById: Record<LessonUUID, LocalLesson> = {}
+	public lessonsById: Map<LessonUUID, LocalLesson> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -34,38 +34,36 @@ class LearnClass {
 	})
 
 	public setLessons = action((lessons: Lesson[]): void => {
-		const map: Record<LessonUUID, LocalLesson> = {}
 		for (const lesson of lessons) {
-			map[lesson.lessonId] = {
+			this.lessonsById.set(lesson.lessonId, {
 				...lesson,
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
-			}
+			})
 		}
-		this.lessonsById = map
 	})
 
 	public setIsRetrievingDetailedData = action((lessonId: LessonUUID, isRetrieving: boolean): void => {
-		const lesson = this.lessonsById[lessonId]
+		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson) return
 		lesson.isRetrievingDetailedData = isRetrieving
 	})
 
 	public setHasRetrievedDetailedData = action((lessonId: LessonUUID, hasRetrieved: boolean): void => {
-		const lesson = this.lessonsById[lessonId]
+		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson) return
 		lesson.hasRetrievedDetailedData = hasRetrieved
 	})
 
 	public setLessonQuestionMap = action((lessonId: LessonUUID, lessonQuestionMap: LessonQuestionMap[]): void => {
-		const lesson = this.lessonsById[lessonId]
+		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson) return
 		lesson.lessonQuestionMap = lessonQuestionMap as LocalLessonQuestionMap[]
 	})
 
 	// eslint-disable-next-line complexity
 	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, answerChoiceId: number): void => {
-		const lesson = this.lessonsById[lessonId]
+		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
@@ -91,19 +89,19 @@ class LearnClass {
 	})
 
 	public getLesson = (lessonId: LessonUUID): LocalLesson | undefined => {
-		return this.lessonsById[lessonId]
+		return this.lessonsById.get(lessonId)
 	}
 
 	public isRetrievingDetailedData = (lessonId: LessonUUID): boolean => {
-		return this.lessonsById[lessonId]?.isRetrievingDetailedData === true
+		return this.lessonsById.get(lessonId)?.isRetrievingDetailedData === true
 	}
 
 	public hasRetrievedDetailedData = (lessonId: LessonUUID): boolean => {
-		return this.lessonsById[lessonId]?.hasRetrievedDetailedData === true
+		return this.lessonsById.get(lessonId)?.hasRetrievedDetailedData === true
 	}
 
 	public setLessonCompleted = action((lessonId: LessonUUID): void => {
-		const lesson = this.lessonsById[lessonId]
+		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson) return
 		lesson.isCompleted = true
 	})
@@ -111,7 +109,7 @@ class LearnClass {
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
-		this.lessonsById = {}
+		this.lessonsById = new Map()
 	}
 }
 

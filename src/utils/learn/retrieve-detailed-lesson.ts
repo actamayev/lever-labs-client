@@ -5,12 +5,14 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
+import authClass from "../../classes/auth-class"
 
 export default async function retrieveDetailedLesson(lessonId: LessonUUID): Promise<void> {
 	try {
 		const lesson = learnClass.getLesson(lessonId)
 		if (
 			!lesson ||
+			authClass.isFinishedWithSignup === false ||
 			learnClass.isRetrievingDetailedData(lessonId) ||
 			learnClass.hasRetrievedDetailedData(lessonId)
 		) return
@@ -30,5 +32,3 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 		learnClass.setIsRetrievingDetailedData(lessonId, false)
 	}
 }
-
-
