@@ -2,6 +2,7 @@ import { action, makeAutoObservable } from "mobx"
 import { Lesson, LessonQuestionMap } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
+import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -122,6 +123,7 @@ class LearnClass {
 		this.currentQuestionState.selectedAnswerId = answerId
 	})
 
+	// eslint-disable-next-line complexity
 	public checkCurrentAnswer = action(async (lessonId: LessonUUID): Promise<boolean> => {
 		if (!this.currentQuestionState) return false
 
@@ -134,6 +136,12 @@ class LearnClass {
 			)
 			isCorrect = choice ? choice.isCorrect : false
 			await submitFunctionToBlockAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+		} else if (question.questionType === "BLOCK_TO_FUNCTION" && question.blockToFunctionFlashcard) {
+			const choice = question.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
+				(c): boolean => c.blockToFunctionAnswerChoiceId === selectedAnswerId
+			)
+			isCorrect = choice ? choice.isCorrect : false
+			await submitBlockToFunctionAnswer(lessonId, question.questionId, selectedAnswerId || 0)
 		}
 
 		// Update the question's correctness in the learn class
