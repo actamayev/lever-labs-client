@@ -4,10 +4,19 @@
 import { observer } from "mobx-react"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import { useCallback } from "react"
+import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 
 function LessonList(): React.ReactNode {
 	const lessons = Array.from(learnClass.lessonsById.values())
 	const navigate = useTypedNavigate()
+
+	const goToLearnPage = useCallback((lessonId: LessonUUID): void => {
+		careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
+		navigate(`/learn/${lessonId}`)
+	}, [navigate])
 
 	if (learnClass.isRetrievingAllLessons) {
 		return (
@@ -30,7 +39,7 @@ function LessonList(): React.ReactNode {
 			{lessons.map((lesson): React.ReactNode => (
 				<div
 					key={lesson.lessonId}
-					onClick={(): void => navigate(`/learn/${lesson.lessonId}`)}
+					onClick={(): void => goToLearnPage(lesson.lessonId)}
 					className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-gray-200 dark:border-gray-700"
 				>
 					<div className="flex items-center justify-between mb-4">
