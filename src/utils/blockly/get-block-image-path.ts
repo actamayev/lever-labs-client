@@ -3,7 +3,10 @@
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import { LED_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/led"
 import { SPEAKER_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/speaker"
+import { SENSORS_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
+import { CONDITIONAL_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/logic"
 
+// eslint-disable-next-line complexity
 export function getBlockImagePath(codingBlock: CodingBlock): string {
 	const blockName = codingBlock.blockName
 
@@ -26,9 +29,19 @@ export function getBlockImagePath(codingBlock: CodingBlock): string {
 	}
 
 	// Color sensor blocks: check_if_object_{color}
-	if (codingBlock.colorSensorDetectionColor) {
+	if (blockName === SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ && codingBlock.colorSensorDetectionColor) {
 		const color = codingBlock.colorSensorDetectionColor.toLowerCase()
 		return `/images/learn/check_if_object_${color}.png`
+	}
+
+	if (blockName === CONDITIONAL_BLOCK_TYPES.IF) {
+		return "/images/learn/if_do.png"
+	} else if (blockName === CONDITIONAL_BLOCK_TYPES.IF_ELSE) {
+		return "/images/learn/if_else.png"
+	} else if (blockName === CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE) {
+		return "/images/learn/if_elseif_else.png"
+	} else if (blockName === CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE) {
+		return "/images/learn/if_2elseif_else.png"
 	}
 
 	// Fallback - return a placeholder or log warning
