@@ -4,6 +4,7 @@
 import { observer } from "mobx-react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import BlockVisualization from "./block-visualization"
 
 function LessonQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -56,7 +57,10 @@ function LessonQuestion(): React.ReactNode {
 								shadowHeight={2}
 								disabled={isInConfirmationStage}
 							>
-								{choice.codingBlock.codingBlockId}
+								<BlockVisualization
+									codingBlock={choice.codingBlock}
+									className="w-full h-full p-4"
+								/>
 							</TactileButton>
 						)
 					})}

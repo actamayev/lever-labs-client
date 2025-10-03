@@ -7,6 +7,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
 import { useCallback } from "react"
+import BlockVisualization from "./block-visualization"
 
 // eslint-disable-next-line max-lines-per-function
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
@@ -93,9 +94,10 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 							<X className="size-10 text-cardinal" />
 							<div className="flex flex-col">
 								<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
-								<span className="text-xl font-semibold text-cardinal">
-									{correctAnswer}
-								</span>
+								<BlockVisualization
+									codingBlock={correctAnswer}
+									className="w-full h-full p-4"
+								/>
 							</div>
 						</div>
 					)}
