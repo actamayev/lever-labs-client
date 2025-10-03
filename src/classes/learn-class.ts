@@ -73,10 +73,6 @@ class LearnClass {
 			if (q.questionType === "DEMO") {
 				// Demo questions are always considered correct
 				isCorrect = true
-			} else if (q.questionType === "FILL_IN_BLANK") {
-				// For fill-in-blank, the correctness was already determined by the API submission
-				// We'll mark it as correct here - the actual checking happens in checkCurrentAnswer
-				isCorrect = true
 			} else if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
 				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
 					(c): boolean => c.blockToFunctionAnswerChoiceId === answerChoiceId
@@ -98,6 +94,32 @@ class LearnClass {
 			lesson.numberQuestionsCorrect += 1
 		} else if (!isCorrect && wasCorrect) {
 			lesson.numberQuestionsCorrect -= 1
+		}
+	})
+
+	public setFillInBlankAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson || !lesson.lessonQuestionMap) return
+
+		let wasCorrect = false
+		let questionFound = false
+
+		for (const mapEntry of lesson.lessonQuestionMap) {
+			if (mapEntry.question.questionId !== questionId) continue
+			const q = mapEntry.question
+			wasCorrect = q.userHasAnsweredCorrectly === true;
+			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			questionFound = true
+			break
+		}
+
+		// Only update the counter if we actually found and updated the question
+		if (questionFound) {
+			if (isCorrect && !wasCorrect) {
+				lesson.numberQuestionsCorrect += 1
+			} else if (!isCorrect && wasCorrect) {
+				lesson.numberQuestionsCorrect -= 1
+			}
 		}
 	})
 
@@ -169,12 +191,21 @@ class LearnClass {
 			// Demo questions are always considered correct and don't need submission
 			isCorrect = true
 		} else if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
-			// For fill-in-blank, submit the CPP code
-			isCorrect = await submitFillInBlankAnswer(
+			// For fill-in-blank, submit the CPP code and capture feedback
+			const result = await submitFillInBlankAnswer(
 				lessonId,
 				question.questionId,
 				question.fillInBlankAnswer.cppCode
 			)
+			isCorrect = result.isCorrect
+			;((): void => {
+				// Persist feedback on the question for rendering in the footer
+				const lesson = this.lessonsById.get(lessonId)
+				if (!lesson?.lessonQuestionMap) return
+				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+				if (!questionMap) return
+				(questionMap.question as LocalQuestion).fillInBlankFeedback = result.feedback
+			})()
 		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
 			const choice = question.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
 				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId
@@ -190,7 +221,11 @@ class LearnClass {
 		}
 
 		// Update the question's correctness in the learn class
-		this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
+		if (question.questionType === "FILL_IN_BLANK") {
+			this.setFillInBlankAnsweredCorrectness(lessonId, question.questionId, isCorrect)
+		} else {
+			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
+		}
 
 		// Set confirmation stage state
 		this.setIsInQuestionConfirmationStage(true)
@@ -212,6 +247,25 @@ class LearnClass {
 		// Exit confirmation stage
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
+	})
+
+	public retryCurrentQuestion = action((): void => {
+		// Exit confirmation stage without advancing; allow user to try again
+		this.isInQuestionConfirmationStage = false
+		this.lastAnswerWasCorrect = false
+		this.setSelectedAnswer(null)
+		// Clear any previous fill-in-the-blank feedback when retrying
+		if (!this.currentQuestionState) return
+		const { question } = this.currentQuestionState
+		if (question.questionType === "FILL_IN_BLANK") {
+			const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
+			)
+			if (!lesson?.lessonQuestionMap) return
+			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+			if (!questionMap) return
+			;(questionMap.question as LocalQuestion).fillInBlankFeedback = ""
+		}
 	})
 
 	private setIsInQuestionConfirmationStage = action((isInQuestionConfirmationStage: boolean): void => {

@@ -9,7 +9,7 @@ export default async function submitFillInBlankAnswer(
 	lessonUuid: LessonUUID,
 	fillInTheBlankId: string,
 	cppCode: string,
-): Promise<boolean> {
+): Promise<{ isCorrect: boolean; feedback: string }> {
 	try {
 		const response = await leverLabsApiClient.learnDataService.submitFillInTheBlankAnswer(
 			lessonUuid,
@@ -20,12 +20,13 @@ export default async function submitFillInBlankAnswer(
 			throw Error("Unable to submit fill-in-blank answer")
 		}
 
-		// Return true if the answer was correct (API should return success response with correctness info)
-		// For now, we'll assume true if the request succeeds
-		return true
+		// The API returns { isCorrect: boolean, feedback: string }
+		// Return both values to the caller
+		const { isCorrect, feedback } = (response.data as { isCorrect: boolean; feedback: string })
+		return { isCorrect: isCorrect === true, feedback: feedback ?? "" }
 	} catch (error) {
 		console.error(error)
-		return false
+		return { isCorrect: false, feedback: "" }
 	}
 }
 
