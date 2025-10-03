@@ -2,7 +2,6 @@
 
 import { observer } from "mobx-react"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
@@ -55,26 +54,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 		}
 	}
 
-	const handleRunCodeClick = (): void => {
-		// TODO: Implement run code functionality
-	}
 
 	const shadowClass = useCallback((): string => {
-		if (!isInConfirmationStage) {
+		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return "shadow-chargingGreen-2"
-		}
-		if (lastAnswerWasCorrect) {
-			return "shadow-chargingGreen-3"
 		}
 		return "shadow-cardinal"
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
 	const tactileButtonClass = useCallback((): string => {
 		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
-		if (!isInConfirmationStage) {
-			return `${baseClass} bg-chargingGreen`
-		}
-		if (lastAnswerWasCorrect) {
+		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return `${baseClass} bg-chargingGreen`
 		}
 		return `${baseClass} bg-cardinal-1`
@@ -85,15 +75,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 		<footer className={`h-[20vh] border-t-2 border-swan flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96 ${
 			!isInConfirmationStage ? "" : "bg-polar !border-polar"
 		}`}>
-			{/* Left: Run code button */}
-			<div className="h-12 w-48">
-				<AnimatedStateButton
-					buttonText="RUN CODE"
-					onClick={handleRunCodeClick}
-					className="duration-150 rounded-2xl text-lg h-11"
-					isDisabled={!isInConfirmationStage && !hasSelectedAnswer}
-				/>
-			</div>
+			{/* Left: Empty space for balance */}
+			<div className="h-12 w-48"></div>
 
 			{/* Center: Feedback message (only in confirmation stage) */}
 			{isInConfirmationStage && (
