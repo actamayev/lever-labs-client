@@ -21,7 +21,7 @@ function LessonFooter(): React.ReactNode {
 					buttonText="RUN CODE"
 					isDisabled={false}
 					onClick={handleRunCodeClick}
-					className="duration-150 rounded-xl text-lg"
+					className="duration-150 rounded-2xl text-lg h-11"
 				/>
 			</div>
 
@@ -29,7 +29,7 @@ function LessonFooter(): React.ReactNode {
 			<TactileButton
 				onClick={handleCheckClick}
 				shadowClass="shadow-chargingGreen-2"
-				className="h-12 px-8 py-4 text-xl font-semibold rounded-xl text-standardBackground"
+				className="h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
 				shadowHeight={4}
 			>
 				CHECK
