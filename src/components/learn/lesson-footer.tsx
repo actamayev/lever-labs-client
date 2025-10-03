@@ -117,7 +117,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				shadowHeight={4}
 				disabled={!isInConfirmationStage && !hasSelectedAnswer && currentQuestion?.questionType !== "DEMO"}
 			>
-				{isInConfirmationStage ? "CONTINUE" : "CHECK"}
+				{(isInConfirmationStage || currentQuestion?.questionType === "DEMO") ? "CONTINUE" : "CHECK"}
 			</TactileButton>
 		</footer>
 	)
