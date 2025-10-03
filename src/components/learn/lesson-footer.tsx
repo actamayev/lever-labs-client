@@ -31,6 +31,16 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 			} : null
 		}
 
+		if (currentQuestion.questionType === "BLOCK_TO_FUNCTION" && currentQuestion.blockToFunctionFlashcard) {
+			const correctChoice = currentQuestion.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
+				(choice): boolean => choice.isCorrect
+			)
+			return correctChoice ? {
+				codingBlock: currentQuestion.blockToFunctionFlashcard.codingBlock,
+				codingBlockId: currentQuestion.blockToFunctionFlashcard.codingBlock.codingBlockId.toString()
+			} : null
+		}
+
 		// TODO: Add other question types as needed
 		return null
 	}
