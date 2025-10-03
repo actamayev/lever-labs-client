@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 "use client"
 
 import { observer } from "mobx-react"
@@ -7,6 +7,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import { BotIcon } from "lucide-react"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -60,7 +61,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			<div className="flex-1 mx-10">
 				<div className="w-full bg-swan rounded-full h-4">
 					<div
-						className="bg-blue-600 dark:bg-blue-500 h-2 rounded-full transition-all duration-300"
+						className="bg-chargingGreen h-4 rounded-full transition-all duration-300"
 						style={{ width: `${progress}%` }}
 					/>
 				</div>
@@ -69,17 +70,10 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			{/* Right: Bot button */}
 			<TactileButton
 				onClick={handleBotClick}
-				shadowClass="shadow-blue-2"
-				className="w-10 h-10 p-0"
-				aria-label="Bot assistance"
+				shadowClass="shadow-macaw-2"
+				className="w-10 h-10 bg-macaw"
 			>
-				<svg
-					className="w-5 h-5 text-white"
-					fill="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V21C3 22.11 3.89 23 5 23H19C20.11 23 21 22.11 21 21V9M19 9H14V4H5V21H19V9Z" />
-				</svg>
+				<BotIcon className="size-10 text-standardBackground"/>
 			</TactileButton>
 		</header>
 	)

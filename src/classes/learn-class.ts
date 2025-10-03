@@ -121,7 +121,7 @@ class LearnClass {
 	public checkCurrentAnswer = action(async (lessonId: LessonUUID): Promise<boolean> => {
 		if (!this.currentQuestionState) return false
 
-		const { question, selectedAnswerId, currentQuestionIndex } = this.currentQuestionState
+		const { question, selectedAnswerId } = this.currentQuestionState
 		let isCorrect = false
 
 		if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
@@ -162,6 +162,8 @@ class LearnClass {
 		this.hasRetrievedAllLessons = false
 		this.lessonsById = new Map()
 		this.currentQuestionState = null
+		this.isInQuestionConfirmationStage = false
+		this.lastAnswerWasCorrect = false
 	}
 }
 
