@@ -22,7 +22,9 @@ export default async function addStudentToScoreboard(
 			!teacherClass.teacherData.isApproved
 		) return
 
-		const addResponse = await leverLabsApiClient.teacherDataService.addStudentToScoreboard(classCode, studentId, scoreboardId, teamNumber)
+		const addResponse = await leverLabsApiClient.teacherDataService.addStudentToScoreboard(
+			classCode, studentId, scoreboardId, teamNumber
+		)
 
 		if (!isEqual(addResponse.status, 200) || isNonSuccessResponse(addResponse.data)) {
 			throw Error("Unable to add student to scoreboard")

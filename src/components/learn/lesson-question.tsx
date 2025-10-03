@@ -5,6 +5,7 @@ import { observer } from "mobx-react"
 import learnClass from "../../classes/learn-class"
 import FunctionToBlockQuestion from "./function-to-block-question"
 import BlockToFunctionQuestion from "./block-to-function-question"
+import DemoQuestion from "./demo-question"
 
 
 function LessonQuestion(): React.ReactNode {
@@ -21,6 +22,10 @@ function LessonQuestion(): React.ReactNode {
 	}
 
 	const { question } = currentQuestionState
+
+	if (question.questionType === "DEMO") {
+		return <DemoQuestion />
+	}
 
 	if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
 		return <FunctionToBlockQuestion />

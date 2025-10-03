@@ -9,8 +9,8 @@ import { useCallback } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 
-// eslint-disable-next-line max-lines-per-function
-function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
+// eslint-disable-next-line max-lines-per-function, complexity
+function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 	const hasSelectedAnswer = learnClass.currentQuestionState?.selectedAnswerId !== null
@@ -50,7 +50,12 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 		if (isInConfirmationStage) {
 			learnClass.continueToNextQuestion(lessonId)
 		} else {
-			await learnClass.checkCurrentAnswer(lessonId)
+			// For demo questions, skip confirmation and go directly to next question
+			if (currentQuestion?.questionType === "DEMO") {
+				learnClass.continueToNextQuestion(lessonId)
+			} else {
+				await learnClass.checkCurrentAnswer(lessonId)
+			}
 		}
 	}
 
@@ -110,7 +115,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 				shadowClass={shadowClass()}
 				className={tactileButtonClass()}
 				shadowHeight={4}
-				disabled={!isInConfirmationStage && !hasSelectedAnswer}
+				disabled={!isInConfirmationStage && !hasSelectedAnswer && currentQuestion?.questionType !== "DEMO"}
 			>
 				{isInConfirmationStage ? "CONTINUE" : "CHECK"}
 			</TactileButton>

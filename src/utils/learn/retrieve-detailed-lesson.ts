@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
@@ -22,9 +22,33 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			throw Error("Unable to retrieve lesson details")
 		}
 
+		// Create a demo question to be the first item
+		const demoQuestion: LocalQuestion = {
+			questionId: "demo-question" as QuestionUUID,
+			questionType: "DEMO",
+			blockToFunctionFlashcard: null,
+			functionToBlockFlashcard: null,
+			fillInTheBlank: null,
+			userHasAnsweredCorrectly: true, // Demo questions are always considered "correct"
+		}
+
+		const demoQuestionMap: LocalLessonQuestionMap = {
+			lessonQuestionMapId: -1, // Use negative ID to distinguish from real questions
+			order: 0, // First item
+			question: demoQuestion,
+		}
+
+		// Add demo as first item and adjust order of existing questions
+		const existingQuestions = response.data.lesson.lessonQuestionMap || []
+		const adjustedQuestions = existingQuestions.map((q, index): LocalLessonQuestionMap => ({
+			...q,
+			order: index + 1, // Shift existing questions by 1
+		}))
+
 		// Set the complete lesson data (basic + detailed) from the response
 		learnClass.setSingleLesson({
 			...response.data.lesson,
+			lessonQuestionMap: [demoQuestionMap, ...adjustedQuestions],
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,
 			numberQuestionsCorrect: 0,
