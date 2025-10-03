@@ -52,13 +52,13 @@ function BlockToFunctionQuestion(): React.ReactNode {
 							}}
 							className={`h-12 w-full flex items-center justify-start px-4 text-lg font-semibold rounded-lg duration-0 ${
 								isSelected
-									? "bg-standardBackgroundHover border-2 border-selectedSidebarButtonBorder"
+									? "bg-standardBackgroundHover border-2 border-macaw"
 									: isInConfirmationStage
 										? "bg-standardBackground border-2 border-swan cursor-default"
-										: "bg-standardBackground border-2 border-swan hover:bg-standardBackgroundHover"
+										: "bg-standardBackground border-2 border-swan hover:bg-polar"
 							}`}
-							shadowClass="shadow-gray-2"
-							shadowHeight={2}
+							shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
+							shadowHeight={4}
 							disabled={isInConfirmationStage}
 						>
 							<span className={"text-left text-eel"}>
