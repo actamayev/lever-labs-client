@@ -25,12 +25,16 @@ class LearnClass {
 
 	public setLessons = action((lessons: Lesson[]): void => {
 		for (const lesson of lessons) {
-			this.lessonsById.set(lesson.lessonId, {
+			this.setSingleLesson({
 				...lesson,
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
 			})
 		}
+	})
+
+	public setSingleLesson = action((lesson: LocalLesson): void => {
+		this.lessonsById.set(lesson.lessonId, lesson)
 	})
 
 	public setIsRetrievingDetailedData = action((lessonId: LessonUUID, isRetrieving: boolean): void => {
@@ -136,8 +140,8 @@ class LearnClass {
 		this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
 
 		// Set confirmation stage state
-		this.isInQuestionConfirmationStage = true
-		this.lastAnswerWasCorrect = isCorrect
+		this.setIsInQuestionConfirmationStage(true)
+		this.setLastAnswerWasCorrect(isCorrect)
 
 		return isCorrect
 	})
@@ -155,6 +159,14 @@ class LearnClass {
 		// Exit confirmation stage
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
+	})
+
+	private setIsInQuestionConfirmationStage = action((isInQuestionConfirmationStage: boolean): void => {
+		this.isInQuestionConfirmationStage = isInQuestionConfirmationStage
+	})
+
+	private setLastAnswerWasCorrect = action((lastAnswerWasCorrect: boolean): void => {
+		this.lastAnswerWasCorrect = lastAnswerWasCorrect
 	})
 
 	public logout(): void {

@@ -23,7 +23,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 		}
 
 		// Set the complete lesson data (basic + detailed) from the response
-		learnClass.lessonsById.set(lessonId, {
+		learnClass.setSingleLesson({
 			...response.data.lesson,
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,

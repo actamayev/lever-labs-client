@@ -33,7 +33,7 @@ function LessonQuestion(): React.ReactNode {
 					{questionText}
 				</h2>
 
-				<div className="flex justify-start gap-4" style={{ transform: 'translateY(2.5rem)' }}>
+				<div className="flex justify-start gap-4" style={{ transform: "translateY(5rem)" }}>
 					{sortedChoices.map((choice): React.ReactNode => {
 						const isSelected = selectedAnswerId === choice.functionToBlockAnswerChoiceId
 
@@ -45,7 +45,7 @@ function LessonQuestion(): React.ReactNode {
 										learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
 									}
 								}}
-								className={`h-60 w-44 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 ${
+								className={`h-64 w-48 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 ${
 									isSelected
 										? "bg-standardBackgroundHover border-2 border-selectedSidebarButtonBorder"
 										: isInConfirmationStage
