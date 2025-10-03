@@ -9,6 +9,8 @@ declare global {
 			blocklyJson: BlocklyJson
 			cppCode: string
 		}
+		// Server-provided feedback for fill-in-the-blank submissions
+		fillInBlankFeedback?: string
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {

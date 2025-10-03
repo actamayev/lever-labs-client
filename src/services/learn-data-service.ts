@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { BaseDataService } from "./base-data-service"
-import { ErrorResponses, SuccessResponse, LessonsResponse, DetailedLessonResponse} from "@lever-labs/common-ts/types/api"
+import { ErrorResponses, SuccessResponse, LessonsResponse, DetailedLessonResponse, CheckCodeResponse} from "@lever-labs/common-ts/types/api"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 
 export default class LearnDataService extends BaseDataService {
@@ -48,10 +48,10 @@ export default class LearnDataService extends BaseDataService {
 	async submitFillInTheBlankAnswer(
 		lessonId: LessonUUID,
 		fillInTheBlankId: string,
-		answer: string
-	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
-		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-fill-in-the-blank/${lessonId}`), { fillInTheBlankId, answer }
+		userCode: string
+	): Promise<AxiosResponse<CheckCodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
+			this.buildUrl(`/submit-fill-in-the-blank/${lessonId}`), { fillInTheBlankId, userCode }
 		)
 	}
 }

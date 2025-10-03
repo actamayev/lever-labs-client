@@ -1,3 +1,4 @@
+
 "use client"
 
 import { observer } from "mobx-react"
@@ -5,11 +6,15 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import isEmpty from "lodash-es/isEmpty"
+import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import pipClass from "../../classes/pip-class"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -17,6 +22,10 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 	const hasSelectedAnswer = learnClass.currentQuestionState?.selectedAnswerId !== null
 	const currentQuestion = learnClass.currentQuestionState?.question
+	const currentCppCode = currentQuestion?.questionType === "FILL_IN_BLANK"
+		? (currentQuestion.fillInBlankAnswer?.cppCode || "")
+		: ""
+	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
 	// Get the correct answer for display
 	const getCorrectAnswer = (): { codingBlock: CodingBlock; codingBlockId: string } | null => {
@@ -47,9 +56,15 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	}
 
 	const correctAnswer = getCorrectAnswer()
+	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const handleCheckClick = async (): Promise<void> => {
 		if (isInConfirmationStage) {
+			// For FILL_IN_BLANK: if incorrect, do not advance; let user try again
+			if (currentQuestion?.questionType === "FILL_IN_BLANK" && !lastAnswerWasCorrect) {
+				learnClass.retryCurrentQuestion()
+				return
+			}
 			learnClass.continueToNextQuestion(lessonId)
 		} else {
 			// For demo questions, skip confirmation and go directly to next question
@@ -57,7 +72,16 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				learnClass.continueToNextQuestion(lessonId)
 				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
 			} else {
-				await learnClass.checkCurrentAnswer(lessonId)
+				if (currentQuestion?.questionType === "FILL_IN_BLANK") {
+					setIsSubmitting(true)
+					try {
+						await learnClass.checkCurrentAnswer(lessonId)
+					} finally {
+						setIsSubmitting(false)
+					}
+				} else {
+					await learnClass.checkCurrentAnswer(lessonId)
+				}
 			}
 		}
 	}
@@ -82,8 +106,21 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		<footer className={`h-[20vh] border-t-2 border-swan flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96 ${
 			!isInConfirmationStage ? "" : "bg-polar !border-polar"
 		}`}>
-			{/* Left: Empty space for balance */}
-			<div className="h-12 w-48"></div>
+			{/* Left: Send Code button for Fill-In-The-Blank */}
+			<div className="h-12 w-48">
+				{currentQuestion?.questionType === "FILL_IN_BLANK" && (
+					<div className="w-48 h-12">
+						<AnimatedStateButton
+							buttonText="Send Code"
+							isDisabled={isSendDisabled}
+							onClick={async (event): Promise<void> => {
+								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
+							}}
+							className="text-lg"
+						/>
+					</div>
+				)}
+			</div>
 
 			{/* Center: Feedback message (only in confirmation stage) */}
 			{isInConfirmationStage && (
@@ -97,14 +134,23 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 						<div className="flex items-center gap-3">
 							<X className="size-10 text-cardinal" />
 							<div className="flex flex-col items-center">
-								<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
-								{correctAnswer && (
-									<div className="relative h-24 w-32">
-										<BlockVisualization
-											codingBlock={correctAnswer.codingBlock}
-											className="w-full h-full"
-										/>
-									</div>
+								{currentQuestion?.questionType === "FILL_IN_BLANK" && (
+									<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+										{currentQuestion.fillInBlankFeedback || "Incorrect. Try again!"}
+									</span>
+								)}
+								{currentQuestion?.questionType !== "FILL_IN_BLANK" && (
+									<>
+										<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
+										{correctAnswer && (
+											<div className="relative h-24 w-32">
+												<BlockVisualization
+													codingBlock={correctAnswer.codingBlock}
+													className="w-full h-full"
+												/>
+											</div>
+										)}
+									</>
 								)}
 							</div>
 						</div>
@@ -119,13 +165,33 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				className={tactileButtonClass()}
 				shadowHeight={4}
 				disabled={
-					!isInConfirmationStage &&
-					!hasSelectedAnswer &&
-					currentQuestion?.questionType !== "DEMO" &&
-					currentQuestion?.questionType !== "FILL_IN_BLANK"
+					(isSubmitting && currentQuestion?.questionType === "FILL_IN_BLANK") ||
+					(!isInConfirmationStage &&
+						!hasSelectedAnswer &&
+						currentQuestion?.questionType !== "DEMO" &&
+						currentQuestion?.questionType !== "FILL_IN_BLANK")
 				}
 			>
-				{(isInConfirmationStage || currentQuestion?.questionType === "DEMO") ? "CONTINUE" : "CHECK"}
+				{((): React.ReactNode => {
+					if (isInConfirmationStage) {
+						if (currentQuestion?.questionType === "FILL_IN_BLANK" && !lastAnswerWasCorrect) return "TRY AGAIN"
+						return "CONTINUE"
+					}
+					if (currentQuestion?.questionType === "DEMO") return "CONTINUE"
+					if (currentQuestion?.questionType === "FILL_IN_BLANK" && isSubmitting) {
+						return (
+							<span className="flex items-center gap-2">
+								<span>CHECKING</span>
+								<span className="flex items-end gap-1">
+									<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
+									<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
+									<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
+								</span>
+							</span>
+						)
+					}
+					return "CHECK"
+				})()}
 			</TactileButton>
 		</footer>
 	)
