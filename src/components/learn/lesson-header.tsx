@@ -6,8 +6,8 @@ import { useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import { BotIcon } from "lucide-react"
+// import { TactileButton } from "../shadcn/ui/tactile-button"
+// import { BotIcon } from "lucide-react"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -26,19 +26,11 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return (completedQuestions / totalQuestions) * 100
 	}, [lesson?.lessonQuestionMap])
 
-	const handleBackClick = (): void => {
-		navigate("/learn")
-	}
-
-	const handleBotClick = (): void => {
-		// TODO: Implement bot functionality
-	}
-
 	return (
 		<header className="h-[15vh] flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96">
 			{/* Left: Back button */}
 			<button
-				onClick={handleBackClick}
+				onClick={(): void => navigate("/learn")}
 				className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-swan duration-0"
 				aria-label="Go back to lessons"
 			>
@@ -68,13 +60,13 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			</div>
 
 			{/* Right: Bot button */}
-			<TactileButton
+			{/* <TactileButton
 				onClick={handleBotClick}
 				shadowClass="shadow-macaw-2"
 				className="w-10 h-10 bg-macaw"
 			>
 				<BotIcon className="size-10 text-standardBackground"/>
-			</TactileButton>
+			</TactileButton> */}
 		</header>
 	)
 }

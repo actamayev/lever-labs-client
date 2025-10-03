@@ -28,14 +28,12 @@ function LessonQuestion(): React.ReactNode {
 		return (
 			<div className="space-y-6">
 				{/* Question text */}
-				<div className="text-center">
-					<h2 className="text-xl font-semibold text-questionText">
-						{questionText}
-					</h2>
-				</div>
+				<h2 className="text-3xl font-semibold text-questionText">
+					{questionText}
+				</h2>
 
 				{/* Answer choices */}
-				<div className="flex justify-center gap-4">
+				<div className="flex justify-start gap-4">
 					{sortedChoices.map((choice): React.ReactNode => {
 						const isSelected = selectedAnswerId === choice.functionToBlockAnswerChoiceId
 
@@ -43,13 +41,13 @@ function LessonQuestion(): React.ReactNode {
 							<TactileButton
 								key={choice.functionToBlockAnswerChoiceId}
 								onClick={(): void => learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)}
-								className={`h-16 w-12 flex items-center justify-center text-lg font-semibold rounded-lg transition-colors ${
+								className={`h-60 w-44 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 ${
 									isSelected
 										? "bg-standardBackgroundHover border-2 border-selectedSidebarButtonBorder"
 										: "bg-standardBackground border-2 border-swan hover:bg-standardBackgroundHover"
 								}`}
 								shadowClass="shadow-gray-2"
-								shadowHeight={4}
+								shadowHeight={2}
 							>
 								{choice.codingBlockId}
 							</TactileButton>
