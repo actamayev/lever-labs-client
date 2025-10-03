@@ -6,8 +6,8 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
-	const handleCheckClick = (): void => {
-		const isCorrect = learnClass.checkCurrentAnswer(lessonId)
+	const handleCheckClick = async (): Promise<void> => {
+		const isCorrect = await learnClass.checkCurrentAnswer(lessonId)
 		// TODO: Handle incorrect answers (show feedback, etc.)
 		console.log(`Answer checked: ${isCorrect ? "correct" : "incorrect"}`)
 	}

@@ -1,12 +1,15 @@
 import { action, makeAutoObservable } from "mobx"
 import { Lesson, LessonQuestionMap } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
 	public hasRetrievedAllLessons = false
 	public lessonsById: Map<LessonUUID, LocalLesson> = new Map()
 	public currentQuestionState: CurrentQuestionState | null = null
+	public isInQuestionConfirmationStage = false
+	public lastAnswerWasCorrect = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -115,7 +118,7 @@ class LearnClass {
 		this.currentQuestionState.selectedAnswerId = answerId
 	})
 
-	public checkCurrentAnswer = action((lessonId: LessonUUID): boolean => {
+	public checkCurrentAnswer = action(async (lessonId: LessonUUID): Promise<boolean> => {
 		if (!this.currentQuestionState) return false
 
 		const { question, selectedAnswerId, currentQuestionIndex } = this.currentQuestionState
@@ -126,17 +129,32 @@ class LearnClass {
 				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId
 			)
 			isCorrect = choice ? choice.isCorrect : false
+			await submitFunctionToBlockAnswer(lessonId, question.questionId, selectedAnswerId || 0)
 		}
 
 		// Update the question's correctness in the learn class
 		this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
 
-		// If correct and not the last question, move to next question
-		if (isCorrect && currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
+		// Set confirmation stage state
+		this.isInQuestionConfirmationStage = true
+		this.lastAnswerWasCorrect = isCorrect
+
+		return isCorrect
+	})
+
+	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
+		if (!this.currentQuestionState) return
+
+		const { currentQuestionIndex } = this.currentQuestionState
+
+		// Move to next question if not the last question
+		if (currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
 			this.setCurrentQuestion(lessonId, currentQuestionIndex + 1)
 		}
 
-		return isCorrect
+		// Exit confirmation stage
+		this.isInQuestionConfirmationStage = false
+		this.lastAnswerWasCorrect = false
 	})
 
 	public logout(): void {
