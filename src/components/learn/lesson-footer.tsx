@@ -6,6 +6,7 @@ import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
+import { useCallback } from "react"
 
 function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
@@ -24,6 +25,27 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 		// TODO: Implement run code functionality
 	}
 
+	const shadowClass = useCallback((): string => {
+		if (!isInConfirmationStage) {
+			return "shadow-chargingGreen-2"
+		}
+		if (lastAnswerWasCorrect) {
+			return "shadow-chargingGreen-3"
+		}
+		return "shadow-cardinal"
+	}, [lastAnswerWasCorrect, isInConfirmationStage])
+
+	const tactileButtonClass = useCallback((): string => {
+		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
+		if (!isInConfirmationStage) {
+			return `${baseClass} bg-chargingGreen`
+		}
+		if (lastAnswerWasCorrect) {
+			return `${baseClass} bg-chargingGreen`
+		}
+		return `${baseClass} bg-cardinal-1`
+	}, [lastAnswerWasCorrect, isInConfirmationStage])
+
 	return (
 		// eslint-disable-next-line max-len
 		<footer className={`h-[20vh] border-t-2 border-swan flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96 ${
@@ -33,9 +55,9 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 			<div className="h-12 w-48">
 				<AnimatedStateButton
 					buttonText="RUN CODE"
-					isDisabled={false}
 					onClick={handleRunCodeClick}
 					className="duration-150 rounded-2xl text-lg h-11"
+					isDisabled={!isInConfirmationStage && !hasSelectedAnswer}
 				/>
 			</div>
 
@@ -44,13 +66,13 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 				<div className="flex items-center gap-3">
 					{lastAnswerWasCorrect ? (
 						<>
-							<Check className="w-6 h-6 text-green-600" />
-							<span className="text-lg font-semibold text-green-600">Correct!</span>
+							<Check className="size-10 text-chargingGreen" />
+							<span className="text-3xl font-semibold text-chargingGreen">Correct!</span>
 						</>
 					) : (
 						<>
-							<X className="w-6 h-6 text-cardinal" />
-							<span className="text-lg font-semibold text-cardinal">Incorrect</span>
+							<X className="size-10 text-cardinal" />
+							<span className="text-3xl font-semibold text-cardinal">Incorrect</span>
 						</>
 					)}
 				</div>
@@ -59,8 +81,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID}): React.ReactNode {
 			{/* Right: Check/Continue button */}
 			<TactileButton
 				onClick={handleCheckClick}
-				shadowClass="shadow-chargingGreen-2"
-				className="h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
+				shadowClass={shadowClass()}
+				className={tactileButtonClass()}
 				shadowHeight={4}
 				disabled={!isInConfirmationStage && !hasSelectedAnswer}
 			>
