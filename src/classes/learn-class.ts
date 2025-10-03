@@ -10,7 +10,7 @@ interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {
 	question: LocalQuestion
 }
 
-interface LocalLesson extends Lesson {
+export interface LocalLesson extends Lesson {
 	isRetrievingDetailedData: boolean
 	hasRetrievedDetailedData: boolean
 	lessonQuestionMap?: LocalLessonQuestionMap[]

@@ -5,29 +5,28 @@ import AuthenticatedLayout from "../../../src/components/layouts/authenticated-l
 import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
 import LearnPage from "../../../src/components/learn/learn-page"
 
-interface SandboxProjectPageProps {
+interface LearnPageProps {
 	params: Promise<{
 		lessonId: LessonUUID
 	}>
 }
 
-export async function generateMetadata({ params }: SandboxProjectPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: LearnPageProps): Promise<Metadata> {
 	const { lessonId } = await params
 	return createMetadata({
 		title: "Learn",
 		// eslint-disable-next-line max-len
-		description: "Create, save, and edit custom Pip programs with an intuitive block-based or text coding interface in your personal project workspace.",
+		description: "Guide Pip through coding challenges like line-following and maze-solving to discover its purpose in a robotics adventure.",
 		path: `/learn/${lessonId}`,
-		keywords: ["custom robot programs", "project workspace", "saved coding projects"]
+		keywords: ["robotics adventure", "coding challenges", "purpose discovery"]
 	})
 }
 
-export default async function CustomSandboxProjectPage({ params }: SandboxProjectPageProps): Promise<React.ReactNode> {
+export default async function CustomSandboxProjectPage({ params }: LearnPageProps): Promise<React.ReactNode> {
 	const { lessonId } = await params
 
-	// Basic validation - adjust regex based on your UUID format
-
 	if (!lessonId || !/^[a-fA-F0-9-]{36}$/.test(lessonId)) {
+		console.error("Invalid lessonId:", lessonId)
 		notFound()
 	}
 
