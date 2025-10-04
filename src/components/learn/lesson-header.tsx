@@ -64,18 +64,18 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					/>
 				</div>
 			</div>
-			{!pipClass.selectedPip ? (
+			{pipClass.selectedPip ? (
+				<div className="flex flex-row gap-3">
+					<SandboxBatterySection />
+					<NetworkWorkbench isSandboxPage={true} />
+				</div>
+			) : (
 				<div className="h-full flex items-center justify-center mb-1">
 					<ConnectToPipButton
 						colors={getDuolingoColors("humpback")}
 						tactileButtonClasses="h-8 text-xl"
 						botIconClasses="!size-6"
 					/>
-				</div>
-			) : (
-				<div className="flex flex-row gap-3">
-					<SandboxBatterySection />
-					<NetworkWorkbench isSandboxPage={true} />
 				</div>
 			)}
 
