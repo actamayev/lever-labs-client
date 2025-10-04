@@ -8,6 +8,11 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 // import { BotIcon } from "lucide-react"
 import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
+import NetworkWorkbench from "../workbench/network/network-workbench"
+import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
+import getDuolingoColors from "../../utils/get-duolingo-colors"
+import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
+import pipClass from "../../classes/pip-class"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -59,6 +64,20 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					/>
 				</div>
 			</div>
+			{!pipClass.selectedPip ? (
+				<div className="h-full flex items-center justify-center mb-1">
+					<ConnectToPipButton
+						colors={getDuolingoColors("humpback")}
+						tactileButtonClasses="h-8 text-xl"
+						botIconClasses="!size-6"
+					/>
+				</div>
+			) : (
+				<div className="flex flex-row gap-3">
+					<SandboxBatterySection />
+					<NetworkWorkbench isSandboxPage={true} />
+				</div>
+			)}
 
 			{/* Right: Bot button */}
 			{/* <TactileButton
