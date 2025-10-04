@@ -1,8 +1,8 @@
 "use client"
 
-import { isEmpty, isNull } from "lodash-es"
+import { isNull } from "lodash-es"
 import isEqual from "lodash-es/isEqual"
-import { LoginRequest } from "@lever-labs/common-ts/types/api"
+import { LoginRequest, LoginSuccess } from "@lever-labs/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import studentClass from "../../../classes/student-class"
 import teacherClass from "../../../classes/teacher-class"
@@ -15,12 +15,10 @@ import serialConnectionManagerClass from "../../../classes/serial-connection-man
 import garageClass from "../../../classes/garage-class"
 import pipClass from "../../../classes/pip-class"
 
-type WhereToNavigate = "PageToNavigateAfterLogin" | "Whiteboard" | "ClassManager" | null
-
 export default async function loginSubmit(
 	loginInformation: LoginRequest,
 	setError: (error: string) => void
-) : Promise<WhereToNavigate> {
+) : Promise<LoginSuccess | null> {
 	try {
 		setError("")
 		const areCredentialsValid = confirmLoginFields(loginInformation, setError)
@@ -52,9 +50,7 @@ export default async function loginSubmit(
 			})
 		}
 
-		if (response.data.teacherData && response.data.teacherData.isApproved === true) return "ClassManager"
-		if (!isEmpty(classroomInfo)) return "Whiteboard"
-		return "PageToNavigateAfterLogin"
+		return response.data
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)
 		return null

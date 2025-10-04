@@ -18,10 +18,13 @@ import { registerSchema } from "../../../utils/auth/auth-schemas"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
+import { isNull } from "lodash-es"
+import { usePathname } from "next/navigation"
 
 export default function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
+	const pathname = usePathname()
 
 	const form = useForm<RegisterFormValues>({
 		resolver: zodResolver(registerSchema),
@@ -34,10 +37,10 @@ export default function RegisterComponent(): React.ReactNode {
 	})
 
 	const onSubmit = useCallback(async (values: RegisterFormValues): Promise<void> => {
-		const success = await registerSubmit(values, setError)
-		if (success === false) return
+		const response = await registerSubmit(values, setError)
+		if (isNull(response) || pathname !== "/register") return
 		navigate(PageToNavigateAfterLogin)
-	}, [navigate])
+	}, [navigate, pathname])
 
 	return (
 		<AuthTemplate title="Create a new account">

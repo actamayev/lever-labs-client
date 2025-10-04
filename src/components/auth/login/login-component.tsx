@@ -18,6 +18,7 @@ import { loginSchema } from "../../../utils/auth/auth-schemas"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
+import { isEmpty, isNull } from "lodash-es"
 
 export default function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
@@ -33,11 +34,17 @@ export default function LoginComponent(): React.ReactNode {
 	})
 
 	const onSubmit = useCallback(async (values: LoginRequest): Promise<void> => {
-		const success = await loginSubmit(values, setError)
-		if (success === null) return
-		if (success === "ClassManager") navigate("/class-manager")
-		if (success === "Whiteboard") navigate("/whiteboard")
-		if (success === "PageToNavigateAfterLogin" && pathname === "/login") navigate(PageToNavigateAfterLogin)
+		const response = await loginSubmit(values, setError)
+		if (isNull(response) || pathname !== "/login") return
+		if (response.teacherData && response.teacherData.isApproved === true) {
+			navigate("/class-manager")
+			return
+		}
+		if (!isEmpty(response.studentClasses)) {
+			navigate("/whiteboard")
+			return
+		}
+		navigate(PageToNavigateAfterLogin)
 	}, [navigate, pathname])
 
 	return (

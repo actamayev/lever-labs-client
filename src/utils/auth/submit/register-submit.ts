@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { RegisterRequest } from "@lever-labs/common-ts/types/api"
+import { RegisterRequest, RegisterSuccess } from "@lever-labs/common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import confirmRegisterFields from "../confirm-register-fields"
@@ -14,17 +14,17 @@ import serialConnectionManagerClass from "../../../classes/serial-connection-man
 export default async function registerSubmit(
 	registerCredentials: RegisterFormValues,
 	setError: (error: string) => void,
-): Promise<boolean> {
+): Promise<RegisterSuccess | null> {
 	try {
 		setError("")
 		const areCredentialsValid = confirmRegisterFields(registerCredentials, setError)
-		if (areCredentialsValid === false) return false
+		if (areCredentialsValid === false) return null
 
 		authClass.setAuthenticating(true)
-		if (typeof window === "undefined") return false
+		if (typeof window === "undefined") return null
 
 		const siteTheme = personalInfoClass.defaultSiteTheme
-		if (isNull(registerCredentials.age)) return false
+		if (isNull(registerCredentials.age)) return null
 
 		const registerRequest: RegisterRequest = {
 			...registerCredentials,
@@ -36,7 +36,7 @@ export default async function registerSubmit(
 
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to register. Please reload the page and try again")
-			return false
+			return null
 		}
 		authClass.setAuthState({
 			isAuthenticated: true,
@@ -48,10 +48,10 @@ export default async function registerSubmit(
 			siteTheme,
 		)
 		void serialConnectionManagerClass.checkAndAutoConnectIfLoggedIn()
-		return true
+		return response.data
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)
-		return false
+		return null
 	} finally {
 		authClass.setAuthenticating(false)
 	}
