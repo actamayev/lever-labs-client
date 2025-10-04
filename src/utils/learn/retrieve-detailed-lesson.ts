@@ -29,7 +29,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			blockToFunctionFlashcard: null,
 			functionToBlockFlashcard: null,
 			fillInTheBlank: null,
-			userHasAnsweredCorrectly: true, // Demo questions are always considered "correct"
+			userHasAnsweredCorrectly: undefined, // Demo questions start as unanswered
 		}
 
 		const demoQuestionMap: LocalLessonQuestionMap = {
@@ -51,7 +51,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			lessonQuestionMap: [demoQuestionMap, ...adjustedQuestions],
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,
-			numberQuestionsCorrect: 0,
+			numberQuestionsCorrect: 0, // Start with 0, demo will increment when passed
 		})
 	} catch (error) {
 		console.error(error)

@@ -244,7 +244,16 @@ class LearnClass {
 	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
 		if (!this.currentQuestionState) return
 
-		const { currentQuestionIndex } = this.currentQuestionState
+		const { currentQuestionIndex, question } = this.currentQuestionState
+
+		// If this is a demo question, mark it as correct and increment progress
+		if (question.questionType === "DEMO") {
+			const lesson = this.lessonsById.get(lessonId)
+			if (lesson && question.userHasAnsweredCorrectly !== true) {
+				question.userHasAnsweredCorrectly = true
+				lesson.numberQuestionsCorrect += 1
+			}
+		}
 
 		// Move to next question if not the last question
 		if (currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
@@ -281,6 +290,36 @@ class LearnClass {
 
 	private setLastAnswerWasCorrect = action((lastAnswerWasCorrect: boolean): void => {
 		this.lastAnswerWasCorrect = lastAnswerWasCorrect
+	})
+
+	public resetLessonProgress = action((lessonId: LessonUUID): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson || !lesson.lessonQuestionMap) return
+
+		// Reset the progress counter to 0
+		lesson.numberQuestionsCorrect = 0
+
+		// Reset all questions to unanswered state
+		for (const mapEntry of lesson.lessonQuestionMap) {
+			mapEntry.question.userHasAnsweredCorrectly = undefined
+			// Clear any fill-in-blank answers and feedback
+			if (mapEntry.question.questionType === "FILL_IN_BLANK") {
+				mapEntry.question.fillInBlankAnswer = undefined
+				mapEntry.question.fillInBlankFeedback = undefined
+			}
+		}
+
+		// Reset current question state if it's for this lesson
+		if (this.currentQuestionState) {
+			const currentLesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === this.currentQuestionState?.question.questionId) ?? false
+			)
+			if (currentLesson?.lessonId === lessonId) {
+				this.currentQuestionState = null
+				this.isInQuestionConfirmationStage = false
+				this.lastAnswerWasCorrect = false
+			}
+		}
 	})
 
 	public logout(): void {

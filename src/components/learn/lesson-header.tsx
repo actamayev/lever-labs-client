@@ -27,7 +27,9 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		const totalQuestions = lesson.lessonQuestionMap.length
 		if (totalQuestions === 0) return 0
 
-		return (lesson.numberQuestionsCorrect / totalQuestions) * 100
+		const progressPercent = (lesson.numberQuestionsCorrect / totalQuestions) * 100
+
+		return progressPercent
 	}, [lesson?.lessonQuestionMap, lesson?.numberQuestionsCorrect])
 
 	// Handle beforeunload warning - only show if user is still editing
@@ -61,11 +63,14 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		stopCareerTrigger()
 	}, [navigate, lesson])
 
-
 	const handleEndSession = useCallback((): void => {
+		// Reset lesson progress before navigating away
+		if (lesson) {
+			learnClass.resetLessonProgress(lessonId)
+		}
 		navigate("/learn")
 		stopCareerTrigger()
-	}, [navigate])
+	}, [navigate, lesson, lessonId])
 
 	return (
 		<>
