@@ -3,16 +3,16 @@
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import pipClass from "../../classes/pip-class"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 // import { BotIcon } from "lucide-react"
-import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
-import NetworkWorkbench from "../workbench/network/network-workbench"
-import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
+import NetworkWorkbench from "../workbench/network/network-workbench"
 import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
-import pipClass from "../../classes/pip-class"
+import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
+import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
