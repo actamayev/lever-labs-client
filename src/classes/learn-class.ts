@@ -1,10 +1,11 @@
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
+import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
-import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -94,6 +95,12 @@ class LearnClass {
 			lesson.numberQuestionsCorrect += 1
 		} else if (!isCorrect && wasCorrect) {
 			lesson.numberQuestionsCorrect -= 1
+		}
+
+		if (isCorrect) {
+			soundManager.playCorrect()
+		} else {
+			soundManager.playWrong()
 		}
 	})
 

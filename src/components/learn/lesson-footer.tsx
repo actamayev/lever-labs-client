@@ -51,7 +51,6 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			} : null
 		}
 
-		// TODO: Add other question types as needed
 		return null
 	}
 
@@ -71,17 +70,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			if (currentQuestion?.questionType === "DEMO") {
 				learnClass.continueToNextQuestion(lessonId)
 				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
-			} else {
-				if (currentQuestion?.questionType === "FILL_IN_BLANK") {
-					setIsSubmitting(true)
-					try {
-						await learnClass.checkCurrentAnswer(lessonId)
-					} finally {
-						setIsSubmitting(false)
-					}
-				} else {
-					await learnClass.checkCurrentAnswer(lessonId)
-				}
+				return
+			}
+			if (currentQuestion?.questionType !== "FILL_IN_BLANK") {
+				await learnClass.checkCurrentAnswer(lessonId)
+				return
+			}
+			setIsSubmitting(true)
+			try {
+				await learnClass.checkCurrentAnswer(lessonId)
+			} finally {
+				setIsSubmitting(false)
 			}
 		}
 	}

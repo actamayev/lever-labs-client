@@ -8,12 +8,14 @@ import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
 import LessonHeader from "./lesson-header"
 import LessonFooter from "./lesson-footer"
 import LessonQuestions from "./lesson-questions"
+import { soundManager } from "../../classes/utility/sound-manager-class"
 
 function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	useEffect((): void => {
 		void retrieveDetailedLesson(lessonId)
 	}, [lessonId])
 	const isLoading = learnClass.isRetrievingDetailedData(lessonId)
+	useEffect((): void => soundManager.initialize(), [])
 
 	const lesson = useMemo((): Lesson | undefined => {
 		return learnClass.getLesson(lessonId)
