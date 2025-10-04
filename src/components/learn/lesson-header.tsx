@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
@@ -26,6 +26,26 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 		return (lesson.numberQuestionsCorrect / totalQuestions) * 100
 	}, [lesson?.lessonQuestionMap, lesson?.numberQuestionsCorrect])
+
+	// Handle beforeunload warning - only show if user is still editing
+	useEffect((): () => void => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent): void => {
+			if (!lesson) return
+			if (lesson.numberQuestionsCorrect > 0) {
+				e.preventDefault()
+				e.returnValue = "Changes you made may not be saved."
+			}
+		}
+
+		if (lesson?.numberQuestionsCorrect && lesson?.numberQuestionsCorrect > 0) {
+			window.addEventListener("beforeunload", handleBeforeUnload)
+		}
+
+		return (): void => {
+			window.removeEventListener("beforeunload", handleBeforeUnload)
+		}
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lesson?.numberQuestionsCorrect])
 
 	const handleBack = useCallback((): void => {
 		navigate("/learn")
