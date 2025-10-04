@@ -1,12 +1,13 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 // import { BotIcon } from "lucide-react"
+import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -21,11 +22,16 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return (lesson.numberQuestionsCorrect / totalQuestions) * 100
 	}, [lesson?.lessonQuestionMap, lesson?.numberQuestionsCorrect])
 
+	const handleBack = useCallback((): void => {
+		navigate("/learn")
+		stopCareerTrigger()
+	}, [navigate])
+
 	return (
 		<header className="h-[15vh] flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96">
 			{/* Left: Back button */}
 			<button
-				onClick={(): void => navigate("/learn")}
+				onClick={handleBack}
 				className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-swan duration-0"
 				aria-label="Go back to lessons"
 			>
