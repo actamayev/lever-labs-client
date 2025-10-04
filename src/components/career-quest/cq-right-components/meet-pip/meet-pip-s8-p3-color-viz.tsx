@@ -1,7 +1,7 @@
 "use client"
 
-import { observer } from "mobx-react"
 import { useMemo } from "react"
+import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 
 function MeetPipS8P3ColorViz(): React.ReactNode {
@@ -39,7 +39,7 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 				<div className="text-center">
 					{/* Color Circle */}
 					<div
-						className="rounded-full border-4 border-hare"
+						className="rounded-full border-2 border-swan"
 						style={{
 							width: circleSize,
 							height: circleSize,
@@ -63,21 +63,30 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 						className="w-16 h-16 rounded-lg mx-auto mb-2 border border-swan"
 						style={{ backgroundColor: `rgb(${latestRed}, 0, 0)` }}
 					/>
-					<div className="text-sm font-medium text-cardinal">Red: {latestRed}</div>
+					<div className="text-sm font-medium text-cardinal flex justify-center items-center gap-1">
+						<span>Red:</span>
+						<span className="inline-block w-8 text-left">{latestRed}</span>
+					</div>
 				</div>
 				<div className="text-center">
 					<div
 						className="w-16 h-16 rounded-lg mx-auto mb-2 border border-swan"
 						style={{ backgroundColor: `rgb(0, ${latestGreen}, 0)` }}
 					/>
-					<div className="text-sm font-medium text-chargingGreen">Green: {latestGreen}</div>
+					<div className="text-sm font-medium text-chargingGreen flex justify-center items-center gap-1">
+						<span>Green:</span>
+						<span className="inline-block w-8 text-left">{latestGreen}</span>
+					</div>
 				</div>
 				<div className="text-center">
 					<div
 						className="w-16 h-16 rounded-lg mx-auto mb-2 border border-swan"
 						style={{ backgroundColor: `rgb(0, 0, ${latestBlue})` }}
 					/>
-					<div className="text-sm font-medium text-macaw">Blue: {latestBlue}</div>
+					<div className="text-sm font-medium text-macaw flex justify-center items-center gap-1">
+						<span>Blue:</span>
+						<span className="inline-block w-8 text-left">{latestBlue}</span>
+					</div>
 				</div>
 			</div>
 		</div>
