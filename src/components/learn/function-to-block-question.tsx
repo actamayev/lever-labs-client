@@ -25,16 +25,15 @@ function FunctionToBlockQuestion(): React.ReactNode {
 
 		const handleKeyDown = (event: KeyboardEvent): void => {
 			const key = event.key
-			if (key === "1" || key === "2" || key === "3") {
-				const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
-				const flashcard = currentQuestionState.question.functionToBlockFlashcard
-				if (!flashcard) return
-				const sortedChoices = [...flashcard.functionToBlockAnswerChoice]
-					.sort((a, b): number => a.order - b.order)
-				if (choiceIndex >= 0 && choiceIndex < sortedChoices.length) {
-					const selectedChoice = sortedChoices[choiceIndex]
-					learnClass.setSelectedAnswer(selectedChoice.functionToBlockAnswerChoiceId)
-				}
+			if (key !== "1" && key !== "2" && key !== "3") return
+			const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
+			const flashcard = currentQuestionState.question.functionToBlockFlashcard
+			if (!flashcard) return
+			const sortedChoices = [...flashcard.functionToBlockAnswerChoice]
+				.sort((a, b): number => a.order - b.order)
+			if (choiceIndex >= 0 && choiceIndex < sortedChoices.length) {
+				const selectedChoice = sortedChoices[choiceIndex]
+				learnClass.setSelectedAnswer(selectedChoice.functionToBlockAnswerChoiceId)
 			}
 		}
 
