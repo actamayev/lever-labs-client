@@ -63,41 +63,40 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					const cardNumber = index + 1
 
 					return (
-						<div key={choice.functionToBlockAnswerChoiceId} className="relative">
-							<TactileButton
-								onClick={(): void => {
-									if (!isInConfirmationStage) {
-										learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
-									}
-								}}
-								className={`h-64 w-48 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 ${
-									isSelected
-										? "bg-standardBackgroundHover border-2 border-macaw"
-										: isInConfirmationStage
-											? "bg-standardBackground border-2 border-swan cursor-default"
-											: "bg-standardBackground border-2 border-swan hover:bg-polar"
-								}`}
-								shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
-								shadowHeight={2}
-								shouldHoverPushButton={false}
-								disabled={isInConfirmationStage}
-							>
-								<BlockVisualization
-									codingBlock={choice.codingBlock}
-									className="w-full h-full p-4"
-								/>
-							</TactileButton>
+						<TactileButton
+							key={choice.functionToBlockAnswerChoiceId}
+							onClick={(): void => {
+								if (!isInConfirmationStage) {
+									learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
+								}
+							}}
+							className={`h-64 w-48 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 relative ${
+								isSelected
+									? "bg-standardBackgroundHover border-2 border-macaw"
+									: isInConfirmationStage
+										? "bg-standardBackground border-2 border-swan cursor-default"
+										: "bg-standardBackground border-2 border-swan hover:bg-polar"
+							}`}
+							shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
+							shadowHeight={2}
+							shouldHoverPushButton={false}
+							disabled={isInConfirmationStage}
+						>
+							<BlockVisualization
+								codingBlock={choice.codingBlock}
+								className="w-full h-full p-4"
+							/>
 							{/* Number badge in bottom right */}
 							<div
 								className={cn(
 									"absolute bottom-2 right-2 w-8 h-8 rounded-lg border-2",
 									"flex items-center justify-center text-sm font-bold",
-									isSelected ? "border-macaw text-macaw"  : "border-swan text-hare"
+									isSelected ? "border-macaw text-macaw" : "border-swan text-hare"
 								)}
 							>
 								{cardNumber}
 							</div>
-						</div>
+						</TactileButton>
 					)
 				})}
 			</div>
