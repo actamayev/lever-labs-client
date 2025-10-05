@@ -65,9 +65,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 	const handleEndSession = useCallback((): void => {
 		// Reset lesson progress before navigating away
-		if (lesson) {
-			learnClass.resetLessonProgress(lessonId)
-		}
+		if (lesson) learnClass.resetLessonProgress(lessonId)
 		navigate("/learn")
 		stopCareerTrigger()
 	}, [navigate, lesson, lessonId])
