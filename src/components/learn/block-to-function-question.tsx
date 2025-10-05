@@ -5,10 +5,14 @@ import { observer } from "mobx-react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import BlockVisualization from "./block-visualization"
+import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
+
+	// Use the keyboard handler hook
+	useQuestionKeyboardHandler()
 
 	if (!currentQuestionState?.question.blockToFunctionFlashcard) {
 		return null
