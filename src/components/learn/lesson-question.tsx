@@ -41,7 +41,7 @@ function LessonQuestion(): React.ReactNode {
 
 	return (
 		<div className="text-center">
-			<p className="text-gray-500 dark:text-gray-400">
+			<p className="text-wolf">
 				Unknown question type
 			</p>
 		</div>
