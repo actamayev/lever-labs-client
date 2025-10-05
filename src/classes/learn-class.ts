@@ -14,6 +14,7 @@ class LearnClass {
 	public currentQuestionState: CurrentQuestionState | null = null
 	public isInQuestionConfirmationStage = false
 	public lastAnswerWasCorrect = false
+	public isExitDialogOpen = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -322,6 +323,10 @@ class LearnClass {
 		}
 	})
 
+	public setIsExitDialogOpen = action((isOpen: boolean): void => {
+		this.isExitDialogOpen = isOpen
+	})
+
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
@@ -329,6 +334,7 @@ class LearnClass {
 		this.currentQuestionState = null
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
+		this.isExitDialogOpen = false
 	}
 }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import learnClass from "../../classes/learn-class"
@@ -19,7 +19,6 @@ import ExitLessonDialog from "./exit-lesson-dialog"
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const lesson = learnClass.getLesson(lessonId)
-	const [isExitDialogOpen, setIsExitDialogOpen] = useState(false)
 
 	const progress = useMemo((): number => {
 		if (!lesson?.lessonQuestionMap) return 0
@@ -55,7 +54,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const handleBack = useCallback((): void => {
 		// Check if user has progress (questions correct > 0)
 		if (lesson && lesson.numberQuestionsCorrect > 0) {
-			setIsExitDialogOpen(true)
+			learnClass.setIsExitDialogOpen(true)
 			return
 		}
 
@@ -127,12 +126,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					<BotIcon className="size-10 text-standardBackground"/>
 				</TactileButton> */}
 			</header>
-			<ExitLessonDialog
-				isExitDialogOpen={isExitDialogOpen}
-				setIsExitDialogOpen={setIsExitDialogOpen}
-				onKeepLearning={(): void => {}}
-				onEndSession={handleEndSession}
-			/>
+			<ExitLessonDialog onEndSession={handleEndSession} />
 		</>
 	)
 }

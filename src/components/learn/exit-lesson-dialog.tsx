@@ -9,29 +9,21 @@ import {
 	DialogClose
 } from "../shadcn/ui/dialog"
 import { TactileButton } from "../shadcn/ui/tactile-button"
+import learnClass from "../../classes/learn-class"
+import { observer } from "mobx-react"
 
-interface Props {
-	isExitDialogOpen: boolean
-	setIsExitDialogOpen: (open: boolean) => void
-	onKeepLearning: () => void
-	onEndSession: () => void
-}
-
-export default function ExitLessonDialog(props: Props): React.ReactNode {
-	const { isExitDialogOpen, setIsExitDialogOpen, onKeepLearning, onEndSession } = props
-
+function ExitLessonDialog({ onEndSession }: { onEndSession: () => void }): React.ReactNode {
 	const handleKeepLearning = useCallback((): void => {
-		onKeepLearning()
-		setIsExitDialogOpen(false)
-	}, [onKeepLearning, setIsExitDialogOpen])
+		learnClass.setIsExitDialogOpen(false)
+	}, [])
 
 	const handleEndSession = useCallback((): void => {
 		onEndSession()
-		setIsExitDialogOpen(false)
-	}, [onEndSession, setIsExitDialogOpen])
+		learnClass.setIsExitDialogOpen(false)
+	}, [onEndSession])
 
 	return (
-		<Dialog open={isExitDialogOpen} onOpenChange={setIsExitDialogOpen}>
+		<Dialog open={learnClass.isExitDialogOpen} onOpenChange={learnClass.setIsExitDialogOpen}>
 			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Wait, don't go!</DialogTitle>
@@ -42,7 +34,7 @@ export default function ExitLessonDialog(props: Props): React.ReactNode {
 						You'll lose your progress if you quit now
 					</p>
 				</div>
-				<div className="flex flex-col gap-3 items-center">
+				<div className="flex flex-col gap-4 items-center">
 					<TactileButton
 						onClick={handleKeepLearning}
 						className="w-full h-10 rounded-xl text-lg text-white bg-macaw"
@@ -63,3 +55,5 @@ export default function ExitLessonDialog(props: Props): React.ReactNode {
 		</Dialog>
 	)
 }
+
+export default observer(ExitLessonDialog)

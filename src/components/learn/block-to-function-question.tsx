@@ -2,10 +2,12 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import BlockVisualization from "./block-visualization"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import { cn } from "../../lib/shadcn/utils"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -13,6 +15,30 @@ function BlockToFunctionQuestion(): React.ReactNode {
 
 	// Use the keyboard handler hook
 	useQuestionKeyboardHandler()
+
+	// Handle number key selection (1, 2, 3)
+	useEffect((): (() => void) => {
+		if (!currentQuestionState?.question.blockToFunctionFlashcard || isInConfirmationStage) {
+			return (): void => {}
+		}
+
+		const handleKeyDown = (event: KeyboardEvent): void => {
+			const key = event.key
+			if (key !== "1" && key !== "2" && key !== "3") return
+			const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
+			const flashcard = currentQuestionState.question.blockToFunctionFlashcard
+			if (!flashcard) return
+			const sortedChoices = [...flashcard.blockToFunctionAnswerChoice]
+				.sort((a, b): number => a.order - b.order)
+			if (choiceIndex >= 0 && choiceIndex < sortedChoices.length) {
+				const selectedChoice = sortedChoices[choiceIndex]
+				learnClass.setSelectedAnswer(selectedChoice.blockToFunctionAnswerChoiceId)
+			}
+		}
+
+		window.addEventListener("keydown", handleKeyDown)
+		return (): void => window.removeEventListener("keydown", handleKeyDown)
+	}, [currentQuestionState?.question.blockToFunctionFlashcard, isInConfirmationStage])
 
 	if (!currentQuestionState?.question.blockToFunctionFlashcard) {
 		return null
@@ -43,8 +69,9 @@ function BlockToFunctionQuestion(): React.ReactNode {
 
 			{/* Answer choices: Function descriptions */}
 			<div className="flex flex-col gap-3" style={{ transform: "translateY(2rem)" }}>
-				{sortedChoices.map((choice): React.ReactNode => {
+				{sortedChoices.map((choice, index): React.ReactNode => {
 					const isSelected = selectedAnswerId === choice.blockToFunctionAnswerChoiceId
+					const choiceNumber = index + 1
 
 					return (
 						<TactileButton
@@ -54,7 +81,8 @@ function BlockToFunctionQuestion(): React.ReactNode {
 									learnClass.setSelectedAnswer(choice.blockToFunctionAnswerChoiceId)
 								}
 							}}
-							className={`h-12 w-full flex items-center justify-start px-4 text-lg font-semibold rounded-lg duration-0 ${
+							// eslint-disable-next-line max-len
+							className={`h-12 w-full flex items-center justify-start px-4 text-lg font-semibold rounded-lg duration-0 relative ${
 								isSelected
 									? "bg-standardBackgroundHover border-2 border-macaw"
 									: isInConfirmationStage
@@ -66,7 +94,17 @@ function BlockToFunctionQuestion(): React.ReactNode {
 							disabled={isInConfirmationStage}
 							shouldHoverPushButton={false}
 						>
-							<span className={"text-left text-eel"}>
+							{/* Number badge on the left */}
+							<div
+								className={cn(
+									"absolute left-2 w-8 h-8 rounded-lg border-2",
+									"flex items-center justify-center text-sm font-bold",
+									isSelected ? "border-macaw text-macaw" : "border-swan text-hare"
+								)}
+							>
+								{choiceNumber}
+							</div>
+							<span className="text-left text-eel ml-10">
 								{choice.functionDescriptionText}
 							</span>
 						</TactileButton>
