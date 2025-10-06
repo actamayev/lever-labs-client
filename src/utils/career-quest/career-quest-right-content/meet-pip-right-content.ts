@@ -573,9 +573,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS8P3ColorViz
-					},
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
+					}
 				},
 				{
 					type: "text",

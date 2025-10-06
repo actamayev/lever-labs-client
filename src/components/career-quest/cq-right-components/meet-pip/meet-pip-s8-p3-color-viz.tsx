@@ -15,7 +15,7 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 	// Fire ENTER on mount, EXIT on unmount/page hide/refresh. Guard against double-sends.
 	useEffect((): (() => void) => {
 		console.log("MeetPipS8P3ColorViz mounted")
-		
+
 		// Delay trigger slightly to allow serial connection to establish if needed
 		const triggerTimeout = setTimeout((): void => {
 			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
@@ -45,6 +45,7 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 		if (!hasInitializedRef.current) {
 			hasInitializedRef.current = true
 			return (): void => {
+				clearTimeout(triggerTimeout)
 				document.removeEventListener("visibilitychange", handleVisibilityChange)
 				window.removeEventListener("beforeunload", handleBeforeUnload)
 				// Skip EXIT on the initial StrictMode cleanup
@@ -52,6 +53,7 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 		}
 
 		return (): void => {
+			clearTimeout(triggerTimeout)
 			document.removeEventListener("visibilitychange", handleVisibilityChange)
 			window.removeEventListener("beforeunload", handleBeforeUnload)
 			sendExitIfNeeded()
