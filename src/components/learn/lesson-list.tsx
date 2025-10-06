@@ -2,7 +2,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { isUndefined } from "lodash-es"
+import { isEmpty, isUndefined } from "lodash-es"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
@@ -30,7 +30,7 @@ function LessonList(): React.ReactNode {
 		)
 	}
 
-	if (lessons.length === 0) {
+	if (isEmpty(lessons)) {
 		return (
 			<div className="flex justify-center items-center p-8">
 				<div className="text-lg">No lessons available</div>
