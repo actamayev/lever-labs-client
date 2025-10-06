@@ -9,8 +9,6 @@ import { Check, X } from "lucide-react"
 import { useCallback, useState } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import isEmpty from "lodash-es/isEmpty"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
@@ -69,7 +67,6 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			// For demo questions, skip confirmation and go directly to next question
 			if (currentQuestion?.questionType === "DEMO") {
 				learnClass.continueToNextQuestion(lessonId)
-				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
 				return
 			}
 			if (currentQuestion?.questionType !== "FILL_IN_BLANK") {

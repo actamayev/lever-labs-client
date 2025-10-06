@@ -2,25 +2,21 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { isEmpty, isUndefined } from "lodash-es"
+import { isEmpty } from "lodash-es"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 
 function LessonList(): React.ReactNode {
 	const lessons = Array.from(learnClass.lessonsById.values())
 	const navigate = useTypedNavigate()
-	const currentQuestionIndex = learnClass.currentQuestionState?.currentQuestionIndex
+	// currentQuestionIndex no longer needed for triggering enter here
 
 	const goToLearnPage = useCallback((lessonId: LessonUUID): void => {
-		if (currentQuestionIndex === 0 || isUndefined(currentQuestionIndex)) {
-			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
-		}
+		// S8_P3_ENTER is now triggered within the MeetPipS8P3ColorViz component on mount
 		navigate(`/learn/${lessonId}`)
-	}, [navigate, currentQuestionIndex])
+	}, [navigate])
 
 	if (learnClass.isRetrievingAllLessons) {
 		return (

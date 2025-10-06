@@ -30,7 +30,7 @@ function ExitLessonDialog({ onEndSession }: { onEndSession: () => void }): React
 					<DialogClose />
 				</DialogHeader>
 				<div className="py-4">
-					<p className="text-lg text-eel dark:text-swan">
+					<p className="text-lg text-eel">
 						You'll lose your progress if you quit now
 					</p>
 				</div>
