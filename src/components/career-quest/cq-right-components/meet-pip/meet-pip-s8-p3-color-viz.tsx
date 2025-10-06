@@ -1,64 +1,19 @@
 
 "use client"
 
-import { useEffect, useMemo, useRef } from "react"
+import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import careerQuestTrigger from "../../../../utils/career-quest/career-quest-trigger"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
-// eslint-disable-next-line max-lines-per-function
 function MeetPipS8P3ColorViz(): React.ReactNode {
-	const hasExitedRef = useRef(false)
-	const hasInitializedRef = useRef(false)
-
-	// Fire ENTER on mount, EXIT on unmount/page hide/refresh. Guard against double-sends.
-	useEffect((): (() => void) => {
-		console.log("MeetPipS8P3ColorViz mounted")
-
-		// Delay trigger slightly to allow serial connection to establish if needed
-		const triggerTimeout = setTimeout((): void => {
-			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
-		}, 100)
-
-		const sendExitIfNeeded = (): void => {
-			if (hasExitedRef.current) return
-			console.log("MeetPipS8P3ColorViz exiting")
-			hasExitedRef.current = true
-			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
-		}
-
-		const handleVisibilityChange = (): void => {
-			if (document.visibilityState === "hidden") {
-				sendExitIfNeeded()
-			}
-		}
-
-		const handleBeforeUnload = (): void => {
-			sendExitIfNeeded()
-		}
-
-		document.addEventListener("visibilitychange", handleVisibilityChange)
-		window.addEventListener("beforeunload", handleBeforeUnload)
-
-		// React 18 StrictMode mounts effects twice in dev: first cleanup is a probe; ignore EXIT there
-		if (!hasInitializedRef.current) {
-			hasInitializedRef.current = true
-			return (): void => {
-				clearTimeout(triggerTimeout)
-				document.removeEventListener("visibilitychange", handleVisibilityChange)
-				window.removeEventListener("beforeunload", handleBeforeUnload)
-				// Skip EXIT on the initial StrictMode cleanup
-			}
-		}
-
-		return (): void => {
-			clearTimeout(triggerTimeout)
-			document.removeEventListener("visibilitychange", handleVisibilityChange)
-			window.removeEventListener("beforeunload", handleBeforeUnload)
-			sendExitIfNeeded()
-		}
-	}, [])
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		MeetPipTriggerType.S8_P3_ENTER,
+		MeetPipTriggerType.S8_P3_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 
 	// Get latest RGB values
 	const latestRed = useMemo((): number => {

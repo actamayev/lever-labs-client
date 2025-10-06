@@ -17,6 +17,7 @@ import MeetPipS6P6TofsViz from "../../../components/career-quest/cq-right-compon
 import MeetPipS6P4MzViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s6-p4-mz-viz"
 import MeetPipS5P5BallMoving from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s5-p5-ball-moving"
 import MeetPipS5P4ImuViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s5-p4-imu-viz"
+import MeetPipS9P6EncoderViz from "../../../components/career-quest/cq-right-components/meet-pip/meet-pip-s9-p6-encoder-viz"
 
 const MEET_PIP: CareerQuestData = {
 	careerUUID: "3e5fd270-6265-4bd4-a7c9-f4fe0618332d" as CareerUUID,
@@ -264,8 +265,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS4P4
-					},
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P4_EXIT)
+					}
 				},
 				{
 					type: "text",
@@ -348,9 +348,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS5P4ImuViz
-					},
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P4_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P4_EXIT)
+					}
 				},
 				{
 					type: "text",
@@ -359,9 +357,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS5P5BallMoving
-					},
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P5_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S5_P5_EXIT)
+					}
 				},
 				{
 					type: "text",
@@ -416,9 +412,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS6P4MzViz
-					},
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P4_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P4_EXIT)
+					}
 				},
 				{
 					type: "text",
@@ -435,9 +429,7 @@ const MEET_PIP: CareerQuestData = {
 					rightSideContent: {
 						type: "component",
 						component: MeetPipS6P6TofsViz
-					},
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P6_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S6_P6_EXIT)
+					}
 				},
 				{
 					type: "text",
@@ -682,9 +674,10 @@ const MEET_PIP: CareerQuestData = {
 					type: "text",
 					id: "meet-pip-9-6",
 					content: "meet-pip-9-6",
-					rightSideContent: "meet-pip-s9-p6-encoder-viz",
-					triggerFunctionEnter: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P6_ENTER),
-					triggerFunctionExit: () => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P6_EXIT)
+					rightSideContent: {
+						type: "component",
+						component: MeetPipS9P6EncoderViz
+					}
 				},
 				{
 					type: "text",

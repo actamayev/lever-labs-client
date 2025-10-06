@@ -3,11 +3,19 @@
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 
 type Vec2 = { x: number; y: number }
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS5P5BallMoving(): JSX.Element {
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		MeetPipTriggerType.S5_P5_ENTER,
+		MeetPipTriggerType.S5_P5_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 	const canvasRef = useRef<HTMLCanvasElement | null>(null)
 	const animationRef = useRef<number | null>(null)
 
