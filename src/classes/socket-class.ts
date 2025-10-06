@@ -11,6 +11,7 @@ import {
 import { listenersMap } from "../utils/constants/listeners-map"
 import pipClass from "./pip-class"
 import garageClass from "./garage-class"
+import { isNull } from "lodash-es"
 
 class SocketClass {
 	private _socket: Socket | null = null
@@ -117,10 +118,9 @@ class SocketClass {
 	}
 
 	private stopHeartbeat(): void {
-		if (this.heartbeatIntervalId !== null) {
-			clearInterval(this.heartbeatIntervalId)
-			this.heartbeatIntervalId = null
-		}
+		if (isNull(this.heartbeatIntervalId)) return
+		clearInterval(this.heartbeatIntervalId)
+		this.heartbeatIntervalId = null
 	}
 
 	public logout = action((): void => {
