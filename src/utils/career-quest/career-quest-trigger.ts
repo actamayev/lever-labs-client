@@ -13,7 +13,6 @@ export default async function careerQuestTrigger(
 	careerType: CareerType,
 	triggerMessageType: ValidTriggerMessageType<CareerType>
 ): Promise<void> {
-	console.log("careerQuestTrigger", triggerMessageType)
 	const buffer = MessageBuilder.createTriggerMessage(careerType, triggerMessageType)
 
 	await sendDataToSerialOrApiTemplate({

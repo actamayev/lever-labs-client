@@ -46,7 +46,7 @@ class SocketClass {
 	})
 
 	private pageHideHandler = action((): void => {
-		if (this._hasPagehideListener) return
+		if (this._hasPagehideListener || typeof window === "undefined") return
 		this._hasPagehideListener = true
 		window.addEventListener("pagehide", (): void => {
 			try {
@@ -109,7 +109,7 @@ class SocketClass {
 	}
 
 	private startHeartbeat(): void {
-		if (!this._socket) return
+		if (!this._socket || typeof window === "undefined") return
 		// heartbeat every 20s
 		this.stopHeartbeat()
 		this.heartbeatIntervalId = window.setInterval((): void => {
