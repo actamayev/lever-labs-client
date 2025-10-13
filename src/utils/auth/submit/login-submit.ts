@@ -18,17 +18,17 @@ import pipClass from "../../../classes/pip-class"
 export default async function loginSubmit(
 	loginInformation: LoginRequest,
 	setError: (error: string) => void
-) : Promise<LoginSuccess | null> {
+) : Promise<boolean> {
 	try {
 		setError("")
 		const areCredentialsValid = confirmLoginFields(loginInformation, setError)
-		if (areCredentialsValid === false) return null
+		if (areCredentialsValid === false) return false
 
 		authClass.setAuthenticating(true)
 		const response = await leverLabsApiClient.authDataService.login(loginInformation)
 		if (!isEqual(response.status, 200) || isNonSuccessResponse(response.data)) {
 			setError("Unable to log in. Please reload the page and try again")
-			return null
+			return false
 		}
 		authClass.setAuthState({
 			isAuthenticated: true,
@@ -50,10 +50,10 @@ export default async function loginSubmit(
 			})
 		}
 
-		return response.data
+		return true
 	} catch (error: unknown) {
 		setErrorAxiosResponse(error, setError)
-		return null
+		return false
 	} finally {
 		authClass.setAuthenticating(false)
 	}

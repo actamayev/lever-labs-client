@@ -2,7 +2,7 @@
 
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
-import { isEmpty, isNull, isUndefined } from "lodash-es"
+import { isNull, isUndefined } from "lodash-es"
 import { useCallback } from "react"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
@@ -18,14 +18,6 @@ export default function GoogleSignIn(): React.ReactNode {
 		if (isNull(response) || (pathname !== "/login" && pathname !== "/register")) return
 		if (response.isNewUser === true || isUndefined(response.personalInfo)) {
 			navigate("/register-google")
-			return
-		}
-		if (response.teacherData && response.teacherData.isApproved === true) {
-			navigate("/class-manager")
-			return
-		}
-		if (!isEmpty(response.studentClasses)) {
-			navigate("/whiteboard")
 			return
 		}
 		navigate(PageToNavigateAfterLogin)
