@@ -90,7 +90,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
 	const tactileButtonClass = useCallback((): string => {
-		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
+		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground duration-0"
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return `${baseClass} bg-chargingGreen`
 		}
