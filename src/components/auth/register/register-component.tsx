@@ -18,7 +18,6 @@ import { registerSchema } from "../../../utils/auth/auth-schemas"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
-import { isNull } from "lodash-es"
 import { usePathname } from "next/navigation"
 
 export default function RegisterComponent(): React.ReactNode {
@@ -37,8 +36,8 @@ export default function RegisterComponent(): React.ReactNode {
 	})
 
 	const onSubmit = useCallback(async (values: RegisterFormValues): Promise<void> => {
-		const response = await registerSubmit(values, setError)
-		if (isNull(response) || pathname !== "/register") return
+		const success = await registerSubmit(values, setError)
+		if (success === false || pathname !== "/register") return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate, pathname])
 
