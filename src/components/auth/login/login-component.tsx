@@ -34,10 +34,8 @@ export default function LoginComponent(): React.ReactNode {
 
 	const onSubmit = useCallback(async (values: LoginRequest): Promise<void> => {
 		const success = await loginSubmit(values, setError)
-		if (success === null) return
-		if (success === "ClassManager") navigate("/class-manager")
-		if (success === "Whiteboard") navigate("/whiteboard")
-		if (success === "PageToNavigateAfterLogin" && pathname === "/login") navigate(PageToNavigateAfterLogin)
+		if (success === false || pathname !== "/login") return
+		navigate(PageToNavigateAfterLogin)
 	}, [navigate, pathname])
 
 	return (

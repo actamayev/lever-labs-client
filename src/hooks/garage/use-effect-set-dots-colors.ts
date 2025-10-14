@@ -5,7 +5,7 @@
 import isNull from "lodash-es/isNull"
 import isEmpty from "lodash-es/isEmpty"
 import debounce from "lodash-es/debounce"
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useRef } from "react"
 import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import { LedControlData } from "@lever-labs/common-ts/types/garage"
 import pipClass from "../../classes/pip-class"
@@ -14,11 +14,19 @@ import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
 export default function useEffectSetDefaultColors(): void {
+	// Track if this is the initial load to prevent automatic LED emission
+	const isInitialLoad = useRef(true)
 	// Create a debounced emit function for the first useEffect
 
 	const debouncedEmitLedColors = useCallback(
 		debounce((): void => {
 			if (isEmpty(garageClass.selectedDots)) return
+
+			// Skip emitting LED colors on initial load
+			if (isInitialLoad.current) {
+				isInitialLoad.current = false
+				return
+			}
 
 			const selectedColorShade = garageClass.selectedColorShade
 			const ledControlData: Omit<LedControlData, "pipUUID"> = {
@@ -76,7 +84,7 @@ export default function useEffectSetDefaultColors(): void {
 			garageClass.selectedColorShade]
 	)
 
-	// This use
+	// This useEffect emits LED colors when color values change, but not on initial load
 	useEffect((): () => void => {
 		debouncedEmitLedColors()
 

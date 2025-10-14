@@ -3,9 +3,17 @@
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS9P6EncoderViz(): React.ReactNode {
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		MeetPipTriggerType.S9_P6_ENTER,
+		MeetPipTriggerType.S9_P6_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 	const leftWheelRef = useRef<HTMLCanvasElement>(null)
 	const rightWheelRef = useRef<HTMLCanvasElement>(null)
 	const leftAnimationRef = useRef<number>()

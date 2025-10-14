@@ -2,35 +2,29 @@
 
 import { useCallback } from "react"
 import isEqual from "lodash-es/isEqual"
-import { usePathname } from "next/navigation"
 import isUndefined from "lodash-es/isUndefined"
 import { CredentialResponse } from "@react-oauth/google"
 import authClass from "../../classes/auth-class"
 import studentClass from "../../classes/student-class"
 import teacherClass from "../../classes/teacher-class"
 import { isErrorResponses } from "../../utils/type-checks"
-import useTypedNavigate from "../navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import { isEmpty, isNull } from "lodash-es"
+import { isNull } from "lodash-es"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"
+import { GoogleAuthSuccess } from "@lever-labs/common-ts/types/api"
 
-export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<void> {
-	const navigate = useTypedNavigate()
-	const pathname = usePathname()
-
-	// eslint-disable-next-line complexity
-	return useCallback(async (successResponse: CredentialResponse): Promise<void> => {
+export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<GoogleAuthSuccess | null> {
+	return useCallback(async (successResponse: CredentialResponse): Promise<GoogleAuthSuccess | null> => {
 		try {
 			authClass.setAuthenticating(true)
 			if (
 				isUndefined(successResponse.credential) ||
 				isUndefined(successResponse.clientId) ||
 				typeof window === "undefined"
-			) return
+			) return null
 
 			const siteTheme = personalInfoClass.defaultSiteTheme
 
@@ -48,7 +42,7 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 			})
 
 			if (googleCallbackResponse.data.isNewUser === true || isUndefined(googleCallbackResponse.data.personalInfo)) {
-				return navigate("/register-google") // Smooth navigation, no refresh
+				return googleCallbackResponse.data
 			}
 
 			personalInfoClass.setRetrievedPersonalData(googleCallbackResponse.data.personalInfo)
@@ -66,24 +60,12 @@ export default function useGoogleAuthCallback(): (successResponse: CredentialRes
 					pipConnectionStatus: "connected online to you"
 				})
 			}
-			if (googleCallbackResponse.data.teacherData && googleCallbackResponse.data.teacherData.isApproved === true) {
-				navigate("/class-manager")
-				return
-			}
-			if (!isEmpty(classroomInfo)) {
-				navigate("/whiteboard")
-				return
-			}
-			// ✅ Navigate smoothly if on auth pages (no refresh)
-			if (pathname === "/login" || pathname === "/register") {
-				navigate(PageToNavigateAfterLogin)
-				return
-			}
-			// If on other pages (like /garage), stay where you are - auth state update will show correct content
+			return googleCallbackResponse.data
 		} catch (error) {
 			console.error(error)
+			return null
 		} finally {
 			authClass.setAuthenticating(false)
 		}
-	}, [navigate, pathname])
+	}, [])
 }

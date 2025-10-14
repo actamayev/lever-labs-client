@@ -13,9 +13,17 @@ import {
 } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
 import sensorDataClass from "../../../../classes/sensor-data-class"
+import { MeetPipTriggerType, CareerType } from "@lever-labs/common-ts/protocol"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS5P4ImuViz(): React.ReactNode {
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		MeetPipTriggerType.S5_P4_ENTER,
+		MeetPipTriggerType.S5_P4_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 	// Calculate linear acceleration magnitude from aX, aY, aZ
 	const linearAccelerationData = useMemo((): { index: number, value: number }[] => {
 		return sensorDataClass.aX.map((ax, index): { index: number, value: number } => {

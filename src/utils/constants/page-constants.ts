@@ -61,4 +61,4 @@ export const careerQuestPages = [
 
 export const allPages = [...staticPages, ...careerQuestPages] as const
 
-export const PageToNavigateAfterLogin = "/garage"
+export const PageToNavigateAfterLogin = "/learn"

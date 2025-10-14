@@ -121,17 +121,17 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 						</span>
 					</button>
 				)}
-				{!pipClass.selectedPip ? (
+				{pipClass.selectedPip ? (
+					<div className="flex flex-row gap-5">
+						<CQBatterySection />
+						<CQNetworkSection />
+					</div>
+				) : (
 					<ConnectToPipButton
 						colors={getDuolingoColors(careerData.careerColor)}
 						tactileButtonClasses="text-3xl"
 						botIconClasses="!size-9"
 					/>
-				) : (
-					<div className="flex flex-row gap-5">
-						<CQBatterySection />
-						<CQNetworkSection />
-					</div>
 				)}
 				{careerData.needsChat && (
 					<CustomTooltip

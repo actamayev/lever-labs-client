@@ -25,9 +25,9 @@ const conditionalsCategory: CustomCategoryInfo = {
 	name: "Conditionals",
 	colour: logicCategoryColour,
 	contents: [
-		// { kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF },
-		// { kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSE },
-		// { kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSE },
+		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_ELSEIF_ELSE },
 		{ kind: "block", type: CONDITIONAL_BLOCK_TYPES.IF_2ELSEIF_ELSE },
 	]
 }
@@ -52,9 +52,9 @@ const loopsCategory: CustomCategoryInfo = {
 	colour: logicCategoryColour,
 	contents: [
 		// { kind: "block", type: LOOP_BLOCK_TYPES.WHILE_UNTIL },
-		// { kind: "block", type: LOOP_BLOCK_TYPES.REPEAT },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.REPEAT },
 		{ kind: "block", type: LOOP_BLOCK_TYPES.FOREVER_LOOP },
-		// { kind: "block", type: LOOP_BLOCK_TYPES.WAIT },
+		{ kind: "block", type: LOOP_BLOCK_TYPES.WAIT },
 	]
 }
 
@@ -73,10 +73,10 @@ export const logicCategory: ParentCategoryInfo = {
 	name: "Logic",
 	colour: logicCategoryColour,
 	contents: [
-		// startCategory,
-		// variableCategory,
+		startCategory,
+		variableCategory,
 		conditionalsCategory,
-		// mathCategory,
+		mathCategory,
 		loopsCategory,
 	]
 }

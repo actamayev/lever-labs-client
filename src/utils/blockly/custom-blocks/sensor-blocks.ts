@@ -49,7 +49,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 						),
 						SENSORS_FIELD_VALUES.SIDE_TOF_READ
 					)
-					.appendField("side")
+					.appendField("side?")
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected by the front-left or front-right sensor")
@@ -65,7 +65,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
-					.appendField("Is object in front")
+					.appendField("Is object in front?")
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected in front")
@@ -89,6 +89,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 						),
 						SENSORS_FIELD_VALUES.COLOR_SENSOR_READ
 					)
+					.appendField("?")
 				this.setOutput(true, "Boolean")
 				this.setColour(sensorsCategoryColour)
 				this.setTooltip("Returns true if an object is detected by the color sensor")

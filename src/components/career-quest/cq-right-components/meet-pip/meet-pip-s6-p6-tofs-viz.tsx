@@ -13,9 +13,17 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 // eslint-disable-next-line max-lines-per-function
 function MeetPipS6P6TofsViz(): React.ReactNode {
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		MeetPipTriggerType.S6_P6_ENTER,
+		MeetPipTriggerType.S6_P6_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 	// Get latest TOF count values
 	const leftTofCount = useMemo((): number => {
 		return sensorDataClass.leftSideTofCounts.length > 0

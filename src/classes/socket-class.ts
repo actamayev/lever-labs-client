@@ -11,10 +11,13 @@ import {
 import { listenersMap } from "../utils/constants/listeners-map"
 import pipClass from "./pip-class"
 import garageClass from "./garage-class"
+import { isNull } from "lodash-es"
 
 class SocketClass {
 	private _socket: Socket | null = null
 	public isConnected: boolean = false
+	private heartbeatIntervalId: number | null = null
+	private _hasPagehideListener: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -37,7 +40,21 @@ class SocketClass {
 		})
 
 		this.setupConnectionEvents()
+		this.startHeartbeat()
 		this.setupAllListeners()
+		this.pageHideHandler()
+	})
+
+	private pageHideHandler = action((): void => {
+		if (this._hasPagehideListener || typeof window === "undefined") return
+		this._hasPagehideListener = true
+		window.addEventListener("pagehide", (): void => {
+			try {
+				if (this._socket?.connected) {
+					this._socket.emit("tab-closing")
+				}
+			} catch { /* ignore */ }
+		})
 	})
 
 	private setupConnectionEvents = action((): void => {
@@ -45,9 +62,11 @@ class SocketClass {
 
 		this._socket.on("connect", (): void => {
 			this.isConnected = true
+			this.startHeartbeat()
 		})
 
 		this._socket.on("disconnect", (_reason: Socket.DisconnectReason): void => {
+			this.stopHeartbeat()
 			pipClass.deletePip()
 			this.isConnected = false
 			// Release all pressed buttons when socket disconnects
@@ -89,6 +108,20 @@ class SocketClass {
 		this._socket.emit(event, payload)
 	}
 
+	private startHeartbeat(): void {
+		if (!this._socket || typeof window === "undefined") return
+		// heartbeat every 20s
+		this.stopHeartbeat()
+		this.heartbeatIntervalId = window.setInterval((): void => {
+			try { this._socket?.emit("heartbeat") } catch {}
+		}, 20_000)
+	}
+
+	private stopHeartbeat(): void {
+		if (isNull(this.heartbeatIntervalId)) return
+		clearInterval(this.heartbeatIntervalId)
+		this.heartbeatIntervalId = null
+	}
 
 	public logout = action((): void => {
 		if (this._socket) {
