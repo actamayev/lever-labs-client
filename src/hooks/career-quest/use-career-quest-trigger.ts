@@ -20,7 +20,7 @@ export default function useCareerQuestTrigger(
 	exitTrigger: ValidTriggerMessageType<CareerType>,
 	options: Options = {}
 ): void {
-	const { enterDelayMs = 100, enabled = true, repeatIntervalMs = 5000 } = options
+	const { enterDelayMs = 100, enabled = true, repeatIntervalMs = 15000 } = options
 	const hasExitedRef = useRef(false)
 	const hasInitializedRef = useRef(false)
 	const intervalRef = useRef<NodeJS.Timeout | null>(null)
