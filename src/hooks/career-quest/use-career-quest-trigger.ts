@@ -3,10 +3,13 @@
 import { useEffect, useRef } from "react"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, ValidTriggerMessageType } from "@lever-labs/common-ts/protocol"
+import pipClass from "../../classes/pip-class"
+import isNull from "lodash-es/isNull"
 
 interface Options {
 	enterDelayMs?: number
 	enabled?: boolean
+	repeatIntervalMs?: number
 }
 
 // Triggers ENTER on mount (with optional delay) and EXIT on unmount/page hide/refresh
@@ -17,22 +20,42 @@ export default function useCareerQuestTrigger(
 	exitTrigger: ValidTriggerMessageType<CareerType>,
 	options: Options = {}
 ): void {
-	const { enterDelayMs = 100, enabled = true } = options
+	const { enterDelayMs = 100, enabled = true, repeatIntervalMs = 5000 } = options
 	const hasExitedRef = useRef(false)
 	const hasInitializedRef = useRef(false)
+	const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
 	useEffect((): (() => void) => {
 		if (!enabled) return (): void => {}
 
 		const triggerTimeout = setTimeout((): void => {
-			if (enterTrigger) {
-				void careerQuestTrigger(careerType, enterTrigger)
+			if (
+				!enterTrigger ||
+				isNull(pipClass.selectedPip)
+			) return
+			void careerQuestTrigger(careerType, enterTrigger)
+
+			// Set up interval to repeat enter trigger every 15 seconds (or custom interval)
+			if (repeatIntervalMs > 0) {
+				intervalRef.current = setInterval((): void => {
+					if (!hasExitedRef.current && enterTrigger) {
+						console.log("Repeating enter trigger")
+						void careerQuestTrigger(careerType, enterTrigger)
+					}
+				}, repeatIntervalMs)
 			}
 		}, Math.max(0, enterDelayMs))
 
 		const sendExitIfNeeded = (): void => {
 			if (hasExitedRef.current) return
 			hasExitedRef.current = true
+
+			// Clear the interval when exiting
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current)
+				intervalRef.current = null
+			}
+
 			void careerQuestTrigger(careerType, exitTrigger)
 		}
 
@@ -54,6 +77,9 @@ export default function useCareerQuestTrigger(
 			hasInitializedRef.current = true
 			return (): void => {
 				clearTimeout(triggerTimeout)
+				if (intervalRef.current) {
+					clearInterval(intervalRef.current)
+				}
 				document.removeEventListener("visibilitychange", handleVisibilityChange)
 				window.removeEventListener("beforeunload", handleBeforeUnload)
 			}
@@ -61,11 +87,12 @@ export default function useCareerQuestTrigger(
 
 		return (): void => {
 			clearTimeout(triggerTimeout)
+			if (intervalRef.current) {
+				clearInterval(intervalRef.current)
+			}
 			document.removeEventListener("visibilitychange", handleVisibilityChange)
 			window.removeEventListener("beforeunload", handleBeforeUnload)
 			sendExitIfNeeded()
 		}
-	}, [careerType, enterTrigger, exitTrigger, enterDelayMs, enabled])
+	}, [careerType, enterTrigger, exitTrigger, enterDelayMs, enabled, repeatIntervalMs])
 }
-
-
