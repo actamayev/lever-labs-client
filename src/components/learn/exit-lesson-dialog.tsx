@@ -37,7 +37,7 @@ function ExitLessonDialog({ onEndSession }: { onEndSession: () => void }): React
 				<div className="flex flex-col gap-4 items-center">
 					<TactileButton
 						onClick={handleKeepLearning}
-						className="w-full h-10 rounded-xl text-lg text-white bg-macaw"
+						className="w-full h-10 rounded-xl text-lg text-white bg-macaw duration-0"
 						shadowHeight={4}
 						shadowClass="shadow-macaw-2"
 						shouldHoverPushButton={false}
