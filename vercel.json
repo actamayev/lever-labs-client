@@ -7,39 +7,6 @@
 		"has": [
 		  {
 			"type": "host",
-			"value": "bluedotrobots.com"
-		  }
-		]
-	  },
-	  {
-		"source": "/(.*)",
-		"destination": "https://www.leverlabs.com/$1",
-		"permanent": true,
-		"has": [
-		  {
-			"type": "host",
-			"value": "www.bluedotrobots.com"
-		  }
-		]
-	  },
-	  {
-		"source": "/(.*)",
-		"destination": "https://staging.leverlabs.com/$1",
-		"permanent": true,
-		"has": [
-		  {
-			"type": "host",
-			"value": "staging.bluedotrobots.com"
-		  }
-		]
-	  },
-	  {
-		"source": "/(.*)",
-		"destination": "https://www.leverlabs.com/$1",
-		"permanent": true,
-		"has": [
-		  {
-			"type": "host",
 			"value": "leverlabs.com"
 		  }
 		]
