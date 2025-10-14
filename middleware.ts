@@ -23,7 +23,7 @@ function clearAuthCookie(response: NextResponse): void {
 }
 
 // Helper function to create redirect response
-function createRedirect(request: NextRequest, path: string): NextResponse {
+function createRedirect(request: NextRequest, path: PageNames): NextResponse {
 	return NextResponse.redirect(new URL(path, request.url))
 }
 
@@ -100,7 +100,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
 		if (userId && username) {
 			const authPages = ["/", "/login", "/register", "/register-google"]
 			if (authPages.includes(pathname)) {
-				return createRedirect(request, "/garage")
+				return createRedirect(request, "/learn")
 			}
 			// User is authenticated on other pages, continue normally
 			return handleAuthenticated({ userId, username }, themeCookie)

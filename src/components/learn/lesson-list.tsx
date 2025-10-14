@@ -2,25 +2,21 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { isUndefined } from "lodash-es"
+import { isEmpty } from "lodash-es"
 import learnClass from "../../classes/learn-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 
 function LessonList(): React.ReactNode {
 	const lessons = Array.from(learnClass.lessonsById.values())
 	const navigate = useTypedNavigate()
-	const currentQuestionIndex = learnClass.currentQuestionState?.currentQuestionIndex
+	// currentQuestionIndex no longer needed for triggering enter here
 
 	const goToLearnPage = useCallback((lessonId: LessonUUID): void => {
-		if (currentQuestionIndex === 0 || isUndefined(currentQuestionIndex)) {
-			careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_ENTER)
-		}
+		// S8_P3_ENTER is now triggered within the MeetPipS8P3ColorViz component on mount
 		navigate(`/learn/${lessonId}`)
-	}, [navigate, currentQuestionIndex])
+	}, [navigate])
 
 	if (learnClass.isRetrievingAllLessons) {
 		return (
@@ -30,7 +26,7 @@ function LessonList(): React.ReactNode {
 		)
 	}
 
-	if (lessons.length === 0) {
+	if (isEmpty(lessons)) {
 		return (
 			<div className="flex justify-center items-center p-8">
 				<div className="text-lg">No lessons available</div>
@@ -44,7 +40,7 @@ function LessonList(): React.ReactNode {
 				<div
 					key={lesson.lessonId}
 					onClick={(): void => goToLearnPage(lesson.lessonId)}
-					className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-gray-200 dark:border-gray-700"
+					className="bg-standardBackground rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-swan"
 				>
 					<div className="flex items-center justify-between mb-4">
 						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">

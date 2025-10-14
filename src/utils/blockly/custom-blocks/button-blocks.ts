@@ -10,7 +10,7 @@ export const buttonBlocks: Record<BUTTON_BLOCK_TYPES, CustomBlock> = {
 		definition: {
 			init: function(this: Blockly.Block): void {
 				this.appendDummyInput()
-					.appendField("Is right button pressed")
+					.appendField("Is right button pressed?")
 				this.setOutput(true, "Boolean")
 				this.setColour(buttonsCategoryColour)
 				this.setTooltip("Returns true if the right button is pressed")

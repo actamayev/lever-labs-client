@@ -1,10 +1,11 @@
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
+import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
-import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -13,6 +14,7 @@ class LearnClass {
 	public currentQuestionState: CurrentQuestionState | null = null
 	public isInQuestionConfirmationStage = false
 	public lastAnswerWasCorrect = false
+	public isExitDialogOpen = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -94,6 +96,12 @@ class LearnClass {
 			lesson.numberQuestionsCorrect += 1
 		} else if (!isCorrect && wasCorrect) {
 			lesson.numberQuestionsCorrect -= 1
+		}
+
+		if (isCorrect) {
+			soundManager.playCorrect()
+		} else {
+			soundManager.playWrong()
 		}
 	})
 
@@ -237,7 +245,16 @@ class LearnClass {
 	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
 		if (!this.currentQuestionState) return
 
-		const { currentQuestionIndex } = this.currentQuestionState
+		const { currentQuestionIndex, question } = this.currentQuestionState
+
+		// If this is a demo question, mark it as correct and increment progress
+		if (question.questionType === "DEMO") {
+			const lesson = this.lessonsById.get(lessonId)
+			if (lesson && question.userHasAnsweredCorrectly !== true) {
+				question.userHasAnsweredCorrectly = true
+				lesson.numberQuestionsCorrect += 1
+			}
+		}
 
 		// Move to next question if not the last question
 		if (currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
@@ -276,6 +293,40 @@ class LearnClass {
 		this.lastAnswerWasCorrect = lastAnswerWasCorrect
 	})
 
+	public resetLessonProgress = action((lessonId: LessonUUID): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson || !lesson.lessonQuestionMap) return
+
+		// Reset the progress counter to 0
+		lesson.numberQuestionsCorrect = 0
+
+		// Reset all questions to unanswered state
+		for (const mapEntry of lesson.lessonQuestionMap) {
+			mapEntry.question.userHasAnsweredCorrectly = undefined
+			// Clear any fill-in-blank answers and feedback
+			if (mapEntry.question.questionType === "FILL_IN_BLANK") {
+				mapEntry.question.fillInBlankAnswer = undefined
+				mapEntry.question.fillInBlankFeedback = undefined
+			}
+		}
+
+		// Reset current question state if it's for this lesson
+		if (this.currentQuestionState) {
+			const currentLesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === this.currentQuestionState?.question.questionId) ?? false
+			)
+			if (currentLesson?.lessonId === lessonId) {
+				this.currentQuestionState = null
+				this.isInQuestionConfirmationStage = false
+				this.lastAnswerWasCorrect = false
+			}
+		}
+	})
+
+	public setIsExitDialogOpen = action((isOpen: boolean): void => {
+		this.isExitDialogOpen = isOpen
+	})
+
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
@@ -283,6 +334,7 @@ class LearnClass {
 		this.currentQuestionState = null
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
+		this.isExitDialogOpen = false
 	}
 }
 

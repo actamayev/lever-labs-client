@@ -17,6 +17,7 @@ import careerQuestTriggersClass from "../../classes/career-quest-triggers-class"
 import sensorDataClass from "../../classes/sensor-data-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
+import { soundManager } from "../../classes/utility/sound-manager-class"
 
 export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true)
@@ -25,6 +26,7 @@ export default async function logout(): Promise<void> {
 		await serialConnectionManagerClass.logout()
 		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
 		await leverLabsApiClient.authDataService.logout()
+		soundManager.cleanup()
 
 		// Clear all client state
 		personalInfoClass.logout()
@@ -44,6 +46,7 @@ export default async function logout(): Promise<void> {
 		teacherClass.logout()
 	} catch (error) {
 		console.error("Logout error:", error)
+		soundManager.cleanup()
 
 		// Even if API fails, clear local state and redirect
 		personalInfoClass.logout()

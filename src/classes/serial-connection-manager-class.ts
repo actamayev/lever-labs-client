@@ -8,6 +8,7 @@ import { PIP_ROBOT_USB_ID } from "../utils/constants/constants"
 import serialMessageManagerClass from "./serial-message-manager-class"
 import workbenchClass from "./workbench-class"
 import pipClass from "./pip-class"
+import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
 
 export class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
@@ -299,7 +300,7 @@ export class SerialConnectionManagerClass {
 		}
 	}
 
-	async disconnect(): Promise<void> {
+	private async disconnect(): Promise<void> {
 		if (!this.pipTurnedOn) return
 
 		try {
@@ -345,6 +346,8 @@ export class SerialConnectionManagerClass {
 			}
 		} catch (error) {
 			console.error("Error in read loop:", error)
+			const pipUUID = pipClass.selectedPip?.pipUUID
+			if (pipUUID) await setSerialConnectionStatus(pipUUID, false)
 			await this.cleanupConnection()
 		}
 	}

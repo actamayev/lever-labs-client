@@ -29,7 +29,6 @@ export default async function addStudentToScoreboard(
 		if (!isEqual(addResponse.status, 200) || isNonSuccessResponse(addResponse.data)) {
 			throw Error("Unable to add student to scoreboard")
 		}
-		console.log("addStudentToScoreboard", scoreboardId, studentId, teamNumber)
 
 		teacherClass.addStudentToScoreboard(scoreboardId, studentId, teamNumber)
 	} catch (error) {

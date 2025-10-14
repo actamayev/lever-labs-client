@@ -62,18 +62,18 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				/>
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
-				{!pipClass.selectedPip ? (
+				{pipClass.selectedPip ? (
+					<div className="flex flex-row gap-8">
+						<SandboxBatterySection />
+						<NetworkWorkbench isSandboxPage={true} />
+					</div>
+				) : (
 					<div className="h-1/2">
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-12 text-2xl"
 							botIconClasses="!size-10"
 						/>
-					</div>
-				) : (
-					<div className="flex flex-row gap-8">
-						<SandboxBatterySection />
-						<NetworkWorkbench isSandboxPage={true} />
 					</div>
 				)}
 				<CustomTooltip

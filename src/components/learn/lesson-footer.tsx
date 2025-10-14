@@ -9,8 +9,6 @@ import { Check, X } from "lucide-react"
 import { useCallback, useState } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import isEmpty from "lodash-es/isEmpty"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
@@ -51,7 +49,6 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			} : null
 		}
 
-		// TODO: Add other question types as needed
 		return null
 	}
 
@@ -70,18 +67,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			// For demo questions, skip confirmation and go directly to next question
 			if (currentQuestion?.questionType === "DEMO") {
 				learnClass.continueToNextQuestion(lessonId)
-				careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S8_P3_EXIT)
-			} else {
-				if (currentQuestion?.questionType === "FILL_IN_BLANK") {
-					setIsSubmitting(true)
-					try {
-						await learnClass.checkCurrentAnswer(lessonId)
-					} finally {
-						setIsSubmitting(false)
-					}
-				} else {
-					await learnClass.checkCurrentAnswer(lessonId)
-				}
+				return
+			}
+			if (currentQuestion?.questionType !== "FILL_IN_BLANK") {
+				await learnClass.checkCurrentAnswer(lessonId)
+				return
+			}
+			setIsSubmitting(true)
+			try {
+				await learnClass.checkCurrentAnswer(lessonId)
+			} finally {
+				setIsSubmitting(false)
 			}
 		}
 	}
@@ -94,7 +90,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
 	const tactileButtonClass = useCallback((): string => {
-		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground"
+		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground duration-0"
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return `${baseClass} bg-chargingGreen`
 		}

@@ -4,6 +4,8 @@ import { observer } from "mobx-react"
 import { FunSounds } from "@lever-labs/common-ts/types/garage"
 import SoundActionButton from "../../../garage/sounds-and-demos/sounds/sound-action-button"
 import useGarageSoundsUseEffect from "../../../../hooks/garage/use-effect-garage-sounds"
+import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 interface FunSoundWithClasses {
 	sound: FunSounds
@@ -15,6 +17,12 @@ interface FunSoundWithClasses {
 
 function MeetPipS4P4(): React.ReactNode {
 	useGarageSoundsUseEffect(false)
+	useCareerQuestTrigger(
+		CareerType.MEET_PIP,
+		null,
+		MeetPipTriggerType.S4_P4_EXIT,
+		{ enterDelayMs: 100, enabled: true }
+	)
 	const iconSize = "!size-16"
 	const sounds: FunSoundWithClasses[] = [
 		{
