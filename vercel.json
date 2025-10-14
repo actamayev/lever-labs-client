@@ -2,7 +2,7 @@
 	"redirects": [
 	  {
 		"source": "/(.*)",
-		"destination": "https://leverlabs.com/$1",
+		"destination": "https://www.leverlabs.com/$1",
 		"permanent": true,
 		"has": [
 		  {
@@ -32,6 +32,17 @@
 			"value": "staging.bluedotrobots.com"
 		  }
 		]
+	  },
+	  {
+		"source": "/(.*)",
+		"destination": "https://www.leverlabs.com/$1",
+		"permanent": true,
+		"has": [
+		  {
+			"type": "host",
+			"value": "leverlabs.com"
+		  }
+		]
 	  }
 	]
-  }
+}
