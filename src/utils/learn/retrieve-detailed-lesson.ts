@@ -48,7 +48,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 		// Set the complete lesson data (basic + detailed) from the response
 		learnClass.setSingleLesson({
 			...response.data.lesson,
-			lessonQuestionMap: [demoQuestionMap, ...adjustedQuestions],
+			lessonQuestionMap: [...adjustedQuestions],
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,
 			numberQuestionsCorrect: 0, // Start with 0, demo will increment when passed

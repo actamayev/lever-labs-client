@@ -6,13 +6,14 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import BlockVisualization from "./block-visualization"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import isEmpty from "lodash-es/isEmpty"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
+import { cn } from "../../lib/shadcn/utils"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -97,11 +98,20 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return `${baseClass} bg-cardinal-1`
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
+	const footerBackgroundColor = useMemo((): string => {
+		if (!isInConfirmationStage) return ""
+		if (lastAnswerWasCorrect) return "bg-questionCorrectGreen !border-questionCorrectGreen"
+		return "bg-questionIncorrectRed !border-questionIncorrectRed"
+	}, [isInConfirmationStage, lastAnswerWasCorrect])
+
 	return (
-		// eslint-disable-next-line max-len
-		<footer className={`h-[20vh] border-t-2 border-swan flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96 ${
-			!isInConfirmationStage ? "" : "bg-polar !border-polar"
-		}`}>
+		<footer
+			className={cn(
+				"h-[20vh] border-t-2 border-swan flex items-center justify-between",
+				"px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96",
+				footerBackgroundColor
+			)}
+		>
 			{/* Left: Send Code button for Fill-In-The-Blank */}
 			<div className="h-12 w-48">
 				{currentQuestion?.questionType === "FILL_IN_BLANK" && (
@@ -123,8 +133,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex items-center gap-3">
 					{lastAnswerWasCorrect ? (
 						<>
-							<Check className="size-10 text-chargingGreen" />
-							<span className="text-3xl font-semibold text-chargingGreen">Correct!</span>
+							<Check className="size-10 text-questionCorrectGreen-2" />
+							<span className="text-3xl font-semibold text-questionCorrectGreen-2">Correct!</span>
 						</>
 					) : (
 						<div className="flex items-center gap-3">
@@ -137,7 +147,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 								)}
 								{currentQuestion?.questionType !== "FILL_IN_BLANK" && (
 									<>
-										<span className="text-3xl font-semibold text-cardinal">Correct solution:</span>
+										<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
 										{correctAnswer && (
 											<div className="relative h-24 w-32">
 												<BlockVisualization

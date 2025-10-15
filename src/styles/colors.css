@@ -18,6 +18,14 @@
 		--chargingGreen-2: 30 180 100;
 		--chargingGreen-3: 50 240 140;
 
+		--questionCorrectGreen: 215 255 184; /* Question background green */
+		--questionCorrectGreen-1: 165 237 111; /* Question border green */
+		--questionCorrectGreen-2: 88 167 0; /* Question correct text color */
+		--questionCorrectGreen-3: 97 184 0; /* Check Question shadow color */
+
+		--questionIncorrectRed: 255 223 224; /* Question background red */
+		--questionIncorrectRed-2: 234 43 43; /* Question incorrect text color */
+
 		--career-quest-yellow: 253 217 11;
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors */
@@ -82,6 +90,14 @@
 		--chargingGreen-3: 50 240 140;
 
 		--career-quest-yellow: 253 217 11;
+
+		--questionCorrectGreen: 32 47 54; /* Question background green */
+		--questionCorrectGreen-1: 95 132 40; /* Question border green */
+		--questionCorrectGreen-2: 122 185 50; /* Question correct text color */
+		--questionCorrectGreen-3: 134 204 54; /* Check Question shadow color */
+
+		--questionIncorrectRed: 32 47 54; /* Question background red */
+		--questionIncorrectRed-2: 216 72 72; /* Question incorrect text color */
 
 		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors - Dark mode variants */

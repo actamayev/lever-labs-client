@@ -50,6 +50,8 @@ declare global {
 	| "humpback"
 	| "beakInner"
 	| "chargingGreen"
+	| "questionCorrectGreen"
+	| "questionIncorrectRed"
 }
 
 export {}
