@@ -1,6 +1,6 @@
 "use client"
 
-import BlueDot from "./blue-dot"
+import LeverLabs from "./lever-labs"
 import { cn } from "../../lib/shadcn/utils"
 import LandingSectionSplit from "./landing-section-split"
 import { landingParagraph } from "../../utils/text-styles"
@@ -13,7 +13,7 @@ export default function ByBuildersForBuilders(): React.ReactNode {
 			imagePosition="left"
 			leftContent={
 				<div className="relative mb-12">
-					<BlueDot />
+					<LeverLabs />
 				</div>
 			}
 			rightContent={
