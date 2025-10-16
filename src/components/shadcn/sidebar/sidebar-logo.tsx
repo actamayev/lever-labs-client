@@ -24,6 +24,7 @@ export default function SidebarLogo(): React.ReactNode {
 								width={56}
 								height={56}
 								className="size-14"
+								priority
 							/>
 						</div>
 					</div>
