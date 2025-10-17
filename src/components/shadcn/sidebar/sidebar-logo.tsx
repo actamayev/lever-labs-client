@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import {
 	SidebarMenu,
 	SidebarMenuItem,
@@ -17,9 +18,13 @@ export default function SidebarLogo(): React.ReactNode {
 				>
 					<div className="flex aspect-square items-start justify-start">
 						<div className="flex">
-							<div
-								className="size-14 rounded-full"
-								style={{ backgroundColor: "rgb(0,61,165)" }}
+							<Image
+								src="/favicon.svg"
+								alt="Logo"
+								width={56}
+								height={56}
+								className="size-14"
+								priority
 							/>
 						</div>
 					</div>

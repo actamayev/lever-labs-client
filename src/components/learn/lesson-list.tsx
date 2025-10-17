@@ -9,7 +9,7 @@ import { useCallback } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 
 function LessonList(): React.ReactNode {
-	const lessons = Array.from(learnClass.lessonsById.values())
+	const lessons = Array.from(learnClass.lessonsById.values()).sort((a, b) => a.lessonOrder - b.lessonOrder)
 	const navigate = useTypedNavigate()
 	// currentQuestionIndex no longer needed for triggering enter here
 

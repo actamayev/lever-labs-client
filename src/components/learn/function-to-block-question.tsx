@@ -1,18 +1,18 @@
-
-/* eslint-disable no-nested-ternary */
 "use client"
-
 import { observer } from "mobx-react"
 import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import BlockVisualization from "./block-visualization"
+// import { TactileButton } from "../shadcn/ui/tactile-button"
+import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
+import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
+
 
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
+	// const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 
 	// Use the keyboard handler hook
 	useQuestionKeyboardHandler()
@@ -41,6 +41,37 @@ function FunctionToBlockQuestion(): React.ReactNode {
 		return (): void => window.removeEventListener("keydown", handleKeyDown)
 	}, [currentQuestionState?.question.functionToBlockFlashcard, isInConfirmationStage])
 
+	// const buttonExtraClass = useCallback((isSelected: boolean): string => {
+	// 	if (isSelected) {
+	// 		if (lastAnswerWasCorrect) {
+	// 			return "bg-questionCorrectGreen border-2 border-questionCorrectGreen-1 cursor-default"
+	// 		}
+	// 		return "bg-standardBackgroundHover border-2 border-macaw"
+	// 	}
+	// 	if (isInConfirmationStage) return "bg-standardBackground border-2 border-swan cursor-default"
+	// 	return "bg-standardBackground border-2 border-swan hover:bg-polar"
+	// }, [isInConfirmationStage, lastAnswerWasCorrect])
+
+	// const numberBadgeClass = useCallback((isSelected: boolean): string => {
+	// 	if (isSelected) {
+	// 		if (lastAnswerWasCorrect) {
+	// 			return "border-questionCorrectGreen-1 text-questionCorrectGreen-2"
+	// 		}
+	// 		return "border-macaw text-macaw"
+	// 	}
+	// 	return "border-swan text-hare"
+	// }, [lastAnswerWasCorrect])
+
+	// const shadowClass = useCallback((isSelected: boolean): string => {
+	// 	if (isSelected) {
+	// 		if (lastAnswerWasCorrect) {
+	// 			return "shadow-questionCorrectGreen-1"
+	// 		}
+	// 		return "shadow-macaw"
+	// 	}
+	// 	return "shadow-swan"
+	// }, [lastAnswerWasCorrect])
+
 	if (!currentQuestionState?.question.functionToBlockFlashcard) {
 		return null
 	}
@@ -63,40 +94,33 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					const cardNumber = index + 1
 
 					return (
-						<TactileButton
-							key={choice.functionToBlockAnswerChoiceId}
+						<div
+							className={cn(
+								"relative w-96 cursor-pointer rounded-3xl duration-0",
+								isSelected ? "outline-2 outline-macaw" : "outline-2 outline-transparent hover:outline-macaw/50",
+								isInConfirmationStage ? "cursor-default" : "cursor-pointer"
+							)}
 							onClick={(): void => {
 								if (!isInConfirmationStage) {
 									learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
 								}
 							}}
-							className={`h-64 w-48 flex items-center justify-center text-lg font-semibold rounded-lg duration-0 relative ${
-								isSelected
-									? "bg-standardBackgroundHover border-2 border-macaw"
-									: isInConfirmationStage
-										? "bg-standardBackground border-2 border-swan cursor-default"
-										: "bg-standardBackground border-2 border-swan hover:bg-polar"
-							}`}
-							shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
-							shadowHeight={2}
-							shouldHoverPushButton={false}
-							disabled={isInConfirmationStage}
+							key={choice.functionToBlockAnswerChoiceId}
 						>
-							<BlockVisualization
-								codingBlock={choice.codingBlock}
-								className="w-full h-full p-4"
-							/>
-							{/* Number badge in bottom right */}
-							<div
-								className={cn(
-									"absolute bottom-2 right-2 w-8 h-8 rounded-lg border-2",
-									"flex items-center justify-center text-sm font-bold",
-									isSelected ? "border-macaw text-macaw" : "border-swan text-hare"
-								)}
-							>
+							<div className="h-48 rounded-t-3xl overflow-hidden">
+								<LearnMiniSandbox
+									blocklyJson={normalizeSandboxJson(choice.codingBlock.codingBlockJson)}
+									className="w-full h-full rounded-t-3xl rounded-b-none"
+								/>
+							</div>
+							{/* Number lip below the sandbox */}
+							<div className={cn(
+								"h-8 rounded-b-3xl flex items-center justify-center text-lg font-bold",
+								isSelected ? "bg-macaw text-white" : "bg-swan text-hare"
+							)}>
 								{cardNumber}
 							</div>
-						</TactileButton>
+						</div>
 					)
 				})}
 			</div>

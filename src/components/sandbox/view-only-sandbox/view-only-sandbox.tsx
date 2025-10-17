@@ -137,12 +137,6 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 	}, [])
 
 	useEffect((): void => {
-		if (workspaceRef.current) {
-			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
-		}
-	}, [isDarkMode])
-
-	useEffect((): void => {
 		void initializeBlocks()
 	}, [])
 
