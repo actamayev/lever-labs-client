@@ -4,10 +4,10 @@ import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
-import useSimpleCareerQuestTrigger from "../../../../hooks/career-quest/use-simple-career-quest-trigger"
+import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 function MeetPipS8P3ColorViz(): React.ReactNode {
-	useSimpleCareerQuestTrigger(
+	useCareerQuestTrigger(
 		CareerType.MEET_PIP,
 		MeetPipTriggerType.S8_P3_ENTER,
 		MeetPipTriggerType.S8_P3_EXIT,
