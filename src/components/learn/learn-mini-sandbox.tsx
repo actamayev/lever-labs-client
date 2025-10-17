@@ -17,7 +17,6 @@ interface LearnMiniSandboxProps {
 	className?: string
 }
 
-// eslint-disable-next-line max-lines-per-function
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -46,8 +45,6 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
-
-		console.log("Workspace changed, blocks count:", workspace.getAllBlocks().length)
 
 		// Center workspace after blocks are loaded
 		if (workspace.getAllBlocks().length > 0 && !isCentered) {
@@ -108,8 +105,6 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		}
 		void initBlocks()
 	}, [])
-
-	console.log("Workspace changed, blocks in workspace:", workspaceRef.current?.getAllBlocks().length)
 
 	if (!blocksInitialized) {
 		return (

@@ -4,6 +4,7 @@ import isEqual from "lodash-es/isEqual"
 import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { soundManager } from "../../classes/utility/sound-manager-class"
 
 export default async function submitFillInBlankAnswer(
 	lessonUuid: LessonUUID,
@@ -23,9 +24,15 @@ export default async function submitFillInBlankAnswer(
 		// The API returns { isCorrect: boolean, feedback: string }
 		// Return both values to the caller
 		const { isCorrect, feedback } = (response.data as { isCorrect: boolean; feedback: string })
+		if (isCorrect === true) {
+			soundManager.playCorrect()
+		} else {
+			soundManager.playWrong()
+		}
 		return { isCorrect: isCorrect === true, feedback: feedback ?? "" }
 	} catch (error) {
 		console.error(error)
+		soundManager.playWrong()
 		return { isCorrect: false, feedback: "" }
 	}
 }

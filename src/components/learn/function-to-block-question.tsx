@@ -1,8 +1,8 @@
 "use client"
 import { observer } from "mobx-react"
-import { useCallback, useEffect } from "react"
+import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+// import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
@@ -12,7 +12,7 @@ import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
-	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
+	// const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 
 	// Use the keyboard handler hook
 	useQuestionKeyboardHandler()
