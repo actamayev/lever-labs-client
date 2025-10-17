@@ -105,7 +105,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 							>
 								{choiceNumber}
 							</div>
-							<span className="text-left text-eel ml-10">
+							<span className={cn("text-left text-eel ml-10", isSelected ? "text-macaw" : "text-eel")}>
 								{choice.functionDescriptionText}
 							</span>
 						</TactileButton>

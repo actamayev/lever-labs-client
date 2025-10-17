@@ -17,6 +17,7 @@ interface LearnMiniSandboxProps {
 	className?: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -46,9 +47,13 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 
-		// Center workspace on first initialization
-		if (!isCentered) {
-			centerWorkspace()
+		console.log("Workspace changed, blocks count:", workspace.getAllBlocks().length)
+
+		// Center workspace after blocks are loaded
+		if (workspace.getAllBlocks().length > 0 && !isCentered) {
+			setTimeout(() => {
+				centerWorkspace()
+			}, 100)
 		}
 	}, [isCentered, centerWorkspace])
 
@@ -61,15 +66,18 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		setIsCentered(false)
 	}, [pathname])
 
-	// Add effect to center workspace after it's initialized and when blocks change
+	// Add effect to center workspace after blocks are loaded
 	useEffect((): () => void => {
-		if (isCentered || isCentering) return (): void => {}
+		if (isCentered || isCentering || !blocksInitialized) return (): void => {}
+
 		const timer = setTimeout((): void => {
-			centerWorkspace()
-		}, 100) // Small delay to ensure workspace is fully rendered
+			if (workspaceRef.current && workspaceRef.current.getAllBlocks().length > 0) {
+				centerWorkspace()
+			}
+		}, 200) // Longer delay to ensure blocks are fully rendered
 
 		return (): void => clearTimeout(timer)
-	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname])
+	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname, blocksInitialized])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
